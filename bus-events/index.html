@@ -1142,6 +1142,30 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#legacy-spec-migration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Legacy ↔ spec migration
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Legacy ↔ spec migration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#not-bridged-adopt-the-spec-directly" class="md-nav__link">
+    <span class="md-ellipsis">
+      Not bridged — adopt the spec directly
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#related-pages" class="md-nav__link">
     <span class="md-ellipsis">
       Related pages
@@ -1492,6 +1516,30 @@
       Session &amp; skill management
     </span>
   </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#legacy-spec-migration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Legacy ↔ spec migration
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Legacy ↔ spec migration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#not-bridged-adopt-the-spec-directly" class="md-nav__link">
+    <span class="md-ellipsis">
+      Not bridged — adopt the spec directly
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1965,6 +2013,155 @@ mechanism); the tables below show both names where applicable.</p>
 </tr>
 </tbody>
 </table>
+<h2 id="legacy-spec-migration">Legacy ↔ spec migration<a class="headerlink" href="#legacy-spec-migration" title="Permanent link">&para;</a></h2>
+<p>OVOS is renaming its bus topics onto the <code>ovos.*</code> spec namespace. You do not have to migrate
+all at once: <code>ovos-bus-client</code>'s <code>NamespaceTranslator</code> runs on every client with both directions
+on by default, so a message emitted on either the legacy or the spec topic is re-emitted on the
+other (see <a href="../bus-service/#namespace-migration">Bus Service — namespace migration</a>). A direct bus
+consumer can therefore subscribe on either name today and switch to the spec name at its own pace.</p>
+<p>The pairs below are the authoritative rename map (<code>ovos_spec_tools</code>'s <code>MIGRATION_MAP</code>). Unless
+marked <strong>shape-changing</strong>, the payload is identical on both topics; shape-changing pairs are
+reshaped best-effort by the translator and may lose fields, so prefer adopting the spec payload
+directly.</p>
+<table>
+<thead>
+<tr>
+<th>Legacy topic</th>
+<th>Spec topic</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>recognizer_loop:utterance</code></td>
+<td><code>ovos.utterance.handle</code></td>
+<td>transcribed utterance (PIPELINE-1 §9.1)</td>
+</tr>
+<tr>
+<td><code>speak</code></td>
+<td><code>ovos.utterance.speak</code></td>
+<td>TTS request (PIPELINE-1 §9.6)</td>
+</tr>
+<tr>
+<td><code>speak:b64_audio</code></td>
+<td><code>ovos.utterance.speak.b64</code></td>
+<td>inline-audio speak request</td>
+</tr>
+<tr>
+<td><code>speak:b64_audio.response</code></td>
+<td><code>ovos.audio.speech</code></td>
+<td>synthesized-audio reply</td>
+</tr>
+<tr>
+<td><code>recognizer_loop:audio_output_start</code></td>
+<td><code>ovos.audio.output.started</code></td>
+<td>playback began (AUDIO-1 §5.1)</td>
+</tr>
+<tr>
+<td><code>recognizer_loop:audio_output_end</code></td>
+<td><code>ovos.audio.output.ended</code></td>
+<td>playback ended (AUDIO-1 §5.2)</td>
+</tr>
+<tr>
+<td><code>mycroft.audio.queue</code></td>
+<td><code>ovos.audio.queue</code></td>
+<td>enqueue a sound <code>{uri}</code></td>
+</tr>
+<tr>
+<td><code>mycroft.audio.play_sound</code></td>
+<td><code>ovos.audio.play_sound</code></td>
+<td>play a sound effect <code>{uri}</code></td>
+</tr>
+<tr>
+<td><code>mycroft.audio.speak.status</code></td>
+<td><code>ovos.audio.is_speaking</code></td>
+<td>query: is audio-out active</td>
+</tr>
+<tr>
+<td><code>mycroft.audio.speech.stop</code></td>
+<td><code>ovos.audio.stop</code></td>
+<td>stop audio output</td>
+</tr>
+<tr>
+<td><code>mycroft.mic.listen</code></td>
+<td><code>ovos.mic.listen</code></td>
+<td>force the listener to start listening (AUDIO-1 §4.4)</td>
+</tr>
+<tr>
+<td><code>recognizer_loop:record_begin</code></td>
+<td><code>ovos.listener.record.started</code></td>
+<td>command recording started (AUDIO-IN-1 §6.1)</td>
+</tr>
+<tr>
+<td><code>recognizer_loop:record_end</code></td>
+<td><code>ovos.listener.record.ended</code></td>
+<td>command recording ended (AUDIO-IN-1 §6.2)</td>
+</tr>
+<tr>
+<td><code>recognizer_loop:sleep</code></td>
+<td><code>ovos.listener.sleep</code></td>
+<td>put listener to sleep (AUDIO-IN-1 §6.3)</td>
+</tr>
+<tr>
+<td><code>mycroft.awoken</code></td>
+<td><code>ovos.listener.awoken</code></td>
+<td>listener woke from sleep (AUDIO-IN-1 §6.4)</td>
+</tr>
+<tr>
+<td><code>mycroft.stop</code></td>
+<td><code>ovos.stop</code></td>
+<td>universal stop broadcast (STOP-1 §5.3)</td>
+</tr>
+<tr>
+<td><code>skill.stop.pong</code></td>
+<td><code>ovos.stop.pong</code></td>
+<td>stoppability reply (STOP-1 §4.2)</td>
+</tr>
+<tr>
+<td><code>complete_intent_failure</code></td>
+<td><code>ovos.intent.unmatched</code></td>
+<td>no intent claimed the utterance (PIPELINE-1 §9.3)</td>
+</tr>
+<tr>
+<td><code>detach_skill</code></td>
+<td><code>ovos.skill.deregister</code></td>
+<td>remove a skill's intents <code>{skill_id}</code></td>
+</tr>
+<tr>
+<td><code>detach_intent</code></td>
+<td><code>ovos.intent.deregister</code></td>
+<td><strong>shape-changing</strong> — remove one intent (INTENT-4 §8.2)</td>
+</tr>
+<tr>
+<td><code>mycroft.skill.enable_intent</code></td>
+<td><code>ovos.intent.enable</code></td>
+<td><strong>shape-changing</strong> — enable an intent (INTENT-4 §8.5)</td>
+</tr>
+<tr>
+<td><code>mycroft.skill.disable_intent</code></td>
+<td><code>ovos.intent.disable</code></td>
+<td><strong>shape-changing</strong> — disable an intent (INTENT-4 §8.5)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="not-bridged-adopt-the-spec-directly">Not bridged — adopt the spec directly<a class="headerlink" href="#not-bridged-adopt-the-spec-directly" title="Permanent link">&para;</a></h3>
+<p>A few areas are deliberately <strong>not</strong> in the translator, so subscribing on the spec name alone will
+<em>not</em> transparently receive the legacy traffic (or vice-versa). These need real adoption in the
+producer and consumer, not a topic swap:</p>
+<ul>
+<li><strong>Handler-lifecycle trio</strong> — <code>mycroft.skill.handler.start</code> / <code>.complete</code> are orchestrator-vs-skill
+  private signals; the orchestrator emits the spec <code>ovos.intent.handler.start</code> / <code>.complete</code> /
+  <code>.error</code> directly. The two namespaces are kept separate by design (PIPELINE-1 §8/§11) — the pair
+  is shape-changing and bridging would double-emit.</li>
+<li><strong>Intent/entity registration</strong> — <code>register_vocab</code> + <code>register_intent</code> (Adapt's N legacy messages)
+  do not map 1:1 onto the single <code>ovos.intent.register.keyword</code> / <code>.register.template</code> /
+  <code>ovos.entity.register</code> message (INTENT-4 §5), which inlines the vocab descriptors. This requires
+  producers/consumers to adopt INTENT-4, not a rename.</li>
+<li><strong>Per-skill stop</strong> — the legacy <code>{skill_id}.stop</code> / <code>{skill_id}.stop.ping</code> handshake uses
+  runtime-assembled per-skill topics, which cannot be static map keys. STOP-1 replaces them with the
+  broadcast <code>ovos.stop</code> / <code>ovos.stop.ping</code> / <code>ovos.stop.pong</code>; the skill base class subscribes on both
+  forms rather than relying on the translator.</li>
+</ul>
 <h2 id="related-pages">Related pages<a class="headerlink" href="#related-pages" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="../bus-service/">Bus Service</a> — the messagebus itself, connection details, legacy/modern topic pairs</li>

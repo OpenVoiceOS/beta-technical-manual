@@ -1649,7 +1649,7 @@ advances chunk by chunk:</p>
 <h2 id="bus-events">Bus Events<a class="headerlink" href="#bus-events" title="Permanent link">&para;</a></h2>
 <p>The listener emits its activity on the OVOS <a href="../bus-service/">messagebus</a>. The most
 useful events for downstream services:</p>
-<p>Canonical (spec) names are shown first, with the legacy name in parentheses. The <code>ovos.listener.*</code> and <code>ovos.utterance.handle</code> names come from <a href="https://github.com/OpenVoiceOS/architecture/blob/dev/audio-in.md">OVOS-AUDIO-IN-1 §5–§6</a>. <code>ovos-dinkum-listener</code> emits the spec <code>ovos.*</code> topics directly for the record/awoken/utterance events (via <code>SpecMessage</code>), and emits the wake-word event under its legacy <code>recognizer_loop:wakeword</code> name. Either way both topics reach subscribers: <code>ovos-bus-client</code>'s <code>NamespaceTranslator</code> runs on every client with both directions on by default (see <a href="../bus-service/#namespace-migration">Bus Service</a>) — emitting a spec topic also emits its legacy alias, and emitting a legacy topic also emits its spec alias.</p>
+<p>Canonical (spec) names are shown first, with the legacy name in parentheses. The <code>ovos.listener.*</code> and <code>ovos.utterance.handle</code> names come from <a href="https://github.com/OpenVoiceOS/architecture/blob/dev/audio-in.md">OVOS-AUDIO-IN-1 §5–§6</a>. <code>ovos-dinkum-listener</code> emits the spec <code>ovos.*</code> topics directly for the record/awoken/utterance events (via <code>SpecMessage</code>); for those, <code>ovos-bus-client</code>'s <code>NamespaceTranslator</code> runs on every client with both directions on by default (see <a href="../bus-service/#namespace-migration">Bus Service</a>) — emitting a spec topic also emits its legacy alias, and vice-versa, so subscribers can use either name. The wake-word event (<code>recognizer_loop:wakeword</code>) is the exception: it has no spec counterpart in the rename map, so it travels under the legacy name only. See the <a href="../bus-events/#legacy-spec-migration">legacy ↔ spec migration table</a> for the full mapping.</p>
 <table>
 <thead>
 <tr>
@@ -1670,9 +1670,9 @@ useful events for downstream services:</p>
 <td>Command recording ended (§6.2)</td>
 </tr>
 <tr>
-<td><code>recognizer_loop:wakeword</code> (spec alias: <code>ovos.listener.wakeword</code>)</td>
+<td><code>recognizer_loop:wakeword</code></td>
 <td><code>{"utterance": str, "key_phrase": str, …}</code></td>
-<td>Wake word detected; capture is opening (§6.5). <code>utterance</code> is the spoken key phrase (underscores/hyphens spaced out), <code>key_phrase</code> its raw form; <code>filename</code> is added when <code>listener.record_wake_words</code> is on. A per-wake-word <code>stt_lang</code> override, when configured, rides the message context (surfaced as <code>session.request_lang</code>) rather than the payload</td>
+<td>Wake word detected; capture is opening. Legacy-only — the wake-word event is not part of the spec rename (there is no <code>ovos.listener.wakeword</code>). <code>utterance</code> is the spoken key phrase (underscores/hyphens spaced out), <code>key_phrase</code> its raw form; <code>filename</code> is added when <code>listener.record_wake_words</code> is on. A per-wake-word <code>stt_lang</code> override, when configured, rides the message context (surfaced as <code>session.request_lang</code>) rather than the payload</td>
 </tr>
 <tr>
 <td><code>ovos.utterance.handle</code> (legacy: <code>recognizer_loop:utterance</code>)</td>
