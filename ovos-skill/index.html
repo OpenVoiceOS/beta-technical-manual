@@ -2016,16 +2016,16 @@ available.</p>
 </thead>
 <tbody>
 <tr>
-<td><code>ovos.stop</code> (legacy: <code>mycroft.stop</code>)</td>
+<td><code>mycroft.stop</code></td>
 <td>Global stop broadcast — cease all activity for the inbound session</td>
 </tr>
 <tr>
-<td><code>&lt;skill_id&gt;:stop</code> (legacy: <code>{skill_id}.stop</code>)</td>
+<td><code>{skill_id}.stop</code></td>
 <td>Skill-directed stop — cease the stoppable activity for the inbound session</td>
 </tr>
 <tr>
-<td><code>ovos.stop.ping</code> (legacy: <code>{skill_id}.stop.ping</code>)</td>
-<td>Check if skill can stop; answer with an <code>ovos.stop.pong</code> carrying <code>can_handle</code></td>
+<td><code>{skill_id}.stop.ping</code></td>
+<td>Check if the skill can stop; the base class answers with <code>{skill_id}.stop.response</code> carrying whether it can handle the stop</td>
 </tr>
 <tr>
 <td><code>{skill_id}.converse.get_response</code></td>

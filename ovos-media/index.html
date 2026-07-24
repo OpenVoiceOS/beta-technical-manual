@@ -2128,7 +2128,7 @@ daemon described here, which is the target:</p>
 </span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>          └── Search dispatch → OCP skills → results → ovos-media
 </span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>
 </span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>  ovos-media (standalone daemon)
-</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>    ├── Player state machine (OCPMediaCatalog)
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>    ├── Player state machine (OCPMediaPlayer)
 </span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>    ├── MPRIS
 </span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>    ├── Media backend plugins
 </span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>    └── GUI (still coupled — target: GUI adapter plugins)
@@ -2286,7 +2286,7 @@ satellite has its own player:</p>
 <p>Key modules:</p>
 <ul>
 <li>
-<p><code>ovos_media/player.py</code> — <code>OCPMediaCatalog</code> (<code>OVOSCommonPlaybackSkill</code> subclass); manages playlists, track history, liked songs</p>
+<p><code>ovos_media/player.py</code> — <code>OCPMediaPlayer</code>, the player state machine (playlist, track history, playback/media/loop state); <code>OCPMediaCatalog</code> (an <code>OVOSCommonPlaybackSkill</code> subclass, instantiated as <code>self.media</code>) manages only the liked-songs store and search-results playlist</p>
 </li>
 <li>
 <p><code>ovos_media/media_backends/</code> — <code>AudioService</code>, <code>VideoService</code>, <code>WebService</code> — each manages typed backend plugins</p>
@@ -2516,9 +2516,10 @@ plugin includes a bridge:</p>
 <hr />
 <h2 id="known-coupling-issues">Known Coupling Issues<a class="headerlink" href="#known-coupling-issues" title="Permanent link">&para;</a></h2>
 <h3 id="ocpmediacatalog-is-a-skill">OCPMediaCatalog is a skill<a class="headerlink" href="#ocpmediacatalog-is-a-skill" title="Permanent link">&para;</a></h3>
-<p><code>ovos_media/player.py</code> inherits from <code>OVOSCommonPlaybackSkill</code>. This registers <code>ovos-media</code> as
-a skill on the bus and loads skill infrastructure (settings, locale, etc.). It also registers
-<code>@ocp_search()</code> for liked songs and <code>@ocp_featured_media()</code> for the browse view.</p>
+<p><code>OCPMediaCatalog</code> in <code>ovos_media/player.py</code> inherits from <code>OVOSCommonPlaybackSkill</code>. This registers
+<code>ovos-media</code> as a skill on the bus and loads skill infrastructure (settings, locale, etc.). It
+registers <code>@ocp_search()</code> to expose liked songs as a search result; there is no
+<code>@ocp_featured_media()</code> handler.</p>
 <h3 id="no-nextprev-in-some-backends">No next/prev in some backends<a class="headerlink" href="#no-nextprev-in-some-backends" title="Permanent link">&para;</a></h3>
 <p>The Music Assistant audio backend does not implement <code>next()</code> or <code>previous()</code> through the legacy
 <code>AudioBackend</code> interface — only through the MA queue API.</p>

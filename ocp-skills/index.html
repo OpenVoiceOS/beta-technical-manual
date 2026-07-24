@@ -1538,16 +1538,14 @@
 <div class="admonition warning">
 <p class="admonition-title">OCP skills are giving way to MediaProvider plugins</p>
 <p>OCP <strong>skills</strong> (media-provider skills built on <code>OVOSCommonPlaybackSkill</code> /
-<a href="#search-results"><code>@ocp_search</code></a>) still work and remain fully supported, but a
-plugin-based alternative now exists alongside them: a dedicated <strong>MediaProvider</strong>
-plugin type (<code>opm.media.provider</code>, loaded via <code>ovos-plugin-manager</code>) that the
-<a href="../ovos-media/"><code>ovos-media</code></a> player loads <strong>in-process</strong> and calls <code>search()</code> on
-directly, instead of broadcasting a query over the bus to skills. This moves media
-catalogs out of skills and into plugins for anyone adopting <code>ovos-media</code>. Both models
-are documented; new integrations that don't need the full skill lifecycle (intents,
-settings UI, converse) should prefer a MediaProvider plugin, but writing an OCP skill
-is still the simpler path and is not going away for setups still on the legacy audio
-service.</p>
+<a href="#search-results"><code>@ocp_search</code></a>) still work and remain fully supported. The intended
+successor is a dedicated <strong>MediaProvider</strong> plugin type (<code>opm.media.provider</code>): the
+entry-point group is defined in <code>ovos-plugin-manager</code>, and the design is for the
+<a href="../ovos-media/"><code>ovos-media</code></a> player to load such plugins <strong>in-process</strong> and call
+<code>search()</code> on them directly, instead of broadcasting a query over the bus to skills.
+That in-process loading is not wired up in <code>ovos-media</code> yet, so writing an OCP skill
+remains the way to provide media today — and stays the simpler path for setups still on
+the legacy audio service.</p>
 </div>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
