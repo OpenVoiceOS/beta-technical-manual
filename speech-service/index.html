@@ -1599,7 +1599,7 @@
 <p><code>DinkumVoiceLoop.run()</code> — <a href="https://github.com/OpenVoiceOS/ovos-dinkum-listener/blob/dev/ovos_dinkum_listener/voice_loop/voice_loop.py"><code>ovos_dinkum_listener/voice_loop/voice_loop.py</code></a> — the per-chunk state machine that drives <a href="../vad-plugins/">VAD</a>, <a href="../wake-word-plugins/">Wake Word</a> and <a href="../stt-plugins/">STT</a> via per-state handlers.</p>
 </li>
 <li>
-<p><code>OVOSDinkumVoiceService._stt_text()</code> — <a href="https://github.com/OpenVoiceOS/ovos-dinkum-listener/blob/dev/ovos_dinkum_listener/service.py"><code>ovos_dinkum_listener/service.py</code></a> — emits the utterance message after <a href="../stt-plugins/">STT</a> returns text: the listener itself emits <code>recognizer_loop:utterance</code>; <code>ovos-bus-client</code>'s automatic namespace bridge (see <a href="../bus-service/#namespace-migration">Bus Service</a>) mirrors it to <code>ovos.utterance.handle</code> for consumers on the spec topic.</p>
+<p><code>OVOSDinkumVoiceService._stt_text()</code> — <a href="https://github.com/OpenVoiceOS/ovos-dinkum-listener/blob/dev/ovos_dinkum_listener/service.py"><code>ovos_dinkum_listener/service.py</code></a> — emits the utterance message after <a href="../stt-plugins/">STT</a> returns text: the listener emits the spec topic <code>ovos.utterance.handle</code> (<code>SpecMessage.UTTERANCE</code>) directly, and <code>ovos-bus-client</code>'s <code>NamespaceTranslator</code> (see <a href="../bus-service/#namespace-migration">Bus Service</a>) also emits the legacy <code>recognizer_loop:utterance</code> alias for old consumers.</p>
 </li>
 </ul>
 <hr />
@@ -1649,7 +1649,7 @@ advances chunk by chunk:</p>
 <h2 id="bus-events">Bus Events<a class="headerlink" href="#bus-events" title="Permanent link">&para;</a></h2>
 <p>The listener emits its activity on the OVOS <a href="../bus-service/">messagebus</a>. The most
 useful events for downstream services:</p>
-<p>Canonical (spec) names are shown first, with the legacy name current code still emits in parentheses. The <code>ovos.listener.*</code> and <code>ovos.utterance.handle</code> names come from <a href="https://github.com/OpenVoiceOS/architecture/blob/dev/audio-in.md">OVOS-AUDIO-IN-1 §5–§6</a>; <code>ovos-dinkum-listener</code> itself still emits only the legacy names, and <code>ovos-bus-client</code>'s automatic namespace bridge (see <a href="../bus-service/#namespace-migration">Bus Service</a>) mirrors them onto the spec topics by default.</p>
+<p>Canonical (spec) names are shown first, with the legacy name in parentheses. The <code>ovos.listener.*</code> and <code>ovos.utterance.handle</code> names come from <a href="https://github.com/OpenVoiceOS/architecture/blob/dev/audio-in.md">OVOS-AUDIO-IN-1 §5–§6</a>. <code>ovos-dinkum-listener</code> emits the spec <code>ovos.*</code> topics directly for the record/awoken/utterance events (via <code>SpecMessage</code>), and emits the wake-word event under its legacy <code>recognizer_loop:wakeword</code> name. Either way both topics reach subscribers: <code>ovos-bus-client</code>'s <code>NamespaceTranslator</code> runs on every client with both directions on by default (see <a href="../bus-service/#namespace-migration">Bus Service</a>) — emitting a spec topic also emits its legacy alias, and emitting a legacy topic also emits its spec alias.</p>
 <table>
 <thead>
 <tr>
@@ -1670,9 +1670,9 @@ useful events for downstream services:</p>
 <td>Command recording ended (§6.2)</td>
 </tr>
 <tr>
-<td><code>ovos.listener.wakeword</code> (legacy: <code>recognizer_loop:wakeword</code>)</td>
-<td><code>{"wake_word", "lang"}</code></td>
-<td>Wake word detected; capture is opening (§6.5). <code>lang</code> is carried only when the deployment binds wake words to languages, and is the hint reported as <code>session.request_lang</code></td>
+<td><code>recognizer_loop:wakeword</code> (spec alias: <code>ovos.listener.wakeword</code>)</td>
+<td><code>{"utterance": str, "key_phrase": str, …}</code></td>
+<td>Wake word detected; capture is opening (§6.5). <code>utterance</code> is the spoken key phrase (underscores/hyphens spaced out), <code>key_phrase</code> its raw form; <code>filename</code> is added when <code>listener.record_wake_words</code> is on. A per-wake-word <code>stt_lang</code> override, when configured, rides the message context (surfaced as <code>session.request_lang</code>) rather than the payload</td>
 </tr>
 <tr>
 <td><code>ovos.utterance.handle</code> (legacy: <code>recognizer_loop:utterance</code>)</td>
@@ -1706,11 +1706,11 @@ transition.</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Gotcha — utterance namespace</p>
-<p>The listener publishes the transcribed command as <code>recognizer_loop:utterance</code>.
-<code>ovos-bus-client</code>'s namespace bridge (on by default) also mirrors it onto
-<code>ovos.utterance.handle</code>, so subscribers can use either topic name — see
-<a href="../bus-service/#namespace-migration">Bus Service — Namespace migration</a> for how
-to turn that bridging off once every consumer speaks the spec namespace.</p>
+<p>The listener publishes the transcribed command on the spec topic
+<code>ovos.utterance.handle</code>. <code>ovos-bus-client</code>'s namespace translator (on by default)
+also emits the legacy <code>recognizer_loop:utterance</code> alias, so subscribers can use
+either topic name — see <a href="../bus-service/#namespace-migration">Bus Service — Namespace migration</a>
+for how to turn that aliasing off once every consumer speaks the spec namespace.</p>
 </div>
 <h2 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">&para;</a></h2>
 <p>The speech service is configured in the <code>listener</code>, <code>hotwords</code>, and <code>stt</code> sections of <code>mycroft.conf</code>.</p>
@@ -1729,8 +1729,12 @@ to turn that bridging off once every consumer speaks the spec namespace.</p>
 </span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="p">}</span>
 </span></code></pre></div>
 <div class="admonition tip">
-<p class="admonition-title">Donating wake-word and STT samples</p>
-<p><code>ovos-dinkum-listener</code> can optionally upload the wake-word and utterance audio it captures to an open-data server, purely to help improve wake-word/STT plugins. It is opt-in and off by default — nothing is uploaded until <code>open_data.ww_urls</code> / <code>open_data.stt_urls</code> is configured. See <a href="../privacy-security/#opt-in-wake-word-and-stt-sample-donation">Privacy &amp; Security</a> and <a href="../config-reference/#all-keys-generated"><code>open_data.*</code> config keys</a>.</p>
+<p class="admonition-title">Saving wake-word audio locally</p>
+<p>Set <code>listener.record_wake_words: true</code> and the listener writes each detected
+wake-word clip to disk (under its <code>wake_words</code> save directory) and adds the
+<code>filename</code> to the wake-word message — handy for gathering training data or
+debugging false triggers. The clips stay on the device; the listener itself does
+not upload anything.</p>
 </div>
 
 

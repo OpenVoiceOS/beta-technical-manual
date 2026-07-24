@@ -1780,13 +1780,13 @@ return a match wins and short-circuits the rest, and if none of them do, the lif
 <p><code>IntentTransformersService.transform(match)</code> — the <strong>intent-transformer chain</strong> post-processes the match (OVOS-TRANSFORM-1 §3.4).</p>
 </li>
 <li>
-<p>Emit <code>ovos.intent.matched</code> (§9.2) — a notification that a plugin claimed the utterance.</p>
-</li>
-<li>
-<p>Build the dispatch message with <code>match.match_type</code> as the message type.</p>
+<p>Build the dispatch message (<code>message.reply(match.match_type, …)</code>) with <code>match.match_type</code> as the message type.</p>
 </li>
 <li>
 <p>Activate the skill in the session (<code>sess.activate_skill(skill_id)</code>) and emit <code>{skill_id}.activate</code> for the skill's callback.</p>
+</li>
+<li>
+<p>Emit <code>ovos.intent.matched</code> (§9.2) — a notification that a plugin claimed the utterance.</p>
 </li>
 <li>
 <p>Wrap the dispatch in the <strong>handler-lifecycle trio</strong> — the orchestrator emits <code>ovos.intent.handler.start</code>, then exactly one of <code>ovos.intent.handler.complete</code> / <code>ovos.intent.handler.error</code> (§8). The skill's intent handler runs between them.</p>

@@ -2306,11 +2306,11 @@ this interacts with <code>systemd</code>'s own <code>Restart=</code>/<code>After
 <p>Set <code>websocket.ssl: true</code> and the Tornado <code>ovos-messagebus</code> serves <code>wss://</code> itself — nothing
 needs to sit in front of it. Point it at an existing certificate with <code>websocket.ssl_cert</code>
 and <code>websocket.ssl_key</code>:</p>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nt">&quot;websocket&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">    </span><span class="nt">&quot;ssl&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">    </span><span class="nt">&quot;ssl_cert&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/etc/ssl/certs/ovos-bus.crt&quot;</span><span class="p">,</span>
-</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">    </span><span class="nt">&quot;ssl_key&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/etc/ssl/private/ovos-bus.key&quot;</span>
-</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="p">}</span>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>&quot;websocket&quot;: {
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>    &quot;ssl&quot;: true,
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>    &quot;ssl_cert&quot;: &quot;/etc/ssl/certs/ovos-bus.crt&quot;,
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>    &quot;ssl_key&quot;: &quot;/etc/ssl/private/ovos-bus.key&quot;
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>}
 </span></code></pre></div>
 <p>If <code>ssl</code> is on but no cert/key are configured, the bus generates a self-signed pair on first
 start (under <code>$XDG_DATA_HOME/OpenVoiceOS/ovos-messagebus/certs/</code>); this path needs the <code>ssl</code>
@@ -2322,31 +2322,31 @@ itself — use the default Tornado backend to serve <code>wss://</code> directly
 </div>
 <hr />
 <h2 id="alternative-implementations">Alternative Implementations<a class="headerlink" href="#alternative-implementations" title="Permanent link">&para;</a></h2>
-<p><code>ovos-messagebus</code> is the reference <strong>Tornado</strong>-based server and is all you need for a normal install (<code>pip install ovos-messagebus</code>). The <code>ovos-messagebus</code> package itself ships only the Tornado backend. Because the wire protocol is just JSON frames over a WebSocket, the server is interchangeable — any process that fans messages out to all connected clients on the same route will work, and a drop-in replacement can be swapped in without touching clients. The RaspOVOS image, for example, ships a separate Rust reimplementation (<code>ovos_rust_messagebus</code>) as its default for performance; see <a href="../production-operations/">Production Operations</a>.</p>
+<p><code>ovos-messagebus</code> is the reference <strong>Tornado</strong>-based server and is all you need for a normal install (<code>pip install ovos-messagebus</code>); the Tornado backend is the default. Because the wire protocol is just JSON frames over a WebSocket, the server is interchangeable — any process that fans messages out to all connected clients on the same route will work, and a drop-in replacement can be swapped in without touching clients. The RaspOVOS image, for example, ships a separate Rust reimplementation (<code>ovos_rust_messagebus</code>) as its default for performance; see <a href="../production-operations/">Production Operations</a>.</p>
 <p>A separate, drop-in Rust implementation exists as its own project for deployments that want lower overhead:</p>
 <ul>
 <li><a href="https://github.com/OscillateLabsLLC/ovos-rust-messagebus">OscillateLabsLLC/ovos-rust-messagebus</a> — speaks the same OVOS wire protocol; build and run it in place of the Python server. See that project's README for build and configuration details.</li>
 </ul>
 <p><strong>In plain terms:</strong> on a stable install, run the default Python (Tornado) server; only reach for the Rust build if profiling shows the bus is a bottleneck.</p>
-<div class="admonition warning">
-<p class="admonition-title">Upcoming — unreleased</p>
-<p>Pluggable high-performance backends are in development. The work keeps <strong>Tornado</strong> as
-the default reference server and adds two optional alternatives, benchmarked side by
-side with a bundled benchmark script at a range of concurrent-client loads:</p>
-<ul>
-<li><strong>webrockets</strong> — a high-performance websocket backend, written in Python.</li>
-<li><strong>Rust</strong> — the <a href="https://github.com/OscillateLabsLLC/ovos-rust-messagebus"><code>ovos-rust-messagebus</code></a>
-  server, run in place of the Python process.</li>
-</ul>
-<p>Early benchmarking shows webrockets ahead at higher concurrency, with the Rust backend
-showing connection saturation at the highest client counts tested. None of this is on a
-published release — do not rely on it on a stable install.</p>
+<div class="admonition info">
+<p class="admonition-title">Optional <code>webrockets</code> backend</p>
+<p><code>ovos-messagebus</code> also bundles an optional, higher-throughput <strong>webrockets</strong> backend
+(Python), installed as an extra and run in place of the Tornado server:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>pip<span class="w"> </span>install<span class="w"> </span><span class="s2">&quot;ovos-messagebus[webrockets]&quot;</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>python<span class="w"> </span>-m<span class="w"> </span>ovos_messagebus.backends.webrockets_backend
+</span></code></pre></div>
+<p>It is early/alpha and not the default: it does <strong>not</strong> terminate TLS and does not honour
+<code>websocket.max_msg_size</code> (it refuses to start when <code>websocket.ssl</code> is set), so serve
+<code>wss://</code> with the Tornado backend. The repo ships a benchmark (<code>benchmark/run_benchmark.py</code>,
+<code>--compare</code>) that pits Tornado, webrockets, and the Rust server against each other; early
+numbers put webrockets ahead at higher concurrency. On a stable install, stay on the
+default Tornado server unless profiling shows the bus is a bottleneck.</p>
 </div>
 <hr />
 <h2 id="filter-debug-mode">Filter / Debug Mode<a class="headerlink" href="#filter-debug-mode" title="Permanent link">&para;</a></h2>
 <p>Set <code>websocket.filter: true</code> in <code>mycroft.conf</code> to log all message types before broadcasting. This does not affect message delivery.</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>DEBUG: &lt;msg_type&gt; source: [...] destination: [...]
-</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>       SESSION: {...}
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>DEBUG: &lt;msg_type&gt; source: [...] destination: [...]
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>       SESSION: {...}
 </span></code></pre></div>
 <p>Messages listed in <code>filter_logs</code> are excluded from the log to reduce noise (default: <code>["gui.status.request", "gui.page.upload"]</code>).</p>
 <p>When <code>filter</code> is off (the default), the bus never deserializes messages — it emits and re-broadcasts the raw frame as-is. Deserialization only happens in <code>filter</code> mode for the log line; if a frame fails to deserialize there, it is dropped (not logged, not re-broadcast).</p>
@@ -2354,24 +2354,24 @@ published release — do not rely on it on a stable install.</p>
 <h2 id="bus-recipes">Bus recipes<a class="headerlink" href="#bus-recipes" title="Permanent link">&para;</a></h2>
 <p>A few small, runnable patterns for talking to a live bus directly, without going through a skill.</p>
 <h3 id="connect-emit-and-wait-for-a-response">Connect, emit, and wait for a response<a class="headerlink" href="#connect-emit-and-wait-for-a-response" title="Permanent link">&para;</a></h3>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="kn">from</span> <span class="nn">ovos_bus_client</span> <span class="kn">import</span> <span class="n">MessageBusClient</span><span class="p">,</span> <span class="n">Message</span>
-</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>
-</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="n">bus</span> <span class="o">=</span> <span class="n">MessageBusClient</span><span class="p">()</span>
-</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="n">bus</span><span class="o">.</span><span class="n">run_in_thread</span><span class="p">()</span>  <span class="c1"># connects on a background daemon thread</span>
-</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>
-</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="c1"># fire-and-forget</span>
-</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="n">bus</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">Message</span><span class="p">(</span><span class="s2">&quot;ovos.utterance.handle&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;utterances&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;what time is it&quot;</span><span class="p">],</span> <span class="s2">&quot;lang&quot;</span><span class="p">:</span> <span class="s2">&quot;en-us&quot;</span><span class="p">}))</span>
-</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>
-</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="c1"># request/response: send a message, then wait for a specific reply type</span>
-</span><span id="__span-8-10"><a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="n">response</span> <span class="o">=</span> <span class="n">bus</span><span class="o">.</span><span class="n">wait_for_response</span><span class="p">(</span>
-</span><span id="__span-8-11"><a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a>    <span class="n">Message</span><span class="p">(</span><span class="s2">&quot;intent.service.adapt.manifest.get&quot;</span><span class="p">),</span>
-</span><span id="__span-8-12"><a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a>    <span class="n">reply_type</span><span class="o">=</span><span class="s2">&quot;intent.service.adapt.manifest&quot;</span><span class="p">,</span>
-</span><span id="__span-8-13"><a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a>    <span class="n">timeout</span><span class="o">=</span><span class="mf">3.0</span><span class="p">,</span>
-</span><span id="__span-8-14"><a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a><span class="p">)</span>
-</span><span id="__span-8-15"><a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a><span class="k">if</span> <span class="n">response</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="__span-8-16"><a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a>    <span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>  <span class="c1"># {&quot;intents&quot;: [...]} — the registered Adapt intent manifest</span>
-</span><span id="__span-8-17"><a id="__codelineno-8-17" name="__codelineno-8-17" href="#__codelineno-8-17"></a>
-</span><span id="__span-8-18"><a id="__codelineno-8-18" name="__codelineno-8-18" href="#__codelineno-8-18"></a><span class="n">bus</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="kn">from</span> <span class="nn">ovos_bus_client</span> <span class="kn">import</span> <span class="n">MessageBusClient</span><span class="p">,</span> <span class="n">Message</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="n">bus</span> <span class="o">=</span> <span class="n">MessageBusClient</span><span class="p">()</span>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="n">bus</span><span class="o">.</span><span class="n">run_in_thread</span><span class="p">()</span>  <span class="c1"># connects on a background daemon thread</span>
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="c1"># fire-and-forget</span>
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="n">bus</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">Message</span><span class="p">(</span><span class="s2">&quot;ovos.utterance.handle&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;utterances&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;what time is it&quot;</span><span class="p">],</span> <span class="s2">&quot;lang&quot;</span><span class="p">:</span> <span class="s2">&quot;en-us&quot;</span><span class="p">}))</span>
+</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>
+</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="c1"># request/response: send a message, then wait for a specific reply type</span>
+</span><span id="__span-9-10"><a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a><span class="n">response</span> <span class="o">=</span> <span class="n">bus</span><span class="o">.</span><span class="n">wait_for_response</span><span class="p">(</span>
+</span><span id="__span-9-11"><a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a>    <span class="n">Message</span><span class="p">(</span><span class="s2">&quot;intent.service.adapt.manifest.get&quot;</span><span class="p">),</span>
+</span><span id="__span-9-12"><a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a>    <span class="n">reply_type</span><span class="o">=</span><span class="s2">&quot;intent.service.adapt.manifest&quot;</span><span class="p">,</span>
+</span><span id="__span-9-13"><a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a>    <span class="n">timeout</span><span class="o">=</span><span class="mf">3.0</span><span class="p">,</span>
+</span><span id="__span-9-14"><a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a><span class="p">)</span>
+</span><span id="__span-9-15"><a id="__codelineno-9-15" name="__codelineno-9-15" href="#__codelineno-9-15"></a><span class="k">if</span> <span class="n">response</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="__span-9-16"><a id="__codelineno-9-16" name="__codelineno-9-16" href="#__codelineno-9-16"></a>    <span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>  <span class="c1"># {&quot;intents&quot;: [...]} — the registered Adapt intent manifest</span>
+</span><span id="__span-9-17"><a id="__codelineno-9-17" name="__codelineno-9-17" href="#__codelineno-9-17"></a>
+</span><span id="__span-9-18"><a id="__codelineno-9-18" name="__codelineno-9-18" href="#__codelineno-9-18"></a><span class="n">bus</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 </span></code></pre></div>
 <div class="admonition warning">
 <p class="admonition-title"><code>ovos.session.sync</code> can't be used this way</p>
