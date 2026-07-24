@@ -1064,6 +1064,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Observability: what exists and what doesn't">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#building-fleet-wide-alerting-yourself" class="md-nav__link">
+    <span class="md-ellipsis">
+      Building fleet-wide alerting yourself
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -1333,6 +1348,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Observability: what exists and what doesn't">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#building-fleet-wide-alerting-yourself" class="md-nav__link">
+    <span class="md-ellipsis">
+      Building fleet-wide alerting yourself
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -1434,6 +1464,12 @@ thin-client bridge), the pattern worth keeping is:</p>
 <li><code>PartOf=</code>/<code>After=</code> the messagebus unit for anything that needs a live bus connection at
   startup.</li>
 </ul>
+<p><code>After=</code> only orders unit <em>start</em>; it says nothing about whether the messagebus is actually
+accepting connections yet, and it says nothing about what happens when the bus unit <em>restarts</em>
+later — see <a href="../bus-service/#bus-restart-reconnect-behavior">Bus restart / reconnect behavior</a> for
+what a dependent service's existing bus connection does when that happens (short version: it
+reconnects on its own with backoff, so <code>Restart=on-failure</code> on the messagebus unit is enough —
+you do not need to also restart every dependent service).</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>systemctl<span class="w"> </span>--user<span class="w"> </span>daemon-reload
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>systemctl<span class="w"> </span>--user<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>--now<span class="w"> </span>ovos.service
 </span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>systemctl<span class="w"> </span>--user<span class="w"> </span>status<span class="w"> </span>ovos-skills.service
@@ -1605,6 +1641,9 @@ speech-to-text and text-to-speech work over HTTP (see <a href="../stt-server/">S
 </span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a><span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">docker.io/smartgic/ovos-tts-server-piper:${VERSION}</span><span class="w">      </span><span class="c1"># or your own build, see tts-server.md</span>
 </span><span id="__span-13-8"><a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a><span class="w">    </span><span class="nt">ports</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;9666:9666&quot;</span><span class="p p-Indicator">]</span>
 </span></code></pre></div>
+<p>These ports are unauthenticated HTTP by default — see
+<a href="../tts-server/#tips-caveats">TTS server: Tips &amp; Caveats</a> for adding API keys or a reverse proxy
+in front of them once they leave localhost.</p>
 <p>The speech-server image name encodes the engine baked into it — <code>ovos-stt-server-onnx-asr</code>,
 <code>ovos-stt-server-onnx-asr-cuda</code>, <code>ovos-tts-server-piper</code>, <code>ovos-tts-server-kokoro</code>,
 <code>ovos-tts-server-phoonnx</code> and so on. Pick the variant carrying the plugin you want; there is
@@ -1640,6 +1679,11 @@ no generic image that loads an arbitrary engine at runtime.</p>
 </span><span id="__span-14-29"><a id="__codelineno-14-29" name="__codelineno-14-29" href="#__codelineno-14-29"></a><span class="w">    </span><span class="nt">network_mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">host</span>
 </span><span id="__span-14-30"><a id="__codelineno-14-30" name="__codelineno-14-30" href="#__codelineno-14-30"></a><span class="w">    </span><span class="nt">depends_on</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">ovos_messagebus</span><span class="p p-Indicator">]</span>
 </span></code></pre></div>
+<p><code>depends_on</code> here only orders <strong>container start</strong> — it starts <code>ovos_messagebus</code> first, but does
+not wait for it to actually accept WebSocket connections before starting the services listed
+after it. Use the <a href="#knowing-when-the-assistant-is-actually-ready">readiness probe</a> (or Compose's
+own <code>depends_on: condition: service_healthy</code> against a healthcheck that runs it) as the real gate
+if a dependent service needs the bus to be live, not just the container to exist.</p>
 <p>Audio devices and sockets have to be handed to the containers that touch them: the listener
 needs the microphone, the audio service needs the speaker, and both need the host's PulseAudio
 or PipeWire socket. Anything you want to survive a container rebuild — downloaded models, the
@@ -1675,6 +1719,37 @@ is a telemetry pipeline you opt into, not an operational metrics/monitoring syst
 </ul>
 <p>There is no supported way to scrape per-request latency or error rates across a fleet today;
 if you need that, you will need to build it on top of the bus messages yourself.</p>
+<h3 id="building-fleet-wide-alerting-yourself">Building fleet-wide alerting yourself<a class="headerlink" href="#building-fleet-wide-alerting-yourself" title="Permanent link">&para;</a></h3>
+<p>Since there's no push-based metrics endpoint, fleet alerting has to be built the other way
+around: something outside each device polls its
+<a href="#knowing-when-the-assistant-is-actually-ready">readiness probe</a> on a schedule and reports a
+non-zero exit to whatever already pages you. A <code>systemd</code> timer wrapping the probe script from
+above is enough to get started:</p>
+<div class="language-ini highlight"><span class="filename">~/.config/systemd/user/ovos-alert.service</span><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="k">[Unit]</span>
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="na">Description</span><span class="o">=</span><span class="s">Check OVOS readiness and alert on failure</span>
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="k">[Service]</span>
+</span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="na">Type</span><span class="o">=</span><span class="s">oneshot</span>
+</span><span id="__span-15-6"><a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a><span class="na">ExecStart</span><span class="o">=</span><span class="s">/bin/sh -c &#39;/usr/local/bin/ovos-ready-probe || /usr/local/bin/notify-monitoring-agent &quot;ovos not ready&quot;&#39;</span>
+</span></code></pre></div>
+<div class="language-ini highlight"><span class="filename">~/.config/systemd/user/ovos-alert.timer</span><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="k">[Unit]</span>
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="na">Description</span><span class="o">=</span><span class="s">Run the OVOS readiness check every 5 minutes</span>
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>
+</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="k">[Timer]</span>
+</span><span id="__span-16-5"><a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a><span class="na">OnBootSec</span><span class="o">=</span><span class="s">5min</span>
+</span><span id="__span-16-6"><a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a><span class="na">OnUnitActiveSec</span><span class="o">=</span><span class="s">5min</span>
+</span><span id="__span-16-7"><a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a>
+</span><span id="__span-16-8"><a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a><span class="k">[Install]</span>
+</span><span id="__span-16-9"><a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a><span class="na">WantedBy</span><span class="o">=</span><span class="s">timers.target</span>
+</span></code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>systemctl<span class="w"> </span>--user<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>--now<span class="w"> </span>ovos-alert.timer
+</span></code></pre></div>
+<p><code>notify-monitoring-agent</code> above is a stand-in for whatever already collects failures on your
+fleet — a <code>curl</code> to a Healthchecks.io/Cronitor-style dead-man's-switch URL, a call into your
+monitoring agent's CLI, an email, a webhook. The same pattern works as a plain <code>cron</code> entry
+(<code>*/5 * * * * /usr/local/bin/ovos-ready-probe || /usr/local/bin/notify-monitoring-agent ...</code>) on a
+system without <code>systemd --user</code> timers. This is something you build, not something OVOS ships —
+but it is the whole shape of a working readiness alert: schedule the probe, act on its exit code.</p>
 
 
 

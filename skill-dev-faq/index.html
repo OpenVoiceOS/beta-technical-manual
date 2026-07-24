@@ -1613,8 +1613,11 @@ in the same folder if you want a localized store listing. Padatious intents loca
 friction since they're trained from example phrases rather than hand-written grammar rules.</p>
 <p>→ full story: <a href="../skill-structure/">Skill Structure</a>, <a href="../lang-support/">Language Support</a>, <a href="../skill-json/#language-support">Skill Metadata File</a></p>
 <h3 id="where-do-my-skills-settings-and-files-actually-live-on-disk">Where do my skill's settings and files actually live on disk?<a class="headerlink" href="#where-do-my-skills-settings-and-files-actually-live-on-disk" title="Permanent link">&para;</a></h3>
-<p>Settings live at <code>~/.config/ovos/skills/&lt;skill_id&gt;/settings.json</code> (a <code>FileWatcher</code> on that path
-fires <code>ovos.skills.settings_changed</code> whenever it changes). Persistent skill data belongs under
+<p>Settings live at <code>$XDG_CONFIG_HOME/&lt;base_folder&gt;/skills/&lt;skill_id&gt;/settings.json</code> — on most Linux
+systems that's <code>~/.config/mycroft/skills/&lt;skill_id&gt;/settings.json</code>, since <code>&lt;base_folder&gt;</code> defaults
+to <code>mycroft</code> for backwards-compatibility (a system-wide <code>ovos.conf</code>, or the
+<code>OVOS_CONFIG_BASE_FOLDER</code> environment variable, can rename it — commonly to <code>OpenVoiceOS</code>). A
+<code>FileWatcher</code> on that path fires <code>ovos.skills.settings_changed</code> whenever it changes. Persistent skill data belongs under
 <code>self.file_system</code>, not a path you build yourself — it resolves to
 <code>$XDG_DATA_HOME/mycroft/filesystem/&lt;skill_id&gt;/</code> and survives skill reinstalls.</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;my_key&quot;</span><span class="p">,</span> <span class="s2">&quot;default&quot;</span><span class="p">)</span>   <span class="c1"># read</span>

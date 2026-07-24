@@ -1248,6 +1248,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#testing-your-change-locally" class="md-nav__link">
+    <span class="md-ellipsis">
+      Testing your change locally
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#writing-a-skill-or-plugin" class="md-nav__link">
     <span class="md-ellipsis">
       Writing a skill or plugin
@@ -1335,6 +1344,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#testing-your-change-locally" class="md-nav__link">
+    <span class="md-ellipsis">
+      Testing your change locally
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#writing-a-skill-or-plugin" class="md-nav__link">
     <span class="md-ellipsis">
       Writing a skill or plugin
@@ -1407,6 +1425,22 @@ isn't just asserted in prose: <a href="https://github.com/OpenVoiceOS/ovos-test-
 is an executable conformance suite that exercises a running OVOS instance against the spec's
 observable behavior. See <a href="../spec-tooling/">Specs &amp; Tooling</a> for how the specs, the harness, and
 the message-spec definitions fit together.</p>
+<h2 id="testing-your-change-locally">Testing your change locally<a class="headerlink" href="#testing-your-change-locally" title="Permanent link">&para;</a></h2>
+<p>The shared <strong>OVOS PR Checks</strong> above catch a broken change, but waiting for CI to tell you is the
+slow way to find out. Run the same kind of check locally first:</p>
+<ul>
+<li><strong>Skills and plugins</strong> — use <a href="../ovoscope-overview/"><code>ovoscope</code></a>, the official End-to-End test
+  tool: it runs a small in-process pretend assistant so you can confirm a request is understood
+  and answered correctly without real hardware or a full install. Every official OVOS skill is
+  required to pass <code>ovoscope</code> E2E tests, so writing one for your change is also writing the test
+  the PR check will run.</li>
+<li><strong>Core repositories</strong> (<code>ovos-core</code>, <code>ovos-bus-client</code>, <code>ovos-utils</code>, and the other libraries
+  under <a href="../ecosystem-index/">the repository index</a>) — run that repo's own <code>pytest</code> suite from a
+  checkout before opening the PR: <code>pip install -e .[test]</code> (or the extra the repo's
+  <code>pyproject.toml</code> names for tests), then <code>pytest</code>.</li>
+</ul>
+<p>Either way, the goal is the same: catch a failure on your own machine, where you can iterate on
+it in seconds, instead of finding out from a CI comment minutes later.</p>
 <h2 id="writing-a-skill-or-plugin">Writing a skill or plugin<a class="headerlink" href="#writing-a-skill-or-plugin" title="Permanent link">&para;</a></h2>
 <p>If you're contributing a new ability rather than a core fix, start with
 <a href="../first-skill/">Your first skill</a> for the step-by-step tutorial, or

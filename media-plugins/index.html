@@ -1508,8 +1508,8 @@ media intent and entities (artist, title, station, …) in an utterance before a
 resolved and played. See <a href="#ovos-media-classifier">ovos-media-classifier</a> below.</p>
 <p>These two families are <strong>separate</strong> (different entry-point groups and base classes), <strong>but a
 plugin package is meant to ship a version for <em>both</em></strong> — so a single <code>pip install</code> gives you a
-backend that works whichever playback system you run. Where a package currently ships only one
-family, adding the other is a <strong>TODO</strong>.</p>
+backend that works whichever playback system you run. Packages are not required to ship both
+families; see the table below for what each currently supports.</p>
 <table>
 <thead>
 <tr>

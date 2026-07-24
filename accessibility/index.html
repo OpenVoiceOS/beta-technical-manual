@@ -797,6 +797,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#motor-and-cognitive-access" class="md-nav__link">
+    <span class="md-ellipsis">
+      Motor and cognitive access
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#where-support-is-thin-today" class="md-nav__link">
     <span class="md-ellipsis">
       Where support is thin today
@@ -1305,6 +1314,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#motor-and-cognitive-access" class="md-nav__link">
+    <span class="md-ellipsis">
+      Motor and cognitive access
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#where-support-is-thin-today" class="md-nav__link">
     <span class="md-ellipsis">
       Where support is thin today
@@ -1367,12 +1385,15 @@ full file format and ready-made examples.</p>
 <h2 id="tuning-speech-for-long-listening-sessions">Tuning speech for long listening sessions<a class="headerlink" href="#tuning-speech-for-long-listening-sessions" title="Permanent link">&para;</a></h2>
 <p>For someone listening to OVOS for extended periods, two things help most: a comfortable speaking
 rate, and a voice that stays intelligible at that rate. There is no single global "speaking rate"
-setting shared by every voice — OVOS supports many <a href="../tts-plugins/">TTS plugins</a>, and the exact
-rate/voice keys they accept live in each plugin's own configuration block under <code>tts</code> in
-<code>mycroft.conf</code>. For example, <a href="../tts-plugins/#ovos-tts-plugin-matxa-multispeaker-cat"><code>ovos-tts-plugin-matxa-multispeaker-cat</code></a>
+setting shared by every voice — OVOS supports many <a href="../tts-plugins/">TTS plugins</a>, and any rate or
+voice key a given engine accepts lives in that plugin's own configuration block, keyed by the
+plugin's module name, under <code>tts</code> in <code>mycroft.conf</code> — the pattern is
+<code>tts.&lt;module-name&gt;.&lt;key&gt;</code>, e.g. <code>tts.ovos-tts-plugin-matxa-multispeaker-cat.voice</code>. For example,
+<a href="../tts-plugins/#ovos-tts-plugin-matxa-multispeaker-cat"><code>ovos-tts-plugin-matxa-multispeaker-cat</code></a>
 and <a href="../tts-plugins/#ovos-tts-plugin-edge-tts"><code>ovos-tts-plugin-edge-tts</code></a> each expose their own
-<code>voice</code> key for picking a specific speaker; check a given plugin's page for whether it also
-exposes a rate/speed option.</p>
+<code>voice</code> key for picking a specific speaker; this manual's <a href="../tts-plugins/">TTS Plugins</a> reference
+does not currently document a dedicated rate/speed key for any individual plugin, so check that
+plugin's own repository for one before falling back to SSML below.</p>
 <p>Rate control is per-plugin config, so check the active plugin's page first. <a href="../ssml/">SSML</a>'s
 <code>&lt;prosody rate="..."&gt;</code> tag is a niche fallback, applied per-utterance from a skill, but it is
 <strong>experimental</strong> and only honored by a couple of TTS plugins (currently espeakNG and Amazon
@@ -1386,6 +1407,26 @@ for most voices:</p>
 <p>Sending SSML is always safe — an unsupported voice just ignores it and speaks the plain text —
 but don't rely on it as your primary rate-control mechanism; prefer a plugin's own rate/speed
 config key where one exists.</p>
+<h2 id="motor-and-cognitive-access">Motor and cognitive access<a class="headerlink" href="#motor-and-cognitive-access" title="Permanent link">&para;</a></h2>
+<p>Voice-first interaction is itself the main accessibility feature for limited dexterity: nothing
+in day-to-day use requires precise pointing, a keyboard, or reaching a physical control — a
+<a href="../wake-word-plugins/">wake word</a> and speech cover waking, asking, and adjusting
+<a href="../skill-examples/#volume">volume</a> without touching the device at all. Two things are worth
+tuning specifically for this:</p>
+<ul>
+<li><strong>Wake-word sensitivity.</strong> If pressing a physical button or repeating a phrase precisely is
+  hard, tune the wake word to trigger more easily rather than relying on a hands-on retry — see
+  <a href="../wake-word-plugins/#wake-word-configuration">Wake Word Plugins</a> for the <code>sensitivity</code> and
+  <code>trigger_level</code> keys, and the "It's not listening to me" section of
+  <a href="../everyday-help/#its-not-listening-to-me">It's Not Working</a> for the quick version.</li>
+<li><strong>Fewer, calmer confirmation steps.</strong> For anyone who finds fast disambiguation prompts hard to
+  follow — a common need for cognitive/attention-related disabilities — favor skills and phrasing
+  that resolve in one turn over ones that chain several "did you mean X or Y" clarifications, and
+  keep requests short and literal (<a href="../skill-examples/">What can I say?</a> lists the phrasing each
+  skill actually expects, which avoids triggering a clarification round-trip at all). This is a
+  usage pattern more than a config switch: OVOS has no built-in setting that slows down or
+  simplifies its clarification dialog today.</li>
+</ul>
 <h2 id="where-support-is-thin-today">Where support is thin today<a class="headerlink" href="#where-support-is-thin-today" title="Permanent link">&para;</a></h2>
 <ul>
 <li><strong>The legacy GUI stack is deprecated.</strong> Anything that depended on visual screen content (rather
@@ -1396,6 +1437,13 @@ config key where one exists.</p>
   built with screen-reader affordances.</li>
 <li><strong>Speaking-rate control is per-plugin, not a single global switch</strong> (see above) — expect to look
   up the specific voice/plugin in use rather than finding one universal setting.</li>
+<li><strong>No visual transcript or captioning of spoken output exists for Deaf/Hard-of-Hearing users.</strong>
+  What OVOS speaks is not also written to a screen anywhere in the stack today; the deprecated GUI
+  stack noted above never implemented this either. A Deaf or Hard-of-Hearing user currently has no
+  supported way to read what the assistant said.</li>
+<li><strong>No dedicated tuning exists for limited dexterity or cognitive load beyond what's described
+  above</strong> — wake-word sensitivity and phrasing choices help, but there is no built-in "simplified
+  mode" or slower confirmation flow.</li>
 </ul>
 
 

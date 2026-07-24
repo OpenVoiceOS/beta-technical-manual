@@ -1468,7 +1468,7 @@ know; only a handful of import paths and class/decorator names changed.</p>
 <tr>
 <td><code>GUITracker</code></td>
 <td><code>can_display()</code> / <code>is_gui_installed()</code> / <code>is_gui_connected(bus)</code> in <code>ovos_utils.gui</code></td>
-<td>See <a href="../skill-dev-faq/">Developer FAQ</a>.</td>
+<td>See <a href="../skill-dev-faq/">Developer FAQ</a>. GUI-heavy skills should also read <a href="../mark1/">Mark 1</a>: <code>self.enclosure</code> and <code>self.gui</code> are being removed from the <code>OVOSSkill</code> base class.</td>
 </tr>
 <tr>
 <td>Mycroft backend skills (<code>skill-ovos-setup</code>, <code>ovos-stt-plugin-selene</code>, …)</td>
@@ -1499,8 +1499,10 @@ know; only a handful of import paths and class/decorator names changed.</p>
 <h2 id="what-you-must-change">What you must change<a class="headerlink" href="#what-you-must-change" title="Permanent link">&para;</a></h2>
 <ul>
 <li>Replace <code>from mycroft import MycroftSkill</code> with <code>from ovos_workshop.skills import OVOSSkill</code>
-  (or one of its subclasses — <code>FallbackSkill</code>, <code>CommonQuerySkill</code>, <code>OVOSCommonPlaybackSkill</code>, etc.
-  — see <a href="../skill-classes/">Skill Classes</a>).</li>
+  (or one of its subclasses — <code>FallbackSkill</code>, <code>OVOSCommonPlaybackSkill</code>, etc. — see
+  <a href="../skill-classes/">Skill Classes</a>). There is no <code>CommonQuerySkill</code> base class; a plain
+  <code>OVOSSkill</code> joins CommonQuery by decorating a method with
+  <a href="../skill-classes/#commonquery-common_query-on-ovosskill"><code>@common_query()</code></a>.</li>
 <li>Replace <code>@intent_file_handler</code> with <code>@intent_handler</code>.</li>
 <li>Drop any code that depends on <code>home.mycroft.ai</code> (pairing checks, remote settings sync, cloud
   STT/TTS calls) — there is nothing to pair with, and the equivalent functionality is provided by

@@ -1741,13 +1741,21 @@ what that means, and the <a href="#anonymous-telemetry">telemetry section below<
 prompt does. <strong>If you're unsure, decline both telemetry prompts</strong> — nothing else about the
 install depends on them.</p>
 </div>
+<div class="admonition tip">
+<p class="admonition-title">Want the easiest option, no terminal at all?</p>
+<p>The <strong><a href="../install-raspovos/">RaspOVOS</a></strong> image is the flash-and-boot alternative to
+this guide: write it to an SD card, boot a Raspberry Pi, and you have a working
+assistant with no terminal, no SSH, and no commands to type. Use <code>ovos-installer</code>
+(this page) if you're on non-Pi hardware, want to install onto an existing Raspberry
+Pi OS setup, or want more control over the install.</p>
+</div>
 <div class="admonition note">
 <p class="admonition-title">This runs over SSH in a terminal, not an app</p>
 <p>There's no phone app or setup wizard with a graphical pairing flow — you type commands into
 a terminal, usually over SSH into a headless device. If you've never used SSH before, budget
 some extra time to get comfortable with it, or consider the
-<a href="../install-raspovos/">RaspOVOS</a> image instead, which boots straight into a working assistant
-with no SSH step required.</p>
+<a href="../install-raspovos/">RaspOVOS</a> image above instead, which boots straight into a working
+assistant with no SSH step required.</p>
 </div>
 <p>Welcome to the quick-start guide for installing Open Voice OS (OVOS) using the official <code>ovos-installer</code>! This guide is suitable for <strong>Raspberry Pi</strong> and <strong>desktop/server</strong> Linux environments. Whether you're running this on a headless Raspberry Pi or your everyday laptop, the steps are mostly the same — only the way you connect to the device differs.</p>
 <blockquote>
@@ -1779,6 +1787,10 @@ resolve. Then connect via SSH:</p>
 <hr />
 <h3 id="4-run-the-ovos-installer">📥 4. Run the OVOS Installer<a class="headerlink" href="#4-run-the-ovos-installer" title="Permanent link">&para;</a></h3>
 <p>Now you're ready to start the installation process:</p>
+<p>This is the official <code>ovos-installer</code> script, straight from the project's <code>main</code> branch — you
+can read it yourself first at
+<a href="https://raw.githubusercontent.com/OpenVoiceOS/ovos-installer/main/installer.sh">raw.githubusercontent.com/OpenVoiceOS/ovos-installer/main/installer.sh</a>
+before running it:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>sudo<span class="w"> </span>sh<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://raw.githubusercontent.com/OpenVoiceOS/ovos-installer/main/installer.sh<span class="k">)</span><span class="s2">&quot;</span>
 </span></code></pre></div>
 <p>That one-liner runs as <strong>root</strong> and executes whatever the <code>main</code> branch of <code>ovos-installer</code>
