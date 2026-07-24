@@ -2170,8 +2170,11 @@ Tornado closes the connection when a message exceeds this size.</p>
 <h2 id="namespace-migration">Namespace migration<a class="headerlink" href="#namespace-migration" title="Permanent link">&para;</a></h2>
 <p>The <a href="../architecture-specs/">Formal Specifications</a> rename many bus topics into
 the <code>ovos.*</code> namespace — for example <code>recognizer_loop:utterance</code> →
-<code>ovos.utterance.handle</code>, <code>mycroft.skill.handler.*</code> → <code>ovos.intent.handler.*</code>,
-<code>complete_intent_failure</code> → <code>ovos.intent.unmatched</code>. Renaming a topic across an
+<code>ovos.utterance.handle</code> and <code>complete_intent_failure</code> → <code>ovos.intent.unmatched</code>
+(the full list is the <a href="../bus-events/#legacy-spec-migration">legacy ↔ spec table</a>;
+a few families, such as the <code>mycroft.skill.handler.*</code> / <code>ovos.intent.handler.*</code>
+trio, are deliberately <strong>not</strong> bridged — see that page's "Not bridged" note).
+Renaming a topic across an
 ecosystem of independently-released repos cannot happen in one coordinated step,
 so <strong><code>ovos-bus-client</code> migrates automatically and incrementally</strong> — the legacy
 and the new names interoperate transparently while the ecosystem moves over.</p>
