@@ -99,7 +99,7 @@ daemon described here, which is the target:
           └── Search dispatch → OCP skills → results → ovos-media
 
   ovos-media (standalone daemon)
-    ├── Player state machine (OCPMediaCatalog)
+    ├── Player state machine (OCPMediaPlayer)
     ├── MPRIS
     ├── Media backend plugins
     └── GUI (still coupled — target: GUI adapter plugins)
@@ -230,7 +230,7 @@ Skills must NOT handle playback. They must NOT have intents for play/pause/stop/
 
 Key modules:
 
-- `ovos_media/player.py` — `OCPMediaCatalog` (`OVOSCommonPlaybackSkill` subclass); manages playlists, track history, liked songs
+- `ovos_media/player.py` — `OCPMediaPlayer`, the player state machine (playlist, track history, playback/media/loop state); `OCPMediaCatalog` (an `OVOSCommonPlaybackSkill` subclass, instantiated as `self.media`) manages only the liked-songs store and search-results playlist
 
 
 - `ovos_media/media_backends/` — `AudioService`, `VideoService`, `WebService` — each manages typed backend plugins
@@ -456,9 +456,10 @@ This bridge is marked for removal in `ovos-core 0.1.0`.
 
 ### OCPMediaCatalog is a skill
 
-`ovos_media/player.py` inherits from `OVOSCommonPlaybackSkill`. This registers `ovos-media` as
-a skill on the bus and loads skill infrastructure (settings, locale, etc.). It also registers
-`@ocp_search()` for liked songs and `@ocp_featured_media()` for the browse view.
+`OCPMediaCatalog` in `ovos_media/player.py` inherits from `OVOSCommonPlaybackSkill`. This registers
+`ovos-media` as a skill on the bus and loads skill infrastructure (settings, locale, etc.). It
+registers `@ocp_search()` to expose liked songs as a search result; there is no
+`@ocp_featured_media()` handler.
 
 ### No next/prev in some backends
 

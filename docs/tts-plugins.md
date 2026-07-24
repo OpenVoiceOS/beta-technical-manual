@@ -29,6 +29,15 @@ TTS plugins are responsible for converting text into audio for playback.
     is given `0.2` s. Both the audio and the phonemes are cached together, keyed by sentence
     hash.
 
+!!! tip "Recommended: phoonnx"
+    For fully offline, on-device synthesis, `ovos-tts-plugin-phoonnx` is the recommended
+    starting point: it's OVOS's own ONNX-based multilingual neural TTS engine, installed with
+    a single `pip install phoonnx`, and it fetches its model automatically the first time a
+    voice is used — no separate download step. Cloud plugins like `ovos-tts-plugin-polly`,
+    `ovos-tts-plugin-azure`, `ovos-tts-plugin-edge-tts` or `ovos-tts-plugin-google-tx` are a
+    fair choice when you need a specific commercial voice or don't want to spend local compute
+    on synthesis.
+
 ## Change your voice
 
 1. Browse [voices_demo](https://github.com/OpenVoiceOS/voices_demo) for audio samples of the
@@ -39,11 +48,14 @@ TTS plugins are responsible for converting text into audio for playback.
    ```json
    {
      "tts": {
-       "module": "ovos-tts-plugin-piper",
-       "ovos-tts-plugin-piper": { "voice": "en_US-amy-low" }
+       "module": "ovos-tts-plugin-phoonnx"
      }
    }
    ```
+   Leaving out a `"voice"` key like this is a valid, minimal config — the plugin picks the
+   first bundled model that supports the configured language. See the
+   [ovos-tts-plugin-phoonnx](#ovos-tts-plugin-phoonnx) section below for how to pin a
+   specific voice.
 3. Save the file — it's JSONC (comments allowed) — and restart OVOS for the change to take effect.
 
 !!! tip

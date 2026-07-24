@@ -161,18 +161,18 @@ A pipeline plugin is a matcher exposing `match(utterances, lang, session) → Ma
 | Plugin type | Entry point group | Template base class |
 |---|---|---|
 | Chat | `opm.agents.chat` | `ChatEngine` |
-| Chat (multimodal) | `opm.agents.chat.multimodal` | — |
-| Multimodal adapter | `opm.agents.multimodal_adapter` | — |
+| Chat (multimodal) | `opm.agents.chat.multimodal` | `MultimodalChatEngine` |
+| Multimodal adapter | `opm.agents.multimodal_adapter` | `MultimodalAdapter` |
 | Retrieval | `opm.agents.retrieval` | `RetrievalEngine` |
 | Document retrieval | `opm.agents.retrieval.documents` | `DocumentIndexerEngine` |
 | Q/A retrieval | `opm.agents.retrieval.qa` | `QAIndexerEngine` |
 | Summarizer | `opm.agents.summarizer` | `SummarizerEngine` |
-| Chat summarizer | `opm.agents.summarizer.chat` | — |
+| Chat summarizer | `opm.agents.summarizer.chat` | `ChatSummarizerEngine` |
 | Extractive QA | `opm.agents.extractive_qa` | `ExtractiveQAEngine` |
 | NLI | `opm.agents.nli` | `NaturalLanguageInferenceEngine` |
 | Reranker | `opm.agents.reranker` | `ReRankerEngine` |
-| Coreference | `opm.agents.coref` | — |
-| Yes/No | `opm.agents.yesno` | — |
+| Coreference | `opm.agents.coref` | `CoreferenceEngine` |
+| Yes/No | `opm.agents.yesno` | `YesNoEngine` |
 | Toolbox | `opm.agents.toolbox` | `ToolBox` |
 | Memory | `opm.agents.memory` | `AgentContextManager` |
 | Option Matcher | `opm.agents.option_matcher` | `OptionMatcherEngine` |
@@ -181,12 +181,12 @@ A pipeline plugin is a matcher exposing `match(utterances, lang, session) → Ma
 
 | Plugin type | Entry point group | Template base class |
 |---|---|---|
-| Embeddings (generic) | `opm.embeddings` | — |
-| Text embeddings | `opm.embeddings.text` | — |
-| Voice embeddings | `opm.embeddings.voice` | — |
-| Image embeddings | `opm.embeddings.image` | — |
-| Face embeddings | `opm.embeddings.face` | — |
-| Knowledge triples | `opm.triples` | — |
+| Embeddings (generic) | `opm.embeddings` | `EmbeddingsDB` |
+| Text embeddings | `opm.embeddings.text` | `TextEmbedder` |
+| Voice embeddings | `opm.embeddings.voice` | `VoiceEmbedder` |
+| Image embeddings | `opm.embeddings.image` | `ImageEmbedder` |
+| Face embeddings | `opm.embeddings.face` | `FaceEmbedder` |
+| Knowledge triples | `opm.triples` | `TriplesExtractor` |
 
 ### Skill & Persona Plugins
 

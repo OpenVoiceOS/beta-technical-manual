@@ -39,6 +39,11 @@ not installed. Vosk offers the fastest setup for an arbitrary wake phrase withou
 
 > Specification: wake-word detection is one of the deployer-defined capture mechanisms that trigger the audio-input service (referenced in [OVOS-AUDIO-IN-1 §5.1](https://github.com/OpenVoiceOS/architecture/blob/dev/audio-in.md) as the source of a `request_lang` hint).
 
+!!! tip "Alternative: openWakeWord"
+    `ovos-ww-plugin-openWakeWord` runs open, pre-trained neural wake-word models and is a
+    strong alternative when you want better accuracy than Vosk without training your own
+    Precise model.
+
 ## Wake Word Configuration
 
 !!! tip "Too many false alarms, or not hearing you at all?"

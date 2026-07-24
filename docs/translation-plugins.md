@@ -12,6 +12,14 @@ Language detection and translation plugins let OVOS identify the language of a p
 
 A single package may ship one or both. In `mycroft.conf` you select them under the `"language"` section with `"detection_module"` (a detect plugin) and `"translation_module"` (a translate plugin).
 
+!!! tip "Recommended: NLLB + fastText (offline)"
+    For offline translation, `ovos-translate-plugin-nllb` (NLLB-200) paired with
+    `ovos-lang-detector-fasttext-plugin` for offline detection is the recommended default —
+    both run fully on-device once their models are downloaded. `ovos-google-translate-plugin`
+    or `ovos-translate-plugin-server` are a fair choice when translation coverage or quality
+    matters more than keeping text off the network, or when the device doesn't have the
+    compute budget to run NLLB locally.
+
 ## Available Language Plugins
 
 | Plugin (entry-point name) | Detect | Translate | Type | Notes |

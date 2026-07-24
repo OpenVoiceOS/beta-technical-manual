@@ -2,16 +2,14 @@
 
 !!! warning "OCP skills are giving way to MediaProvider plugins"
     OCP **skills** (media-provider skills built on `OVOSCommonPlaybackSkill` /
-    [`@ocp_search`](#search-results)) still work and remain fully supported, but a
-    plugin-based alternative now exists alongside them: a dedicated **MediaProvider**
-    plugin type (`opm.media.provider`, loaded via `ovos-plugin-manager`) that the
-    [`ovos-media`](ovos-media.md) player loads **in-process** and calls `search()` on
-    directly, instead of broadcasting a query over the bus to skills. This moves media
-    catalogs out of skills and into plugins for anyone adopting `ovos-media`. Both models
-    are documented; new integrations that don't need the full skill lifecycle (intents,
-    settings UI, converse) should prefer a MediaProvider plugin, but writing an OCP skill
-    is still the simpler path and is not going away for setups still on the legacy audio
-    service.
+    [`@ocp_search`](#search-results)) still work and remain fully supported. The intended
+    successor is a dedicated **MediaProvider** plugin type (`opm.media.provider`): the
+    entry-point group is defined in `ovos-plugin-manager`, and the design is for the
+    [`ovos-media`](ovos-media.md) player to load such plugins **in-process** and call
+    `search()` on them directly, instead of broadcasting a query over the bus to skills.
+    That in-process loading is not wired up in `ovos-media` yet, so writing an OCP skill
+    remains the way to provide media today — and stays the simpler path for setups still on
+    the legacy audio service.
 
 !!! abstract "In a nutshell"
     OCP (OVOS Common Playback) is the part of OVOS that handles playing media, like music, podcasts, or radio. An OCP skill doesn't listen for "play X" itself; instead it acts as a source of media. When someone asks to play something, OVOS asks every OCP skill "can you find this?", each one answers with whatever it can offer and how good a match it thinks it is, and OVOS plays the best result. It's like asking several record shops for an album and going with whoever has the closest match. New terms are explained in the [Glossary](glossary.md).

@@ -9,6 +9,14 @@ their config, and install commands.
 
 ## Speech & Audio
 
+!!! tip "Recommended offline defaults"
+    For a fully offline, on-device speech stack: TTS → [phoonnx](tts-plugins.md) · STT →
+    [onnx-asr](stt-plugins.md) · VAD → [silero](vad-plugins.md) · Wake word →
+    [precise-onnx](wake-word-plugins.md) (or [openWakeWord](wake-word-plugins.md) as a
+    strong alternative). Each linked page explains the reasoning and lists the cloud
+    alternatives that are a fair choice when local compute or coverage needs push you
+    that way.
+
 | Type | Entry point | What it does |
 |---|---|---|
 | [Microphone](mic-plugins.md) | `opm.microphone` | Captures audio from a microphone or audio source |

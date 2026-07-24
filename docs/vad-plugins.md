@@ -17,9 +17,18 @@ The VAD engine continuously monitors the microphone's audio stream. Its primary 
 
 2.  **Speech End Detection**: Identifying when the user has finished speaking, so the audio can be sent for processing (STT).
 
+!!! tip "Recommended: silero"
+    `ovos-vad-plugin-silero` gives the most accurate speech/silence boundary detection,
+    using a small neural model, and is the recommended default when you can afford the
+    (modest) extra CPU cost of running it. `ovos-vad-plugin-webrtcvad` is a good lighter
+    fallback — CPU-only and widely used, at somewhat lower accuracy. `ovos-vad-plugin-noise`
+    trades the most accuracy for requiring no model download at all.
+
 ## Configuration
 
-You can configure the VAD plugin in your `mycroft.conf`:
+You can configure the VAD plugin in your `mycroft.conf`. The example below uses
+`ovos-vad-plugin-webrtcvad` purely to show the shape of the config — see
+[ovos-vad-plugin-silero](#ovos-vad-plugin-silero) below for the recommended plugin's config:
 
 ```json
 {

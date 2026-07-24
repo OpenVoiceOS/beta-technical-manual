@@ -12,20 +12,27 @@
 STT (Speech-to-Text) plugins convert spoken audio into text. They are the bridge
 between the listener and the intent pipeline.
 
+!!! tip "Recommended: onnx-asr"
+    For offline, on-device recognition, `ovos-stt-plugin-onnx-asr` is the recommended
+    starting point: it runs entirely through ONNX Runtime, with no PyTorch/transformers
+    dependency, and covers NeMo Parakeet/Canary, Whisper and wav2vec2 model families. Cloud
+    STT (e.g. `ovos-stt-plugin-azure`) is a fair choice when the local device doesn't have
+    the compute budget for on-device recognition.
+
 ## Using an STT plugin
 
 Install a plugin and point your `mycroft.conf` at it:
 
 ```bash
-pip install ovos-stt-plugin-fasterwhisper
+pip install ovos-stt-plugin-onnx-asr
 ```
 
 ```json
 {
   "stt": {
-    "module": "ovos-stt-plugin-fasterwhisper",
-    "ovos-stt-plugin-fasterwhisper": {
-      "model": "small"
+    "module": "ovos-stt-plugin-onnx-asr",
+    "ovos-stt-plugin-onnx-asr": {
+      "model": "nemo-parakeet-tdt-0.6b-v3"
     }
   }
 }

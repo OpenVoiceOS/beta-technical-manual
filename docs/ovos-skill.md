@@ -191,9 +191,9 @@ available.
 
 | Event | Description |
 |---|---|
-| `ovos.stop` (legacy: `mycroft.stop`) | Global stop broadcast — cease all activity for the inbound session |
-| `<skill_id>:stop` (legacy: `{skill_id}.stop`) | Skill-directed stop — cease the stoppable activity for the inbound session |
-| `ovos.stop.ping` (legacy: `{skill_id}.stop.ping`) | Check if skill can stop; answer with an `ovos.stop.pong` carrying `can_handle` |
+| `mycroft.stop` | Global stop broadcast — cease all activity for the inbound session |
+| `{skill_id}.stop` | Skill-directed stop — cease the stoppable activity for the inbound session |
+| `{skill_id}.stop.ping` | Check if the skill can stop; the base class answers with `{skill_id}.stop.response` carrying whether it can handle the stop |
 | `{skill_id}.converse.get_response` | Feed user response to `get_response` |
 | `mycroft.skill.enable_intent` | Enable a disabled intent (the bus-facing counterpart to calling `self.enable_intent(intent_name)` from Python) |
 | `mycroft.skill.disable_intent` | Disable an active intent (the bus-facing counterpart to calling `self.disable_intent(intent_name)` from Python) |
