@@ -278,8 +278,11 @@ Topic names below are the canonical spec names ([OVOS-PIPELINE-1 §9](https://gi
 
 The [Formal Specifications](architecture-specs.md) rename many bus topics into
 the `ovos.*` namespace — for example `recognizer_loop:utterance` →
-`ovos.utterance.handle`, `mycroft.skill.handler.*` → `ovos.intent.handler.*`,
-`complete_intent_failure` → `ovos.intent.unmatched`. Renaming a topic across an
+`ovos.utterance.handle` and `complete_intent_failure` → `ovos.intent.unmatched`
+(the full list is the [legacy ↔ spec table](bus-events.md#legacy-spec-migration);
+a few families, such as the `mycroft.skill.handler.*` / `ovos.intent.handler.*`
+trio, are deliberately **not** bridged — see that page's "Not bridged" note).
+Renaming a topic across an
 ecosystem of independently-released repos cannot happen in one coordinated step,
 so **`ovos-bus-client` migrates automatically and incrementally** — the legacy
 and the new names interoperate transparently while the ecosystem moves over.
