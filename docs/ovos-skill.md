@@ -167,7 +167,7 @@ from ovos_utils import classproperty
 from ovos_utils.process_utils import RuntimeRequirements
 
 @classproperty
-def runtime_requirements(cls):
+def runtime_requirements(self):
     return RuntimeRequirements(
         network_before_load=False,
         internet_before_load=False,

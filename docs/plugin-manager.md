@@ -154,6 +154,7 @@ A pipeline plugin is a matcher exposing `match(utterances, lang, session) → Ma
 | Video Player | `opm.media.video` |
 | Web Player | `opm.media.web` |
 | Media Provider | `opm.media.provider` |
+| [Media Classifier](media-plugins.md#ovos-media-classifier) | `opm.media.classifier` |
 
 ### Agent Plugins
 

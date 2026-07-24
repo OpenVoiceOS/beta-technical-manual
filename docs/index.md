@@ -28,6 +28,20 @@ how it hears, thinks, and speaks, or teach it brand-new abilities.
     intent pipeline." You don't need to read it front to back — pick the path below that
     matches what you want to do. Unfamiliar word? Check the **[Glossary](glossary.md)**.
 
+!!! note "OVOS is do-it-yourself"
+    There's no phone app and no plug-and-play appliance to buy. You get OVOS running by
+    flashing an SD-card image or working from a terminal — see below. It's not hard, but
+    it is hands-on.
+
+---
+
+## Start here
+
+Just want a working voice assistant with the least fuss? Flash the
+**[RaspOVOS](install-raspovos.md)** image onto a Raspberry Pi's SD card and boot it — no
+terminal required. That's the easiest path in this manual. Everyone else, pick your path
+in the grid below.
+
 ---
 
 ## Choose your path

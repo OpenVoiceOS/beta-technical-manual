@@ -20,6 +20,9 @@
 - **Smart-home control isn't automatic.** Alexa/Google devices come with smart-home skills
   built in; OVOS needs a one-time Home Assistant setup — see
   [OVOS & Home Assistant](home-assistant.md).
+- **"Skill" means something different here.** Both platforms use the word, but OVOS has no
+  centralized skill store or certification process — skills are installed directly, via
+  `pip` or the OVOS installer, not approved and published through a marketplace.
 - In exchange, you get an assistant that runs on hardware you choose, is not tied to one
   company's cloud, and — for the parts you choose to run locally — doesn't have to send your
   voice anywhere at all. See [Privacy & Security](privacy-security.md) for exactly what a

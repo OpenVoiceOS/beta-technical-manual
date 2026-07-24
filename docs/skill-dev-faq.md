@@ -145,8 +145,11 @@ friction since they're trained from example phrases rather than hand-written gra
 
 ### Where do my skill's settings and files actually live on disk?
 
-Settings live at `~/.config/ovos/skills/<skill_id>/settings.json` (a `FileWatcher` on that path
-fires `ovos.skills.settings_changed` whenever it changes). Persistent skill data belongs under
+Settings live at `$XDG_CONFIG_HOME/<base_folder>/skills/<skill_id>/settings.json` — on most Linux
+systems that's `~/.config/mycroft/skills/<skill_id>/settings.json`, since `<base_folder>` defaults
+to `mycroft` for backwards-compatibility (a system-wide `ovos.conf`, or the
+`OVOS_CONFIG_BASE_FOLDER` environment variable, can rename it — commonly to `OpenVoiceOS`). A
+`FileWatcher` on that path fires `ovos.skills.settings_changed` whenever it changes. Persistent skill data belongs under
 `self.file_system`, not a path you build yourself — it resolves to
 `$XDG_DATA_HOME/mycroft/filesystem/<skill_id>/` and survives skill reinstalls.
 

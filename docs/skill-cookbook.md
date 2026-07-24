@@ -170,6 +170,7 @@ import json
 import time
 
 import requests
+from ovos_utils import classproperty
 from ovos_utils.process_utils import RuntimeRequirements
 from ovos_workshop.skills import OVOSSkill
 from ovos_workshop.decorators import intent_handler
@@ -180,7 +181,7 @@ CACHE_TTL = 3600  # seconds
 
 class ExchangeRateSkill(OVOSSkill):
 
-    @property
+    @classproperty
     def runtime_requirements(self):
         # legacy declaration: this skill needs a live network connection.
         # only gates loading if "skills.use_deferred_loading" is enabled.
@@ -237,7 +238,7 @@ class ExchangeRateSkill(OVOSSkill):
 
 ### Moving parts
 
-- `runtime_requirements` (a `@property` you override, returning `RuntimeRequirements(...)`) is a deprecated, legacy declaration. Its `*_before_load` flags only gate loading when `skills.use_deferred_loading` is enabled in config — with the default config, all skills load unconditionally regardless of this declaration. See [Runtime Requirements](skill-runtime-requirements.md) for the current behavior.
+- `runtime_requirements` (a `@classproperty` you override, returning `RuntimeRequirements(...)`) is a deprecated, legacy declaration. Its `*_before_load` flags only gate loading when `skills.use_deferred_loading` is enabled in config — with the default config, all skills load unconditionally regardless of this declaration. See [Runtime Requirements](skill-runtime-requirements.md) for the current behavior.
 - Always pass `timeout=` to `requests.get`/`.post` — an OVOS skill runs on the shared bus-handling thread pool and a hung HTTP call can stall other skill callbacks.
 - `self.file_system` (a `FileSystemAccess`, exposing `.path`) is a writable, skill-private directory distinct from `settings.json` — the right place for a response cache, downloaded assets, or anything larger than a few settings keys.
 - Wrap the network call narrowly (`requests.exceptions.Timeout` / `.RequestException`) so a real bug elsewhere in the handler still raises normally instead of being swallowed by a broad `except Exception`.

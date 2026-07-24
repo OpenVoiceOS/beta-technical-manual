@@ -40,12 +40,15 @@ full file format and ready-made examples.
 
 For someone listening to OVOS for extended periods, two things help most: a comfortable speaking
 rate, and a voice that stays intelligible at that rate. There is no single global "speaking rate"
-setting shared by every voice — OVOS supports many [TTS plugins](tts-plugins.md), and the exact
-rate/voice keys they accept live in each plugin's own configuration block under `tts` in
-`mycroft.conf`. For example, [`ovos-tts-plugin-matxa-multispeaker-cat`](tts-plugins.md#ovos-tts-plugin-matxa-multispeaker-cat)
+setting shared by every voice — OVOS supports many [TTS plugins](tts-plugins.md), and any rate or
+voice key a given engine accepts lives in that plugin's own configuration block, keyed by the
+plugin's module name, under `tts` in `mycroft.conf` — the pattern is
+`tts.<module-name>.<key>`, e.g. `tts.ovos-tts-plugin-matxa-multispeaker-cat.voice`. For example,
+[`ovos-tts-plugin-matxa-multispeaker-cat`](tts-plugins.md#ovos-tts-plugin-matxa-multispeaker-cat)
 and [`ovos-tts-plugin-edge-tts`](tts-plugins.md#ovos-tts-plugin-edge-tts) each expose their own
-`voice` key for picking a specific speaker; check a given plugin's page for whether it also
-exposes a rate/speed option.
+`voice` key for picking a specific speaker; this manual's [TTS Plugins](tts-plugins.md) reference
+does not currently document a dedicated rate/speed key for any individual plugin, so check that
+plugin's own repository for one before falling back to SSML below.
 
 Rate control is per-plugin config, so check the active plugin's page first. [SSML](ssml.md)'s
 `<prosody rate="...">` tag is a niche fallback, applied per-utterance from a skill, but it is
@@ -64,6 +67,27 @@ Sending SSML is always safe — an unsupported voice just ignores it and speaks 
 but don't rely on it as your primary rate-control mechanism; prefer a plugin's own rate/speed
 config key where one exists.
 
+## Motor and cognitive access
+
+Voice-first interaction is itself the main accessibility feature for limited dexterity: nothing
+in day-to-day use requires precise pointing, a keyboard, or reaching a physical control — a
+[wake word](wake-word-plugins.md) and speech cover waking, asking, and adjusting
+[volume](skill-examples.md#volume) without touching the device at all. Two things are worth
+tuning specifically for this:
+
+- **Wake-word sensitivity.** If pressing a physical button or repeating a phrase precisely is
+  hard, tune the wake word to trigger more easily rather than relying on a hands-on retry — see
+  [Wake Word Plugins](wake-word-plugins.md#wake-word-configuration) for the `sensitivity` and
+  `trigger_level` keys, and the "It's not listening to me" section of
+  [It's Not Working](everyday-help.md#its-not-listening-to-me) for the quick version.
+- **Fewer, calmer confirmation steps.** For anyone who finds fast disambiguation prompts hard to
+  follow — a common need for cognitive/attention-related disabilities — favor skills and phrasing
+  that resolve in one turn over ones that chain several "did you mean X or Y" clarifications, and
+  keep requests short and literal ([What can I say?](skill-examples.md) lists the phrasing each
+  skill actually expects, which avoids triggering a clarification round-trip at all). This is a
+  usage pattern more than a config switch: OVOS has no built-in setting that slows down or
+  simplifies its clarification dialog today.
+
 ## Where support is thin today
 
 - **The legacy GUI stack is deprecated.** Anything that depended on visual screen content (rather
@@ -74,3 +98,10 @@ config key where one exists.
   built with screen-reader affordances.
 - **Speaking-rate control is per-plugin, not a single global switch** (see above) — expect to look
   up the specific voice/plugin in use rather than finding one universal setting.
+- **No visual transcript or captioning of spoken output exists for Deaf/Hard-of-Hearing users.**
+  What OVOS speaks is not also written to a screen anywhere in the stack today; the deprecated GUI
+  stack noted above never implemented this either. A Deaf or Hard-of-Hearing user currently has no
+  supported way to read what the assistant said.
+- **No dedicated tuning exists for limited dexterity or cognitive load beyond what's described
+  above** — wake-word sensitivity and phrasing choices help, but there is no built-in "simplified
+  mode" or slower confirmation flow.

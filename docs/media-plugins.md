@@ -21,8 +21,8 @@ resolved and played. See [ovos-media-classifier](#ovos-media-classifier) below.
 
 These two families are **separate** (different entry-point groups and base classes), **but a
 plugin package is meant to ship a version for *both*** — so a single `pip install` gives you a
-backend that works whichever playback system you run. Where a package currently ships only one
-family, adding the other is a **TODO**.
+backend that works whichever playback system you run. Packages are not required to ship both
+families; see the table below for what each currently supports.
 
 | Package | Player | Ships for |
 |---|---|---|

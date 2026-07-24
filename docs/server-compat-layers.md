@@ -134,7 +134,7 @@ client = anthropic.Anthropic(
     base_url="http://localhost:8337/anthropic/v1"
 )
 message = client.messages.create(
-    model="claude-3-5-sonnet-20241022",
+    model="<model>",  # e.g. an Anthropic model id
     max_tokens=256,
     messages=[{"role": "user", "content": "Hello!"}]
 )

@@ -9,6 +9,12 @@
 By the end you'll have a skill that answers when you say *"hello"*. Once you've done it once,
 every other skill is just more of the same idea.
 
+!!! note "Before you start: OVOS needs to already be installed"
+    This walkthrough assumes OVOS is already installed and its Python environment is available
+    to work in — see [ovos-installer](ovos-installer.md) or [RaspOVOS](install-raspovos.md) if
+    you haven't done that yet. The ten minutes below covers writing and installing the skill
+    itself, once that environment is in place.
+
 ## What a skill is made of
 
 A skill is a small folder with three kinds of files:

@@ -41,6 +41,24 @@ is an executable conformance suite that exercises a running OVOS instance agains
 observable behavior. See [Specs & Tooling](spec-tooling.md) for how the specs, the harness, and
 the message-spec definitions fit together.
 
+## Testing your change locally
+
+The shared **OVOS PR Checks** above catch a broken change, but waiting for CI to tell you is the
+slow way to find out. Run the same kind of check locally first:
+
+- **Skills and plugins** — use [`ovoscope`](ovoscope-overview.md), the official End-to-End test
+  tool: it runs a small in-process pretend assistant so you can confirm a request is understood
+  and answered correctly without real hardware or a full install. Every official OVOS skill is
+  required to pass `ovoscope` E2E tests, so writing one for your change is also writing the test
+  the PR check will run.
+- **Core repositories** (`ovos-core`, `ovos-bus-client`, `ovos-utils`, and the other libraries
+  under [the repository index](ecosystem-index.md)) — run that repo's own `pytest` suite from a
+  checkout before opening the PR: `pip install -e .[test]` (or the extra the repo's
+  `pyproject.toml` names for tests), then `pytest`.
+
+Either way, the goal is the same: catch a failure on your own machine, where you can iterate on
+it in seconds, instead of finding out from a CI comment minutes later.
+
 ## Writing a skill or plugin
 
 If you're contributing a new ability rather than a core fix, start with

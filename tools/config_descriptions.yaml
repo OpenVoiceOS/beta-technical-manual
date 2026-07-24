@@ -1,5 +1,7 @@
 confirm_listening: Play a beep when the system starts listening.
 date_format: Date format for display and parsing.
+gui_websocket.host: Bound to all interfaces by default — see [Bus Service](bus-service.md)
+  for network-exposure guidance.
 lang: Primary BCP-47 language code for STT and TTS.
 listener.fake_barge_in: Mute output during recording.
 listener.recording_timeout: Max seconds for a single recording.

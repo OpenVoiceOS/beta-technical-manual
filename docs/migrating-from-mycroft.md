@@ -73,7 +73,7 @@ What changed, line by line:
 | `self.translate()` / `translate_list()` / `translate_namedvalue()` / `translate_template()` | `self.resources.render_dialog()` / `load_list_file()` / `load_named_value_file()` / `load_template_file()` | The old `translate*` helpers were **removed**; see [Statements → Using translatable resources](statements.md#using-translatable-resources). |
 | `home.mycroft.ai` (pairing, cloud STT/TTS, remote settings) | *Nothing — removed* | OVOS is [**backendless**](deprecated-repos.md#backend-services-removed-architecture-5): there is no account, no pairing, and no central server. STT/TTS/settings all run through local or self-hosted plugins instead. |
 | Mycroft Skills Manager (`msm`, `ovos_skill_manager`) | pip / `opm.skill` entry points | Skills are ordinary Python packages installed with `pip`; discovery goes through [OPM](plugin-manager.md), not a separate skill manager. |
-| `GUITracker` | `can_display()` / `is_gui_installed()` / `is_gui_connected(bus)` in `ovos_utils.gui` | See [Developer FAQ](skill-dev-faq.md). |
+| `GUITracker` | `can_display()` / `is_gui_installed()` / `is_gui_connected(bus)` in `ovos_utils.gui` | See [Developer FAQ](skill-dev-faq.md). GUI-heavy skills should also read [Mark 1](mark1.md): `self.enclosure` and `self.gui` are being removed from the `OVOSSkill` base class. |
 | Mycroft backend skills (`skill-ovos-setup`, `ovos-stt-plugin-selene`, …) | Removed or replaced | See the [Deprecated & Archived Repositories](deprecated-repos.md) list for the full mapping. |
 | `~/.config/mycroft/` config/settings folder | Same path, kept for compatibility | `mycroft` is still the **default** base folder name for config and settings, on purpose — see [Skill Settings](skill-settings.md#storage-location). It can be renamed via `ovos.conf` / `OVOS_CONFIG_BASE_FOLDER` if you want a fresh `OpenVoiceOS` folder instead. |
 | "Hey Mycroft" wake word | Unchanged | Still the default wake word; nothing to migrate here. |
@@ -90,8 +90,10 @@ What changed, line by line:
 ## What you must change
 
 - Replace `from mycroft import MycroftSkill` with `from ovos_workshop.skills import OVOSSkill`
-  (or one of its subclasses — `FallbackSkill`, `CommonQuerySkill`, `OVOSCommonPlaybackSkill`, etc.
-  — see [Skill Classes](skill-classes.md)).
+  (or one of its subclasses — `FallbackSkill`, `OVOSCommonPlaybackSkill`, etc. — see
+  [Skill Classes](skill-classes.md)). There is no `CommonQuerySkill` base class; a plain
+  `OVOSSkill` joins CommonQuery by decorating a method with
+  [`@common_query()`](skill-classes.md#commonquery-common_query-on-ovosskill).
 - Replace `@intent_file_handler` with `@intent_handler`.
 - Drop any code that depends on `home.mycroft.ai` (pairing checks, remote settings sync, cloud
   STT/TTS calls) — there is nothing to pair with, and the equivalent functionality is provided by

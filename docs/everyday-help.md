@@ -44,7 +44,8 @@ symptom.
   adjust `sensitivity` and `trigger_level` in `mycroft.conf`, and pick a less noise-prone wake word
   if needed. Unlike the fixes above, this one needs opening a text config file, not just talking
   to the assistant — see [Make It Yours](personalize.md) for the general edit-and-restart
-  routine.
+  routine, or [Accessibility](accessibility.md#installing-without-fighting-a-screen-reader) if
+  editing that file interactively (e.g. with a screen reader) is itself the obstacle.
 
 ## "It's not talking back to me" / "It's muted"
 

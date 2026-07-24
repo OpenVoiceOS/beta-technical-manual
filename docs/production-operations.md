@@ -90,6 +90,13 @@ thin-client bridge), the pattern worth keeping is:
 - `PartOf=`/`After=` the messagebus unit for anything that needs a live bus connection at
   startup.
 
+`After=` only orders unit *start*; it says nothing about whether the messagebus is actually
+accepting connections yet, and it says nothing about what happens when the bus unit *restarts*
+later — see [Bus restart / reconnect behavior](bus-service.md#bus-restart-reconnect-behavior) for
+what a dependent service's existing bus connection does when that happens (short version: it
+reconnects on its own with backoff, so `Restart=on-failure` on the messagebus unit is enough —
+you do not need to also restart every dependent service).
+
 ```bash
 systemctl --user daemon-reload
 systemctl --user enable --now ovos.service
@@ -304,6 +311,10 @@ services:
     ports: ["9666:9666"]
 ```
 
+These ports are unauthenticated HTTP by default — see
+[TTS server: Tips & Caveats](tts-server.md#tips-caveats) for adding API keys or a reverse proxy
+in front of them once they leave localhost.
+
 The speech-server image name encodes the engine baked into it — `ovos-stt-server-onnx-asr`,
 `ovos-stt-server-onnx-asr-cuda`, `ovos-tts-server-piper`, `ovos-tts-server-kokoro`,
 `ovos-tts-server-phoonnx` and so on. Pick the variant carrying the plugin you want; there is
@@ -341,6 +352,12 @@ services:
     network_mode: host
     depends_on: [ovos_messagebus]
 ```
+
+`depends_on` here only orders **container start** — it starts `ovos_messagebus` first, but does
+not wait for it to actually accept WebSocket connections before starting the services listed
+after it. Use the [readiness probe](#knowing-when-the-assistant-is-actually-ready) (or Compose's
+own `depends_on: condition: service_healthy` against a healthcheck that runs it) as the real gate
+if a dependent service needs the bus to be live, not just the container to exist.
 
 Audio devices and sockets have to be handed to the containers that touch them: the listener
 needs the microphone, the audio service needs the speaker, and both need the host's PulseAudio
@@ -380,3 +397,43 @@ For day-to-day, per-device debugging, use:
 
 There is no supported way to scrape per-request latency or error rates across a fleet today;
 if you need that, you will need to build it on top of the bus messages yourself.
+
+### Building fleet-wide alerting yourself
+
+Since there's no push-based metrics endpoint, fleet alerting has to be built the other way
+around: something outside each device polls its
+[readiness probe](#knowing-when-the-assistant-is-actually-ready) on a schedule and reports a
+non-zero exit to whatever already pages you. A `systemd` timer wrapping the probe script from
+above is enough to get started:
+
+```ini title="~/.config/systemd/user/ovos-alert.service"
+[Unit]
+Description=Check OVOS readiness and alert on failure
+
+[Service]
+Type=oneshot
+ExecStart=/bin/sh -c '/usr/local/bin/ovos-ready-probe || /usr/local/bin/notify-monitoring-agent "ovos not ready"'
+```
+
+```ini title="~/.config/systemd/user/ovos-alert.timer"
+[Unit]
+Description=Run the OVOS readiness check every 5 minutes
+
+[Timer]
+OnBootSec=5min
+OnUnitActiveSec=5min
+
+[Install]
+WantedBy=timers.target
+```
+
+```bash
+systemctl --user enable --now ovos-alert.timer
+```
+
+`notify-monitoring-agent` above is a stand-in for whatever already collects failures on your
+fleet — a `curl` to a Healthchecks.io/Cronitor-style dead-man's-switch URL, a call into your
+monitoring agent's CLI, an email, a webhook. The same pattern works as a plain `cron` entry
+(`*/5 * * * * /usr/local/bin/ovos-ready-probe || /usr/local/bin/notify-monitoring-agent ...`) on a
+system without `systemd --user` timers. This is something you build, not something OVOS ships —
+but it is the whole shape of a working readiness alert: schedule the probe, act on its exit code.

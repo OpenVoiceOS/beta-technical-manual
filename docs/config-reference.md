@@ -250,7 +250,7 @@ itself — a separate concern from the `speech_begin`/`silence_end` timing above
 | `websocket.ssl` | `false` |  |
 | `websocket.shared_connection` | `true` |  |
 | `websocket.max_msg_size` | `25` |  |
-| `gui_websocket.host` | `"0.0.0.0"` |  |
+| `gui_websocket.host` | `"0.0.0.0"` | Bound to all interfaces by default — see [Bus Service](bus-service.md) for network-exposure guidance. |
 | `gui_websocket.base_port` | `18181` |  |
 | `gui_websocket.route` | `"/gui"` |  |
 | `gui_websocket.ssl` | `false` |  |

@@ -40,7 +40,7 @@ their config, and install commands.
 | [OCP Stream Extractors](ocp-plugins.md) | `opm.ocp.extractor` | Resolve a playable stream from a URL (YouTube, RSS, …) |
 | [OCP Media Classifiers](media-plugins.md#ovos-media-classifier) | `opm.media.classifier` | Recognize media intent + entities (artist, title, station, …) in an utterance |
 | [Media Playback](media-plugins.md) | `opm.media.audio` / `.video` / `.web` | Backend players for [ovos-media](ovos-media.md) |
-| [GUI Adapters](gui-adapters.md) | `opm.gui_adapter` | Render backends for the GUI *(**Upcoming** — tracked in [ovos-plugin-manager#377](https://github.com/OpenVoiceOS/ovos-plugin-manager/pull/377), see page)* |
+| [GUI Adapters](gui-adapters.md) | `opm.gui_adapter` **(unreleased)** | Render backends for the GUI — not yet built or released; see the [GUI Adapters](gui-adapters.md) page. |
 
 ## AI Agents & Personas
 

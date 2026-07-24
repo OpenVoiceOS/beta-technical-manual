@@ -11,12 +11,19 @@
     prompt does. **If you're unsure, decline both telemetry prompts** — nothing else about the
     install depends on them.
 
+!!! tip "Want the easiest option, no terminal at all?"
+    The **[RaspOVOS](install-raspovos.md)** image is the flash-and-boot alternative to
+    this guide: write it to an SD card, boot a Raspberry Pi, and you have a working
+    assistant with no terminal, no SSH, and no commands to type. Use `ovos-installer`
+    (this page) if you're on non-Pi hardware, want to install onto an existing Raspberry
+    Pi OS setup, or want more control over the install.
+
 !!! note "This runs over SSH in a terminal, not an app"
     There's no phone app or setup wizard with a graphical pairing flow — you type commands into
     a terminal, usually over SSH into a headless device. If you've never used SSH before, budget
     some extra time to get comfortable with it, or consider the
-    [RaspOVOS](install-raspovos.md) image instead, which boots straight into a working assistant
-    with no SSH step required.
+    [RaspOVOS](install-raspovos.md) image above instead, which boots straight into a working
+    assistant with no SSH step required.
 
 Welcome to the quick-start guide for installing Open Voice OS (OVOS) using the official `ovos-installer`! This guide is suitable for **Raspberry Pi** and **desktop/server** Linux environments. Whether you're running this on a headless Raspberry Pi or your everyday laptop, the steps are mostly the same — only the way you connect to the device differs.
 
@@ -70,6 +77,11 @@ sudo apt install -y git curl
 ### 📥 4. Run the OVOS Installer
 
 Now you're ready to start the installation process:
+
+This is the official `ovos-installer` script, straight from the project's `main` branch — you
+can read it yourself first at
+[raw.githubusercontent.com/OpenVoiceOS/ovos-installer/main/installer.sh](https://raw.githubusercontent.com/OpenVoiceOS/ovos-installer/main/installer.sh)
+before running it:
 
 ```bash
 sudo sh -c "$(curl -fsSL https://raw.githubusercontent.com/OpenVoiceOS/ovos-installer/main/installer.sh)"
