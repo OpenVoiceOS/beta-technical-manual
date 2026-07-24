@@ -155,6 +155,63 @@ See [Bus Service: common message types](bus-service.md#key-message-categories).
 | `ovos.session.update_default` | `ovos-core` | all clients |
 | `mycroft.network.connected` / `mycroft.internet.connected` | `ovos-PHAL` | `ovos-core`, skills |
 
+## Legacy ↔ spec migration
+
+OVOS is renaming its bus topics onto the `ovos.*` spec namespace. You do not have to migrate
+all at once: `ovos-bus-client`'s `NamespaceTranslator` runs on every client with both directions
+on by default, so a message emitted on either the legacy or the spec topic is re-emitted on the
+other (see [Bus Service — namespace migration](bus-service.md#namespace-migration)). A direct bus
+consumer can therefore subscribe on either name today and switch to the spec name at its own pace.
+
+The pairs below are the authoritative rename map (`ovos_spec_tools`'s `MIGRATION_MAP`). Unless
+marked **shape-changing**, the payload is identical on both topics; shape-changing pairs are
+reshaped best-effort by the translator and may lose fields, so prefer adopting the spec payload
+directly.
+
+| Legacy topic | Spec topic | Notes |
+|---|---|---|
+| `recognizer_loop:utterance` | `ovos.utterance.handle` | transcribed utterance (PIPELINE-1 §9.1) |
+| `speak` | `ovos.utterance.speak` | TTS request (PIPELINE-1 §9.6) |
+| `speak:b64_audio` | `ovos.utterance.speak.b64` | inline-audio speak request |
+| `speak:b64_audio.response` | `ovos.audio.speech` | synthesized-audio reply |
+| `recognizer_loop:audio_output_start` | `ovos.audio.output.started` | playback began (AUDIO-1 §5.1) |
+| `recognizer_loop:audio_output_end` | `ovos.audio.output.ended` | playback ended (AUDIO-1 §5.2) |
+| `mycroft.audio.queue` | `ovos.audio.queue` | enqueue a sound `{uri}` |
+| `mycroft.audio.play_sound` | `ovos.audio.play_sound` | play a sound effect `{uri}` |
+| `mycroft.audio.speak.status` | `ovos.audio.is_speaking` | query: is audio-out active |
+| `mycroft.audio.speech.stop` | `ovos.audio.stop` | stop audio output |
+| `mycroft.mic.listen` | `ovos.mic.listen` | force the listener to start listening (AUDIO-1 §4.4) |
+| `recognizer_loop:record_begin` | `ovos.listener.record.started` | command recording started (AUDIO-IN-1 §6.1) |
+| `recognizer_loop:record_end` | `ovos.listener.record.ended` | command recording ended (AUDIO-IN-1 §6.2) |
+| `recognizer_loop:sleep` | `ovos.listener.sleep` | put listener to sleep (AUDIO-IN-1 §6.3) |
+| `mycroft.awoken` | `ovos.listener.awoken` | listener woke from sleep (AUDIO-IN-1 §6.4) |
+| `mycroft.stop` | `ovos.stop` | universal stop broadcast (STOP-1 §5.3) |
+| `skill.stop.pong` | `ovos.stop.pong` | stoppability reply (STOP-1 §4.2) |
+| `complete_intent_failure` | `ovos.intent.unmatched` | no intent claimed the utterance (PIPELINE-1 §9.3) |
+| `detach_skill` | `ovos.skill.deregister` | remove a skill's intents `{skill_id}` |
+| `detach_intent` | `ovos.intent.deregister` | **shape-changing** — remove one intent (INTENT-4 §8.2) |
+| `mycroft.skill.enable_intent` | `ovos.intent.enable` | **shape-changing** — enable an intent (INTENT-4 §8.5) |
+| `mycroft.skill.disable_intent` | `ovos.intent.disable` | **shape-changing** — disable an intent (INTENT-4 §8.5) |
+
+### Not bridged — adopt the spec directly
+
+A few areas are deliberately **not** in the translator, so subscribing on the spec name alone will
+*not* transparently receive the legacy traffic (or vice-versa). These need real adoption in the
+producer and consumer, not a topic swap:
+
+- **Handler-lifecycle trio** — `mycroft.skill.handler.start` / `.complete` are orchestrator-vs-skill
+  private signals; the orchestrator emits the spec `ovos.intent.handler.start` / `.complete` /
+  `.error` directly. The two namespaces are kept separate by design (PIPELINE-1 §8/§11) — the pair
+  is shape-changing and bridging would double-emit.
+- **Intent/entity registration** — `register_vocab` + `register_intent` (Adapt's N legacy messages)
+  do not map 1:1 onto the single `ovos.intent.register.keyword` / `.register.template` /
+  `ovos.entity.register` message (INTENT-4 §5), which inlines the vocab descriptors. This requires
+  producers/consumers to adopt INTENT-4, not a rename.
+- **Per-skill stop** — the legacy `{skill_id}.stop` / `{skill_id}.stop.ping` handshake uses
+  runtime-assembled per-skill topics, which cannot be static map keys. STOP-1 replaces them with the
+  broadcast `ovos.stop` / `ovos.stop.ping` / `ovos.stop.pong`; the skill base class subscribes on both
+  forms rather than relying on the translator.
+
 ## Related pages
 
 - [Bus Service](bus-service.md) — the messagebus itself, connection details, legacy/modern topic pairs
