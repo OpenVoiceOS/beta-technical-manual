@@ -1815,6 +1815,13 @@ The full roster with descriptions and licenses lives in one place — the
 <code>ovos-ww-plugin-precise-lite</code> (TFLite), then <code>ovos-ww-plugin-precise</code> (classic Precise), then
 <code>ovos-ww-plugin-vosk</code>, then <code>ovos-ww-plugin-pocketsphinx</code> if a plugin further up the chain is
 not installed. Vosk offers the fastest setup for an arbitrary wake phrase without model training.</p>
+<div class="admonition note">
+<p class="admonition-title">Relative footprint</p>
+<p>The default <code>ovos-ww-plugin-precise-onnx</code> models are small, purpose-built for a single
+wake phrase, and meant to run continuously on-device — much lighter than a general STT or
+TTS model, which is why wake-word detection is the one always-on inference step in the
+listener pipeline.</p>
+</div>
 <blockquote>
 <p>Specification: wake-word detection is one of the deployer-defined capture mechanisms that trigger the audio-input service (referenced in <a href="https://github.com/OpenVoiceOS/architecture/blob/dev/audio-in.md">OVOS-AUDIO-IN-1 §5.1</a> as the source of a <code>request_lang</code> hint).</p>
 </blockquote>

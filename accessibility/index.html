@@ -1426,12 +1426,23 @@ tuning specifically for this:</p>
   skill actually expects, which avoids triggering a clarification round-trip at all). This is a
   usage pattern more than a config switch: OVOS has no built-in setting that slows down or
   simplifies its clarification dialog today.</li>
+<li><strong>If speaking isn't reliable.</strong> Voice-first is itself a barrier for non-verbal users and anyone
+  with a motor speech disorder, severe stutter, or temporary voice loss. The documented
+  text-input fallback is <code>ovos-simple-cli</code> (see <a href="../cli-tools/">Command-line Tools</a>), which opens
+  an interactive typed chat with the running assistant — you type instead of speak and get the
+  same responses.</li>
 </ul>
 <h2 id="where-support-is-thin-today">Where support is thin today<a class="headerlink" href="#where-support-is-thin-today" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>The legacy GUI stack is deprecated.</strong> Anything that depended on visual screen content (rather
+<li>
+<p><strong>Typed input is terminal-only.</strong> <code>ovos-simple-cli</code> gives a text alternative to speech, but
+  there is no GUI/on-screen typed-input path today, so it assumes comfort with a terminal.</p>
+</li>
+<li>
+<p><strong>The legacy GUI stack is deprecated.</strong> Anything that depended on visual screen content (rather
   than speech) is not a reliable path right now regardless of assistive technology — see
-  <a href="../gui-service/">GUI Service</a> for the current status and the replacement effort underway.</li>
+  <a href="../gui-service/">GUI Service</a> for the current status and the replacement effort underway.</p>
+</li>
 <li><strong>No dedicated screen-reader integration exists for the installer's interactive wizard mode</strong>
   beyond the scenario-file path above; the wizard itself is a standard terminal menu, not one
   built with screen-reader affordances.</li>

@@ -1503,6 +1503,10 @@ voice is used — no separate download step. Cloud plugins like <code>ovos-tts-p
 <code>ovos-tts-plugin-azure</code>, <code>ovos-tts-plugin-edge-tts</code> or <code>ovos-tts-plugin-google-tx</code> are a
 fair choice when you need a specific commercial voice or don't want to spend local compute
 on synthesis.</p>
+<p><strong>Footprint:</strong> phoonnx voices are small, single-purpose ONNX models — the class of model
+ONNX Runtime is built to run efficiently on-device, unlike the heavier general-purpose
+engines further down this page (Coqui, Whisper-class transformers, etc.). Exact size varies
+per voice, since each one is a separate model fetched on first use.</p>
 </div>
 <h2 id="change-your-voice">Change your voice<a class="headerlink" href="#change-your-voice" title="Permanent link">&para;</a></h2>
 <ol>

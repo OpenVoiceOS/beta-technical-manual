@@ -1581,6 +1581,12 @@ starting point: it runs entirely through ONNX Runtime, with no PyTorch/transform
 dependency, and covers NeMo Parakeet/Canary, Whisper and wav2vec2 model families. Cloud
 STT (e.g. <code>ovos-stt-plugin-azure</code>) is a fair choice when the local device doesn't have
 the compute budget for on-device recognition.</p>
+<p><strong>Footprint:</strong> as noted in the <a href="#ovos-stt-plugin-onnx-asr">plugin's own entry</a>, most models
+in the <a href="https://huggingface.co/collections/OpenVoiceOS/stt-asr-onnx">OpenVoiceOS/stt-asr-onnx</a>
+collection ship both <code>fp32</code> and <code>int8</code> weights — pick <code>int8</code> for the lower-RAM, lower-compute
+option on constrained hardware. Beyond quantization, footprint is mostly driven by model
+family/size: a small Parakeet/wav2vec2-class model is far lighter than a large
+Whisper-class one, independent of the plugin wrapping it.</p>
 </div>
 <h2 id="using-an-stt-plugin">Using an STT plugin<a class="headerlink" href="#using-an-stt-plugin" title="Permanent link">&para;</a></h2>
 <p>Install a plugin and point your <code>mycroft.conf</code> at it:</p>

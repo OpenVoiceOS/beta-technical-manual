@@ -1615,7 +1615,7 @@
 </tr>
 </tbody>
 </table>
-<p>The runner classes that load and chain these plugins (<code>UtteranceTransformersService</code>, <code>MetadataTransformersService</code>, <code>IntentTransformersService</code>) live in <code>ovos-core</code> (<code>ovos_core/transformers.py</code>). Audio, dialog, and TTS transformers are run by the listener and the audio/TTS stacks respectively.</p>
+<p>The runner classes that load and chain these plugins — <code>UtteranceTransformersService</code>, <code>MetadataTransformersService</code>, <code>IntentTransformersService</code>, <code>AudioTransformersService</code>, <code>DialogTransformersService</code>, <code>TTSTransformersService</code> — live in <code>ovos-plugin-manager</code> (<code>ovos_plugin_manager.transformer_services</code>). Each consumer imports the one it needs: <code>ovos-core</code> runs the utterance/metadata/intent chains, the listener the audio chain, and the audio/TTS stacks the dialog/TTS chains.</p>
 <hr />
 <h2 id="1-audio-transformers">1. Audio Transformers<a class="headerlink" href="#1-audio-transformers" title="Permanent link">&para;</a></h2>
 <p><strong>Entry point:</strong> <code>opm.transformer.audio</code></p>

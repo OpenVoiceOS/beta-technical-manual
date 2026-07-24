@@ -1758,6 +1758,14 @@ return a match wins and short-circuits the rest, and if none of them do, the lif
 </li>
 </ol>
 <p>The chosen language is validated against <code>valid_langs</code> from config using <code>closest_lang()</code> (from <code>ovos_spec_tools</code>), which tolerates near-matches such as <code>en</code> vs <code>en-us</code>.</p>
+<div class="admonition note">
+<p class="admonition-title">This ordering is the orchestrator's own consolidation</p>
+<p>OVOS-SESSION-1 §3.2 treats these language signals as <em>informative</em> and deliberately does
+<strong>not</strong> mandate a fixed precedence — it warns that <code>request_lang</code> is a hint a consumer "MUST
+NOT treat as a guarantee" (§3.2.5) and, for intent matching, suggests preferring <code>stt_lang</code> /
+<code>detected_lang</code> then <code>lang</code>. The fixed list above is how <code>ovos-core</code>'s intent service
+consolidates them in practice; another orchestrator may weigh them differently.</p>
+</div>
 <h2 id="multilingual-matching">Multilingual Matching<a class="headerlink" href="#multilingual-matching" title="Permanent link">&para;</a></h2>
 <p>When <code>intents.multilingual_matching</code> is enabled, if the primary language produces no match, OVOS will try all other configured languages in order.</p>
 <h2 id="session-management">Session Management<a class="headerlink" href="#session-management" title="Permanent link">&para;</a></h2>

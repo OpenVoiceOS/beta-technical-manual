@@ -725,6 +725,15 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#picking-a-plugin-combo-for-your-pi-tier" class="md-nav__link">
+    <span class="md-ellipsis">
+      Picking a plugin combo for your Pi tier
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#storage-options" class="md-nav__link">
     <span class="md-ellipsis">
       Storage Options
@@ -1484,6 +1493,15 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#picking-a-plugin-combo-for-your-pi-tier" class="md-nav__link">
+    <span class="md-ellipsis">
+      Picking a plugin combo for your Pi tier
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#storage-options" class="md-nav__link">
     <span class="md-ellipsis">
       Storage Options
@@ -1682,6 +1700,23 @@ image from an existing Raspberry Pi OS install, use the
 <li><strong>Note:</strong> The Raspberry Pi 3 will work but may be <strong>extremely slow</strong> compared to newer models.</li>
 </ul>
 </li>
+<li><strong>Not supported:</strong> Raspberry Pi Zero (and other boards below the Pi 3) fall under the stated
+  minimum — don't expect a usable experience there; start from a Pi 3 or newer.</li>
+</ul>
+<h3 id="picking-a-plugin-combo-for-your-pi-tier">Picking a plugin combo for your Pi tier<a class="headerlink" href="#picking-a-plugin-combo-for-your-pi-tier" title="Permanent link">&para;</a></h3>
+<p>The Pi model above sets the ceiling on what you can run comfortably. As a starting point per
+tier (see <a href="../stt-plugins/">STT Plugins</a>, <a href="../tts-plugins/">TTS Plugins</a>,
+<a href="../wake-word-plugins/">Wake Word Plugins</a> and <a href="../vad-plugins/">VAD Plugins</a> for the full rosters):</p>
+<ul>
+<li><strong>Pi 3 (minimum):</strong> lean on cloud services or the lightest local plugins — a small wake-word
+  model, an energy/noise VAD, and cloud STT/TTS (or, if you need fully offline, the smallest
+  local models you can find). Avoid local Whisper-class STT/TTS here; it is the heaviest option
+  in the rosters and this is the board least equipped to run it.</li>
+<li><strong>Pi 4:</strong> a comfortable middle ground for local, on-device models — e.g.
+  <a href="../stt-plugins/#ovos-stt-plugin-onnx-asr"><code>ovos-stt-plugin-onnx-asr</code></a> with a small,
+  <code>int8</code>-quantized model, and <a href="../tts-plugins/#ovos-tts-plugin-phoonnx"><code>ovos-tts-plugin-phoonnx</code></a>.</li>
+<li><strong>Pi 5:</strong> the offline STT performance improvement noted above gives you the most headroom for
+  larger local models, including Whisper-class STT, if you want to stay fully offline.</li>
 </ul>
 <h3 id="storage-options">Storage Options<a class="headerlink" href="#storage-options" title="Permanent link">&para;</a></h3>
 <ul>

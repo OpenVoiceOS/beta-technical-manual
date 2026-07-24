@@ -1801,9 +1801,17 @@ without it, and only some community config tools still read it.</p>
 </span></code></pre></div>
 <h4 id="skilljson"><code>skill.json</code><a class="headerlink" href="#skilljson" title="Permanent link">&para;</a></h4>
 <p>This is an optional, per-language file — it lives alongside your dialog and intent
-files (e.g. <code>locale/en-us/skill.json</code>), not at the repository root. Today it is read for
-exactly one purpose: registering example utterances with the homescreen, so the
-launcher can show sample things to say for that language.</p>
+files (e.g. <code>locale/en-us/skill.json</code>). At runtime it is read for exactly one purpose:
+registering example utterances with the homescreen, so the launcher can show sample things
+to say for that language.</p>
+<div class="admonition note">
+<p class="admonition-title">Same filename, two roles</p>
+<p>The <code>locale/&lt;lang&gt;/skill.json</code> shown here carries only the runtime <code>examples</code>. The <strong>store
+metadata</strong> file of the same name — carrying <code>source</code>, <code>package_name</code>, <code>pip_spec</code>,
+<code>extra_plugins</code>, <code>tags</code>, <code>icon</code>, etc. for the skills marketplace and installer — is a
+separate, broader schema documented in full on the <a href="../skill-json/">Skill Metadata File</a> page.
+<code>ovos-workshop</code> never installs anything from either file.</p>
+</div>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="p">{</span>
 </span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="w">    </span><span class="nt">&quot;examples&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;hello&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;say hello&quot;</span><span class="p">]</span>
 </span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="p">}</span>
