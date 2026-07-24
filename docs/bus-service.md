@@ -389,7 +389,7 @@ this interacts with `systemd`'s own `Restart=`/`After=` ordering across the OVOS
     needs to sit in front of it. Point it at an existing certificate with `websocket.ssl_cert`
     and `websocket.ssl_key`:
 
-    ```json
+    ```jsonc
     "websocket": {
         "ssl": true,
         "ssl_cert": "/etc/ssl/certs/ovos-bus.crt",
@@ -409,7 +409,7 @@ this interacts with `systemd`'s own `Restart=`/`After=` ordering across the OVOS
 
 ## Alternative Implementations
 
-`ovos-messagebus` is the reference **Tornado**-based server and is all you need for a normal install (`pip install ovos-messagebus`). The `ovos-messagebus` package itself ships only the Tornado backend. Because the wire protocol is just JSON frames over a WebSocket, the server is interchangeable — any process that fans messages out to all connected clients on the same route will work, and a drop-in replacement can be swapped in without touching clients. The RaspOVOS image, for example, ships a separate Rust reimplementation (`ovos_rust_messagebus`) as its default for performance; see [Production Operations](production-operations.md).
+`ovos-messagebus` is the reference **Tornado**-based server and is all you need for a normal install (`pip install ovos-messagebus`); the Tornado backend is the default. Because the wire protocol is just JSON frames over a WebSocket, the server is interchangeable — any process that fans messages out to all connected clients on the same route will work, and a drop-in replacement can be swapped in without touching clients. The RaspOVOS image, for example, ships a separate Rust reimplementation (`ovos_rust_messagebus`) as its default for performance; see [Production Operations](production-operations.md).
 
 A separate, drop-in Rust implementation exists as its own project for deployments that want lower overhead:
 
@@ -417,18 +417,21 @@ A separate, drop-in Rust implementation exists as its own project for deployment
 
 **In plain terms:** on a stable install, run the default Python (Tornado) server; only reach for the Rust build if profiling shows the bus is a bottleneck.
 
-!!! warning "Upcoming — unreleased"
-    Pluggable high-performance backends are in development. The work keeps **Tornado** as
-    the default reference server and adds two optional alternatives, benchmarked side by
-    side with a bundled benchmark script at a range of concurrent-client loads:
+!!! info "Optional `webrockets` backend"
+    `ovos-messagebus` also bundles an optional, higher-throughput **webrockets** backend
+    (Python), installed as an extra and run in place of the Tornado server:
 
-    - **webrockets** — a high-performance websocket backend, written in Python.
-    - **Rust** — the [`ovos-rust-messagebus`](https://github.com/OscillateLabsLLC/ovos-rust-messagebus)
-      server, run in place of the Python process.
+    ```bash
+    pip install "ovos-messagebus[webrockets]"
+    python -m ovos_messagebus.backends.webrockets_backend
+    ```
 
-    Early benchmarking shows webrockets ahead at higher concurrency, with the Rust backend
-    showing connection saturation at the highest client counts tested. None of this is on a
-    published release — do not rely on it on a stable install.
+    It is early/alpha and not the default: it does **not** terminate TLS and does not honour
+    `websocket.max_msg_size` (it refuses to start when `websocket.ssl` is set), so serve
+    `wss://` with the Tornado backend. The repo ships a benchmark (`benchmark/run_benchmark.py`,
+    `--compare`) that pits Tornado, webrockets, and the Rust server against each other; early
+    numbers put webrockets ahead at higher concurrency. On a stable install, stay on the
+    default Tornado server unless profiling shows the bus is a bottleneck.
 
 ---
 

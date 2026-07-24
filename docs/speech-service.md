@@ -20,7 +20,7 @@ A third, even more minimal option is `mycroft-classic-listener` — the original
     - `DinkumVoiceLoop.run()` — [`ovos_dinkum_listener/voice_loop/voice_loop.py`](https://github.com/OpenVoiceOS/ovos-dinkum-listener/blob/dev/ovos_dinkum_listener/voice_loop/voice_loop.py) — the per-chunk state machine that drives [VAD](vad-plugins.md), [Wake Word](wake-word-plugins.md) and [STT](stt-plugins.md) via per-state handlers.
 
 
-    - `OVOSDinkumVoiceService._stt_text()` — [`ovos_dinkum_listener/service.py`](https://github.com/OpenVoiceOS/ovos-dinkum-listener/blob/dev/ovos_dinkum_listener/service.py) — emits the utterance message after [STT](stt-plugins.md) returns text: the listener itself emits `recognizer_loop:utterance`; `ovos-bus-client`'s automatic namespace bridge (see [Bus Service](bus-service.md#namespace-migration)) mirrors it to `ovos.utterance.handle` for consumers on the spec topic.
+    - `OVOSDinkumVoiceService._stt_text()` — [`ovos_dinkum_listener/service.py`](https://github.com/OpenVoiceOS/ovos-dinkum-listener/blob/dev/ovos_dinkum_listener/service.py) — emits the utterance message after [STT](stt-plugins.md) returns text: the listener emits the spec topic `ovos.utterance.handle` (`SpecMessage.UTTERANCE`) directly, and `ovos-bus-client`'s `NamespaceTranslator` (see [Bus Service](bus-service.md#namespace-migration)) also emits the legacy `recognizer_loop:utterance` alias for old consumers.
     
     ---
     
@@ -76,13 +76,13 @@ Source: `ovos_dinkum_listener/voice_loop/voice_loop.py:36` (`ListeningState`) an
 The listener emits its activity on the OVOS [messagebus](bus-service.md). The most
 useful events for downstream services:
 
-Canonical (spec) names are shown first, with the legacy name current code still emits in parentheses. The `ovos.listener.*` and `ovos.utterance.handle` names come from [OVOS-AUDIO-IN-1 §5–§6](https://github.com/OpenVoiceOS/architecture/blob/dev/audio-in.md); `ovos-dinkum-listener` itself still emits only the legacy names, and `ovos-bus-client`'s automatic namespace bridge (see [Bus Service](bus-service.md#namespace-migration)) mirrors them onto the spec topics by default.
+Canonical (spec) names are shown first, with the legacy name in parentheses. The `ovos.listener.*` and `ovos.utterance.handle` names come from [OVOS-AUDIO-IN-1 §5–§6](https://github.com/OpenVoiceOS/architecture/blob/dev/audio-in.md). `ovos-dinkum-listener` emits the spec `ovos.*` topics directly for the record/awoken/utterance events (via `SpecMessage`), and emits the wake-word event under its legacy `recognizer_loop:wakeword` name. Either way both topics reach subscribers: `ovos-bus-client`'s `NamespaceTranslator` runs on every client with both directions on by default (see [Bus Service](bus-service.md#namespace-migration)) — emitting a spec topic also emits its legacy alias, and emitting a legacy topic also emits its spec alias.
 
 | Message | Payload | Meaning |
 |---|---|---|
 | `ovos.listener.record.started` (legacy: `recognizer_loop:record_begin`) | none | Command recording started (§6.1) |
 | `ovos.listener.record.ended` (legacy: `recognizer_loop:record_end`) | none | Command recording ended (§6.2) |
-| `ovos.listener.wakeword` (legacy: `recognizer_loop:wakeword`) | `{"wake_word", "lang"}` | Wake word detected; capture is opening (§6.5). `lang` is carried only when the deployment binds wake words to languages, and is the hint reported as `session.request_lang` |
+| `recognizer_loop:wakeword` (spec alias: `ovos.listener.wakeword`) | `{"utterance": str, "key_phrase": str, …}` | Wake word detected; capture is opening (§6.5). `utterance` is the spoken key phrase (underscores/hyphens spaced out), `key_phrase` its raw form; `filename` is added when `listener.record_wake_words` is on. A per-wake-word `stt_lang` override, when configured, rides the message context (surfaced as `session.request_lang`) rather than the payload |
 | `ovos.utterance.handle` (legacy: `recognizer_loop:utterance`) | `{"utterances": [str], "lang"}` | Transcribed command — the main result (§5, OVOS-PIPELINE-1 §9.1) |
 | `recognizer_loop:speech.recognition.unknown` | none | STT returned nothing (silence / failure) |
 | `ovos.listener.awoken` (legacy: `mycroft.awoken`) | none | Listener woke from sleep (§6.4) |
@@ -103,11 +103,11 @@ and `recognizer_loop:state.get`. The full table lives in the bus-message spec
 
 !!! note "Gotcha — utterance namespace"
 
-    The listener publishes the transcribed command as `recognizer_loop:utterance`.
-    `ovos-bus-client`'s namespace bridge (on by default) also mirrors it onto
-    `ovos.utterance.handle`, so subscribers can use either topic name — see
-    [Bus Service — Namespace migration](bus-service.md#namespace-migration) for how
-    to turn that bridging off once every consumer speaks the spec namespace.
+    The listener publishes the transcribed command on the spec topic
+    `ovos.utterance.handle`. `ovos-bus-client`'s namespace translator (on by default)
+    also emits the legacy `recognizer_loop:utterance` alias, so subscribers can use
+    either topic name — see [Bus Service — Namespace migration](bus-service.md#namespace-migration)
+    for how to turn that aliasing off once every consumer speaks the spec namespace.
 
 ## Configuration
 
@@ -130,5 +130,9 @@ The speech service is configured in the `listener`, `hotwords`, and `stt` sectio
 
 ```
 
-!!! tip "Donating wake-word and STT samples"
-    `ovos-dinkum-listener` can optionally upload the wake-word and utterance audio it captures to an open-data server, purely to help improve wake-word/STT plugins. It is opt-in and off by default — nothing is uploaded until `open_data.ww_urls` / `open_data.stt_urls` is configured. See [Privacy & Security](privacy-security.md#opt-in-wake-word-and-stt-sample-donation) and [`open_data.*` config keys](config-reference.md#all-keys-generated).
+!!! tip "Saving wake-word audio locally"
+    Set `listener.record_wake_words: true` and the listener writes each detected
+    wake-word clip to disk (under its `wake_words` save directory) and adds the
+    `filename` to the wake-word message — handy for gathering training data or
+    debugging false triggers. The clips stay on the device; the listener itself does
+    not upload anything.

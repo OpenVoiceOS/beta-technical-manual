@@ -94,13 +94,13 @@ When a pipeline plugin returns a match:
 1. `IntentTransformersService.transform(match)` — the **intent-transformer chain** post-processes the match (OVOS-TRANSFORM-1 §3.4).
 
 
-2. Emit `ovos.intent.matched` (§9.2) — a notification that a plugin claimed the utterance.
+2. Build the dispatch message (`message.reply(match.match_type, …)`) with `match.match_type` as the message type.
 
 
-3. Build the dispatch message with `match.match_type` as the message type.
+3. Activate the skill in the session (`sess.activate_skill(skill_id)`) and emit `{skill_id}.activate` for the skill's callback.
 
 
-4. Activate the skill in the session (`sess.activate_skill(skill_id)`) and emit `{skill_id}.activate` for the skill's callback.
+4. Emit `ovos.intent.matched` (§9.2) — a notification that a plugin claimed the utterance.
 
 
 5. Wrap the dispatch in the **handler-lifecycle trio** — the orchestrator emits `ovos.intent.handler.start`, then exactly one of `ovos.intent.handler.complete` / `ovos.intent.handler.error` (§8). The skill's intent handler runs between them.

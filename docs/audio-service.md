@@ -36,7 +36,7 @@
 
 ??? abstract "Technical Reference"
 
-    - `PlaybackService.run()` — [`ovos_audio/service.py`](https://github.com/OpenVoiceOS/ovos-audio/blob/dev/ovos_audio/service.py) — Main service thread; registers the `speak` handler and drives the [TTS](tts-plugins.md) queue.
+    - `PlaybackService.init_messagebus()` — [`ovos_audio/service.py`](https://github.com/OpenVoiceOS/ovos-audio/blob/dev/ovos_audio/service.py) — registers the `ovos.utterance.speak` (legacy `speak`) handler and the rest of the bus events; called from `__init__`. `PlaybackService.run()` marks the service alive/ready and reports legacy-audio-backend status.
 
 
     - `PlaybackThread.run()` — [`ovos_audio/playback.py`](https://github.com/OpenVoiceOS/ovos-audio/blob/dev/ovos_audio/playback.py) — logic for playing back the synthesized audio chunks.
@@ -49,7 +49,7 @@
 
 ## Overview
 
-The audio service receives `ovos.utterance.speak` messages (legacy: `speak`) from the [messagebus](bus-service.md) — the natural-language response exit point of the utterance lifecycle (OVOS-PIPELINE-1 §9.6) — runs the text through the **dialog-transformer chain**, sends it to a [TTS](tts-plugins.md) engine, runs the resulting audio through the **tts-transformer chain**, and plays it through its playback queue (OVOS-AUDIO-1 §3). The same queue also plays sound effects (`mycroft.audio.queue` / `mycroft.audio.play_sound`). Separately, and only when `enable_old_audioservice` is on, it *also* hosts the legacy media audioservice for music/news/streams — see the **Two independent subsystems** note at the top of this page.
+The audio service receives `ovos.utterance.speak` messages (legacy: `speak`) from the [messagebus](bus-service.md) — the natural-language response exit point of the utterance lifecycle (OVOS-PIPELINE-1 §9.6) — runs the text through the **dialog-transformer chain**, sends it to a [TTS](tts-plugins.md) engine, runs the resulting audio through the **tts-transformer chain**, and plays it through its playback queue (OVOS-AUDIO-1 §3). The same queue also plays sound effects (`ovos.audio.queue` / `ovos.audio.play_sound`, legacy: `mycroft.audio.queue` / `mycroft.audio.play_sound`). Separately, and only when `enable_old_audioservice` is on, it *also* hosts the legacy media audioservice for music/news/streams — see the **Two independent subsystems** note at the top of this page.
 
 ### Key Responsibilities
 

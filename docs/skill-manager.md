@@ -13,13 +13,13 @@ The `SkillManager` is a core component of `ovos-core`. It is a daemon `Thread` t
 
 ??? abstract "Technical Reference"
 
-    - `SkillManager.run()` — [`ovos_core/skill_manager.py:476`](https://github.com/OpenVoiceOS/ovos-core/blob/dev/ovos_core/skill_manager.py) — Main loop; re-scans for new skills every 30 s via `self._stop_event.wait(30)`.
+    - `SkillManager.run()` — [`ovos_core/skill_manager.py:474`](https://github.com/OpenVoiceOS/ovos-core/blob/dev/ovos_core/skill_manager.py) — Main loop; re-scans for new skills every 30 s via `self._stop_event.wait(30)`.
 
 
-    - `SkillManager.load_plugin_skills()` — [`ovos_core/skill_manager.py:347`](https://github.com/OpenVoiceOS/ovos-core/blob/dev/ovos_core/skill_manager.py) — loads discovered skills via `PluginSkillLoader` (from `ovos_workshop.skill_launcher`).
+    - `SkillManager.load_plugin_skills()` — [`ovos_core/skill_manager.py:345`](https://github.com/OpenVoiceOS/ovos-core/blob/dev/ovos_core/skill_manager.py) — loads discovered skills via `PluginSkillLoader` (from `ovos_workshop.skill_launcher`); applies each skill's `RuntimeRequirements` (`network_before_load` / `internet_before_load`) as the connectivity gate.
 
 
-    - `SkillManager._sync_skill_loading_state()` — [`ovos_core/skill_manager.py:181`](https://github.com/OpenVoiceOS/ovos-core/blob/dev/ovos_core/skill_manager.py) — connectivity gating based on `RuntimeRequirements`.
+    - `SkillManager._sync_skill_loading_state()` — [`ovos_core/skill_manager.py:179`](https://github.com/OpenVoiceOS/ovos-core/blob/dev/ovos_core/skill_manager.py) — queries connectivity (via `ovos.PHAL.internet_check` / GUI state) and emits `mycroft.network.connected` / `mycroft.internet.connected`; the actual gating happens in `load_plugin_skills()` and only when `skills.use_deferred_loading` is enabled.
     
 
 ## Skill Discovery
@@ -78,11 +78,12 @@ Skills listed in `skills.blacklisted_skills` in `mycroft.conf` are skipped at lo
 After new skills are loaded, the manager requests pipeline re-training:
 
 ```text
-mycroft.skills.train  →  (pipeline plugins train)  →  mycroft.skills.trained
-
+mycroft.skills.train  →  (pipeline plugins that need it train, e.g. padatious)
 ```
 
-Training has a 60-second timeout. On failure, an error is logged but the manager continues.
+The manager emits `mycroft.skills.train` fire-and-forget — there is no reply topic
+in the spec and no blocking wait or timeout in `SkillManager`. Pipeline plugins that
+have a deferred training step react to it; those that don't simply ignore it.
 
 ## Settings File Watcher
 
