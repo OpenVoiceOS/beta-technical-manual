@@ -228,9 +228,16 @@ dependencies = [
 #### `skill.json`
 
 This is an optional, per-language file — it lives alongside your dialog and intent
-files (e.g. `locale/en-us/skill.json`), not at the repository root. Today it is read for
-exactly one purpose: registering example utterances with the homescreen, so the
-launcher can show sample things to say for that language.
+files (e.g. `locale/en-us/skill.json`). At runtime it is read for exactly one purpose:
+registering example utterances with the homescreen, so the launcher can show sample things
+to say for that language.
+
+!!! note "Same filename, two roles"
+    The `locale/<lang>/skill.json` shown here carries only the runtime `examples`. The **store
+    metadata** file of the same name — carrying `source`, `package_name`, `pip_spec`,
+    `extra_plugins`, `tags`, `icon`, etc. for the skills marketplace and installer — is a
+    separate, broader schema documented in full on the [Skill Metadata File](skill-json.md) page.
+    `ovos-workshop` never installs anything from either file.
 
 ```json
 {

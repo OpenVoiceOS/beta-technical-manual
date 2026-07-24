@@ -24,6 +24,10 @@ The VAD engine continuously monitors the microphone's audio stream. Its primary 
     fallback — CPU-only and widely used, at somewhat lower accuracy. `ovos-vad-plugin-noise`
     trades the most accuracy for requiring no model download at all.
 
+    **Relative footprint:** silero runs a small neural model, so it is heavier than the
+    energy/noise or WebRTC VADs — but still light next to a wake-word or STT model, since VAD
+    only has to classify one chunk as speech/silence, not decode it.
+
 ## Configuration
 
 You can configure the VAD plugin in your `mycroft.conf`. The example below uses

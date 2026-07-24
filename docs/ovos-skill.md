@@ -58,7 +58,14 @@ self.speak("Hello world")
 self.speak_dialog("my.dialog.file")            # uses locale/lang/dialog/my.dialog.file
 self.speak_dialog("my.dialog", data={"name": "Alice"})  # Mustache templating
 
+self.speak("Anything else?", expect_response=True)  # speak, then listen for a reply
 ```
+
+Both `speak()` and `speak_dialog()` accept `expect_response=False`. Set it to `True` and OVOS
+re-opens the microphone as soon as the prompt finishes speaking, so the user's next utterance is
+captured without a wake word — the basis of a follow-up question. (To capture and *return* that
+reply inside your handler, use `get_response` instead — see [Getting User Input](#getting-user-input)
+below and the [Skill Cookbook](skill-cookbook.md).)
 
 ### Playing audio files
 

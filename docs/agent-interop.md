@@ -121,15 +121,17 @@ The `OVOSPersonaAgentExecutor` wraps the active persona and exposes it at `/a2a`
 
 [OpenVoiceOS/ovos-a2a-agent-plugin](https://github.com/OpenVoiceOS/ovos-a2a-agent-plugin) (pip: `ovos-a2a-solver-plugin`) is an `A2AChatEngine` `ChatEngine` plugin (OPM group `opm.agents.chat`, entry point `ovos-a2a-solver`) that delegates persona reasoning to any external A2A server.
 
-```yaml
-# persona YAML
-name: my-a2a-persona
-engine: ovos-a2a-solver
-engine_config:
-  agent_url: "https://my-a2a-agent.example.com"
-  auth_header: "Bearer <token>"
-  timeout: 60
-  streaming: false
+```json
+{
+  "name": "my-a2a-persona",
+  "handlers": ["ovos-a2a-solver"],
+  "ovos-a2a-solver": {
+    "agent_url": "https://my-a2a-agent.example.com",
+    "auth_header": "Bearer <token>",
+    "timeout": 60,
+    "streaming": false
+  }
+}
 ```
 
 Config keys:

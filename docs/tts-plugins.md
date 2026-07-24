@@ -38,6 +38,11 @@ TTS plugins are responsible for converting text into audio for playback.
     fair choice when you need a specific commercial voice or don't want to spend local compute
     on synthesis.
 
+    **Footprint:** phoonnx voices are small, single-purpose ONNX models — the class of model
+    ONNX Runtime is built to run efficiently on-device, unlike the heavier general-purpose
+    engines further down this page (Coqui, Whisper-class transformers, etc.). Exact size varies
+    per voice, since each one is a separate model fetched on first use.
+
 ## Change your voice
 
 1. Browse [voices_demo](https://github.com/OpenVoiceOS/voices_demo) for audio samples of the

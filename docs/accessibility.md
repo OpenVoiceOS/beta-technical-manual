@@ -87,8 +87,16 @@ tuning specifically for this:
   skill actually expects, which avoids triggering a clarification round-trip at all). This is a
   usage pattern more than a config switch: OVOS has no built-in setting that slows down or
   simplifies its clarification dialog today.
+- **If speaking isn't reliable.** Voice-first is itself a barrier for non-verbal users and anyone
+  with a motor speech disorder, severe stutter, or temporary voice loss. The documented
+  text-input fallback is `ovos-simple-cli` (see [Command-line Tools](cli-tools.md)), which opens
+  an interactive typed chat with the running assistant — you type instead of speak and get the
+  same responses.
 
 ## Where support is thin today
+
+- **Typed input is terminal-only.** `ovos-simple-cli` gives a text alternative to speech, but
+  there is no GUI/on-screen typed-input path today, so it assumes comfort with a terminal.
 
 - **The legacy GUI stack is deprecated.** Anything that depended on visual screen content (rather
   than speech) is not a reliable path right now regardless of assistive technology — see

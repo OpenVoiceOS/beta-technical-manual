@@ -19,6 +19,13 @@ between the listener and the intent pipeline.
     STT (e.g. `ovos-stt-plugin-azure`) is a fair choice when the local device doesn't have
     the compute budget for on-device recognition.
 
+    **Footprint:** as noted in the [plugin's own entry](#ovos-stt-plugin-onnx-asr), most models
+    in the [OpenVoiceOS/stt-asr-onnx](https://huggingface.co/collections/OpenVoiceOS/stt-asr-onnx)
+    collection ship both `fp32` and `int8` weights — pick `int8` for the lower-RAM, lower-compute
+    option on constrained hardware. Beyond quantization, footprint is mostly driven by model
+    family/size: a small Parakeet/wav2vec2-class model is far lighter than a large
+    Whisper-class one, independent of the plugin wrapping it.
+
 ## Using an STT plugin
 
 Install a plugin and point your `mycroft.conf` at it:

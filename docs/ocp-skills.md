@@ -199,7 +199,7 @@ def register_ocp_keyword(self, media_type: MediaType, label: str,
 
 def load_ocp_keyword_from_csv(self, csv_path: str, lang: str = None):
     """ load entities from a .csv file for usage with self.ocp_voc_match
-    see the ocp_entities.csv datatsets for example files built from wikidata SPARQL queries
+    see the ocp_entities.csv datasets for example files built from wikidata SPARQL queries
 
     examples contents of csv file
 

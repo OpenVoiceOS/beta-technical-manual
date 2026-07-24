@@ -178,6 +178,36 @@ top -b -n 1 -u ovos
 Run the same commands idle and mid-conversation; the delta tells you what your wake-word/STT/TTS
 choice actually costs on your board, which matters far more than any generic published figure.
 
+### Sizing by relative cost, not measured numbers
+
+Without a published number to anchor on, the useful thing to reason about is *relative* cost —
+which plugin choices are light, medium, or heavy relative to each other — plus one fixed fact:
+the always-on core (`ovos-messagebus`, `ovos-core`, `ovos-audio`, `ovos-dinkum-listener`,
+`ovos-PHAL`, and whatever skills you load) runs on every device regardless of which STT/TTS/WW
+models you pick. That core has to fit on your board *before* you add any model on top of it —
+size the board for the core first, then budget headroom for the models.
+
+On top of that fixed base, roughly from lightest to heaviest:
+
+- **Lightest**: an energy/noise-threshold [VAD](vad-plugins.md#ovos-vad-plugin-noise) (no model
+  download), a small wake-word model (e.g.
+  [`ovos-ww-plugin-precise-onnx`](wake-word-plugins.md#ovos-ww-plugin-precise-onnx)), and cloud
+  [STT](stt-plugins.md#ovos-stt-plugin-azure)/[TTS](tts-plugins.md#ovos-tts-plugin-azure) (Azure,
+  Polly, Edge-TTS, etc.) — inference happens on someone else's server, so the device only needs
+  enough CPU for the always-on core plus audio capture/playback.
+- **Middle**: local, on-device inference using a small/quantized model — e.g.
+  [`ovos-stt-plugin-onnx-asr`](stt-plugins.md#ovos-stt-plugin-onnx-asr) with a small
+  `int8`-quantized model, [`ovos-tts-plugin-phoonnx`](tts-plugins.md#ovos-tts-plugin-phoonnx),
+  and [`ovos-vad-plugin-silero`](vad-plugins.md#ovos-vad-plugin-silero)'s small neural VAD model.
+  `int8` weights are consistently the lower-footprint choice over `fp32` for the same model.
+- **Heaviest**: local Whisper-class or other large general-purpose models (see the `large`
+  variants in the [STT plugin reference](stt-plugins.md)) — several plugins in that table
+  explicitly recommend a GPU or `use_cuda: true` for this reason. Running these well on a small
+  board without a GPU is the scenario most likely to disappoint.
+
+Pick a tier that leaves headroom above the fixed core cost, not one that just barely fits the
+model alone.
+
 ---
 
 ## Over-the-air updates

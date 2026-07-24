@@ -9,7 +9,7 @@ proxies, and [`ovos-persona-server`](persona-server.md).
 
 Install: `pip install ovos-openai-plugin`
 
-Repository: `OpenVoiceOS Workspace/Agent Plugins/ovos-openai-plugin`
+**GitHub**: [https://github.com/OpenVoiceOS/ovos-openai-plugin](https://github.com/OpenVoiceOS/ovos-openai-plugin)
 
 !!! note "Removed legacy solver"
     The old `ovos-solver-openai-plugin` entry point and the `OpenAIChatCompletionsSolver` /

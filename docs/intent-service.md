@@ -71,6 +71,13 @@ The language for an utterance is chosen based on a priority list from message co
 
 The chosen language is validated against `valid_langs` from config using `closest_lang()` (from `ovos_spec_tools`), which tolerates near-matches such as `en` vs `en-us`.
 
+!!! note "This ordering is the orchestrator's own consolidation"
+    OVOS-SESSION-1 §3.2 treats these language signals as *informative* and deliberately does
+    **not** mandate a fixed precedence — it warns that `request_lang` is a hint a consumer "MUST
+    NOT treat as a guarantee" (§3.2.5) and, for intent matching, suggests preferring `stt_lang` /
+    `detected_lang` then `lang`. The fixed list above is how `ovos-core`'s intent service
+    consolidates them in practice; another orchestrator may weigh them differently.
+
 ## Multilingual Matching
 
 When `intents.multilingual_matching` is enabled, if the primary language produces no match, OVOS will try all other configured languages in order.

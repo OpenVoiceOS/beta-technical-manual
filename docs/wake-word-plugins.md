@@ -37,6 +37,12 @@ The full roster with descriptions and licenses lives in one place — the
 `ovos-ww-plugin-vosk`, then `ovos-ww-plugin-pocketsphinx` if a plugin further up the chain is
 not installed. Vosk offers the fastest setup for an arbitrary wake phrase without model training.
 
+!!! note "Relative footprint"
+    The default `ovos-ww-plugin-precise-onnx` models are small, purpose-built for a single
+    wake phrase, and meant to run continuously on-device — much lighter than a general STT or
+    TTS model, which is why wake-word detection is the one always-on inference step in the
+    listener pipeline.
+
 > Specification: wake-word detection is one of the deployer-defined capture mechanisms that trigger the audio-input service (referenced in [OVOS-AUDIO-IN-1 §5.1](https://github.com/OpenVoiceOS/architecture/blob/dev/audio-in.md) as the source of a `request_lang` hint).
 
 !!! tip "Alternative: openWakeWord"

@@ -68,7 +68,7 @@ classmethod for discovery.
 from ovos_plugin_manager.templates.g2p import Grapheme2PhonemePlugin
 
 class MyG2P(Grapheme2PhonemePlugin):
-    def get_arpa(self, word, lang):
+    def get_arpa(self, word, lang, ignore_oov=False):
         # Implement your G2P logic here
         return ["HH", "EH", "L", "OW"]
 

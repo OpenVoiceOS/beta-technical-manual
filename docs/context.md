@@ -137,7 +137,7 @@ own namespace, which is how it becomes visible to other skills' context
 gates.
 
 ```python
-    @intent_handler(IntentBuilder().require(PythonPerson).require(WhereFrom))
+    @intent_handler(IntentBuilder().require('PythonPerson').require('WhereFrom'))
     def handle_from(self, message):
         # PythonPerson can be any of the Monty Python members
         python = message.data.get('PythonPerson')

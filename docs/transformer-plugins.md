@@ -25,7 +25,7 @@ All base classes live in `ovos_plugin_manager.templates.transformers` and share 
 | **Dialog** | Before TTS | `DialogTransformer` | `opm.transformer.dialog` |
 | **TTS** | After TTS, before Playback | `TTSTransformer` | `opm.transformer.tts` |
 
-The runner classes that load and chain these plugins (`UtteranceTransformersService`, `MetadataTransformersService`, `IntentTransformersService`) live in `ovos-core` (`ovos_core/transformers.py`). Audio, dialog, and TTS transformers are run by the listener and the audio/TTS stacks respectively.
+The runner classes that load and chain these plugins — `UtteranceTransformersService`, `MetadataTransformersService`, `IntentTransformersService`, `AudioTransformersService`, `DialogTransformersService`, `TTSTransformersService` — live in `ovos-plugin-manager` (`ovos_plugin_manager.transformer_services`). Each consumer imports the one it needs: `ovos-core` runs the utterance/metadata/intent chains, the listener the audio chain, and the audio/TTS stacks the dialog/TTS chains.
 
 ---
 

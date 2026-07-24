@@ -246,7 +246,7 @@ phrasing is covered.
 | pt-BR | ❌ | ✅ | ✅ | ✅ |
 | ca-ES | ✅ | ✅ | ✅ | ✅ |
 | gl-ES | ✅ | ✅ | ✅ | ✅ |
-| eu-ES | ✅ | ⚠️ (female only) | ✅ | ✅ |
+| eu-ES | ✅ | ✅ | ✅ | ✅ |
 | da-DK | ✅ | ⚠️ (male only) | ✅ | ✅ |
 
 Both the number and date parsers already cover far more languages than the bundled

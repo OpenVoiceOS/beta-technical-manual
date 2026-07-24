@@ -22,6 +22,24 @@ This tutorial is designed for users new to Raspberry Pi and RaspOVOS. Follow the
     - For offline [STT](stt-plugins.md) (speech-to-text), the **Raspberry Pi 5** offers significant performance improvements.
 - **Minimum Requirement:** Raspberry Pi 3.
     - **Note:** The Raspberry Pi 3 will work but may be **extremely slow** compared to newer models.
+- **Not supported:** Raspberry Pi Zero (and other boards below the Pi 3) fall under the stated
+  minimum — don't expect a usable experience there; start from a Pi 3 or newer.
+
+### Picking a plugin combo for your Pi tier
+
+The Pi model above sets the ceiling on what you can run comfortably. As a starting point per
+tier (see [STT Plugins](stt-plugins.md), [TTS Plugins](tts-plugins.md),
+[Wake Word Plugins](wake-word-plugins.md) and [VAD Plugins](vad-plugins.md) for the full rosters):
+
+- **Pi 3 (minimum):** lean on cloud services or the lightest local plugins — a small wake-word
+  model, an energy/noise VAD, and cloud STT/TTS (or, if you need fully offline, the smallest
+  local models you can find). Avoid local Whisper-class STT/TTS here; it is the heaviest option
+  in the rosters and this is the board least equipped to run it.
+- **Pi 4:** a comfortable middle ground for local, on-device models — e.g.
+  [`ovos-stt-plugin-onnx-asr`](stt-plugins.md#ovos-stt-plugin-onnx-asr) with a small,
+  `int8`-quantized model, and [`ovos-tts-plugin-phoonnx`](tts-plugins.md#ovos-tts-plugin-phoonnx).
+- **Pi 5:** the offline STT performance improvement noted above gives you the most headroom for
+  larger local models, including Whisper-class STT, if you want to stay fully offline.
 
 ### Storage Options
 
