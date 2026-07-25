@@ -48,7 +48,7 @@ If the device does not complete its boot sequence:
 
 ## How to debug intent matching
 
-To easily debug intent parsing open a terminal and run `ologs | grep intent` , this will show you live logs related only to intent parsing
+To easily debug intent parsing open a terminal and run `ologs | grep intent`; this will show you live logs related only to intent parsing
 
 !!! note "`ologs` is a raspOVOS shortcut"
     `ologs` is a raspOVOS-only shell alias (`tail -f` over the log files, see [raspOVOS commands](install-raspovos.md#helpful-commands)); it is **not** the portable [`ovos-logs`](cli-tools.md#reading-the-logs-ovos-logs) CLI. On a non-raspOVOS install use `ovos-logs` (or `tail -f` on the [log files](troubleshooting.md)) instead.
@@ -331,7 +331,7 @@ Some wake words are hard to trigger, especially if missing from the language mod
 
 > 💡 e.g. `hey mycroft` is usually transcribed as `hey microsoft`,
 
-example for "hey  computer"
+example for "hey computer"
 
 ```jsonc
   "listener": {
@@ -345,7 +345,7 @@ example for "hey  computer"
         "debug": true,
         "samples": ["hey computer", "a computer", "hey computed"],
         "rule": "equals",
-        "full_vocab": false,
+        "full_vocab": false
     }
   }
 
@@ -459,7 +459,7 @@ Subdevice #0: subdevice #0
 - **Verify Volume and Mute status:**
     - Run `alsamixer` and verify that volume isn't too low or audio muted.
 - **Check audio setup logs:**
-- During boot the audio setup generates logs, which are saved to the `/tmp` directory:
+- During boot the audio setup generates a log file, saved to the `/tmp` directory:
     - `/tmp/autosoundcard.log` (for soundcard autoconfiguration)
     
 
@@ -596,7 +596,7 @@ Fri 17 Jan 11:42:48 WET 2025 - ALSA default card set to: 3
 ### Saving Transcriptions
 
 You can enable saving of recordings to file, this should be your first step to diagnose problems, is the audio
-inteligible? is it being cropped? too noisy? low volume?
+intelligible? is it being cropped? too noisy? low volume?
 
 > 💡 set `"save_utterances": true` in
 > your [listener config](https://github.com/OpenVoiceOS/ovos-config/blob/V0.0.13a19/ovos_config/mycroft.conf),

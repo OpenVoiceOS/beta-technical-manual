@@ -47,7 +47,7 @@ is direct:
 | Process scheduler | **[Pipeline](https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md)** plugin ordering |
 | Loadable kernel modules | Pipeline plugins and transformer plugins |
 | Process supervision | The handler-lifecycle events |
-| System-call ABI | The `match(utterances, lang, session) → Match` contract |
+| System-call ABI | The `match(utterances, lang, message) → Match` contract |
 
 ---
 
@@ -75,7 +75,7 @@ is direct:
 
 | Spec | What it covers |
 |------|----------------|
-| [**OVOS-PIPELINE-1** — Utterance Lifecycle & Pipeline](https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md) | The foundational input/output spec: the `match(utterances, lang, session) → Match` contract, **first-match-wins** ordering, dispatch, and the handler-lifecycle events. |
+| [**OVOS-PIPELINE-1** — Utterance Lifecycle & Pipeline](https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md) | The foundational input/output spec: the `match(utterances, lang, message) → Match` contract, **first-match-wins** ordering, dispatch, and the handler-lifecycle events. |
 | [**OVOS-TRANSFORM-1** — Transformer Plugins](https://github.com/OpenVoiceOS/architecture/blob/dev/transformer.md) | The six ordered chains (audio / utterance / metadata / intent / dialog / tts) that enrich or rewrite artifacts at fixed points in the lifecycle. |
 | [**OVOS-CONTEXT-1** — Intent Context](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-context.md) | The decaying, per-session key/value store that **gates** which intents may match across conversational turns. |
 | [**OVOS-CONVERSE-1** — Active Handlers & Interactive Response](https://github.com/OpenVoiceOS/architecture/blob/dev/converse.md) | How a skill stays "active" to intercept follow-ups, and the response window that collects a single follow-up reply. |

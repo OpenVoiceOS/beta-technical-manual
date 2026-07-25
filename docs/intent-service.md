@@ -41,7 +41,7 @@ ovos.utterance.handle  (legacy: recognizer_loop:utterance)   §9.1
   ├── _validate_session()                        # get/create Session
   │
   └── for each pipeline plugin (in order, first-match-wins):    §6.2
-        match(utterances, lang, session) → Match | None         §4
+        match(utterances, lang, message) → Match | None         §4
           ├── match found → ovos.intent.matched (§9.2) → dispatch → handler trio (§8)
           └── no match   → next plugin
               (no plugin matched) → ovos.intent.unmatched (§9.3, legacy: complete_intent_failure)
@@ -83,7 +83,7 @@ The chosen language is validated against `valid_langs` from config using `closes
 
 ## Multilingual Matching
 
-When `intents.multilingual_matching` is enabled, if the primary language produces no match, OVOS will try all other configured languages in order.
+When `intents.multilingual_matching` is enabled, the language fallback is **per pipeline plugin**, not a second whole-pipeline pass: for each plugin in priority order the orchestrator first tries it in the primary language, then — if that plugin declines — retries the *same* plugin in every other configured language, and only then advances to the next plugin. A consequence is that a lower-priority plugin's alternate-language match can win over a higher-priority plugin that was never reached. When the config is off, every plugin is tried in the primary language only.
 
 ## Session Management
 

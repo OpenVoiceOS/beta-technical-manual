@@ -16,7 +16,7 @@ single voice-assistant program. A voice assistant is a *product* that answers
 questions; a voice OS is a *platform* — it defines the boundary between what you
 say and what runs, arbitrates which application handles each utterance, and
 carries conversation state across turns. The orchestrator's
-`match(utterances, lang, session) → Match` contract is, in effect, the
+`match(utterances, lang, message) → Match` contract is, in effect, the
 system-call ABI that lets third-party skills and plugins build against a
 stable interface without knowing about each other — see the
 [Formal Specifications](architecture-specs.md).
