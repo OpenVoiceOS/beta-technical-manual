@@ -3,6 +3,9 @@
 !!! abstract "In a nutshell"
     This is a developer reference for the **legacy** (old, deprecated) way OVOS put things on a screen — the set of behind-the-scenes messages that a skill, the screen service, and the on-device display use to stay in sync about what to show. Think of it as the agreed "language" two parts of the system speak so the right page and data appear. There is no generally usable OVOS screen today; this is kept mainly for **Mark 2** devices and reference, and a ground-up replacement is being built (see [GUI Adapter Plugins](gui-adapters.md)). For terms, see the [Glossary](glossary.md).
 
+!!! tip "Building a remote client?"
+    Skip this legacy protocol — see [Screens on OVOS Today](gui-status.md) for the current approach.
+
 !!! danger "The OVOS GUI is deprecated — see [Screens on OVOS Today](gui-status.md) for the full picture"
     This page documents the legacy protocol. There is no generally usable OVOS GUI right now,
     and a replacement is **Upcoming**.

@@ -3,13 +3,13 @@
 !!! abstract "In a nutshell"
     This is the friendly, guided way to get OVOS onto your machine. You run a single command, then a menu-driven wizard walks you through a few choices (your language, where to install, which features you want) and does the rest for you. It works the same on a Raspberry Pi or an everyday Linux laptop, and is the recommended way to install — no programming required. Scripting a fleet instead? See the [non-interactive scenario install](#non-interactive-scenario-install), which skips the wizard entirely. See the [Glossary](glossary.md) for unfamiliar terms.
 
-!!! warning "Read this before you start: what a default install sends over the network"
+!!! note "Read this before you start: what a default install sends over the network"
     A default OVOS install talks to public, community-run servers for speech-to-text and
     text-to-speech unless you change it — and the installer asks you to opt into two separate
     telemetry reports along the way. See [Privacy & Security](privacy-security.md) for exactly
     what that means, and the [telemetry section below](#anonymous-telemetry) for what each
-    prompt does. **If you're unsure, decline both telemetry prompts** — nothing else about the
-    install depends on them.
+    prompt does and covers. If you're unsure about either prompt, declining is always safe —
+    nothing else about the install depends on them.
 
 !!! tip "Want the easiest option, no terminal at all?"
     The **[RaspOVOS](install-raspovos.md)** image is the flash-and-boot alternative to
@@ -281,7 +281,7 @@ This is your last chance to cancel the process.
 
 ### 📊 Anonymous Telemetry
 
-!!! tip "TL;DR: if you're unsure, decline both"
+!!! tip "If you're unsure, decline both"
     Declining both prompts changes nothing about how OVOS works — it only stops these two
     reports from being sent. There is no functional downside to declining.
 

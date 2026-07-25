@@ -167,23 +167,19 @@ The GUI WebSocket server is configured under `gui_websocket` in `mycroft.conf`:
 | `base_port` | TCP port Qt clients connect to (default: `18181`) |
 | `route` | WebSocket route path (default: `/gui`) |
 
-!!! danger "The GUI WebSocket is unauthenticated and reaches the core bus"
+!!! danger "The GUI WebSocket is unauthenticated, unencrypted, and reaches the core bus"
     Anything received on the GUI socket is translated into an emit on the core messagebus, so
     this socket carries the same authority as the bus itself. There is no authentication and no
-    origin check.
+    origin check. On top of that, there's no TLS option either: unlike
+    [`ovos-messagebus`](bus-service.md) (which can serve `wss://` itself), `ovos-gui`'s Tornado
+    WebSocket server has no working `gui_websocket.ssl` server path — verified against the
+    `ovos-gui` source, there is no config key that turns this socket into `wss://`.
 
     Set `gui_websocket.host` to `127.0.0.1` unless a remote display client genuinely needs it, and
     never expose port `18181` beyond a trusted network. If a display really must run on another
-    machine, put it behind a VPN or a reverse proxy that authenticates, or use
+    machine, put it behind a VPN or a reverse proxy that authenticates and terminates TLS, or use
     [HiveMind](https://jarbashivemind.github.io/HiveMind-community-docs/) for authenticated remote
     transport.
-
-!!! danger "There is no TLS option for the GUI websocket"
-    Unlike [`ovos-messagebus`](bus-service.md) (which can serve `wss://` itself),
-    `ovos-gui`'s Tornado WebSocket server has no working `gui_websocket.ssl` server path —
-    verified against the `ovos-gui` source. There is no config key that turns this socket
-    into `wss://`. Keep it bound to `127.0.0.1` or behind a reverse proxy/VPN that
-    terminates TLS and authenticates; do not expose it as-is.
 
 ---
 

@@ -22,13 +22,13 @@ A single package may ship one or both. In `mycroft.conf` you select them under t
 
 ## Available Language Plugins
 
-| Plugin (entry-point name) | Detect | Translate | Type | Notes | Maturity |
-|--------|--------|-----------|------|-------|-------|
-| `ovos-translate-plugin-server` ([repo](https://github.com/OpenVoiceOS/ovos-translate-server-plugin)) | ✔️ | ✔️ | API (self/community hosted) | Client for [ovos-translate-server](https://github.com/OpenVoiceOS/ovos-translate-server); ships a built-in public-server list with failover. Detection is a separate entry-point, `ovos-lang-detector-plugin-server`. | Stable |
-| `ovos-translate-plugin-nllb` ([repo](https://github.com/OpenVoiceOS/ovos-translate-plugin-nllb)) | ❌ | ✔️ | FOSS (Offline) | NLLB-200 via CTranslate2; downloads a model the first time. | Stable |
-| `ovos-lang-detector-fasttext-plugin` ([repo](https://github.com/OpenVoiceOS/ovos-lang-detector-fasttext-plugin)) | ✔️ | ❌ | FOSS (Offline) | fastText language identification. | Stable |
-| `ovos-lang-detector-classics-plugin` ([repo](https://github.com/OpenVoiceOS/ovos-lang-detector-classics-plugin)) | ✔️ | ❌ | FOSS (Offline) | A *voter* (`ovos-lang-detector-plugin-voter`) that averages classic detectors — by default cld2, langdetect and fastlang (cld3 is also available as a separate sub-plugin). | Stable |
-| `ovos-google-translate-plugin` ([repo](https://github.com/OpenVoiceOS/ovos-google-translate-plugin)) | ✔️ | ✔️ | API (free) | Translate (`ovos-google-translate-plugin`) and detect (`ovos-google-lang-detector-plugin`) are separate entry-points. | Stable |
+| Plugin (entry-point name) | Detect | Translate | Type | License | Notes | Maturity |
+|--------|--------|-----------|------|---------|-------|-------|
+| `ovos-translate-plugin-server` ([repo](https://github.com/OpenVoiceOS/ovos-translate-server-plugin)) | ✔️ | ✔️ | API (self/community hosted) | Apache-2.0 | Client for [ovos-translate-server](https://github.com/OpenVoiceOS/ovos-translate-server); ships a built-in public-server list with failover. Detection is a separate entry-point, `ovos-lang-detector-plugin-server`. | Stable |
+| `ovos-translate-plugin-nllb` ([repo](https://github.com/OpenVoiceOS/ovos-translate-plugin-nllb)) | ❌ | ✔️ | FOSS (Offline) | Apache-2.0 | NLLB-200 via CTranslate2; downloads a model the first time. | Stable |
+| `ovos-lang-detector-fasttext-plugin` ([repo](https://github.com/OpenVoiceOS/ovos-lang-detector-fasttext-plugin)) | ✔️ | ❌ | FOSS (Offline) | Apache-2.0 | fastText language identification. | Stable |
+| `ovos-lang-detector-classics-plugin` ([repo](https://github.com/OpenVoiceOS/ovos-lang-detector-classics-plugin)) | ✔️ | ❌ | FOSS (Offline) | no license file | A *voter* (`ovos-lang-detector-plugin-voter`) that averages classic detectors — by default cld2, langdetect and fastlang (cld3 is also available as a separate sub-plugin). | Stable |
+| `ovos-google-translate-plugin` ([repo](https://github.com/OpenVoiceOS/ovos-google-translate-plugin)) | ✔️ | ✔️ | API (free) | Apache-2.0 (cloud service, separate Google terms) | Translate (`ovos-google-translate-plugin`) and detect (`ovos-google-lang-detector-plugin`) are separate entry-points. | Stable |
 
 Maturity reflects repository health (age, activity, open issues/PRs, in-repo docs), not version — see the [Maturity Scale](maturity.md).
 

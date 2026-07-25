@@ -4,11 +4,14 @@
     OVOS follows a **universal donor** licensing policy: the code should be usable by anyone,
     anywhere, with no strings attached. In practice that means permissive licenses (mostly
     Apache 2.0 or BSD) for all core components, with a short, explicitly documented list of
-    exceptions where a dependency forces a stricter license on one specific plugin.
+    exceptions — either a dependency forcing a stricter license on one specific plugin, or a
+    plugin repository that never shipped a `LICENSE` file at all.
 
 Under the universal donor policy, OVOS code should be usable anywhere by anyone, with no
-conditions attached. OVOS is predominately Apache 2.0 or BSD licensed; there are only a few
-exceptions, and each is listed below.
+conditions attached. OVOS is predominately Apache 2.0 or BSD licensed; the exceptions are a
+small minority of plugins, and every one of them is listed in the table below — either because
+a dependency forces a stricter license, or because the plugin's own repository never shipped a
+`LICENSE` file at all.
 
 Individual plugins or skills may carry their own license when they wrap a dependency that
 requires it — for example a TTS plugin that wraps an AGPL-licensed engine cannot itself be
@@ -49,6 +52,14 @@ compatible with your use case before depending on them.
 | [ovos-tts-plugin-espeakNG](https://github.com/OpenVoiceOS/ovos-tts-plugin-espeakNG) | GPL | depends on [espeak-ng](https://github.com/espeak-ng/espeak-ng) ([GPL-3.0](https://github.com/espeak-ng/espeak-ng/blob/master/COPYING)) |
 | [ovos-g2p-plugin-espeak](https://github.com/OVOSHatchery/ovos-g2p-plugin-espeak) | GPL | depends on [espeak-phonemizer](https://github.com/rhasspy/espeak-phonemizer) ([GPL-3.0](https://github.com/rhasspy/espeak-phonemizer/blob/master/LICENSE)) |
 | [ovos-tts-plugin-SAM](https://github.com/OpenVoiceOS/ovos-tts-plugin-SAM) | see repo (no license file) | the package self-declares Apache-2.0 in its `pyproject.toml`, but the repository ships no `LICENSE` file, and the underlying S.A.M. engine is reverse-engineered abandonware with no clear upstream license |
+| ovos-tts-plugin-phoonnx (built into [phoonnx](https://github.com/TigreGotico/phoonnx)) | no license file | the `phoonnx` repository ships no `LICENSE` file; see the [TTS plugin table](tts-plugins.md#tts-plugins-reference) for the corresponding model-card caveat |
+| [ovos-tts-plugin-beepspeak](https://github.com/OpenVoiceOS/ovos-tts-plugin-beepspeak) | no license file | novelty R2-D2-style TTS plugin; the repository ships no `LICENSE` file |
+| [ovos-tts-plugin-lux](https://github.com/OpenVoiceOS/ovos-tts-plugin-lux) | no license file | zipvoice-based voice-cloning TTS plugin; the repository ships no `LICENSE` file |
+| [ovos-stt-plugin-HiTZ](https://github.com/OpenVoiceOS/ovos-stt-plugin-HiTZ) | no license file | archived/deprecated Basque STT plugin; the repository ships no `LICENSE` file |
+
+The rows above with **no license file** are not a rejection of the universal donor policy —
+they are repositories that never declared one, so no license can be assumed for redistribution
+purposes; treat "no license file" as more restrictive than any permissive license, not less.
 
 ## Further reading
 

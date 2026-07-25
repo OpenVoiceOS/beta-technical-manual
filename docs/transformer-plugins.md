@@ -157,8 +157,8 @@ my-transformer = "my_package.module:MyTransformer"
 | [ovos-utterance-plugin-cancel](#ovos-utterance-plugin-cancel) | plugin to look at the tail end of the transcribed phrase, ignoring the utterance if it ends with "nevermind that" or "cancel it" or "ignore that". | Stable |
 | [ovos-audio-transformer-plugin-ggwave](#ovos-audio-transformer-plugin-ggwave) | plugin for https://github.com/ggerganov/ggwave | Mature |
 | [ovos-tts-transformer-sox-plugin](#ovos-tts-transformer-sox-plugin) | This repository contains a Python package for a Text-to-Speech (TTS) transformer that utilizes SoX (Sound eXchange) for audio processing. The transformer applies various effects to the generated audio before playback. | Beta |
-| [ovos_tts_transformer_FlashSR](#ovos_tts_transformer_flashsr) | ONNX-based audio super-resolution that upsamples synthesized TTS audio before playback (not yet on PyPI). | PoC |
-| [ovos_tts_transformer_NovaSR](#ovos_tts_transformer_novasr) | torch-based audio super-resolution upsampler for synthesized TTS audio (not yet on PyPI). | PoC |
+| [ovos_tts_transformer_FlashSR](#ovos_tts_transformer_flashsr) | ONNX-based audio super-resolution that upsamples synthesized TTS audio before playback (not yet on PyPI). | Proof-of-concept |
+| [ovos_tts_transformer_NovaSR](#ovos_tts_transformer_novasr) | torch-based audio super-resolution upsampler for synthesized TTS audio (not yet on PyPI). | Proof-of-concept |
 
 Maturity reflects repository health (age, activity, open issues/PRs, in-repo docs), not version — see the [Maturity Scale](maturity.md).
 
