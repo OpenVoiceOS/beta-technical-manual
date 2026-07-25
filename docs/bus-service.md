@@ -44,7 +44,7 @@ for every message any one client sends, writes that same message to every other 
 (the Tornado I/O loop shown in the box runs this on its own daemon thread, so it does not block
 whichever process embeds it). `ovos-core`, `ovos-audio`, and `ovos-gui` above are just three
 example clients — anything speaking the same WebSocket protocol, including your own scripts, can
-connect and take part on equal footing.
+connect and take part with the same permissions as any other client.
 
 ---
 
@@ -307,8 +307,8 @@ The canonical legacy ↔ spec topic map lives in the `NamespaceTranslator` from
   **de-duplication** so a handler that would match both fires exactly once.
 
 The result is the same practical guarantee — a producer and a consumer can each switch from a
-legacy topic to its `ovos.*` spec name **in any order, with no coordination**, and no flag day —
-achieved by translating on receipt in every connected process rather than by widening what goes
+legacy topic to its `ovos.*` spec name **in any order, with no coordination**, and without every
+component having to switch over at the same time — achieved by translating on receipt in every connected process rather than by widening what goes
 out on the wire.
 
 ### Turning the bridges off
@@ -365,7 +365,7 @@ and a plain `ConnectionRefusedError`/`ConnectionResetError` land there). `on_err
 
 **Backoff.** Reconnection starts at a 5-second delay and doubles on each further failure, capped
 at 60 seconds (`self.retry = min(self.retry * 2, 60)`), so a device left disconnected for a while
-does not hammer the bus with reconnect attempts. A successful reconnect resets the delay back to
+does not overload the bus with reconnect attempts. A successful reconnect resets the delay back to
 5 seconds for next time.
 
 **In-flight calls during the outage.** `emit()` (and therefore `wait_for_response()`, which calls

@@ -188,7 +188,7 @@ height: Mycroft.Units.gridUnit // 16px Tall
 
 OVOS Shell uses a custom Kirigami Platform Theme plugin to provide global theming to all skills and user interfaces, which also allows OVOS GUIs to be fully compatible with the system themes on platforms that are not running the OVOS Shell.
 
-Kirigami Theme and Color Scheme guide is extensive and can be found [here](https://develop.kde.org/docs/use/kirigami/style-colors/)
+The Kirigami Theme and Color Scheme guide is extensive and can be found on the [Kirigami style and colors page](https://develop.kde.org/docs/use/kirigami/style-colors/)
 
 OVOS GUI's developed to follow the color scheme depend on only a subset of available colors, mainly:
 

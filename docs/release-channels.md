@@ -109,6 +109,13 @@ These channels are managed via the [constraints files](https://pip.pypa.io/en/st
 - 🚫 No new features or breaking changes
 - ✅ Recommended for production or everyday use
 
+!!! note "\"Production-ready\" means package-version stability, not a hardened default"
+    This channel guarantees the *package versions* are stable and tested — it says nothing
+    about the default plugin configuration. Out of the box, that config still ships cloud
+    STT/TTS/translation and an unauthenticated bus. See
+    [Privacy & Security](privacy-security.md) for the actual network surface and how to
+    harden it.
+
 ```bash
 uv pip install ovos-core[mycroft] -c https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-stable.txt
 

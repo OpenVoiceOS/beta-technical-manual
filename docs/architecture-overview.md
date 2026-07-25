@@ -23,7 +23,7 @@ stable interface without knowing about each other — see the
 
 ## High-Level Flow
 
-![Full Flow](img/Full%20flow.jpeg)
+![Diagram: an utterance flowing from microphone input through wake word, STT, the intent pipeline, skill execution, TTS, and audio/GUI output](img/Full%20flow.jpeg)
 
 The diagram above illustrates how a user utterance moves through the system:
 
@@ -55,7 +55,7 @@ ovos-messagebus  (WebSocket pub/sub)
       │
       ├── ovos-dinkum-listener  – STT / wake-word → ovos.utterance.handle
       ├── ovos-audio            – TTS / sound playback (+ legacy media audioservice)
-      ├── ovos-media            – standalone media-playback service (opt-in; replaces legacy audioservice)
+      ├── ovos-media            – standalone media-playback service (opt-in, Proof-of-concept; replaces legacy audioservice)
       ├── ovos-gui              – GUI layer
       └── ovos-phal             – hardware/platform plugins
 ```
@@ -65,9 +65,10 @@ run inside `IntentService` above. The other three run elsewhere in the pipeline:
 transformers run in `ovos-dinkum-listener` before STT, and dialog and TTS transformers run in
 `ovos-audio` (or `ovos-media`, where installed) when a response is rendered.
 
-```bash
-
-```
+In words: `ovos-messagebus` is the hub. `ovos-core` connects to it and contains the
+`SkillManager` and `IntentService`. `ovos-dinkum-listener`, `ovos-audio`, `ovos-media`,
+`ovos-gui`, and `ovos-PHAL` are siblings that each connect to the bus independently, alongside
+`ovos-core`.
 
 `ovos-messagebus` sits at the top because every other box connects to it as a client — it is the
 one shared channel, not a hierarchy. `ovos-core` bundles the services most people mean by "the

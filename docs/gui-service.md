@@ -93,6 +93,12 @@ format.
             resolves and renders the requested QML pages
 ```
 
+In words: a skill calls `self.gui` (for example `show_text()`), which emits `gui.value.set`
+and `gui.page.show` on the OVOS messagebus. `ovos-gui`'s `NamespaceManager` tracks the active
+namespace stack and mirrors it out to every connected client as `mycroft.session.*` /
+`mycroft.gui.list.*` messages over its WebSocket. The Qt client receives those messages and
+renders the requested QML page.
+
 ### `GUIInterface` display methods
 
 `self.gui` exposes these display methods (from `ovos_bus_client.apis.gui.GUIInterface`):

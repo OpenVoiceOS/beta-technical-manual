@@ -61,7 +61,7 @@ class MeaningFallback(FallbackSkill):
 
 > **NOTE**: a `FallbackSkill` can register any number of fallback handlers.
 
-The above example can be found [here](https://github.com/forslund/fallback-meaning).
+The above example can be found in [the fallback-meaning skill example](https://github.com/forslund/fallback-meaning).
 
 ---
 

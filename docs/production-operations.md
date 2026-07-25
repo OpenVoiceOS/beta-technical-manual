@@ -178,6 +178,14 @@ ready_sound: false   # don't play a ready chime either
 `network`/`internet`/`gui_connected` are also accepted `ready_settings` entries, and any
 service exposing an OVOS `ProcessStatus` (including `PHAL`) can be named by its status key.
 
+!!! warning "`mycroft.ready` only covers what you list"
+    `mycroft.ready` only tracks the components named in `ready_settings` — skills, voice, and
+    audio by default. It does **not** track the GUI or the media daemon unless you add
+    `gui_connected` (or a media status key) yourself. That means a fleet can report "ready"
+    while the screen is stuck (see [GUI status](gui-status.md)) or the media daemon
+    (see [ovos-media](ovos-media.md)) is non-functional — the health check simply never asked
+    about them.
+
 !!! note "Upcoming — a bundled health check script"
     A ready-to-use OVOS health check script for the `ovos-installer` is in progress
     ([ovos-installer#542](https://github.com/OpenVoiceOS/ovos-installer/pull/542)), covering

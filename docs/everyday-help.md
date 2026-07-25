@@ -32,13 +32,13 @@ symptom.
 ## "It's not listening to me"
 
 - **Say the wake word clearly, with a short pause after it.** OVOS listens for a wake word (by
-  default *"Hey Mycroft"*) before it pays attention to anything else. Say the wake word, wait a
-  beat, then say your request — "Hey Mycroft… what's the weather" — rather than running the two
+  default *"Hey Mycroft"*) before it pays attention to anything else. Say the wake word, wait
+  about one second, then say your request — "Hey Mycroft… what's the weather" — rather than running the two
   together.
 - **Check you're not muted.** If a light or on-screen icon shows the microphone is muted, say
   *"unmute microphone"* or use the physical mute switch/button if your device has one.
 - **Move closer, or reduce background noise.** Wake-word detection is a local audio match — a TV,
-  music, or a fan right next to the microphone can drown it out.
+  music, or a fan right next to the microphone can make it too loud for the wake word to be heard.
 - **The wake word keeps missing or keeps false-triggering.** This is a sensitivity setting, not a
   hardware fault — see [Wake Word Plugins](wake-word-plugins.md#wake-word-configuration) for how to
   adjust `sensitivity` and `trigger_level` in `mycroft.conf`, and pick a less noise-prone wake word

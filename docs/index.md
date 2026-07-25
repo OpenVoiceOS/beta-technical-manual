@@ -151,7 +151,7 @@ in the grid below.
 
     ---
 
-    SBC-agnostic hardware, PHAL, and the honest state of on-device screens.
+    SBC-agnostic hardware, PHAL, and why on-device screens aren't a serious option yet.
 
     [:octicons-arrow-right-24: Hardware Integrators](hardware-integrators.md)
 
@@ -166,8 +166,8 @@ in the grid below.
 ## How OVOS is organized
 
 OVOS is not one program — it's a small team of cooperating services that talk to each
-other over a shared **[messagebus](bus-service.md)**. Knowing the cast of characters
-makes the rest of the manual click into place:
+other over a shared **[messagebus](bus-service.md)**. Knowing these components
+will make the rest of the manual easier to follow:
 
 !!! tip "Maturity badges"
     Most component and plugin pages open with a **maturity** badge (e.g. ⬤⬤⬤⬤◯ Stable) and

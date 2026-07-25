@@ -164,7 +164,7 @@ The skill emits an `ovos.utterance.speak` message containing the response text �
 ## 8. [Session](session.md) Wrap-up
 **Service:** `ovos-core` (Session Manager)
 
-The lifecycle closes with exactly one `ovos.utterance.handled` event (OVOS-PIPELINE-1 §9.5) — the universal end-marker that fires whether an intent matched, a fallback answered, or nothing claimed the utterance. The conversation state is then updated: `turns_remaining` decrements after the match round regardless of whether anything matched, though entries freshly written this round are exempt from that decrement. If the skill requested a follow-up question (e.g., `expect_response=True`), the listener is reactivated immediately, and the cycle begins again at Step 1, but with the current **Session** context preserved.
+The lifecycle closes with exactly one `ovos.utterance.handled` event (OVOS-PIPELINE-1 §9.5) — the universal end-marker that fires whether an intent matched, a fallback answered, or nothing claimed the utterance. Any `intent_context` entries that carry an explicit `turns_remaining` counter (an optional per-entry field — most entries instead decay on the time-based `timeout`, see [Session](session.md#intent-context)) have it decremented after the match round, except entries freshly written this round; this turn-count decay is a second, independent axis from the timeout. If the skill requested a follow-up question (e.g., `expect_response=True` / `listen=True`), the reply is spoken and the listener is reactivated **directly into recording** — the wake word is bypassed, so the cycle resumes at **Step 2** (recording → STT), not the wake-word gate of Step 1, with the current **Session** context preserved.
 
 ---
 

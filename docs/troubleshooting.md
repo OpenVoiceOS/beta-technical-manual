@@ -63,7 +63,7 @@ emits an utterance message, the intent service emits a match, the skill emits a 
 the bus as a client and streams every one of those messages live to a browser tab — it turns six
 separate log files into one filterable, searchable timeline.
 
-Under the hood it is a FastAPI + WebSocket/SSE service that opens an `ovos-bus-client` connection to
+Internally, it is a FastAPI + WebSocket/SSE service that opens an `ovos-bus-client` connection to
 the messagebus and keeps an in-memory ring buffer of everything it sees. The browser UI lets you:
 
 - filter the live stream by message type (glob patterns, e.g. `ovos.*` or `recognizer_loop:*`)
@@ -454,7 +454,7 @@ If the logs and bus traffic don't explain the problem, the OpenVoiceOS community
   questions, bug reports, and searchable past discussions.
 
 When asking for help, include the relevant log excerpt (or an `ovos-busmon` JSON export) for the
-stage where the trail goes cold — it is almost always faster to diagnose with the actual message
+stage where you stop seeing the expected messages — it is almost always faster to diagnose with the actual message
 sequence than with a description of the symptom alone.
 
 ---

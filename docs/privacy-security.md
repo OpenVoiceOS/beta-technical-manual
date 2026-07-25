@@ -34,7 +34,7 @@ to a network you don't control, or install a skill whose source you haven't vett
 | Connectivity checks | `network_tests` polls `https://api.ipify.org`, `1.1.1.1`, `8.8.8.8`, `http://nmcheck.gnome.org/check_network_status.txt` and `https://checkonline.home-assistant.io/online.txt` to decide whether the device is online and behind a captive portal | **No** — but every URL is a config key; point `network_tests` at your own infrastructure |
 | Backend / pairing | OVOS is **backendless** by default — there is no backend key in the shipped `mycroft.conf` at all, nothing is paired, and no account exists unless you add one yourself | **Yes** |
 | Remote config | OVOS has no remote/backend config layer — nothing on the network can push settings into your `mycroft.conf` | **Yes** |
-| Update checks | The installer does **not** phone home automatically; you re-run it manually to check for a newer release | **Yes** |
+| Update checks | The installer does **not** automatically contact a server; you re-run it manually to check for a newer release | **Yes** |
 | Install-time telemetry | One-time, opt-in — see below | Depends on your answer |
 | Ongoing usage telemetry | Opt-in, continues to run after install — see below | Depends on your answer |
 
