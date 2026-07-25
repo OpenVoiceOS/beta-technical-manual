@@ -1698,6 +1698,33 @@ mechanism); the tables below show both names where applicable.</p>
 </tr>
 </tbody>
 </table>
+<p><code>IntentService</code> also <strong>emits</strong> these on a successful match (in order — see <a href="../intent-service/#intent-match-emission">Intent Service</a>):</p>
+<table>
+<thead>
+<tr>
+<th>Event</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>{skill_id}.activate</code></td>
+<td>Mark the matched skill active in the session</td>
+</tr>
+<tr>
+<td><code>ovos.intent.matched</code></td>
+<td>A pipeline plugin claimed the utterance (notification)</td>
+</tr>
+<tr>
+<td><code>&lt;skill_id&gt;:&lt;intent_name&gt;</code></td>
+<td>The dispatch message that invokes the winning skill's intent handler</td>
+</tr>
+<tr>
+<td><code>ovos.intent.handler.start</code> → <code>ovos.intent.handler.complete</code> / <code>ovos.intent.handler.error</code></td>
+<td>The orchestrator-owned handler-lifecycle trio around the invocation (§8; <strong>not</strong> translator-bridged — see <a href="#legacy-spec-migration">Legacy ↔ spec migration</a>)</td>
+</tr>
+</tbody>
+</table>
 <h3 id="converse">Converse<a class="headerlink" href="#converse" title="Permanent link">&para;</a></h3>
 <p>See <a href="../converse-pipeline/#bus-events-handled">Converse Pipeline</a> for the full picture.</p>
 <table>
@@ -1819,15 +1846,15 @@ mechanism); the tables below show both names where applicable.</p>
 <tbody>
 <tr>
 <td><code>ovos.stop</code> (legacy: <code>mycroft.stop</code>)</td>
-<td>Global stop broadcast — every skill subscribes and ceases activity for the inbound session (see below)</td>
+<td>Global stop broadcast — every skill subscribes and ceases activity for the inbound session (see below). Only this pair is translator-bridged</td>
 </tr>
 <tr>
 <td><code>&lt;skill_id&gt;:stop</code> (legacy: <code>{skill_id}.stop</code>)</td>
-<td>Skill-directed stop dispatch</td>
+<td>Skill-directed stop dispatch. <strong>Dual-subscribed, not translator-bridged</strong> — the skill base class listens on both forms itself (the per-skill <code>{skill_id}.*</code> shape can't be a static map key)</td>
 </tr>
 <tr>
 <td><code>ovos.stop.ping</code> (legacy: <code>{skill_id}.stop.ping</code>)</td>
-<td>Check whether this skill can stop</td>
+<td>Check whether this skill can stop. Also <strong>dual-subscribed, not translator-bridged</strong> (see the <a href="#not-bridged-adopt-the-spec-directly">Not bridged</a> note)</td>
 </tr>
 <tr>
 <td><code>mycroft.skill.enable_intent</code> / <code>mycroft.skill.disable_intent</code></td>
