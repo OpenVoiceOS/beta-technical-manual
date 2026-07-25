@@ -1106,6 +1106,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#intent-context" class="md-nav__link">
+    <span class="md-ellipsis">
+      Intent context
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#presentation-preferences" class="md-nav__link">
     <span class="md-ellipsis">
       Presentation preferences
@@ -1565,6 +1574,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#intent-context" class="md-nav__link">
+    <span class="md-ellipsis">
+      Intent context
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#presentation-preferences" class="md-nav__link">
     <span class="md-ellipsis">
       Presentation preferences
@@ -1713,6 +1731,14 @@ TTS voice selection keys on <code>data.lang</code> for exactly this reason.</p>
 </div>
 <p>See <a href="../lang-selection/">Language Selection and Disambiguation</a> for how <code>ovos-core</code> resolves
 these signals into the language it matches an utterance in.</p>
+<h2 id="intent-context">Intent context<a class="headerlink" href="#intent-context" title="Permanent link">&para;</a></h2>
+<p>A session also carries <code>intent_context</code>: a per-key decaying context store that gates which
+intents may match across turns (e.g. "book a flight" setting context so a follow-up "to
+Paris" is understood without repeating "flight"). It is a session field claimed into the
+SESSION-1 registry by <strong>OVOS-CONTEXT-1</strong>, holding <code>{value, expires_at}</code> per key — each entry
+decays after a <code>timeout</code> (default ~2 minutes) unless refreshed. See
+<a href="../intent-service/">Intent Service</a> for how context is set, read, and consumed during
+pipeline matching.</p>
 <h2 id="presentation-preferences">Presentation preferences<a class="headerlink" href="#presentation-preferences" title="Permanent link">&para;</a></h2>
 <p>Beyond <code>session_id</code> and the language signals, a session carries <strong>presentation
 preferences</strong> that follow the session's originator rather than the device —

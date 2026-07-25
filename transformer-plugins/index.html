@@ -1573,9 +1573,15 @@ transformer blocks the owning service for its full duration — there is no back
 execution or timeout. This matters most for <code>AudioTransformer</code>, which sits on the
 real-time audio path: keep its work fast and offload anything heavy (model inference,
 network calls) to a background thread/process instead of doing it inside <code>transform()</code>.</p>
+<p>There is no async return path back into the chain: <code>transform()</code> is called inline and
+must return before the chain can proceed, so it cannot await a background job's result
+mid-chain. "Offload the heavy work" only helps if <code>transform()</code> can return
+cached/previous data immediately on each call, while the background thread/process
+updates that cache for the <em>next</em> call to pick up — the current call never blocks on
+the background job finishing.</p>
 </div>
 <h2 id="transformer-types">Transformer Types<a class="headerlink" href="#transformer-types" title="Permanent link">&para;</a></h2>
-<p>All base classes live in <code>ovos_plugin_manager.templates.transformers</code> and share the same constructor: <code>__init__(self, name, priority=50, config=None)</code>, plus <code>bind(bus)</code> and <code>initialize()</code>.</p>
+<p>All base classes live in <code>ovos_plugin_manager.templates.transformers</code> and share the same constructor: <code>__init__(self, name, priority=50, config=None)</code>, plus <code>bind(bus)</code> and <code>initialize()</code>. The loader supplies <code>name</code>, <code>priority</code>, and <code>config</code> from configuration when it instantiates your class — a plugin usually does not need to override <code>__init__</code> at all; if it does, it must call <code>super().__init__(name, priority, config)</code> so the loader-supplied values still reach the base class.</p>
 <table>
 <thead>
 <tr>

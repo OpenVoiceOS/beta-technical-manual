@@ -2006,10 +2006,9 @@ for the full guidance.</p>
 </span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>ovos-config<span class="w"> </span>get<span class="w"> </span>-k<span class="w"> </span>lang<span class="w">                 </span><span class="c1"># find all keys containing &quot;lang&quot;</span>
 </span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>ovos-config<span class="w"> </span>get<span class="w"> </span>-k<span class="w"> </span>/tts/module<span class="w">          </span><span class="c1"># get exact value at tts.module</span>
 </span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>ovos-config<span class="w"> </span><span class="nb">set</span><span class="w"> </span>-k<span class="w"> </span>/tts/module<span class="w"> </span>-v<span class="w"> </span>ovos-tts-plugin-phoonnx
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="c1"># if the key is a secret (llm.key, tokens), afterward: chmod 600 ~/.config/mycroft/mycroft.conf</span>
 </span></code></pre></div>
-<p>If the key you're setting is a secret (e.g. <code>llm.key</code>, an access token), follow up with
-<code>chmod 600 ~/.config/mycroft/mycroft.conf</code> — <code>ovos-config set</code> does not restrict the file's
-permissions itself.</p>
+<p>See the <strong>Secrets and permissions</strong> warning above — <code>ovos-config set</code> does not restrict the file's permissions itself.</p>
 <hr />
 <h2 id="protected-keys-and-system-restrictions">Protected Keys and System Restrictions<a class="headerlink" href="#protected-keys-and-system-restrictions" title="Permanent link">&para;</a></h2>
 <p>The system config (<code>/etc/mycroft/mycroft.conf</code>) can enforce constraints:</p>

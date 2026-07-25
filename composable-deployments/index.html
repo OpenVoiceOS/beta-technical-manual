@@ -1928,6 +1928,11 @@ install hides for you. These are the most common sources of confusion.</p>
 <td><code>ovos-gui-service</code></td>
 <td>The GUI service's environment/container</td>
 </tr>
+<tr>
+<td><a href="../transformer-plugins/">Transformer</a> (<code>opm.transformer.*</code>)</td>
+<td><code>ovos-core</code> (utterance/metadata/intent chains), <code>ovos-dinkum-listener</code> (audio chain), <code>ovos-audio</code> (dialog/tts chains)</td>
+<td>Whichever of those services' environments runs the chain that plugin belongs to</td>
+</tr>
 </tbody>
 </table>
 <p>There is no cross-process plugin discovery — each service resolves plugins from its <strong>own</strong>
@@ -1958,6 +1963,14 @@ or arbitrate between them. Running two instances of the same service against one
 give you redundancy or failover; it gives you duplicate handling of every message and
 double-emitted lifecycle events (e.g. two <code>ovos.intent.handler.start</code>/<code>.complete</code> pairs for
 one utterance), since both instances react to the same broadcast independently.</p>
+<p>There is no supported skill-level or bus-level workaround for this. Filtering handlers by
+<code>session_id</code> inside a skill does not make it safe to run two instances of a singleton
+service against the same bus: the duplication happens at the message-dispatch level, before
+any skill code runs, so every subscriber on both instances still receives and reacts to
+every message. Horizontal scaling for multiple devices/users is a distributed-deployment
+concern, not a duplicate-singleton one — it is done with <a href="../hivemind-agents/">HiveMind</a>
+satellites talking to a single hub, not by running two copies of <code>ovos-core</code>,
+<code>ovos-audio</code>, or <code>ovos-dinkum-listener</code> against one bus.</p>
 <h3 id="defaults-assume-localhost">Defaults assume localhost<a class="headerlink" href="#defaults-assume-localhost" title="Permanent link">&para;</a></h3>
 <p><code>websocket.host</code> (<code>127.0.0.1</code>), and most PHAL device-integration plugins, assume everything they
 talk to is on the same machine. Treat every default as loopback-only until you have explicitly

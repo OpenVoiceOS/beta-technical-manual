@@ -2024,6 +2024,12 @@ multi-instance and run all configured plugins of a type in priority order.</p>
 <p>Discovery is also name-keyed: if two installed packages register the same entry-point
 name under the same group, OPM keys them by that name, so one silently shadows the other
 with no error. Avoid duplicate plugin names across packages.</p>
+<p>For the singleton core types this collision happens <em>before</em> the factory ever runs: the
+factory (<code>OVOSSTTFactory.create()</code>, <code>OVOSTTSFactory.create()</code>, etc.) just asks
+<code>find_*_plugins()</code> for whichever class is registered under the configured <code>module</code> name
+and instantiates it. If two packages registered that same entry-point name, discovery has
+already picked one of them silently at import time — the factory has no way to detect or
+warn about the collision, it only ever sees the single class discovery handed it.</p>
 </div>
 <h3 id="transformer-plugins">Transformer Plugins<a class="headerlink" href="#transformer-plugins" title="Permanent link">&para;</a></h3>
 <p>These six types are the six ordered chains of <a href="https://github.com/OpenVoiceOS/architecture/blob/dev/transformer.md">OVOS-TRANSFORM-1</a>, each injected at a fixed point in the utterance lifecycle (audio → utterance → metadata → intent → dialog → tts) and run in <strong>ascending</strong> priority order.</p>
