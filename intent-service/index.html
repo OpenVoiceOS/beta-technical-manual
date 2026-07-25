@@ -1754,7 +1754,7 @@
 </span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>  ├── _validate_session()                        # get/create Session
 </span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>  │
 </span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>  └── for each pipeline plugin (in order, first-match-wins):    §6.2
-</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>        match(utterances, lang, session) → Match | None         §4
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>        match(utterances, lang, message) → Match | None         §4
 </span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>          ├── match found → ovos.intent.matched (§9.2) → dispatch → handler trio (§8)
 </span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>          └── no match   → next plugin
 </span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>              (no plugin matched) → ovos.intent.unmatched (§9.3, legacy: complete_intent_failure)
@@ -1792,7 +1792,7 @@ NOT treat as a guarantee" (§3.2.5) and, for intent matching, suggests preferrin
 consolidates them in practice; another orchestrator may weigh them differently.</p>
 </div>
 <h2 id="multilingual-matching">Multilingual Matching<a class="headerlink" href="#multilingual-matching" title="Permanent link">&para;</a></h2>
-<p>When <code>intents.multilingual_matching</code> is enabled, if the primary language produces no match, OVOS will try all other configured languages in order.</p>
+<p>When <code>intents.multilingual_matching</code> is enabled, the language fallback is <strong>per pipeline plugin</strong>, not a second whole-pipeline pass: for each plugin in priority order the orchestrator first tries it in the primary language, then — if that plugin declines — retries the <em>same</em> plugin in every other configured language, and only then advances to the next plugin. A consequence is that a lower-priority plugin's alternate-language match can win over a higher-priority plugin that was never reached. When the config is off, every plugin is tried in the primary language only.</p>
 <h2 id="session-management">Session Management<a class="headerlink" href="#session-management" title="Permanent link">&para;</a></h2>
 <p>Each utterance is associated with a <code>Session</code>.</p>
 <ul>

@@ -1257,7 +1257,7 @@ component for spec conformance, not for everyday use.</p>
 </tr>
 <tr>
 <td><strong>📐 Match Contract</strong></td>
-<td>The single method every <strong>pipeline plugin</strong> exposes: <code>match(utterances, lang, session) → Match \| None</code>. It is the "system-call ABI" of the voice OS — the orchestrator knows nothing about a plugin except this signature. Returning a <code>Match</code> claims the utterance; returning <code>None</code> declines it. 📐 <a href="https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md">OVOS-PIPELINE-1</a>.</td>
+<td>The single method every <strong>pipeline plugin</strong> exposes: <code>match(utterances, lang, message) → Match \| None</code>. It is the "system-call ABI" of the voice OS — the orchestrator knows nothing about a plugin except this signature. Returning a <code>Match</code> claims the utterance; returning <code>None</code> declines it. 📐 <a href="https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md">OVOS-PIPELINE-1</a>.</td>
 </tr>
 <tr>
 <td><strong>Message</strong></td>
@@ -1317,7 +1317,7 @@ component for spec conformance, not for everyday use.</p>
 </tr>
 <tr>
 <td><strong>📐 Pipeline Plugin</strong></td>
-<td>A matcher that exposes the <strong>match contract</strong> — <code>match(utterances, lang, session) → Match \| None</code>. The <strong>orchestrator</strong> iterates the installed pipeline plugins in <code>session.pipeline</code> order, <strong>first-match-wins</strong>; a plugin returns a <code>Match</code> to claim the utterance or <code>None</code> to pass. <a href="../adapt-pipeline/">Adapt</a>, <a href="../padatious-pipeline/">Padatious</a>, <a href="../converse-pipeline/">Converse</a>, <a href="../fallback-pipeline/">Fallback</a>, <a href="../ocp-pipeline/">OCP</a> and <a href="../personas/">Persona</a> are all pipeline plugins. 📐 <a href="https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md">OVOS-PIPELINE-1</a>.</td>
+<td>A matcher that exposes the <strong>match contract</strong> — <code>match(utterances, lang, message) → Match \| None</code>. The <strong>orchestrator</strong> iterates the installed pipeline plugins in <code>session.pipeline</code> order, <strong>first-match-wins</strong>; a plugin returns a <code>Match</code> to claim the utterance or <code>None</code> to pass. <a href="../adapt-pipeline/">Adapt</a>, <a href="../padatious-pipeline/">Padatious</a>, <a href="../converse-pipeline/">Converse</a>, <a href="../fallback-pipeline/">Fallback</a>, <a href="../ocp-pipeline/">OCP</a> and <a href="../personas/">Persona</a> are all pipeline plugins. 📐 <a href="https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md">OVOS-PIPELINE-1</a>.</td>
 </tr>
 <tr>
 <td><strong>Plugin</strong></td>

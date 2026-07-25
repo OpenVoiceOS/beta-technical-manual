@@ -1715,7 +1715,7 @@
 <ul>
 <li><strong><a href="../skill-manager/">Skill Manager</a></strong> — finds, loads, and manages skill lifecycles, including connectivity gating (skills only load once requirements like internet access are met).</li>
 <li><strong><a href="../intent-service/">Intent Service</a></strong> — the utterance handling flow, language disambiguation, and the query API.</li>
-<li><strong>Intent Pipeline</strong> — the ordered sequence of <strong>pipeline plugins</strong> that decide what the user wants; each exposes a single <code>match(utterances, lang, session) → Match | None</code> contract and they run <strong>first-match-wins</strong>, with no cross-plugin confidence scoring (OVOS-PIPELINE-1 §4, §6.2). See <a href="../adapt-pipeline/">Adapt</a>, <a href="../padatious-pipeline/">Padatious</a>, and <a href="../cq-pipeline/">Common Query</a>.</li>
+<li><strong>Intent Pipeline</strong> — the ordered sequence of <strong>pipeline plugins</strong> that decide what the user wants; each exposes a single <code>match(utterances, lang, message) → Match | None</code> contract and they run <strong>first-match-wins</strong>, with no cross-plugin confidence scoring (OVOS-PIPELINE-1 §4, §6.2). See <a href="../adapt-pipeline/">Adapt</a>, <a href="../padatious-pipeline/">Padatious</a>, and <a href="../cq-pipeline/">Common Query</a>.</li>
 <li><strong>Transformer Plugins</strong> — modify utterances, metadata, or intent matches as they move through the pipeline.</li>
 <li><strong><a href="../skill-installer/">Skill Installer</a></strong> — installs and manages skills and Python packages dynamically at runtime.</li>
 </ul>

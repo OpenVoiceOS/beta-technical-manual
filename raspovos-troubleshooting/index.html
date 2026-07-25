@@ -1683,7 +1683,7 @@ problems in plain language before you dig into the technical steps below.</p>
 </ul>
 <hr />
 <h2 id="how-to-debug-intent-matching">How to debug intent matching<a class="headerlink" href="#how-to-debug-intent-matching" title="Permanent link">&para;</a></h2>
-<p>To easily debug intent parsing open a terminal and run <code>ologs | grep intent</code> , this will show you live logs related only to intent parsing</p>
+<p>To easily debug intent parsing open a terminal and run <code>ologs | grep intent</code>; this will show you live logs related only to intent parsing</p>
 <div class="admonition note">
 <p class="admonition-title"><code>ologs</code> is a raspOVOS shortcut</p>
 <p><code>ologs</code> is a raspOVOS-only shell alias (<code>tail -f</code> over the log files, see <a href="../install-raspovos/#helpful-commands">raspOVOS commands</a>); it is <strong>not</strong> the portable <a href="../cli-tools/#reading-the-logs-ovos-logs"><code>ovos-logs</code></a> CLI. On a non-raspOVOS install use <code>ovos-logs</code> (or <code>tail -f</code> on the <a href="../troubleshooting/">log files</a>) instead.</p>
@@ -1945,7 +1945,7 @@ others, so it's essential to test and evaluate the plugin with your chosen word.
 <blockquote>
 <p>💡 e.g. <code>hey mycroft</code> is usually transcribed as <code>hey microsoft</code>,</p>
 </blockquote>
-<p>example for "hey  computer"</p>
+<p>example for "hey computer"</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>  &quot;listener&quot;: {
 </span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>    &quot;wake_word&quot;: &quot;hey_computer&quot;
 </span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>  },
@@ -1957,7 +1957,7 @@ others, so it's essential to test and evaluate the plugin with your chosen word.
 </span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>        &quot;debug&quot;: true,
 </span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>        &quot;samples&quot;: [&quot;hey computer&quot;, &quot;a computer&quot;, &quot;hey computed&quot;],
 </span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>        &quot;rule&quot;: &quot;equals&quot;,
-</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>        &quot;full_vocab&quot;: false,
+</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>        &quot;full_vocab&quot;: false
 </span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>    }
 </span><span id="__span-4-14"><a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a>  }
 </span></code></pre></div>
@@ -2076,7 +2076,7 @@ choosing a wake word that will work well in various environments:</p>
 </ul>
 </li>
 <li><strong>Check audio setup logs:</strong></li>
-<li>During boot the audio setup generates logs, which are saved to the <code>/tmp</code> directory:<ul>
+<li>During boot the audio setup generates a log file, saved to the <code>/tmp</code> directory:<ul>
 <li><code>/tmp/autosoundcard.log</code> (for soundcard autoconfiguration)</li>
 </ul>
 </li>
@@ -2213,7 +2213,7 @@ choosing a wake word that will work well in various environments:</p>
 <h2 id="stt-tips-and-tricks">STT tips and tricks<a class="headerlink" href="#stt-tips-and-tricks" title="Permanent link">&para;</a></h2>
 <h3 id="saving-transcriptions">Saving Transcriptions<a class="headerlink" href="#saving-transcriptions" title="Permanent link">&para;</a></h3>
 <p>You can enable saving of recordings to file, this should be your first step to diagnose problems, is the audio
-inteligible? is it being cropped? too noisy? low volume?</p>
+intelligible? is it being cropped? too noisy? low volume?</p>
 <blockquote>
 <p>💡 set <code>"save_utterances": true</code> in
 your <a href="https://github.com/OpenVoiceOS/ovos-config/blob/V0.0.13a19/ovos_config/mycroft.conf">listener config</a>,
