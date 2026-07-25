@@ -12,6 +12,14 @@ Transformer plugins let you intercept and modify data as it flows through the tr
 
 A transformer never *replaces* a stage; it sits between two stages and reshapes what passes through. Several plugins of the same type can be active at once — they run in sequence, lowest `priority` first, so each one builds on the output of the previous.
 
+!!! note "Synchronous contract — keep transformers fast"
+    `transform()` (and `on_audio()`/`on_speech()`) are plain synchronous methods; the chain
+    runner calls each one inline, in order, on the thread that owns the chain. A slow
+    transformer blocks the owning service for its full duration — there is no background
+    execution or timeout. This matters most for `AudioTransformer`, which sits on the
+    real-time audio path: keep its work fast and offload anything heavy (model inference,
+    network calls) to a background thread/process instead of doing it inside `transform()`.
+
 ## Transformer Types
 
 All base classes live in `ovos_plugin_manager.templates.transformers` and share the same constructor: `__init__(self, name, priority=50, config=None)`, plus `bind(bus)` and `initialize()`.

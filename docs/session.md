@@ -94,7 +94,8 @@ and `location` is what backs the `location` / `location_pretty` /
 
 ## Magic Properties
 
-Skills have some "magic properties", these will always reflect the value in the current `Session`
+Skills have some "magic properties" — these reflect the current `Session`'s value when it has
+one, falling back to Configuration otherwise
 
 ```python
     # magic properties -> depend on message.context / Session

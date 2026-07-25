@@ -274,6 +274,16 @@ wake word detection, STT, intent matching, and TTS all round-trip through the bu
 lossy link between the listener and the bus is felt as sluggish or dropped voice interactions, not
 as an error message.
 
+### Services are implicit singletons per bus
+
+`ovos-core`, `ovos-audio`, and `ovos-dinkum-listener` are each written assuming they are the
+only instance of that service talking to a given bus. The bus itself is pure fan-out with no
+leader election or ownership concept — it has no way to tell two `ovos-core` processes apart
+or arbitrate between them. Running two instances of the same service against one bus does not
+give you redundancy or failover; it gives you duplicate handling of every message and
+double-emitted lifecycle events (e.g. two `ovos.intent.handler.start`/`.complete` pairs for
+one utterance), since both instances react to the same broadcast independently.
+
 ### Defaults assume localhost
 
 `websocket.host` (`127.0.0.1`), and most PHAL device-integration plugins, assume everything they

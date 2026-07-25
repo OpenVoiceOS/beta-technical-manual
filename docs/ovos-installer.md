@@ -1,5 +1,9 @@
 # How to Install Open Voice OS with the `ovos-installer`
 
+If you have a spare Raspberry Pi and want the zero-terminal experience, use
+**[raspOVOS](install-raspovos.md)** instead. Keep reading here only if you're on
+non-Pi hardware or installing onto an existing Raspberry Pi OS setup.
+
 !!! abstract "In a nutshell"
     This is the friendly, guided way to get OVOS onto your machine. You run a single command, then a menu-driven wizard walks you through a few choices (your language, where to install, which features you want) and does the rest for you. It works the same on a Raspberry Pi or an everyday Linux laptop, and is the recommended way to install — no programming required. Scripting a fleet instead? See the [non-interactive scenario install](#non-interactive-scenario-install), which skips the wizard entirely. See the [Glossary](glossary.md) for unfamiliar terms.
 
@@ -81,22 +85,26 @@ Now you're ready to start the installation process:
 This is the official `ovos-installer` script, straight from the project's `main` branch — you
 can read it yourself first at
 [raw.githubusercontent.com/OpenVoiceOS/ovos-installer/main/installer.sh](https://raw.githubusercontent.com/OpenVoiceOS/ovos-installer/main/installer.sh)
-before running it:
+before running it. Two ways to run it are shown below — **do one or the other, not both,
+they install the same thing.**
 
-```bash
-sudo sh -c "$(curl -fsSL https://raw.githubusercontent.com/OpenVoiceOS/ovos-installer/main/installer.sh)"
-
-```
-
-That one-liner runs as **root** and executes whatever the `main` branch of `ovos-installer`
-currently holds — it is not pinned to a release. To read the script before it runs, download it
-first and execute the copy you reviewed:
+To read the script before it runs, download it first and execute the copy you reviewed:
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/OpenVoiceOS/ovos-installer/main/installer.sh -o installer.sh
 less installer.sh
 sudo sh installer.sh
 ```
+
+!!! warning "Piping straight to root, without reading it first"
+    The one-liner below runs as **root** and executes whatever the `main` branch of
+    `ovos-installer` currently holds — it is not pinned to a release, and you never see the
+    script before it runs with root privileges. Prefer the download-then-inspect version above
+    unless you're already comfortable with that trade-off.
+
+    ```bash
+    sudo sh -c "$(curl -fsSL https://raw.githubusercontent.com/OpenVoiceOS/ovos-installer/main/installer.sh)"
+    ```
 
 ![Terminal running the installer script: an ASCII-art OVOS logo above a progress log showing OS detection, AVX/SIMD and Raspberry Pi checks, Python virtualenv setup, and Ansible requirement installation all marked done](https://gist.github.com/user-attachments/assets/8a87fd01-2570-419b-8154-159b2d5801cb)
 
@@ -210,7 +218,7 @@ already in use is offered (you can't switch method in place).
 `alpha`
 :   Bleeding-edge/pre-release packages. **Required** (and the only option offered) on macOS and on Mark II/DevKit hardware.
 
-![Release channel screen with a single available option, development, selected as a radio button](https://gist.github.com/user-attachments/assets/f782cebe-c86b-4474-93d7-894b712e8fe7)
+![Release channel screen with a single available option, alpha, selected as a radio button](https://gist.github.com/user-attachments/assets/f782cebe-c86b-4474-93d7-894b712e8fe7)
 
 ---
 
@@ -302,27 +310,27 @@ Below is the field list _(see the [Ansible template](https://github.com/OpenVoic
 
 | Data                   | Description                                              |
 | ---------------------- | -------------------------------------------------------- |
-| `architecture`         | CPU architecture where OVOS was installed                |
-| `channel`              | `testing` or `alpha` channel of OVOS                     |
-| `container`            | OVOS installed into containers                           |
-| `country`              | Country the machine appeared to be in, derived from a public-IP geolocation lookup (`ip-api.com`) performed by the installer — not something you type in |
-| `cpu_capable`          | Is the CPU supports AVX2 or SIMD instructions            |
-| `display_server`       | Is X or Wayland are used as display server               |
-| `extra_skills_feature` | Extra OVOS's skills enabled during the installation      |
-| `gui_feature`          | GUI enabled during the installation                      |
-| `hardware`             | Is the device a Mark 1, Mark II or DevKit                |
-| `installed_at`         | Date when OVOS has been installed                        |
-| `os_kernel`            | Kernel version of the host where OVOS is running         |
-| `os_name`              | OS name of the host where OVOS is running                |
-| `os_type`              | OS type of the host where OVOS is running                |
-| `os_version`           | OS version of the host where OVOS is running             |
-| `profile`              | Which profile has been used during the OVOS installation |
-| `python_version`       | What Python version was running on the host              |
-| `raspberry_pi`         | Does OVOS has been installed on Raspberry Pi             |
-| `skills_feature`       | Default OVOS's skills enabled during the installation    |
-| `sound_server`         | What PulseAudio or PipeWire used                         |
-| `tuning_enabled`       | Whether the Raspberry Pi tuning feature was used         |
-| `venv`                 | OVOS installed into a Python virtual environment         |
+| `architecture`         | CPU architecture where OVOS was installed (required)                |
+| `channel`              | `testing` or `alpha` channel of OVOS (required)                    |
+| `container`            | OVOS installed into containers (required)                          |
+| `country`              | Country the machine appeared to be in, derived from a public-IP geolocation lookup (`ip-api.com`) performed by the installer — not something you type in (required) |
+| `cpu_capable`          | Is the CPU supports AVX2 or SIMD instructions (required)           |
+| `display_server`       | Is X or Wayland are used as display server (required)              |
+| `extra_skills_feature` | Extra OVOS's skills enabled during the installation (required)     |
+| `gui_feature`          | GUI enabled during the installation (required)                     |
+| `hardware`             | Is the device a Mark 1, Mark II or DevKit (required)                |
+| `installed_at`         | Date when OVOS has been installed (required)                       |
+| `os_kernel`            | Kernel version of the host where OVOS is running (required)        |
+| `os_name`              | OS name of the host where OVOS is running (required)               |
+| `os_type`              | OS type of the host where OVOS is running (required)                |
+| `os_version`           | OS version of the host where OVOS is running (required)            |
+| `profile`              | Which profile has been used during the OVOS installation (required) |
+| `python_version`       | What Python version was running on the host (required)             |
+| `raspberry_pi`         | Does OVOS has been installed on Raspberry Pi (required)             |
+| `skills_feature`       | Default OVOS's skills enabled during the installation (required)   |
+| `sound_server`         | What PulseAudio or PipeWire used (required)                         |
+| `tuning_enabled`       | Whether the Raspberry Pi tuning feature was used (required)         |
+| `venv`                 | OVOS installed into a Python virtual environment (required)         |
 
 #### Ongoing usage telemetry (`share_usage_telemetry`)
 

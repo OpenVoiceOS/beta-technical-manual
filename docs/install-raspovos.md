@@ -6,8 +6,8 @@
 !!! tip "Turnkey Raspberry Pi image"
     **raspOVOS** is a ready-made, actively maintained image built specifically for the
     Raspberry Pi — the quickest way to get a full OVOS voice assistant running on Pi
-    hardware. If you're installing on other Linux hardware, or want to build your own
-    image from an existing Raspberry Pi OS install, use the
+    hardware. If you're installing on non-Pi hardware, or want to install onto an
+    existing Raspberry Pi OS setup instead of flashing a new image, use the
     **[`ovos-installer`](ovos-installer.md)** instead.
 
 This tutorial is designed for users new to Raspberry Pi and raspOVOS. Follow these steps to set up and optimize your device for the best experience.

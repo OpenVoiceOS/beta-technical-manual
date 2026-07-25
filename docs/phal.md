@@ -181,7 +181,9 @@ admin = AdminPHAL(
 
 ```bash
 
-# Typically run via systemd as root
+# Run it via its systemd unit — not casually/interactively as root — and confirm the
+# bus is bound to localhost (see bus-service.md) before enabling any admin plugin: this
+# is a root, bus-reachable process, and the bus itself is unauthenticated.
 sudo ovos_PHAL_admin
 
 ```

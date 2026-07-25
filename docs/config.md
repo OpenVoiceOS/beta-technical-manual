@@ -153,9 +153,13 @@ export OVOS_CONFIG_FILENAME="myconfig.yaml"
 ovos-config show                        # full merged config
 ovos-config get -k lang                 # find all keys containing "lang"
 ovos-config get -k /tts/module          # get exact value at tts.module
-ovos-config set -k /tts/module -v ovos-tts-plugin-mimic3
+ovos-config set -k /tts/module -v ovos-tts-plugin-phoonnx
 
 ```
+
+If the key you're setting is a secret (e.g. `llm.key`, an access token), follow up with
+`chmod 600 ~/.config/mycroft/mycroft.conf` — `ovos-config set` does not restrict the file's
+permissions itself.
 
 ---
 
@@ -247,7 +251,7 @@ from ovos_config.models import LocalConf, UserConfig
 
 # Direct access to a layer
 user = UserConfig()
-user["tts"] = {"module": "ovos-tts-plugin-mimic3"}
+user["tts"] = {"module": "ovos-tts-plugin-phoonnx"}
 user.store()   # write to disk
 
 ```
@@ -376,7 +380,7 @@ ovos-config get -k /tts/module          # get exact value at tts.module (strict 
 ### `set`
 
 ```bash
-ovos-config set -k /tts/module -v ovos-tts-plugin-mimic3
+ovos-config set -k /tts/module -v ovos-tts-plugin-phoonnx
 ovos-config set -k blacklisted_skills -v my-bad-skill   # append to list
 ovos-config set -k gui                  # interactive: choose key and enter value
 

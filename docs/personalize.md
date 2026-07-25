@@ -54,7 +54,9 @@ Full walkthrough, plugin choices, and tuning: [Wake Word Plugins](wake-word-plug
 ## Change your voice
 
 Install the plugin's package first — `phoonnx` ships the `ovos-tts-plugin-phoonnx` plugin,
-so without it OVOS has nothing to load and the voice won't actually change:
+so without it OVOS has nothing to load and the voice won't actually change. Activate the
+same Python environment OVOS runs in *before* running this, or the plugin installs
+somewhere OVOS never looks:
 
 ```bash
 pip install phoonnx

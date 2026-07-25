@@ -144,7 +144,11 @@ how the [Plugin Manager](plugin-manager.md) discovers installed skills.
 
 First, activate the same Python environment OVOS runs in, so the skill installs into the
 interpreter `ovos-core` actually uses — for example `source ~/.venvs/ovos/bin/activate` for
-a venv install (the exact path depends on how you installed OVOS). If you're running OVOS in
+a venv install. That exact path is only an example, not something you can assume: check
+where your particular install created its environment, e.g. the installer's summary screen
+(see [ovos-installer](ovos-installer.md#-summary)) or the `ExecStart=`/`Environment=` lines
+of your `ovos-core` systemd unit — raspOVOS, `ovos-installer`, and container installs each
+put it somewhere different. If you're running OVOS in
 a container instead, there's no host environment to activate — install into the container
 directly: `docker compose exec <service> pip install -e .` (run from the skill folder, with
 the skill's path mounted into the container, or copy it in first).

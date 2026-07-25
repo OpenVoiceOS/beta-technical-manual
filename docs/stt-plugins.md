@@ -379,6 +379,11 @@ languages resolve to different pretrained models.
 
 - **Description**: OpenVoiceOS companion plugin for [OpenVoiceOS STT Server](https://github.com/OpenVoiceOS/ovos-stt-http-server)
 
+!!! warning "Talks to a public community server by default"
+    Leaving `urls` unset falls back to a best-effort, publicly-run community STT server, not
+    a private or guaranteed-available endpoint. Point it at your own self-hosted server (see
+    [stt-server](stt-server.md#companion-plugin)) if you need privacy or reliability.
+
 ### Default Configuration
 
 ```jsonc

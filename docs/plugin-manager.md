@@ -85,6 +85,17 @@ The entry point group is the canonical identifier used in `setup.py` / `pyprojec
     [ovos-plugin-manager#377](https://github.com/OpenVoiceOS/ovos-plugin-manager/pull/377).
     Until it lands, the current GUI plugin type is `opm.gui` (`GUIExtension`).
 
+!!! note "How many can run at once?"
+    The core voice-pipeline plugin types (`opm.stt`, `opm.tts`, `opm.wake_word`, `opm.VAD`,
+    `opm.microphone`) are **singleton per service**: their factory (`OVOSSTTFactory`,
+    `OVOSTTSFactory`, etc.) reads a single `module` config key and instantiates exactly one
+    active engine. This is unlike the six transformer chains below, which are explicitly
+    multi-instance and run all configured plugins of a type in priority order.
+
+    Discovery is also name-keyed: if two installed packages register the same entry-point
+    name under the same group, OPM keys them by that name, so one silently shadows the other
+    with no error. Avoid duplicate plugin names across packages.
+
 ### Transformer Plugins
 
 These six types are the six ordered chains of [OVOS-TRANSFORM-1](https://github.com/OpenVoiceOS/architecture/blob/dev/transformer.md), each injected at a fixed point in the utterance lifecycle (audio → utterance → metadata → intent → dialog → tts) and run in **ascending** priority order.

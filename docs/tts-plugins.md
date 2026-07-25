@@ -430,6 +430,11 @@ Maturity reflects repository health (age, activity, open issues/PRs, in-repo doc
 
 - **Description**: OpenVoiceOS companion plugin for [OpenVoiceOS TTS Server](https://github.com/OpenVoiceOS/ovos-tts-server)
 
+!!! warning "Talks to a public community server by default"
+    The `host` below points at a best-effort, publicly-run community server, not a private
+    or guaranteed-available endpoint. Point it at your own self-hosted server (see
+    [tts-server](tts-server.md#companion-plugin)) if you need privacy or reliability.
+
 ### Default Configuration
 
 ```jsonc

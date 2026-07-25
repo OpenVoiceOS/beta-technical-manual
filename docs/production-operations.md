@@ -315,11 +315,11 @@ speech-to-text and text-to-speech work over HTTP (see [STT server](stt-server.md
 services:
   ovos_stt_server:
     image: docker.io/smartgic/ovos-stt-server-onnx-asr:${VERSION}   # or your own build, see stt-server.md
-    ports: ["8080:8080"]
+    ports: ["8080:8080"]  # UNAUTHENTICATED — do not expose beyond localhost/VPN
 
   ovos_tts_server:
     image: docker.io/smartgic/ovos-tts-server-piper:${VERSION}      # or your own build, see tts-server.md
-    ports: ["9666:9666"]
+    ports: ["9666:9666"]  # UNAUTHENTICATED — do not expose beyond localhost/VPN
 ```
 
 The speech-server image name encodes the engine baked into it — `ovos-stt-server-onnx-asr`,
@@ -381,6 +381,13 @@ resource limit and healthcheck spelled out.
     reachable by any of them, not just `ovos_messagebus`; "bound to localhost" no longer means
     "only reachable by this one process" once host networking is in play. Treat the whole host
     as the trust boundary, not the individual container.
+
+    Host networking also exposes any service that binds `0.0.0.0` straight onto the LAN, not
+    just the host's own loopback. [`gui-service.md`](gui-service.md) notes that
+    `gui_websocket.host` defaults to `0.0.0.0` (all interfaces) — combined with
+    `network_mode: host` here, that default puts the GUI WebSocket on the LAN, not just the
+    device. Set `gui_websocket.host` to `127.0.0.1` unless a remote display client genuinely
+    needs LAN access.
 
 Each thin client still runs its own bus, listener, audio and core — only the heavy STT/TTS
 inference is centralized. This is the same pattern as

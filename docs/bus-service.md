@@ -95,8 +95,10 @@ part of the shipped `mycroft.conf` `websocket` section.
 
 !!! danger "Security: the bus has no authentication — keep it local"
     The messagebus has **no authentication and no encryption**, and **any** client that can
-    connect gets **full control** of the device (it can trigger skills, read everything on the
-    bus, even run code via some plugins). Treat it like an open door to the whole assistant.
+    connect gets control of everything installed skills and plugins expose over the bus — up
+    to root-level system control (reboot, shutdown, factory-reset) **if** an AdminPHAL system
+    plugin such as `ovos-PHAL-plugin-system` is installed and enabled (see
+    [phal.md](phal.md#security-model)). Treat it like an open door to the whole assistant.
 
     - **Keep it bound to localhost** (`host: "127.0.0.1"`, the shipped default). Only set
       `"0.0.0.0"` if you fully control the network, and **never port-forward 8181** to the
