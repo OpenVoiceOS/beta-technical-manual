@@ -1541,7 +1541,7 @@ alongside the skill and OVOS itself, not just present somewhere on the machine.<
 <code>pyproject.toml</code> instead of installing it loose, so <code>pip install -e .[test]</code> pulls in everything a
 contributor needs:</p>
 <div class="language-toml highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">[project.optional-dependencies]</span>
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="n">test</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;ovoscope&quot;</span><span class="p">]</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="n">test</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;ovoscope&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;ovos-padatious-pipeline-plugin&quot;</span><span class="p">]</span>
 </span></code></pre></div>
 <h2 id="step-2-write-the-first-end2endtest">Step 2 — Write the first <code>End2EndTest</code><a class="headerlink" href="#step-2-write-the-first-end2endtest" title="Permanent link">&para;</a></h2>
 <div class="admonition note">

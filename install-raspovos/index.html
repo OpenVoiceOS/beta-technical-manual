@@ -1695,17 +1695,17 @@
 <h1 id="raspovos-a-beginners-guide-to-setting-up-your-raspberry-pi-with-ovos">RaspOVOS: A Beginner's Guide to Setting Up Your Raspberry Pi with OVOS<a class="headerlink" href="#raspovos-a-beginners-guide-to-setting-up-your-raspberry-pi-with-ovos" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>This is a step-by-step guide to turning a Raspberry Pi (a small, inexpensive computer) into a working OVOS voice assistant by flashing a ready-made "RaspOVOS" image onto an SD card or USB drive. It walks you through hardware choices, writing the image, first boot, connecting to Wi-Fi, and the handy commands you'll use afterward. RaspOVOS is the flagship, turnkey OpenVoiceOS experience for the Raspberry Pi — flash it and boot straight into a working assistant, no manual install steps required. See the <a href="../glossary/">Glossary</a> for unfamiliar terms.</p>
+<p>This is a step-by-step guide to turning a Raspberry Pi (a small, inexpensive computer) into a working OVOS voice assistant by flashing a ready-made "raspOVOS" image onto an SD card or USB drive. It walks you through hardware choices, writing the image, first boot, connecting to Wi-Fi, and the handy commands you'll use afterward. raspOVOS is the flagship, turnkey OpenVoiceOS experience for the Raspberry Pi — flash it and boot straight into a working assistant, no manual install steps required. See the <a href="../glossary/">Glossary</a> for unfamiliar terms.</p>
 </div>
 <div class="admonition tip">
 <p class="admonition-title">Turnkey Raspberry Pi image</p>
-<p><strong>RaspOVOS</strong> is a ready-made, actively maintained image built specifically for the
+<p><strong>raspOVOS</strong> is a ready-made, actively maintained image built specifically for the
 Raspberry Pi — the quickest way to get a full OVOS voice assistant running on Pi
 hardware. If you're installing on other Linux hardware, or want to build your own
 image from an existing Raspberry Pi OS install, use the
 <strong><a href="../ovos-installer/"><code>ovos-installer</code></a></strong> instead.</p>
 </div>
-<p>This tutorial is designed for users new to Raspberry Pi and RaspOVOS. Follow these steps to set up and optimize your device for the best experience.</p>
+<p>This tutorial is designed for users new to Raspberry Pi and raspOVOS. Follow these steps to set up and optimize your device for the best experience.</p>
 <hr />
 <h2 id="step-1-prepare-your-hardware">Step 1: Prepare Your Hardware<a class="headerlink" href="#step-1-prepare-your-hardware" title="Permanent link">&para;</a></h2>
 <h3 id="raspberry-pi-model-recommendations">Raspberry Pi Model Recommendations<a class="headerlink" href="#raspberry-pi-model-recommendations" title="Permanent link">&para;</a></h3>
@@ -1845,7 +1845,7 @@ tier (see <a href="../stt-plugins/">STT Plugins</a>, <a href="../tts-plugins/">T
 <ul>
 <li>Insert your SD card or USB drive into your computer.</li>
 <li>In the Raspberry Pi Imager:<ul>
-<li><strong>Choose OS:</strong> Select "Use custom" and locate the RaspOVOS image file.</li>
+<li><strong>Choose OS:</strong> Select "Use custom" and locate the raspOVOS image file.</li>
 <li><strong>Choose Storage:</strong> Select your SD card or USB drive.</li>
 </ul>
 </li>
@@ -1853,7 +1853,7 @@ tier (see <a href="../stt-plugins/">STT Plugins</a>, <a href="../tts-plugins/">T
 </li>
 </ol>
 <p><img alt="Raspberry Pi Imager &quot;Choose Device&quot; screen listing supported Pi models" src="https://github.com/user-attachments/assets/92458289-a3c3-4c7b-afc8-126881445f9f" /></p>
-<p><img alt="Raspberry Pi Imager &quot;Choose OS&quot; screen with &quot;Use custom&quot; selected to pick the RaspOVOS image file" src="https://github.com/user-attachments/assets/36a83d0a-ebc2-4095-94ba-604ad78b5452" /></p>
+<p><img alt="Raspberry Pi Imager &quot;Choose OS&quot; screen with &quot;Use custom&quot; selected to pick the raspOVOS image file" src="https://github.com/user-attachments/assets/36a83d0a-ebc2-4095-94ba-604ad78b5452" /></p>
 <p><img alt="Raspberry Pi Imager &quot;Choose Storage&quot; screen listing the target SD card or USB drive" src="https://github.com/user-attachments/assets/47c92497-d1a2-4f2d-90be-189806736c0d" /></p>
 <ol>
 <li>
@@ -1947,9 +1947,9 @@ gives no on-screen confirmation, so treat it as a fallback, not the primary path
 <p>Place the transmitting device near the Raspberry Pi microphone.</p>
 </li>
 <li>
-<p>If successful, the <strong>RaspOVOS device</strong> (not the transmitting phone/laptop) plays an acknowledgment tone.</p>
+<p>If successful, the <strong>raspOVOS device</strong> (not the transmitting phone/laptop) plays an acknowledgment tone.</p>
 <ul>
-<li>If decoding fails or credentials are incorrect, the RaspOVOS device plays an error tone instead.</li>
+<li>If decoding fails or credentials are incorrect, the raspOVOS device plays an error tone instead.</li>
 </ul>
 </li>
 </ol>
@@ -1964,15 +1964,15 @@ gives no on-screen confirmation, so treat it as a fallback, not the primary path
   announce it out loud — if Wi-Fi isn't configured yet or the network is unreachable,
   the device stays silent instead. Check <code>ovos-status</code> and the <code>ologs</code> output (see
   below) to confirm the services actually started even without a spoken confirmation,
-  and see <a href="../raspovos-troubleshooting/#ovos-fails-to-speak-i-am-ready">RaspOVOS Troubleshooting</a>
+  and see <a href="../raspovos-troubleshooting/#ovos-fails-to-speak-i-am-ready">raspOVOS Troubleshooting</a>
   if it never speaks up once online.</li>
 </ul>
 <hr />
 <h2 id="step-6-using-ovos-commands">Step 6: Using OVOS Commands<a class="headerlink" href="#step-6-using-ovos-commands" title="Permanent link">&para;</a></h2>
 <h3 id="helpful-commands">Helpful Commands<a class="headerlink" href="#helpful-commands" title="Permanent link">&para;</a></h3>
-<p>When you log in, RaspOVOS prints a welcome banner listing its built-in helper commands. These
-are <strong>RaspOVOS-specific shell helpers</strong> (aliases and small scripts baked into the image) — they
-are part of the RaspOVOS image, not a standard <code>pip install</code> of OVOS. Run <code>ovos-help</code> at any time
+<p>When you log in, raspOVOS prints a welcome banner listing its built-in helper commands. These
+are <strong>raspOVOS-specific shell helpers</strong> (aliases and small scripts baked into the image) — they
+are part of the raspOVOS image, not a standard <code>pip install</code> of OVOS. Run <code>ovos-help</code> at any time
 to reprint the full list.</p>
 <p><strong>Web interfaces:</strong></p>
 <ul>
@@ -2017,10 +2017,10 @@ to reprint the full list.</p>
 <li><code>ovos-help</code> — reprint this command list.</li>
 </ul>
 <div class="admonition note">
-<p class="admonition-title">Audio HAT setup on RaspOVOS uses <code>ovos-i2csound</code></p>
-<p>On RaspOVOS, an i2c sound HAT (such as a Respeaker or the Mark 2's SJ201) is detected and
+<p class="admonition-title">Audio HAT setup on raspOVOS uses <code>ovos-i2csound</code></p>
+<p>On raspOVOS, an i2c sound HAT (such as a Respeaker or the Mark 2's SJ201) is detected and
 configured at boot by the <strong><code>ovos-i2csound</code></strong> service shipped in the image, which writes the
-detected board to <code>/etc/OpenVoiceOS/i2c_platform</code>. This is specific to the RaspOVOS image —
+detected board to <code>/etc/OpenVoiceOS/i2c_platform</code>. This is specific to the raspOVOS image —
 the <a href="../ovos-installer/">ovos-installer</a> does <strong>not</strong> use it (see
 <a href="../mark2/">Mark 2 Hardware</a> for the installer's kernel-driver approach).</p>
 </div>
@@ -2030,7 +2030,7 @@ the <a href="../ovos-installer/">ovos-installer</a> does <strong>not</strong> us
 <li>If you're unsure whether the system has finished booting, check logs using this command.</li>
 </ul>
 <hr />
-<p>Enjoy your journey with RaspOVOS! With your Raspberry Pi set up, you can start exploring all the features of OpenVoiceOS.</p>
+<p>Enjoy your journey with raspOVOS! With your Raspberry Pi set up, you can start exploring all the features of OpenVoiceOS.</p>
 <hr />
 <h2 id="now-try-it">Now try it<a class="headerlink" href="#now-try-it" title="Permanent link">&para;</a></h2>
 <p>Your device is up and listening. Two places to go next:</p>

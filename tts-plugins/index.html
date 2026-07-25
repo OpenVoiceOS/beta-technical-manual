@@ -1525,8 +1525,12 @@ per voice, since each one is a separate model fetched on first use.</p>
    first bundled model that supports the configured language. See the
    <a href="#ovos-tts-plugin-phoonnx">ovos-tts-plugin-phoonnx</a> section below for how to pin a
    specific voice.</li>
-<li>Save the file — it's JSONC (comments allowed) — and restart OVOS for the change to take effect.</li>
 </ol>
+<p>Installing a plugin's package (like <code>pip install phoonnx</code>) only makes it available to
+   OVOS if it lands in the same Python environment OVOS itself runs in — activate that venv
+   or container first, the same way <a href="../first-skill/">Your First Skill</a> does before installing
+   a skill.
+3. Save the file — it's JSONC (comments allowed) — and restart OVOS for the change to take effect.</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p>Don't want to hand-pick a plugin and voice yourself? <code>ovos-config autoconfigure -l &lt;lang&gt; ...</code>

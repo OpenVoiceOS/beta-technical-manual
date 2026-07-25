@@ -1576,6 +1576,10 @@ does not include a log-shipping client.</p>
 <h2 id="staged-upgrades-and-rollback">Staged upgrades and rollback<a class="headerlink" href="#staged-upgrades-and-rollback" title="Permanent link">&para;</a></h2>
 <p><a href="../release-channels/">Release channels</a> covers <code>stable</code>/<code>testing</code>/<code>alpha</code> constraints files.
 For a fleet, the same mechanism gives you a controlled, reversible upgrade path:</p>
+<p>If only a single package regressed, rolling back the whole stack is unnecessary — see
+<a href="../release-channels/#pinning-or-rolling-back-a-single-package">Release Channels: Pinning or rolling back a single
+package</a> for pinning and
+restarting just that one package across the fleet.</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="c1"># 1. Freeze exactly what&#39;s currently installed, in case you need to go back</span>
 </span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>uv<span class="w"> </span>pip<span class="w"> </span>freeze<span class="w"> </span>&gt;<span class="w"> </span>/etc/ovos/known-good-<span class="k">$(</span>date<span class="w"> </span>+%F<span class="k">)</span>.txt
 </span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>

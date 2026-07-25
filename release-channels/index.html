@@ -664,7 +664,7 @@
           <li class="md-nav__item">
   <a href="#2-raspovos-turnkey-raspberry-pi-image" class="md-nav__link">
     <span class="md-ellipsis">
-      2. RaspOVOS — turnkey Raspberry Pi image
+      2. raspOVOS — turnkey Raspberry Pi image
     </span>
   </a>
   
@@ -1461,7 +1461,7 @@
           <li class="md-nav__item">
   <a href="#2-raspovos-turnkey-raspberry-pi-image" class="md-nav__link">
     <span class="md-ellipsis">
-      2. RaspOVOS — turnkey Raspberry Pi image
+      2. raspOVOS — turnkey Raspberry Pi image
     </span>
   </a>
   
@@ -1675,7 +1675,7 @@ people who want fine-grained control (custom/headless setups). A few terms used 
 <p>Depending on your experience level and goals, you can choose one of the following methods:</p>
 <h3 id="1-the-ovos-installer-recommended">1. <a href="../ovos-installer/">The <code>ovos-installer</code></a> (Recommended)<a class="headerlink" href="#1-the-ovos-installer-recommended" title="Permanent link">&para;</a></h3>
 <p>The easiest way for most users. A guided TUI (Text User Interface) script that handles dependencies, environment setup, and service configuration for you.</p>
-<h3 id="2-raspovos-turnkey-raspberry-pi-image">2. <a href="../install-raspovos/">RaspOVOS</a> — turnkey Raspberry Pi image<a class="headerlink" href="#2-raspovos-turnkey-raspberry-pi-image" title="Permanent link">&para;</a></h3>
+<h3 id="2-raspovos-turnkey-raspberry-pi-image">2. <a href="../install-raspovos/">raspOVOS</a> — turnkey Raspberry Pi image<a class="headerlink" href="#2-raspovos-turnkey-raspberry-pi-image" title="Permanent link">&para;</a></h3>
 <p>The flagship, actively maintained pre-built image for the Raspberry Pi. Flash it and
 boot straight into a working assistant — no manual install steps required.</p>
 <h3 id="3-manual-installation-advanced">3. Manual Installation (Advanced)<a class="headerlink" href="#3-manual-installation-advanced" title="Permanent link">&para;</a></h3>
@@ -1715,6 +1715,21 @@ for that one package to it:</p>
 </span></code></pre></div>
 <p>so the pin survives the next time you reinstall from that constraints file, instead of
 being silently overwritten by the channel's range.</p>
+<p>Either way, you need to know what the old, working version was. Get it from your frozen
+snapshot — <code>grep ovos-stt-plugin-whisper known-good.txt</code> (see <a href="#rolling-back">Rolling Back</a>
+below) — or, if you didn't freeze one, from <code>pip show ovos-stt-plugin-whisper</code> run <em>before</em>
+you upgraded.</p>
+<p>Pinning the package alone isn't enough: the process that already loaded the old, broken
+version keeps running it in memory until it restarts. Restart whichever service loads that
+package — e.g. <code>systemctl --user restart ovos-dinkum-listener.service</code> for an STT plugin —
+before you consider the rollback complete.</p>
+<div class="admonition note">
+<p class="admonition-title">A release channel isn't a maturity guarantee</p>
+<p>Picking the <code>stable</code> channel bounds <em>versions</em>, not the maturity of every plugin that
+channel resolves. See <a href="../maturity/">Maturity Scale: a release channel is not a maturity
+guarantee</a> for what "stable
+channel" does and doesn't promise.</p>
+</div>
 <hr />
 <h2 id="choosing-a-release-channel">Choosing a Release Channel<a class="headerlink" href="#choosing-a-release-channel" title="Permanent link">&para;</a></h2>
 <p>OVOS follows <a href="https://semver.org/"><strong>semantic versioning</strong></a> (SemVer) with a <strong>rolling release model</strong> and supports three release channels — <strong>stable</strong>, <strong>testing</strong>, and <strong>alpha</strong> — so you can pick the right balance between cutting-edge features and system reliability.</p>
@@ -1916,6 +1931,10 @@ machine a month apart, can resolve to different versions.</p>
 installed before an upgrade. Before upgrading anything you care about, freeze what's currently working:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>uv<span class="w"> </span>pip<span class="w"> </span>freeze<span class="w"> </span>&gt;<span class="w"> </span>known-good.txt
 </span></code></pre></div>
+<p>This plain <code>known-good.txt</code> in the current directory is the single-machine form of the same
+convention <a href="../production-operations/#staged-upgrades-and-rollback">Production Operations</a> uses
+for a fleet — a dated, absolute path like <code>/etc/ovos/known-good-2026-07-01.txt</code>. Same pattern,
+just scaled from one machine to many.</p>
 <p>If an upgrade misbehaves, <code>pip</code>/<code>uv</code> won't downgrade a package on their own just because a
 newer constraints file changed — an ordinary <code>install</code> call treats an already-satisfied
 requirement as nothing to do. Force the reinstall of the exact frozen versions instead:</p>
