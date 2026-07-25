@@ -1596,6 +1596,7 @@
 <th>Plugin</th>
 <th>Description</th>
 <th>OS Compatibility</th>
+<th>Maturity</th>
 </tr>
 </thead>
 <tbody>
@@ -1603,34 +1604,41 @@
 <td><a href="https://github.com/OpenVoiceOS/ovos-microphone-plugin-alsa">ovos-microphone-plugin-alsa</a></td>
 <td>Based on <a href="http://larsimmisch.github.io/pyalsaaudio">pyalsaaudio</a>. Offers low-latency and high performance on ALSA-compatible devices.</td>
 <td>Linux</td>
+<td>Stable</td>
 </tr>
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/ovos-microphone-plugin-pyaudio">ovos-microphone-plugin-pyaudio</a></td>
 <td>Uses the <a href="https://people.csail.mit.edu/hubert/pyaudio/">PyAudio</a> PortAudio bindings directly (no <code>speech_recognition</code> dependency). Good cross-platform general-purpose plugin.</td>
 <td>Linux, macOS, Windows</td>
+<td>Beta</td>
 </tr>
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/ovos-microphone-plugin-sounddevice">ovos-microphone-plugin-sounddevice</a></td>
 <td>Built on <a href="https://github.com/spatialaudio/python-sounddevice">python-sounddevice</a>. Offers cross-platform support.</td>
 <td>Linux, macOS, Windows</td>
+<td>Stable</td>
 </tr>
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/ovos-microphone-plugin-files">ovos-microphone-plugin-files</a></td>
 <td>Uses audio files as input instead of a live microphone — ideal for testing and debugging.</td>
 <td>Linux, macOS, Windows</td>
+<td>Stable</td>
 </tr>
 <tr>
 <td><a href="https://github.com/OVOSHatchery/ovos-microphone-plugin-arecord">ovos-microphone-plugin-arecord</a></td>
 <td>Wraps <code>arecord</code> using subprocess calls. Simple and effective on systems with ALSA. <strong>Hatchery-only</strong> — not published to PyPI, install from source if you need it.</td>
 <td>Linux</td>
+<td>Alpha</td>
 </tr>
 <tr>
 <td><a href="https://github.com/OVOSHatchery/ovos-microphone-plugin-socket">ovos-microphone-plugin-socket</a></td>
 <td>Receives audio over a socket connection. Useful for remote microphone setups. <strong>Hatchery-only</strong> — not published to PyPI, install from source if you need it.</td>
 <td>Linux, macOS, Windows</td>
+<td>Beta</td>
 </tr>
 </tbody>
 </table>
+<p>Maturity reflects repository health (age, activity, open issues/PRs, in-repo docs), not version — see the <a href="../maturity/">Maturity Scale</a>.</p>
 <h2 id="technical-explanation">Technical Explanation<a class="headerlink" href="#technical-explanation" title="Permanent link">&para;</a></h2>
 <p>OVOS uses a plugin architecture to decouple the audio input system from the rest of the voice stack. Microphone plugins implement a common interface, making it easy to swap between different audio sources or backends without changing application code.</p>
 <h3 id="the-microphone-interface">The Microphone Interface<a class="headerlink" href="#the-microphone-interface" title="Permanent link">&para;</a></h3>

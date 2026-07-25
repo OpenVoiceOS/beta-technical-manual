@@ -1415,6 +1415,7 @@ compute budget to run NLLB locally.</p>
 <th>Translate</th>
 <th>Type</th>
 <th>Notes</th>
+<th>Maturity</th>
 </tr>
 </thead>
 <tbody>
@@ -1424,6 +1425,7 @@ compute budget to run NLLB locally.</p>
 <td>✔️</td>
 <td>API (self/community hosted)</td>
 <td>Client for <a href="https://github.com/OpenVoiceOS/ovos-translate-server">ovos-translate-server</a>; ships a built-in public-server list with failover. Detection is a separate entry-point, <code>ovos-lang-detector-plugin-server</code>.</td>
+<td>Stable</td>
 </tr>
 <tr>
 <td><code>ovos-translate-plugin-nllb</code> (<a href="https://github.com/OpenVoiceOS/ovos-translate-plugin-nllb">repo</a>)</td>
@@ -1431,6 +1433,7 @@ compute budget to run NLLB locally.</p>
 <td>✔️</td>
 <td>FOSS (Offline)</td>
 <td>NLLB-200 via CTranslate2; downloads a model the first time.</td>
+<td>Stable</td>
 </tr>
 <tr>
 <td><code>ovos-lang-detector-fasttext-plugin</code> (<a href="https://github.com/OpenVoiceOS/ovos-lang-detector-fasttext-plugin">repo</a>)</td>
@@ -1438,6 +1441,7 @@ compute budget to run NLLB locally.</p>
 <td>❌</td>
 <td>FOSS (Offline)</td>
 <td>fastText language identification.</td>
+<td>Stable</td>
 </tr>
 <tr>
 <td><code>ovos-lang-detector-classics-plugin</code> (<a href="https://github.com/OpenVoiceOS/ovos-lang-detector-classics-plugin">repo</a>)</td>
@@ -1445,6 +1449,7 @@ compute budget to run NLLB locally.</p>
 <td>❌</td>
 <td>FOSS (Offline)</td>
 <td>A <em>voter</em> (<code>ovos-lang-detector-plugin-voter</code>) that averages classic detectors — by default cld2, langdetect and fastlang (cld3 is also available as a separate sub-plugin).</td>
+<td>Stable</td>
 </tr>
 <tr>
 <td><code>ovos-google-translate-plugin</code> (<a href="https://github.com/OpenVoiceOS/ovos-google-translate-plugin">repo</a>)</td>
@@ -1452,9 +1457,11 @@ compute budget to run NLLB locally.</p>
 <td>✔️</td>
 <td>API (free)</td>
 <td>Translate (<code>ovos-google-translate-plugin</code>) and detect (<code>ovos-google-lang-detector-plugin</code>) are separate entry-points.</td>
+<td>Stable</td>
 </tr>
 </tbody>
 </table>
+<p>Maturity reflects repository health (age, activity, open issues/PRs, in-repo docs), not version — see the <a href="../maturity/">Maturity Scale</a>.</p>
 <blockquote>
 <p><strong>Heads up:</strong> the package repo name, the pip name, and the <strong>entry-point name you put in config</strong> are not always the same. Configure plugins by their <em>entry-point name</em> (e.g. <code>ovos-translate-plugin-server</code>, not the repo <code>ovos-translate-server-plugin</code>). The names in the table above are the entry-point names.</p>
 </blockquote>

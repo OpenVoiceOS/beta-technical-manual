@@ -1797,6 +1797,7 @@ separately-licensed model, that is called out under "model".</p>
 <th>Plugin</th>
 <th>Description</th>
 <th>License</th>
+<th>Maturity</th>
 </tr>
 </thead>
 <tbody>
@@ -1804,84 +1805,101 @@ separately-licensed model, that is called out under "model".</p>
 <td><a href="#ovos-stt-plugin-wav2vec">ovos-stt-plugin-wav2vec</a></td>
 <td>OVOS plugin for <a href="https://ai.meta.com/blog/wav2vec-20-learning-the-structure-of-speech-from-raw-audio/">Wav2Vec2</a></td>
 <td>Apache-2.0 (model: see model card)</td>
+<td>Stable</td>
 </tr>
 <tr>
 <td><a href="#ovos-stt-plugin-azure">ovos-stt-plugin-azure</a></td>
 <td>Microsoft Azure cloud speech-to-text.</td>
 <td>Apache-2.0</td>
+<td>Stable</td>
 </tr>
 <tr>
 <td><a href="#ovos-stt-plugin-chromium">ovos-stt-plugin-chromium</a></td>
 <td>Speech-to-text using the Google Chrome browser speech API.</td>
 <td>Apache-2.0</td>
+<td>Stable</td>
 </tr>
 <tr>
 <td><a href="#ovos-stt-plugin-mms">ovos-stt-plugin-mms</a></td>
 <td>OVOS plugin for <a href="https://huggingface.co/docs/transformers/main/en/model_doc/mms">The Massively Multilingual Speech (MMS) project</a> ⚠️ <strong>Archived</strong> — MMS models also run under <a href="https://github.com/OpenVoiceOS/ovos-stt-plugin-wav2vec2">ovos-stt-plugin-wav2vec2</a>.</td>
 <td>Apache-2.0 (model: see model card)</td>
+<td>Deprecated</td>
 </tr>
 <tr>
 <td><a href="#ovos-stt-server-plugin">ovos-stt-server-plugin</a></td>
 <td>OpenVoiceOS companion plugin for <a href="https://github.com/OpenVoiceOS/ovos-stt-http-server">OpenVoiceOS STT Server</a></td>
 <td>Apache-2.0</td>
+<td>Stable</td>
 </tr>
 <tr>
 <td><a href="#ovos-stt-http-server">ovos-stt-http-server</a></td>
 <td>Turn any OVOS STT plugin into a micro service!</td>
 <td>Apache-2.0</td>
+<td>Stable</td>
 </tr>
 <tr>
 <td><a href="#ovos-stt-plugin-whisper">ovos-stt-plugin-whisper</a></td>
 <td>OpenVoiceOS STT plugin for <a href="https://github.com/guillaumekln/faster-whisper">Whisper</a>, using transformers library</td>
 <td>Apache-2.0 (default model: <a href="https://huggingface.co/openai/whisper-large-v3-turbo">openai/whisper-large-v3-turbo</a>)</td>
+<td>Beta</td>
 </tr>
 <tr>
 <td><a href="#ovos-stt-plugin-whispercpp">ovos-stt-plugin-whispercpp</a></td>
 <td>OpenVoiceOS STT plugin for <a href="https://github.com/ggerganov/whisper.cpp">whispercpp</a></td>
 <td>Apache-2.0 (model: see model card)</td>
+<td>Stable</td>
 </tr>
 <tr>
 <td><a href="#ovos-stt-plugin-fasterwhisper">ovos-stt-plugin-fasterwhisper</a></td>
 <td>OpenVoiceOS STT plugin for <a href="https://github.com/guillaumekln/faster-whisper">Faster Whisper</a></td>
 <td>Apache-2.0 (default model: <a href="https://huggingface.co/mobiuslabsgmbh/faster-whisper-large-v3-turbo">mobiuslabsgmbh/faster-whisper-large-v3-turbo</a>)</td>
+<td>Stable</td>
 </tr>
 <tr>
 <td><a href="#ovos-stt-plugin-nemo">ovos-stt-plugin-nemo</a></td>
 <td>OpenVoiceOS STT plugin for <a href="https://docs.nvidia.com/nemo-framework/user-guide/latest/nemotoolkit/asr/models.html">Nemo</a>, GPU is <strong>strongly recommended</strong></td>
 <td>Apache-2.0 (model: see model card)</td>
+<td>Stable</td>
 </tr>
 <tr>
 <td><a href="#ovos-stt-plugin-whisper-lm">ovos-stt-plugin-whisper-lm</a></td>
 <td>OpenVoiceOS STT plugin for <a href="https://github.com/hitz-zentroa/whisper-lm-transformers">Whisper-LM-transformers</a>, KenLM and Large language model integration with Whisper ASR models implemented in Hugging Face library.</td>
 <td>Apache-2.0 (model: see model card)</td>
+<td>Stable</td>
 </tr>
 <tr>
 <td><a href="#ovos-stt-plugin-citrinet">ovos-stt-plugin-citrinet</a></td>
 <td>OpenVoiceOS STT plugin</td>
 <td>Apache-2.0 (model: see model card)</td>
+<td>Stable</td>
 </tr>
 <tr>
 <td><a href="#ovos-stt-plugin-nos">ovos-stt-plugin-nos</a></td>
 <td>Galician STT using Proxecto Nós wav2vec2 models. ⚠️ Archived — superseded by <a href="https://github.com/OpenVoiceOS/ovos-stt-plugin-wav2vec2">ovos-stt-plugin-wav2vec2</a>.</td>
 <td>Apache-2.0 (model: see model card)</td>
+<td>Deprecated</td>
 </tr>
 <tr>
 <td><a href="#ovos-stt-plugin-hitz">ovos-stt-plugin-HiTZ</a></td>
 <td>OpenVoiceOS STT plugin for <strong>Basque</strong> models trained by <a href="https://huggingface.co/HiTZ">HiTZ</a> ⚠️ <strong>Archived/deprecated.</strong></td>
 <td>see repo (no license file)</td>
+<td>Deprecated</td>
 </tr>
 <tr>
 <td><a href="#ovos-stt-plugin-vosk">ovos-stt-plugin-vosk</a></td>
 <td>Mycroft STT plugin for <a href="https://alphacephei.com/vosk/">Vosk</a></td>
 <td>Apache-2.0 (model: see model card)</td>
+<td>Stable</td>
 </tr>
 <tr>
 <td><a href="#ovos-stt-plugin-onnx-asr">ovos-stt-plugin-onnx-asr</a></td>
 <td>Runs <a href="https://github.com/istupakov/onnx-asr">onnx-asr</a> models (NeMo Parakeet/Canary, Whisper, wav2vec2, …) fully offline via ONNX Runtime — a strong default for on-device, offline recognition.</td>
 <td>Apache-2.0 (model: see model card)</td>
+<td>Beta</td>
 </tr>
 </tbody>
 </table>
+<p>Maturity reflects repository health (age, activity, open issues/PRs, in-repo docs), not version — see the <a href="../maturity/">Maturity Scale</a>.</p>
 <h2 id="ovos-stt-plugin-wav2vec">ovos-stt-plugin-wav2vec<a class="headerlink" href="#ovos-stt-plugin-wav2vec" title="Permanent link">&para;</a></h2>
 <ul>
 <li>

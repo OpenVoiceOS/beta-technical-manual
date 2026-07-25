@@ -1611,23 +1611,28 @@ only has to classify one chunk as speech/silence, not decode it.</p>
 <tr>
 <th>Plugin</th>
 <th>Description</th>
+<th>Maturity</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/ovos-vad-plugin-webrtcvad">ovos-vad-plugin-webrtcvad</a></td>
 <td>Based on Google's WebRTC VAD (<code>webrtcvad-wheels</code>). Lightweight, CPU-only, widely used. <code>vad_mode</code> (0–3) sets how aggressively it filters out non-speech: <code>0</code> is the least aggressive (most permissive, more likely to classify borderline audio as speech), <code>3</code> is the most aggressive at filtering out non-speech and is the plugin's default.</td>
+<td>Stable</td>
 </tr>
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/ovos-vad-plugin-silero">ovos-vad-plugin-silero</a></td>
 <td>Uses the Silero deep-learning model for high-accuracy VAD, particularly in noisy environments.</td>
+<td>Stable</td>
 </tr>
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/ovos-vad-plugin-noise">ovos-vad-plugin-noise</a></td>
 <td>Simple energy/noise-threshold VAD with no model download.</td>
+<td>Stable</td>
 </tr>
 </tbody>
 </table>
+<p>Maturity reflects repository health (age, activity, open issues/PRs, in-repo docs), not version — see the <a href="../maturity/">Maturity Scale</a>.</p>
 <blockquote>
 <p>Specification: audio capture and VAD are deployer-defined components feeding the listener; see <a href="https://github.com/OpenVoiceOS/architecture/blob/dev/audio-in.md">OVOS-AUDIO-IN-1</a> for the audio-input service that consumes their output.</p>
 </blockquote>

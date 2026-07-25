@@ -1935,6 +1935,7 @@ separately-licensed model, that is called out under "model".</p>
 <th>Plugin</th>
 <th>Description</th>
 <th>License</th>
+<th>Maturity</th>
 </tr>
 </thead>
 <tbody>
@@ -1942,39 +1943,47 @@ separately-licensed model, that is called out under "model".</p>
 <td><a href="#ovos-ww-plugin-precise-lite">ovos-ww-plugin-precise-lite</a></td>
 <td>First fallback below the default: a trained Precise wake-word model exported to TFLite. ⚠️ <strong>Archived</strong> — kept working as installed; <code>ovos-ww-plugin-precise-onnx</code> is the maintained successor.</td>
 <td>Apache-2.0</td>
+<td>Deprecated</td>
 </tr>
 <tr>
 <td><a href="#ovos-ww-plugin-openwakeword">ovos-ww-plugin-openWakeWord</a></td>
 <td>Wake-word detection using the open-source openWakeWord neural models.</td>
 <td>Apache-2.0 (model: see model card)</td>
+<td>Stable</td>
 </tr>
 <tr>
 <td><a href="#ovos-ww-plugin-vosk">ovos-ww-plugin-vosk</a></td>
 <td>Mycroft wake word plugin for <a href="https://alphacephei.com/vosk/">Vosk</a></td>
 <td>Apache-2.0 (model: see model card)</td>
+<td>Stable</td>
 </tr>
 <tr>
 <td><a href="#ovos-ww-plugin-precise-onnx">ovos-ww-plugin-precise-onnx</a></td>
 <td>Default plugin for <code>hey_mycroft</code>: a Precise wake-word model exported to ONNX.</td>
 <td>Apache-2.0</td>
+<td>Beta</td>
 </tr>
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/ovos-ww-plugin-wakewordlab">ovos-ww-plugin-wakewordlab</a></td>
 <td>Compact (~240 KB) neural wake-word models with a Silero VAD pre-filter (<code>.wkw</code>/<code>.onnx</code>). <strong>Not yet on PyPI</strong> — install from source.</td>
 <td>see repo (no license file)</td>
+<td>Alpha</td>
 </tr>
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/ovos-ww-plugin-wakeforge">ovos-ww-plugin-wakeforge</a></td>
 <td>Runs custom wake-word models trained with <a href="https://github.com/TigreGotico/wakeforge">wakeforge</a> — train a detector from a single phrase, export a two-file model. <strong>Not yet on PyPI</strong> — install from source.</td>
 <td>Apache-2.0</td>
+<td>Alpha</td>
 </tr>
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/ovos-ww-plugin-server">ovos-ww-plugin-server</a></td>
 <td>Remote wake-word detection: streams audio to an <a href="https://github.com/OpenVoiceOS/ovos-ww-server">ovos-ww-server</a> instance (offload detection from a thin satellite). <strong>Not yet on PyPI</strong> — install from source.</td>
 <td>Apache-2.0</td>
+<td>Alpha</td>
 </tr>
 </tbody>
 </table>
+<p>Maturity reflects repository health (age, activity, open issues/PRs, in-repo docs), not version — see the <a href="../maturity/">Maturity Scale</a>.</p>
 <h2 id="ovos-ww-plugin-precise-lite">ovos-ww-plugin-precise-lite<a class="headerlink" href="#ovos-ww-plugin-precise-lite" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
