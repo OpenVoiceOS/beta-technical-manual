@@ -92,7 +92,7 @@ before you consider the rollback complete.
 !!! note "A release channel isn't a maturity guarantee"
     Picking the `stable` channel bounds *versions*, not the maturity of every plugin that
     channel resolves. See [Maturity Scale: a release channel is not a maturity
-    guarantee](maturity.md#a-release-channel-is-not-a-maturity-guarantee) for what "stable
+    guarantee](maturity.md) for what "stable
     channel" does and doesn't promise.
 
 ---
