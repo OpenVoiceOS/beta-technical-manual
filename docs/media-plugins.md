@@ -24,16 +24,18 @@ plugin package is meant to ship a version for *both*** — so a single `pip inst
 backend that works whichever playback system you run. Packages are not required to ship both
 families; see the table below for what each currently supports.
 
-| Package | Player | Ships for |
-|---|---|---|
-| [ovos-media-plugin-spotify](#ovos-media-plugin-spotify) | Spotify Connect | ✅ both (old audio service + ovos-media) |
-| [ovos-media-plugin-chromecast](#ovos-media-plugin-chromecast) | Chromecast (audio + video) | ✅ both |
-| [ovos-media-plugin-vlc](#ovos-media-plugin-vlc) | headless VLC (audio + video) | ✅ both |
-| [ovos-media-plugin-mplayer](#ovos-media-plugin-mplayer) | MPlayer (audio + video) | ✅ both |
-| [ovos-audio-plugin-mpv](#ovos-audio-plugin-mpv) | MPV (audio + video) | ✅ both |
-| [ovos-media-plugin-ffplay](#ovos-media-plugin-ffplay) | ffplay (audio) | ✅ both |
-| [ovos-media-plugin-cli](#ovos-media-plugin-cli) | generic CLI-command player (audio) | ✅ both |
-| [ovos-plugin-vlc](#ovos-plugin-vlc) | VLC | old audio service only (legacy) — use ovos-media-plugin-vlc for ovos-media |
+| Package | Player | Ships for | Maturity |
+|---|---|---|---|
+| [ovos-media-plugin-spotify](#ovos-media-plugin-spotify) | Spotify Connect | ✅ both (old audio service + ovos-media) | Stable |
+| [ovos-media-plugin-chromecast](#ovos-media-plugin-chromecast) | Chromecast (audio + video) | ✅ both | Stable |
+| [ovos-media-plugin-vlc](#ovos-media-plugin-vlc) | headless VLC (audio + video) | ✅ both | Beta |
+| [ovos-media-plugin-mplayer](#ovos-media-plugin-mplayer) | MPlayer (audio + video) | ✅ both | Stable |
+| [ovos-audio-plugin-mpv](#ovos-audio-plugin-mpv) | MPV (audio + video) | ✅ both | Stable |
+| [ovos-media-plugin-ffplay](#ovos-media-plugin-ffplay) | ffplay (audio) | ✅ both | Stable |
+| [ovos-media-plugin-cli](#ovos-media-plugin-cli) | generic CLI-command player (audio) | ✅ both | Alpha |
+| [ovos-plugin-vlc](#ovos-plugin-vlc) | VLC | old audio service only (legacy) — use ovos-media-plugin-vlc for ovos-media | Stable |
+
+Maturity reflects repository health (age, activity, open issues/PRs, in-repo docs), not version — see the [Maturity Scale](maturity.md).
 
 The [`ovos-ocp-audio-plugin`](#ovos-ocp-audio-plugin) below is not a playback backend — it is the
 **old audio service itself** (deprecated, still the shipped default).

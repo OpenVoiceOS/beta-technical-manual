@@ -50,11 +50,13 @@ You can configure the VAD plugin in your `mycroft.conf`. The example below uses
 
 ## Supported VAD Plugins
 
-| Plugin | Description |
-|--------|-------------|
-| [ovos-vad-plugin-webrtcvad](https://github.com/OpenVoiceOS/ovos-vad-plugin-webrtcvad) | Based on Google's WebRTC VAD (`webrtcvad-wheels`). Lightweight, CPU-only, widely used. `vad_mode` (0–3) sets how aggressively it filters out non-speech: `0` is the least aggressive (most permissive, more likely to classify borderline audio as speech), `3` is the most aggressive at filtering out non-speech and is the plugin's default. |
-| [ovos-vad-plugin-silero](https://github.com/OpenVoiceOS/ovos-vad-plugin-silero) | Uses the Silero deep-learning model for high-accuracy VAD, particularly in noisy environments. |
-| [ovos-vad-plugin-noise](https://github.com/OpenVoiceOS/ovos-vad-plugin-noise) | Simple energy/noise-threshold VAD with no model download. |
+| Plugin | Description | Maturity |
+|--------|-------------|----------|
+| [ovos-vad-plugin-webrtcvad](https://github.com/OpenVoiceOS/ovos-vad-plugin-webrtcvad) | Based on Google's WebRTC VAD (`webrtcvad-wheels`). Lightweight, CPU-only, widely used. `vad_mode` (0–3) sets how aggressively it filters out non-speech: `0` is the least aggressive (most permissive, more likely to classify borderline audio as speech), `3` is the most aggressive at filtering out non-speech and is the plugin's default. | Stable |
+| [ovos-vad-plugin-silero](https://github.com/OpenVoiceOS/ovos-vad-plugin-silero) | Uses the Silero deep-learning model for high-accuracy VAD, particularly in noisy environments. | Stable |
+| [ovos-vad-plugin-noise](https://github.com/OpenVoiceOS/ovos-vad-plugin-noise) | Simple energy/noise-threshold VAD with no model download. | Stable |
+
+Maturity reflects repository health (age, activity, open issues/PRs, in-repo docs), not version — see the [Maturity Scale](maturity.md).
 
 > Specification: audio capture and VAD are deployer-defined components feeding the listener; see [OVOS-AUDIO-IN-1](https://github.com/OpenVoiceOS/architecture/blob/dev/audio-in.md) for the audio-input service that consumes their output.
 

@@ -11,10 +11,12 @@ A G2P plugin takes a word or an utterance and returns a list of phonemes in a sp
 
 ## Available G2P Plugins
 
-| Plugin | Alphabet | Description |
-|--------|----------|-------------|
-| `ovos-g2p-plugin-mimic` | ARPA | Uses the Mimic 1 engine for G2P conversion. Shipped by [ovos-tts-plugin-mimic](https://github.com/OpenVoiceOS/ovos-tts-plugin-mimic) (the TTS plugin also registers an `opm.g2p` entry point). |
-| [ovos-g2p-plugin-espeak](https://github.com/OVOSHatchery/ovos-g2p-plugin-espeak) | IPA | Wraps `espeak-phonemizer` for broad multilingual IPA coverage. **Hatchery-only** — not published to PyPI, install from source if you need it. |
+| Plugin | Alphabet | Description | Maturity |
+|--------|----------|-------------|----------|
+| `ovos-g2p-plugin-mimic` | ARPA | Uses the Mimic 1 engine for G2P conversion. Shipped by [ovos-tts-plugin-mimic](https://github.com/OpenVoiceOS/ovos-tts-plugin-mimic) (the TTS plugin also registers an `opm.g2p` entry point). | Mature |
+| [ovos-g2p-plugin-espeak](https://github.com/OVOSHatchery/ovos-g2p-plugin-espeak) | IPA | Wraps `espeak-phonemizer` for broad multilingual IPA coverage. **Hatchery-only** — not published to PyPI, install from source if you need it. | PoC |
+
+Maturity reflects repository health (age, activity, open issues/PRs, in-repo docs), not version — see the [Maturity Scale](maturity.md).
 
 !!! note "Roster completeness"
     This table lists the G2P plugins known to register an `opm.g2p` entry point; it is

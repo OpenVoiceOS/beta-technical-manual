@@ -11,6 +11,8 @@
 A non-exhaustive list of skills available for OpenVoiceOS. Whether a given skill is already on your
 assistant depends on how you installed it — see the legend below.
 
+Each skill below shows a **Maturity** rating from its repository health — see the [Maturity Scale](maturity.md).
+
 !!! tip "How to get a skill"
     Many of these ship with the [`ovos-installer`](ovos-installer.md)'s skill selection. To add
     one yourself, install its package (the repo link and `pip install` command are in the
@@ -51,7 +53,7 @@ survives a reboot and can sync with an external calendar.
 - Set a daily alarm for 8 AM.
 
 ??? note "Install"
-    [:material-github: OpenVoiceOS/ovos-skill-alerts](https://github.com/OpenVoiceOS/ovos-skill-alerts) · `pip install ovos-skill-alerts`
+    [:material-github: OpenVoiceOS/ovos-skill-alerts](https://github.com/OpenVoiceOS/ovos-skill-alerts) · `pip install ovos-skill-alerts` · Maturity: Mature
 
 -------
 
@@ -72,7 +74,7 @@ Get the current time, date, or information about specific calendar days.
 - What time is it in Paris?
 
 ??? note "Install"
-    [:material-github: OpenVoiceOS/ovos-skill-date-time](https://github.com/OpenVoiceOS/ovos-skill-date-time) · `pip install ovos-skill-date-time`
+    [:material-github: OpenVoiceOS/ovos-skill-date-time](https://github.com/OpenVoiceOS/ovos-skill-date-time) · `pip install ovos-skill-date-time` · Maturity: Mature
 
 -------
 
@@ -90,7 +92,7 @@ triggering listening — say "Wake up" (or the configured stand-up word) to brin
 - Go to sleep
 
 ??? note "Install"
-    [:material-github: OpenVoiceOS/ovos-skill-naptime](https://github.com/OpenVoiceOS/ovos-skill-naptime) · `pip install ovos-skill-naptime`
+    [:material-github: OpenVoiceOS/ovos-skill-naptime](https://github.com/OpenVoiceOS/ovos-skill-naptime) · `pip install ovos-skill-naptime` · Maturity: Mature
 
 -------
 
@@ -115,7 +117,7 @@ cities around the world. Current conditions and weather forecasts come from Open
 - What's the temperature?
 
 ??? note "Install"
-    [:material-github: OpenVoiceOS/ovos-skill-weather](https://github.com/OpenVoiceOS/ovos-skill-weather) · `pip install ovos-skill-weather`
+    [:material-github: OpenVoiceOS/ovos-skill-weather](https://github.com/OpenVoiceOS/ovos-skill-weather) · `pip install ovos-skill-weather` · Maturity: Mature
 
 -------
 
@@ -160,7 +162,7 @@ stations.
 - play tsf jazz radio
 
 ??? note "Install"
-    [:material-github: OpenVoiceOS/ovos-skill-pyradios](https://github.com/OpenVoiceOS/ovos-skill-pyradios) · `pip install ovos-skill-pyradios`
+    [:material-github: OpenVoiceOS/ovos-skill-pyradios](https://github.com/OpenVoiceOS/ovos-skill-pyradios) · `pip install ovos-skill-pyradios` · Maturity: Stable
 
 ### SomaFM
 
@@ -175,7 +177,7 @@ Listen to a variety of commercial-free internet radio stations from SomaFM.
 - play secret agent
 
 ??? note "Install"
-    [:material-github: OpenVoiceOS/ovos-skill-somafm](https://github.com/OpenVoiceOS/ovos-skill-somafm) · `pip install ovos-skill-somafm`
+    [:material-github: OpenVoiceOS/ovos-skill-somafm](https://github.com/OpenVoiceOS/ovos-skill-somafm) · `pip install ovos-skill-somafm` · Maturity: Stable
 
 ### News
 
@@ -193,7 +195,7 @@ News streams from around the globe.
 - play catalan news
 
 ??? note "Install"
-    [:material-github: OpenVoiceOS/ovos-skill-news](https://github.com/OpenVoiceOS/ovos-skill-news) · `pip install ovos-skill-news`
+    [:material-github: OpenVoiceOS/ovos-skill-news](https://github.com/OpenVoiceOS/ovos-skill-news) · `pip install ovos-skill-news` · Maturity: Stable
 
 ### Local Media
 
@@ -216,7 +218,7 @@ local folder.
 - open my usb
 
 ??? note "Install"
-    [:material-github: OpenVoiceOS/ovos-skill-local-media](https://github.com/OpenVoiceOS/ovos-skill-local-media) · `pip install ovos-skill-local-media`
+    [:material-github: OpenVoiceOS/ovos-skill-local-media](https://github.com/OpenVoiceOS/ovos-skill-local-media) · `pip install ovos-skill-local-media` · Maturity: Mature
 
 !!! note "Playing your own music or a streaming service"
     Out of the box, OVOS plays internet radio (PyRadios, SomaFM) and local files — it does not
@@ -245,7 +247,7 @@ Brighten your day with dad humor. Laughter is not guaranteed, but eye rolls are 
 - Do you know any jokes?
 
 ??? note "Install"
-    [:material-github: OpenVoiceOS/ovos-skill-icanhazdadjokes](https://github.com/OpenVoiceOS/ovos-skill-icanhazdadjokes) · `pip install ovos-skill-icanhazdadjokes`
+    [:material-github: OpenVoiceOS/ovos-skill-icanhazdadjokes](https://github.com/OpenVoiceOS/ovos-skill-icanhazdadjokes) · `pip install ovos-skill-icanhazdadjokes` · Maturity: Stable
 
 ### Parrot
 
@@ -267,7 +269,7 @@ Turn OpenVoiceOS into an echoing parrot! Make OVOS repeat whatever you want.
 - Repeat that
 
 ??? note "Install"
-    [:material-github: OpenVoiceOS/ovos-skill-parrot](https://github.com/OpenVoiceOS/ovos-skill-parrot) · `pip install ovos-skill-parrot`
+    [:material-github: OpenVoiceOS/ovos-skill-parrot](https://github.com/OpenVoiceOS/ovos-skill-parrot) · `pip install ovos-skill-parrot` · Maturity: Stable
 
 ### Confucius Quotes
 
@@ -283,7 +285,7 @@ Quotes from Confucius.
 - Who is Confucius
 
 ??? note "Install"
-    [:material-github: OpenVoiceOS/ovos-skill-confucius-quotes](https://github.com/OpenVoiceOS/ovos-skill-confucius-quotes) · `pip install ovos-skill-confucius-quotes`
+    [:material-github: OpenVoiceOS/ovos-skill-confucius-quotes](https://github.com/OpenVoiceOS/ovos-skill-confucius-quotes) · `pip install ovos-skill-confucius-quotes` · Maturity: Stable
 
 ### Today in History
 
@@ -301,7 +303,7 @@ Wikipedia.
 - What happened today in history?
 
 ??? note "Install"
-    [:material-github: OpenVoiceOS/ovos-skill-days-in-history](https://github.com/OpenVoiceOS/ovos-skill-days-in-history) · `pip install ovos-skill-days-in-history`
+    [:material-github: OpenVoiceOS/ovos-skill-days-in-history](https://github.com/OpenVoiceOS/ovos-skill-days-in-history) · `pip install ovos-skill-days-in-history` · Maturity: Stable
 
 ### Number Facts
 
@@ -320,7 +322,7 @@ Facts about numbers.
 - math fact about number 7
 
 ??? note "Install"
-    [:material-github: OpenVoiceOS/ovos-skill-number-facts](https://github.com/OpenVoiceOS/ovos-skill-number-facts) · `pip install ovos-skill-number-facts`
+    [:material-github: OpenVoiceOS/ovos-skill-number-facts](https://github.com/OpenVoiceOS/ovos-skill-number-facts) · `pip install ovos-skill-number-facts` · Maturity: Stable
 
 ### Movie Master
 
@@ -343,7 +345,7 @@ movie with your voice.
 - When was the movie _______ made?
 
 ??? note "Install"
-    [:material-github: OpenVoiceOS/ovos-skill-moviemaster](https://github.com/OpenVoiceOS/ovos-skill-moviemaster) · `pip install ovos-skill-moviemaster`
+    [:material-github: OpenVoiceOS/ovos-skill-moviemaster](https://github.com/OpenVoiceOS/ovos-skill-moviemaster) · `pip install ovos-skill-moviemaster` · Maturity: Stable
 
 ### ISS Location
 
@@ -360,7 +362,7 @@ Track the location of the International Space Station.
 - Who is on board of the space station?
 
 ??? note "Install"
-    [:material-github: OpenVoiceOS/ovos-skill-iss-location](https://github.com/OpenVoiceOS/ovos-skill-iss-location) · `pip install ovos-skill-iss-location`
+    [:material-github: OpenVoiceOS/ovos-skill-iss-location](https://github.com/OpenVoiceOS/ovos-skill-iss-location) · `pip install ovos-skill-iss-location` · Maturity: Stable
 
 ### DuckDuckGo
 
@@ -375,7 +377,7 @@ Use DuckDuckGo to answer questions.
 - who is elon musk
 
 ??? note "Install"
-    [:material-github: OpenVoiceOS/ovos-skill-ddg](https://github.com/OpenVoiceOS/ovos-skill-ddg) · `pip install ovos-skill-ddg`
+    [:material-github: OpenVoiceOS/ovos-skill-ddg](https://github.com/OpenVoiceOS/ovos-skill-ddg) · `pip install ovos-skill-ddg` · Maturity: Stable
 
 ### Wikipedia
 
@@ -395,7 +397,7 @@ in-depth information.
 - Tell me about Elon Musk
 
 ??? note "Install"
-    [:material-github: OpenVoiceOS/ovos-skill-wikipedia](https://github.com/OpenVoiceOS/ovos-skill-wikipedia) · `pip install ovos-skill-wikipedia`
+    [:material-github: OpenVoiceOS/ovos-skill-wikipedia](https://github.com/OpenVoiceOS/ovos-skill-wikipedia) · `pip install ovos-skill-wikipedia` · Maturity: Mature
 
 ### WikiHow
 
@@ -409,7 +411,7 @@ How to do nearly everything.
 - how to boil an egg
 
 ??? note "Install"
-    [:material-github: OpenVoiceOS/ovos-skill-wikihow](https://github.com/OpenVoiceOS/ovos-skill-wikihow) · `pip install ovos-skill-wikihow`
+    [:material-github: OpenVoiceOS/ovos-skill-wikihow](https://github.com/OpenVoiceOS/ovos-skill-wikihow) · `pip install ovos-skill-wikihow` · Maturity: Stable
 
 ### Wolfie (Wolfram Alpha)
 
@@ -427,7 +429,7 @@ Use Wolfram Alpha for general knowledge questions.
 - ask the wolf what is the speed of light
 
 ??? note "Install"
-    [:material-github: OpenVoiceOS/ovos-skill-wolfie](https://github.com/OpenVoiceOS/ovos-skill-wolfie) · `pip install ovos-skill-wolfie`
+    [:material-github: OpenVoiceOS/ovos-skill-wolfie](https://github.com/OpenVoiceOS/ovos-skill-wolfie) · `pip install ovos-skill-wolfie` · Maturity: Mature
 
 ### Wordnet
 
@@ -441,7 +443,7 @@ Use Wordnet to answer dictionary-like questions.
 - what is the antonym of ...
 
 ??? note "Install"
-    [:material-github: OpenVoiceOS/ovos-skill-wordnet](https://github.com/OpenVoiceOS/ovos-skill-wordnet) · `pip install ovos-skill-wordnet`
+    [:material-github: OpenVoiceOS/ovos-skill-wordnet](https://github.com/OpenVoiceOS/ovos-skill-wordnet) · `pip install ovos-skill-wordnet` · Maturity: Stable
 
 ### Spelling
 
@@ -457,7 +459,7 @@ Provides the spelling of words and phrases upon request.
 - Spell succotash
 
 ??? note "Install"
-    [:material-github: OpenVoiceOS/ovos-skill-spelling](https://github.com/OpenVoiceOS/ovos-skill-spelling) · `pip install ovos-skill-spelling`
+    [:material-github: OpenVoiceOS/ovos-skill-spelling](https://github.com/OpenVoiceOS/ovos-skill-spelling) · `pip install ovos-skill-spelling` · Maturity: Stable
 
 ### Personal
 
@@ -475,7 +477,7 @@ intelligence.
 - Who made you?
 
 ??? note "Install"
-    [:material-github: OpenVoiceOS/ovos-skill-personal](https://github.com/OpenVoiceOS/ovos-skill-personal) · `pip install ovos-skill-personal`
+    [:material-github: OpenVoiceOS/ovos-skill-personal](https://github.com/OpenVoiceOS/ovos-skill-personal) · `pip install ovos-skill-personal` · Maturity: Stable
 
 ### Hello World
 
@@ -491,7 +493,7 @@ is put together.
 - How are you?
 
 ??? note "Install"
-    [:material-github: OpenVoiceOS/ovos-skill-hello-world](https://github.com/OpenVoiceOS/ovos-skill-hello-world) · `pip install ovos-skill-hello-world`
+    [:material-github: OpenVoiceOS/ovos-skill-hello-world](https://github.com/OpenVoiceOS/ovos-skill-hello-world) · `pip install ovos-skill-hello-world` · Maturity: Stable
 
 -------
 
@@ -517,7 +519,7 @@ Control the volume of OVOS with verbal commands.
 - set volume to maximum
 
 ??? note "Install"
-    [:material-github: OpenVoiceOS/ovos-skill-volume](https://github.com/OpenVoiceOS/ovos-skill-volume) · `pip install ovos-skill-volume`
+    [:material-github: OpenVoiceOS/ovos-skill-volume](https://github.com/OpenVoiceOS/ovos-skill-volume) · `pip install ovos-skill-volume` · Maturity: Stable
 
 ### IP Address
 
@@ -534,7 +536,7 @@ Network connection information.
 - Tell me your IP address
 
 ??? note "Install"
-    [:material-github: OpenVoiceOS/ovos-skill-ip](https://github.com/OpenVoiceOS/ovos-skill-ip) · `pip install ovos-skill-ip`
+    [:material-github: OpenVoiceOS/ovos-skill-ip](https://github.com/OpenVoiceOS/ovos-skill-ip) · `pip install ovos-skill-ip` · Maturity: Stable
 
 ### Speedtest
 
@@ -547,7 +549,7 @@ Runs an internet bandwidth test using speedtest.net.
 - run a speedtest
 
 ??? note "Install"
-    [:material-github: OpenVoiceOS/ovos-skill-speedtest](https://github.com/OpenVoiceOS/ovos-skill-speedtest) · `pip install ovos-skill-speedtest`
+    [:material-github: OpenVoiceOS/ovos-skill-speedtest](https://github.com/OpenVoiceOS/ovos-skill-speedtest) · `pip install ovos-skill-speedtest` · Maturity: Stable
 
 ### Boot Finished
 
@@ -565,7 +567,7 @@ finished.
 - Enable ready notifications.
 
 ??? note "Install"
-    [:material-github: OpenVoiceOS/ovos-skill-boot-finished](https://github.com/OpenVoiceOS/ovos-skill-boot-finished) · `pip install ovos-skill-boot-finished`
+    [:material-github: OpenVoiceOS/ovos-skill-boot-finished](https://github.com/OpenVoiceOS/ovos-skill-boot-finished) · `pip install ovos-skill-boot-finished` · Maturity: Stable
 
 ### Dictation
 
@@ -579,7 +581,7 @@ Continuously transcribes user speech to a text file while enabled.
 - end dictation
 
 ??? note "Install"
-    [:material-github: OpenVoiceOS/ovos-skill-dictation](https://github.com/OpenVoiceOS/ovos-skill-dictation) · `pip install ovos-skill-dictation`
+    [:material-github: OpenVoiceOS/ovos-skill-dictation](https://github.com/OpenVoiceOS/ovos-skill-dictation) · `pip install ovos-skill-dictation` · Maturity: Stable
 
 ### Audio Recording
 
@@ -596,7 +598,7 @@ Record and manage audio clips directly from your assistant.
 - begin recording
 
 ??? note "Install"
-    [:material-github: OpenVoiceOS/ovos-skill-audio-recording](https://github.com/OpenVoiceOS/ovos-skill-audio-recording) · `pip install ovos-skill-audio-recording`
+    [:material-github: OpenVoiceOS/ovos-skill-audio-recording](https://github.com/OpenVoiceOS/ovos-skill-audio-recording) · `pip install ovos-skill-audio-recording` · Maturity: Stable
 
 ### Commands
 
@@ -611,4 +613,4 @@ where you want a voice shortcut to a maintenance script instead of SSHing in.
 - launch command ___
 
 ??? note "Install"
-    [:material-github: OpenVoiceOS/ovos-skill-cmd](https://github.com/OpenVoiceOS/ovos-skill-cmd) · `pip install ovos-skill-cmd`
+    [:material-github: OpenVoiceOS/ovos-skill-cmd](https://github.com/OpenVoiceOS/ovos-skill-cmd) · `pip install ovos-skill-cmd` · Maturity: Stable
