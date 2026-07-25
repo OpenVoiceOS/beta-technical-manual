@@ -146,7 +146,7 @@ First, activate the same Python environment OVOS runs in, so the skill installs 
 interpreter `ovos-core` actually uses — for example `source ~/.venvs/ovos/bin/activate` for
 a venv install. That exact path is only an example, not something you can assume: check
 where your particular install created its environment, e.g. the installer's summary screen
-(see [ovos-installer](ovos-installer.md#-summary)) or the `ExecStart=`/`Environment=` lines
+(see [ovos-installer](ovos-installer.md#environment-summary)) or the `ExecStart=`/`Environment=` lines
 of your `ovos-core` systemd unit — raspOVOS, `ovos-installer`, and container installs each
 put it somewhere different. If you're running OVOS in
 a container instead, there's no host environment to activate — install into the container
