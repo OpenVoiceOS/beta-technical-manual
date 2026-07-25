@@ -353,10 +353,10 @@ itself — a separate concern from the `speech_begin`/`silence_end` timing above
 | `gui.disable_gui` | `false` |  |
 | `ignore_logs` | `["enclosure.mouth.viseme", "enclosure.mouth.display"]` |  |
 | `session.ttl` | `-1` |  |
-| `stt.module` | `"ovos-stt-plugin-server"` |  |
+| `stt.module` | `"ovos-stt-plugin-server"` | Stock default is `ovos-stt-plugin-server`, which routes voice audio to a public community server for speech-to-text — see [Privacy & Security](privacy-security.md). |
 | `stt.fallback_module` | `""` |  |
 | `tts.pulse_duck` | `false` |  |
-| `tts.module` | `"ovos-tts-plugin-server"` |  |
+| `tts.module` | `"ovos-tts-plugin-server"` | Stock default is `ovos-tts-plugin-server`, which routes text to a public community server for text-to-speech — see [Privacy & Security](privacy-security.md). |
 | `tts.fallback_module` | `""` |  |
 | `tts.ovos-tts-plugin-mimic.voice` | `"ap"` |  |
 | `tts.ovos-tts-plugin-mimic.persist_cache` | `false` |  |
@@ -371,8 +371,8 @@ itself — a separate concern from the `speech_begin`/`silence_end` timing above
 | `g2p.module` | `""` |  |
 | `padatious.regex_only` | `false` |  |
 | `padatious.fuzz` | `true` |  |
-| `language.detection_module` | `"ovos-lang-detector-plugin-server"` |  |
-| `language.translation_module` | `"ovos-translate-plugin-server"` |  |
+| `language.detection_module` | `"ovos-lang-detector-plugin-server"` | Stock default is `ovos-lang-detector-plugin-server`, which routes text to a public community server for language detection — see [Privacy & Security](privacy-security.md). |
+| `language.translation_module` | `"ovos-translate-plugin-server"` | Stock default is `ovos-translate-plugin-server`, which routes text to a public community server for translation — see [Privacy & Security](privacy-security.md). |
 | `language.ovos-translate-plugin-server.fallback_module` | `"ovos-google-translate-plugin"` |  |
 | `language.ovos-lang-detector-plugin-server.fallback_module` | `"ovos-google-lang-detector-plugin"` |  |
 | `language.ovos-google-lang-detector-plugin.fallback_module` | `"ovos-lang-detector-plugin-cld3"` |  |

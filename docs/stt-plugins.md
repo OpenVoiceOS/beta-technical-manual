@@ -279,7 +279,7 @@ separately-licensed model, that is called out under "model".
 |--------|-------------|---------|----------|
 | [ovos-stt-plugin-wav2vec](#ovos-stt-plugin-wav2vec) | OVOS plugin for [Wav2Vec2](https://ai.meta.com/blog/wav2vec-20-learning-the-structure-of-speech-from-raw-audio/) | Apache-2.0 (model: see model card) | Stable |
 | [ovos-stt-plugin-azure](#ovos-stt-plugin-azure) | Microsoft Azure cloud speech-to-text. | Apache-2.0 (cloud service, separate Microsoft terms) | Stable |
-| [ovos-stt-plugin-chromium](#ovos-stt-plugin-chromium) | Speech-to-text using the Google Chrome browser speech API. | Apache-2.0 (cloud service, separate Google terms) | Stable |
+| [ovos-stt-plugin-chromium](#ovos-stt-plugin-chromium) | Speech-to-text using the Google Chrome browser speech API. | Apache-2.0 (cloud service, unofficial Google endpoint, separate Google terms) | Stable |
 | [ovos-stt-plugin-mms](#ovos-stt-plugin-mms) | OVOS plugin for [The Massively Multilingual Speech (MMS) project](https://huggingface.co/docs/transformers/main/en/model_doc/mms) ⚠️ **Archived** — MMS models also run under [ovos-stt-plugin-wav2vec2](https://github.com/OpenVoiceOS/ovos-stt-plugin-wav2vec2). | Apache-2.0 (model: see model card) | Deprecated |
 | [ovos-stt-server-plugin](#ovos-stt-server-plugin) | OpenVoiceOS companion plugin for [OpenVoiceOS STT Server](https://github.com/OpenVoiceOS/ovos-stt-http-server) | Apache-2.0 | Stable |
 | [ovos-stt-http-server](#ovos-stt-http-server) | Turn any OVOS STT plugin into a micro service! | Apache-2.0 | Stable |
@@ -348,6 +348,11 @@ languages resolve to different pretrained models.
 
 
 - **Description**: Speech-to-text using the Google Chrome browser speech API.
+
+!!! note
+    This plugin talks to the same unofficial, undocumented endpoint used by the Chrome
+    browser's speech recognition feature — not a published Google Cloud Speech-to-Text
+    API with an API key. Google can change or revoke access to this endpoint at any time.
 
 ---
 

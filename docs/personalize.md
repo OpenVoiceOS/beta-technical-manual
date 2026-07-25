@@ -25,7 +25,8 @@ nano ~/.config/mycroft/mycroft.conf
 
 Before restarting, double-check the file still parses — a stray missing comma or bracket will
 stop it from loading. Because `mycroft.conf` allows `//` comments, plain `json.tool` will
-reject it even when it's fine — use the same comment-aware loader OVOS itself uses:
+reject it even when it's fine — use the same comment-aware loader OVOS itself uses. This runs
+a small Python command directly in the terminal — paste it exactly as shown:
 
 ```bash
 python3 -c "from ovos_utils.json_helper import load_commented_json; load_commented_json('$HOME/.config/mycroft/mycroft.conf'); print('OK')"

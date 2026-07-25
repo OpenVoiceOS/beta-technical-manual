@@ -122,8 +122,8 @@ from ovos_plugin_manager.tts import find_tts_plugins
 plugins = find_tts_plugins()
 tts_class = plugins["ovos-tts-plugin-mimic"]
 
-# Initialize (requires lang and config)
-tts = tts_class(lang="en-us", config={})
+# Initialize (config only — lang is passed inside the config dict)
+tts = tts_class(config={"lang": "en-us"})
 
 # Generate audio
 wav_file = "hello.wav"
@@ -188,7 +188,7 @@ separately-licensed model or a paid cloud service, that is called out under "mod
 |--------|-------------|---------|----------|
 | [ovos-tts-server](#ovos-tts-server) | Turn any OVOS TTS plugin into a micro service! | Apache-2.0 | Stable |
 | [ovos-tts-plugin-polly](#ovos-tts-plugin-polly) | Amazon Polly cloud text-to-speech. | Apache-2.0 (cloud service, separate Amazon terms) | Mature |
-| [ovos-tts-plugin-google-tx](#ovos-tts-plugin-google-tx) | OVOS TTS plugin for [gTTS](https://github.com/pndurette/gTTS) | Apache-2.0 (cloud service, separate Google terms) | Mature |
+| [ovos-tts-plugin-google-tx](#ovos-tts-plugin-google-tx) | OVOS TTS plugin for [gTTS](https://github.com/pndurette/gTTS) | Apache-2.0 (cloud service, unofficial Google endpoint, separate Google terms) | Mature |
 | [ovos-tts-plugin-edge-tts](#ovos-tts-plugin-edge-tts) | TTS plugin for [OVOS](https://openvoiceos.org) based on [Edge-TTS](https://github.com/rany2/edge-tts) | Apache-2.0 | Stable |
 | [ovos-tts-plugin-matxa-multispeaker-cat](#ovos-tts-plugin-matxa-multispeaker-cat) | 🍵 [Matxa-TTS](https://huggingface.co/projecte-aina/matxa-tts-cat-multiaccent), the multispeaker, multidialectal neural TTS model.  It works together with the vocoder model 🥑 [alVoCat](https://huggingface.co/projecte-aina/alvocat-vocos-22khz), to generate high quality and expressive speech efficiently in four Catalan dialects: ⚠️ **Archived/deprecated.** | Apache-2.0 (model: see model card) | Deprecated |
 | [ovos-tts-plugin-marytts](#ovos-tts-plugin-marytts) | TTS Plugin for [MaryTTS](https://github.com/marytts/marytts) | Apache-2.0 | Stable |
@@ -239,6 +239,11 @@ Maturity reflects repository health (age, activity, open issues/PRs, in-repo doc
 
 
 - **Description**: OVOS TTS plugin for [gTTS](https://github.com/pndurette/gTTS)
+
+!!! note
+    gTTS works by calling the same unofficial, undocumented endpoint used by the Google
+    Translate web UI's "listen" feature — not a published, API-keyed Google Cloud
+    Text-to-Speech API. Google can change or revoke access to this endpoint at any time.
 
 ### Default Configuration
 

@@ -113,6 +113,9 @@ Hey — how can I help?
 A skill is just a Python package that advertises itself to OVOS through an **entry point**.
 `pyproject.toml`:
 
+!!! note "You don't need to understand this file yet"
+    Replace the two `name` placeholders and your username, and copy the rest as-is.
+
 ```toml
 [build-system]
 requires = ["setuptools>=61", "wheel"]
@@ -144,11 +147,16 @@ how the [Plugin Manager](plugin-manager.md) discovers installed skills.
 
 First, activate the same Python environment OVOS runs in, so the skill installs into the
 interpreter `ovos-core` actually uses — for example `source ~/.venvs/ovos/bin/activate` for
-a venv install. That exact path is only an example, not something you can assume: check
-where your particular install created its environment, e.g. the installer's summary screen
-(see [ovos-installer](ovos-installer.md#environment-summary)) or the `ExecStart=`/`Environment=` lines
-of your `ovos-core` systemd unit — raspOVOS, `ovos-installer`, and container installs each
-put it somewhere different. If you're running OVOS in
+a venv install. In plain English: a **[virtual environment](glossary.md)** is an isolated
+Python install, and "activating" it just means that **[pip](glossary.md)** will now install
+into the one OVOS actually uses instead of somewhere else — see the
+[Glossary](glossary.md) if these terms are new. That exact path is only an example, not
+something you can assume: check where your particular install created its environment, e.g.
+the installer's summary screen
+(see [ovos-installer](ovos-installer.md#environment-summary)) — or, advanced: if you installed
+via [systemd](glossary.md), its unit file's `Environment=`/`ExecStart=` lines show the path,
+see [Troubleshooting](troubleshooting.md). raspOVOS, `ovos-installer`, and container installs
+each put it somewhere different. If you're running OVOS in
 a container instead, there's no host environment to activate — install into the container
 directly: `docker compose exec <service> pip install -e .` (run from the skill folder, with
 the skill's path mounted into the container, or copy it in first).

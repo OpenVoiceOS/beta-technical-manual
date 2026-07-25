@@ -109,6 +109,10 @@ tier (see [STT Plugins](stt-plugins.md), [TTS Plugins](tts-plugins.md),
   }
   ```
 
+!!! tip "How to apply these settings"
+    To apply these settings, see [Make It Yours](personalize.md) for where `mycroft.conf`
+    lives and how to edit it.
+
 ### Storage Options
 
 - **SD Card or USB Storage:**
@@ -202,7 +206,9 @@ Raspberry Pi boards are notoriously **picky about power supplies**. Insufficient
 3. **Autologin:**
 
 
-    - The `ovos` user will automatically log in to the terminal after boot.
+    - The `ovos` user will automatically log in to the terminal after boot. This is a
+      text-only command screen, not a graphical desktop — see [Make It Yours](personalize.md)
+      and [It's Not Working — Quick Fixes](everyday-help.md) for the basics of using it.
 
 
 4. **Check System Status:**

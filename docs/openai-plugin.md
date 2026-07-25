@@ -35,6 +35,13 @@ All engines wrap the same `OpenAIChatCompletions` API client, so any OpenAI-comp
 Completions server (OpenAI, ollama, llama.cpp, vLLM, LocalAI, `ovos-persona-server`, …) works
 by pointing `api_url` at its `/v1` base.
 
+!!! note "`Remote Llama` demo persona sends text to a third-party public server"
+    The pre-built `Remote Llama` persona ships pointed at a public ollama/LLama server
+    operated by a third party. Who operates that server, how long it retains conversation
+    text, and whether it logs requests are not stated by the plugin. For privacy, point
+    `api_url` at your own local model (see [gguf-plugin.md](gguf-plugin.md)) or another
+    self-hosted endpoint instead of using this demo persona as-is.
+
 ---
 
 ## Common Configuration Keys
