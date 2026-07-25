@@ -1,5 +1,8 @@
 # Remote Agents with HiveMind
 
+!!! info "No maturity badge here"
+    HiveMind is a separate project (its own organization and [community docs](https://jarbashivemind.github.io/HiveMind-community-docs/)), so the OVOS [Maturity Scale](maturity.md) — which rates OVOS-org repository health — deliberately does not apply to it. This page covers the OVOS-side integration only.
+
 !!! abstract "In a nutshell"
     OpenVoiceOS runs **local-first**, but sometimes you want one capable machine to do the
     thinking and several small devices ("satellites") to do the listening and speaking — or

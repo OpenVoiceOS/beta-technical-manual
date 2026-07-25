@@ -1,5 +1,8 @@
 # Language Selection and Disambiguation
 
+!!! success "Maturity — Mature ⬤⬤⬤⬤⬤"
+    Long-lived, battle-tested, and actively maintained — this is `ovos-core` internals; depend on it freely. Rated by [repository health](maturity.md), not version.
+
 !!! tip "Just want to change your language?"
     See [Language Support](lang-support.md) instead — this page is internals: how `ovos-core`
     picks a language for a given utterance internally, not how to configure one.

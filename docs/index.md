@@ -169,6 +169,12 @@ OVOS is not one program — it's a small team of cooperating services that talk 
 other over a shared **[messagebus](bus-service.md)**. Knowing the cast of characters
 makes the rest of the manual click into place:
 
+!!! tip "Maturity badges"
+    Most component and plugin pages open with a **maturity** badge (e.g. ⬤⬤⬤⬤◯ Stable) and
+    the plugin catalogs carry a Maturity column. It tells you how much a component can be
+    relied on, judged from repository health rather than version number — see the
+    [Maturity Scale](maturity.md).
+
 | Piece | In plain terms | Learn more |
 |---|---|---|
 | **Listener** | Hears the wake word and records your speech | [Speech Service](speech-service.md) |

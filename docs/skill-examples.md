@@ -15,9 +15,11 @@ Each skill below shows a **Maturity** rating from its repository health — see 
 
 !!! tip "How to get a skill"
     Many of these ship with the [`ovos-installer`](ovos-installer.md)'s skill selection. To add
-    one yourself, install its package (the repo link and `pip install` command are in the
+    one yourself, install its package (the repo link and install command are in the
     collapsed "Install" block under each skill below) and restart `ovos-core` — it scans for
-    installed skills automatically. If a skill isn't published to PyPI, install straight from
+    installed skills automatically. On RaspOVOS, prefer `ovos-install <package>`, RaspOVOS's own
+    helper, which installs with the correct version constraints; on any other setup, `pip install
+    <package>` works the same way. If a skill isn't published to PyPI, install straight from
     git, e.g. `pip install git+https://github.com/OpenVoiceOS/ovos-skill-weather`. To build your
     own, follow [Your First Skill](first-skill.md).
 
@@ -27,7 +29,7 @@ Each skill below shows a **Maturity** rating from its repository health — see 
     - 🟡 **Installer optional** — installed only if you also enable the installer's
       `extra-skills` feature.
     - ⚪ **Manual install only** — not offered by the installer at all; add it yourself with
-      `pip install`.
+      `ovos-install` (on RaspOVOS) or `pip install` (otherwise).
 
 ---
 
@@ -143,7 +145,7 @@ access token.
 - Activate the movie night scene.
 
 ??? note "Install"
-    [:material-github: OscillateLabsLLC/skill-homeassistant](https://github.com/OscillateLabsLLC/skill-homeassistant) · `pip install skill-homeassistant` — or tick `homeassistant` in the [ovos-installer](ovos-installer.md#feature-selection) feature list, which prompts for the URL and token for you.
+    [:material-github: OscillateLabsLLC/skill-homeassistant](https://github.com/OscillateLabsLLC/skill-homeassistant) · On RaspOVOS, `ovos-install skill-homeassistant` (installs with the correct version constraints); otherwise `pip install skill-homeassistant` — or tick `homeassistant` in the [ovos-installer](ovos-installer.md#feature-selection) feature list, which prompts for the URL and token for you · Maturity: Stable
 
 -------
 

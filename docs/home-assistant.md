@@ -60,7 +60,19 @@ With those two in hand, either:
 - Tick the `homeassistant` feature in the [ovos-installer](ovos-installer.md#feature-selection)
   (offered for the `ovos`/`listener` profiles on the `virtualenv` or `containers` install
   method) — the installer prompts you for the URL and token during setup, or
-- Install the skill yourself afterwards:
+
+    !!! note "RaspOVOS users: this doesn't apply to you"
+        The `homeassistant` feature above belongs to the `ovos-installer` flow, for setups
+        installed via that installer. If you're on a RaspOVOS image (flashed straight to an
+        SD card or USB drive), you never run `ovos-installer` — install the skill directly
+        with the command below instead.
+
+- Install the skill yourself afterwards. On RaspOVOS, use `ovos-install`, which installs with
+  the correct version constraints:
+  ```bash
+  ovos-install skill-homeassistant
+  ```
+  On any other setup, use `pip install` instead:
   ```bash
   pip install skill-homeassistant
   ```

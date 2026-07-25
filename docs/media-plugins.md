@@ -49,6 +49,12 @@ The [`ovos-ocp-audio-plugin`](#ovos-ocp-audio-plugin) below is not a playback ba
 
 - **Description**: Spotify Connect playback. Ships entry points for **both** the old audio service (`mycroft.plugin.audioservice`) and [ovos-media](https://github.com/OpenVoiceOS/ovos-media) (`opm.media.audio`).
 
+```bash
+pip install ovos-media-plugin-spotify
+```
+
+Then select it in your audio/media backend config — see [Media playback: legacy vs. ovos-media](ovos-media.md).
+
 ---
 
 ## ovos-media-plugin-vlc
@@ -62,6 +68,12 @@ The [`ovos-ocp-audio-plugin`](#ovos-ocp-audio-plugin) below is not a playback ba
   (`mycroft.plugin.audioservice`, type `ovos_vlc`). The older, old-audio-service-only
   [ovos-plugin-vlc](#ovos-plugin-vlc) still exists as a separate package.
 
+```bash
+pip install ovos-media-plugin-vlc
+```
+
+Then select it in your audio/media backend config — see [Media playback: legacy vs. ovos-media](ovos-media.md).
+
 ---
 
 ## ovos-media-plugin-chromecast
@@ -70,6 +82,12 @@ The [`ovos-ocp-audio-plugin`](#ovos-ocp-audio-plugin) below is not a playback ba
 
 
 - **Description**: Cast audio/video to a Chromecast. Ships entry points for **both** the old audio service and [ovos-media](https://github.com/OpenVoiceOS/ovos-media) (`opm.media.audio` / `opm.media.video`).
+
+```bash
+pip install ovos-media-plugin-chromecast
+```
+
+Then select it in your audio/media backend config — see [Media playback: legacy vs. ovos-media](ovos-media.md).
 
 ---
 
@@ -89,6 +107,12 @@ The [`ovos-ocp-audio-plugin`](#ovos-ocp-audio-plugin) below is not a playback ba
 
 - **Description**: VLC `AudioBackend` for the **old audio service** (`mycroft.plugin.audioservice`). For the [ovos-media](ovos-media.md) backend use [ovos-media-plugin-vlc](#ovos-media-plugin-vlc).
 
+```bash
+pip install ovos-plugin-vlc
+```
+
+Then select it in your audio/media backend config — see [Media playback: legacy vs. ovos-media](ovos-media.md).
+
 ---
 
 ## ovos-media-plugin-mplayer
@@ -99,6 +123,12 @@ The [`ovos-ocp-audio-plugin`](#ovos-ocp-audio-plugin) below is not a playback ba
 - **Description**: MPlayer audio/video playback. Ships entry points for both
   [ovos-media](https://github.com/OpenVoiceOS/ovos-media) (`opm.media.audio` / `opm.media.video`)
   and the old audio service (`mycroft.plugin.audioservice`, type `ovos_mplayer`).
+
+```bash
+pip install ovos-media-plugin-mplayer
+```
+
+Then select it in your audio/media backend config — see [Media playback: legacy vs. ovos-media](ovos-media.md).
 
 ---
 
@@ -112,6 +142,12 @@ The [`ovos-ocp-audio-plugin`](#ovos-ocp-audio-plugin) below is not a playback ba
   [ovos-media](https://github.com/OpenVoiceOS/ovos-media) (`opm.media.audio` / `opm.media.video`)
   and the old audio service (`mycroft.plugin.audioservice`, type `ovos_mpv`).
 
+```bash
+pip install ovos-audio-plugin-mpv
+```
+
+Then select it in your audio/media backend config — see [Media playback: legacy vs. ovos-media](ovos-media.md).
+
 ---
 
 ## ovos-media-plugin-ffplay
@@ -123,6 +159,12 @@ The [`ovos-ocp-audio-plugin`](#ovos-ocp-audio-plugin) below is not a playback ba
   [ovos-media](https://github.com/OpenVoiceOS/ovos-media) (`opm.media.audio`, class
   `FFPlayOCPAudioService`) and the old audio service (`mycroft.plugin.audioservice`, type
   `ovos_ffplay`). Direct programmatic access is available via `FFPlayAudioPlayer`.
+
+```bash
+pip install ovos-media-plugin-ffplay
+```
+
+Then select it in your audio/media backend config — see [Media playback: legacy vs. ovos-media](ovos-media.md).
 
 ---
 
@@ -139,6 +181,13 @@ The [`ovos-ocp-audio-plugin`](#ovos-ocp-audio-plugin) below is not a playback ba
   (`SIGSTOP`/`SIGCONT`). Ships entry points for both ovos-media (`opm.media.audio`, class
   `CLIAudioService`) and the old audio service (`mycroft.plugin.audioservice`, type
   `ovos_cli`).
+
+```bash
+pip install ovos-media-plugin-cli
+```
+
+Then select it in your audio/media backend config, optionally setting the `command` to
+a specific CLI player — see [Media playback: legacy vs. ovos-media](ovos-media.md).
 
 ---
 

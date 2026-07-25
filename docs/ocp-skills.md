@@ -1,5 +1,10 @@
 # OCP Skills
 
+!!! tip "Just want to play music or radio?"
+    Install a ready-made skill instead of writing one — see
+    [What Can I Say? — Music & Radio](skill-examples.md#music-radio). This page is for
+    developers writing a new OCP media skill.
+
 !!! warning "OCP skills are giving way to MediaProvider plugins"
     OCP **skills** (media-provider skills built on `OVOSCommonPlaybackSkill` /
     [`@ocp_search`](#search-results)) still work and remain fully supported. The intended
