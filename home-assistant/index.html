@@ -1417,14 +1417,29 @@ note.</p>
 </ol>
 <p>With those two in hand, either:</p>
 <ul>
-<li>Tick the <code>homeassistant</code> feature in the <a href="../ovos-installer/#feature-selection">ovos-installer</a>
+<li>
+<p>Tick the <code>homeassistant</code> feature in the <a href="../ovos-installer/#feature-selection">ovos-installer</a>
   (offered for the <code>ovos</code>/<code>listener</code> profiles on the <code>virtualenv</code> or <code>containers</code> install
-  method) — the installer prompts you for the URL and token during setup, or</li>
-<li>Install the skill yourself afterwards:
-  <div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pip<span class="w"> </span>install<span class="w"> </span>skill-homeassistant
+  method) — the installer prompts you for the URL and token during setup, or</p>
+<div class="admonition note">
+<p class="admonition-title">RaspOVOS users: this doesn't apply to you</p>
+<p>The <code>homeassistant</code> feature above belongs to the <code>ovos-installer</code> flow, for setups
+installed via that installer. If you're on a RaspOVOS image (flashed straight to an
+SD card or USB drive), you never run <code>ovos-installer</code> — install the skill directly
+with the command below instead.</p>
+</div>
+</li>
+<li>
+<p>Install the skill yourself afterwards. On RaspOVOS, use <code>ovos-install</code>, which installs with
+  the correct version constraints:
+  <div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>ovos-install<span class="w"> </span>skill-homeassistant
+</span></code></pre></div>
+  On any other setup, use <code>pip install</code> instead:
+  <div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>pip<span class="w"> </span>install<span class="w"> </span>skill-homeassistant
 </span></code></pre></div>
   then configure it with your instance's URL and token (see the skill's own repository for the
-  current configuration key names), and restart OVOS to load it.</li>
+  current configuration key names), and restart OVOS to load it.</p>
+</li>
 </ul>
 <h3 id="example-utterances">Example utterances<a class="headerlink" href="#example-utterances" title="Permanent link">&para;</a></h3>
 <p>Actual phrasing and which devices respond depend entirely on how your own devices, areas, and
