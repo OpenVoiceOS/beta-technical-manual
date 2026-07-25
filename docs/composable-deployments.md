@@ -217,6 +217,17 @@ graph LR
     SAT -. HiveMind protocol .-> HIVE
 ```
 
+!!! warning "Trust boundary: the bus and HIVE links are localhost/LAN only"
+    Every `<-- websocket.host=A -->` link in the diagram above (including the `HIVE` connection)
+    is a direct connection to the raw messagebus and must stay on a trusted localhost/LAN network
+    — it is never meant to be exposed to, or reachable from, the open internet. See
+    [Bus Service](bus-service.md) (see its "Security: the bus has no authentication" note) for
+    why the bus itself is a trust boundary. The
+    **only** link in this topology that is designed to cross an untrusted network is the dotted
+    `SAT -. HiveMind protocol .-> HIVE` edge: the HiveMind satellite talks to `hivemind-core` over
+    HiveMind's own authenticated protocol, not the raw bus, which is precisely what makes it safe
+    to run a satellite from a network you don't otherwise trust.
+
 ## Caveats
 
 Splitting services this way is fully supported, but it moves responsibilities that a single-host

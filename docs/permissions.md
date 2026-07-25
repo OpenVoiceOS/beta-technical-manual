@@ -10,6 +10,14 @@
 ??? info "📐 Formal specification"
     Converse participation rules are specified by **[OVOS-CONVERSE-1](https://github.com/OpenVoiceOS/architecture/blob/dev/converse.md)**; see the [spec index](architecture-specs.md).
 
+!!! note "Routing/participation controls, not a security boundary"
+    Converse and fallback permission settings decide which already-loaded skills get to
+    *participate* in a given turn — they are not a security or sandboxing mechanism. A
+    skill that is loaded has full code-execution rights regardless of its converse
+    whitelist/blacklist status; these settings cannot contain a malicious skill, they can
+    only stop it from being offered a turn. See
+    [Privacy & Security — skills are not sandboxed](privacy-security.md#skills-are-not-sandboxed).
+
 ## Permissions
 
 **Module:** `ovos_workshop.permissions`

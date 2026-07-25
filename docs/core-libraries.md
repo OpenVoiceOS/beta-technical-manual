@@ -25,6 +25,7 @@ bus chores. It also ships the `ovos-listen` / `ovos-speak` / `ovos-say-to` / `ov
 - Source: [OpenVoiceOS/ovos-bus-client](https://github.com/OpenVoiceOS/ovos-bus-client)
 - API docs: [`/docs`](https://github.com/OpenVoiceOS/ovos-bus-client/tree/dev/docs)
 - In the manual: [messagebus Service](bus-service.md) (architecture & message flow).
+- License: Apache-2.0
 
 ## `ovos-utils`
 
@@ -34,6 +35,7 @@ decorators, language helpers, sound playback, and many small utilities. It also 
 
 - Source: [OpenVoiceOS/ovos-utils](https://github.com/OpenVoiceOS/ovos-utils)
 - API docs: [`/docs`](https://github.com/OpenVoiceOS/ovos-utils/tree/dev/docs)
+- License: Apache-2.0
 
 ## `ovos-pydantic-models`
 
@@ -42,6 +44,7 @@ lets tools validate and introspect message types instead of passing around raw d
 
 - Source: [OpenVoiceOS/ovos-pydantic-models](https://github.com/OpenVoiceOS/ovos-pydantic-models)
 - API docs: [`/docs`](https://github.com/OpenVoiceOS/ovos-pydantic-models/tree/dev/docs)
+- License: Apache-2.0
 
 ## `ovos-plugin-manager` (OPM)
 
@@ -50,6 +53,7 @@ manual at [Plugin Manager](plugin-manager.md).
 
 - Source: [OpenVoiceOS/ovos-plugin-manager](https://github.com/OpenVoiceOS/ovos-plugin-manager)
 - API docs: [`/docs`](https://github.com/OpenVoiceOS/ovos-plugin-manager/tree/dev/docs)
+- License: Apache-2.0
 
 ## `ovos-workshop`
 
@@ -58,6 +62,7 @@ helpers, and skill lifecycle. Covered in the manual under [Skill Development](wo
 
 - Source: [OpenVoiceOS/ovos-workshop](https://github.com/OpenVoiceOS/ovos-workshop)
 - API docs: [`/docs`](https://github.com/OpenVoiceOS/ovos-workshop/tree/dev/docs)
+- License: Apache-2.0
 
 ## `ovos-config`
 
@@ -67,6 +72,7 @@ The layered configuration system (defaults → system → user → runtime). Cov
 - Source: [OpenVoiceOS/ovos-config](https://github.com/OpenVoiceOS/ovos-config)
 - API docs: unlike the libraries above, `ovos-config` has no separate `docs/` folder — its
   [`README`](https://github.com/OpenVoiceOS/ovos-config/blob/dev/README.md) is the API reference.
+- License: Apache-2.0
 
 ## `kw-template-matcher`
 

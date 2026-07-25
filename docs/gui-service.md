@@ -178,6 +178,13 @@ The GUI WebSocket server is configured under `gui_websocket` in `mycroft.conf`:
     [HiveMind](https://jarbashivemind.github.io/HiveMind-community-docs/) for authenticated remote
     transport.
 
+!!! danger "There is no TLS option for the GUI websocket"
+    Unlike [`ovos-messagebus`](bus-service.md) (which can serve `wss://` itself),
+    `ovos-gui`'s Tornado WebSocket server has no working `gui_websocket.ssl` server path —
+    verified against the `ovos-gui` source. There is no config key that turns this socket
+    into `wss://`. Keep it bound to `127.0.0.1` or behind a reverse proxy/VPN that
+    terminates TLS and authenticates; do not expose it as-is.
+
 ---
 
 !!! warning "Upcoming — unreleased"

@@ -65,6 +65,18 @@ their config, and install commands.
 |---|---|---|
 | [PHAL](phal.md) (Platform/Hardware Abstraction Layer) | `opm.phal` | Hardware and platform integrations |
 
+## Other plugin types
+
+These plugin types are defined by the Plugin Manager but don't yet have a dedicated catalog
+page here — see [Plugin Manager → Plugin Types](plugin-manager.md#plugin-types) for their
+entry-point group and template base class:
+
+- **Voice Clone** (`opm.vc`) — clones a voice for TTS synthesis
+- **Audio→IPA** (`opm.audio2ipa`) — transcribes audio directly to phonemes (IPA)
+- **Embeddings** (`opm.embeddings`, plus `opm.embeddings.text` / `.voice` / `.image` / `.face`) —
+  generic and modality-specific embedding backends
+- **Knowledge Triples** (`opm.triples`) — extracts subject-predicate-object triples from text
+
 For the full machine-readable list of plugin types and template base classes, see the
 **[Plugin Manager → Plugin Types](plugin-manager.md#plugin-types)** table. To create your own
 plugin, each catalog page above includes a template and entry-point example.

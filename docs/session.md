@@ -62,10 +62,11 @@ doing the work.
 | `request_lang` | The language the **emitter reported** for this utterance — a hint, never authoritative (e.g. the language bound to the wake word that fired) | The emitter: listener, UI selector, or a routing layer |
 | `detected_lang` | The language a **detection component** classified the utterance as. May disagree with both `stt_lang` and `lang`; disagreement is normal | A language-detection plugin or transformer |
 
-Rough guidance on which to read: bias STT with `request_lang`; match intents and pick dialogs
-on `stt_lang` or `detected_lang`; render responses in `output_lang` when it is set; constrain a
-detector's candidate set with `lang` plus `secondary_langs`. Never assume a field is present,
-and never assume one equals another.
+Rough guidance on which to read: render responses in `output_lang` when it is set; constrain a
+detector's candidate set with `lang` plus `secondary_langs`. For intent matching, `ovos-core`
+does not read a single field in isolation — see [Language Selection](lang-selection.md) for the
+authoritative resolution order (`stt_lang` → `request_lang` → `detected_lang` → configured
+default). Never assume a field is present, and never assume one equals another.
 
 !!! warning "`data.lang` is per-payload, not session state"
     Many bus topics carry a `data.lang` describing the language of the content *in that

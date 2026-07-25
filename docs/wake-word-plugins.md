@@ -37,6 +37,11 @@ The full roster with descriptions and licenses lives in one place — the
 `ovos-ww-plugin-vosk`, then `ovos-ww-plugin-pocketsphinx` if a plugin further up the chain is
 not installed. Vosk offers the fastest setup for an arbitrary wake phrase without model training.
 
+The default `hey_mycroft` engine `ovos-ww-plugin-precise-onnx` is rated **Beta**, its
+fallback `ovos-ww-plugin-vosk` is Stable, and `ovos-ww-plugin-precise-lite` is Deprecated;
+the default is chosen for accuracy, and per the [Maturity Scale](maturity.md) maturity is
+separate from the recommendation.
+
 !!! note "Relative footprint"
     The default `ovos-ww-plugin-precise-onnx` models are small, purpose-built for a single
     wake phrase, and meant to run continuously on-device — much lighter than a general STT or

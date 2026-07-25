@@ -326,7 +326,7 @@ setup(
     version="0.1.0",
     license="Apache-2.0",
     packages=find_packages(),
-    install_requires=["ovos-plugin-manager>=0.0.1"],
+    install_requires=["ovos-plugin-manager>=1.0.0,<3.0.0"],
     entry_points={
         "opm.stt": [
             "my-engine-stt = my_stt_plugin:MySTTPlugin"

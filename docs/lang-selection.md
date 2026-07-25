@@ -21,7 +21,7 @@ per-payload `data.lang`. Each is defined in
 
 ## The Disambiguation Logic
 
-When a `recognizer_loop:utterance` message arrives on the [messagebus](bus-service.md), `ovos-core` (specifically the `IntentService`) runs a disambiguation routine to decide which language to use for intent matching.
+When an `ovos.utterance.handle` message (legacy: `recognizer_loop:utterance`) arrives on the [messagebus](bus-service.md), `ovos-core` (specifically the `IntentService`) runs a disambiguation routine to decide which language to use for intent matching.
 
 The service inspects the message's `context` dict and picks the **first** of these keys that is present *and* resolves to a valid language:
 

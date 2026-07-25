@@ -58,6 +58,14 @@ ovos-messagebus  (WebSocket pub/sub)
       ├── ovos-media            – standalone media-playback service (opt-in; replaces legacy audioservice)
       ├── ovos-gui              – GUI layer
       └── ovos-phal             – hardware/platform plugins
+```
+
+Of the six [transformer chains](transformer-plugins.md), only utterance, metadata, and intent
+run inside `IntentService` above. The other three run elsewhere in the pipeline: audio
+transformers run in `ovos-dinkum-listener` before STT, and dialog and TTS transformers run in
+`ovos-audio` (or `ovos-media`, where installed) when a response is rendered.
+
+```bash
 
 ```
 

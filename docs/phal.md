@@ -202,6 +202,17 @@ system power management, thermal control. The explicit `enabled: true` requireme
 security boundary — installed-but-unconfigured admin plugins never run accidentally.
 Skills and the core pipeline never run as root.
 
+!!! danger "AdminPHAL plugins run enabled bus actions with root privilege"
+    `AdminPHAL` receives the same **unauthenticated** [messagebus](bus-service.md) client
+    as every other service — construction takes a plain `MessageBusClient`, with no
+    separate credential or capability check. If the bus is reachable, anyone who can emit
+    bus messages can trigger any *enabled* admin plugin's actions, and those actions run
+    with root privilege: for example, `ovos-PHAL-plugin-system` exposes reboot, shutdown
+    and factory-reset over the bus. This is a stronger consequence of the bus's lack of
+    authentication than "skills aren't sandboxed" — it is root-equivalent remote control,
+    not just assistant control. See [Privacy & Security](privacy-security.md) for the full
+    trust-boundary picture.
+
 ### Configuration
 
 ```json

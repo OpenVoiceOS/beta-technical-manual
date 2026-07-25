@@ -300,6 +300,12 @@ speech-to-text and text-to-speech work over HTTP (see [STT server](stt-server.md
 [TTS server](tts-server.md)). A sketch, based on the real container images published by
 [`ovos-docker`](https://github.com/OpenVoiceOS/ovos-docker):
 
+!!! danger "These ports are unauthenticated plain HTTP"
+    `8080` and `9666` below serve unauthenticated plain HTTP by default. Never expose them
+    to untrusted networks — add API keys and/or put a reverse proxy in front of them before
+    they leave localhost. See [tts-server: Tips & Caveats](tts-server.md#tips-caveats) for
+    how.
+
 ```yaml title="docker-compose.yml — central speech backend"
 services:
   ovos_stt_server:
@@ -310,10 +316,6 @@ services:
     image: docker.io/smartgic/ovos-tts-server-piper:${VERSION}      # or your own build, see tts-server.md
     ports: ["9666:9666"]
 ```
-
-These ports are unauthenticated HTTP by default — see
-[TTS server: Tips & Caveats](tts-server.md#tips-caveats) for adding API keys or a reverse proxy
-in front of them once they leave localhost.
 
 The speech-server image name encodes the engine baked into it — `ovos-stt-server-onnx-asr`,
 `ovos-stt-server-onnx-asr-cuda`, `ovos-tts-server-piper`, `ovos-tts-server-kokoro`,
@@ -367,6 +369,13 @@ container filesystem. The
 [reference compose file](https://github.com/OpenVoiceOS/ovos-docker/blob/dev/compose/docker-compose.yml)
 in `ovos-docker` is the fuller version of the sketch above, with every volume, device,
 resource limit and healthcheck spelled out.
+
+!!! danger "`network_mode: host` shares the loopback across every container on that host"
+    With `network_mode: host`, `127.0.0.1` is the **host's** loopback, not a container-private
+    one — every container and process on that host shares it. A bus bound to `127.0.0.1` is
+    reachable by any of them, not just `ovos_messagebus`; "bound to localhost" no longer means
+    "only reachable by this one process" once host networking is in play. Treat the whole host
+    as the trust boundary, not the individual container.
 
 Each thin client still runs its own bus, listener, audio and core — only the heavy STT/TTS
 inference is centralized. This is the same pattern as

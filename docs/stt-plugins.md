@@ -19,6 +19,10 @@ between the listener and the intent pipeline.
     STT (e.g. `ovos-stt-plugin-azure`) is a fair choice when the local device doesn't have
     the compute budget for on-device recognition.
 
+    `ovos-stt-plugin-onnx-asr` is rated **Beta** while several alternatives are Stable;
+    it is recommended here for its offline quality and footprint, and per the
+    [Maturity Scale](maturity.md) maturity is not the same as a recommendation.
+
     **Footprint:** as noted in the [plugin's own entry](#ovos-stt-plugin-onnx-asr), most models
     in the [OpenVoiceOS/stt-asr-onnx](https://huggingface.co/collections/OpenVoiceOS/stt-asr-onnx)
     collection ship both `fp32` and `int8` weights — pick `int8` for the lower-RAM, lower-compute
@@ -279,9 +283,9 @@ separately-licensed model, that is called out under "model".
 | [ovos-stt-plugin-mms](#ovos-stt-plugin-mms) | OVOS plugin for [The Massively Multilingual Speech (MMS) project](https://huggingface.co/docs/transformers/main/en/model_doc/mms) ⚠️ **Archived** — MMS models also run under [ovos-stt-plugin-wav2vec2](https://github.com/OpenVoiceOS/ovos-stt-plugin-wav2vec2). | Apache-2.0 (model: see model card) | Deprecated |
 | [ovos-stt-server-plugin](#ovos-stt-server-plugin) | OpenVoiceOS companion plugin for [OpenVoiceOS STT Server](https://github.com/OpenVoiceOS/ovos-stt-http-server) | Apache-2.0 | Stable |
 | [ovos-stt-http-server](#ovos-stt-http-server) | Turn any OVOS STT plugin into a micro service! | Apache-2.0 | Stable |
-| [ovos-stt-plugin-whisper](#ovos-stt-plugin-whisper) | OpenVoiceOS STT plugin for [Whisper](https://github.com/guillaumekln/faster-whisper), using transformers library | Apache-2.0 (default model: [openai/whisper-large-v3-turbo](https://huggingface.co/openai/whisper-large-v3-turbo)) | Beta |
+| [ovos-stt-plugin-whisper](#ovos-stt-plugin-whisper) | OpenVoiceOS STT plugin for [Whisper](https://github.com/guillaumekln/faster-whisper), using transformers library | Apache-2.0 (default model: [openai/whisper-large-v3](https://huggingface.co/openai/whisper-large-v3)) | Beta |
 | [ovos-stt-plugin-whispercpp](#ovos-stt-plugin-whispercpp) | OpenVoiceOS STT plugin for [whispercpp](https://github.com/ggerganov/whisper.cpp) | Apache-2.0 (model: see model card) | Stable |
-| [ovos-stt-plugin-fasterwhisper](#ovos-stt-plugin-fasterwhisper) | OpenVoiceOS STT plugin for [Faster Whisper](https://github.com/guillaumekln/faster-whisper) | Apache-2.0 (default model: [mobiuslabsgmbh/faster-whisper-large-v3-turbo](https://huggingface.co/mobiuslabsgmbh/faster-whisper-large-v3-turbo)) | Stable |
+| [ovos-stt-plugin-fasterwhisper](#ovos-stt-plugin-fasterwhisper) | OpenVoiceOS STT plugin for [Faster Whisper](https://github.com/guillaumekln/faster-whisper) | Apache-2.0 (default model: `large-v3`) | Stable |
 | [ovos-stt-plugin-nemo](#ovos-stt-plugin-nemo) | OpenVoiceOS STT plugin for [Nemo](https://docs.nvidia.com/nemo-framework/user-guide/latest/nemotoolkit/asr/models.html), GPU is **strongly recommended** | Apache-2.0 (model: see model card) | Stable |
 | [ovos-stt-plugin-whisper-lm](#ovos-stt-plugin-whisper-lm) | OpenVoiceOS STT plugin for [Whisper-LM-transformers](https://github.com/hitz-zentroa/whisper-lm-transformers), KenLM and Large language model integration with Whisper ASR models implemented in Hugging Face library. | Apache-2.0 (model: see model card) | Stable |
 | [ovos-stt-plugin-citrinet](#ovos-stt-plugin-citrinet) | OpenVoiceOS STT plugin | Apache-2.0 (model: see model card) | Stable |
@@ -449,6 +453,8 @@ offline engine from the table above.
 
 - **Description**: OpenVoiceOS STT plugin for [Faster Whisper](https://github.com/guillaumekln/faster-whisper)
 
+CTranslate2 also supports `int8` / `int8_float16` compute types for lower-RAM CPU deployments — change `compute_type` to use them.
+
 ### Default Configuration
 
 ```jsonc
@@ -473,6 +479,8 @@ offline engine from the table above.
 
 
 - **Description**: OpenVoiceOS STT plugin for [Nemo](https://docs.nvidia.com/nemo-framework/user-guide/latest/nemotoolkit/asr/models.html), GPU is **strongly recommended**
+
+CPU is the shipped default (`use_cuda: false`); set `use_cuda: true` for acceptable throughput on supported GPUs — the GPU recommendation is about speed, not a required default.
 
 ### Default Configuration
 
