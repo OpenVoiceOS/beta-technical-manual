@@ -1983,8 +1983,9 @@ plugin such as <code>ovos-PHAL-plugin-system</code> is installed and enabled (se
   already has full access, so only install software you trust.</li>
 <li><strong>The GUI WebSocket needs the same treatment.</strong> <code>ovos-gui</code> serves a second, equally
   unauthenticated socket on port <code>18181</code>, and messages received there are translated into
-  emits on this bus — so it carries the same authority. Unlike the bus, it ships bound to
-  <code>0.0.0.0</code>; set <code>gui_websocket.host</code> to <code>127.0.0.1</code> unless a remote display client needs it.</li>
+  emits on this bus — so it carries the same authority. Like the bus, it ships bound to
+  <code>127.0.0.1</code>; widening <code>gui_websocket.host</code> to <code>0.0.0.0</code> for a remote display exposes that
+  unauthenticated socket to the whole network.</li>
 </ul>
 </div>
 <hr />

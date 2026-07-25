@@ -1694,7 +1694,7 @@ mechanism); the tables below show both names where applicable.</p>
 <tr>
 <td><code>ovos.intent.unmatched</code> (legacy: <code>complete_intent_failure</code>)</td>
 <td>—</td>
-<td>No pipeline plugin claimed the utterance; routed to <a href="../fallback-pipeline/">Fallback</a></td>
+<td>No pipeline stage claimed the utterance — including the <a href="../fallback-pipeline/">fallback</a> stages, which run <em>inside</em> the match loop; this is the terminal "nothing handled it" marker, not a hand-off</td>
 </tr>
 </tbody>
 </table>

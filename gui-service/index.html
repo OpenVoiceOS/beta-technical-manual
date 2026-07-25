@@ -1793,7 +1793,7 @@ share one global display stack.</p>
 <p>The GUI WebSocket server is configured under <code>gui_websocket</code> in <code>mycroft.conf</code>:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>{
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>  &quot;gui_websocket&quot;: {
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>    &quot;host&quot;: &quot;0.0.0.0&quot;, // binds ALL interfaces — set 127.0.0.1 unless a remote display needs it
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>    &quot;host&quot;: &quot;127.0.0.1&quot;, // localhost only by default — widen to 0.0.0.0 only if a remote display needs it
 </span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>    &quot;base_port&quot;: 18181,
 </span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>    &quot;route&quot;: &quot;/gui&quot;
 </span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>  }
@@ -1809,7 +1809,7 @@ share one global display stack.</p>
 <tbody>
 <tr>
 <td><code>host</code></td>
-<td>Interface the Tornado WebSocket server binds to (default: <code>0.0.0.0</code>, <strong>all interfaces</strong>)</td>
+<td>Interface the Tornado WebSocket server binds to (default: <code>127.0.0.1</code>, <strong>localhost only</strong>)</td>
 </tr>
 <tr>
 <td><code>base_port</code></td>
@@ -1829,8 +1829,9 @@ origin check. On top of that, there's no TLS option either: unlike
 <a href="../bus-service/"><code>ovos-messagebus</code></a> (which can serve <code>wss://</code> itself), <code>ovos-gui</code>'s Tornado
 WebSocket server has no working <code>gui_websocket.ssl</code> server path — verified against the
 <code>ovos-gui</code> source, there is no config key that turns this socket into <code>wss://</code>.</p>
-<p>Set <code>gui_websocket.host</code> to <code>127.0.0.1</code> unless a remote display client genuinely needs it, and
-never expose port <code>18181</code> beyond a trusted network. If a display really must run on another
+<p>It ships bound to <code>127.0.0.1</code> (localhost only) — keep it that way unless a remote display
+client genuinely needs it, and never widen <code>gui_websocket.host</code> to <code>0.0.0.0</code> or expose port
+<code>18181</code> beyond a trusted network. If a display really must run on another
 machine, put it behind a VPN or a reverse proxy that authenticates and terminates TLS, or use
 <a href="https://jarbashivemind.github.io/HiveMind-community-docs/">HiveMind</a> for authenticated remote
 transport.</p>
