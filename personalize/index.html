@@ -1374,7 +1374,8 @@ allowed (JSONC). Open it with any text editor, for example:</p>
 </span></code></pre></div>
 <p>Before restarting, double-check the file still parses — a stray missing comma or bracket will
 stop it from loading. Because <code>mycroft.conf</code> allows <code>//</code> comments, plain <code>json.tool</code> will
-reject it even when it's fine — use the same comment-aware loader OVOS itself uses:</p>
+reject it even when it's fine — use the same comment-aware loader OVOS itself uses. This runs
+a small Python command directly in the terminal — paste it exactly as shown:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>python3<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;from ovos_utils.json_helper import load_commented_json; load_commented_json(&#39;</span><span class="nv">$HOME</span><span class="s2">/.config/mycroft/mycroft.conf&#39;); print(&#39;OK&#39;)&quot;</span>
 </span></code></pre></div>
 <p>This prints <code>OK</code> if the file is valid, or a <code>JSONDecodeError</code> with a line/column pointing at the

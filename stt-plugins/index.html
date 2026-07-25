@@ -1819,7 +1819,7 @@ separately-licensed model, that is called out under "model".</p>
 <tr>
 <td><a href="#ovos-stt-plugin-chromium">ovos-stt-plugin-chromium</a></td>
 <td>Speech-to-text using the Google Chrome browser speech API.</td>
-<td>Apache-2.0 (cloud service, separate Google terms)</td>
+<td>Apache-2.0 (cloud service, unofficial Google endpoint, separate Google terms)</td>
 <td>Stable</td>
 </tr>
 <tr>
@@ -1956,6 +1956,12 @@ languages resolve to different pretrained models.</p>
 <p><strong>Description</strong>: Speech-to-text using the Google Chrome browser speech API.</p>
 </li>
 </ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This plugin talks to the same unofficial, undocumented endpoint used by the Chrome
+browser's speech recognition feature — not a published Google Cloud Speech-to-Text
+API with an API key. Google can change or revoke access to this endpoint at any time.</p>
+</div>
 <hr />
 <h2 id="ovos-stt-plugin-mms">ovos-stt-plugin-mms<a class="headerlink" href="#ovos-stt-plugin-mms" title="Permanent link">&para;</a></h2>
 <ul>

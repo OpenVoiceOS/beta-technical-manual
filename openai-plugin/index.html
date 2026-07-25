@@ -1732,6 +1732,14 @@ switch to the <code>ovos-chat-openai-plugin</code> agent engine (still listed un
 <p>All engines wrap the same <code>OpenAIChatCompletions</code> API client, so any OpenAI-compatible Chat
 Completions server (OpenAI, ollama, llama.cpp, vLLM, LocalAI, <code>ovos-persona-server</code>, …) works
 by pointing <code>api_url</code> at its <code>/v1</code> base.</p>
+<div class="admonition note">
+<p class="admonition-title"><code>Remote Llama</code> demo persona sends text to a third-party public server</p>
+<p>The pre-built <code>Remote Llama</code> persona ships pointed at a public ollama/LLama server
+operated by a third party. Who operates that server, how long it retains conversation
+text, and whether it logs requests are not stated by the plugin. For privacy, point
+<code>api_url</code> at your own local model (see <a href="../gguf-plugin/">gguf-plugin.md</a>) or another
+self-hosted endpoint instead of using this demo persona as-is.</p>
+</div>
 <hr />
 <h2 id="common-configuration-keys">Common Configuration Keys<a class="headerlink" href="#common-configuration-keys" title="Permanent link">&para;</a></h2>
 <p>All plugins wrap <code>OpenAIChatCompletions</code> internally.</p>

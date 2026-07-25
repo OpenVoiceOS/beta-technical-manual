@@ -1608,6 +1608,10 @@ random so the assistant doesn't sound robotic:</p>
 <h2 id="step-5-make-it-installable">Step 5 — Make it installable<a class="headerlink" href="#step-5-make-it-installable" title="Permanent link">&para;</a></h2>
 <p>A skill is just a Python package that advertises itself to OVOS through an <strong>entry point</strong>.
 <code>pyproject.toml</code>:</p>
+<div class="admonition note">
+<p class="admonition-title">You don't need to understand this file yet</p>
+<p>Replace the two <code>name</code> placeholders and your username, and copy the rest as-is.</p>
+</div>
 <div class="language-toml highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="k">[build-system]</span>
 </span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="n">requires</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;setuptools&gt;=61&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;wheel&quot;</span><span class="p">]</span>
 </span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="n">build-backend</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;setuptools.build_meta&quot;</span>
@@ -1635,11 +1639,16 @@ how the <a href="../plugin-manager/">Plugin Manager</a> discovers installed skil
 <h2 id="step-6-install-it-and-talk-to-it">Step 6 — Install it and talk to it<a class="headerlink" href="#step-6-install-it-and-talk-to-it" title="Permanent link">&para;</a></h2>
 <p>First, activate the same Python environment OVOS runs in, so the skill installs into the
 interpreter <code>ovos-core</code> actually uses — for example <code>source ~/.venvs/ovos/bin/activate</code> for
-a venv install. That exact path is only an example, not something you can assume: check
-where your particular install created its environment, e.g. the installer's summary screen
-(see <a href="../ovos-installer/#environment-summary">ovos-installer</a>) or the <code>ExecStart=</code>/<code>Environment=</code> lines
-of your <code>ovos-core</code> systemd unit — raspOVOS, <code>ovos-installer</code>, and container installs each
-put it somewhere different. If you're running OVOS in
+a venv install. In plain English: a <strong><a href="../glossary/">virtual environment</a></strong> is an isolated
+Python install, and "activating" it just means that <strong><a href="../glossary/">pip</a></strong> will now install
+into the one OVOS actually uses instead of somewhere else — see the
+<a href="../glossary/">Glossary</a> if these terms are new. That exact path is only an example, not
+something you can assume: check where your particular install created its environment, e.g.
+the installer's summary screen
+(see <a href="../ovos-installer/#environment-summary">ovos-installer</a>) — or, advanced: if you installed
+via <a href="../glossary/">systemd</a>, its unit file's <code>Environment=</code>/<code>ExecStart=</code> lines show the path,
+see <a href="../troubleshooting/">Troubleshooting</a>. raspOVOS, <code>ovos-installer</code>, and container installs
+each put it somewhere different. If you're running OVOS in
 a container instead, there's no host environment to activate — install into the container
 directly: <code>docker compose exec &lt;service&gt; pip install -e .</code> (run from the skill folder, with
 the skill's path mounted into the container, or copy it in first).</p>

@@ -1571,8 +1571,8 @@ picks a recommended offline/online voice for your language automatically — see
 </span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="n">plugins</span> <span class="o">=</span> <span class="n">find_tts_plugins</span><span class="p">()</span>
 </span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="n">tts_class</span> <span class="o">=</span> <span class="n">plugins</span><span class="p">[</span><span class="s2">&quot;ovos-tts-plugin-mimic&quot;</span><span class="p">]</span>
 </span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>
-</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="c1"># Initialize (requires lang and config)</span>
-</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="n">tts</span> <span class="o">=</span> <span class="n">tts_class</span><span class="p">(</span><span class="n">lang</span><span class="o">=</span><span class="s2">&quot;en-us&quot;</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="p">{})</span>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="c1"># Initialize (config only — lang is passed inside the config dict)</span>
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="n">tts</span> <span class="o">=</span> <span class="n">tts_class</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;lang&quot;</span><span class="p">:</span> <span class="s2">&quot;en-us&quot;</span><span class="p">})</span>
 </span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>
 </span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="c1"># Generate audio</span>
 </span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="n">wav_file</span> <span class="o">=</span> <span class="s2">&quot;hello.wav&quot;</span>
@@ -1651,7 +1651,7 @@ separately-licensed model or a paid cloud service, that is called out under "mod
 <tr>
 <td><a href="#ovos-tts-plugin-google-tx">ovos-tts-plugin-google-tx</a></td>
 <td>OVOS TTS plugin for <a href="https://github.com/pndurette/gTTS">gTTS</a></td>
-<td>Apache-2.0 (cloud service, separate Google terms)</td>
+<td>Apache-2.0 (cloud service, unofficial Google endpoint, separate Google terms)</td>
 <td>Mature</td>
 </tr>
 <tr>
@@ -1790,6 +1790,12 @@ thin docs — don't read one column as implying the other.</p>
 <p><strong>Description</strong>: OVOS TTS plugin for <a href="https://github.com/pndurette/gTTS">gTTS</a></p>
 </li>
 </ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>gTTS works by calling the same unofficial, undocumented endpoint used by the Google
+Translate web UI's "listen" feature — not a published, API-keyed Google Cloud
+Text-to-Speech API. Google can change or revoke access to this endpoint at any time.</p>
+</div>
 <h3 id="default-configuration">Default Configuration<a class="headerlink" href="#default-configuration" title="Permanent link">&para;</a></h3>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>  &quot;tts&quot;: {
 </span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>    &quot;module&quot;: &quot;ovos-tts-plugin-google-tx&quot;

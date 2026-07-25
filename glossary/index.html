@@ -1312,6 +1312,10 @@ component for spec conformance, not for everyday use.</p>
 <td>Platform &amp; Hardware Abstraction Layer; a service that handles low-level hardware interactions (volume, buttons, etc.).</td>
 </tr>
 <tr>
+<td><strong>pip</strong></td>
+<td>Python's package installer — the command you run (<code>pip install ...</code>) to add a library or skill to a Python environment. See <strong>virtual environment (venv)</strong> below for <em>which</em> environment it installs into.</td>
+</tr>
+<tr>
 <td><strong>📐 Pipeline Plugin</strong></td>
 <td>A matcher that exposes the <strong>match contract</strong> — <code>match(utterances, lang, session) → Match \| None</code>. The <strong>orchestrator</strong> iterates the installed pipeline plugins in <code>session.pipeline</code> order, <strong>first-match-wins</strong>; a plugin returns a <code>Match</code> to claim the utterance or <code>None</code> to pass. <a href="../adapt-pipeline/">Adapt</a>, <a href="../padatious-pipeline/">Padatious</a>, <a href="../converse-pipeline/">Converse</a>, <a href="../fallback-pipeline/">Fallback</a>, <a href="../ocp-pipeline/">OCP</a> and <a href="../personas/">Persona</a> are all pipeline plugins. 📐 <a href="https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md">OVOS-PIPELINE-1</a>.</td>
 </tr>
@@ -1376,6 +1380,14 @@ component for spec conformance, not for everyday use.</p>
 <td>The process of transcribing spoken audio into text.</td>
 </tr>
 <tr>
+<td><strong>systemd</strong></td>
+<td>The Linux service manager most OVOS installs run under — it starts each OVOS component (<code>ovos-core</code>, <code>ovos-audio</code>, …) as a background service and restarts it if it crashes. Its <strong>unit files</strong> describe how each service is launched (which command, which environment).</td>
+</tr>
+<tr>
+<td><strong>terminal / shell</strong></td>
+<td>The text-only command window where you type commands instead of clicking things — on Linux this is usually <code>bash</code> or <code>zsh</code>. Most OVOS install and troubleshooting steps happen here.</td>
+</tr>
+<tr>
 <td><strong><a href="../transformer-plugins/">Transformer</a></strong></td>
 <td>A plugin that modifies audio, text, or metadata as it moves through the pipeline. Specified by 📐 <a href="https://github.com/OpenVoiceOS/architecture/blob/dev/transformer.md">OVOS-TRANSFORM-1</a>; see <strong>Transformer Chain</strong> below.</td>
 </tr>
@@ -1394,6 +1406,10 @@ component for spec conformance, not for everyday use.</p>
 <tr>
 <td><strong><a href="../vad-plugins/">VAD</a> (<a href="../vad-plugins/">Voice Activity Detection</a>)</strong></td>
 <td>The process of detecting when a user starts and stops speaking.</td>
+</tr>
+<tr>
+<td><strong>virtual environment (venv)</strong></td>
+<td>An isolated Python install with its own set of packages, kept separate from the system Python. You <strong>activate</strong> a venv (e.g. <code>source path/to/venv/bin/activate</code>) so that <strong>pip</strong> installs into that isolated copy instead of somewhere else — this matters for OVOS because a skill installed into the wrong environment won't be found by <code>ovos-core</code>.</td>
 </tr>
 <tr>
 <td><strong>Visemes</strong></td>
