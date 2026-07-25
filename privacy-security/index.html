@@ -1388,6 +1388,9 @@ with its bundled defaults</strong> — the most common path. Anything below can 
 changed by picking different plugins or a different <a href="../composable-deployments/">profile</a>,
 so where behavior depends on a choice you made, this page says so instead of
 guessing.</p>
+<p>None of this is unusual for a local-only Linux service: the trust model below is the same
+one any local daemon or dev server has — it mostly starts to matter once you expose a port
+to a network you don't control, or install a skill whose source you haven't vetted.</p>
 <hr />
 <h2 id="network-surface-of-a-default-install">Network surface of a default install<a class="headerlink" href="#network-surface-of-a-default-install" title="Permanent link">&para;</a></h2>
 <table>
@@ -1413,6 +1416,11 @@ guessing.</p>
 <td>Translation / language detection</td>
 <td><code>language.translation_module</code> defaults to <code>ovos-translate-plugin-server</code> and <code>language.detection_module</code> to <code>ovos-lang-detector-plugin-server</code>, both pointed at <strong>public servers</strong> run by the OVOS community; the declared fallbacks are <code>ovos-google-translate-plugin</code> / <code>ovos-google-lang-detector-plugin</code></td>
 <td><strong>No</strong> — text to be translated or language-detected leaves the device. Self-host <a href="https://github.com/OpenVoiceOS/ovos-translate-server">ovos-translate-server</a> and point the plugins at it, or pick an offline plugin</td>
+</tr>
+<tr>
+<td>LLM / persona solvers</td>
+<td>Not configured by default — but as soon as an LLM-backed solver or persona plugin is configured (e.g. an OpenAI-compatible <code>llm.module</code>), the user's query and/or conversation text is sent to whichever third-party cloud LLM provider that plugin points at</td>
+<td>Depends on the plugin — see the <a href="../llm-transformers/">LLM transformers</a> and <a href="../personas/">personas</a> pages for offline vs. cloud options</td>
 </tr>
 <tr>
 <td>Wake word</td>
@@ -1451,7 +1459,7 @@ guessing.</p>
 </tr>
 </tbody>
 </table>
-<div class="admonition danger">
+<div class="admonition warning">
 <p class="admonition-title">Default STT, TTS and translation send your voice and words to a public server</p>
 <p>Out of the box, speech recognition, speech synthesis <strong>and</strong> translation /
 language detection are all configured against <strong>public servers operated by

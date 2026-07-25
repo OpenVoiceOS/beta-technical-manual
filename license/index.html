@@ -1412,11 +1412,14 @@
 <p>OVOS follows a <strong>universal donor</strong> licensing policy: the code should be usable by anyone,
 anywhere, with no strings attached. In practice that means permissive licenses (mostly
 Apache 2.0 or BSD) for all core components, with a short, explicitly documented list of
-exceptions where a dependency forces a stricter license on one specific plugin.</p>
+exceptions — either a dependency forcing a stricter license on one specific plugin, or a
+plugin repository that never shipped a <code>LICENSE</code> file at all.</p>
 </div>
 <p>Under the universal donor policy, OVOS code should be usable anywhere by anyone, with no
-conditions attached. OVOS is predominately Apache 2.0 or BSD licensed; there are only a few
-exceptions, and each is listed below.</p>
+conditions attached. OVOS is predominately Apache 2.0 or BSD licensed; the exceptions are a
+small minority of plugins, and every one of them is listed in the table below — either because
+a dependency forces a stricter license, or because the plugin's own repository never shipped a
+<code>LICENSE</code> file at all.</p>
 <p>Individual plugins or skills may carry their own license when they wrap a dependency that
 requires it — for example a TTS plugin that wraps an AGPL-licensed engine cannot itself be
 relicensed under a more permissive term. Core components are kept fully free; any code whose
@@ -1478,8 +1481,31 @@ compatible with your use case before depending on them.</p>
 <td>see repo (no license file)</td>
 <td>the package self-declares Apache-2.0 in its <code>pyproject.toml</code>, but the repository ships no <code>LICENSE</code> file, and the underlying S.A.M. engine is reverse-engineered abandonware with no clear upstream license</td>
 </tr>
+<tr>
+<td>ovos-tts-plugin-phoonnx (built into <a href="https://github.com/TigreGotico/phoonnx">phoonnx</a>)</td>
+<td>no license file</td>
+<td>the <code>phoonnx</code> repository ships no <code>LICENSE</code> file; see the <a href="../tts-plugins/#tts-plugins-reference">TTS plugin table</a> for the corresponding model-card caveat</td>
+</tr>
+<tr>
+<td><a href="https://github.com/OpenVoiceOS/ovos-tts-plugin-beepspeak">ovos-tts-plugin-beepspeak</a></td>
+<td>no license file</td>
+<td>novelty R2-D2-style TTS plugin; the repository ships no <code>LICENSE</code> file</td>
+</tr>
+<tr>
+<td><a href="https://github.com/OpenVoiceOS/ovos-tts-plugin-lux">ovos-tts-plugin-lux</a></td>
+<td>no license file</td>
+<td>zipvoice-based voice-cloning TTS plugin; the repository ships no <code>LICENSE</code> file</td>
+</tr>
+<tr>
+<td><a href="https://github.com/OpenVoiceOS/ovos-stt-plugin-HiTZ">ovos-stt-plugin-HiTZ</a></td>
+<td>no license file</td>
+<td>archived/deprecated Basque STT plugin; the repository ships no <code>LICENSE</code> file</td>
+</tr>
 </tbody>
 </table>
+<p>The rows above with <strong>no license file</strong> are not a rejection of the universal donor policy —
+they are repositories that never declared one, so no license can be assumed for redistribution
+purposes; treat "no license file" as more restrictive than any permissive license, not less.</p>
 <h2 id="further-reading">Further reading<a class="headerlink" href="#further-reading" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="https://blog.openvoiceos.org/posts/2023-02-28-permissive-licenses">Why OpenVoiceOS Uses Permissive Licenses</a> — OVOS blog</li>

@@ -1435,6 +1435,22 @@ GitHub organization (not <code>OpenVoiceOS</code>). The full guide is the
 <a href="https://jarbashivemind.github.io/HiveMind-community-docs/">HiveMind community docs</a>; this
 page covers how HiveMind relates to OVOS.</p>
 </div>
+<div class="admonition note">
+<p class="admonition-title">HiveMind vs. agent-interop protocols</p>
+<p>HiveMind is the <strong>voice-satellite transport</strong> — how a mic/speaker device or remote client
+reaches an OVOS brain. MCP and A2A (see <a href="../agent-interop/">Agent Interop</a>) are a different
+thing: LLM/agent tool protocols for letting AI systems call each other's tools.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Building a remote client</p>
+<p>If you're writing a remote or native (non-Python) client that connects over HiveMind,
+this manual is <strong>not</strong> the place to look for the wire details. HiveMind defines its own
+protocol — the connect URL, the access-key auth handshake, the message envelope, and the
+reconnect/backoff behavior a client must implement — and that protocol is documented in
+the HiveMind project's own community documentation:
+<a href="https://jarbashivemind.github.io/HiveMind-community-docs/">HiveMind community docs</a>.
+This page only covers the OVOS side (how an OVOS install is exposed as a HiveMind agent).</p>
+</div>
 <hr />
 <h2 id="the-pieces">The pieces<a class="headerlink" href="#the-pieces" title="Permanent link">&para;</a></h2>
 <table>
