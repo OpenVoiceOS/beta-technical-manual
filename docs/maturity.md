@@ -41,3 +41,11 @@ will it still be here and still work in a year?**
 
 Ratings are a point-in-time judgement and move as repositories do; treat a badge as guidance, not
 a guarantee.
+
+!!! note "A release channel is not a maturity guarantee"
+    A [release channel](release-channels.md) (stable/testing/dev) only bounds the version
+    range of `ovos-core` itself — it says nothing about the maturity of the individual
+    plugins it happens to pull in. A stable-channel install can still resolve to a
+    **Beta**-rated (or even Alpha-rated) plugin as a dependency. Check each plugin's own
+    maturity badge in the manual before relying on it, rather than assuming "stable
+    channel" means "every component is production-grade."

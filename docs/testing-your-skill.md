@@ -19,6 +19,10 @@ into the ecosystem is expected to ship at least one.
 
 ## Step 1 — Install ovoscope
 
+Activate the same environment you installed the skill into in [Your First Skill](first-skill.md)
+(the venv or container you ran `pip install -e .` in) — `ovoscope` needs to be importable
+alongside the skill and OVOS itself, not just present somewhere on the machine.
+
 Add it as a test dependency of the skill you built in [Your First Skill](first-skill.md):
 
 ```bash
@@ -35,6 +39,12 @@ test = ["ovoscope"]
 ```
 
 ## Step 2 — Write the first `End2EndTest`
+
+!!! note "Prerequisite: the Padatious pipeline plugin"
+    This test drives `session.pipeline = ["ovos-padatious-pipeline-plugin"]`, so that plugin
+    must actually be installed: `pip show ovos-padatious-pipeline-plugin || pip install
+    ovos-padatious-pipeline-plugin`. If the test runs but reports no spoken output at all,
+    a missing pipeline plugin — not a bug in your skill — is the first thing to check.
 
 Create `test/test_hello.py` next to your skill's `pyproject.toml`:
 

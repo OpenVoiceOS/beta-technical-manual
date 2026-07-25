@@ -86,5 +86,9 @@ library when hand-authoring or prototyping matching rules.
 
 ---
 
+These libraries are transitive dependencies of `ovos-core` and are version-bounded by
+the same [release-channel constraints files](release-channels.md) rather than pinned
+independently — you don't normally choose their versions yourself.
+
 For the full list of OVOS repositories — plugins, skills, tools, and more — see the
 [OVOS Repository Index](ecosystem-index.md).

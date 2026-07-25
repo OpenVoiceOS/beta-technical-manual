@@ -201,7 +201,10 @@ A pipeline plugin is a matcher exposing `match(utterances, lang, session) → Ma
 ### Deprecated Types
 
 These are still recognized (mapped to canonical names internally) but should not be used
-in new plugins:
+in new plugins. This section covers **entry-point-level** deprecations (an old entry
+point group renamed to a canonical one); for **repo-level** deprecations (an entire
+plugin/repository retired in favor of a different package), see
+[Deprecated & Archived Repositories](deprecated-repos.md).
 
 | Old entry point group | Canonical |
 |---|---|
@@ -236,7 +239,9 @@ plugins published under any of the names above still load correctly today.
 The legacy **solver** groups (`opm.solver.question`, `opm.solver.chat`,
 `opm.solver.summarization`, `opm.solver.entailment`, `opm.solver.multiple_choice`,
 `opm.solver.reading_comprehension`) and `opm.coreference` are superseded by the
-`opm.agents.*` types above and will be removed in the next major release.
+`opm.agents.*` types above and will be removed in the next major release — the same
+`ovos-plugin-manager` major-version boundary as the `<3.0.0` cap noted above under
+[Minimum OPM version](#plugin-types).
 
 ---
 

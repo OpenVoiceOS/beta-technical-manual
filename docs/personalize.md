@@ -53,11 +53,17 @@ Full walkthrough, plugin choices, and tuning: [Wake Word Plugins](wake-word-plug
 
 ## Change your voice
 
+Install the plugin's package first — `phoonnx` ships the `ovos-tts-plugin-phoonnx` plugin,
+so without it OVOS has nothing to load and the voice won't actually change:
+
+```bash
+pip install phoonnx
+```
+
 ```json
 {
   "tts": {
-    "module": "ovos-tts-plugin-piper",
-    "ovos-tts-plugin-piper": { "voice": "en_US-amy-low" }
+    "module": "ovos-tts-plugin-phoonnx"
   }
 }
 ```

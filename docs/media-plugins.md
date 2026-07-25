@@ -24,18 +24,25 @@ plugin package is meant to ship a version for *both*** — so a single `pip inst
 backend that works whichever playback system you run. Packages are not required to ship both
 families; see the table below for what each currently supports.
 
-| Package | Player | Ships for | Maturity |
-|---|---|---|---|
-| [ovos-media-plugin-spotify](#ovos-media-plugin-spotify) | Spotify Connect | ✅ both (old audio service + ovos-media) | Stable |
-| [ovos-media-plugin-chromecast](#ovos-media-plugin-chromecast) | Chromecast (audio + video) | ✅ both | Stable |
-| [ovos-media-plugin-vlc](#ovos-media-plugin-vlc) | headless VLC (audio + video) | ✅ both | Beta |
-| [ovos-media-plugin-mplayer](#ovos-media-plugin-mplayer) | MPlayer (audio + video) | ✅ both | Stable |
-| [ovos-audio-plugin-mpv](#ovos-audio-plugin-mpv) | MPV (audio + video) | ✅ both | Stable |
-| [ovos-media-plugin-ffplay](#ovos-media-plugin-ffplay) | ffplay (audio) | ✅ both | Stable |
-| [ovos-media-plugin-cli](#ovos-media-plugin-cli) | generic CLI-command player (audio) | ✅ both | Alpha |
-| [ovos-plugin-vlc](#ovos-plugin-vlc) | VLC | old audio service only (legacy) — use ovos-media-plugin-vlc for ovos-media | Stable |
+| Package | Player | Ships for | License | Maturity |
+|---|---|---|---|---|
+| [ovos-media-plugin-spotify](#ovos-media-plugin-spotify) | Spotify Connect | ✅ both (old audio service + ovos-media) | Apache-2.0 | Stable |
+| [ovos-media-plugin-chromecast](#ovos-media-plugin-chromecast) | Chromecast (audio + video) | ✅ both | Apache-2.0 | Stable |
+| [ovos-media-plugin-vlc](#ovos-media-plugin-vlc) | headless VLC (audio + video) | ✅ both | Apache-2.0 | Beta |
+| [ovos-media-plugin-mplayer](#ovos-media-plugin-mplayer) | MPlayer (audio + video) | ✅ both | Apache-2.0 | Stable |
+| [ovos-audio-plugin-mpv](#ovos-audio-plugin-mpv) | MPV (audio + video) | ✅ both | Apache-2.0 | Stable |
+| [ovos-media-plugin-ffplay](#ovos-media-plugin-ffplay) | ffplay (audio) | ✅ both | Apache-2.0 | Stable |
+| [ovos-media-plugin-cli](#ovos-media-plugin-cli) | generic CLI-command player (audio) | ✅ both | Apache-2.0 | Alpha |
+| [ovos-plugin-vlc](#ovos-plugin-vlc) | VLC | old audio service only (legacy) — use ovos-media-plugin-vlc for ovos-media | Apache-2.0 | Stable |
 
 Maturity reflects repository health (age, activity, open issues/PRs, in-repo docs), not version — see the [Maturity Scale](maturity.md).
+
+!!! note "License and Maturity are independent axes"
+    The **License** column reports what the repository itself declares (or doesn't — "no
+    license file" just means no SPDX license was found, not that the code is unmature) and the
+    **Maturity** column reports repository health (age, activity, issues/PRs, docs). A plugin can
+    be **Mature** and still ship no license file, or be **Stable** with a permissive license but
+    thin docs — don't read one column as implying the other.
 
 The [`ovos-ocp-audio-plugin`](#ovos-ocp-audio-plugin) below is not a playback backend — it is the
 **old audio service itself** (deprecated, still the shipped default).
@@ -102,7 +109,7 @@ Then select it in your audio/media backend config — see [Media playback: legac
 
 ## ovos-plugin-vlc
 
-- **GitHub**: [https://github.com/OpenVoiceOS/ovos-plugin-vlc](https://github.com/OpenVoiceOS/ovos-plugin-vlc)
+- **PyPI**: [ovos-plugin-vlc](https://pypi.org/project/ovos-plugin-vlc) (legacy package; no separate source repository — superseded by [ovos-media-plugin-vlc](#ovos-media-plugin-vlc))
 
 
 - **Description**: VLC `AudioBackend` for the **old audio service** (`mycroft.plugin.audioservice`). For the [ovos-media](ovos-media.md) backend use [ovos-media-plugin-vlc](#ovos-media-plugin-vlc).

@@ -31,6 +31,56 @@ Install individual components via `pip` or `uv`. Best for developers or custom i
 
 ---
 
+## Checking what you have installed
+
+Before touching anything, find out what's actually on the machine:
+
+```bash
+pip show ovos-core                  # version, location, and dependencies of one package
+pip list | grep ovos                # every installed ovos-* package and its version
+ovos-core --version                 # if the CLI entry point is available on this version
+```
+
+`pip show` also lists a package's declared `Requires:`, which is a quick way to check
+whether a dependency bump you're considering is even compatible with what else is
+installed. If `ovos-core --version` isn't recognized, fall back to `pip show ovos-core`
+— not every release exposes a `--version` flag on the CLI.
+
+## Before you upgrade: see what changed
+
+This manual intentionally never hardcodes a current version number — by the time you
+read this page, any number here would already be stale. Before upgrading, check the
+**source of truth** for what actually changed in the version you're moving to:
+
+- Each repository's **GitHub Releases** page (e.g.
+  [ovos-core/releases](https://github.com/OpenVoiceOS/ovos-core/releases)) — swap
+  `ovos-core` for the package you're upgrading.
+- Its `CHANGELOG.md`, where the repository keeps one (generated from conventional
+  commits — see [Semantic Versioning](https://semver.org/)).
+
+## Pinning or rolling back a single package
+
+The [freeze/force-reinstall pattern](#rolling-back) below rolls back your *entire*
+environment. If only one package regressed, you don't need the sledgehammer — pin
+just that package instead:
+
+```bash
+pip install "ovos-stt-plugin-whisper==<old-version>"
+```
+
+Or, if you're using a local constraints file (see
+[Offline and mirrored installs](#offline-and-mirrored-installs)), append an exact pin
+for that one package to it:
+
+```text
+ovos-stt-plugin-whisper==<old-version>
+```
+
+so the pin survives the next time you reinstall from that constraints file, instead of
+being silently overwritten by the channel's range.
+
+---
+
 ## Choosing a Release Channel
 
 OVOS follows [**semantic versioning**](https://semver.org/) (SemVer) with a **rolling release model** and supports three release channels — **stable**, **testing**, and **alpha** — so you can pick the right balance between cutting-edge features and system reliability.

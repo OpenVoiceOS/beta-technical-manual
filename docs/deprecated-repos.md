@@ -10,6 +10,11 @@ about retired repositories, not how to write skills today.
 !!! warning "These repositories are archived"
     The repositories below are **archived** in the [OpenVoiceOS GitHub organization](https://github.com/OpenVoiceOS) — they are read-only and no longer maintained. They are listed here so you can recognize them and find the current replacement. Do **not** start new work against them.
 
+This page covers **repo-level** deprecations (an entire repository retired). For
+**entry-point-level** deprecations — an old OPM entry point group renamed to a
+canonical one while the plugin itself keeps working — see
+[Plugin Manager: Deprecated Types](plugin-manager.md#deprecated-types).
+
 There are roughly **84** archived repositories (the exact count drifts as more get archived). They are grouped by area below; each row gives the reason and the current replacement where one exists.
 
 

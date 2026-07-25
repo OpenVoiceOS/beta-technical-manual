@@ -243,7 +243,7 @@ systemctl --user restart ovos.service
 If the upgrade misbehaves, roll back to the frozen set:
 
 ```bash
-uv pip install --force-reinstall -r /etc/ovos/known-good-2026-07-01.txt
+uv pip install --force-reinstall -r /etc/ovos/known-good-2026-07-01.txt  # use the actual date from the freeze file you created in step 1
 systemctl --user restart ovos.service
 ```
 

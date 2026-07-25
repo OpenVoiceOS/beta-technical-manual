@@ -54,6 +54,45 @@ to a network you don't control, or install a skill whose source you haven't vett
 
 --8<-- "snippets/community-servers.md"
 
+### A fully offline stack
+
+Each row above links to its own offline alternative, but assembling all of them into one
+working config means cross-referencing four separate catalog pages. Here they are combined
+into a single `~/.config/mycroft/mycroft.conf` — offline STT, TTS, VAD, wake word, and
+translation/language-detection, all running on-device:
+
+```jsonc
+// ~/.config/mycroft/mycroft.conf — fully offline stack
+{
+  "stt": {
+    "module": "ovos-stt-plugin-onnx-asr"
+  },
+  "tts": {
+    "module": "ovos-tts-plugin-phoonnx"
+  },
+  "listener": {
+    "VAD": {
+      "module": "ovos-vad-plugin-silero"
+    }
+  },
+  "hotwords": {
+    "hey_mycroft": {
+      "module": "ovos-ww-plugin-precise-onnx"
+    }
+  },
+  "language": {
+    "translation_module": "ovos-translate-plugin-nllb",
+    "detection_module": "ovos-lang-detector-fasttext-plugin"
+  }
+}
+```
+
+LLM-backed solvers and personas are not part of this table because they're not configured
+by default at all — see [LLM transformers](llm-transformers.md) and [personas](personas.md).
+If you do want one, it's still possible to keep the whole stack offline: point it at a
+**local** model (for example one served by `llama.cpp` on the same machine) instead of a
+cloud provider, so the query and conversation text never leave the device.
+
 !!! tip "depends on selected profile"
     A `server` or `satellite` install ([composable deployments](composable-deployments.md))
     changes which of these components even run on this particular device — the

@@ -32,6 +32,13 @@ A single package may ship one or both. In `mycroft.conf` you select them under t
 
 Maturity reflects repository health (age, activity, open issues/PRs, in-repo docs), not version — see the [Maturity Scale](maturity.md).
 
+!!! note "License and Maturity are independent axes"
+    The **License** column reports what the repository itself declares (or doesn't — "no
+    license file" just means no SPDX license was found, not that the code is unmature) and the
+    **Maturity** column reports repository health (age, activity, issues/PRs, docs). A plugin can
+    be **Mature** and still ship no license file, or be **Stable** with a permissive license but
+    thin docs — don't read one column as implying the other.
+
 > **Heads up:** the package repo name, the pip name, and the **entry-point name you put in config** are not always the same. Configure plugins by their *entry-point name* (e.g. `ovos-translate-plugin-server`, not the repo `ovos-translate-server-plugin`). The names in the table above are the entry-point names.
 
 ---

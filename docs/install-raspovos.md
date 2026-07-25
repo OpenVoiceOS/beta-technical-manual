@@ -336,4 +336,13 @@ Enjoy your journey with RaspOVOS! With your Raspberry Pi set up, you can start e
 
 ---
 
+## Now try it
+
+Your device is up and listening. Two places to go next:
+
+- **[What can I say?](skill-examples.md)** — a catalog of things you can actually say to it, organized by what's installed.
+- **[Fun stuff to try](showcase.md)** — a curated list of fun and impressive things to show off once the basics work.
+
+---
+
 *Source code: [OpenVoiceOS/raspOVOS](https://github.com/OpenVoiceOS/raspOVOS).*
