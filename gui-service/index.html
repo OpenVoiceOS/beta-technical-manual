@@ -1693,6 +1693,11 @@ format.</p>
 </span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>            Qt5 / Qt6 GUI client (mycroft-gui / ovos-shell)
 </span><span id="__span-1-18"><a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>            resolves and renders the requested QML pages
 </span></code></pre></div>
+<p>In words: a skill calls <code>self.gui</code> (for example <code>show_text()</code>), which emits <code>gui.value.set</code>
+and <code>gui.page.show</code> on the OVOS messagebus. <code>ovos-gui</code>'s <code>NamespaceManager</code> tracks the active
+namespace stack and mirrors it out to every connected client as <code>mycroft.session.*</code> /
+<code>mycroft.gui.list.*</code> messages over its WebSocket. The Qt client receives those messages and
+renders the requested QML page.</p>
 <h3 id="guiinterface-display-methods"><code>GUIInterface</code> display methods<a class="headerlink" href="#guiinterface-display-methods" title="Permanent link">&para;</a></h3>
 <p><code>self.gui</code> exposes these display methods (from <code>ovos_bus_client.apis.gui.GUIInterface</code>):</p>
 <table>

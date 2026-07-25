@@ -1740,6 +1740,14 @@ channel" does and doesn't promise.</p>
 <li>🚫 No new features or breaking changes</li>
 <li>✅ Recommended for production or everyday use</li>
 </ul>
+<div class="admonition note">
+<p class="admonition-title">\"Production-ready\" means package-version stability, not a hardened default</p>
+<p>This channel guarantees the <em>package versions</em> are stable and tested — it says nothing
+about the default plugin configuration. Out of the box, that config still ships cloud
+STT/TTS/translation and an unauthenticated bus. See
+<a href="../privacy-security/">Privacy &amp; Security</a> for the actual network surface and how to
+harden it.</p>
+</div>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>ovos-core<span class="o">[</span>mycroft<span class="o">]</span><span class="w"> </span>-c<span class="w"> </span>https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-stable.txt
 </span></code></pre></div>
 <h3 id="2-testing-channel-feature-updates">2. Testing Channel (Feature Updates)<a class="headerlink" href="#2-testing-channel-feature-updates" title="Permanent link">&para;</a></h3>

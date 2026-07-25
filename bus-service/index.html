@@ -1899,7 +1899,7 @@ for every message any one client sends, writes that same message to every other 
 (the Tornado I/O loop shown in the box runs this on its own daemon thread, so it does not block
 whichever process embeds it). <code>ovos-core</code>, <code>ovos-audio</code>, and <code>ovos-gui</code> above are just three
 example clients — anything speaking the same WebSocket protocol, including your own scripts, can
-connect and take part on equal footing.</p>
+connect and take part with the same permissions as any other client.</p>
 <hr />
 <h2 id="running-the-server">Running the Server<a class="headerlink" href="#running-the-server" title="Permanent link">&para;</a></h2>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>ovos-messagebus
@@ -2220,8 +2220,8 @@ and the new names interoperate transparently while the ecosystem moves over.</p>
   <strong>de-duplication</strong> so a handler that would match both fires exactly once.</li>
 </ul>
 <p>The result is the same practical guarantee — a producer and a consumer can each switch from a
-legacy topic to its <code>ovos.*</code> spec name <strong>in any order, with no coordination</strong>, and no flag day —
-achieved by translating on receipt in every connected process rather than by widening what goes
+legacy topic to its <code>ovos.*</code> spec name <strong>in any order, with no coordination</strong>, and without every
+component having to switch over at the same time — achieved by translating on receipt in every connected process rather than by widening what goes
 out on the wire.</p>
 <h3 id="turning-the-bridges-off">Turning the bridges off<a class="headerlink" href="#turning-the-bridges-off" title="Permanent link">&para;</a></h3>
 <p>Each direction is independently controllable (default <code>true</code>), via environment
@@ -2309,7 +2309,7 @@ and a plain <code>ConnectionRefusedError</code>/<code>ConnectionResetError</code
 "connected" flag, closes the socket, and reconnects.</p>
 <p><strong>Backoff.</strong> Reconnection starts at a 5-second delay and doubles on each further failure, capped
 at 60 seconds (<code>self.retry = min(self.retry * 2, 60)</code>), so a device left disconnected for a while
-does not hammer the bus with reconnect attempts. A successful reconnect resets the delay back to
+does not overload the bus with reconnect attempts. A successful reconnect resets the delay back to
 5 seconds for next time.</p>
 <p><strong>In-flight calls during the outage.</strong> <code>emit()</code> (and therefore <code>wait_for_response()</code>, which calls
 <code>emit()</code> internally) waits for the connection to come back rather than failing fast: it waits up

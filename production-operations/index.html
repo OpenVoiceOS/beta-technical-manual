@@ -1538,6 +1538,15 @@ services that actually apply:</p>
 </span></code></pre></div>
 <p><code>network</code>/<code>internet</code>/<code>gui_connected</code> are also accepted <code>ready_settings</code> entries, and any
 service exposing an OVOS <code>ProcessStatus</code> (including <code>PHAL</code>) can be named by its status key.</p>
+<div class="admonition warning">
+<p class="admonition-title"><code>mycroft.ready</code> only covers what you list</p>
+<p><code>mycroft.ready</code> only tracks the components named in <code>ready_settings</code> — skills, voice, and
+audio by default. It does <strong>not</strong> track the GUI or the media daemon unless you add
+<code>gui_connected</code> (or a media status key) yourself. That means a fleet can report "ready"
+while the screen is stuck (see <a href="../gui-status/">GUI status</a>) or the media daemon
+(see <a href="../ovos-media/">ovos-media</a>) is non-functional — the health check simply never asked
+about them.</p>
+</div>
 <div class="admonition note">
 <p class="admonition-title">Upcoming — a bundled health check script</p>
 <p>A ready-to-use OVOS health check script for the <code>ovos-installer</code> is in progress
