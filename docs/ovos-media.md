@@ -1,7 +1,7 @@
 # ovos-media
 
-!!! note "Maturity — Beta ⬤⬤⬤◯◯"
-    Actively developed, but the `ovos-media` daemon is opt-in and not yet the default playback stack (see the Upcoming note below). Rated by [repository health](maturity.md), not version.
+!!! warning "Maturity — Proof-of-concept ⬤◯◯◯◯"
+    The `ovos-media` daemon is **unfinished** — a work in progress that is opt-in and not the default playback stack (see the Upcoming note below). For exploration only; the OCP-in-`ovos-audio` path remains the way to play media today. Rated by [repository health](maturity.md), not version.
 
 !!! abstract "In a nutshell"
     `ovos-media` is the planned future replacement for how OVOS plays music, podcasts and videos. Today, stock installs still use the older audio backend; `ovos-media` is an opt-in, work-in-progress rewrite meant to handle audio, video and web playback more cleanly and to support several players at once. If you are not deliberately trying it out, you are not using it yet — this page describes where things are heading. See the [OCP Pipeline](ocp-pipeline.md) for how playback requests are recognized, or the [Glossary](glossary.md) for terms.
