@@ -109,6 +109,7 @@ nav:
       - Life of an Utterance: life-of-an-utterance.md
       - Formal Specifications: architecture-specs.md
       - Specification Tooling: spec-tooling.md
+      - Maturity Scale: maturity.md
       - MessageBus Service: bus-service.md
       - Plugin Manager: plugin-manager.md
       - Composable Deployments: composable-deployments.md

@@ -1,5 +1,8 @@
 # OCP Pipeline
 
+!!! info "Maturity — Stable ⬤⬤⬤⬤◯"
+    Established and production-ready, actively maintained. Rated by [repository health](maturity.md), not version.
+
 !!! abstract "In a nutshell"
     When you say "play some jazz" or "next song", the assistant first has to realise you are talking about *media* and not, say, the weather. This is the part that does that: it spots that an utterance is a playback request, figures out what kind of media you want, asks the installed music/podcast/video skills to search for it, and hands the best result off to be played. Think of it as the dispatcher that turns "play X" into actual playback. See the [Intent Pipeline](pipelines-overview.md) overview or the [Glossary](glossary.md) for related terms.
 

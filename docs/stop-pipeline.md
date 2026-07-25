@@ -1,5 +1,8 @@
 # Stop Pipeline
 
+!!! success "Maturity — Mature ⬤⬤⬤⬤⬤"
+    Long-lived, battle-tested, and actively maintained — depend on it freely. Rated by [repository health](maturity.md), not version.
+
 !!! abstract "In a nutshell"
     This is the part of OVOS that listens for "stop", "cancel", or the same word in your language and makes the assistant quit whatever it is doing — interrupting a spoken reply, ending a question, or halting a task a skill started. Because being able to stop is so essential to a voice assistant, OVOS treats it as a built-in, always-on feature rather than an optional add-on, and it works in any language that ships the right word list. For the wider system this fits into, see the [Fallback Pipeline](fallback-pipeline.md) or the [Glossary](glossary.md).
 

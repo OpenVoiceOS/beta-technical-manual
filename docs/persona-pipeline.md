@@ -1,5 +1,8 @@
 # Persona Pipeline
 
+!!! info "Maturity — Stable ⬤⬤⬤⬤◯"
+    Established and production-ready, actively maintained. Rated by [repository health](maturity.md), not version.
+
 !!! abstract "In a nutshell"
     A "persona" is a configurable AI character — often powered by a chatbot-style language model — that the assistant can hand your request to. This pipeline decides when to let that persona answer you instead of the usual command-matching skills, which is useful for open-ended chat or questions that no specific skill covers. You can set it to handle everything, or only step in when nothing else fits. See the [Glossary](glossary.md) for terms, or [Solver/Agent plugins](agent-plugins.md) for the components a persona uses to come up with answers.
 

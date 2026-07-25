@@ -1,5 +1,8 @@
 # OVOS Plugin Manager (OPM)
 
+!!! success "Maturity — Mature ⬤⬤⬤⬤⬤"
+    Long-lived, battle-tested, and actively maintained — depend on it freely. Rated by [repository health](maturity.md), not version.
+
 !!! abstract "In a nutshell"
     A plugin is an add-on you can drop in to give OpenVoiceOS a new ability or swap how it does something — for example, a different way to turn speech into text. The Plugin Manager is the part that finds these add-ons once they're installed and loads them when needed, so you don't have to wire anything up by hand. Think of it like the app store and launcher for OVOS's interchangeable pieces: install one, and the system just discovers it. See the [Glossary](glossary.md) for unfamiliar terms or the [Architecture Overview](architecture-overview.md) for how plugins fit into the wider system.
 

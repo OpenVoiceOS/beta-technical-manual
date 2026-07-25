@@ -1,0 +1,37 @@
+# Maturity Scale
+
+Many pages in this manual carry a **maturity** badge. It tells you, at a glance, how much
+weight a component can bear in a real deployment — whether it is a rock-solid dependency, a
+usable-but-moving target, or an early experiment that may change under you.
+
+!!! info "How maturity is judged"
+    A component's rating comes from the **health of its source repository**, not its version
+    number. OVOS packages are versioned continuously from conventional commits, so a `0.x`
+    version says little about how battle-tested the code is — a foundational library can sit at
+    `0.8` with hundreds of releases, while a brand-new experiment can ship a `1.0`. Instead, the
+    rating weighs signals that actually track maturity: how long the repository has existed,
+    how actively it is maintained (recent commit activity), the volume of open issues and pull
+    requests it fields, and whether it carries real in-repo documentation and tests.
+
+## The levels
+
+| Badge | Level | What it means for you |
+|---|---|---|
+| ⬤⬤⬤⬤⬤ | **Mature** | Long-lived, battle-tested, widely deployed, actively maintained. Depend on it freely. |
+| ⬤⬤⬤⬤◯ | **Stable** | Established and production-ready, maintained, with real docs. Safe for production; API changes are rare and announced. |
+| ⬤⬤⬤◯◯ | **Beta** | Works and is in real use, but younger or still settling — expect the occasional breaking change. Fine to build on with an eye on releases. |
+| ⬤⬤◯◯◯ | **Alpha** | Functional but early: the API churns, coverage is thin, and it may change substantially. Try it, pin it, don't build a product on it yet. |
+| ⬤◯◯◯◯ | **Proof-of-concept** | A spike or reference implementation. It may work, but it is not maintained as a product and may disappear. For exploration only. |
+| ⚠️ | **Deprecated** | The repository is archived or no longer maintained. Avoid it for new work; the page notes what replaces it where a replacement exists. |
+
+## Why it's not the version number
+
+A version like `1.2.0` is set by the release pipeline from commit conventions — a single `feat:`
+commit can move a `0.x` library to the next minor, and a `chore!:` moves it to a new major. That
+makes versions a precise record of *what changed*, but a poor proxy for *how much you can rely on
+it*. Repository health — age, sustained maintenance, an engaged issue tracker, and in-repo docs —
+is a better answer to the only question a maturity badge should answer: **if I depend on this,
+will it still be here and still work in a year?**
+
+Ratings are a point-in-time judgement and move as repositories do; treat a badge as guidance, not
+a guarantee.

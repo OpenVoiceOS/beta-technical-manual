@@ -1,5 +1,8 @@
 # Specification Tooling
 
+!!! note "Maturity — Beta ⬤⬤⬤◯◯"
+    In real use but still settling — watch releases for the occasional breaking change. Rated by [repository health](maturity.md), not version.
+
 !!! abstract "In a nutshell"
     The [Formal Specifications](architecture-specs.md) say *what* must happen.
     Three pieces of tooling turn that from prose into something you can build on

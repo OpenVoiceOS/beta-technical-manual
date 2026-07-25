@@ -1,5 +1,8 @@
 # ovos-workshop Documentation
 
+!!! success "Maturity — Mature ⬤⬤⬤⬤⬤"
+    Long-lived, battle-tested, and actively maintained — depend on it freely. Rated by [repository health](maturity.md), not version.
+
 !!! abstract "In a nutshell"
     A "skill" is an add-on that teaches OVOS to do one thing — tell the weather, set a timer, play music. `ovos-workshop` is the starter kit that gives skill makers the building blocks so they do not have to start from scratch. This page is for people who want to build their own skills; if you just use OVOS, you can skip it. See [Skill Design Best Practices](skill-best-practices.md) and the [Glossary](glossary.md).
 

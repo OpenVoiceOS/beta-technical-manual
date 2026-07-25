@@ -1,5 +1,8 @@
 # Speech Service
 
+!!! info "Maturity — Stable ⬤⬤⬤⬤◯"
+    Established and production-ready, actively maintained. Rated by [repository health](maturity.md), not version.
+
 !!! abstract "In a nutshell"
     The speech service is the "ears" of OpenVoiceOS. It listens through the microphone, waits for a wake word (like "Hey Mycroft"), and then turns whatever you say next into text so the rest of the system can act on it. Think of it as the part that hears you and writes down your request. From here that text is handed off to the [Intent Service](intent-service.md), which works out what to do. New to the terms? See the [Glossary](glossary.md).
 

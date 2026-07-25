@@ -1,5 +1,8 @@
 # Adapt Pipeline Plugin
 
+!!! info "Maturity — Stable ⬤⬤⬤⬤◯"
+    Established and production-ready, actively maintained. Rated by [repository health](maturity.md), not version.
+
 !!! abstract "In a nutshell"
     Adapt is one of the tools that helps the assistant figure out what you want when you speak to it. It works like a checklist: a skill says "if you hear these keywords together, this is the command for me." When you say "switch on the lamp", Adapt spots the keywords "switch on" and "lamp" and routes your request to the right skill. There is no guessing or learning involved — it simply matches the words it was told to look for. See the [Glossary](glossary.md) for terms, or [Padatious](padatious-pipeline.md) for a sister tool that learns from example sentences instead.
 

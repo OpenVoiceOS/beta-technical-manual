@@ -1,5 +1,8 @@
 # Intent Service
 
+!!! success "Maturity — Mature ⬤⬤⬤⬤⬤"
+    Long-lived, battle-tested, and actively maintained — depend on it freely. Rated by [repository health](maturity.md), not version.
+
 !!! abstract "In a nutshell"
     The Intent Service is the part of OpenVoiceOS that figures out what you actually meant. Once the [Speech Service](speech-service.md) has turned your words into text, this service reads that text and decides which skill should handle it — much like a receptionist hearing your request and directing you to the right desk. It tries a series of matchers in order and stops at the first one confident enough to respond. New to the terms? See the [Glossary](glossary.md).
 

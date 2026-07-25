@@ -1,5 +1,8 @@
 # Skill Installer (SkillsStore)
 
+!!! success "Maturity — Mature ⬤⬤⬤⬤⬤"
+    Long-lived, battle-tested, and actively maintained — depend on it freely. Rated by [repository health](maturity.md), not version.
+
 !!! abstract "In a nutshell"
     This is the built-in part of OVOS that can add or remove [skills](skill-examples.md) (and other software packages) while the assistant is running — no need to open a terminal or restart anything. Think of it as an app-store back end: something asks "install this skill," and OVOS downloads and wires it in on the fly. It is switched off unless explicitly enabled, for safety. See [Skill Manager](skill-manager.md) for how skills then get loaded, or the [Glossary](glossary.md) for terms.
 

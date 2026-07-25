@@ -1,5 +1,8 @@
 # GUI Service (ovos-gui)
 
+!!! warning "Maturity — Deprecated ⚠️"
+    This page documents the **legacy** GUI stack, which is deprecated — see [Screens on OVOS Today](gui-status.md) for the current picture. Rated by [repository health](maturity.md), not version.
+
 !!! danger "The OVOS GUI is deprecated — see [Screens on OVOS Today](gui-status.md) for the full picture"
     This page documents the legacy stack. There is no generally usable OVOS GUI right now,
     and a replacement is **Upcoming**.

@@ -1,5 +1,8 @@
 # Bus Service
 
+!!! success "Maturity — Mature ⬤⬤⬤⬤⬤"
+    Long-lived, battle-tested, and actively maintained — depend on it freely. Rated by [repository health](maturity.md), not version.
+
 !!! abstract "In a nutshell"
     The messagebus is the shared channel that lets all the separate parts of OpenVoiceOS talk to one another. Picture a group radio frequency: whatever one part says is heard by everyone tuned in, and each part simply pays attention to the messages meant for it and ignores the rest. There's no traffic controller deciding who gets what — every message goes to everybody. It's how the listener, the brain, the audio, and the screen all stay in sync. See the [Architecture Overview](architecture-overview.md) for how the pieces fit together, or the [Glossary](glossary.md) for unfamiliar terms.
 

@@ -1,5 +1,8 @@
 # Skill Manager
 
+!!! success "Maturity — Mature ⬤⬤⬤⬤⬤"
+    Long-lived, battle-tested, and actively maintained — depend on it freely. Rated by [repository health](maturity.md), not version.
+
 !!! abstract "In a nutshell"
     The Skill Manager is the part of OVOS that finds all your installed [skills](skill-examples.md) and starts them up when the assistant boots. It also decides *when* each one is allowed to run — some skills need the internet or a screen before they can work — and keeps re-checking, so a skill you install later appears without a restart. Think of it as the floor manager that knows which staff are on duty and clocks them in. See [Skill Installer](skill-installer.md) for how skills get added, or the [Glossary](glossary.md) for terms.
 

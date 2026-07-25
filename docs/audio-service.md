@@ -1,5 +1,8 @@
 # Audio Service
 
+!!! info "Maturity — Stable ⬤⬤⬤⬤◯"
+    Established and production-ready, actively maintained. Rated by [repository health](maturity.md), not version.
+
 !!! abstract "In a nutshell"
     `ovos-audio` is the part of OVOS that actually makes sound come out of the speakers. When a skill wants to say something, this service turns that text into speech (using a [TTS](tts-plugins.md) plugin) and plays it, while making sure only one thing talks at a time and turning down background music so you can hear the reply. Think of it as the assistant's mouth and its audio mixer rolled into one. See [TTS Plugins](tts-plugins.md) or the [Glossary](glossary.md) for related terms.
 

@@ -1,5 +1,8 @@
 # Hierarchical KNN Intent Pipeline
 
+!!! note "Maturity — Beta ⬤⬤⬤◯◯"
+    In real use but still settling — watch releases for the occasional breaking change. Rated by [repository health](maturity.md), not version.
+
 !!! abstract "In a nutshell"
     This is a *semantic* [intent](glossary.md) matcher: instead of matching keywords or example
     phrases literally, it understands what an utterance **means** by comparing it (via

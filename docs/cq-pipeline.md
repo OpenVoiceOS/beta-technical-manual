@@ -1,5 +1,8 @@
 # Common Query Pipeline
 
+!!! info "Maturity — Stable ⬤⬤⬤⬤◯"
+    Established and production-ready, actively maintained. Rated by [repository health](maturity.md), not version.
+
 !!! abstract "In a nutshell"
     When you ask a general-knowledge question like "who wrote Hamlet?", the Common Query pipeline asks *all* your installed knowledge skills (Wikipedia, Wolfram Alpha, and so on) the same question at once, gathers their answers, and reads back the best one. Think of it as a quiz host who puts the question to every contestant and then announces the strongest reply. It never makes up answers itself — every answer comes from a skill, so if you have no knowledge skills installed it simply stays quiet. See the [Intent Pipeline overview](pipelines-overview.md) or the [Glossary](glossary.md).
 

@@ -1,5 +1,8 @@
 # ovos-core
 
+!!! success "Maturity — Mature ⬤⬤⬤⬤⬤"
+    Long-lived, battle-tested, and actively maintained — depend on it freely. Rated by [repository health](maturity.md), not version.
+
 !!! abstract "In a nutshell"
     `ovos-core` is the "brain" of your assistant. It does not listen through the microphone or talk through the speaker — those are separate helpers — but it is the part in the middle that loads your skills, takes the words you said, decides which skill should answer, and hands back the reply. Think of it as the dispatcher in a control room: it does not do the talking or listening itself, it just routes each request to the right place. Everything it does travels over the [messagebus](bus-service.md); see also the [Glossary](glossary.md).
 

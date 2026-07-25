@@ -1,5 +1,8 @@
 # Session Aware Skills
 
+!!! success "Maturity — Mature ⬤⬤⬤⬤⬤"
+    Long-lived, battle-tested, and actively maintained — depend on it freely. Rated by [repository health](maturity.md), not version.
+
 !!! abstract "In a nutshell"
     One OVOS device can talk to several people at once: your phone, a kitchen speaker, and other connected devices may all be asking it things at the same time. A *session* is simply the information that says who is asking and in what language. If your skill remembers anything between requests, like a running game or a chat history, it needs to keep each person's information separate so two users don't get each other's answers, much like separate tables at a restaurant. This page shows how to make a skill session aware. New terms are explained in the [Glossary](glossary.md).
 

@@ -1,5 +1,8 @@
 # Model2Vec Intent Pipeline
 
+!!! note "Maturity — Beta ⬤⬤⬤◯◯"
+    In real use but still settling — watch releases for the occasional breaking change. Rated by [repository health](maturity.md), not version.
+
 !!! abstract "In a nutshell"
     This is another tool that figures out which skill should handle what you said. Instead of matching exact keywords or memorized examples, it compares the *meaning* of your words to the commands it knows — so it can still understand you when you phrase things differently than expected. Think of it as recognizing that "turn the music down" and "lower the volume" are asking for the same thing. It is meant to work alongside the keyword-based [Adapt](adapt-pipeline.md) and example-based [Padatious](padatious-pipeline.md) tools, not replace them. See the [Glossary](glossary.md) for unfamiliar terms.
 

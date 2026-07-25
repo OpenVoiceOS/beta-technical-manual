@@ -1,5 +1,8 @@
 # PHAL — Platform/Hardware Abstraction Layer
 
+!!! info "Maturity — Stable ⬤⬤⬤⬤◯"
+    Established and production-ready, actively maintained. Rated by [repository health](maturity.md), not version.
+
 !!! abstract "In a nutshell"
     PHAL is how OpenVoiceOS talks to the physical device it runs on — things like volume controls, Wi-Fi setup, buttons, LEDs, and other hardware. It works through small add-ons (plugins) that each handle one piece of hardware and quietly run in the background, so the assistant can adjust the speaker volume or set up a network connection without you saying a word. Some hardware needs extra system permissions, so PHAL comes in a regular version and a privileged "admin" version. If you're building your own hardware and want to write a PHAL plugin for it, see [Building Hardware on OVOS](hardware-integrators.md). New to the terms? See the [Glossary](glossary.md).
 
