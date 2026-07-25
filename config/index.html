@@ -2138,9 +2138,8 @@ are driven by the bus handlers below rather than called directly.</p>
 </tr>
 </tbody>
 </table>
-<p>The layer classes also carry newer aliases (<code>DefaultConfig</code>, <code>DistributionConfig</code>,
-<code>SystemConfig</code>, <code>UserConfig</code>) reserved for a future <code>ovos-config</code> release; on the current
-release the <code>Mycroft*</code> / <code>Ovos*</code> names above are the canonical ones.</p>
+<p><code>MycroftUserConfig</code> is also exported under the alias <code>MycroftXDGConfig</code> for backward
+compatibility.</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="kn">from</span> <span class="nn">ovos_config.models</span> <span class="kn">import</span> <span class="n">LocalConf</span><span class="p">,</span> <span class="n">MycroftUserConfig</span>
 </span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>
 </span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="c1"># Direct access to a layer</span>
@@ -2312,12 +2311,21 @@ release the <code>Mycroft*</code> / <code>Ovos*</code> names above are the canon
 <td>Offline STT and TTS</td>
 </tr>
 <tr>
+<td><code>-p, --platform</code></td>
+<td>Optimize the config for a device: <code>rpi3</code>, <code>rpi4</code>, <code>rpi5</code>, <code>linux</code>, <code>mac</code>, or <code>termux</code></td>
+</tr>
+<tr>
+<td><code>-g, --gpu</code></td>
+<td>Configure plugins for GPU (only valid together with <code>--offline</code>)</td>
+</tr>
+<tr>
 <td><code>-m, --male</code> / <code>-f, --female</code></td>
 <td>Default voice gender (if neither is given, TTS configuration is skipped)</td>
 </tr>
 </tbody>
 </table>
-<p><code>--online</code>/<code>--offline</code> and <code>--male</code>/<code>--female</code> are each mutually exclusive pairs.</p>
+<p><code>--online</code>/<code>--offline</code> and <code>--male</code>/<code>--female</code> are each mutually exclusive pairs.
+<code>--gpu</code> cannot be combined with <code>--online</code>/<code>--hybrid</code> or a Raspberry Pi platform.</p>
 <h3 id="telemetry"><code>telemetry</code><a class="headerlink" href="#telemetry" title="Permanent link">&para;</a></h3>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>ovos-config<span class="w"> </span>telemetry<span class="w"> </span>--enable<span class="w">    </span><span class="c1"># opt in to intent telemetry upload</span>
 </span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>ovos-config<span class="w"> </span>telemetry<span class="w"> </span>--disable<span class="w">   </span><span class="c1"># opt out</span>

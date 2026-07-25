@@ -1693,8 +1693,9 @@ There is no secrets manager or encryption layer.</p>
       <a href="../tts-plugins/">TTS plugins</a>).</li>
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Keep the messagebus bound to <code>127.0.0.1</code>; never expose port <code>8181</code>
       directly to the internet (<a href="../bus-service/">Bus Service</a>).</li>
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Set <code>gui_websocket.host</code> to <code>127.0.0.1</code> — the shipped default is <code>0.0.0.0</code>,
-      and that socket carries the same authority as the bus
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Keep <code>gui_websocket.host</code> at its shipped default <code>127.0.0.1</code>; never widen it to
+      <code>0.0.0.0</code> for a remote display without a VPN or an authenticating proxy — that
+      socket carries the same authority as the bus
       (<a href="../gui-service/">GUI Service</a>).</li>
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Point <code>network_tests</code> at your own infrastructure if the default connectivity
       probes are not acceptable.</li>
