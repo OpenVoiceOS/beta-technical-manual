@@ -1697,10 +1697,11 @@ doing the work.</p>
 </tr>
 </tbody>
 </table>
-<p>Rough guidance on which to read: bias STT with <code>request_lang</code>; match intents and pick dialogs
-on <code>stt_lang</code> or <code>detected_lang</code>; render responses in <code>output_lang</code> when it is set; constrain a
-detector's candidate set with <code>lang</code> plus <code>secondary_langs</code>. Never assume a field is present,
-and never assume one equals another.</p>
+<p>Rough guidance on which to read: render responses in <code>output_lang</code> when it is set; constrain a
+detector's candidate set with <code>lang</code> plus <code>secondary_langs</code>. For intent matching, <code>ovos-core</code>
+does not read a single field in isolation — see <a href="../lang-selection/">Language Selection</a> for the
+authoritative resolution order (<code>stt_lang</code> → <code>request_lang</code> → <code>detected_lang</code> → configured
+default). Never assume a field is present, and never assume one equals another.</p>
 <div class="admonition warning">
 <p class="admonition-title"><code>data.lang</code> is per-payload, not session state</p>
 <p>Many bus topics carry a <code>data.lang</code> describing the language of the content <em>in that

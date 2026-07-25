@@ -1632,6 +1632,13 @@ and audio services, all pointed at one shared, more capable machine that does th
 speech-to-text and text-to-speech work over HTTP (see <a href="../stt-server/">STT server</a> and
 <a href="../tts-server/">TTS server</a>). A sketch, based on the real container images published by
 <a href="https://github.com/OpenVoiceOS/ovos-docker"><code>ovos-docker</code></a>:</p>
+<div class="admonition danger">
+<p class="admonition-title">These ports are unauthenticated plain HTTP</p>
+<p><code>8080</code> and <code>9666</code> below serve unauthenticated plain HTTP by default. Never expose them
+to untrusted networks — add API keys and/or put a reverse proxy in front of them before
+they leave localhost. See <a href="../tts-server/#tips-caveats">tts-server: Tips &amp; Caveats</a> for
+how.</p>
+</div>
 <div class="language-yaml highlight"><span class="filename">docker-compose.yml — central speech backend</span><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="nt">services</span><span class="p">:</span>
 </span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="w">  </span><span class="nt">ovos_stt_server</span><span class="p">:</span>
 </span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">docker.io/smartgic/ovos-stt-server-onnx-asr:${VERSION}</span><span class="w">   </span><span class="c1"># or your own build, see stt-server.md</span>
@@ -1641,9 +1648,6 @@ speech-to-text and text-to-speech work over HTTP (see <a href="../stt-server/">S
 </span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a><span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">docker.io/smartgic/ovos-tts-server-piper:${VERSION}</span><span class="w">      </span><span class="c1"># or your own build, see tts-server.md</span>
 </span><span id="__span-13-8"><a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a><span class="w">    </span><span class="nt">ports</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;9666:9666&quot;</span><span class="p p-Indicator">]</span>
 </span></code></pre></div>
-<p>These ports are unauthenticated HTTP by default — see
-<a href="../tts-server/#tips-caveats">TTS server: Tips &amp; Caveats</a> for adding API keys or a reverse proxy
-in front of them once they leave localhost.</p>
 <p>The speech-server image name encodes the engine baked into it — <code>ovos-stt-server-onnx-asr</code>,
 <code>ovos-stt-server-onnx-asr-cuda</code>, <code>ovos-tts-server-piper</code>, <code>ovos-tts-server-kokoro</code>,
 <code>ovos-tts-server-phoonnx</code> and so on. Pick the variant carrying the plugin you want; there is
@@ -1692,6 +1696,14 @@ container filesystem. The
 <a href="https://github.com/OpenVoiceOS/ovos-docker/blob/dev/compose/docker-compose.yml">reference compose file</a>
 in <code>ovos-docker</code> is the fuller version of the sketch above, with every volume, device,
 resource limit and healthcheck spelled out.</p>
+<div class="admonition danger">
+<p class="admonition-title"><code>network_mode: host</code> shares the loopback across every container on that host</p>
+<p>With <code>network_mode: host</code>, <code>127.0.0.1</code> is the <strong>host's</strong> loopback, not a container-private
+one — every container and process on that host shares it. A bus bound to <code>127.0.0.1</code> is
+reachable by any of them, not just <code>ovos_messagebus</code>; "bound to localhost" no longer means
+"only reachable by this one process" once host networking is in play. Treat the whole host
+as the trust boundary, not the individual container.</p>
+</div>
 <p>Each thin client still runs its own bus, listener, audio and core — only the heavy STT/TTS
 inference is centralized. This is the same pattern as
 <a href="../wyoming-bridges/">Wyoming bridges</a> and <a href="../hivemind-agents/">HiveMind</a>, just wired directly

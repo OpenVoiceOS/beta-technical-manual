@@ -1853,6 +1853,18 @@ just needs a speech primitive over the network.</p>
     GUI &lt;-- websocket.host=A --&gt; BUS
     HIVE &lt;-- websocket.host=A --&gt; BUS
     SAT -. HiveMind protocol .-&gt; HIVE</code></pre>
+<div class="admonition warning">
+<p class="admonition-title">Trust boundary: the bus and HIVE links are localhost/LAN only</p>
+<p>Every <code>&lt;-- websocket.host=A --&gt;</code> link in the diagram above (including the <code>HIVE</code> connection)
+is a direct connection to the raw messagebus and must stay on a trusted localhost/LAN network
+— it is never meant to be exposed to, or reachable from, the open internet. See
+<a href="../bus-service/">Bus Service</a> (see its "Security: the bus has no authentication" note) for
+why the bus itself is a trust boundary. The
+<strong>only</strong> link in this topology that is designed to cross an untrusted network is the dotted
+<code>SAT -. HiveMind protocol .-&gt; HIVE</code> edge: the HiveMind satellite talks to <code>hivemind-core</code> over
+HiveMind's own authenticated protocol, not the raw bus, which is precisely what makes it safe
+to run a satellite from a network you don't otherwise trust.</p>
+</div>
 <h2 id="caveats">Caveats<a class="headerlink" href="#caveats" title="Permanent link">&para;</a></h2>
 <p>Splitting services this way is fully supported, but it moves responsibilities that a single-host
 install hides for you. These are the most common sources of confusion.</p>

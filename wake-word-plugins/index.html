@@ -1815,6 +1815,10 @@ The full roster with descriptions and licenses lives in one place — the
 <code>ovos-ww-plugin-precise-lite</code> (TFLite), then <code>ovos-ww-plugin-precise</code> (classic Precise), then
 <code>ovos-ww-plugin-vosk</code>, then <code>ovos-ww-plugin-pocketsphinx</code> if a plugin further up the chain is
 not installed. Vosk offers the fastest setup for an arbitrary wake phrase without model training.</p>
+<p>The default <code>hey_mycroft</code> engine <code>ovos-ww-plugin-precise-onnx</code> is rated <strong>Beta</strong>, its
+fallback <code>ovos-ww-plugin-vosk</code> is Stable, and <code>ovos-ww-plugin-precise-lite</code> is Deprecated;
+the default is chosen for accuracy, and per the <a href="../maturity/">Maturity Scale</a> maturity is
+separate from the recommendation.</p>
 <div class="admonition note">
 <p class="admonition-title">Relative footprint</p>
 <p>The default <code>ovos-ww-plugin-precise-onnx</code> models are small, purpose-built for a single

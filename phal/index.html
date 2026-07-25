@@ -2349,6 +2349,18 @@ hardware capabilities required by its plugins.</p>
 system power management, thermal control. The explicit <code>enabled: true</code> requirement is a
 security boundary — installed-but-unconfigured admin plugins never run accidentally.
 Skills and the core pipeline never run as root.</p>
+<div class="admonition danger">
+<p class="admonition-title">AdminPHAL plugins run enabled bus actions with root privilege</p>
+<p><code>AdminPHAL</code> receives the same <strong>unauthenticated</strong> <a href="../bus-service/">messagebus</a> client
+as every other service — construction takes a plain <code>MessageBusClient</code>, with no
+separate credential or capability check. If the bus is reachable, anyone who can emit
+bus messages can trigger any <em>enabled</em> admin plugin's actions, and those actions run
+with root privilege: for example, <code>ovos-PHAL-plugin-system</code> exposes reboot, shutdown
+and factory-reset over the bus. This is a stronger consequence of the bus's lack of
+authentication than "skills aren't sandboxed" — it is root-equivalent remote control,
+not just assistant control. See <a href="../privacy-security/">Privacy &amp; Security</a> for the full
+trust-boundary picture.</p>
+</div>
 <h3 id="configuration_1">Configuration<a class="headerlink" href="#configuration_1" title="Permanent link">&para;</a></h3>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="p">{</span>
 </span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">  </span><span class="nt">&quot;PHAL&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>

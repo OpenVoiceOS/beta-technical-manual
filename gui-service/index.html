@@ -1827,6 +1827,14 @@ machine, put it behind a VPN or a reverse proxy that authenticates, or use
 <a href="https://jarbashivemind.github.io/HiveMind-community-docs/">HiveMind</a> for authenticated remote
 transport.</p>
 </div>
+<div class="admonition danger">
+<p class="admonition-title">There is no TLS option for the GUI websocket</p>
+<p>Unlike <a href="../bus-service/"><code>ovos-messagebus</code></a> (which can serve <code>wss://</code> itself),
+<code>ovos-gui</code>'s Tornado WebSocket server has no working <code>gui_websocket.ssl</code> server path —
+verified against the <code>ovos-gui</code> source. There is no config key that turns this socket
+into <code>wss://</code>. Keep it bound to <code>127.0.0.1</code> or behind a reverse proxy/VPN that
+terminates TLS and authenticates; do not expose it as-is.</p>
+</div>
 <hr />
 <div class="admonition warning">
 <p class="admonition-title">Upcoming — unreleased</p>

@@ -1581,6 +1581,9 @@ starting point: it runs entirely through ONNX Runtime, with no PyTorch/transform
 dependency, and covers NeMo Parakeet/Canary, Whisper and wav2vec2 model families. Cloud
 STT (e.g. <code>ovos-stt-plugin-azure</code>) is a fair choice when the local device doesn't have
 the compute budget for on-device recognition.</p>
+<p><code>ovos-stt-plugin-onnx-asr</code> is rated <strong>Beta</strong> while several alternatives are Stable;
+it is recommended here for its offline quality and footprint, and per the
+<a href="../maturity/">Maturity Scale</a> maturity is not the same as a recommendation.</p>
 <p><strong>Footprint:</strong> as noted in the <a href="#ovos-stt-plugin-onnx-asr">plugin's own entry</a>, most models
 in the <a href="https://huggingface.co/collections/OpenVoiceOS/stt-asr-onnx">OpenVoiceOS/stt-asr-onnx</a>
 collection ship both <code>fp32</code> and <code>int8</code> weights — pick <code>int8</code> for the lower-RAM, lower-compute
@@ -1840,7 +1843,7 @@ separately-licensed model, that is called out under "model".</p>
 <tr>
 <td><a href="#ovos-stt-plugin-whisper">ovos-stt-plugin-whisper</a></td>
 <td>OpenVoiceOS STT plugin for <a href="https://github.com/guillaumekln/faster-whisper">Whisper</a>, using transformers library</td>
-<td>Apache-2.0 (default model: <a href="https://huggingface.co/openai/whisper-large-v3-turbo">openai/whisper-large-v3-turbo</a>)</td>
+<td>Apache-2.0 (default model: <a href="https://huggingface.co/openai/whisper-large-v3">openai/whisper-large-v3</a>)</td>
 <td>Beta</td>
 </tr>
 <tr>
@@ -1852,7 +1855,7 @@ separately-licensed model, that is called out under "model".</p>
 <tr>
 <td><a href="#ovos-stt-plugin-fasterwhisper">ovos-stt-plugin-fasterwhisper</a></td>
 <td>OpenVoiceOS STT plugin for <a href="https://github.com/guillaumekln/faster-whisper">Faster Whisper</a></td>
-<td>Apache-2.0 (default model: <a href="https://huggingface.co/mobiuslabsgmbh/faster-whisper-large-v3-turbo">mobiuslabsgmbh/faster-whisper-large-v3-turbo</a>)</td>
+<td>Apache-2.0 (default model: <code>large-v3</code>)</td>
 <td>Stable</td>
 </tr>
 <tr>
@@ -2049,6 +2052,7 @@ servers entirely: fully offline plugins exist for everything.</p>
 <p><strong>Description</strong>: OpenVoiceOS STT plugin for <a href="https://github.com/guillaumekln/faster-whisper">Faster Whisper</a></p>
 </li>
 </ul>
+<p>CTranslate2 also supports <code>int8</code> / <code>int8_float16</code> compute types for lower-RAM CPU deployments — change <code>compute_type</code> to use them.</p>
 <h3 id="default-configuration_5">Default Configuration<a class="headerlink" href="#default-configuration_5" title="Permanent link">&para;</a></h3>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>  &quot;stt&quot;: {
 </span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>    &quot;module&quot;: &quot;ovos-stt-plugin-fasterwhisper&quot;,
@@ -2071,6 +2075,7 @@ servers entirely: fully offline plugins exist for everything.</p>
 <p><strong>Description</strong>: OpenVoiceOS STT plugin for <a href="https://docs.nvidia.com/nemo-framework/user-guide/latest/nemotoolkit/asr/models.html">Nemo</a>, GPU is <strong>strongly recommended</strong></p>
 </li>
 </ul>
+<p>CPU is the shipped default (<code>use_cuda: false</code>); set <code>use_cuda: true</code> for acceptable throughput on supported GPUs — the GPU recommendation is about speed, not a required default.</p>
 <h3 id="default-configuration_6">Default Configuration<a class="headerlink" href="#default-configuration_6" title="Permanent link">&para;</a></h3>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>  &quot;stt&quot;: {
 </span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>    &quot;module&quot;: &quot;ovos-stt-plugin-nemo&quot;,

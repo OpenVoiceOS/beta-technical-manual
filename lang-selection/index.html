@@ -1453,7 +1453,7 @@ per-payload <code>data.lang</code>. Each is defined in
 <a href="../session/#language-signals">Session Aware Skills — Language signals</a>.</p>
 <hr />
 <h2 id="the-disambiguation-logic">The Disambiguation Logic<a class="headerlink" href="#the-disambiguation-logic" title="Permanent link">&para;</a></h2>
-<p>When a <code>recognizer_loop:utterance</code> message arrives on the <a href="../bus-service/">messagebus</a>, <code>ovos-core</code> (specifically the <code>IntentService</code>) runs a disambiguation routine to decide which language to use for intent matching.</p>
+<p>When an <code>ovos.utterance.handle</code> message (legacy: <code>recognizer_loop:utterance</code>) arrives on the <a href="../bus-service/">messagebus</a>, <code>ovos-core</code> (specifically the <code>IntentService</code>) runs a disambiguation routine to decide which language to use for intent matching.</p>
 <p>The service inspects the message's <code>context</code> dict and picks the <strong>first</strong> of these keys that is present <em>and</em> resolves to a valid language:</p>
 <table>
 <thead>

@@ -1562,11 +1562,15 @@ local <a href="../bus-service/">messagebus</a>. As documented there:</p>
 <p>Any process that can open a WebSocket connection to the bus (default
 <code>127.0.0.1:8181</code>) has full control of the assistant: it can trigger any
 skill, read everything crossing the bus, and — through plugins that expose
-subprocess or file access — potentially run arbitrary code. Never bind the
-bus to <code>0.0.0.0</code> or port-forward it to the internet. For remote access
-(satellites, phones, other rooms) use <a href="../hivemind-agents/">HiveMind</a>
-instead, which adds authentication and encryption on top of the same bus
-protocol.</p>
+subprocess or file access — potentially run arbitrary code. This is not
+limited to skill-level mischief: if any <a href="../phal/#security-model">AdminPHAL</a>
+system plugin is enabled (for example <code>ovos-PHAL-plugin-system</code>), the same
+unauthenticated bus can trigger reboot, shutdown or factory-reset with root
+privilege — an exposed bus is a root-privileged attack surface, not just an
+assistant-control one. Never bind the bus to <code>0.0.0.0</code> or port-forward it to
+the internet. For remote access (satellites, phones, other rooms) use
+<a href="../hivemind-agents/">HiveMind</a> instead, which adds authentication and
+encryption on top of the same bus protocol.</p>
 </div>
 <h2 id="skills-are-not-sandboxed">Skills are not sandboxed<a class="headerlink" href="#skills-are-not-sandboxed" title="Permanent link">&para;</a></h2>
 <p>There is no sandbox, permission model, or capability system for skills.
@@ -1589,8 +1593,9 @@ kept strictly local.</p>
 <hr />
 <h2 id="mycroftconf-can-contain-plaintext-secrets"><code>mycroft.conf</code> can contain plaintext secrets<a class="headerlink" href="#mycroftconf-can-contain-plaintext-secrets" title="Permanent link">&para;</a></h2>
 <p>Anything you configure for cloud integrations — LLM API keys (<code>llm.key</code>), a
-Home Assistant long-lived access token, custom STT/TTS server credentials —
-is stored <strong>as plaintext</strong> in your user config, typically
+Home Assistant long-lived access token, custom STT/TTS server credentials,
+an <a href="https://github.com/OpenVoiceOS/ovos-opendata-server"><code>ovos-opendata-server</code></a>
+<code>open_data.api_key</code> — is stored <strong>as plaintext</strong> in your user config, typically
 <code>~/.config/mycroft/mycroft.conf</code> (see <a href="../config/#file-locations">Configuration Management</a>).
 There is no secrets manager or encryption layer.</p>
 <div class="admonition warning">
