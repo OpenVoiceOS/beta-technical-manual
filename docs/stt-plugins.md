@@ -296,6 +296,13 @@ separately-licensed model, that is called out under "model".
 
 Maturity reflects repository health (age, activity, open issues/PRs, in-repo docs), not version — see the [Maturity Scale](maturity.md).
 
+!!! note "License and Maturity are independent axes"
+    The **License** column reports what the repository itself declares (or doesn't — "no
+    license file" just means no SPDX license was found, not that the code is unmature) and the
+    **Maturity** column reports repository health (age, activity, issues/PRs, docs). A plugin can
+    be **Mature** and still ship no license file, or be **Stable** with a permissive license but
+    thin docs — don't read one column as implying the other.
+
 ## ovos-stt-plugin-wav2vec
 
 - **GitHub**: [https://github.com/OpenVoiceOS/ovos-stt-plugin-wav2vec](https://github.com/OpenVoiceOS/ovos-stt-plugin-wav2vec) (aliased by

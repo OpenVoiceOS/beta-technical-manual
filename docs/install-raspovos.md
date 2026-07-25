@@ -35,11 +35,79 @@ tier (see [STT Plugins](stt-plugins.md), [TTS Plugins](tts-plugins.md),
   model, an energy/noise VAD, and cloud STT/TTS (or, if you need fully offline, the smallest
   local models you can find). Avoid local Whisper-class STT/TTS here; it is the heaviest option
   in the rosters and this is the board least equipped to run it.
+
+  ```jsonc
+  // ~/.config/mycroft/mycroft.conf — Pi 3 / lightweight tier: cloud STT, local energy VAD
+  {
+    "stt": {
+      "module": "ovos-stt-plugin-server"
+    },
+    "listener": {
+      "VAD": {
+        "module": "ovos-vad-plugin-webrtcvad"
+      }
+    }
+  }
+  ```
+
 - **Pi 4:** a comfortable middle ground for local, on-device models — e.g.
   [`ovos-stt-plugin-onnx-asr`](stt-plugins.md#ovos-stt-plugin-onnx-asr) with a small,
   `int8`-quantized model, and [`ovos-tts-plugin-phoonnx`](tts-plugins.md#ovos-tts-plugin-phoonnx).
+
+  ```jsonc
+  // ~/.config/mycroft/mycroft.conf — Pi 4-class tier: local ONNX STT/TTS
+  {
+    "stt": {
+      "module": "ovos-stt-plugin-onnx-asr",
+      "ovos-stt-plugin-onnx-asr": {
+        "model": "nemo-parakeet-tdt-0.6b-v3",
+        "quantization": "int8"
+      }
+    },
+    "tts": {
+      "module": "ovos-tts-plugin-phoonnx"
+    },
+    "listener": {
+      "VAD": {
+        "module": "ovos-vad-plugin-silero"
+      }
+    },
+    "hotwords": {
+      "hey_mycroft": {
+        "module": "ovos-ww-plugin-precise-onnx"
+      }
+    }
+  }
+  ```
+
 - **Pi 5:** the offline STT performance improvement noted above gives you the most headroom for
   larger local models, including Whisper-class STT, if you want to stay fully offline.
+
+  ```jsonc
+  // ~/.config/mycroft/mycroft.conf — Pi 5-class tier: larger local STT model
+  {
+    "stt": {
+      "module": "ovos-stt-plugin-fasterwhisper",
+      "ovos-stt-plugin-fasterwhisper": {
+        "model": "large-v3",
+        "compute_type": "int8"
+      }
+    },
+    "tts": {
+      "module": "ovos-tts-plugin-phoonnx"
+    },
+    "listener": {
+      "VAD": {
+        "module": "ovos-vad-plugin-silero"
+      }
+    },
+    "hotwords": {
+      "hey_mycroft": {
+        "module": "ovos-ww-plugin-precise-onnx"
+      }
+    }
+  }
+  ```
 
 ### Storage Options
 
