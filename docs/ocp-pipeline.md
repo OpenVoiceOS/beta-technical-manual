@@ -12,7 +12,7 @@
 The **OCP (OVOS Common Play)** Pipeline Plugin handles media playback commands —
 "play some jazz", "pause", "next song". It recognises that an utterance is about
 media, works out what kind of media is wanted, asks OCP-enabled skills to search
-for it, filters the results, and hands the best one to `ovos-audio` to play.
+for it, filters the results, and hands the best one to the active player — `ovos-audio`'s legacy OCP backend by default, or the [`ovos-media`](ovos-media.md) daemon if enabled — to play.
 
 Skills act purely as catalogs: they return search results, they do not play
 anything themselves. OCP centralises selection and playback.
