@@ -1962,6 +1962,12 @@ store instead of hard-coding it in <code>mycroft.conf</code>.</p>
 <p><strong>Description</strong>: OpenVoiceOS companion plugin for <a href="https://github.com/OpenVoiceOS/ovos-tts-server">OpenVoiceOS TTS Server</a></p>
 </li>
 </ul>
+<div class="admonition warning">
+<p class="admonition-title">Talks to a public community server by default</p>
+<p>The <code>host</code> below points at a best-effort, publicly-run community server, not a private
+or guaranteed-available endpoint. Point it at your own self-hosted server (see
+<a href="../tts-server/#companion-plugin">tts-server</a>) if you need privacy or reliability.</p>
+</div>
 <h3 id="default-configuration_7">Default Configuration<a class="headerlink" href="#default-configuration_7" title="Permanent link">&para;</a></h3>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>  &quot;tts&quot;: {
 </span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>    &quot;module&quot;: &quot;ovos-tts-plugin-server&quot;,

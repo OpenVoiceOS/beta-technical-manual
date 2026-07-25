@@ -1797,7 +1797,10 @@ consolidates them in practice; another orchestrator may weigh them differently.<
 <p>Each utterance is associated with a <code>Session</code>.</p>
 <ul>
 <li>
-<p>The <strong>default session</strong> expires and is reset automatically.</p>
+<p>The per-session <code>intent_context</code> (<code>session.intent_context</code>) decays on a <code>timeout</code> (config
+  <code>timeout</code>, default 2 minutes) — this is what "expires," not the session itself. The
+  <code>"default"</code> session is persisted in-process by the orchestrator, not destroyed; see
+  <a href="../session/">Session Aware Skills</a>.</p>
 </li>
 <li>
 <p><strong>Non-default sessions</strong> (e.g., from <a href="../hivemind-agents/">HiveMind</a> clients) are updated but not reset.</p>
@@ -1825,8 +1828,11 @@ consolidates them in practice; another orchestrator may weigh them differently.<
 <p>Wrap the dispatch in the <strong>handler-lifecycle trio</strong> — the orchestrator emits <code>ovos.intent.handler.start</code>, then exactly one of <code>ovos.intent.handler.complete</code> / <code>ovos.intent.handler.error</code> (§8). The skill's intent handler runs between them.</p>
 <div class="admonition note">
 <p class="admonition-title">The trio is orchestrator-owned</p>
-<p>The handler — skill or plugin-bundled — is a black box, and third-party handler code
-carries no obligation here (PIPELINE-1 §8). The wrapper around the invocation emits
+<p>The handler — skill or plugin-bundled — emits nothing that the trio itself tracks,
+and third-party handler code carries no obligation here (PIPELINE-1 §8). It is free
+to emit its own messages (e.g. a skill calling <code>self.speak()</code> emits
+<code>ovos.utterance.speak</code>) — those are simply not part of the trio's bookkeeping. The
+wrapper around the invocation emits
 <code>start</code> before the call and exactly one of <code>complete</code> (normal return) or <code>error</code>
 (exception) after it, each <code>forward</code>-derived from the dispatch message so <code>context</code>
 and <code>session</code> are preserved. The payload is <code>{skill_id, intent_name}</code>, plus
@@ -1844,9 +1850,13 @@ if set to <code>false</code>, through its own private connection — see
 <a href="../bus-service/#configuration">messagebus Configuration</a>.</p>
 <p>Each skill's handlers (intents, converse, events) run synchronously inside <code>create_wrapper()</code>, on
 whichever thread delivers the message to that skill's bus subscription — there is no per-handler
-thread pool. This means: two skills that each own a bus connection can handle messages
-concurrently, but a single slow handler blocks only its own skill's subsequent messages, not
-other skills'. <code>create_wrapper()</code> runs the handler inside a <code>try</code>/<code>except</code>/<code>finally</code>: an
+thread pool. This means: when <code>websocket.shared_connection</code> is <code>false</code> and two skills each own a
+private bus connection, they can handle messages concurrently, and a single slow handler blocks
+only its own skill's subsequent messages, not other skills'. The <strong>default</strong> is
+<code>websocket.shared_connection: true</code>, in which case every skill shares <code>ovos-core</code>'s single bus
+connection, so a slow handler on that connection can delay message delivery to other skills as
+well — see <a href="../bus-service/#configuration">messagebus Configuration</a>. <code>create_wrapper()</code> runs the
+handler inside a <code>try</code>/<code>except</code>/<code>finally</code>: an
 uncaught exception is caught, logged, reported via the handler's <code>.error</code> message (and, unless
 <code>speak_errors=False</code>, spoken back to the user as a generic "I ran into an error" style dialog) —
 it never crashes <code>ovos-core</code> or the offending skill's process. A handler can also raise

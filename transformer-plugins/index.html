@@ -1565,6 +1565,15 @@
 </details>
 <p>Transformer plugins let you intercept and modify data as it flows through the transformer chain. Each type is a small class with a <code>transform()</code> method that runs at a fixed stage — turning raw audio into cleaner audio, fixing transcribed text before intent matching, enriching a matched intent, or post-processing speech before playback.</p>
 <p>A transformer never <em>replaces</em> a stage; it sits between two stages and reshapes what passes through. Several plugins of the same type can be active at once — they run in sequence, lowest <code>priority</code> first, so each one builds on the output of the previous.</p>
+<div class="admonition note">
+<p class="admonition-title">Synchronous contract — keep transformers fast</p>
+<p><code>transform()</code> (and <code>on_audio()</code>/<code>on_speech()</code>) are plain synchronous methods; the chain
+runner calls each one inline, in order, on the thread that owns the chain. A slow
+transformer blocks the owning service for its full duration — there is no background
+execution or timeout. This matters most for <code>AudioTransformer</code>, which sits on the
+real-time audio path: keep its work fast and offload anything heavy (model inference,
+network calls) to a background thread/process instead of doing it inside <code>transform()</code>.</p>
+</div>
 <h2 id="transformer-types">Transformer Types<a class="headerlink" href="#transformer-types" title="Permanent link">&para;</a></h2>
 <p>All base classes live in <code>ovos_plugin_manager.templates.transformers</code> and share the same constructor: <code>__init__(self, name, priority=50, config=None)</code>, plus <code>bind(bus)</code> and <code>initialize()</code>.</p>
 <table>

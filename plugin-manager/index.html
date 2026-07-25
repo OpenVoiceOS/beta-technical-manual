@@ -2014,6 +2014,17 @@ The entry point group is the canonical identifier used in <code>setup.py</code> 
 <a href="https://github.com/OpenVoiceOS/ovos-plugin-manager/pull/377">ovos-plugin-manager#377</a>.
 Until it lands, the current GUI plugin type is <code>opm.gui</code> (<code>GUIExtension</code>).</p>
 </div>
+<div class="admonition note">
+<p class="admonition-title">How many can run at once?</p>
+<p>The core voice-pipeline plugin types (<code>opm.stt</code>, <code>opm.tts</code>, <code>opm.wake_word</code>, <code>opm.VAD</code>,
+<code>opm.microphone</code>) are <strong>singleton per service</strong>: their factory (<code>OVOSSTTFactory</code>,
+<code>OVOSTTSFactory</code>, etc.) reads a single <code>module</code> config key and instantiates exactly one
+active engine. This is unlike the six transformer chains below, which are explicitly
+multi-instance and run all configured plugins of a type in priority order.</p>
+<p>Discovery is also name-keyed: if two installed packages register the same entry-point
+name under the same group, OPM keys them by that name, so one silently shadows the other
+with no error. Avoid duplicate plugin names across packages.</p>
+</div>
 <h3 id="transformer-plugins">Transformer Plugins<a class="headerlink" href="#transformer-plugins" title="Permanent link">&para;</a></h3>
 <p>These six types are the six ordered chains of <a href="https://github.com/OpenVoiceOS/architecture/blob/dev/transformer.md">OVOS-TRANSFORM-1</a>, each injected at a fixed point in the utterance lifecycle (audio → utterance → metadata → intent → dialog → tts) and run in <strong>ascending</strong> priority order.</p>
 <table>

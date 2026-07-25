@@ -1635,7 +1635,11 @@ how the <a href="../plugin-manager/">Plugin Manager</a> discovers installed skil
 <h2 id="step-6-install-it-and-talk-to-it">Step 6 — Install it and talk to it<a class="headerlink" href="#step-6-install-it-and-talk-to-it" title="Permanent link">&para;</a></h2>
 <p>First, activate the same Python environment OVOS runs in, so the skill installs into the
 interpreter <code>ovos-core</code> actually uses — for example <code>source ~/.venvs/ovos/bin/activate</code> for
-a venv install (the exact path depends on how you installed OVOS). If you're running OVOS in
+a venv install. That exact path is only an example, not something you can assume: check
+where your particular install created its environment, e.g. the installer's summary screen
+(see <a href="../ovos-installer/#environment-summary">ovos-installer</a>) or the <code>ExecStart=</code>/<code>Environment=</code> lines
+of your <code>ovos-core</code> systemd unit — raspOVOS, <code>ovos-installer</code>, and container installs each
+put it somewhere different. If you're running OVOS in
 a container instead, there's no host environment to activate — install into the container
 directly: <code>docker compose exec &lt;service&gt; pip install -e .</code> (run from the skill folder, with
 the skill's path mounted into the container, or copy it in first).</p>

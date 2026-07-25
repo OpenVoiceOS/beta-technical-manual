@@ -1984,6 +1984,12 @@ languages resolve to different pretrained models.</p>
 <p><strong>Description</strong>: OpenVoiceOS companion plugin for <a href="https://github.com/OpenVoiceOS/ovos-stt-http-server">OpenVoiceOS STT Server</a></p>
 </li>
 </ul>
+<div class="admonition warning">
+<p class="admonition-title">Talks to a public community server by default</p>
+<p>Leaving <code>urls</code> unset falls back to a best-effort, publicly-run community STT server, not
+a private or guaranteed-available endpoint. Point it at your own self-hosted server (see
+<a href="../stt-server/#companion-plugin">stt-server</a>) if you need privacy or reliability.</p>
+</div>
 <h3 id="default-configuration_2">Default Configuration<a class="headerlink" href="#default-configuration_2" title="Permanent link">&para;</a></h3>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>  &quot;stt&quot;: {
 </span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>    &quot;module&quot;: &quot;ovos-stt-plugin-server&quot;,

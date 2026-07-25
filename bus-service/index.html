@@ -1969,8 +1969,10 @@ part of the shipped <code>mycroft.conf</code> <code>websocket</code> section.</p
 <div class="admonition danger">
 <p class="admonition-title">Security: the bus has no authentication — keep it local</p>
 <p>The messagebus has <strong>no authentication and no encryption</strong>, and <strong>any</strong> client that can
-connect gets <strong>full control</strong> of the device (it can trigger skills, read everything on the
-bus, even run code via some plugins). Treat it like an open door to the whole assistant.</p>
+connect gets control of everything installed skills and plugins expose over the bus — up
+to root-level system control (reboot, shutdown, factory-reset) <strong>if</strong> an AdminPHAL system
+plugin such as <code>ovos-PHAL-plugin-system</code> is installed and enabled (see
+<a href="../phal/#security-model">phal.md</a>). Treat it like an open door to the whole assistant.</p>
 <ul>
 <li><strong>Keep it bound to localhost</strong> (<code>host: "127.0.0.1"</code>, the shipped default). Only set
   <code>"0.0.0.0"</code> if you fully control the network, and <strong>never port-forward 8181</strong> to the

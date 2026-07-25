@@ -1415,7 +1415,9 @@ restart them depends on how OVOS was installed:</p>
 <p>Full walkthrough, plugin choices, and tuning: <a href="../wake-word-plugins/#change-your-wake-word">Wake Word Plugins</a>.</p>
 <h2 id="change-your-voice">Change your voice<a class="headerlink" href="#change-your-voice" title="Permanent link">&para;</a></h2>
 <p>Install the plugin's package first — <code>phoonnx</code> ships the <code>ovos-tts-plugin-phoonnx</code> plugin,
-so without it OVOS has nothing to load and the voice won't actually change:</p>
+so without it OVOS has nothing to load and the voice won't actually change. Activate the
+same Python environment OVOS runs in <em>before</em> running this, or the plugin installs
+somewhere OVOS never looks:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>pip<span class="w"> </span>install<span class="w"> </span>phoonnx
 </span></code></pre></div>
 <p>Make sure to install it into the same Python environment OVOS itself runs in — see the
