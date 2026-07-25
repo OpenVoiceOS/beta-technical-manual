@@ -50,6 +50,15 @@ Handled by `ovos-core`'s `IntentService`; see [Intent Service](intent-service.md
 | `intent.service.pipelines.reload` | `handle_reload_pipelines` | Reload the configured pipeline plugin stack |
 | `ovos.intent.unmatched` (legacy: `complete_intent_failure`) | — | No pipeline plugin claimed the utterance; routed to [Fallback](fallback-pipeline.md) |
 
+`IntentService` also **emits** these on a successful match (in order — see [Intent Service](intent-service.md#intent-match-emission)):
+
+| Event | Meaning |
+|---|---|
+| `{skill_id}.activate` | Mark the matched skill active in the session |
+| `ovos.intent.matched` | A pipeline plugin claimed the utterance (notification) |
+| `<skill_id>:<intent_name>` | The dispatch message that invokes the winning skill's intent handler |
+| `ovos.intent.handler.start` → `ovos.intent.handler.complete` / `ovos.intent.handler.error` | The orchestrator-owned handler-lifecycle trio around the invocation (§8; **not** translator-bridged — see [Legacy ↔ spec migration](#legacy-spec-migration)) |
+
 ### Converse
 
 See [Converse Pipeline](converse-pipeline.md#bus-events-handled) for the full picture.
@@ -92,9 +101,9 @@ Handled by every `OVOSSkill` instance; see [OVOSSkill API](ovos-skill.md#system-
 
 | Event | Meaning |
 |---|---|
-| `ovos.stop` (legacy: `mycroft.stop`) | Global stop broadcast — every skill subscribes and ceases activity for the inbound session (see below) |
-| `<skill_id>:stop` (legacy: `{skill_id}.stop`) | Skill-directed stop dispatch |
-| `ovos.stop.ping` (legacy: `{skill_id}.stop.ping`) | Check whether this skill can stop |
+| `ovos.stop` (legacy: `mycroft.stop`) | Global stop broadcast — every skill subscribes and ceases activity for the inbound session (see below). Only this pair is translator-bridged |
+| `<skill_id>:stop` (legacy: `{skill_id}.stop`) | Skill-directed stop dispatch. **Dual-subscribed, not translator-bridged** — the skill base class listens on both forms itself (the per-skill `{skill_id}.*` shape can't be a static map key) |
+| `ovos.stop.ping` (legacy: `{skill_id}.stop.ping`) | Check whether this skill can stop. Also **dual-subscribed, not translator-bridged** (see the [Not bridged](#not-bridged-adopt-the-spec-directly) note) |
 | `mycroft.skill.enable_intent` / `mycroft.skill.disable_intent` | Enable/disable one of the skill's intents |
 | `mycroft.skill.set_cross_context` / `mycroft.skill.remove_cross_context` | Manage cross-skill context |
 | `mycroft.skills.settings.changed` | Remote settings update |

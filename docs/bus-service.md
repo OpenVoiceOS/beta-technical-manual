@@ -195,7 +195,7 @@ Every message on the bus is a JSON object with three fields:
 The bus recognises only one special message type: `connected` (emitted to a new client immediately after it opens a connection). All other types are application-level.
 
 !!! note "Colon vs. dot: what a topic's shape tells you"
-    A `:` anywhere in a topic's `type` marks it as **dispatch-shaped** — assembled at runtime from identifiers to address one specific registered handler, canonically `<skill_id>:<intent_name>`. Only a formal spec defines a colon-bearing shape. Every other topic — events, requests, responses, lifecycle signals — uses the dotted `<x>.<y>.<verb>` form and never contains `:`. You can classify any topic you see on the bus with that one test.
+    A `:` in a topic's `type` marks it as **runtime-assembled dispatch** — built from identifiers to address a specific handler rather than broadcast. The canonical, most common shape is `<skill_id>:<intent_name>` (intent dispatch), but a few pipeline-internal topics also use the colon form — e.g. `<pipeline_id>:global_stop`, `converse:<skill_id>`, `question:query`. So a colon means "dispatch / pipeline-internal, addressed at runtime", not exclusively skill-intent. Everything else — events, requests, responses, lifecycle signals — uses the dotted `<x>.<y>.<verb>` form.
 
 See [Bus Client](core-libraries.md#ovos-bus-client) for the `Message` Python API.
 
