@@ -1633,6 +1633,12 @@ random so the assistant doesn't sound robotic:</p>
 (<code>&lt;skill-name&gt;.&lt;author&gt;</code>); the value points at your skill class. The <code>opm.skill</code> group is
 how the <a href="../plugin-manager/">Plugin Manager</a> discovers installed skills.</p>
 <h2 id="step-6-install-it-and-talk-to-it">Step 6 — Install it and talk to it<a class="headerlink" href="#step-6-install-it-and-talk-to-it" title="Permanent link">&para;</a></h2>
+<p>First, activate the same Python environment OVOS runs in, so the skill installs into the
+interpreter <code>ovos-core</code> actually uses — for example <code>source ~/.venvs/ovos/bin/activate</code> for
+a venv install (the exact path depends on how you installed OVOS). If you're running OVOS in
+a container instead, there's no host environment to activate — install into the container
+directly: <code>docker compose exec &lt;service&gt; pip install -e .</code> (run from the skill folder, with
+the skill's path mounted into the container, or copy it in first).</p>
 <p>From inside the <code>ovos-skill-my-first/</code> folder:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.
 </span></code></pre></div>

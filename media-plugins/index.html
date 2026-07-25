@@ -1516,6 +1516,7 @@ families; see the table below for what each currently supports.</p>
 <th>Package</th>
 <th>Player</th>
 <th>Ships for</th>
+<th>License</th>
 <th>Maturity</th>
 </tr>
 </thead>
@@ -1524,53 +1525,69 @@ families; see the table below for what each currently supports.</p>
 <td><a href="#ovos-media-plugin-spotify">ovos-media-plugin-spotify</a></td>
 <td>Spotify Connect</td>
 <td>✅ both (old audio service + ovos-media)</td>
+<td>Apache-2.0</td>
 <td>Stable</td>
 </tr>
 <tr>
 <td><a href="#ovos-media-plugin-chromecast">ovos-media-plugin-chromecast</a></td>
 <td>Chromecast (audio + video)</td>
 <td>✅ both</td>
+<td>Apache-2.0</td>
 <td>Stable</td>
 </tr>
 <tr>
 <td><a href="#ovos-media-plugin-vlc">ovos-media-plugin-vlc</a></td>
 <td>headless VLC (audio + video)</td>
 <td>✅ both</td>
+<td>Apache-2.0</td>
 <td>Beta</td>
 </tr>
 <tr>
 <td><a href="#ovos-media-plugin-mplayer">ovos-media-plugin-mplayer</a></td>
 <td>MPlayer (audio + video)</td>
 <td>✅ both</td>
+<td>Apache-2.0</td>
 <td>Stable</td>
 </tr>
 <tr>
 <td><a href="#ovos-audio-plugin-mpv">ovos-audio-plugin-mpv</a></td>
 <td>MPV (audio + video)</td>
 <td>✅ both</td>
+<td>Apache-2.0</td>
 <td>Stable</td>
 </tr>
 <tr>
 <td><a href="#ovos-media-plugin-ffplay">ovos-media-plugin-ffplay</a></td>
 <td>ffplay (audio)</td>
 <td>✅ both</td>
+<td>Apache-2.0</td>
 <td>Stable</td>
 </tr>
 <tr>
 <td><a href="#ovos-media-plugin-cli">ovos-media-plugin-cli</a></td>
 <td>generic CLI-command player (audio)</td>
 <td>✅ both</td>
+<td>Apache-2.0</td>
 <td>Alpha</td>
 </tr>
 <tr>
 <td><a href="#ovos-plugin-vlc">ovos-plugin-vlc</a></td>
 <td>VLC</td>
 <td>old audio service only (legacy) — use ovos-media-plugin-vlc for ovos-media</td>
+<td>Apache-2.0</td>
 <td>Stable</td>
 </tr>
 </tbody>
 </table>
 <p>Maturity reflects repository health (age, activity, open issues/PRs, in-repo docs), not version — see the <a href="../maturity/">Maturity Scale</a>.</p>
+<div class="admonition note">
+<p class="admonition-title">License and Maturity are independent axes</p>
+<p>The <strong>License</strong> column reports what the repository itself declares (or doesn't — "no
+license file" just means no SPDX license was found, not that the code is unmature) and the
+<strong>Maturity</strong> column reports repository health (age, activity, issues/PRs, docs). A plugin can
+be <strong>Mature</strong> and still ship no license file, or be <strong>Stable</strong> with a permissive license but
+thin docs — don't read one column as implying the other.</p>
+</div>
 <p>The <a href="#ovos-ocp-audio-plugin"><code>ovos-ocp-audio-plugin</code></a> below is not a playback backend — it is the
 <strong>old audio service itself</strong> (deprecated, still the shipped default).</p>
 <hr />
@@ -1630,7 +1647,7 @@ families; see the table below for what each currently supports.</p>
 <h2 id="ovos-plugin-vlc">ovos-plugin-vlc<a class="headerlink" href="#ovos-plugin-vlc" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
-<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-plugin-vlc">https://github.com/OpenVoiceOS/ovos-plugin-vlc</a></p>
+<p><strong>PyPI</strong>: <a href="https://pypi.org/project/ovos-plugin-vlc">ovos-plugin-vlc</a> (legacy package; no separate source repository — superseded by <a href="#ovos-media-plugin-vlc">ovos-media-plugin-vlc</a>)</p>
 </li>
 <li>
 <p><strong>Description</strong>: VLC <code>AudioBackend</code> for the <strong>old audio service</strong> (<code>mycroft.plugin.audioservice</code>). For the <a href="../ovos-media/">ovos-media</a> backend use <a href="#ovos-media-plugin-vlc">ovos-media-plugin-vlc</a>.</p>

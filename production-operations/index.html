@@ -1587,7 +1587,7 @@ For a fleet, the same mechanism gives you a controlled, reversible upgrade path:
 </span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>systemctl<span class="w"> </span>--user<span class="w"> </span>restart<span class="w"> </span>ovos.service
 </span></code></pre></div>
 <p>If the upgrade misbehaves, roll back to the frozen set:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>--force-reinstall<span class="w"> </span>-r<span class="w"> </span>/etc/ovos/known-good-2026-07-01.txt
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>--force-reinstall<span class="w"> </span>-r<span class="w"> </span>/etc/ovos/known-good-2026-07-01.txt<span class="w">  </span><span class="c1"># use the actual date from the freeze file you created in step 1</span>
 </span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>systemctl<span class="w"> </span>--user<span class="w"> </span>restart<span class="w"> </span>ovos.service
 </span></code></pre></div>
 <p><code>--force-reinstall</code> is needed on rollback because a plain <code>pip install</code> treats "already

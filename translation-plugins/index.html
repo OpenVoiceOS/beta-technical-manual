@@ -1468,6 +1468,14 @@ compute budget to run NLLB locally.</p>
 </tbody>
 </table>
 <p>Maturity reflects repository health (age, activity, open issues/PRs, in-repo docs), not version — see the <a href="../maturity/">Maturity Scale</a>.</p>
+<div class="admonition note">
+<p class="admonition-title">License and Maturity are independent axes</p>
+<p>The <strong>License</strong> column reports what the repository itself declares (or doesn't — "no
+license file" just means no SPDX license was found, not that the code is unmature) and the
+<strong>Maturity</strong> column reports repository health (age, activity, issues/PRs, docs). A plugin can
+be <strong>Mature</strong> and still ship no license file, or be <strong>Stable</strong> with a permissive license but
+thin docs — don't read one column as implying the other.</p>
+</div>
 <blockquote>
 <p><strong>Heads up:</strong> the package repo name, the pip name, and the <strong>entry-point name you put in config</strong> are not always the same. Configure plugins by their <em>entry-point name</em> (e.g. <code>ovos-translate-plugin-server</code>, not the repo <code>ovos-translate-server-plugin</code>). The names in the table above are the entry-point names.</p>
 </blockquote>

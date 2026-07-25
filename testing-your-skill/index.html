@@ -1531,6 +1531,9 @@ real utterance, and checking what comes back out — the same journey a spoken c
 the microphone. <code>ovoscope</code> is the tool the OVOS project itself uses for this; every skill accepted
 into the ecosystem is expected to ship at least one.</p>
 <h2 id="step-1-install-ovoscope">Step 1 — Install ovoscope<a class="headerlink" href="#step-1-install-ovoscope" title="Permanent link">&para;</a></h2>
+<p>Activate the same environment you installed the skill into in <a href="../first-skill/">Your First Skill</a>
+(the venv or container you ran <code>pip install -e .</code> in) — <code>ovoscope</code> needs to be importable
+alongside the skill and OVOS itself, not just present somewhere on the machine.</p>
 <p>Add it as a test dependency of the skill you built in <a href="../first-skill/">Your First Skill</a>:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pip<span class="w"> </span>install<span class="w"> </span>ovoscope
 </span></code></pre></div>
@@ -1541,6 +1544,13 @@ contributor needs:</p>
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="n">test</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;ovoscope&quot;</span><span class="p">]</span>
 </span></code></pre></div>
 <h2 id="step-2-write-the-first-end2endtest">Step 2 — Write the first <code>End2EndTest</code><a class="headerlink" href="#step-2-write-the-first-end2endtest" title="Permanent link">&para;</a></h2>
+<div class="admonition note">
+<p class="admonition-title">Prerequisite: the Padatious pipeline plugin</p>
+<p>This test drives <code>session.pipeline = ["ovos-padatious-pipeline-plugin"]</code>, so that plugin
+must actually be installed: <code>pip show ovos-padatious-pipeline-plugin || pip install
+ovos-padatious-pipeline-plugin</code>. If the test runs but reports no spoken output at all,
+a missing pipeline plugin — not a bug in your skill — is the first thing to check.</p>
+</div>
 <p>Create <code>test/test_hello.py</code> next to your skill's <code>pyproject.toml</code>:</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">from</span> <span class="nn">ovos_bus_client.message</span> <span class="kn">import</span> <span class="n">Message</span>
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="kn">from</span> <span class="nn">ovos_bus_client.session</span> <span class="kn">import</span> <span class="n">Session</span>

@@ -974,6 +974,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Network surface of a default install">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a-fully-offline-stack" class="md-nav__link">
+    <span class="md-ellipsis">
+      A fully offline stack
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1273,6 +1288,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Network surface of a default install">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a-fully-offline-stack" class="md-nav__link">
+    <span class="md-ellipsis">
+      A fully offline stack
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1481,6 +1511,40 @@ not optimized, carry no uptime guarantees, and may vanish at any time. OVOS will
 and unreliable if you rely on them. The official recommendation is to self-host — or skip
 servers entirely: fully offline plugins exist for everything.</p>
 </div>
+<h3 id="a-fully-offline-stack">A fully offline stack<a class="headerlink" href="#a-fully-offline-stack" title="Permanent link">&para;</a></h3>
+<p>Each row above links to its own offline alternative, but assembling all of them into one
+working config means cross-referencing four separate catalog pages. Here they are combined
+into a single <code>~/.config/mycroft/mycroft.conf</code> — offline STT, TTS, VAD, wake word, and
+translation/language-detection, all running on-device:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>// ~/.config/mycroft/mycroft.conf — fully offline stack
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>{
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>  &quot;stt&quot;: {
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>    &quot;module&quot;: &quot;ovos-stt-plugin-onnx-asr&quot;
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>  },
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>  &quot;tts&quot;: {
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>    &quot;module&quot;: &quot;ovos-tts-plugin-phoonnx&quot;
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>  },
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>  &quot;listener&quot;: {
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>    &quot;VAD&quot;: {
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>      &quot;module&quot;: &quot;ovos-vad-plugin-silero&quot;
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>    }
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>  },
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>  &quot;hotwords&quot;: {
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>    &quot;hey_mycroft&quot;: {
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>      &quot;module&quot;: &quot;ovos-ww-plugin-precise-onnx&quot;
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>    }
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>  },
+</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>  &quot;language&quot;: {
+</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>    &quot;translation_module&quot;: &quot;ovos-translate-plugin-nllb&quot;,
+</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>    &quot;detection_module&quot;: &quot;ovos-lang-detector-fasttext-plugin&quot;
+</span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>  }
+</span><span id="__span-0-23"><a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>}
+</span></code></pre></div>
+<p>LLM-backed solvers and personas are not part of this table because they're not configured
+by default at all — see <a href="../llm-transformers/">LLM transformers</a> and <a href="../personas/">personas</a>.
+If you do want one, it's still possible to keep the whole stack offline: point it at a
+<strong>local</strong> model (for example one served by <code>llama.cpp</code> on the same machine) instead of a
+cloud provider, so the query and conversation text never leave the device.</p>
 <div class="admonition tip">
 <p class="admonition-title">depends on selected profile</p>
 <p>A <code>server</code> or <code>satellite</code> install (<a href="../composable-deployments/">composable deployments</a>)

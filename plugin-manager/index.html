@@ -2364,7 +2364,10 @@ from that list are not run. A plugin can cancel the rest of the chain by returni
 </table>
 <h3 id="deprecated-types">Deprecated Types<a class="headerlink" href="#deprecated-types" title="Permanent link">&para;</a></h3>
 <p>These are still recognized (mapped to canonical names internally) but should not be used
-in new plugins:</p>
+in new plugins. This section covers <strong>entry-point-level</strong> deprecations (an old entry
+point group renamed to a canonical one); for <strong>repo-level</strong> deprecations (an entire
+plugin/repository retired in favor of a different package), see
+<a href="../deprecated-repos/">Deprecated &amp; Archived Repositories</a>.</p>
 <table>
 <thead>
 <tr>
@@ -2473,7 +2476,9 @@ plugins published under any of the names above still load correctly today.</p>
 <p>The legacy <strong>solver</strong> groups (<code>opm.solver.question</code>, <code>opm.solver.chat</code>,
 <code>opm.solver.summarization</code>, <code>opm.solver.entailment</code>, <code>opm.solver.multiple_choice</code>,
 <code>opm.solver.reading_comprehension</code>) and <code>opm.coreference</code> are superseded by the
-<code>opm.agents.*</code> types above and will be removed in the next major release.</p>
+<code>opm.agents.*</code> types above and will be removed in the next major release — the same
+<code>ovos-plugin-manager</code> major-version boundary as the <code>&lt;3.0.0</code> cap noted above under
+<a href="#plugin-types">Minimum OPM version</a>.</p>
 <hr />
 <h2 id="writing-a-plugin">Writing a Plugin<a class="headerlink" href="#writing-a-plugin" title="Permanent link">&para;</a></h2>
 <h3 id="1-implement-the-base-class">1. Implement the base class<a class="headerlink" href="#1-implement-the-base-class" title="Permanent link">&para;</a></h3>
