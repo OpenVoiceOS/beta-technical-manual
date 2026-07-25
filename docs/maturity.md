@@ -13,6 +13,12 @@ usable-but-moving target, or an early experiment that may change under you.
     how actively it is maintained (recent commit activity), the volume of open issues and pull
     requests it fields, and whether it carries real in-repo documentation and tests.
 
+!!! warning "Maturity is not a recommendation"
+    A badge rates how *reliable and maintained* a component is — not whether it is the right
+    choice for your use case. A component can be **Mature** (rock-solid, battle-tested) and still
+    be the wrong tool for a given job, and a page may recommend against broad use of something its
+    code is perfectly stable. Always read the page's own recommendation alongside the badge.
+
 ## The levels
 
 | Badge | Level | What it means for you |
