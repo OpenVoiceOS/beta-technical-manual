@@ -60,6 +60,9 @@ so without it OVOS has nothing to load and the voice won't actually change:
 pip install phoonnx
 ```
 
+Make sure to install it into the same Python environment OVOS itself runs in — see the
+note in [TTS Plugins](tts-plugins.md#change-your-voice).
+
 ```json
 {
   "tts": {

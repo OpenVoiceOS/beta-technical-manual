@@ -71,6 +71,7 @@ translation/language-detection, all running on-device:
     "module": "ovos-tts-plugin-phoonnx"
   },
   "listener": {
+    "wake_word": "hey_mycroft",
     "VAD": {
       "module": "ovos-vad-plugin-silero"
     }

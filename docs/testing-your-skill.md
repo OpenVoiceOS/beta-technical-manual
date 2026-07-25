@@ -35,7 +35,7 @@ contributor needs:
 
 ```toml
 [project.optional-dependencies]
-test = ["ovoscope"]
+test = ["ovoscope", "ovos-padatious-pipeline-plugin"]
 ```
 
 ## Step 2 — Write the first `End2EndTest`

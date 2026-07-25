@@ -22,7 +22,7 @@ Depending on your experience level and goals, you can choose one of the followin
 ### 1. [The `ovos-installer`](ovos-installer.md) (Recommended)
 The easiest way for most users. A guided TUI (Text User Interface) script that handles dependencies, environment setup, and service configuration for you.
 
-### 2. [RaspOVOS](install-raspovos.md) — turnkey Raspberry Pi image
+### 2. [raspOVOS](install-raspovos.md) — turnkey Raspberry Pi image
 The flagship, actively maintained pre-built image for the Raspberry Pi. Flash it and
 boot straight into a working assistant — no manual install steps required.
 
@@ -78,6 +78,22 @@ ovos-stt-plugin-whisper==<old-version>
 
 so the pin survives the next time you reinstall from that constraints file, instead of
 being silently overwritten by the channel's range.
+
+Either way, you need to know what the old, working version was. Get it from your frozen
+snapshot — `grep ovos-stt-plugin-whisper known-good.txt` (see [Rolling Back](#rolling-back)
+below) — or, if you didn't freeze one, from `pip show ovos-stt-plugin-whisper` run *before*
+you upgraded.
+
+Pinning the package alone isn't enough: the process that already loaded the old, broken
+version keeps running it in memory until it restarts. Restart whichever service loads that
+package — e.g. `systemctl --user restart ovos-dinkum-listener.service` for an STT plugin —
+before you consider the rollback complete.
+
+!!! note "A release channel isn't a maturity guarantee"
+    Picking the `stable` channel bounds *versions*, not the maturity of every plugin that
+    channel resolves. See [Maturity Scale: a release channel is not a maturity
+    guarantee](maturity.md#a-release-channel-is-not-a-maturity-guarantee) for what "stable
+    channel" does and doesn't promise.
 
 ---
 
@@ -298,6 +314,11 @@ installed before an upgrade. Before upgrading anything you care about, freeze wh
 ```bash
 uv pip freeze > known-good.txt
 ```
+
+This plain `known-good.txt` in the current directory is the single-machine form of the same
+convention [Production Operations](production-operations.md#staged-upgrades-and-rollback) uses
+for a fleet — a dated, absolute path like `/etc/ovos/known-good-2026-07-01.txt`. Same pattern,
+just scaled from one machine to many.
 
 If an upgrade misbehaves, `pip`/`uv` won't downgrade a package on their own just because a
 newer constraints file changed — an ordinary `install` call treats an already-satisfied

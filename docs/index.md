@@ -38,7 +38,7 @@ how it hears, thinks, and speaks, or teach it brand-new abilities.
 ## Start here
 
 Just want a working voice assistant with the least fuss? Flash the
-**[RaspOVOS](install-raspovos.md)** image onto a Raspberry Pi's SD card and boot it — no
+**[raspOVOS](install-raspovos.md)** image onto a Raspberry Pi's SD card and boot it — no
 terminal required. That's the easiest path in this manual. Everyone else, pick your path
 in the grid below.
 

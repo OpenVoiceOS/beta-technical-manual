@@ -2,7 +2,7 @@
 
 !!! tip "Looking for a device to buy or flash today?"
     Don't start here. The Mark 2 is discontinued, best-effort legacy hardware with rough edges —
-    see [RaspOVOS](install-raspovos.md) for the turnkey image that's the closest thing to a
+    see [raspOVOS](install-raspovos.md) for the turnkey image that's the closest thing to a
     ready-to-buy-and-flash OVOS device today.
 
 !!! abstract "In a nutshell"

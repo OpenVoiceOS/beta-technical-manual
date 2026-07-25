@@ -12,7 +12,7 @@
     nothing else about the install depends on them.
 
 !!! tip "Want the easiest option, no terminal at all?"
-    The **[RaspOVOS](install-raspovos.md)** image is the flash-and-boot alternative to
+    The **[raspOVOS](install-raspovos.md)** image is the flash-and-boot alternative to
     this guide: write it to an SD card, boot a Raspberry Pi, and you have a working
     assistant with no terminal, no SSH, and no commands to type. Use `ovos-installer`
     (this page) if you're on non-Pi hardware, want to install onto an existing Raspberry
@@ -22,7 +22,7 @@
     There's no phone app or setup wizard with a graphical pairing flow — you type commands into
     a terminal, usually over SSH into a headless device. If you've never used SSH before, budget
     some extra time to get comfortable with it, or consider the
-    [RaspOVOS](install-raspovos.md) image above instead, which boots straight into a working
+    [raspOVOS](install-raspovos.md) image above instead, which boots straight into a working
     assistant with no SSH step required.
 
 Welcome to the quick-start guide for installing Open Voice OS (OVOS) using the official `ovos-installer`! This guide is suitable for **Raspberry Pi** and **desktop/server** Linux environments. Whether you're running this on a headless Raspberry Pi or your everyday laptop, the steps are mostly the same — only the way you connect to the device differs.
@@ -31,7 +31,7 @@ Welcome to the quick-start guide for installing Open Voice OS (OVOS) using the o
 
 > 💡 On a Raspberry Pi, you have two first-class options: run the `ovos-installer`
 > against an existing Raspberry Pi OS install (this guide), or flash the turnkey
-> **[RaspOVOS](install-raspovos.md)** image for a boot-and-go experience. On any other
+> **[raspOVOS](install-raspovos.md)** image for a boot-and-go experience. On any other
 > Linux hardware, use the `ovos-installer`.
 
 ---

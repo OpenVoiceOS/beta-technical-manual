@@ -1,16 +1,16 @@
 # RaspOVOS: A Beginner's Guide to Setting Up Your Raspberry Pi with OVOS
 
 !!! abstract "In a nutshell"
-    This is a step-by-step guide to turning a Raspberry Pi (a small, inexpensive computer) into a working OVOS voice assistant by flashing a ready-made "RaspOVOS" image onto an SD card or USB drive. It walks you through hardware choices, writing the image, first boot, connecting to Wi-Fi, and the handy commands you'll use afterward. RaspOVOS is the flagship, turnkey OpenVoiceOS experience for the Raspberry Pi — flash it and boot straight into a working assistant, no manual install steps required. See the [Glossary](glossary.md) for unfamiliar terms.
+    This is a step-by-step guide to turning a Raspberry Pi (a small, inexpensive computer) into a working OVOS voice assistant by flashing a ready-made "raspOVOS" image onto an SD card or USB drive. It walks you through hardware choices, writing the image, first boot, connecting to Wi-Fi, and the handy commands you'll use afterward. raspOVOS is the flagship, turnkey OpenVoiceOS experience for the Raspberry Pi — flash it and boot straight into a working assistant, no manual install steps required. See the [Glossary](glossary.md) for unfamiliar terms.
 
 !!! tip "Turnkey Raspberry Pi image"
-    **RaspOVOS** is a ready-made, actively maintained image built specifically for the
+    **raspOVOS** is a ready-made, actively maintained image built specifically for the
     Raspberry Pi — the quickest way to get a full OVOS voice assistant running on Pi
     hardware. If you're installing on other Linux hardware, or want to build your own
     image from an existing Raspberry Pi OS install, use the
     **[`ovos-installer`](ovos-installer.md)** instead.
 
-This tutorial is designed for users new to Raspberry Pi and RaspOVOS. Follow these steps to set up and optimize your device for the best experience.
+This tutorial is designed for users new to Raspberry Pi and raspOVOS. Follow these steps to set up and optimize your device for the best experience.
 
 ---
 
@@ -145,13 +145,13 @@ Raspberry Pi boards are notoriously **picky about power supplies**. Insufficient
 
     - Insert your SD card or USB drive into your computer.
     - In the Raspberry Pi Imager:
-        - **Choose OS:** Select "Use custom" and locate the RaspOVOS image file.
+        - **Choose OS:** Select "Use custom" and locate the raspOVOS image file.
         - **Choose Storage:** Select your SD card or USB drive.
 
 
 ![Raspberry Pi Imager "Choose Device" screen listing supported Pi models](https://github.com/user-attachments/assets/92458289-a3c3-4c7b-afc8-126881445f9f)
 
-![Raspberry Pi Imager "Choose OS" screen with "Use custom" selected to pick the RaspOVOS image file](https://github.com/user-attachments/assets/36a83d0a-ebc2-4095-94ba-604ad78b5452)
+![Raspberry Pi Imager "Choose OS" screen with "Use custom" selected to pick the raspOVOS image file](https://github.com/user-attachments/assets/36a83d0a-ebc2-4095-94ba-604ad78b5452)
 
 ![Raspberry Pi Imager "Choose Storage" screen listing the target SD card or USB drive](https://github.com/user-attachments/assets/47c92497-d1a2-4f2d-90be-189806736c0d)
 
@@ -242,10 +242,10 @@ gives no on-screen confirmation, so treat it as a fallback, not the primary path
 3. Place the transmitting device near the Raspberry Pi microphone.
 
 
-4. If successful, the **RaspOVOS device** (not the transmitting phone/laptop) plays an acknowledgment tone.
+4. If successful, the **raspOVOS device** (not the transmitting phone/laptop) plays an acknowledgment tone.
 
 
-    - If decoding fails or credentials are incorrect, the RaspOVOS device plays an error tone instead.
+    - If decoding fails or credentials are incorrect, the raspOVOS device plays an error tone instead.
 
 🚧 **Note:** ggwave is a **work-in-progress** feature and does not have any dialogs or provide on-screen feedback. 🚧
 
@@ -262,7 +262,7 @@ gives no on-screen confirmation, so treat it as a fallback, not the primary path
   announce it out loud — if Wi-Fi isn't configured yet or the network is unreachable,
   the device stays silent instead. Check `ovos-status` and the `ologs` output (see
   below) to confirm the services actually started even without a spoken confirmation,
-  and see [RaspOVOS Troubleshooting](raspovos-troubleshooting.md#ovos-fails-to-speak-i-am-ready)
+  and see [raspOVOS Troubleshooting](raspovos-troubleshooting.md#ovos-fails-to-speak-i-am-ready)
   if it never speaks up once online.
 
 ---
@@ -271,9 +271,9 @@ gives no on-screen confirmation, so treat it as a fallback, not the primary path
 
 ### Helpful Commands
 
-When you log in, RaspOVOS prints a welcome banner listing its built-in helper commands. These
-are **RaspOVOS-specific shell helpers** (aliases and small scripts baked into the image) — they
-are part of the RaspOVOS image, not a standard `pip install` of OVOS. Run `ovos-help` at any time
+When you log in, raspOVOS prints a welcome banner listing its built-in helper commands. These
+are **raspOVOS-specific shell helpers** (aliases and small scripts baked into the image) — they
+are part of the raspOVOS image, not a standard `pip install` of OVOS. Run `ovos-help` at any time
 to reprint the full list.
 
 **Web interfaces:**
@@ -318,10 +318,10 @@ to reprint the full list.
 - `ovos-support` — compile logs into a support package to share when asking for help.
 - `ovos-help` — reprint this command list.
 
-!!! note "Audio HAT setup on RaspOVOS uses `ovos-i2csound`"
-    On RaspOVOS, an i2c sound HAT (such as a Respeaker or the Mark 2's SJ201) is detected and
+!!! note "Audio HAT setup on raspOVOS uses `ovos-i2csound`"
+    On raspOVOS, an i2c sound HAT (such as a Respeaker or the Mark 2's SJ201) is detected and
     configured at boot by the **`ovos-i2csound`** service shipped in the image, which writes the
-    detected board to `/etc/OpenVoiceOS/i2c_platform`. This is specific to the RaspOVOS image —
+    detected board to `/etc/OpenVoiceOS/i2c_platform`. This is specific to the raspOVOS image —
     the [ovos-installer](ovos-installer.md) does **not** use it (see
     [Mark 2 Hardware](mark2.md) for the installer's kernel-driver approach).
 
@@ -332,7 +332,7 @@ to reprint the full list.
 
 ---
 
-Enjoy your journey with RaspOVOS! With your Raspberry Pi set up, you can start exploring all the features of OpenVoiceOS.
+Enjoy your journey with raspOVOS! With your Raspberry Pi set up, you can start exploring all the features of OpenVoiceOS.
 
 ---
 

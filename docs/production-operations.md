@@ -228,6 +228,11 @@ does not include a log-shipping client.
 [Release channels](release-channels.md) covers `stable`/`testing`/`alpha` constraints files.
 For a fleet, the same mechanism gives you a controlled, reversible upgrade path:
 
+If only a single package regressed, rolling back the whole stack is unnecessary — see
+[Release Channels: Pinning or rolling back a single
+package](release-channels.md#pinning-or-rolling-back-a-single-package) for pinning and
+restarting just that one package across the fleet.
+
 ```bash
 # 1. Freeze exactly what's currently installed, in case you need to go back
 uv pip freeze > /etc/ovos/known-good-$(date +%F).txt

@@ -61,6 +61,11 @@ TTS plugins are responsible for converting text into audio for playback.
    first bundled model that supports the configured language. See the
    [ovos-tts-plugin-phoonnx](#ovos-tts-plugin-phoonnx) section below for how to pin a
    specific voice.
+
+   Installing a plugin's package (like `pip install phoonnx`) only makes it available to
+   OVOS if it lands in the same Python environment OVOS itself runs in — activate that venv
+   or container first, the same way [Your First Skill](first-skill.md) does before installing
+   a skill.
 3. Save the file — it's JSONC (comments allowed) — and restart OVOS for the change to take effect.
 
 !!! tip

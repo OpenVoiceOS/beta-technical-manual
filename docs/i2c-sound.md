@@ -89,7 +89,7 @@ of the audio/diagnostic helpers exposed by the image's [command set](install-ras
 
 - [Mark 2 Hardware](mark2.md) — the SJ201 board, and the installer's `VocalFusionDriver` path.
 - [Mark 1 Hardware](mark1.md) — the faceplate device.
-- [RaspOVOS image](install-raspovos.md) — the image these tools ship on.
+- [raspOVOS image](install-raspovos.md) — the image these tools ship on.
 - [PHAL](phal.md) — the hardware-abstraction plugins for buttons, LEDs, fans, etc.
 
 ---
