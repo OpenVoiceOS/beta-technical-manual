@@ -41,12 +41,17 @@ If the device does not complete its boot sequence:
 ## OVOS Fails to Speak "I am Ready"
 
 - Confirm the device has a working Internet connection — otherwise OVOS won't consider itself ready
+- The "I am Ready" announcement is spoken by the `ovos-skill-boot-finished` skill: if that skill is not installed or failed to load, the device can be fully working yet stay silent at boot. Check it appears in the loaded-skills list (see [How to check installed skills](#how-to-check-installed-skills) below, where `skill-ovos-boot-finished.openvoiceos` should be present).
+- For what "ready" actually means and how to probe it on headless or fleet deployments, see [Knowing when the assistant is actually ready](production-operations.md#knowing-when-the-assistant-is-actually-ready).
 
 ---
 
 ## How to debug intent matching
 
 To easily debug intent parsing open a terminal and run `ologs | grep intent` , this will show you live logs related only to intent parsing
+
+!!! note "`ologs` is a raspOVOS shortcut"
+    `ologs` is a raspOVOS-only shell alias (`tail -f` over the log files, see [raspOVOS commands](install-raspovos.md#helpful-commands)); it is **not** the portable [`ovos-logs`](cli-tools.md#reading-the-logs-ovos-logs) CLI. On a non-raspOVOS install use `ovos-logs` (or `tail -f` on the [log files](troubleshooting.md)) instead.
 
 then in another terminal send commands with `ovos-say-to "sentence to test"`  (or use your voice)
 

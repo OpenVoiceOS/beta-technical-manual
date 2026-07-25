@@ -9,7 +9,7 @@
 **Module:** `ovos_core.intent_services.service.IntentService` — [`ovos_core/intent_services/service.py`](https://github.com/OpenVoiceOS/ovos-core/blob/dev/ovos_core/intent_services/service.py)
 
 ??? info "📐 Formal specification"
-    The utterance lifecycle, the `match(utterances, lang, session) → Match` contract, **first-match-wins** ordering, and the dispatch/handler-lifecycle events are specified by **[OVOS-PIPELINE-1 — Utterance Lifecycle & Pipeline](https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md)**; what an intent *is* (keyword vs template) and the match-result shape by **[OVOS-INTENT-3 — Intent Definition](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-3.md)**; and how skills declare intents/entities on the bus by **[OVOS-INTENT-4 — Intent & Entity Registration](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-4.md)**. See also the [spec index](architecture-specs.md). `IntentService` is the reference **orchestrator** of this lifecycle; the spec topic names below are canonical.
+    The utterance lifecycle, the `match(utterances, lang, message) → Match` contract (the third argument is the utterance `Message`, from which a plugin reads the session via `message.context["session"]`), **first-match-wins** ordering, and the dispatch/handler-lifecycle events are specified by **[OVOS-PIPELINE-1 — Utterance Lifecycle & Pipeline](https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md)**; what an intent *is* (keyword vs template) and the match-result shape by **[OVOS-INTENT-3 — Intent Definition](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-3.md)**; and how skills declare intents/entities on the bus by **[OVOS-INTENT-4 — Intent & Entity Registration](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-4.md)**. See also the [spec index](architecture-specs.md). `IntentService` is the reference **orchestrator** of this lifecycle; the spec topic names below are canonical.
 
 `IntentService` is the component of `ovos-core` responsible for routing user utterances through the configured **Intent Pipeline** until a match is found.
 
@@ -195,8 +195,11 @@ intent context (`session.intent_context`) specified by
     [OVOS-PIPELINE-1 §7.3](https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md)
     keeps a registry of `intent_name` values leased to a pipeline-plugin role: `converse`,
     `response`, `stop`, `fallback` and `common_query`. A skill or pipeline **must not** register
-    a reserved name under INTENT-4 — such a registration is malformed, logged at WARN and not
-    indexed; a skill subscribes to the reserved dispatch topic by framework convention instead.
+    a reserved name under INTENT-4; a skill subscribes to the reserved dispatch topic by framework
+    convention instead. (The spec reserves these names, but `ovos-core`'s intent manifest does
+    not currently reject a reserved-name registration — it only warns on registrations missing
+    required fields — so this is a contract skills must honor, not one the orchestrator enforces
+    today.)
     A reservation is a namespace lease, not a dispatch change: reserved-name dispatches fire
     context stamping, routing and the handler trio like any other, except that the
     `session.active_handlers` push is suppressed, since a reserved name continues or terminates

@@ -153,7 +153,11 @@ WARNING - Message Bus Client will reconnect in 5.0 seconds.
 ```
 
 If you see that, start (or restart) `ovos-messagebus`, then `ovos-core` and `ovos-dinkum-listener`,
-and check `bus.log` for a clean startup (no repeated `Connection Refused` lines). In `ovos-busmon`,
+and check `bus.log` for a clean startup (no repeated `Connection Refused` lines). Clients
+reconnect on their own with a backing-off retry (5 s → 60 s cap), so a bus restart does **not**
+require restarting every client by hand — see [Bus restart / reconnect
+behavior](bus-service.md#bus-restart-reconnect-behavior) for exactly what to expect while they
+recover. In `ovos-busmon`,
 this stage is trivially visible: if the bus is down, busmon's own connection retries forever and the
 stream stays empty.
 
