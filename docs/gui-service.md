@@ -151,10 +151,10 @@ music ends         → stack empty → idle view shown
 
 The GUI WebSocket server is configured under `gui_websocket` in `mycroft.conf`:
 
-```json
+```jsonc
 {
   "gui_websocket": {
-    "host": "0.0.0.0",
+    "host": "0.0.0.0", // binds ALL interfaces — set 127.0.0.1 unless a remote display needs it
     "base_port": 18181,
     "route": "/gui"
   }

@@ -154,12 +154,11 @@ ovos-config show                        # full merged config
 ovos-config get -k lang                 # find all keys containing "lang"
 ovos-config get -k /tts/module          # get exact value at tts.module
 ovos-config set -k /tts/module -v ovos-tts-plugin-phoonnx
+# if the key is a secret (llm.key, tokens), afterward: chmod 600 ~/.config/mycroft/mycroft.conf
 
 ```
 
-If the key you're setting is a secret (e.g. `llm.key`, an access token), follow up with
-`chmod 600 ~/.config/mycroft/mycroft.conf` — `ovos-config set` does not restrict the file's
-permissions itself.
+See the **Secrets and permissions** warning above — `ovos-config set` does not restrict the file's permissions itself.
 
 ---
 

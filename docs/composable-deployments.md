@@ -246,6 +246,7 @@ A plugin is only usable by the process that imports it. Installing an STT plugin
 | Pipeline (intent matching), skills | `ovos-core` | The core's environment/container |
 | PHAL plugins | `ovos_PHAL` | The PHAL service's environment/container |
 | GUI adapters | `ovos-gui-service` | The GUI service's environment/container |
+| [Transformer](transformer-plugins.md) (`opm.transformer.*`) | `ovos-core` (utterance/metadata/intent chains), `ovos-dinkum-listener` (audio chain), `ovos-audio` (dialog/tts chains) | Whichever of those services' environments runs the chain that plugin belongs to |
 
 There is no cross-process plugin discovery — each service resolves plugins from its **own**
 Python environment's entry points at startup.
@@ -283,6 +284,15 @@ or arbitrate between them. Running two instances of the same service against one
 give you redundancy or failover; it gives you duplicate handling of every message and
 double-emitted lifecycle events (e.g. two `ovos.intent.handler.start`/`.complete` pairs for
 one utterance), since both instances react to the same broadcast independently.
+
+There is no supported skill-level or bus-level workaround for this. Filtering handlers by
+`session_id` inside a skill does not make it safe to run two instances of a singleton
+service against the same bus: the duplication happens at the message-dispatch level, before
+any skill code runs, so every subscriber on both instances still receives and reacts to
+every message. Horizontal scaling for multiple devices/users is a distributed-deployment
+concern, not a duplicate-singleton one — it is done with [HiveMind](hivemind-agents.md)
+satellites talking to a single hub, not by running two copies of `ovos-core`,
+`ovos-audio`, or `ovos-dinkum-listener` against one bus.
 
 ### Defaults assume localhost
 

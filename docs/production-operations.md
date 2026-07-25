@@ -331,7 +331,7 @@ no generic image that loads an arbitrary engine at runtime.
 services:
   ovos_messagebus:
     image: docker.io/smartgic/ovos-messagebus:${VERSION}
-    network_mode: host
+    network_mode: host  # shares host loopback AND LAN interfaces with every container on this host
 
   ovos_listener:
     image: docker.io/smartgic/ovos-listener:${VERSION}

@@ -283,7 +283,7 @@ Before the installation begins, you'll see a summary of every option you
 selected on the previous screens (method, channel, profile, features, tuning).
 This is your last chance to cancel the process.
 
-![Summary screen listing the chosen method (virtualenv), version/channel (development), profile (ovos), GUI and skills both enabled, and tuning enabled, with a Yes/No confirmation prompt](https://gist.github.com/user-attachments/assets/62a565f3-6871-4dfe-a441-c482199feac0)
+![Summary screen listing the chosen method (virtualenv), version/channel (alpha), profile (ovos), GUI and skills both enabled, and tuning enabled, with a Yes/No confirmation prompt](https://gist.github.com/user-attachments/assets/62a565f3-6871-4dfe-a441-c482199feac0)
 
 ---
 
@@ -306,31 +306,33 @@ purely a "during setup only" choice.
 
 This report is generated and sent **once**, right after installation
 completes — nothing else about this specific report is collected afterwards.
-Below is the field list _(see the [Ansible template](https://github.com/OpenVoiceOS/ovos-installer/blob/main/ansible/roles/ovos_installer/templates/telemetry.json.j2) used to build it)_.
+Below is the field list — every one of these is always included in the report
+whenever you opt in; none of them is something you type in yourself _(see the
+[Ansible template](https://github.com/OpenVoiceOS/ovos-installer/blob/main/ansible/roles/ovos_installer/templates/telemetry.json.j2) used to build it)_.
 
 | Data                   | Description                                              |
 | ---------------------- | -------------------------------------------------------- |
-| `architecture`         | CPU architecture where OVOS was installed (required)                |
-| `channel`              | `testing` or `alpha` channel of OVOS (required)                    |
-| `container`            | OVOS installed into containers (required)                          |
-| `country`              | Country the machine appeared to be in, derived from a public-IP geolocation lookup (`ip-api.com`) performed by the installer — not something you type in (required) |
-| `cpu_capable`          | Is the CPU supports AVX2 or SIMD instructions (required)           |
-| `display_server`       | Is X or Wayland are used as display server (required)              |
-| `extra_skills_feature` | Extra OVOS's skills enabled during the installation (required)     |
-| `gui_feature`          | GUI enabled during the installation (required)                     |
-| `hardware`             | Is the device a Mark 1, Mark II or DevKit (required)                |
-| `installed_at`         | Date when OVOS has been installed (required)                       |
-| `os_kernel`            | Kernel version of the host where OVOS is running (required)        |
-| `os_name`              | OS name of the host where OVOS is running (required)               |
-| `os_type`              | OS type of the host where OVOS is running (required)                |
-| `os_version`           | OS version of the host where OVOS is running (required)            |
-| `profile`              | Which profile has been used during the OVOS installation (required) |
-| `python_version`       | What Python version was running on the host (required)             |
-| `raspberry_pi`         | Does OVOS has been installed on Raspberry Pi (required)             |
-| `skills_feature`       | Default OVOS's skills enabled during the installation (required)   |
-| `sound_server`         | What PulseAudio or PipeWire used (required)                         |
-| `tuning_enabled`       | Whether the Raspberry Pi tuning feature was used (required)         |
-| `venv`                 | OVOS installed into a Python virtual environment (required)         |
+| `architecture`         | CPU architecture where OVOS was installed                |
+| `channel`              | `testing` or `alpha` channel of OVOS                     |
+| `container`            | OVOS installed into containers                           |
+| `country`              | Country the machine appeared to be in, derived from a public-IP geolocation lookup (`ip-api.com`) performed by the installer — not something you type in |
+| `cpu_capable`          | Is the CPU supports AVX2 or SIMD instructions             |
+| `display_server`       | Is X or Wayland are used as display server                |
+| `extra_skills_feature` | Extra OVOS's skills enabled during the installation        |
+| `gui_feature`          | GUI enabled during the installation                        |
+| `hardware`             | Is the device a Mark 1, Mark II or DevKit                  |
+| `installed_at`         | Date when OVOS has been installed                          |
+| `os_kernel`            | Kernel version of the host where OVOS is running           |
+| `os_name`              | OS name of the host where OVOS is running                  |
+| `os_type`              | OS type of the host where OVOS is running                  |
+| `os_version`           | OS version of the host where OVOS is running                |
+| `profile`              | Which profile has been used during the OVOS installation    |
+| `python_version`       | What Python version was running on the host                 |
+| `raspberry_pi`         | Does OVOS has been installed on Raspberry Pi                |
+| `skills_feature`       | Default OVOS's skills enabled during the installation        |
+| `sound_server`         | What PulseAudio or PipeWire used                             |
+| `tuning_enabled`       | Whether the Raspberry Pi tuning feature was used              |
+| `venv`                 | OVOS installed into a Python virtual environment              |
 
 #### Ongoing usage telemetry (`share_usage_telemetry`)
 

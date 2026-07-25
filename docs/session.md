@@ -79,6 +79,16 @@ default). Never assume a field is present, and never assume one equals another.
 See [Language Selection and Disambiguation](lang-selection.md) for how `ovos-core` resolves
 these signals into the language it matches an utterance in.
 
+## Intent context
+
+A session also carries `intent_context`: a per-key decaying context store that gates which
+intents may match across turns (e.g. "book a flight" setting context so a follow-up "to
+Paris" is understood without repeating "flight"). It is a session field claimed into the
+SESSION-1 registry by **OVOS-CONTEXT-1**, holding `{value, expires_at}` per key — each entry
+decays after a `timeout` (default ~2 minutes) unless refreshed. See
+[Intent Service](intent-service.md) for how context is set, read, and consumed during
+pipeline matching.
+
 ## Presentation preferences
 
 Beyond `session_id` and the language signals, a session carries **presentation

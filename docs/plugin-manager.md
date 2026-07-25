@@ -96,6 +96,13 @@ The entry point group is the canonical identifier used in `setup.py` / `pyprojec
     name under the same group, OPM keys them by that name, so one silently shadows the other
     with no error. Avoid duplicate plugin names across packages.
 
+    For the singleton core types this collision happens *before* the factory ever runs: the
+    factory (`OVOSSTTFactory.create()`, `OVOSTTSFactory.create()`, etc.) just asks
+    `find_*_plugins()` for whichever class is registered under the configured `module` name
+    and instantiates it. If two packages registered that same entry-point name, discovery has
+    already picked one of them silently at import time — the factory has no way to detect or
+    warn about the collision, it only ever sees the single class discovery handed it.
+
 ### Transformer Plugins
 
 These six types are the six ordered chains of [OVOS-TRANSFORM-1](https://github.com/OpenVoiceOS/architecture/blob/dev/transformer.md), each injected at a fixed point in the utterance lifecycle (audio → utterance → metadata → intent → dialog → tts) and run in **ascending** priority order.

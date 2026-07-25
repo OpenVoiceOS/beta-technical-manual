@@ -20,9 +20,16 @@ A transformer never *replaces* a stage; it sits between two stages and reshapes 
     real-time audio path: keep its work fast and offload anything heavy (model inference,
     network calls) to a background thread/process instead of doing it inside `transform()`.
 
+    There is no async return path back into the chain: `transform()` is called inline and
+    must return before the chain can proceed, so it cannot await a background job's result
+    mid-chain. "Offload the heavy work" only helps if `transform()` can return
+    cached/previous data immediately on each call, while the background thread/process
+    updates that cache for the *next* call to pick up — the current call never blocks on
+    the background job finishing.
+
 ## Transformer Types
 
-All base classes live in `ovos_plugin_manager.templates.transformers` and share the same constructor: `__init__(self, name, priority=50, config=None)`, plus `bind(bus)` and `initialize()`.
+All base classes live in `ovos_plugin_manager.templates.transformers` and share the same constructor: `__init__(self, name, priority=50, config=None)`, plus `bind(bus)` and `initialize()`. The loader supplies `name`, `priority`, and `config` from configuration when it instantiates your class — a plugin usually does not need to override `__init__` at all; if it does, it must call `super().__init__(name, priority, config)` so the loader-supplied values still reach the base class.
 
 | Type | Stage | Base Class | Entry-point group |
 |------|-------|------------|-------------------|
