@@ -238,8 +238,9 @@ There is no secrets manager or encryption layer.
       [TTS plugins](tts-plugins.md)).
 - [ ] Keep the messagebus bound to `127.0.0.1`; never expose port `8181`
       directly to the internet ([Bus Service](bus-service.md)).
-- [ ] Set `gui_websocket.host` to `127.0.0.1` — the shipped default is `0.0.0.0`,
-      and that socket carries the same authority as the bus
+- [ ] Keep `gui_websocket.host` at its shipped default `127.0.0.1`; never widen it to
+      `0.0.0.0` for a remote display without a VPN or an authenticating proxy — that
+      socket carries the same authority as the bus
       ([GUI Service](gui-service.md)).
 - [ ] Point `network_tests` at your own infrastructure if the default connectivity
       probes are not acceptable.

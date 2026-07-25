@@ -239,9 +239,8 @@ Each layer is a `LocalConf` instance — a file-backed `dict` subclass.
 | `RemoteConf` | backend / paired-server cache | Optional remote layer (`LocalConf`) |
 | `MycroftUserConfig` | `~/.config/mycroft/mycroft.conf` | Primary user layer (`LocalConf`) |
 
-The layer classes also carry newer aliases (`DefaultConfig`, `DistributionConfig`,
-`SystemConfig`, `UserConfig`) reserved for a future `ovos-config` release; on the current
-release the `Mycroft*` / `Ovos*` names above are the canonical ones.
+`MycroftUserConfig` is also exported under the alias `MycroftXDGConfig` for backward
+compatibility.
 
 ```python
 from ovos_config.models import LocalConf, MycroftUserConfig
@@ -401,9 +400,12 @@ ovos-config autoconfigure -l de-de --online --male
 | `-hy, --hybrid` | Offline TTS + online STT (default when neither `--online` nor `--offline` is given) |
 | `-on, --online` | Online STT and TTS |
 | `-off, --offline` | Offline STT and TTS |
+| `-p, --platform` | Optimize the config for a device: `rpi3`, `rpi4`, `rpi5`, `linux`, `mac`, or `termux` |
+| `-g, --gpu` | Configure plugins for GPU (only valid together with `--offline`) |
 | `-m, --male` / `-f, --female` | Default voice gender (if neither is given, TTS configuration is skipped) |
 
 `--online`/`--offline` and `--male`/`--female` are each mutually exclusive pairs.
+`--gpu` cannot be combined with `--online`/`--hybrid` or a Raspberry Pi platform.
 
 ### `telemetry`
 
