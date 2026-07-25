@@ -19,7 +19,7 @@ All paths respect the `OVOS_CONFIG_BASE_FOLDER` environment variable (default: `
 | `DISTRIBUTION_CONFIG` | `/usr/share/mycroft/mycroft.conf` | Distribution-level override (env: `OVOS_DISTRIBUTION_CONFIG`) |
 | `SYSTEM_CONFIG` | `/etc/mycroft/mycroft.conf` | System-level config (env: `MYCROFT_SYSTEM_CONFIG`) |
 | `USER_CONFIG` | `~/.config/mycroft/mycroft.conf` | XDG user config (primary editable) |
-| `ASSISTANT_CONFIG` | `~/.config/mycroft/runtime.conf` | Runtime changes written by OVOS itself, not by users |
+| `WEB_CONFIG_CACHE` | `~/.config/mycroft/web_cache.json` | Cache of the optional remote/backend config layer (env: `MYCROFT_WEB_CACHE`) |
 
 ---
 

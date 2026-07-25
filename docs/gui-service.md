@@ -160,7 +160,7 @@ The GUI WebSocket server is configured under `gui_websocket` in `mycroft.conf`:
 ```jsonc
 {
   "gui_websocket": {
-    "host": "0.0.0.0", // binds ALL interfaces — set 127.0.0.1 unless a remote display needs it
+    "host": "127.0.0.1", // localhost only by default — widen to 0.0.0.0 only if a remote display needs it
     "base_port": 18181,
     "route": "/gui"
   }
@@ -169,7 +169,7 @@ The GUI WebSocket server is configured under `gui_websocket` in `mycroft.conf`:
 
 | Key | Description |
 |---|---|
-| `host` | Interface the Tornado WebSocket server binds to (default: `0.0.0.0`, **all interfaces**) |
+| `host` | Interface the Tornado WebSocket server binds to (default: `127.0.0.1`, **localhost only**) |
 | `base_port` | TCP port Qt clients connect to (default: `18181`) |
 | `route` | WebSocket route path (default: `/gui`) |
 
@@ -181,8 +181,9 @@ The GUI WebSocket server is configured under `gui_websocket` in `mycroft.conf`:
     WebSocket server has no working `gui_websocket.ssl` server path — verified against the
     `ovos-gui` source, there is no config key that turns this socket into `wss://`.
 
-    Set `gui_websocket.host` to `127.0.0.1` unless a remote display client genuinely needs it, and
-    never expose port `18181` beyond a trusted network. If a display really must run on another
+    It ships bound to `127.0.0.1` (localhost only) — keep it that way unless a remote display
+    client genuinely needs it, and never widen `gui_websocket.host` to `0.0.0.0` or expose port
+    `18181` beyond a trusted network. If a display really must run on another
     machine, put it behind a VPN or a reverse proxy that authenticates and terminates TLS, or use
     [HiveMind](https://jarbashivemind.github.io/HiveMind-community-docs/) for authenticated remote
     transport.

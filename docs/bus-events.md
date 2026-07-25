@@ -48,7 +48,7 @@ Handled by `ovos-core`'s `IntentService`; see [Intent Service](intent-service.md
 | `intent.service.intent.get` | `handle_get_intent` | Query the best-matching intent without dispatching it |
 | `intent.service.skills.deactivate` | `_handle_deactivate` | Remove a skill from active/converse consideration |
 | `intent.service.pipelines.reload` | `handle_reload_pipelines` | Reload the configured pipeline plugin stack |
-| `ovos.intent.unmatched` (legacy: `complete_intent_failure`) | — | No pipeline plugin claimed the utterance; routed to [Fallback](fallback-pipeline.md) |
+| `ovos.intent.unmatched` (legacy: `complete_intent_failure`) | — | No pipeline stage claimed the utterance — including the [fallback](fallback-pipeline.md) stages, which run *inside* the match loop; this is the terminal "nothing handled it" marker, not a hand-off |
 
 `IntentService` also **emits** these on a successful match (in order — see [Intent Service](intent-service.md#intent-match-emission)):
 

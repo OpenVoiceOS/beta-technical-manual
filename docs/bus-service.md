@@ -109,8 +109,9 @@ part of the shipped `mycroft.conf` `websocket` section.
       already has full access, so only install software you trust.
     - **The GUI WebSocket needs the same treatment.** `ovos-gui` serves a second, equally
       unauthenticated socket on port `18181`, and messages received there are translated into
-      emits on this bus — so it carries the same authority. Unlike the bus, it ships bound to
-      `0.0.0.0`; set `gui_websocket.host` to `127.0.0.1` unless a remote display client needs it.
+      emits on this bus — so it carries the same authority. Like the bus, it ships bound to
+      `127.0.0.1`; widening `gui_websocket.host` to `0.0.0.0` for a remote display exposes that
+      unauthenticated socket to the whole network.
 
 ---
 
