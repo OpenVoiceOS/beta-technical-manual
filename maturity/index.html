@@ -8,13 +8,13 @@
       
       
       
-        <link rel="canonical" href="https://tigregotico.github.io/ovos-technical-manual/spec-tooling/">
+        <link rel="canonical" href="https://tigregotico.github.io/ovos-technical-manual/maturity/">
       
       
-        <link rel="prev" href="../architecture-specs/">
+        <link rel="prev" href="../spec-tooling/">
       
       
-        <link rel="next" href="../maturity/">
+        <link rel="next" href="../bus-service/">
       
       
       <link rel="icon" href="https://github.com/OpenVoiceOS/ovos_assets/blob/master/Logo/ovos-logo-512.png?raw=true">
@@ -22,7 +22,7 @@
     
     
       
-        <title>Specification Tooling - OpenVoiceOS Technical Manual</title>
+        <title>Maturity Scale - OpenVoiceOS Technical Manual</title>
       
     
     
@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#specification-tooling" class="md-skip">
+        <a href="#maturity-scale" class="md-skip">
           Skip to content
         </a>
       
@@ -111,7 +111,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Specification Tooling
+              Maturity Scale
             
           </span>
         </div>
@@ -720,6 +720,27 @@
                 
   
   
+  
+  
+    <li class="md-nav__item">
+      <a href="../spec-tooling/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Specification Tooling
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
     
   
   
@@ -736,7 +757,7 @@
           
   
   <span class="md-ellipsis">
-    Specification Tooling
+    Maturity Scale
   </span>
   
 
@@ -747,7 +768,7 @@
         
   
   <span class="md-ellipsis">
-    Specification Tooling
+    Maturity Scale
   </span>
   
 
@@ -769,27 +790,18 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#ovos-spec-tools-the-reference-implementation" class="md-nav__link">
+  <a href="#the-levels" class="md-nav__link">
     <span class="md-ellipsis">
-      ovos-spec-tools — the reference implementation
+      The levels
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#ovos-test-harness-the-conformance-suite" class="md-nav__link">
+  <a href="#why-its-not-the-version-number" class="md-nav__link">
     <span class="md-ellipsis">
-      ovos-test-harness — the conformance suite
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#adopting-the-spec-namespace-without-a-flag-day" class="md-nav__link">
-    <span class="md-ellipsis">
-      Adopting the spec namespace — without a flag day
+      Why it's not the version number
     </span>
   </a>
   
@@ -799,27 +811,6 @@
   
 </nav>
       
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../maturity/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Maturity Scale
-  </span>
-  
-
-      </a>
     </li>
   
 
@@ -1317,27 +1308,18 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#ovos-spec-tools-the-reference-implementation" class="md-nav__link">
+  <a href="#the-levels" class="md-nav__link">
     <span class="md-ellipsis">
-      ovos-spec-tools — the reference implementation
+      The levels
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#ovos-test-harness-the-conformance-suite" class="md-nav__link">
+  <a href="#why-its-not-the-version-number" class="md-nav__link">
     <span class="md-ellipsis">
-      ovos-test-harness — the conformance suite
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#adopting-the-spec-namespace-without-a-flag-day" class="md-nav__link">
-    <span class="md-ellipsis">
-      Adopting the spec namespace — without a flag day
+      Why it's not the version number
     </span>
   </a>
   
@@ -1361,174 +1343,71 @@
   
 
 
-<h1 id="specification-tooling">Specification Tooling<a class="headerlink" href="#specification-tooling" title="Permanent link">&para;</a></h1>
-<div class="admonition note">
-<p class="admonition-title">Maturity — Beta ⬤⬤⬤◯◯</p>
-<p>In real use but still settling — watch releases for the occasional breaking change. Rated by <a href="../maturity/">repository health</a>, not version.</p>
+<h1 id="maturity-scale">Maturity Scale<a class="headerlink" href="#maturity-scale" title="Permanent link">&para;</a></h1>
+<p>Many pages in this manual carry a <strong>maturity</strong> badge. It tells you, at a glance, how much
+weight a component can bear in a real deployment — whether it is a rock-solid dependency, a
+usable-but-moving target, or an early experiment that may change under you.</p>
+<div class="admonition info">
+<p class="admonition-title">How maturity is judged</p>
+<p>A component's rating comes from the <strong>health of its source repository</strong>, not its version
+number. OVOS packages are versioned continuously from conventional commits, so a <code>0.x</code>
+version says little about how battle-tested the code is — a foundational library can sit at
+<code>0.8</code> with hundreds of releases, while a brand-new experiment can ship a <code>1.0</code>. Instead, the
+rating weighs signals that actually track maturity: how long the repository has existed,
+how actively it is maintained (recent commit activity), the volume of open issues and pull
+requests it fields, and whether it carries real in-repo documentation and tests.</p>
 </div>
-<div class="admonition abstract">
-<p class="admonition-title">In a nutshell</p>
-<p>The <a href="../architecture-specs/">Formal Specifications</a> say <em>what</em> must happen.
-Three pieces of tooling turn that from prose into something you can build on
-and check: <strong>ovos-spec-tools</strong> (a ready-made, conformant implementation of
-the low-level primitives), <strong>ovos-test-harness</strong> (an executable test suite
-that proves a running stack obeys the specs), and the <strong>bus-client namespace
-migration</strong> (which lets the ecosystem adopt the new spec topic names without
-a flag day).</p>
-</div>
-<details class="info">
-<summary>📐 Formal specification</summary>
-<p>These tools serve the <strong><a href="https://github.com/OpenVoiceOS/architecture">OpenVoiceOS/architecture</a></strong> specs — see the <a href="../architecture-specs/">spec index</a>.</p>
-</details>
-<hr />
-<h2 id="ovos-spec-tools-the-reference-implementation">ovos-spec-tools — the reference implementation<a class="headerlink" href="#ovos-spec-tools-the-reference-implementation" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/OpenVoiceOS/ovos-spec-tools"><strong>ovos-spec-tools</strong></a> is the
-<strong>single conformant implementation</strong> of the low-level primitives the specs
-describe. OVOS components used to reimplement template expansion, resource
-loading, and language matching in several places — and the copies drifted.
-Rather than reimplement (and re-introduce the bugs), depend on this package; it
-is dependency-light (the core has <strong>no dependencies</strong>) and tracks the specs
-clause-for-clause.</p>
+<h2 id="the-levels">The levels<a class="headerlink" href="#the-levels" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
 <tr>
-<th>Primitive</th>
-<th>Spec</th>
-<th>What it does</th>
+<th>Badge</th>
+<th>Level</th>
+<th>What it means for you</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Sentence-template expander</td>
-<td><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/intent-1.md">OVOS-INTENT-1</a></td>
-<td>Expands <code>(a\|b)</code> / <code>[opt]</code> / <code>{slot}</code> / <code>&lt;vocab&gt;</code> into the sentences it denotes</td>
+<td>⬤⬤⬤⬤⬤</td>
+<td><strong>Mature</strong></td>
+<td>Long-lived, battle-tested, widely deployed, actively maintained. Depend on it freely.</td>
 </tr>
 <tr>
-<td>Locale resource loader</td>
-<td><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/intent-2.md">OVOS-INTENT-2</a></td>
-<td>Loads a skill's <code>locale/</code> <code>.intent</code> / <code>.dialog</code> / <code>.voc</code> / <code>.entity</code> / <code>.blacklist</code> / <code>.prompt</code> files</td>
+<td>⬤⬤⬤⬤◯</td>
+<td><strong>Stable</strong></td>
+<td>Established and production-ready, maintained, with real docs. Safe for production; API changes are rare and announced.</td>
 </tr>
 <tr>
-<td>Dialog &amp; prompt renderer</td>
-<td><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/intent-2.md">OVOS-INTENT-2 §4</a></td>
-<td>Renders a spoken <code>.dialog</code> line or a <code>.prompt</code> with slot substitution</td>
+<td>⬤⬤⬤◯◯</td>
+<td><strong>Beta</strong></td>
+<td>Works and is in real use, but younger or still settling — expect the occasional breaking change. Fine to build on with an eye on releases.</td>
 </tr>
 <tr>
-<td>Language-tag matching</td>
-<td><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/intent-2.md">OVOS-INTENT-2 §2.2</a></td>
-<td>Picks the closest available BCP-47 language for a request</td>
+<td>⬤⬤◯◯◯</td>
+<td><strong>Alpha</strong></td>
+<td>Functional but early: the API churns, coverage is thin, and it may change substantially. Try it, pin it, don't build a product on it yet.</td>
 </tr>
 <tr>
-<td>Message envelope</td>
-<td><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/msg-1.md">OVOS-MSG-1</a></td>
-<td>The <code>{type, data, context}</code> <code>Message</code> and its <code>forward</code>/<code>reply</code>/<code>response</code> derivations</td>
+<td>⬤◯◯◯◯</td>
+<td><strong>Proof-of-concept</strong></td>
+<td>A spike or reference implementation. It may work, but it is not maintained as a product and may disappear. For exploration only.</td>
 </tr>
 <tr>
-<td><code>Session</code> / <code>SessionManager</code></td>
-<td><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/session-1.md">OVOS-SESSION-1</a></td>
-<td>The registered session-carrier field set with omission-not-null (de)serialization, plus a process-wide one-object-per-<code>session_id</code> registry that folds each incoming snapshot onto the live object and re-stamps <code>forward</code>/<code>reply</code>/<code>response</code> derivations with it</td>
-</tr>
-<tr>
-<td>Context gating &amp; decay</td>
-<td><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/intent-context.md">OVOS-CONTEXT-1</a></td>
-<td>Stateless helpers over the flat <code>session.intent_context</code> map: <code>gate_satisfied</code>/<code>is_live</code>/<code>decrement</code>/<code>prune</code>/<code>enforce_cap</code> for <code>requires_context</code>/<code>excludes_context</code> gating and decay, plus <code>context_supplied_slots</code>/<code>context_slot_candidates</code> for context-sourced slot fill</td>
-</tr>
-<tr>
-<td><code>IntentBuilder</code> / <code>Intent</code></td>
-<td><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/intent-4.md">OVOS-INTENT-4 §5</a></td>
-<td>Adapt-free, plugin-agnostic keyword-intent definition — <code>require</code>/<code>optionally</code>/<code>one_of</code>/<code>exclude</code>/<code>build()</code> — mapping to the <code>ovos.intent.register.keyword</code> payload; <code>voc_match</code> matches an utterance against a <code>.voc</code> file; source-compatible with the <code>ovos-workshop</code> classes it replaces</td>
-</tr>
-<tr>
-<td><code>SpecMessage</code></td>
-<td>multiple (<a href="https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md">PIPELINE-1</a>, <a href="https://github.com/OpenVoiceOS/architecture/blob/dev/intent-4.md">INTENT-4</a>, <a href="https://github.com/OpenVoiceOS/architecture/blob/dev/stop-1.md">STOP-1</a>, <a href="https://github.com/OpenVoiceOS/architecture/blob/dev/persona.md">PERSONA-1</a>, <a href="https://github.com/OpenVoiceOS/architecture/blob/dev/fallback.md">FALLBACK-1</a>, …)</td>
-<td>An enum of every canonical <code>ovos.*</code> spec bus topic, plus <code>MIGRATION_MAP</code>/<code>NamespaceTranslator</code> — the legacy↔<code>ovos.*</code> rename table the <a href="../bus-service/#namespace-migration">namespace bridge</a> applies</td>
-</tr>
-<tr>
-<td><code>ovos-spec-lint</code></td>
-<td><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/intent-1.md">OVOS-INTENT-1</a> / <a href="https://github.com/OpenVoiceOS/architecture/blob/dev/intent-2.md">-2</a></td>
-<td>A linter that validates a <code>locale/</code> folder against the resource-format specs, including <code>.blacklist</code>/<code>.entity</code> naming and slot-free constraints</td>
+<td>⚠️</td>
+<td><strong>Deprecated</strong></td>
+<td>The repository is archived or no longer maintained. Avoid it for new work; the page notes what replaces it where a replacement exists.</td>
 </tr>
 </tbody>
 </table>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pip<span class="w"> </span>install<span class="w"> </span>ovos-spec-tools<span class="w">            </span><span class="c1"># core — no dependencies (Python 3.10+)</span>
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>pip<span class="w"> </span>install<span class="w"> </span>ovos-spec-tools<span class="o">[</span>langcodes<span class="o">]</span><span class="w"> </span><span class="c1"># adds smart language fallback</span>
-</span></code></pre></div>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">from</span> <span class="nn">ovos_spec_tools</span> <span class="kn">import</span> <span class="n">expand</span><span class="p">,</span> <span class="n">LocaleResources</span><span class="p">,</span> <span class="n">render</span><span class="p">,</span> <span class="n">closest_lang</span><span class="p">,</span> <span class="n">Message</span>
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="n">expand</span><span class="p">(</span><span class="s2">&quot;(turn|switch) [the] light&quot;</span><span class="p">)</span>             <span class="c1"># every sentence the template denotes</span>
-</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="n">res</span> <span class="o">=</span> <span class="n">LocaleResources</span><span class="p">(</span><span class="s2">&quot;my-skill/locale&quot;</span><span class="p">)</span>
-</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="n">render</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">load_dialog</span><span class="p">(</span><span class="s2">&quot;weather&quot;</span><span class="p">,</span> <span class="s2">&quot;en-US&quot;</span><span class="p">),</span>     <span class="c1"># a spoken response</span>
-</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>       <span class="n">slots</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;temperature&quot;</span><span class="p">:</span> <span class="mi">21</span><span class="p">})</span>
-</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="n">closest_lang</span><span class="p">(</span><span class="s2">&quot;en-AU&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;pt-BR&quot;</span><span class="p">,</span> <span class="s2">&quot;en-US&quot;</span><span class="p">])</span>       <span class="c1"># -&gt; &#39;en-US&#39;</span>
-</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="n">m</span> <span class="o">=</span> <span class="n">Message</span><span class="p">(</span><span class="s2">&quot;ovos.intent.list&quot;</span><span class="p">,</span> <span class="p">{},</span> <span class="p">{</span><span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="s2">&quot;skill.id&quot;</span><span class="p">})</span>
-</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="n">m</span><span class="o">.</span><span class="n">response</span><span class="p">({</span><span class="s2">&quot;intents&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;...&quot;</span><span class="p">]})</span><span class="o">.</span><span class="n">serialize</span><span class="p">()</span>    <span class="c1"># -&gt; the &#39;ovos.intent.list.response&#39; JSON</span>
-</span></code></pre></div>
-<p>Lint a skill's locale folder against the grammar and format specs:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>ovos-spec-lint<span class="w"> </span>my-skill/locale
-</span></code></pre></div>
-<p>The session carrier, the keyword-intent builder, and the canonical topic
-vocabulary follow the same pattern — plain data plus stdlib-only helpers:</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kn">from</span> <span class="nn">ovos_spec_tools</span> <span class="kn">import</span> <span class="n">IntentBuilder</span><span class="p">,</span> <span class="n">Session</span><span class="p">,</span> <span class="n">SpecMessage</span>
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="c1"># OVOS-SESSION-1 wire-shape carrier; SessionManager (in ovos_spec_tools.session)</span>
-</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="c1"># is the optional one-object-per-session_id registry built on top of it</span>
-</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="n">session</span> <span class="o">=</span> <span class="n">Session</span><span class="p">(</span><span class="n">session_id</span><span class="o">=</span><span class="s2">&quot;default&quot;</span><span class="p">,</span> <span class="n">lang</span><span class="o">=</span><span class="s2">&quot;en-US&quot;</span><span class="p">)</span>
-</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>
-</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="c1"># OVOS-INTENT-4 §5 keyword-intent structure — adapt-free, source-compatible</span>
-</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="c1"># with the ovos-workshop IntentBuilder skills already import</span>
-</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="n">intent</span> <span class="o">=</span> <span class="n">IntentBuilder</span><span class="p">(</span><span class="s2">&quot;HelloIntent&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">require</span><span class="p">(</span><span class="s2">&quot;Hello&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">build</span><span class="p">()</span>
-</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>
-</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="n">SpecMessage</span><span class="o">.</span><span class="n">SPEAK</span><span class="o">.</span><span class="n">value</span>  <span class="c1"># -&gt; &#39;ovos.utterance.speak&#39;, the spec-canonical topic name</span>
-</span></code></pre></div>
-<div class="admonition tip">
-<p class="admonition-title">When to reach for it</p>
-<p>Building an intent-matching pipeline plugin, a skill loader, a satellite, or any third-party
-tool that touches OVOS templates, locale files, language selection, or the
-bus envelope? Depend on <code>ovos-spec-tools</code> instead of hand-rolling — that is
-exactly the drift the package exists to prevent. See also
-<a href="../resource-files/">Resource Files</a> and <a href="../lang-selection/">Language Selection</a>.</p>
-</div>
-<hr />
-<h2 id="ovos-test-harness-the-conformance-suite">ovos-test-harness — the conformance suite<a class="headerlink" href="#ovos-test-harness-the-conformance-suite" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/OpenVoiceOS/ovos-test-harness"><strong>ovos-test-harness</strong></a> is the
-<strong>executable counterpart</strong> of the specs. Each test asserts one observable bus
-behavior a spec mandates, against a <em>real running OVOS stack</em>. If the specs are
-the law, this harness is the courtroom: it puts a concrete combination of OVOS
-repos on trial against the law and returns a verdict per normative clause —
-<strong>pass</strong>, <strong><code>xfail</code></strong> (a documented gap), or <strong>fail</strong>.</p>
-<p><strong>Why a separate repo.</strong> A single spec clause is only satisfied when a
-<em>combination</em> of branches across a dozen repos lines up — <code>ovos-core</code>,
-<code>ovos-workshop</code>, <code>ovos-bus-client</code>, the pipeline plugins, fixture skills. You
-cannot prove that from inside any one repo, because that repo's CI installs only
-its own package plus whatever pip resolves, and pip is free to downgrade a
-sibling out of the exact combination you are trying to validate.</p>
-<p><strong>The model.</strong> The harness is <strong>not a package</strong> — there is no <code>pip install .</code>.
-Its <a href="https://github.com/OpenVoiceOS/ovos-test-harness"><code>requirements.txt</code></a> is the
-<strong>stack under test</strong>: every line pins one repo to an exact git ref or version, so
-CI never re-resolves and never downgrades a component. Each test then:</p>
-<ul>
-<li>imports the spec vocabulary from <a href="https://github.com/OpenVoiceOS/ovos-spec-tools"><code>ovos-spec-tools</code></a>, so a topic name is <em>provably spec-defined</em> rather than a magic string;</li>
-<li>drives and captures the live bus through <a href="https://github.com/OpenVoiceOS/ovoscope"><code>ovoscope</code></a> (see <a href="../ovoscope-overview/">Testing Skills</a>);</li>
-<li>asserts the spec-mandated behavior and records pass / <code>xfail</code> / fail.</li>
-</ul>
-<p>This is where an implementation is <strong>proven to conform</strong> to the merged
-architecture specs — the bridge between the prescriptive Markdown and the code
-that has to honour it.</p>
-<hr />
-<h2 id="adopting-the-spec-namespace-without-a-flag-day">Adopting the spec namespace — without a flag day<a class="headerlink" href="#adopting-the-spec-namespace-without-a-flag-day" title="Permanent link">&para;</a></h2>
-<p>The specs rename many bus topics into the <code>ovos.*</code> namespace (for example
-<code>recognizer_loop:utterance</code> → <code>ovos.utterance.handle</code>). Migrating an ecosystem
-of independently-released repos to new topic names all at once is impossible —
-so <a href="../bus-service/"><strong>ovos-bus-client</strong></a> does it <strong>automatically and
-incrementally</strong>. A single message travels the wire once, and each
-connected client translates on receive: a subscription to either the legacy or
-the <code>ovos.*</code> name is also delivered its migrated counterpart locally
-(de-duplicated), so a producer and consumer can each switch to <code>ovos.*</code>
-<strong>in any order, with no coordination</strong>.</p>
-<p>This is what makes spec adoption gradual rather than a breaking change. The full
-mechanism — and how to turn the bridges off once a deployment is fully
-modernised — is documented under
-<a href="../bus-service/#namespace-migration"><strong>messagebus Service → Namespace migration</strong></a>.</p>
+<h2 id="why-its-not-the-version-number">Why it's not the version number<a class="headerlink" href="#why-its-not-the-version-number" title="Permanent link">&para;</a></h2>
+<p>A version like <code>1.2.0</code> is set by the release pipeline from commit conventions — a single <code>feat:</code>
+commit can move a <code>0.x</code> library to the next minor, and a <code>chore!:</code> moves it to a new major. That
+makes versions a precise record of <em>what changed</em>, but a poor proxy for <em>how much you can rely on
+it</em>. Repository health — age, sustained maintenance, an engaged issue tracker, and in-repo docs —
+is a better answer to the only question a maturity badge should answer: <strong>if I depend on this,
+will it still be here and still work in a year?</strong></p>
+<p>Ratings are a point-in-time judgement and move as repositories do; treat a badge as guidance, not
+a guarantee.</p>
 
 
 
