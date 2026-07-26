@@ -1425,8 +1425,25 @@ reference.</p>
 <p>All the stages in this guide talk to each other over the <a href="../bus-service/">messagebus</a>: the listener
 emits an utterance message, the intent service emits a match, the skill emits a <code>speak</code>, and so on.
 <strong><a href="https://github.com/OpenVoiceOS/ovos-busmon"><code>ovos-busmon</code></a></strong> is a small web app that connects to
-the bus as a client and streams every one of those messages live to a browser tab — it turns six
-separate log files into one filterable, searchable timeline.</p>
+the bus as a client and streams every one of those messages live to a browser tab, in one
+filterable, searchable timeline.</p>
+<div class="admonition note">
+<p class="admonition-title">Bus messages, not logs</p>
+<p><code>ovos-busmon</code> shows <strong>live bus messages only</strong> — it does <strong>not</strong> parse the log files. It
+complements the log tooling (<a href="../cli-tools/#reading-the-logs-ovos-logs"><code>ovos-logs</code></a> and the
+per-service <code>*.log</code> files), it doesn't replace it. For a terminal-based <strong>log</strong> viewer, the
+community project <a href="https://github.com/andlo/ovos-tui-client">ovos-tui-client</a> reads the OVOS
+logs directly.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Zero-install demo</p>
+<p>A hosted static build is available at
+<a href="https://openvoiceos.github.io/ovos-busmon/">openvoiceos.github.io/ovos-busmon</a> — no <code>pip
+install</code> needed. Because it's the <strong>static-page</strong> build (not the FastAPI-backed server), the
+browser connects straight to the bus itself, so it only works when the <strong>browser runs on the
+same machine as OVOS</strong>. For remote or multi-device use, run the full <code>pip install ovos-busmon</code>
+server below.</p>
+</div>
 <p>Internally, it is a FastAPI + WebSocket/SSE service that opens an <code>ovos-bus-client</code> connection to
 the messagebus and keeps an in-memory ring buffer of everything it sees. The browser UI lets you:</p>
 <ul>
