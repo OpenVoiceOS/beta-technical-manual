@@ -371,62 +371,64 @@ players interchangeably.
 
 ## Configuration
 
-```json
+```jsonc
 {
   "media": {
-    "enable_mpris": false,
+    "enable_mpris": false,       // expose OVOS playback on the MPRIS D-Bus interface
+    "mpris_poll_interval": 1,    // seconds between MPRIS state polls (when enable_mpris)
+    "ignored_players": [],       // MPRIS player names OVOS should not track/adopt
 
-    "preferred_audio_services": ["gui", "vlc", "mplayer", "cli"],
-    "preferred_video_services": ["gui", "vlc"],
-    "preferred_web_services": ["gui", "browser"],
+    // message sources trusted to bypass per-session validation
+    "native_sources": ["debug_cli", "audio"],
+    // when true, the daemon only acts on the local ("default") session —
+    // set false for HiveMind/multi-session setups that drive playback remotely
+    "validate_source": true,
+
+    "preferred_audio_services": ["vlc", "mplayer", "cli"],
+    "preferred_video_services": ["vlc", "mplayer"],
+    "preferred_web_services": [],
 
     "audio_players": {
-      "vlc": {
-        "module": "ovos-media-audio-plugin-vlc",
-        "aliases": ["VLC"],
-        "active": true
-      },
-      "cli": {
-        "module": "ovos-media-audio-plugin-cli",
-        "aliases": ["Command Line"],
-        "active": true
-      },
-      "gui": {
-        "module": "ovos-media-audio-plugin-gui",
-        "aliases": ["GUI", "Graphical User Interface"],
-        "active": true
-      }
+      "vlc": { "module": "ovos-media-audio-plugin-vlc", "aliases": ["VLC"], "active": true },
+      "cli": { "module": "ovos-media-audio-plugin-cli", "aliases": ["Command Line"], "active": true }
     },
-
     "video_players": {
-      "vlc": {
-        "module": "ovos-media-video-plugin-vlc",
-        "aliases": ["VLC"],
-        "active": true
-      },
-      "gui": {
-        "module": "ovos-media-video-plugin-gui",
-        "aliases": ["GUI", "Graphical User Interface"],
-        "active": true
-      }
-    },
-
-    "web_players": {
-      "browser": {
-        "module": "ovos-media-web-plugin-browser",
-        "aliases": ["Browser", "Local Browser", "Default Browser"],
-        "active": true
-      },
-      "gui": {
-        "module": "ovos-media-web-plugin-gui",
-        "aliases": ["GUI", "Graphical User Interface"],
-        "active": true
-      }
+      "vlc": { "module": "ovos-media-video-plugin-vlc", "aliases": ["VLC"], "active": true }
     }
   }
 }
-
 ```
+
+> The `gui` / `browser` module names shown in earlier drafts are not real
+> backends — the bundled players are `vlc`, `mplayer`, `cli`, `spotify`,
+> `chromecast`, and the legacy `qt5` GUI hand-off (see the
+> [backend table](#available-media-backend-plugins)).
+
+Each entry's key is a local name; `module` is the plugin's **entry-point name**
+(e.g. `ovos-media-audio-plugin-vlc`), which can differ from its pip package name
+(`ovos-media-plugin-vlc`). `preferred_*_services` are ordered fallback lists; the
+audio list is also the generic fallback when a type-specific list is empty. To
+hand playback to the legacy GUI player, add the `qt5` entry points
+(`ovos-media-audio-plugin-qt5`, `…-video-plugin-qt5`, `…-web-plugin-qt5`) — that
+backend is legacy and needs the deprecated [ovos-shell](ovos-shell.md).
+
+Other `media.*` keys read by the player (all optional): `autoplay` (default
+`true` — play the next queued track automatically), `merge_search` (fold new
+search results into the active playlist vs. replacing it), and
+`force_audioservice` (route audio through the audio backend even when a GUI is
+available).
+
+### Service-level bus messages
+
+Beyond the per-player `ovos.audio.service.*` / `ovos.video.service.*` API, the
+`MediaService` daemon itself handles these bus messages directly:
+
+| Bus message | Purpose |
+|---|---|
+| `ovos.common_play.home` | Open the OCP home/menu |
+| `ovos.common_play.ping` | Liveness probe — lets callers detect a running `ovos-media` |
+| `ovos.common_play.search.start` / `ovos.common_play.search.end` | Bracket an in-progress OCP search |
+| `opm.audio.query` | OPM plugin-discovery compatibility with the legacy `PlaybackService` handler |
 
 ---
 
