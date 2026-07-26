@@ -1645,18 +1645,6 @@
 <td>Linux, macOS, Windows</td>
 <td>Stable</td>
 </tr>
-<tr>
-<td><a href="https://github.com/OVOSHatchery/ovos-microphone-plugin-arecord">ovos-microphone-plugin-arecord</a></td>
-<td>Wraps <code>arecord</code> using subprocess calls. Simple and effective on systems with ALSA. <strong>Hatchery-only</strong> — not published to PyPI, install from source if you need it.</td>
-<td>Linux</td>
-<td>Alpha</td>
-</tr>
-<tr>
-<td><a href="https://github.com/OVOSHatchery/ovos-microphone-plugin-socket">ovos-microphone-plugin-socket</a></td>
-<td>Receives audio over a socket connection. Useful for remote microphone setups. <strong>Hatchery-only</strong> — not published to PyPI, install from source if you need it.</td>
-<td>Linux, macOS, Windows</td>
-<td>Beta</td>
-</tr>
 </tbody>
 </table>
 <p>Maturity reflects repository health (age, activity, open issues/PRs, in-repo docs), not version — see the <a href="../maturity/">Maturity Scale</a>.</p>
@@ -1756,20 +1744,11 @@ format (16 kHz, 16-bit, mono) is what the listener expects downstream.</p>
 <li>
 <p><strong>Testing</strong>: The <code>files</code> plugin is ideal for automated testing environments where live input isn't available.</p>
 </li>
-<li>
-<p><strong>Remote audio</strong>: The <code>socket</code> plugin is a proof-of-concept for networked microphones and is not recommended for production use without customization.</p>
-</li>
-<li>
-<p><strong>Hatchery-only plugins</strong>: <code>ovos-microphone-plugin-arecord</code> and <code>ovos-microphone-plugin-socket</code>
-  live under <a href="https://github.com/OVOSHatchery">OVOSHatchery</a>, not the core <code>OpenVoiceOS</code> org, and
-  are <strong>not published to PyPI</strong> — install them straight from the git repository if you need them.</p>
-</li>
 </ul>
 <h1 id="microphone-plugins-reference">Microphone Plugins Reference<a class="headerlink" href="#microphone-plugins-reference" title="Permanent link">&para;</a></h1>
 <p>Default configuration for the plugins listed in <a href="#supported-microphone-plugins">Supported Microphone Plugins</a>
 above (OS compatibility and a one-line description live in that table; this section only adds
-config where a plugin has one). <code>ovos-microphone-plugin-arecord</code> and <code>ovos-microphone-plugin-socket</code>
-have no dedicated section here — see the table above and <a href="#tips-caveats">Tips &amp; Caveats</a>.</p>
+config where a plugin has one).</p>
 <h2 id="ovos-microphone-plugin-alsa">ovos-microphone-plugin-alsa<a class="headerlink" href="#ovos-microphone-plugin-alsa" title="Permanent link">&para;</a></h2>
 <ul>
 <li>

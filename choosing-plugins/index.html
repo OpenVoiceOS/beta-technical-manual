@@ -1522,20 +1522,26 @@ catalog. New here? Start with the <a href="../plugins-index/">Plugins Index</a>.
 </div>
 <div class="admonition tip">
 <p class="admonition-title">Don't want to choose? Use the recommended offline stack</p>
-<p>Every ⭐ below is a sensible, <strong>fully-offline, on-device</strong> default. Drop this into
-<code>~/.config/mycroft/mycroft.conf</code> and you have a complete private stack — no cloud, no
-account:</p>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="p">{</span>
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span><span class="nt">&quot;microphone&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;module&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ovos-microphone-plugin-alsa&quot;</span><span class="w"> </span><span class="p">},</span>
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">  </span><span class="nt">&quot;listener&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;VAD&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;module&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ovos-vad-plugin-silero&quot;</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">},</span>
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">  </span><span class="nt">&quot;stt&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;module&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ovos-stt-plugin-onnx-asr&quot;</span><span class="w"> </span><span class="p">},</span>
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">  </span><span class="nt">&quot;tts&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;module&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ovos-tts-plugin-phoonnx&quot;</span><span class="w"> </span><span class="p">}</span>
-</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="p">}</span>
+<p>Every ⭐ below is a sensible, <strong>fully-offline, on-device</strong> default — a complete private
+stack, no cloud, no account. First install them:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pip<span class="w"> </span>install<span class="w"> </span>ovos-microphone-plugin-alsa<span class="w"> </span>ovos-vad-plugin-silero<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">            </span>ovos-stt-plugin-onnx-asr<span class="w"> </span>phoonnx
 </span></code></pre></div>
-<p>The wake word already defaults to <strong>precise-onnx</strong> (<code>hey_mycroft</code>) — see
-<a href="#wake-word">Wake Word</a> to change the phrase. Or run
-<code>ovos-config autoconfigure -l en-us --offline</code> to set language + these defaults for you.</p>
+<p>then drop this into <code>~/.config/mycroft/mycroft.conf</code>:</p>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="p">{</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span><span class="nt">&quot;microphone&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;module&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ovos-microphone-plugin-alsa&quot;</span><span class="w"> </span><span class="p">},</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">  </span><span class="nt">&quot;listener&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;VAD&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;module&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ovos-vad-plugin-silero&quot;</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">},</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">  </span><span class="nt">&quot;stt&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;module&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ovos-stt-plugin-onnx-asr&quot;</span><span class="w"> </span><span class="p">},</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">  </span><span class="nt">&quot;tts&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;module&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ovos-tts-plugin-phoonnx&quot;</span><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="p">}</span>
+</span></code></pre></div>
+<p>The wake word is <strong>not</strong> in the snippet because it already defaults to <strong>precise-onnx</strong>
+(<code>hey_mycroft</code>) — see <a href="#wake-word">Wake Word</a> to change the phrase. Prefer one command?
+<code>ovos-config autoconfigure -l en-us --offline</code> writes the language + these defaults for
+you (it needs <code>ovos-config</code> already installed, and configures rather than installs plugins).</p>
 </div>
+<p><strong>In a hurry with a specific constraint</strong> (low-power Pi, GPU accuracy, thin satellite, cloud
+OK)? Jump straight to <strong><a href="#pick-by-scenario">Pick by scenario</a></strong>.</p>
 <p><strong>How to read the tables.</strong> ⭐ marks the recommended default. <strong>Maturity</strong> rates
 <a href="../maturity/">repository health</a> (PoC → Alpha → Beta → Stable → Mature), <em>not</em> how good the
 plugin is — a Beta default can be the right pick. <strong>Offline</strong> means it runs on-device with
@@ -1579,12 +1585,6 @@ page for its config.</p>
 <td>Stable</td>
 <td>offline</td>
 <td>Automated testing — feed audio files instead of a live mic</td>
-</tr>
-<tr>
-<td>ovos-microphone-plugin-socket</td>
-<td>Beta</td>
-<td>network</td>
-<td>A remote/networked mic over a socket (proof-of-concept)</td>
 </tr>
 </tbody>
 </table>
@@ -1665,17 +1665,13 @@ page for its config.</p>
 <tr>
 <td>ovos-ww-plugin-server</td>
 <td>Alpha</td>
-<td>online</td>
-<td>Thin satellite offloading detection to a remote ww-server</td>
-</tr>
-<tr>
-<td>ovos-ww-plugin-precise-lite</td>
-<td>Deprecated</td>
-<td>offline</td>
-<td>You already have a TFLite Precise model — superseded by precise-onnx</td>
+<td>hybrid</td>
+<td>Thin satellite offloading detection to a self-hosted ww-server</td>
 </tr>
 </tbody>
 </table>
+<p><em><code>ovos-ww-plugin-precise-lite</code> is <strong>deprecated</strong> — the TFLite predecessor of precise-onnx,
+kept working as a fallback but not a pick for new setups.</em></p>
 <h3 id="stt-speech-to-text">STT (Speech-to-Text)<a class="headerlink" href="#stt-speech-to-text" title="Permanent link">&para;</a></h3>
 <p>Transcribes speech to text. See the <a href="../stt-plugins/">STT catalog</a> (15 plugins; top picks shown).</p>
 <table>
@@ -1797,7 +1793,11 @@ cloud engines (Azure, Polly, …) add the vendor's separate terms. The catalog p
 the exact licence per plugin.</p>
 </div>
 <h3 id="g2p-grapheme-to-phoneme">G2P (Grapheme-to-Phoneme)<a class="headerlink" href="#g2p-grapheme-to-phoneme" title="Permanent link">&para;</a></h3>
-<p>Text → phonemes, mostly for mouth/visemes. See the <a href="../g2p-plugins/">G2P catalog</a>.</p>
+<p>Converts text to phonemes to drive <strong>mouth-movement / viseme animation</strong> (e.g. a Mark 1
+face). This is a <strong>Beta, Mark 1-era</strong> capability: most TTS voices don't emit phoneme timing,
+so a G2P plugin <em>estimates</em> it from the text. Only <strong>Mimic 1</strong> provides phoneme timing
+natively; for any other voice the G2P plugin simulates the timing. <strong>If you don't drive a
+mouth/face, you don't need a G2P plugin at all.</strong> See the <a href="../g2p-plugins/">G2P catalog</a>.</p>
 <table>
 <thead>
 <tr>
@@ -1810,15 +1810,9 @@ the exact licence per plugin.</p>
 <tbody>
 <tr>
 <td>⭐ <strong>ovos-g2p-plugin-mimic</strong></td>
-<td>Mature</td>
+<td>Beta</td>
 <td>offline</td>
-<td>The stable, PyPI-published default (ARPA phonemes via Mimic 1)</td>
-</tr>
-<tr>
-<td>ovos-g2p-plugin-espeak</td>
-<td>PoC</td>
-<td>offline</td>
-<td>Broad multilingual IPA (wraps espeak); Hatchery-only, not on PyPI</td>
+<td>The PyPI-published default — ARPA phonemes via the Mimic 1 engine</td>
 </tr>
 </tbody>
 </table>
