@@ -104,7 +104,6 @@
 - Aug 2021 - [ovos-ww-plugin-vosk](https://github.com/OpenVoiceOS/ovos-ww-plugin-vosk) released
 - Aug 2021 - [precise-lite](https://github.com/OpenVoiceOS/precise-lite) forked from Mycroft, adding tflite support
 - Aug 2021 - [ovos-ww-plugin-precise-lite](https://github.com/OpenVoiceOS/ovos-ww-plugin-precise-lite) released
-- Aug 2021 - [ovos-ww-plugin-nyumaya](https://github.com/OVOSHatchery/ovos-ww-plugin-nyumaya) released
 - Aug 2021 - [precise-lite-models](https://github.com/OpenVoiceOS/precise-lite-models) start being shared
 - Aug 2021 - [skill-ovos-volume](https://github.com/OpenVoiceOS/skill-ovos-volume) released
 - Sep 2021 - [VocalFusionDriver](https://github.com/OpenVoiceOS/VocalFusionDriver) released by OVOS to support the mk2
@@ -289,12 +288,10 @@
 - Feb 2024 - [ovos-tts-plugin-edge-tts](https://github.com/OpenVoiceOS/ovos-tts-plugin-edge-tts) released
 - Feb 2024 - Selene servers and Mycroft AI website [go down](https://community.openconversational.ai/t/mycroft-servers-down-any-quick-and-dirty-trick/)
 - Feb 2024 - [skill-ovos-randomness](https://github.com/OpenVoiceOS/skill-ovos-randomness) released, maintained by community member @mikejgray
-- Feb 2024 - [OVOSHatchery](https://github.com/OVOSHatchery) created to incubate new projects
 - Feb 2024 - @Chance leaves OpenVoiceOS
 - Feb 2024 - [skill-ovos-wordnet](https://github.com/OpenVoiceOS/skill-ovos-wordnet) released
-- Mar 2024 - Community Mycroft [skills updated to OVOS](https://github.com/orgs/OVOSHatchery/repositories?type=fork&q=skill) under OVOSHatchery
+- Mar 2024 - Community Mycroft skills begin being ported to OVOS
 - Mar 2024 - [OVOS Skill Store](https://openvoiceos.github.io/OVOS-skills-store) released!
-- Mar 2024 - [Hatchery Skill Store](https://ovoshatchery.github.io/OVOS-Hatchery-skills) released!
 - Mar 2024 - First successful run of OpenVoiceOS natively on Mac OS with Apple Silicon
 - Mar 2024 - [ovos-installer](https://github.com/OpenVoiceOS/ovos-installer) second release, codename `Doom` supports Mark II device, maintained by community member @goldyfruit
 - Apr 2024 - [Mark 2 demo](https://community.openconversational.ai/t/open-voice-os-running-on-a-mark-ii-with-its-local-ai-running-mistral/14572) running OpenVoiceOS connected to a local A.I.
