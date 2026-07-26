@@ -88,12 +88,37 @@ Solvers are tried in order; the first that returns an answer wins. Some solvers 
 | `/tools/{name}` | POST | UTCP tool invocation |
 | `/mcp` | * | MCP streamable-HTTP transport (mounted when the `mcp` extra is installed) |
 | `/a2a` | * | A2A agent endpoint (mounted when `--a2a-base-url` is set and the `a2a` extra is installed) |
+| `/openai/v1/files` | POST/GET/DELETE | OpenAI **Files** API (`{id}`, `{id}/content`) — mounted when the `rag` extra is installed |
+| `/openai/v1/vector_stores` | POST/GET/DELETE | OpenAI **Vector Stores** API (`{id}`, `{id}/files`, `{id}/search`) — mounted when the `rag` extra is installed |
 
 The legacy unprefixed paths `/v1/...` and `/api/...` (OpenAI and Ollama respectively) remain
 mounted as deprecated aliases of `/openai/v1/...` and `/ollama/api/...`; responses on these
 legacy paths carry `Deprecation` and `Link` headers pointing at the canonical path.
 
 There is no authentication; put the server behind a reverse proxy if it is exposed.
+
+### Memory, RAG & embeddings
+
+By default the server is a **stateless passthrough** — the client owns conversation
+state. Two modes are selected by the `CHAT_MEMORY` environment variable:
+
+- `off` (default) — *backend* mode: stateless; the client drives the Files /
+  Vector-Stores endpoints itself. Use this for multi-user / drop-in-OpenAI
+  deployments (a shared server memory would leak across users).
+- `transparent` — single-user *hosted agent* mode: the server keys history by
+  session (the OpenAI `user` field, else a default session) and folds the persona's
+  `memory_module` into every turn.
+
+The embeddings endpoints and vector-store search share one embeddings backend,
+configured via environment variables:
+
+| Env var | Default | Purpose |
+|---|---|---|
+| `TEXT_EMBEDDINGS_PLUGIN` | `ovos-gguf-embeddings-plugin` | Text-embeddings plugin |
+| `EMBEDDINGS_DB_PLUGIN` | `ovos-chromadb-embeddings-plugin` | Vector store backend |
+| `EMBEDDINGS_MODEL` / `EMBEDDINGS_URL` / `EMBEDDINGS_KEY` | unset | Model + remote embeddings endpoint/key |
+| `FILE_STORAGE_PATH` | `~/.cache/ovos-persona-server/files` | Where uploaded files are stored |
+| `FILE_STORAGE_STRATEGY` | `disk` | `disk`, `database`, or `both` |
 
 ---
 
