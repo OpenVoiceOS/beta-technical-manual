@@ -2085,6 +2085,16 @@ are driven by the bus handlers below rather than called directly.</p>
 <td><code>Configuration.clear_cache</code></td>
 <td>Drop the cached merged config</td>
 </tr>
+<tr>
+<td><code>mycroft.paired</code></td>
+<td><code>Configuration.handle_remote_update</code></td>
+<td>Reload the remote/backend config layer</td>
+</tr>
+<tr>
+<td><code>mycroft.internet.connected</code></td>
+<td><code>Configuration.handle_remote_update</code></td>
+<td>Reload the remote/backend config layer</td>
+</tr>
 </tbody>
 </table>
 <p><code>Configuration.set_config_watcher()</code> uses <code>ovos-utils</code>' <code>FileWatcher</code> (watchdog) to monitor config files on disk and reloads automatically when they change.</p>

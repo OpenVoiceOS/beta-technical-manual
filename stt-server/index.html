@@ -1599,7 +1599,7 @@ with the plugin's <strong>built-in defaults</strong>; it does <strong>not</stron
 </li>
 <li>
 <p><strong>Compatibility routers</strong><br />
-  Beyond the native endpoints, the app mounts drop-in compatible routers so existing cloud-STT clients work unchanged, e.g. Wit.ai (<code>POST /wit/speech</code>, override the SDK host with the <code>WIT_URL</code> env var), Chromium speech-api (<code>POST /speech-api/v2/recognize</code>), and routers for OpenAI Whisper, Whisper.cpp server, Deepgram, Google, AssemblyAI, Azure, IBM Watson, AWS Transcribe, Vosk and Speechmatics. A <code>GET /utcp</code> manual advertises the endpoints to UTCP agents, and an MCP server mounts when <code>pip install 'ovos-stt-http-server[mcp]'</code> is present.</p>
+  Beyond the native endpoints, the app mounts drop-in compatible routers so existing cloud-STT clients work unchanged, e.g. Wit.ai (<code>POST /wit/speech</code>, override the SDK host with the <code>WIT_URL</code> env var), Chromium speech-api (<code>POST /speech-api/v2/recognize</code>), and routers for OpenAI Whisper, Whisper.cpp server, Deepgram, Google, AssemblyAI, Azure, IBM Watson, AWS Transcribe, Vosk, Speechmatics, Gladia, ElevenLabs Scribe, Groq and Kaldi GStreamer. See <code>/docs</code> for the authoritative set. A <code>GET /utcp</code> manual advertises the endpoints to UTCP agents, and an MCP server mounts when <code>pip install 'ovos-stt-http-server[mcp]'</code> is present.</p>
 </li>
 <li>
 <p><strong>Scalability</strong><br />
@@ -1716,9 +1716,10 @@ target different self-hosted or cloud STT server APIs without a dedicated plugin
 </span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>    &quot;ovos-stt-plugin-server&quot;: {
 </span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>      &quot;urls&quot;: [&quot;http://localhost:8080/stt&quot;],
 </span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>      &quot;verify_ssl&quot;: true,
-</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>      &quot;timeout&quot;: 5
-</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>    },
-</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a> }
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>      &quot;user_agent&quot;: &quot;my-ovos-client&quot;,
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>      &quot;timeout&quot;: 5
+</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>    },
+</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a> }
 </span></code></pre></div>
 <p>for audio language detection</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>  &quot;listener&quot;: {
@@ -1730,6 +1731,10 @@ target different self-hosted or cloud STT server APIs without a dedicated plugin
 </span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>    }
 </span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>  }
 </span></code></pre></div>
+<p>The singular <code>url</code> key (a single string or a list) is also accepted as an alias for <code>urls</code>,
+and takes precedence over <code>urls</code> when both are set. The optional <code>user_agent</code> (STT client and
+lang-detect classifier alike) overrides the request <code>User-Agent</code> sent to servers; it defaults
+to the standard OVOS client UA.</p>
 <div class="admonition warning">
 <p class="admonition-title">No <code>urls</code> configured → public servers, not local failure</p>
 <p>If you omit <code>urls</code> entirely, the plugin does <strong>not</strong> fail — it silently falls back to a

@@ -862,6 +862,15 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#context-and-keyword-gating" class="md-nav__link">
+    <span class="md-ellipsis">
+      Context and keyword gating
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1268,6 +1277,15 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#context-and-keyword-gating" class="md-nav__link">
+    <span class="md-ellipsis">
+      Context and keyword gating
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1331,11 +1349,21 @@ drops from <code>1.0</code> to <code>0.85</code>. Entity placeholders like <code
 wildcards and carry no penalty. An entity whose name was never registered with
 <code>add_entity</code> still matches but at a slightly reduced confidence (a small <code>0.04</code>
 penalty, e.g. <code>0.96</code>).</p>
+<h2 id="context-and-keyword-gating">Context and keyword gating<a class="headerlink" href="#context-and-keyword-gating" title="Permanent link">&para;</a></h2>
+<p>Intents can be gated at runtime by session context or suppressed by keyword:</p>
+<ul>
+<li><code>set_context(intent_name, context_name, context_val=None)</code> / <code>require_context(intent_name, context_name)</code> — only consider the intent when the given context is active; <code>unset_context</code> / <code>unrequire_context</code> reverse them.</li>
+<li><code>exclude_context(intent_name, context_name)</code> — suppress the intent while a context is active (<code>unexclude_context</code> reverses it).</li>
+<li><code>exclude_keywords(intent_name, samples)</code> — drop the intent from matching when the query contains any of the given keywords.</li>
+</ul>
+<p>These let a container activate or hide intents based on conversational state without rebuilding it.</p>
 <div class="admonition tip">
 <p class="admonition-title">When to choose Padacioso</p>
 <p>Use it when you want Padatious-style example-based matching with entity extraction, but
 without a training step or model files — handy for tests, tiny scripts, or resource-constrained
-devices. For fuzzy/typo-tolerant matching use <a href="../nebulento/">Nebulento</a>; for keyword-only
+devices. Padacioso also has an optional built-in fuzzy mode — <code>IntentContainer(fuzz=True)</code>
+enables rapidfuzz-based typo-tolerant matching against template variants, scored with a
+confidence penalty. For a dedicated fuzzy parser use <a href="../nebulento/">Nebulento</a>; for keyword-only
 matching use <a href="../palavreado/">Palavreado</a>; for the full neural version use
 <a href="../padatious-pipeline/">Padatious</a>.</p>
 </div>

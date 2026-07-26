@@ -1587,7 +1587,7 @@
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">pronounce_number</span><span class="p">(</span><span class="mi">123</span><span class="p">,</span> <span class="s2">&quot;en&quot;</span><span class="p">)</span>            <span class="c1"># &quot;one hundred and twenty three&quot;</span>
 </span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="n">extract_number</span><span class="p">(</span><span class="s2">&quot;I have twenty apples&quot;</span><span class="p">,</span> <span class="s2">&quot;en&quot;</span><span class="p">)</span>   <span class="c1"># 20</span>
 </span></code></pre></div>
-<p>Every function takes an explicit <code>lang</code> (a BCP-47 code such as <code>"en"</code> or <code>"pt-br"</code>); there is no global default language. When a language lacks a hand-written implementation for <code>pronounce_number</code>/<code>pronounce_ordinal</code>, the library falls back to <a href="https://github.com/rhasspy/unicode-rbnf">unicode-rbnf</a>. For functions without a fallback (<code>extract_number</code>, <code>is_fractional</code>, <code>numbers_to_digits</code>), an unsupported language raises <code>NotImplementedError</code>.</p>
+<p>Every function takes an explicit <code>lang</code> (a BCP-47 code such as <code>"en"</code> or <code>"pt-br"</code>); there is no global default language. When a language lacks a hand-written implementation for <code>pronounce_number</code>/<code>pronounce_ordinal</code>, the library falls back to <a href="https://github.com/rhasspy/unicode-rbnf">unicode-rbnf</a>. For functions without a fallback (<code>extract_number</code>, <code>is_fractional</code>), an unsupported language raises <code>NotImplementedError</code>. <code>numbers_to_digits</code> never raises — an unsupported language is left unchanged.</p>
 <h2 id="features">Features<a class="headerlink" href="#features" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
@@ -1597,7 +1597,7 @@
 <p><strong>Pronounce Ordinals:</strong> Converts numbers to their ordinal forms (<code>pronounce_ordinal</code>).</p>
 </li>
 <li>
-<p><strong>Pronounce Fractions:</strong> Speaks a fraction string such as <code>"3/2"</code> (<code>pronounce_fraction</code>, <code>pt</code>/<code>mwl</code> only).</p>
+<p><strong>Pronounce Fractions:</strong> Speaks a fraction string such as <code>"3/2"</code> (<code>pronounce_fraction</code>). Hand-written for <code>pt</code>, <code>ast</code>, <code>ca</code>, <code>oc</code>, <code>an</code>, <code>mwl</code>, <code>gl</code>, and <code>ro</code>; every other language uses a generic fallback.</p>
 </li>
 <li>
 <p><strong>Extract Numbers:</strong> Extracts a number from text (<code>extract_number</code>).</p>
@@ -1637,14 +1637,14 @@
 <td>✅</td>
 <td>🚧</td>
 <td>✅</td>
-<td>✅</td>
+<td>🚧</td>
 </tr>
 <tr>
 <td><code>kab</code> (Kabyle)</td>
 <td>✅</td>
 <td>✅</td>
 <td>✅</td>
-<td>✅</td>
+<td>🚧</td>
 </tr>
 <tr>
 <td><code>az</code> (Azerbaijani)</td>
@@ -1790,6 +1790,7 @@
 </table>
 <blockquote>
 <p>💡 If a language is not implemented for <code>pronounce_number</code> or <code>pronounce_ordinal</code> then <a href="https://github.com/rhasspy/unicode-rbnf">unicode-rbnf</a> will be used as a fallback.</p>
+<p>📋 This table is a curated subset. <code>pronounce_number</code> and <code>extract_number</code> dispatch cover ~41 languages in total (including <code>an</code>, <code>ar</code>, <code>ast</code>, <code>bg</code>, <code>el</code>, <code>et</code>, <code>fi</code>, <code>fy</code>, <code>he</code>, <code>hr</code>, <code>id</code>, <code>ms</code>, <code>nb</code>, <code>nn</code>, <code>no</code>, <code>oc</code>, <code>ro</code>, <code>sk</code>, and <code>tr</code>). See <a href="https://github.com/OpenVoiceOS/ovos-number-parser/blob/dev/docs/languages.md"><code>docs/languages.md</code></a> in the repo for the full per-language matrix.</p>
 </blockquote>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -1814,7 +1815,7 @@
 </span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="sd">        number: The number to pronounce.</span>
 </span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="sd">        lang (str): A BCP-47 language code.</span>
 </span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="sd">        places (int): Number of decimal places to express. Default is 3.</span>
-</span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="sd">        short_scale (bool): Use short (True) or long scale (False) for large numbers. Defaults to `True` when left `None`.</span>
+</span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="sd">        short_scale (bool): Use short (True) or long scale (False) for large numbers. When left `None`, the language&#39;s canonical convention applies (e.g. `pt-br` short, `pt-pt` long), not an unconditional short scale.</span>
 </span><span id="__span-2-14"><a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a><span class="sd">        scientific (bool): Pronounce in scientific notation if True.</span>
 </span><span id="__span-2-15"><a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a><span class="sd">        ordinals (bool): Pronounce as an ordinal if True.</span>
 </span><span id="__span-2-16"><a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a><span class="sd">        digits (DigitPronunciation): Digit-reading style (e.g. read digit-by-digit). Honored by pt/mwl.</span>
@@ -1830,6 +1831,7 @@
 </span></code></pre></div>
 <blockquote>
 <p>Most language backends only consume <code>number</code>, <code>places</code>, <code>short_scale</code>, <code>scientific</code>, and <code>ordinals</code>. The <code>digits</code>, <code>gender</code>, and <code>scale</code> arguments (and <code>DigitPronunciation</code>/<code>GrammaticalGender</code>/<code>Scale</code>, importable from <code>ovos_number_parser.util</code>) currently only affect Portuguese (<code>pt</code>) and Mirandese (<code>mwl</code>).</p>
+<p><code>pronounce_number</code> also accepts a Python <code>complex</code> value and speaks it in rectangular <code>a+bi</code> form, e.g. <code>pronounce_number(complex(3, 2), "en")</code> → <code>"three plus two i"</code>. The number itself is composed from the per-language cardinal pronunciation; only the "plus"/"minus"/"i" connectives are language-specific (English used as the default).</p>
 </blockquote>
 <p><strong>Example Usage:</strong></p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kn">from</span> <span class="nn">ovos_number_parser</span> <span class="kn">import</span> <span class="n">pronounce_number</span>
@@ -1945,55 +1947,20 @@
 </span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="n">numbers_to_digits</span><span class="p">(</span><span class="s2">&quot;set a timer for twenty five minutes&quot;</span><span class="p">,</span> <span class="s2">&quot;en&quot;</span><span class="p">)</span>
 </span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="c1"># &quot;set a timer for 25 minutes&quot;</span>
 </span></code></pre></div>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="k">def</span> <span class="nf">numbers_to_digits</span><span class="p">(</span><span class="n">utterance</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">lang</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">scale</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Scale</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span>
-</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>                       <span class="n">ordinals</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">fractions</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>                       <span class="n">scale_words</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span> <span class="o">...</span>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="k">def</span> <span class="nf">numbers_to_digits</span><span class="p">(</span><span class="n">utterance</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">lang</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">scale</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Scale</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span> <span class="o">...</span>
 </span></code></pre></div>
-<p><code>scale</code> (<code>Scale.LONG</code> / <code>Scale.SHORT</code>, from <code>ovos_number_parser.util</code>) only matters for <code>pt</code>/<code>mwl</code>. Hand-written rewriting exists for <code>gl</code>, <code>de</code>, <code>pt</code>, <code>mwl</code>, <code>ru</code>, <code>uk</code>, <code>en</code>, and <code>kab</code> (marked ✅ in the table above); every other language that <code>extract_number</code> supports gets a generic word-span replacement instead (marked 🚧) — it works but is less precise about compound numerals than a hand-written implementation. A language <code>extract_number</code> does not support at all is left unchanged rather than raising.</p>
-<p>Three keyword-only flags tune what counts as a convertible number. Each defaults to the behavior <code>numbers_to_digits</code> has always had, so existing callers see no change:</p>
-<table>
-<thead>
-<tr>
-<th>Flag</th>
-<th>Default</th>
-<th>Effect when flipped</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>ordinals</code></td>
-<td><code>False</code></td>
-<td><code>True</code> also reads ordinal words as values: <code>"the twenty fifth"</code> → <code>"the 25"</code>. Left off, an ordinal word stays a word.</td>
-</tr>
-<tr>
-<td><code>fractions</code></td>
-<td><code>True</code></td>
-<td><code>False</code> keeps a <em>bare</em> fraction word untouched: <code>"half past nine"</code> → <code>"half past 9"</code>. A fraction inside a larger quantity still converts either way: <code>"two and a half hours"</code> → <code>"2.5 hours"</code>.</td>
-</tr>
-<tr>
-<td><code>scale_words</code></td>
-<td><code>True</code></td>
-<td><code>False</code> converts only the count and leaves the scale word alone: <code>"sixty six million years ago"</code> → <code>"66 million years ago"</code>.</td>
-</tr>
-</tbody>
-</table>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="o">&gt;&gt;&gt;</span> <span class="n">numbers_to_digits</span><span class="p">(</span><span class="s2">&quot;a quarter to five&quot;</span><span class="p">,</span> <span class="s2">&quot;en&quot;</span><span class="p">,</span> <span class="n">fractions</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="s1">&#39;a quarter to 5&#39;</span>
-</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="o">&gt;&gt;&gt;</span> <span class="n">numbers_to_digits</span><span class="p">(</span><span class="s2">&quot;sixty six million years ago&quot;</span><span class="p">,</span> <span class="s2">&quot;en&quot;</span><span class="p">,</span> <span class="n">scale_words</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="s1">&#39;66 million years ago&#39;</span>
-</span></code></pre></div>
-<p>Not every language has vocabulary for a flag to suppress — a language whose parser never converted fraction or scale words in the first place already leaves that word untouched, so the flag has nothing to do. <code>ordinals</code> applies uniformly everywhere.</p>
+<p><code>scale</code> (<code>Scale.LONG</code> / <code>Scale.SHORT</code>, from <code>ovos_number_parser.util</code>) only matters for languages that distinguish short/long scale (e.g. <code>pt</code>/<code>mwl</code>). Hand-written rewriting is dispatched for <code>ast</code>, <code>oc</code>, <code>an</code>, <code>fy</code>, <code>gl</code>, <code>de</code>, <code>pt</code>, <code>mwl</code>, <code>ro</code>, <code>bg</code>, <code>hr</code>, <code>ru</code>, <code>sk</code>, <code>id</code>, <code>ms</code>, <code>tr</code>, and <code>uk</code>; every other language (including <code>en</code> and <code>kab</code>) gets a generic word-span replacement instead — it works but is less precise about compound numerals than a hand-written implementation. A language is never raised on: one that has no parser at all is simply left unchanged.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Kabyle (<code>kab</code>) has two coexisting numeral systems: everyday loan-word counting (Arabic-derived above ten, e.g. <code>waḥed u ɛecrin</code> = 21) used for pronunciation, and a formalized pan-Amazigh proposal (invariable tens, descending magnitudes, no connectors) that extraction also recognizes. <code>kab</code> counts only up to 9999 and has no scale or fraction vocabulary, so the <code>scale_words</code>/<code>fractions</code> flags have nothing to suppress there; <code>ordinals</code> still applies.</p>
+<p>Kabyle (<code>kab</code>) has two coexisting numeral systems: everyday loan-word counting (Arabic-derived above ten, e.g. <code>waḥed u ɛecrin</code> = 21) used for pronunciation, and a formalized pan-Amazigh proposal (invariable tens, descending magnitudes, no connectors) that extraction also recognizes. <code>kab</code> counts only up to 9999 and has no scale or fraction vocabulary.</p>
 </div>
 <h3 id="pronounce-a-fraction">Pronounce a Fraction<a class="headerlink" href="#pronounce-a-fraction" title="Permanent link">&para;</a></h3>
-<p>Speak a fraction string such as <code>"3/2"</code>. Only Portuguese (<code>pt</code>) and Mirandese (<code>mwl</code>) are implemented; any other language raises <code>NotImplementedError</code>.</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="kn">from</span> <span class="nn">ovos_number_parser</span> <span class="kn">import</span> <span class="n">pronounce_fraction</span>
-</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>
-</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="n">pronounce_fraction</span><span class="p">(</span><span class="s2">&quot;3/2&quot;</span><span class="p">,</span> <span class="s2">&quot;pt&quot;</span><span class="p">)</span>   <span class="c1"># &quot;três meios&quot;</span>
+<p>Speak a fraction string such as <code>"3/2"</code>. Hand-written pronunciation exists for <code>pt</code>, <code>ast</code>, <code>ca</code>, <code>oc</code>, <code>an</code>, <code>mwl</code>, <code>gl</code>, and <code>ro</code>; every other language routes through a generic fallback rather than raising.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="kn">from</span> <span class="nn">ovos_number_parser</span> <span class="kn">import</span> <span class="n">pronounce_fraction</span>
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="n">pronounce_fraction</span><span class="p">(</span><span class="s2">&quot;3/2&quot;</span><span class="p">,</span> <span class="s2">&quot;pt&quot;</span><span class="p">)</span>   <span class="c1"># &quot;três meios&quot;</span>
 </span></code></pre></div>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="k">def</span> <span class="nf">pronounce_fraction</span><span class="p">(</span><span class="n">fraction_word</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">lang</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">scale</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Scale</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span> <span class="o">...</span>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="k">def</span> <span class="nf">pronounce_fraction</span><span class="p">(</span><span class="n">fraction_word</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">lang</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">scale</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Scale</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span> <span class="o">...</span>
 </span></code></pre></div>
 <h2 id="related-projects">Related Projects<a class="headerlink" href="#related-projects" title="Permanent link">&para;</a></h2>
 <ul>

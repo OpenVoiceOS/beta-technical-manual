@@ -1650,8 +1650,9 @@ to use OVOS engines without knowing anything about the OVOS plugin system.</p>
 </table>
 <blockquote>
 <p>The port is not a built-in default — it is set by the <code>--uri</code> you pass. The
-values above are the conventional ports used in the upstream READMEs and the
-examples below. <code>wyoming-ovos-stt</code> requires <code>--uri</code>; <code>wyoming-ovos-tts</code> and
+values above are the conventional ports used in this manual's examples (the
+upstream READMEs use overlapping values). <code>wyoming-ovos-stt</code> requires <code>--uri</code>;
+<code>wyoming-ovos-tts</code> and
 <code>wyoming-ovos-wakeword</code> default to <code>stdio://</code>.</p>
 </blockquote>
 <p>These three are standalone Wyoming <strong>servers</strong> (console-script entry points), not
@@ -1746,6 +1747,18 @@ entry-point group and re-exposes it over the Wyoming protocol.</p>
 <td>No</td>
 <td><code>False</code></td>
 <td>Enable DEBUG log level</td>
+</tr>
+<tr>
+<td><code>--log-format</code></td>
+<td>No</td>
+<td><code>BASIC_FORMAT</code></td>
+<td>Format string for log messages</td>
+</tr>
+<tr>
+<td><code>--version</code></td>
+<td>No</td>
+<td>—</td>
+<td>Print version and exit</td>
 </tr>
 </tbody>
 </table>
@@ -2011,6 +2024,12 @@ clients select which to activate via the <code>Detect</code> event.</p>
 <td>No</td>
 <td><code>False</code></td>
 <td>Enable DEBUG log level</td>
+</tr>
+<tr>
+<td><code>--log-format</code></td>
+<td>No</td>
+<td><code>BASIC_FORMAT</code></td>
+<td>Format string for log messages</td>
 </tr>
 </tbody>
 </table>

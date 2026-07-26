@@ -1654,7 +1654,7 @@
 </span><span id="__span-1-29"><a id="__codelineno-1-29" name="__codelineno-1-29" href="#__codelineno-1-29"></a>                │   git push; gh pr create → PR to `base_branch` (default master)
 </span><span id="__span-1-30"><a id="__codelineno-1-30" name="__codelineno-1-30" href="#__codelineno-1-30"></a>                │
 </span><span id="__span-1-31"><a id="__codelineno-1-31" name="__codelineno-1-31" href="#__codelineno-1-31"></a>                ├─ [publish_pypi job]   if: publish_pypi
-</span><span id="__span-1-32"><a id="__codelineno-1-32" name="__codelineno-1-32" href="#__codelineno-1-32"></a>                │   python -m build
+</span><span id="__span-1-32"><a id="__codelineno-1-32" name="__codelineno-1-32" href="#__codelineno-1-32"></a>                │   uv build
 </span><span id="__span-1-33"><a id="__codelineno-1-33" name="__codelineno-1-33" href="#__codelineno-1-33"></a>                │   pypa/gh-action-pypi-publish@release/v1 → PyPI as 1.3.0a1 (uses PYPI_TOKEN)
 </span><span id="__span-1-34"><a id="__codelineno-1-34" name="__codelineno-1-34" href="#__codelineno-1-34"></a>                │
 </span><span id="__span-1-35"><a id="__codelineno-1-35" name="__codelineno-1-35" href="#__codelineno-1-35"></a>                └─ [notify job]   if: notify_matrix &amp;&amp; PR merged
@@ -1690,7 +1690,7 @@ to <code>master</code>.</p>
 </span><span id="__span-2-19"><a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a>                │   ncipollo/release-action → GitHub release tag 1.3.0
 </span><span id="__span-2-20"><a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a>                │
 </span><span id="__span-2-21"><a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a>                ├─ [publish_pypi job]   if: publish_pypi
-</span><span id="__span-2-22"><a id="__codelineno-2-22" name="__codelineno-2-22" href="#__codelineno-2-22"></a>                │   python -m build
+</span><span id="__span-2-22"><a id="__codelineno-2-22" name="__codelineno-2-22" href="#__codelineno-2-22"></a>                │   uv build
 </span><span id="__span-2-23"><a id="__codelineno-2-23" name="__codelineno-2-23" href="#__codelineno-2-23"></a>                │   pypa/gh-action-pypi-publish@release/v1 → PyPI as 1.3.0 (uses PYPI_TOKEN)
 </span><span id="__span-2-24"><a id="__codelineno-2-24" name="__codelineno-2-24" href="#__codelineno-2-24"></a>                │
 </span><span id="__span-2-25"><a id="__codelineno-2-25" name="__codelineno-2-25" href="#__codelineno-2-25"></a>                ├─ [sync_dev job]   if: sync_dev
@@ -1731,7 +1731,7 @@ to <code>master</code>.</p>
 </tr>
 </tbody>
 </table>
-<p>These files use <code>&gt;=</code> bounds (e.g. <code>ovos-utils&gt;=0.3.0</code>) so users get the latest compatible version within their chosen channel. <code>downstream-check.yml</code> reads <code>constraints-alpha.txt</code> (default branch <code>main</code>) to compute reverse dependencies; the channel-compatibility check in <code>release-preview.yml</code> reads all three.</p>
+<p>The bounds tighten by channel: <code>constraints-alpha.txt</code> uses pure <code>&gt;=</code> (e.g. <code>ovos-audio&gt;=2.1.1a1</code>) to always pull the newest pre-release; <code>constraints-testing.txt</code> caps at the next major (e.g. <code>ovos-audio&gt;=1.1.0,&lt;2.0.0</code>); <code>constraints-stable.txt</code> caps at the next minor (e.g. <code>ovos-audio&gt;=0.4.0,&lt;0.5.0</code>). Users get the latest compatible version within their chosen channel. <code>downstream-check.yml</code> reads <code>constraints-alpha.txt</code> (default branch <code>main</code>) to compute reverse dependencies; the channel-compatibility check in <code>release-preview.yml</code> reads all three.</p>
 <hr />
 <h2 id="manual-reruns">Manual Reruns<a class="headerlink" href="#manual-reruns" title="Permanent link">&para;</a></h2>
 <p>Both <code>publish-alpha.yml</code> and <code>publish-stable.yml</code> support <code>workflow_dispatch</code>, so the wrapper workflows in your repo can be triggered manually from the GitHub Actions UI. This is useful when:</p>

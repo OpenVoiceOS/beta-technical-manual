@@ -1596,7 +1596,27 @@ time expressions.</p>
 </thead>
 <tbody>
 <tr>
+<td>an</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>ar</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>ast</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
 <td>az</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>bg</td>
 <td>✅</td>
 <td>✅</td>
 </tr>
@@ -1621,6 +1641,11 @@ time expressions.</p>
 <td>✅</td>
 </tr>
 <tr>
+<td>el</td>
+<td>❌</td>
+<td>✅</td>
+</tr>
+<tr>
 <td>en</td>
 <td>✅</td>
 <td>✅</td>
@@ -1631,7 +1656,7 @@ time expressions.</p>
 <td>✅</td>
 </tr>
 <tr>
-<td>gl</td>
+<td>et</td>
 <td>✅</td>
 <td>✅</td>
 </tr>
@@ -1646,7 +1671,32 @@ time expressions.</p>
 <td>✅</td>
 </tr>
 <tr>
+<td>fi</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
 <td>fr</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>fy</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>gl</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>he</td>
+<td>❌</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>hr</td>
 <td>✅</td>
 <td>✅</td>
 </tr>
@@ -1656,12 +1706,42 @@ time expressions.</p>
 <td>✅</td>
 </tr>
 <tr>
+<td>id</td>
+<td>❌</td>
+<td>✅</td>
+</tr>
+<tr>
 <td>it</td>
 <td>✅</td>
 <td>✅</td>
 </tr>
 <tr>
+<td>kab</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>ms</td>
+<td>❌</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>nb/no</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
 <td>nl</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>nn</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>oc</td>
 <td>✅</td>
 <td>✅</td>
 </tr>
@@ -1676,7 +1756,22 @@ time expressions.</p>
 <td>✅</td>
 </tr>
 <tr>
+<td>ro</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
 <td>ru</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>sk</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>sl</td>
 <td>✅</td>
 <td>✅</td>
 </tr>
@@ -1686,8 +1781,8 @@ time expressions.</p>
 <td>✅</td>
 </tr>
 <tr>
-<td>sl</td>
-<td>✅</td>
+<td>tr</td>
+<td>❌</td>
 <td>✅</td>
 </tr>
 <tr>
@@ -1698,7 +1793,7 @@ time expressions.</p>
 </tbody>
 </table>
 <blockquote>
-<p>💡 If a language is not implemented for <code>extract_datetime</code> then <a href="https://dateparser.readthedocs.io/en/latest/">dateparser</a> will be used as a fallback</p>
+<p>💡 If a language is not implemented for <code>extract_datetime</code> then <a href="https://dateparser.readthedocs.io/en/latest/">dateparser</a> will be used as a fallback. Most <code>extract_duration</code> languages are driven by a shared lexicon engine (<code>DURATION_LEXICONS</code> in <code>ovos_date_parser/duration.py</code>), so new languages are added declaratively; <code>ar</code>, <code>ast</code>, <code>kab</code>, <code>fa</code> and <code>sv</code> have standalone extractors instead.</p>
 </blockquote>
 <p><strong>Format</strong></p>
 <table>
@@ -1713,7 +1808,35 @@ time expressions.</p>
 </thead>
 <tbody>
 <tr>
+<td>an</td>
+<td>✅</td>
+<td>✅</td>
+<td>🚧</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>ar</td>
+<td>✅</td>
+<td>✅</td>
+<td>🚧</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>ast</td>
+<td>✅</td>
+<td>✅</td>
+<td>🚧</td>
+<td>✅</td>
+</tr>
+<tr>
 <td>az</td>
+<td>✅</td>
+<td>✅</td>
+<td>🚧</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>bg</td>
 <td>✅</td>
 <td>✅</td>
 <td>🚧</td>
@@ -1748,6 +1871,13 @@ time expressions.</p>
 <td>✅</td>
 </tr>
 <tr>
+<td>el</td>
+<td>✅</td>
+<td>✅</td>
+<td>🚧</td>
+<td>✅</td>
+</tr>
+<tr>
 <td>en</td>
 <td>✅</td>
 <td>✅</td>
@@ -1762,7 +1892,7 @@ time expressions.</p>
 <td>✅</td>
 </tr>
 <tr>
-<td>gl</td>
+<td>et</td>
 <td>✅</td>
 <td>✅</td>
 <td>🚧</td>
@@ -1783,7 +1913,42 @@ time expressions.</p>
 <td>✅</td>
 </tr>
 <tr>
+<td>fi</td>
+<td>✅</td>
+<td>✅</td>
+<td>🚧</td>
+<td>✅</td>
+</tr>
+<tr>
 <td>fr</td>
+<td>✅</td>
+<td>✅</td>
+<td>🚧</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>fy</td>
+<td>✅</td>
+<td>✅</td>
+<td>🚧</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>gl</td>
+<td>✅</td>
+<td>✅</td>
+<td>🚧</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>he</td>
+<td>✅</td>
+<td>✅</td>
+<td>🚧</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>hr</td>
 <td>✅</td>
 <td>✅</td>
 <td>🚧</td>
@@ -1797,6 +1962,13 @@ time expressions.</p>
 <td>✅</td>
 </tr>
 <tr>
+<td>id</td>
+<td>✅</td>
+<td>✅</td>
+<td>🚧</td>
+<td>✅</td>
+</tr>
+<tr>
 <td>it</td>
 <td>✅</td>
 <td>✅</td>
@@ -1804,7 +1976,42 @@ time expressions.</p>
 <td>✅</td>
 </tr>
 <tr>
+<td>kab</td>
+<td>✅</td>
+<td>✅</td>
+<td>🚧</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>ms</td>
+<td>✅</td>
+<td>✅</td>
+<td>🚧</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>nb/no</td>
+<td>✅</td>
+<td>✅</td>
+<td>🚧</td>
+<td>✅</td>
+</tr>
+<tr>
 <td>nl</td>
+<td>✅</td>
+<td>✅</td>
+<td>🚧</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>nn</td>
+<td>✅</td>
+<td>✅</td>
+<td>🚧</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>oc</td>
 <td>✅</td>
 <td>✅</td>
 <td>🚧</td>
@@ -1825,7 +2032,28 @@ time expressions.</p>
 <td>✅</td>
 </tr>
 <tr>
+<td>ro</td>
+<td>✅</td>
+<td>✅</td>
+<td>🚧</td>
+<td>✅</td>
+</tr>
+<tr>
 <td>ru</td>
+<td>✅</td>
+<td>✅</td>
+<td>🚧</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>sk</td>
+<td>✅</td>
+<td>✅</td>
+<td>🚧</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>sl</td>
 <td>✅</td>
 <td>✅</td>
 <td>🚧</td>
@@ -1839,7 +2067,7 @@ time expressions.</p>
 <td>✅</td>
 </tr>
 <tr>
-<td>sl</td>
+<td>tr</td>
 <td>✅</td>
 <td>✅</td>
 <td>🚧</td>
@@ -1880,23 +2108,35 @@ duration expressions like "30 minutes" or "two and a half hours."</p>
 <p class="admonition-title">Note</p>
 <p>The remainder keeps whatever surrounds the extracted duration phrase verbatim, but a connective word ("and" in English, "y" in Spanish) or comma left stranded <em>between two consumed number groups</em> is stripped along with them. A connector that still joins unconsumed text on either side is left alone: <code>extract_duration("two hours and rest and relax", lang="en")</code> returns remainder <code>"and rest and relax"</code>.</p>
 </div>
+<p><code>extract_duration</code> also accepts two keyword-only arguments — but <strong>only for languages on the shared lexicon engine</strong> (the ✅ <code>extract_duration</code> rows above except the standalone <code>ar</code>, <code>ast</code>, <code>kab</code>, <code>fa</code>, <code>sv</code> extractors). Passing them for any other language raises <code>NotImplementedError</code>:</p>
+<ul>
+<li><strong><code>resolution</code></strong> (<code>DurationResolution</code>, default <code>TIMEDELTA</code>) — controls the return type: <code>TIMEDELTA</code> (a <code>timedelta</code>), <code>RELATIVEDELTA</code> (a calendar-accurate <code>dateutil.relativedelta</code>, so "2 months" stays 2 months rather than a fixed number of days), or a single-unit total such as <code>TOTAL_SECONDS</code>/<code>TOTAL_MINUTES</code>/... returned as a <code>float</code>.</li>
+<li><strong><code>replace_token</code></strong> (<code>str</code>, default <code>""</code>) — the string each consumed duration phrase is replaced with in the remainder, marking where it was found instead of stripping it out.</li>
+</ul>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kn">from</span> <span class="nn">ovos_date_parser</span> <span class="kn">import</span> <span class="n">extract_duration</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="kn">from</span> <span class="nn">ovos_date_parser.duration</span> <span class="kn">import</span> <span class="n">DurationResolution</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="n">extract_duration</span><span class="p">(</span><span class="s2">&quot;wait two months&quot;</span><span class="p">,</span> <span class="n">lang</span><span class="o">=</span><span class="s2">&quot;en&quot;</span><span class="p">,</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>                 <span class="n">resolution</span><span class="o">=</span><span class="n">DurationResolution</span><span class="o">.</span><span class="n">RELATIVEDELTA</span><span class="p">)</span>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="c1"># (relativedelta(months=+2), &quot;wait&quot;)</span>
+</span></code></pre></div>
 <h3 id="formatting-time">Formatting Time<a class="headerlink" href="#formatting-time" title="Permanent link">&para;</a></h3>
 <p>Generate a natural-sounding time format suitable for voice or display in different languages, allowing customization for
 speech or written text.</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kn">from</span> <span class="nn">ovos_date_parser</span> <span class="kn">import</span> <span class="n">nice_time</span>
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>
-</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="n">dt</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">(</span><span class="mi">2024</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="n">formatted_time</span> <span class="o">=</span> <span class="n">nice_time</span><span class="p">(</span><span class="n">dt</span><span class="p">,</span> <span class="n">lang</span><span class="o">=</span><span class="s2">&quot;en&quot;</span><span class="p">,</span> <span class="n">speech</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">use_24hour</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="nb">print</span><span class="p">(</span><span class="n">formatted_time</span><span class="p">)</span>  <span class="c1"># &quot;three o&#39;clock&quot;</span>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kn">from</span> <span class="nn">ovos_date_parser</span> <span class="kn">import</span> <span class="n">nice_time</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="n">dt</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">(</span><span class="mi">2024</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="n">formatted_time</span> <span class="o">=</span> <span class="n">nice_time</span><span class="p">(</span><span class="n">dt</span><span class="p">,</span> <span class="n">lang</span><span class="o">=</span><span class="s2">&quot;en&quot;</span><span class="p">,</span> <span class="n">speech</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">use_24hour</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="nb">print</span><span class="p">(</span><span class="n">formatted_time</span><span class="p">)</span>  <span class="c1"># &quot;three o&#39;clock&quot;</span>
 </span></code></pre></div>
 <h3 id="relative-time-descriptions">Relative Time Descriptions<a class="headerlink" href="#relative-time-descriptions" title="Permanent link">&para;</a></h3>
 <p>Create relative phrases for describing dates and times in relation to the current moment or a reference datetime.</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kn">from</span> <span class="nn">ovos_date_parser</span> <span class="kn">import</span> <span class="n">nice_relative_time</span>
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
-</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>
-</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="n">relative_time</span> <span class="o">=</span> <span class="n">nice_relative_time</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span> <span class="o">+</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(),</span> <span class="n">lang</span><span class="o">=</span><span class="s2">&quot;en&quot;</span><span class="p">)</span>
-</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="nb">print</span><span class="p">(</span><span class="n">relative_time</span><span class="p">)</span>  <span class="c1"># &quot;twenty four hours&quot;</span>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kn">from</span> <span class="nn">ovos_date_parser</span> <span class="kn">import</span> <span class="n">nice_relative_time</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="n">relative_time</span> <span class="o">=</span> <span class="n">nice_relative_time</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span> <span class="o">+</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(),</span> <span class="n">lang</span><span class="o">=</span><span class="s2">&quot;en&quot;</span><span class="p">)</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="nb">print</span><span class="p">(</span><span class="n">relative_time</span><span class="p">)</span>  <span class="c1"># &quot;twenty four hours&quot;</span>
 </span></code></pre></div>
 <blockquote>
 <p>The generic implementation speaks the rounded difference as words — <code>"two hours"</code>, <code>"twenty four hours"</code>, <code>"seven days"</code> — using <code>pronounce_number</code> internally (it does not produce words like "tomorrow"). Basque (<code>eu</code>) is the only language with a dedicated <code>nice_relative_time</code> implementation; everything else uses the generic one.</p>
@@ -1905,20 +2145,20 @@ speech or written text.</p>
 <p>A date phrase often refers to a <em>stretch</em> of time rather than a single instant — "July 2026" is a whole month, "the 1980s" a whole decade. <code>extract_timespan</code> returns that stretch as a <strong><code>DateSpan</code></strong>: a half-open <code>[start, end)</code> interval whose endpoints are <strong><code>AstroDate</code></strong> objects — datetime-like points that are not capped at years 1–9999, so BC dates and far-future dates work too. The span's <em>width carries its precision</em>.</p>
 <p><code>nice_span</code> is the inverse: give it a <code>DateSpan</code> and it picks the label that matches the width — a one-day span reads as a date, a month-wide span as a month, a decade as "the 1980s", a century as "the 19<sup>th</sup> century". For English this round-trips: what <code>nice_span</code> writes, <code>extract_timespan</code> reads back.</p>
 <!-- docs-check: skip-next -->
-<div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kn">from</span> <span class="nn">ovos_date_parser</span> <span class="kn">import</span> <span class="n">extract_timespan</span><span class="p">,</span> <span class="n">nice_span</span>
-</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>
-</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="n">span</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">extract_timespan</span><span class="p">(</span><span class="s2">&quot;the 19th century&quot;</span><span class="p">,</span> <span class="s2">&quot;en&quot;</span><span class="p">)</span>
-</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="nb">print</span><span class="p">(</span><span class="n">span</span><span class="o">.</span><span class="n">start</span><span class="p">,</span> <span class="s2">&quot;..&quot;</span><span class="p">,</span> <span class="n">span</span><span class="o">.</span><span class="n">end</span><span class="p">)</span>   <span class="c1"># 1800-01-01 .. 1900-01-01</span>
-</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="nb">print</span><span class="p">(</span><span class="n">nice_span</span><span class="p">(</span><span class="n">span</span><span class="p">,</span> <span class="s2">&quot;en&quot;</span><span class="p">))</span>        <span class="c1"># &#39;the 19th century&#39;</span>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kn">from</span> <span class="nn">ovos_date_parser</span> <span class="kn">import</span> <span class="n">extract_timespan</span><span class="p">,</span> <span class="n">nice_span</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="n">span</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">extract_timespan</span><span class="p">(</span><span class="s2">&quot;the 19th century&quot;</span><span class="p">,</span> <span class="s2">&quot;en&quot;</span><span class="p">)</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="nb">print</span><span class="p">(</span><span class="n">span</span><span class="o">.</span><span class="n">start</span><span class="p">,</span> <span class="s2">&quot;..&quot;</span><span class="p">,</span> <span class="n">span</span><span class="o">.</span><span class="n">end</span><span class="p">)</span>   <span class="c1"># 1800-01-01 .. 1900-01-01</span>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="nb">print</span><span class="p">(</span><span class="n">nice_span</span><span class="p">(</span><span class="n">span</span><span class="p">,</span> <span class="s2">&quot;en&quot;</span><span class="p">))</span>        <span class="c1"># &#39;the 19th century&#39;</span>
 </span></code></pre></div>
 <p>The <code>nice_*</code> datetime formatters also accept an <code>AstroDate</code> directly — it is projected to a regular <code>datetime</code> when it fits, so extracted points can be formatted without unwrapping them first:</p>
 <!-- docs-check: skip-next -->
-<div class="language-python highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kn">from</span> <span class="nn">ovos_date_parser</span> <span class="kn">import</span> <span class="n">nice_date</span><span class="p">,</span> <span class="n">nice_time</span>
-</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="kn">from</span> <span class="nn">ovos_date_parser.astrodate</span> <span class="kn">import</span> <span class="n">AstroDate</span>
-</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>
-</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="n">when</span> <span class="o">=</span> <span class="n">AstroDate</span><span class="p">(</span><span class="mi">2026</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
-</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="n">nice_date</span><span class="p">(</span><span class="n">when</span><span class="p">,</span> <span class="n">lang</span><span class="o">=</span><span class="s2">&quot;en&quot;</span><span class="p">)</span>   <span class="c1"># &quot;tuesday, july twenty-first, twenty twenty six&quot;</span>
-</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="n">nice_time</span><span class="p">(</span><span class="n">when</span><span class="p">,</span> <span class="n">lang</span><span class="o">=</span><span class="s2">&quot;en&quot;</span><span class="p">)</span>   <span class="c1"># &quot;half past three&quot;</span>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="kn">from</span> <span class="nn">ovos_date_parser</span> <span class="kn">import</span> <span class="n">nice_date</span><span class="p">,</span> <span class="n">nice_time</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="kn">from</span> <span class="nn">ovos_date_parser.astrodate</span> <span class="kn">import</span> <span class="n">AstroDate</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="n">when</span> <span class="o">=</span> <span class="n">AstroDate</span><span class="p">(</span><span class="mi">2026</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="n">nice_date</span><span class="p">(</span><span class="n">when</span><span class="p">,</span> <span class="n">lang</span><span class="o">=</span><span class="s2">&quot;en&quot;</span><span class="p">)</span>   <span class="c1"># &quot;tuesday, july twenty-first, twenty twenty six&quot;</span>
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="n">nice_time</span><span class="p">(</span><span class="n">when</span><span class="p">,</span> <span class="n">lang</span><span class="o">=</span><span class="s2">&quot;en&quot;</span><span class="p">)</span>   <span class="c1"># &quot;half past three&quot;</span>
 </span></code></pre></div>
 <p><code>nice_span</code> gives a sensible label in every formatting language, but the round-trip guarantee (label back through <code>extract_timespan</code> to the same span) currently holds for English only; matching span grammars for other languages live in the <code>chronologia</code> reckoning core the package builds on.</p>
 <div class="admonition note">

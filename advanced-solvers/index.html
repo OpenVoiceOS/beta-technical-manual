@@ -1643,7 +1643,7 @@ Returns <code>None</code> on API error.</p>
 <p>Resolves a free-form user reply to one entry in a fixed list of options — the engine behind a
 skill's <code>ask_selection()</code>. The reference implementation,
 <a href="https://github.com/OpenVoiceOS/ovos-option-matcher-fuzzy-plugin"><code>ovos-option-matcher-fuzzy-plugin</code></a>
-(<code>FuzzyOptionMatcherPlugin</code>), resolves in order: fuzzy match (rapidfuzz <code>WRatio</code>) when the score
+(<code>FuzzyOptionMatcherPlugin</code>), resolves in order: fuzzy match via ovos-utils <code>match_one</code> (difflib <code>SequenceMatcher</code> ratio) when the score
 reaches <code>min_conf</code> (config key, default <code>0.65</code>), then locale-aware "last option" vocab, then
 ordinal/cardinal vocab (longest match wins), then a numeric fallback via <code>ovos-number-parser</code>,
 returning <code>None</code> if nothing matches.</p>

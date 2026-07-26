@@ -3766,7 +3766,7 @@
 <tr>
 <td><code>publish_pypi</code></td>
 <td><code>publish_pypi: true</code> + <code>bump_version</code> succeeded</td>
-<td>Builds with <code>python -m build</code>, publishes via <code>pypa/gh-action-pypi-publish@release/v1</code> (uses <code>PYPI_TOKEN</code>)</td>
+<td>Builds with <code>uv build</code>, publishes via <code>pypa/gh-action-pypi-publish@release/v1</code> (uses <code>PYPI_TOKEN</code>)</td>
 </tr>
 <tr>
 <td><code>notify</code></td>
@@ -4090,7 +4090,7 @@
 <tbody>
 <tr>
 <td><code>build_tests</code></td>
-<td>Matrix job. Runs <code>python -m build</code>, installs the resulting wheel (with extras if specified), optionally runs <code>pytest</code>. Saves per-version result as an artifact.</td>
+<td>Matrix job. Runs <code>uv build</code>, installs the resulting wheel (with extras if specified), optionally runs <code>pytest</code>. Saves per-version result as an artifact.</td>
 </tr>
 <tr>
 <td><code>post_build_report</code></td>
@@ -4493,7 +4493,7 @@
 </tr>
 <tr>
 <td>Setup Python</td>
-<td><code>actions/setup-python@v5</code></td>
+<td><code>actions/setup-python@v6</code></td>
 </tr>
 <tr>
 <td>Install System Dependencies</td>
@@ -5165,7 +5165,7 @@
 </tr>
 <tr>
 <td>Setup Python</td>
-<td><code>actions/setup-python@v5</code></td>
+<td><code>actions/setup-python@v6</code></td>
 </tr>
 <tr>
 <td>Run release check</td>
@@ -5423,7 +5423,7 @@
 </tr>
 <tr>
 <td>Setup Python</td>
-<td><code>actions/setup-python@v5</code></td>
+<td><code>actions/setup-python@v6</code></td>
 </tr>
 <tr>
 <td>Run skill check</td>
@@ -6412,7 +6412,7 @@
 </ol>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Checkout gh-automations scripts</span>
 </span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a><span class="w">  </span><span class="nt">if</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">github.event_name == &#39;pull_request&#39;</span>
-</span><span id="__span-23-3"><a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a><span class="w">  </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/checkout@v6</span>
+</span><span id="__span-23-3"><a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a><span class="w">  </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/checkout@v7</span>
 </span><span id="__span-23-4"><a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a><span class="w">  </span><span class="nt">with</span><span class="p">:</span>
 </span><span id="__span-23-5"><a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a><span class="w">    </span><span class="nt">repository</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">OpenVoiceOS/gh-automations</span>
 </span><span id="__span-23-6"><a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a><span class="w">    </span><span class="nt">ref</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dev</span>

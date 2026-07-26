@@ -1822,6 +1822,31 @@ clients.</p>
 return to the idle/home screen for that many seconds. <code>override_animations=True</code>
 disables platform transition animations for the page.</p>
 </div>
+<div class="admonition warning">
+<p class="admonition-title">Upcoming — a wider template surface in the standalone package</p>
+<p>The templates above are what today's <code>ovos_bus_client.apis.gui.GUIInterface</code> ships. The
+forward-looking standalone <strong><code>ovos-gui-api-client</code></strong> <code>GUIInterface</code> (the package
+<a href="https://github.com/OpenVoiceOS/ovos-workshop/pull/420">ovos-workshop#420</a> rebinds
+<code>self.gui</code> to) adds more <code>SYSTEM_*</code> helpers: <code>show_list</code>, <code>show_grid</code>, <code>show_table</code>,
+<code>show_weather</code>, <code>show_clock</code>, <code>show_timer</code>, <code>show_map</code>, <code>show_media_player</code>, <code>show_face</code>,
+and the two voice-first dialogue helpers <code>show_confirm(question, ...)</code> and
+<code>show_select(items, prompt=None, ...)</code>. These are <strong>not</strong> on a released <code>ovos-workshop</code>;
+treat them as the template set new skills will target once the rebind lands.</p>
+<p>Two behavioural notes for that package:</p>
+<ul>
+<li><strong><code>fill</code> vocabulary changes.</strong> The standalone <code>FillMode</code> enum uses <code>"fit"</code> / <code>"crop"</code> /
+  <code>"stretch"</code>, not the <code>"PreserveAspectFit"</code> / <code>"PreserveAspectCrop"</code> / <code>"Stretch"</code> values
+  the installed <code>ovos_bus_client</code> <code>show_image()</code> expects. The value set flips when
+  <code>self.gui</code> rebinds.</li>
+<li><strong>Dialogue helpers round-trip.</strong> These are visual accompaniments to a spoken question —
+  the skill must still ask and handle the voice response, and must not block on a GUI
+  event. Where the display layer supports a touch shortcut, <code>show_confirm</code> fires
+  <code>&lt;skill_id&gt;.confirm.response</code> with <code>{"confirmed": bool}</code> and <code>show_select</code> fires
+  <code>&lt;skill_id&gt;.select.response</code> with <code>{"value": ...}</code>. The interface also auto-registers an
+  inbound <code>&lt;skill_id&gt;.set</code> handler so the display layer can push value changes back into
+  the skill's session data.</li>
+</ul>
+</div>
 <hr />
 <h2 id="custom-pages">Custom pages<a class="headerlink" href="#custom-pages" title="Permanent link">&para;</a></h2>
 <p>Templates cover common cases, but you can also ship your own pages. Place a

@@ -1050,6 +1050,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Bus Events">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#base64-audio-stt-over-the-bus" class="md-nav__link">
+    <span class="md-ellipsis">
+      Base64 audio STT over the bus
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1569,6 +1584,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Bus Events">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#base64-audio-stt-over-the-bus" class="md-nav__link">
+    <span class="md-ellipsis">
+      Base64 audio STT over the bus
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1717,9 +1747,34 @@ useful events for downstream services:</p>
 </tbody>
 </table>
 <p>It also reacts to inbound commands: <code>ovos.listener.sleep</code> (legacy: <code>recognizer_loop:sleep</code>)
-suspends capture, <code>recognizer_loop:wake_up</code> resumes it, plus <code>recognizer_loop:record_stop</code>
-and <code>recognizer_loop:state.get</code>. The full table lives in the bus-message spec
-(<code>message_spec/dinkum.md</code>).</p>
+suspends capture, <code>recognizer_loop:wake_up</code> resumes it, plus <code>recognizer_loop:record_stop</code>,
+<code>recognizer_loop:state.get</code> (read the current mode/state) and <code>recognizer_loop:state.set</code>
+(change the listening mode/state at runtime — send <code>state</code> and/or <code>mode</code> in <code>message.data</code>;
+the handler replies with <code>recognizer_loop:state</code> just like <code>state.get</code>). The full table lives
+in the bus-message spec (<code>message_spec/dinkum.md</code>).</p>
+<h3 id="base64-audio-stt-over-the-bus">Base64 audio STT over the bus<a class="headerlink" href="#base64-audio-stt-over-the-bus" title="Permanent link">&para;</a></h3>
+<p>Remote clients without a local mic (e.g. HiveMind) can push audio to the listener for
+transcription via two inbound commands. Both take <code>{"audio": &lt;base64 str&gt;}</code> in
+<code>message.data</code>, with optional <code>lang</code>, <code>sample_rate</code>, and <code>sample_width</code> (defaulting to the
+STT/loop values):</p>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Behaviour</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>recognizer_loop:b64_transcribe</code></td>
+<td>Transcribes the audio and returns the result on the message response as <code>{"transcriptions": [...], "lang"}</code> — a pure STT call that emits no utterance event</td>
+</tr>
+<tr>
+<td><code>recognizer_loop:b64_audio</code></td>
+<td>Transcribes and, if the result clears <code>min_stt_confidence</code>, emits the normal <code>ovos.utterance.handle</code> (<code>recognizer_loop:utterance</code>) event as if the audio had come from the mic; otherwise emits <code>recognizer_loop:speech.recognition.unknown</code></td>
+</tr>
+</tbody>
+</table>
 <div class="admonition note">
 <p class="admonition-title">Sleep is device-scoped, not session-scoped</p>
 <p><code>ovos.listener.sleep</code> rides a session like every other message, but sleep mode is a

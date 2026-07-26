@@ -763,6 +763,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Step 2: Install RaspOVOS Image">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#download-the-raspovos-image" class="md-nav__link">
+    <span class="md-ellipsis">
+      Download the raspOVOS image
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1540,6 +1555,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Step 2: Install RaspOVOS Image">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#download-the-raspovos-image" class="md-nav__link">
+    <span class="md-ellipsis">
+      Download the raspOVOS image
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1837,6 +1867,21 @@ lives and how to edit it.</p>
 </ul>
 <hr />
 <h2 id="step-2-install-raspovos-image">Step 2: Install RaspOVOS Image<a class="headerlink" href="#step-2-install-raspovos-image" title="Permanent link">&para;</a></h2>
+<h3 id="download-the-raspovos-image">Download the raspOVOS image<a class="headerlink" href="#download-the-raspovos-image" title="Permanent link">&para;</a></h3>
+<p>Grab the latest image from the
+<a href="https://github.com/OpenVoiceOS/raspOVOS/releases">raspOVOS Releases page</a>. Images are named
+<code>raspOVOS-&lt;lang&gt;-bookworm-arm64-&lt;variant&gt;.img.xz</code> — pick the one matching your language and one of
+three <strong>variants</strong>, which trade on-device processing against the Pi tier you chose in Step 1:</p>
+<ul>
+<li><strong><code>lite</code></strong> — delegates both STT and TTS to public OVOS servers with a minimal intent pipeline;
+  the lightest option and the one that <em>might</em> run on a <strong>Pi 3</strong>.</li>
+<li><strong><code>hybrid</code></strong> — runs TTS on-device but still uses public STT servers, with a balanced intent
+  pipeline; recommended for a <strong>Pi 4</strong>.</li>
+<li><strong><code>offline</code></strong> — runs both STT and TTS on-device with the full intent pipeline; needs at least
+  <strong>4 GB RAM (Pi &#8536;, 8 GB preferred)</strong>.</li>
+</ul>
+<p>So a Pi 3 user should pick <code>lite</code>, and a Pi 5 user who wants to stay fully offline should pick
+<code>offline</code>. (<code>DEV</code>-prefixed releases are untranslated base images for developers — skip them.)</p>
 <ol>
 <li>
 <p><strong>Download and Install Raspberry Pi Imager</strong></p>
@@ -2008,6 +2053,11 @@ to reprint the full list.</p>
 <ul>
 <li><code>ls-skills</code> — list the <code>skill_id</code> of every installed skill.</li>
 <li><code>ls-stt</code> / <code>ls-tts</code> / <code>ls-ww</code> / <code>ls-tx</code> — list installed <a href="../stt-plugins/">STT</a> / <a href="../tts-plugins/">TTS</a> / wake-word / <a href="../translation-plugins/">translation</a> plugins.</li>
+</ul>
+<p><strong>Sound/audio:</strong></p>
+<ul>
+<li><code>ovos-audio-diagnostics</code> — print the active sound server, sinks, and default output device.</li>
+<li><code>ovos-audio-setup</code> — interactive audio configuration menu (handy after wiring up a HAT).</li>
 </ul>
 <p><strong>Logs and status:</strong></p>
 <ul>

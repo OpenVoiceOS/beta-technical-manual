@@ -1068,6 +1068,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Speaker Verification">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#config-keys" class="md-nav__link">
+    <span class="md-ellipsis">
+      Config keys
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1479,6 +1494,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Speaker Verification">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#config-keys" class="md-nav__link">
+    <span class="md-ellipsis">
+      Config keys
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1605,12 +1635,71 @@
 </span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">    </span><span class="nt">&quot;ww_verifiers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 </span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">      </span><span class="nt">&quot;ovos-ww-verifier-speaker&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 </span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="w">        </span><span class="nt">&quot;model&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;wespeaker-resnet34&quot;</span><span class="p">,</span>
-</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="w">        </span><span class="nt">&quot;threshold&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.45</span>
-</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="w">      </span><span class="p">}</span>
-</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="w">    </span><span class="p">}</span>
-</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="w">  </span><span class="p">}</span>
-</span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="p">}</span>
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="w">        </span><span class="nt">&quot;threshold&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.45</span><span class="p">,</span>
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="w">        </span><span class="nt">&quot;fail_open&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="w">      </span><span class="p">}</span>
+</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="w">  </span><span class="p">}</span>
+</span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a><span class="p">}</span>
 </span></code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title">Fail-open is the default</p>
+<p><code>fail_open</code> defaults to <strong><code>true</code></strong>: an installed-but-unenrolled plugin accepts <em>every</em> activation. Set <code>"fail_open": false</code> to reject all detections until at least one profile is enrolled.</p>
+</div>
+<h3 id="config-keys">Config keys<a class="headerlink" href="#config-keys" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Type</th>
+<th>Default</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>model</code></td>
+<td>str</td>
+<td><code>wespeaker-resnet34</code></td>
+<td>speakeronnx model alias or <code>.onnx</code> path</td>
+</tr>
+<tr>
+<td><code>threshold</code></td>
+<td>float</td>
+<td><code>0.45</code></td>
+<td>Global cosine-similarity acceptance threshold</td>
+</tr>
+<tr>
+<td><code>fail_open</code></td>
+<td>bool</td>
+<td><code>true</code></td>
+<td>Accept all activations when no profiles are enrolled</td>
+</tr>
+<tr>
+<td><code>per_profile_thresholds</code></td>
+<td>dict</td>
+<td><code>{}</code></td>
+<td>Per-name threshold overrides, e.g. <code>{"Alice": 0.5}</code></td>
+</tr>
+<tr>
+<td><code>profiles_path</code></td>
+<td>str</td>
+<td>XDG data dir</td>
+<td>Override the profile-storage location</td>
+</tr>
+<tr>
+<td><code>sample_rate</code> / <code>sample_width</code> / <code>channels</code></td>
+<td>int</td>
+<td><code>16000</code> / <code>2</code> / <code>1</code></td>
+<td>PCM format of the incoming audio chunk</td>
+</tr>
+</tbody>
+</table>
+<p>The <code>model</code> key accepts any alias from <a href="https://github.com/TigreGotico/speakeronnx"><code>speakeronnx</code></a>'s model registry — <code>wespeaker-resnet34</code> (default), <code>wespeaker-ecapa512</code>, <code>campplus</code>, <code>titanet-small</code>/<code>titanet-large</code>, <code>eres2net</code>, <code>redimnet-b2</code>, and others — or a direct <code>.onnx</code> path.</p>
+<div class="admonition note">
+<p class="admonition-title">Threshold is model-specific</p>
+<p>The <code>threshold</code> does <strong>not</strong> transfer between models. Cosine-similarity scales differ enormously by architecture — the same enrolled-vs-guest pair scored ~0.95 on <code>titanet-small</code> but ~0.17 on <code>campplus</code>. The default <code>0.45</code> is calibrated only for <code>wespeaker-resnet34</code>; if you change <code>model</code>, you must re-tune <code>threshold</code>.</p>
+</div>
 <p>Use case: household authorization — a shared-wake-word deployment where each registered user's voice profile allows or denies activation.</p>
 <hr />
 <h2 id="precise-onnx-plugin">Precise-ONNX Plugin<a class="headerlink" href="#precise-onnx-plugin" title="Permanent link">&para;</a></h2>

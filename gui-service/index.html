@@ -1827,8 +1827,10 @@ share one global display stack.</p>
 this socket carries the same authority as the bus itself. There is no authentication and no
 origin check. On top of that, there's no TLS option either: unlike
 <a href="../bus-service/"><code>ovos-messagebus</code></a> (which can serve <code>wss://</code> itself), <code>ovos-gui</code>'s Tornado
-WebSocket server has no working <code>gui_websocket.ssl</code> server path — verified against the
-<code>ovos-gui</code> source, there is no config key that turns this socket into <code>wss://</code>.</p>
+WebSocket server has no working <code>gui_websocket.ssl</code> server path. The <code>gui_websocket.ssl</code>
+key does exist in the default config (value <code>false</code>), but it is a no-op: <code>create_gui_service</code>
+in <code>ovos_gui/bus.py</code> reads only <code>route</code>, <code>base_port</code>, and <code>host</code>, so nothing turns this
+socket into <code>wss://</code>.</p>
 <p>It ships bound to <code>127.0.0.1</code> (localhost only) — keep it that way unless a remote display
 client genuinely needs it, and never widen <code>gui_websocket.host</code> to <code>0.0.0.0</code> or expose port
 <code>18181</code> beyond a trusted network. If a display really must run on another

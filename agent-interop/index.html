@@ -1823,7 +1823,7 @@ satellite or a remote voice client instead, see <a href="../hivemind-agents/">Hi
 <tbody>
 <tr>
 <td>stdio (subprocess)</td>
-<td><code>"transport": "stdio", "command": "uvx", "args": [...]</code></td>
+<td><code>"transport": "stdio", "command": "uvx", "args": [...]</code>, optional <code>"env": {...}</code></td>
 </tr>
 <tr>
 <td>SSE</td>
@@ -1835,6 +1835,12 @@ satellite or a remote voice client instead, see <a href="../hivemind-agents/">Hi
 </tr>
 </tbody>
 </table>
+<p>For stdio, <code>env</code> is an optional dict of extra environment variables passed to
+<code>StdioServerParameters</code>, letting you inject secrets or <code>PATH</code> into the subprocess
+MCP server. Both <code>ovos-mcp-toolbox</code> and <code>ovos-utcp-toolbox</code> also accept a
+per-instance <code>toolbox_id</code> (defaults <code>ovos-mcp-toolbox</code> / <code>ovos-utcp-toolbox</code>) so
+multiple servers of the same type can run side by side, and a <code>timeout</code> (default
+30 seconds per call) to tune slow tools.</p>
 <h3 id="utcp-ovos-utcp-toolbox">UTCP (<code>ovos-utcp-toolbox</code>)<a class="headerlink" href="#utcp-ovos-utcp-toolbox" title="Permanent link">&para;</a></h3>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="p">{</span>
 </span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">  </span><span class="nt">&quot;toolboxes&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;ovos-utcp-toolbox&quot;</span><span class="p">],</span>
@@ -1848,6 +1854,11 @@ satellite or a remote voice client instead, see <a href="../hivemind-agents/">Hi
 </span><span id="__span-10-10"><a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a><span class="p">}</span>
 </span></code></pre></div>
 <p>A background asyncio event loop keeps sessions alive between tool calls. Each server's JSON Schema is translated to a Pydantic model at discovery time so the LLM receives the actual input schema.</p>
+<p>Tool discovery degrades gracefully: if the <code>mcp</code>/<code>utcp</code> extra is missing, or the
+configured server cannot be reached, <code>list_tools()</code> logs a <code>LOG.warning</code> and
+returns an empty list rather than crashing the agent loop. A misconfigured
+toolbox therefore loads zero tools silently — check the logs when expected tools
+are absent.</p>
 <div class="admonition note">
 <p class="admonition-title"><code>ovos-tool-adapters</code> and the Persona Server's own MCP/UTCP bridge</p>
 <p>Both <code>MCPToolBox</code> and <code>UTCPToolBox</code> (from <code>ovos-tool-adapters</code>) and the Persona Server's tool

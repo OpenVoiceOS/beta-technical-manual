@@ -2006,7 +2006,7 @@
 <td><code>convert_K_to_RGB</code></td>
 <td><code>(colour_temperature: int) -&gt; sRGBAColor</code></td>
 <td><code>sRGBAColor</code></td>
-<td>Converts a color temperature in Kelvin (1 000–40 000 K) to an sRGB color. Algorithm by Tanner Helland.</td>
+<td>Converts a color temperature in Kelvin (1 000–40 000 K) to an sRGB color. Algorithm by Tanner Helland. Raises <code>ValueError</code> for temperatures outside the 1 000–40 000 K range, so callers should guard input.</td>
 </tr>
 <tr>
 <td><code>get_contrasting_black_or_white</code></td>
@@ -2047,7 +2047,7 @@
 </tbody>
 </table>
 <h3 id="colormatcher-class-ovos_color_parsermatchingpy"><code>ColorMatcher</code> class (<code>ovos_color_parser/matching.py</code>)<a class="headerlink" href="#colormatcher-class-ovos_color_parsermatchingpy" title="Permanent link">&para;</a></h3>
-<p>Thread-safe class that owns the Aho-Corasick automata. Automata are class-level dicts (<code>_color_automatons</code>, <code>_object_automatons</code>) keyed by language code and built lazily.</p>
+<p>Thread-safe class that owns the <code>SubstringMatcher</code> automata. Can be used statically (backed by the per-language class-level caches <code>_color_automatons</code>/<code>_object_automatons</code>, built lazily) or as an instance with a fixed language and optional custom vocabularies for isolated, injectable matching.</p>
 <table>
 <thead>
 <tr>
@@ -2057,6 +2057,21 @@
 </tr>
 </thead>
 <tbody>
+<tr>
+<td><code>__init__</code></td>
+<td><code>(lang: str = "en", color_palettes: Optional[Iterable[Dict[str, str]]] = None, object_colors: Optional[Dict[str, str]] = None)</code></td>
+<td>Construct an instance bound to <code>lang</code>. Pass <code>color_palettes</code>/<code>object_colors</code> to inject custom vocabularies (defaults load the bundled JSON word lists for <code>lang</code>).</td>
+</tr>
+<tr>
+<td><code>match_colors</code></td>
+<td><code>(description: str, strategy: MatchStrategy = DAMERAU_LEVENSHTEIN_SIMILARITY, fuzzy: bool = False) -&gt; List[Tuple[HLSColor, float]]</code></td>
+<td>Instance method: match <code>description</code> against this instance's color vocabulary. Exact-first; the fuzzy scan runs only when <code>fuzzy=True</code> and exact spotting finds nothing.</td>
+</tr>
+<tr>
+<td><code>match_objects</code></td>
+<td><code>(description: str, strategy: MatchStrategy = DAMERAU_LEVENSHTEIN_SIMILARITY) -&gt; List[Tuple[HLSColor, float]]</code></td>
+<td>Instance method: match <code>description</code> against this instance's object-color vocabulary.</td>
+</tr>
 <tr>
 <td><code>load_color_automaton</code></td>
 <td><code>(cls, lang: str) -&gt; SubstringMatcher</code></td>

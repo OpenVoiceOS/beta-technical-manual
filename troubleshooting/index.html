@@ -1453,6 +1453,11 @@ the messagebus and keeps an in-memory ring buffer of everything it sees. The bro
 <li>pause/resume capture and sort newest/oldest first</li>
 <li>export the captured buffer as JSON/JSONL for later inspection</li>
 <li>inject an arbitrary message onto the bus from the UI (the same trick as <code>ovos-say-to</code>, but visual)</li>
+<li>group the live stream into a <strong>timeline</strong> — per-session, expandable traces with category badges, so
+  you can follow a single utterance across Stages 2–5 as one interaction instead of scanning the raw feed</li>
+<li>type an utterance into the <strong>chat panel</strong> (<code>POST /api/chat</code>) — it emits a <code>recognizer_loop:utterance</code>
+  with a stable session ID (so multi-turn/converse works), letting you replay a failing interaction
+  deterministically without speaking</li>
 </ul>
 <p>There is also a zero-install mode: the UI is a single static page that can open a WebSocket straight
 to <code>ws://&lt;device&gt;:8181/core</code> with no server component at all — useful for a one-off look without
@@ -1515,7 +1520,8 @@ public internet.</p>
 </div>
 <h3 id="a-concrete-walkthrough">A concrete walkthrough<a class="headerlink" href="#a-concrete-walkthrough" title="Permanent link">&para;</a></h3>
 <ol>
-<li>Start <code>ovos-busmon</code> (it will keep retrying the bus connection until the device is reachable).</li>
+<li>Start <code>ovos-busmon</code> — it comes up even if the bus is unreachable, but does <strong>not</strong> auto-retry the
+   connection, so start it once the OVOS device is up (or restart busmon after the bus is running).</li>
 <li>Open <code>http://127.0.0.1:8005</code> in a browser and log in with the configured credentials.</li>
 <li>Speak (or trigger) an utterance on the OVOS device.</li>
 <li>Filter by <code>recognizer_loop:*</code> — the first hit is the raw utterance leaving the listener
@@ -1545,8 +1551,8 @@ reconnect on their own with a backing-off retry (5 s → 60 s cap), so a bus res
 require restarting every client by hand — see <a href="../bus-service/#bus-restart-reconnect-behavior">Bus restart / reconnect
 behavior</a> for exactly what to expect while they
 recover. In <code>ovos-busmon</code>,
-this stage is trivially visible: if the bus is down, busmon's own connection retries forever and the
-stream stays empty.</p>
+this stage is trivially visible: if the bus was down when busmon started, its connection never came
+up (busmon does not auto-retry) and the stream stays empty — restart busmon once the bus is back.</p>
 <div class="admonition tip">
 <p class="admonition-title">Nothing wrong with the mic yet</p>
 <p>This stage says nothing about audio hardware — it only confirms the messagebus itself accepts

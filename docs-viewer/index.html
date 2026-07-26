@@ -1540,6 +1540,16 @@
 </li>
 </ol>
 <p>Downloaded sources are cached on disk. Subsequent launches skip re-downloading (except <code>live-status</code>, which is always refreshed). There is <strong>no <code>--force</code> CLI flag</strong>: forcing a re-download is only possible from Python, by calling <code>download_docs(force=True)</code> (or deleting the cache directory before launching).</p>
+<div class="admonition note">
+<p class="admonition-title">The first launch of <em>any</em> key downloads <em>every</em> source</p>
+<p>Regardless of which key you pass, <code>Documentation.__init__</code> calls <code>download_docs()</code>,
+which loops over <strong>all</strong> sources — the three zip archives (<code>technical</code>, <code>messages</code>,
+<code>hivemind</code>), the <code>live-status</code>/<code>raspOVOS</code>/<code>installer</code> READMEs, and all ~49 skill
+READMEs via <code>download_skills()</code> — and downloads each one that is not already cached.
+So <code>ovos-docs-viewer technical</code> on a clean machine populates the entire <code>ovos_docs/</code>
+cache, not just the <code>technical</code> tree. The very first run is therefore slow and needs
+network access to all sources; later runs only re-fetch <code>live-status</code>.</p>
+</div>
 <h2 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">&para;</a></h2>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pip<span class="w"> </span>install<span class="w"> </span>ovos-docs-viewer
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>

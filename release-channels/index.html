@@ -1748,6 +1748,14 @@ STT/TTS/translation and an unauthenticated bus. See
 <a href="../privacy-security/">Privacy &amp; Security</a> for the actual network surface and how to
 harden it.</p>
 </div>
+<div class="admonition warning">
+<p class="admonition-title">Stable is currently a stale snapshot — Testing is recommended today</p>
+<p>Formal codename releases have not landed yet, so <code>constraints-stable.txt</code> reflects an
+older, unmaintained snapshot (ovos-core <code>1.3.1</code>) rather than the most polished or actively
+supported versions. Until the first codename release is cut, <strong>Testing</strong> (ovos-core <code>2.1.1</code>)
+is the recommended channel for most distros and users, matching upstream guidance in
+<a href="https://github.com/OpenVoiceOS/ovos-releases">ovos-releases</a>.</p>
+</div>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>ovos-core<span class="o">[</span>mycroft<span class="o">]</span><span class="w"> </span>-c<span class="w"> </span>https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-stable.txt
 </span></code></pre></div>
 <h3 id="2-testing-channel-feature-updates">2. Testing Channel (Feature Updates)<a class="headerlink" href="#2-testing-channel-feature-updates" title="Permanent link">&para;</a></h3>
@@ -1918,7 +1926,8 @@ instead. See <a href="../skill-installer/">Skill Installer</a>.</p>
 <ul>
 <li>OVOS is <strong>fully modularized</strong>, with each major service in its own repository, so you install only what you need.</li>
 <li>All packages follow <a href="https://semver.org/">Semantic Versioning (SemVer)</a>, so you can rely on versioning to understand stability and compatibility.</li>
-<li>Constraints files are a <strong>stable standard</strong> for bounding system versions since the <a href="https://github.com/OpenVoiceOS/ovos-releases">ovos-releases 1.0.0</a> milestone.</li>
+<li>Constraints files hosted in <a href="https://github.com/OpenVoiceOS/ovos-releases">ovos-releases</a> are the current mechanism for bounding system versions across the channels. Formal codename releases are still pending — see the note under the Stable channel.</li>
+<li>Once <strong>codename releases</strong> begin, packagers should pin to the versioned (tagged) constraints file URL rather than the <code>main</code> branch, so a package doesn't silently pick up constraint changes after its QA cycle is done.</li>
 </ul>
 <div class="admonition note">
 <p class="admonition-title">Channel constraints are ranges, not exact pins</p>

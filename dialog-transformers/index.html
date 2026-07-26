@@ -1509,7 +1509,10 @@
 <h3 id="ovos-dialog-normalizer-plugin"><strong>OVOS Dialog Normalizer Plugin</strong><a class="headerlink" href="#ovos-dialog-normalizer-plugin" title="Permanent link">&para;</a></h3>
 <ul>
 <li>
-<p><strong>Purpose</strong>: Prepares text for TTS by expanding contractions and converting digits to words, ensuring clearer pronunciation.</p>
+<p><strong>Purpose</strong>: Prepares text for TTS by expanding contractions, expanding title abbreviations (<code>Dr.</code>→<code>Doctor</code>, <code>Mr.</code>→<code>Mister</code>, <code>Prof.</code>→<code>Professor</code>), normalizing currency (<code>€</code>→<code>euros</code>), and converting digits to spoken words, ensuring clearer pronunciation.</p>
+</li>
+<li>
+<p><strong>Multilingual coverage</strong>: Contractions are English-only, while title abbreviations are defined per language (en/ca/es/pt/gl/fr/it/nl/de). Numbers are pronounced via <code>ovos-number-parser</code>, falling back to <code>unicode-rbnf</code> for languages it doesn't yet cover. A few language-specific rules exist too (e.g. <code>ºC</code>→<code>graos centígrados</code> for Galician).</p>
 </li>
 <li>
 <p><strong>Example</strong>:</p>

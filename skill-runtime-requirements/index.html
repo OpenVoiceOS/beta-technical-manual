@@ -1854,14 +1854,16 @@ report ready. Configure what it waits for through <strong>that skill's own setti
 </span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">    </span><span class="s2">&quot;network_skills&quot;</span><span class="p">,</span>
 </span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">    </span><span class="s2">&quot;internet_skills&quot;</span><span class="p">,</span>
 </span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">    </span><span class="s2">&quot;audio&quot;</span><span class="p">,</span>
-</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">    </span><span class="s2">&quot;speech&quot;</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">    </span><span class="s2">&quot;voice&quot;</span>
 </span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">  </span><span class="p">]</span>
 </span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="p">}</span>
 </span></code></pre></div>
 <p>This is the skill's <code>settings.json</code> (see <a href="../skill-settings/">Skill Settings</a>),
 not <code>mycroft.conf</code>. In this example, boot-finished is configured to wait for
-network and internet connectivity, plus the audio and speech services, before
-emitting <code>mycroft.ready</code>. Each setup can customize this list based on its
+network and internet connectivity, plus the audio and voice services, before
+emitting <code>mycroft.ready</code>. (The listener reports readiness under <code>voice</code>, not
+<code>speech</code> — there is no <code>speech</code> service key, so waiting on it would never
+resolve.) Each setup can customize this list based on its
 needs — an offline install won't want to wait on internet-dependent skills, a
 headless server won't want to wait on an audio stack, etc. If <code>ready_settings</code>
 is not set, the skill defaults to waiting for <code>skills</code> plus every currently
@@ -1920,6 +1922,12 @@ installed skill_id.</p>
 waiting for <code>skills</code> plus every currently installed skill_id. Because OVOS
 supports dynamic skill loading (skills can load and unload after startup),
 timing can impact anything that depends on the <code>mycroft.ready</code> message.</p>
+<p>⚠️ <strong>Troubleshooting</strong>: A readiness check polls every 3s and gives up after
+60s; if any service is still not ready it sleeps 5s and re-emits
+<code>mycroft.ready.check</code>, retrying indefinitely. So an unsatisfiable
+<code>ready_settings</code> entry — a wrong service key (e.g. <code>speech</code> instead of
+<code>voice</code>) or a service that never starts — makes the skill loop forever and
+never emit <code>mycroft.ready</code>.</p>
 </blockquote>
 <hr />
 <h2 id="deferred-loading-before-load-gating-only">Deferred Loading (before-load gating only)<a class="headerlink" href="#deferred-loading-before-load-gating-only" title="Permanent link">&para;</a></h2>

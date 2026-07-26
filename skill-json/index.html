@@ -1863,7 +1863,9 @@ as recommended, not mandatory.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>In practice, real-world <code>skill.json</code> files vary quite a bit — some use
-<code>title</code> instead of <code>name</code>, and older, auto-generated <code>skill.json</code> files
+<code>title</code> instead of <code>name</code>, some carry a <code>category</code> string (e.g. <code>"Daily"</code>,
+<code>"Information"</code>, <code>"Configuration"</code>) that the skill store uses to group
+listings, and older, auto-generated <code>skill.json</code> files
 (from the legacy skills-manager tooling) carry many more fields
 (<code>version</code>, <code>url</code>, <code>requirements</code>, <code>platforms</code>, and more). Stick to the
 fields above for new skills; anything extra is ignored by <code>ovos-workshop</code>.</p>

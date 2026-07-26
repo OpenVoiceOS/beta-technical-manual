@@ -1710,10 +1710,13 @@ swaps in better defaults, it is not required just to switch languages.</p>
 </li>
 </ul>
 <h3 id="translation-progress">📊 Translation Progress<a class="headerlink" href="#translation-progress" title="Permanent link">&para;</a></h3>
-<p>Translation progress is tracked at:<br />
-👉 <a href="https://openvoiceos.github.io/lang-support-tracker">https://openvoiceos.github.io/lang-support-tracker</a></p>
-<p>The tracker provides daily updates and displays all languages that have reached at least 25% translation coverage.</p>
+<p>OVOS Localize scans skill data and exports a language × skill coverage matrix to
+<a href="https://openvoiceos.github.io/ovos-localize/data/coverage.json"><code>data/coverage.json</code></a>,
+refreshed alongside the translation app — this is the current source of translation progress.</p>
 <blockquote>
+<p>⚠️ The older <a href="https://github.com/OpenVoiceOS/lang-support-tracker">lang-support-tracker</a>
+is a <strong>frozen GitLocalize-era snapshot</strong> (superseded by OVOS Localize); its percentages
+are no longer updated and should not be treated as current.</p>
 <p>❗ If your language is missing from <a href="https://openvoiceos.github.io/ovos-localize/">OVOS Localize</a>, <a href="https://github.com/OpenVoiceOS/lang-support-tracker/issues">open an issue</a> to request it. Currently, languages must be added manually.</p>
 </blockquote>
 <p>See <strong><a href="../ovos-localize-tutorial/">Contribute Translations with OVOS Localize</a></strong> for the step-by-step translator guide.</p>
@@ -2062,14 +2065,9 @@ Whisper) by hand until a dedicated recommendation is added.</p>
 <p><a href="../ovos-localize-tutorial/">Translator Tutorial</a></p>
 </li>
 </ul>
-<p>Translation stats for each language are also available in:</p>
+<p>Live per-language translation stats are available from OVOS Localize:</p>
 <ul>
-<li>
-<p><a href="https://openvoiceos.github.io/lang-support-tracker/tx_info/translate_status_pt-PT.md">Markdown summaries (e.g., <code>translate_status_pt-PT.md</code>)</a></p>
-</li>
-<li>
-<p><a href="https://openvoiceos.github.io/lang-support-tracker/tx_info/pt-PT.json">JSON format (e.g., <code>pt-PT.json</code>)</a></p>
-</li>
+<li><a href="https://openvoiceos.github.io/ovos-localize/data/coverage.json"><code>data/coverage.json</code></a> — language × skill coverage matrix with display names</li>
 </ul>
 <hr />
 <h3 id="2-test-in-real-world-usage">2. <strong>Test in Real-World Usage</strong><a class="headerlink" href="#2-test-in-real-world-usage" title="Permanent link">&para;</a></h3>

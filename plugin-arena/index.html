@@ -1495,13 +1495,14 @@ same plugin under a different config counts as a different fighter — and once 
 is merged, the arena's sweep runs it against the pinned datasets and it appears on the boards.</p>
 <ol>
 <li>Add a JSON file at <code>registry/competitors/&lt;modality&gt;/&lt;competitor-id&gt;.json</code>, where <code>&lt;modality&gt;</code>
-   is one of <code>stt</code>, <code>tts</code>, <code>ww</code>, <code>vad</code>, <code>intent</code>. Required fields are <code>competitor_id</code>, <code>modality</code>
+   is one of <code>stt</code>, <code>tts</code>, <code>wake_word</code>, <code>vad</code>, <code>intent</code>, <code>intent_keyword</code>, <code>intent_template</code>
+   (the three intent leagues are separate competitor directories). Required fields are <code>competitor_id</code>, <code>modality</code>
    and <code>config</code> (a valid <code>mycroft.conf</code> fragment); non-intent fighters also need <code>plugin</code>, the OPM
    entry-point name. Intent fighters describe an ordered <code>config.intents.pipeline</code> of
    <code>&lt;plugin&gt;-&lt;tier&gt;</code> stages — a single stage benchmarks one engine, several stages make an
    ensemble — and <code>plugin</code> is derived automatically for the single-stage case.</li>
 <li>Validate locally with <code>uv run pytest tests/test_registry.py</code>, which checks every competitor
-   file against the schema. CI runs the same validation via <code>arena/cli.py validate-registry</code>.</li>
+   file against the schema. CI runs the same test under the reusable <code>build_tests</code> job (<code>test_path: tests/</code>).</li>
 <li>Open a pull request. The sweep and the boards do the rest, and the fighter gets an embeddable
    rank badge for its README.</li>
 </ol>
@@ -1570,6 +1571,7 @@ footprint classes, lives in
 <ul>
 <li>Standard ELO formula (<code>arena/elo.py</code>): <code>K_FACTOR = 32</code> for new competitors (<code>&lt; 30</code> battles), <code>K_FACTOR_VETERAN = 16</code> once past the <code>VETERAN_THRESHOLD = 30</code> battles.</li>
 <li>The ELO seed is derived deterministically from the published benchmark predictions; human votes (GitHub issues) replay in issue-number order on top of it.</li>
+<li>Automatic benchmark-seeded votes are down-weighted relative to human votes: <code>AUTO_K_DIVISOR = 4.0</code>, so auto votes carry a quarter of the K-weight of a human vote (<code>k_factor(battles, auto=True)</code> divides K by 4; the Bradley-Terry path uses the matching <code>BT_AUTO_WEIGHT = 1/4</code>).</li>
 <li>Standings are fully recomputable from public data alone — the leaderboard JSON committed by <code>tally.yml</code> is a cache, not the source of truth.</li>
 </ul>
 <hr />
@@ -1607,8 +1609,8 @@ footprint classes, lives in
 <hr />
 <h2 id="registry-validation-scoring-and-provenance">Registry Validation, Scoring, and Provenance<a class="headerlink" href="#registry-validation-scoring-and-provenance" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>Registry validation</strong> — <code>arena/cli.py validate-registry</code> strictly validates every competitor/dataset JSON file under <code>registry/</code> and exits non-zero on the first error, so a malformed registry entry is caught in CI (a dedicated <code>validate_registry</code> job runs it) before it can silently break assembly.</li>
-<li><strong>Canonical WER normalization</strong> — STT scoring passes both the reference and the hypothesis text through a single, versioned normalization convention (<code>arena.metrics.normalize_transcript</code>, tracked as <code>WER_NORMALIZER_VERSION</code>) before tokenizing: Unicode NFKC normalization, casefolding, punctuation stripped down to letters/digits/whitespace, and every run of digits spelled out digit-by-digit ("123" → "one two three") so numeral formatting differences between runners do not skew the score. <code>row_wer</code> prefers recomputing from raw reference/prediction text over a stored precomputed WER, falling back to the stored value only when raw text is unavailable.</li>
+<li><strong>Registry validation</strong> — <code>tests/test_registry.py</code> validates every competitor/dataset JSON file under <code>registry/</code> against the schema, so a malformed registry entry is caught in CI (under the reusable <code>build_tests</code> job) before it can silently break assembly. Run it locally with <code>uv run pytest tests/test_registry.py</code>.</li>
+<li><strong>WER normalization</strong> — STT scoring keeps normalization deliberately minimal: <code>_wer_components</code> (<code>arena/metrics.py</code>) lowercases both reference and hypothesis and splits on whitespace, then computes a word-level Levenshtein distance. <code>row_wer</code> returns a row's stored <code>wer</code> when present and only recomputes from <code>reference_text</code>/<code>prediction</code> when it is <code>None</code>. The recompute-first behaviour belongs instead to <code>row_wer_components</code> (used for WER bootstrap CIs), which recomputes word errors and reference word count from raw text and falls back to the stored <code>wer</code> (with unit word count) only when raw text is unavailable.</li>
 <li><strong>Version-blend guard</strong> — if a competitor's rows span more than one <code>plugin_version</code>, the board build logs a warning rather than silently averaging scores across versions.</li>
 <li><strong>Reproducible predictions provenance</strong> — <code>assemble</code> pins every HuggingFace predictions source to an immutable commit SHA (the dataset registry entry's <code>predictions_revision</code> when set, else <code>--revision</code>) and records the resolved mapping on each benchmark board (<code>predictions_revisions</code>) and in the top-level index, so a third party can re-fetch the exact predictions that produced any published score.</li>
 </ul>

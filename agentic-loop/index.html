@@ -1725,6 +1725,7 @@ the engine config (each defaults if unset):</p>
 </span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="p">})</span>
 </span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="n">messages</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">build_conversation_context</span><span class="p">(</span><span class="n">utterance</span><span class="p">,</span> <span class="n">session_id</span><span class="o">=</span><span class="s2">&quot;s1&quot;</span><span class="p">)</span>
 </span></code></pre></div>
+<p>It also registers as an OPM plugin — entry point <code>ovos-agents-md-context-plugin</code> under the <code>opm.agents.memory</code> group — so it can be wired declaratively from persona JSON, the same way loops and toolboxes are.</p>
 <hr />
 <h2 id="security-notes">Security Notes<a class="headerlink" href="#security-notes" title="Permanent link">&para;</a></h2>
 <ul>
