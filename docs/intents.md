@@ -182,6 +182,8 @@ from ovos_workshop.decorators import intent_handler
 
 The IntentBuilder is then passed the name of the Intent as a string, followed by one or more parameters that correspond with one of our `.voc` or `.rx` files.
 
+*Excerpt — the decorator on its own (a complete skill using it appears further below):*
+
 ```python
 @intent_handler(IntentBuilder('IntentName')
                               .require('Potato')
@@ -265,7 +267,7 @@ One of the most common mistakes when getting started with Skills is that the voc
 
 #### I am unable to match against the utterance string
 
-The utterance string received from the speech-to-text engine is received all lowercase. As such any string matching you are trying to do should also be converted to lowercase. For example:
+The utterance string received from the speech-to-text engine is received all lowercase. As such any string matching you are trying to do should also be converted to lowercase. For example (a method excerpt from inside a skill class):
 
 ```python
     @intent_handler(IntentBuilder('Example').require('Example').require('Intent'))
@@ -488,7 +490,7 @@ The `intent_handler()` _decorator_ can be used to create an examples based inten
 
 You may also see the `@intent_file_handler` decorator used in Skills. This has been deprecated and you can now replace any instance of this with the simpler `@intent_handler` decorator.
 
-From our first example above, we created a file `locale/en-us/what.is.a.tomato.intent`. To register an intent using this file we can use:
+From our first example above, we created a file `locale/en-us/what.is.a.tomato.intent`. To register an intent using this file we can use the following decorator (shown on its own; place it above a handler method inside your skill class):
 
 ```python
 @intent_handler('what.is.a.tomato.intent')
