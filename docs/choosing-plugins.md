@@ -21,8 +21,10 @@
 
     ```json
     {
-      "microphone": { "module": "ovos-microphone-plugin-alsa" },
-      "listener": { "VAD": { "module": "ovos-vad-plugin-silero" } },
+      "listener": {
+        "microphone": { "module": "ovos-microphone-plugin-alsa" },
+        "VAD": { "module": "ovos-vad-plugin-silero" }
+      },
       "stt": { "module": "ovos-stt-plugin-onnx-asr" },
       "tts": { "module": "ovos-tts-plugin-phoonnx" }
     }
