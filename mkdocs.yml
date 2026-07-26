@@ -206,6 +206,7 @@ nav:
       - Testing Reference (ovoscope): ovoscope-overview.md
   - Plugin Ecosystem:
       - Index & Overview: plugins-index.md
+      - Choosing Plugins (compare & recommend): choosing-plugins.md
       - Plugin Arena (benchmarks): plugin-arena.md
       - Speech & Audio:
           - Microphone: mic-plugins.md

@@ -7,6 +7,11 @@ Every plugin registers under an **entry-point group** (the `opm.*` name below) s
 [Plugin Manager](plugin-manager.md) can find it. Pick a type to see the available plugins,
 their config, and install commands.
 
+!!! tip "Too many choices? Start with **[Choosing Plugins](choosing-plugins.md)**"
+    A side-by-side comparison of every plugin type — the recommended default, each option's
+    maturity, offline/cloud, and licence, plus a copy-paste fully-offline stack and
+    scenario-based picks. This page is the *map of types*; that page helps you *pick one*.
+
 ## Speech & Audio
 
 !!! tip "Recommended offline defaults"

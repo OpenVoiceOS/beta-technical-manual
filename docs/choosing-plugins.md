@@ -1,0 +1,186 @@
+# Choosing Plugins — Comparison & Recommendations
+
+!!! abstract "In a nutshell"
+    OVOS ships **dozens** of interchangeable plugins for each job — a great thing, but
+    it's easy to feel lost picking one. This page is the shortcut: for every plugin type
+    it names a **recommended default**, then a small **comparison table** so you can see at
+    a glance which option fits your situation (offline vs cloud, hardware budget, licence,
+    maturity). Want the full config and every option? Each section links to its detailed
+    catalog. New here? Start with the [Plugins Index](plugins-index.md).
+
+!!! tip "Don't want to choose? Use the recommended offline stack"
+    Every ⭐ below is a sensible, **fully-offline, on-device** default. Drop this into
+    `~/.config/mycroft/mycroft.conf` and you have a complete private stack — no cloud, no
+    account:
+
+    ```json
+    {
+      "microphone": { "module": "ovos-microphone-plugin-alsa" },
+      "listener": { "VAD": { "module": "ovos-vad-plugin-silero" } },
+      "stt": { "module": "ovos-stt-plugin-onnx-asr" },
+      "tts": { "module": "ovos-tts-plugin-phoonnx" }
+    }
+    ```
+
+    The wake word already defaults to **precise-onnx** (`hey_mycroft`) — see
+    [Wake Word](#wake-word) to change the phrase. Or run
+    `ovos-config autoconfigure -l en-us --offline` to set language + these defaults for you.
+
+**How to read the tables.** ⭐ marks the recommended default. **Maturity** rates
+[repository health](maturity.md) (PoC → Alpha → Beta → Stable → Mature), *not* how good the
+plugin is — a Beta default can be the right pick. **Offline** means it runs on-device with
+no network; **online** calls a cloud service (separate terms); **hybrid** talks to a server
+you can self-host. Pick the row whose *"choose this if"* matches you, then open the catalog
+page for its config.
+
+---
+
+## Speech input
+
+### Microphone
+
+Captures audio. See the [Microphone catalog](mic-plugins.md).
+
+| Plugin | Maturity | Runs | Choose this if |
+|---|---|---|---|
+| ⭐ **ovos-microphone-plugin-alsa** | Stable | offline | Linux/ALSA hardware — lowest latency, best performance |
+| ovos-microphone-plugin-sounddevice | Stable | offline | Cross-platform (Linux/macOS/Windows) capture |
+| ovos-microphone-plugin-pyaudio | Beta | offline | You want PortAudio bindings directly, no `speech_recognition` dep |
+| ovos-microphone-plugin-files | Stable | offline | Automated testing — feed audio files instead of a live mic |
+| ovos-microphone-plugin-socket | Beta | network | A remote/networked mic over a socket (proof-of-concept) |
+
+### VAD (Voice Activity Detection)
+
+Detects when speech starts/stops. See the [VAD catalog](vad-plugins.md).
+
+| Plugin | Maturity | Runs | Choose this if |
+|---|---|---|---|
+| ⭐ **ovos-vad-plugin-silero** | Stable | offline | Best accuracy, esp. in noise; small neural model ships in the package (16 kHz) |
+| ovos-vad-plugin-webrtcvad | Stable | offline | Lighter CPU-only fallback with tunable aggressiveness |
+| ovos-vad-plugin-noise | Stable | offline | Lightest possible — energy threshold, no model at all |
+
+### Wake Word
+
+Listens for the activation phrase. See the [Wake Word catalog](wake-word-plugins.md).
+
+| Plugin | Maturity | Runs | Choose this if |
+|---|---|---|---|
+| ⭐ **ovos-ww-plugin-precise-onnx** | Beta | offline | The default `hey_mycroft` engine — accurate, lightweight always-on ONNX |
+| ovos-ww-plugin-openWakeWord | Stable | offline | Better accuracy than Vosk from open pre-trained models, no training |
+| ovos-ww-plugin-vosk | Stable | offline | Fastest setup for an arbitrary phrase, no model training (good for dev) |
+| ovos-ww-plugin-wakewordlab | Alpha | offline | Very compact (~240 KB) models with a Silero pre-filter (install from source) |
+| ovos-ww-plugin-wakeforge | Alpha | offline | Train a custom detector from a single phrase (install from source) |
+| ovos-ww-plugin-server | Alpha | online | Thin satellite offloading detection to a remote ww-server |
+| ovos-ww-plugin-precise-lite | Deprecated | offline | You already have a TFLite Precise model — superseded by precise-onnx |
+
+### STT (Speech-to-Text)
+
+Transcribes speech to text. See the [STT catalog](stt-plugins.md) (15 plugins; top picks shown).
+
+| Plugin | Maturity | Runs | Choose this if |
+|---|---|---|---|
+| ⭐ **ovos-stt-plugin-onnx-asr** | Beta | offline | Recommended default: ONNX Runtime, no PyTorch, int8 weights for low-RAM devices |
+| ovos-stt-plugin-fasterwhisper | Stable | offline | Whisper accuracy via CTranslate2 int8/float16, CPU or GPU |
+| ovos-stt-plugin-whispercpp | Stable | offline | Lightweight Whisper via whisper.cpp (tiny/small models) on modest CPUs |
+| ovos-stt-plugin-nemo | Stable | offline | NVIDIA NeMo Conformer models, GPU strongly recommended |
+| ovos-stt-plugin-vosk | Stable | offline | Long-established lightweight engine from a local model folder |
+| ovos-stt-server-plugin | Stable | hybrid | Offload STT to your own self-hosted OVOS STT server |
+| ovos-stt-plugin-azure | Stable | online | No on-device compute budget; accept cloud STT (Microsoft terms) |
+
+---
+
+## Speech output
+
+### TTS (Text-to-Speech)
+
+Turns replies into speech. See the [TTS catalog](tts-plugins.md) (17 plugins; top picks shown).
+
+| Plugin | Maturity | Runs | Choose this if |
+|---|---|---|---|
+| ⭐ **ovos-tts-plugin-phoonnx** | Stable | offline | Recommended default: small multilingual ONNX voices, auto model fetch |
+| ovos-tts-plugin-coqui | Stable | offline | Higher-quality neural synthesis, heavier local compute |
+| ovos-tts-plugin-espeakNG | Mature | offline | Very broad language coverage, tiny footprint, robotic voice |
+| ovos-tts-plugin-pico | Mature | offline | Lightest possible offline voice on constrained hardware |
+| ovos-tts-plugin-server | Mature | hybrid | Offload synthesis to a self-hosted/community OVOS/Piper server |
+| ovos-tts-plugin-edge-tts | Stable | online | Free high-quality Microsoft Edge cloud voices, no subscription |
+| ovos-tts-plugin-polly | Mature | online | A specific commercial cloud voice (Amazon Polly) |
+
+!!! note "Licence watch"
+    Most speech plugins are Apache-2.0, but a few differ — e.g. **espeakNG is GPL-3.0**, and
+    cloud engines (Azure, Polly, …) add the vendor's separate terms. The catalog pages carry
+    the exact licence per plugin.
+
+### G2P (Grapheme-to-Phoneme)
+
+Text → phonemes, mostly for mouth/visemes. See the [G2P catalog](g2p-plugins.md).
+
+| Plugin | Maturity | Runs | Choose this if |
+|---|---|---|---|
+| ⭐ **ovos-g2p-plugin-mimic** | Mature | offline | The stable, PyPI-published default (ARPA phonemes via Mimic 1) |
+| ovos-g2p-plugin-espeak | PoC | offline | Broad multilingual IPA (wraps espeak); Hatchery-only, not on PyPI |
+
+---
+
+## Language
+
+### Translation & Language Detection
+
+Detect a text's language and translate. See the [Translation catalog](translation-plugins.md).
+
+| Plugin | Maturity | Runs | Choose this if |
+|---|---|---|---|
+| ⭐ **ovos-translate-plugin-nllb** | Stable | offline | Recommended offline translation (NLLB-200 via CTranslate2) |
+| ⭐ **ovos-lang-detector-fasttext-plugin** | Stable | offline | Recommended offline detection, pairs with NLLB |
+| ovos-lang-detector-classics-plugin | Stable | offline | Offline detection voting across classic detectors |
+| ovos-translate-plugin-server | Stable | hybrid | Self-/community-hosted translate server with public failover |
+| ovos-google-translate-plugin | Stable | online | Free cloud translate+detect when coverage beats keeping text local |
+
+---
+
+## Media playback
+
+Backend players for [ovos-media](ovos-media.md). See the [Media catalog](media-plugins.md).
+
+| Plugin | Maturity | Runs | Choose this if |
+|---|---|---|---|
+| ⭐ **ovos-audio-plugin-mpv** | Stable | offline | General-purpose local audio+video; works on both media backends |
+| ovos-media-plugin-mplayer | Stable | offline | MPlayer as the local audio+video backend |
+| ovos-media-plugin-ffplay | Stable | offline | Lightweight ffplay audio-only playback |
+| ovos-media-plugin-vlc | Beta | offline | Headless VLC audio+video, ovos-media-ready package |
+| ovos-media-plugin-spotify | Stable | online | Spotify Connect streaming |
+| ovos-media-plugin-chromecast | Stable | online | Cast audio+video to a Chromecast on the network |
+
+---
+
+## Text & audio transformers
+
+Hook into the text / audio / dialog / TTS stages. See the [Transformers catalog](transformer-plugins.md).
+
+| Plugin | Maturity | Runs | Choose this if |
+|---|---|---|---|
+| ⭐ **ovos-utterance-normalizer** | Stable | offline | Standard utterance cleanup before intent parsing (the default) |
+| ovos-utterance-corrections-plugin | Stable | offline | Correct STT outputs for better intent matching |
+| ovos-utterance-plugin-cancel | Stable | offline | Cancel an utterance ending in "nevermind that" |
+| ovos-dialog-normalizer-plugin | Stable | offline | Normalize dialog text before TTS |
+| ovos-bidirectional-translation-plugin | Stable | hybrid | Understand + speak in *any* language via paired transformers |
+| ovos-audio-transformer-plugin-ggwave | Mature | offline | Data-over-sound encode/decode on the audio path |
+
+---
+
+## Pick by scenario
+
+- **Fully offline / private (Raspberry Pi or mini-PC):** the ⭐ stack — alsa mic, silero VAD,
+  precise-onnx wake word, onnx-asr STT, phoonnx TTS. Everything runs on-device.
+- **Lowest-power / tiny device:** swap TTS to **pico** or **espeakNG**, VAD to **webrtcvad**,
+  STT to **vosk** (small model). Accept lower accuracy for a smaller footprint.
+- **Best accuracy, GPU available:** STT **fasterwhisper** (large model) or **nemo**; TTS
+  **coqui**. Still fully offline.
+- **Thin satellite / shared backend:** offload with the `*-server` plugins (STT server, TTS
+  server, ww-server) so the heavy models live on one machine.
+- **Cloud is acceptable (coverage/quality first):** STT **azure**, TTS **edge-tts**/**polly**,
+  translation **google** — each adds the vendor's separate terms.
+
+Maturity here is a **repository-health** signal, not a quality score — see the
+[Maturity scale](maturity.md). For discovery/loading internals see the
+[Plugin Manager](plugin-manager.md); for head-to-head benchmark data see the
+[Plugin Arena](plugin-arena.md).
