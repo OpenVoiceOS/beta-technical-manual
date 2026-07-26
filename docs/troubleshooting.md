@@ -60,8 +60,23 @@ reference.
 All the stages in this guide talk to each other over the [messagebus](bus-service.md): the listener
 emits an utterance message, the intent service emits a match, the skill emits a `speak`, and so on.
 **[`ovos-busmon`](https://github.com/OpenVoiceOS/ovos-busmon)** is a small web app that connects to
-the bus as a client and streams every one of those messages live to a browser tab — it turns six
-separate log files into one filterable, searchable timeline.
+the bus as a client and streams every one of those messages live to a browser tab, in one
+filterable, searchable timeline.
+
+!!! note "Bus messages, not logs"
+    `ovos-busmon` shows **live bus messages only** — it does **not** parse the log files. It
+    complements the log tooling ([`ovos-logs`](cli-tools.md#reading-the-logs-ovos-logs) and the
+    per-service `*.log` files), it doesn't replace it. For a terminal-based **log** viewer, the
+    community project [ovos-tui-client](https://github.com/andlo/ovos-tui-client) reads the OVOS
+    logs directly.
+
+!!! tip "Zero-install demo"
+    A hosted static build is available at
+    [openvoiceos.github.io/ovos-busmon](https://openvoiceos.github.io/ovos-busmon/) — no `pip
+    install` needed. Because it's the **static-page** build (not the FastAPI-backed server), the
+    browser connects straight to the bus itself, so it only works when the **browser runs on the
+    same machine as OVOS**. For remote or multi-device use, run the full `pip install ovos-busmon`
+    server below.
 
 Internally, it is a FastAPI + WebSocket/SSE service that opens an `ovos-bus-client` connection to
 the messagebus and keeps an in-memory ring buffer of everything it sees. The browser UI lets you:
