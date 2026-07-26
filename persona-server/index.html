@@ -1040,6 +1040,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="HTTP API Endpoints">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#memory-rag-embeddings" class="md-nav__link">
+    <span class="md-ellipsis">
+      Memory, RAG &amp; embeddings
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1396,6 +1411,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="HTTP API Endpoints">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#memory-rag-embeddings" class="md-nav__link">
+    <span class="md-ellipsis">
+      Memory, RAG &amp; embeddings
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1618,12 +1648,71 @@ endpoints, a UTCP tool surface, and vendor-compatible routers for <strong>Anthro
 <td>*</td>
 <td>A2A agent endpoint (mounted when <code>--a2a-base-url</code> is set and the <code>a2a</code> extra is installed)</td>
 </tr>
+<tr>
+<td><code>/openai/v1/files</code></td>
+<td>POST/GET/DELETE</td>
+<td>OpenAI <strong>Files</strong> API (<code>{id}</code>, <code>{id}/content</code>) — mounted when the <code>rag</code> extra is installed</td>
+</tr>
+<tr>
+<td><code>/openai/v1/vector_stores</code></td>
+<td>POST/GET/DELETE</td>
+<td>OpenAI <strong>Vector Stores</strong> API (<code>{id}</code>, <code>{id}/files</code>, <code>{id}/search</code>) — mounted when the <code>rag</code> extra is installed</td>
+</tr>
 </tbody>
 </table>
 <p>The legacy unprefixed paths <code>/v1/...</code> and <code>/api/...</code> (OpenAI and Ollama respectively) remain
 mounted as deprecated aliases of <code>/openai/v1/...</code> and <code>/ollama/api/...</code>; responses on these
 legacy paths carry <code>Deprecation</code> and <code>Link</code> headers pointing at the canonical path.</p>
 <p>There is no authentication; put the server behind a reverse proxy if it is exposed.</p>
+<h3 id="memory-rag-embeddings">Memory, RAG &amp; embeddings<a class="headerlink" href="#memory-rag-embeddings" title="Permanent link">&para;</a></h3>
+<p>By default the server is a <strong>stateless passthrough</strong> — the client owns conversation
+state. Two modes are selected by the <code>CHAT_MEMORY</code> environment variable:</p>
+<ul>
+<li><code>off</code> (default) — <em>backend</em> mode: stateless; the client drives the Files /
+  Vector-Stores endpoints itself. Use this for multi-user / drop-in-OpenAI
+  deployments (a shared server memory would leak across users).</li>
+<li><code>transparent</code> — single-user <em>hosted agent</em> mode: the server keys history by
+  session (the OpenAI <code>user</code> field, else a default session) and folds the persona's
+  <code>memory_module</code> into every turn.</li>
+</ul>
+<p>The embeddings endpoints and vector-store search share one embeddings backend,
+configured via environment variables:</p>
+<table>
+<thead>
+<tr>
+<th>Env var</th>
+<th>Default</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>TEXT_EMBEDDINGS_PLUGIN</code></td>
+<td><code>ovos-gguf-embeddings-plugin</code></td>
+<td>Text-embeddings plugin</td>
+</tr>
+<tr>
+<td><code>EMBEDDINGS_DB_PLUGIN</code></td>
+<td><code>ovos-chromadb-embeddings-plugin</code></td>
+<td>Vector store backend</td>
+</tr>
+<tr>
+<td><code>EMBEDDINGS_MODEL</code> / <code>EMBEDDINGS_URL</code> / <code>EMBEDDINGS_KEY</code></td>
+<td>unset</td>
+<td>Model + remote embeddings endpoint/key</td>
+</tr>
+<tr>
+<td><code>FILE_STORAGE_PATH</code></td>
+<td><code>~/.cache/ovos-persona-server/files</code></td>
+<td>Where uploaded files are stored</td>
+</tr>
+<tr>
+<td><code>FILE_STORAGE_STRATEGY</code></td>
+<td><code>disk</code></td>
+<td><code>disk</code>, <code>database</code>, or <code>both</code></td>
+</tr>
+</tbody>
+</table>
 <hr />
 <h2 id="openai-compatible-example">OpenAI-Compatible Example<a class="headerlink" href="#openai-compatible-example" title="Permanent link">&para;</a></h2>
 <p>Point the <code>openai</code> SDK at the <code>/openai/v1</code> path:</p>
