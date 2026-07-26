@@ -398,6 +398,13 @@ def reset_everything(self, message):
 
 ## GUI / Homescreen Decorators
 
+!!! warning "Homescreens are being deprecated"
+    Skill-provided home/idle screens are on their way out: in the GUI rework the
+    idle screen becomes a job for the display backend rather than a skill (see
+    [Home Screen](homescreen.md) and [Screens on OVOS Today](gui-status.md)). The
+    decorators below still work on the legacy stack but should not be treated as
+    the forward-looking way to build a home screen.
+
 ### `@homescreen_app`
 
 `homescreen_app` — `ovos_workshop/decorators/__init__.py`
@@ -455,6 +462,13 @@ The method is registered as `{skill_id}.get_data` on the bus.
 ---
 
 ## OCP Decorators
+
+!!! warning "OCP skills are being deprecated"
+    Skills that implement playback with these decorators (`OVOSCommonPlaybackSkill`)
+    are on a deprecation path: content search/playback is moving to
+    [`ovos-media`](ovos-media.md) **media provider plugins** (`media_providers`).
+    The decorators below still work today, but new integrations should target the
+    media-provider API rather than an OCP skill.
 
 OCP (OpenVoiceOS [Common Play](ocp-pipeline.md)) decorators are used with `OVOSCommonPlaybackSkill` and `OVOSGameSkill`.
 
