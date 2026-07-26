@@ -16,6 +16,7 @@ from ovos_workshop.decorators import (
     adds_context,
     removes_context,
     homescreen_app,
+    resting_screen_handler,
     killable_intent,
     killable_event,
 )
@@ -409,6 +410,23 @@ from ovos_workshop.decorators import homescreen_app
 @homescreen_app(icon="my_app.png", name="My App")
 def launch_app(self, message):
     self.gui.show_page("main.qml")
+
+```
+
+### `@resting_screen_handler`
+
+`resting_screen_handler` — `ovos_workshop/decorators/__init__.py`
+
+Register a method as a **resting screen** (idle screen) handler, optionally shown
+when the device enters idle mode. `name` is the name the resting screen registers
+under. See [Home Screen](homescreen.md) for the full idle-screen walkthrough.
+
+```python
+from ovos_workshop.decorators import resting_screen_handler
+
+@resting_screen_handler(name="Clock")
+def show_clock(self, message):
+    self.gui.show_page("clock.qml")
 
 ```
 
