@@ -2131,6 +2131,7 @@ case we would assume the user expects OVOS to respond with today's weather for t
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="kn">from</span> <span class="nn">ovos_workshop.decorators</span> <span class="kn">import</span> <span class="n">intent_handler</span>
 </span></code></pre></div>
 <p>The IntentBuilder is then passed the name of the Intent as a string, followed by one or more parameters that correspond with one of our <code>.voc</code> or <code>.rx</code> files.</p>
+<p><em>Excerpt — the decorator on its own (a complete skill using it appears further below):</em></p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nd">@intent_handler</span><span class="p">(</span><span class="n">IntentBuilder</span><span class="p">(</span><span class="s1">&#39;IntentName&#39;</span><span class="p">)</span>
 </span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>                              <span class="o">.</span><span class="n">require</span><span class="p">(</span><span class="s1">&#39;Potato&#39;</span><span class="p">)</span>
 </span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>                              <span class="o">.</span><span class="n">require</span><span class="p">(</span><span class="s1">&#39;Like&#39;</span><span class="p">)</span>
@@ -2203,7 +2204,7 @@ case we would assume the user expects OVOS to respond with today's weather for t
 </li>
 </ol>
 <h4 id="i-am-unable-to-match-against-the-utterance-string">I am unable to match against the utterance string<a class="headerlink" href="#i-am-unable-to-match-against-the-utterance-string" title="Permanent link">&para;</a></h4>
-<p>The utterance string received from the speech-to-text engine is received all lowercase. As such any string matching you are trying to do should also be converted to lowercase. For example:</p>
+<p>The utterance string received from the speech-to-text engine is received all lowercase. As such any string matching you are trying to do should also be converted to lowercase. For example (a method excerpt from inside a skill class):</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>    <span class="nd">@intent_handler</span><span class="p">(</span><span class="n">IntentBuilder</span><span class="p">(</span><span class="s1">&#39;Example&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">require</span><span class="p">(</span><span class="s1">&#39;Example&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">require</span><span class="p">(</span><span class="s1">&#39;Intent&#39;</span><span class="p">))</span>
 </span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>    <span class="k">def</span> <span class="nf">handle_example</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
 </span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>        <span class="n">utterance</span> <span class="o">=</span> <span class="n">message</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;utterance&#39;</span><span class="p">)</span>
@@ -2346,7 +2347,7 @@ case we would assume the user expects OVOS to respond with today's weather for t
 <h3 id="using-it-in-a-skill">Using it in a Skill<a class="headerlink" href="#using-it-in-a-skill" title="Permanent link">&para;</a></h3>
 <p>The <code>intent_handler()</code> <em>decorator</em> can be used to create an examples based intent handler by passing in the filename of the <code>.intent</code> file as a string.</p>
 <p>You may also see the <code>@intent_file_handler</code> decorator used in Skills. This has been deprecated and you can now replace any instance of this with the simpler <code>@intent_handler</code> decorator.</p>
-<p>From our first example above, we created a file <code>locale/en-us/what.is.a.tomato.intent</code>. To register an intent using this file we can use:</p>
+<p>From our first example above, we created a file <code>locale/en-us/what.is.a.tomato.intent</code>. To register an intent using this file we can use the following decorator (shown on its own; place it above a handler method inside your skill class):</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="nd">@intent_handler</span><span class="p">(</span><span class="s1">&#39;what.is.a.tomato.intent&#39;</span><span class="p">)</span>
 </span></code></pre></div>
 <p>This <em>decorator</em> must be imported before it is used:</p>
