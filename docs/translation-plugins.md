@@ -41,6 +41,28 @@ Maturity reflects repository health (age, activity, open issues/PRs, in-repo doc
 
 > **Heads up:** the package repo name, the pip name, and the **entry-point name you put in config** are not always the same. Configure plugins by their *entry-point name* (e.g. `ovos-translate-plugin-server`, not the repo `ovos-translate-server-plugin`). The names in the table above are the entry-point names.
 
+### Configuring `ovos-translate-plugin-server`
+
+If you don't set anything, the client shuffles through its built-in public-server list and fails over to the next server whenever one errors or times out. To point it at your own [ovos-translate-server](https://github.com/OpenVoiceOS/ovos-translate-server) instance(s), set `host` — a single URL, or a list of URLs for failover:
+
+```json
+{
+  "language": {
+    "translation_module": "ovos-translate-plugin-server",
+    "detection_module": "ovos-lang-detector-plugin-server",
+    "ovos-translate-plugin-server": {
+        "host": ["https://my-nllb.example", "https://backup-nllb.example"],
+        "timeout": 5,
+        "skip_detection": false
+    }
+  }
+}
+```
+
+- **`host`** — a URL string or a list of URLs. When a list, the client tries each in order on failure. Omit it to use the built-in public servers (tried in random order to spread load).
+- **`timeout`** — per-request timeout in seconds (default `5`).
+- **`skip_detection`** (translator only) — when `true`, the plugin skips the pre-translate `/detect/{text}` round-trip and lets the server infer the source language directly from the `/translate/{target}/{text}` endpoint, halving the request count when the server can self-detect. Defaults to `false`.
+
 ---
 
 ## Technical Explanation

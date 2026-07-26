@@ -51,10 +51,22 @@ wildcards and carry no penalty. An entity whose name was never registered with
 `add_entity` still matches but at a slightly reduced confidence (a small `0.04`
 penalty, e.g. `0.96`).
 
+## Context and keyword gating
+
+Intents can be gated at runtime by session context or suppressed by keyword:
+
+- `set_context(intent_name, context_name, context_val=None)` / `require_context(intent_name, context_name)` — only consider the intent when the given context is active; `unset_context` / `unrequire_context` reverse them.
+- `exclude_context(intent_name, context_name)` — suppress the intent while a context is active (`unexclude_context` reverses it).
+- `exclude_keywords(intent_name, samples)` — drop the intent from matching when the query contains any of the given keywords.
+
+These let a container activate or hide intents based on conversational state without rebuilding it.
+
 !!! tip "When to choose Padacioso"
     Use it when you want Padatious-style example-based matching with entity extraction, but
     without a training step or model files — handy for tests, tiny scripts, or resource-constrained
-    devices. For fuzzy/typo-tolerant matching use [Nebulento](nebulento.md); for keyword-only
+    devices. Padacioso also has an optional built-in fuzzy mode — `IntentContainer(fuzz=True)`
+    enables rapidfuzz-based typo-tolerant matching against template variants, scored with a
+    confidence penalty. For a dedicated fuzzy parser use [Nebulento](nebulento.md); for keyword-only
     matching use [Palavreado](palavreado.md); for the full neural version use
     [Padatious](padatious-pipeline.md).
 

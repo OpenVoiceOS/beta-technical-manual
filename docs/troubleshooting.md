@@ -87,6 +87,11 @@ the messagebus and keeps an in-memory ring buffer of everything it sees. The bro
 - pause/resume capture and sort newest/oldest first
 - export the captured buffer as JSON/JSONL for later inspection
 - inject an arbitrary message onto the bus from the UI (the same trick as `ovos-say-to`, but visual)
+- group the live stream into a **timeline** — per-session, expandable traces with category badges, so
+  you can follow a single utterance across Stages 2–5 as one interaction instead of scanning the raw feed
+- type an utterance into the **chat panel** (`POST /api/chat`) — it emits a `recognizer_loop:utterance`
+  with a stable session ID (so multi-turn/converse works), letting you replay a failing interaction
+  deterministically without speaking
 
 There is also a zero-install mode: the UI is a single static page that can open a WebSocket straight
 to `ws://<device>:8181/core` with no server component at all — useful for a one-off look without
@@ -133,7 +138,8 @@ and sets `OVOS_BUS_HOST=host.docker.internal` so it can reach a bus running on t
 
 ### A concrete walkthrough
 
-1. Start `ovos-busmon` (it will keep retrying the bus connection until the device is reachable).
+1. Start `ovos-busmon` — it comes up even if the bus is unreachable, but does **not** auto-retry the
+   connection, so start it once the OVOS device is up (or restart busmon after the bus is running).
 2. Open `http://127.0.0.1:8005` in a browser and log in with the configured credentials.
 3. Speak (or trigger) an utterance on the OVOS device.
 4. Filter by `recognizer_loop:*` — the first hit is the raw utterance leaving the listener
@@ -173,8 +179,8 @@ reconnect on their own with a backing-off retry (5 s → 60 s cap), so a bus res
 require restarting every client by hand — see [Bus restart / reconnect
 behavior](bus-service.md#bus-restart-reconnect-behavior) for exactly what to expect while they
 recover. In `ovos-busmon`,
-this stage is trivially visible: if the bus is down, busmon's own connection retries forever and the
-stream stays empty.
+this stage is trivially visible: if the bus was down when busmon started, its connection never came
+up (busmon does not auto-retry) and the stream stays empty — restart busmon once the bus is back.
 
 !!! tip "Nothing wrong with the mic yet"
     This stage says nothing about audio hardware — it only confirms the messagebus itself accepts

@@ -47,7 +47,10 @@ Replace `"plugin_name"` with the identifier of the desired plugin and provide an
 
 ### **OVOS Dialog Normalizer Plugin**
 
-* **Purpose**: Prepares text for TTS by expanding contractions and converting digits to words, ensuring clearer pronunciation.
+* **Purpose**: Prepares text for TTS by expanding contractions, expanding title abbreviations (`Dr.`→`Doctor`, `Mr.`→`Mister`, `Prof.`→`Professor`), normalizing currency (`€`→`euros`), and converting digits to spoken words, ensuring clearer pronunciation.
+
+
+* **Multilingual coverage**: Contractions are English-only, while title abbreviations are defined per language (en/ca/es/pt/gl/fr/it/nl/de). Numbers are pronounced via `ovos-number-parser`, falling back to `unicode-rbnf` for languages it doesn't yet cover. A few language-specific rules exist too (e.g. `ºC`→`graos centígrados` for Galician).
 
 
 * **Example**:

@@ -149,6 +149,8 @@ ctx = AgentsMDContextManager({
 messages = ctx.build_conversation_context(utterance, session_id="s1")
 ```
 
+It also registers as an OPM plugin — entry point `ovos-agents-md-context-plugin` under the `opm.agents.memory` group — so it can be wired declaratively from persona JSON, the same way loops and toolboxes are.
+
 ---
 
 ## Security Notes

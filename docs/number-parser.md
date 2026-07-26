@@ -14,7 +14,7 @@ pronounce_number(123, "en")            # "one hundred and twenty three"
 extract_number("I have twenty apples", "en")   # 20
 ```
 
-Every function takes an explicit `lang` (a BCP-47 code such as `"en"` or `"pt-br"`); there is no global default language. When a language lacks a hand-written implementation for `pronounce_number`/`pronounce_ordinal`, the library falls back to [unicode-rbnf](https://github.com/rhasspy/unicode-rbnf). For functions without a fallback (`extract_number`, `is_fractional`, `numbers_to_digits`), an unsupported language raises `NotImplementedError`.
+Every function takes an explicit `lang` (a BCP-47 code such as `"en"` or `"pt-br"`); there is no global default language. When a language lacks a hand-written implementation for `pronounce_number`/`pronounce_ordinal`, the library falls back to [unicode-rbnf](https://github.com/rhasspy/unicode-rbnf). For functions without a fallback (`extract_number`, `is_fractional`), an unsupported language raises `NotImplementedError`. `numbers_to_digits` never raises — an unsupported language is left unchanged.
 
 ## Features
 
@@ -24,7 +24,7 @@ Every function takes an explicit `lang` (a BCP-47 code such as `"en"` or `"pt-br
 - **Pronounce Ordinals:** Converts numbers to their ordinal forms (`pronounce_ordinal`).
 
 
-- **Pronounce Fractions:** Speaks a fraction string such as `"3/2"` (`pronounce_fraction`, `pt`/`mwl` only).
+- **Pronounce Fractions:** Speaks a fraction string such as `"3/2"` (`pronounce_fraction`). Hand-written for `pt`, `ast`, `ca`, `oc`, `an`, `mwl`, `gl`, and `ro`; every other language uses a generic fallback.
 
 
 - **Extract Numbers:** Extracts a number from text (`extract_number`).
@@ -50,8 +50,8 @@ Every function takes an explicit `lang` (a BCP-47 code such as `"en"` or `"pt-br
 
 | Language Code           | Pronounce Number | Pronounce Ordinal | Extract Number | numbers_to_digits |
 |-------------------------|------------------|-------------------|----------------|-------------------|
-| `en` (English)          | ✅               | 🚧                | ✅             | ✅                |
-| `kab` (Kabyle)          | ✅               | ✅                | ✅             | ✅                |
+| `en` (English)          | ✅               | 🚧                | ✅             | 🚧                |
+| `kab` (Kabyle)          | ✅               | ✅                | ✅             | 🚧                |
 | `az` (Azerbaijani)      | ✅               | 🚧                | ✅             | 🚧                |
 | `ca` (Catalan)          | ✅                | ✅                 | ✅              | 🚧                 |
 | `gl` (Galician)         | ✅                | ✅                | ✅              |  ✅                  |
@@ -75,6 +75,8 @@ Every function takes an explicit `lang` (a BCP-47 code such as `"en"` or `"pt-br
 
 
 > 💡 If a language is not implemented for `pronounce_number` or `pronounce_ordinal` then [unicode-rbnf](https://github.com/rhasspy/unicode-rbnf) will be used as a fallback.
+
+> 📋 This table is a curated subset. `pronounce_number` and `extract_number` dispatch cover ~41 languages in total (including `an`, `ar`, `ast`, `bg`, `el`, `et`, `fi`, `fy`, `he`, `hr`, `id`, `ms`, `nb`, `nn`, `no`, `oc`, `ro`, `sk`, and `tr`). See [`docs/languages.md`](https://github.com/OpenVoiceOS/ovos-number-parser/blob/dev/docs/languages.md) in the repo for the full per-language matrix.
 
 !!! note
     Several Romance languages (`ast`, `an`, `oc`, `fr`, `it`, `ca`, `es`, `gl`, `pt`, `mwl`, `ro`) share a common `RomanceNumberExtractor`/`NumberVocabulary` engine internally, so their extraction logic stays consistent across languages that inflect numbers similarly.
@@ -107,7 +109,7 @@ def pronounce_number(number: Union[int, float], lang: str, places: int = 3, shor
         number: The number to pronounce.
         lang (str): A BCP-47 language code.
         places (int): Number of decimal places to express. Default is 3.
-        short_scale (bool): Use short (True) or long scale (False) for large numbers. Defaults to `True` when left `None`.
+        short_scale (bool): Use short (True) or long scale (False) for large numbers. When left `None`, the language's canonical convention applies (e.g. `pt-br` short, `pt-pt` long), not an unconditional short scale.
         scientific (bool): Pronounce in scientific notation if True.
         ordinals (bool): Pronounce as an ordinal if True.
         digits (DigitPronunciation): Digit-reading style (e.g. read digit-by-digit). Honored by pt/mwl.
@@ -124,6 +126,8 @@ def pronounce_number(number: Union[int, float], lang: str, places: int = 3, shor
 ```
 
 > Most language backends only consume `number`, `places`, `short_scale`, `scientific`, and `ordinals`. The `digits`, `gender`, and `scale` arguments (and `DigitPronunciation`/`GrammaticalGender`/`Scale`, importable from `ovos_number_parser.util`) currently only affect Portuguese (`pt`) and Mirandese (`mwl`).
+
+> `pronounce_number` also accepts a Python `complex` value and speaks it in rectangular `a+bi` form, e.g. `pronounce_number(complex(3, 2), "en")` → `"three plus two i"`. The number itself is composed from the per-language cardinal pronunciation; only the "plus"/"minus"/"i" connectives are language-specific (English used as the default).
 
 **Example Usage:**
 
@@ -284,36 +288,17 @@ numbers_to_digits("set a timer for twenty five minutes", "en")
 ```
 
 ```python
-def numbers_to_digits(utterance: str, lang: str, scale: Optional[Scale] = None, *,
-                       ordinals: bool = False, fractions: bool = True,
-                       scale_words: bool = True) -> str: ...
+def numbers_to_digits(utterance: str, lang: str, scale: Optional[Scale] = None) -> str: ...
 ```
 
-`scale` (`Scale.LONG` / `Scale.SHORT`, from `ovos_number_parser.util`) only matters for `pt`/`mwl`. Hand-written rewriting exists for `gl`, `de`, `pt`, `mwl`, `ru`, `uk`, `en`, and `kab` (marked ✅ in the table above); every other language that `extract_number` supports gets a generic word-span replacement instead (marked 🚧) — it works but is less precise about compound numerals than a hand-written implementation. A language `extract_number` does not support at all is left unchanged rather than raising.
-
-Three keyword-only flags tune what counts as a convertible number. Each defaults to the behavior `numbers_to_digits` has always had, so existing callers see no change:
-
-| Flag | Default | Effect when flipped |
-| --- | --- | --- |
-| `ordinals` | `False` | `True` also reads ordinal words as values: `"the twenty fifth"` → `"the 25"`. Left off, an ordinal word stays a word. |
-| `fractions` | `True` | `False` keeps a *bare* fraction word untouched: `"half past nine"` → `"half past 9"`. A fraction inside a larger quantity still converts either way: `"two and a half hours"` → `"2.5 hours"`. |
-| `scale_words` | `True` | `False` converts only the count and leaves the scale word alone: `"sixty six million years ago"` → `"66 million years ago"`. |
-
-```python
->>> numbers_to_digits("a quarter to five", "en", fractions=False)
-'a quarter to 5'
->>> numbers_to_digits("sixty six million years ago", "en", scale_words=False)
-'66 million years ago'
-```
-
-Not every language has vocabulary for a flag to suppress — a language whose parser never converted fraction or scale words in the first place already leaves that word untouched, so the flag has nothing to do. `ordinals` applies uniformly everywhere.
+`scale` (`Scale.LONG` / `Scale.SHORT`, from `ovos_number_parser.util`) only matters for languages that distinguish short/long scale (e.g. `pt`/`mwl`). Hand-written rewriting is dispatched for `ast`, `oc`, `an`, `fy`, `gl`, `de`, `pt`, `mwl`, `ro`, `bg`, `hr`, `ru`, `sk`, `id`, `ms`, `tr`, and `uk`; every other language (including `en` and `kab`) gets a generic word-span replacement instead — it works but is less precise about compound numerals than a hand-written implementation. A language is never raised on: one that has no parser at all is simply left unchanged.
 
 !!! note
-    Kabyle (`kab`) has two coexisting numeral systems: everyday loan-word counting (Arabic-derived above ten, e.g. `waḥed u ɛecrin` = 21) used for pronunciation, and a formalized pan-Amazigh proposal (invariable tens, descending magnitudes, no connectors) that extraction also recognizes. `kab` counts only up to 9999 and has no scale or fraction vocabulary, so the `scale_words`/`fractions` flags have nothing to suppress there; `ordinals` still applies.
+    Kabyle (`kab`) has two coexisting numeral systems: everyday loan-word counting (Arabic-derived above ten, e.g. `waḥed u ɛecrin` = 21) used for pronunciation, and a formalized pan-Amazigh proposal (invariable tens, descending magnitudes, no connectors) that extraction also recognizes. `kab` counts only up to 9999 and has no scale or fraction vocabulary.
 
 ### Pronounce a Fraction
 
-Speak a fraction string such as `"3/2"`. Only Portuguese (`pt`) and Mirandese (`mwl`) are implemented; any other language raises `NotImplementedError`.
+Speak a fraction string such as `"3/2"`. Hand-written pronunciation exists for `pt`, `ast`, `ca`, `oc`, `an`, `mwl`, `gl`, and `ro`; every other language routes through a generic fallback rather than raising.
 
 ```python
 from ovos_number_parser import pronounce_fraction

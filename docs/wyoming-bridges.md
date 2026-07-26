@@ -19,8 +19,9 @@ to use OVOS engines without knowing anything about the OVOS plugin system.
 | `wyoming-ovos-wakeword` | `wyoming-ovos-wakeword` | 7893 | `opm.wake_word` |
 
 > The port is not a built-in default — it is set by the `--uri` you pass. The
-> values above are the conventional ports used in the upstream READMEs and the
-> examples below. `wyoming-ovos-stt` requires `--uri`; `wyoming-ovos-tts` and
+> values above are the conventional ports used in this manual's examples (the
+> upstream READMEs use overlapping values). `wyoming-ovos-stt` requires `--uri`;
+> `wyoming-ovos-tts` and
 > `wyoming-ovos-wakeword` default to `stdio://`.
 
 These three are standalone Wyoming **servers** (console-script entry points), not
@@ -87,6 +88,8 @@ wyoming-ovos-stt --plugin-name <ovos-stt-plugin-name> --uri tcp://0.0.0.0:7891
 | `--plugin-name` | Yes | — | OVOS STT plugin module name (e.g. `ovos-stt-plugin-whisper`) |
 | `--uri` | Yes | — | `tcp://HOST:PORT` or `unix:///path/to/socket` |
 | `--debug` | No | `False` | Enable DEBUG log level |
+| `--log-format` | No | `BASIC_FORMAT` | Format string for log messages |
+| `--version` | No | — | Print version and exit |
 
 Examples:
 
@@ -314,6 +317,7 @@ wyoming-ovos-wakeword --uri tcp://0.0.0.0:7893
 | `--uri` | No | `stdio://` | `tcp://HOST:PORT` or `unix:///path/to/socket` |
 | `--zeroconf` | No | disabled | Enable mDNS/zeroconf service discovery (optional: service name) |
 | `--debug` | No | `False` | Enable DEBUG log level |
+| `--log-format` | No | `BASIC_FORMAT` | Format string for log messages |
 
 Examples:
 

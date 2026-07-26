@@ -11,13 +11,13 @@
     different stages:
 
     - `ovos-gui-api-client` — a template-based `GUIInterface` already exists and works today.
-    - `ovos-legacy-mycroft-gui-plugin` and `ovos-gui-plugin-pyhtmx` (repo `pyhtmx-gui-client`)
-      already implement the adapter-side contract described below (an `AbstractGUIPlugin`
-      subclass registered under `opm.gui_adapter`) — but that base class does not exist yet in
-      any released `ovos-plugin-manager`, and `ovos-gui` does not yet contain the router that
-      would dispatch events to these adapters. These plugins are therefore built ahead of their
-      own dependency, and the router mentioned elsewhere on this page (connection status,
-      `handle_show_*` dispatch) is not yet built either.
+    - `ovos-legacy-mycroft-gui-plugin` and `ovos-gui-plugin-ag-ui` already implement the
+      adapter-side contract described below (an `AbstractGUIPlugin` subclass registered under
+      `opm.gui_adapter`) — but that base class does not exist yet in any released
+      `ovos-plugin-manager`, and `ovos-gui` does not yet contain the router that would dispatch
+      events to these adapters. These plugins are therefore built ahead of their own dependency,
+      and the router mentioned elsewhere on this page (connection status, `handle_show_*`
+      dispatch) is not yet built either.
     - The formal contract is specified by
       [OVOS-GUI-1](https://github.com/OpenVoiceOS/architecture/blob/dev/gui-1.md), an
       [architecture spec](architecture-specs.md). The spec deliberately leaves the exact
@@ -28,12 +28,17 @@
 
     Per OVOS-GUI-1, the sole per-event routing key for the adapter contract is **`session_id`**
     — there is no separate site/room/location dimension; a shared/multi-room screen is expressed
-    by its clients sharing one `session_id`.
+    by its clients sharing one `session_id`. The `ovos-gui-plugin-ag-ui` adapter already follows
+    this convention (every `handle_show_*` / lifecycle signature takes `session_id: str = "default"`).
 
-    !!! note "Client-side `site_id` still exists (in flux)"
-        The Qt6 client rework branch (`mycroft-gui-qt6`) still ships a separate **`site_id`**
-        dimension (`--site-id` flag, `MYCROFT_SITE_ID` env var) for multi-site setups. So at the
-        *client* layer site_id is not yet gone, even though the OVOS-GUI-1 *adapter contract*
+    !!! note "The legacy adapter still routes on `site_id` (in flux)"
+        The shipped `ovos-legacy-mycroft-gui-plugin` has **not** yet adopted the `session_id`
+        contract: every `handle_show_*` and lifecycle method takes `site_id: str = "default"`
+        instead (`ovos_legacy_mycroft_gui/__init__.py`), and its websocket layer routes on
+        `site_id` (`send_to_clients_for_site(site_id)`). The Qt6 client rework branch
+        (`mycroft-gui-qt6`) likewise still ships a separate **`site_id`** dimension (`--site-id`
+        flag, `MYCROFT_SITE_ID` env var) for multi-site setups. So at both the *legacy adapter*
+        and *client* layers site_id is not yet gone, even though the OVOS-GUI-1 *adapter contract*
         collapses routing to `session_id`. The two layers may still be reconciled.
 
 In the rework, `ovos-gui` no longer renders or talks to Qt clients directly. It becomes a
@@ -137,9 +142,10 @@ individual `handle_show_*` methods it cares about; unimplemented ones default to
 
 The legacy [`gui.status.request`](gui-protocol.md) bus message already exists today and answers
 whether any display is connected. An adapter is expected to optionally provide an
-`any_client_connected() -> bool` method so a future router can fold it into that response; since
-the base class and router are not yet built, treat the exact hook-up (duck-typing or otherwise)
-as illustrative:
+`any_client_connected() -> bool` method so a future router can fold it into that response; the
+legacy adapter already ships a concrete module-level `any_client_connected()`
+(`ovos_legacy_mycroft_gui/websocket.py`) as a reference implementation. Since the base class and
+router are not yet built, treat the exact hook-up (duck-typing or otherwise) as illustrative:
 
 ```python
 def any_client_connected(self) -> bool:
@@ -151,7 +157,16 @@ def any_client_connected(self) -> bool:
 | Repo | PyPI package | Entry-point name | Class | Description |
 |---|---|---|---|---|
 | `ovos-legacy-mycroft-gui-plugin` | `ovos-legacy-mycroft-gui-plugin` | `ovos-legacy-mycroft-gui` | `LegacyMycoftGuiPlugin` | Tornado WebSocket → Qt / mycroft-gui clients; also runs `HomescreenManager` |
-| `pyhtmx-gui-client` | `ovos-gui-plugin-pyhtmx` | `ovos-gui-plugin-pyhtmx` | `PyHTMXGUIPlugin` | Browser adapter (HTMX) |
+| `ovos-gui-plugin-ag-ui` | `ovos-gui-plugin-ag-ui` | `ovos-gui-plugin-ag-ui` | `AgUiGuiPlugin` | ag-ui protocol adapter: renders GUI state/template events as ag-ui SSE events for ag-ui / CopilotKit frontends |
+
+!!! note "`pyhtmx-gui-client` is a client, not an adapter"
+    The `pyhtmx-gui-client` repo (PyPI `ovos-pyhtmx-gui-client`, console script `pyhtmx-gui`)
+    is **not** a GUI adapter plugin — it ships no `AbstractGUIPlugin` subclass and no
+    `opm.gui_adapter` entry point. It is a standalone FastAPI/uvicorn GUI *client* whose
+    `GUIClient` connects as a WebSocket client to the legacy `ovos-gui` protocol
+    (`ws://localhost:18181/gui`, config keys `ovos-server-url` / `client-id`), analogous to a
+    mycroft-gui Qt client. It belongs to the legacy websocket-client path, not the adapter
+    architecture described here.
 
 ## Writing a custom adapter
 
@@ -191,7 +206,7 @@ exact key path is not yet fixed by any released code — treat it as illustrativ
 {
   "gui": {
     "adapters": {
-      "ovos-gui-plugin-pyhtmx": {
+      "ovos-gui-plugin-ag-ui": {
         "host": "0.0.0.0",
         "port": 8080
       }
@@ -200,9 +215,27 @@ exact key path is not yet fixed by any released code — treat it as illustrativ
 }
 ```
 
+The shipped legacy adapter, however, reads concrete config today rather than the
+`gui.adapters.*` path. It consumes the top-level `[gui_websocket]` section via `ovos_config`
+(`host` default `0.0.0.0`, `base_port` default `18181`, `route` default `/gui`) and
+`gui.default_qt_version` (default `5`):
+
+```json
+{
+  "gui_websocket": {
+    "host": "0.0.0.0",
+    "base_port": 18181,
+    "route": "/gui"
+  },
+  "gui": {
+    "default_qt_version": 5
+  }
+}
+```
+
 ## Multi-modal rendering
 
-With two adapters installed (e.g. legacy Qt and pyhtmx), every display event is dispatched
+With two adapters installed (e.g. legacy Qt and ag-ui), every display event is dispatched
 to both:
 
 ```text
@@ -210,7 +243,7 @@ self.gui.show_weather(…)
        ↓
 ovos-gui router, fanned out to every installed opm.gui_adapter plugin
        ├──→ LegacyMycoftGuiPlugin.handle_show_weather(…)   → Qt client
-       └──→ PyHTMXGUIPlugin.handle_show_weather(…)          → browser
+       └──→ AgUiGuiPlugin.handle_show_weather(…)            → ag-ui / CopilotKit frontend
 ```
 
 Both displays update simultaneously and independently.

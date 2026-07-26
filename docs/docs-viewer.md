@@ -23,6 +23,15 @@
 
 Downloaded sources are cached on disk. Subsequent launches skip re-downloading (except `live-status`, which is always refreshed). There is **no `--force` CLI flag**: forcing a re-download is only possible from Python, by calling `download_docs(force=True)` (or deleting the cache directory before launching).
 
+!!! note "The first launch of *any* key downloads *every* source"
+    Regardless of which key you pass, `Documentation.__init__` calls `download_docs()`,
+    which loops over **all** sources — the three zip archives (`technical`, `messages`,
+    `hivemind`), the `live-status`/`raspOVOS`/`installer` READMEs, and all ~49 skill
+    READMEs via `download_skills()` — and downloads each one that is not already cached.
+    So `ovos-docs-viewer technical` on a clean machine populates the entire `ovos_docs/`
+    cache, not just the `technical` tree. The very first run is therefore slow and needs
+    network access to all sources; later runs only re-fetch `live-status`.
+
 ## Installation
 
 ```bash

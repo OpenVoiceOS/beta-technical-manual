@@ -93,7 +93,7 @@ Runs on PR merge to `dev`. Bumps the version, optionally updates changelog and c
 | `update_changelog` | `update_changelog: true` + `bump_version` succeeded | Calls `github-changelog-generator-action@v2.4`, commits result |
 | `tag_prerelease` | `publish_prerelease: true` + `bump_version` succeeded | Creates GitHub pre-release via `ncipollo/release-action@v1` |
 | `propose_release` | `propose_release: true` + `bump_version` succeeded | Creates `release-X.Y.ZaN` branch, opens PR to `master` via GitHub API |
-| `publish_pypi` | `publish_pypi: true` + `bump_version` succeeded | Builds with `python -m build`, publishes via `pypa/gh-action-pypi-publish@release/v1` (uses `PYPI_TOKEN`) |
+| `publish_pypi` | `publish_pypi: true` + `bump_version` succeeded | Builds with `uv build`, publishes via `pypa/gh-action-pypi-publish@release/v1` (uses `PYPI_TOKEN`) |
 | `notify` | `notify_matrix: true` + `bump_version` succeeded + PR merged | Calls `notify-matrix.yml` with a canned message |
 
 ### Bot guard
@@ -248,7 +248,7 @@ Runs build, install, and optionally tests across a configurable matrix of Python
 
 | Job | Description |
 |-----|-------------|
-| `build_tests` | Matrix job. Runs `python -m build`, installs the resulting wheel (with extras if specified), optionally runs `pytest`. Saves per-version result as an artifact. |
+| `build_tests` | Matrix job. Runs `uv build`, installs the resulting wheel (with extras if specified), optionally runs `pytest`. Saves per-version result as an artifact. |
 | `post_build_report` | Runs after the matrix, only on PR events with `pr_comment: true`. Downloads all result artifacts, formats and posts the `section:build` PR comment. |
 
 ### Typical usage
@@ -447,7 +447,7 @@ Runs [ovoscope](ovoscope-overview.md) end-to-end skill tests on a **single Pytho
 |------|-------------|
 | Checkout | Checks out the calling repo |
 | Checkout gh-automations scripts | Checks out `OpenVoiceOS/gh-automations@dev` into `_gh_automations/` (PR events only) |
-| Setup Python | `actions/setup-python@v5` |
+| Setup Python | `actions/setup-python@v6` |
 | Install System Dependencies | `apt-get install` the `system_deps` list (skipped if empty) |
 | Install Package with Test Extras | `pip install ".[test]"` (or the configured extras) plus `pytest pytest-json-report ovoscope` |
 | Check required pipeline availability | Inline Python reads `opm.pipeline` entry points and exits 1 if any `require_*` pipeline is absent |
@@ -790,7 +790,7 @@ Reads `version.py`, predicts the next version from PR labels and/or title using 
 | Step | Description |
 |------|-------------|
 | Checkout + scripts checkout | Checks out the calling repo and (on PR events) the gh-automations scripts |
-| Setup Python | `actions/setup-python@v5` |
+| Setup Python | `actions/setup-python@v6` |
 | Run release check | `check_release.py --version-file … --output-json /tmp/release-report.json`. Env vars: `PR_LABELS_JSON`, `PR_TITLE`. `continue-on-error: true`. |
 | Format release section | Inline Python reads `release-report.json` → `release-section.md` |
 | Post release section to PR comment | Calls `update_pr_comment.py` with `--section-id release` |
@@ -947,7 +947,7 @@ Follows the canonical 3-phase pattern (`continue-on-error` → format → post �
 | Step | Description |
 |------|-------------|
 | Checkout + scripts checkout | Checks out the calling repo and (on PR events) the gh-automations scripts |
-| Setup Python | `actions/setup-python@v5` |
+| Setup Python | `actions/setup-python@v6` |
 | Run skill check | `check_skill.py --repo-root . --locale-dir … --output-json /tmp/skill-report.json`. `continue-on-error: true`. |
 | Format skill section | Inline Python reads `skill-report.json` → `skill-section.md` |
 | Post skill section to PR comment | Calls `update_pr_comment.py` with `--section-id skill` |
@@ -1394,7 +1394,7 @@ To add a new check type to the aggregated comment from any workflow:
 
 - name: Checkout gh-automations scripts
   if: github.event_name == 'pull_request'
-  uses: actions/checkout@v6
+  uses: actions/checkout@v7
   with:
     repository: OpenVoiceOS/gh-automations
     ref: dev

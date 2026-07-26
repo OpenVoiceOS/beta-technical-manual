@@ -44,7 +44,7 @@ Several reusable workflows check this repo out again at runtime to reach `script
 
 ```yaml
 
-- uses: actions/checkout@v6
+- uses: actions/checkout@v7
   with:
     repository: OpenVoiceOS/gh-automations
     ref: dev

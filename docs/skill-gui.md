@@ -145,6 +145,30 @@ gui.remove_controlled_notification()
     return to the idle/home screen for that many seconds. `override_animations=True`
     disables platform transition animations for the page.
 
+!!! warning "Upcoming — a wider template surface in the standalone package"
+    The templates above are what today's `ovos_bus_client.apis.gui.GUIInterface` ships. The
+    forward-looking standalone **`ovos-gui-api-client`** `GUIInterface` (the package
+    [ovos-workshop#420](https://github.com/OpenVoiceOS/ovos-workshop/pull/420) rebinds
+    `self.gui` to) adds more `SYSTEM_*` helpers: `show_list`, `show_grid`, `show_table`,
+    `show_weather`, `show_clock`, `show_timer`, `show_map`, `show_media_player`, `show_face`,
+    and the two voice-first dialogue helpers `show_confirm(question, ...)` and
+    `show_select(items, prompt=None, ...)`. These are **not** on a released `ovos-workshop`;
+    treat them as the template set new skills will target once the rebind lands.
+
+    Two behavioural notes for that package:
+
+    - **`fill` vocabulary changes.** The standalone `FillMode` enum uses `"fit"` / `"crop"` /
+      `"stretch"`, not the `"PreserveAspectFit"` / `"PreserveAspectCrop"` / `"Stretch"` values
+      the installed `ovos_bus_client` `show_image()` expects. The value set flips when
+      `self.gui` rebinds.
+    - **Dialogue helpers round-trip.** These are visual accompaniments to a spoken question —
+      the skill must still ask and handle the voice response, and must not block on a GUI
+      event. Where the display layer supports a touch shortcut, `show_confirm` fires
+      `<skill_id>.confirm.response` with `{"confirmed": bool}` and `show_select` fires
+      `<skill_id>.select.response` with `{"value": ...}`. The interface also auto-registers an
+      inbound `<skill_id>.set` handler so the display layer can push value changes back into
+      the skill's session data.
+
 ---
 
 ## Custom pages

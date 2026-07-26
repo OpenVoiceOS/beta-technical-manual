@@ -60,53 +60,91 @@ time expressions.
 
 | Language | `extract_duration` | `extract_datetime` |
 |----------|--------------------|--------------------|
+| an       | ✅                  | ✅                  |
+| ar       | ✅                  | ✅                  |
+| ast      | ✅                  | ✅                  |
 | az       | ✅                  | ✅                  |
+| bg       | ✅                  | ✅                  |
 | ca       | ✅                  | ✅                  |
 | cs       | ✅                  | ✅                  |
 | da       | ✅                  | ✅                  |
 | de       | ✅                  | ✅                  |
+| el       | ❌                  | ✅                  |
 | en       | ✅                  | ✅                  |
 | es       | ✅                  | ✅                  |
-| gl       | ✅                  | ✅                 |
+| et       | ✅                  | ✅                  |
 | eu       | ✅                  | ✅                  |
 | fa       | ✅                  | ✅                  |
+| fi       | ✅                  | ✅                  |
 | fr       | ✅                  | ✅                  |
-| hu       | ✅                  | ✅                 |
+| fy       | ✅                  | ✅                  |
+| gl       | ✅                  | ✅                  |
+| he       | ❌                  | ✅                  |
+| hr       | ✅                  | ✅                  |
+| hu       | ✅                  | ✅                  |
+| id       | ❌                  | ✅                  |
 | it       | ✅                  | ✅                  |
+| kab      | ✅                  | ✅                  |
+| ms       | ❌                  | ✅                  |
+| nb/no    | ✅                  | ✅                  |
 | nl       | ✅                  | ✅                  |
+| nn       | ✅                  | ✅                  |
+| oc       | ✅                  | ✅                  |
 | pl       | ✅                  | ✅                  |
 | pt       | ✅                  | ✅                  |
+| ro       | ✅                  | ✅                  |
 | ru       | ✅                  | ✅                  |
-| sv       | ✅                  | ✅                  |
+| sk       | ✅                  | ✅                  |
 | sl       | ✅                  | ✅                  |
+| sv       | ✅                  | ✅                  |
+| tr       | ❌                  | ✅                  |
 | uk       | ✅                  | ✅                  |
 
 
-> 💡 If a language is not implemented for `extract_datetime` then [dateparser](https://dateparser.readthedocs.io/en/latest/) will be used as a fallback
+> 💡 If a language is not implemented for `extract_datetime` then [dateparser](https://dateparser.readthedocs.io/en/latest/) will be used as a fallback. Most `extract_duration` languages are driven by a shared lexicon engine (`DURATION_LEXICONS` in `ovos_date_parser/duration.py`), so new languages are added declaratively; `ar`, `ast`, `kab`, `fa` and `sv` have standalone extractors instead.
 
 **Format**
 
 | Language | `nice_date`<br>`nice_date_time`<br>`nice_day` <br>`nice_weekday` <br>`nice_month` <br>`nice_year` <br>`get_date_strings` | `nice_time` | `nice_relative_time` | `nice_duration` |
 |----------|--------------------------------------------------------------------------------------------------------------------------|-------------|----------------------|-----------------|
+| an       | ✅                                                                                                                        | ✅           | 🚧                   | ✅               |
+| ar       | ✅                                                                                                                        | ✅           | 🚧                   | ✅               |
+| ast      | ✅                                                                                                                        | ✅           | 🚧                   | ✅               |
 | az       | ✅                                                                                                                        | ✅           | 🚧                   | ✅               |
+| bg       | ✅                                                                                                                        | ✅           | 🚧                   | ✅               |
 | ca       | ✅                                                                                                                        | ✅           | 🚧                   | ✅               |
 | cs       | ✅                                                                                                                        | ✅           | 🚧                   | ✅               |
 | da       | ✅                                                                                                                        | ✅           | 🚧                   | ✅               |
 | de       | ✅                                                                                                                        | ✅           | 🚧                   | ✅               |
+| el       | ✅                                                                                                                        | ✅           | 🚧                   | ✅               |
 | en       | ✅                                                                                                                        | ✅           | 🚧                   | ✅               |
 | es       | ✅                                                                                                                        | ✅           | 🚧                   | ✅               |
-| gl       | ✅                                                                                                                        | ✅           | 🚧                   | ✅               |
+| et       | ✅                                                                                                                        | ✅           | 🚧                   | ✅               |
 | eu       | ✅                                                                                                                        | ✅           | ✅                    | ✅               |
 | fa       | ✅                                                                                                                        | ✅           | 🚧                   | ✅               |
+| fi       | ✅                                                                                                                        | ✅           | 🚧                   | ✅               |
 | fr       | ✅                                                                                                                        | ✅           | 🚧                   | ✅               |
+| fy       | ✅                                                                                                                        | ✅           | 🚧                   | ✅               |
+| gl       | ✅                                                                                                                        | ✅           | 🚧                   | ✅               |
+| he       | ✅                                                                                                                        | ✅           | 🚧                   | ✅               |
+| hr       | ✅                                                                                                                        | ✅           | 🚧                   | ✅               |
 | hu       | ✅                                                                                                                        | ✅           | 🚧                   | ✅               |
+| id       | ✅                                                                                                                        | ✅           | 🚧                   | ✅               |
 | it       | ✅                                                                                                                        | ✅           | 🚧                   | ✅               |
+| kab      | ✅                                                                                                                        | ✅           | 🚧                   | ✅               |
+| ms       | ✅                                                                                                                        | ✅           | 🚧                   | ✅               |
+| nb/no    | ✅                                                                                                                        | ✅           | 🚧                   | ✅               |
 | nl       | ✅                                                                                                                        | ✅           | 🚧                   | ✅               |
+| nn       | ✅                                                                                                                        | ✅           | 🚧                   | ✅               |
+| oc       | ✅                                                                                                                        | ✅           | 🚧                   | ✅               |
 | pl       | ✅                                                                                                                        | ✅           | 🚧                   | ✅               |
 | pt       | ✅                                                                                                                        | ✅           | 🚧                   | ✅               |
+| ro       | ✅                                                                                                                        | ✅           | 🚧                   | ✅               |
 | ru       | ✅                                                                                                                        | ✅           | 🚧                   | ✅               |
-| sv       | ✅                                                                                                                        | ✅           | 🚧                   | ✅               |
+| sk       | ✅                                                                                                                        | ✅           | 🚧                   | ✅               |
 | sl       | ✅                                                                                                                        | ✅           | 🚧                   | ✅               |
+| sv       | ✅                                                                                                                        | ✅           | 🚧                   | ✅               |
+| tr       | ✅                                                                                                                        | ✅           | 🚧                   | ✅               |
 | uk       | ✅                                                                                                                        | ✅           | 🚧                   | ✅               |
 
 ## Usage
@@ -143,6 +181,20 @@ print(remainder)  # "It will take about"
 
 !!! note
     The remainder keeps whatever surrounds the extracted duration phrase verbatim, but a connective word ("and" in English, "y" in Spanish) or comma left stranded *between two consumed number groups* is stripped along with them. A connector that still joins unconsumed text on either side is left alone: `extract_duration("two hours and rest and relax", lang="en")` returns remainder `"and rest and relax"`.
+
+`extract_duration` also accepts two keyword-only arguments — but **only for languages on the shared lexicon engine** (the ✅ `extract_duration` rows above except the standalone `ar`, `ast`, `kab`, `fa`, `sv` extractors). Passing them for any other language raises `NotImplementedError`:
+
+- **`resolution`** (`DurationResolution`, default `TIMEDELTA`) — controls the return type: `TIMEDELTA` (a `timedelta`), `RELATIVEDELTA` (a calendar-accurate `dateutil.relativedelta`, so "2 months" stays 2 months rather than a fixed number of days), or a single-unit total such as `TOTAL_SECONDS`/`TOTAL_MINUTES`/... returned as a `float`.
+- **`replace_token`** (`str`, default `""`) — the string each consumed duration phrase is replaced with in the remainder, marking where it was found instead of stripping it out.
+
+```python
+from ovos_date_parser import extract_duration
+from ovos_date_parser.duration import DurationResolution
+
+extract_duration("wait two months", lang="en",
+                 resolution=DurationResolution.RELATIVEDELTA)
+# (relativedelta(months=+2), "wait")
+```
 
 ### Formatting Time
 

@@ -230,7 +230,7 @@ A radio-button list of installation profiles:
 :   The classic, all-in-one experience — voice pipeline, skills, and (optionally) GUI all running locally. The default and the profile the rest of this page assumes.
 
 `satellite`
-:   A microphone/speaker endpoint that talks to a separate OVOS core over the network — see [composable deployments](composable-deployments.md). Skips the feature-selection screen (no local skills/GUI/LLM/Home Assistant to configure).
+:   A microphone/speaker endpoint that talks to a separate OVOS core over the network — see [composable deployments](composable-deployments.md). Skips the feature-selection screen (no local skills/GUI/LLM/Home Assistant to configure), but instead adds four HiveMind connection prompts: host, port, access key, and password.
 
 `listener`
 :   Runs only the listening/wake-word side of OVOS.
@@ -440,9 +440,26 @@ directory of the repository.
 
 > 💡 **LLM and Home Assistant features.** Setting `features.llm: true` enables the OVOS
 > Persona LLM fallback and requires the `llm.api_url`, `llm.key`, `llm.model`, and
-> `llm.persona` keys (an OpenAI-compatible endpoint). A Home Assistant feature is also
+> `llm.persona` keys (an OpenAI-compatible endpoint). Three optional tuning keys —
+> `llm.max_tokens`, `llm.temperature`, and `llm.top_p` — are also accepted. A Home Assistant feature is also
 > available. **macOS** is supported with `launchd` service management, but only with the
 > `virtualenv` method and the `alpha` channel.
+
+> 💡 **Satellite profile.** Deploying `profile: satellite` non-interactively requires a
+> `hivemind:` block giving the connection details to the OVOS core it pairs with —
+> `hivemind.host`, `hivemind.port`, `hivemind.key`, and `hivemind.password`:
+>
+> ```yaml
+> profile: satellite
+> hivemind:
+>   host: 192.168.100.50
+>   port: 5678
+>   key: 95b774f1e85c2ea8e8a80ac2c5d09c6b
+>   password: 255203b3c8a7e59de1d60441a55d4f48
+> features:
+>   skills: false
+>   extra_skills: false
+> ```
 
 ---
 

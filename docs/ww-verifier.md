@@ -100,12 +100,32 @@ Profiles are stored as embedding vectors in `~/.local/share/ovos_speaker_verifie
     "ww_verifiers": {
       "ovos-ww-verifier-speaker": {
         "model": "wespeaker-resnet34",
-        "threshold": 0.45
+        "threshold": 0.45,
+        "fail_open": false
       }
     }
   }
 }
 ```
+
+!!! warning "Fail-open is the default"
+    `fail_open` defaults to **`true`**: an installed-but-unenrolled plugin accepts *every* activation. Set `"fail_open": false` to reject all detections until at least one profile is enrolled.
+
+### Config keys
+
+| Key | Type | Default | Purpose |
+| --- | --- | --- | --- |
+| `model` | str | `wespeaker-resnet34` | speakeronnx model alias or `.onnx` path |
+| `threshold` | float | `0.45` | Global cosine-similarity acceptance threshold |
+| `fail_open` | bool | `true` | Accept all activations when no profiles are enrolled |
+| `per_profile_thresholds` | dict | `{}` | Per-name threshold overrides, e.g. `{"Alice": 0.5}` |
+| `profiles_path` | str | XDG data dir | Override the profile-storage location |
+| `sample_rate` / `sample_width` / `channels` | int | `16000` / `2` / `1` | PCM format of the incoming audio chunk |
+
+The `model` key accepts any alias from [`speakeronnx`](https://github.com/TigreGotico/speakeronnx)'s model registry — `wespeaker-resnet34` (default), `wespeaker-ecapa512`, `campplus`, `titanet-small`/`titanet-large`, `eres2net`, `redimnet-b2`, and others — or a direct `.onnx` path.
+
+!!! note "Threshold is model-specific"
+    The `threshold` does **not** transfer between models. Cosine-similarity scales differ enormously by architecture — the same enrolled-vs-guest pair scored ~0.95 on `titanet-small` but ~0.17 on `campplus`. The default `0.45` is calibrated only for `wespeaker-resnet34`; if you change `model`, you must re-tune `threshold`.
 
 Use case: household authorization — a shared-wake-word deployment where each registered user's voice profile allows or denies activation.
 

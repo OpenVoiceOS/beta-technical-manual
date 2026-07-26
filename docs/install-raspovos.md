@@ -137,6 +137,23 @@ Raspberry Pi boards are notoriously **picky about power supplies**. Insufficient
 
 ## Step 2: Install RaspOVOS Image
 
+### Download the raspOVOS image
+
+Grab the latest image from the
+[raspOVOS Releases page](https://github.com/OpenVoiceOS/raspOVOS/releases). Images are named
+`raspOVOS-<lang>-bookworm-arm64-<variant>.img.xz` — pick the one matching your language and one of
+three **variants**, which trade on-device processing against the Pi tier you chose in Step 1:
+
+- **`lite`** — delegates both STT and TTS to public OVOS servers with a minimal intent pipeline;
+  the lightest option and the one that *might* run on a **Pi 3**.
+- **`hybrid`** — runs TTS on-device but still uses public STT servers, with a balanced intent
+  pipeline; recommended for a **Pi 4**.
+- **`offline`** — runs both STT and TTS on-device with the full intent pipeline; needs at least
+  **4 GB RAM (Pi 4/5, 8 GB preferred)**.
+
+So a Pi 3 user should pick `lite`, and a Pi 5 user who wants to stay fully offline should pick
+`offline`. (`DEV`-prefixed releases are untranslated base images for developers — skip them.)
+
 1. **Download and Install Raspberry Pi Imager**
 
 
@@ -309,6 +326,11 @@ to reprint the full list.
 
 - `ls-skills` — list the `skill_id` of every installed skill.
 - `ls-stt` / `ls-tts` / `ls-ww` / `ls-tx` — list installed [STT](stt-plugins.md) / [TTS](tts-plugins.md) / wake-word / [translation](translation-plugins.md) plugins.
+
+**Sound/audio:**
+
+- `ovos-audio-diagnostics` — print the active sound server, sinks, and default output device.
+- `ovos-audio-setup` — interactive audio configuration menu (handy after wiring up a HAT).
 
 **Logs and status:**
 

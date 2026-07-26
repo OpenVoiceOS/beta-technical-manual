@@ -183,9 +183,16 @@ Add to a persona JSON:
 
 | Transport | Config |
 |-----------|--------|
-| stdio (subprocess) | `"transport": "stdio", "command": "uvx", "args": [...]` |
+| stdio (subprocess) | `"transport": "stdio", "command": "uvx", "args": [...]`, optional `"env": {...}` |
 | SSE | `"transport": "sse", "url": "http://..."` |
 | Streamable HTTP | `"transport": "http", "url": "http://..."` |
+
+For stdio, `env` is an optional dict of extra environment variables passed to
+`StdioServerParameters`, letting you inject secrets or `PATH` into the subprocess
+MCP server. Both `ovos-mcp-toolbox` and `ovos-utcp-toolbox` also accept a
+per-instance `toolbox_id` (defaults `ovos-mcp-toolbox` / `ovos-utcp-toolbox`) so
+multiple servers of the same type can run side by side, and a `timeout` (default
+30 seconds per call) to tune slow tools.
 
 ### UTCP (`ovos-utcp-toolbox`)
 
@@ -203,6 +210,12 @@ Add to a persona JSON:
 ```
 
 A background asyncio event loop keeps sessions alive between tool calls. Each server's JSON Schema is translated to a Pydantic model at discovery time so the LLM receives the actual input schema.
+
+Tool discovery degrades gracefully: if the `mcp`/`utcp` extra is missing, or the
+configured server cannot be reached, `list_tools()` logs a `LOG.warning` and
+returns an empty list rather than crashing the agent loop. A misconfigured
+toolbox therefore loads zero tools silently — check the logs when expected tools
+are absent.
 
 !!! note "`ovos-tool-adapters` and the Persona Server's own MCP/UTCP bridge"
     Both `MCPToolBox` and `UTCPToolBox` (from `ovos-tool-adapters`) and the Persona Server's tool

@@ -101,8 +101,8 @@ eyes.hue_spin()            # cycle the hue
 eyes.on(); eyes.off()      # raw on / off
 ```
 
-The `Eyes` API also exposes `set_hue` / `set_saturation` / `set_luminance` and their animated
-`hue_spin` / `saturation_spin` / `luminance_spin` variants.
+The `Eyes` API also exposes `set_hue` and `set_brightness(level)` (level `1`-`30`, bigger is
+brighter), plus the animated `hue_spin` / `saturation_spin` / `luminance_spin` variants.
 
 ### Faceplate Icons
 

@@ -92,7 +92,9 @@ as recommended, not mandatory.
 
 !!! note
     In practice, real-world `skill.json` files vary quite a bit — some use
-    `title` instead of `name`, and older, auto-generated `skill.json` files
+    `title` instead of `name`, some carry a `category` string (e.g. `"Daily"`,
+    `"Information"`, `"Configuration"`) that the skill store uses to group
+    listings, and older, auto-generated `skill.json` files
     (from the legacy skills-manager tooling) carry many more fields
     (`version`, `url`, `requirements`, `platforms`, and more). Stick to the
     fields above for new skills; anything extra is ignored by `ovos-workshop`.

@@ -93,7 +93,7 @@ options:
   `--multi` loads one engine instance per language on demand (one model per `lang`), instead of a single shared model.
 
 - **Compatibility routers**  
-  Beyond the native endpoints, the app mounts drop-in compatible routers so existing cloud-STT clients work unchanged, e.g. Wit.ai (`POST /wit/speech`, override the SDK host with the `WIT_URL` env var), Chromium speech-api (`POST /speech-api/v2/recognize`), and routers for OpenAI Whisper, Whisper.cpp server, Deepgram, Google, AssemblyAI, Azure, IBM Watson, AWS Transcribe, Vosk and Speechmatics. A `GET /utcp` manual advertises the endpoints to UTCP agents, and an MCP server mounts when `pip install 'ovos-stt-http-server[mcp]'` is present.
+  Beyond the native endpoints, the app mounts drop-in compatible routers so existing cloud-STT clients work unchanged, e.g. Wit.ai (`POST /wit/speech`, override the SDK host with the `WIT_URL` env var), Chromium speech-api (`POST /speech-api/v2/recognize`), and routers for OpenAI Whisper, Whisper.cpp server, Deepgram, Google, AssemblyAI, Azure, IBM Watson, AWS Transcribe, Vosk, Speechmatics, Gladia, ElevenLabs Scribe, Groq and Kaldi GStreamer. See `/docs` for the authoritative set. A `GET /utcp` manual advertises the endpoints to UTCP agents, and an MCP server mounts when `pip install 'ovos-stt-http-server[mcp]'` is present.
 
 - **Scalability**  
   Stateless design lets you run multiple instances behind a load balancer or in Kubernetes.
@@ -203,6 +203,7 @@ Point it at your own server (localhost, or wherever you run the container above)
     "ovos-stt-plugin-server": {
       "urls": ["http://localhost:8080/stt"],
       "verify_ssl": true,
+      "user_agent": "my-ovos-client",
       "timeout": 5
     },
  }
@@ -222,6 +223,11 @@ for audio language detection
   }
 
 ```
+
+The singular `url` key (a single string or a list) is also accepted as an alias for `urls`,
+and takes precedence over `urls` when both are set. The optional `user_agent` (STT client and
+lang-detect classifier alike) overrides the request `User-Agent` sent to servers; it defaults
+to the standard OVOS client UA.
 
 !!! warning "No `urls` configured → public servers, not local failure"
     If you omit `urls` entirely, the plugin does **not** fail — it silently falls back to a

@@ -54,7 +54,7 @@ compatible with your use case before depending on them.
 | [ovos-tts-plugin-SAM](https://github.com/OpenVoiceOS/ovos-tts-plugin-SAM) | see repo (no license file) | the package self-declares Apache-2.0 in its `pyproject.toml`, but the repository ships no `LICENSE` file, and the underlying S.A.M. engine is reverse-engineered abandonware with no clear upstream license |
 | ovos-tts-plugin-phoonnx (built into [phoonnx](https://github.com/TigreGotico/phoonnx)) | no license file | the `phoonnx` repository ships no `LICENSE` file; see the [TTS plugin table](tts-plugins.md#tts-plugins-reference) for the corresponding model-card caveat |
 | [ovos-tts-plugin-beepspeak](https://github.com/OpenVoiceOS/ovos-tts-plugin-beepspeak) | no license file | novelty R2-D2-style TTS plugin; the repository ships no `LICENSE` file |
-| [ovos-tts-plugin-lux](https://github.com/OpenVoiceOS/ovos-tts-plugin-lux) | no license file | zipvoice-based voice-cloning TTS plugin; the repository ships no `LICENSE` file |
+| [ovos-tts-plugin-lux](https://github.com/OpenVoiceOS/ovos-tts-plugin-lux) | see repo (no license file) | zipvoice-based voice-cloning TTS plugin; the package self-declares Apache-2.0 in its `setup.py` (with the OSI Apache classifier), but the repository ships no standalone `LICENSE` file |
 | [ovos-stt-plugin-HiTZ](https://github.com/OpenVoiceOS/ovos-stt-plugin-HiTZ) | no license file | archived/deprecated Basque STT plugin; the repository ships no `LICENSE` file |
 
 The rows above with **no license file** are not a rejection of the universal donor policy —

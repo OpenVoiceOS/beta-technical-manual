@@ -116,6 +116,13 @@ These channels are managed via the [constraints files](https://pip.pypa.io/en/st
     [Privacy & Security](privacy-security.md) for the actual network surface and how to
     harden it.
 
+!!! warning "Stable is currently a stale snapshot — Testing is recommended today"
+    Formal codename releases have not landed yet, so `constraints-stable.txt` reflects an
+    older, unmaintained snapshot (ovos-core `1.3.1`) rather than the most polished or actively
+    supported versions. Until the first codename release is cut, **Testing** (ovos-core `2.1.1`)
+    is the recommended channel for most distros and users, matching upstream guidance in
+    [ovos-releases](https://github.com/OpenVoiceOS/ovos-releases).
+
 ```bash
 uv pip install ovos-core[mycroft] -c https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-stable.txt
 
@@ -294,7 +301,8 @@ fetch the channel file on every operation:
 
 - OVOS is **fully modularized**, with each major service in its own repository, so you install only what you need.
 - All packages follow [Semantic Versioning (SemVer)](https://semver.org/), so you can rely on versioning to understand stability and compatibility.
-- Constraints files are a **stable standard** for bounding system versions since the [ovos-releases 1.0.0](https://github.com/OpenVoiceOS/ovos-releases) milestone.
+- Constraints files hosted in [ovos-releases](https://github.com/OpenVoiceOS/ovos-releases) are the current mechanism for bounding system versions across the channels. Formal codename releases are still pending — see the note under the Stable channel.
+- Once **codename releases** begin, packagers should pin to the versioned (tagged) constraints file URL rather than the `main` branch, so a package doesn't silently pick up constraint changes after its QA cycle is done.
 
 !!! note "Channel constraints are ranges, not exact pins"
     Every entry in the published channel constraints files is a compatible **range**

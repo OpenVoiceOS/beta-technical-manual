@@ -163,7 +163,7 @@ Implementations: `GGUFYesNoEngine`.
 Resolves a free-form user reply to one entry in a fixed list of options — the engine behind a
 skill's `ask_selection()`. The reference implementation,
 [`ovos-option-matcher-fuzzy-plugin`](https://github.com/OpenVoiceOS/ovos-option-matcher-fuzzy-plugin)
-(`FuzzyOptionMatcherPlugin`), resolves in order: fuzzy match (rapidfuzz `WRatio`) when the score
+(`FuzzyOptionMatcherPlugin`), resolves in order: fuzzy match via ovos-utils `match_one` (difflib `SequenceMatcher` ratio) when the score
 reaches `min_conf` (config key, default `0.65`), then locale-aware "last option" vocab, then
 ordinal/cardinal vocab (longest match wins), then a numeric fallback via `ovos-number-parser`,
 returning `None` if nothing matches.

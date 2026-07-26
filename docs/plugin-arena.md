@@ -66,13 +66,14 @@ same plugin under a different config counts as a different fighter — and once 
 is merged, the arena's sweep runs it against the pinned datasets and it appears on the boards.
 
 1. Add a JSON file at `registry/competitors/<modality>/<competitor-id>.json`, where `<modality>`
-   is one of `stt`, `tts`, `ww`, `vad`, `intent`. Required fields are `competitor_id`, `modality`
+   is one of `stt`, `tts`, `wake_word`, `vad`, `intent`, `intent_keyword`, `intent_template`
+   (the three intent leagues are separate competitor directories). Required fields are `competitor_id`, `modality`
    and `config` (a valid `mycroft.conf` fragment); non-intent fighters also need `plugin`, the OPM
    entry-point name. Intent fighters describe an ordered `config.intents.pipeline` of
    `<plugin>-<tier>` stages — a single stage benchmarks one engine, several stages make an
    ensemble — and `plugin` is derived automatically for the single-stage case.
 2. Validate locally with `uv run pytest tests/test_registry.py`, which checks every competitor
-   file against the schema. CI runs the same validation via `arena/cli.py validate-registry`.
+   file against the schema. CI runs the same test under the reusable `build_tests` job (`test_path: tests/`).
 3. Open a pull request. The sweep and the boards do the rest, and the fighter gets an embeddable
    rank badge for its README.
 
@@ -113,6 +114,7 @@ Modality-specific fields (kept inline or in `extras`):
 
 - Standard ELO formula (`arena/elo.py`): `K_FACTOR = 32` for new competitors (`< 30` battles), `K_FACTOR_VETERAN = 16` once past the `VETERAN_THRESHOLD = 30` battles.
 - The ELO seed is derived deterministically from the published benchmark predictions; human votes (GitHub issues) replay in issue-number order on top of it.
+- Automatic benchmark-seeded votes are down-weighted relative to human votes: `AUTO_K_DIVISOR = 4.0`, so auto votes carry a quarter of the K-weight of a human vote (`k_factor(battles, auto=True)` divides K by 4; the Bradley-Terry path uses the matching `BT_AUTO_WEIGHT = 1/4`).
 - Standings are fully recomputable from public data alone — the leaderboard JSON committed by `tally.yml` is a cache, not the source of truth.
 
 ---
@@ -131,8 +133,8 @@ Modality-specific fields (kept inline or in `extras`):
 
 ## Registry Validation, Scoring, and Provenance
 
-- **Registry validation** — `arena/cli.py validate-registry` strictly validates every competitor/dataset JSON file under `registry/` and exits non-zero on the first error, so a malformed registry entry is caught in CI (a dedicated `validate_registry` job runs it) before it can silently break assembly.
-- **Canonical WER normalization** — STT scoring passes both the reference and the hypothesis text through a single, versioned normalization convention (`arena.metrics.normalize_transcript`, tracked as `WER_NORMALIZER_VERSION`) before tokenizing: Unicode NFKC normalization, casefolding, punctuation stripped down to letters/digits/whitespace, and every run of digits spelled out digit-by-digit ("123" → "one two three") so numeral formatting differences between runners do not skew the score. `row_wer` prefers recomputing from raw reference/prediction text over a stored precomputed WER, falling back to the stored value only when raw text is unavailable.
+- **Registry validation** — `tests/test_registry.py` validates every competitor/dataset JSON file under `registry/` against the schema, so a malformed registry entry is caught in CI (under the reusable `build_tests` job) before it can silently break assembly. Run it locally with `uv run pytest tests/test_registry.py`.
+- **WER normalization** — STT scoring keeps normalization deliberately minimal: `_wer_components` (`arena/metrics.py`) lowercases both reference and hypothesis and splits on whitespace, then computes a word-level Levenshtein distance. `row_wer` returns a row's stored `wer` when present and only recomputes from `reference_text`/`prediction` when it is `None`. The recompute-first behaviour belongs instead to `row_wer_components` (used for WER bootstrap CIs), which recomputes word errors and reference word count from raw text and falls back to the stored `wer` (with unit word count) only when raw text is unavailable.
 - **Version-blend guard** — if a competitor's rows span more than one `plugin_version`, the board build logs a warning rather than silently averaging scores across versions.
 - **Reproducible predictions provenance** — `assemble` pins every HuggingFace predictions source to an immutable commit SHA (the dataset registry entry's `predictions_revision` when set, else `--revision`) and records the resolved mapping on each benchmark board (`predictions_revisions`) and in the top-level index, so a third party can re-fetch the exact predictions that produced any published score.
 

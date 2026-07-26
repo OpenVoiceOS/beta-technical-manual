@@ -97,7 +97,7 @@ your-repo workflow  (e.g. release.yml)
                 │   git push; gh pr create → PR to `base_branch` (default master)
                 │
                 ├─ [publish_pypi job]   if: publish_pypi
-                │   python -m build
+                │   uv build
                 │   pypa/gh-action-pypi-publish@release/v1 → PyPI as 1.3.0a1 (uses PYPI_TOKEN)
                 │
                 └─ [notify job]   if: notify_matrix && PR merged
@@ -140,7 +140,7 @@ your-repo workflow  (e.g. publish_stable.yml)
                 │   ncipollo/release-action → GitHub release tag 1.3.0
                 │
                 ├─ [publish_pypi job]   if: publish_pypi
-                │   python -m build
+                │   uv build
                 │   pypa/gh-action-pypi-publish@release/v1 → PyPI as 1.3.0 (uses PYPI_TOKEN)
                 │
                 ├─ [sync_dev job]   if: sync_dev
@@ -172,7 +172,7 @@ After a stable release is published to PyPI, the constraints files in [ovos-rele
 | `constraints-testing.txt` | Testing |
 | `constraints-stable.txt` | Stable |
 
-These files use `>=` bounds (e.g. `ovos-utils>=0.3.0`) so users get the latest compatible version within their chosen channel. `downstream-check.yml` reads `constraints-alpha.txt` (default branch `main`) to compute reverse dependencies; the channel-compatibility check in `release-preview.yml` reads all three.
+The bounds tighten by channel: `constraints-alpha.txt` uses pure `>=` (e.g. `ovos-audio>=2.1.1a1`) to always pull the newest pre-release; `constraints-testing.txt` caps at the next major (e.g. `ovos-audio>=1.1.0,<2.0.0`); `constraints-stable.txt` caps at the next minor (e.g. `ovos-audio>=0.4.0,<0.5.0`). Users get the latest compatible version within their chosen channel. `downstream-check.yml` reads `constraints-alpha.txt` (default branch `main`) to compute reverse dependencies; the channel-compatibility check in `release-preview.yml` reads all three.
 
 ---
 

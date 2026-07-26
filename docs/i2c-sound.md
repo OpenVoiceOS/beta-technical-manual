@@ -74,6 +74,28 @@ ongoing **audio-configuration** layer (scripts + systemd services) that sits abo
 - expose more complex setups (e.g. echo cancellation) in a friendlier way;
 - work across `alsa`, `pipewire`, or `pulseaudio`, and even on non-OVOS Raspberry Pi images.
 
+End users normally interact with just one entrypoint: **`ovos-audio-setup`**, an interactive menu
+(installed to `/usr/local/bin`) to pick the default soundcard, enable/disable the automation, and
+revert changes. It is also scriptable — `ovos-audio-setup <choice>` runs a menu option directly. The
+other scripts (`soundcard-autoconfigure`, `combine-sinks`, `usb-autovolume`) are not run by hand;
+they are driven automatically by systemd units and udev rules on boot and USB sound events.
+
+When picking the default output, `soundcard-autoconfigure` follows a **fixed priority order**:
+
+1. the `ovos-i2csound` hint in `/etc/OpenVoiceOS/i2c_platform` (the marker described above), if it
+   names a known platform;
+2. **USB** soundcard;
+3. user-installed **HAT**;
+4. onboard **headphones** (`bcm2835`, not present on Pi 5);
+5. **HDMI** (`vc4-hdmi`), as a last resort.
+
+!!! tip "Debugging no-audio devices"
+    Each tool writes a log to `/tmp`, which is the first place to look when a device has no sound:
+
+    - `/tmp/autosoundcard.log` — soundcard autoconfiguration
+    - `/tmp/autovolume-usb.log` — USB volume udev events
+    - `/tmp/autosink.log` — combined sink creation
+
 !!! note "Alpha"
     `raspovos-audio-setup` is an alpha-stage project — useful, but still stabilising.
 

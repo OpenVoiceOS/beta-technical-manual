@@ -218,6 +218,8 @@ are driven by the bus handlers below rather than called directly.
 | `configuration.patch` | `Configuration.patch` | Apply `data["config"]` as an in-memory patch |
 | `configuration.patch.clear` | `Configuration.patch_clear` | Clear the in-memory patch |
 | `configuration.cache.clear` | `Configuration.clear_cache` | Drop the cached merged config |
+| `mycroft.paired` | `Configuration.handle_remote_update` | Reload the remote/backend config layer |
+| `mycroft.internet.connected` | `Configuration.handle_remote_update` | Reload the remote/backend config layer |
 
 `Configuration.set_config_watcher()` uses `ovos-utils`' `FileWatcher` (watchdog) to monitor config files on disk and reloads automatically when they change.
 

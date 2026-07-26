@@ -128,7 +128,7 @@ Type aliases exported from `models.py`:
 | `color_distance` | `(color_a: Color, color_b: Color) -> float` | `float` | CIEDE2000 perceptual distance between two colors in sRGB-255 space. Lower is more similar. Computed by the in-house `srgb8_distance`/`delta_e_cie2000` implementation in `ovos_color_parser/core/distance.py` — no `colorspacious` dependency. |
 | `closest_color` | `(color: Color, color_opts: List[Color]) -> Color` | `Color` | Returns the element of `color_opts` with the smallest `color_distance` to `color`. |
 | `average_colors` | `(colors: List[Color], weights: Optional[List[float]] = None) -> HLSColor` | `HLSColor` | Weighted average of a list of colors. Hue is averaged using circular mean (atan2) to avoid wrap-around errors. Returns an `HLSColor`. |
-| `convert_K_to_RGB` | `(colour_temperature: int) -> sRGBAColor` | `sRGBAColor` | Converts a color temperature in Kelvin (1 000–40 000 K) to an sRGB color. Algorithm by Tanner Helland. |
+| `convert_K_to_RGB` | `(colour_temperature: int) -> sRGBAColor` | `sRGBAColor` | Converts a color temperature in Kelvin (1 000–40 000 K) to an sRGB color. Algorithm by Tanner Helland. Raises `ValueError` for temperatures outside the 1 000–40 000 K range, so callers should guard input. |
 | `get_contrasting_black_or_white` | `(hex_code: str) -> sRGBAColor` | `sRGBAColor` | Returns black or white, whichever provides the best contrast against the input hex color, using the YIQ luma formula. |
 | `palette_from_description` | `(description: str, lang: str = "en", strategy: MatchStrategy = ...) -> sRGBAColorPalette` | `sRGBAColorPalette` | Returns all candidate colors matched from a description (fuzzy, no adjective adjustment). Useful for UI palette suggestions. |
 | `lookup_name` | `(color: Color, lang: str = "en", namespace: Optional[str] = None, nearest: bool = False) -> str` | `str` | Reverse-lookup: given a color object, find its name in the language word list. `nearest=True` falls back to the closest known name instead of requiring an exact hex match. Raises `ValueError` if the hex code has no named entry and `nearest=False`. |
@@ -138,10 +138,13 @@ Type aliases exported from `models.py`:
 
 ### `ColorMatcher` class (`ovos_color_parser/matching.py`)
 
-Thread-safe class that owns the Aho-Corasick automata. Automata are class-level dicts (`_color_automatons`, `_object_automatons`) keyed by language code and built lazily.
+Thread-safe class that owns the `SubstringMatcher` automata. Can be used statically (backed by the per-language class-level caches `_color_automatons`/`_object_automatons`, built lazily) or as an instance with a fixed language and optional custom vocabularies for isolated, injectable matching.
 
 | Method | Signature | Description |
 |--------|-----------|-------------|
+| `__init__` | `(lang: str = "en", color_palettes: Optional[Iterable[Dict[str, str]]] = None, object_colors: Optional[Dict[str, str]] = None)` | Construct an instance bound to `lang`. Pass `color_palettes`/`object_colors` to inject custom vocabularies (defaults load the bundled JSON word lists for `lang`). |
+| `match_colors` | `(description: str, strategy: MatchStrategy = DAMERAU_LEVENSHTEIN_SIMILARITY, fuzzy: bool = False) -> List[Tuple[HLSColor, float]]` | Instance method: match `description` against this instance's color vocabulary. Exact-first; the fuzzy scan runs only when `fuzzy=True` and exact spotting finds nothing. |
+| `match_objects` | `(description: str, strategy: MatchStrategy = DAMERAU_LEVENSHTEIN_SIMILARITY) -> List[Tuple[HLSColor, float]]` | Instance method: match `description` against this instance's object-color vocabulary. |
 | `load_color_automaton` | `(cls, lang: str) -> SubstringMatcher` | Build (or return cached) substring-matching automaton from all non-descriptor JSON word lists for `lang`. |
 | `load_object_automaton` | `(cls, lang: str) -> SubstringMatcher` | Build (or return cached) automaton from `object_colors.json` for `lang`. |
 | `match_color_automaton` | `(description: str, lang: str = "en", strategy: MatchStrategy = DAMERAU_LEVENSHTEIN_SIMILARITY, fuzzy: bool = False) -> List[Tuple[HLSColor, float]]` | Match description against color name database. |

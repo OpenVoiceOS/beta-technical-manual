@@ -12,12 +12,21 @@ OpenVoiceOS's multilingual language-name parsing and pronouncing library. It con
 from ovos_lang_parser import extract_langcode, pronounce_lang
 
 extract_langcode("switch to Spanish please", "en")   # ("es", 1.0)  -> (code, confidence)
+extract_langcode("Brazilian Portuguese", "en")        # ("pt-br", 1.0)  regional codes preserved
 pronounce_lang("fr", "en")                            # "French"
+```
+
+Because matching is fuzzy, apply a confidence threshold before acting on a result — the OVOS examples treat `conf >= 0.7` as a hit:
+
+```python
+code, conf = extract_langcode(utterance, ui_lang)
+if conf >= 0.7:
+    switch_language(code)
 ```
 
 When a user says "switch to French", you need the BCP-47 code `"fr"`; when speaking a language back to the user you need its localized name. This library covers both directions.
 
-The first argument that names a language is the *target* language being talked about; the `lang` argument is the *UI language the user is speaking in* (which decides the vocabulary of recognized names). The UI languages that ship with name vocabularies are: `ca`, `da`, `de`, `en`, `es`, `eu`, `fr`, `gl`, `it`, `nl`, `pt`. A UI `lang` outside this set is matched to the closest one (and raises `ValueError` if nothing is close).
+The first argument that names a language is the *target* language being talked about; the `lang` argument is the *UI language the user is speaking in* (which decides the vocabulary of recognized names). 21 UI languages ship with name vocabularies: `an`, `ar`, `ast`, `bg`, `ca`, `da`, `de`, `en`, `es`, `eu`, `fr`, `fy`, `gl`, `hr`, `it`, `kab`, `nl`, `oc`, `pt`, `ro`, `sk` (the live list is always `ovos_lang_parser.LANGS`). A UI `lang` outside this set is matched to the closest one (and raises `ValueError` if nothing is close).
 
 ---
 
@@ -25,10 +34,12 @@ The first argument that names a language is the *target* language being talked a
 
 | File | Responsibility |
 |------|---------------|
-| `ovos_lang_parser/__init__.py` | Entire public API — 3 functions |
+| `ovos_lang_parser/__init__.py` | Entire public API — 3 functions plus the `LANGS` constant |
 | `ovos_lang_parser/res/<lang>/langs.json` | Per-UI-language JSON files mapping BCP-47 codes to their spoken name(s) in that UI language |
 
-Dependencies: `langcodes` (closest language match), `ovos-utils` (bracket template expansion, fuzzy `match_one`).
+The public surface is these three functions plus the `LANGS` constant — the list of UI-language codes that ship a wordlist.
+
+Dependencies: `ovos-spec-tools` (BCP-47 tag resolution: `standardize_lang`, `closest_lang`, `lang_distance` per OVOS-INTENT-2 §2.2), `langcodes` and `language_data` (CLDR display names / fuzzy name lookup), `ovos-utils` (fuzzy `match_one`). Alternative-name template expansion is handled internally by the module's own `_expand()` regex, not by `ovos-utils`.
 
 ---
 
@@ -38,18 +49,19 @@ The library is intentionally minimal. `__init__.py` contains three functions and
 
 ```python
 RES_DIR = f"{os.path.dirname(__file__)}/res"
-LANGS = os.listdir(RES_DIR)    # list of language codes with resource files
+LANGS = sorted(entry for entry in os.listdir(RES_DIR)
+               if os.path.isfile(f"{RES_DIR}/{entry}/langs.json"))
 ```
 
 ### `get_lang_data(lang)`
 
-1. Uses `langcodes.closest_match(lang, LANGS)` to tolerate BCP-47 variants (e.g. `"en-US"` matches `"en"`). Raises `ValueError` if distance > 10.
+1. Uses `ovos_spec_tools.language.closest_lang(lang, LANGS)` to tolerate BCP-47 variants (e.g. `"en-US"` matches `"en"`, `"pt-br"` matches `"pt"`). Raises `ValueError` when `closest_lang` returns `None` (nothing close enough).
 2. Opens `res/<closest_lang>/langs.json`.
-3. Expands any alternative-name templates (e.g. `"(Español|Castellano)"` → `["Español", "Castellano"]`) using `ovos_utils.bracket_expansion.expand_template`.
+3. Expands any alternative-name templates (e.g. `"(Español|Castellano)"` → `["Español", "Castellano"]`) with the module's internal recursive `_expand()` regex.
 4. Returns a flat `dict` of `spoken_name → bcp47_code` for all known languages in that UI language.
 
 !!! note
-    `expand_template` is deprecated in favor of `ovos_spec_tools.expand`, which the current implementation now delegates to internally. The template syntax is `(a|b)` for alternatives, not square brackets.
+    The template syntax is `(a|b)` for alternatives, not square brackets. Expansion is done by the library's own `_expand()` function — there is no dependency on any external template-expansion helper.
 
 The `langs.json` format maps BCP-47 codes to one or more spoken names, either as a plain string, a JSON list, or a `(alt1|alt2)` template string. For example, `res/de/langs.json` (German UI names) lists Catalan as:
 
@@ -79,7 +91,7 @@ Return the full spoken-name-to-code mapping for UI language `lang`.
 
 Returns `dict[spoken_name, bcp47_code]`. Multiple spoken names for the same language produce multiple keys mapping to the same code.
 
-Raises `ValueError` if no resource file is close enough to `lang` (closeness threshold: distance ≤ 10 in `langcodes.closest_match`).
+Raises `ValueError` if no resource file is close enough to `lang` (when `ovos_spec_tools.language.closest_lang` returns `None`).
 
 ---
 
@@ -96,7 +108,13 @@ Identify the language being referred to in `text`, where the user is speaking in
 | `text` | `str` | Utterance containing a language name, e.g. `"set the language to French"` |
 | `lang` | `str` | BCP-47 code of the UI language |
 
-Returns `(bcp47_code, confidence_score)` — the best-matching language code and its match confidence (0.0–1.0). Uses `ovos_utils.parse.match_one` with `MatchStrategy.TOKEN_SET_RATIO`.
+Returns `(bcp47_code, confidence_score)` — the best-matching language code and its match confidence (0.0–1.0). Matching proceeds in tiers:
+
+1. **Exact whole-word span match** always wins: a wordlist name appearing verbatim as a run of whole words in the utterance returns confidence `1.0`; the most specific (longest) such span wins, so `"American English"` beats `"English"`.
+2. **Fuzzy wordlist match** via `ovos_utils.parse.match_one` with `MatchStrategy.TOKEN_SET_RATIO`.
+3. **Guarded CLDR fallback** (`langcodes.find`): consulted only when the fuzzy match is below the `0.9` name floor, covering languages no wordlist bundles. It is guarded so `langcodes.find` cannot greedily resolve ordinary words to obscure codes.
+
+Non-string or blank `text` returns `("", 0.0)` rather than raising; a zero-confidence match also yields `("", 0.0)`.
 
 Example:
 ```python
@@ -119,14 +137,24 @@ Return the spoken name of a language code in the UI language `lang`.
 | `lang_code` | `str` | BCP-47 code of the language to pronounce, e.g. `"fr"` |
 | `lang` | `str` | BCP-47 code of the UI language |
 
-Returns a single spoken name string. If multiple names exist, the first is returned. Falls back to the `lang_code` itself if no entry is found.
+Returns a single spoken name string. Resolution is most-specific-first: the full tag's curated name, then the **base-language** curated name (a regioned or private-use tag like `ar-EG` or `pt-BR-x-caipira` resolves to the name of `ar` / `pt`). If the wordlist has no curated name, it falls back to the CLDR display name via `langcodes` (`mwl` → `"Mirandese"`, `lij` → `"Ligurian"`), covering the long tail of ISO-639 codes no wordlist bundles. Only a truly unknown code is returned unchanged.
 
 Example:
 ```python
 pronounce_lang("fr", "en")   # "French"
 pronounce_lang("es", "en")   # "Spanish"
 pronounce_lang("en", "fr")   # "Anglais"
+pronounce_lang("mwl", "en")  # "Mirandese"  (CLDR fallback, no wordlist entry)
 ```
+
+---
+
+## Dialects & regional subtags
+
+A language code may carry a region (`ar-EG`, `pt-AO`) or a private-use dialect subtag (`an-x-ansotano`, `pt-BR-x-caipira`, `ar-IQ-x-qeltu`). The wordlists name languages and a handful of specific regional varieties — they do not name every dialect. The contract is explicit:
+
+- Tag standardization (`ovos_spec_tools.language.standardize_lang`) **preserves** region and `-x-` private-use subtags; a tag is never silently collapsed to its base language, and a private-use tag never raises.
+- `pronounce_lang` returns the most specific spoken name it has: the full tag's name when one exists, otherwise a documented, lossy-but-safe fall back to the **base-language** name (`ar-EG` → the name of `ar`). This is an acceptable answer, not a failure, when no dialect-specific name is bundled.
 
 ---
 

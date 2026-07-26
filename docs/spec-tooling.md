@@ -114,6 +114,20 @@ CI never re-resolves and never downgrades a component. Each test then:
 - drives and captures the live bus through [`ovoscope`](https://github.com/OpenVoiceOS/ovoscope) (see [Testing Skills](ovoscope-overview.md));
 - asserts the spec-mandated behavior and records pass / `xfail` / fail.
 
+**Coverage.** All 20 specs on the architecture `dev` branch currently have
+conformance suites (SESSION-1 and SESSION-2 share one suite; INTENT-4 has both an
+orchestrator suite and a per-plugin registration-compliance suite). The
+authoritative spec→suite traceability matrix lives in the repo's
+[`docs/coverage.md`](https://github.com/OpenVoiceOS/ovos-test-harness/blob/dev/docs/coverage.md);
+documented conformance gaps are recorded as `xfail` entries and catalogued in
+[`docs/known-gaps.md`](https://github.com/OpenVoiceOS/ovos-test-harness/blob/dev/docs/known-gaps.md).
+
+**Pre-flighting a cross-repo change.** To certify an unmerged combination,
+maintainers pin the candidate branches in `requirements.txt` and open a harness
+PR — CI then installs exactly that stack and runs the full conformance suite
+against it, flipping each ref to `@dev` as it merges. One structural limit: two
+branches of the *same* repo cannot both be installed, so pick one ref per repo.
+
 This is where an implementation is **proven to conform** to the merged
 architecture specs — the bridge between the prescriptive Markdown and the code
 that has to honour it.

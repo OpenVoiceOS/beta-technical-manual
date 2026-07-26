@@ -178,8 +178,10 @@ The GUI WebSocket server is configured under `gui_websocket` in `mycroft.conf`:
     this socket carries the same authority as the bus itself. There is no authentication and no
     origin check. On top of that, there's no TLS option either: unlike
     [`ovos-messagebus`](bus-service.md) (which can serve `wss://` itself), `ovos-gui`'s Tornado
-    WebSocket server has no working `gui_websocket.ssl` server path — verified against the
-    `ovos-gui` source, there is no config key that turns this socket into `wss://`.
+    WebSocket server has no working `gui_websocket.ssl` server path. The `gui_websocket.ssl`
+    key does exist in the default config (value `false`), but it is a no-op: `create_gui_service`
+    in `ovos_gui/bus.py` reads only `route`, `base_port`, and `host`, so nothing turns this
+    socket into `wss://`.
 
     It ships bound to `127.0.0.1` (localhost only) — keep it that way unless a remote display
     client genuinely needs it, and never widen `gui_websocket.host` to `0.0.0.0` or expose port

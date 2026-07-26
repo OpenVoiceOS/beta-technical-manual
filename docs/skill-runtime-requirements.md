@@ -29,7 +29,7 @@ report ready. Configure what it waits for through **that skill's own settings**
     "network_skills",
     "internet_skills",
     "audio",
-    "speech"
+    "voice"
   ]
 }
 
@@ -37,8 +37,10 @@ report ready. Configure what it waits for through **that skill's own settings**
 
 This is the skill's `settings.json` (see [Skill Settings](skill-settings.md)),
 not `mycroft.conf`. In this example, boot-finished is configured to wait for
-network and internet connectivity, plus the audio and speech services, before
-emitting `mycroft.ready`. Each setup can customize this list based on its
+network and internet connectivity, plus the audio and voice services, before
+emitting `mycroft.ready`. (The listener reports readiness under `voice`, not
+`speech` — there is no `speech` service key, so waiting on it would never
+resolve.) Each setup can customize this list based on its
 needs — an offline install won't want to wait on internet-dependent skills, a
 headless server won't want to wait on an audio stack, etc. If `ready_settings`
 is not set, the skill defaults to waiting for `skills` plus every currently
@@ -105,6 +107,13 @@ Any other name is treated generically: the skill waits for a `mycroft.<name>.is_
 > waiting for `skills` plus every currently installed skill_id. Because OVOS
 > supports dynamic skill loading (skills can load and unload after startup),
 > timing can impact anything that depends on the `mycroft.ready` message.
+
+> ⚠️ **Troubleshooting**: A readiness check polls every 3s and gives up after
+> 60s; if any service is still not ready it sleeps 5s and re-emits
+> `mycroft.ready.check`, retrying indefinitely. So an unsatisfiable
+> `ready_settings` entry — a wrong service key (e.g. `speech` instead of
+> `voice`) or a service that never starts — makes the skill loop forever and
+> never emit `mycroft.ready`.
 
 ---
 

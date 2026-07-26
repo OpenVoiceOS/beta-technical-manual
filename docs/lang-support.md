@@ -105,10 +105,13 @@ OVOS uses [**OVOS Localize**](https://openvoiceos.github.io/ovos-localize/) — 
 
 ### 📊 Translation Progress
 
-Translation progress is tracked at:  
-👉 [https://openvoiceos.github.io/lang-support-tracker](https://openvoiceos.github.io/lang-support-tracker)
+OVOS Localize scans skill data and exports a language × skill coverage matrix to
+[`data/coverage.json`](https://openvoiceos.github.io/ovos-localize/data/coverage.json),
+refreshed alongside the translation app — this is the current source of translation progress.
 
-The tracker provides daily updates and displays all languages that have reached at least 25% translation coverage.
+> ⚠️ The older [lang-support-tracker](https://github.com/OpenVoiceOS/lang-support-tracker)
+> is a **frozen GitLocalize-era snapshot** (superseded by OVOS Localize); its percentages
+> are no longer updated and should not be treated as current.
 
 > ❗ If your language is missing from [OVOS Localize](https://openvoiceos.github.io/ovos-localize/), [open an issue](https://github.com/OpenVoiceOS/lang-support-tracker/issues) to request it. Currently, languages must be added manually.
 
@@ -274,12 +277,9 @@ Use [OVOS Localize](https://openvoiceos.github.io/ovos-localize/) to translate d
 
 - [Translator Tutorial](ovos-localize-tutorial.md)
 
-Translation stats for each language are also available in:
+Live per-language translation stats are available from OVOS Localize:
 
-- [Markdown summaries (e.g., `translate_status_pt-PT.md`)](https://openvoiceos.github.io/lang-support-tracker/tx_info/translate_status_pt-PT.md)
-
-
-- [JSON format (e.g., `pt-PT.json`)](https://openvoiceos.github.io/lang-support-tracker/tx_info/pt-PT.json)
+- [`data/coverage.json`](https://openvoiceos.github.io/ovos-localize/data/coverage.json) — language × skill coverage matrix with display names
 
 ---
 

@@ -91,9 +91,23 @@ Canonical (spec) names are shown first, with the legacy name in parentheses. The
 | `ovos.listener.awoken` (legacy: `mycroft.awoken`) | none | Listener woke from sleep (§6.4) |
 
 It also reacts to inbound commands: `ovos.listener.sleep` (legacy: `recognizer_loop:sleep`)
-suspends capture, `recognizer_loop:wake_up` resumes it, plus `recognizer_loop:record_stop`
-and `recognizer_loop:state.get`. The full table lives in the bus-message spec
-(`message_spec/dinkum.md`).
+suspends capture, `recognizer_loop:wake_up` resumes it, plus `recognizer_loop:record_stop`,
+`recognizer_loop:state.get` (read the current mode/state) and `recognizer_loop:state.set`
+(change the listening mode/state at runtime — send `state` and/or `mode` in `message.data`;
+the handler replies with `recognizer_loop:state` just like `state.get`). The full table lives
+in the bus-message spec (`message_spec/dinkum.md`).
+
+### Base64 audio STT over the bus
+
+Remote clients without a local mic (e.g. HiveMind) can push audio to the listener for
+transcription via two inbound commands. Both take `{"audio": <base64 str>}` in
+`message.data`, with optional `lang`, `sample_rate`, and `sample_width` (defaulting to the
+STT/loop values):
+
+| Command | Behaviour |
+| --- | --- |
+| `recognizer_loop:b64_transcribe` | Transcribes the audio and returns the result on the message response as `{"transcriptions": [...], "lang"}` — a pure STT call that emits no utterance event |
+| `recognizer_loop:b64_audio` | Transcribes and, if the result clears `min_stt_confidence`, emits the normal `ovos.utterance.handle` (`recognizer_loop:utterance`) event as if the audio had come from the mic; otherwise emits `recognizer_loop:speech.recognition.unknown` |
 
 !!! note "Sleep is device-scoped, not session-scoped"
 

@@ -24,7 +24,10 @@
        `enable_old_audioservice`, on by default) that plays music/news/streams through
        [audioservice backends](media-plugins.md#ovos-ocp-audio-plugin) such as
        [OCP](ocp-audio-plugin.md). This is the **deprecated** part, being superseded by the
-       standalone [`ovos-media`](ovos-media.md) daemon.
+       standalone [`ovos-media`](ovos-media.md) daemon. A second top-level key,
+       `disable_ocp` (default `false`, slated to flip to `true`), gates whether the OCP
+       audioservice backend loads within this subsystem. Both keys are set at the **top
+       level** of `mycroft.conf`, not under the `Audio` section.
 
     Switching media playback to `ovos-media` (`enable_old_audioservice: false`) turns off
     subsystem 2 only — TTS and sound playback (subsystem 1) keep working exactly as before.
@@ -86,10 +89,12 @@ Subsystem 2 — legacy media audioservice (only if enable_old_audioservice):
 
 ## Configuration
 
-Settings for the audio service are located in the `tts` and `Audio` sections of `mycroft.conf`.
+Settings for the audio service are located in the `tts` and `Audio` sections of `mycroft.conf`, plus two **top-level** toggles (`enable_old_audioservice`, `disable_ocp`) that gate the deprecated media path — see the **Two independent subsystems** note above.
 
 ```json
 {
+  "enable_old_audioservice": true,
+  "disable_ocp": false,
   "tts": {
     "module": "ovos-tts-plugin-server",
     "ovos-tts-plugin-server": {
