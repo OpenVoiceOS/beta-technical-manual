@@ -9,9 +9,15 @@
     catalog. New here? Start with the [Plugins Index](plugins-index.md).
 
 !!! tip "Don't want to choose? Use the recommended offline stack"
-    Every ⭐ below is a sensible, **fully-offline, on-device** default. Drop this into
-    `~/.config/mycroft/mycroft.conf` and you have a complete private stack — no cloud, no
-    account:
+    Every ⭐ below is a sensible, **fully-offline, on-device** default — a complete private
+    stack, no cloud, no account. First install them:
+
+    ```bash
+    pip install ovos-microphone-plugin-alsa ovos-vad-plugin-silero \
+                ovos-stt-plugin-onnx-asr phoonnx
+    ```
+
+    then drop this into `~/.config/mycroft/mycroft.conf`:
 
     ```json
     {
@@ -22,9 +28,13 @@
     }
     ```
 
-    The wake word already defaults to **precise-onnx** (`hey_mycroft`) — see
-    [Wake Word](#wake-word) to change the phrase. Or run
-    `ovos-config autoconfigure -l en-us --offline` to set language + these defaults for you.
+    The wake word is **not** in the snippet because it already defaults to **precise-onnx**
+    (`hey_mycroft`) — see [Wake Word](#wake-word) to change the phrase. Prefer one command?
+    `ovos-config autoconfigure -l en-us --offline` writes the language + these defaults for
+    you (it needs `ovos-config` already installed, and configures rather than installs plugins).
+
+**In a hurry with a specific constraint** (low-power Pi, GPU accuracy, thin satellite, cloud
+OK)? Jump straight to **[Pick by scenario](#pick-by-scenario)**.
 
 **How to read the tables.** ⭐ marks the recommended default. **Maturity** rates
 [repository health](maturity.md) (PoC → Alpha → Beta → Stable → Mature), *not* how good the
@@ -47,7 +57,6 @@ Captures audio. See the [Microphone catalog](mic-plugins.md).
 | ovos-microphone-plugin-sounddevice | Stable | offline | Cross-platform (Linux/macOS/Windows) capture |
 | ovos-microphone-plugin-pyaudio | Beta | offline | You want PortAudio bindings directly, no `speech_recognition` dep |
 | ovos-microphone-plugin-files | Stable | offline | Automated testing — feed audio files instead of a live mic |
-| ovos-microphone-plugin-socket | Beta | network | A remote/networked mic over a socket (proof-of-concept) |
 
 ### VAD (Voice Activity Detection)
 
@@ -70,8 +79,10 @@ Listens for the activation phrase. See the [Wake Word catalog](wake-word-plugins
 | ovos-ww-plugin-vosk | Stable | offline | Fastest setup for an arbitrary phrase, no model training (good for dev) |
 | ovos-ww-plugin-wakewordlab | Alpha | offline | Very compact (~240 KB) models with a Silero pre-filter (install from source) |
 | ovos-ww-plugin-wakeforge | Alpha | offline | Train a custom detector from a single phrase (install from source) |
-| ovos-ww-plugin-server | Alpha | online | Thin satellite offloading detection to a remote ww-server |
-| ovos-ww-plugin-precise-lite | Deprecated | offline | You already have a TFLite Precise model — superseded by precise-onnx |
+| ovos-ww-plugin-server | Alpha | hybrid | Thin satellite offloading detection to a self-hosted ww-server |
+
+*`ovos-ww-plugin-precise-lite` is **deprecated** — the TFLite predecessor of precise-onnx,
+kept working as a fallback but not a pick for new setups.*
 
 ### STT (Speech-to-Text)
 
@@ -112,12 +123,15 @@ Turns replies into speech. See the [TTS catalog](tts-plugins.md) (17 plugins; to
 
 ### G2P (Grapheme-to-Phoneme)
 
-Text → phonemes, mostly for mouth/visemes. See the [G2P catalog](g2p-plugins.md).
+Converts text to phonemes to drive **mouth-movement / viseme animation** (e.g. a Mark 1
+face). This is a **Beta, Mark 1-era** capability: most TTS voices don't emit phoneme timing,
+so a G2P plugin *estimates* it from the text. Only **Mimic 1** provides phoneme timing
+natively; for any other voice the G2P plugin simulates the timing. **If you don't drive a
+mouth/face, you don't need a G2P plugin at all.** See the [G2P catalog](g2p-plugins.md).
 
 | Plugin | Maturity | Runs | Choose this if |
 |---|---|---|---|
-| ⭐ **ovos-g2p-plugin-mimic** | Mature | offline | The stable, PyPI-published default (ARPA phonemes via Mimic 1) |
-| ovos-g2p-plugin-espeak | PoC | offline | Broad multilingual IPA (wraps espeak); Hatchery-only, not on PyPI |
+| ⭐ **ovos-g2p-plugin-mimic** | Beta | offline | The PyPI-published default — ARPA phonemes via the Mimic 1 engine |
 
 ---
 

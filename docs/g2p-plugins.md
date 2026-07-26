@@ -3,7 +3,12 @@
 !!! abstract "In a nutshell"
     These plugins work out *how a written word should sound*. A "grapheme" is just a letter you see on the page, and a "phoneme" is a unit of sound you hear when it's spoken — so this is the part that figures out, for example, that "knight" sounds like "nite". The voice that reads text aloud uses this to pronounce words more correctly, and on-screen avatars use it to move their lips in time with the speech. For unfamiliar terms, see the [Glossary](glossary.md); to learn about the voices that speak, see [TTS Plugins](tts-plugins.md).
 
-Grapheme-to-Phoneme (G2P) plugins are responsible for converting written text (graphemes) into their spoken representations (phonemes). These are used by [TTS](tts-plugins.md) engines to improve pronunciation and by the GUI to provide lip-sync data (visemes).
+Grapheme-to-Phoneme (G2P) plugins convert written text (graphemes) into phonemes. In practice
+this is a **Beta, Mark 1-era capability used for mouth-movement / viseme animation**: most
+[TTS](tts-plugins.md) voices don't emit phoneme timing, so a G2P plugin *estimates* it from the
+text to drive lip-sync. Only **Mimic 1** provides phoneme timing natively; for any other voice
+the G2P plugin simulates the timing. **If you don't drive an on-screen mouth/face, you don't
+need a G2P plugin.**
 
 ## How it works
 
@@ -13,8 +18,7 @@ A G2P plugin takes a word or an utterance and returns a list of phonemes in a sp
 
 | Plugin | Alphabet | Description | Maturity |
 |--------|----------|-------------|----------|
-| `ovos-g2p-plugin-mimic` | ARPA | Uses the Mimic 1 engine for G2P conversion. Shipped by [ovos-tts-plugin-mimic](https://github.com/OpenVoiceOS/ovos-tts-plugin-mimic) (the TTS plugin also registers an `opm.g2p` entry point). | Mature |
-| [ovos-g2p-plugin-espeak](https://github.com/OVOSHatchery/ovos-g2p-plugin-espeak) | IPA | Wraps `espeak-phonemizer` for broad multilingual IPA coverage. **Hatchery-only** — not published to PyPI, install from source if you need it. | Proof-of-concept |
+| `ovos-g2p-plugin-mimic` | ARPA | Uses the Mimic 1 engine for G2P conversion. Shipped by [ovos-tts-plugin-mimic](https://github.com/OpenVoiceOS/ovos-tts-plugin-mimic) (the TTS plugin also registers an `opm.g2p` entry point). | Beta |
 
 Maturity reflects repository health (age, activity, open issues/PRs, in-repo docs), not version — see the [Maturity Scale](maturity.md).
 

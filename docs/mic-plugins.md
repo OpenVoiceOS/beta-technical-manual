@@ -41,8 +41,6 @@ pip install ovos-microphone-plugin-<name>
 | [ovos-microphone-plugin-pyaudio](https://github.com/OpenVoiceOS/ovos-microphone-plugin-pyaudio) | Uses the [PyAudio](https://people.csail.mit.edu/hubert/pyaudio/) PortAudio bindings directly (no `speech_recognition` dependency). Good cross-platform general-purpose plugin. | Linux, macOS, Windows | Beta |
 | [ovos-microphone-plugin-sounddevice](https://github.com/OpenVoiceOS/ovos-microphone-plugin-sounddevice) | Built on [python-sounddevice](https://github.com/spatialaudio/python-sounddevice). Offers cross-platform support. | Linux, macOS, Windows | Stable |
 | [ovos-microphone-plugin-files](https://github.com/OpenVoiceOS/ovos-microphone-plugin-files) | Uses audio files as input instead of a live microphone — ideal for testing and debugging. | Linux, macOS, Windows | Stable |
-| [ovos-microphone-plugin-arecord](https://github.com/OVOSHatchery/ovos-microphone-plugin-arecord) | Wraps `arecord` using subprocess calls. Simple and effective on systems with ALSA. **Hatchery-only** — not published to PyPI, install from source if you need it. | Linux | Alpha |
-| [ovos-microphone-plugin-socket](https://github.com/OVOSHatchery/ovos-microphone-plugin-socket) | Receives audio over a socket connection. Useful for remote microphone setups. **Hatchery-only** — not published to PyPI, install from source if you need it. | Linux, macOS, Windows | Beta |
 
 Maturity reflects repository health (age, activity, open issues/PRs, in-repo docs), not version — see the [Maturity Scale](maturity.md).
 
@@ -165,19 +163,11 @@ finally:
 - **Testing**: The `files` plugin is ideal for automated testing environments where live input isn't available.
 
 
-- **Remote audio**: The `socket` plugin is a proof-of-concept for networked microphones and is not recommended for production use without customization.
-
-
-- **Hatchery-only plugins**: `ovos-microphone-plugin-arecord` and `ovos-microphone-plugin-socket`
-  live under [OVOSHatchery](https://github.com/OVOSHatchery), not the core `OpenVoiceOS` org, and
-  are **not published to PyPI** — install them straight from the git repository if you need them.
-
 # Microphone Plugins Reference
 
 Default configuration for the plugins listed in [Supported Microphone Plugins](#supported-microphone-plugins)
 above (OS compatibility and a one-line description live in that table; this section only adds
-config where a plugin has one). `ovos-microphone-plugin-arecord` and `ovos-microphone-plugin-socket`
-have no dedicated section here — see the table above and [Tips & Caveats](#tips-caveats).
+config where a plugin has one).
 
 ## ovos-microphone-plugin-alsa
 
