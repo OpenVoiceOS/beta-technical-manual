@@ -174,16 +174,21 @@ Detailed per-plugin configuration for the same roster listed in
 - **GitHub**: [https://github.com/OpenVoiceOS/ovos-vad-plugin-silero](https://github.com/OpenVoiceOS/ovos-vad-plugin-silero)
 
 
-- **Description**: Silero Voice Activity Detection (VAD) plugin.
+- **Description**: Silero Voice Activity Detection (VAD) plugin. The Silero ONNX
+  model **ships inside the package**, so it runs fully offline with no first-run
+  download. Requires 16 kHz audio (it raises rather than resampling).
 
 ### Default Configuration
 
-```json
+```jsonc
 {
     "listener": {
         "VAD": {
             "module": "ovos-vad-plugin-silero",
             "ovos-vad-plugin-silero": {
+                // speech-probability cutoff; below this a chunk is treated as silence
+                "threshold": 0.2,
+                // optional — override the bundled model with a custom ONNX file
                 "model": "/optional/path/to/model.onnx"
             }
         }
@@ -191,6 +196,17 @@ Detailed per-plugin configuration for the same roster listed in
 }
 
 ```
+
+| Config key | Default | Effect |
+|---|---|---|
+| `threshold` | `0.2` | Speech-probability cutoff; chunks scoring below it are classified as silence |
+| `model` | bundled `silero_vad.onnx` | Path to a custom ONNX model; defaults to the model shipped in the package |
+
+!!! tip "Same package also provides a pre-wake VAD verifier"
+    `ovos-vad-plugin-silero` registers a second entry point, `ovos-ww-verifier-silero`
+    (`opm.wake_word.verifier`), which re-checks that a wake-word activation actually
+    contains speech before waking — a "noise filter" that cuts false wakes. It has its
+    own `threshold` (default `0.1`). See the Pre-Wake VAD blog post below.
 
 ---
 
