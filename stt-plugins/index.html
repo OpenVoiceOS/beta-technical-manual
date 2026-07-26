@@ -1604,7 +1604,7 @@ Whisper-class one, independent of the plugin wrapping it.</p>
 </span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">  </span><span class="p">}</span>
 </span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="p">}</span>
 </span></code></pre></div>
-<p>The roster below lists available plugins and their default configurations.</p>
+<p>The roster below lists available plugins with a recommended starting configuration for each (which may differ from a plugin's built-in default — noted where relevant).</p>
 <h2 id="stt"><code>STT</code><a class="headerlink" href="#stt" title="Permanent link">&para;</a></h2>
 <p>The base STT, this handles the audio in "batch mode" taking a complete audio file, and returning the complete transcription.</p>
 <p>Each STT plugin class needs to define the <code>execute()</code> method taking two arguments:</p>
@@ -2204,10 +2204,11 @@ servers entirely: fully offline plugins exist for everything.</p>
 <p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-stt-plugin-onnx-asr">https://github.com/OpenVoiceOS/ovos-stt-plugin-onnx-asr</a></p>
 </li>
 <li>
-<p><strong>Description</strong>: Runs <a href="https://github.com/istupakov/onnx-asr">onnx-asr</a> models fully offline via ONNX Runtime — no cloud call, no PyTorch/transformers dependency. Supports NeMo Parakeet and Canary, Whisper, and wav2vec2 model families.</p>
+<p><strong>Description</strong>: Runs <a href="https://github.com/istupakov/onnx-asr">onnx-asr</a> models via ONNX Runtime with no PyTorch/transformers dependency. Inference is fully offline; models are downloaded from Hugging Face on first load, so it runs offline <strong>after the model has been fetched once</strong> (there is currently no plugin-level option to pin a purely-local model directory). Supports NeMo Parakeet and Canary, Whisper, and wav2vec2 model families.</p>
 </li>
 </ul>
-<h3 id="default-configuration_12">Default Configuration<a class="headerlink" href="#default-configuration_12" title="Permanent link">&para;</a></h3>
+<h3 id="recommended-configuration">Recommended Configuration<a class="headerlink" href="#recommended-configuration" title="Permanent link">&para;</a></h3>
+<p>If <code>model</code> is omitted, the plugin loads its <strong>built-in default <code>nemo-canary-1b-v2</code></strong> — a ~1B-parameter model with strong accuracy but a heavier footprint. For typical offline devices we recommend setting the lighter <code>nemo-parakeet-tdt-0.6b-v3</code> explicitly:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>  &quot;stt&quot;: {
 </span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>    &quot;module&quot;: &quot;ovos-stt-plugin-onnx-asr&quot;,
 </span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>    &quot;ovos-stt-plugin-onnx-asr&quot;: {
@@ -2215,6 +2216,41 @@ servers entirely: fully offline plugins exist for everything.</p>
 </span><span id="__span-21-5"><a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a>    }
 </span><span id="__span-21-6"><a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a>  }
 </span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Config key</th>
+<th>Default</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>model</code></td>
+<td><code>nemo-canary-1b-v2</code></td>
+<td>Built-in alias or any Hugging Face ONNX ASR repo id</td>
+</tr>
+<tr>
+<td><code>quantization</code></td>
+<td>unset</td>
+<td>Set <code>"int8"</code> to load int8 weights where a model ships them (smaller/faster)</td>
+</tr>
+<tr>
+<td><code>use_cuda</code></td>
+<td><code>false</code></td>
+<td>Select the CUDA execution provider (with a CPU fallback)</td>
+</tr>
+<tr>
+<td><code>providers</code></td>
+<td>unset</td>
+<td>Explicit list of onnxruntime execution providers; takes precedence over <code>use_cuda</code></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Language handling is model-family-gated</p>
+<p>The configured/utterance language is only passed to the ASR call for <strong>Whisper</strong> and <strong>Canary</strong> (NeMo Conformer AED) families. Other families (Parakeet, GigaAM, Vosk, wav2vec2, T-one) ignore <code>lang</code> — for those, pick a language-specific model instead of relying on a <code>lang</code> setting to steer a multilingual one.</p>
+</div>
 <p>Besides the built-in aliases and the <code>onnx-asr</code> repository's own model hub, the plugin loads any repo id from the <a href="https://huggingface.co/collections/OpenVoiceOS/stt-asr-onnx">OpenVoiceOS/stt-asr-onnx</a> collection — curated single-language and regional ONNX conversions of NeMo Conformer/Parakeet and Whisper checkpoints, grouped roughly by family: AI4Bharat/Vaani models for Indian languages, NVIDIA Conformer/Parakeet models for major European languages (plus Kabyle, Belarusian, Esperanto, Kinyarwanda), Iberian-language Conformer models, and per-language Whisper finetunes. Most ship both fp32 and int8 weights (<code>quantization: "int8"</code> works); a few large models are fp32-only. See the collection itself for the exhaustive, current list — it grows independently of this plugin's release cycle.</p>
 <hr />
 <h2 id="further-reading">Further reading<a class="headerlink" href="#further-reading" title="Permanent link">&para;</a></h2>
