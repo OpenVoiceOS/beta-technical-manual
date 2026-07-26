@@ -463,12 +463,15 @@ The method is registered as `{skill_id}.get_data` on the bus.
 
 ## OCP Decorators
 
-!!! warning "OCP skills are being deprecated"
-    Skills that implement playback with these decorators (`OVOSCommonPlaybackSkill`)
-    are on a deprecation path: content search/playback is moving to
-    [`ovos-media`](ovos-media.md) **media provider plugins** (`media_providers`).
-    The decorators below still work today, but new integrations should target the
-    media-provider API rather than an OCP skill.
+!!! warning "Media search is moving out of skills"
+    The **media search/provider** role — a skill implementing `@ocp_search` to
+    return media results — is being deprecated: a new class of **media-search
+    plugins**, consumed directly by the [OCP pipeline plugin](ocp-pipeline.md), is
+    replacing it (PRs in progress). Other OCP skill uses are **not** going away —
+    voice games (`OVOSGameSkill`), ebook readers, and playback handlers remain
+    supported. The decorators below still work today; new *media-search*
+    integrations should target the upcoming media-search plugin type rather than an
+    `@ocp_search` skill.
 
 OCP (OpenVoiceOS [Common Play](ocp-pipeline.md)) decorators are used with `OVOSCommonPlaybackSkill` and `OVOSGameSkill`.
 
