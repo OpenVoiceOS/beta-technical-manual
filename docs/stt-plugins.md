@@ -49,7 +49,7 @@ pip install ovos-stt-plugin-onnx-asr
 }
 ```
 
-The roster below lists available plugins and their default configurations.
+The roster below lists available plugins with a recommended starting configuration for each (which may differ from a plugin's built-in default — noted where relevant).
 
 ## `STT`
 
@@ -627,9 +627,11 @@ CPU is the shipped default (`use_cuda: false`); set `use_cuda: true` for accepta
 - **GitHub**: [https://github.com/OpenVoiceOS/ovos-stt-plugin-onnx-asr](https://github.com/OpenVoiceOS/ovos-stt-plugin-onnx-asr)
 
 
-- **Description**: Runs [onnx-asr](https://github.com/istupakov/onnx-asr) models fully offline via ONNX Runtime — no cloud call, no PyTorch/transformers dependency. Supports NeMo Parakeet and Canary, Whisper, and wav2vec2 model families.
+- **Description**: Runs [onnx-asr](https://github.com/istupakov/onnx-asr) models via ONNX Runtime with no PyTorch/transformers dependency. Inference is fully offline; models are downloaded from Hugging Face on first load, so it runs offline **after the model has been fetched once** (there is currently no plugin-level option to pin a purely-local model directory). Supports NeMo Parakeet and Canary, Whisper, and wav2vec2 model families.
 
-### Default Configuration
+### Recommended Configuration
+
+If `model` is omitted, the plugin loads its **built-in default `nemo-canary-1b-v2`** — a ~1B-parameter model with strong accuracy but a heavier footprint. For typical offline devices we recommend setting the lighter `nemo-parakeet-tdt-0.6b-v3` explicitly:
 
 ```jsonc
   "stt": {
@@ -640,6 +642,16 @@ CPU is the shipped default (`use_cuda: false`); set `use_cuda: true` for accepta
   }
 
 ```
+
+| Config key | Default | Effect |
+|---|---|---|
+| `model` | `nemo-canary-1b-v2` | Built-in alias or any Hugging Face ONNX ASR repo id |
+| `quantization` | unset | Set `"int8"` to load int8 weights where a model ships them (smaller/faster) |
+| `use_cuda` | `false` | Select the CUDA execution provider (with a CPU fallback) |
+| `providers` | unset | Explicit list of onnxruntime execution providers; takes precedence over `use_cuda` |
+
+!!! note "Language handling is model-family-gated"
+    The configured/utterance language is only passed to the ASR call for **Whisper** and **Canary** (NeMo Conformer AED) families. Other families (Parakeet, GigaAM, Vosk, wav2vec2, T-one) ignore `lang` — for those, pick a language-specific model instead of relying on a `lang` setting to steer a multilingual one.
 
 Besides the built-in aliases and the `onnx-asr` repository's own model hub, the plugin loads any repo id from the [OpenVoiceOS/stt-asr-onnx](https://huggingface.co/collections/OpenVoiceOS/stt-asr-onnx) collection — curated single-language and regional ONNX conversions of NeMo Conformer/Parakeet and Whisper checkpoints, grouped roughly by family: AI4Bharat/Vaani models for Indian languages, NVIDIA Conformer/Parakeet models for major European languages (plus Kabyle, Belarusian, Esperanto, Kinyarwanda), Iberian-language Conformer models, and per-language Whisper finetunes. Most ship both fp32 and int8 weights (`quantization: "int8"` works); a few large models are fp32-only. See the collection itself for the exhaustive, current list — it grows independently of this plugin's release cycle.
 
