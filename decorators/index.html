@@ -2387,6 +2387,14 @@
 </span></code></pre></div>
 <hr />
 <h2 id="gui-homescreen-decorators">GUI / Homescreen Decorators<a class="headerlink" href="#gui-homescreen-decorators" title="Permanent link">&para;</a></h2>
+<div class="admonition warning">
+<p class="admonition-title">Homescreens are being deprecated</p>
+<p>Skill-provided home/idle screens are on their way out: in the GUI rework the
+idle screen becomes a job for the display backend rather than a skill (see
+<a href="../homescreen/">Home Screen</a> and <a href="../gui-status/">Screens on OVOS Today</a>). The
+decorators below still work on the legacy stack but should not be treated as
+the forward-looking way to build a home screen.</p>
+</div>
 <h3 id="homescreen_app"><code>@homescreen_app</code><a class="headerlink" href="#homescreen_app" title="Permanent link">&para;</a></h3>
 <p><code>homescreen_app</code> — <code>ovos_workshop/decorators/__init__.py</code></p>
 <p>Register a method as a homescreen app launcher. The icon file must be inside the <code>gui/</code> subfolder of the skill.</p>
@@ -2422,6 +2430,14 @@ under. See <a href="../homescreen/">Home Screen</a> for the full idle-screen wal
 <p>The method is registered as <code>{skill_id}.get_data</code> on the bus.</p>
 <hr />
 <h2 id="ocp-decorators">OCP Decorators<a class="headerlink" href="#ocp-decorators" title="Permanent link">&para;</a></h2>
+<div class="admonition warning">
+<p class="admonition-title">OCP skills are being deprecated</p>
+<p>Skills that implement playback with these decorators (<code>OVOSCommonPlaybackSkill</code>)
+are on a deprecation path: content search/playback is moving to
+<a href="../ovos-media/"><code>ovos-media</code></a> <strong>media provider plugins</strong> (<code>media_providers</code>).
+The decorators below still work today, but new integrations should target the
+media-provider API rather than an OCP skill.</p>
+</div>
 <p>OCP (OpenVoiceOS <a href="../ocp-pipeline/">Common Play</a>) decorators are used with <code>OVOSCommonPlaybackSkill</code> and <code>OVOSGameSkill</code>.</p>
 <p><strong>Source:</strong> <code>ovos_workshop/decorators/ocp.py</code></p>
 <table>
