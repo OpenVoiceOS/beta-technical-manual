@@ -1727,21 +1727,54 @@ used by the plugin manager to advertise network/offline behavior.</p>
 <p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-vad-plugin-silero">https://github.com/OpenVoiceOS/ovos-vad-plugin-silero</a></p>
 </li>
 <li>
-<p><strong>Description</strong>: Silero Voice Activity Detection (VAD) plugin.</p>
+<p><strong>Description</strong>: Silero Voice Activity Detection (VAD) plugin. The Silero ONNX
+  model <strong>ships inside the package</strong>, so it runs fully offline with no first-run
+  download. Requires 16 kHz audio (it raises rather than resampling).</p>
 </li>
 </ul>
 <h3 id="default-configuration">Default Configuration<a class="headerlink" href="#default-configuration" title="Permanent link">&para;</a></h3>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="p">{</span>
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">    </span><span class="nt">&quot;listener&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">        </span><span class="nt">&quot;VAD&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">            </span><span class="nt">&quot;module&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ovos-vad-plugin-silero&quot;</span><span class="p">,</span>
-</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">            </span><span class="nt">&quot;ovos-vad-plugin-silero&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="w">                </span><span class="nt">&quot;model&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/optional/path/to/model.onnx&quot;</span>
-</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="w">            </span><span class="p">}</span>
-</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="w">        </span><span class="p">}</span>
-</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="w">    </span><span class="p">}</span>
-</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="p">}</span>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>{
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>    &quot;listener&quot;: {
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>        &quot;VAD&quot;: {
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>            &quot;module&quot;: &quot;ovos-vad-plugin-silero&quot;,
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>            &quot;ovos-vad-plugin-silero&quot;: {
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>                // speech-probability cutoff; below this a chunk is treated as silence
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>                &quot;threshold&quot;: 0.2,
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>                // optional — override the bundled model with a custom ONNX file
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>                &quot;model&quot;: &quot;/optional/path/to/model.onnx&quot;
+</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>            }
+</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>        }
+</span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>    }
+</span><span id="__span-5-13"><a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>}
 </span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Config key</th>
+<th>Default</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>threshold</code></td>
+<td><code>0.2</code></td>
+<td>Speech-probability cutoff; chunks scoring below it are classified as silence</td>
+</tr>
+<tr>
+<td><code>model</code></td>
+<td>bundled <code>silero_vad.onnx</code></td>
+<td>Path to a custom ONNX model; defaults to the model shipped in the package</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition tip">
+<p class="admonition-title">Same package also provides a pre-wake VAD verifier</p>
+<p><code>ovos-vad-plugin-silero</code> registers a second entry point, <code>ovos-ww-verifier-silero</code>
+(<code>opm.wake_word.verifier</code>), which re-checks that a wake-word activation actually
+contains speech before waking — a "noise filter" that cuts false wakes. It has its
+own <code>threshold</code> (default <code>0.1</code>). See the Pre-Wake VAD blog post below.</p>
+</div>
 <hr />
 <h2 id="further-reading">Further reading<a class="headerlink" href="#further-reading" title="Permanent link">&para;</a></h2>
 <ul>
