@@ -2431,12 +2431,15 @@ under. See <a href="../homescreen/">Home Screen</a> for the full idle-screen wal
 <hr />
 <h2 id="ocp-decorators">OCP Decorators<a class="headerlink" href="#ocp-decorators" title="Permanent link">&para;</a></h2>
 <div class="admonition warning">
-<p class="admonition-title">OCP skills are being deprecated</p>
-<p>Skills that implement playback with these decorators (<code>OVOSCommonPlaybackSkill</code>)
-are on a deprecation path: content search/playback is moving to
-<a href="../ovos-media/"><code>ovos-media</code></a> <strong>media provider plugins</strong> (<code>media_providers</code>).
-The decorators below still work today, but new integrations should target the
-media-provider API rather than an OCP skill.</p>
+<p class="admonition-title">Media search is moving out of skills</p>
+<p>The <strong>media search/provider</strong> role — a skill implementing <code>@ocp_search</code> to
+return media results — is being deprecated: a new class of <strong>media-search
+plugins</strong>, consumed directly by the <a href="../ocp-pipeline/">OCP pipeline plugin</a>, is
+replacing it (PRs in progress). Other OCP skill uses are <strong>not</strong> going away —
+voice games (<code>OVOSGameSkill</code>), ebook readers, and playback handlers remain
+supported. The decorators below still work today; new <em>media-search</em>
+integrations should target the upcoming media-search plugin type rather than an
+<code>@ocp_search</code> skill.</p>
 </div>
 <p>OCP (OpenVoiceOS <a href="../ocp-pipeline/">Common Play</a>) decorators are used with <code>OVOSCommonPlaybackSkill</code> and <code>OVOSGameSkill</code>.</p>
 <p><strong>Source:</strong> <code>ovos_workshop/decorators/ocp.py</code></p>
