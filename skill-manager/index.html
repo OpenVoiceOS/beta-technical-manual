@@ -1712,13 +1712,13 @@
 <summary>Technical Reference</summary>
 <ul>
 <li>
-<p><code>SkillManager.run()</code> — <a href="https://github.com/OpenVoiceOS/ovos-core/blob/dev/ovos_core/skill_manager.py"><code>ovos_core/skill_manager.py:474</code></a> — Main loop; re-scans for new skills every 30 s via <code>self._stop_event.wait(30)</code>.</p>
+<p><code>SkillManager.run()</code> — <a href="https://github.com/OpenVoiceOS/ovos-core/blob/dev/ovos_core/skill_manager.py"><code>ovos_core/skill_manager.py:476</code></a> — Main loop; re-scans for new skills every 30 s via <code>self._stop_event.wait(30)</code>.</p>
 </li>
 <li>
-<p><code>SkillManager.load_plugin_skills()</code> — <a href="https://github.com/OpenVoiceOS/ovos-core/blob/dev/ovos_core/skill_manager.py"><code>ovos_core/skill_manager.py:345</code></a> — loads discovered skills via <code>PluginSkillLoader</code> (from <code>ovos_workshop.skill_launcher</code>); applies each skill's <code>RuntimeRequirements</code> (<code>network_before_load</code> / <code>internet_before_load</code>) as the connectivity gate.</p>
+<p><code>SkillManager.load_plugin_skills()</code> — <a href="https://github.com/OpenVoiceOS/ovos-core/blob/dev/ovos_core/skill_manager.py"><code>ovos_core/skill_manager.py:347</code></a> — loads discovered skills via <code>PluginSkillLoader</code> (from <code>ovos_workshop.skill_launcher</code>); applies each skill's <code>RuntimeRequirements</code> (<code>network_before_load</code> / <code>internet_before_load</code>) as the connectivity gate.</p>
 </li>
 <li>
-<p><code>SkillManager._sync_skill_loading_state()</code> — <a href="https://github.com/OpenVoiceOS/ovos-core/blob/dev/ovos_core/skill_manager.py"><code>ovos_core/skill_manager.py:179</code></a> — queries connectivity (via <code>ovos.PHAL.internet_check</code> / GUI state) and emits <code>mycroft.network.connected</code> / <code>mycroft.internet.connected</code>; the actual gating happens in <code>load_plugin_skills()</code> and only when <code>skills.use_deferred_loading</code> is enabled.</p>
+<p><code>SkillManager._sync_skill_loading_state()</code> — <a href="https://github.com/OpenVoiceOS/ovos-core/blob/dev/ovos_core/skill_manager.py"><code>ovos_core/skill_manager.py:181</code></a> — queries connectivity (via <code>ovos.PHAL.internet_check</code> / GUI state) and emits <code>mycroft.network.connected</code> / <code>mycroft.internet.connected</code>; the actual gating happens in <code>load_plugin_skills()</code> and only when <code>skills.use_deferred_loading</code> is enabled.</p>
 </li>
 </ul>
 </details>
@@ -1781,9 +1781,11 @@ are met:</p>
 <p>After new skills are loaded, the manager requests pipeline re-training:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>mycroft.skills.train  →  (pipeline plugins that need it train, e.g. padatious)
 </span></code></pre></div>
-<p>The manager emits <code>mycroft.skills.train</code> fire-and-forget — there is no reply topic
-in the spec and no blocking wait or timeout in <code>SkillManager</code>. Pipeline plugins that
-have a deferred training step react to it; those that don't simply ignore it.</p>
+<p>The manager emits <code>mycroft.skills.train</code> and blocks up to 60 seconds via
+<code>bus.wait_for_response(..., "mycroft.skills.trained", timeout=60)</code>. It logs an
+error if training times out or reports an error. Pipeline plugins with a
+deferred training step reply on <code>mycroft.skills.trained</code>. Plugins without one
+never reply, and the call times out.</p>
 <h2 id="settings-file-watcher">Settings File Watcher<a class="headerlink" href="#settings-file-watcher" title="Permanent link">&para;</a></h2>
 <p>When enabled, a <code>FileWatcher</code> monitors <code>~/.config/ovos/skills/*/settings.json</code>. Any change emits:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>ovos.skills.settings_changed  {skill_id: &quot;...&quot;}

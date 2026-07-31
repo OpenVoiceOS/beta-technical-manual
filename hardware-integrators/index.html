@@ -1828,11 +1828,12 @@ whole OS image, not just Python packages), you will need to bring your own solut
 <p>If your device has a display, <a href="../gui-service/"><code>ovos-gui</code></a> provides the protocol and
 <a href="../ovos-shell/"><code>ovos-shell</code></a> (or a Qt5/QML client speaking the same
 <a href="../gui-protocol/">GUI protocol</a>) renders it, with a <a href="../homescreen/">homescreen</a> skill as the
-default idle view — this part is real and works today on Linux desktops and the
-<a href="../ovos-installer/">GUI-capable installer path</a>. If you are starting a from-scratch hardware
+default idle view — this part works today on Linux desktops and the
+<a href="../ovos-installer/">GUI-capable installer path</a>, but the legacy Qt5 stack is deprecated
+pending the GUI rework. If you are starting a from-scratch hardware
 design, plan for a voice-first experience with an optional screen rather than the other way
-around: the GUI layer is functional but is going through active rework, so treat it as a nice
-extra your device can degrade gracefully without, not a hard dependency for launch.</p>
+around: treat the GUI layer as a nice extra your device can degrade gracefully without, not
+a hard dependency for launch.</p>
 <hr />
 <h2 id="see-also">See also<a class="headerlink" href="#see-also" title="Permanent link">&para;</a></h2>
 <ul>

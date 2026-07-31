@@ -1969,7 +1969,7 @@ service against the same bus: the duplication happens at the message-dispatch le
 any skill code runs, so every subscriber on both instances still receives and reacts to
 every message. Horizontal scaling for multiple devices/users is a distributed-deployment
 concern, not a duplicate-singleton one — it is done with <a href="../hivemind-agents/">HiveMind</a>
-satellites talking to a single hub, not by running two copies of <code>ovos-core</code>,
+satellites talking to a single HiveMind server, not by running two copies of <code>ovos-core</code>,
 <code>ovos-audio</code>, or <code>ovos-dinkum-listener</code> against one bus.</p>
 <h3 id="defaults-assume-localhost">Defaults assume localhost<a class="headerlink" href="#defaults-assume-localhost" title="Permanent link">&para;</a></h3>
 <p><code>websocket.host</code> (<code>127.0.0.1</code>), and most PHAL device-integration plugins, assume everything they

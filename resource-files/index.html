@@ -1670,6 +1670,10 @@
 <p>The locale folder layout and the plain-text resource formats are specified by <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/intent-2.md">OVOS-INTENT-2 — Locale Resource Formats</a></strong> (a formal <a href="../architecture-specs/">architecture spec</a>); the template grammar inside them is <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/intent-1.md">OVOS-INTENT-1</a></strong>. OVOS-INTENT-2 defines <strong>six canonical roles</strong> by extension: <code>.intent</code> and <code>.dialog</code> (slot-bearing — they may use <code>{name}</code> slots), <code>.entity</code>, <code>.voc</code>, and <code>.blacklist</code> (slot-free — expansion only), and <code>.prompt</code> (a whole-file language-model prompt with <code>{{name}}</code> substitution, <strong>not</strong> a template). Resources live under <code>locale/&lt;lang&gt;/</code> (BCP-47 tags, compared case-insensitively, searched recursively), resolved user → skill → core (§2.1). The <code>.rx</code>, <code>.list</code>, and <code>.word</code> files below are <strong>framework extensions</strong>, not OVOS-INTENT-2 roles — prefer <code>.entity</code>/<code>.voc</code>/<code>.blacklist</code> for portability.</p>
 </details>
 <p>Skills load localized resources from a structured directory layout. Resources are loaded automatically at startup for every language in <code>native_langs</code> (<code>core_lang</code> + <code>secondary_langs</code>).</p>
+<p><code>.blacklist</code> is a spec-defined role under OVOS-INTENT-2. <code>ovos-workshop</code> has no built-in
+loader for it. A skill must read the file itself. The <code>voc_blacklist=</code> argument on
+<code>@intent_handler</code> is a different, unrelated mechanism. It takes <code>.voc</code> filenames, not
+<code>.blacklist</code> filenames.</p>
 <h2 id="directory-layout">Directory Layout<a class="headerlink" href="#directory-layout" title="Permanent link">&para;</a></h2>
 <p>The recommended layout uses a single <code>locale/</code> directory:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>my-skill/
@@ -1721,7 +1725,7 @@
 <tr>
 <td><code>.blacklist</code></td>
 <td>Blacklist</td>
-<td>Phrases that suppress a paired <code>.intent</code> (OVOS-INTENT-2 role; slot-free)</td>
+<td>Phrases that suppress a paired <code>.intent</code> (OVOS-INTENT-2 role; slot-free). No built-in <code>ovos-workshop</code> loader. Skills read this file themselves. Unrelated to <code>voc_blacklist=</code> on <code>@intent_handler</code>, which takes <code>.voc</code> filenames.</td>
 </tr>
 <tr>
 <td><code>.prompt</code></td>
