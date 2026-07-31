@@ -1854,13 +1854,20 @@ lighter Conformer). <code>--gpu</code> needs a CUDA-capable GPU and implies <cod
 <p>The table below is a snapshot of the bundled recommendations. The authoritative list is whatever <code>recommends/offline_stt/*.conf</code>, <code>recommends/offline_female/*.conf</code>, and <code>recommends/offline_male/*.conf</code> files ship in your installed <code>ovos-config</code>. It grows as new models are added to the OVOS Hugging Face collections.</p>
 </blockquote>
 <p>Offline STT is <a href="../stt-plugins/#ovos-stt-plugin-onnx-asr"><code>ovos-stt-plugin-onnx-asr</code></a> everywhere
-it's listed. Offline TTS is always <a href="../tts-plugins/#ovos-tts-plugin-phoonnx"><code>ovos-tts-plugin-phoonnx</code></a>.
-It picks a default voice for the language automatically. A handful of the original
-languages pin an explicit voice instead. Both work the same way from the user's side.
-<code>int8</code> next to a model means a quantized CPU build is available and used by default.
-<code>--gpu</code> switches to the full-precision model with <code>use_cuda: true</code>. For the most
+it's listed. Where the table shows an offline TTS entry, it is always
+<a href="../tts-plugins/#ovos-tts-plugin-phoonnx"><code>ovos-tts-plugin-phoonnx</code></a>, pinned to a specific male
+and/or female voice. <code>int8</code> next to a model means a quantized CPU build is available and used
+by default. <code>--gpu</code> switches to the full-precision model with <code>use_cuda: true</code>. For the most
 widely-spoken languages (English, French, German, Italian, Dutch) it swaps in a larger model
 entirely (<code>nemo-canary-1b-v2</code>) instead of just requantizing.</p>
+<div class="admonition note">
+<p class="admonition-title">A TTS recommend needs a gender-evidenced voice</p>
+<p>A bundled offline TTS recommendation pins one male voice and one female voice per
+language. <code>autoconfigure</code> adds a language only once a phoonnx voice with a confirmed
+gender exists for it. A language without one is STT-only until such a voice appears; you
+can still point <code>ovos-tts-plugin-phoonnx</code> at any voice ID yourself, but it won't be
+auto-selected.</p>
+</div>
 <p>Several regional variants still have gaps. <strong>EN-GB</strong>, <strong>PT-BR</strong>, <strong>AR-SA</strong>, and the four
 Catalan variants (<strong>CA-BA</strong>, <strong>CA-NW</strong>, <strong>CA-VA</strong>, plus the already-covered <strong>CA-ES</strong>) ship a
 TTS voice but no bundled offline STT recommendation. <strong>EN-AU</strong> has no bundled offline
@@ -1888,12 +1895,12 @@ available.</p>
 <tr>
 <td><strong>AS-IN</strong></td>
 <td><code>OpenVoiceOS/ai4bharat-indicconformer-as-onnx</code></td>
-<td style="text-align: center;">✅</td>
+<td style="text-align: center;">—</td>
 </tr>
 <tr>
 <td><strong>BE-BY</strong></td>
 <td><code>OpenVoiceOS/nvidia-be-conformer-transducer-large-onnx</code> (int8)</td>
-<td style="text-align: center;">✅</td>
+<td style="text-align: center;">—</td>
 </tr>
 <tr>
 <td><strong>BN-IN</strong></td>
@@ -1963,7 +1970,7 @@ available.</p>
 <tr>
 <td><strong>ET-EE</strong></td>
 <td><code>OpenVoiceOS/yuriyvnv-parakeet-tdt-0.6b-et-onnx</code> (int8)</td>
-<td style="text-align: center;">✅</td>
+<td style="text-align: center;">—</td>
 </tr>
 <tr>
 <td><strong>EU-ES</strong></td>
@@ -1978,7 +1985,7 @@ available.</p>
 <tr>
 <td><strong>FON-BJ</strong></td>
 <td><code>OpenVoiceOS/misterkissi-whisper-small-fongbe-onnx</code></td>
-<td style="text-align: center;">✅</td>
+<td style="text-align: center;">—</td>
 </tr>
 <tr>
 <td><strong>FR-FR</strong></td>
@@ -1988,7 +1995,7 @@ available.</p>
 <tr>
 <td><strong>GA-IE</strong></td>
 <td><code>OpenVoiceOS/misterkissi-w2v2-lg-xls-r-300m-ga-onnx</code></td>
-<td style="text-align: center;">✅</td>
+<td style="text-align: center;">—</td>
 </tr>
 <tr>
 <td><strong>GL-ES</strong></td>
@@ -1998,7 +2005,7 @@ available.</p>
 <tr>
 <td><strong>GU-IN</strong></td>
 <td><code>OpenVoiceOS/ai4bharat-indicconformer-gu-onnx</code> (int8)</td>
-<td style="text-align: center;">✅</td>
+<td style="text-align: center;">—</td>
 </tr>
 <tr>
 <td><strong>HI-IN</strong></td>
@@ -2008,12 +2015,12 @@ available.</p>
 <tr>
 <td><strong>HR-HR</strong></td>
 <td><code>OpenVoiceOS/nvidia-hr-conformer-transducer-large-onnx</code> (int8)</td>
-<td style="text-align: center;">✅</td>
+<td style="text-align: center;">—</td>
 </tr>
 <tr>
 <td><strong>HT-HT</strong></td>
 <td><code>OpenVoiceOS/misterkissi-whisper-small-haitian-creole-onnx</code></td>
-<td style="text-align: center;">✅</td>
+<td style="text-align: center;">—</td>
 </tr>
 <tr>
 <td><strong>IT-IT</strong></td>
@@ -2028,12 +2035,12 @@ available.</p>
 <tr>
 <td><strong>KAB-DZ</strong></td>
 <td><code>OpenVoiceOS/nvidia-kab-conformer-transducer-large-onnx</code> (int8)</td>
-<td style="text-align: center;">✅</td>
+<td style="text-align: center;">—</td>
 </tr>
 <tr>
 <td><strong>KN-IN</strong></td>
 <td><code>OpenVoiceOS/ai4bharat-indicconformer-kn-onnx</code> (int8)</td>
-<td style="text-align: center;">✅</td>
+<td style="text-align: center;">—</td>
 </tr>
 <tr>
 <td><strong>KOK-IN</strong></td>
@@ -2053,17 +2060,17 @@ available.</p>
 <tr>
 <td><strong>MAI-IN</strong></td>
 <td><code>OpenVoiceOS/ai4bharat-indicconformer-mai-onnx</code> (int8)</td>
-<td style="text-align: center;">✅</td>
+<td style="text-align: center;">—</td>
 </tr>
 <tr>
 <td><strong>MG-MG</strong></td>
 <td><code>OpenVoiceOS/misterkissi-whisper-small-malagasy-onnx</code></td>
-<td style="text-align: center;">✅</td>
+<td style="text-align: center;">—</td>
 </tr>
 <tr>
 <td><strong>ML-IN</strong></td>
 <td><code>OpenVoiceOS/ai4bharat-indicconformer-ml-onnx</code> (int8)</td>
-<td style="text-align: center;">✅</td>
+<td style="text-align: center;">—</td>
 </tr>
 <tr>
 <td><strong>MNI-IN</strong></td>
@@ -2073,17 +2080,17 @@ available.</p>
 <tr>
 <td><strong>MR-IN</strong></td>
 <td><code>OpenVoiceOS/ai4bharat-indicconformer-mr-onnx</code> (int8)</td>
-<td style="text-align: center;">✅</td>
+<td style="text-align: center;">—</td>
 </tr>
 <tr>
 <td><strong>NE-NP</strong></td>
 <td><code>OpenVoiceOS/ai4bharat-indicconformer-ne-onnx</code> (int8)</td>
-<td style="text-align: center;">✅</td>
+<td style="text-align: center;">—</td>
 </tr>
 <tr>
 <td><strong>NGL-MZ</strong></td>
 <td><code>OpenVoiceOS/misterkissi-whisper-small-lomwe-onnx</code></td>
-<td style="text-align: center;">✅</td>
+<td style="text-align: center;">—</td>
 </tr>
 <tr>
 <td><strong>NL-NL</strong></td>
@@ -2098,7 +2105,7 @@ available.</p>
 <tr>
 <td><strong>PA-IN</strong></td>
 <td><code>OpenVoiceOS/ai4bharat-indicconformer-pa-onnx</code> (int8)</td>
-<td style="text-align: center;">✅</td>
+<td style="text-align: center;">—</td>
 </tr>
 <tr>
 <td><strong>PL-PL</strong></td>
@@ -2118,12 +2125,12 @@ available.</p>
 <tr>
 <td><strong>RU-RU</strong></td>
 <td><code>OpenVoiceOS/nvidia-ru-conformer-transducer-large-onnx</code> (int8)</td>
-<td style="text-align: center;">✅</td>
+<td style="text-align: center;">—</td>
 </tr>
 <tr>
 <td><strong>RW-RW</strong></td>
 <td><code>OpenVoiceOS/nvidia-rw-conformer-transducer-large-onnx</code> (int8)</td>
-<td style="text-align: center;">✅</td>
+<td style="text-align: center;">—</td>
 </tr>
 <tr>
 <td><strong>SA-IN</strong></td>
@@ -2148,7 +2155,7 @@ available.</p>
 <tr>
 <td><strong>SN-ZW</strong></td>
 <td><code>OpenVoiceOS/misterkissi-whisper-small-shona-onnx</code></td>
-<td style="text-align: center;">✅</td>
+<td style="text-align: center;">—</td>
 </tr>
 <tr>
 <td><strong>ST-ZA</strong></td>
@@ -2158,12 +2165,12 @@ available.</p>
 <tr>
 <td><strong>TA-IN</strong></td>
 <td><code>OpenVoiceOS/ai4bharat-indicconformer-ta-onnx</code> (int8)</td>
-<td style="text-align: center;">✅</td>
+<td style="text-align: center;">—</td>
 </tr>
 <tr>
 <td><strong>TE-IN</strong></td>
 <td><code>OpenVoiceOS/ai4bharat-indicconformer-te-onnx</code> (int8)</td>
-<td style="text-align: center;">✅</td>
+<td style="text-align: center;">—</td>
 </tr>
 <tr>
 <td><strong>TIG-ER</strong></td>
@@ -2173,12 +2180,12 @@ available.</p>
 <tr>
 <td><strong>TL-PH</strong></td>
 <td><code>OpenVoiceOS/stt-tl-fastconformer-hybrid-large-onnx</code></td>
-<td style="text-align: center;">✅</td>
+<td style="text-align: center;">—</td>
 </tr>
 <tr>
 <td><strong>TN-ZA</strong></td>
 <td><code>OpenVoiceOS/misterkissi-whisper-small-setswana-onnx</code></td>
-<td style="text-align: center;">✅</td>
+<td style="text-align: center;">—</td>
 </tr>
 <tr>
 <td><strong>UMB-AO</strong></td>
@@ -2188,12 +2195,12 @@ available.</p>
 <tr>
 <td><strong>UR-PK</strong></td>
 <td><code>OpenVoiceOS/ai4bharat-indicconformer-ur-onnx</code> (int8)</td>
-<td style="text-align: center;">✅</td>
+<td style="text-align: center;">—</td>
 </tr>
 <tr>
 <td><strong>UZ-UZ</strong></td>
 <td><code>OpenVoiceOS/asr-uz-fastconformer-large-onnx</code></td>
-<td style="text-align: center;">✅</td>
+<td style="text-align: center;">—</td>
 </tr>
 <tr>
 <td><strong>VAI-LR</strong></td>
@@ -2203,7 +2210,7 @@ available.</p>
 <tr>
 <td><strong>VI-VN</strong></td>
 <td><code>OpenVoiceOS/nvidia-parakeet-ctc-0.6b-vietnamese-onnx</code> (int8)</td>
-<td style="text-align: center;">✅</td>
+<td style="text-align: center;">—</td>
 </tr>
 </tbody>
 </table>
@@ -2212,6 +2219,12 @@ available.</p>
 <p>Where the STT column shows "—", the bundled recommendations don't cover offline speech
 recognition for that language yet. <code>autoconfigure</code> will skip that part of the
 configuration and tell you so. Use an online STT plugin instead.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Some TTS recommends cover only one gender</p>
+<p><strong>BN-IN</strong> ships a male voice only, and <strong>SL-SI</strong> ships a female voice only. Pass the
+matching <code>--male</code>/<code>--female</code> flag for these; the other gender falls back to no TTS
+configuration until a voice with that gender is confirmed.</p>
 </div>
 <h3 id="per-language-status-matrix">Per-language status matrix<a class="headerlink" href="#per-language-status-matrix" title="Permanent link">&para;</a></h3>
 <p>STT/TTS columns summarize the auto-configuration table above (✅ = a bundled offline
