@@ -1536,7 +1536,12 @@
 <h1 id="ovos-lang-parser">ovos-lang-parser<a class="headerlink" href="#ovos-lang-parser" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>This is a small helper that connects the <em>name</em> of a language to the short code computers use for it. When you say "switch to Spanish", it figures out you mean the language tagged <code>es</code>; and when the assistant needs to mention a language out loud, it turns that code back into the spoken name "Spanish". That two-way translation is what lets you change languages just by asking. See the <a href="../glossary/">Glossary</a> for terms, or <a href="../lang-selection/">Language Selection</a> for how OVOS decides which language to use.</p>
+<p>This is a small helper that connects the <em>name</em> of a language to the short code computers
+use for it. When you say "switch to Spanish", it figures out you mean the language tagged
+<code>es</code>. When the assistant needs to mention a language out loud, it turns that code back
+into the spoken name "Spanish". That two-way translation is what lets you change
+languages just by asking. See the <a href="../glossary/">Glossary</a> for terms, or
+<a href="../lang-selection/">Language Selection</a> for how OVOS decides which language to use.</p>
 </div>
 <p>OpenVoiceOS's multilingual language-name parsing and pronouncing library. It converts spoken language names ("Spanish", "Espagnol") to BCP-47 codes (<code>"es"</code>) and vice versa, so skills and components can handle language-selection commands in natural speech.</p>
 <p><strong>What you get in 30 seconds:</strong></p>
@@ -1546,13 +1551,18 @@
 </span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="n">extract_langcode</span><span class="p">(</span><span class="s2">&quot;Brazilian Portuguese&quot;</span><span class="p">,</span> <span class="s2">&quot;en&quot;</span><span class="p">)</span>        <span class="c1"># (&quot;pt-br&quot;, 1.0)  regional codes preserved</span>
 </span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="n">pronounce_lang</span><span class="p">(</span><span class="s2">&quot;fr&quot;</span><span class="p">,</span> <span class="s2">&quot;en&quot;</span><span class="p">)</span>                            <span class="c1"># &quot;French&quot;</span>
 </span></code></pre></div>
-<p>Because matching is fuzzy, apply a confidence threshold before acting on a result — the OVOS examples treat <code>conf &gt;= 0.7</code> as a hit:</p>
+<p>Because matching is fuzzy, apply a confidence threshold before acting on a result. The OVOS examples treat <code>conf &gt;= 0.7</code> as a hit:</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">code</span><span class="p">,</span> <span class="n">conf</span> <span class="o">=</span> <span class="n">extract_langcode</span><span class="p">(</span><span class="n">utterance</span><span class="p">,</span> <span class="n">ui_lang</span><span class="p">)</span>
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="k">if</span> <span class="n">conf</span> <span class="o">&gt;=</span> <span class="mf">0.7</span><span class="p">:</span>
 </span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>    <span class="n">switch_language</span><span class="p">(</span><span class="n">code</span><span class="p">)</span>
 </span></code></pre></div>
-<p>When a user says "switch to French", you need the BCP-47 code <code>"fr"</code>; when speaking a language back to the user you need its localized name. This library covers both directions.</p>
-<p>The first argument that names a language is the <em>target</em> language being talked about; the <code>lang</code> argument is the <em>UI language the user is speaking in</em> (which decides the vocabulary of recognized names). 21 UI languages ship with name vocabularies: <code>an</code>, <code>ar</code>, <code>ast</code>, <code>bg</code>, <code>ca</code>, <code>da</code>, <code>de</code>, <code>en</code>, <code>es</code>, <code>eu</code>, <code>fr</code>, <code>fy</code>, <code>gl</code>, <code>hr</code>, <code>it</code>, <code>kab</code>, <code>nl</code>, <code>oc</code>, <code>pt</code>, <code>ro</code>, <code>sk</code> (the live list is always <code>ovos_lang_parser.LANGS</code>). A UI <code>lang</code> outside this set is matched to the closest one (and raises <code>ValueError</code> if nothing is close).</p>
+<p>When a user says "switch to French", you need the BCP-47 code <code>"fr"</code>. When speaking a language back to the user, you need its localized name. This library covers both directions.</p>
+<p>The first argument that names a language is the <em>target</em> language being talked about. The
+<code>lang</code> argument is the <em>UI language the user is speaking in</em>, which decides the vocabulary of
+recognized names. 21 UI languages ship with name vocabularies: <code>an</code>, <code>ar</code>, <code>ast</code>, <code>bg</code>, <code>ca</code>,
+<code>da</code>, <code>de</code>, <code>en</code>, <code>es</code>, <code>eu</code>, <code>fr</code>, <code>fy</code>, <code>gl</code>, <code>hr</code>, <code>it</code>, <code>kab</code>, <code>nl</code>, <code>oc</code>, <code>pt</code>, <code>ro</code>, <code>sk</code>
+(the live list is always <code>ovos_lang_parser.LANGS</code>). A UI <code>lang</code> outside this set is matched to
+the closest one, and raises <code>ValueError</code> if nothing is close.</p>
 <hr />
 <h2 id="package-layout">Package layout<a class="headerlink" href="#package-layout" title="Permanent link">&para;</a></h2>
 <table>
@@ -1573,7 +1583,7 @@
 </tr>
 </tbody>
 </table>
-<p>The public surface is these three functions plus the <code>LANGS</code> constant — the list of UI-language codes that ship a wordlist.</p>
+<p>The public surface is these three functions plus the <code>LANGS</code> constant: the list of UI-language codes that ship a wordlist.</p>
 <p>Dependencies: <code>ovos-spec-tools</code> (BCP-47 tag resolution: <code>standardize_lang</code>, <code>closest_lang</code>, <code>lang_distance</code> per OVOS-INTENT-2 §2.2), <code>langcodes</code> and <code>language_data</code> (CLDR display names / fuzzy name lookup), <code>ovos-utils</code> (fuzzy <code>match_one</code>). Alternative-name template expansion is handled internally by the module's own <code>_expand()</code> regex, not by <code>ovos-utils</code>.</p>
 <hr />
 <h2 id="architecture">Architecture<a class="headerlink" href="#architecture" title="Permanent link">&para;</a></h2>
@@ -1591,7 +1601,7 @@
 </ol>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The template syntax is <code>(a|b)</code> for alternatives, not square brackets. Expansion is done by the library's own <code>_expand()</code> function — there is no dependency on any external template-expansion helper.</p>
+<p>The template syntax is <code>(a|b)</code> for alternatives, not square brackets. The library's own <code>_expand()</code> function does the expansion. There is no dependency on any external template-expansion helper.</p>
 </div>
 <p>The <code>langs.json</code> format maps BCP-47 codes to one or more spoken names, either as a plain string, a JSON list, or a <code>(alt1|alt2)</code> template string. For example, <code>res/de/langs.json</code> (German UI names) lists Catalan as:</p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="p">{</span>
@@ -1649,13 +1659,14 @@
 </tr>
 </tbody>
 </table>
-<p>Returns <code>(bcp47_code, confidence_score)</code> — the best-matching language code and its match confidence (0.0–1.0). Matching proceeds in tiers:</p>
+<p>Returns <code>(bcp47_code, confidence_score)</code>: the best-matching language code and its match
+confidence (0.0-1.0). Matching proceeds in tiers:</p>
 <ol>
-<li><strong>Exact whole-word span match</strong> always wins: a wordlist name appearing verbatim as a run of whole words in the utterance returns confidence <code>1.0</code>; the most specific (longest) such span wins, so <code>"American English"</code> beats <code>"English"</code>.</li>
+<li><strong>Exact whole-word span match</strong> always wins. A wordlist name appearing verbatim as a run of whole words in the utterance returns confidence <code>1.0</code>. The most specific (longest) such span wins, so <code>"American English"</code> beats <code>"English"</code>.</li>
 <li><strong>Fuzzy wordlist match</strong> via <code>ovos_utils.parse.match_one</code> with <code>MatchStrategy.TOKEN_SET_RATIO</code>.</li>
 <li><strong>Guarded CLDR fallback</strong> (<code>langcodes.find</code>): consulted only when the fuzzy match is below the <code>0.9</code> name floor, covering languages no wordlist bundles. It is guarded so <code>langcodes.find</code> cannot greedily resolve ordinary words to obscure codes.</li>
 </ol>
-<p>Non-string or blank <code>text</code> returns <code>("", 0.0)</code> rather than raising; a zero-confidence match also yields <code>("", 0.0)</code>.</p>
+<p>Non-string or blank <code>text</code> returns <code>("", 0.0)</code> rather than raising. A zero-confidence match also yields <code>("", 0.0)</code>.</p>
 <p>Example:
 <div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">extract_langcode</span><span class="p">(</span><span class="s2">&quot;switch to Spanish please&quot;</span><span class="p">,</span> <span class="s2">&quot;en&quot;</span><span class="p">)</span>
 </span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="c1"># (&quot;es&quot;, 1.0)</span>
@@ -1686,7 +1697,12 @@
 </tr>
 </tbody>
 </table>
-<p>Returns a single spoken name string. Resolution is most-specific-first: the full tag's curated name, then the <strong>base-language</strong> curated name (a regioned or private-use tag like <code>ar-EG</code> or <code>pt-BR-x-caipira</code> resolves to the name of <code>ar</code> / <code>pt</code>). If the wordlist has no curated name, it falls back to the CLDR display name via <code>langcodes</code> (<code>mwl</code> → <code>"Mirandese"</code>, <code>lij</code> → <code>"Ligurian"</code>), covering the long tail of ISO-639 codes no wordlist bundles. Only a truly unknown code is returned unchanged.</p>
+<p>Returns a single spoken name string. Resolution is most-specific-first: the full tag's curated
+name, then the <strong>base-language</strong> curated name (a regioned or private-use tag like <code>ar-EG</code> or
+<code>pt-BR-x-caipira</code> resolves to the name of <code>ar</code> / <code>pt</code>). If the wordlist has no curated name, it
+falls back to the CLDR display name via <code>langcodes</code> (<code>mwl</code> → <code>"Mirandese"</code>, <code>lij</code> →
+<code>"Ligurian"</code>), covering the long tail of ISO-639 codes no wordlist bundles. Only a truly
+unknown code is returned unchanged.</p>
 <p>Example:
 <div class="language-python highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="n">pronounce_lang</span><span class="p">(</span><span class="s2">&quot;fr&quot;</span><span class="p">,</span> <span class="s2">&quot;en&quot;</span><span class="p">)</span>   <span class="c1"># &quot;French&quot;</span>
 </span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="n">pronounce_lang</span><span class="p">(</span><span class="s2">&quot;es&quot;</span><span class="p">,</span> <span class="s2">&quot;en&quot;</span><span class="p">)</span>   <span class="c1"># &quot;Spanish&quot;</span>
@@ -1695,15 +1711,20 @@
 </span></code></pre></div></p>
 <hr />
 <h2 id="dialects-regional-subtags">Dialects &amp; regional subtags<a class="headerlink" href="#dialects-regional-subtags" title="Permanent link">&para;</a></h2>
-<p>A language code may carry a region (<code>ar-EG</code>, <code>pt-AO</code>) or a private-use dialect subtag (<code>an-x-ansotano</code>, <code>pt-BR-x-caipira</code>, <code>ar-IQ-x-qeltu</code>). The wordlists name languages and a handful of specific regional varieties — they do not name every dialect. The contract is explicit:</p>
+<p>A language code may carry a region (<code>ar-EG</code>, <code>pt-AO</code>) or a private-use dialect subtag
+(<code>an-x-ansotano</code>, <code>pt-BR-x-caipira</code>, <code>ar-IQ-x-qeltu</code>). The wordlists name languages and a
+handful of specific regional varieties. They do not name every dialect. The contract is
+explicit:</p>
 <ul>
-<li>Tag standardization (<code>ovos_spec_tools.language.standardize_lang</code>) <strong>preserves</strong> region and <code>-x-</code> private-use subtags; a tag is never silently collapsed to its base language, and a private-use tag never raises.</li>
+<li>Tag standardization (<code>ovos_spec_tools.language.standardize_lang</code>) <strong>preserves</strong> region and <code>-x-</code> private-use subtags. A tag is never silently collapsed to its base language, and a private-use tag never raises.</li>
 <li><code>pronounce_lang</code> returns the most specific spoken name it has: the full tag's name when one exists, otherwise a documented, lossy-but-safe fall back to the <strong>base-language</strong> name (<code>ar-EG</code> → the name of <code>ar</code>). This is an acceptable answer, not a failure, when no dialect-specific name is bundled.</li>
 </ul>
 <hr />
 <h2 id="language-resource-files">Language resource files<a class="headerlink" href="#language-resource-files" title="Permanent link">&para;</a></h2>
 <p>Resources live in <code>ovos_lang_parser/res/&lt;lang&gt;/langs.json</code>. Each file is written in the UI language indicated by the directory name and lists language names as they would be spoken by a user of that UI language.</p>
-<p>A code can list multiple valid spoken forms — as a JSON list, or as a <code>"(Name1|Name2)"</code> alternation string that gets expanded — allowing for synonyms (e.g. German lists both "Katalanisch" and "Valencianisch" for <code>"ca"</code>).</p>
+<p>A code can list multiple valid spoken forms, as a JSON list, or as a <code>"(Name1|Name2)"</code>
+alternation string that gets expanded. This allows synonyms (e.g. German lists both
+"Katalanisch" and "Valencianisch" for <code>"ca"</code>).</p>
 <hr />
 <h2 id="cross-references">Cross-references<a class="headerlink" href="#cross-references" title="Permanent link">&para;</a></h2>
 <table>

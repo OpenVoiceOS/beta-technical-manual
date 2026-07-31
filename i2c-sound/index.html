@@ -1202,7 +1202,7 @@
         <li class="md-nav__item">
   <a href="#ovos-i2c-detection-identify-the-board" class="md-nav__link">
     <span class="md-ellipsis">
-      ovos-i2c-detection — identify the board
+      ovos-i2c-detection: identify the board
     </span>
   </a>
   
@@ -1211,7 +1211,7 @@
         <li class="md-nav__item">
   <a href="#ovos-i2csound-detect-and-configure-at-boot" class="md-nav__link">
     <span class="md-ellipsis">
-      ovos-i2csound — detect and configure at boot
+      ovos-i2csound: detect and configure at boot
     </span>
   </a>
   
@@ -1220,7 +1220,7 @@
         <li class="md-nav__item">
   <a href="#raspovos-audio-setup-manage-the-audio-configuration" class="md-nav__link">
     <span class="md-ellipsis">
-      raspovos-audio-setup — manage the audio configuration
+      raspovos-audio-setup: manage the audio configuration
     </span>
   </a>
   
@@ -1229,7 +1229,7 @@
         <li class="md-nav__item">
   <a href="#ovos-tools-raspovos-shell-helpers" class="md-nav__link">
     <span class="md-ellipsis">
-      ovos-tools — raspOVOS shell helpers
+      ovos-tools: raspOVOS shell helpers
     </span>
   </a>
   
@@ -1403,7 +1403,7 @@
         <li class="md-nav__item">
   <a href="#ovos-i2c-detection-identify-the-board" class="md-nav__link">
     <span class="md-ellipsis">
-      ovos-i2c-detection — identify the board
+      ovos-i2c-detection: identify the board
     </span>
   </a>
   
@@ -1412,7 +1412,7 @@
         <li class="md-nav__item">
   <a href="#ovos-i2csound-detect-and-configure-at-boot" class="md-nav__link">
     <span class="md-ellipsis">
-      ovos-i2csound — detect and configure at boot
+      ovos-i2csound: detect and configure at boot
     </span>
   </a>
   
@@ -1421,7 +1421,7 @@
         <li class="md-nav__item">
   <a href="#raspovos-audio-setup-manage-the-audio-configuration" class="md-nav__link">
     <span class="md-ellipsis">
-      raspovos-audio-setup — manage the audio configuration
+      raspovos-audio-setup: manage the audio configuration
     </span>
   </a>
   
@@ -1430,7 +1430,7 @@
         <li class="md-nav__item">
   <a href="#ovos-tools-raspovos-shell-helpers" class="md-nav__link">
     <span class="md-ellipsis">
-      ovos-tools — raspOVOS shell helpers
+      ovos-tools: raspOVOS shell helpers
     </span>
   </a>
   
@@ -1467,44 +1467,46 @@
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
 <p>Many Raspberry Pi voice devices use an add-on <strong>sound board (a "HAT")</strong> for their microphones
-and speaker — the <a href="../mark2/">Mark 2</a>'s SJ201, a Respeaker, and so on. Before OVOS can hear or
+and speaker, such as the <a href="../mark2/">Mark 2</a>'s SJ201 or a Respeaker. Before OVOS can hear or
 speak, that board has to be <strong>detected</strong>, given the <strong>right driver</strong>, and wired into the
 system's <strong>audio config</strong>. This page covers the small OVOS tools that do that on the
-<a href="../install-raspovos/">raspOVOS</a> image. (The <a href="../ovos-installer/">ovos-installer</a> handles the
-Mark 2 differently — see <a href="../mark2/">Mark 2 Hardware</a>.) See the <a href="../glossary/">Glossary</a> for terms.</p>
+<a href="../install-raspovos/">raspOVOS</a> image. The <a href="../ovos-installer/">ovos-installer</a> handles the
+Mark 2 differently. See <a href="../mark2/">Mark 2 Hardware</a> and the <a href="../glossary/">Glossary</a> for terms.</p>
 </div>
-<p>Raspberry Pi sound HATs sit on the <strong>i2c bus</strong> and need three things before audio works: the board
-must be <strong>identified</strong>, the correct <strong>kernel driver / ALSA settings</strong> applied, and the system's
-<strong>audio routing</strong> (sound server, default device, volume) configured. OVOS splits this across a few
-focused tools, used mainly by the <a href="../install-raspovos/">raspOVOS</a> image.</p>
+<p>Raspberry Pi sound HATs sit on the <strong>i2c bus</strong> and need three things before audio works. The
+board must be <strong>identified</strong>, the correct <strong>kernel driver / ALSA settings</strong> applied, and the
+system's <strong>audio routing</strong> (sound server, default device, volume) configured. OVOS splits this
+across a few focused tools, used mainly by the <a href="../install-raspovos/">raspOVOS</a> image.</p>
 <div class="admonition info">
 <p class="admonition-title">Two different hardware paths</p>
 <p>The tools on this page are the <strong>raspOVOS image</strong> path. The ansible
-<a href="../ovos-installer/">ovos-installer</a> does <strong>not</strong> use them for the <a href="../mark2/">Mark 2</a> — it builds
-the <a href="../mark2/#the-ovos-kernel-driver-vocalfusiondriver"><code>VocalFusionDriver</code></a> kernel module
-instead. Pick the path that matches how you installed OVOS.</p>
+<a href="../ovos-installer/">ovos-installer</a> does <strong>not</strong> use them for the <a href="../mark2/">Mark 2</a>. It
+builds the <a href="../mark2/#the-ovos-kernel-driver-vocalfusiondriver"><code>VocalFusionDriver</code></a> kernel
+module instead. Pick the path that matches how you installed OVOS.</p>
 </div>
 <hr />
-<h2 id="ovos-i2c-detection-identify-the-board"><code>ovos-i2c-detection</code> — identify the board<a class="headerlink" href="#ovos-i2c-detection-identify-the-board" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/OpenVoiceOS/ovos-i2c-detection"><code>OpenVoiceOS/ovos-i2c-detection</code></a> is a small set
-of scripts that probe the i2c bus and answer "what board is this?". It exposes checks such as:</p>
+<h2 id="ovos-i2c-detection-identify-the-board"><code>ovos-i2c-detection</code>: identify the board<a class="headerlink" href="#ovos-i2c-detection-identify-the-board" title="Permanent link">&para;</a></h2>
+<p><a href="https://github.com/OpenVoiceOS/ovos-i2c-detection"><code>OpenVoiceOS/ovos-i2c-detection</code></a> is a small
+set of scripts that probe the i2c bus and answer "what board is this?" It exposes checks such
+as:</p>
 <ul>
-<li><code>is_sj201_v6</code> — Mycroft SJ201 <strong>dev kit</strong> board (revision 6)</li>
-<li><code>is_sj201_v10</code> — SJ201 <strong>production</strong> board (revision 10)</li>
-<li><code>is_texas_tas5806</code> — the TAS5806 amplifier (used to confirm an SJ201 v10)</li>
-<li><code>is_wm8960</code> — WM8960-based HATs (ReSpeaker 2-mic, Adafruit 2-mic)</li>
+<li><code>is_sj201_v6</code>: Mycroft SJ201 <strong>dev kit</strong> board (revision 6)</li>
+<li><code>is_sj201_v10</code>: SJ201 <strong>production</strong> board (revision 10)</li>
+<li><code>is_texas_tas5806</code>: the TAS5806 amplifier (used to confirm an SJ201 v10)</li>
+<li><code>is_wm8960</code>: WM8960-based HATs (ReSpeaker 2-mic, Adafruit 2-mic)</li>
 </ul>
-<p>This is the primitive that tells the <a href="../mark2/">Mark 2</a> dev kit apart from the retail unit, and is
-used by the detection/configuration tools below.</p>
-<h2 id="ovos-i2csound-detect-and-configure-at-boot"><code>ovos-i2csound</code> — detect and configure at boot<a class="headerlink" href="#ovos-i2csound-detect-and-configure-at-boot" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/OpenVoiceOS/ovos-i2csound"><code>OpenVoiceOS/ovos-i2csound</code></a> is a shell script plus a
-systemd service (<code>i2csound.service</code>) that runs at boot, <strong>auto-detects the attached i2c sound HAT,
-and configures ALSA</strong> for it. It writes the detected board name to <strong><code>/etc/OpenVoiceOS/i2c_platform</code></strong>
-— a marker other components read to know what hardware they are on (an absent file means no supported
-card was found). It supports the SJ201 and a range of Respeaker-style HATs, and is the piece that
-"makes the microphone and speaker exist" on a raspOVOS image.</p>
-<p>Install is a one-time <code>sudo ./install.sh</code> (apt-based systems) followed by a reboot; on a raspOVOS
-image it is already baked in.</p>
+<p>This is the primitive that tells the <a href="../mark2/">Mark 2</a> dev kit apart from the retail unit, and
+it is used by the detection and configuration tools below.</p>
+<h2 id="ovos-i2csound-detect-and-configure-at-boot"><code>ovos-i2csound</code>: detect and configure at boot<a class="headerlink" href="#ovos-i2csound-detect-and-configure-at-boot" title="Permanent link">&para;</a></h2>
+<p><a href="https://github.com/OpenVoiceOS/ovos-i2csound"><code>OpenVoiceOS/ovos-i2csound</code></a> is a shell script
+plus a systemd service (<code>i2csound.service</code>) that runs at boot. It <strong>auto-detects the attached
+i2c sound HAT and configures ALSA</strong> for it. It writes the detected board name to
+<strong><code>/etc/OpenVoiceOS/i2c_platform</code></strong>, a marker other components read to know what hardware they
+are on. An absent file means no supported card was found. It supports the SJ201 and a range of
+Respeaker-style HATs, and is the piece that "makes the microphone and speaker exist" on a
+raspOVOS image.</p>
+<p>Install is a one-time <code>sudo ./install.sh</code> on apt-based systems, followed by a reboot. On a
+raspOVOS image it is already baked in.</p>
 <div class="admonition tip">
 <p class="admonition-title">You should see</p>
 <p><code>install.sh</code> finishes by printing:</p>
@@ -1516,55 +1518,58 @@ image it is already baked in.</p>
 <p>A supported board's name (e.g. <code>SJ201V6</code>) means detection succeeded. If the file does not
 exist, <code>ovos-i2csound</code> ran but did not find a supported sound card.</p>
 </div>
-<h2 id="raspovos-audio-setup-manage-the-audio-configuration"><code>raspovos-audio-setup</code> — manage the audio configuration<a class="headerlink" href="#raspovos-audio-setup-manage-the-audio-configuration" title="Permanent link">&para;</a></h2>
+<h2 id="raspovos-audio-setup-manage-the-audio-configuration"><code>raspovos-audio-setup</code>: manage the audio configuration<a class="headerlink" href="#raspovos-audio-setup-manage-the-audio-configuration" title="Permanent link">&para;</a></h2>
 <p><a href="https://github.com/OpenVoiceOS/raspovos-audio-setup"><code>OpenVoiceOS/raspovos-audio-setup</code></a> is the
-ongoing <strong>audio-configuration</strong> layer (scripts + systemd services) that sits above detection. Where
-<code>ovos-i2csound</code> brings the card up, <code>raspovos-audio-setup</code> keeps audio working as things change:</p>
+ongoing <strong>audio-configuration</strong> layer (scripts and systemd services) that sits above detection.
+Where <code>ovos-i2csound</code> brings the card up, <code>raspovos-audio-setup</code> keeps audio working as things
+change:</p>
 <ul>
-<li>set the default soundcard, combine audio sinks, manage USB-soundcard volume;</li>
-<li>survive hardware changes (plugging in a USB soundcard live, or moving the SD card to different
-  hardware);</li>
-<li>expose more complex setups (e.g. echo cancellation) in a friendlier way;</li>
-<li>work across <code>alsa</code>, <code>pipewire</code>, or <code>pulseaudio</code>, and even on non-OVOS Raspberry Pi images.</li>
+<li>Set the default soundcard, combine audio sinks, and manage USB-soundcard volume.</li>
+<li>Survive hardware changes, such as plugging in a USB soundcard live or moving the SD card to
+  different hardware.</li>
+<li>Expose more complex setups, such as echo cancellation, in a friendlier way.</li>
+<li>Work across <code>alsa</code>, <code>pipewire</code>, or <code>pulseaudio</code>, and even on non-OVOS Raspberry Pi images.</li>
 </ul>
-<p>End users normally interact with just one entrypoint: <strong><code>ovos-audio-setup</code></strong>, an interactive menu
-(installed to <code>/usr/local/bin</code>) to pick the default soundcard, enable/disable the automation, and
-revert changes. It is also scriptable — <code>ovos-audio-setup &lt;choice&gt;</code> runs a menu option directly. The
-other scripts (<code>soundcard-autoconfigure</code>, <code>combine-sinks</code>, <code>usb-autovolume</code>) are not run by hand;
-they are driven automatically by systemd units and udev rules on boot and USB sound events.</p>
+<p>End users normally interact with just one entry point: <strong><code>ovos-audio-setup</code></strong>, an interactive
+menu (installed to <code>/usr/local/bin</code>) to pick the default soundcard, enable or disable the
+automation, and revert changes. It is also scriptable. <code>ovos-audio-setup &lt;choice&gt;</code> runs a menu
+option directly. The other scripts (<code>soundcard-autoconfigure</code>, <code>combine-sinks</code>,
+<code>usb-autovolume</code>) are not run by hand. Systemd units and udev rules drive them automatically on
+boot and USB sound events.</p>
 <p>When picking the default output, <code>soundcard-autoconfigure</code> follows a <strong>fixed priority order</strong>:</p>
 <ol>
 <li>the <code>ovos-i2csound</code> hint in <code>/etc/OpenVoiceOS/i2c_platform</code> (the marker described above), if it
-   names a known platform;</li>
-<li><strong>USB</strong> soundcard;</li>
-<li>user-installed <strong>HAT</strong>;</li>
-<li>onboard <strong>headphones</strong> (<code>bcm2835</code>, not present on Pi 5);</li>
-<li><strong>HDMI</strong> (<code>vc4-hdmi</code>), as a last resort.</li>
+   names a known platform</li>
+<li><strong>USB</strong> soundcard</li>
+<li>user-installed <strong>HAT</strong></li>
+<li>onboard <strong>headphones</strong> (<code>bcm2835</code>, not present on Pi 5)</li>
+<li><strong>HDMI</strong> (<code>vc4-hdmi</code>), as a last resort</li>
 </ol>
 <div class="admonition tip">
 <p class="admonition-title">Debugging no-audio devices</p>
-<p>Each tool writes a log to <code>/tmp</code>, which is the first place to look when a device has no sound:</p>
+<p>Each tool writes a log to <code>/tmp</code>, the first place to look when a device has no sound:</p>
 <ul>
-<li><code>/tmp/autosoundcard.log</code> — soundcard autoconfiguration</li>
-<li><code>/tmp/autovolume-usb.log</code> — USB volume udev events</li>
-<li><code>/tmp/autosink.log</code> — combined sink creation</li>
+<li><code>/tmp/autosoundcard.log</code>: soundcard autoconfiguration</li>
+<li><code>/tmp/autovolume-usb.log</code>: USB volume udev events</li>
+<li><code>/tmp/autosink.log</code>: combined sink creation</li>
 </ul>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Alpha</p>
-<p><code>raspovos-audio-setup</code> is an alpha-stage project — useful, but still stabilising.</p>
+<p><code>raspovos-audio-setup</code> is an alpha-stage project. It is useful, but still stabilizing.</p>
 </div>
-<h2 id="ovos-tools-raspovos-shell-helpers"><code>ovos-tools</code> — raspOVOS shell helpers<a class="headerlink" href="#ovos-tools-raspovos-shell-helpers" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/OpenVoiceOS/ovos-tools"><code>OpenVoiceOS/ovos-tools</code></a> is a grab-bag of helper bash
-utilities used by <a href="../install-raspovos/">raspOVOS</a> (and usable on other Linux systems), including some
-of the audio/diagnostic helpers exposed by the image's <a href="../install-raspovos/#helpful-commands">command set</a>.</p>
+<h2 id="ovos-tools-raspovos-shell-helpers"><code>ovos-tools</code>: raspOVOS shell helpers<a class="headerlink" href="#ovos-tools-raspovos-shell-helpers" title="Permanent link">&para;</a></h2>
+<p><a href="https://github.com/OpenVoiceOS/ovos-tools"><code>OpenVoiceOS/ovos-tools</code></a> is a set of helper bash
+utilities used by <a href="../install-raspovos/">raspOVOS</a> and usable on other Linux systems. It
+includes some of the audio and diagnostic helpers exposed by the image's
+<a href="../install-raspovos/#helpful-commands">command set</a>.</p>
 <hr />
 <h2 id="related-pages">Related Pages<a class="headerlink" href="#related-pages" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="../mark2/">Mark 2 Hardware</a> — the SJ201 board, and the installer's <code>VocalFusionDriver</code> path.</li>
-<li><a href="../mark1/">Mark 1 Hardware</a> — the faceplate device.</li>
-<li><a href="../install-raspovos/">raspOVOS image</a> — the image these tools ship on.</li>
-<li><a href="../phal/">PHAL</a> — the hardware-abstraction plugins for buttons, LEDs, fans, etc.</li>
+<li><a href="../mark2/">Mark 2 Hardware</a>: the SJ201 board, and the installer's <code>VocalFusionDriver</code> path.</li>
+<li><a href="../mark1/">Mark 1 Hardware</a>: the faceplate device.</li>
+<li><a href="../install-raspovos/">raspOVOS image</a>: the image these tools ship on.</li>
+<li><a href="../phal/">PHAL</a>: the hardware-abstraction plugins for buttons, LEDs, fans, etc.</li>
 </ul>
 <hr />
 <p><em>Source code: <a href="https://github.com/OpenVoiceOS/ovos-i2csound">OpenVoiceOS/ovos-i2csound</a>, <a href="https://github.com/OpenVoiceOS/ovos-i2c-detection">OpenVoiceOS/ovos-i2c-detection</a>, <a href="https://github.com/OpenVoiceOS/raspovos-audio-setup">OpenVoiceOS/raspovos-audio-setup</a>.</em></p>

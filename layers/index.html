@@ -1645,22 +1645,31 @@
 <h1 id="intent-layers">Intent Layers<a class="headerlink" href="#intent-layers" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>Normally a skill listens for all of its commands at once. Intent Layers let a skill turn commands on and off as a conversation progresses, so only the choices that make sense right now are available — much like a "choose your own adventure" book where each page unlocks the next set of options. This is handy for step-by-step flows, games, or anything that should react differently depending on what the user just did. For the broader picture, see the <a href="../glossary/">Glossary</a>.</p>
+<p>Normally a skill listens for all of its commands at once. Intent Layers let a skill turn
+commands on and off as a conversation progresses, so only the choices that make sense
+right now are available, much like a "choose your own adventure" book where each page
+unlocks the next set of options. This is handy for step-by-step flows, games, or anything
+that should react differently depending on what the user just did. For the broader
+picture, see the <a href="../glossary/">Glossary</a>.</p>
 </div>
 <details class="info">
 <summary>📐 Formal specification</summary>
-<p><code>IntentLayer</code> gating is implemented through the session's <strong>intent context</strong> — each layer is a session context token its intents require. The mechanism is specified by <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/intent-context.md">OVOS-CONTEXT-1 — Intent Context</a></strong> (see <a href="../context/">Context</a> and the <a href="../architecture-specs/">spec index</a>).</p>
+<p><code>IntentLayer</code> gating is implemented through the session's <strong>intent context</strong>. Each layer is a session context token its intents require. The mechanism is specified by <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/intent-context.md">OVOS-CONTEXT-1: Intent Context</a></strong> (see <a href="../context/">Context</a> and the <a href="../architecture-specs/">spec index</a>).</p>
 </details>
 <div class="admonition tip">
 <p class="admonition-title"><code>IntentLayers</code> are per-session</p>
-<p><code>IntentLayer</code> state lives in the <strong>session</strong>, so layered skills are concurrency-safe across <a href="https://jarbashivemind.github.io/HiveMind-community-docs/">HiveMind</a> satellites — two satellites can be in different layers at the same time. (The lower-level <code>enable_intent</code> / <code>disable_intent</code> calls in the next section still change the <strong>global</strong> intent set, so prefer layers for per-session flows.)</p>
+<p><code>IntentLayer</code> state lives in the <strong>session</strong>, so layered skills are concurrency-safe
+across <a href="https://jarbashivemind.github.io/HiveMind-community-docs/">HiveMind</a> satellites.
+Two satellites can be in different layers at the same time. (The lower-level
+<code>enable_intent</code> / <code>disable_intent</code> calls in the next section still change the <strong>global</strong>
+intent set, so prefer layers for per-session flows.)</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Not the same as skill permissions</p>
-<p>Intent layers switch groups of <em>intents</em> on and off inside one already-active skill. Whether a skill is even allowed to participate in converse at all (whitelists, blacklists, <code>ConverseMode</code>) is a separate, coarser gate — see <a href="../permissions/">Permissions &amp; Activation Control</a>.</p>
+<p>Intent layers switch groups of <em>intents</em> on and off inside one already-active skill. Whether a skill is even allowed to participate in converse at all (whitelists, blacklists, <code>ConverseMode</code>) is a separate, coarser gate. See <a href="../permissions/">Permissions &amp; Activation Control</a>.</p>
 </div>
 <h2 id="managing-intents">Managing Intents<a class="headerlink" href="#managing-intents" title="Permanent link">&para;</a></h2>
-<p>Sometimes you might want to manually enable or disable an intent, in OVOSSkills you can do this explicitly to create stateful interactions</p>
+<p>Sometimes you might want to manually enable or disable an intent. In OVOSSkills you can do this explicitly to create stateful interactions:</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">class</span> <span class="nc">RotatingIntentsSkill</span><span class="p">(</span><span class="n">OVOSSkill</span><span class="p">):</span>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -1687,13 +1696,13 @@
 </span><span id="__span-0-24"><a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">disable_intent</span><span class="p">(</span><span class="s2">&quot;C.intent&quot;</span><span class="p">)</span>
 </span></code></pre></div>
 <blockquote>
-<p><strong>NOTE</strong>: <code>enable_intent</code> / <code>disable_intent</code> change the <strong>global</strong> intent set — these states are shared across <a href="../session/">Sessions</a>. For per-session gating, use <a href="#decorators">Intent Layers</a> (which gate via intent context) instead.</p>
+<p><strong>NOTE</strong>: <code>enable_intent</code> / <code>disable_intent</code> change the <strong>global</strong> intent set. These states are shared across <a href="../session/">Sessions</a>. For per-session gating, use <a href="#decorators">Intent Layers</a> (which gate via intent context) instead.</p>
 </blockquote>
 <h2 id="state-machines">State Machines<a class="headerlink" href="#state-machines" title="Permanent link">&para;</a></h2>
-<p>Another utils provided by <code>ovos-workshop</code> is <code>IntentLayers</code>, to manage groups of intent together</p>
-<p><code>IntentLayers</code> lend themselves well to implement state machines.</p>
+<p><code>ovos-workshop</code> also provides <code>IntentLayers</code>, to manage groups of intents together.</p>
+<p><code>IntentLayers</code> work well for implementing state machines.</p>
 <h3 id="the-manual-way">The Manual way<a class="headerlink" href="#the-manual-way" title="Permanent link">&para;</a></h3>
-<p>In this example we implement the <a href="https://en.wikipedia.org/wiki/Konami_Code">Konami Code</a>, doing everything the manual way instead of using decorators</p>
+<p>In this example we implement the <a href="https://en.wikipedia.org/wiki/Konami_Code">Konami Code</a>, doing everything the manual way instead of using decorators.</p>
 <p><img alt="State diagram of the Konami Code intent layers: up1 and up2 lead to down1 and down2, then left1/right1, left2/right2, and finally the B and A layers before resetting" src="https://github.com/OpenVoiceOS/ovos-technical-manual/assets/33701864/13b9de20-1f8d-44b3-9b65-c13a79a41b1e" /></p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">class</span> <span class="nc">KonamiCodeSkill</span><span class="p">(</span><span class="n">OVOSSkill</span><span class="p">):</span>
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -1783,12 +1792,15 @@
 </span><span id="__span-1-86"><a id="__codelineno-1-86" name="__codelineno-1-86" href="#__codelineno-1-86"></a>        <span class="k">return</span> <span class="kc">False</span>
 </span></code></pre></div>
 <h3 id="decorators">Decorators<a class="headerlink" href="#decorators" title="Permanent link">&para;</a></h3>
-<p>When you have many complex chained intents <code>IntentLayers</code> often makes your life easier, a layer is a named group of intents that you can manage at once.</p>
-<p>Slightly more complex than the previous example, we may want to offer several "forks" on the intent execution, enabling different intent groups depending on previous interactions</p>
-<p><a href="https://github.com/JarbasSkills/skill-moon-game/">skill-moon-game</a> is an example full voice game implemented this way</p>
-<p>An excerpt from the game to illustrate usage of <code>IntentLayer</code> decorators</p>
+<p>When you have many complex chained intents, <code>IntentLayers</code> often makes your work easier. A
+layer is a named group of intents that you can manage at once.</p>
+<p>Slightly more complex than the previous example, we may want to offer several "forks" on the
+intent execution, enabling different intent groups depending on previous interactions.</p>
+<p><a href="https://github.com/JarbasSkills/skill-moon-game/">skill-moon-game</a> is an example full voice
+game implemented this way.</p>
+<p>Here is an excerpt from the game to illustrate usage of <code>IntentLayer</code> decorators:</p>
 <blockquote>
-<p><strong>NOTE</strong>: <code>IntentLayers</code> are <strong>per-session</strong> — gated via <a href="../context/">intent context</a> (<a href="https://github.com/OpenVoiceOS/architecture/blob/dev/intent-context.md">OVOS-CONTEXT-1</a>), so each <a href="https://jarbashivemind.github.io/HiveMind-community-docs/07_voicesat/">voice satellite</a> keeps its own layer state instead of all joining the same game.</p>
+<p><strong>NOTE</strong>: <code>IntentLayers</code> are <strong>per-session</strong>, gated via <a href="../context/">intent context</a> (<a href="https://github.com/OpenVoiceOS/architecture/blob/dev/intent-context.md">OVOS-CONTEXT-1</a>), so each <a href="https://jarbashivemind.github.io/HiveMind-community-docs/07_voicesat/">voice satellite</a> keeps its own layer state instead of all joining the same game.</p>
 </blockquote>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">from</span> <span class="nn">ovos_workshop.decorators.layers</span> <span class="kn">import</span> <span class="n">layer_intent</span><span class="p">,</span> <span class="n">enables_layer</span><span class="p">,</span> \
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>    <span class="n">disables_layer</span><span class="p">,</span> <span class="n">resets_layers</span>
@@ -1861,15 +1873,15 @@
 <p><code>self.intent_layers</code> is an instance of <code>IntentLayers</code>
 (<code>ovos_workshop.decorators.layers.IntentLayers</code>), created lazily the first time a layer
 decorator or <code>layer_intent</code> runs and bound to the skill instance.</p>
-<p>A layer is <strong>not</strong> a separate matching mechanism — it's a named group of intents mapped to a
+<p>A layer is <strong>not</strong> a separate matching mechanism. It's a named group of intents mapped to a
 single synthetic <a href="../context/">intent context</a> token (<code>layer_&lt;name&gt;</code>, prefixed internally with
 the skill id). Every intent registered under that layer is set to <em>require</em> the token, so:</p>
 <ul>
-<li><code>activate_layer("guard")</code> calls <code>self.set_context(...)</code> for the layer's token — the layer's
+<li><code>activate_layer("guard")</code> calls <code>self.set_context(...)</code> for the layer's token. The layer's
   intents become matchable.</li>
-<li><code>deactivate_layer("guard")</code> calls <code>self.remove_context(...)</code> — they stop matching again.</li>
+<li><code>deactivate_layer("guard")</code> calls <code>self.remove_context(...)</code>. They stop matching again.</li>
 <li>The intents themselves stay registered with the intent service for the skill's whole
-  lifetime; only whether their required context is present changes. There's no
+  lifetime. Only whether their required context is present changes. There's no
   detach/re-attach churn.</li>
 </ul>
 <p>Because layer state rides on intent context, and intent context is per-session, each

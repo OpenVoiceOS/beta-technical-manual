@@ -1410,33 +1410,33 @@
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
 <p>OVOS follows a <strong>universal donor</strong> licensing policy: the code should be usable by anyone,
-anywhere, with no strings attached. In practice that means permissive licenses (mostly
-Apache 2.0 or BSD) for all core components, with a short, explicitly documented list of
-exceptions — either a dependency forcing a stricter license on one specific plugin, or a
-plugin repository that never shipped a <code>LICENSE</code> file at all.</p>
+anywhere, with no strings attached. In practice that means permissive licenses, mostly
+Apache 2.0 or BSD, for all core components, with a short, explicitly documented list of
+exceptions. Each exception is either a dependency forcing a stricter license on one
+specific plugin, or a plugin repository that never shipped a <code>LICENSE</code> file at all.</p>
 </div>
 <p>Under the universal donor policy, OVOS code should be usable anywhere by anyone, with no
-conditions attached. OVOS is predominately Apache 2.0 or BSD licensed; the exceptions are a
-small minority of plugins, and every one of them is listed in the table below — either because
-a dependency forces a stricter license, or because the plugin's own repository never shipped a
-<code>LICENSE</code> file at all.</p>
+conditions attached. OVOS is predominantly Apache 2.0 or BSD licensed. The exceptions are a
+small minority of plugins, and every one of them is listed in the table below, either because
+a dependency forces a stricter license, or because the plugin's own repository never shipped
+a <code>LICENSE</code> file at all.</p>
 <p>Individual plugins or skills may carry their own license when they wrap a dependency that
-requires it — for example a TTS plugin that wraps an AGPL-licensed engine cannot itself be
-relicensed under a more permissive term. Core components are kept fully free; any code whose
+requires it. For example, a TTS plugin that wraps an AGPL-licensed engine cannot itself be
+relicensed under a more permissive term. Core components are kept fully free. Any code whose
 license cannot be controlled lives in an optional plugin instead, flagged as such.</p>
 <p>This also means avoiding LGPL code, for the reasons explained in
 <a href="https://softwareengineering.stackexchange.com/questions/119436/what-does-gpl-with-classpath-exception-mean-in-practice/326325#326325">this discussion of the GPL classpath exception</a>.</p>
 <h2 id="policy-properties">Policy properties<a class="headerlink" href="#policy-properties" title="Permanent link">&para;</a></h2>
 <p>The license policy has the following properties:</p>
 <ul>
-<li>It gives the user of the software complete and unrestrained access, such that they may
+<li>It gives the user of the software complete and unrestrained access, so they may
   inspect, modify, and redistribute their changes:<ul>
-<li><strong>Inspection</strong> — anyone may inspect the software for security vulnerabilities.</li>
-<li><strong>Modification</strong> — anyone may modify the software to fix issues or add features.</li>
-<li><strong>Redistribution</strong> — anyone may redistribute the software on their own terms.</li>
+<li><strong>Inspection</strong>: anyone may inspect the software for security vulnerabilities.</li>
+<li><strong>Modification</strong>: anyone may modify the software to fix issues or add features.</li>
+<li><strong>Redistribution</strong>: anyone may redistribute the software on their own terms.</li>
 </ul>
 </li>
-<li>It is compatible with GPL licenses — projects licensed as GPL can be distributed with OVOS.</li>
+<li>It is compatible with GPL licenses. Projects licensed as GPL can be distributed with OVOS.</li>
 <li>It allows incorporating GPL-incompatible free software, such as CDDL-licensed code.</li>
 </ul>
 <p>The policy does not restrict what software may run <em>on</em> OVOS. Thanks to the plugin
@@ -1498,13 +1498,13 @@ compatible with your use case before depending on them.</p>
 </tr>
 </tbody>
 </table>
-<p>The rows above with <strong>no license file</strong> are not a rejection of the universal donor policy —
-they are repositories that never declared one, so no license can be assumed for redistribution
-purposes; treat "no license file" as more restrictive than any permissive license, not less.</p>
+<p>The rows above with <strong>no license file</strong> are not a rejection of the universal donor policy.
+They are repositories that never declared one, so no license can be assumed for redistribution
+purposes. Treat "no license file" as more restrictive than any permissive license, not less.</p>
 <h2 id="further-reading">Further reading<a class="headerlink" href="#further-reading" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="https://blog.openvoiceos.org/posts/2023-02-28-permissive-licenses">Why OpenVoiceOS Uses Permissive Licenses</a> — OVOS blog</li>
-<li><a href="../deprecated-repos/">Deprecated &amp; Archived Repositories</a> — current replacements for archived plugins</li>
+<li><a href="https://blog.openvoiceos.org/posts/2023-02-28-permissive-licenses">Why OpenVoiceOS Uses Permissive Licenses</a> (OVOS blog)</li>
+<li><a href="../deprecated-repos/">Deprecated &amp; Archived Repositories</a>: current replacements for archived plugins</li>
 </ul>
 
 

@@ -1083,7 +1083,7 @@
           <li class="md-nav__item">
   <a href="#full-ovos-hivemind-ovos-agent-plugin" class="md-nav__link">
     <span class="md-ellipsis">
-      Full OVOS — hivemind-ovos-agent-plugin
+      Full OVOS: hivemind-ovos-agent-plugin
     </span>
   </a>
   
@@ -1092,7 +1092,7 @@
           <li class="md-nav__item">
   <a href="#a-single-persona-hivemind-persona-agent-plugin" class="md-nav__link">
     <span class="md-ellipsis">
-      A single persona — hivemind-persona-agent-plugin
+      A single persona: hivemind-persona-agent-plugin
     </span>
   </a>
   
@@ -1321,7 +1321,7 @@
           <li class="md-nav__item">
   <a href="#full-ovos-hivemind-ovos-agent-plugin" class="md-nav__link">
     <span class="md-ellipsis">
-      Full OVOS — hivemind-ovos-agent-plugin
+      Full OVOS: hivemind-ovos-agent-plugin
     </span>
   </a>
   
@@ -1330,7 +1330,7 @@
           <li class="md-nav__item">
   <a href="#a-single-persona-hivemind-persona-agent-plugin" class="md-nav__link">
     <span class="md-ellipsis">
-      A single persona — hivemind-persona-agent-plugin
+      A single persona: hivemind-persona-agent-plugin
     </span>
   </a>
   
@@ -1422,38 +1422,39 @@
 <h1 id="remote-agents-with-hivemind">Remote Agents with HiveMind<a class="headerlink" href="#remote-agents-with-hivemind" title="Permanent link">&para;</a></h1>
 <div class="admonition info">
 <p class="admonition-title">No maturity badge here</p>
-<p>HiveMind is a separate project (its own organization and <a href="https://jarbashivemind.github.io/HiveMind-community-docs/">community docs</a>), so the OVOS <a href="../maturity/">Maturity Scale</a> — which rates OVOS-org repository health — deliberately does not apply to it. This page covers the OVOS-side integration only.</p>
+<p>HiveMind is a separate project, with its own organization and <a href="https://jarbashivemind.github.io/HiveMind-community-docs/">community docs</a>. The OVOS <a href="../maturity/">Maturity Scale</a>, which rates OVOS-org repository health, does not apply to it. This page covers the OVOS-side integration only.</p>
 </div>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>OpenVoiceOS runs <strong>local-first</strong>, but sometimes you want one capable machine to do the
-thinking and several small devices ("satellites") to do the listening and speaking — or
-you want to reach your assistant securely from off-device. <strong>HiveMind</strong> is the companion
-project that makes that possible: it exposes an OVOS install (or a single persona) over an
+<p>OpenVoiceOS runs <strong>local-first</strong>. Sometimes you want one capable machine to do the
+thinking while several small devices ("satellites") listen and speak. Or you want to
+reach your assistant securely from off-device. <strong>HiveMind</strong> is the companion project
+that makes this possible. It exposes an OVOS install, or a single persona, over an
 authenticated, encrypted protocol that satellites and clients connect to.</p>
 </div>
 <div class="admonition info">
 <p class="admonition-title">HiveMind lives under its own org</p>
 <p>The HiveMind packages referenced here are maintained in the <strong><a href="https://github.com/JarbasHiveMind">JarbasHiveMind</a></strong>
 GitHub organization (not <code>OpenVoiceOS</code>). The full guide is the
-<a href="https://jarbashivemind.github.io/HiveMind-community-docs/">HiveMind community docs</a>; this
+<a href="https://jarbashivemind.github.io/HiveMind-community-docs/">HiveMind community docs</a>. This
 page covers how HiveMind relates to OVOS.</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">HiveMind vs. agent-interop protocols</p>
-<p>HiveMind is the <strong>voice-satellite transport</strong> — how a mic/speaker device or remote client
-reaches an OVOS brain. MCP and A2A (see <a href="../agent-interop/">Agent Interop</a>) are a different
-thing: LLM/agent tool protocols for letting AI systems call each other's tools.</p>
+<p>HiveMind is the <strong>voice-satellite transport</strong>: how a mic/speaker device or remote client
+reaches an OVOS brain. MCP and A2A (see <a href="../agent-interop/">Agent Interop</a>) are different.
+They are LLM/agent tool protocols that let AI systems call each other's tools.</p>
 </div>
 <div class="admonition tip">
 <p class="admonition-title">Building a remote client</p>
-<p>If you're writing a remote or native (non-Python) client that connects over HiveMind,
+<p>If you are writing a remote or native (non-Python) client that connects over HiveMind,
 this manual is <strong>not</strong> the place to look for the wire details. HiveMind defines its own
-protocol — the connect URL, the access-key auth handshake, the message envelope, and the
-reconnect/backoff behavior a client must implement — and that protocol is documented in
-the HiveMind project's own community documentation:
+protocol: the connect URL, the access-key auth handshake, the message envelope, and the
+reconnect/backoff behavior a client must implement. That protocol is documented in the
+HiveMind project's own community documentation:
 <a href="https://jarbashivemind.github.io/HiveMind-community-docs/">HiveMind community docs</a>.
-This page only covers the OVOS side (how an OVOS install is exposed as a HiveMind agent).</p>
+This page only covers the OVOS side, meaning how an OVOS install is exposed as a
+HiveMind agent.</p>
 </div>
 <hr />
 <h2 id="the-pieces">The pieces<a class="headerlink" href="#the-pieces" title="Permanent link">&para;</a></h2>
@@ -1471,7 +1472,7 @@ This page only covers the OVOS side (how an OVOS install is exposed as a HiveMin
 </tr>
 <tr>
 <td><strong>Agent</strong></td>
-<td>What actually answers — either a full <a href="../core/">ovos-core</a> install (<code>hivemind-ovos-agent-plugin</code>) or a single <a href="../personas/">persona</a> (<code>hivemind-persona-agent-plugin</code>).</td>
+<td>What actually answers: either a full <a href="../core/">ovos-core</a> install (<code>hivemind-ovos-agent-plugin</code>) or a single <a href="../personas/">persona</a> (<code>hivemind-persona-agent-plugin</code>).</td>
 </tr>
 <tr>
 <td><strong>Satellites / clients</strong></td>
@@ -1479,20 +1480,20 @@ This page only covers the OVOS side (how an OVOS install is exposed as a HiveMin
 </tr>
 </tbody>
 </table>
-<p><code>hivemind-core</code> is <strong>pluggable</strong> via the <strong>HiveMind Plugin Manager (HPM)</strong> across four axes, so
-you can swap implementations without touching the rest:</p>
+<p><code>hivemind-core</code> is <strong>pluggable</strong> via the <strong>HiveMind Plugin Manager (HPM)</strong> across four axes.
+You can swap implementations without touching the rest:</p>
 <ul>
-<li><strong>Agent protocol</strong> — what brain answers (OVOS / persona / others).</li>
-<li><strong>Network protocol</strong> — how clients connect (WebSocket is the reference implementation).</li>
-<li><strong>Database</strong> — where client credentials live (JSON / SQLite / Redis).</li>
-<li><strong>Binary data handler</strong> — how binary payloads (e.g. audio) move over the mesh.</li>
+<li><strong>Agent protocol</strong>: what brain answers (OVOS / persona / others).</li>
+<li><strong>Network protocol</strong>: how clients connect (WebSocket is the reference implementation).</li>
+<li><strong>Database</strong>: where client credentials live (JSON / SQLite / Redis).</li>
+<li><strong>Binary data handler</strong>: how binary payloads (e.g. audio) move over the mesh.</li>
 </ul>
 <p><img alt="Diagram of a server running ovos-core and hivemind-core, exposing a hivemind_listener on port 5678 that three satellite clients (Kitchen, Bedroom, Restroom) connect to, each relaying its own spoken request back to the server" src="../img/satellites.png" /></p>
 <hr />
 <h2 id="quickstart-expose-an-ovos-install">Quickstart: expose an OVOS install<a class="headerlink" href="#quickstart-expose-an-ovos-install" title="Permanent link">&para;</a></h2>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pip<span class="w"> </span>install<span class="w"> </span>hivemind-core
 </span></code></pre></div>
-<p><strong>1. Provision a client.</strong> Every satellite/client needs an access key issued by the server:</p>
+<p><strong>1. Provision a client.</strong> Every satellite or client needs an access key issued by the server:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>hivemind-core<span class="w"> </span>add-client<span class="w">       </span><span class="c1"># prints an access key + password for one client</span>
 </span></code></pre></div>
 <p>This writes the client to the server's credentials database (under
@@ -1503,8 +1504,8 @@ you can swap implementations without touching the rest:</p>
 </span></code></pre></div>
 <p>By default it serves the local <code>ovos-core</code> via <code>hivemind-ovos-agent-plugin</code> (configured under
 <code>agent_protocol</code> in <code>server.json</code>).</p>
-<p><strong>3. Give a client its identity, then connect.</strong> On the <em>client</em> device, persist the access key
-issued in step 1 (this is the step that makes everything else work):</p>
+<p><strong>3. Give a client its identity, then connect.</strong> On the <em>client</em> device, save the access key
+issued in step 1. This step makes everything else work:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>pip<span class="w"> </span>install<span class="w"> </span>hivemind-websocket-client
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>hivemind-client<span class="w"> </span>set-identity<span class="w">    </span><span class="c1"># stores the access key / host for this node</span>
 </span></code></pre></div>
@@ -1516,18 +1517,18 @@ without being handed connection details each time.</p>
 <p>On success it prints:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>== Identity successfully connected to HiveMind!
 </span></code></pre></div>
-<p>If it hangs or errors instead, double-check the server is running (<code>hivemind-core listen</code>) and
-reachable on the configured host/port, and that the access key matches one printed by
+<p>If it hangs or errors, check that the server is running (<code>hivemind-core listen</code>) and reachable
+on the configured host and port. Also check that the access key matches one printed by
 <code>hivemind-core add-client</code>.</p>
 <hr />
 <h2 id="choosing-the-agent-full-ovos-vs-a-single-persona">Choosing the agent: full OVOS vs a single persona<a class="headerlink" href="#choosing-the-agent-full-ovos-vs-a-single-persona" title="Permanent link">&para;</a></h2>
 <p>The agent is selected by the <code>agent_protocol.module</code> key in <code>~/.config/hivemind-core/server.json</code>.</p>
-<h3 id="full-ovos-hivemind-ovos-agent-plugin">Full OVOS — <code>hivemind-ovos-agent-plugin</code><a class="headerlink" href="#full-ovos-hivemind-ovos-agent-plugin" title="Permanent link">&para;</a></h3>
-<p>The default. Bridges HiveMind to a running <a href="../core/">ovos-core</a> over its messagebus, so remote
-clients get the <strong>whole</strong> assistant (skills, pipelines, OCP, etc.).</p>
-<h3 id="a-single-persona-hivemind-persona-agent-plugin">A single persona — <code>hivemind-persona-agent-plugin</code><a class="headerlink" href="#a-single-persona-hivemind-persona-agent-plugin" title="Permanent link">&para;</a></h3>
-<p>Exposes just one <a href="../personas/">persona</a> — no <code>ovos-core</code>, no messagebus — so the attack surface
-is minimal. It answers straight from the configured persona.</p>
+<h3 id="full-ovos-hivemind-ovos-agent-plugin">Full OVOS: <code>hivemind-ovos-agent-plugin</code><a class="headerlink" href="#full-ovos-hivemind-ovos-agent-plugin" title="Permanent link">&para;</a></h3>
+<p>The default. Bridges HiveMind to a running <a href="../core/">ovos-core</a> over its messagebus. Remote
+clients get the whole assistant: skills, pipelines, OCP, and more.</p>
+<h3 id="a-single-persona-hivemind-persona-agent-plugin">A single persona: <code>hivemind-persona-agent-plugin</code><a class="headerlink" href="#a-single-persona-hivemind-persona-agent-plugin" title="Permanent link">&para;</a></h3>
+<p>Exposes just one <a href="../personas/">persona</a>, with no <code>ovos-core</code> and no messagebus, so the attack
+surface stays minimal. It answers straight from the configured persona.</p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="p">{</span>
 </span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">  </span><span class="nt">&quot;agent_protocol&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 </span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">    </span><span class="nt">&quot;module&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;hivemind-persona-agent-plugin&quot;</span><span class="p">,</span>
@@ -1545,37 +1546,37 @@ is minimal. It answers straight from the configured persona.</p>
 </span><span id="__span-6-15"><a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a><span class="w">  </span><span class="p">}</span>
 </span><span id="__span-6-16"><a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a><span class="p">}</span>
 </span></code></pre></div>
-<p>The <code>persona</code> value may be an inline config dict (above) or a path to an
+<p>The <code>persona</code> value may be an inline config dict, as above, or a path to an
 <a href="https://github.com/OpenVoiceOS/ovos-persona">ovos-persona</a> JSON file (<code>~</code> is expanded). The
-<code>"module"</code> value must equal the plugin's entry-point name, and that same string is reused as the
+<code>"module"</code> value must equal the plugin's entry-point name. That same string is reused as the
 key holding its config.</p>
 <hr />
 <h2 id="satellites-clients">Satellites &amp; clients<a class="headerlink" href="#satellites-clients" title="Permanent link">&para;</a></h2>
 <p>A server is only useful once something connects to it. On the client side:</p>
 <ul>
-<li><strong><a href="https://github.com/JarbasHiveMind/hivemind-websocket-client"><code>hivemind-websocket-client</code></a></strong> — the client library and the <code>hivemind-client</code> CLI (<code>set-identity</code>, send utterances, etc.).</li>
-<li><strong><a href="https://github.com/JarbasHiveMind/hivemind-mic-satellite"><code>hivemind-mic-satellite</code></a></strong> — a thin device that only does wake-word + microphone capture; STT/TTS run server-side.</li>
-<li><strong><a href="https://github.com/JarbasHiveMind/hivemind-listener"><code>hivemind-listener</code></a></strong> — the server-side audio entrypoint that performs STT/TTS for audio satellites (binary audio over the mesh).</li>
+<li><strong><a href="https://github.com/JarbasHiveMind/hivemind-websocket-client"><code>hivemind-websocket-client</code></a></strong>: the client library and the <code>hivemind-client</code> CLI (<code>set-identity</code>, send utterances, and more).</li>
+<li><strong><a href="https://github.com/JarbasHiveMind/hivemind-mic-satellite"><code>hivemind-mic-satellite</code></a></strong>: a thin device that only does wake-word and microphone capture. STT and TTS run server-side.</li>
+<li><strong><a href="https://github.com/JarbasHiveMind/hivemind-listener"><code>hivemind-listener</code></a></strong>: the server-side audio entry point that performs STT/TTS for audio satellites, with binary audio moving over the mesh.</li>
 </ul>
-<p>This split is the real "voice satellite" story: cheap devices listen and speak, the server thinks.</p>
+<p>This split is the real "voice satellite" story: cheap devices listen and speak, and the server thinks.</p>
 <hr />
 <h2 id="permissions-access-control">Permissions &amp; access control<a class="headerlink" href="#permissions-access-control" title="Permanent link">&para;</a></h2>
 <p>HiveMind is <strong>deny-by-default</strong>: a client may only do what it has been explicitly granted.
 <code>hivemind-core</code> enforces this at the message-type level with a <code>PolicyChain</code> of pluggable
-<code>PolicyPlugin</code>s (including <code>MessageTypeACLPolicy</code>) that every inbound message is checked
-against. Its admin CLI manages this, including:</p>
+<code>PolicyPlugin</code>s, including <code>MessageTypeACLPolicy</code>, that checks every inbound message. Its
+admin CLI manages this, including:</p>
 <ul>
-<li><code>add-client</code> / <code>list-clients</code> / <code>delete-client</code> — manage who may connect.</li>
-<li><code>allow-msg</code> / <code>blacklist-msg</code> — whitelist or block specific bus message types per client.</li>
-<li><code>make-admin</code> / <code>revoke-admin</code>, <code>allow-escalate</code> / <code>allow-propagate</code> — elevate or restrict a client.</li>
-<li><code>blacklist-skill</code> / <code>allow-skill</code>, <code>blacklist-intent</code> / <code>allow-intent</code> — stop or re-allow a
-  client from reaching specific skills/intents. These just write <code>skill_blacklist</code> /
-  <code>intent_blacklist</code> client metadata; actually enforcing it against skill/intent IDs requires
-  the <code>OVOSAgentPolicy</code> plugin (from <code>hivemind-ovos-agent-plugin</code>) to be present in the
-  server's policy chain — the CLI verbs alone don't block anything without it.</li>
+<li><code>add-client</code> / <code>list-clients</code> / <code>delete-client</code>: manage who may connect.</li>
+<li><code>allow-msg</code> / <code>blacklist-msg</code>: allow or block specific bus message types per client.</li>
+<li><code>make-admin</code> / <code>revoke-admin</code>, <code>allow-escalate</code> / <code>allow-propagate</code>: elevate or restrict a client.</li>
+<li><code>blacklist-skill</code> / <code>allow-skill</code>, <code>blacklist-intent</code> / <code>allow-intent</code>: stop or re-allow a
+  client from reaching specific skills or intents. These verbs only write <code>skill_blacklist</code> and
+  <code>intent_blacklist</code> client metadata. Enforcing them against skill or intent IDs requires the
+  <code>OVOSAgentPolicy</code> plugin (from <code>hivemind-ovos-agent-plugin</code>) to be present in the server's
+  policy chain. The CLI verbs alone block nothing without it.</li>
 </ul>
 <p>This is what makes HiveMind safe to expose to satellites or other users, unlike the plain
-<a href="../persona-server/">persona-server</a> (HTTP, no auth).</p>
+<a href="../persona-server/">persona-server</a>, which is HTTP with no auth.</p>
 <div class="admonition tip">
 <p class="admonition-title">Web admin UI</p>
 <p><a href="https://github.com/JarbasHiveMind/hivemind-admin-panel"><code>hivemind-admin-panel</code></a> is a web UI
@@ -1583,11 +1584,11 @@ for managing clients, permissions, plugins and personas instead of the CLI.</p>
 </div>
 <hr />
 <h2 id="using-hivemind-as-a-solver">Using HiveMind as a solver<a class="headerlink" href="#using-hivemind-as-a-solver" title="Permanent link">&para;</a></h2>
-<p>Want your <em>local</em> assistant to ask a <em>remote</em> HiveMind agent when it's stuck? Install the
+<p>Your local assistant can ask a remote HiveMind agent when it's stuck. Install the
 <strong><a href="https://github.com/JarbasHiveMind/ovos-solver-hivemind-plugin"><code>ovos-solver-hivemind-plugin</code></a></strong>
 (class <code>HiveMindSolver</code>, import <code>ovos_hivemind_solver</code>) and add it to a persona. It is a normal
-<a href="../agent-plugins/">solver</a>, so it slots into a mixture-of-solvers chain — handy for delegating
-hard questions, surviving local outages, or collaborative setups.</p>
+<a href="../agent-plugins/">solver</a>, so it slots into a mixture-of-solvers chain. This helps when
+delegating hard questions or surviving local outages.</p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="p">{</span>
 </span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;HiveMind Agent&quot;</span><span class="p">,</span>
 </span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">  </span><span class="nt">&quot;solvers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;ovos-solver-hivemind-plugin&quot;</span><span class="p">],</span>
@@ -1605,8 +1606,8 @@ hard questions, surviving local outages, or collaborative setups.</p>
 <p>There is also a pipeline-plugin form,
 <strong><a href="https://github.com/JarbasHiveMind/ovos-hivemind-pipeline-plugin"><code>ovos-hivemind-pipeline-plugin</code></a></strong>
 (entry point <code>opm.pipeline</code>, class <code>HiveMindPipeline</code>). Instead of living inside a persona, it
-slots directly into the <a href="../pipelines-overview/">intent pipeline</a> — <em>"when in doubt, ask a smarter
-OVOS install."</em> Add it to <code>intents.pipeline</code> and configure it under <code>mycroft.conf</code>:</p>
+slots directly into the <a href="../pipelines-overview/">intent pipeline</a>. The idea: when in doubt, ask
+a smarter OVOS install. Add it to <code>intents.pipeline</code> and configure it under <code>mycroft.conf</code>:</p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="p">{</span>
 </span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="w">  </span><span class="nt">&quot;intents&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 </span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">    </span><span class="nt">&quot;pipeline&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;...&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;ovos-hivemind-pipeline-plugin&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;...&quot;</span><span class="p">],</span>
@@ -1618,8 +1619,8 @@ OVOS install."</em> Add it to <code>intents.pipeline</code> and configure it und
 </span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="w">  </span><span class="p">}</span>
 </span><span id="__span-9-10"><a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a><span class="p">}</span>
 </span></code></pre></div>
-<p>Use the <strong>solver</strong> form to delegate inside a persona's reasoning; use the <strong>pipeline</strong> form to
-delegate at the intent-matching stage (e.g. as a late, catch-all matcher).</p>
+<p>Use the <strong>solver</strong> form to delegate inside a persona's reasoning. Use the <strong>pipeline</strong> form to
+delegate at the intent-matching stage, for example as a late, catch-all matcher.</p>
 <hr />
 <h2 id="deployment-patterns">Deployment patterns<a class="headerlink" href="#deployment-patterns" title="Permanent link">&para;</a></h2>
 <p>HiveMind and the <a href="../persona-server/">persona-server</a> cover different trust boundaries:</p>
@@ -1637,7 +1638,7 @@ delegate at the intent-matching stage (e.g. as a late, catch-all matcher).</p>
 <td>Local interface + persona</td>
 <td><code>ovos-persona-server</code> + <code>persona.json</code></td>
 <td>❌</td>
-<td>OpenAI-compatible HTTP, no auth — quick setups only</td>
+<td>OpenAI-compatible HTTP, no auth, quick setups only</td>
 </tr>
 <tr>
 <td>Local interface + OpenVoiceOS</td>
@@ -1665,19 +1666,19 @@ delegate at the intent-matching stage (e.g. as a late, catch-all matcher).</p>
 </tr>
 </tbody>
 </table>
-<p>The HTTP rows are useful for wiring a persona into local tools (Home Assistant's Ollama
-integration, OpenWebUI, …) on a trusted network. The HiveMind rows are what you expose to
+<p>The HTTP rows are useful for wiring a persona into local tools, such as Home Assistant's Ollama
+integration or OpenWebUI, on a trusted network. The HiveMind rows are what you expose to
 satellites or untrusted networks.</p>
 <blockquote>
-<p>⚠️ The plain <a href="../persona-server/"><code>persona-server</code></a> is <strong>HTTP only — not encrypted or
-authenticated</strong>. Keep it on a trusted local network; use HiveMind for anything remote.</p>
+<p>⚠️ The plain <a href="../persona-server/"><code>persona-server</code></a> is <strong>HTTP only, not encrypted or
+authenticated</strong>. Keep it on a trusted local network. Use HiveMind for anything remote.</p>
 </blockquote>
 <hr />
 <h2 id="further-reading">Further reading<a class="headerlink" href="#further-reading" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="https://jarbashivemind.github.io/HiveMind-community-docs/">HiveMind community docs</a></li>
-<li><a href="https://blog.openvoiceos.org/posts/2025-07-25-A-real-use-case-with-OVOS-and-Hivemind">A real use case with OVOS and Hivemind</a> — OVOS blog</li>
-<li><a href="https://blog.openvoiceos.org/posts/2026-01-14-OVOS-hivemind-industry">OVOS &amp; HiveMind in the Manufacturing Industry</a> — OVOS blog</li>
+<li><a href="https://blog.openvoiceos.org/posts/2025-07-25-A-real-use-case-with-OVOS-and-Hivemind">A real use case with OVOS and Hivemind</a> (OVOS blog)</li>
+<li><a href="https://blog.openvoiceos.org/posts/2026-01-14-OVOS-hivemind-industry">OVOS &amp; HiveMind in the Manufacturing Industry</a> (OVOS blog)</li>
 </ul>
 
 

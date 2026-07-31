@@ -1352,13 +1352,14 @@
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
 <p>OVOS and <a href="https://www.home-assistant.io/">Home Assistant</a> (HA) are two different open-source
-projects that can work together in <strong>two separate, independent directions</strong>: OVOS can <em>lend
-its speech engines to</em> Home Assistant's own voice pipeline, or a skill on OVOS can <em>control
-devices inside</em> Home Assistant. You can use either one alone, or both at once — they don't
-depend on each other. This page explains both directions and links to the details.</p>
+projects. They can work together in <strong>two separate, independent directions</strong>: OVOS can
+<em>lend its speech engines to</em> Home Assistant's own voice pipeline, or a skill on OVOS can
+<em>control devices inside</em> Home Assistant. You can use either one alone, or both at once.
+They don't depend on each other. This page explains both directions and links to the
+details.</p>
 </div>
-<p>There is no single "OVOS + Home Assistant" switch — there are two unrelated integrations, and
-it's easy to conflate them. Pick the one (or both) that matches what you're trying to do:</p>
+<p>There is no single "OVOS + Home Assistant" switch. There are two unrelated integrations, and
+it's easy to conflate them. Pick the one, or both, that matches what you're trying to do:</p>
 <table>
 <thead>
 <tr>
@@ -1385,15 +1386,15 @@ it's easy to conflate them. Pick the one (or both) that matches what you're tryi
 </table>
 <hr />
 <h2 id="direction-1-home-assistant-uses-ovoss-speech-engines">Direction 1: Home Assistant uses OVOS's speech engines<a class="headerlink" href="#direction-1-home-assistant-uses-ovoss-speech-engines" title="Permanent link">&para;</a></h2>
-<p>Home Assistant's own voice assistant feature (Assist) can use external speech components over the
-<a href="https://github.com/rhasspy/wyoming">Wyoming protocol</a> — the same protocol Rhasspy and other
+<p>Home Assistant's own voice assistant feature (Assist) can use external speech components over
+the <a href="https://github.com/rhasspy/wyoming">Wyoming protocol</a>, the same protocol Rhasspy and other
 open voice tools speak. OVOS ships three small bridge packages
 (<code>wyoming-ovos-stt</code>, <code>wyoming-ovos-tts</code>, <code>wyoming-ovos-wakeword</code>) that each expose one installed
-OVOS plugin as a Wyoming server, so Home Assistant can point Assist at, say, an OVOS STT plugin
-without knowing anything about the OVOS plugin system underneath.</p>
-<p>This is useful if you already have OVOS plugins configured and tuned (a particular STT model, a
-particular TTS voice) and want Home Assistant's own Assist pipeline to use them, instead of
-running a second, separately-configured set of speech engines just for HA.</p>
+OVOS plugin as a Wyoming server. This lets Home Assistant point Assist at, say, an OVOS STT
+plugin without knowing anything about the OVOS plugin system underneath.</p>
+<p>This is useful if you already have OVOS plugins configured and tuned, such as a particular STT
+model or TTS voice, and want Home Assistant's own Assist pipeline to use them. It saves you
+from running a second, separately configured set of speech engines just for HA.</p>
 <p>See <a href="../wyoming-bridges/">Wyoming Bridges</a> for installation, configuration, and the exact HA-side
 setup (adding a Wyoming integration pointed at the bridge's host and port).</p>
 <hr />
@@ -1411,16 +1412,16 @@ note.</p>
 <p>You need two things from your Home Assistant instance before installing the skill:</p>
 <ol>
 <li><strong>The URL</strong> of your Home Assistant instance (e.g. <code>http://homeassistant.local:8123</code>).</li>
-<li><strong>A long-lived access token</strong> — generate one from your Home Assistant user profile page
-   (<em>Settings → your profile → Long-Lived Access Tokens → Create Token</em>) and keep it secret; it
+<li><strong>A long-lived access token.</strong> Generate one from your Home Assistant user profile page
+   (<em>Settings → your profile → Long-Lived Access Tokens → Create Token</em>) and keep it secret. It
    grants the same access as your account.</li>
 </ol>
 <p>With those two in hand, either:</p>
 <ul>
 <li>
-<p>Tick the <code>homeassistant</code> feature in the <a href="../ovos-installer/#feature-selection">ovos-installer</a>
-  (offered for the <code>ovos</code>/<code>listener</code> profiles on the <code>virtualenv</code> or <code>containers</code> install
-  method) — the installer prompts you for the URL and token during setup, or</p>
+<p>Tick the <code>homeassistant</code> feature in the <a href="../ovos-installer/#feature-selection">ovos-installer</a>,
+  offered for the <code>ovos</code>/<code>listener</code> profiles on the <code>virtualenv</code> or <code>containers</code> install
+  method. The installer prompts you for the URL and token during setup, or</p>
 <div class="admonition note">
 <p class="admonition-title">RaspOVOS users: this doesn't apply to you</p>
 <p>The <code>homeassistant</code> feature above belongs to the <code>ovos-installer</code> flow, for setups
@@ -1437,7 +1438,7 @@ with the command below instead.</p>
   On any other setup, use <code>pip install</code> instead:
   <div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>pip<span class="w"> </span>install<span class="w"> </span>skill-homeassistant
 </span></code></pre></div>
-  then configure it with your instance's URL and token (see the skill's own repository for the
+  Then configure it with your instance's URL and token (see the skill's own repository for the
   current configuration key names), and restart OVOS to load it.</p>
 </li>
 </ul>

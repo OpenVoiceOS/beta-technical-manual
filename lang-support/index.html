@@ -1610,11 +1610,29 @@
 <h1 id="language-support-in-openvoiceos">Language Support in OpenVoiceOS<a class="headerlink" href="#language-support-in-openvoiceos" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>Making OVOS truly work in a given language takes more than translating menu text — it needs translated skill phrases, a speech-to-text engine that understands that language, and a text-to-speech voice that can speak it. This page explains the current state of language support, how to get a working setup quickly with the <code>ovos-config autoconfigure</code> command, and how you can help improve your language by translating phrases or testing real speech. If you just want it running now, jump to <a href="#auto-configuration">Auto-Configuration</a>. See also <a href="../lang-customization/">Customizing Language Resources</a> and the <a href="../glossary/">Glossary</a>.</p>
+<p>Making OVOS truly work in a given language takes more than translating menu text. It
+needs translated skill phrases, a speech-to-text engine that understands that language,
+and a text-to-speech voice that can speak it. This page explains the current state of
+language support, how to get a working setup quickly with the <code>ovos-config autoconfigure</code>
+command, and how you can help improve your language by translating phrases or testing
+real speech. If you just want it running now, jump to
+<a href="#auto-configuration">Auto-Configuration</a>. See also
+<a href="../lang-customization/">Customizing Language Resources</a> and the <a href="../glossary/">Glossary</a>.</p>
 </div>
-<p>OpenVoiceOS (OVOS) aims to support multiple languages across its components, including intent recognition, speech-to-text (<a href="../stt-plugins/">STT</a>), text-to-speech (<a href="../tts-plugins/">TTS</a>), and skill dialogs. However, full language support requires more than translation of interface text. This document outlines the current state of language support, known limitations, and how contributors can help improve multilingual performance in OVOS.</p>
-<p><strong>Want it working now?</strong> Jump to <a href="#auto-configuration">Auto-Configuration</a> — <code>ovos-config autoconfigure -l &lt;lang&gt; ...</code> sets up recommended STT/TTS plugins in one command. <strong>Want to make your language work better?</strong> See <a href="#how-to-improve-language-support">How to Improve Language Support</a>.</p>
-<p>Related pages: <a href="../lang-selection/">Language Selection</a> (how OVOS picks a language per utterance), <a href="../lang-customization/">Customizing Language Resources</a> (override/translate skill text), and <a href="../bidirectional-translation/">Bidirectional Translation</a> (use a single-language skill in any language).</p>
+<p>OpenVoiceOS (OVOS) aims to support multiple languages across its components, including intent
+recognition, speech-to-text (<a href="../stt-plugins/">STT</a>), text-to-speech (<a href="../tts-plugins/">TTS</a>),
+and skill dialogs. However, full language support requires more than translation of interface
+text. This document outlines the current state of language support, known limitations, and
+how contributors can help improve multilingual performance in OVOS.</p>
+<p><strong>Want it working now?</strong> Jump to <a href="#auto-configuration">Auto-Configuration</a>.
+<code>ovos-config autoconfigure -l &lt;lang&gt; ...</code> sets up recommended STT/TTS plugins in one command.
+<strong>Want to make your language work better?</strong> See <a href="#how-to-improve-language-support">How to Improve Language Support</a>.</p>
+<p>Related pages:</p>
+<ul>
+<li><a href="../lang-selection/">Language Selection</a>: how OVOS picks a language per utterance.</li>
+<li><a href="../lang-customization/">Customizing Language Resources</a>: override or translate skill text.</li>
+<li><a href="../bidirectional-translation/">Bidirectional Translation</a>: use a single-language skill in any language.</li>
+</ul>
 <div class="admonition note">
 <p class="admonition-title">How language selection works</p>
 <p>Setting the global <code>lang</code> key in <a href="../config/"><code>mycroft.conf</code></a> is sufficient on its own to
@@ -1622,8 +1640,8 @@ switch the assistant's language: STT, TTS, and every other language-aware plugin
 the global <code>lang</code> automatically. A per-plugin <code>lang</code> setting exists only to <em>override</em>
 that default for one plugin (e.g. running a second voice in another language).
 <code>ovos-config autoconfigure</code> (below) is a convenience that additionally picks the
-<em>recommended</em> plugins/voices for a language (offline/online, gender) — it optionally
-swaps in better defaults, it is not required just to switch languages.</p>
+<em>recommended</em> plugins/voices for a language (offline/online, gender). It optionally
+swaps in better defaults. It is not required just to switch languages.</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Language codes are case-insensitive</p>
@@ -1632,7 +1650,7 @@ swaps in better defaults, it is not required just to switch languages.</p>
 <code>mycroft.conf</code>. This manual writes codes in lower-case (<code>en-us</code>) by convention.</p>
 </div>
 <hr />
-<p>While the OVOS installer allows users to select a preferred language, <strong>selecting a language does not guarantee full support across all subsystems</strong>. True multilingual support requires dedicated:</p>
+<p>The OVOS installer lets users select a preferred language, but <strong>selecting a language does not guarantee full support across all subsystems</strong>. True multilingual support requires dedicated:</p>
 <ul>
 <li>
 <p>✅ Translations (intents, dialogs, settings, etc.)</p>
@@ -1647,7 +1665,8 @@ swaps in better defaults, it is not required just to switch languages.</p>
 <p>✅ Language-specific intent adaptation and fallback logic</p>
 </li>
 </ul>
-<p>Without these, many core features (e.g., voice commands, speech output, skill interactions) may not function as expected.</p>
+<p>Without these, many core features, such as voice commands, speech output, and skill
+interactions, may not work as expected.</p>
 <hr />
 <h2 id="adding-a-new-language">Adding a New Language<a class="headerlink" href="#adding-a-new-language" title="Permanent link">&para;</a></h2>
 <p>Adding support for a new language in OVOS is a multi-step process requiring:</p>
@@ -1668,7 +1687,7 @@ swaps in better defaults, it is not required just to switch languages.</p>
 <p>We welcome and encourage community participation to improve language support. Every contribution helps make OVOS more accessible to speakers around the world.</p>
 <hr />
 <h2 id="technical-language-handling">Technical Language Handling<a class="headerlink" href="#technical-language-handling" title="Permanent link">&para;</a></h2>
-<p>OVOS handles languages dynamically throughout the interaction cycle. For a deep dive into how the system picks which language to use for an utterance, see <strong><a href="../lang-selection/">Language Selection and Disambiguation</a></strong>.</p>
+<p>OVOS handles languages dynamically throughout the interaction cycle. To look closer at how the system picks which language to use for an utterance, see <strong><a href="../lang-selection/">Language Selection and Disambiguation</a></strong>.</p>
 <h3 id="stt-and-tts-requirements">STT and TTS Requirements<a class="headerlink" href="#stt-and-tts-requirements" title="Permanent link">&para;</a></h3>
 <p>For a language to function correctly in a voice assistant environment, it must have <strong>dedicated STT and TTS plugins</strong> that support the language reliably.</p>
 <h3 id="stt-speech-to-text">STT (Speech-to-Text)<a class="headerlink" href="#stt-speech-to-text" title="Permanent link">&para;</a></h3>
@@ -1697,7 +1716,9 @@ swaps in better defaults, it is not required just to switch languages.</p>
 </ul>
 <hr />
 <h2 id="translation-coverage">Translation Coverage<a class="headerlink" href="#translation-coverage" title="Permanent link">&para;</a></h2>
-<p>OVOS uses <a href="https://openvoiceos.github.io/ovos-localize/"><strong>OVOS Localize</strong></a> — a GitHub-native, in-browser translation tool purpose-built for OVOS — to manage translation files across its repositories. (It replaces the retired third-party <em>GitLocalize</em> service.) This includes:</p>
+<p>OVOS uses <a href="https://openvoiceos.github.io/ovos-localize/"><strong>OVOS Localize</strong></a>, a GitHub-native,
+in-browser translation tool built for OVOS, to manage translation files across its
+repositories. It replaces the retired third-party <em>GitLocalize</em> service. This includes:</p>
 <ul>
 <li>
 <p><a href="../skill-design-guidelines/">Skill</a> dialog files</p>
@@ -1712,10 +1733,10 @@ swaps in better defaults, it is not required just to switch languages.</p>
 <h3 id="translation-progress">📊 Translation Progress<a class="headerlink" href="#translation-progress" title="Permanent link">&para;</a></h3>
 <p>OVOS Localize scans skill data and exports a language × skill coverage matrix to
 <a href="https://openvoiceos.github.io/ovos-localize/data/coverage.json"><code>data/coverage.json</code></a>,
-refreshed alongside the translation app — this is the current source of translation progress.</p>
+refreshed alongside the translation app. This is the current source of translation progress.</p>
 <blockquote>
 <p>⚠️ The older <a href="https://github.com/OpenVoiceOS/lang-support-tracker">lang-support-tracker</a>
-is a <strong>frozen GitLocalize-era snapshot</strong> (superseded by OVOS Localize); its percentages
+is a <strong>frozen GitLocalize-era snapshot</strong> (superseded by OVOS Localize). Its percentages
 are no longer updated and should not be treated as current.</p>
 <p>❗ If your language is missing from <a href="https://openvoiceos.github.io/ovos-localize/">OVOS Localize</a>, <a href="https://github.com/OpenVoiceOS/lang-support-tracker/issues">open an issue</a> to request it. Currently, languages must be added manually.</p>
 </blockquote>
@@ -1724,10 +1745,10 @@ are no longer updated and should not be treated as current.</p>
 <p>OVOS Localize also auto-generates <strong>machine-learning-ready JSONL datasets</strong> from the scanned
 skill data (hosted statically, refreshed daily), under <code>data/datasets/</code>:</p>
 <ul>
-<li><strong>Intent classification</strong> (<code>classification/{lang}.jsonl</code>) — <code>.intent</code>/<code>.voc</code> phrases mapped
-  to their skill domain and intent name (for training NLU / small language models).</li>
-<li><strong>Parallel corpora</strong> (<code>translation/{lang_pair}.jsonl</code>) — English keys paired with their
-  translations from <code>.dialog</code>/<code>.intent</code> files (for machine translation).</li>
+<li><strong>Intent classification</strong> (<code>classification/{lang}.jsonl</code>): <code>.intent</code>/<code>.voc</code> phrases mapped
+  to their skill domain and intent name, for training NLU / small language models.</li>
+<li><strong>Parallel corpora</strong> (<code>translation/{lang_pair}.jsonl</code>): English keys paired with their
+  translations from <code>.dialog</code>/<code>.intent</code> files, for machine translation.</li>
 </ul>
 <p>These load directly via HuggingFace <code>datasets.load_dataset(...)</code>.</p>
 <hr />
@@ -1746,7 +1767,7 @@ skill data (hosted statically, refreshed daily), under <code>data/datasets/</cod
 <p>Skills may have translated intents but missing dialog translations. The assistant typically speaks the dialog filename if it is not translated</p>
 </li>
 <li>
-<p>STT/TTS plugin coverage is uneven per language variant — some regional variants have no bundled offline recommendation at all (see the gaps called out below the auto-configuration table), so a language can be "installed" without actually being able to hear or speak yet.</p>
+<p>STT/TTS plugin coverage is uneven per language variant. Some regional variants have no bundled offline recommendation at all (see the gaps called out below the auto-configuration table). A language can be "installed" without actually being able to hear or speak yet.</p>
 </li>
 </ul>
 <hr />
@@ -1759,7 +1780,7 @@ skill data (hosted statically, refreshed daily), under <code>data/datasets/</cod
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>These three commands illustrate the three <em>modes</em> (<code>--offline</code>/<code>--online</code>/<code>--hybrid</code>),
-not a per-language recommendation — check the <a href="#supported-languages">Supported Languages</a>
+not a per-language recommendation. Check the <a href="#supported-languages">Supported Languages</a>
 table below for what's actually bundled for a given language before picking a mode.</p>
 </div>
 <p>The recommendations are data-driven: they come from per-language <code>*.conf</code> files bundled in <code>ovos-config</code> (<code>recommends/</code>), so the exact models depend on your installed version. See <a href="../config/"><code>ovos-config</code></a> for full options.</p>
@@ -1806,8 +1827,8 @@ for each.</p>
 <p>After writing the config it lists the installed STT/TTS plugins and warns about any recommended plugin you still need to <code>pip install</code>.</p>
 <p>Two more flags tune the result for your hardware:</p>
 <ul>
-<li><code>--platform</code> / <code>-p</code> picks a hardware preset — <code>rpi3</code>, <code>rpi4</code>, <code>rpi5</code>, <code>linux</code>, <code>mac</code> or
-  <code>termux</code> — and optimizes the configuration for it.</li>
+<li><code>--platform</code> / <code>-p</code> picks a hardware preset, one of <code>rpi3</code>, <code>rpi4</code>, <code>rpi5</code>, <code>linux</code>, <code>mac</code>,
+  or <code>termux</code>, and optimizes the configuration for it.</li>
 <li><code>--gpu</code> / <code>-g</code> selects GPU-accelerated plugins. It implies <code>--offline</code>, so it cannot be
   combined with <code>--online</code> or <code>--hybrid</code>, and it is rejected on the Raspberry Pi platforms.</li>
 </ul>
@@ -1816,11 +1837,11 @@ for each.</p>
 <p>The table below is a snapshot of the bundled recommendations. The authoritative list is whatever <code>recommends/base/*.conf</code>, <code>recommends/offline_stt/*.conf</code>, and related files ship in your installed <code>ovos-config</code>.</p>
 </blockquote>
 <p>Plainly: a few widely-spoken variants still have real gaps in the bundled recommendations.
-<strong>en-GB</strong> and <strong>pt-BR</strong> have no bundled offline STT recommendation at all — you'll need to
+<strong>en-GB</strong> and <strong>pt-BR</strong> have no bundled offline STT recommendation at all. You'll need to
 configure an online plugin or pick a multilingual offline model (e.g. Whisper) by hand.
 <strong>en-AU</strong> has no bundled offline recommendation on either side. Some regional voices are
-one-gender-only offline (e.g. <strong>da-DK</strong> ships no offline female voice) — the missing gender
-still works, just via an online plugin or a manually-configured model.</p>
+one-gender-only offline (e.g. <strong>da-DK</strong> ships no offline female voice). The missing gender
+still works, just via an online plugin or a manually configured model.</p>
 <p>The table shows the exact offline STT plugin and model, and the offline TTS voice, each
 language is configured with.</p>
 <table>
@@ -1921,14 +1942,14 @@ language is configured with.</p>
 </table>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Where a cell shows "—", the bundled recommendations don't cover that combination yet;
+<p>Where a cell shows "—", the bundled recommendations don't cover that combination yet.
 <code>autoconfigure</code> will skip that part of the configuration and tell you so.</p>
 </div>
 <h3 id="per-language-status-matrix">Per-language status matrix<a class="headerlink" href="#per-language-status-matrix" title="Permanent link">&para;</a></h3>
 <p>STT/TTS columns summarize the auto-configuration table above (✅ = a bundled offline
 recommendation exists for at least one voice/gender, ⚠️ = only online/partial, ❌ = no bundled
 offline recommendation). Number and date parsing come from the language modules actually
-shipped in the installed <code>ovos-number-parser</code> / <code>ovos-date-parser</code> — a ✅ here means a
+shipped in the installed <code>ovos-number-parser</code> / <code>ovos-date-parser</code>. A ✅ here means a
 dedicated language module exists (<code>numbers_&lt;code&gt;.py</code> / <code>dates_&lt;code&gt;.py</code>), not that every
 phrasing is covered.</p>
 <table>
@@ -2043,14 +2064,14 @@ phrasing is covered.</p>
 </tbody>
 </table>
 <p>Both the number and date parsers already cover far more languages than the bundled
-auto-configuration table above — including several with no offline STT/TTS recommendation
-yet (e.g. Arabic, Hebrew, Polish, Turkish, Ukrainian, Russian, and more). Parsing text is
-much cheaper to add a language module for than shipping a full speech model, so this column
-tends to run ahead of STT/TTS.</p>
+auto-configuration table above, including several with no offline STT/TTS recommendation yet
+(e.g. Arabic, Hebrew, Polish, Turkish, Ukrainian, Russian, and more). Adding a language module
+for parsing text is much cheaper than shipping a full speech model, so this column tends to
+run ahead of STT/TTS.</p>
 <div class="admonition warning">
 <p class="admonition-title">pt-BR has no bundled offline STT</p>
 <p>Brazilian Portuguese is a widely-spoken variant with <strong>no bundled offline speech-to-text
-recommendation</strong> at all — <code>ovos-config autoconfigure -l pt-br --offline</code> will skip STT
+recommendation</strong> at all. <code>ovos-config autoconfigure -l pt-br --offline</code> will skip STT
 entirely. Use an online STT plugin, or configure a multilingual offline model (such as
 Whisper) by hand until a dedicated recommendation is added.</p>
 </div>
@@ -2068,7 +2089,7 @@ Whisper) by hand until a dedicated recommendation is added.</p>
 </ul>
 <p>Live per-language translation stats are available from OVOS Localize:</p>
 <ul>
-<li><a href="https://openvoiceos.github.io/ovos-localize/data/coverage.json"><code>data/coverage.json</code></a> — language × skill coverage matrix with display names</li>
+<li><a href="https://openvoiceos.github.io/ovos-localize/data/coverage.json"><code>data/coverage.json</code></a>: language × skill coverage matrix with display names</li>
 </ul>
 <hr />
 <h3 id="2-test-in-real-world-usage">2. <strong>Test in Real-World Usage</strong><a class="headerlink" href="#2-test-in-real-world-usage" title="Permanent link">&para;</a></h3>
@@ -2115,7 +2136,7 @@ Whisper) by hand until a dedicated recommendation is added.</p>
 <h2 id="tips-for-contributors">Tips for Contributors<a class="headerlink" href="#tips-for-contributors" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
-<p>Translators: Use <a href="https://openvoiceos.github.io/ovos-localize/">OVOS Localize</a>'s side-by-side editor — it shows the skill code behind each phrase — to keep intent logic intact.</p>
+<p>Translators: Use <a href="https://openvoiceos.github.io/ovos-localize/">OVOS Localize</a>'s side-by-side editor, which shows the skill code behind each phrase, to keep intent logic intact.</p>
 </li>
 <li>
 <p>Developers: Review user-submitted errors on the dashboard to improve skill performance.</p>

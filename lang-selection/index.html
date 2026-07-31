@@ -1435,20 +1435,20 @@
 
 <h1 id="language-selection-and-disambiguation">Language Selection and Disambiguation<a class="headerlink" href="#language-selection-and-disambiguation" title="Permanent link">&para;</a></h1>
 <div class="admonition success">
-<p class="admonition-title">Maturity — Mature ⬤⬤⬤⬤⬤</p>
-<p>Long-lived, battle-tested, and actively maintained — this is <code>ovos-core</code> internals; depend on it freely. Rated by <a href="../maturity/">repository health</a>, not version.</p>
+<p class="admonition-title">Maturity: Mature ⬤⬤⬤⬤⬤</p>
+<p>Long-lived, well-tested, and actively maintained. This is <code>ovos-core</code> internals. You can depend on it. Rated by <a href="../maturity/">repository health</a>, not version.</p>
 </div>
 <div class="admonition tip">
 <p class="admonition-title">Just want to change your language?</p>
-<p>See <a href="../lang-support/">Language Support</a> instead — this page is internals: how <code>ovos-core</code>
-picks a language for a given utterance internally, not how to configure one.</p>
+<p>See <a href="../lang-support/">Language Support</a> instead. This page covers internals: how
+<code>ovos-core</code> picks a language for a given utterance internally, not how to configure one.</p>
 </div>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>Every utterance carries a language tag (on the message <code>context</code>), and <code>ovos-core</code> resolves
-it from the most trustworthy source available — falling back to your configured default —
-before it tries to match an intent. If you only ever use one language, the default <code>lang</code> in
-<code>mycroft.conf</code> is all that matters and you can skip the details below.</p>
+<p>Every utterance carries a language tag (on the message <code>context</code>), and <code>ovos-core</code>
+resolves it from the most trustworthy source available, falling back to your configured
+default, before it tries to match an intent. If you only ever use one language, the
+default <code>lang</code> in <code>mycroft.conf</code> is all that matters, and you can skip the details below.</p>
 </div>
 <p>OpenVoiceOS is designed to be multi-language from the ground up. This page explains the technical logic used by <code>ovos-core</code> to determine which language should be used for a given user utterance.</p>
 <p>The raw material for that decision is the session's six language signals — <code>lang</code>,
@@ -1485,7 +1485,7 @@ per-payload <code>data.lang</code>. Each is defined in
 </tr>
 </tbody>
 </table>
-<p>The message language itself is resolved by <code>get_message_lang()</code>, which checks <code>message.data["lang"]</code> first and then <code>message.context["lang"]</code>; if neither is present it falls back to the system <code>lang</code> from <code>mycroft.conf</code>.</p>
+<p>The message language itself is resolved by <code>get_message_lang()</code>, which checks <code>message.data["lang"]</code> first and then <code>message.context["lang"]</code>. If neither is present, it falls back to the system <code>lang</code> from <code>mycroft.conf</code>.</p>
 <h3 id="validation-against-valid_langs">Validation against <code>valid_langs</code><a class="headerlink" href="#validation-against-valid_langs" title="Permanent link">&para;</a></h3>
 <p>Each candidate above is validated against the enabled-language list before it is accepted. That list is taken from <code>message.context["valid_langs"]</code> if the source provided one, otherwise from <code>get_valid_languages()</code> (i.e. <code>lang</code> + <code>secondary_langs</code> in <code>mycroft.conf</code>). OVOS uses the <code>closest_lang</code> helper (from <code>ovos_spec_tools</code>) to find the closest match:</p>
 <ul>
@@ -1500,13 +1500,13 @@ language). These are what <code>ovos-core</code> itself uses.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The older <code>ovos_utils.lang</code> helpers below (<code>standardize_lang_tag</code>, <code>get_language_dir</code>) are
-<strong>deprecated</strong> in favour of the <code>ovos_spec_tools</code> helpers above; they are documented here
+<strong>deprecated</strong> in favor of the <code>ovos_spec_tools</code> helpers above. They are documented here
 because existing skills still reference them.</p>
 </div>
 <h3 id="standardize_lang_taglang_code-macrotrue"><code>standardize_lang_tag(lang_code, macro=True)</code><a class="headerlink" href="#standardize_lang_taglang_code-macrotrue" title="Permanent link">&para;</a></h3>
 <p>Normalizes a language tag to a canonical form (e.g., <code>"en-us"</code> -&gt; <code>"en-US"</code>). It is used internally to ensure comparisons are reliable. With <code>macro=True</code> it can also collapse a tag to its macro-language.</p>
 <h3 id="get_language_dirbase_path-langen-us"><code>get_language_dir(base_path, lang="en-US")</code><a class="headerlink" href="#get_language_dirbase_path-langen-us" title="Permanent link">&para;</a></h3>
-<p>A crucial helper for <a href="../skill-design-guidelines/">Skills</a>. It scans a directory (like <code>locale/</code>) and returns the best matching subdirectory for the requested language, tolerating regional variations.</p>
+<p>An important helper for <a href="../skill-design-guidelines/">Skills</a>. It scans a directory (like <code>locale/</code>) and returns the best matching subdirectory for the requested language, tolerating regional variations.</p>
 <hr />
 <h2 id="configuration-helpers">Configuration Helpers<a class="headerlink" href="#configuration-helpers" title="Permanent link">&para;</a></h2>
 <p>The <code>ovos-config</code> library (<code>ovos_config.locale</code>) provides helpers to retrieve language settings from <code>mycroft.conf</code>.</p>
@@ -1525,7 +1525,7 @@ because existing skills still reference them.</p>
 </span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">  </span><span class="p">}</span>
 </span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="p">}</span>
 </span></code></pre></div>
-<p>This allows seamless switching between languages without manual reconfiguration, at the cost of extra matching work per failed utterance.</p>
+<p>This allows switching between languages without manual reconfiguration, at the cost of extra matching work per failed utterance.</p>
 <hr />
 <p><em>Source code: <a href="https://github.com/OpenVoiceOS/ovos-core">OpenVoiceOS/ovos-core</a>.</em></p>
 

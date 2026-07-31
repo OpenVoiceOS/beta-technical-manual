@@ -1725,17 +1725,17 @@
 <h1 id="raspovos-a-beginners-guide-to-setting-up-your-raspberry-pi-with-ovos">RaspOVOS: A Beginner's Guide to Setting Up Your Raspberry Pi with OVOS<a class="headerlink" href="#raspovos-a-beginners-guide-to-setting-up-your-raspberry-pi-with-ovos" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>This is a step-by-step guide to turning a Raspberry Pi (a small, inexpensive computer) into a working OVOS voice assistant by flashing a ready-made "raspOVOS" image onto an SD card or USB drive. It walks you through hardware choices, writing the image, first boot, connecting to Wi-Fi, and the handy commands you'll use afterward. raspOVOS is the flagship, turnkey OpenVoiceOS experience for the Raspberry Pi — flash it and boot straight into a working assistant, no manual install steps required. See the <a href="../glossary/">Glossary</a> for unfamiliar terms.</p>
+<p>This is a step-by-step guide to turning a Raspberry Pi (a small, inexpensive computer) into a working OVOS voice assistant by flashing a ready-made "raspOVOS" image onto an SD card or USB drive. It walks you through hardware choices, writing the image, first boot, connecting to Wi-Fi, and the handy commands you'll use afterward. raspOVOS is the main, ready-made OpenVoiceOS experience for the Raspberry Pi. Flash it and boot straight into a working assistant, with no manual install steps required. See the <a href="../glossary/">Glossary</a> for unfamiliar terms.</p>
 </div>
 <div class="admonition tip">
-<p class="admonition-title">Turnkey Raspberry Pi image</p>
+<p class="admonition-title">Ready-made Raspberry Pi image</p>
 <p><strong>raspOVOS</strong> is a ready-made, actively maintained image built specifically for the
-Raspberry Pi — the quickest way to get a full OVOS voice assistant running on Pi
+Raspberry Pi. It is the quickest way to get a full OVOS voice assistant running on Pi
 hardware. If you're installing on non-Pi hardware, or want to install onto an
 existing Raspberry Pi OS setup instead of flashing a new image, use the
 <strong><a href="../ovos-installer/"><code>ovos-installer</code></a></strong> instead.</p>
 </div>
-<p>This tutorial is designed for users new to Raspberry Pi and raspOVOS. Follow these steps to set up and optimize your device for the best experience.</p>
+<p>This tutorial is designed for users new to Raspberry Pi and raspOVOS. Follow these steps to set up your device.</p>
 <hr />
 <h2 id="step-1-prepare-your-hardware">Step 1: Prepare Your Hardware<a class="headerlink" href="#step-1-prepare-your-hardware" title="Permanent link">&para;</a></h2>
 <h3 id="raspberry-pi-model-recommendations">Raspberry Pi Model Recommendations<a class="headerlink" href="#raspberry-pi-model-recommendations" title="Permanent link">&para;</a></h3>
@@ -1749,17 +1749,17 @@ existing Raspberry Pi OS setup instead of flashing a new image, use the
 </ul>
 </li>
 <li><strong>Not supported:</strong> Raspberry Pi Zero (and other boards below the Pi 3) fall under the stated
-  minimum — don't expect a usable experience there; start from a Pi 3 or newer.</li>
+  minimum. Don't expect a usable experience there. Start from a Pi 3 or newer.</li>
 </ul>
 <h3 id="picking-a-plugin-combo-for-your-pi-tier">Picking a plugin combo for your Pi tier<a class="headerlink" href="#picking-a-plugin-combo-for-your-pi-tier" title="Permanent link">&para;</a></h3>
 <p>The Pi model above sets the ceiling on what you can run comfortably. As a starting point per
 tier (see <a href="../stt-plugins/">STT Plugins</a>, <a href="../tts-plugins/">TTS Plugins</a>,
 <a href="../wake-word-plugins/">Wake Word Plugins</a> and <a href="../vad-plugins/">VAD Plugins</a> for the full rosters):</p>
 <ul>
-<li><strong>Pi 3 (minimum):</strong> lean on cloud services or the lightest local plugins — a small wake-word
-  model, an energy/noise VAD, and cloud STT/TTS (or, if you need fully offline, the smallest
-  local models you can find). Avoid local Whisper-class STT/TTS here; it is the heaviest option
-  in the rosters and this is the board least equipped to run it.</li>
+<li><strong>Pi 3 (minimum):</strong> lean on cloud services or the lightest local plugins: a small wake-word
+  model, an energy/noise VAD, and cloud STT/TTS. If you need fully offline, use the smallest
+  local models you can find. Avoid local Whisper-class STT/TTS here. It is the heaviest option
+  in the rosters, and this is the board least equipped to run it.</li>
 </ul>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>// ~/.config/mycroft/mycroft.conf — Pi 3 / lightweight tier: cloud STT, local energy VAD
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>{
@@ -1780,7 +1780,7 @@ tier (see <a href="../stt-plugins/">STT Plugins</a>, <a href="../tts-plugins/">T
 <p>See <a href="../stt-server/">STT server</a> if you want to self-host that server instead of using a
   public one.</p>
 <ul>
-<li><strong>Pi 4:</strong> a comfortable middle ground for local, on-device models — e.g.
+<li><strong>Pi 4:</strong> a comfortable middle ground for local, on-device models. Examples:
   <a href="../stt-plugins/#ovos-stt-plugin-onnx-asr"><code>ovos-stt-plugin-onnx-asr</code></a> with a small,
   <code>int8</code>-quantized model, and <a href="../tts-plugins/#ovos-tts-plugin-phoonnx"><code>ovos-tts-plugin-phoonnx</code></a>.</li>
 </ul>
@@ -1853,7 +1853,7 @@ lives and how to edit it.</p>
 </li>
 </ul>
 <h3 id="power-supply-considerations">Power Supply Considerations<a class="headerlink" href="#power-supply-considerations" title="Permanent link">&para;</a></h3>
-<p>Raspberry Pi boards are notoriously <strong>picky about power supplies</strong>. Insufficient power can lead to performance issues, random reboots, or the appearance of the <strong>undervoltage detected</strong> warning (a lightning bolt symbol in the top-right corner of the screen).</p>
+<p>Raspberry Pi boards are <strong>picky about power supplies</strong>. Insufficient power can cause performance issues, random reboots, or the <strong>undervoltage detected</strong> warning (a lightning bolt symbol in the top-right corner of the screen).</p>
 <ul>
 <li><strong>Recommended Power Supplies:</strong><ul>
 <li>Raspberry Pi 4: 5V 3A USB-C power adapter.</li>
@@ -1874,20 +1874,20 @@ lives and how to edit it.</p>
 <hr />
 <h2 id="step-2-install-raspovos-image">Step 2: Install RaspOVOS Image<a class="headerlink" href="#step-2-install-raspovos-image" title="Permanent link">&para;</a></h2>
 <h3 id="download-the-raspovos-image">Download the raspOVOS image<a class="headerlink" href="#download-the-raspovos-image" title="Permanent link">&para;</a></h3>
-<p>Grab the latest image from the
+<p>Get the latest image from the
 <a href="https://github.com/OpenVoiceOS/raspOVOS/releases">raspOVOS Releases page</a>. Images are named
-<code>raspOVOS-&lt;lang&gt;-bookworm-arm64-&lt;variant&gt;.img.xz</code> — pick the one matching your language and one of
-three <strong>variants</strong>, which trade on-device processing against the Pi tier you chose in Step 1:</p>
+<code>raspOVOS-&lt;lang&gt;-bookworm-arm64-&lt;variant&gt;.img.xz</code>. Pick the one matching your language and one
+of three <strong>variants</strong>, which trade on-device processing against the Pi tier you chose in Step 1:</p>
 <ul>
-<li><strong><code>lite</code></strong> — delegates both STT and TTS to public OVOS servers with a minimal intent pipeline;
-  the lightest option and the one that <em>might</em> run on a <strong>Pi 3</strong>.</li>
-<li><strong><code>hybrid</code></strong> — runs TTS on-device but still uses public STT servers, with a balanced intent
-  pipeline; recommended for a <strong>Pi 4</strong>.</li>
-<li><strong><code>offline</code></strong> — runs both STT and TTS on-device with the full intent pipeline; needs at least
+<li><strong><code>lite</code></strong>: delegates both STT and TTS to public OVOS servers with a minimal intent pipeline.
+  It is the lightest option and the one that <em>might</em> run on a <strong>Pi 3</strong>.</li>
+<li><strong><code>hybrid</code></strong>: runs TTS on-device but still uses public STT servers, with a balanced intent
+  pipeline. Recommended for a <strong>Pi 4</strong>.</li>
+<li><strong><code>offline</code></strong>: runs both STT and TTS on-device with the full intent pipeline. Needs at least
   <strong>4 GB RAM (Pi &#8536;, 8 GB preferred)</strong>.</li>
 </ul>
-<p>So a Pi 3 user should pick <code>lite</code>, and a Pi 5 user who wants to stay fully offline should pick
-<code>offline</code>. (<code>DEV</code>-prefixed releases are untranslated base images for developers — skip them.)</p>
+<p>A Pi 3 user should pick <code>lite</code>. A Pi 5 user who wants to stay fully offline should pick
+<code>offline</code>. <code>DEV</code>-prefixed releases are untranslated base images for developers. Skip them.</p>
 <ol>
 <li>
 <p><strong>Download and Install Raspberry Pi Imager</strong></p>
@@ -1962,8 +1962,8 @@ three <strong>variants</strong>, which trade on-device processing against the Pi
 <p><strong>Autologin:</strong></p>
 <ul>
 <li>The <code>ovos</code> user will automatically log in to the terminal after boot. This is a
-  text-only command screen, not a graphical desktop — see <a href="../personalize/">Make It Yours</a>
-  and <a href="../everyday-help/">It's Not Working — Quick Fixes</a> for the basics of using it.</li>
+  text-only command screen, not a graphical desktop. See <a href="../personalize/">Make It Yours</a>
+  and <a href="../everyday-help/">It's Not Working: Quick Fixes</a> for the basics of using it.</li>
 </ul>
 </li>
 <li>
@@ -1976,9 +1976,8 @@ three <strong>variants</strong>, which trade on-device processing against the Pi
 <hr />
 <h2 id="step-4-setting-up-wi-fi">Step 4: Setting Up Wi-Fi<a class="headerlink" href="#step-4-setting-up-wi-fi" title="Permanent link">&para;</a></h2>
 <h3 id="option-1-recommended-configure-wi-fi-using-raspberry-pi-imager">Option 1 (recommended): Configure Wi-Fi Using Raspberry Pi Imager<a class="headerlink" href="#option-1-recommended-configure-wi-fi-using-raspberry-pi-imager" title="Permanent link">&para;</a></h3>
-<p>The most straightforward and reliable method is to set up Wi-Fi during the imaging
-process, in Step 2 above — use this whenever you have a computer to flash the image
-with.</p>
+<p>The most reliable method is to set up Wi-Fi during the imaging process, in Step 2 above.
+Use this whenever you have a computer to flash the image with.</p>
 <ol>
 <li>
 <p>Open Raspberry Pi Imager and select Edit Settings Option.</p>
@@ -1992,8 +1991,8 @@ with.</p>
 </ol>
 <h3 id="option-2-fallback-work-in-progress-audio-based-wi-fi-setup-ggwave">Option 2 (fallback, work-in-progress): Audio-Based Wi-Fi Setup (ggwave)<a class="headerlink" href="#option-2-fallback-work-in-progress-audio-based-wi-fi-setup-ggwave" title="Permanent link">&para;</a></h3>
 <p>Use this only if you didn't set Wi-Fi credentials at imaging time and have no other way
-to reach the device (no monitor/keyboard, no Ethernet). It is a work in progress and
-gives no on-screen confirmation, so treat it as a fallback, not the primary path.</p>
+to reach the device (no monitor/keyboard, no Ethernet). It is a work in progress and gives
+no on-screen confirmation. Treat it as a fallback, not the primary path.</p>
 <ol>
 <li>
 <p>Open <a href="https://openvoiceos.github.io/ovos-audio-transformer-plugin-ggwave/">ggwave Wi-Fi setup</a> on a device with speakers.</p>
@@ -2011,7 +2010,7 @@ gives no on-screen confirmation, so treat it as a fallback, not the primary path
 </ul>
 </li>
 </ol>
-<p>🚧 <strong>Note:</strong> ggwave is a <strong>work-in-progress</strong> feature and does not have any dialogs or provide on-screen feedback. 🚧</p>
+<p><strong>Note:</strong> ggwave is a <strong>work-in-progress</strong> feature. It does not show dialogs or give on-screen feedback.</p>
 <p><img alt="ggwave Wi-Fi setup web page with SSID/password fields and a &quot;transmit&quot; button" src="https://github.com/user-attachments/assets/ce2857b1-b93f-4092-99f3-43f555e04920" /></p>
 <hr />
 <h2 id="step-5-running-ovos">Step 5: Running OVOS<a class="headerlink" href="#step-5-running-ovos" title="Permanent link">&para;</a></h2>
@@ -2019,72 +2018,72 @@ gives no on-screen confirmation, so treat it as a fallback, not the primary path
 <ul>
 <li>On the first run, OVOS may take longer to initialize.</li>
 <li>A working Internet connection is required for OVOS to consider itself ready and
-  announce it out loud — if Wi-Fi isn't configured yet or the network is unreachable,
+  announce it out loud. If Wi-Fi isn't configured yet or the network is unreachable,
   the device stays silent instead. Check <code>ovos-status</code> and the <code>ologs</code> output (see
-  below) to confirm the services actually started even without a spoken confirmation,
-  and see <a href="../raspovos-troubleshooting/#ovos-fails-to-speak-i-am-ready">raspOVOS Troubleshooting</a>
+  below) to confirm the services actually started, even without a spoken confirmation.
+  See <a href="../raspovos-troubleshooting/#ovos-fails-to-speak-i-am-ready">raspOVOS Troubleshooting</a>
   if it never speaks up once online.</li>
 </ul>
 <hr />
 <h2 id="step-6-using-ovos-commands">Step 6: Using OVOS Commands<a class="headerlink" href="#step-6-using-ovos-commands" title="Permanent link">&para;</a></h2>
 <h3 id="helpful-commands">Helpful Commands<a class="headerlink" href="#helpful-commands" title="Permanent link">&para;</a></h3>
 <p>When you log in, raspOVOS prints a welcome banner listing its built-in helper commands. These
-are <strong>raspOVOS-specific shell helpers</strong> (aliases and small scripts baked into the image) — they
-are part of the raspOVOS image, not a standard <code>pip install</code> of OVOS. Run <code>ovos-help</code> at any time
-to reprint the full list.</p>
+are <strong>raspOVOS-specific shell helpers</strong> (aliases and small scripts baked into the image). They
+are part of the raspOVOS image, not a standard <code>pip install</code> of OVOS. Run <code>ovos-help</code> at any
+time to reprint the full list.</p>
 <p><strong>Web interfaces:</strong></p>
 <ul>
-<li><code>ovos-yaml-editor</code> — web editor for OVOS configuration (port 9210).</li>
-<li><code>ovos-skill-config-tool</code> — web editor for individual skill settings (port 8000).</li>
+<li><code>ovos-yaml-editor</code>: web editor for OVOS configuration (port 9210).</li>
+<li><code>ovos-skill-config-tool</code>: web editor for individual skill settings (port 8000).</li>
 </ul>
 <p><strong>Talking to OVOS:</strong></p>
 <ul>
-<li><code>ovos-config</code> — manage your local OVOS configuration files.</li>
-<li><code>ovos-listen</code> — activate the microphone to listen for a command.</li>
-<li><code>ovos-speak &lt;phrase&gt;</code> — have OVOS speak a phrase to the user.</li>
-<li><code>ovos-say-to &lt;phrase&gt;</code> — send an utterance to OVOS as if you had spoken it.</li>
-<li><code>ovos-simple-cli</code> — chat with your device from the terminal.</li>
-<li><code>ovos-docs-viewer</code> — open the documentation viewer (also <code>ovos-manual</code>, <code>ovos-skills-info</code>).</li>
+<li><code>ovos-config</code>: manage your local OVOS configuration files.</li>
+<li><code>ovos-listen</code>: activate the microphone to listen for a command.</li>
+<li><code>ovos-speak &lt;phrase&gt;</code>: have OVOS speak a phrase to the user.</li>
+<li><code>ovos-say-to &lt;phrase&gt;</code>: send an utterance to OVOS as if you had spoken it.</li>
+<li><code>ovos-simple-cli</code>: chat with your device from the terminal.</li>
+<li><code>ovos-docs-viewer</code>: open the documentation viewer (also <code>ovos-manual</code>, <code>ovos-skills-info</code>).</li>
 </ul>
 <p><strong>Managing packages:</strong></p>
 <ul>
-<li><code>ovos-install</code> — install OVOS packages with the correct version constraints.</li>
-<li><code>ovos-update</code> — update all OVOS and skill packages.</li>
-<li><code>ovos-force-reinstall</code> — force a full reinstall of all OVOS packages (last-resort repair).</li>
-<li><code>ovos-freeze</code> — export installed OVOS packages to <code>requirements.txt</code>.</li>
-<li><code>ovos-outdated</code> — list outdated OVOS/skill packages.</li>
-<li><code>ovos-reset-brain</code> — reset the "OVOS brain" to a blank state by uninstalling all skills.</li>
+<li><code>ovos-install</code>: install OVOS packages with the correct version constraints.</li>
+<li><code>ovos-update</code>: update all OVOS and skill packages.</li>
+<li><code>ovos-force-reinstall</code>: force a full reinstall of all OVOS packages (last-resort repair).</li>
+<li><code>ovos-freeze</code>: export installed OVOS packages to <code>requirements.txt</code>.</li>
+<li><code>ovos-outdated</code>: list outdated OVOS/skill packages.</li>
+<li><code>ovos-reset-brain</code>: reset the "OVOS brain" to a blank state by uninstalling all skills.</li>
 </ul>
 <p><strong>Inspecting plugins:</strong></p>
 <ul>
-<li><code>ls-skills</code> — list the <code>skill_id</code> of every installed skill.</li>
-<li><code>ls-stt</code> / <code>ls-tts</code> / <code>ls-ww</code> / <code>ls-tx</code> — list installed <a href="../stt-plugins/">STT</a> / <a href="../tts-plugins/">TTS</a> / wake-word / <a href="../translation-plugins/">translation</a> plugins.</li>
+<li><code>ls-skills</code>: list the <code>skill_id</code> of every installed skill.</li>
+<li><code>ls-stt</code> / <code>ls-tts</code> / <code>ls-ww</code> / <code>ls-tx</code>: list installed <a href="../stt-plugins/">STT</a> / <a href="../tts-plugins/">TTS</a> / wake-word / <a href="../translation-plugins/">translation</a> plugins.</li>
 </ul>
 <p><strong>Sound/audio:</strong></p>
 <ul>
-<li><code>ovos-audio-diagnostics</code> — print the active sound server, sinks, and default output device.</li>
-<li><code>ovos-audio-setup</code> — interactive audio configuration menu (handy after wiring up a HAT).</li>
+<li><code>ovos-audio-diagnostics</code>: print the active sound server, sinks, and default output device.</li>
+<li><code>ovos-audio-setup</code>: interactive audio configuration menu (handy after wiring up a HAT).</li>
 </ul>
 <p><strong>Logs and status:</strong></p>
 <ul>
-<li><code>ologs</code> — view all logs in real time.</li>
-<li><code>ovos-logs [COMMAND] --help</code> — a small tool to help navigate the logs.</li>
-<li><code>ovos-status</code> — list OVOS-related systemd services.</li>
-<li><code>ovos-restart</code> — restart all OVOS-related systemd services.</li>
-<li><code>ovos-server-status</code> — check the live status of the public OVOS servers.</li>
+<li><code>ologs</code>: view all logs in real time.</li>
+<li><code>ovos-logs [COMMAND] --help</code>: a small tool to help navigate the logs.</li>
+<li><code>ovos-status</code>: list OVOS-related systemd services.</li>
+<li><code>ovos-restart</code>: restart all OVOS-related systemd services.</li>
+<li><code>ovos-server-status</code>: check the live status of the public OVOS servers.</li>
 </ul>
 <p><strong>Misc:</strong></p>
 <ul>
-<li><code>ovos-commands</code> — usage examples for the installed skills.</li>
-<li><code>ovos-support</code> — compile logs into a support package to share when asking for help.</li>
-<li><code>ovos-help</code> — reprint this command list.</li>
+<li><code>ovos-commands</code>: usage examples for the installed skills.</li>
+<li><code>ovos-support</code>: compile logs into a support package to share when asking for help.</li>
+<li><code>ovos-help</code>: reprint this command list.</li>
 </ul>
 <div class="admonition note">
 <p class="admonition-title">Audio HAT setup on raspOVOS uses <code>ovos-i2csound</code></p>
 <p>On raspOVOS, an i2c sound HAT (such as a Respeaker or the Mark 2's SJ201) is detected and
 configured at boot by the <strong><code>ovos-i2csound</code></strong> service shipped in the image, which writes the
-detected board to <code>/etc/OpenVoiceOS/i2c_platform</code>. This is specific to the raspOVOS image —
-the <a href="../ovos-installer/">ovos-installer</a> does <strong>not</strong> use it (see
+detected board to <code>/etc/OpenVoiceOS/i2c_platform</code>. This is specific to the raspOVOS image.
+The <a href="../ovos-installer/">ovos-installer</a> does <strong>not</strong> use it (see
 <a href="../mark2/">Mark 2 Hardware</a> for the installer's kernel-driver approach).</p>
 </div>
 <h3 id="check-logs-in-real-time">Check Logs in Real-Time<a class="headerlink" href="#check-logs-in-real-time" title="Permanent link">&para;</a></h3>
@@ -2093,13 +2092,13 @@ the <a href="../ovos-installer/">ovos-installer</a> does <strong>not</strong> us
 <li>If you're unsure whether the system has finished booting, check logs using this command.</li>
 </ul>
 <hr />
-<p>Enjoy your journey with raspOVOS! With your Raspberry Pi set up, you can start exploring all the features of OpenVoiceOS.</p>
+<p>With your Raspberry Pi set up, you can start exploring the features of OpenVoiceOS.</p>
 <hr />
 <h2 id="now-try-it">Now try it<a class="headerlink" href="#now-try-it" title="Permanent link">&para;</a></h2>
 <p>Your device is up and listening. Two places to go next:</p>
 <ul>
-<li><strong><a href="../skill-examples/">What can I say?</a></strong> — a catalog of things you can actually say to it, organized by what's installed.</li>
-<li><strong><a href="../showcase/">Fun stuff to try</a></strong> — a curated list of fun and impressive things to show off once the basics work.</li>
+<li><strong><a href="../skill-examples/">What can I say?</a></strong>: a catalog of things you can actually say to it, organized by what's installed.</li>
+<li><strong><a href="../showcase/">Fun stuff to try</a></strong>: a list of fun things to show off once the basics work.</li>
 </ul>
 <hr />
 <p><em>Source code: <a href="https://github.com/OpenVoiceOS/raspOVOS">OpenVoiceOS/raspOVOS</a>.</em></p>

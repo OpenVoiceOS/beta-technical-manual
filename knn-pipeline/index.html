@@ -1471,8 +1471,8 @@
 
 <h1 id="hierarchical-knn-intent-pipeline">Hierarchical KNN Intent Pipeline<a class="headerlink" href="#hierarchical-knn-intent-pipeline" title="Permanent link">&para;</a></h1>
 <div class="admonition note">
-<p class="admonition-title">Maturity — Beta ⬤⬤⬤◯◯</p>
-<p>In real use but still settling — watch releases for the occasional breaking change. Rated by <a href="../maturity/">repository health</a>, not version.</p>
+<p class="admonition-title">Maturity: Beta ⬤⬤⬤◯◯</p>
+<p>In real use but still settling. Watch releases for the occasional breaking change. Rated by <a href="../maturity/">repository health</a>, not version.</p>
 </div>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
@@ -1484,7 +1484,7 @@ It's the heavyweight option you reach for when the simpler, deterministic matche
 </div>
 <details class="info">
 <summary>📐 Formal specification</summary>
-<p>Hierarchical KNN is a <strong>pipeline plugin</strong> under <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md">OVOS-PIPELINE-1 — Utterance Lifecycle &amp; Pipeline</a></strong>, filling the <strong>template-intent</strong> engine role of <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/intent-3.md">OVOS-INTENT-3 §5–§6</a></strong> over the <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/intent-1.md">OVOS-INTENT-1 grammar</a></strong>. Its embedding/k-NN matching is one of the engine-specific strategies INTENT-3 §8 leaves open. See the <a href="../architecture-specs/">spec index</a>.</p>
+<p>Hierarchical KNN is a <strong>pipeline plugin</strong> under <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md">OVOS-PIPELINE-1: Utterance Lifecycle &amp; Pipeline</a></strong>. It fills the <strong>template-intent</strong> engine role of <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/intent-3.md">OVOS-INTENT-3 §5-§6</a></strong> over the <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/intent-1.md">OVOS-INTENT-1 grammar</a></strong>. Its embedding/k-NN matching is one of the engine-specific strategies INTENT-3 §8 leaves open. See the <a href="../architecture-specs/">spec index</a>.</p>
 </details>
 <p><a href="https://github.com/OpenVoiceOS/ovos-hierarchical-knn-pipeline"><code>ovos-hierarchical-knn-pipeline</code></a>
 is an intent-matching <a href="../pipelines-overview/">pipeline plugin</a> (entry point <code>opm.pipeline</code>,
@@ -1494,15 +1494,16 @@ index.</p>
 <h2 id="how-it-works">How it works<a class="headerlink" href="#how-it-works" title="Permanent link">&para;</a></h2>
 <ul>
 <li><strong>Two-stage search</strong>: it first narrows to the likely <strong>domain</strong>, then to the <strong>intent</strong> within
-  it (using Wu–Lin pairwise probability estimation) — keeping search fast as the intent set grows.</li>
-<li>It classifies utterances into the intent labels <strong>already registered</strong> by loaded skills (Adapt,
-  Padatious, and plugin-specific labels), and <strong>ignores</strong> labels from skills that aren't loaded.
-  Adapt and Padatious intents are synced into the index dynamically at runtime.</li>
+  it, using Wu-Lin pairwise probability estimation. This keeps search fast as the intent set
+  grows.</li>
+<li>It classifies utterances into the intent labels <strong>already registered</strong> by loaded skills
+  (Adapt, Padatious, and plugin-specific labels), and <strong>ignores</strong> labels from skills that
+  aren't loaded. Adapt and Padatious intents are synced into the index dynamically at runtime.</li>
 <li>Search is automatically scoped to the <strong>domains of loaded skills</strong> (domain pre-filtering).</li>
 </ul>
-<p>It is ideal as a <strong>high-recall semantic stage</strong> for cases where the deterministic engines fail to
-produce a high-confidence match — conceptually similar to <a href="../m2v-pipeline/">Model2Vec</a>, but using
-a pre-built FAISS index and a hierarchical classifier.</p>
+<p>It works well as a <strong>high-recall semantic stage</strong> for cases where the deterministic engines
+fail to produce a high-confidence match. It is conceptually similar to
+<a href="../m2v-pipeline/">Model2Vec</a>, but uses a pre-built FAISS index and a hierarchical classifier.</p>
 <h2 id="requirements-footprint">Requirements &amp; footprint<a class="headerlink" href="#requirements-footprint" title="Permanent link">&para;</a></h2>
 <ul>
 <li><strong>Languages</strong>: en, pt, es, fr, it, de, nl, ca, gl, da, eu (11).</li>

@@ -1715,39 +1715,56 @@
 
 <h1 id="intent-service">Intent Service<a class="headerlink" href="#intent-service" title="Permanent link">&para;</a></h1>
 <div class="admonition success">
-<p class="admonition-title">Maturity — Mature ⬤⬤⬤⬤⬤</p>
-<p>Long-lived, battle-tested, and actively maintained — depend on it freely. Rated by <a href="../maturity/">repository health</a>, not version.</p>
+<p class="admonition-title">Maturity: Mature ⬤⬤⬤⬤⬤</p>
+<p>Long-lived, well-tested, and actively maintained. You can depend on it. Rated by <a href="../maturity/">repository health</a>, not version.</p>
 </div>
 <p>See also: <a href="../intents/">Intent Design</a> for how a skill defines the keyword and template intents
 this service matches.</p>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>The Intent Service is the part of OpenVoiceOS that figures out what you actually meant. Once the <a href="../speech-service/">Speech Service</a> has turned your words into text, this service reads that text and decides which skill should handle it — much like a receptionist hearing your request and directing you to the right desk. It tries a series of matchers in order and stops at the first one confident enough to respond. New to the terms? See the <a href="../glossary/">Glossary</a>.</p>
+<p>The Intent Service is the part of OpenVoiceOS that figures out what you actually meant.
+Once the <a href="../speech-service/">Speech Service</a> has turned your words into text, this
+service reads that text and decides which skill should handle it, much like a
+receptionist hearing your request and directing you to the right desk. It tries a series
+of matchers in order and stops at the first one confident enough to respond. New to the
+terms? See the <a href="../glossary/">Glossary</a>.</p>
 </div>
-<p><strong>Module:</strong> <code>ovos_core.intent_services.service.IntentService</code> — <a href="https://github.com/OpenVoiceOS/ovos-core/blob/dev/ovos_core/intent_services/service.py"><code>ovos_core/intent_services/service.py</code></a></p>
+<p><strong>Module:</strong> <code>ovos_core.intent_services.service.IntentService</code>: <a href="https://github.com/OpenVoiceOS/ovos-core/blob/dev/ovos_core/intent_services/service.py"><code>ovos_core/intent_services/service.py</code></a></p>
 <details class="info">
 <summary>📐 Formal specification</summary>
-<p>The utterance lifecycle, the <code>match(utterances, lang, message) → Match</code> contract (the third argument is the utterance <code>Message</code>, from which a plugin reads the session via <code>message.context["session"]</code>), <strong>first-match-wins</strong> ordering, and the dispatch/handler-lifecycle events are specified by <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md">OVOS-PIPELINE-1 — Utterance Lifecycle &amp; Pipeline</a></strong>; what an intent <em>is</em> (keyword vs template) and the match-result shape by <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/intent-3.md">OVOS-INTENT-3 — Intent Definition</a></strong>; and how skills declare intents/entities on the bus by <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/intent-4.md">OVOS-INTENT-4 — Intent &amp; Entity Registration</a></strong>. See also the <a href="../architecture-specs/">spec index</a>. <code>IntentService</code> is the reference <strong>orchestrator</strong> of this lifecycle; the spec topic names below are canonical.</p>
+<p>The utterance lifecycle, the <code>match(utterances, lang, message) → Match</code> contract (the third
+argument is the utterance <code>Message</code>, from which a plugin reads the session via
+<code>message.context["session"]</code>), <strong>first-match-wins</strong> ordering, and the
+dispatch/handler-lifecycle events are specified by
+<strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md">OVOS-PIPELINE-1: Utterance Lifecycle &amp; Pipeline</a></strong>.
+What an intent <em>is</em> (keyword vs template) and the match-result shape come from
+<strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/intent-3.md">OVOS-INTENT-3: Intent Definition</a></strong>.
+How skills declare intents and entities on the bus comes from
+<strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/intent-4.md">OVOS-INTENT-4: Intent &amp; Entity Registration</a></strong>.
+See also the <a href="../architecture-specs/">spec index</a>. <code>IntentService</code> is the reference
+<strong>orchestrator</strong> of this lifecycle. The spec topic names below are canonical.</p>
 </details>
 <p><code>IntentService</code> is the component of <code>ovos-core</code> responsible for routing user utterances through the configured <strong>Intent Pipeline</strong> until a match is found.</p>
-<p><strong>In plain terms:</strong> this is the part that takes the words you said and figures out <em>which</em> skill should answer. It runs each matcher in your pipeline in order (e.g. stop, converse, padatious, adapt, …) and stops at the first one confident enough to handle the request.</p>
+<p><strong>In plain terms:</strong> this is the part that takes the words you said and figures out <em>which</em>
+skill should answer. It runs each matcher in your pipeline in order, such as stop, converse,
+padatious, and adapt, and stops at the first one confident enough to handle the request.</p>
 <hr />
 <details class="abstract">
 <summary>Technical Reference</summary>
 <ul>
 <li>
-<p><code>IntentService.handle_utterance()</code> — <a href="https://github.com/OpenVoiceOS/ovos-core/blob/dev/ovos_core/intent_services/service.py"><code>ovos_core/intent_services/service.py</code></a> — Main entry point for processing utterances.</p>
+<p><code>IntentService.handle_utterance()</code>: <a href="https://github.com/OpenVoiceOS/ovos-core/blob/dev/ovos_core/intent_services/service.py"><code>ovos_core/intent_services/service.py</code></a>. Main entry point for processing utterances.</p>
 </li>
 <li>
-<p><code>IntentService._emit_utterance_handled()</code> — <a href="https://github.com/OpenVoiceOS/ovos-core/blob/dev/ovos_core/intent_services/service.py"><code>ovos_core/intent_services/service.py</code></a> — terminal callback that emits the handled/complete message once a matcher's handler chain finishes.</p>
+<p><code>IntentService._emit_utterance_handled()</code>: <a href="https://github.com/OpenVoiceOS/ovos-core/blob/dev/ovos_core/intent_services/service.py"><code>ovos_core/intent_services/service.py</code></a>. Terminal callback that emits the handled/complete message once a matcher's handler chain finishes.</p>
 </li>
 <li>
-<p><code>OVOSPipelineFactory.load_plugin()</code> — <a href="https://github.com/OpenVoiceOS/ovos-plugin-manager/blob/dev/ovos_plugin_manager/pipeline.py"><code>ovos_plugin_manager/pipeline.py</code></a> — factory that builds matcher pipeline plugins from config (<code>get_installed_pipeline_ids()</code> lists them).</p>
+<p><code>OVOSPipelineFactory.load_plugin()</code>: <a href="https://github.com/OpenVoiceOS/ovos-plugin-manager/blob/dev/ovos_plugin_manager/pipeline.py"><code>ovos_plugin_manager/pipeline.py</code></a>. Factory that builds matcher pipeline plugins from config (<code>get_installed_pipeline_ids()</code> lists them).</p>
 </li>
 </ul>
 </details>
 <h2 id="utterance-handling-flow">Utterance Handling Flow<a class="headerlink" href="#utterance-handling-flow" title="Permanent link">&para;</a></h2>
-<p>When an <code>ovos.utterance.handle</code> message (legacy: <code>recognizer_loop:utterance</code>) arrives on the bus — the lifecycle entry point of <a href="https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md">OVOS-PIPELINE-1 §9.1</a>:</p>
+<p>When an <code>ovos.utterance.handle</code> message (legacy: <code>recognizer_loop:utterance</code>) arrives on the bus, it triggers the lifecycle entry point of <a href="https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md">OVOS-PIPELINE-1 §9.1</a>:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>ovos.utterance.handle  (legacy: recognizer_loop:utterance)   §9.1
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>  │
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>  ├── UtteranceTransformersService.transform()   # utterance-transformer chain   TRANSFORM-1 §3.2
@@ -1762,23 +1779,23 @@ this service matches.</p>
 </span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>              (no plugin matched) → ovos.intent.unmatched (§9.3, legacy: complete_intent_failure)
 </span></code></pre></div>
 <p>Reading top to bottom: an incoming utterance is first reshaped by the utterance- and
-metadata-transformer chains, then the best language and a <code>Session</code> are resolved once, up front —
-every pipeline plugin after that point sees the same already-prepared utterance, language, and
-session. The plugins themselves are then tried strictly in configured order; the first one to
-return a match wins and short-circuits the rest, and if none of them do, the lifecycle ends in
-<code>ovos.intent.unmatched</code> instead of a dispatch.</p>
+metadata-transformer chains. Then the best language and a <code>Session</code> are resolved once, up
+front. Every pipeline plugin after that point sees the same already-prepared utterance,
+language, and session. The plugins themselves are then tried strictly in configured order.
+The first one to return a match wins and short-circuits the rest. If none of them do, the
+lifecycle ends in <code>ovos.intent.unmatched</code> instead of a dispatch.</p>
 <p>Every lifecycle terminates with exactly one <code>ovos.utterance.handled</code> (§9.5), the universal end-marker, whether or not anything matched.</p>
 <h2 id="language-disambiguation">Language Disambiguation<a class="headerlink" href="#language-disambiguation" title="Permanent link">&para;</a></h2>
 <p>The language for an utterance is chosen based on a priority list from message context keys:</p>
 <ol>
 <li>
-<p><code>stt_lang</code> — language used by <a href="../stt-plugins/">STT</a> to transcribe.</p>
+<p><code>stt_lang</code>: language used by <a href="../stt-plugins/">STT</a> to transcribe.</p>
 </li>
 <li>
-<p><code>request_lang</code> — volunteered by the source (e.g. wake word).</p>
+<p><code>request_lang</code>: volunteered by the source (e.g. wake word).</p>
 </li>
 <li>
-<p><code>detected_lang</code> — detected by a transformer plugin.</p>
+<p><code>detected_lang</code>: detected by a transformer plugin.</p>
 </li>
 <li>
 <p>Config default / <code>message.data["lang"]</code>.</p>
@@ -1788,20 +1805,26 @@ return a match wins and short-circuits the rest, and if none of them do, the lif
 <div class="admonition note">
 <p class="admonition-title">This ordering is the orchestrator's own consolidation</p>
 <p>OVOS-SESSION-1 §3.2 treats these language signals as <em>informative</em> and deliberately does
-<strong>not</strong> mandate a fixed precedence — it warns that <code>request_lang</code> is a hint a consumer "MUST
-NOT treat as a guarantee" (§3.2.5) and, for intent matching, suggests preferring <code>stt_lang</code> /
+<strong>not</strong> mandate a fixed precedence. It warns that <code>request_lang</code> is a hint a consumer "MUST
+NOT treat as a guarantee" (§3.2.5), and for intent matching, suggests preferring <code>stt_lang</code> /
 <code>detected_lang</code> then <code>lang</code>. The fixed list above is how <code>ovos-core</code>'s intent service
-consolidates them in practice; another orchestrator may weigh them differently.</p>
+consolidates them in practice. Another orchestrator may weigh them differently.</p>
 </div>
 <h2 id="multilingual-matching">Multilingual Matching<a class="headerlink" href="#multilingual-matching" title="Permanent link">&para;</a></h2>
-<p>When <code>intents.multilingual_matching</code> is enabled, the language fallback is <strong>per pipeline plugin</strong>, not a second whole-pipeline pass: for each plugin in priority order the orchestrator first tries it in the primary language, then — if that plugin declines — retries the <em>same</em> plugin in every other configured language, and only then advances to the next plugin. A consequence is that a lower-priority plugin's alternate-language match can win over a higher-priority plugin that was never reached. When the config is off, every plugin is tried in the primary language only.</p>
+<p>When <code>intents.multilingual_matching</code> is enabled, the language fallback is <strong>per pipeline
+plugin</strong>, not a second whole-pipeline pass. For each plugin in priority order, the
+orchestrator first tries it in the primary language. If that plugin declines, it retries the
+<em>same</em> plugin in every other configured language, and only then advances to the next plugin.
+A consequence is that a lower-priority plugin's alternate-language match can win over a
+higher-priority plugin that was never reached. When the config is off, every plugin is tried
+in the primary language only.</p>
 <h2 id="session-management">Session Management<a class="headerlink" href="#session-management" title="Permanent link">&para;</a></h2>
 <p>Each utterance is associated with a <code>Session</code>.</p>
 <ul>
 <li>
 <p>The per-session <code>intent_context</code> (<code>session.intent_context</code>) decays on a <code>timeout</code> (config
-  <code>timeout</code>, default 2 minutes) — this is what "expires," not the session itself. The
-  <code>"default"</code> session is persisted in-process by the orchestrator, not destroyed; see
+  <code>timeout</code>, default 2 minutes). This is what "expires," not the session itself. The
+  <code>"default"</code> session is persisted in-process by the orchestrator, not destroyed. See
   <a href="../session/">Session Aware Skills</a>.</p>
 </li>
 <li>
@@ -1815,7 +1838,7 @@ consolidates them in practice; another orchestrator may weigh them differently.<
 <p>When a pipeline plugin returns a match:</p>
 <ol>
 <li>
-<p><code>IntentTransformersService.transform(match)</code> — the <strong>intent-transformer chain</strong> post-processes the match (OVOS-TRANSFORM-1 §3.4).</p>
+<p><code>IntentTransformersService.transform(match)</code>: the <strong>intent-transformer chain</strong> post-processes the match (OVOS-TRANSFORM-1 §3.4).</p>
 </li>
 <li>
 <p>Build the dispatch message (<code>message.reply(match.match_type, …)</code>) with <code>match.match_type</code> as the message type.</p>
@@ -1824,46 +1847,45 @@ consolidates them in practice; another orchestrator may weigh them differently.<
 <p>Activate the skill in the session (<code>sess.activate_skill(skill_id)</code>) and emit <code>{skill_id}.activate</code> for the skill's callback.</p>
 </li>
 <li>
-<p>Emit <code>ovos.intent.matched</code> (§9.2) — a notification that a plugin claimed the utterance.</p>
+<p>Emit <code>ovos.intent.matched</code> (§9.2), a notification that a plugin claimed the utterance.</p>
 </li>
 <li>
-<p>Wrap the dispatch in the <strong>handler-lifecycle trio</strong> — the orchestrator emits <code>ovos.intent.handler.start</code>, then exactly one of <code>ovos.intent.handler.complete</code> / <code>ovos.intent.handler.error</code> (§8). The skill's intent handler runs between them.</p>
+<p>Wrap the dispatch in the <strong>handler-lifecycle trio</strong>. The orchestrator emits <code>ovos.intent.handler.start</code>, then exactly one of <code>ovos.intent.handler.complete</code> / <code>ovos.intent.handler.error</code> (§8). The skill's intent handler runs between them.</p>
 <div class="admonition note">
 <p class="admonition-title">The trio is orchestrator-owned</p>
-<p>The handler — skill or plugin-bundled — emits nothing that the trio itself tracks,
-and third-party handler code carries no obligation here (PIPELINE-1 §8). It is free
-to emit its own messages (e.g. a skill calling <code>self.speak()</code> emits
-<code>ovos.utterance.speak</code>) — those are simply not part of the trio's bookkeeping. The
-wrapper around the invocation emits
-<code>start</code> before the call and exactly one of <code>complete</code> (normal return) or <code>error</code>
-(exception) after it, each <code>forward</code>-derived from the dispatch message so <code>context</code>
-and <code>session</code> are preserved. The payload is <code>{skill_id, intent_name}</code>, plus
-<code>exception</code> on the <code>error</code> leg. A handler bounded by a deployment-defined timeout that
-overruns produces an <code>error</code> leg carrying a timeout <code>exception</code>; the dispatch is never
-re-emitted.</p>
+<p>The handler, whether skill or plugin-bundled, emits nothing that the trio itself
+tracks. Third-party handler code carries no obligation here (PIPELINE-1 §8). It is
+free to emit its own messages (e.g. a skill calling <code>self.speak()</code> emits
+<code>ovos.utterance.speak</code>). Those are simply not part of the trio's bookkeeping. The
+wrapper around the invocation emits <code>start</code> before the call and exactly one of
+<code>complete</code> (normal return) or <code>error</code> (exception) after it, each <code>forward</code>-derived
+from the dispatch message so <code>context</code> and <code>session</code> are preserved. The payload is
+<code>{skill_id, intent_name}</code>, plus <code>exception</code> on the <code>error</code> leg. A handler bounded by a
+deployment-defined timeout that overruns produces an <code>error</code> leg carrying a timeout
+<code>exception</code>. The dispatch is never re-emitted.</p>
 </div>
 </li>
 </ol>
 <h2 id="threading-and-failure-model">Threading and Failure Model<a class="headerlink" href="#threading-and-failure-model" title="Permanent link">&para;</a></h2>
-<p>Skills run <strong>in the same process</strong> as <code>ovos-core</code> — loaded and supervised by the <code>SkillManager</code>
-thread, not a separate process per skill. Each skill talks to the bus either through
-<code>ovos-core</code>'s single shared connection (<code>websocket.shared_connection: true</code>, the default) or,
-if set to <code>false</code>, through its own private connection — see
+<p>Skills run <strong>in the same process</strong> as <code>ovos-core</code>. The <code>SkillManager</code> thread loads and
+supervises them, not a separate process per skill. Each skill talks to the bus either through
+<code>ovos-core</code>'s single shared connection (<code>websocket.shared_connection: true</code>, the default), or,
+if set to <code>false</code>, through its own private connection. See
 <a href="../bus-service/#configuration">messagebus Configuration</a>.</p>
-<p>Each skill's handlers (intents, converse, events) run synchronously inside <code>create_wrapper()</code>, on
-whichever thread delivers the message to that skill's bus subscription — there is no per-handler
-thread pool. This means: when <code>websocket.shared_connection</code> is <code>false</code> and two skills each own a
-private bus connection, they can handle messages concurrently, and a single slow handler blocks
-only its own skill's subsequent messages, not other skills'. The <strong>default</strong> is
+<p>Each skill's handlers (intents, converse, events) run synchronously inside <code>create_wrapper()</code>,
+on whichever thread delivers the message to that skill's bus subscription. There is no
+per-handler thread pool. This means that when <code>websocket.shared_connection</code> is <code>false</code> and two
+skills each own a private bus connection, they can handle messages concurrently. A single slow
+handler blocks only its own skill's subsequent messages, not other skills'. The <strong>default</strong> is
 <code>websocket.shared_connection: true</code>, in which case every skill shares <code>ovos-core</code>'s single bus
 connection, so a slow handler on that connection can delay message delivery to other skills as
-well — see <a href="../bus-service/#configuration">messagebus Configuration</a>. <code>create_wrapper()</code> runs the
-handler inside a <code>try</code>/<code>except</code>/<code>finally</code>: an
-uncaught exception is caught, logged, reported via the handler's <code>.error</code> message (and, unless
-<code>speak_errors=False</code>, spoken back to the user as a generic "I ran into an error" style dialog) —
-it never crashes <code>ovos-core</code> or the offending skill's process. A handler can also raise
-<code>AbortEvent</code> to end the current handler run early and skip the <code>.error</code> path, treating it as a
-normal (early) completion instead of a failure.</p>
+well. See <a href="../bus-service/#configuration">messagebus Configuration</a>. <code>create_wrapper()</code> runs the
+handler inside a <code>try</code>/<code>except</code>/<code>finally</code>. An uncaught exception is caught, logged, and
+reported via the handler's <code>.error</code> message, and unless <code>speak_errors=False</code>, spoken back to
+the user as a generic "I ran into an error" style dialog. It never crashes <code>ovos-core</code> or the
+offending skill's process. A handler can also raise <code>AbortEvent</code> to end the current handler run
+early and skip the <code>.error</code> path, treating it as a normal (early) completion instead of a
+failure.</p>
 <h2 id="intent-query-api">Intent Query API<a class="headerlink" href="#intent-query-api" title="Permanent link">&para;</a></h2>
 <p>External tools can query the pipeline without triggering a skill action:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>intent.service.intent.get  {utterance: &quot;...&quot;, lang: &quot;...&quot;}
@@ -1915,11 +1937,11 @@ intent context (<code>session.intent_context</code>) specified by
 <div class="admonition note">
 <p class="admonition-title">INTENT-4 registration topics</p>
 <p>Skills broadcast their intent and entity registrations on the canonical
-<a href="https://github.com/OpenVoiceOS/architecture/blob/dev/intent-4.md">OVOS-INTENT-4</a> topics —
+<a href="https://github.com/OpenVoiceOS/architecture/blob/dev/intent-4.md">OVOS-INTENT-4</a> topics:
 <code>ovos.intent.register.keyword</code>, <code>ovos.intent.register.template</code>, <code>ovos.intent.deregister</code>,
-<code>ovos.intent.enable</code> / <code>.disable</code> — alongside the legacy <code>register_intent</code> /
+<code>ovos.intent.enable</code> / <code>.disable</code>. They exist alongside the legacy <code>register_intent</code> /
 <code>register_vocab</code> events, so pipeline plugins can consume the spec topics while skills on
-the legacy events keep working. Registrations are broadcast, not addressed: every
+the legacy events keep working. Registrations are broadcast, not addressed. Every
 interested plugin indexes them in parallel, and the orchestrator keeps a passive manifest
 it serves through <code>ovos.intent.list</code> and <code>ovos.intent.describe</code>.</p>
 </div>
@@ -1928,12 +1950,12 @@ it serves through <code>ovos.intent.list</code> and <code>ovos.intent.describe</
 <p><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md">OVOS-PIPELINE-1 §7.3</a>
 keeps a registry of <code>intent_name</code> values leased to a pipeline-plugin role: <code>converse</code>,
 <code>response</code>, <code>stop</code>, <code>fallback</code> and <code>common_query</code>. A skill or pipeline <strong>must not</strong> register
-a reserved name under INTENT-4; a skill subscribes to the reserved dispatch topic by framework
-convention instead. (The spec reserves these names, but <code>ovos-core</code>'s intent manifest does
-not currently reject a reserved-name registration — it only warns on registrations missing
-required fields — so this is a contract skills must honor, not one the orchestrator enforces
-today.)
-A reservation is a namespace lease, not a dispatch change: reserved-name dispatches fire
+a reserved name under INTENT-4. A skill subscribes to the reserved dispatch topic by
+framework convention instead. The spec reserves these names, but <code>ovos-core</code>'s intent
+manifest does not currently reject a reserved-name registration. It only warns on
+registrations missing required fields, so this is a contract skills must honor, not one the
+orchestrator enforces today.
+A reservation is a namespace lease, not a dispatch change. Reserved-name dispatches fire
 context stamping, routing and the handler trio like any other, except that the
 <code>session.active_handlers</code> push is suppressed, since a reserved name continues or terminates
 an already-active skill's participation rather than starting a fresh one. See

@@ -1394,13 +1394,24 @@
 <h1 id="customizing-language-resources">Customizing Language Resources<a class="headerlink" href="#customizing-language-resources" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>Every skill ships small text files that say what phrases to listen for and what to say back. This page shows how to swap in your own versions of those files — to reword a reply, fix wording for your accent or dialect, or add a language a skill doesn't include — all without editing the skill's actual code. You drop your edited copy into a personal folder, and OVOS loads yours instead, falling back to the skill's original for anything you didn't change. See <a href="../lang-support/">Language Support</a> for the bigger picture, or the <a href="../glossary/">Glossary</a> for terms.</p>
+<p>Every skill ships small text files that say what phrases to listen for and what to say
+back. This page shows how to swap in your own versions of those files, to reword a
+reply, fix wording for your accent or dialect, or add a language a skill doesn't
+include, all without editing the skill's actual code. You drop your edited copy into a
+personal folder, and OVOS loads yours instead, falling back to the skill's original for
+anything you didn't change. See <a href="../lang-support/">Language Support</a> for the bigger
+picture, or the <a href="../glossary/">Glossary</a> for terms.</p>
 </div>
-<p>OpenVoiceOS lets you override or extend a skill's <strong>locale resources</strong> — the plain-text files that tell the assistant what to listen for and what to say — without touching the skill's source code. This is how you localize responses, fix intent matching for your accent, reword a reply, or add a language a skill doesn't ship.</p>
-<p><strong>New here?</strong> A skill ships small text files grouped by language. You can drop your own copy of any one of those files into a user folder, and OVOS will load yours instead of the skill's. You only override the files you care about; everything else falls back to the skill.</p>
+<p>OpenVoiceOS lets you override or extend a skill's <strong>locale resources</strong>, the plain-text files
+that tell the assistant what to listen for and what to say, without touching the skill's
+source code. This is how you localize responses, fix intent matching for your accent, reword
+a reply, or add a language a skill doesn't ship.</p>
+<p><strong>New here?</strong> A skill ships small text files grouped by language. You can drop your own copy
+of any one of those files into a user folder, and OVOS loads yours instead of the skill's.
+You only override the files you care about. Everything else falls back to the skill.</p>
 <details class="info">
 <summary>📐 Formal specification</summary>
-<p>Locale resource layout and file formats are defined by <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/intent-2.md">OVOS-INTENT-2 — Locale Resource Formats</a></strong> (companion to <a href="https://github.com/OpenVoiceOS/architecture/blob/dev/intent-1.md">OVOS-INTENT-1</a>, the sentence-template grammar). See the <a href="../architecture-specs/">spec index</a>. This page describes how OVOS implements that spec; the spec is the normative reference.</p>
+<p>Locale resource layout and file formats are defined by <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/intent-2.md">OVOS-INTENT-2: Locale Resource Formats</a></strong> (companion to <a href="https://github.com/OpenVoiceOS/architecture/blob/dev/intent-1.md">OVOS-INTENT-1</a>, the sentence-template grammar). See the <a href="../architecture-specs/">spec index</a>. This page describes how OVOS implements that spec. The spec is the normative reference.</p>
 </details>
 <hr />
 <h2 id="resource-roles">Resource Roles<a class="headerlink" href="#resource-roles" title="Permanent link">&para;</a></h2>
@@ -1447,10 +1458,10 @@
 </tr>
 </tbody>
 </table>
-<p>Two files may share a base name only if their roles differ (<code>confirm.intent</code> and <code>confirm.dialog</code> are distinct resources); two files with the <strong>same</strong> extension must not share a base name anywhere in one language's directory tree.</p>
+<p>Two files may share a base name only if their roles differ (<code>confirm.intent</code> and <code>confirm.dialog</code> are distinct resources). Two files with the <strong>same</strong> extension must not share a base name anywhere in one language's directory tree.</p>
 <hr />
 <h2 id="locale-folder-layout">Locale Folder Layout<a class="headerlink" href="#locale-folder-layout" title="Permanent link">&para;</a></h2>
-<p>All localized resources live under a single <code>locale/</code> directory, with <strong>one subdirectory per language</strong>, named with a BCP-47 tag (case-insensitive — <code>en-US</code> and <code>en-us</code> are the same):</p>
+<p>All localized resources live under a single <code>locale/</code> directory, with <strong>one subdirectory per language</strong>, named with a BCP-47 tag. This is case-insensitive: <code>en-US</code> and <code>en-us</code> are the same:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>my-skill/
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>└── locale/
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>    ├── en-US/
@@ -1463,29 +1474,33 @@
 </span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>    └── pt-BR/
 </span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>        └── …
 </span></code></pre></div>
-<p>A language directory <strong>may</strong> contain subdirectories; a loader resolves a resource by searching the language directory and all its subdirectories recursively. Subdirectory names are an authoring convenience and carry no meaning to the loader.</p>
+<p>A language directory <strong>may</strong> contain subdirectories. A loader resolves a resource by searching the language directory and all its subdirectories recursively. Subdirectory names are an authoring convenience and carry no meaning to the loader.</p>
 <div class="admonition note">
 <p class="admonition-title">Legacy layouts</p>
 <p>Older skills used <code>vocab/&lt;lang&gt;/</code> and <code>dialog/&lt;lang&gt;/</code> directories instead of <code>locale/&lt;lang&gt;/</code>. OVOS still searches these for backwards compatibility, but new skills and overrides should use <code>locale/</code>.</p>
 </div>
 <hr />
 <h2 id="resolution-precedence">Resolution Precedence<a class="headerlink" href="#resolution-precedence" title="Permanent link">&para;</a></h2>
-<p>The same resource — the same <code>(role, base name)</code> pair — may exist in three places. OVOS resolves it in this order (<strong>first match wins</strong>):</p>
+<p>The same resource, the same <code>(role, base name)</code> pair, may exist in three places. OVOS
+resolves it in this order (<strong>first match wins</strong>):</p>
 <ol>
-<li><strong>User overrides</strong> — <code>&lt;xdg_data&gt;/resources/&lt;skill_id&gt;/locale/&lt;lang&gt;/</code></li>
-<li><strong>Skill resources</strong> — the skill's own bundled <code>locale/&lt;lang&gt;/</code></li>
-<li><strong>Core resources</strong> — fallback files shipped by the framework (e.g. <code>ovos-workshop</code>)</li>
+<li><strong>User overrides</strong>: <code>&lt;xdg_data&gt;/resources/&lt;skill_id&gt;/locale/&lt;lang&gt;/</code></li>
+<li><strong>Skill resources</strong>: the skill's own bundled <code>locale/&lt;lang&gt;/</code></li>
+<li><strong>Core resources</strong>: fallback files shipped by the framework (e.g. <code>ovos-workshop</code>)</li>
 </ol>
-<p>Overrides apply at <strong>whole-file granularity</strong>: an override file replaces the corresponding lower-precedence file entirely. You do <strong>not</strong> merge line-by-line, and you do <strong>not</strong> need to copy files you aren't changing.</p>
+<p>Overrides apply at <strong>whole-file granularity</strong>: an override file replaces the corresponding
+lower-precedence file entirely. You do <strong>not</strong> merge line-by-line, and you do <strong>not</strong> need to
+copy files you aren't changing.</p>
 <h3 id="where-the-user-override-folder-lives">Where the user override folder lives<a class="headerlink" href="#where-the-user-override-folder-lives" title="Permanent link">&para;</a></h3>
-<p>The user override base is <code>&lt;xdg_data&gt;/resources/&lt;skill_id&gt;/</code>, where <code>&lt;xdg_data&gt;</code> is the XDG data path — by default <code>~/.local/share/mycroft</code>. So a typical override file path is:</p>
+<p>The user override base is <code>&lt;xdg_data&gt;/resources/&lt;skill_id&gt;/</code>, where <code>&lt;xdg_data&gt;</code> is the XDG
+data path, by default <code>~/.local/share/mycroft</code>. A typical override file path is:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>~/.local/share/mycroft/resources/&lt;skill_id&gt;/locale/&lt;lang&gt;/&lt;file&gt;
 </span></code></pre></div>
 <h3 id="how-to-override">How to Override<a class="headerlink" href="#how-to-override" title="Permanent link">&para;</a></h3>
 <ol>
-<li><strong>Find the skill ID</strong> — e.g. <code>ovos-skill-weather.openvoiceos</code>.</li>
-<li><strong>Create the folders</strong> — <code>~/.local/share/mycroft/resources/&lt;skill_id&gt;/locale/&lt;lang&gt;/</code>.</li>
-<li><strong>Copy and edit</strong> — copy the <code>.dialog</code>, <code>.intent</code>, <code>.voc</code>, <code>.entity</code>, or <code>.blacklist</code> file you want to change from the skill's source into that folder and edit it.</li>
+<li><strong>Find the skill ID</strong>, e.g. <code>ovos-skill-weather.openvoiceos</code>.</li>
+<li><strong>Create the folders</strong>: <code>~/.local/share/mycroft/resources/&lt;skill_id&gt;/locale/&lt;lang&gt;/</code>.</li>
+<li><strong>Copy and edit</strong>: copy the <code>.dialog</code>, <code>.intent</code>, <code>.voc</code>, <code>.entity</code>, or <code>.blacklist</code> file you want to change from the skill's source into that folder and edit it.</li>
 <li><strong>Restart</strong> <code>ovos-core</code> to pick up the change.</li>
 </ol>
 <div class="admonition tip">
@@ -1493,7 +1508,11 @@
 <p>Only place the specific files you want to change. The loader falls back to the skill (and then core) resources for everything you didn't override.</p>
 </div>
 <h3 id="language-fallback">Language fallback<a class="headerlink" href="#language-fallback" title="Permanent link">&para;</a></h3>
-<p>If the requested language has no directory, the loader prefers an exact match but <strong>may</strong> fall back to the nearest available language. OVOS uses the <code>langcodes</code> <code>tag_distance()</code> function and treats a distance below <code>10</code> as a usable regional match (e.g. <code>en-au</code> resolving to <code>en-us</code>). Per the spec this fallback is an implementation choice, not a guarantee — ship the exact language directory you need.</p>
+<p>If the requested language has no directory, the loader prefers an exact match but <strong>may</strong> fall
+back to the nearest available language. OVOS uses the <code>langcodes</code> <code>tag_distance()</code> function and
+treats a distance below <code>10</code> as a usable regional match (e.g. <code>en-au</code> resolving to <code>en-us</code>).
+Per the spec this fallback is an implementation choice, not a guarantee. Ship the exact
+language directory you need.</p>
 <hr />
 <h2 id="file-format-basics">File Format Basics<a class="headerlink" href="#file-format-basics" title="Permanent link">&para;</a></h2>
 <p>All five roles are line-oriented UTF-8 text (OVOS-INTENT-2 §3):</p>
@@ -1502,7 +1521,9 @@
 <li>blank lines and lines beginning with <code>#</code> (comments) are skipped;</li>
 <li>both <code>LF</code> and <code>CRLF</code> line endings are accepted.</li>
 </ul>
-<p>Slot-bearing files (<code>.intent</code>, <code>.dialog</code>) use the OVOS-INTENT-1 sentence-template grammar — expansion <code>(a|b)</code> / optional <code>[x]</code> and named slots <code>{name}</code>. Slot-free files (<code>.entity</code>, <code>.voc</code>, <code>.blacklist</code>) use expansion only, with no <code>{slots}</code>.</p>
+<p>Slot-bearing files (<code>.intent</code>, <code>.dialog</code>) use the OVOS-INTENT-1 sentence-template grammar:
+expansion <code>(a|b)</code>, optional <code>[x]</code>, and named slots <code>{name}</code>. Slot-free files (<code>.entity</code>,
+<code>.voc</code>, <code>.blacklist</code>) use expansion only, with no <code>{slots}</code>.</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a># turn_on.intent  (slot-bearing)
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>turn on (the|) {device}
 </span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>(switch|power) on {device}
@@ -1513,16 +1534,21 @@
 </span></code></pre></div>
 <hr />
 <h2 id="system-wide-resource-overrides">System-wide Resource Overrides<a class="headerlink" href="#system-wide-resource-overrides" title="Permanent link">&para;</a></h2>
-<p>Some core, non-skill resources (sounds, common error/boot dialogs) are resolved by the framework outside the per-skill scheme above. Custom <code>.wav</code> sounds and core <code>.dialog</code> files placed in the framework's resource locations let you rebrand the assistant's "personality". These paths are framework-defined; only the <code>locale/&lt;lang&gt;/</code> layout beneath a resource root is normative.</p>
+<p>Some core, non-skill resources (sounds, common error/boot dialogs) are resolved by the
+framework outside the per-skill scheme above. Custom <code>.wav</code> sounds and core <code>.dialog</code> files
+placed in the framework's resource locations let you change the assistant's "personality".
+These paths are framework-defined. Only the <code>locale/&lt;lang&gt;/</code> layout beneath a resource root
+is normative.</p>
 <hr />
 <h2 id="customizing-number-date-and-language-name-parsers">Customizing Number, Date, and Language-Name Parsers<a class="headerlink" href="#customizing-number-date-and-language-name-parsers" title="Permanent link">&para;</a></h2>
 <p>The technical parsers for numbers, dates, and spoken language names are separate libraries, not skill resources:</p>
 <ul>
-<li><strong>Language names</strong> — <code>ovos-lang-parser</code> maps BCP-47 codes to spoken names.</li>
-<li><strong>Numbers</strong> — <code>ovos-number-parser</code> (e.g. if "22<sup>nd</sup>" doesn't parse in your language).</li>
-<li><strong>Dates</strong> — <code>ovos-date-parser</code>.</li>
+<li><strong>Language names</strong>: <code>ovos-lang-parser</code> maps BCP-47 codes to spoken names.</li>
+<li><strong>Numbers</strong>: <code>ovos-number-parser</code> (e.g. if "22<sup>nd</sup>" doesn't parse in your language).</li>
+<li><strong>Dates</strong>: <code>ovos-date-parser</code>.</li>
 </ul>
-<p>These are rule-driven per language. Fixes are best contributed upstream to the respective repository so every install benefits; local edits to an installed package are not persistent across upgrades.</p>
+<p>These are rule-driven per language. Contribute fixes upstream to the respective repository so
+every install benefits. Local edits to an installed package do not persist across upgrades.</p>
 
 
 
