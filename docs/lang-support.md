@@ -232,13 +232,19 @@ Two more flags tune the result for your hardware:
 > The table below is a snapshot of the bundled recommendations. The authoritative list is whatever `recommends/offline_stt/*.conf`, `recommends/offline_female/*.conf`, and `recommends/offline_male/*.conf` files ship in your installed `ovos-config`. It grows as new models are added to the OVOS Hugging Face collections.
 
 Offline STT is [`ovos-stt-plugin-onnx-asr`](stt-plugins.md#ovos-stt-plugin-onnx-asr) everywhere
-it's listed. Offline TTS is always [`ovos-tts-plugin-phoonnx`](tts-plugins.md#ovos-tts-plugin-phoonnx).
-It picks a default voice for the language automatically. A handful of the original
-languages pin an explicit voice instead. Both work the same way from the user's side.
-`int8` next to a model means a quantized CPU build is available and used by default.
-`--gpu` switches to the full-precision model with `use_cuda: true`. For the most
+it's listed. Where the table shows an offline TTS entry, it is always
+[`ovos-tts-plugin-phoonnx`](tts-plugins.md#ovos-tts-plugin-phoonnx), pinned to a specific male
+and/or female voice. `int8` next to a model means a quantized CPU build is available and used
+by default. `--gpu` switches to the full-precision model with `use_cuda: true`. For the most
 widely-spoken languages (English, French, German, Italian, Dutch) it swaps in a larger model
 entirely (`nemo-canary-1b-v2`) instead of just requantizing.
+
+!!! note "A TTS recommend needs a gender-evidenced voice"
+    A bundled offline TTS recommendation pins one male voice and one female voice per
+    language. `autoconfigure` adds a language only once a phoonnx voice with a confirmed
+    gender exists for it. A language without one is STT-only until such a voice appears; you
+    can still point `ovos-tts-plugin-phoonnx` at any voice ID yourself, but it won't be
+    auto-selected.
 
 Several regional variants still have gaps. **EN-GB**, **PT-BR**, **AR-SA**, and the four
 Catalan variants (**CA-BA**, **CA-NW**, **CA-VA**, plus the already-covered **CA-ES**) ship a
@@ -255,8 +261,8 @@ available.
 | Language | Offline STT model | Offline TTS |
 |----------|--------------------|:---:|
 | **AR-SA** | — | ✅ |
-| **AS-IN** | `OpenVoiceOS/ai4bharat-indicconformer-as-onnx` | ✅ |
-| **BE-BY** | `OpenVoiceOS/nvidia-be-conformer-transducer-large-onnx` (int8) | ✅ |
+| **AS-IN** | `OpenVoiceOS/ai4bharat-indicconformer-as-onnx` | — |
+| **BE-BY** | `OpenVoiceOS/nvidia-be-conformer-transducer-large-onnx` (int8) | — |
 | **BN-IN** | `OpenVoiceOS/ai4bharat-indicconformer-bn-onnx` (int8) | ✅ |
 | **BRX-IN** | `OpenVoiceOS/ai4bharat-indicconformer-brx-onnx` (int8) | — |
 | **CA-BA** | — | ✅ |
@@ -270,60 +276,65 @@ available.
 | **EN-US** | `nemo-parakeet-tdt-0.6b-v3` (int8) | ✅ |
 | **EO** | `OpenVoiceOS/nvidia-eo-conformer-transducer-large-onnx` (int8) | — |
 | **ES-ES** | `OpenVoiceOS/parakeet-rnnt-1.1b-cv17-es-ep18-1270h-onnx` | ✅ |
-| **ET-EE** | `OpenVoiceOS/yuriyvnv-parakeet-tdt-0.6b-et-onnx` (int8) | ✅ |
+| **ET-EE** | `OpenVoiceOS/yuriyvnv-parakeet-tdt-0.6b-et-onnx` (int8) | — |
 | **EU-ES** | `OpenVoiceOS/stt-eu-conformer-transducer-large-onnx` | ✅ |
 | **FA-IR** | `OpenVoiceOS/nvidia-fa-fastconformer-hybrid-large-onnx` (int8) | ✅ |
-| **FON-BJ** | `OpenVoiceOS/misterkissi-whisper-small-fongbe-onnx` | ✅ |
+| **FON-BJ** | `OpenVoiceOS/misterkissi-whisper-small-fongbe-onnx` | — |
 | **FR-FR** | `nemo-parakeet-tdt-0.6b-v3` (int8) | ✅ |
-| **GA-IE** | `OpenVoiceOS/misterkissi-w2v2-lg-xls-r-300m-ga-onnx` | ✅ |
+| **GA-IE** | `OpenVoiceOS/misterkissi-w2v2-lg-xls-r-300m-ga-onnx` | — |
 | **GL-ES** | `onnx-community/whisper-large-v3-turbo` (int8) | ✅ |
-| **GU-IN** | `OpenVoiceOS/ai4bharat-indicconformer-gu-onnx` (int8) | ✅ |
+| **GU-IN** | `OpenVoiceOS/ai4bharat-indicconformer-gu-onnx` (int8) | — |
 | **HI-IN** | `OpenVoiceOS/ai4bharat-indicconformer-hi-onnx` (int8) | ✅ |
-| **HR-HR** | `OpenVoiceOS/nvidia-hr-conformer-transducer-large-onnx` (int8) | ✅ |
-| **HT-HT** | `OpenVoiceOS/misterkissi-whisper-small-haitian-creole-onnx` | ✅ |
+| **HR-HR** | `OpenVoiceOS/nvidia-hr-conformer-transducer-large-onnx` (int8) | — |
+| **HT-HT** | `OpenVoiceOS/misterkissi-whisper-small-haitian-creole-onnx` | — |
 | **IT-IT** | `nemo-parakeet-tdt-0.6b-v3` (int8) | ✅ |
 | **JA-JP** | `OpenVoiceOS/nvidia-parakeet-tdt_ctc-0.6b-ja-onnx` (int8) | ✅ |
-| **KAB-DZ** | `OpenVoiceOS/nvidia-kab-conformer-transducer-large-onnx` (int8) | ✅ |
-| **KN-IN** | `OpenVoiceOS/ai4bharat-indicconformer-kn-onnx` (int8) | ✅ |
+| **KAB-DZ** | `OpenVoiceOS/nvidia-kab-conformer-transducer-large-onnx` (int8) | — |
+| **KN-IN** | `OpenVoiceOS/ai4bharat-indicconformer-kn-onnx` (int8) | — |
 | **KOK-IN** | `OpenVoiceOS/ai4bharat-indicconformer-kok-onnx` (int8) | — |
 | **KPO-TG** | `OpenVoiceOS/misterkissi-whisper-small-kposo-onnx` | — |
 | **KS-IN** | `OpenVoiceOS/ai4bharat-indicconformer-ks-onnx` (int8) | — |
-| **MAI-IN** | `OpenVoiceOS/ai4bharat-indicconformer-mai-onnx` (int8) | ✅ |
-| **MG-MG** | `OpenVoiceOS/misterkissi-whisper-small-malagasy-onnx` | ✅ |
-| **ML-IN** | `OpenVoiceOS/ai4bharat-indicconformer-ml-onnx` (int8) | ✅ |
+| **MAI-IN** | `OpenVoiceOS/ai4bharat-indicconformer-mai-onnx` (int8) | — |
+| **MG-MG** | `OpenVoiceOS/misterkissi-whisper-small-malagasy-onnx` | — |
+| **ML-IN** | `OpenVoiceOS/ai4bharat-indicconformer-ml-onnx` (int8) | — |
 | **MNI-IN** | `OpenVoiceOS/ai4bharat-indicconformer-mni-onnx` (int8) | — |
-| **MR-IN** | `OpenVoiceOS/ai4bharat-indicconformer-mr-onnx` (int8) | ✅ |
-| **NE-NP** | `OpenVoiceOS/ai4bharat-indicconformer-ne-onnx` (int8) | ✅ |
-| **NGL-MZ** | `OpenVoiceOS/misterkissi-whisper-small-lomwe-onnx` | ✅ |
+| **MR-IN** | `OpenVoiceOS/ai4bharat-indicconformer-mr-onnx` (int8) | — |
+| **NE-NP** | `OpenVoiceOS/ai4bharat-indicconformer-ne-onnx` (int8) | — |
+| **NGL-MZ** | `OpenVoiceOS/misterkissi-whisper-small-lomwe-onnx` | — |
 | **NL-NL** | `nemo-parakeet-tdt-0.6b-v3` (int8) | ✅ |
 | **OR-IN** | `OpenVoiceOS/ai4bharat-indicconformer-or-onnx` (int8) | — |
-| **PA-IN** | `OpenVoiceOS/ai4bharat-indicconformer-pa-onnx` (int8) | ✅ |
+| **PA-IN** | `OpenVoiceOS/ai4bharat-indicconformer-pa-onnx` (int8) | — |
 | **PL-PL** | `OpenVoiceOS/yuriyvnv-parakeet-tdt-0.6b-pl-onnx` | ✅ |
 | **PT-BR** | — | ✅ |
 | **PT-PT** | `OpenVoiceOS/whisper-medium-pt-onnx` | ✅ |
-| **RU-RU** | `OpenVoiceOS/nvidia-ru-conformer-transducer-large-onnx` (int8) | ✅ |
-| **RW-RW** | `OpenVoiceOS/nvidia-rw-conformer-transducer-large-onnx` (int8) | ✅ |
+| **RU-RU** | `OpenVoiceOS/nvidia-ru-conformer-transducer-large-onnx` (int8) | — |
+| **RW-RW** | `OpenVoiceOS/nvidia-rw-conformer-transducer-large-onnx` (int8) | — |
 | **SA-IN** | `OpenVoiceOS/ai4bharat-indicconformer-sa-onnx` (int8) | — |
 | **SAT-IN** | `OpenVoiceOS/ai4bharat-indicconformer-sat-onnx` (int8) | — |
 | **SD-IN** | `OpenVoiceOS/ai4bharat-indicconformer-sd-onnx` (int8) | — |
 | **SL-SI** | `OpenVoiceOS/yuriyvnv-parakeet-tdt-0.6b-sl-onnx` (int8) | ✅ |
-| **SN-ZW** | `OpenVoiceOS/misterkissi-whisper-small-shona-onnx` | ✅ |
+| **SN-ZW** | `OpenVoiceOS/misterkissi-whisper-small-shona-onnx` | — |
 | **ST-ZA** | `OpenVoiceOS/misterkissi-whisper-small-sesotho-onnx` | — |
-| **TA-IN** | `OpenVoiceOS/ai4bharat-indicconformer-ta-onnx` (int8) | ✅ |
-| **TE-IN** | `OpenVoiceOS/ai4bharat-indicconformer-te-onnx` (int8) | ✅ |
+| **TA-IN** | `OpenVoiceOS/ai4bharat-indicconformer-ta-onnx` (int8) | — |
+| **TE-IN** | `OpenVoiceOS/ai4bharat-indicconformer-te-onnx` (int8) | — |
 | **TIG-ER** | `OpenVoiceOS/misterkissi-whisper-small-tigre-onnx` | — |
-| **TL-PH** | `OpenVoiceOS/stt-tl-fastconformer-hybrid-large-onnx` | ✅ |
-| **TN-ZA** | `OpenVoiceOS/misterkissi-whisper-small-setswana-onnx` | ✅ |
+| **TL-PH** | `OpenVoiceOS/stt-tl-fastconformer-hybrid-large-onnx` | — |
+| **TN-ZA** | `OpenVoiceOS/misterkissi-whisper-small-setswana-onnx` | — |
 | **UMB-AO** | `OpenVoiceOS/misterkissi-whisper-small-umbundu-onnx` | — |
-| **UR-PK** | `OpenVoiceOS/ai4bharat-indicconformer-ur-onnx` (int8) | ✅ |
-| **UZ-UZ** | `OpenVoiceOS/asr-uz-fastconformer-large-onnx` | ✅ |
+| **UR-PK** | `OpenVoiceOS/ai4bharat-indicconformer-ur-onnx` (int8) | — |
+| **UZ-UZ** | `OpenVoiceOS/asr-uz-fastconformer-large-onnx` | — |
 | **VAI-LR** | `OpenVoiceOS/misterkissi-whisper-small-vai-onnx` | — |
-| **VI-VN** | `OpenVoiceOS/nvidia-parakeet-ctc-0.6b-vietnamese-onnx` (int8) | ✅ |
+| **VI-VN** | `OpenVoiceOS/nvidia-parakeet-ctc-0.6b-vietnamese-onnx` (int8) | — |
 
 !!! note
     Where the STT column shows "—", the bundled recommendations don't cover offline speech
     recognition for that language yet. `autoconfigure` will skip that part of the
     configuration and tell you so. Use an online STT plugin instead.
+
+!!! note "Some TTS recommends cover only one gender"
+    **BN-IN** ships a male voice only, and **SL-SI** ships a female voice only. Pass the
+    matching `--male`/`--female` flag for these; the other gender falls back to no TTS
+    configuration until a voice with that gender is confirmed.
 
 ### Per-language status matrix
 
