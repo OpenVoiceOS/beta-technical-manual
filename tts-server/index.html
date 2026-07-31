@@ -1648,6 +1648,14 @@ but ignored — a self-hosted server has no keys to check.</p>
 <code>ovos-tts-plugin-server</code>):</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>pip<span class="w"> </span>install<span class="w"> </span>ovos-tts-plugin-server
 </span></code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Key name: <code>host</code>, not <code>urls</code></p>
+<p>This TTS companion plugin reads the <strong><code>host</code></strong> key. The
+<a href="../stt-server/#companion-plugin">STT companion plugin</a> reads a different key,
+<strong><code>urls</code></strong> (a list). The two are not interchangeable. If you set the wrong key, the
+plugin does not error — it silently ignores the value and falls back to the
+public servers described below.</p>
+</div>
 <p><strong>Configuration</strong> <code>mycroft.conf</code>:</p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="p">{</span>
 </span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">  </span><span class="nt">&quot;tts&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
@@ -1662,6 +1670,18 @@ but ignored — a self-hosted server has no keys to check.</p>
 </span><span id="__span-8-11"><a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a><span class="w"> </span><span class="p">}</span><span class="w"> </span>
 </span><span id="__span-8-12"><a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a><span class="p">}</span>
 </span></code></pre></div>
+<p><strong>Restart and verify</strong></p>
+<p>After editing the config, restart the client so it picks up the change, then confirm it
+is actually talking to your server:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="c1"># raspOVOS</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>ovos-restart
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="c1"># any other systemd-managed install</span>
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>systemctl<span class="w"> </span>--user<span class="w"> </span>restart<span class="w"> </span>ovos.service
+</span></code></pre></div>
+<p>Ask the assistant to say something and check the voice/audio logs, or watch live traffic
+with <a href="../bus-service/"><code>ovos-busmon</code></a>, to confirm the configured <code>host</code> server is the one
+receiving the request, not a public fallback.</p>
 <div class="admonition warning">
 <p class="admonition-title">No <code>host</code> configured → public servers, not local failure</p>
 <p>If you omit <code>host</code>, the plugin does <strong>not</strong> fail — it silently falls back to a built-in
@@ -1732,14 +1752,14 @@ container serving that engine behind <code>ovos-tts-server</code>. Until the com
 lands, check a plugin's own repository for a Dockerfile before building one by hand.</p>
 </div>
 <p><strong>Create a Dockerfile</strong></p>
-<div class="language-dockerfile highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="k">FROM</span><span class="w"> </span><span class="s">python:3.11-slim</span>
-</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="k">RUN</span><span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>ovos-tts-server
-</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="k">RUN</span><span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span><span class="o">{</span>YOUR_TTS_PLUGIN<span class="o">}</span>
-</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="k">ENTRYPOINT</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;ovos-tts-server&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;--engine&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;{YOUR_TTS_PLUGIN}&quot;</span><span class="p">]</span>
+<div class="language-dockerfile highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="k">FROM</span><span class="w"> </span><span class="s">python:3.11-slim</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="k">RUN</span><span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>ovos-tts-server
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="k">RUN</span><span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span><span class="o">{</span>YOUR_TTS_PLUGIN<span class="o">}</span>
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="k">ENTRYPOINT</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;ovos-tts-server&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;--engine&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;{YOUR_TTS_PLUGIN}&quot;</span><span class="p">]</span>
 </span></code></pre></div>
 <p><strong>Build &amp; Run</strong></p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>my-ovos-tts<span class="w"> </span>.
-</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>docker<span class="w"> </span>run<span class="w"> </span>-p<span class="w"> </span><span class="m">9666</span>:9666<span class="w"> </span>my-ovos-tts
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>my-ovos-tts<span class="w"> </span>.
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>docker<span class="w"> </span>run<span class="w"> </span>-p<span class="w"> </span><span class="m">9666</span>:9666<span class="w"> </span>my-ovos-tts
 </span></code></pre></div>
 <p>Pre-built containers are also available via the <a href="https://github.com/OpenVoiceOS/ovos-docker-tts">ovos-docker-tts</a>
 repository.</p>
@@ -1759,7 +1779,8 @@ repository.</p>
 </li>
 <li>
 <p><strong>Security</strong>: Consider adding API keys or putting a reverse proxy (NGINX, Traefik) in front for SSL termination and
-  rate limiting.</p>
+  rate limiting. See <a href="../stt-server/#tips-caveats">stt-server: a minimal NGINX server block</a> for a worked example —
+  the same shape applies here, just point <code>proxy_pass</code> at port 9666 instead of 8080.</p>
 </li>
 <li>
 <p><strong>Plugin Dependencies</strong>: Some voices require native libraries (e.g., TensorFlow). Bake them into your Docker image to
