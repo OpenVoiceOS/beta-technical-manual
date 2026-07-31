@@ -1635,11 +1635,11 @@
 pipeline plugin inside <code>ovos-core</code>.</p>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>Normally a skill answers one request and then forgets about you. "Converse" lets a skill stay in the conversation for a little while after it has spoken, so it can catch a quick follow-up like "yes", "no", "thanks", or "the red one" that only makes sense as a reply. It's the difference between a one-off answer and a short back-and-forth chat. New terms are explained in the <a href="../glossary/">Glossary</a>.</p>
+<p>Normally a skill answers one request and then forgets about you. "Converse" lets a skill stay in the conversation for a little while after it has spoken, so it can catch a quick follow-up like "yes", "no", "thanks", or "the red one" that only makes sense as a reply. This is the difference between a one-off answer and a short back-and-forth chat. New terms are explained in the <a href="../glossary/">Glossary</a>.</p>
 </div>
 <details class="info">
 <summary>📐 Formal specification</summary>
-<p>Converse is specified by <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/converse.md">OVOS-CONVERSE-1 — Active Handlers &amp; Interactive Response</a></strong> (a formal <a href="../architecture-specs/">architecture spec</a>). A skill that was recently active stays on the session's <strong>converse-handler list</strong> (<code>session.converse_handlers</code> — what this page calls the <em>Active Skills List</em>); a <strong>converse pipeline plugin</strong> polls each eligible handler with a <code>&lt;skill_id&gt;.converse.ping</code> / <code>.pong</code> round-trip and, when one claims, returns a <code>Match</code> on the reserved <code>intent_name</code> <strong><code>converse</code></strong>, which the orchestrator dispatches to <code>&lt;skill_id&gt;:converse</code>. The "wait for the next reply" feature (the response window) is the session field <code>session.response_mode</code>, delivered via the reserved <code>intent_name</code> <strong><code>response</code></strong>. Both <code>converse</code> and <code>response</code> are reserved names no skill may register. The list and the response window are <strong>session-resident state</strong> that rides every message — which is why session-aware skills behave correctly across satellites.</p>
+<p>Converse is specified by <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/converse.md">OVOS-CONVERSE-1 — Active Handlers &amp; Interactive Response</a></strong> (a formal <a href="../architecture-specs/">architecture spec</a>). A skill that was recently active stays on the session's <strong>converse-handler list</strong> (<code>session.converse_handlers</code>, what this page calls the <em>Active Skills List</em>). A <strong>converse pipeline plugin</strong> polls each eligible handler with a <code>&lt;skill_id&gt;.converse.ping</code> / <code>.pong</code> round-trip. When one claims, it returns a <code>Match</code> on the reserved <code>intent_name</code> <strong><code>converse</code></strong>, which the orchestrator dispatches to <code>&lt;skill_id&gt;:converse</code>. The "wait for the next reply" feature (the response window) is the session field <code>session.response_mode</code>, delivered via the reserved <code>intent_name</code> <strong><code>response</code></strong>. Both <code>converse</code> and <code>response</code> are reserved names no skill may register. The list and the response window are <strong>session-resident state</strong> that rides every message. This is why session-aware skills behave correctly across satellites.</p>
 </details>
 <div class="admonition note">
 <p class="admonition-title">Upcoming — <code>stop</code> joins the reserved names</p>
@@ -1648,14 +1648,14 @@ formalizes <code>stop</code> as a third reserved <code>intent_name</code>, along
 with a separable legacy-compatibility bridge for existing consumers. See
 <a href="../intent-service/">Intent Service</a> for the pipeline-plugin side of this change.</p>
 </div>
-<p><strong>What / why (beginners):</strong> <code>converse()</code> lets a skill keep listening <em>after</em> it has just spoken, without registering a new intent for every possible follow-up. Once your skill runs, it goes onto the <strong>Active Skills List</strong> for a few minutes; while it is there, every new utterance is offered to its <code>converse()</code> method <em>before</em> normal intent parsing. This is how you handle "yes / no / thanks / the red one" replies that only make sense right after your skill acted.</p>
-<p>Each <a href="../skill-design-guidelines/">Skill</a> may define a <code>converse()</code> method. This method is called any time the Skill has been recently active and a new utterance is processed.</p>
-<p>The converse method expects a single argument, a standard <code>Message</code> object — the same object an intent handler receives.</p>
+<p><strong>What / why (beginners):</strong> <code>converse()</code> lets a skill keep listening after it has just spoken, without registering a new intent for every possible follow-up. Once your skill runs, it goes onto the <strong>Active Skills List</strong> for a few minutes. While it is there, every new utterance is offered to its <code>converse()</code> method before normal intent parsing. This is how you handle "yes / no / thanks / the red one" replies that only make sense right after your skill acted.</p>
+<p>Each <a href="../skill-design-guidelines/">Skill</a> may define a <code>converse()</code> method. This method is called any time the skill has been recently active and a new utterance is processed.</p>
+<p>The converse method expects a single argument, a standard <code>Message</code> object, the same object an intent handler receives.</p>
 <p>Converse methods must return a Boolean: <code>True</code> if the utterance was handled (it is consumed and intent parsing is skipped), otherwise <code>False</code>.</p>
 <div class="admonition warning">
 <p class="admonition-title">Requires <code>ConversationalSkill</code></p>
 <p><code>converse()</code>, <code>activate()</code>, <code>deactivate()</code>, <code>handle_activate()</code>/<code>handle_deactivate()</code>, and
-<code>@conversational_intent</code> are <strong>not</strong> available on the plain <code>OVOSSkill</code> base class — subclass
+<code>@conversational_intent</code> are <strong>not</strong> available on the plain <code>OVOSSkill</code> base class. Subclass
 <code>ConversationalSkill</code> (<code>from ovos_workshop.skills.converse import ConversationalSkill</code>) instead
 to use any of the features on this page.</p>
 </div>
@@ -1667,7 +1667,7 @@ whitelist/blacklist — covered on <a href="../permissions/">Permissions &amp; A
 <code>converse()</code> never fires even though your skill is active, check that gate first.</p>
 </div>
 <h2 id="basic-usage">Basic usage<a class="headerlink" href="#basic-usage" title="Permanent link">&para;</a></h2>
-<p>Let's use a version of the Ice Cream Skill we've been building up and add a converse method to catch any brief statements of thanks that might directly follow an order.</p>
+<p>This example extends the Ice Cream Skill built up earlier, adding a converse method to catch any brief statement of thanks that might directly follow an order.</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span> <span class="nn">ovos_workshop.skills.converse</span> <span class="kn">import</span> <span class="n">ConversationalSkill</span>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kn">from</span> <span class="nn">ovos_workshop.decorators</span> <span class="kn">import</span> <span class="n">intent_handler</span>
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
@@ -1690,24 +1690,24 @@ whitelist/blacklist — covered on <a href="../permissions/">Permissions &amp; A
 <p>In this example:</p>
 <ol>
 <li>
-<p>A User might request an ice cream which is handled by <code>handle_request_icecream()</code></p>
+<p>A user might request an ice cream, which <code>handle_request_icecream()</code> handles.</p>
 </li>
 <li>
-<p>The Skill would be added to the system Active Skill list for up to 5 minutes.</p>
+<p>The skill is added to the system Active Skill list for up to 5 minutes.</p>
 </li>
 <li>
-<p>Any utterance received by OVOS would trigger this Skills converse system whilst it is considered active.</p>
+<p>Any utterance OVOS receives triggers this skill's converse system while it is considered active.</p>
 </li>
 <li>
-<p>If the User followed up with a pleasantry such as "Hey Mycroft, thanks" - the converse method would match this vocab against the <code>Thankyou.voc</code> file in the Skill and speak the contents of the <code>you-are-welcome.dialog</code> file. The method would return <code>True</code> and the utterance would be consumed meaning the intent parsing service would never be triggered.</p>
+<p>If the user follows up with a pleasantry such as "Hey Mycroft, thanks", the converse method matches this vocab against the <code>Thankyou.voc</code> file in the skill and speaks the contents of the <code>you-are-welcome.dialog</code> file. The method returns <code>True</code> and the utterance is consumed, so the intent parsing service never triggers.</p>
 </li>
 <li>
-<p>Any utterance that did not match would be silently ignored and allowed to continue on to other converse methods and finally to the intent parsing service.</p>
+<p>Any utterance that does not match is silently ignored and continues on to other converse methods, and finally to the intent parsing service.</p>
 </li>
 </ol>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>skills that are not <a href="../session/">Session</a> aware may behave weirdly with voice satellites, see the <a href="https://github.com/OpenVoiceOS/ovos-skill-parrot/">parrot skill</a> for an example.</p>
+<p>Skills that are not <a href="../session/">Session</a> aware may behave unpredictably with voice satellites. See the <a href="https://github.com/OpenVoiceOS/ovos-skill-parrot/">parrot skill</a> for an example.</p>
 </div>
 <h2 id="active-skill-list">Active Skill List<a class="headerlink" href="#active-skill-list" title="Permanent link">&para;</a></h2>
 <p>A Skill is considered active if it has been called in the last 5 minutes. This window is the
@@ -1719,13 +1719,13 @@ whitelist/blacklist — covered on <a href="../permissions/">Permissions &amp; A
 </span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>  }
 </span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>}
 </span></code></pre></div>
-<p>Skills are called in order of when they were last active. For example, if a user spoke the following commands:</p>
+<p>Skills are called in order of when they were last active. For example, if a user speaks the following commands:</p>
 <blockquote>
 <p>Hey Mycroft, set a timer for 10 minutes</p>
 <p>Hey Mycroft, what's the weather</p>
 </blockquote>
-<p>Then the utterance "what's the weather" would first be sent to the Timer Skill's <code>converse()</code> method, then to the intent service for normal handling where the Weather Skill would be called.</p>
-<p>As the Weather Skill was called it has now been added to the front of the Active Skills List. Hence, the next utterance received will be directed to:</p>
+<p>The utterance "what's the weather" is first sent to the Timer Skill's <code>converse()</code> method, then to the intent service for normal handling, where the Weather Skill is called.</p>
+<p>Because the Weather Skill was called, it is now added to the front of the Active Skills List. The next utterance received is directed to:</p>
 <ol>
 <li>
 <p><code>WeatherSkill.converse()</code></p>
@@ -1740,22 +1740,22 @@ whitelist/blacklist — covered on <a href="../permissions/">Permissions &amp; A
 <p>When does a skill become active?</p>
 <ol>
 <li>
-<p><strong>before</strong> an intent is called the skill is <strong>activated</strong></p>
+<p><strong>Before</strong> an intent is called, the skill is <strong>activated</strong>.</p>
 </li>
 <li>
-<p>if a fallback <strong>returns True</strong> (to consume the utterance) the skill is <strong>activated</strong> right <strong>after</strong> the fallback</p>
+<p>If a fallback <strong>returns True</strong> (to consume the utterance), the skill is <strong>activated</strong> right <strong>after</strong> the fallback.</p>
 </li>
 <li>
-<p>if converse <strong>returns True</strong> (to consume the utterance) the skill is <strong>reactivated</strong> right <strong>after</strong> converse</p>
+<p>If converse <strong>returns True</strong> (to consume the utterance), the skill is <strong>reactivated</strong> right <strong>after</strong> converse.</p>
 </li>
 <li>
-<p>a skill can activate/deactivate itself at any time</p>
+<p>A skill can activate or deactivate itself at any time.</p>
 </li>
 </ol>
 <h2 id="making-a-skill-active">Making a Skill Active<a class="headerlink" href="#making-a-skill-active" title="Permanent link">&para;</a></h2>
-<p>There are occasions where a Skill has not been triggered by the User, but it should still be considered "Active".</p>
-<p>In the case of our Ice Cream Skill - we might have a function that will execute when the customers order is ready. 
-At this point, we also want to be responsive to the customers thanks, so we call <code>self.activate()</code> to manually add our Skill to the front of the Active Skills List.</p>
+<p>There are occasions where a user has not triggered a skill, but it should still be considered "Active".</p>
+<p>In the case of our Ice Cream Skill, we might have a function that runs when the customer's order is ready.
+At this point, we also want to be responsive to the customer's thanks, so we call <code>self.activate()</code> to manually add our skill to the front of the Active Skills List.</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">from</span> <span class="nn">ovos_bus_client.message</span> <span class="kn">import</span> <span class="n">Message</span>
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="kn">from</span> <span class="nn">ovos_workshop.skills.converse</span> <span class="kn">import</span> <span class="n">ConversationalSkill</span>
 </span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
@@ -1774,8 +1774,8 @@ At this point, we also want to be responsive to the customers thanks, so we call
 </span><span id="__span-2-16"><a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Skill has been activated&quot;</span><span class="p">)</span>
 </span></code></pre></div>
 <h2 id="deactivating-a-skill">Deactivating a Skill<a class="headerlink" href="#deactivating-a-skill" title="Permanent link">&para;</a></h2>
-<p>The active skill list will be pruned by <code>ovos-core</code>, any skills that have not been interacted with for longer than 5 minutes will be deactivated</p>
-<p>Individual Skills may react to this event, to clean up state or, in some rare cases, to reactivate themselves</p>
+<p><code>ovos-core</code> prunes the active skill list. Any skill not interacted with for longer than 5 minutes is deactivated.</p>
+<p>Individual skills may react to this event, to clean up state or, in some rare cases, to reactivate themselves.</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kn">from</span> <span class="nn">ovos_bus_client.message</span> <span class="kn">import</span> <span class="n">Message</span>
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="kn">from</span> <span class="nn">ovos_workshop.skills.converse</span> <span class="kn">import</span> <span class="n">ConversationalSkill</span>
 </span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
@@ -1791,7 +1791,7 @@ At this point, we also want to be responsive to the customers thanks, so we call
 </span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a><span class="sd">        &quot;&quot;&quot;</span>
 </span><span id="__span-3-14"><a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">activate</span><span class="p">()</span>
 </span></code></pre></div>
-<p>A skill can also deactivate itself at any time</p>
+<p>A skill can also deactivate itself at any time.</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kn">from</span> <span class="nn">ovos_bus_client.message</span> <span class="kn">import</span> <span class="n">Message</span>
 </span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="kn">from</span> <span class="nn">ovos_workshop.skills.converse</span> <span class="kn">import</span> <span class="n">ConversationalSkill</span>
 </span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>
@@ -1803,9 +1803,9 @@ At this point, we also want to be responsive to the customers thanks, so we call
 </span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">deactivate</span><span class="p">()</span>
 </span></code></pre></div>
 <h2 id="conversational-intents">Conversational Intents<a class="headerlink" href="#conversational-intents" title="Permanent link">&para;</a></h2>
-<p>Skills can have extra intents valid while they are active, those are internal and not part of the main intent system. For an active skill, the order is: its <code>@conversational_intent</code>-decorated handlers are checked first; only if none of them match does the skill's own <code>converse()</code> method get a chance to run. Both happen before the utterance would fall through to the normal Adapt/Padatious intent pipeline.</p>
-<p>the <code>@conversational_intent</code> decorator can be used to define converse intent handlers</p>
-<p>these intents only trigger after an initial interaction, essentially they are only follow up questions</p>
+<p>Skills can have extra intents valid while they are active. Those intents are internal and not part of the main intent system. For an active skill, its <code>@conversational_intent</code>-decorated handlers are checked first. Only if none of them match does the skill's own <code>converse()</code> method get a chance to run. Both happen before the utterance falls through to the normal Adapt/Padatious intent pipeline.</p>
+<p>The <code>@conversational_intent</code> decorator defines converse intent handlers.</p>
+<p>These intents only trigger after an initial interaction. They are essentially follow-up questions.</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kn">from</span> <span class="nn">ovos_workshop.skills.converse</span> <span class="kn">import</span> <span class="n">ConversationalSkill</span>
 </span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="kn">from</span> <span class="nn">ovos_workshop.decorators</span> <span class="kn">import</span> <span class="n">intent_handler</span><span class="p">,</span> <span class="n">conversational_intent</span>
 </span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>
@@ -1823,9 +1823,9 @@ At this point, we also want to be responsive to the customers thanks, so we call
 </span><span id="__span-5-15"><a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">speak</span><span class="p">(</span><span class="n">fact2</span><span class="p">)</span>
 </span></code></pre></div>
 <blockquote>
-<p><strong>NOTE</strong>: Only works with <code>.intent</code> files, <a href="../adapt-pipeline/">Adapt</a>/Keyword intents are NOT supported</p>
+<p><strong>NOTE</strong>: Only works with <code>.intent</code> files. <a href="../adapt-pipeline/">Adapt</a>/keyword intents are NOT supported.</p>
 </blockquote>
-<p>A more complex example, a game skill that allows saving/exiting the game only during playback</p>
+<p>A more complex example: a game skill that allows saving or exiting the game only during playback.</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="k">class</span> <span class="nc">MyGameSkill</span><span class="p">(</span><span class="n">ConversationalSkill</span><span class="p">):</span>
 </span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>
 </span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>    <span class="nd">@intent_handler</span><span class="p">(</span><span class="s2">&quot;play.intent&quot;</span><span class="p">)</span>
@@ -1850,7 +1850,7 @@ At this point, we also want to be responsive to the customers thanks, so we call
 </span><span id="__span-6-22"><a id="__codelineno-6-22" name="__codelineno-6-22" href="#__codelineno-6-22"></a>        <span class="k">return</span> <span class="kc">False</span>
 </span></code></pre></div>
 <blockquote>
-<p><strong>NOTE</strong>:  if these intents trigger, they are called <strong>INSTEAD</strong> of <code>converse</code></p>
+<p><strong>NOTE</strong>: If these intents trigger, they are called <strong>INSTEAD</strong> of <code>converse</code>.</p>
 </blockquote>
 
 

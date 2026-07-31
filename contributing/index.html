@@ -1400,28 +1400,28 @@ spec" gets checked, and where to ask if you get stuck.</p>
 <p>Every OVOS repository publishes through the same shared pipeline, described in full on the
 <a href="../gh-automations-overview/">gh-automations</a> page:</p>
 <ol>
-<li><strong>Branch</strong> — work happens on a feature branch, not directly on <code>dev</code>.</li>
-<li><strong>Pull request into <code>dev</code></strong> — opening a PR against <code>dev</code> triggers the shared <strong>OVOS PR
+<li><strong>Branch</strong>: work happens on a feature branch, not directly on <code>dev</code>.</li>
+<li><strong>Pull request into <code>dev</code></strong>: opening a PR against <code>dev</code> triggers the shared <strong>OVOS PR
    Checks</strong>: build/install/test, license and dependency scanning, plugin-manifest detection
    (for plugin repos), coverage, and a version-bump preview. These checks post their results
-   as a single comment on the PR; a PR merges once they pass.</li>
-<li><strong>Merge to <code>dev</code></strong> — a merged PR triggers an automatic alpha release to PyPI, so the change
+   as a single comment on the PR. A PR merges once they pass.</li>
+<li><strong>Merge to <code>dev</code></strong>: a merged PR triggers an automatic alpha release to PyPI, so the change
    is installable (as a pre-release) right away.</li>
-<li><strong>Promotion to stable</strong> — periodically, a release PR rolls accumulated <code>dev</code> changes into
-   <code>master</code>; merging it tags and publishes the stable release.</li>
+<li><strong>Promotion to stable</strong>: periodically, a release PR rolls accumulated <code>dev</code> changes into
+   <code>master</code>. Merging it tags and publishes the stable release.</li>
 </ol>
 <p>See <a href="../gh-automations-release/">Release Flow</a> and <a href="../gh-automations-workflows/">Workflow Reference</a>
 for the full mechanics, including how versions are bumped from conventional-commit prefixes.</p>
 <h2 id="finding-the-code">Finding the code<a class="headerlink" href="#finding-the-code" title="Permanent link">&para;</a></h2>
-<p>OVOS is split across many small repositories — one per plugin, one per core service, one per
+<p>OVOS is split across many small repositories: one per plugin, one per core service, one per
 skill. The <a href="../ecosystem-index/">OVOS Repository Index</a> is the map of every public repository in
-the project; the <a href="../plugins-index/">Plugin Ecosystem</a> page is the narrower view of installable
+the project. The <a href="../plugins-index/">Plugin Ecosystem</a> page is the narrower view of installable
 plugins by category (STT, TTS, wake word, and so on). Start there rather than guessing a repo
 name.</p>
 <h2 id="how-spec-correct-is-checked">How "spec-correct" is checked<a class="headerlink" href="#how-spec-correct-is-checked" title="Permanent link">&para;</a></h2>
 <p>Core subsystems (the messagebus, the audio pipeline, OCP, and others) are backed by written
-<strong>architecture specs</strong> — see the <a href="../architecture-specs/">spec index</a>. Conformance to those specs
-isn't just asserted in prose: <a href="https://github.com/OpenVoiceOS/ovos-test-harness"><code>ovos-test-harness</code></a>
+<strong>architecture specs</strong>. See the <a href="../architecture-specs/">spec index</a>. Conformance to those specs
+isn't just asserted in prose. <a href="https://github.com/OpenVoiceOS/ovos-test-harness"><code>ovos-test-harness</code></a>
 is an executable conformance suite that exercises a running OVOS instance against the spec's
 observable behavior. See <a href="../spec-tooling/">Specs &amp; Tooling</a> for how the specs, the harness, and
 the message-spec definitions fit together.</p>
@@ -1429,31 +1429,31 @@ the message-spec definitions fit together.</p>
 <p>The shared <strong>OVOS PR Checks</strong> above catch a broken change, but waiting for CI to tell you is the
 slow way to find out. Run the same kind of check locally first:</p>
 <ul>
-<li><strong>Skills and plugins</strong> — use <a href="../ovoscope-overview/"><code>ovoscope</code></a>, the official End-to-End test
-  tool: it runs a small in-process pretend assistant so you can confirm a request is understood
-  and answered correctly without real hardware or a full install. Every official OVOS skill is
-  required to pass <code>ovoscope</code> E2E tests, so writing one for your change is also writing the test
+<li><strong>Skills and plugins</strong>: use <a href="../ovoscope-overview/"><code>ovoscope</code></a>, the official end-to-end test
+  tool. It runs a small in-process pretend assistant, so you can confirm a request is understood
+  and answered correctly without real hardware or a full install. Every official OVOS skill must
+  pass <code>ovoscope</code> E2E tests, so writing one for your change also writes the test
   the PR check will run.</li>
 <li><strong>Core repositories</strong> (<code>ovos-core</code>, <code>ovos-bus-client</code>, <code>ovos-utils</code>, and the other libraries
-  under <a href="../ecosystem-index/">the repository index</a>) — run that repo's own <code>pytest</code> suite from a
+  under <a href="../ecosystem-index/">the repository index</a>): run that repo's own <code>pytest</code> suite from a
   checkout before opening the PR: <code>pip install -e .[test]</code> (or the extra the repo's
   <code>pyproject.toml</code> names for tests), then <code>pytest</code>.</li>
 </ul>
-<p>Either way, the goal is the same: catch a failure on your own machine, where you can iterate on
+<p>Either way, the goal is the same. Catch a failure on your own machine, where you can iterate on
 it in seconds, instead of finding out from a CI comment minutes later.</p>
 <h2 id="writing-a-skill-or-plugin">Writing a skill or plugin<a class="headerlink" href="#writing-a-skill-or-plugin" title="Permanent link">&para;</a></h2>
 <p>If you're contributing a new ability rather than a core fix, start with
 <a href="../first-skill/">Your first skill</a> for the step-by-step tutorial, or
 <a href="../skill-structure/">Anatomy of a Skill</a> for the reference structure. For plugins (a new STT
-engine, TTS voice, wake word, etc.) browse the <a href="../plugins-index/">Plugin Ecosystem</a> page for the
-category you're extending and use an existing plugin in that category as a template — the plugin
-base classes referenced throughout this manual (for example the <a href="../tts-plugins/#plugin-template">TTS plugin template</a>)
+engine, TTS voice, wake word, and so on), browse the <a href="../plugins-index/">Plugin Ecosystem</a> page for the
+category you're extending, and use an existing plugin in that category as a template. The plugin
+base classes referenced throughout this manual (for example, the <a href="../tts-plugins/#plugin-template">TTS plugin template</a>)
 are the contract your plugin's entry point needs to satisfy.</p>
 <h2 id="where-to-ask">Where to ask<a class="headerlink" href="#where-to-ask" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong><a href="https://matrix.to/#/#openvoiceos-skills:matrix.org">Skills channel on OVOS Chat</a></strong> — quick
+<li><strong><a href="https://matrix.to/#/#openvoiceos-skills:matrix.org">Skills channel on OVOS Chat</a></strong>: quick
   questions while writing a skill.</li>
-<li><strong><a href="https://community.openconversational.ai/">Open Conversational AI forum</a></strong> — longer
+<li><strong><a href="https://community.openconversational.ai/">Open Conversational AI forum</a></strong>: longer
   questions, design discussion, or anything that needs more than a chat message.</li>
 </ul>
 <p>See <a href="../skill-dev-faq/">Skill Dev FAQ</a> for answers to the questions that come up most, and

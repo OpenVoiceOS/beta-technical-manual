@@ -1412,7 +1412,7 @@
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
 <p>OVOS is built on a handful of shared Python libraries that the services and skills all depend
-on — the messagebus client, general utilities, typed message models, and so on. Their detailed
+on, including the messagebus client, general utilities, and typed message models. Their detailed
 API reference lives <strong>in each library's own repository</strong> (every one ships a <code>docs/</code> folder), so
 this page is a <strong>map</strong>: what each library is for, and a direct link to its source and docs.
 Keeping the API reference at the source avoids it drifting out of sync with the code. See the
@@ -1420,8 +1420,8 @@ Keeping the API reference at the source avoids it drifting out of sync with the 
 </div>
 <div class="admonition info">
 <p class="admonition-title">Why this is just links</p>
-<p>Per-library API docs are maintained <strong>in the library repos themselves</strong> (each has a <code>docs/</code>
-folder rendered on GitHub). Re-hosting them here would mean two copies to keep in sync, so the
+<p>The library repos themselves maintain per-library API docs (each has a <code>docs/</code>
+folder rendered on GitHub). Re-hosting them here would mean keeping two copies in sync, so the
 manual links out to the authoritative source instead. Use the links below.</p>
 </div>
 <hr />
@@ -1446,7 +1446,7 @@ decorators, language helpers, sound playback, and many small utilities. It also 
 <li>License: Apache-2.0</li>
 </ul>
 <h2 id="ovos-pydantic-models"><code>ovos-pydantic-models</code><a class="headerlink" href="#ovos-pydantic-models" title="Permanent link">&para;</a></h2>
-<p>Typed <a href="https://docs.pydantic.dev/">Pydantic</a> models for OVOS bus messages — a schema layer that
+<p>Typed <a href="https://docs.pydantic.dev/">Pydantic</a> models for OVOS bus messages: a schema layer that
 lets tools validate and introspect message types instead of passing around raw dicts.</p>
 <ul>
 <li>Source: <a href="https://github.com/OpenVoiceOS/ovos-pydantic-models">OpenVoiceOS/ovos-pydantic-models</a></li>
@@ -1474,7 +1474,7 @@ helpers, and skill lifecycle. Covered in the manual under <a href="../workshop-o
 <a href="../config/">Configuration</a>.</p>
 <ul>
 <li>Source: <a href="https://github.com/OpenVoiceOS/ovos-config">OpenVoiceOS/ovos-config</a></li>
-<li>API docs: unlike the libraries above, <code>ovos-config</code> has no separate <code>docs/</code> folder — its
+<li>API docs: unlike the libraries above, <code>ovos-config</code> has no separate <code>docs/</code> folder. Its
   <a href="https://github.com/OpenVoiceOS/ovos-config/blob/dev/README.md"><code>README</code></a> is the API reference.</li>
 <li>License: Apache-2.0</li>
 </ul>
@@ -1490,8 +1490,8 @@ library when hand-authoring or prototyping matching rules.</p>
 <hr />
 <p>These libraries are transitive dependencies of <code>ovos-core</code> and are version-bounded by
 the same <a href="../release-channels/">release-channel constraints files</a> rather than pinned
-independently — you don't normally choose their versions yourself.</p>
-<p>For the full list of OVOS repositories — plugins, skills, tools, and more — see the
+independently. You don't normally choose their versions yourself.</p>
+<p>For the full list of OVOS repositories, including plugins, skills, and tools, see the
 <a href="../ecosystem-index/">OVOS Repository Index</a>.</p>
 
 

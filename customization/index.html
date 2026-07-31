@@ -1765,17 +1765,17 @@
 <h1 id="customization">Customization<a class="headerlink" href="#customization" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>You don't have to be a programmer to make a skill behave the way you like. This page shows how to change the things an existing skill says — to give your assistant its own personality — or to add a language it doesn't yet support, all by dropping a few text files into a folder on your device. The original skill stays untouched; your changes simply override it. The later sections are a reference for developers. For more on those text files see <a href="../resource-files/">Resource Files</a>; for term definitions see the <a href="../glossary/">Glossary</a>.</p>
+<p>You don't have to be a programmer to make a skill behave the way you like. This page shows how to change what an existing skill says, to give your assistant its own personality, or to add a language it doesn't yet support, all by dropping a few text files into a folder on your device. The original skill stays untouched. Your changes simply override it. The later sections are a reference for developers. For more on those text files, see <a href="../resource-files/">Resource Files</a>. For term definitions, see the <a href="../glossary/">Glossary</a>.</p>
 </div>
 <h2 id="resource-files">Resource Files<a class="headerlink" href="#resource-files" title="Permanent link">&para;</a></h2>
-<p>Resource files are essential components of OVOS skills, containing data such as dialogs, intents, vocabularies, regular expressions, templates, and more. </p>
+<p>Resource files are essential components of OVOS skills. They contain data such as dialogs, intents, vocabularies, regular expressions, and templates.</p>
 <p>These files define how a skill interacts with the user and responds to queries.</p>
 <blockquote>
-<p><strong>RECAP</strong>: the skill contains a <code>locale</code> folder with subfolders for each lang, eg <code>en-us</code>, learn more in <a href="../skill-structure/">skill structure docs</a></p>
+<p><strong>RECAP</strong>: the skill contains a <code>locale</code> folder with subfolders for each lang, for example <code>en-us</code>. Learn more in the <a href="../skill-structure/">skill structure docs</a>.</p>
 </blockquote>
 <h3 id="customizing-dialogs">Customizing Dialogs<a class="headerlink" href="#customizing-dialogs" title="Permanent link">&para;</a></h3>
-<p>Users can personalize the behavior of skills by customizing dialogues to better suit their preferences. </p>
-<p>To give a unique twist and personality to your assistant you don't need to fork existing skills only to change dialogs</p>
+<p>Users can personalize the behavior of skills by customizing dialogs to better suit their preferences.</p>
+<p>To give a unique twist and personality to your assistant, you don't need to fork existing skills just to change dialogs.</p>
 <p>Here's a step-by-step guide on how to replace the dialog of an existing skill:</p>
 <p><strong>Identify the <a href="../skill-design-guidelines/">Skill</a> and Resource to Replace</strong>:</p>
 <ul>
@@ -1798,9 +1798,9 @@
 <div class="admonition warning">
 <p class="admonition-title">Your file REPLACES the original, it does not merge with it</p>
 <p>The user-specific file is used instead of the skill's own <code>time.current.dialog</code>, line for
-line — it is not appended to or merged with the original. If the skill is later updated
-upstream and new lines are added to its <code>time.current.dialog</code>, your override will keep
-shadowing the whole file and you will not see those new lines until you copy them into
+line. It is not appended to or merged with the original. If the skill is later updated
+upstream and new lines are added to its <code>time.current.dialog</code>, your override keeps
+shadowing the whole file, and you will not see those new lines until you copy them into
 your override yourself.</p>
 </div>
 <p><strong>Locate the User-Specific Resource Directory</strong>:</p>
@@ -1812,7 +1812,7 @@ your override yourself.</p>
 <p>The user-specific resource directory is located within the XDG data directory. It follows the path <code>XDG_DATA_HOME/mycroft/resources/skill-ovos-date-time.openvoiceos</code> (where <code>XDG_DATA_HOME</code> is the user's data directory, usually <code>~/.local/share</code> on Linux).</p>
 </li>
 <li>
-<p>If it does not exist, create it, This can be done using file manager tools or command-line utilities such as <code>mkdir</code> on Unix-like systems.</p>
+<p>If it does not exist, create it. You can do this with file manager tools or command-line utilities such as <code>mkdir</code> on Unix-like systems.</p>
 </li>
 </ul>
 <p><strong>Copy the Replacement Dialog File to the User-Specific Directory</strong>:</p>
@@ -1839,10 +1839,10 @@ your override yourself.</p>
      folder casing) and restart OpenVoiceOS so the skill reloads its resources.</p>
 </li>
 </ul>
-<p>Customizing dialogues offers users flexibility in tailoring the behavior of skills to their specific needs and preferences.</p>
+<p>Customizing dialogs gives users flexibility to tailor the behavior of skills to their specific needs and preferences.</p>
 <h3 id="local-language-support">Local Language support<a class="headerlink" href="#local-language-support" title="Permanent link">&para;</a></h3>
-<p>Adding support for additional languages to existing skills enables users to interact with OVOS in their preferred language. </p>
-<p>While developing or waiting for skills to support your language you might want to add it locally</p>
+<p>Adding support for additional languages to existing skills lets users interact with OVOS in their preferred language.</p>
+<p>While developing a skill, or waiting for one to support your language, you might want to add it locally.</p>
 <p>Users can add language support for a skill by creating a new language folder in the user resources directory and copying the necessary files over:</p>
 <p><strong>Identify the Skill and Language to Add</strong>:</p>
 <ul>
@@ -1868,10 +1868,10 @@ your override yourself.</p>
 <p><strong>Copy the Required Files to the New Language Folder</strong>:</p>
 <ul>
 <li>
-<p>Copy all the necessary resource files from an existing language folder (e.g., <code>en-us</code>) to the newly created language folder (<code>es-es</code>).</p>
+<p>Copy all the necessary resource files from an existing language folder (for example, <code>en-us</code>) to the newly created language folder (<code>es-es</code>).</p>
 </li>
 <li>
-<p>This includes files such as dialogues, vocabularies, regex patterns, etc., depending on the resources used by the skill.</p>
+<p>This includes files such as dialogs, vocabularies, and regex patterns, depending on the resources used by the skill.</p>
 </li>
 <li>
 <p>Ensure that all files are placed in the corresponding directories within the new language folder to maintain the directory structure of the original skill.</p>
@@ -1891,13 +1891,13 @@ your override yourself.</p>
 </ul>
 <p>By following these steps, users can add support for additional languages to existing skills by creating new language folders and copying the required resource files.</p>
 <blockquote>
-<p><strong>NEXT STEPS</strong>: consider sending a Pull Request to the skill to directly add language support!</p>
+<p><strong>NEXT STEPS</strong>: consider sending a pull request to the skill to add language support directly.</p>
 </blockquote>
-<p>This allows users to extend the language capabilities of skills beyond the languages provided by default.</p>
+<p>This lets users extend the language capabilities of skills beyond the languages provided by default.</p>
 <hr />
 <h2 id="developer-resource-file-reference">Developer: Resource File Reference<a class="headerlink" href="#developer-resource-file-reference" title="Permanent link">&para;</a></h2>
-<p>The end-user steps above are dropping files into the same <code>locale/&lt;lang-code&gt;/</code> layout described
-below — this section is the developer-facing reference for that layout: which resource types
+<p>The end-user steps above drop files into the same <code>locale/&lt;lang-code&gt;/</code> layout described
+below. This section is the developer-facing reference for that layout: which resource types
 exist, how they are looked up, and how to load them from code.</p>
 <p>Skills load localized resources from a structured directory layout. Resources are loaded automatically at startup for every language in <code>native_langs</code> (<code>core_lang</code> + <code>secondary_langs</code>).</p>
 <h3 id="recommended-layout">Recommended Layout<a class="headerlink" href="#recommended-layout" title="Permanent link">&para;</a></h3>
@@ -1916,7 +1916,7 @@ exist, how they are looked up, and how to load them from code.</p>
 </span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>└── gui/
 </span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>    └── my_page.qml
 </span></code></pre></div>
-<p>Legacy skills may use separate <code>dialog/</code>, <code>vocab/</code>, <code>regex/</code> subdirectories — these are still supported.</p>
+<p>Legacy skills may use separate <code>dialog/</code>, <code>vocab/</code>, <code>regex/</code> subdirectories. These are still supported.</p>
 <h3 id="resource-types">Resource Types<a class="headerlink" href="#resource-types" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
@@ -2012,13 +2012,13 @@ exist, how they are looked up, and how to load them from code.</p>
 <h2 id="related-pages">Related Pages<a class="headerlink" href="#related-pages" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
-<p><a href="../skill-structure/">Skill Structure</a> — directory layout and skill packaging</p>
+<p><a href="../skill-structure/">Skill Structure</a>: directory layout and skill packaging</p>
 </li>
 <li>
-<p><a href="../intents/">Intents</a> — Adapt and Padatious intent files</p>
+<p><a href="../intents/">Intents</a>: Adapt and Padatious intent files</p>
 </li>
 <li>
-<p><a href="../skill-classes/">Skill Classes</a> — <code>OVOSSkill</code> properties (<code>resources</code>, <code>lang</code>, <code>find_resource</code>)</p>
+<p><a href="../skill-classes/">Skill Classes</a>: <code>OVOSSkill</code> properties (<code>resources</code>, <code>lang</code>, <code>find_resource</code>)</p>
 </li>
 </ul>
 <hr />

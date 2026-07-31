@@ -1472,13 +1472,13 @@
 <h1 id="dialog-transformers">Dialog Transformers<a class="headerlink" href="#dialog-transformers" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>These plugins give the assistant's written reply one last edit <em>just before</em> it's read aloud. Like a proofreader catching the text on its way out, they can adjust the tone, simplify the wording, or translate it — and because this happens in one shared place, it applies to every feature at once without changing any of them. See <a href="../transformer-plugins/">Transformer Plugins</a> and the <a href="../glossary/">Glossary</a> for unfamiliar terms.</p>
+<p>These plugins give the assistant's written reply one last edit just before it's read aloud. Like a proofreader catching the text on its way out, they can adjust the tone, simplify the wording, or translate it. Because this happens in one shared place, it applies to every feature at once without changing any of them. See <a href="../transformer-plugins/">Transformer Plugins</a> and the <a href="../glossary/">Glossary</a> for unfamiliar terms.</p>
 </div>
 <details class="info">
 <summary>📐 Formal specification</summary>
-<p>Dialog transformers are the <strong><code>dialog</code> chain</strong> of <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/transformer.md">OVOS-TRANSFORM-1 — Transformer Plugins</a> §3.5</strong> (a formal <a href="../architecture-specs/">architecture spec</a>). The spec's post-skill, pre-TTS injection point receives the rendered dialog <strong>string</strong>, an optional <code>lang</code>, and the full <code>Message.context</code>; it may rewrite the string entirely (translate, persona, simplify, length-cap) and mutate <code>lang</code>/context — the spec names setting a <code>voice_id</code> context hint (for a downstream TTS transformer to act on) as a common case. Rewriting and translation belong <strong>here</strong> (against the text), not in the <code>tts</code> chain (against the audio). <strong>Ordering:</strong> the chain runs by <strong>ascending</strong> <code>priority</code> (lowest first), matching the spec.</p>
+<p>Dialog transformers are the <strong><code>dialog</code> chain</strong> of <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/transformer.md">OVOS-TRANSFORM-1 — Transformer Plugins</a> §3.5</strong> (a formal <a href="../architecture-specs/">architecture spec</a>). The spec's post-skill, pre-TTS injection point receives the rendered dialog <strong>string</strong>, an optional <code>lang</code>, and the full <code>Message.context</code>. It may rewrite the string entirely (translate, persona, simplify, length-cap) and mutate <code>lang</code>/context. The spec names setting a <code>voice_id</code> context hint (for a downstream TTS transformer to act on) as a common case. Rewriting and translation belong here (against the text), not in the <code>tts</code> chain (against the audio). <strong>Ordering:</strong> the chain runs by <strong>ascending</strong> <code>priority</code> (lowest first), matching the spec.</p>
 </details>
-<p><strong>Dialog Transformers</strong> in OpenVoiceOS (OVOS) are plugins that modify or enhance text responses just before they are sent to the <a href="../tts-plugins/">Text-to-Speech</a> (<a href="../tts-plugins/">TTS</a>) engine. This allows for dynamic adjustments to the assistant's speech, such as altering tone, simplifying language, or translating content, without requiring changes to individual skills.</p>
+<p><strong>Dialog Transformers</strong> in OpenVoiceOS (OVOS) are plugins that modify or enhance text responses just before they are sent to the <a href="../tts-plugins/">Text-to-Speech</a> (<a href="../tts-plugins/">TTS</a>) engine. This lets the assistant's speech adjust dynamically, such as altering tone, simplifying language, or translating content, without requiring changes to individual skills.</p>
 <hr />
 <h2 id="how-they-work">How They Work<a class="headerlink" href="#how-they-work" title="Permanent link">&para;</a></h2>
 <ol>
@@ -1512,7 +1512,7 @@
 <p><strong>Purpose</strong>: Prepares text for TTS by expanding contractions, expanding title abbreviations (<code>Dr.</code>→<code>Doctor</code>, <code>Mr.</code>→<code>Mister</code>, <code>Prof.</code>→<code>Professor</code>), normalizing currency (<code>€</code>→<code>euros</code>), and converting digits to spoken words, ensuring clearer pronunciation.</p>
 </li>
 <li>
-<p><strong>Multilingual coverage</strong>: Contractions are English-only, while title abbreviations are defined per language (en/ca/es/pt/gl/fr/it/nl/de). Numbers are pronounced via <code>ovos-number-parser</code>, falling back to <code>unicode-rbnf</code> for languages it doesn't yet cover. A few language-specific rules exist too (e.g. <code>ºC</code>→<code>graos centígrados</code> for Galician).</p>
+<p><strong>Multilingual coverage</strong>: Contractions are English-only, while title abbreviations are defined per language (en/ca/es/pt/gl/fr/it/nl/de). Numbers are pronounced via <code>ovos-number-parser</code>, falling back to <code>unicode-rbnf</code> for languages it doesn't yet cover. A few language-specific rules exist too (for example, <code>ºC</code>→<code>graos centígrados</code> for Galician).</p>
 </li>
 <li>
 <p><strong>Example</strong>:</p>
@@ -1545,7 +1545,7 @@
 <h3 id="ovos-openai-dialog-transformer-plugin"><strong>OVOS OpenAI Dialog Transformer Plugin</strong><a class="headerlink" href="#ovos-openai-dialog-transformer-plugin" title="Permanent link">&para;</a></h3>
 <ul>
 <li>
-<p><strong>Purpose</strong>: Utilizes OpenAI's API to rewrite responses based on a specified persona or tone.</p>
+<p><strong>Purpose</strong>: Uses OpenAI's API to rewrite responses based on a specified persona or tone.</p>
 </li>
 <li>
 <p><strong>Example</strong>:</p>

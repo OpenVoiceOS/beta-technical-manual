@@ -1512,7 +1512,7 @@
 </div>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>When you ask a general-knowledge question like "who wrote Hamlet?", the Common Query pipeline asks <em>all</em> your installed knowledge skills (Wikipedia, Wolfram Alpha, and so on) the same question at once, gathers their answers, and reads back the best one. Think of it as a quiz host who puts the question to every contestant and then announces the strongest reply. It never makes up answers itself — every answer comes from a skill, so if you have no knowledge skills installed it simply stays quiet. See the <a href="../pipelines-overview/">Intent Pipeline overview</a> or the <a href="../glossary/">Glossary</a>.</p>
+<p>When you ask a general-knowledge question like "who wrote Hamlet?", the Common Query pipeline asks all your installed knowledge skills (Wikipedia, Wolfram Alpha, and so on) the same question at once, gathers their answers, and reads back the best one. Think of it as a quiz host who puts the question to every contestant and then announces the strongest reply. It never makes up answers itself. Every answer comes from a skill, so if you have no knowledge skills installed, it simply stays quiet. See the <a href="../pipelines-overview/">Intent Pipeline overview</a> or the <a href="../glossary/">Glossary</a>.</p>
 </div>
 <details class="info">
 <summary>📐 Formal specification</summary>
@@ -1522,7 +1522,7 @@
 utterance looks like a question ("Who wrote Hamlet?", "How tall is Everest?"), it
 broadcasts the question to every installed <strong>CommonQuery skill</strong>, collects their
 answers, and picks the best one.</p>
-<p>It does <strong>not</strong> generate text or do retrieval-augmented generation — every answer
+<p>It does <strong>not</strong> generate text or do retrieval-augmented generation. Every answer
 comes from a skill. It is also not a chit-chat handler. Think of it as a referee
 that asks all your knowledge skills the same question and returns the strongest
 reply.</p>
@@ -1545,12 +1545,12 @@ win first:</p>
 </span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="w">  </span><span class="p">}</span>
 </span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="p">}</span>
 </span></code></pre></div>
-<p>Now install one or more CommonQuery skills (e.g. Wikipedia, Wolfram Alpha) and ask
+<p>Now install one or more CommonQuery skills (for example, Wikipedia, Wolfram Alpha) and ask
 a question.</p>
 <hr />
 <div class="admonition note">
 <p class="admonition-title">Why it never blocks fallback (and spec topic names)</p>
-<p>Common Query is a <strong>scatter-gather contest</strong> that runs <em>entirely inside <code>match</code></em> (COMMON-QUERY-1 §2): it polls skills, collects full answers, ranks them, and only returns a <code>Match</code> if one clears the confidence threshold — otherwise it returns <code>None</code> and the orchestrator continues to fallback. The answer <em>is</em> the claim decision, so this is the spec's documented exception to PIPELINE-1 §4.4's "return fast" rule (§2.1). On a win it returns a <strong>self-addressed</strong> Match on the reserved <code>intent_name</code> <code>common_query</code> (PIPELINE-1 §7.3), dispatched on <code>&lt;pipeline_id&gt;:common_query</code>, and its own trivial handler speaks the selected answer. The spec topic names differ from the current code:</p>
+<p>Common Query is a <strong>scatter-gather contest</strong> that runs entirely inside <code>match</code> (COMMON-QUERY-1 §2). It polls skills, collects full answers, and ranks them, only returning a <code>Match</code> if one clears the confidence threshold. Otherwise it returns <code>None</code> and the orchestrator continues to fallback. The answer is the claim decision, so this is the spec's documented exception to PIPELINE-1 §4.4's "return fast" rule (§2.1). On a win it returns a <strong>self-addressed</strong> Match on the reserved <code>intent_name</code> <code>common_query</code> (PIPELINE-1 §7.3), dispatched on <code>&lt;pipeline_id&gt;:common_query</code>, and its own trivial handler speaks the selected answer. The spec topic names differ from the current code:</p>
 <table>
 <thead>
 <tr>
@@ -1580,22 +1580,22 @@ a question.</p>
 </div>
 <h2 id="how-it-works">How it works<a class="headerlink" href="#how-it-works" title="Permanent link">&para;</a></h2>
 <p>The matcher class is <code>CommonQAService</code> (a <code>PipelinePlugin</code>, so it exposes a single
-<code>match()</code> — hence the one <code>ovos-common-query-pipeline-plugin</code> ID, not high/medium/low tiers).</p>
+<code>match()</code>, hence the one <code>ovos-common-query-pipeline-plugin</code> ID, not high/medium/low tiers).</p>
 <ol>
-<li><strong>Question detection</strong> — <code>is_question_like()</code> requires at least 3 words, a
+<li><strong>Question detection</strong>: <code>is_question_like()</code> requires at least 3 words and a
    "question word" (<code>QuestionWord</code> vocab), and rejects utterances that match
-   <code>Play</code>, <code>Weather</code>, <code>Alerts</code>, or a misc blacklist. Non-questions are skipped so
+   <code>Play</code>, <code>Weather</code>, <code>Alerts</code>, or a misc blacklist. Non-questions are skipped, so
    the query never goes out.</li>
-<li><strong>Broadcast</strong> — emits <code>question:query</code> with the phrase. CommonQuery skills are
+<li><strong>Broadcast</strong>: emits <code>question:query</code> with the phrase. CommonQuery skills are
    discovered on startup via an <code>ovos.common_query.ping</code> / <code>ovos.common_query.pong</code>
    handshake.</li>
-<li><strong>Collect</strong> — skills reply on <code>question:query.response</code>, each with an answer and
+<li><strong>Collect</strong>: skills reply on <code>question:query.response</code>, each with an answer and
    a self-reported confidence. A skill can ask for more time by replying with
    <code>searching: true</code>, which extends the timeout.</li>
-<li><strong>Select</strong> — the best answer is chosen. If a reranker plugin is configured and
-   loaded, it scores the candidate answers; otherwise the skills' own confidences
+<li><strong>Select</strong>: the pipeline chooses the best answer. If a reranker plugin is configured and
+   loaded, it scores the candidate answers. Otherwise the skills' own confidences
    order them.</li>
-<li><strong>Deliver</strong> — returns an <code>IntentHandlerMatch</code>. The match type is
+<li><strong>Deliver</strong>: returns an <code>IntentHandlerMatch</code>. The match type is
    <code>question:action.&lt;skill_id&gt;</code> (or plain <code>question:action</code> for skills still using
    the deprecated CommonQuery base class), so the selected skill is told to speak
    its answer.</li>
@@ -1666,23 +1666,23 @@ self-reported confidences.</p>
 <p class="admonition-title">Shipped defaults differ slightly</p>
 <p>The bundled <code>mycroft.conf</code> ships an <code>intents.ovos-common-query-pipeline-plugin</code>
 section that overrides some of the library defaults above: <code>max_response_wait: 6</code>
-and <code>extension_time: 3</code>. Its <code>reranker</code> is <code>ovos-flashrank-reranker-plugin</code> —
+and <code>extension_time: 3</code>. Its <code>reranker</code> is <code>ovos-flashrank-reranker-plugin</code>,
 the same plugin the library falls back to when no reranker is configured at all.</p>
 </div>
 <hr />
 <h2 id="performance">Performance<a class="headerlink" href="#performance" title="Permanent link">&para;</a></h2>
 <ul>
-<li>Response time tracks the slowest skill you let answer; <code>max_response_wait</code> caps
+<li>Response time tracks the slowest skill you let answer. <code>max_response_wait</code> caps
   it, so very slow skills may be dropped.</li>
-<li>Rerankers add latency, noticeably so on constrained hardware (e.g. Raspberry
+<li>Rerankers add latency, noticeably so on constrained hardware (for example, a Raspberry
   Pi). Tune the wait times and thresholds to taste.</li>
 </ul>
 <hr />
 <h2 id="notes">Notes<a class="headerlink" href="#notes" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>Answers come from skills only</strong> — no generation, no RAG.</li>
-<li><strong>Not chit-chat</strong> — strictly factual question answering.</li>
-<li><strong>Skills required</strong> — with no CommonQuery skills installed the matcher returns
+<li><strong>Answers come from skills only</strong>: no generation, no RAG.</li>
+<li><strong>Not chit-chat</strong>: strictly factual question answering.</li>
+<li><strong>Skills required</strong>: with no CommonQuery skills installed, the matcher returns
   nothing immediately.</li>
 <li>Skills using the old CommonQuery base class still work but log a deprecation
   warning and are matched as plain <code>question:action</code>.</li>

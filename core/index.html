@@ -1662,20 +1662,20 @@
 <h1 id="ovos-core">ovos-core<a class="headerlink" href="#ovos-core" title="Permanent link">&para;</a></h1>
 <div class="admonition success">
 <p class="admonition-title">Maturity — Mature ⬤⬤⬤⬤⬤</p>
-<p>Long-lived, battle-tested, and actively maintained — depend on it freely. Rated by <a href="../maturity/">repository health</a>, not version.</p>
+<p>Long-lived and actively maintained. Depend on it freely. Rated by <a href="../maturity/">repository health</a>, not version.</p>
 </div>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p><code>ovos-core</code> is the "brain" of your assistant. It does not listen through the microphone or talk through the speaker — those are separate helpers — but it is the part in the middle that loads your skills, takes the words you said, decides which skill should answer, and hands back the reply. Think of it as the dispatcher in a control room: it does not do the talking or listening itself, it just routes each request to the right place. Everything it does travels over the <a href="../bus-service/">messagebus</a>; see also the <a href="../glossary/">Glossary</a>.</p>
+<p><code>ovos-core</code> is the "brain" of your assistant. It does not listen through the microphone or talk through the speaker. Those are separate helpers. It is the part in the middle that loads your skills, takes the words you said, decides which skill should answer, and hands back the reply. Think of it as the dispatcher in a control room, routing each request to the right place without doing the talking or listening itself. Everything it does travels over the <a href="../bus-service/">messagebus</a>. See also the <a href="../glossary/">Glossary</a>.</p>
 </div>
 <details class="info">
 <summary>📐 Formal specification</summary>
-<p><code>ovos-core</code> is the reference <strong>orchestrator</strong> — the logical role that runs the pipeline, routes matches to handlers, and emits the handler-lifecycle events. That role is specified by <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md">OVOS-PIPELINE-1 — Utterance Lifecycle &amp; Pipeline</a></strong>; the transformer chains it hosts by <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/transformer.md">OVOS-TRANSFORM-1 — Transformer Plugins</a></strong>; and the intent/entity registration it ingests by <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/intent-4.md">OVOS-INTENT-4 — Intent &amp; Entity Registration</a></strong>. See also the <a href="../architecture-specs/">spec index</a>. The specs are implementation-agnostic: any conformant orchestrator can replace <code>ovos-core</code> and run the same skills.</p>
+<p><code>ovos-core</code> is the reference <strong>orchestrator</strong>, the logical role that runs the pipeline, routes matches to handlers, and emits the handler-lifecycle events. That role is specified by <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md">OVOS-PIPELINE-1 — Utterance Lifecycle &amp; Pipeline</a></strong>. The transformer chains it hosts are specified by <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/transformer.md">OVOS-TRANSFORM-1 — Transformer Plugins</a></strong>, and the intent/entity registration it ingests by <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/intent-4.md">OVOS-INTENT-4 — Intent &amp; Entity Registration</a></strong>. See also the <a href="../architecture-specs/">spec index</a>. The specs are implementation-agnostic, so any conformant orchestrator can replace <code>ovos-core</code> and run the same skills.</p>
 </details>
 <p><code>ovos-core</code> is the central intelligence of OpenVoiceOS. It acts as the orchestrator, managing the lifecycle of skills, coordinating the intent pipeline, and ensuring smooth communication between all parts of the system.</p>
-<p><strong>In plain terms:</strong> <code>ovos-core</code> is the "brain" service. It does not capture audio or speak — those are separate services. Its job is to load your skills, take the transcribed text off the bus, decide which skill handles it, and hand off the reply. Everything it does flows over the <a href="../bus-service/">messagebus</a>.</p>
+<p><strong>In plain terms:</strong> <code>ovos-core</code> is the "brain" service. It does not capture audio or speak. Those are separate services. Its job is to load your skills, take the transcribed text off the bus, decide which skill handles it, and hand off the reply. Everything it does flows over the <a href="../bus-service/">messagebus</a>.</p>
 <h2 id="role-in-the-system">Role in the System<a class="headerlink" href="#role-in-the-system" title="Permanent link">&para;</a></h2>
-<p>Every user utterance, whether captured from a microphone or received via a remote client, flows through <code>ovos-core</code>. It performs the heavy lifting of:</p>
+<p>Every user utterance, whether captured from a microphone or received via a remote client, flows through <code>ovos-core</code>. It handles:</p>
 <ul>
 <li>
 <p><strong>Discovering and loading skill plugins.</strong></p>
@@ -1711,13 +1711,13 @@
 </span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="w">      </span>└──<span class="w"> </span>ovos-phal<span class="w">             </span>–<span class="w"> </span>hardware/platform<span class="w"> </span>plugins
 </span></code></pre></div>
 <h2 id="key-components">Key Components<a class="headerlink" href="#key-components" title="Permanent link">&para;</a></h2>
-<p>For a deeper dive into each subsystem:</p>
+<p>For more detail on each subsystem:</p>
 <ul>
-<li><strong><a href="../skill-manager/">Skill Manager</a></strong> — finds, loads, and manages skill lifecycles, including connectivity gating (skills only load once requirements like internet access are met).</li>
-<li><strong><a href="../intent-service/">Intent Service</a></strong> — the utterance handling flow, language disambiguation, and the query API.</li>
-<li><strong>Intent Pipeline</strong> — the ordered sequence of <strong>pipeline plugins</strong> that decide what the user wants; each exposes a single <code>match(utterances, lang, message) → Match | None</code> contract and they run <strong>first-match-wins</strong>, with no cross-plugin confidence scoring (OVOS-PIPELINE-1 §4, §6.2). See <a href="../adapt-pipeline/">Adapt</a>, <a href="../padatious-pipeline/">Padatious</a>, and <a href="../cq-pipeline/">Common Query</a>.</li>
-<li><strong>Transformer Plugins</strong> — modify utterances, metadata, or intent matches as they move through the pipeline.</li>
-<li><strong><a href="../skill-installer/">Skill Installer</a></strong> — installs and manages skills and Python packages dynamically at runtime.</li>
+<li><strong><a href="../skill-manager/">Skill Manager</a></strong>: finds, loads, and manages skill lifecycles, including connectivity gating (skills only load once requirements like internet access are met).</li>
+<li><strong><a href="../intent-service/">Intent Service</a></strong>: the utterance handling flow, language disambiguation, and the query API.</li>
+<li><strong>Intent Pipeline</strong>: the ordered sequence of <strong>pipeline plugins</strong> that decide what the user wants. Each exposes a single <code>match(utterances, lang, message) → Match | None</code> contract, and they run <strong>first-match-wins</strong>, with no cross-plugin confidence scoring (OVOS-PIPELINE-1 §4, §6.2). See <a href="../adapt-pipeline/">Adapt</a>, <a href="../padatious-pipeline/">Padatious</a>, and <a href="../cq-pipeline/">Common Query</a>.</li>
+<li><strong>Transformer Plugins</strong>: modify utterances, metadata, or intent matches as they move through the pipeline.</li>
+<li><strong><a href="../skill-installer/">Skill Installer</a></strong>: installs and manages skills and Python packages dynamically at runtime.</li>
 </ul>
 <hr />
 <h2 id="entry-points">Entry Points<a class="headerlink" href="#entry-points" title="Permanent link">&para;</a></h2>
@@ -1745,7 +1745,7 @@
 </tbody>
 </table>
 <h2 id="subsystem-enable-flags">Subsystem Enable Flags<a class="headerlink" href="#subsystem-enable-flags" title="Permanent link">&para;</a></h2>
-<p>You can customize which parts of <code>ovos-core</code> start, but only from the <strong>CLI</strong> — these are
+<p>You can customize which parts of <code>ovos-core</code> start, but only from the <strong>CLI</strong>. These are
 constructor arguments to <code>main()</code>/<code>SkillManager</code>, not <code>mycroft.conf</code> keys, so there is no
 configuration-file equivalent:</p>
 <table>
@@ -1778,7 +1778,7 @@ configuration-file equivalent:</p>
 </tr>
 </tbody>
 </table>
-<p>CLI equivalents are the <code>--disable-*</code> forms: <code>--disable-intent-service</code>, <code>--disable-installer</code>, <code>--disable-file-watcher</code>, etc.</p>
+<p>CLI equivalents are the <code>--disable-*</code> forms: <code>--disable-intent-service</code>, <code>--disable-installer</code>, <code>--disable-file-watcher</code>, and so on.</p>
 <hr />
 <p><em>Source code: <a href="https://github.com/OpenVoiceOS/ovos-core">OpenVoiceOS/ovos-core</a>.</em></p>
 
