@@ -1,14 +1,14 @@
 # GUI Service (ovos-gui)
 
 !!! note "Maturity — Beta ⬤⬤⬤◯◯"
-    The `ovos-gui` repository is active, but the GUI **stack this page documents is legacy** and being superseded — see [Screens on OVOS Today](gui-status.md) for what to use now. The badge rates [repository health](maturity.md), not the stack's status; read the deprecation notice below.
+    The `ovos-gui` repository is active, but the GUI **stack this page documents is legacy** and being superseded. See [Screens on OVOS Today](gui-status.md) for what to use now. The badge rates [repository health](maturity.md), not the stack's status. Read the deprecation notice below.
 
 !!! danger "The OVOS GUI is deprecated — see [Screens on OVOS Today](gui-status.md) for the full picture"
     This page documents the legacy stack. There is no generally usable OVOS GUI right now,
     and a replacement is **Upcoming**.
 
 !!! abstract "In a nutshell"
-    `ovos-gui` is the part of OpenVoiceOS that decides what shows up on a screen — text, images, a music player, or an idle home screen. Skills never draw to the display themselves; they send a request to this service, which keeps track of what each skill wants shown and passes it on to whatever screen is connected. Think of it as a stage manager that decides which scene is in front of the audience at any moment. To learn more, see the [Home Screen](homescreen.md) and the [Glossary](glossary.md).
+    `ovos-gui` is the part of OpenVoiceOS that decides what shows up on a screen: text, images, a music player, or an idle home screen. Skills never draw to the display themselves. They send a request to this service, which keeps track of what each skill wants shown and passes it on to whatever screen is connected. Think of it as a stage manager that decides which scene is in front of the audience at any moment. To learn more, see the [Home Screen](homescreen.md) and the [Glossary](glossary.md).
 
 ??? info "📐 Formal specification"
     The **forward** model for the display layer is
@@ -33,7 +33,7 @@ receives those messages, keeps track of what each skill wants shown, and forward
 result to whatever GUI client is connected (typically [ovos-shell](ovos-shell.md) running
 the Qt/[Kirigami](qt5-gui.md) UI).
 
-A minimal example — display some text:
+A minimal example that displays some text:
 
 ```python
 from ovos_workshop.skills import OVOSSkill
@@ -174,12 +174,12 @@ The GUI WebSocket server is configured under `gui_websocket` in `mycroft.conf`:
 | `route` | WebSocket route path (default: `/gui`) |
 
 !!! danger "The GUI WebSocket is unauthenticated, unencrypted, and reaches the core bus"
-    Anything received on the GUI socket is translated into an emit on the core messagebus, so
+    Anything received on the GUI socket is translated into an emit on the core messagebus. So
     this socket carries the same authority as the bus itself. There is no authentication and no
-    origin check. On top of that, there's no TLS option either: unlike
+    origin check. On top of that, there is no TLS option either. Unlike
     [`ovos-messagebus`](bus-service.md) (which can serve `wss://` itself), `ovos-gui`'s Tornado
     WebSocket server has no working `gui_websocket.ssl` server path. The `gui_websocket.ssl`
-    key does exist in the default config (value `false`), but it is a no-op: `create_gui_service`
+    key does exist in the default config (value `false`), but it is a no-op. `create_gui_service`
     in `ovos_gui/bus.py` reads only `route`, `base_port`, and `host`, so nothing turns this
     socket into `wss://`.
 
@@ -187,7 +187,7 @@ The GUI WebSocket server is configured under `gui_websocket` in `mycroft.conf`:
     unless a remote display genuinely needs network access. Never leave `0.0.0.0` on an
     untrusted network, and never expose port `18181` beyond a trusted network. If a display
     really must run on another machine, put it behind a VPN or a reverse proxy that
-    authenticates and terminates TLS, or use
+    authenticates and terminates TLS. Or use
     [HiveMind](https://jarbashivemind.github.io/HiveMind-community-docs/) for authenticated remote
     transport.
 
@@ -205,22 +205,22 @@ The GUI WebSocket server is configured under `gui_websocket` in `mycroft.conf`:
     [ovos-gui#117](https://github.com/OpenVoiceOS/ovos-gui/pull/117), and
     [ovos-legacy-mycroft-gui-plugin#3](https://github.com/OpenVoiceOS/ovos-legacy-mycroft-gui-plugin/pull/3).
 
-    **What changes.** Per OVOS-GUI-1, `ovos-gui` becomes a **pure state-and-dispatch hub**:
-    it runs **no WebSocket server** and renders nothing. It loads every installed
+    **What changes.** Per OVOS-GUI-1, `ovos-gui` becomes a **pure state-and-dispatch hub**.
+    It runs **no WebSocket server** and renders nothing. It loads every installed
     **GUI adapter plugin** (`opm.gui_adapter` entry-point group) via
     `OVOSGUIAdapterFactory.create_all(bus, config)` and fans each display event out to all
-    of them concurrently, enabling multi-modal output (Qt + browser + terminal at once). A
-    headless device with zero adapters degrades to a no-op dispatch — it never crashes. The
+    of them at once. This enables multi-modal output (Qt + browser + terminal at once). A
+    headless device with zero adapters degrades to a no-op dispatch. It never crashes. The
     Qt WebSocket server moves into the `ovos-legacy-mycroft-gui-plugin` adapter.
 
     **Templates instead of QML page names.** Skills display one of a **closed vocabulary of
-    22 `SYSTEM_*` templates** (`SYSTEM_weather`, `SYSTEM_text`, `SYSTEM_list`, …) defined by
+    22 `SYSTEM_*` templates** (`SYSTEM_weather`, `SYSTEM_text`, `SYSTEM_list`, and more) defined by
     the spec. Custom QML page names are no longer accepted by the router. The template-based
     `GUIInterface` moves into the standalone `ovos-gui-api-client` package (separate from the
     current `ovos_bus_client.apis.gui.GUIInterface`).
 
     **Addressing is `session_id`-only.** The spec drops any separate site/room/location
-    dimension: a GUI message is routed solely by its `session_id`, and a shared/multi-room
+    dimension. A GUI message is routed solely by its `session_id`, and a shared/multi-room
     screen is expressed by clients sharing one `session_id`. This is the intended target
     design, not a regression.
 

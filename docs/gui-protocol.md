@@ -1,24 +1,24 @@
 # GUI Protocol
 
 !!! abstract "In a nutshell"
-    This is a developer reference for the **legacy** (old, deprecated) way OVOS put things on a screen — the set of behind-the-scenes messages that a skill, the screen service, and the on-device display use to stay in sync about what to show. Think of it as the agreed "language" two parts of the system speak so the right page and data appear. There is no generally usable OVOS screen today; this is kept mainly for **Mark 2** devices and reference, and a ground-up replacement is being built (see [GUI Adapter Plugins](gui-adapters.md)). For terms, see the [Glossary](glossary.md).
+    This is a developer reference for the **legacy** (old, deprecated) way OVOS put things on a screen. It documents the set of behind-the-scenes messages that a skill, the screen service, and the on-device display use to stay in sync about what to show. Think of it as the agreed "language" two parts of the system speak so the right page and data appear. There is no generally usable OVOS screen today. This is kept mainly for **Mark 2** devices and reference, and a ground-up replacement is being built (see [GUI Adapter Plugins](gui-adapters.md)). For terms, see the [Glossary](glossary.md).
 
 !!! tip "Building a remote client?"
-    Skip this legacy protocol — see [Screens on OVOS Today](gui-status.md) for the current approach.
+    Skip this legacy protocol. See [Screens on OVOS Today](gui-status.md) for the current approach.
 
 !!! danger "The OVOS GUI is deprecated — see [Screens on OVOS Today](gui-status.md) for the full picture"
     This page documents the legacy protocol. There is no generally usable OVOS GUI right now,
     and a replacement is **Upcoming**.
 
 ??? info "📐 Formal specification"
-    The **forward** model for the display subsystem is **[OVOS-GUI-1 — GUI Display Subsystem](https://github.com/OpenVoiceOS/architecture/blob/dev/gui-1.md)** (a formal [architecture spec](architecture-specs.md)). It replaces the legacy protocol on this page with a clean separation: an application declares *what* to show by naming a template from a **closed `SYSTEM_*` vocabulary** and pushing flat session-data, and interchangeable **render backends (adapters)** decide *how* to draw it — fanned out to every installed adapter. The wire messages stay `gui.value.set` / `gui.page.show` / `gui.clear.namespace`, but a `gui.page.show` whose first page is **not** a `SYSTEM_*` template is rejected (no more arbitrary QML), and a GUI message is routed **solely by its `session_id`**. This page documents the legacy Qt-WebSocket protocol that the OVOS-GUI-1 adapter model supersedes; where they differ, the spec is the canonical target (see the "Upcoming" note at the foot of this page and [GUI Adapter Plugins](gui-adapters.md)).
+    The **forward** model for the display subsystem is **[OVOS-GUI-1 — GUI Display Subsystem](https://github.com/OpenVoiceOS/architecture/blob/dev/gui-1.md)** (a formal [architecture spec](architecture-specs.md)). It replaces the legacy protocol on this page with a clean separation: an application declares *what* to show by naming a template from a **closed `SYSTEM_*` vocabulary** and pushing flat session-data. Interchangeable **render backends (adapters)** decide *how* to draw it, fanned out to every installed adapter. The wire messages stay `gui.value.set` / `gui.page.show` / `gui.clear.namespace`, but a `gui.page.show` whose first page is **not** a `SYSTEM_*` template is rejected (no more arbitrary QML). A GUI message is routed **solely by its `session_id`**. This page documents the legacy Qt-WebSocket protocol that the OVOS-GUI-1 adapter model supersedes. Where they differ, the spec is the canonical target (see the "Upcoming" note at the foot of this page and [GUI Adapter Plugins](gui-adapters.md)).
 
 The `ovos-gui` service exposes two communication channels:
 
-1. **OVOS [messagebus](bus-service.md)** — used by skills and core components to set GUI state.
+1. **OVOS [messagebus](bus-service.md)**: used by skills and core components to set GUI state.
 
 
-2. **Qt WebSocket** (default port 18181, served by `ovos-gui` itself) — used by Qt5/Qt6
+2. **Qt WebSocket** (default port 18181, served by `ovos-gui` itself): used by Qt5/Qt6
    GUI clients (`mycroft-gui-qt5`, `ovos-shell`) to receive display commands and send
    back user interaction events.
 
@@ -241,7 +241,7 @@ namespace), so the UI can react to listening/speaking state:
     `GUIInterface`) and `EnclosureProtocolListener` (the consumer mix-in that wires those
     messages to overridable no-op handlers, in
     [`ovos-ui-enclosure-protocol`](https://github.com/OpenVoiceOS/ovos-ui-enclosure-protocol)).
-    A hardware enclosure plugin inherits `EnclosureProtocolListener` to receive the commands;
+    A hardware enclosure plugin inherits `EnclosureProtocolListener` to receive the commands.
     [`ovos-PHAL-plugin-mk1`](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-mk1) is the
     reference listener implementation.
 
@@ -290,7 +290,7 @@ The Qt client then opens a WebSocket connection to `ws://localhost:18181/gui`.
     example `websocat ws://localhost:18181/gui` or a short `websockets` Python script) and trigger
     a skill that shows a GUI page. You should observe the server immediately replay
     `mycroft.session.list.insert` and `mycroft.gui.list.insert` messages for the active
-    namespace — this is `GUIWebsocketHandler.synchronize()` bringing your new client up to date.
+    namespace. This is `GUIWebsocketHandler.synchronize()` bringing your new client up to date.
 
 When a client connects, `GUIWebsocketHandler.synchronize()` replays the full current state:
 
@@ -555,7 +555,7 @@ User swipes / taps on Qt:
     - `gui.page.show` will accept **only** `SYSTEM_*` template names — custom QML pages are no
       longer supported.
     - Instead of mirroring to Qt clients directly, template events fan out to every loaded
-      `opm.gui_adapter` plugin (see [GUI Adapter Plugins](gui-adapters.md)); the Qt WebSocket
+      `opm.gui_adapter` plugin (see [GUI Adapter Plugins](gui-adapters.md)). The Qt WebSocket
       protocol on this page becomes one such adapter.
 
     None of this is implemented in `ovos-gui` yet — see

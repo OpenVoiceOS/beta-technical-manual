@@ -1,13 +1,13 @@
 # Glossary of Terms
 
-This glossary defines common terms, acronyms, and concepts used throughout the OpenVoiceOS (OVOS) ecosystem. New to OVOS? Skim this first — most pages assume these words.
+This glossary defines common terms, acronyms, and concepts used throughout the OpenVoiceOS (OVOS) ecosystem. New to OVOS? Skim this first. Most pages assume these words.
 
 ??? info "📐 Formal specification"
     Entries marked **📐** name part of the **formal vocabulary** of the OVOS
-    architecture — concepts with a normative, implementation-agnostic
-    definition. Each links to its authoritative spec; for the full set and how
-    they fit together see the **[spec index](architecture-specs.md)**. You can
-    safely skip these on a first read — they matter once you're checking a
+    architecture: concepts with a normative, implementation-agnostic
+    definition. Each links to its authoritative spec. For the full set and how
+    they fit together, see the **[spec index](architecture-specs.md)**. You can
+    safely skip these on a first read. They matter once you're checking a
     component for spec conformance, not for everyday use.
 
 | Term | Definition |
@@ -93,7 +93,7 @@ This glossary defines common terms, acronyms, and concepts used throughout the O
 ## Deprecated & alias terms
 
 Older docs, code comments, and community posts sometimes use terms that have since been replaced.
-These still mean the same thing — you don't need to update anything working, but prefer the
+These still mean the same thing. You don't need to update anything working, but prefer the
 current name in new writing:
 
 | Old term | Current term |

@@ -1,36 +1,36 @@
 
-# `ovos-docs-viewer` — Documentation Index
+# `ovos-docs-viewer` - Documentation Index
 
 !!! abstract "In a nutshell"
-    `ovos-docs-viewer` is a little program that lets you read the OVOS documentation right inside your terminal, without opening a web browser. You run `ovos-docs-viewer technical` to open this very manual, then use the arrow keys to browse the pages and press `q` to quit. It downloads the docs the first time and remembers them afterwards, so later visits work even offline. See the [Glossary](glossary.md) for terms.
+    `ovos-docs-viewer` lets you read the OVOS documentation inside your terminal, without a web browser. Run `ovos-docs-viewer technical` to open this manual. Use the arrow keys to browse pages and press `q` to quit. It downloads the docs the first time and reuses them after that, so later visits work offline. See the [Glossary](glossary.md) for terms.
 
-`ovos-docs-viewer` is a terminal-based documentation browser for OpenVoiceOS. It downloads Markdown documentation from GitHub, then renders it interactively inside the terminal using a [Textual](https://textual.textualize.io/) TUI with a file-tree sidebar and a Markdown viewer panel.
+`ovos-docs-viewer` is a terminal-based documentation browser for OpenVoiceOS. It downloads Markdown documentation from GitHub. It then renders the docs inside the terminal using a [Textual](https://textual.textualize.io/) TUI with a file-tree sidebar and a Markdown viewer panel.
 
-**Minimal use:** `ovos-docs-viewer technical` opens the technical manual in your terminal. Pass one of the documentation keys below as the single argument; the first run downloads and caches the docs, later runs read from the cache. Use the arrow keys to walk the file tree, Enter to open a file, and `q` to quit. It is read-only and needs network access only on first use (and every time for `live-status`).
+**Minimal use:** `ovos-docs-viewer technical` opens the technical manual in your terminal. Pass one of the documentation keys below as the single argument. The first run downloads and caches the docs. Later runs read from the cache. Use the arrow keys to walk the file tree, press Enter to open a file, and press `q` to quit. The tool is read-only. It needs network access only on first use, and every time for `live-status`.
 
 ## How It Works
 
-1. On first launch, the tool fetches documentation from a hard-coded set of GitHub sources and caches them under `$XDG_DATA_HOME/ovos_docs/`.
+1. On first launch, the tool fetches documentation from a fixed set of GitHub sources and caches them under `$XDG_DATA_HOME/ovos_docs/`.
 
 
 2. A `Documentation` Textual app opens with a split layout: a directory tree on the left (20% width) filtered to `.md` files only, and a `MarkdownViewer` on the right.
 
 
-3. The user navigates the tree and selects files to render rendered Markdown inline.
+3. Navigate the tree and select a file to render it inline.
 
 
 4. Press `q` to quit.
 
-Downloaded sources are cached on disk. Subsequent launches skip re-downloading (except `live-status`, which is always refreshed). There is **no `--force` CLI flag**: forcing a re-download is only possible from Python, by calling `download_docs(force=True)` (or deleting the cache directory before launching).
+Downloaded sources are cached on disk. Later launches skip re-downloading, except for `live-status`, which is always refreshed. There is **no `--force` CLI flag**. To force a re-download, call `download_docs(force=True)` from Python, or delete the cache directory before launching.
 
 !!! note "The first launch of *any* key downloads *every* source"
     Regardless of which key you pass, `Documentation.__init__` calls `download_docs()`,
-    which loops over **all** sources — the three zip archives (`technical`, `messages`,
+    which loops over **all** sources. This includes the three zip archives (`technical`, `messages`,
     `hivemind`), the `live-status`/`raspOVOS`/`installer` READMEs, and all ~49 skill
-    READMEs via `download_skills()` — and downloads each one that is not already cached.
+    READMEs via `download_skills()`. It downloads each one that is not already cached.
     So `ovos-docs-viewer technical` on a clean machine populates the entire `ovos_docs/`
-    cache, not just the `technical` tree. The very first run is therefore slow and needs
-    network access to all sources; later runs only re-fetch `live-status`.
+    cache, not just the `technical` tree. The first run is slow and needs network
+    access to all sources. Later runs only re-fetch `live-status`.
 
 ## Installation
 
@@ -51,7 +51,7 @@ ovos-docs-viewer DOCS
 
 ```
 
-The console script `ovos-docs-viewer` maps to `ovos_docs_viewer.ovos_docs:launch`. `DOCS` is a single required argument and must be one of the following string keys (an unknown key fails with an `AssertionError` before the TUI opens):
+The console script `ovos-docs-viewer` maps to `ovos_docs_viewer.ovos_docs:launch`. `DOCS` is a single required argument. It must be one of the string keys below. An unknown key fails with an `AssertionError` before the TUI opens.
 
 | Key | Source |
 |---|---|
@@ -100,12 +100,12 @@ $XDG_DATA_HOME/ovos_docs/
 
 ```
 
-Zip-archive sources (`technical`, `messages`, `hivemind`) keep their full `docs/` tree. Single-README sources (`live-status`, `raspOVOS`, `installer`) are written as `<key>/docs/<key>.md`. `$XDG_DATA_HOME` is resolved via `ovos_utils.xdg_utils.xdg_data_home` (typically `~/.local/share`).
+Zip-archive sources (`technical`, `messages`, `hivemind`) keep their full `docs/` tree. Single-README sources (`live-status`, `raspOVOS`, `installer`) are written as `<key>/docs/<key>.md`. `$XDG_DATA_HOME` resolves via `ovos_utils.xdg_utils.xdg_data_home`, typically `~/.local/share`.
 
 !!! tip "Seeing stale docs? Delete the cache"
     There is no `--force` CLI flag to refresh a source once it's cached. If a page looks
-    out of date, the reliable fix is to delete that source's cache directory and relaunch —
-    it will be re-downloaded automatically:
+    out of date, the reliable fix is to delete that source's cache directory and relaunch.
+    It will download again automatically:
 
     ```bash
     rm -rf "$XDG_DATA_HOME/ovos_docs/technical"
@@ -134,10 +134,10 @@ Zip-archive sources (`technical`, `messages`, `hivemind`) keep their full `docs/
 
 ## Cross-References
 
-- [ovos-technical-manual](https://github.com/OpenVoiceOS/ovos-technical-manual) — primary documentation source for the `technical` key
+- [ovos-technical-manual](https://github.com/OpenVoiceOS/ovos-technical-manual): primary documentation source for the `technical` key
 
 
-- [message_spec](https://github.com/OpenVoiceOS/message_spec) — bus message reference for the `messages` key
+- [message_spec](https://github.com/OpenVoiceOS/message_spec): bus message reference for the `messages` key
 
 
-- [ovos-utils](https://github.com/OpenVoiceOS/ovos-utils) — XDG path helpers
+- [ovos-utils](https://github.com/OpenVoiceOS/ovos-utils): XDG path helpers

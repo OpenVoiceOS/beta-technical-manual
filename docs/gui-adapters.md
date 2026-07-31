@@ -1,57 +1,58 @@
 # GUI Adapter Plugins
 
 !!! abstract "In a nutshell"
-    This page is for developers and describes the **new, not-yet-finished** way OVOS will draw things on a screen — the planned replacement for the old, deprecated GUI. The idea: instead of OVOS talking to one kind of screen directly, it sends a generic "show this weather card" message and small plugins called **adapters** translate that into whatever the actual display is (a touchscreen, a web browser, even a terminal). Several adapters can run at once, so the same content shows on multiple screens. This is upcoming work, not the everyday path today — see the [GUI Protocol](gui-protocol.md) for the current legacy screen and the [Glossary](glossary.md) for terms.
+    This page is for developers. It describes the **new, not-yet-finished** way OVOS will draw things on a screen: the planned replacement for the old, deprecated GUI. The idea: instead of OVOS talking to one kind of screen directly, it sends a generic "show this weather card" message. Small plugins called **adapters** translate that into whatever the actual display is (a touchscreen, a web browser, even a terminal). Several adapters can run at once, so the same content shows on multiple screens. This is upcoming work, not the everyday path today. See the [GUI Protocol](gui-protocol.md) for the current legacy screen and the [Glossary](glossary.md) for terms.
 
 !!! warning "Nothing on this page is built or released yet"
     This page documents the **in-progress replacement** for the deprecated
-    [legacy GUI](gui-service.md), and none of it is usable on a stable install today. Until it
-    ships, there is no generally usable OVOS GUI; **Mark 2** devices keep a screen via the
+    [legacy GUI](gui-service.md). None of it is usable on a stable install today. Until it
+    ships, there is no generally usable OVOS GUI. **Mark 2** devices keep a screen via the
     legacy stack that the [`ovos-installer`](ovos-installer.md) sets up. The pieces are at
     different stages:
 
-    - `ovos-gui-api-client` — a template-based `GUIInterface` already exists and works today.
+    - `ovos-gui-api-client`: a template-based `GUIInterface` already exists and works today.
     - `ovos-legacy-mycroft-gui-plugin` and `ovos-gui-plugin-ag-ui` already implement the
       adapter-side contract described below (an `AbstractGUIPlugin` subclass registered under
-      `opm.gui_adapter`) — but that base class does not exist yet in any released
+      `opm.gui_adapter`). But that base class does not exist yet in any released
       `ovos-plugin-manager`, and `ovos-gui` does not yet contain the router that would dispatch
-      events to these adapters. These plugins are therefore built ahead of their own dependency,
-      and the router mentioned elsewhere on this page (connection status, `handle_show_*`
+      events to these adapters. These plugins are therefore built ahead of their own dependency.
+      The router mentioned elsewhere on this page (connection status, `handle_show_*`
       dispatch) is not yet built either.
     - The formal contract is specified by
       [OVOS-GUI-1](https://github.com/OpenVoiceOS/architecture/blob/dev/gui-1.md), an
       [architecture spec](architecture-specs.md). The spec deliberately leaves the exact
-      entry-point group name and method signatures **non-normative** — it gives them only as an
+      entry-point group name and method signatures **non-normative**. It gives them only as an
       illustrative example. The names below (`AbstractGUIPlugin`, `handle_show_*`,
       `opm.gui_adapter`) are what the real adapter plugins linked above have already
-      standardized on, which is why this page uses them.
+      standardized on. That is why this page uses them.
 
-    Per OVOS-GUI-1, the sole per-event routing key for the adapter contract is **`session_id`**
-    — there is no separate site/room/location dimension; a shared/multi-room screen is expressed
+    Per OVOS-GUI-1, the sole per-event routing key for the adapter contract is **`session_id`**.
+    There is no separate site/room/location dimension. A shared/multi-room screen is expressed
     by its clients sharing one `session_id`. The `ovos-gui-plugin-ag-ui` adapter already follows
     this convention (every `handle_show_*` / lifecycle signature takes `session_id: str = "default"`).
 
     !!! note "The legacy adapter still routes on `site_id` (in flux)"
         The shipped `ovos-legacy-mycroft-gui-plugin` has **not** yet adopted the `session_id`
-        contract: every `handle_show_*` and lifecycle method takes `site_id: str = "default"`
+        contract. Every `handle_show_*` and lifecycle method takes `site_id: str = "default"`
         instead (`ovos_legacy_mycroft_gui/__init__.py`), and its websocket layer routes on
         `site_id` (`send_to_clients_for_site(site_id)`). The Qt6 client rework branch
         (`mycroft-gui-qt6`) likewise still ships a separate **`site_id`** dimension (`--site-id`
         flag, `MYCROFT_SITE_ID` env var) for multi-site setups. So at both the *legacy adapter*
-        and *client* layers site_id is not yet gone, even though the OVOS-GUI-1 *adapter contract*
+        and *client* layers, site_id is not yet gone, even though the OVOS-GUI-1 *adapter contract*
         collapses routing to `session_id`. The two layers may still be reconciled.
 
 In the rework, `ovos-gui` no longer renders or talks to Qt clients directly. It becomes a
 router that dispatches each display event to every installed **GUI adapter plugin**. Each
 adapter translates template events into whatever protocol it needs (Qt WebSocket,
-HTTP+SSE, curses, …). Multiple adapters can run at once, enabling multi-modal output.
+HTTP+SSE, curses, and more). Multiple adapters can run at once, so output can reach several
+display types at the same time.
 
 !!! info "Adapters can add their own extra functionality (optional)"
     Beyond rendering the standard display templates, a GUI adapter plugin **may define its own
-    extra bus event listeners**, exposing additional, **optional** capabilities that skills can
+    extra bus event listeners**. This exposes additional, **optional** capabilities that skills can
     choose to use. Examples include **Mark 1 events / faceplate control** (the
     [Mark 1](mark1.md) faceplate becomes such an adapter), **home screens**, and **custom QML**.
-    These are opt-in: a skill works without them, but can adopt the extra functionality offered
+    These are opt-in. A skill works without them, but can adopt the extra functionality offered
     by whichever adapter(s) are installed.
 
 ## Entry point
@@ -134,15 +135,15 @@ def on_status_event(self, event_name: str, data: dict, session_id: str = "defaul
 ### Dispatch
 
 The (not-yet-built) router is expected to map each `SYSTEM_*` template name to the matching
-`handle_show_*` method — the naming convention `handle_show_<template suffix>` is already fixed
+`handle_show_*` method. The naming convention `handle_show_<template suffix>` is already fixed
 by the adapter plugins that implement this contract today. An adapter overrides only the
-individual `handle_show_*` methods it cares about; unimplemented ones default to no-ops.
+individual `handle_show_*` methods it cares about. Unimplemented ones default to no-ops.
 
 ### Connection status
 
 The legacy [`gui.status.request`](gui-protocol.md) bus message already exists today and answers
 whether any display is connected. An adapter is expected to optionally provide an
-`any_client_connected() -> bool` method so a future router can fold it into that response; the
+`any_client_connected() -> bool` method, so a future router can fold it into that response. The
 legacy adapter already ships a concrete module-level `any_client_connected()`
 (`ovos_legacy_mycroft_gui/websocket.py`) as a reference implementation. Since the base class and
 router are not yet built, treat the exact hook-up (duck-typing or otherwise) as illustrative:
@@ -161,10 +162,10 @@ def any_client_connected(self) -> bool:
 
 !!! note "`pyhtmx-gui-client` is a client, not an adapter"
     The `pyhtmx-gui-client` repo (PyPI `ovos-pyhtmx-gui-client`, console script `pyhtmx-gui`)
-    is **not** a GUI adapter plugin — it ships no `AbstractGUIPlugin` subclass and no
+    is **not** a GUI adapter plugin. It ships no `AbstractGUIPlugin` subclass and no
     `opm.gui_adapter` entry point. It is a standalone FastAPI/uvicorn GUI *client* whose
     `GUIClient` connects as a WebSocket client to the legacy `ovos-gui` protocol
-    (`ws://localhost:18181/gui`, config keys `ovos-server-url` / `client-id`), analogous to a
+    (`ws://localhost:18181/gui`, config keys `ovos-server-url` / `client-id`), similar to a
     mycroft-gui Qt client. It belongs to the legacy websocket-client path, not the adapter
     architecture described here.
 
@@ -199,8 +200,8 @@ Register in `pyproject.toml`:
 
 Adapter configuration is expected to live under a `gui.adapters.<entry-point-name>` key in
 [`mycroft.conf`](config.md), following the existing `get_plugin_config()` convention used by
-other OPM plugin types, and to be passed as the `config` dict to the adapter's `__init__`. This
-exact key path is not yet fixed by any released code — treat it as illustrative:
+other OPM plugin types. It is expected to be passed as the `config` dict to the adapter's `__init__`. This
+exact key path is not yet fixed by any released code. Treat it as illustrative:
 
 ```json
 {

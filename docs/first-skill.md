@@ -2,7 +2,7 @@
 
 !!! abstract "In a nutshell"
     A **skill** is an add-on that teaches OVOS a new ability. This page is a hands-on
-    walkthrough: you'll create a tiny skill from scratch, install it, and talk to it — in about
+    walkthrough. You'll create a tiny skill from scratch, install it, and talk to it, in about
     ten minutes. You only need to be comfortable creating a few text files. New to the words
     here? Keep the [Glossary](glossary.md) open.
 
@@ -11,7 +11,7 @@ every other skill is just more of the same idea.
 
 !!! note "Before you start: OVOS needs to already be installed"
     This walkthrough assumes OVOS is already installed and its Python environment is available
-    to work in — see [ovos-installer](ovos-installer.md) or [RaspOVOS](install-raspovos.md) if
+    to work in. See [ovos-installer](ovos-installer.md) or [RaspOVOS](install-raspovos.md) if
     you haven't done that yet. The ten minutes below covers writing and installing the skill
     itself, once that environment is in place.
 
@@ -26,7 +26,7 @@ A skill is a small folder with three kinds of files:
 | **dialog files** (`*.dialog`) | lines **OVOS can speak back** (it picks one at random) | `Hello! Nice to meet you.` |
 
 The intent and dialog files live in a `locale/<language>/` folder, so the same skill can be
-translated. That's the whole model — [Anatomy of a Skill](skill-structure.md) covers it in depth.
+translated. That's the whole model. [Anatomy of a Skill](skill-structure.md) covers it in depth.
 
 ## Step 1 — Create the folder layout
 
@@ -46,17 +46,17 @@ ovos-skill-my-first/
 ```
 
 !!! note "Both layouts work"
-    OVOS walks the *entire* `locale/<lang>/` folder looking for a file by name, so grouping
+    OVOS walks the *entire* `locale/<lang>/` folder looking for a file by name. So grouping
     files into `intents/`/`dialog/` subfolders (as above) or dropping them flat directly in
-    `locale/en-us/` both work equally well — pick whichever keeps your skill readable. The
+    `locale/en-us/` both work equally well. Pick whichever keeps your skill readable. The
     language folder name itself is also case-insensitive (`en-us` and `en-US` are the same
     folder to OVOS). See [Anatomy of a Skill](skill-structure.md) and
     [Intent Design](intents.md) for more on this layout.
 
 ## Step 2 — Write the skill code
 
-Every skill is a Python class that subclasses [`OVOSSkill`](ovos-skill.md). A **decorator** — a
-line starting with `@` placed just above a function — tells OVOS what that function is for; here
+Every skill is a Python class that subclasses [`OVOSSkill`](ovos-skill.md). A **decorator** (a
+line starting with `@` placed just above a function) tells OVOS what that function is for. Here
 `@intent_handler("Hello.intent")` means *"run this function when the user says something matching
 `Hello.intent`"* (see [Decorators](decorators.md) for the full list). `self.speak_dialog("hello")`
 then speaks a random line from `hello.dialog`.
@@ -81,13 +81,13 @@ class MyFirstSkill(OVOSSkill):
         self.speak_dialog("hello")
 ```
 
-That's the entire skill. `initialize()` is optional — you only need it once you have setup work
+That's the entire skill. `initialize()` is optional. You only need it once you have setup work
 that depends on the skill being fully wired up (reading [settings](skill-settings.md), registering
 extra event handlers, and so on).
 
 ## Step 3 — Tell OVOS what the user might say
 
-`ovos_skill_my_first/locale/en-us/intents/Hello.intent` — one example phrase per line. OVOS
+`ovos_skill_my_first/locale/en-us/intents/Hello.intent`: one example phrase per line. OVOS
 learns the *pattern* from these, so you don't have to list every wording:
 
 ```text
@@ -99,7 +99,7 @@ greet me
 
 ## Step 4 — Write what OVOS says back
 
-`ovos_skill_my_first/locale/en-us/dialog/hello.dialog` — one option per line; OVOS picks one at
+`ovos_skill_my_first/locale/en-us/dialog/hello.dialog`: one option per line. OVOS picks one at
 random so the assistant doesn't sound robotic:
 
 ```text
@@ -144,24 +144,28 @@ ovos_skill_my_first = ["locale/*/*", "locale/*/*/*"]
 ```
 
 The entry-point key (`my-first.youruser`) becomes your skill's **`skill_id`**
-(`<skill-name>.<author>`); the value points at your skill class. The `opm.skill` group is
+(`<skill-name>.<author>`). The value points at your skill class. The `opm.skill` group is
 how the [Plugin Manager](plugin-manager.md) discovers installed skills.
 
 ## Step 6 — Install it and talk to it
 
 First, activate the same Python environment OVOS runs in, so the skill installs into the
-interpreter `ovos-core` actually uses — for example `source ~/.venvs/ovos/bin/activate` for
+interpreter `ovos-core` actually uses. For example, `source ~/.venvs/ovos/bin/activate` for
 a venv install. In plain English: a **[virtual environment](glossary.md)** is an isolated
-Python install, and "activating" it just means that **[pip](glossary.md)** will now install
-into the one OVOS actually uses instead of somewhere else — see the
-[Glossary](glossary.md) if these terms are new. That exact path is only an example, not
-something you can assume: check where your particular install created its environment, e.g.
+Python install. "Activating" it just means that **[pip](glossary.md)** will now install
+into the one OVOS actually uses, instead of somewhere else. See the
+[Glossary](glossary.md) if these terms are new.
+
+That exact path is only an example, not
+something you can assume. Check where your particular install created its environment, for example
 the installer's summary screen
-(see [ovos-installer](ovos-installer.md#environment-summary)) — or, advanced: if you installed
-via [systemd](glossary.md), its unit file's `Environment=`/`ExecStart=` lines show the path,
-see [Troubleshooting](troubleshooting.md). raspOVOS, `ovos-installer`, and container installs
-each put it somewhere different. If you're running OVOS in
-a container instead, there's no host environment to activate — install into the container
+(see [ovos-installer](ovos-installer.md#environment-summary)). Advanced: if you installed
+via [systemd](glossary.md), its unit file's `Environment=`/`ExecStart=` lines show the path.
+See [Troubleshooting](troubleshooting.md). raspOVOS, `ovos-installer`, and container installs
+each put it somewhere different.
+
+If you're running OVOS in
+a container instead, there's no host environment to activate. Install into the container
 directly: `docker compose exec <service> pip install -e .` (run from the skill folder, with
 the skill's path mounted into the container, or copy it in first).
 
@@ -171,21 +175,21 @@ From inside the `ovos-skill-my-first/` folder:
 pip install -e .
 ```
 
-Restart `ovos-core` (or it will pick the skill up on its next scan) — see
+Restart `ovos-core` (or it will pick the skill up on its next scan). See
 [Stage 1 of Troubleshooting](troubleshooting.md#stage-1-is-the-service-even-running-and-is-the-bus-reachable)
 for exactly how to start/restart the OVOS services. Then say your configured wake word first
 (default **"Hey Mycroft"**), wait for the listening chime, and then say:
 
 > "**hello**"
 
-…and OVOS replies with one of your dialog lines. 🎉 You just wrote a skill.
+OVOS replies with one of your dialog lines. You just wrote a skill.
 
 !!! note "If OVOS doesn't reply"
-    Check the skills log for your skill_id: `ovos-logs show -l skills` — see
+    Check the skills log for your skill_id: `ovos-logs show -l skills`. See
     [Troubleshooting](troubleshooting.md) for how to read what it's telling you. `Hello.intent`
     is a **Padatious** template intent, so the live device also needs
     `ovos-padatious-pipeline-plugin` installed and listed in its `intents.pipeline` config for
-    the file to match at all — see [Test Your Skill](testing-your-skill.md) for the same
+    the file to match at all. See [Test Your Skill](testing-your-skill.md) for the same
     requirement in the automated test.
 
 !!! tip "No microphone handy, or want to test without talking?"
@@ -198,19 +202,19 @@ for exactly how to start/restart the OVOS services. Then say your configured wak
 If you add a new `.intent` or `.dialog` file after this walkthrough, what you do next depends on
 how the skill is installed. With an editable install (`pip install -e .`, as used above), the
 files live on disk where you edited them, so a restart of `ovos-core` (or the skills service) is
-enough — no reinstall needed. With a normal wheel install, the files were copied into the package
+enough. No reinstall needed. With a normal wheel install, the files were copied into the package
 at install time, so you must reinstall the skill (`pip install .` again, or the equivalent for a
 built wheel) before OVOS can see the new file.
 
 ## Where to go next
 
-- **Pull a value out of what the user said** (a name, a city, a number) — see [Intent Design](intents.md).
-- **Have a back-and-forth** ("what's your name?" → reply) — see [Continuous Conversation](converse.md).
-- **Save settings or files** — see [Skill Settings](skill-settings.md) and [Filesystem](skill-filesystem.md).
-- **Make it sound good and behave well** — see [Skill Best Practices](skill-best-practices.md).
-- **Test it automatically** — see [Skill Testing](ovoscope-overview.md).
-- **Publish it** so others can install it — see [Sharing your skill](skill-json.md#sharing-your-skill).
-- **See how an utterance actually travels through OVOS** — see [Life of an Utterance](life-of-an-utterance.md).
+- **Pull a value out of what the user said** (a name, a city, a number). See [Intent Design](intents.md).
+- **Have a back-and-forth** ("what's your name?" then a reply). See [Continuous Conversation](converse.md).
+- **Save settings or files**. See [Skill Settings](skill-settings.md) and [Filesystem](skill-filesystem.md).
+- **Make it sound good and behave well**. See [Skill Best Practices](skill-best-practices.md).
+- **Test it automatically**. See [Skill Testing](ovoscope-overview.md).
+- **Publish it** so others can install it. See [Sharing your skill](skill-json.md#sharing-your-skill).
+- **See how an utterance actually travels through OVOS**. See [Life of an Utterance](life-of-an-utterance.md).
 - Browse real skills for ideas in [Skill Examples](skill-examples.md).
 - Questions along the way? Ask in the
   [skills channel on OVOS Chat](https://matrix.to/#/#openvoiceos-skills:matrix.org).

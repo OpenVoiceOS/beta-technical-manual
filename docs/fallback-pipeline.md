@@ -1,18 +1,18 @@
 # Fallback Pipeline
 
 !!! success "Maturity — Mature ⬤⬤⬤⬤⬤"
-    Long-lived, battle-tested, and actively maintained — depend on it freely. Rated by [repository health](maturity.md), not version.
+    Long-lived, battle-tested, and actively maintained. Depend on it freely. Rated by [repository health](maturity.md), not version.
 
 !!! abstract "In a nutshell"
-    When you say something and none of your assistant's regular skills know how to respond, the fallback pipeline is the safety net that tries one last set of "catch-all" skills so the assistant still says something instead of going silent. Think of it as the help desk that gets your question only after everyone else has passed on it. It asks these backup skills in a set order until one of them handles the request. See the [Converse Pipeline](converse-pipeline.md) for what runs before this, or the [Glossary](glossary.md) for terms.
+    When you say something and none of your assistant's regular skills know how to respond, the fallback pipeline is the safety net. It tries one last set of "catch-all" skills so the assistant still says something instead of going silent. Think of it as the help desk that gets your question only after everyone else has passed on it. It asks these backup skills in a set order until one of them handles the request. See the [Converse Pipeline](converse-pipeline.md) for what runs before this, or the [Glossary](glossary.md) for terms.
 
 ??? info "📐 Formal specification"
     The fallback plugin is specified by **[OVOS-FALLBACK-1 — Fallback Pipeline Plugin](https://github.com/OpenVoiceOS/architecture/blob/dev/fallback.md)**, built on **[OVOS-PIPELINE-1](https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md)**. See the [spec index](architecture-specs.md).
 
-The **Fallback Pipeline** in **OpenVoiceOS (OVOS)** manages how fallback skills are queried when no primary skill handles a user's utterance. It coordinates multiple fallback handlers, ensuring the system gracefully attempts to respond even when regular intent matching fails.
+The **Fallback Pipeline** in **OpenVoiceOS (OVOS)** manages how fallback skills are queried when no primary skill handles a user's utterance. It coordinates multiple fallback handlers, so the system still attempts to respond even when regular intent matching fails.
 
 !!! note "How the spec frames it"
-    A **fallback skill** declares no intent patterns; instead it receives the raw utterance at query time and decides for itself whether it can respond (FALLBACK-1 §2) — the appropriate pattern for open-domain QA, LLM completions, and any coverage that cannot be modelled as a grammar. The plugin builds an ordered handler pool from each skill's registered `priority` and the session preference `session.fallback_handlers`, queries pool members one at a time via `ovos.skills.fallback.ping` / `.pong`, and returns a `Match` on the **reserved `intent_name` `fallback`** (PIPELINE-1 §7.3) targeting the first willing skill — dispatched on `ovos.skills.fallback.{skill_id}.request`. If the pool is exhausted it returns `None`, and the orchestrator emits `ovos.intent.unmatched`. The high/medium/low stages below are one fallback plugin loaded at several pipeline positions, each restricted to a `priority` range (FALLBACK-1 §8.2).
+    A **fallback skill** declares no intent patterns. Instead it receives the raw utterance at query time and decides for itself whether it can respond (FALLBACK-1 §2). This is the right pattern for open-domain QA, LLM completions, and any coverage that cannot be modelled as a grammar. The plugin builds an ordered handler pool from each skill's registered `priority` and the session preference `session.fallback_handlers`. It queries pool members one at a time via `ovos.skills.fallback.ping` / `.pong`, and returns a `Match` on the **reserved `intent_name` `fallback`** (PIPELINE-1 §7.3) targeting the first willing skill, dispatched on `ovos.skills.fallback.{skill_id}.request`. If the pool is exhausted it returns `None`, and the orchestrator emits `ovos.intent.unmatched`. The high/medium/low stages below are one fallback plugin loaded at several pipeline positions, each restricted to a `priority` range (FALLBACK-1 §8.2).
 
 ---
 
@@ -51,7 +51,7 @@ Each matcher filters registered fallbacks with `range.start < priority ≤ range
 2. `FallbackService.match_high/medium/low()` filters registered fallbacks to the stage's priority range
 
 
-3. It pings candidates via `ovos.skills.fallback.ping` (carrying the priority `range` and a `fallback_request_id`) and collects `ovos.skills.fallback.pong` acknowledgements (`can_handle`, echoing the same `fallback_request_id`) within ~0.5s. The request id lets the service ignore a pong that answers a stale or concurrent poll round instead of one it is currently waiting on.
+3. It pings candidates via `ovos.skills.fallback.ping` (carrying the priority `range` and a `fallback_request_id`) and collects `ovos.skills.fallback.pong` acknowledgements (`can_handle`, echoing the same `fallback_request_id`) within ~0.5s. The request id lets the service ignore a pong that answers a stale or concurrent poll round, instead of the one it is currently waiting on.
 
 
 4. Candidates are sorted by priority ascending; the winning match dispatches to that skill via `ovos.skills.fallback.{skill_id}.request`
@@ -94,7 +94,7 @@ class MyFallback(FallbackSkill):
 
 ```
 
-This enables modular and customizable fallback behavior depending on your skill ecosystem.
+This lets you customize fallback behavior for your skill ecosystem.
 
 ---
 
@@ -150,39 +150,39 @@ This enables modular and customizable fallback behavior depending on your skill 
 * The pipeline itself **does not define or enforce a default fallback response**.
 
 
-* The default "I don't understand" reply is implemented in the separate `ovos-skill-fallback-unknown` skill.
+* The separate `ovos-skill-fallback-unknown` skill implements the default "I don't understand" reply.
 
 
-* This modular design allows developers to create custom fallback strategies or add fallback chatbot skills without modifying the core pipeline.
+* This design lets developers create custom fallback strategies or add fallback chatbot skills without changing the core pipeline.
 
 
-* Fallback skills are expected to implement some dialog if they consume the utterance.
+* Fallback skills should implement some dialog if they consume the utterance.
 
 ---
 
 ## Security
 
-Just like with converse, a badly designed or malicious skill can hijack the fallback skill loop. While this is not as serious as with converse, protections are provided:
+As with converse, a badly designed or malicious skill can hijack the fallback skill loop. This is less serious than with converse, but the pipeline still provides protections:
 
 * You can configure what skills are allowed to use the fallback mechanism via `fallback_mode`.
 
 
-* `fallback_priorities` allows users to adjust priorities when the default values don't work well with the installed skill collection.
+* `fallback_priorities` lets users adjust priorities when the default values don't fit the installed skill collection.
 
 ---
 
 ## Related Pages
 
-- [Fallback Skill](fallbacks.md) — the skill-side `FallbackSkill` API this pipeline plugin drives
+- [Fallback Skill](fallbacks.md): the skill-side `FallbackSkill` API this pipeline plugin drives
 
 
-- [ovos-core](core.md) — `FallbackService` implementation and bus events
+- [ovos-core](core.md): `FallbackService` implementation and bus events
 
 
-- [Converse Pipeline](converse-pipeline.md) — what runs before fallback
+- [Converse Pipeline](converse-pipeline.md): what runs before fallback
 
 
-- [Skill Classes](skill-classes.md) — `FallbackSkill` base class
+- [Skill Classes](skill-classes.md): `FallbackSkill` base class
 
 ---
 

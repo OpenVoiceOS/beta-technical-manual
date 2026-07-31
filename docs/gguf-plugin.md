@@ -1,17 +1,17 @@
 # GGUF / Local LLM Agent Plugin (`ovos-gguf-plugin`)
 
 !!! abstract "In a nutshell"
-    This plugin runs an AI language model *entirely on your own device* — no internet, no accounts, and nothing sent to a company's servers — which is ideal when privacy or offline use matters. ("GGUF" is just the file format these downloadable models come in.) It can chat, summarize, translate, detect languages, and more. See [AI Agents & Personas](personas.md) for the bigger picture and the [Glossary](glossary.md) for unfamiliar terms.
+    This plugin runs an AI language model *entirely on your own device*. No internet, no accounts, and nothing sent to a company's servers. This is ideal when privacy or offline use matters. ("GGUF" is the file format these downloadable models come in.) It can chat, summarize, translate, detect languages, and more. See [AI Agents & Personas](personas.md) for the bigger picture and the [Glossary](glossary.md) for unfamiliar terms.
 
 `ovos-gguf-plugin` runs local GGUF models through
-[`llama-cpp-python`](https://github.com/abetlen/llama-cpp-python) — no API keys, no network,
-suitable for offline, air-gapped, or privacy-sensitive deployments. It provides a chat engine,
-a summarizer, translation / language-detection, a text-embeddings plugin, and a dialog
+[`llama-cpp-python`](https://github.com/abetlen/llama-cpp-python). It needs no API keys and no network,
+so it suits offline, air-gapped, or privacy-sensitive deployments. It provides a chat engine,
+a summarizer, translation and language-detection, a text-embeddings plugin, and a dialog
 transformer.
 
 Models load from a [Hugging Face Hub](https://huggingface.co) repository (downloaded on first
-use) or from a local `.gguf` file path. Each engine loads its own `llama_cpp.Llama` instance;
-one `Llama` can be shared between engines by passing `gguf_engine=` in code.
+use) or from a local `.gguf` file path. Each engine loads its own `llama_cpp.Llama` instance.
+You can share one `Llama` between engines by passing `gguf_engine=` in code.
 
 Install: `pip install ovos-gguf-plugin`
 
@@ -52,7 +52,7 @@ Model loading happens in `GGUFChatEngine`, which the other engines delegate to.
 | `system_prompt` | `str` | `null` | Default system prompt. |
 | `allow_system_prompts` | `bool` | `false` | When `true`, caller system messages are merged with the configured prompt; when `false`, stripped. |
 
-A `model` value that is an existing file path is loaded with `Llama(model_path=...)`; otherwise
+A `model` value that is an existing file path is loaded with `Llama(model_path=...)`. Otherwise
 it is treated as a Hub repo id and loaded with `Llama.from_pretrained(repo_id=..., filename=...)`.
 
 ### Minimal configuration (Hub model)
@@ -68,11 +68,11 @@ it is treated as a Hub repo id and loaded with `Llama.from_pretrained(repo_id=..
 
 !!! note "First run downloads the model"
     The first time a Hub `model` is used, `Llama.from_pretrained` downloads the matching GGUF
-    file from Hugging Face and caches it locally (subsequent runs are instant). For the example
-    above, the quantized file (`Phi-3-mini-4k-instruct-q4.gguf`) is about **2.2 GiB**; expect
-    anywhere from under a minute to several minutes depending on your internet connection.
-    Larger models (7B+) commonly run several GiB and take proportionally longer. The download
-    only happens once per file, and no data is sent anywhere afterward — inference is fully
+    file from Hugging Face and caches it locally. Later runs are instant. For the example
+    above, the quantized file (`Phi-3-mini-4k-instruct-q4.gguf`) is about **2.2 GiB**. Expect
+    anywhere from under a minute to several minutes, depending on your internet connection.
+    Larger models (7B+) commonly run several GiB and take longer. The download
+    only happens once per file. No data is sent anywhere afterward: inference is fully
     offline.
 
 ### Local file configuration
@@ -89,12 +89,12 @@ it is treated as a Hub repo id and loaded with `Llama.from_pretrained(repo_id=..
 
 ## Chat Engine (`opm.agents.chat`)
 
-**Class:** `GGUFChatEngine` — `ovos_gguf_plugin/chat.py:GGUFChatEngine`
+**Class:** `GGUFChatEngine` (`ovos_gguf_plugin/chat.py:GGUFChatEngine`)
 
 **OPM plugin name:** `ovos-chat-gguf-plugin`
 
 Multi-turn conversational LLM using a local GGUF model. Implements `continue_chat`,
-`stream_tokens`, and `stream_sentences` — API-compatible with `OpenAIChatEngine` for offline use.
+`stream_tokens`, and `stream_sentences`. It is API-compatible with `OpenAIChatEngine` for offline use.
 
 ```json
 {
@@ -130,13 +130,13 @@ Activate by voice: `"Chat with Local Phi-3"`.
 
 ## Summarizer (`opm.agents.summarizer`)
 
-**Class:** `GGUFSummarizer` — `ovos_gguf_plugin/summarizer.py:GGUFSummarizer`
+**Class:** `GGUFSummarizer` (`ovos_gguf_plugin/summarizer.py:GGUFSummarizer`)
 
 **OPM plugin name:** `ovos-summarizer-gguf-plugin`
 
 Condenses a document into a short summary using a local GGUF model. Delegates generation to a
 `GGUFChatEngine`. The system prompt and user prompt default to the plugin's localized
-`.prompt` files; override with `system_prompt` and `prompt_template` (a template with a
+`.prompt` files. Override with `system_prompt` and `prompt_template` (a template with a
 `{content}` placeholder).
 
 | Key | Type | Default | Description |
@@ -158,7 +158,7 @@ Condenses a document into a short summary using a local GGUF model. Delegates ge
 
 ## Translation & Language Detection (`opm.lang.translate`, `opm.lang.detect`)
 
-**Classes:** `GGUFTextTranslator` / `GGUFTextLangDetector` — `ovos_gguf_plugin/translate.py`
+**Classes:** `GGUFTextTranslator` / `GGUFTextLangDetector` (`ovos_gguf_plugin/translate.py`)
 
 **OPM plugin names:** `ovos-translate-gguf-plugin` / `ovos-lang-detect-gguf-plugin`
 
@@ -184,13 +184,13 @@ Translate text between languages or detect a text's language using a local GGUF 
 
 ## Dialog Transformer (`opm.transformer.dialog`)
 
-**Class:** `GGUFDialogTransformer` — `ovos_gguf_plugin/dialog_transformers.py:GGUFDialogTransformer`
+**Class:** `GGUFDialogTransformer` (`ovos_gguf_plugin/dialog_transformers.py:GGUFDialogTransformer`)
 
 **OPM plugin name:** `ovos-dialog-transformer-gguf-plugin`
 
 Runs after skill response generation, before [TTS](tts-plugins.md) synthesis. Rewrites skill
-responses with a local GGUF model. Only invoked when a `rewrite_prompt` is configured (via
-config or `context["prompt"]`); falls back to the original dialog otherwise. Default priority:
+responses with a local GGUF model. It only runs when a `rewrite_prompt` is configured (via
+config or `context["prompt"]`). Otherwise it falls back to the original dialog. Default priority:
 `10`. The system prompt defaults to the localized `dialog_transform_system` prompt.
 
 ```json
@@ -218,13 +218,13 @@ config or `context["prompt"]`); falls back to the original dialog otherwise. Def
 
 Quantization level guide:
 
-- `Q4_K_M` — good balance of quality and speed (recommended default)
+- `Q4_K_M`: good balance of quality and speed (recommended default)
 
 
-- `Q8_0` — higher quality, roughly 2× the memory of Q4
+- `Q8_0`: higher quality, roughly 2x the memory of Q4
 
 
-- `Q2_K` — smallest/fastest, lowest quality
+- `Q2_K`: smallest/fastest, lowest quality
 
 ---
 
@@ -254,16 +254,16 @@ CMAKE_ARGS="-DGGML_CUDA=on" pip install llama-cpp-python --force-reinstall
 
 ## Cross-References
 
-- [Agent Engine Types](agent-plugins.md) — base class contracts and full type reference
+- [Agent Engine Types](agent-plugins.md): base class contracts and full type reference
 
 
-- [Personas & PersonaService](personas.md) — how to load and activate personas
+- [Personas & PersonaService](personas.md): how to load and activate personas
 
 
-- [LLM Transformers](llm-transformers.md) — dialog transformer pipeline
+- [LLM Transformers](llm-transformers.md): dialog transformer pipeline
 
 
-- [OpenAI Plugin](openai-plugin.md) — OpenAI-compatible API alternative
+- [OpenAI Plugin](openai-plugin.md): OpenAI-compatible API alternative
 
 ---
 

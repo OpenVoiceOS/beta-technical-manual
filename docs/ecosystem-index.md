@@ -1,9 +1,9 @@
 # OVOS Repository Index
 
 !!! abstract "In a nutshell"
-    OVOS is a large ecosystem of small, focused repositories — core services, plus hundreds of swappable [plugins](plugins-index.md) and [skills](skill-design-guidelines.md). This page is the map: every **public** repository in the [OpenVoiceOS GitHub organization](https://github.com/OpenVoiceOS), grouped by what it does. For each one: why it exists, what it does, and which part of the stack consumes it. Archived repositories are omitted here — see [Deprecated & Legacy Repositories](deprecated-repos.md).
+    OVOS is a large ecosystem of small, focused repositories: core services, plus hundreds of swappable [plugins](plugins-index.md) and [skills](skill-design-guidelines.md). This page is the map. It lists every **public** repository in the [OpenVoiceOS GitHub organization](https://github.com/OpenVoiceOS), grouped by what it does. For each one: why it exists, what it does, and which part of the stack consumes it. Archived repositories are omitted here. See [Deprecated & Legacy Repositories](deprecated-repos.md).
 
-There are roughly **280** public, non-archived repositories in the [`OpenVoiceOS`](https://github.com/OpenVoiceOS) organization (the exact count drifts as repos are added or archived — check `gh repo list OpenVoiceOS --no-archived` for the current figure). Browse them by category below; click any name to open it on GitHub. Entries marked ⚠️ are experimental or pre-release — read the repository's own README before adopting them.
+There are roughly **280** public, non-archived repositories in the [`OpenVoiceOS`](https://github.com/OpenVoiceOS) organization. The exact count drifts as repos are added or archived; check `gh repo list OpenVoiceOS --no-archived` for the current figure. Browse them by category below. Click any name to open it on GitHub. Entries marked ⚠️ are experimental or pre-release. Read the repository's own README before you adopt them.
 
 > Generated from the live organization repository list. If a repository is missing here it is either archived, private, or newly created — check the [organization page](https://github.com/OpenVoiceOS) for the authoritative list.
 
@@ -13,55 +13,55 @@ There are roughly **280** public, non-archived repositories in the [`OpenVoiceOS
 :   The consumer/listener half of the legacy Mark 1 hardware-enclosure protocol: it defines `EnclosureProtocolListener`, a mix-in that wires the `enclosure.*` bus messages (LED eyes, mouth/faceplate, system LEDs) to overridable handlers. The producer half (`EnclosureAPI`, used by skills as `self.enclosure`) lives in ovos-gui-api-client; loaded by hardware enclosure plugins such as ovos-PHAL-plugin-mk1.
 
 **[ovos-audio](https://github.com/OpenVoiceOS/ovos-audio)**
-:   The "mouth" of the OVOS assistant: it handles text-to-speech generation and audio playback of the resulting speech. Core runtime component of the OVOS stack; other services and skills import it directly or run it as a daemon.
+:   The "mouth" of the OVOS assistant: it handles text-to-speech generation and audio playback of the resulting speech. Core runtime component of the OVOS stack. Other services and skills import it directly or run it as a daemon.
 
 **[ovos-bus-client](https://github.com/OpenVoiceOS/ovos-bus-client)**
-:   A Python client for the OVOS messagebus. Connect to OVOS, emit messages, and react to system events. Core runtime component of the OVOS stack; other services and skills import it directly or run it as a daemon.
+:   A Python client for the OVOS messagebus. Connect to OVOS, emit messages, and react to system events. Core runtime component of the OVOS stack. Other services and skills import it directly or run it as a daemon.
 
 **[ovos-color-parser](https://github.com/OpenVoiceOS/ovos-color-parser)**
-:   Turn natural-language color descriptions into color objects, and color objects back into names, in 23 languages. Pure Python, zero network, no ML model — just bundled wordlists and color math. Core runtime component of the OVOS stack; other services and skills import it directly or run it as a daemon.
+:   Turn natural-language color descriptions into color objects, and color objects back into names, in 23 languages. Pure Python, zero network, no ML model — just bundled wordlists and color math. Core runtime component of the OVOS stack. Other services and skills import it directly or run it as a daemon.
 
 **[ovos-config](https://github.com/OpenVoiceOS/ovos-config)**
-:   helper package to interact with mycroft config. Core runtime component of the OVOS stack; other services and skills import it directly or run it as a daemon.
+:   helper package to interact with mycroft config. Core runtime component of the OVOS stack. Other services and skills import it directly or run it as a daemon.
 
 **[ovos-core](https://github.com/OpenVoiceOS/ovos-core)**
-:   OpenVoiceOS is an open-source platform for smart speakers and other voice-centric devices. Core runtime component of the OVOS stack; other services and skills import it directly or run it as a daemon.
+:   OpenVoiceOS is an open-source platform for smart speakers and other voice-centric devices. Core runtime component of the OVOS stack. Other services and skills import it directly or run it as a daemon.
 
 **[ovos-date-parser](https://github.com/OpenVoiceOS/ovos-date-parser)**
-:   Multilingual parsing, extraction and formatting of human date, time and duration expressions — a two-way bridge between machine timestamps and the way people actually speak and write about time. Core runtime component of the OVOS stack; other services and skills import it directly or run it as a daemon.
+:   Multilingual parsing, extraction and formatting of human date, time and duration expressions — a two-way bridge between machine timestamps and the way people actually speak and write about time. Core runtime component of the OVOS stack. Other services and skills import it directly or run it as a daemon.
 
 **[ovos-dinkum-listener](https://github.com/OpenVoiceOS/ovos-dinkum-listener)**
-:   The OVOS speech-recognition daemon: it owns the microphone, wake-word detection, voice-activity detection and STT, and emits the recognized utterance onto the messagebus for the intent service to handle. Core runtime component of the OVOS stack; other services and skills import it directly or run it as a daemon.
+:   The OVOS speech-recognition daemon: it owns the microphone, wake-word detection, voice-activity detection and STT, and emits the recognized utterance onto the messagebus for the intent service to handle. Core runtime component of the OVOS stack. Other services and skills import it directly or run it as a daemon.
 
 **[ovos-gui](https://github.com/OpenVoiceOS/ovos-gui)**
-:   GUI messagebus service, manages GUI state and implements the gui protocol. Core runtime component of the OVOS stack; other services and skills import it directly or run it as a daemon.
+:   GUI messagebus service, manages GUI state and implements the gui protocol. Core runtime component of the OVOS stack. Other services and skills import it directly or run it as a daemon.
 
 **[ovos-gui-api-client](https://github.com/OpenVoiceOS/ovos-gui-api-client)**
-:   A template defines what kind of information is being presented, not how it looks. The display layer (Qt/web/terminal/etc.) owns all rendering decisions. Skills own only the semantic data they provide. Core runtime component of the OVOS stack; other services and skills import it directly or run it as a daemon.
+:   A template defines what kind of information is being presented, not how it looks. The display layer (Qt/web/terminal/etc.) owns all rendering decisions. Skills own only the semantic data they provide. Core runtime component of the OVOS stack. Other services and skills import it directly or run it as a daemon.
 
 **[ovos-lang-parser](https://github.com/OpenVoiceOS/ovos-lang-parser)**
-:   Map spoken and written language names to standard IETF/BCP-47 language codes — and back — in many languages, offline, with a two-function API. Core runtime component of the OVOS stack; other services and skills import it directly or run it as a daemon.
+:   Map spoken and written language names to standard IETF/BCP-47 language codes — and back — in many languages, offline, with a two-function API. Core runtime component of the OVOS stack. Other services and skills import it directly or run it as a daemon.
 
 **[ovos-messagebus](https://github.com/OpenVoiceOS/ovos-messagebus)**
-:   messagebus service, the nervous system of OpenVoiceOS. Core runtime component of the OVOS stack; other services and skills import it directly or run it as a daemon.
+:   messagebus service, the nervous system of OpenVoiceOS. Core runtime component of the OVOS stack. Other services and skills import it directly or run it as a daemon.
 
 **[ovos-number-parser](https://github.com/OpenVoiceOS/ovos-number-parser)**
-:   Convert numbers between digits and spoken words, in 40 languages, with one small dependency-light library. Core runtime component of the OVOS stack; other services and skills import it directly or run it as a daemon.
+:   Convert numbers between digits and spoken words, in 40 languages, with one small dependency-light library. Core runtime component of the OVOS stack. Other services and skills import it directly or run it as a daemon.
 
 **[ovos-opendata-server](https://github.com/OpenVoiceOS/ovos-opendata-server)**
-:   A FastAPI service for collecting anonymized OVOS usage metrics and data with an interactive Streamlit dashboard for visualization. Core runtime component of the OVOS stack; other services and skills import it directly or run it as a daemon.
+:   A FastAPI service for collecting anonymized OVOS usage metrics and data with an interactive Streamlit dashboard for visualization. Core runtime component of the OVOS stack. Other services and skills import it directly or run it as a daemon.
 
 **[ovos-plugin-manager](https://github.com/OpenVoiceOS/ovos-plugin-manager)**
-:   OPM can be used to load and create plugins for the OpenVoiceOS ecosystem! Core runtime component of the OVOS stack; other services and skills import it directly or run it as a daemon.
+:   OPM can be used to load and create plugins for the OpenVoiceOS ecosystem! Core runtime component of the OVOS stack. Other services and skills import it directly or run it as a daemon.
 
 **[ovos-pydantic-models](https://github.com/OpenVoiceOS/ovos-pydantic-models)**
-:   Typed Pydantic v2 models for every message that flows over the OVOS messagebus. Core runtime component of the OVOS stack; other services and skills import it directly or run it as a daemon.
+:   Typed Pydantic v2 models for every message that flows over the OVOS messagebus. Core runtime component of the OVOS stack. Other services and skills import it directly or run it as a daemon.
 
 **[ovos-utils](https://github.com/OpenVoiceOS/ovos-utils)**
-:   collection of simple utilities for use across the mycroft ecosystem. Core runtime component of the OVOS stack; other services and skills import it directly or run it as a daemon.
+:   collection of simple utilities for use across the mycroft ecosystem. Core runtime component of the OVOS stack. Other services and skills import it directly or run it as a daemon.
 
 **[ovos-workshop](https://github.com/OpenVoiceOS/ovos-workshop)**
-:   Base classes, decorators, and helpers for building skills and applications for OpenVoiceOS. Core runtime component of the OVOS stack; other services and skills import it directly or run it as a daemon.
+:   Base classes, decorators, and helpers for building skills and applications for OpenVoiceOS. Core runtime component of the OVOS stack. Other services and skills import it directly or run it as a daemon.
 
 
 ## Skills (53)
@@ -323,7 +323,7 @@ Most register under the `opm.tts` entry-point group and are loaded by ovos-audio
 :   A client-side TTS plugin that forwards text to a remote ovos-tts-server instance over HTTP instead of synthesizing speech locally. Registers under the `opm.tts` entry-point group; loaded by ovos-audio when configured to use a remote TTS server.
 
 **[ovos-tts-transformer-sox-plugin](https://github.com/OpenVoiceOS/ovos-tts-transformer-sox-plugin)**
-:   This repository contains a Python package for a Text-to-Speech (TTS) transformer that utilizes SoX (Sound eXchange) for audio processing. The transformer applies various effects to the generated audio before playback.
+:   This repository contains a Python package for a Text-to-Speech (TTS) transformer that uses SoX (Sound eXchange) for audio processing. The transformer applies various effects to the generated audio before playback.
 
 
 ## Wake Word plugins (7)

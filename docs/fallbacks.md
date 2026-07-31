@@ -1,27 +1,27 @@
 # Fallback [Skill](skill-design-guidelines.md)
 
 !!! abstract "In a nutshell"
-    A fallback skill is a catch-all that only gets a turn when no regular skill understood what you said. It is where you put things like "sorry, I didn't catch that", a web search, or a large language model that should answer only when nothing more specific did. Each fallback has a priority number so you can decide which ones try first, with broad "I don't understand" handlers going last. To see how this fits into the bigger picture, read the [Fallback Pipeline](fallback-pipeline.md), or the [Glossary](glossary.md) for terms.
+    A fallback skill is a catch-all. It only gets a turn when no regular skill understood what you said. Use it for things like "sorry, I didn't catch that", a web search, or a large language model that should answer only when nothing more specific did. Each fallback has a priority number, so you can decide which ones try first. Broad "I don't understand" handlers go last. To see how this fits into the bigger picture, read the [Fallback Pipeline](fallback-pipeline.md), or the [Glossary](glossary.md) for terms.
 
 ??? info "📐 Formal specification"
-    Fallback handling is specified by **[OVOS-FALLBACK-1 — Fallback Pipeline Plugin](https://github.com/OpenVoiceOS/architecture/blob/dev/fallback.md)** (a formal [architecture spec](architecture-specs.md)). A skill declares itself a fallback handler by calling `register_fallback()`, which emits `ovos.skills.fallback.register` with a `skill_id` and integer `priority`; the fallback **pipeline plugin** builds a pool ordered by **ascending** priority (**lower number runs earlier** — matching this page), then pings each candidate with `ovos.skills.fallback.ping` and reads its `can_answer()` verdict off the `ovos.skills.fallback.pong` reply, dispatching in priority order to the first willing skill via `ovos.skills.fallback.<skill_id>.request`. A catch-all skill is typically registered at a high number (e.g. `100`) so every utterance gets a response. Note this is the opposite of what "priority" usually implies elsewhere: a *lower* number here means the handler is tried *sooner*, not that it is more important.
+    Fallback handling is specified by **[OVOS-FALLBACK-1 — Fallback Pipeline Plugin](https://github.com/OpenVoiceOS/architecture/blob/dev/fallback.md)** (a formal [architecture spec](architecture-specs.md)). A skill declares itself a fallback handler by calling `register_fallback()`, which emits `ovos.skills.fallback.register` with a `skill_id` and integer `priority`. The fallback **pipeline plugin** builds a pool ordered by **ascending** priority (**lower number runs earlier**, matching this page). It then pings each candidate with `ovos.skills.fallback.ping` and reads its `can_answer()` verdict off the `ovos.skills.fallback.pong` reply, dispatching in priority order to the first willing skill via `ovos.skills.fallback.<skill_id>.request`. A catch-all skill is typically registered at a high number (e.g. `100`) so every utterance gets a response. This is the opposite of what "priority" usually implies elsewhere: a *lower* number here means the handler is tried *sooner*, not that it is more important.
 
-A **Fallback** skill is the last line of defense: it is only consulted when no intent matched the utterance. This is where you put a catch-all ("I didn't understand"), an LLM, a web search, or any handler that should run *only* when nothing more specific did.
+A **Fallback** skill is the last line of defense. It is only consulted when no intent matched the utterance. Use it for a catch-all ("I didn't understand"), an LLM, a web search, or any handler that should run *only* when nothing more specific did.
 
 ## Order of precedence
 
-Fallback Skills each have a **priority** and are tried in order from low priority value to high priority value (lower number = tried earlier). When a Fallback Skill handles the **[Utterance](life-of-an-utterance.md)** it returns `True` and no further fallbacks are tried.
+Fallback Skills each have a **priority** and are tried in order from low priority value to high priority value. Lower number means tried earlier. When a Fallback Skill handles the **[Utterance](life-of-an-utterance.md)** it returns `True` and no further fallbacks are tried.
 
 !!! note "Two different facts: internal stages vs. your pick"
     The pipeline internally splits the 0-101 priority space into three dispatch stages,
-    checked in that order — `fallback_high` (priority 0 up to, but not including, 5),
-    `fallback_medium` (5 up to 90), and `fallback_low` (90 up to 101) — implemented directly
+    checked in this order: `fallback_high` (priority 0 up to, but not including, 5),
+    `fallback_medium` (5 up to 90), and `fallback_low` (90 up to 101). These are implemented directly
     in `ovos-core`'s `FallbackService` (no separate pipeline plugin package involved).
     That is an implementation detail, not a recommendation. The **recommended pick ranges**
-    below are a separate, coarser convention for choosing *where in the medium/low stages*
+    below are a separate, coarser convention. They help you choose *where in the medium/low stages*
     your own handler's priority should sit.
 
-Pick your priority number by how broad your handler is — remember, a smaller number runs **earlier**, a larger number runs **later**:
+Pick your priority number by how broad your handler is. Remember, a smaller number runs **earlier**, a larger number runs **later**:
 
 - Very specific handlers should use a **small number** (e.g. `0–49`) so they run before broad ones and get first refusal.
 - Handlers that fit a middle ground should use `50–74`.
@@ -61,7 +61,7 @@ class MeaningFallback(FallbackSkill):
 
 > **NOTE**: a `FallbackSkill` can register any number of fallback handlers.
 
-The above example can be found in [the fallback-meaning skill example](https://github.com/forslund/fallback-meaning).
+You can find this example in [the fallback-meaning skill example](https://github.com/forslund/fallback-meaning).
 
 ---
 
@@ -93,9 +93,9 @@ class MeaningFallback(FallbackSkill):
 
 ## `can_answer`
 
-Fallback skills can report *whether* they would answer a question, without actually executing the action or speaking. This lets other OVOS components probe how an utterance will be handled with no side effects, and can skip work in the fallback pipeline.
+Fallback skills can report *whether* they would answer a question, without executing the action or speaking. This lets other OVOS components probe how an utterance will be handled with no side effects. It also lets the pipeline skip work when it isn't needed.
 
-This method is **not implemented by default** — the base implementation raises `NotImplementedError`. Since the skills service pings every fallback skill (`ovos.skills.fallback.ping` → `can_answer()`) to decide whether it is even worth invoking, you should always override `can_answer` in a real `FallbackSkill`:
+This method is **not implemented by default**. The base implementation raises `NotImplementedError`. The skills service pings every fallback skill (`ovos.skills.fallback.ping` → `can_answer()`) to decide whether it is even worth invoking. Always override `can_answer` in a real `FallbackSkill`:
 
 ```python
 from ovos_bus_client.session import SessionManager
