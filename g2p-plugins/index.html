@@ -1583,13 +1583,13 @@
 <h1 id="grapheme-to-phoneme-g2p-plugins">Grapheme-to-Phoneme (G2P) Plugins<a class="headerlink" href="#grapheme-to-phoneme-g2p-plugins" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>These plugins work out <em>how a written word should sound</em>. A "grapheme" is just a letter you see on the page, and a "phoneme" is a unit of sound you hear when it's spoken — so this is the part that figures out, for example, that "knight" sounds like "nite". The voice that reads text aloud uses this to pronounce words more correctly, and on-screen avatars use it to move their lips in time with the speech. For unfamiliar terms, see the <a href="../glossary/">Glossary</a>; to learn about the voices that speak, see <a href="../tts-plugins/">TTS Plugins</a>.</p>
+<p>These plugins work out <em>how a written word should sound</em>. A "grapheme" is a letter you see on the page. A "phoneme" is a unit of sound you hear when it's spoken. This is the part that figures out, for example, that "knight" sounds like "nite". The voice that reads text aloud uses this to pronounce words more correctly. On-screen avatars use it to move their lips in time with the speech. For unfamiliar terms, see the <a href="../glossary/">Glossary</a>; to learn about the voices that speak, see <a href="../tts-plugins/">TTS Plugins</a>.</p>
 </div>
 <p>Grapheme-to-Phoneme (G2P) plugins convert written text (graphemes) into phonemes. In practice
-this is a <strong>Beta, Mark 1-era capability used for mouth-movement / viseme animation</strong>: most
+this is a <strong>Beta, Mark 1-era capability used for mouth-movement / viseme animation</strong>. Most
 <a href="../tts-plugins/">TTS</a> voices don't emit phoneme timing, so a G2P plugin <em>estimates</em> it from the
-text to drive lip-sync. Only <strong>Mimic 1</strong> provides phoneme timing natively; for any other voice
-the G2P plugin simulates the timing. <strong>If you don't drive an on-screen mouth/face, you don't
+text to drive lip-sync. Only <strong>Mimic 1</strong> provides phoneme timing natively. For any other voice
+the G2P plugin simulates the timing. <strong>If you don't drive an on-screen mouth or face, you don't
 need a G2P plugin.</strong></p>
 <h2 id="how-it-works">How it works<a class="headerlink" href="#how-it-works" title="Permanent link">&para;</a></h2>
 <p>A G2P plugin takes a word or an utterance and returns a list of phonemes in a specific alphabet, such as <strong>Arpabet</strong> or <strong>IPA</strong>.</p>
@@ -1615,18 +1615,18 @@ need a G2P plugin.</strong></p>
 <p>Maturity reflects repository health (age, activity, open issues/PRs, in-repo docs), not version — see the <a href="../maturity/">Maturity Scale</a>.</p>
 <div class="admonition note">
 <p class="admonition-title">Roster completeness</p>
-<p>This table lists the G2P plugins known to register an <code>opm.g2p</code> entry point; it is
+<p>This table lists the G2P plugins known to register an <code>opm.g2p</code> entry point. It is
 not guaranteed to be exhaustive. If you know of another OVOS-compatible G2P
 plugin missing here, check its <code>pyproject.toml</code>/<code>setup.py</code> for an <code>opm.g2p</code> entry point before
-assuming it belongs on this list.</p>
+you assume it belongs on this list.</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Some TTS engines phonemize internally, without an <code>opm.g2p</code> plugin</p>
 <p><a href="https://github.com/OpenVoiceOS/ovos-tts-plugin-espeakNG"><code>ovos-tts-plugin-espeakNG</code></a> embeds
-espeak-ng's own grapheme-to-phoneme conversion, and the <code>phoonnx</code> TTS backends delegate
-phonemization to <a href="https://github.com/TigreGotico/scriptconv"><code>scriptconv</code></a> — rather than to a
-separate <code>opm.g2p</code> plugin. Neither is on the table above because neither is discoverable
-as a standalone G2P plugin — the phonemization happens as an implementation detail of the TTS
+espeak-ng's own grapheme-to-phoneme conversion. The <code>phoonnx</code> TTS backends delegate
+phonemization to <a href="https://github.com/TigreGotico/scriptconv"><code>scriptconv</code></a>, instead of a
+separate <code>opm.g2p</code> plugin. Neither is on the table above, because neither is discoverable
+as a standalone G2P plugin. The phonemization happens as an implementation detail of the TTS
 engine itself.</p>
 </div>
 <hr />
@@ -1646,10 +1646,10 @@ engine itself.</p>
 </span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Return visemes for lip-sync animation.&quot;&quot;&quot;</span>
 </span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>        <span class="o">...</span>
 </span></code></pre></div>
-<p>A plugin implements whichever of <code>get_arpa</code> / <code>get_ipa</code> it can — at least one of the two,
-since both raise <code>NotImplementedError</code> by default and the derived <code>utterance2*</code> helpers need at
+<p>A plugin implements whichever of <code>get_arpa</code> / <code>get_ipa</code> it can, at least one of the two.
+Both raise <code>NotImplementedError</code> by default, and the derived <code>utterance2*</code> helpers need at
 least one working conversion to produce anything. The base class derives <code>utterance2arpa</code>,
-<code>utterance2ipa</code>, and <code>utterance2visemes</code> from those, and exposes an <code>available_languages</code>
+<code>utterance2ipa</code>, and <code>utterance2visemes</code> from those. It also exposes an <code>available_languages</code>
 classmethod for discovery.</p>
 <h2 id="creating-your-own-plugin">Creating Your Own Plugin<a class="headerlink" href="#creating-your-own-plugin" title="Permanent link">&para;</a></h2>
 <h3 id="1-implementation-template">1. Implementation Template<a class="headerlink" href="#1-implementation-template" title="Permanent link">&para;</a></h3>
@@ -1683,7 +1683,7 @@ classmethod for discovery.</p>
 </span></code></pre></div>
 <h2 id="further-reading">Further reading<a class="headerlink" href="#further-reading" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="https://blog.openvoiceos.org/posts/2025-12-14-barranquenho">The First Phonemizer for Barranquenho</a> — OVOS blog</li>
+<li><a href="https://blog.openvoiceos.org/posts/2025-12-14-barranquenho">The First Phonemizer for Barranquenho</a>: OVOS blog</li>
 </ul>
 
 

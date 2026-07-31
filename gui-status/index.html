@@ -1555,27 +1555,27 @@
 <p class="admonition-title">In a nutshell</p>
 <p>OVOS is voice-first, but some devices (notably the <strong>Mark 2</strong>) also have a screen.
 The screen software that exists <strong>today</strong> is old, deprecated, and best described as
-"just barely working" — kept alive only so existing Mark 2 devices don't go dark. A
+"just barely working". It stays alive only so existing Mark 2 devices don't go dark. A
 ground-up replacement is being designed, but it is <strong>Upcoming</strong> and not usable yet.
-This page is the single, honest answer to "what's the state of GUI on OVOS?" — every
+This page is the single, honest answer to "what's the state of GUI on OVOS?" Every
 other GUI page links back here instead of repeating the same warning.</p>
 </div>
 <h2 id="the-honest-verdict">The honest verdict<a class="headerlink" href="#the-honest-verdict" title="Permanent link">&para;</a></h2>
 <p>There is <strong>no generally usable OVOS GUI right now</strong>. The only screen stack that actually
-runs is the <strong>legacy Qt5 stack</strong> — <a href="../ovos-shell/"><code>ovos-shell</code></a> wrapping
+runs is the <strong>legacy Qt5 stack</strong>: <a href="../ovos-shell/"><code>ovos-shell</code></a> wrapping
 <a href="../qt5-gui/"><code>mycroft-gui-qt5</code></a>, talking over the <a href="../gui-protocol/">legacy GUI protocol</a> to
-<a href="../gui-service/"><code>ovos-gui</code></a> — and that stack is <strong>deprecated upstream</strong> (Qt5 itself is no
-longer updated) and treated as <strong>broken</strong> in the sense that no active development happens
-on it. It is kept solely so devices that already have it (Mark 2s shipped via the
+<a href="../gui-service/"><code>ovos-gui</code></a>. That stack is <strong>deprecated upstream</strong> (Qt5 itself is no
+longer updated) and treated as <strong>broken</strong>, in the sense that no active development happens
+on it. It stays around solely so devices that already have it (Mark 2s shipped via the
 <a href="../ovos-installer/"><code>ovos-installer</code></a>) keep a working screen.</p>
-<p>A ground-up replacement — the <strong>GUI adapter rework</strong>, formalized as spec
-<strong>OVOS-GUI-1</strong> — is being built to fix this properly, but it is <strong>Upcoming</strong>: not merged,
+<p>A ground-up replacement, the <strong>GUI adapter rework</strong>, formalized as spec
+<strong>OVOS-GUI-1</strong>, is being built to fix this properly. It is <strong>Upcoming</strong>: not merged,
 not released, and not something to plan a product around today. See
 <a href="../gui-adapters/">GUI Adapter Plugins</a> for the technical design.</p>
 <h2 id="practical-recommendation">Practical recommendation<a class="headerlink" href="#practical-recommendation" title="Permanent link">&para;</a></h2>
 <p>If you are shipping a device with a screen <strong>today</strong>:</p>
 <ul>
-<li>Voice must remain the primary interface — treat any screen as a bonus, never a
+<li>Voice must remain the primary interface. Treat any screen as a bonus, never a
   requirement, since the display stack can vanish or be swapped without warning.</li>
 <li>If you need a screen now, use the legacy Mark 2 path: <code>ovos-shell</code> +
   <code>mycroft-gui-qt5</code>, installed automatically by the <a href="../ovos-installer/"><code>ovos-installer</code></a>.
@@ -1589,11 +1589,11 @@ not released, and not something to plan a product around today. See
 <p>The GUI adapter rework is spread across several repositories. All of the following are
 open, in-progress pull requests — nothing here has shipped:</p>
 <ul>
-<li><a href="https://github.com/OpenVoiceOS/ovos-plugin-manager/pull/377">ovos-plugin-manager#377</a> — <code>AbstractGUIPlugin</code> base class</li>
-<li><a href="https://github.com/OpenVoiceOS/ovos-gui/pull/112">ovos-gui#112</a> — adapter/template rework landing</li>
-<li><a href="https://github.com/OpenVoiceOS/ovos-gui/pull/117">ovos-gui#117</a> — OVOS-GUI-1 service conformance</li>
-<li><a href="https://github.com/OpenVoiceOS/ovos-bus-client/pull/238">ovos-bus-client#238</a> — GUI-1-conformant wire shapes</li>
-<li><a href="https://github.com/OpenVoiceOS/ovos-legacy-mycroft-gui-plugin/pull/3">ovos-legacy-mycroft-gui-plugin#3</a> — legacy adapter conforming to the session_id-only contract</li>
+<li><a href="https://github.com/OpenVoiceOS/ovos-plugin-manager/pull/377">ovos-plugin-manager#377</a>: <code>AbstractGUIPlugin</code> base class</li>
+<li><a href="https://github.com/OpenVoiceOS/ovos-gui/pull/112">ovos-gui#112</a>: adapter/template rework landing</li>
+<li><a href="https://github.com/OpenVoiceOS/ovos-gui/pull/117">ovos-gui#117</a>: OVOS-GUI-1 service conformance</li>
+<li><a href="https://github.com/OpenVoiceOS/ovos-bus-client/pull/238">ovos-bus-client#238</a>: GUI-1-conformant wire shapes</li>
+<li><a href="https://github.com/OpenVoiceOS/ovos-legacy-mycroft-gui-plugin/pull/3">ovos-legacy-mycroft-gui-plugin#3</a>: legacy adapter conforming to the session_id-only contract</li>
 </ul>
 <h2 id="gui-generations-at-a-glance">GUI generations at a glance<a class="headerlink" href="#gui-generations-at-a-glance" title="Permanent link">&para;</a></h2>
 <table>

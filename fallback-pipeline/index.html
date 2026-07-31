@@ -1610,20 +1610,20 @@
 <h1 id="fallback-pipeline">Fallback Pipeline<a class="headerlink" href="#fallback-pipeline" title="Permanent link">&para;</a></h1>
 <div class="admonition success">
 <p class="admonition-title">Maturity — Mature ⬤⬤⬤⬤⬤</p>
-<p>Long-lived, battle-tested, and actively maintained — depend on it freely. Rated by <a href="../maturity/">repository health</a>, not version.</p>
+<p>Long-lived, battle-tested, and actively maintained. Depend on it freely. Rated by <a href="../maturity/">repository health</a>, not version.</p>
 </div>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>When you say something and none of your assistant's regular skills know how to respond, the fallback pipeline is the safety net that tries one last set of "catch-all" skills so the assistant still says something instead of going silent. Think of it as the help desk that gets your question only after everyone else has passed on it. It asks these backup skills in a set order until one of them handles the request. See the <a href="../converse-pipeline/">Converse Pipeline</a> for what runs before this, or the <a href="../glossary/">Glossary</a> for terms.</p>
+<p>When you say something and none of your assistant's regular skills know how to respond, the fallback pipeline is the safety net. It tries one last set of "catch-all" skills so the assistant still says something instead of going silent. Think of it as the help desk that gets your question only after everyone else has passed on it. It asks these backup skills in a set order until one of them handles the request. See the <a href="../converse-pipeline/">Converse Pipeline</a> for what runs before this, or the <a href="../glossary/">Glossary</a> for terms.</p>
 </div>
 <details class="info">
 <summary>📐 Formal specification</summary>
 <p>The fallback plugin is specified by <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/fallback.md">OVOS-FALLBACK-1 — Fallback Pipeline Plugin</a></strong>, built on <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md">OVOS-PIPELINE-1</a></strong>. See the <a href="../architecture-specs/">spec index</a>.</p>
 </details>
-<p>The <strong>Fallback Pipeline</strong> in <strong>OpenVoiceOS (OVOS)</strong> manages how fallback skills are queried when no primary skill handles a user's utterance. It coordinates multiple fallback handlers, ensuring the system gracefully attempts to respond even when regular intent matching fails.</p>
+<p>The <strong>Fallback Pipeline</strong> in <strong>OpenVoiceOS (OVOS)</strong> manages how fallback skills are queried when no primary skill handles a user's utterance. It coordinates multiple fallback handlers, so the system still attempts to respond even when regular intent matching fails.</p>
 <div class="admonition note">
 <p class="admonition-title">How the spec frames it</p>
-<p>A <strong>fallback skill</strong> declares no intent patterns; instead it receives the raw utterance at query time and decides for itself whether it can respond (FALLBACK-1 §2) — the appropriate pattern for open-domain QA, LLM completions, and any coverage that cannot be modelled as a grammar. The plugin builds an ordered handler pool from each skill's registered <code>priority</code> and the session preference <code>session.fallback_handlers</code>, queries pool members one at a time via <code>ovos.skills.fallback.ping</code> / <code>.pong</code>, and returns a <code>Match</code> on the <strong>reserved <code>intent_name</code> <code>fallback</code></strong> (PIPELINE-1 §7.3) targeting the first willing skill — dispatched on <code>ovos.skills.fallback.{skill_id}.request</code>. If the pool is exhausted it returns <code>None</code>, and the orchestrator emits <code>ovos.intent.unmatched</code>. The high/medium/low stages below are one fallback plugin loaded at several pipeline positions, each restricted to a <code>priority</code> range (FALLBACK-1 §8.2).</p>
+<p>A <strong>fallback skill</strong> declares no intent patterns. Instead it receives the raw utterance at query time and decides for itself whether it can respond (FALLBACK-1 §2). This is the right pattern for open-domain QA, LLM completions, and any coverage that cannot be modelled as a grammar. The plugin builds an ordered handler pool from each skill's registered <code>priority</code> and the session preference <code>session.fallback_handlers</code>. It queries pool members one at a time via <code>ovos.skills.fallback.ping</code> / <code>.pong</code>, and returns a <code>Match</code> on the <strong>reserved <code>intent_name</code> <code>fallback</code></strong> (PIPELINE-1 §7.3) targeting the first willing skill, dispatched on <code>ovos.skills.fallback.{skill_id}.request</code>. If the pool is exhausted it returns <code>None</code>, and the orchestrator emits <code>ovos.intent.unmatched</code>. The high/medium/low stages below are one fallback plugin loaded at several pipeline positions, each restricted to a <code>priority</code> range (FALLBACK-1 §8.2).</p>
 </div>
 <hr />
 <h2 id="implementation">Implementation<a class="headerlink" href="#implementation" title="Permanent link">&para;</a></h2>
@@ -1677,7 +1677,7 @@
 <p><code>FallbackService.match_high/medium/low()</code> filters registered fallbacks to the stage's priority range</p>
 </li>
 <li>
-<p>It pings candidates via <code>ovos.skills.fallback.ping</code> (carrying the priority <code>range</code> and a <code>fallback_request_id</code>) and collects <code>ovos.skills.fallback.pong</code> acknowledgements (<code>can_handle</code>, echoing the same <code>fallback_request_id</code>) within ~0.5s. The request id lets the service ignore a pong that answers a stale or concurrent poll round instead of one it is currently waiting on.</p>
+<p>It pings candidates via <code>ovos.skills.fallback.ping</code> (carrying the priority <code>range</code> and a <code>fallback_request_id</code>) and collects <code>ovos.skills.fallback.pong</code> acknowledgements (<code>can_handle</code>, echoing the same <code>fallback_request_id</code>) within ~0.5s. The request id lets the service ignore a pong that answers a stale or concurrent poll round, instead of the one it is currently waiting on.</p>
 </li>
 <li>
 <p>Candidates are sorted by priority ascending; the winning match dispatches to that skill via <code>ovos.skills.fallback.{skill_id}.request</code></p>
@@ -1718,7 +1718,7 @@
 </span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">speak</span><span class="p">(</span><span class="s2">&quot;I don&#39;t know, but I tried.&quot;</span><span class="p">)</span>
 </span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>        <span class="k">return</span> <span class="kc">True</span>   <span class="c1"># consumed</span>
 </span></code></pre></div>
-<p>This enables modular and customizable fallback behavior depending on your skill ecosystem.</p>
+<p>This lets you customize fallback behavior for your skill ecosystem.</p>
 <hr />
 <h2 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">&para;</a></h2>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="p">{</span>
@@ -1822,40 +1822,40 @@
 <p>The pipeline itself <strong>does not define or enforce a default fallback response</strong>.</p>
 </li>
 <li>
-<p>The default "I don't understand" reply is implemented in the separate <code>ovos-skill-fallback-unknown</code> skill.</p>
+<p>The separate <code>ovos-skill-fallback-unknown</code> skill implements the default "I don't understand" reply.</p>
 </li>
 <li>
-<p>This modular design allows developers to create custom fallback strategies or add fallback chatbot skills without modifying the core pipeline.</p>
+<p>This design lets developers create custom fallback strategies or add fallback chatbot skills without changing the core pipeline.</p>
 </li>
 <li>
-<p>Fallback skills are expected to implement some dialog if they consume the utterance.</p>
+<p>Fallback skills should implement some dialog if they consume the utterance.</p>
 </li>
 </ul>
 <hr />
 <h2 id="security">Security<a class="headerlink" href="#security" title="Permanent link">&para;</a></h2>
-<p>Just like with converse, a badly designed or malicious skill can hijack the fallback skill loop. While this is not as serious as with converse, protections are provided:</p>
+<p>As with converse, a badly designed or malicious skill can hijack the fallback skill loop. This is less serious than with converse, but the pipeline still provides protections:</p>
 <ul>
 <li>
 <p>You can configure what skills are allowed to use the fallback mechanism via <code>fallback_mode</code>.</p>
 </li>
 <li>
-<p><code>fallback_priorities</code> allows users to adjust priorities when the default values don't work well with the installed skill collection.</p>
+<p><code>fallback_priorities</code> lets users adjust priorities when the default values don't fit the installed skill collection.</p>
 </li>
 </ul>
 <hr />
 <h2 id="related-pages">Related Pages<a class="headerlink" href="#related-pages" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
-<p><a href="../fallbacks/">Fallback Skill</a> — the skill-side <code>FallbackSkill</code> API this pipeline plugin drives</p>
+<p><a href="../fallbacks/">Fallback Skill</a>: the skill-side <code>FallbackSkill</code> API this pipeline plugin drives</p>
 </li>
 <li>
-<p><a href="../core/">ovos-core</a> — <code>FallbackService</code> implementation and bus events</p>
+<p><a href="../core/">ovos-core</a>: <code>FallbackService</code> implementation and bus events</p>
 </li>
 <li>
-<p><a href="../converse-pipeline/">Converse Pipeline</a> — what runs before fallback</p>
+<p><a href="../converse-pipeline/">Converse Pipeline</a>: what runs before fallback</p>
 </li>
 <li>
-<p><a href="../skill-classes/">Skill Classes</a> — <code>FallbackSkill</code> base class</p>
+<p><a href="../skill-classes/">Skill Classes</a>: <code>FallbackSkill</code> base class</p>
 </li>
 </ul>
 <hr />

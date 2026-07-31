@@ -1517,7 +1517,7 @@
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
 <p>A <strong>skill</strong> is an add-on that teaches OVOS a new ability. This page is a hands-on
-walkthrough: you'll create a tiny skill from scratch, install it, and talk to it — in about
+walkthrough. You'll create a tiny skill from scratch, install it, and talk to it, in about
 ten minutes. You only need to be comfortable creating a few text files. New to the words
 here? Keep the <a href="../glossary/">Glossary</a> open.</p>
 </div>
@@ -1526,7 +1526,7 @@ every other skill is just more of the same idea.</p>
 <div class="admonition note">
 <p class="admonition-title">Before you start: OVOS needs to already be installed</p>
 <p>This walkthrough assumes OVOS is already installed and its Python environment is available
-to work in — see <a href="../ovos-installer/">ovos-installer</a> or <a href="../install-raspovos/">RaspOVOS</a> if
+to work in. See <a href="../ovos-installer/">ovos-installer</a> or <a href="../install-raspovos/">RaspOVOS</a> if
 you haven't done that yet. The ten minutes below covers writing and installing the skill
 itself, once that environment is in place.</p>
 </div>
@@ -1559,7 +1559,7 @@ itself, once that environment is in place.</p>
 </tbody>
 </table>
 <p>The intent and dialog files live in a <code>locale/&lt;language&gt;/</code> folder, so the same skill can be
-translated. That's the whole model — <a href="../skill-structure/">Anatomy of a Skill</a> covers it in depth.</p>
+translated. That's the whole model. <a href="../skill-structure/">Anatomy of a Skill</a> covers it in depth.</p>
 <h2 id="step-1-create-the-folder-layout">Step 1 — Create the folder layout<a class="headerlink" href="#step-1-create-the-folder-layout" title="Permanent link">&para;</a></h2>
 <p>Make this structure (replace <code>youruser</code> with your name/handle later):</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>ovos-skill-my-first/
@@ -1575,16 +1575,16 @@ translated. That's the whole model — <a href="../skill-structure/">Anatomy of 
 </span></code></pre></div>
 <div class="admonition note">
 <p class="admonition-title">Both layouts work</p>
-<p>OVOS walks the <em>entire</em> <code>locale/&lt;lang&gt;/</code> folder looking for a file by name, so grouping
+<p>OVOS walks the <em>entire</em> <code>locale/&lt;lang&gt;/</code> folder looking for a file by name. So grouping
 files into <code>intents/</code>/<code>dialog/</code> subfolders (as above) or dropping them flat directly in
-<code>locale/en-us/</code> both work equally well — pick whichever keeps your skill readable. The
+<code>locale/en-us/</code> both work equally well. Pick whichever keeps your skill readable. The
 language folder name itself is also case-insensitive (<code>en-us</code> and <code>en-US</code> are the same
 folder to OVOS). See <a href="../skill-structure/">Anatomy of a Skill</a> and
 <a href="../intents/">Intent Design</a> for more on this layout.</p>
 </div>
 <h2 id="step-2-write-the-skill-code">Step 2 — Write the skill code<a class="headerlink" href="#step-2-write-the-skill-code" title="Permanent link">&para;</a></h2>
-<p>Every skill is a Python class that subclasses <a href="../ovos-skill/"><code>OVOSSkill</code></a>. A <strong>decorator</strong> — a
-line starting with <code>@</code> placed just above a function — tells OVOS what that function is for; here
+<p>Every skill is a Python class that subclasses <a href="../ovos-skill/"><code>OVOSSkill</code></a>. A <strong>decorator</strong> (a
+line starting with <code>@</code> placed just above a function) tells OVOS what that function is for. Here
 <code>@intent_handler("Hello.intent")</code> means <em>"run this function when the user says something matching
 <code>Hello.intent</code>"</em> (see <a href="../decorators/">Decorators</a> for the full list). <code>self.speak_dialog("hello")</code>
 then speaks a random line from <code>hello.dialog</code>.</p>
@@ -1605,11 +1605,11 @@ then speaks a random line from <code>hello.dialog</code>.</p>
 </span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>    <span class="k">def</span> <span class="nf">handle_hello</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
 </span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">speak_dialog</span><span class="p">(</span><span class="s2">&quot;hello&quot;</span><span class="p">)</span>
 </span></code></pre></div>
-<p>That's the entire skill. <code>initialize()</code> is optional — you only need it once you have setup work
+<p>That's the entire skill. <code>initialize()</code> is optional. You only need it once you have setup work
 that depends on the skill being fully wired up (reading <a href="../skill-settings/">settings</a>, registering
 extra event handlers, and so on).</p>
 <h2 id="step-3-tell-ovos-what-the-user-might-say">Step 3 — Tell OVOS what the user might say<a class="headerlink" href="#step-3-tell-ovos-what-the-user-might-say" title="Permanent link">&para;</a></h2>
-<p><code>ovos_skill_my_first/locale/en-us/intents/Hello.intent</code> — one example phrase per line. OVOS
+<p><code>ovos_skill_my_first/locale/en-us/intents/Hello.intent</code>: one example phrase per line. OVOS
 learns the <em>pattern</em> from these, so you don't have to list every wording:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>hello
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>hi there
@@ -1617,7 +1617,7 @@ learns the <em>pattern</em> from these, so you don't have to list every wording:
 </span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>greet me
 </span></code></pre></div>
 <h2 id="step-4-write-what-ovos-says-back">Step 4 — Write what OVOS says back<a class="headerlink" href="#step-4-write-what-ovos-says-back" title="Permanent link">&para;</a></h2>
-<p><code>ovos_skill_my_first/locale/en-us/dialog/hello.dialog</code> — one option per line; OVOS picks one at
+<p><code>ovos_skill_my_first/locale/en-us/dialog/hello.dialog</code>: one option per line. OVOS picks one at
 random so the assistant doesn't sound robotic:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>Hello! Nice to meet you.
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>Hi there!
@@ -1656,42 +1656,44 @@ random so the assistant doesn't sound robotic:</p>
 </span><span id="__span-4-24"><a id="__codelineno-4-24" name="__codelineno-4-24" href="#__codelineno-4-24"></a><span class="n">ovos_skill_my_first</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;locale/*/*&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;locale/*/*/*&quot;</span><span class="p">]</span>
 </span></code></pre></div>
 <p>The entry-point key (<code>my-first.youruser</code>) becomes your skill's <strong><code>skill_id</code></strong>
-(<code>&lt;skill-name&gt;.&lt;author&gt;</code>); the value points at your skill class. The <code>opm.skill</code> group is
+(<code>&lt;skill-name&gt;.&lt;author&gt;</code>). The value points at your skill class. The <code>opm.skill</code> group is
 how the <a href="../plugin-manager/">Plugin Manager</a> discovers installed skills.</p>
 <h2 id="step-6-install-it-and-talk-to-it">Step 6 — Install it and talk to it<a class="headerlink" href="#step-6-install-it-and-talk-to-it" title="Permanent link">&para;</a></h2>
 <p>First, activate the same Python environment OVOS runs in, so the skill installs into the
-interpreter <code>ovos-core</code> actually uses — for example <code>source ~/.venvs/ovos/bin/activate</code> for
+interpreter <code>ovos-core</code> actually uses. For example, <code>source ~/.venvs/ovos/bin/activate</code> for
 a venv install. In plain English: a <strong><a href="../glossary/">virtual environment</a></strong> is an isolated
-Python install, and "activating" it just means that <strong><a href="../glossary/">pip</a></strong> will now install
-into the one OVOS actually uses instead of somewhere else — see the
-<a href="../glossary/">Glossary</a> if these terms are new. That exact path is only an example, not
-something you can assume: check where your particular install created its environment, e.g.
+Python install. "Activating" it just means that <strong><a href="../glossary/">pip</a></strong> will now install
+into the one OVOS actually uses, instead of somewhere else. See the
+<a href="../glossary/">Glossary</a> if these terms are new.</p>
+<p>That exact path is only an example, not
+something you can assume. Check where your particular install created its environment, for example
 the installer's summary screen
-(see <a href="../ovos-installer/#environment-summary">ovos-installer</a>) — or, advanced: if you installed
-via <a href="../glossary/">systemd</a>, its unit file's <code>Environment=</code>/<code>ExecStart=</code> lines show the path,
-see <a href="../troubleshooting/">Troubleshooting</a>. raspOVOS, <code>ovos-installer</code>, and container installs
-each put it somewhere different. If you're running OVOS in
-a container instead, there's no host environment to activate — install into the container
+(see <a href="../ovos-installer/#environment-summary">ovos-installer</a>). Advanced: if you installed
+via <a href="../glossary/">systemd</a>, its unit file's <code>Environment=</code>/<code>ExecStart=</code> lines show the path.
+See <a href="../troubleshooting/">Troubleshooting</a>. raspOVOS, <code>ovos-installer</code>, and container installs
+each put it somewhere different.</p>
+<p>If you're running OVOS in
+a container instead, there's no host environment to activate. Install into the container
 directly: <code>docker compose exec &lt;service&gt; pip install -e .</code> (run from the skill folder, with
 the skill's path mounted into the container, or copy it in first).</p>
 <p>From inside the <code>ovos-skill-my-first/</code> folder:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.
 </span></code></pre></div>
-<p>Restart <code>ovos-core</code> (or it will pick the skill up on its next scan) — see
+<p>Restart <code>ovos-core</code> (or it will pick the skill up on its next scan). See
 <a href="../troubleshooting/#stage-1-is-the-service-even-running-and-is-the-bus-reachable">Stage 1 of Troubleshooting</a>
 for exactly how to start/restart the OVOS services. Then say your configured wake word first
 (default <strong>"Hey Mycroft"</strong>), wait for the listening chime, and then say:</p>
 <blockquote>
 <p>"<strong>hello</strong>"</p>
 </blockquote>
-<p>…and OVOS replies with one of your dialog lines. 🎉 You just wrote a skill.</p>
+<p>OVOS replies with one of your dialog lines. You just wrote a skill.</p>
 <div class="admonition note">
 <p class="admonition-title">If OVOS doesn't reply</p>
-<p>Check the skills log for your skill_id: <code>ovos-logs show -l skills</code> — see
+<p>Check the skills log for your skill_id: <code>ovos-logs show -l skills</code>. See
 <a href="../troubleshooting/">Troubleshooting</a> for how to read what it's telling you. <code>Hello.intent</code>
 is a <strong>Padatious</strong> template intent, so the live device also needs
 <code>ovos-padatious-pipeline-plugin</code> installed and listed in its <code>intents.pipeline</code> config for
-the file to match at all — see <a href="../testing-your-skill/">Test Your Skill</a> for the same
+the file to match at all. See <a href="../testing-your-skill/">Test Your Skill</a> for the same
 requirement in the automated test.</p>
 </div>
 <div class="admonition tip">
@@ -1704,18 +1706,18 @@ for more on this and other text-based ways to test a skill.</p>
 <p>If you add a new <code>.intent</code> or <code>.dialog</code> file after this walkthrough, what you do next depends on
 how the skill is installed. With an editable install (<code>pip install -e .</code>, as used above), the
 files live on disk where you edited them, so a restart of <code>ovos-core</code> (or the skills service) is
-enough — no reinstall needed. With a normal wheel install, the files were copied into the package
+enough. No reinstall needed. With a normal wheel install, the files were copied into the package
 at install time, so you must reinstall the skill (<code>pip install .</code> again, or the equivalent for a
 built wheel) before OVOS can see the new file.</p>
 <h2 id="where-to-go-next">Where to go next<a class="headerlink" href="#where-to-go-next" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>Pull a value out of what the user said</strong> (a name, a city, a number) — see <a href="../intents/">Intent Design</a>.</li>
-<li><strong>Have a back-and-forth</strong> ("what's your name?" → reply) — see <a href="../converse/">Continuous Conversation</a>.</li>
-<li><strong>Save settings or files</strong> — see <a href="../skill-settings/">Skill Settings</a> and <a href="../skill-filesystem/">Filesystem</a>.</li>
-<li><strong>Make it sound good and behave well</strong> — see <a href="../skill-best-practices/">Skill Best Practices</a>.</li>
-<li><strong>Test it automatically</strong> — see <a href="../ovoscope-overview/">Skill Testing</a>.</li>
-<li><strong>Publish it</strong> so others can install it — see <a href="../skill-json/#sharing-your-skill">Sharing your skill</a>.</li>
-<li><strong>See how an utterance actually travels through OVOS</strong> — see <a href="../life-of-an-utterance/">Life of an Utterance</a>.</li>
+<li><strong>Pull a value out of what the user said</strong> (a name, a city, a number). See <a href="../intents/">Intent Design</a>.</li>
+<li><strong>Have a back-and-forth</strong> ("what's your name?" then a reply). See <a href="../converse/">Continuous Conversation</a>.</li>
+<li><strong>Save settings or files</strong>. See <a href="../skill-settings/">Skill Settings</a> and <a href="../skill-filesystem/">Filesystem</a>.</li>
+<li><strong>Make it sound good and behave well</strong>. See <a href="../skill-best-practices/">Skill Best Practices</a>.</li>
+<li><strong>Test it automatically</strong>. See <a href="../ovoscope-overview/">Skill Testing</a>.</li>
+<li><strong>Publish it</strong> so others can install it. See <a href="../skill-json/#sharing-your-skill">Sharing your skill</a>.</li>
+<li><strong>See how an utterance actually travels through OVOS</strong>. See <a href="../life-of-an-utterance/">Life of an Utterance</a>.</li>
 <li>Browse real skills for ideas in <a href="../skill-examples/">Skill Examples</a>.</li>
 <li>Questions along the way? Ask in the
   <a href="https://matrix.to/#/#openvoiceos-skills:matrix.org">skills channel on OVOS Chat</a>.</li>

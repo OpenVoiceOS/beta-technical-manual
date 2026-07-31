@@ -1551,16 +1551,16 @@
 <h1 id="gguf-local-llm-agent-plugin-ovos-gguf-plugin">GGUF / Local LLM Agent Plugin (<code>ovos-gguf-plugin</code>)<a class="headerlink" href="#gguf-local-llm-agent-plugin-ovos-gguf-plugin" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>This plugin runs an AI language model <em>entirely on your own device</em> — no internet, no accounts, and nothing sent to a company's servers — which is ideal when privacy or offline use matters. ("GGUF" is just the file format these downloadable models come in.) It can chat, summarize, translate, detect languages, and more. See <a href="../personas/">AI Agents &amp; Personas</a> for the bigger picture and the <a href="../glossary/">Glossary</a> for unfamiliar terms.</p>
+<p>This plugin runs an AI language model <em>entirely on your own device</em>. No internet, no accounts, and nothing sent to a company's servers. This is ideal when privacy or offline use matters. ("GGUF" is the file format these downloadable models come in.) It can chat, summarize, translate, detect languages, and more. See <a href="../personas/">AI Agents &amp; Personas</a> for the bigger picture and the <a href="../glossary/">Glossary</a> for unfamiliar terms.</p>
 </div>
 <p><code>ovos-gguf-plugin</code> runs local GGUF models through
-<a href="https://github.com/abetlen/llama-cpp-python"><code>llama-cpp-python</code></a> — no API keys, no network,
-suitable for offline, air-gapped, or privacy-sensitive deployments. It provides a chat engine,
-a summarizer, translation / language-detection, a text-embeddings plugin, and a dialog
+<a href="https://github.com/abetlen/llama-cpp-python"><code>llama-cpp-python</code></a>. It needs no API keys and no network,
+so it suits offline, air-gapped, or privacy-sensitive deployments. It provides a chat engine,
+a summarizer, translation and language-detection, a text-embeddings plugin, and a dialog
 transformer.</p>
 <p>Models load from a <a href="https://huggingface.co">Hugging Face Hub</a> repository (downloaded on first
-use) or from a local <code>.gguf</code> file path. Each engine loads its own <code>llama_cpp.Llama</code> instance;
-one <code>Llama</code> can be shared between engines by passing <code>gguf_engine=</code> in code.</p>
+use) or from a local <code>.gguf</code> file path. Each engine loads its own <code>llama_cpp.Llama</code> instance.
+You can share one <code>Llama</code> between engines by passing <code>gguf_engine=</code> in code.</p>
 <p>Install: <code>pip install ovos-gguf-plugin</code></p>
 <p>Repository: <code>OpenVoiceOS Workspace/Agent Plugins/ovos-gguf-plugin</code></p>
 <hr />
@@ -1682,7 +1682,7 @@ engines, a chat-summarizer, or an utterance transformer. For reranking, install 
 </tr>
 </tbody>
 </table>
-<p>A <code>model</code> value that is an existing file path is loaded with <code>Llama(model_path=...)</code>; otherwise
+<p>A <code>model</code> value that is an existing file path is loaded with <code>Llama(model_path=...)</code>. Otherwise
 it is treated as a Hub repo id and loaded with <code>Llama.from_pretrained(repo_id=..., filename=...)</code>.</p>
 <h3 id="minimal-configuration-hub-model">Minimal configuration (Hub model)<a class="headerlink" href="#minimal-configuration-hub-model" title="Permanent link">&para;</a></h3>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="p">{</span>
@@ -1694,11 +1694,11 @@ it is treated as a Hub repo id and loaded with <code>Llama.from_pretrained(repo_
 <div class="admonition note">
 <p class="admonition-title">First run downloads the model</p>
 <p>The first time a Hub <code>model</code> is used, <code>Llama.from_pretrained</code> downloads the matching GGUF
-file from Hugging Face and caches it locally (subsequent runs are instant). For the example
-above, the quantized file (<code>Phi-3-mini-4k-instruct-q4.gguf</code>) is about <strong>2.2 GiB</strong>; expect
-anywhere from under a minute to several minutes depending on your internet connection.
-Larger models (7B+) commonly run several GiB and take proportionally longer. The download
-only happens once per file, and no data is sent anywhere afterward — inference is fully
+file from Hugging Face and caches it locally. Later runs are instant. For the example
+above, the quantized file (<code>Phi-3-mini-4k-instruct-q4.gguf</code>) is about <strong>2.2 GiB</strong>. Expect
+anywhere from under a minute to several minutes, depending on your internet connection.
+Larger models (7B+) commonly run several GiB and take longer. The download
+only happens once per file. No data is sent anywhere afterward: inference is fully
 offline.</p>
 </div>
 <h3 id="local-file-configuration">Local file configuration<a class="headerlink" href="#local-file-configuration" title="Permanent link">&para;</a></h3>
@@ -1709,10 +1709,10 @@ offline.</p>
 </span></code></pre></div>
 <hr />
 <h2 id="chat-engine-opmagentschat">Chat Engine (<code>opm.agents.chat</code>)<a class="headerlink" href="#chat-engine-opmagentschat" title="Permanent link">&para;</a></h2>
-<p><strong>Class:</strong> <code>GGUFChatEngine</code> — <code>ovos_gguf_plugin/chat.py:GGUFChatEngine</code></p>
+<p><strong>Class:</strong> <code>GGUFChatEngine</code> (<code>ovos_gguf_plugin/chat.py:GGUFChatEngine</code>)</p>
 <p><strong>OPM plugin name:</strong> <code>ovos-chat-gguf-plugin</code></p>
 <p>Multi-turn conversational LLM using a local GGUF model. Implements <code>continue_chat</code>,
-<code>stream_tokens</code>, and <code>stream_sentences</code> — API-compatible with <code>OpenAIChatEngine</code> for offline use.</p>
+<code>stream_tokens</code>, and <code>stream_sentences</code>. It is API-compatible with <code>OpenAIChatEngine</code> for offline use.</p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="p">{</span>
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">  </span><span class="nt">&quot;ovos-chat-gguf-plugin&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 </span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">    </span><span class="nt">&quot;model&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;microsoft/Phi-3-mini-4k-instruct-gguf&quot;</span><span class="p">,</span>
@@ -1737,11 +1737,11 @@ offline.</p>
 <p>Activate by voice: <code>"Chat with Local Phi-3"</code>.</p>
 <hr />
 <h2 id="summarizer-opmagentssummarizer">Summarizer (<code>opm.agents.summarizer</code>)<a class="headerlink" href="#summarizer-opmagentssummarizer" title="Permanent link">&para;</a></h2>
-<p><strong>Class:</strong> <code>GGUFSummarizer</code> — <code>ovos_gguf_plugin/summarizer.py:GGUFSummarizer</code></p>
+<p><strong>Class:</strong> <code>GGUFSummarizer</code> (<code>ovos_gguf_plugin/summarizer.py:GGUFSummarizer</code>)</p>
 <p><strong>OPM plugin name:</strong> <code>ovos-summarizer-gguf-plugin</code></p>
 <p>Condenses a document into a short summary using a local GGUF model. Delegates generation to a
 <code>GGUFChatEngine</code>. The system prompt and user prompt default to the plugin's localized
-<code>.prompt</code> files; override with <code>system_prompt</code> and <code>prompt_template</code> (a template with a
+<code>.prompt</code> files. Override with <code>system_prompt</code> and <code>prompt_template</code> (a template with a
 <code>{content}</code> placeholder).</p>
 <table>
 <thead>
@@ -1776,7 +1776,7 @@ offline.</p>
 </span></code></pre></div>
 <hr />
 <h2 id="translation-language-detection-opmlangtranslate-opmlangdetect">Translation &amp; Language Detection (<code>opm.lang.translate</code>, <code>opm.lang.detect</code>)<a class="headerlink" href="#translation-language-detection-opmlangtranslate-opmlangdetect" title="Permanent link">&para;</a></h2>
-<p><strong>Classes:</strong> <code>GGUFTextTranslator</code> / <code>GGUFTextLangDetector</code> — <code>ovos_gguf_plugin/translate.py</code></p>
+<p><strong>Classes:</strong> <code>GGUFTextTranslator</code> / <code>GGUFTextLangDetector</code> (<code>ovos_gguf_plugin/translate.py</code>)</p>
 <p><strong>OPM plugin names:</strong> <code>ovos-translate-gguf-plugin</code> / <code>ovos-lang-detect-gguf-plugin</code></p>
 <p>Translate text between languages or detect a text's language using a local GGUF model.</p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="p">{</span>
@@ -1794,11 +1794,11 @@ offline.</p>
 </span></code></pre></div>
 <hr />
 <h2 id="dialog-transformer-opmtransformerdialog">Dialog Transformer (<code>opm.transformer.dialog</code>)<a class="headerlink" href="#dialog-transformer-opmtransformerdialog" title="Permanent link">&para;</a></h2>
-<p><strong>Class:</strong> <code>GGUFDialogTransformer</code> — <code>ovos_gguf_plugin/dialog_transformers.py:GGUFDialogTransformer</code></p>
+<p><strong>Class:</strong> <code>GGUFDialogTransformer</code> (<code>ovos_gguf_plugin/dialog_transformers.py:GGUFDialogTransformer</code>)</p>
 <p><strong>OPM plugin name:</strong> <code>ovos-dialog-transformer-gguf-plugin</code></p>
 <p>Runs after skill response generation, before <a href="../tts-plugins/">TTS</a> synthesis. Rewrites skill
-responses with a local GGUF model. Only invoked when a <code>rewrite_prompt</code> is configured (via
-config or <code>context["prompt"]</code>); falls back to the original dialog otherwise. Default priority:
+responses with a local GGUF model. It only runs when a <code>rewrite_prompt</code> is configured (via
+config or <code>context["prompt"]</code>). Otherwise it falls back to the original dialog. Default priority:
 <code>10</code>. The system prompt defaults to the localized <code>dialog_transform_system</code> prompt.</p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="p">{</span>
 </span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">  </span><span class="nt">&quot;dialog_transformers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
@@ -1841,13 +1841,13 @@ config or <code>context["prompt"]</code>); falls back to the original dialog oth
 <p>Quantization level guide:</p>
 <ul>
 <li>
-<p><code>Q4_K_M</code> — good balance of quality and speed (recommended default)</p>
+<p><code>Q4_K_M</code>: good balance of quality and speed (recommended default)</p>
 </li>
 <li>
-<p><code>Q8_0</code> — higher quality, roughly 2× the memory of Q4</p>
+<p><code>Q8_0</code>: higher quality, roughly 2x the memory of Q4</p>
 </li>
 <li>
-<p><code>Q2_K</code> — smallest/fastest, lowest quality</p>
+<p><code>Q2_K</code>: smallest/fastest, lowest quality</p>
 </li>
 </ul>
 <hr />
@@ -1867,16 +1867,16 @@ offload for limited VRAM). <code>0</code> = CPU only.</p>
 <h2 id="cross-references">Cross-References<a class="headerlink" href="#cross-references" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
-<p><a href="../agent-plugins/">Agent Engine Types</a> — base class contracts and full type reference</p>
+<p><a href="../agent-plugins/">Agent Engine Types</a>: base class contracts and full type reference</p>
 </li>
 <li>
-<p><a href="../personas/">Personas &amp; PersonaService</a> — how to load and activate personas</p>
+<p><a href="../personas/">Personas &amp; PersonaService</a>: how to load and activate personas</p>
 </li>
 <li>
-<p><a href="../llm-transformers/">LLM Transformers</a> — dialog transformer pipeline</p>
+<p><a href="../llm-transformers/">LLM Transformers</a>: dialog transformer pipeline</p>
 </li>
 <li>
-<p><a href="../openai-plugin/">OpenAI Plugin</a> — OpenAI-compatible API alternative</p>
+<p><a href="../openai-plugin/">OpenAI Plugin</a>: OpenAI-compatible API alternative</p>
 </li>
 </ul>
 <hr />
