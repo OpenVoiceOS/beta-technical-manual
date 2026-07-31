@@ -1732,7 +1732,7 @@
 <h1 id="gui-skills-guiinterface">GUI Skills (GUIInterface)<a class="headerlink" href="#gui-skills-guiinterface" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>When an OVOS device has a screen, a skill can show things on it — text, images, a page of results — not just speak. This page describes the small Python toolkit a skill author uses to push data to the screen and ask for a page to be displayed. It is a developer topic, and the screen system is being rebuilt (see <a href="../gui-adapters/">GUI Adapters</a>), so voice should stay the main way you interact while the screen support is treated as a bonus. See the <a href="../glossary/">Glossary</a> for terms.</p>
+<p>When an OVOS device has a screen, a skill can show things on it: text, images, a page of results. This page describes the small Python toolkit a skill author uses to push data to the screen and ask for a page to be displayed. It is a developer topic, and the screen system is being rebuilt (see <a href="../gui-adapters/">GUI Adapters</a>). Voice should stay the main way you interact, while the screen is a bonus. See the <a href="../glossary/">Glossary</a> for terms.</p>
 </div>
 <div class="admonition danger">
 <p class="admonition-title">The OVOS GUI is deprecated — see <a href="../gui-status/">Screens on OVOS Today</a> for the full picture</p>
@@ -1741,7 +1741,7 @@ now, and a replacement is <strong>Upcoming</strong>. Voice should remain the pri
 </div>
 <details class="info">
 <summary>📐 Formal specification</summary>
-<p>The <strong>forward</strong> model a skill targets is <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/gui-1.md">OVOS-GUI-1 — GUI Display Subsystem</a></strong> (a formal <a href="../architecture-specs/">architecture spec</a>). Under it, <code>self.gui</code> declares display intent by naming a template from the <strong>closed <code>SYSTEM_*</code> vocabulary</strong> (<code>SYSTEM_text</code>, <code>SYSTEM_image</code>, <code>SYSTEM_list</code>, <code>SYSTEM_weather</code>, <code>SYSTEM_confirm</code>, …) and pushing flat session-data; interchangeable <strong>render backends</strong> draw it, routed by <code>session_id</code>. Two rules matter for skill authors: a skill <strong>MUST NOT</strong> invent template names or ship its own home/resting screen (the resting display is owned entirely by the backend, §6.9), and image keys carry an <code>http(s)</code> URL or <code>data:</code> URI — <strong>never a local filesystem path</strong>. The <code>show_*</code> helpers below map onto these templates; the custom-<code>.qml</code> path is legacy and unsupported under OVOS-GUI-1. Where this page and the spec differ, the spec is the canonical target.</p>
+<p>The <strong>forward</strong> model a skill targets is <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/gui-1.md">OVOS-GUI-1 — GUI Display Subsystem</a></strong> (a formal <a href="../architecture-specs/">architecture spec</a>). Under it, <code>self.gui</code> declares display intent by naming a template from the <strong>closed <code>SYSTEM_*</code> vocabulary</strong> (<code>SYSTEM_text</code>, <code>SYSTEM_image</code>, <code>SYSTEM_list</code>, <code>SYSTEM_weather</code>, <code>SYSTEM_confirm</code>, …) and pushing flat session-data. Interchangeable <strong>render backends</strong> draw it, routed by <code>session_id</code>. Two rules matter for skill authors. A skill <strong>MUST NOT</strong> invent template names or ship its own home/resting screen (the resting display is owned entirely by the backend, §6.9). Image keys carry an <code>http(s)</code> URL or <code>data:</code> URI, <strong>never a local filesystem path</strong>. The <code>show_*</code> helpers below map onto these templates. The custom-<code>.qml</code> path is legacy and unsupported under OVOS-GUI-1. Where this page and the spec differ, the spec is the canonical target.</p>
 </details>
 <p>Many OVOS devices have a screen. A skill can drive that screen the same way it
 speaks: through a small Python API. You set some values, ask for a page to be
@@ -1750,7 +1750,7 @@ shown, and any connected GUI client (Qt shell, web, terminal, ...) renders it.</
 (<code>self.gui["name"] = "OVOS"</code>), then call a <code>show_*</code> method to display a page.</p>
 <p>Under the hood, <code>self.gui</code> is a <code>SkillGUI</code> instance (a subclass of <code>GUIInterface</code>)
 created automatically for every <code>OVOSSkill</code>. On current <code>ovos-workshop</code> v8 the base class
-lives in <code>ovos_bus_client.apis.gui.GUIInterface</code>; the skill wrapper is
+lives in <code>ovos_bus_client.apis.gui.GUIInterface</code>. The skill wrapper is
 <code>ovos_workshop.skills.ovos.SkillGUI</code>, namespaced to your <code>skill_id</code>.</p>
 <div class="admonition warning">
 <p class="admonition-title">Upcoming — unreleased</p>
@@ -1759,7 +1759,7 @@ lives in <code>ovos_bus_client.apis.gui.GUIInterface</code>; the skill wrapper i
 <code>ovos_bus_client.apis.gui</code>) and drops the <code>ui_directories</code> constructor argument (today,
 <code>ui_directories</code> is a <code>dict</code> mapping a framework name, e.g. <code>"qt5"</code>, to its local resource
 directory, which <code>GUIInterface</code> searches when resolving a relative image/page name to a
-file on disk), since skills under the <a href="../gui-service/">GUI rework</a> no longer ship QML. This is <strong>not</strong> on a released <code>ovos-workshop</code>; on stable installs <code>self.gui</code> is
+file on disk), since skills under the <a href="../gui-service/">GUI rework</a> no longer ship QML. This is <strong>not</strong> on a released <code>ovos-workshop</code>. On stable installs <code>self.gui</code> is
 still the <code>ovos_bus_client.apis.gui.GUIInterface</code>-based <code>SkillGUI</code> described above. Tracked in
 <a href="https://github.com/OpenVoiceOS/ovos-workshop/pull/420">ovos-workshop#420</a>.</p>
 </div>
@@ -1768,7 +1768,7 @@ still the <code>ovos_bus_client.apis.gui.GUIInterface</code>-based <code>SkillGU
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">gui</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;OpenVoiceOS&quot;</span>
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">gui</span><span class="o">.</span><span class="n">show_text</span><span class="p">(</span><span class="s2">&quot;Hello from OVOS!&quot;</span><span class="p">)</span>
 </span></code></pre></div>
-<p><code>self.gui</code> behaves like a dictionary — values you set are synced to the active
+<p><code>self.gui</code> behaves like a dictionary. Values you set are synced to the active
 page whenever it (re)renders. The keys you set are visible to the page under the
 skill's namespace.</p>
 <div class="admonition tip">
@@ -1796,14 +1796,14 @@ according to its local capabilities.</p>
 </span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>               <span class="n">override_animations</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </span></code></pre></div>
 <p><code>fill</code> accepts <code>"PreserveAspectFit"</code>, <code>"PreserveAspectCrop"</code>, or <code>"Stretch"</code>.
-<code>url</code> may be a local file path or an <code>http(s)</code> URL; missing local files are
+<code>url</code> may be a local file path or an <code>http(s)</code> URL. Missing local files are
 logged and the call returns without showing anything.</p>
 <div class="admonition note">
 <p class="admonition-title">Local paths work today, but the spec says not to rely on them</p>
 <p>The installed <code>show_image()</code> (<code>ovos_bus_client.apis.gui.GUIInterface</code>) does accept and
-resolve a local filesystem path — that's the current, working behavior described above.
+resolve a local filesystem path. That is the current, working behavior described above.
 The OVOS-GUI-1 spec box further up this page nonetheless says image keys should carry only
-an <code>http(s)</code> URL or <code>data:</code> URI, never a local path — that's the forward-looking contract
+an <code>http(s)</code> URL or <code>data:</code> URI, never a local path. That is the forward-looking contract
 for interchangeable render backends, not a rule the current code enforces. Prefer a URL or
 <code>data:</code> URI in new skills if you want to stay forward-compatible.</p>
 </div>
@@ -1835,11 +1835,11 @@ clients.</p>
 </span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="n">gui</span><span class="o">.</span><span class="n">show_controlled_notification</span><span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s2">&quot;info&quot;</span><span class="p">)</span>
 </span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="n">gui</span><span class="o">.</span><span class="n">remove_controlled_notification</span><span class="p">()</span>
 </span></code></pre></div>
-<p><code>style</code> is one of <code>info</code>, <code>warning</code>, <code>success</code>, <code>error</code>; <code>noticetype</code> is
+<p><code>style</code> is one of <code>info</code>, <code>warning</code>, <code>success</code>, <code>error</code>. <code>noticetype</code> is
 <code>transient</code> (auto-timeout) or <code>sticky</code>.</p>
 <div class="admonition note">
 <p class="admonition-title"><code>override_idle</code></p>
-<p><code>override_idle=True</code> keeps your page up indefinitely; an <code>int</code> delays the
+<p><code>override_idle=True</code> keeps your page up indefinitely. An <code>int</code> delays the
 return to the idle/home screen for that many seconds. <code>override_animations=True</code>
 disables platform transition animations for the page.</p>
 </div>
@@ -1851,16 +1851,16 @@ forward-looking standalone <strong><code>ovos-gui-api-client</code></strong> <co
 <code>self.gui</code> to) adds more <code>SYSTEM_*</code> helpers: <code>show_list</code>, <code>show_grid</code>, <code>show_table</code>,
 <code>show_weather</code>, <code>show_clock</code>, <code>show_timer</code>, <code>show_map</code>, <code>show_media_player</code>, <code>show_face</code>,
 and the two voice-first dialogue helpers <code>show_confirm(question, ...)</code> and
-<code>show_select(items, prompt=None, ...)</code>. These are <strong>not</strong> on a released <code>ovos-workshop</code>;
-treat them as the template set new skills will target once the rebind lands.</p>
+<code>show_select(items, prompt=None, ...)</code>. These are <strong>not</strong> on a released <code>ovos-workshop</code>.
+Treat them as the template set new skills will target once the rebind lands.</p>
 <p>Two behavioural notes for that package:</p>
 <ul>
 <li><strong><code>fill</code> vocabulary changes.</strong> The standalone <code>FillMode</code> enum uses <code>"fit"</code> / <code>"crop"</code> /
   <code>"stretch"</code>, not the <code>"PreserveAspectFit"</code> / <code>"PreserveAspectCrop"</code> / <code>"Stretch"</code> values
   the installed <code>ovos_bus_client</code> <code>show_image()</code> expects. The value set flips when
   <code>self.gui</code> rebinds.</li>
-<li><strong>Dialogue helpers round-trip.</strong> These are visual accompaniments to a spoken question —
-  the skill must still ask and handle the voice response, and must not block on a GUI
+<li><strong>Dialogue helpers round-trip.</strong> These are visual accompaniments to a spoken question. The
+  skill must still ask and handle the voice response, and must not block on a GUI
   event. Where the display layer supports a touch shortcut, <code>show_confirm</code> fires
   <code>&lt;skill_id&gt;.confirm.response</code> with <code>{"confirmed": bool}</code> and <code>show_select</code> fires
   <code>&lt;skill_id&gt;.select.response</code> with <code>{"value": ...}</code>. The interface also auto-registers an
@@ -1876,7 +1876,7 @@ treat them as the template set new skills will target once the rebind lands.</p>
 </span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">gui</span><span class="p">[</span><span class="s2">&quot;foodPlaces&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">results</span>
 </span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">gui</span><span class="o">.</span><span class="n">show_page</span><span class="p">(</span><span class="s2">&quot;foodplaces&quot;</span><span class="p">)</span>   <span class="c1"># resolves your gui/ resource</span>
 </span></code></pre></div>
-<p>For the Qt/QML client, custom pages are <code>.qml</code> files; see
+<p>For the Qt/QML client, custom pages are <code>.qml</code> files. See
 <a href="../qt5-gui/">Mycroft-GUI QT5</a> for the QML component reference, theming, event
 handling, and resting faces. Other clients resolve the same logical page name to
 their own format.</p>

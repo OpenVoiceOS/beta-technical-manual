@@ -1671,8 +1671,8 @@
 The subdirectories are named using the <a href="https://en.wikipedia.org/wiki/IETF_language_tag">IETF language tag</a> for the
 language.
 For example, Brazilian Portuguese is 'pt-br', German is 'de-de', and Australian English is 'en-au'.</p>
-<p><code>dialog</code> and <code>vocab</code> have been <strong>deprecated</strong>, they are still supported, but we strongly recommend you use <code>locale</code> for new
-skills</p>
+<p><code>dialog</code> and <code>vocab</code> are <strong>deprecated</strong>. They are still supported, but we strongly recommend you use <code>locale</code> for new
+skills.</p>
 <div class="admonition note">
 <p class="admonition-title">If both layouts exist for the same resource, <code>locale</code> wins</p>
 <p>Resource lookup (<code>find_resource</code>/<code>load_data_files</code> in <code>ovos_workshop/resource_files.py</code>)
@@ -1680,11 +1680,11 @@ checks the <code>locale/&lt;lang&gt;/</code> layout before falling back to the l
 <code>vocab/&lt;lang&gt;/</code>, <code>regex/&lt;lang&gt;/</code> layout. If a skill somehow ships the same filename in both
 places, the <code>locale</code> copy is what gets loaded.</p>
 </div>
-<p>inside the <code>locale</code> folder you will find subfolders for each language (e.g. <code>en-us</code>), often all you need to do in order
-to translate a skill is adding a new folder for your language here</p>
-<p>each language folder can have the structure it wants, you may see files grouped by type in subfolder or all in the base
-folder</p>
-<p>You will find several unfamiliar file extensions in this folder, but these are simple text files</p>
+<p>Inside the <code>locale</code> folder you will find subfolders for each language (e.g. <code>en-us</code>). Often all you need to do
+to translate a skill is add a new folder for your language here.</p>
+<p>Each language folder can have the structure it wants. You may see files grouped by type in a subfolder, or all in the base
+folder.</p>
+<p>You will find several unfamiliar file extensions in this folder, but these are simple text files.</p>
 <ul>
 <li>
 <p><code>.dialog</code> files used for defining speech responses</p>
@@ -1702,7 +1702,7 @@ folder</p>
 </li>
 </ul>
 <h3 id="initpy"><strong>init</strong>.py<a class="headerlink" href="#initpy" title="Permanent link">&para;</a></h3>
-<p>The <code>__init__.py</code> file is where most of the Skill is defined using Python code. </p>
+<p>The <code>__init__.py</code> file is where most of the Skill is defined using Python code.</p>
 <h4 id="importing-libraries">Importing libraries<a class="headerlink" href="#importing-libraries" title="Permanent link">&para;</a></h4>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span> <span class="nn">ovos_workshop.intents</span> <span class="kn">import</span> <span class="n">IntentBuilder</span>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kn">from</span> <span class="nn">ovos_workshop.decorators</span> <span class="kn">import</span> <span class="n">intent_handler</span>
@@ -1720,7 +1720,7 @@ the <a href="https://matrix.to/#/#openvoiceos-skills:matrix.org">skills Channel 
 <p>Inside the class, methods are then defined.</p>
 <h4 id="init"><strong>init</strong>()<a class="headerlink" href="#init" title="Permanent link">&para;</a></h4>
 <p>This method is the <em>constructor</em>. It is called when the Skill is first constructed. It is often used to declare state
-variables or perform setup actions, however it cannot fully utilize OVOSSkill methods as the skill is not fully initialized yet at this point. </p>
+variables or perform setup actions. It cannot fully use <code>OVOSSkill</code> methods, since the skill is not fully initialized yet at this point.</p>
 <p><strong>You usually don't have to include the constructor.</strong></p>
 <p>An example <code>__init__</code> method might be:</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -1728,19 +1728,19 @@ variables or perform setup actions, however it cannot fully utilize OVOSSkill me
 </span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">already_said_hello</span> <span class="o">=</span> <span class="kc">False</span>
 </span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">be_friendly</span> <span class="o">=</span> <span class="kc">True</span>
 </span></code></pre></div>
-<p><code>__init__</code> method must accept at least <code>skill_id</code> and <code>bus</code> kwargs and pass them to <code>super()</code>, we recommend passing <code>*args, **kwargs</code> like in example above instead</p>
-<p><strong>NOTE</strong>: <code>self.skill_id</code>, <code>self.file_system</code>, <code>self.settings</code>, <code>self.bus</code> are only available after the call to <code>super()</code>, if you need them consider using <code>initialize</code> instead</p>
+<p>The <code>__init__</code> method must accept at least <code>skill_id</code> and <code>bus</code> kwargs and pass them to <code>super()</code>. We recommend passing <code>*args, **kwargs</code> instead, as in the example above.</p>
+<p><strong>NOTE</strong>: <code>self.skill_id</code>, <code>self.file_system</code>, <code>self.settings</code>, and <code>self.bus</code> are only available after the call to <code>super()</code>. If you need them earlier, consider using <code>initialize</code> instead.</p>
 <h4 id="initialize">initialize()<a class="headerlink" href="#initialize" title="Permanent link">&para;</a></h4>
-<p>This method is called during <code>__init__</code>, if you implemented <code>__init__</code> in your skill it will be called during <code>super()</code></p>
+<p>This method is called during <code>__init__</code>. If you implemented <code>__init__</code> in your skill, it is called during <code>super()</code>.</p>
 <p>Perform any final setup needed for the skill here. This function is invoked after the skill is fully constructed and
-registered with the system. Intents will be registered and Skill settings will be available.</p>
-<p>See the property-availability note above (<code>__init__()</code>) — this is where you should access <code>self.skill_id</code>, <code>self.bus</code>, <code>self.settings</code>, and <code>self.file_system</code> if you can't wait until they're set.</p>
+registered with the system. Intents are registered and Skill settings are available.</p>
+<p>See the property-availability note above (<code>__init__()</code>). This is where you should access <code>self.skill_id</code>, <code>self.bus</code>, <code>self.settings</code>, and <code>self.file_system</code> if you cannot wait until they are set.</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>    <span class="n">my_setting</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;my_setting&#39;</span><span class="p">)</span>
 </span></code></pre></div>
 <h4 id="intent_handler"><a class="magiclink magiclink-github magiclink-mention" href="https://github.com/intent_handler" title="GitHub User: intent_handler">@intent_handler</a><a class="headerlink" href="#intent_handler" title="Permanent link">&para;</a></h4>
-<p>We can use the <code>initialize</code> function to manually register intents, however the <code>@intent_handler</code> decorator is a
-cleaner way to achieve this. We will learn all about the different <a href="../intents/">Intents</a> shortly. </p>
+<p>We can use the <code>initialize</code> function to manually register intents. The <code>@intent_handler</code> decorator is a
+cleaner way to do this. We cover the different <a href="../intents/">Intents</a> shortly.</p>
 <p>In skills we can see the two different intent styles.</p>
 <ol>
 <li>A <strong>keyword (rule-based) intent</strong>, triggered by a keyword defined in a <code>ThankYouKeyword.voc</code>
@@ -1773,7 +1773,7 @@ case <code>welcome.dialog</code> and <code>how.are.you.dialog</code>.</p>
 <p>You will usually also have a <code>stop()</code> method.</p>
 <p>The <code>stop</code> method is called anytime a User says "Stop" or a similar command. It is useful for stopping any output or process that a User might want to end without needing to issue a Skill specific utterance such as media playback or an expired alarm notification.</p>
 <p>In the following example, we call a method <code>stop_beeping</code> to end a notification that our Skill has created.</p>
-<p>If the skill "consumed" the stop signal it should return True, else return False. </p>
+<p>If the skill "consumed" the stop signal, it should return True. Otherwise it should return False.</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>    <span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 </span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">beeping</span><span class="p">:</span>
 </span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">stop_beeping</span><span class="p">()</span>
@@ -1781,11 +1781,11 @@ case <code>welcome.dialog</code> and <code>how.are.you.dialog</code>.</p>
 </span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>        <span class="k">return</span> <span class="kc">False</span>
 </span></code></pre></div>
 <p>If a Skill has any active functionality, the stop() method should terminate the functionality, leaving the Skill in a known good state.</p>
-<p>When the skill returns True no other skill will be stopped, when it returns False the next active skill will attempt to stop and so on until something consumes the stop signal</p>
+<p>When the skill returns True, no other skill is stopped. When it returns False, the next active skill attempts to stop, and so on until something consumes the stop signal.</p>
 <h4 id="shutdown">shutdown()<a class="headerlink" href="#shutdown" title="Permanent link">&para;</a></h4>
-<p>The <code>shutdown</code> method is called during the Skill process termination. 
-It is used to perform any final actions to ensure all processes and operations in execution are stopped safely. 
-This might be particularly useful for Skills that have scheduled future events, may be writing to a file or database, or that have initiated new processes.</p>
+<p>The <code>shutdown</code> method is called during Skill process termination.
+It performs any final actions to ensure all running processes and operations stop safely.
+This is useful for Skills that have scheduled future events, are writing to a file or database, or have started other processes.</p>
 <p>In the following example we cancel a scheduled event and call a method in our Skill to stop a subprocess we initiated.</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>    <span class="k">def</span> <span class="nf">shutdown</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 </span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">cancel_scheduled_event</span><span class="p">(</span><span class="s1">&#39;my_event&#39;</span><span class="p">)</span>
@@ -1793,7 +1793,7 @@ This might be particularly useful for Skills that have scheduled future events, 
 </span></code></pre></div>
 <h3 id="settingsmetayaml-optional-legacy">settingsmeta.yaml <em>(optional, legacy)</em><a class="headerlink" href="#settingsmetayaml-optional-legacy" title="Permanent link">&para;</a></h3>
 <p>This optional file describes a settings UI for the skill. It is a <strong>legacy format from the old
-Mycroft backend</strong> that OVOS doesn't run, so it is <strong>usually absent</strong> — skills handle their settings
+Mycroft backend</strong> that OVOS does not run, so it is <strong>usually absent</strong>. Skills handle their settings
 without it, and only some community config tools still read it.</p>
 <p>Jump to <a href="../skill-settings-meta/">Skill Settings Meta</a> for the format, and <a href="../skill-settings/">Skill Settings</a> for how skills actually read and write settings.</p>
 <h3 id="packaging-and-distribution">Packaging and Distribution<a class="headerlink" href="#packaging-and-distribution" title="Permanent link">&para;</a></h3>
@@ -1821,15 +1821,15 @@ without it, and only some community config tools still read it.</p>
 </span><span id="__span-8-20"><a id="__codelineno-8-20" name="__codelineno-8-20" href="#__codelineno-8-20"></a><span class="s2">&quot;*&quot;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;locale/**/*&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;ui/**/*&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;*.json&quot;</span><span class="p">]</span>
 </span></code></pre></div>
 <h4 id="skilljson"><code>skill.json</code><a class="headerlink" href="#skilljson" title="Permanent link">&para;</a></h4>
-<p>This is an optional, per-language file — it lives alongside your dialog and intent
+<p>This is an optional, per-language file. It lives alongside your dialog and intent
 files (e.g. <code>locale/en-us/skill.json</code>). At runtime it is read for exactly one purpose:
 registering example utterances with the homescreen, so the launcher can show sample things
 to say for that language.</p>
 <div class="admonition note">
 <p class="admonition-title">Same filename, two roles</p>
 <p>The <code>locale/&lt;lang&gt;/skill.json</code> shown here carries only the runtime <code>examples</code>. The <strong>store
-metadata</strong> file of the same name — carrying <code>source</code>, <code>package_name</code>, <code>pip_spec</code>,
-<code>extra_plugins</code>, <code>tags</code>, <code>icon</code>, etc. for the skills marketplace and installer — is a
+metadata</strong> file of the same name, carrying <code>source</code>, <code>package_name</code>, <code>pip_spec</code>,
+<code>extra_plugins</code>, <code>tags</code>, <code>icon</code>, etc. for the skills marketplace and installer, is a
 separate, broader schema documented in full on the <a href="../skill-json/">Skill Metadata File</a> page.
 <code>ovos-workshop</code> never installs anything from either file.</p>
 </div>

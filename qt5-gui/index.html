@@ -1655,10 +1655,10 @@
 <h1 id="mycroft-gui-qt5">Mycroft-GUI QT5<a class="headerlink" href="#mycroft-gui-qt5" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>Some OVOS devices have a screen, and this page describes the older way of drawing on it — a graphical toolkit called Qt5/QML, where you describe what a screen should look like (text, images, animations, cards) in a markup language. This is the <strong>legacy</strong> screen path: it is deprecated and a ground-up replacement is being built (see <a href="../gui-adapters/">GUI Adapters</a>), so treat the examples here as reference rather than something to build new work on. Voice, not the screen, is meant to be the main way you interact with OVOS. See the <a href="../glossary/">Glossary</a> for terms.</p>
+<p>Some OVOS devices have a screen, and this page describes the older way of drawing on it: a graphical toolkit called Qt5/QML, where you describe what a screen should look like (text, images, animations, cards) in a markup language. This is the <strong>legacy</strong> screen path. It is deprecated, and a ground-up replacement is being built (see <a href="../gui-adapters/">GUI Adapters</a>), so treat the examples here as reference rather than something to build new work on. Voice, not the screen, is meant to be the main way you interact with OVOS. See the <a href="../glossary/">Glossary</a> for terms.</p>
 </div>
 <div class="admonition danger">
-<p class="admonition-title">The OVOS GUI is deprecated — see <a href="../gui-status/">Screens on OVOS Today</a> for the full picture</p>
+<p class="admonition-title">The OVOS GUI is deprecated: see <a href="../gui-status/">Screens on OVOS Today</a> for the full picture</p>
 <p>The Qt5/QML client described here is part of the legacy stack. There is no generally
 usable OVOS GUI right now, and a replacement is <strong>Upcoming</strong>.</p>
 </div>
@@ -1671,18 +1671,18 @@ keep a screen.</p>
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Both successors are unreleased work-in-progress</p>
-<p>Two replacement GUI clients are being built, <strong>both unreleased / WIP</strong> — neither is usable yet:</p>
+<p>Two replacement GUI clients are being built, <strong>both unreleased / WIP</strong>. Neither is usable yet:</p>
 <ul>
-<li><strong>Qt6/Kirigami</strong> — <a href="https://github.com/OpenVoiceOS/mycroft-gui-qt6">mycroft-gui-qt6</a>
-  (<code>feat/gui-protocol-rework</code>); still needs a human C++/Qt6 build review.</li>
-<li><strong>pyhtmx</strong> (browser/HTMX) — a web-based render path via the GUI-adapter system.</li>
+<li><strong>Qt6/Kirigami</strong>: <a href="https://github.com/OpenVoiceOS/mycroft-gui-qt6">mycroft-gui-qt6</a>
+  (<code>feat/gui-protocol-rework</code>), still needs a human C++/Qt6 build review.</li>
+<li><strong>pyhtmx</strong> (browser/HTMX): a web-based render path via the GUI-adapter system.</li>
 </ul>
 <p>Until one of these ships, there is <strong>no maintained GUI client</strong>. See
 <a href="../gui-adapters/">GUI Adapters</a> for the rework architecture.</p>
 </div>
 <h2 id="introduction-to-qml">Introduction to QML<a class="headerlink" href="#introduction-to-qml" title="Permanent link">&para;</a></h2>
-<p>The reference GUI client implementation is based on the QML user interface markup language, which gives skill authors complete freedom to create in-depth, innovative interactions without boundaries, or to use simple templates within the GUI framework for minimalistic display of text and images, depending on the skill's needs.</p>
-<p>QML user interface markup language is a declarative language built on top of Qt's existing strengths designed to describe the user interface of a program: both what it looks like, and how it behaves. QML provides modules that consist of sophisticated set of graphical and behavioral building elements.</p>
+<p>The reference GUI client implementation is based on the QML user interface markup language. It gives skill authors freedom to create in-depth, custom interactions, or to use simple templates within the GUI framework for a minimal display of text and images, depending on the skill's needs.</p>
+<p>QML is a declarative language built on top of Qt. It describes the user interface of a program: both what it looks like and how it behaves. QML provides modules made up of graphical and behavioral building elements.</p>
 <h3 id="before-getting-started">Before Getting Started<a class="headerlink" href="#before-getting-started" title="Permanent link">&para;</a></h3>
 <p>A collection of resources to familiarize you with QML and Kirigami Framework.</p>
 <ul>
@@ -1704,19 +1704,19 @@ keep a screen.</p>
 </span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="kr">import</span> <span class="nx">org</span><span class="p">.</span><span class="nx">kde</span><span class="p">.</span><span class="nx">lottie</span> <span class="mf">1.0</span>
 </span></code></pre></div>
 <p><strong>QTQuick Module:</strong></p>
-<p>Qt Quick module is the standard library for writing QML applications, the module provides a visual canvas and includes types for creating and animating visual components, receiving user input, creating data models and views and delayed object instantiation. In-depth information about QtQuick can be found at <a href="https://doc.qt.io/qt-5.11/qtquick-index.html">Qt Quick Documentation</a></p>
+<p>Qt Quick module is the standard library for writing QML applications. It provides a visual canvas and includes types for creating and animating visual components, receiving user input, creating data models and views, and delayed object instantiation. In-depth information about QtQuick can be found at <a href="https://doc.qt.io/qt-5.11/qtquick-index.html">Qt Quick Documentation</a></p>
 <p><strong>QTQuick.Controls Module:</strong></p>
-<p>The QtQuick Controls module provides a set of controls that can be used to build complete interfaces in Qt Quick. Some of the controls provided are button controls, container controls, delegate controls, indicator controls, input controls, navigation controls and more, for a complete list of controls and components provided by QtQuick Controls you can refer to <a href="https://doc.qt.io/qt-5.11/qtquickcontrols2-guidelines.html">QtQuick Controls 2 Guidelines</a></p>
+<p>The QtQuick Controls module provides a set of controls that can be used to build complete interfaces in Qt Quick. Some of the controls provided are button controls, container controls, delegate controls, indicator controls, input controls, and navigation controls. For a complete list of controls and components provided by QtQuick Controls, see <a href="https://doc.qt.io/qt-5.11/qtquickcontrols2-guidelines.html">QtQuick Controls 2 Guidelines</a></p>
 <p><strong>QtQuick.Layouts Module:</strong></p>
-<p>QtQuick Layouts are a set of QML types used to arrange items in a user interface. Some of the layouts provided by QtQuick Layouts are Column Layout, Grid Layout, Row Layout and more, for a complete list of layouts you can refer to <a href="http://doc.qt.io/qt-5/qtquicklayouts-index.html">QtQuick Layouts Documentation</a></p>
+<p>QtQuick Layouts are a set of QML types used to arrange items in a user interface. Some of the layouts provided are Column Layout, Grid Layout, and Row Layout. For a complete list of layouts, see <a href="http://doc.qt.io/qt-5/qtquicklayouts-index.html">QtQuick Layouts Documentation</a></p>
 <p><strong>Kirigami Module:</strong></p>
-<p><a href="https://api.kde.org/frameworks/kirigami/html/index.html">Kirigami</a> is a set of QtQuick components for mobile and convergent applications. <a href="https://api.kde.org/frameworks/kirigami/html/index.html">Kirigami</a> is a set of high level components to make the creation of applications that look and feel great on mobile as well as desktop devices and follow the <a href="https://community.kde.org/KDE_Visual_Design_Group/KirigamiHIG">Kirigami Human Interface Guidelines</a></p>
+<p><a href="https://api.kde.org/frameworks/kirigami/html/index.html">Kirigami</a> is a set of QtQuick components for mobile and convergent applications. These high-level components help you build applications that look and feel great on mobile and desktop devices alike, and that follow the <a href="https://community.kde.org/KDE_Visual_Design_Group/KirigamiHIG">Kirigami Human Interface Guidelines</a>.</p>
 <p><strong>Mycroft Module:</strong></p>
-<p>Mycroft GUI frameworks provides a set of high level components and events system for aiding in the development of Mycroft visual skills. One of the controls provided by Mycroft GUI frameworks are Mycroft-GUI Framework Base Delegates <a href="../gui-service/">Mycroft-GUI Framework Base Delegates Documentation</a></p>
+<p>Mycroft GUI frameworks provide a set of high-level components and an event system to aid in developing Mycroft visual skills. One control they provide is Mycroft-GUI Framework Base Delegates. See <a href="../gui-service/">Mycroft-GUI Framework Base Delegates Documentation</a></p>
 <p><strong>QML Lottie Module:</strong></p>
 <p>This provides a QML <code>Item</code> to render Adobe® After Effects™ animations exported as JSON with Bodymovin using the Lottie Web library. For list of all properties supported refer <a href="https://github.com/kbroulik/lottie-qml">Lottie QML</a></p>
 <h3 id="mycroft-gui-framework-base-delegates">Mycroft-GUI Framework Base Delegates<a class="headerlink" href="#mycroft-gui-framework-base-delegates" title="Permanent link">&para;</a></h3>
-<p>When you design your skill with QML, Mycroft-GUI frameworks provides you with some base delegates you should use when designing your GUI skill. The base delegates provide you with a basic presentation layer for your skill with some property assignments that can help you setup background images, background dim, timeout and grace time properties to give you the control you need for rendering an experience. In your GUI <a href="../skill-design-guidelines/">Skill</a> you can use:</p>
+<p>When you design your skill with QML, Mycroft-GUI frameworks provide some base delegates you should use when designing your GUI skill. The base delegates provide a basic presentation layer for your skill, with property assignments that let you set up background images, background dim, and timeout and grace-time properties, giving you the control you need to render an experience. In your GUI <a href="../skill-design-guidelines/">Skill</a> you can use:</p>
 <p><strong>Mycroft.Delegate:</strong> A basic and simple page based on Kirigami.Page</p>
 <p>Simple display Image and Text Example using Mycroft.Delegate</p>
 <div class="language-qml highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kr">import</span> <span class="nx">Mycroft</span> <span class="mf">1.0</span> <span class="nx">as</span> <span class="nx">Mycroft</span>
@@ -1803,7 +1803,7 @@ keep a screen.</p>
 </span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>height: Mycroft.Units.gridUnit // 16px Tall
 </span></code></pre></div>
 <h4 id="theming">Theming:<a class="headerlink" href="#theming" title="Permanent link">&para;</a></h4>
-<p>OVOS Shell uses a custom Kirigami Platform Theme plugin to provide global theming to all skills and user interfaces, which also allows OVOS GUIs to be fully compatible with the system themes on platforms that are not running the OVOS Shell.</p>
+<p>OVOS Shell uses a custom Kirigami Platform Theme plugin to provide global theming to all skills and user interfaces. This also lets OVOS GUIs stay fully compatible with the system themes on platforms not running OVOS Shell.</p>
 <p>The Kirigami Theme and Color Scheme guide is extensive and can be found on the <a href="https://develop.kde.org/docs/use/kirigami/style-colors/">Kirigami style and colors page</a></p>
 <p>OVOS GUI's developed to follow the color scheme depend on only a subset of available colors, mainly:</p>
 <ol>
@@ -1822,10 +1822,10 @@ keep a screen.</p>
 <img alt="Example delegate over a mountain background: red corner triangles mark the safe-area margin, and a three-slice pie chart below the title uses the primary (dark), highlight (red), and text (white) theme colors" src="https://mycroft.blue-systems.com/display-1.png" /></p>
 <ol>
 <li>
-<p>When designing your first QML file, it is important to note the red triangles in the above image, these triangles represent the margin from the screen edge the GUI needs to be designed within, these margins ensure your GUI content does not overlap with features like edge lighting and menus in the platforms that support it like OVOS-Shell</p>
+<p>Note the red triangles in the image above. They mark the margin from the screen edge the GUI needs to be designed within. These margins keep your GUI content from overlapping features like edge lighting and menus on platforms that support them, such as OVOS-Shell.</p>
 </li>
 <li>
-<p>The content items and components all utilize the selected color scheme, where black is the primary background color, red is the accent color and white is the contrasting text color</p>
+<p>The content items and components all use the selected color scheme. Black is the primary background color, red is the accent color, and white is the contrasting text color.</p>
 </li>
 </ol>
 <p><strong>Let's look at this in QML:</strong></p>
@@ -1878,13 +1878,13 @@ keep a screen.</p>
 <img alt="Vertical display example: the same two image cards (Example Card A, Example Card B) stacked instead of side by side, with a Next button below" src="https://mycroft.blue-systems.com/display-3.png" /></p>
 <ol>
 <li>
-<p>When designing for different screens it is preferred to utilize Grids, GridLayouts and GridViews this allows easier content placement as one can control the number of columns and rows displayed on the screen</p>
+<p>When designing for different screens, prefer Grids, GridLayouts, and GridViews. They make content placement easier because you control the number of columns and rows shown on screen.</p>
 </li>
 <li>
-<p>It is also recommended to use Flickables when you believe your content is going to not fit on the screen, this allows for content to always be scrollable. To make it easier to design scrollable content, Mycroft GUI provides you with a ready to use Mycroft.ScrollableDelegate.</p>
+<p>Use Flickables when you expect your content not to fit on the screen. This keeps content scrollable. To make scrollable content easier to design, Mycroft GUI provides a ready-to-use <code>Mycroft.ScrollableDelegate</code>.</p>
 </li>
 <li>
-<p>It is also preferred to use the width vs height comparison on the root delegate item to know when the screen should be using a vertical layout vs horizontal layout</p>
+<p>Also compare width to height on the root delegate item to know when the screen needs a vertical layout instead of a horizontal one.</p>
 </li>
 </ol>
 <p><strong>Let's look at this in QML:</strong></p>
@@ -1952,7 +1952,7 @@ keep a screen.</p>
 </span><span id="__span-6-13"><a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a><span class="p">}</span>
 </span></code></pre></div>
 <p><strong>Display Sliding Images</strong></p>
-<p>Contains an image that will slowly scroll in order to be shown completely</p>
+<p>Contains an image that scrolls slowly so it can be shown completely.</p>
 <p><strong>QML Example</strong></p>
 <div class="language-qml highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1">// standard imports (QtQuick, QtQuick.Controls, QtQuick.Layouts, Kirigami, Mycroft — see the imports block above)</span>
 </span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>
@@ -1977,7 +1977,7 @@ keep a screen.</p>
 </span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="p">}</span>
 </span></code></pre></div>
 <p><strong>Display A Vertical ListView With Information Cards</strong></p>
-<p>Kirigami CardsListView is a ListView which can have AbstractCard as its delegate: it will automatically assign the proper spacing and margins around the cards adhering to the design guidelines.</p>
+<p>Kirigami CardsListView is a ListView that can have AbstractCard as its delegate. It automatically assigns the proper spacing and margins around the cards, following the design guidelines.</p>
 <p><strong>Python Skill Example</strong></p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="o">...</span>
 </span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="k">def</span> <span class="nf">handle_food_places</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
@@ -2061,7 +2061,7 @@ keep a screen.</p>
 </span><span id="__span-10-72"><a id="__codelineno-10-72" name="__codelineno-10-72" href="#__codelineno-10-72"></a><span class="p">}</span>
 </span></code></pre></div>
 <p><strong>Using Proportional Delegate For Simple Display Skills &amp; Auto Layout</strong></p>
-<p><strong>ProportionalDelegate</strong> is a delegate which has proportional padding and a columnlayout as mainItem. The delegate supports a proportionalGridUnit which is based upon its size and the contents are supposed to be scaled proportionally to the delegate size either directly or using the proportionalGridUnit.</p>
+<p><strong>ProportionalDelegate</strong> is a delegate which has proportional padding and a columnlayout as mainItem. The delegate supports a <code>proportionalGridUnit</code>, based on its size. Contents should scale proportionally to the delegate size, either directly or by using the <code>proportionalGridUnit</code>.</p>
 <p><strong>AutoFitLabel</strong> is a label that will always scale its text size according to the item size rather than the other way around</p>
 <p><strong>QML Example</strong></p>
 <div class="language-qml highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="c1">// standard imports (QtQuick, QtQuick.Controls, QtQuick.Layouts, Kirigami, Mycroft — see the imports block above)</span>
@@ -2087,7 +2087,7 @@ keep a screen.</p>
 </span><span id="__span-11-21"><a id="__codelineno-11-21" name="__codelineno-11-21" href="#__codelineno-11-21"></a><span class="p">}</span>
 </span></code></pre></div>
 <p><strong>Using Slideshow Component To Show Cards Slideshow</strong></p>
-<p>Slideshow component lets you insert a slideshow with your custom delegate in any skill display which can be tuned to autoplay and loop and also scrolled or flicked manually by the user.</p>
+<p>The Slideshow component lets you insert a slideshow with your custom delegate in any skill display. It can be tuned to autoplay and loop, and can also be scrolled or flicked manually by the user.</p>
 <p><strong>QML Example</strong></p>
 <div class="language-qml highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="c1">// standard imports (QtQuick, QtQuick.Controls, QtQuick.Layouts, Kirigami, Mycroft — see the imports block above)</span>
 </span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>
@@ -2128,7 +2128,7 @@ keep a screen.</p>
 </span><span id="__span-12-37"><a id="__codelineno-12-37" name="__codelineno-12-37" href="#__codelineno-12-37"></a><span class="p">}</span>
 </span></code></pre></div>
 <h4 id="event-handling">Event Handling<a class="headerlink" href="#event-handling" title="Permanent link">&para;</a></h4>
-<p>Mycroft GUI API provides an Event Handling Protocol between the skill and QML display which allow Skill Authors to forward events in either direction to an event consumer. Skill Authors have the ability to create any amount of custom events. Event names that start with "system." are available to all skills, like previous/next/pick.</p>
+<p>Mycroft GUI API provides an Event Handling Protocol between the skill and QML display. It lets skill authors forward events in either direction to an event consumer. Skill authors can create any number of custom events. Event names that start with "system." are available to all skills, like previous/next/pick.</p>
 <p><strong>Simple Event Trigger Example From QML Display To Skill</strong></p>
 <p><strong>Python Skill Example</strong></p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -2184,7 +2184,7 @@ keep a screen.</p>
 </span><span id="__span-16-16"><a id="__codelineno-16-16" name="__codelineno-16-16" href="#__codelineno-16-16"></a><span class="p">}</span>
 </span></code></pre></div>
 <h4 id="resting-faces">Resting Faces<a class="headerlink" href="#resting-faces" title="Permanent link">&para;</a></h4>
-<p>The resting face API provides skill authors the ability to extend their skills to supply their own customized IDLE screens that will be displayed when there is no activity on the screen.</p>
+<p>The resting face API lets skill authors extend their skills to supply their own custom IDLE screens, displayed when there is no activity on the screen.</p>
 <p><strong>Simple Idle Screen Example</strong></p>
 <p><strong>Python Skill Example</strong></p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="kn">from</span> <span class="nn">ovos_workshop.decorators</span> <span class="kn">import</span> <span class="n">resting_screen_handler</span>
@@ -2212,10 +2212,10 @@ keep a screen.</p>
 </span></code></pre></div>
 <h2 id="related-pages">Related pages<a class="headerlink" href="#related-pages" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="../gui-adapters/">GUI Adapters</a> — the in-progress replacement architecture for this legacy Qt5 client.</li>
-<li><a href="../ovos-shell/">ovos-shell</a> — the shell application that hosts and manages GUI clients on a device.</li>
-<li><a href="../gui-status/">Screens on OVOS Today</a> — the current, honest state of GUI support across OVOS.</li>
-<li><a href="../gui-service/">GUI Service</a> — the bus-facing service that mediates between skills and GUI clients.</li>
+<li><a href="../gui-adapters/">GUI Adapters</a>: the in-progress replacement architecture for this legacy Qt5 client.</li>
+<li><a href="../ovos-shell/">ovos-shell</a>: the shell application that hosts and manages GUI clients on a device.</li>
+<li><a href="../gui-status/">Screens on OVOS Today</a>: the current, honest state of GUI support across OVOS.</li>
+<li><a href="../gui-service/">GUI Service</a>: the bus-facing service that mediates between skills and GUI clients.</li>
 </ul>
 
 

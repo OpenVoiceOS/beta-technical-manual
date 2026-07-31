@@ -1880,15 +1880,15 @@
 <h1 id="ovos-plugin-manager-opm">OVOS Plugin Manager (OPM)<a class="headerlink" href="#ovos-plugin-manager-opm" title="Permanent link">&para;</a></h1>
 <div class="admonition success">
 <p class="admonition-title">Maturity — Mature ⬤⬤⬤⬤⬤</p>
-<p>Long-lived, battle-tested, and actively maintained — depend on it freely. Rated by <a href="../maturity/">repository health</a>, not version.</p>
+<p>Long-lived and actively maintained. Depend on it freely. Rated by <a href="../maturity/">repository health</a>, not version.</p>
 </div>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>A plugin is an add-on you can drop in to give OpenVoiceOS a new ability or swap how it does something — for example, a different way to turn speech into text. The Plugin Manager is the part that finds these add-ons once they're installed and loads them when needed, so you don't have to wire anything up by hand. Think of it like the app store and launcher for OVOS's interchangeable pieces: install one, and the system just discovers it. See the <a href="../glossary/">Glossary</a> for unfamiliar terms or the <a href="../architecture-overview/">Architecture Overview</a> for how plugins fit into the wider system.</p>
+<p>A plugin is an add-on you can drop in to give OpenVoiceOS a new ability or swap how it does something. For example, a different way to turn speech into text. The Plugin Manager is the part that finds these add-ons once they're installed, and loads them when needed, so you don't have to wire anything up by hand. Think of it like the app store and launcher for OVOS's interchangeable pieces. Install one, and the system discovers it. See the <a href="../glossary/">Glossary</a> for unfamiliar terms or the <a href="../architecture-overview/">Architecture Overview</a> for how plugins fit into the wider system.</p>
 </div>
 <details class="info">
-<summary>📐 Formal specification</summary>
-<p>OPM is the <em>discovery and loading</em> mechanism; it is not itself a spec, but several plugin <strong>roles</strong> it loads are defined by the architecture specs and carry conformance obligations independent of OPM. In particular, <strong>pipeline plugins</strong> (entry point <code>opm.pipeline</code>) implement the <code>match(utterances, lang, message) → Match</code> contract and <strong>first-match-wins</strong> ordering of <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md">OVOS-PIPELINE-1</a></strong>, and the six <strong>transformer</strong> plugin types (<code>opm.transformer.*</code>) implement the six ordered chains of <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/transformer.md">OVOS-TRANSFORM-1</a></strong> (priority <strong>ascending</strong> — lower runs earlier). See the <a href="../architecture-specs/">spec index</a> for the full set of plugin-role specs.</p>
+<summary>Formal specification</summary>
+<p>OPM is the <em>discovery and loading</em> mechanism. It is not itself a spec, but several plugin <strong>roles</strong> it loads are defined by the architecture specs and carry conformance obligations independent of OPM. In particular, <strong>pipeline plugins</strong> (entry point <code>opm.pipeline</code>) implement the <code>match(utterances, lang, message) → Match</code> contract and <strong>first-match-wins</strong> ordering of <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md">OVOS-PIPELINE-1</a></strong>, and the six <strong>transformer</strong> plugin types (<code>opm.transformer.*</code>) implement the six ordered chains of <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/transformer.md">OVOS-TRANSFORM-1</a></strong> (priority <strong>ascending</strong>, lower runs earlier). See the <a href="../architecture-specs/">spec index</a> for the full set of plugin-role specs.</p>
 </details>
 <p><img alt="OPM's plugin categories grouped by role: listener plugins (microphone, wake word, VAD, audio transformer, STT), audio plugins (dialog transformer, G2P, TTS, TTS transformer), core plugins (utterance transformer, metadata transformer, translation/language detection, skills), PHAL plugins, GUI plugins, and media plugins (video/music playback)" src="https://github.com/OpenVoiceOS/ovos-plugin-manager/assets/33701864/8c939267-42fc-4377-bcdb-f7df65e73252" /></p>
 <p>The OVOS Plugin Manager (OPM) is the plugin discovery and loading infrastructure for the
@@ -1899,7 +1899,7 @@ other projects.</p>
 <h2 id="how-it-works">How It Works<a class="headerlink" href="#how-it-works" title="Permanent link">&para;</a></h2>
 <p>Plugins are Python packages that register a class under a specific entry point group in
 <code>setup.py</code> or <code>pyproject.toml</code>. OPM uses <code>importlib.metadata.entry_points()</code> to discover
-all installed plugins of a given type at runtime — no manual registration required.</p>
+all installed plugins of a given type at runtime. No manual registration is required.</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span> <span class="nn">ovos_plugin_manager.stt</span> <span class="kn">import</span> <span class="n">find_stt_plugins</span><span class="p">,</span> <span class="n">load_stt_plugin</span>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="c1"># List all installed STT plugins</span>
@@ -1910,7 +1910,7 @@ all installed plugins of a given type at runtime — no manual registration requ
 </span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="c1"># Load a specific plugin class</span>
 </span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="n">MySTT</span> <span class="o">=</span> <span class="n">load_stt_plugin</span><span class="p">(</span><span class="s2">&quot;ovos-stt-plugin-whisper&quot;</span><span class="p">)</span>
 </span></code></pre></div>
-<p>Factories handle the full lifecycle — discovery, instantiation, and configuration:</p>
+<p>Factories handle the full lifecycle: discovery, instantiation, and configuration:</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">from</span> <span class="nn">ovos_plugin_manager.stt</span> <span class="kn">import</span> <span class="n">OVOSSTTFactory</span>
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
 </span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="n">stt</span> <span class="o">=</span> <span class="n">OVOSSTTFactory</span><span class="o">.</span><span class="n">create</span><span class="p">({</span>
@@ -2008,7 +2008,7 @@ The entry point group is the canonical identifier used in <code>setup.py</code> 
 </tbody>
 </table>
 <div class="admonition warning">
-<p class="admonition-title">Upcoming — unreleased</p>
+<p class="admonition-title">Upcoming, unreleased</p>
 <p>A dedicated GUI-adapter plugin type (entry point <code>opm.gui_adapter</code>, base class
 <code>AbstractGUIPlugin</code>) is in development. Tracked in
 <a href="https://github.com/OpenVoiceOS/ovos-plugin-manager/pull/377">ovos-plugin-manager#377</a>.
@@ -2028,7 +2028,7 @@ with no error. Avoid duplicate plugin names across packages.</p>
 factory (<code>OVOSSTTFactory.create()</code>, <code>OVOSTTSFactory.create()</code>, etc.) just asks
 <code>find_*_plugins()</code> for whichever class is registered under the configured <code>module</code> name
 and instantiates it. If two packages registered that same entry-point name, discovery has
-already picked one of them silently at import time — the factory has no way to detect or
+already picked one of them silently at import time. The factory has no way to detect or
 warn about the collision, it only ever sees the single class discovery handed it.</p>
 </div>
 <h3 id="transformer-plugins">Transformer Plugins<a class="headerlink" href="#transformer-plugins" title="Permanent link">&para;</a></h3>
@@ -2114,11 +2114,11 @@ their own copies. It exposes one runner class per transformer type:</p>
 </tr>
 </tbody>
 </table>
-<p>Loading is config-gated and opt-in — a plugin only runs if its name appears in the relevant
+<p>Loading is config-gated and opt-in. A plugin only runs if its name appears in the relevant
 config section and its entry does not set <code>"active": false</code>. Ordering follows
 <a href="https://github.com/OpenVoiceOS/architecture/blob/dev/transformer.md">OVOS-TRANSFORM-1</a> §4:
 plugins run in ascending <code>priority</code> order by default, but an explicit <code>"order"</code> list of
-plugin names in the config section overrides priority-based ordering; loaded plugins absent
+plugin names in the config section overrides priority-based ordering. Loaded plugins absent
 from that list are not run. A plugin can cancel the rest of the chain by returning both
 <code>"canceled": true</code> and a <code>"cancel_reason"</code> in its context (§8.1).</p>
 <h3 id="language-processing-plugins">Language Processing Plugins<a class="headerlink" href="#language-processing-plugins" title="Permanent link">&para;</a></h3>
@@ -2164,7 +2164,7 @@ from that list are not run. A plugin can cancel the rest of the chain by returni
 </tbody>
 </table>
 <h3 id="intent-pipeline-plugins">Intent Pipeline Plugins<a class="headerlink" href="#intent-pipeline-plugins" title="Permanent link">&para;</a></h3>
-<p>A pipeline plugin is a matcher exposing <code>match(utterances, lang, message) → Match | None</code>; the orchestrator runs the configured set in order, <strong>first-match-wins</strong>, with no cross-plugin scoring (<a href="https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md">OVOS-PIPELINE-1</a>).</p>
+<p>A pipeline plugin is a matcher exposing <code>match(utterances, lang, message) → Match | None</code>. The orchestrator runs the configured set in order, <strong>first-match-wins</strong>, with no cross-plugin scoring (<a href="https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md">OVOS-PIPELINE-1</a>).</p>
 <table>
 <thead>
 <tr>
@@ -2483,13 +2483,13 @@ plugin/repository retired in favor of a different package), see
 </tr>
 </tbody>
 </table>
-<p>This table mirrors <code>ovos_plugin_manager.utils.DEPRECATED_ENTRYPOINTS</code> — the source of truth OPM
+<p>This table mirrors <code>ovos_plugin_manager.utils.DEPRECATED_ENTRYPOINTS</code>. This is the source of truth OPM
 uses at runtime to silently rewrite a plugin's old entry-point group to its canonical one, so
 plugins published under any of the names above still load correctly today.</p>
 <p>The legacy <strong>solver</strong> groups (<code>opm.solver.question</code>, <code>opm.solver.chat</code>,
 <code>opm.solver.summarization</code>, <code>opm.solver.entailment</code>, <code>opm.solver.multiple_choice</code>,
 <code>opm.solver.reading_comprehension</code>) and <code>opm.coreference</code> are superseded by the
-<code>opm.agents.*</code> types above and will be removed in the next major release — the same
+<code>opm.agents.*</code> types above and will be removed in the next major release. This is the same
 <code>ovos-plugin-manager</code> major-version boundary as the <code>&lt;3.0.0</code> cap noted above under
 <a href="#plugin-types">Minimum OPM version</a>.</p>
 <hr />
@@ -2644,7 +2644,7 @@ plugins published under any of the names above still load correctly today.</p>
 <h3 id="5-declare-runtimerequirements">5. Declare <code>RuntimeRequirements</code><a class="headerlink" href="#5-declare-runtimerequirements" title="Permanent link">&para;</a></h3>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p><code>RuntimeRequirements</code> is a deprecated mechanism; see <a href="../skill-runtime-requirements/">Runtime Requirements</a> for current behavior.</p>
+<p><code>RuntimeRequirements</code> is a deprecated mechanism. See <a href="../skill-runtime-requirements/">Runtime Requirements</a> for current behavior.</p>
 </div>
 <p>Override <code>runtime_requirements</code> to declare connectivity needs. See
 <a href="../skill-runtime-requirements/">Runtime Requirements</a> for what OVOS actually does with this
@@ -2679,13 +2679,13 @@ from <code>mycroft.conf</code>.</p>
 <p>Resolve a merged configuration dict for a plugin. Precedence (highest to lowest):</p>
 <ol>
 <li>
-<p>Module-specific block — <code>config[section][module]</code></p>
+<p>Module-specific block: <code>config[section][module]</code></p>
 </li>
 <li>
-<p>Section-level defaults — <code>config[section]</code> (scalar keys only)</p>
+<p>Section-level defaults: <code>config[section]</code> (scalar keys only)</p>
 </li>
 <li>
-<p>Top-level <code>lang</code> — <code>config['lang']</code></p>
+<p>Top-level <code>lang</code>: <code>config['lang']</code></p>
 </li>
 </ol>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="kn">from</span> <span class="nn">ovos_plugin_manager.utils.config</span> <span class="kn">import</span> <span class="n">get_plugin_config</span>
@@ -2719,8 +2719,8 @@ Returns <code>{plugin_name: {lang: [configs]}}</code>.</p>
 Returns <code>{plugin_name: [list_of_valid_config_dicts]}</code>.</p>
 <p>When <code>include_dialects=True</code>, configs for closely related dialects (linguistic distance
 under 10, via <code>ovos_spec_tools.lang_distance</code>) are also included. A dialect match has its
-<code>priority</code> raised by 15 (<code>get_valid_plugin_configs</code> in <code>ovos_plugin_manager.utils.config</code>) —
-since lower priority numbers are selected first, this makes dialect matches lower
+<code>priority</code> raised by 15 (<code>get_valid_plugin_configs</code> in <code>ovos_plugin_manager.utils.config</code>).
+Since lower priority numbers are selected first, this makes dialect matches lower
 precedence than an exact language/locale match.</p>
 <h3 id="get_plugin_supported_languages"><code>get_plugin_supported_languages</code><a class="headerlink" href="#get_plugin_supported_languages" title="Permanent link">&para;</a></h3>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="k">def</span> <span class="nf">get_plugin_supported_languages</span><span class="p">(</span><span class="n">plug_type</span><span class="p">:</span> <span class="n">PluginTypes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span>
@@ -2734,44 +2734,44 @@ Invalid/empty config lists are removed.</p>
 <hr />
 <h2 id="configuration-priority">Configuration Priority<a class="headerlink" href="#configuration-priority" title="Permanent link">&para;</a></h2>
 <p>Within a config list, entries are sorted <strong>ascending</strong> by their <code>"priority"</code> key (default
-<code>60</code>) — <code>sort_plugin_configs()</code> puts the highest-numbered priority at the end of the list.
+<code>60</code>). <code>sort_plugin_configs()</code> puts the highest-numbered priority at the end of the list.
 See <code>sort_plugin_configs</code> / <code>get_valid_plugin_configs</code> in <code>ovos_plugin_manager.utils.config</code>
 for the exact ordering used when selecting a config.</p>
 <hr />
 <h2 id="voice-satellites-hivemind">Voice Satellites (<a href="../hivemind-agents/">HiveMind</a>)<a class="headerlink" href="#voice-satellites-hivemind" title="Permanent link">&para;</a></h2>
 <p>HiveMind setups allow distributing which plugins run server-side or satellite-side:</p>
-<p><strong>Skills Server</strong> — HiveMind server runs core services and skills; satellites handle their
+<p><strong>Skills Server</strong>: HiveMind server runs core services and skills. Satellites handle their
 own STT/TTS locally:</p>
 <p><img alt="Server Profile" src="https://github.com/OpenVoiceOS/ovos-technical-manual/assets/33701864/55694b82-69c9-4288-9a89-1d9716eb3c57" /></p>
-<p><strong>Audio Server</strong> — HiveMind server runs a full OVOS core and handles STT/TTS for all
+<p><strong>Audio Server</strong>: HiveMind server runs a full OVOS core and handles STT/TTS for all
 satellites:</p>
 <p><img alt="Listener Profile" src="https://github.com/OpenVoiceOS/ovos-technical-manual/assets/33701864/1455a488-af0f-44b4-a5e6-0418a7cd1f96" /></p>
 <hr />
 <h2 id="projects-using-opm">Projects Using OPM<a class="headerlink" href="#projects-using-opm" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
-<p><a href="https://github.com/OpenVoiceOS/ovos-core">ovos-core</a> — intent pipeline, skill loading</p>
+<p><a href="https://github.com/OpenVoiceOS/ovos-core">ovos-core</a>: intent pipeline, skill loading</p>
 </li>
 <li>
-<p><a href="https://github.com/OpenVoiceOS/ovos-audio">ovos-audio</a> — TTS, audio backends</p>
+<p><a href="https://github.com/OpenVoiceOS/ovos-audio">ovos-audio</a>: TTS, audio backends</p>
 </li>
 <li>
-<p><a href="https://github.com/OpenVoiceOS/ovos-dinkum-listener">ovos-dinkum-listener</a> — STT, wake word, VAD, microphone</p>
+<p><a href="https://github.com/OpenVoiceOS/ovos-dinkum-listener">ovos-dinkum-listener</a>: STT, wake word, VAD, microphone</p>
 </li>
 <li>
-<p><a href="https://github.com/OpenVoiceOS/ovos-tts-server">ovos-tts-server</a> — HTTP TTS proxy</p>
+<p><a href="https://github.com/OpenVoiceOS/ovos-tts-server">ovos-tts-server</a>: HTTP TTS proxy</p>
 </li>
 <li>
-<p><a href="https://github.com/OpenVoiceOS/ovos-stt-http-server">ovos-stt-http-server</a> — HTTP STT proxy</p>
+<p><a href="https://github.com/OpenVoiceOS/ovos-stt-http-server">ovos-stt-http-server</a>: HTTP STT proxy</p>
 </li>
 <li>
-<p><a href="../wyoming-bridges/">wyoming-ovos-stt / wyoming-ovos-tts / wyoming-ovos-wakeword</a> — Wyoming protocol bridges</p>
+<p><a href="../wyoming-bridges/">wyoming-ovos-stt / wyoming-ovos-tts / wyoming-ovos-wakeword</a>: Wyoming protocol bridges</p>
 </li>
 <li>
-<p><a href="https://github.com/NeonGeckoCom/NeonCore">neon-core</a> — compatible fork</p>
+<p><a href="https://github.com/NeonGeckoCom/NeonCore">neon-core</a>: compatible fork</p>
 </li>
 <li>
-<p><a href="https://github.com/JarbasHiveMind/HiveMind-voice-sat">HiveMind voice satellite</a> — distributed voice pipeline</p>
+<p><a href="https://github.com/JarbasHiveMind/HiveMind-voice-sat">HiveMind voice satellite</a>: distributed voice pipeline</p>
 </li>
 </ul>
 <p>STT, TTS, and WakeWord plugin types retain backward compatibility with Mycroft-Core via

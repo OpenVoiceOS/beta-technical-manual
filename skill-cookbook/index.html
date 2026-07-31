@@ -1756,17 +1756,17 @@
 <h1 id="skill-cookbook">Skill Cookbook<a class="headerlink" href="#skill-cookbook" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>The rest of this manual documents individual building blocks — settings, scheduling, playback, a GUI — one at a time. This page instead shows them <strong>combined</strong>, the way a real skill uses them: a complete, working file for each common job a skill needs to do. If you already know what <code>schedule_event</code> or <code>@ocp_search</code> does and just want to see it used correctly next to everything else it needs, start here.</p>
+<p>The rest of this manual documents individual building blocks (settings, scheduling, playback, a GUI) one at a time. This page instead shows them <strong>combined</strong>, the way a real skill uses them: a complete, working file for each common job a skill needs to do. If you already know what <code>schedule_event</code> or <code>@ocp_search</code> does and just want to see it used correctly next to everything else it needs, start here.</p>
 </div>
 <p>Each recipe below is a <strong>complete skill module</strong> (or a clearly-marked excerpt of one), followed by notes on the moving parts and links to the reference page that documents each API in full. None of these recipes invent new methods: every class, method signature, and bus event name was checked against the installed <code>ovos-workshop</code>, <code>ovos-bus-client</code>, and <code>ovos-utils</code> packages.</p>
 <div class="admonition note">
 <p class="admonition-title">Scaffolding not shown</p>
-<p>To keep each recipe focused, <code>requirements.txt</code>, <code>manifest.yml</code>, <code>setup.py</code>/<code>pyproject.toml</code>, and the <code>__init__.py</code> boilerplate needed to actually publish a skill are omitted here — see <a href="../skill-design-guidelines/">Skill Anatomy</a> and <a href="../core/">Skill Structure</a> for those. Intent files (<code>.intent</code>, <code>.voc</code>) referenced below live under <code>locale/&lt;lang&gt;/</code>.</p>
+<p>To keep each recipe focused, <code>requirements.txt</code>, <code>manifest.yml</code>, <code>setup.py</code>/<code>pyproject.toml</code>, and the <code>__init__.py</code> boilerplate needed to actually publish a skill are omitted here. See <a href="../skill-design-guidelines/">Skill Anatomy</a> and <a href="../core/">Skill Structure</a> for those. Intent files (<code>.intent</code>, <code>.voc</code>) referenced below live under <code>locale/&lt;lang&gt;/</code>.</p>
 </div>
 <hr />
 <h2 id="1-a-reminder-skill-scheduled-events-with-restart-persistence">1. A reminder skill: scheduled events with restart persistence<a class="headerlink" href="#1-a-reminder-skill-scheduled-events-with-restart-persistence" title="Permanent link">&para;</a></h2>
 <p><strong>When you'd want this:</strong> the user says "remind me in 10 minutes to check the oven", and the reminder must still fire even if the device rebooted in the meantime.</p>
-<p>The scheduler (<code>self.schedule_event</code>) lives entirely in memory — if the skill process restarts, every pending timer is gone. The only thing that survives a restart is the skill's <a href="../skill-settings/">settings</a> file, so a reminder skill must write down <em>when</em> each reminder is due and re-schedule anything still in the future the moment the skill reloads.</p>
+<p>The scheduler (<code>self.schedule_event</code>) lives entirely in memory. If the skill process restarts, every pending timer is gone. The only thing that survives a restart is the skill's <a href="../skill-settings/">settings</a> file, so a reminder skill must write down <em>when</em> each reminder is due and re-schedule anything still in the future the moment the skill reloads.</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span> <span class="nn">datetime</span>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kn">from</span> <span class="nn">ovos_workshop.skills</span> <span class="kn">import</span> <span class="n">OVOSSkill</span>
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kn">from</span> <span class="nn">ovos_workshop.decorators</span> <span class="kn">import</span> <span class="n">intent_handler</span>
@@ -1830,13 +1830,13 @@
 </span></code></pre></div>
 <h3 id="moving-parts">Moving parts<a class="headerlink" href="#moving-parts" title="Permanent link">&para;</a></h3>
 <ul>
-<li><code>self.schedule_event(handler, when, data=None, name=None)</code> — <code>when</code> accepts a
+<li><code>self.schedule_event(handler, when, data=None, name=None)</code>: <code>when</code> accepts a
   <code>datetime.datetime</code> (absolute) or an <code>int</code>/<code>float</code> (seconds from now). <code>name</code> is
   the handle you cancel or update by later. Full signature and semantics: <a href="../ovos-skill/#scheduling-events">Scheduling Events</a>.</li>
-<li><code>self.cancel_scheduled_event(name)</code> / <code>self.update_scheduled_event(name, data)</code> — manage an existing timer by name.</li>
-<li>For a recurring alarm (not a one-shot reminder) use <code>self.schedule_repeating_event(handler, when, frequency, name=...)</code> instead — same page.</li>
-<li><code>self.settings</code> is a <code>JsonStorage</code> (dict-like) backed by <code>settings.json</code>; <code>self.settings.store()</code> writes it to disk immediately. See <a href="../skill-settings/">Skill Settings</a> for the storage location and lifecycle.</li>
-<li>The pattern of "write intended future state to settings, replay it in <code>initialize()</code>" is the standard way any OVOS skill survives a restart — there is no separate scheduler persistence API.</li>
+<li><code>self.cancel_scheduled_event(name)</code> / <code>self.update_scheduled_event(name, data)</code>: manage an existing timer by name.</li>
+<li>For a recurring alarm (not a one-shot reminder), use <code>self.schedule_repeating_event(handler, when, frequency, name=...)</code> instead. Same page.</li>
+<li><code>self.settings</code> is a <code>JsonStorage</code> (dict-like) backed by <code>settings.json</code>. <code>self.settings.store()</code> writes it to disk immediately. See <a href="../skill-settings/">Skill Settings</a> for the storage location and lifecycle.</li>
+<li>The pattern of "write intended future state to settings, replay it in <code>initialize()</code>" is the standard way any OVOS skill survives a restart. There is no separate scheduler persistence API.</li>
 </ul>
 <div class="admonition tip">
 <p class="admonition-title">Full production example</p>
@@ -1844,7 +1844,7 @@
 </div>
 <hr />
 <h2 id="2-user-configurable-behavior-settings-settingsmeta-live-reload">2. User-configurable behavior: settings + settingsmeta + live reload<a class="headerlink" href="#2-user-configurable-behavior-settings-settingsmeta-live-reload" title="Permanent link">&para;</a></h2>
-<p><strong>When you'd want this:</strong> a skill has a behavior the user should be able to tune — a unit system, a greeting name, an API key — and it should react immediately when that value changes, whether the change came from a config file edit or a remote settings backend.</p>
+<p><strong>When you'd want this:</strong> a skill has a behavior the user should be able to tune, such as a unit system, a greeting name, or an API key, and it should react immediately when that value changes, whether the change came from a config file edit or a remote settings backend.</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kn">from</span> <span class="nn">ovos_workshop.skills</span> <span class="kn">import</span> <span class="n">OVOSSkill</span>
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="kn">from</span> <span class="nn">ovos_workshop.decorators</span> <span class="kn">import</span> <span class="n">intent_handler</span>
 </span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
@@ -1885,9 +1885,9 @@
 </span></code></pre></div>
 <h3 id="moving-parts_1">Moving parts<a class="headerlink" href="#moving-parts_1" title="Permanent link">&para;</a></h3>
 <ul>
-<li><code>self.settings_change_callback</code> is a plain attribute you assign a callable to (there is no decorator for it) — the base class checks <code>if self.settings_change_callback is not None</code> both on a local file-watcher change and on a remote <code>mycroft.skills.settings.changed</code> push, and calls it with no arguments either way. See <a href="../skill-settings/">Skill Settings</a> for the two trigger paths.</li>
-<li>Read settings defensively with <code>.get(key, default)</code> — a fresh install has an empty <code>settings.json</code> until <code>settingsmeta.yaml</code> defaults are applied by a settings UI, or you seed <code>self.settings</code> yourself in <code>initialize()</code>.</li>
-<li><code>settingsmeta.yaml</code>/<code>.json</code> is descriptive only: it drives a <em>UI</em> for editing settings, it does not itself create or validate keys — <a href="../skill-settings-meta/">Skill Settings Meta</a> covers the full field-type table and where the file must live.</li>
+<li><code>self.settings_change_callback</code> is a plain attribute you assign a callable to (there is no decorator for it). The base class checks <code>if self.settings_change_callback is not None</code> both on a local file-watcher change and on a remote <code>mycroft.skills.settings.changed</code> push, and calls it with no arguments either way. See <a href="../skill-settings/">Skill Settings</a> for the two trigger paths.</li>
+<li>Read settings defensively with <code>.get(key, default)</code>. A fresh install has an empty <code>settings.json</code> until <code>settingsmeta.yaml</code> defaults are applied by a settings UI, or you seed <code>self.settings</code> yourself in <code>initialize()</code>.</li>
+<li><code>settingsmeta.yaml</code>/<code>.json</code> is descriptive only. It drives a <em>UI</em> for editing settings, and does not itself create or validate keys. See <a href="../skill-settings-meta/">Skill Settings Meta</a> for the full field-type table and where the file must live.</li>
 </ul>
 <hr />
 <h2 id="3-calling-an-external-api-safely-timeouts-spoken-errors-and-a-cache">3. Calling an external API safely: timeouts, spoken errors, and a cache<a class="headerlink" href="#3-calling-an-external-api-safely-timeouts-spoken-errors-and-a-cache" title="Permanent link">&para;</a></h2>
@@ -1895,7 +1895,7 @@
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>This recipe also shows <code>runtime_requirements</code>, a deprecated, legacy declaration kept here
-for skills that already use it — see <a href="../skill-runtime-requirements/">Runtime Requirements</a>
+for skills that already use it. See <a href="../skill-runtime-requirements/">Runtime Requirements</a>
 for what it currently does. New skills don't need it for the timeout/cache/spoken-error
 pattern below, which works regardless.</p>
 </div>
@@ -1970,9 +1970,9 @@ pattern below, which works regardless.</p>
 </span></code></pre></div>
 <h3 id="moving-parts_2">Moving parts<a class="headerlink" href="#moving-parts_2" title="Permanent link">&para;</a></h3>
 <ul>
-<li><code>runtime_requirements</code> (a <code>@classproperty</code> you override, returning <code>RuntimeRequirements(...)</code>) is a deprecated, legacy declaration. Its <code>*_before_load</code> flags only gate loading when <code>skills.use_deferred_loading</code> is enabled in config — with the default config, all skills load unconditionally regardless of this declaration. See <a href="../skill-runtime-requirements/">Runtime Requirements</a> for the current behavior.</li>
-<li>Always pass <code>timeout=</code> to <code>requests.get</code>/<code>.post</code> — an OVOS skill runs on the shared bus-handling thread pool and a hung HTTP call can stall other skill callbacks.</li>
-<li><code>self.file_system</code> (a <code>FileSystemAccess</code>, exposing <code>.path</code>) is a writable, skill-private directory distinct from <code>settings.json</code> — the right place for a response cache, downloaded assets, or anything larger than a few settings keys.</li>
+<li><code>runtime_requirements</code> (a <code>@classproperty</code> you override, returning <code>RuntimeRequirements(...)</code>) is a deprecated, legacy declaration. Its <code>*_before_load</code> flags only gate loading when <code>skills.use_deferred_loading</code> is enabled in config. With the default config, all skills load unconditionally regardless of this declaration. See <a href="../skill-runtime-requirements/">Runtime Requirements</a> for the current behavior.</li>
+<li>Always pass <code>timeout=</code> to <code>requests.get</code>/<code>.post</code>. An OVOS skill runs on the shared bus-handling thread pool, and a hung HTTP call can stall other skill callbacks.</li>
+<li><code>self.file_system</code> (a <code>FileSystemAccess</code>, exposing <code>.path</code>) is a writable, skill-private directory distinct from <code>settings.json</code>. It is the right place for a response cache, downloaded assets, or anything larger than a few settings keys.</li>
 <li>Wrap the network call narrowly (<code>requests.exceptions.Timeout</code> / <code>.RequestException</code>) so a real bug elsewhere in the handler still raises normally instead of being swallowed by a broad <code>except Exception</code>.</li>
 </ul>
 <hr />
@@ -1980,14 +1980,14 @@ pattern below, which works regardless.</p>
 <div class="admonition warning">
 <p class="admonition-title">Testing multi-turn flows over the bus</p>
 <p>When driving this recipe from a test or script, re-fetch the live session before each
-follow-up utterance — reusing a stale serialized <code>Session</code> erases the activation from
+follow-up utterance. Reusing a stale serialized <code>Session</code> erases the activation from
 turn 1. See <a href="../testing-your-skill/#multi-turn-tests-always-re-pull-the-session">Testing Your Skill</a>.</p>
 </div>
-<p><strong>When you'd want this:</strong> the interaction needs more than one exchange — booking a table means asking for a time, a party size, and a name in sequence, or reacting to whatever the user says next without them repeating the skill's name.</p>
+<p><strong>When you'd want this:</strong> the interaction needs more than one exchange. Booking a table means asking for a time, a party size, and a name in sequence, or reacting to whatever the user says next without them repeating the skill's name.</p>
 <p>There are two complementary tools for this:</p>
 <ul>
-<li><code>self.get_response(...)</code> — call it <em>from inside an intent handler</em> to ask one question and block until an answer (or timeout) comes back. Best for a short, linear form.</li>
-<li><code>ConversationalSkill.converse(message)</code> — override this to intercept <strong>every</strong> utterance while your skill is "active" (recently used), before intent matching even runs. Best for an open-ended back-and-forth.</li>
+<li><code>self.get_response(...)</code>: call it <em>from inside an intent handler</em> to ask one question and block until an answer (or timeout) comes back. Best for a short, linear form.</li>
+<li><code>ConversationalSkill.converse(message)</code>: override this to intercept <strong>every</strong> utterance while your skill is "active" (recently used), before intent matching even runs. Best for an open-ended back-and-forth.</li>
 </ul>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kn">from</span> <span class="nn">ovos_workshop.skills.converse</span> <span class="kn">import</span> <span class="n">ConversationalSkill</span>
 </span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="kn">from</span> <span class="nn">ovos_workshop.decorators</span> <span class="kn">import</span> <span class="n">intent_handler</span>
@@ -2031,9 +2031,9 @@ turn 1. See <a href="../testing-your-skill/#multi-turn-tests-always-re-pull-the-
 </span></code></pre></div>
 <h3 id="moving-parts_3">Moving parts<a class="headerlink" href="#moving-parts_3" title="Permanent link">&para;</a></h3>
 <ul>
-<li><code>get_response(dialog="", data=None, validator=None, on_fail=None, num_retries=-1)</code> speaks <code>dialog</code> (rendered with <code>data</code>), then waits for a reply; it returns the utterance string, or <code>None</code> if the user didn't answer / said "cancel". <code>validator</code> can reject and re-ask (e.g. requiring a number).</li>
-<li><code>converse()</code> only runs while the skill is <strong>active</strong> — recently handled an intent, or explicitly kept alive with <code>self.activate(duration_minutes=...)</code> as shown above. It must subclass <code>ConversationalSkill</code> (not plain <code>OVOSSkill</code>) to be dispatched; returning <code>True</code> claims the utterance, <code>False</code> lets normal pipeline processing continue. See <a href="../converse/">Converse</a> and the <a href="../converse-pipeline/">Converse Pipeline</a> for how a skill enters and leaves the active list.</li>
-<li><code>self.voc_match(utterance, "yes")</code> checks against <code>locale/en-us/vocab/yes.voc</code> — see <a href="../skill-design-guidelines/">Skill Design Guidelines</a> for vocab file conventions.</li>
+<li><code>get_response(dialog="", data=None, validator=None, on_fail=None, num_retries=-1)</code> speaks <code>dialog</code> (rendered with <code>data</code>), then waits for a reply. It returns the utterance string, or <code>None</code> if the user didn't answer / said "cancel". <code>validator</code> can reject and re-ask (e.g. requiring a number).</li>
+<li><code>converse()</code> only runs while the skill is <strong>active</strong>: recently handled an intent, or explicitly kept alive with <code>self.activate(duration_minutes=...)</code> as shown above. It must subclass <code>ConversationalSkill</code> (not plain <code>OVOSSkill</code>) to be dispatched. Returning <code>True</code> claims the utterance, <code>False</code> lets normal pipeline processing continue. See <a href="../converse/">Converse</a> and the <a href="../converse-pipeline/">Converse Pipeline</a> for how a skill enters and leaves the active list.</li>
+<li><code>self.voc_match(utterance, "yes")</code> checks against <code>locale/en-us/vocab/yes.voc</code>. See <a href="../skill-design-guidelines/">Skill Design Guidelines</a> for vocab file conventions.</li>
 <li><a href="../context/">Context</a> (<code>self.set_context()</code>) is the lighter-weight alternative when you only need to bias which of <em>your own</em> intents can match next, rather than intercepting raw utterances.</li>
 </ul>
 <hr />
@@ -2084,15 +2084,15 @@ turn 1. See <a href="../testing-your-skill/#multi-turn-tests-always-re-pull-the-
 </span></code></pre></div>
 <h3 id="moving-parts_4">Moving parts<a class="headerlink" href="#moving-parts_4" title="Permanent link">&para;</a></h3>
 <ul>
-<li><code>MediaType</code> and <code>PlaybackType</code> are enums imported from <code>ovos_utils.ocp</code>; results are plain dicts, not a dedicated result class — mandatory keys are <code>uri</code>, <code>title</code>, <code>media_type</code>, <code>playback</code>, <code>match_confidence</code> (0-100), with <code>artist</code>, <code>album</code>, <code>image</code>, <code>length</code> (seconds) optional. Full field table: <a href="../ocp-skills/">OCP Skills</a>.</li>
-<li><code>@ocp_search()</code> (imported from <code>ovos_workshop.decorators.ocp</code>) marks a method as a search provider; OCP calls every registered provider's search method in parallel and keeps the best-confidence result across all installed OCP skills. A search method may <code>return</code> a list or <code>yield</code> results incrementally.</li>
+<li><code>MediaType</code> and <code>PlaybackType</code> are enums imported from <code>ovos_utils.ocp</code>. Results are plain dicts, not a dedicated result class. Mandatory keys are <code>uri</code>, <code>title</code>, <code>media_type</code>, <code>playback</code>, <code>match_confidence</code> (0-100), with <code>artist</code>, <code>album</code>, <code>image</code>, <code>length</code> (seconds) optional. Full field table: <a href="../ocp-skills/">OCP Skills</a>.</li>
+<li><code>@ocp_search()</code> (imported from <code>ovos_workshop.decorators.ocp</code>) marks a method as a search provider. OCP calls every registered provider's search method in parallel and keeps the best-confidence result across all installed OCP skills. A search method may <code>return</code> a list or <code>yield</code> results incrementally.</li>
 <li><code>supported_media</code> (passed to <code>super().__init__()</code>) tells OCP which <code>MediaType</code>s this skill should even be asked about.</li>
 <li><code>self.voc_match(phrase, "office_playlist")</code> reuses the same vocabulary mechanism as intents to give a confident match a high score, while still falling back to a loose substring check.</li>
-<li><a href="../ocp-skills/">OCP Skills</a> also documents <code>self.extend_timeout()</code> (ask OCP to wait longer for a slow search) and notes that new integrations not needing the full skill lifecycle may prefer a <code>MediaProvider</code> plugin instead — see that page's opening warning.</li>
+<li><a href="../ocp-skills/">OCP Skills</a> also documents <code>self.extend_timeout()</code> (ask OCP to wait longer for a slow search) and notes that new integrations not needing the full skill lifecycle may prefer a <code>MediaProvider</code> plugin instead. See that page's opening warning.</li>
 </ul>
 <hr />
 <h2 id="6-gui-voice-together-show-a-page-while-speaking-update-it-live">6. GUI + voice together: show a page while speaking, update it live<a class="headerlink" href="#6-gui-voice-together-show-a-page-while-speaking-update-it-live" title="Permanent link">&para;</a></h2>
-<p><strong>When you'd want this:</strong> a skill on a screen-equipped device (a Mark 2, say) should show a result — a weather card, a list, a picture — at the same moment it speaks about it, and keep the screen in sync as things change (e.g. counting down a timer).</p>
+<p><strong>When you'd want this:</strong> a skill on a screen-equipped device (a Mark 2, say) should show a result, such as a weather card, a list, or a picture, at the same moment it speaks about it, and keep the screen in sync as things change (e.g. counting down a timer).</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="kn">from</span> <span class="nn">ovos_workshop.skills</span> <span class="kn">import</span> <span class="n">OVOSSkill</span>
 </span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="kn">from</span> <span class="nn">ovos_workshop.decorators</span> <span class="kn">import</span> <span class="n">intent_handler</span>
 </span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>
@@ -2113,21 +2113,21 @@ turn 1. See <a href="../testing-your-skill/#multi-turn-tests-always-re-pull-the-
 </span><span id="__span-9-18"><a id="__codelineno-9-18" name="__codelineno-9-18" href="#__codelineno-9-18"></a>        <span class="c1"># weather page is showing, to refresh the number without re-speaking</span>
 </span><span id="__span-9-19"><a id="__codelineno-9-19" name="__codelineno-9-19" href="#__codelineno-9-19"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">gui</span><span class="p">[</span><span class="s2">&quot;temperature&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">message</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;temperature&quot;</span><span class="p">]</span>
 </span></code></pre></div>
-<p><code>gui/qt5/weather.qml</code> renders <code>temperature</code>/<code>condition</code> as GUI session data; see <a href="../skill-gui/">Skill GUI</a> for the full page/session-data lifecycle and <code>gui/qt6</code>/other render-backend layout conventions.</p>
+<p><code>gui/qt5/weather.qml</code> renders <code>temperature</code>/<code>condition</code> as GUI session data. See <a href="../skill-gui/">Skill GUI</a> for the full page/session-data lifecycle and <code>gui/qt6</code>/other render-backend layout conventions.</p>
 <h3 id="moving-parts_5">Moving parts<a class="headerlink" href="#moving-parts_5" title="Permanent link">&para;</a></h3>
 <ul>
-<li><code>self.gui</code> is a <code>SkillGUI</code> instance (a subclass of <code>GUIInterface</code>), set up automatically once a skill initializes — no separate import or manual construction needed.</li>
-<li><code>self.gui["key"] = value</code> sets session data the page template reads; <code>self.gui.show_page(name, override_idle=...)</code> requests that page be displayed (<code>override_idle</code> keeps it up for N seconds even if something would otherwise return to the idle screen).</li>
+<li><code>self.gui</code> is a <code>SkillGUI</code> instance (a subclass of <code>GUIInterface</code>), set up automatically once a skill initializes. No separate import or manual construction is needed.</li>
+<li><code>self.gui["key"] = value</code> sets session data the page template reads. <code>self.gui.show_page(name, override_idle=...)</code> requests that page be displayed (<code>override_idle</code> keeps it up for N seconds even if something would otherwise return to the idle screen).</li>
 <li>Updating <code>self.gui[...]</code> again while the page is already showing (as in <code>handle_temperature_update</code>) pushes fresh data to an already-visible page without calling <code>show_page</code> again.</li>
 <li>
 <div class="admonition danger">
 <p class="admonition-title">This is the legacy GUI stack</p>
-Everything in this recipe targets the current, <strong>deprecated</strong> <code>.qml</code>-based GUI stack, which <a href="../skill-gui/">Skill GUI</a> documents as effectively unusable outside Mark 2 maintenance today. The forward-looking replacement is the <strong>Upcoming</strong> <a href="../gui-adapters/">GUI rework</a> (spec OVOS-GUI-1), which instead has a skill declare intent via a closed <code>SYSTEM_*</code> template vocabulary rather than shipping custom <code>.qml</code>; that page is the one to design new screen support against.</div>
+Everything in this recipe targets the current, <strong>deprecated</strong> <code>.qml</code>-based GUI stack, which <a href="../skill-gui/">Skill GUI</a> documents as effectively unusable outside Mark 2 maintenance today. The forward-looking replacement is the <strong>Upcoming</strong> <a href="../gui-adapters/">GUI rework</a> (spec OVOS-GUI-1), which instead has a skill declare intent via a closed <code>SYSTEM_*</code> template vocabulary rather than shipping custom <code>.qml</code>. That page is the one to design new screen support against.</div>
 </li>
 </ul>
 <hr />
 <h2 id="7-fallback-llm-delegating-unmatched-utterances-to-a-solver-plugin">7. Fallback + LLM: delegating unmatched utterances to a solver plugin<a class="headerlink" href="#7-fallback-llm-delegating-unmatched-utterances-to-a-solver-plugin" title="Permanent link">&para;</a></h2>
-<p><strong>When you'd want this:</strong> every intent-matching skill has had its turn and none of them understood the utterance — instead of a flat "sorry, I don't understand", hand it to a language-model-backed plugin and speak whatever it comes back with.</p>
+<p><strong>When you'd want this:</strong> every intent-matching skill has had its turn and none of them understood the utterance. Instead of a flat "sorry, I don't understand," hand it to a language-model-backed plugin and speak whatever it comes back with.</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="kn">from</span> <span class="nn">ovos_plugin_manager.templates.solvers</span> <span class="kn">import</span> <span class="n">QuestionSolver</span>
 </span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="kn">from</span> <span class="nn">ovos_workshop.skills.fallback</span> <span class="kn">import</span> <span class="n">FallbackSkill</span>
 </span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>
@@ -2161,18 +2161,18 @@ Everything in this recipe targets the current, <strong>deprecated</strong> <code
 </span></code></pre></div>
 <h3 id="moving-parts_6">Moving parts<a class="headerlink" href="#moving-parts_6" title="Permanent link">&para;</a></h3>
 <ul>
-<li>A <code>FallbackSkill</code> subclass calls <code>self.register_fallback(handler, priority)</code> in <code>initialize()</code>; <code>handler</code> must return <code>True</code> if it produced an answer (stopping the chain) or <code>False</code> to let the next-priority fallback try. Priority <code>90</code> is deliberately high (tried late) since an LLM should be the <em>last</em> resort, not the first — see <a href="../fallbacks/">Fallback Skill</a> for the recommended priority tiers.</li>
-<li><code>QuestionSolver.get_spoken_answer(query, lang=None, units=None)</code> is the common template every question-answering solver plugin implements — a plugin is just a Python entry point (<code>opm.solver</code>) you load by id, the same plugin-discovery pattern used everywhere else in OVOS.</li>
+<li>A <code>FallbackSkill</code> subclass calls <code>self.register_fallback(handler, priority)</code> in <code>initialize()</code>. <code>handler</code> must return <code>True</code> if it produced an answer (stopping the chain) or <code>False</code> to let the next-priority fallback try. Priority <code>90</code> is deliberately high (tried late) since an LLM should be the <em>last</em> resort, not the first. See <a href="../fallbacks/">Fallback Skill</a> for the recommended priority tiers.</li>
+<li><code>QuestionSolver.get_spoken_answer(query, lang=None, units=None)</code> is the common template every question-answering solver plugin implements. A plugin is just a Python entry point (<code>opm.solver</code>) you load by id, the same plugin-discovery pattern used everywhere else in OVOS.</li>
 <li>
 <div class="admonition warning">
-<p class="admonition-title">Upcoming — solver templates are being replaced</p>
-<code>ovos_plugin_manager.templates.solvers</code> (including <code>QuestionSolver</code>, used above because it is what ships and runs today) is deprecated in favor of <code>ovos_plugin_manager.templates.agents.AbstractAgentEngine</code> and the <code>opm.agents.*</code> entry point groups. New solver plugins should target the newer API; see <a href="../advanced-solvers/">Specialized Agent Engine Types</a> for the full migration table and what each new agent type replaces.</div>
+<p class="admonition-title">Upcoming: solver templates are being replaced</p>
+<code>ovos_plugin_manager.templates.solvers</code> (including <code>QuestionSolver</code>, used above because it is what ships and runs today) is deprecated in favor of <code>ovos_plugin_manager.templates.agents.AbstractAgentEngine</code> and the <code>opm.agents.*</code> entry point groups. New solver plugins should target the newer API. See <a href="../advanced-solvers/">Specialized Agent Engine Types</a> for the full migration table and what each new agent type replaces.</div>
 </li>
-<li><code>self.speak(text)</code> (a raw string) is used here instead of <code>self.speak_dialog(...)</code> because the LLM's answer is not a template — it's already the exact sentence to say.</li>
+<li><code>self.speak(text)</code> (a raw string) is used here instead of <code>self.speak_dialog(...)</code> because the LLM's answer is not a template. It is already the exact sentence to say.</li>
 </ul>
 <hr />
 <h2 id="8-ambient-behavior-from-bus-events-react-to-listening-state-and-time-of-day">8. Ambient behavior from bus events: react to listening state and time of day<a class="headerlink" href="#8-ambient-behavior-from-bus-events-react-to-listening-state-and-time-of-day" title="Permanent link">&para;</a></h2>
-<p><strong>When you'd want this:</strong> a skill needs to do something not triggered by an utterance at all — dim a light while the device is actively listening, or change its greeting depending on whether it's morning or night, driven purely by bus events other services already emit.</p>
+<p><strong>When you'd want this:</strong> a skill needs to do something not triggered by an utterance at all. Examples include dimming a light while the device is actively listening, or changing its greeting depending on whether it's morning or night, driven purely by bus events other services already emit.</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="kn">import</span> <span class="nn">datetime</span>
 </span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>
 </span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="kn">from</span> <span class="nn">ovos_bus_client.message</span> <span class="kn">import</span> <span class="n">Message</span>
@@ -2215,9 +2215,9 @@ Everything in this recipe targets the current, <strong>deprecated</strong> <code
 </span></code></pre></div>
 <h3 id="moving-parts_7">Moving parts<a class="headerlink" href="#moving-parts_7" title="Permanent link">&para;</a></h3>
 <ul>
-<li><code>recognizer_loop:record_begin</code> / <code>recognizer_loop:record_end</code> bracket an active recording (wake word already triggered); <code>recognizer_loop:audio_output_start</code> / <code>_end</code> bracket the device speaking — both pairs are emitted by the listener service regardless of which skill (if any) is involved. There is also <code>recognizer_loop:wakeword</code>, emitted the instant the wake word itself is detected, slightly before recording begins.</li>
-<li><code>self.add_event(msg_type, handler)</code> subscribes for the lifetime of the skill (auto-removed on shutdown) — the general-purpose alternative to a decorator-based intent handler, for any bus event that isn't an utterance.</li>
-<li><code>schedule_repeating_event(handler, when, frequency, name=...)</code> with <code>when=None</code> starts the first run after one <code>frequency</code> interval; pass a <code>datetime</code> for <code>when</code> instead if the first run needs to happen at a specific moment.</li>
+<li><code>recognizer_loop:record_begin</code> / <code>recognizer_loop:record_end</code> bracket an active recording (wake word already triggered). <code>recognizer_loop:audio_output_start</code> / <code>_end</code> bracket the device speaking. Both pairs are emitted by the listener service regardless of which skill (if any) is involved. There is also <code>recognizer_loop:wakeword</code>, emitted the instant the wake word itself is detected, slightly before recording begins.</li>
+<li><code>self.add_event(msg_type, handler)</code> subscribes for the lifetime of the skill (auto-removed on shutdown). This is the general-purpose alternative to a decorator-based intent handler, for any bus event that isn't an utterance.</li>
+<li><code>schedule_repeating_event(handler, when, frequency, name=...)</code> with <code>when=None</code> starts the first run after one <code>frequency</code> interval. Pass a <code>datetime</code> for <code>when</code> instead if the first run needs to happen at a specific moment.</li>
 <li>This skill emits its own <code>ovos.ambient_mood.changed</code> event rather than reaching into a light/hardware plugin directly, keeping it decoupled from whatever actually consumes the mood (a PHAL plugin, another skill, a GUI). See <a href="../bus-service/">Bus Service</a> for the emit/on API and <a href="../converse-pipeline/">PIPELINE-1 correlation</a> for how bus events relate to a given utterance's session.</li>
 </ul>
 <hr />

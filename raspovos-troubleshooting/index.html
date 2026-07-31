@@ -1677,16 +1677,16 @@ problems in plain language before you dig into the technical steps below.</p>
 <hr />
 <h2 id="ovos-fails-to-speak-i-am-ready">OVOS Fails to Speak "I am Ready"<a class="headerlink" href="#ovos-fails-to-speak-i-am-ready" title="Permanent link">&para;</a></h2>
 <ul>
-<li>Confirm the device has a working Internet connection — otherwise OVOS won't consider itself ready</li>
+<li>Confirm the device has a working Internet connection. Otherwise OVOS won't consider itself ready</li>
 <li>The "I am Ready" announcement is spoken by the <code>ovos-skill-boot-finished</code> skill: if that skill is not installed or failed to load, the device can be fully working yet stay silent at boot. Check it appears in the loaded-skills list (see <a href="#how-to-check-installed-skills">How to check installed skills</a> below, where <code>skill-ovos-boot-finished.openvoiceos</code> should be present).</li>
 <li>For what "ready" actually means and how to probe it on headless or fleet deployments, see <a href="../production-operations/#knowing-when-the-assistant-is-actually-ready">Knowing when the assistant is actually ready</a>.</li>
 </ul>
 <hr />
 <h2 id="how-to-debug-intent-matching">How to debug intent matching<a class="headerlink" href="#how-to-debug-intent-matching" title="Permanent link">&para;</a></h2>
-<p>To easily debug intent parsing open a terminal and run <code>ologs | grep intent</code>; this will show you live logs related only to intent parsing</p>
+<p>To easily debug intent parsing, open a terminal and run <code>ologs | grep intent</code>. This shows you live logs related only to intent parsing</p>
 <div class="admonition note">
 <p class="admonition-title"><code>ologs</code> is a raspOVOS shortcut</p>
-<p><code>ologs</code> is a raspOVOS-only shell alias (<code>tail -f</code> over the log files, see <a href="../install-raspovos/#helpful-commands">raspOVOS commands</a>); it is <strong>not</strong> the portable <a href="../cli-tools/#reading-the-logs-ovos-logs"><code>ovos-logs</code></a> CLI. On a non-raspOVOS install use <code>ovos-logs</code> (or <code>tail -f</code> on the <a href="../troubleshooting/">log files</a>) instead.</p>
+<p><code>ologs</code> is a raspOVOS-only shell alias (<code>tail -f</code> over the log files, see <a href="../install-raspovos/#helpful-commands">raspOVOS commands</a>). It is <strong>not</strong> the portable <a href="../cli-tools/#reading-the-logs-ovos-logs"><code>ovos-logs</code></a> CLI. On a non-raspOVOS install use <code>ovos-logs</code> (or <code>tail -f</code> on the <a href="../troubleshooting/">log files</a>) instead.</p>
 </div>
 <p>then in another terminal send commands with <code>ovos-say-to "sentence to test"</code>  (or use your voice)</p>
 <p>The <code>Session pipeline</code> line in the log below shows the <a href="../pipelines-overview/#available-pipeline-components">default pipeline order</a>:</p>
@@ -1979,8 +1979,8 @@ others, so it's essential to test and evaluate the plugin with your chosen word.
 <p>💡 <code>"lang"</code> does not need to match the main language, if there is no vosk model for your language you can try faking it with similar sounding words from a different one</p>
 </blockquote>
 <h3 id="tips-for-choosing-a-good-wake-word">Tips for Choosing a Good Wake Word<a class="headerlink" href="#tips-for-choosing-a-good-wake-word" title="Permanent link">&para;</a></h3>
-<p>Selecting a wake word is crucial to improving the accuracy and responsiveness of your system. Here are some tips for
-choosing a wake word that will work well in various environments:</p>
+<p>Picking a good wake word improves the accuracy and responsiveness of your system. Here are some tips for
+choosing a wake word that works well in various environments:</p>
 <ul>
 <li>
 <p><strong>3 or 4 Syllables:</strong> Wake words that are 3 or 4 syllables long tend to perform better because they are more distinct

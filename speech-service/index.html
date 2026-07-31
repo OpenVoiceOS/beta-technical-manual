@@ -1639,22 +1639,22 @@
 </div>
 <details class="info">
 <summary>📐 Formal specification</summary>
-<p>The capture → audio-transformer chain → STT → utterance flow and the listening-lifecycle signals are specified by <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/audio-in.md">OVOS-AUDIO-IN-1 — Audio Input Service</a></strong>; the audio-transformer chain that runs on the raw audio before STT by <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/transformer.md">OVOS-TRANSFORM-1 — Transformer Plugins</a></strong> (§3.1). See also the <a href="../architecture-specs/">spec index</a>. <code>ovos-dinkum-listener</code> is the reference implementation; the spec topic names below are canonical, with the legacy name noted once.</p>
+<p>The capture → audio-transformer chain → STT → utterance flow and the listening-lifecycle signals are specified by <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/audio-in.md">OVOS-AUDIO-IN-1 — Audio Input Service</a></strong>. The audio-transformer chain that runs on the raw audio before STT is specified by <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/transformer.md">OVOS-TRANSFORM-1 — Transformer Plugins</a></strong> (§3.1). See also the <a href="../architecture-specs/">spec index</a>. <code>ovos-dinkum-listener</code> is the reference implementation. The spec topic names below are canonical, with the legacy name noted once.</p>
 </details>
-<p><code>ovos-dinkum-listener</code> is the service responsible for audio capture, <a href="../wake-word-plugins/">Wake Word</a> detection, and <a href="../stt-plugins/">Speech-to-Text</a> (<a href="../stt-plugins/">STT</a>). It is the default, full-featured listener; <code>ovos-simple-listener</code> is a lighter alternative that emits the same <code>recognizer_loop:*</code> bus events but without the full state machine.</p>
-<p>A third, even more minimal option is <code>mycroft-classic-listener</code> — the original mycroft-core listener ported to the OVOS plugin ecosystem. It implements the same <code>recognizer_loop:*</code> contract but does <strong>not</strong> support <code>instant_listen</code>, multiple hotwords, VAD, listening modes, or fallback STT (fallback hotwords via OPM are supported).</p>
+<p><code>ovos-dinkum-listener</code> is the service responsible for audio capture, <a href="../wake-word-plugins/">Wake Word</a> detection, and <a href="../stt-plugins/">Speech-to-Text</a> (<a href="../stt-plugins/">STT</a>). It is the default, full-featured listener. <code>ovos-simple-listener</code> is a lighter alternative that emits the same <code>recognizer_loop:*</code> bus events but without the full state machine.</p>
+<p>A third, even more minimal option is <code>mycroft-classic-listener</code>, the original mycroft-core listener ported to the OVOS plugin ecosystem. It implements the same <code>recognizer_loop:*</code> contract but does <strong>not</strong> support <code>instant_listen</code>, multiple hotwords, VAD, listening modes, or fallback STT (fallback hotwords via OPM are supported).</p>
 <hr />
 <details class="abstract">
 <summary>Technical Reference</summary>
 <ul>
 <li>
-<p><code>OVOSDinkumVoiceService</code> — <a href="https://github.com/OpenVoiceOS/ovos-dinkum-listener/blob/dev/ovos_dinkum_listener/service.py"><code>ovos_dinkum_listener/service.py</code></a> — the service <code>Thread</code>; <code>run()</code> connects to the bus and drives the voice loop.</p>
+<p><code>OVOSDinkumVoiceService</code>: <a href="https://github.com/OpenVoiceOS/ovos-dinkum-listener/blob/dev/ovos_dinkum_listener/service.py"><code>ovos_dinkum_listener/service.py</code></a>. This is the service <code>Thread</code>. <code>run()</code> connects to the bus and drives the voice loop.</p>
 </li>
 <li>
-<p><code>DinkumVoiceLoop.run()</code> — <a href="https://github.com/OpenVoiceOS/ovos-dinkum-listener/blob/dev/ovos_dinkum_listener/voice_loop/voice_loop.py"><code>ovos_dinkum_listener/voice_loop/voice_loop.py</code></a> — the per-chunk state machine that drives <a href="../vad-plugins/">VAD</a>, <a href="../wake-word-plugins/">Wake Word</a> and <a href="../stt-plugins/">STT</a> via per-state handlers.</p>
+<p><code>DinkumVoiceLoop.run()</code>: <a href="https://github.com/OpenVoiceOS/ovos-dinkum-listener/blob/dev/ovos_dinkum_listener/voice_loop/voice_loop.py"><code>ovos_dinkum_listener/voice_loop/voice_loop.py</code></a>. This is the per-chunk state machine that drives <a href="../vad-plugins/">VAD</a>, <a href="../wake-word-plugins/">Wake Word</a> and <a href="../stt-plugins/">STT</a> via per-state handlers.</p>
 </li>
 <li>
-<p><code>OVOSDinkumVoiceService._stt_text()</code> — <a href="https://github.com/OpenVoiceOS/ovos-dinkum-listener/blob/dev/ovos_dinkum_listener/service.py"><code>ovos_dinkum_listener/service.py</code></a> — emits the utterance message after <a href="../stt-plugins/">STT</a> returns text: the listener emits the spec topic <code>ovos.utterance.handle</code> (<code>SpecMessage.UTTERANCE</code>) directly, and <code>ovos-bus-client</code>'s <code>NamespaceTranslator</code> (see <a href="../bus-service/#namespace-migration">Bus Service</a>) also emits the legacy <code>recognizer_loop:utterance</code> alias for old consumers.</p>
+<p><code>OVOSDinkumVoiceService._stt_text()</code>: <a href="https://github.com/OpenVoiceOS/ovos-dinkum-listener/blob/dev/ovos_dinkum_listener/service.py"><code>ovos_dinkum_listener/service.py</code></a>. It emits the utterance message after <a href="../stt-plugins/">STT</a> returns text. The listener emits the spec topic <code>ovos.utterance.handle</code> (<code>SpecMessage.UTTERANCE</code>) directly, and <code>ovos-bus-client</code>'s <code>NamespaceTranslator</code> (see <a href="../bus-service/#namespace-migration">Bus Service</a>) also emits the legacy <code>recognizer_loop:utterance</code> alias for old consumers.</p>
 </li>
 </ul>
 <hr />
@@ -1695,7 +1695,7 @@ advances chunk by chunk:</p>
 <li>
 <p><strong>States</strong> (<code>ListeningState</code>): <code>wakeword</code> → <code>recording</code> → <code>in_cmd</code> → <code>after_cmd</code>,
   plus <code>sleeping</code> / <code>wake_up</code>, <code>confirmation</code>, <code>before_cmd</code>, <code>pre_wake_vad</code>, and
-  <code>WAITING_CMD = "continuous"</code> — the state used while continuous/hybrid listening waits
+  <code>WAITING_CMD = "continuous"</code>, the state used while continuous/hybrid listening waits
   for an utterance without a wake word.</p>
 </li>
 </ul>
@@ -1704,7 +1704,7 @@ advances chunk by chunk:</p>
 <h2 id="bus-events">Bus Events<a class="headerlink" href="#bus-events" title="Permanent link">&para;</a></h2>
 <p>The listener emits its activity on the OVOS <a href="../bus-service/">messagebus</a>. The most
 useful events for downstream services:</p>
-<p>Canonical (spec) names are shown first, with the legacy name in parentheses. The <code>ovos.listener.*</code> and <code>ovos.utterance.handle</code> names come from <a href="https://github.com/OpenVoiceOS/architecture/blob/dev/audio-in.md">OVOS-AUDIO-IN-1 §5–§6</a>. <code>ovos-dinkum-listener</code> emits the spec <code>ovos.*</code> topics directly for the record/awoken/utterance events (via <code>SpecMessage</code>); for those, <code>ovos-bus-client</code>'s <code>NamespaceTranslator</code> runs on every client with both directions on by default (see <a href="../bus-service/#namespace-migration">Bus Service</a>) — emitting a spec topic also emits its legacy alias, and vice-versa, so subscribers can use either name. The wake-word event (<code>recognizer_loop:wakeword</code>) is the exception: it has no spec counterpart in the rename map, so it travels under the legacy name only. See the <a href="../bus-events/#legacy-spec-migration">legacy ↔ spec migration table</a> for the full mapping.</p>
+<p>Canonical (spec) names are shown first, with the legacy name in parentheses. The <code>ovos.listener.*</code> and <code>ovos.utterance.handle</code> names come from <a href="https://github.com/OpenVoiceOS/architecture/blob/dev/audio-in.md">OVOS-AUDIO-IN-1 §5–§6</a>. <code>ovos-dinkum-listener</code> emits the spec <code>ovos.*</code> topics directly for the record/awoken/utterance events (via <code>SpecMessage</code>). For those, <code>ovos-bus-client</code>'s <code>NamespaceTranslator</code> runs on every client with both directions on by default (see <a href="../bus-service/#namespace-migration">Bus Service</a>). Emitting a spec topic also emits its legacy alias, and vice versa, so subscribers can use either name. The wake-word event (<code>recognizer_loop:wakeword</code>) is the exception: it has no spec counterpart in the rename map, so it travels under the legacy name only. See the <a href="../bus-events/#legacy-spec-migration">legacy ↔ spec migration table</a> for the full mapping.</p>
 <table>
 <thead>
 <tr>
@@ -1749,8 +1749,8 @@ useful events for downstream services:</p>
 <p>It also reacts to inbound commands: <code>ovos.listener.sleep</code> (legacy: <code>recognizer_loop:sleep</code>)
 suspends capture, <code>recognizer_loop:wake_up</code> resumes it, plus <code>recognizer_loop:record_stop</code>,
 <code>recognizer_loop:state.get</code> (read the current mode/state) and <code>recognizer_loop:state.set</code>
-(change the listening mode/state at runtime — send <code>state</code> and/or <code>mode</code> in <code>message.data</code>;
-the handler replies with <code>recognizer_loop:state</code> just like <code>state.get</code>). The full table lives
+(change the listening mode/state at runtime by sending <code>state</code> and/or <code>mode</code> in <code>message.data</code>.
+The handler replies with <code>recognizer_loop:state</code> just like <code>state.get</code>). The full table lives
 in the bus-message spec (<code>message_spec/dinkum.md</code>).</p>
 <h3 id="base64-audio-stt-over-the-bus">Base64 audio STT over the bus<a class="headerlink" href="#base64-audio-stt-over-the-bus" title="Permanent link">&para;</a></h3>
 <p>Remote clients without a local mic (e.g. HiveMind) can push audio to the listener for
@@ -1780,8 +1780,8 @@ STT/loop values):</p>
 <p><code>ovos.listener.sleep</code> rides a session like every other message, but sleep mode is a
 <strong>physical device state</strong>: a sleeping listener captures nothing, for any session
 (AUDIO-IN-1 §6.3). Entering or leaving sleep therefore affects the whole device, not
-only the session that carried the request. Sleep entry is unacknowledged by design —
-the only sleep-related emission is <code>ovos.listener.awoken</code> on the sleep→awake
+only the session that carried the request. Sleep entry is unacknowledged by design.
+The only sleep-related emission is <code>ovos.listener.awoken</code> on the sleep→awake
 transition.</p>
 </div>
 <div class="admonition note">
@@ -1812,8 +1812,8 @@ for how to turn that aliasing off once every consumer speaks the spec namespace.
 <p class="admonition-title">Saving wake-word audio locally</p>
 <p>Set <code>listener.record_wake_words: true</code> and the listener writes each detected
 wake-word clip to disk (under its <code>wake_words</code> save directory) and adds the
-<code>filename</code> to the wake-word message — handy for gathering training data or
-debugging false triggers. The clips stay on the device; the listener itself does
+<code>filename</code> to the wake-word message. This is handy for gathering training data or
+debugging false triggers. The clips stay on the device. The listener itself does
 not upload anything.</p>
 </div>
 

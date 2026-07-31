@@ -2097,7 +2097,7 @@
 </div>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>PHAL is how OpenVoiceOS talks to the physical device it runs on — things like volume controls, Wi-Fi setup, buttons, LEDs, and other hardware. It works through small add-ons (plugins) that each handle one piece of hardware and quietly run in the background, so the assistant can adjust the speaker volume or set up a network connection without you saying a word. Some hardware needs extra system permissions, so PHAL comes in a regular version and a privileged "admin" version. If you're building your own hardware and want to write a PHAL plugin for it, see <a href="../hardware-integrators/">Building Hardware on OVOS</a>. New to the terms? See the <a href="../glossary/">Glossary</a>.</p>
+<p>PHAL is how OpenVoiceOS talks to the physical device it runs on: things like volume controls, Wi-Fi setup, buttons, LEDs, and other hardware. It works through small add-ons (plugins) that each handle one piece of hardware and quietly run in the background, so the assistant can adjust the speaker volume or set up a network connection without you saying a word. Some hardware needs extra system permissions, so PHAL comes in a regular version and a privileged "admin" version. If you're building your own hardware and want to write a PHAL plugin for it, see <a href="../hardware-integrators/">Building Hardware on OVOS</a>. New to the terms? See the <a href="../glossary/">Glossary</a>.</p>
 </div>
 <p>PHAL (Platform/Hardware Abstraction Layer) provides a plugin-based system for integrating
 hardware-specific and platform-level functionality into OVOS. PHAL plugins run as
@@ -2108,13 +2108,13 @@ client at construction, and may listen to or emit any bus event.</p>
 <summary>Technical Reference</summary>
 <ul>
 <li>
-<p><code>PHAL.start()</code> — <a href="https://github.com/OpenVoiceOS/ovos-PHAL/blob/dev/ovos_PHAL/service.py"><code>ovos_PHAL/service.py:97</code></a> — Loads user-level plugins and reports <code>ProcessStatus</code> ready. <code>PHAL</code> is a plain object, not a thread.</p>
+<p><code>PHAL.start()</code> (<a href="https://github.com/OpenVoiceOS/ovos-PHAL/blob/dev/ovos_PHAL/service.py"><code>ovos_PHAL/service.py:97</code></a>): loads user-level plugins and reports <code>ProcessStatus</code> ready. <code>PHAL</code> is a plain object, not a thread.</p>
 </li>
 <li>
-<p><code>AdminPHAL.load_plugins()</code> — <a href="https://github.com/OpenVoiceOS/ovos-PHAL/blob/dev/ovos_PHAL/admin.py"><code>ovos_PHAL/admin.py:45</code></a> — Discovery/validation for privileged/root-level plugins (<code>find_admin_plugins</code>).</p>
+<p><code>AdminPHAL.load_plugins()</code> (<a href="https://github.com/OpenVoiceOS/ovos-PHAL/blob/dev/ovos_PHAL/admin.py"><code>ovos_PHAL/admin.py:45</code></a>): discovery/validation for privileged/root-level plugins (<code>find_admin_plugins</code>).</p>
 </li>
 <li>
-<p><code>PHAL.load_plugins()</code> — <a href="https://github.com/OpenVoiceOS/ovos-PHAL/blob/dev/ovos_PHAL/service.py"><code>ovos_PHAL/service.py:67</code></a> — discovery and validation of user plugins via OPM (<code>find_phal_plugins</code>).</p>
+<p><code>PHAL.load_plugins()</code> (<a href="https://github.com/OpenVoiceOS/ovos-PHAL/blob/dev/ovos_PHAL/service.py"><code>ovos_PHAL/service.py:67</code></a>): discovery and validation of user plugins via OPM (<code>find_phal_plugins</code>).</p>
 </li>
 </ul>
 <hr />
@@ -2196,14 +2196,14 @@ and is launched by its own console script (<code>ovos_PHAL</code> / <code>ovos_P
 point group <code>opm.phal</code>) and applies these rules in order:</p>
 <ol>
 <li>
-<p><strong>Admin-only check</strong> — if the plugin name appears in <code>admin_config</code>, skip it (it will
+<p><strong>Admin-only check</strong>: if the plugin name appears in <code>admin_config</code>, skip it (it will
    be loaded by <code>AdminPHAL</code> instead).</p>
 </li>
 <li>
-<p><strong>Explicit disable</strong> — if <code>config.get("enabled") is False</code>, skip.</p>
+<p><strong>Explicit disable</strong>: if <code>config.get("enabled") is False</code>, skip.</p>
 </li>
 <li>
-<p><strong>Validator</strong> — if the plugin class has a <code>validator</code> attribute, call
+<p><strong>Validator</strong>: if the plugin class has a <code>validator</code> attribute, call
    <code>plug.validator.validate(config)</code>:</p>
 </li>
 <li>
@@ -2216,14 +2216,14 @@ point group <code>opm.phal</code>) and applies these rules in order:</p>
 <p>Raises exception → skip, log error</p>
 </li>
 <li>
-<p><strong>No validator</strong> — defaults to enabled; only <code>enabled: false</code> can disable.
+<p><strong>No validator</strong>: defaults to enabled. Only <code>enabled: false</code> can disable.
    Note: the <code>PHALPlugin</code> base sets <code>validator = PHALValidator</code> by default, so most
    plugins do take the validator path. The default validator just returns
-   <code>config.get("enabled", True) is True</code>; a subclass overrides <code>validate()</code> to add a
+   <code>config.get("enabled", True) is True</code>. A subclass overrides <code>validate()</code> to add a
    real hardware probe.</p>
 </li>
 <li>
-<p><strong>Instantiation</strong> — <code>plug(bus=self.bus, config=config)</code>; stored in <code>self.drivers[name]</code>.</p>
+<p><strong>Instantiation</strong>: <code>plug(bus=self.bus, config=config)</code>, stored in <code>self.drivers[name]</code>.</p>
 </li>
 </ol>
 <h3 id="processstatus-lifecycle">ProcessStatus lifecycle<a class="headerlink" href="#processstatus-lifecycle" title="Permanent link">&para;</a></h3>
@@ -2256,7 +2256,7 @@ services can query over the bus:</p>
 </tbody>
 </table>
 <p>The <code>alive</code> callback exists in the hook map but <code>PHAL.start()</code> does not call
-<code>set_alive()</code>; the status goes straight to <code>started</code> then <code>ready</code>.</p>
+<code>set_alive()</code>. The status goes straight to <code>started</code> then <code>ready</code>.</p>
 <h3 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">&para;</a></h3>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="p">{</span>
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">  </span><span class="nt">&quot;PHAL&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
@@ -2284,7 +2284,7 @@ services can query over the bus:</p>
 </tr>
 <tr>
 <td><code>"enabled": true</code></td>
-<td>Passed to the validator; the default validator treats it as enabled, but a custom <code>validate()</code> can still skip on missing hardware</td>
+<td>Passed to the validator. The default validator treats it as enabled, but a custom <code>validate()</code> can still skip on missing hardware</td>
 </tr>
 <tr>
 <td>Any other keys</td>
@@ -2292,8 +2292,8 @@ services can query over the bus:</p>
 </tr>
 </tbody>
 </table>
-<p>Plugins with a passing validator and no <code>enabled: false</code> are loaded automatically —
-no config entry is needed just to enable a plugin.</p>
+<p>Plugins with a passing validator and no <code>enabled: false</code> are loaded automatically.
+No config entry is needed just to enable a plugin.</p>
 <hr />
 <h2 id="adminphal-service">AdminPHAL Service<a class="headerlink" href="#adminphal-service" title="Permanent link">&para;</a></h2>
 <p><strong>Module:</strong> <code>ovos_PHAL.admin.AdminPHAL</code></p>
@@ -2309,7 +2309,7 @@ hardware capabilities required by its plugins.</p>
 </span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>    <span class="c1"># hooks as PHAL above</span>
 </span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="p">)</span>
 </span></code></pre></div>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1"># Run it via its systemd unit — not casually/interactively as root — and confirm the</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1"># Run it via its systemd unit, not casually/interactively as root, and confirm the</span>
 </span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="c1"># bus is bound to localhost (see bus-service.md) before enabling any admin plugin: this</span>
 </span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="c1"># is a root, bus-reachable process, and the bus itself is unauthenticated.</span>
 </span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>sudo<span class="w"> </span>ovos_PHAL_admin
@@ -2337,7 +2337,7 @@ hardware capabilities required by its plugins.</p>
 <tr>
 <td>Default enable</td>
 <td>Yes (validator + not <code>enabled: false</code>)</td>
-<td><strong>No — requires <code>"enabled": true</code></strong></td>
+<td><strong>No, requires <code>"enabled": true</code></strong></td>
 </tr>
 <tr>
 <td>Skip logic</td>
@@ -2349,17 +2349,17 @@ hardware capabilities required by its plugins.</p>
 <h3 id="security-model">Security model<a class="headerlink" href="#security-model" title="Permanent link">&para;</a></h3>
 <p>Admin plugins are intended for hardware requiring elevated permissions: I²C, SPI, GPIO,
 system power management, thermal control. The explicit <code>enabled: true</code> requirement is a
-security boundary — installed-but-unconfigured admin plugins never run accidentally.
+security boundary. Installed-but-unconfigured admin plugins never run accidentally.
 Skills and the core pipeline never run as root.</p>
 <div class="admonition danger">
 <p class="admonition-title">AdminPHAL plugins run enabled bus actions with root privilege</p>
 <p><code>AdminPHAL</code> receives the same <strong>unauthenticated</strong> <a href="../bus-service/">messagebus</a> client
-as every other service — construction takes a plain <code>MessageBusClient</code>, with no
+as every other service. Construction takes a plain <code>MessageBusClient</code>, with no
 separate credential or capability check. If the bus is reachable, anyone who can emit
 bus messages can trigger any <em>enabled</em> admin plugin's actions, and those actions run
 with root privilege: for example, <code>ovos-PHAL-plugin-system</code> exposes reboot, shutdown
 and factory-reset over the bus. This is a stronger consequence of the bus's lack of
-authentication than "skills aren't sandboxed" — it is root-equivalent remote control,
+authentication than "skills aren't sandboxed." It is root-equivalent remote control,
 not just assistant control. See <a href="../privacy-security/">Privacy &amp; Security</a> for the full
 trust-boundary picture.</p>
 </div>
@@ -2400,27 +2400,27 @@ trust-boundary picture.</p>
 <ul>
 <li>
 <p>Stores <code>self.bus</code>, <code>self.config</code> and <code>self.name</code>. There is <strong>no</strong> <code>self.skill_id</code>
-  attribute; when it emits events it derives a per-plugin id of the form
+  attribute. When it emits events it derives a per-plugin id of the form
   <code>ovos.PHAL.&lt;name&gt;</code>.</p>
 </li>
 <li>
-<p>Its <code>__init__</code> calls <code>self.start()</code> itself — instantiating a plugin already runs
+<p>Its <code>__init__</code> calls <code>self.start()</code> itself. Instantiating a plugin already runs
   its thread. Do all setup <strong>before</strong> <code>super().__init__()</code> returns, or guard against
   the thread already running.</p>
 </li>
 <li>
 <p>It auto-registers a large set of legacy enclosure (<code>enclosure.eyes.*</code>,
-  <code>enclosure.mouth.*</code>) and <code>recognizer_loop:*</code> bus handlers; override the matching
+  <code>enclosure.mouth.*</code>) and <code>recognizer_loop:*</code> bus handlers. Override the matching
   <code>on_*</code> methods to react to them. Call <code>super().shutdown()</code> to unregister them.</p>
 </li>
 </ul>
 <div class="admonition note">
 <p class="admonition-title">Hardware-interface ABCs live in <code>ovos-hardware-helpers</code></p>
-<p>The abstract base classes that hardware PHAL plugins implement —
+<p>The abstract base classes that hardware PHAL plugins implement,
 <code>AbstractLed</code>, <code>AbstractFan</code>, and <code>AbstractSwitches</code> (plus a suite of ready-made
-LED animations) — live in the
+LED animations) live in the
 <a href="https://github.com/OpenVoiceOS/ovos-hardware-helpers"><code>ovos-hardware-helpers</code></a>
-library; subclass them there when writing a hardware PHAL plugin. See
+library. Subclass them there when writing a hardware PHAL plugin. See
 <a href="../hardware-integrators/#writing-your-own-hardware-driver-abstractled-abstractswitches">Building Hardware on OVOS</a>
 for a worked example.</p>
 </div>
@@ -2453,8 +2453,8 @@ for a worked example.</p>
 <div class="language-toml highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="k">[project.entry-points.</span><span class="s2">&quot;opm.phal.admin&quot;</span><span class="k">]</span>
 </span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="n">my-admin-phal-plugin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;my_package:MyAdminPlugin&quot;</span>
 </span></code></pre></div>
-<p><strong>Dual registration</strong> (plugin can run as either user or admin — the service that has the
-plugin name in its config section loads it; the other skips it):</p>
+<p><strong>Dual registration</strong> (plugin can run as either user or admin. The service that has the
+plugin name in its config section loads it. The other skips it):</p>
 <div class="language-toml highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="k">[project.entry-points.</span><span class="s2">&quot;opm.phal&quot;</span><span class="k">]</span>
 </span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="n">my-phal-plugin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;my_package:MyPlugin&quot;</span>
 </span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>
@@ -2486,7 +2486,7 @@ plugin name in its config section loads it; the other skips it):</p>
 <p>Provide a <code>shutdown()</code> method for clean teardown</p>
 </li>
 <li>
-<p>No hot-reload — configuration changes require restarting the PHAL service</p>
+<p>No hot-reload. Configuration changes require restarting the PHAL service</p>
 </li>
 </ul>
 <hr />
@@ -2504,7 +2504,7 @@ plugin name in its config section loads it; the other skips it):</p>
 <td>Voice interactions and user-facing features</td>
 </tr>
 <tr>
-<td>No voice trigger needed — reacts to hardware events</td>
+<td>No voice trigger needed, reacts to hardware events</td>
 <td>Responds to user utterances</td>
 </tr>
 <tr>
@@ -2604,7 +2604,7 @@ skill as a voice frontend.</p>
 </tr>
 <tr>
 <td><a href="#ovos-phal-plugin-hotkeys">ovos-PHAL-plugin-hotkeys</a></td>
-<td>Keyboard hotkeys — define key combos to trigger bus events</td>
+<td>Keyboard hotkeys: define key combos to trigger bus events</td>
 </tr>
 <tr>
 <td><a href="#ovos-phal-sensors">ovos-PHAL-sensors</a></td>

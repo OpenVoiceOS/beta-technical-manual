@@ -1720,14 +1720,14 @@
 <h1 id="skill-settings">Skill Settings<a class="headerlink" href="#skill-settings" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>"Settings" are a skill's saved preferences — things like a username, an API key, or a chosen option — that stick around even after a restart. Think of it as a small notepad each skill keeps to remember how the user wants it to behave. This page shows how a skill reads and writes those values, and how it reacts when a user changes them. To describe an optional (legacy) settings form for community config tools, see <a href="../skill-settings-meta/">Skill Settings Meta</a>; for term definitions see the <a href="../glossary/">Glossary</a>.</p>
+<p>"Settings" are a skill's saved preferences, such as a username, an API key, or a chosen option. They stick around even after a restart. This page shows how a skill reads and writes those values, and how it reacts when a user changes them. For an optional (legacy) settings form used by community config tools, see <a href="../skill-settings-meta/">Skill Settings Meta</a>. For term definitions, see the <a href="../glossary/">Glossary</a>.</p>
 </div>
-<p>Settings provide per-skill persistent key-value storage backed by a JSON file. They allow users to configure and personalize skill behavior — changing defaults, providing API keys, or adjusting integration preferences.</p>
+<p>Settings provide per-skill persistent key-value storage backed by a JSON file. They let users configure skill behavior: changing defaults, providing API keys, or adjusting integration preferences.</p>
 <hr />
 <h2 id="quick-start">Quick start<a class="headerlink" href="#quick-start" title="Permanent link">&para;</a></h2>
-<p>Building on the <code>MyFirstSkill</code> from <a href="../first-skill/">Your First Skill</a>, here's the smallest useful
-use of settings — a greeting that remembers a name the user gave it once:</p>
-<p><code>ovos_skill_my_first/locale/en-us/SetName.intent</code> — one example phrase per line:</p>
+<p>Building on the <code>MyFirstSkill</code> from <a href="../first-skill/">Your First Skill</a>, here is the smallest useful
+use of settings: a greeting that remembers a name the user gave it once.</p>
+<p><code>ovos_skill_my_first/locale/en-us/SetName.intent</code>, one example phrase per line:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>call me {name}
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>my name is {name}
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>set my name to {name}
@@ -1760,9 +1760,9 @@ syntax) and the greeting picks up the stored name automatically, even after a re
 <h2 id="storage-location">Storage Location<a class="headerlink" href="#storage-location" title="Permanent link">&para;</a></h2>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>$XDG_CONFIG_HOME/&lt;base_folder&gt;/skills/&lt;skill_id&gt;/settings.json
 </span></code></pre></div>
-<p><code>&lt;base_folder&gt;</code> defaults to <code>mycroft</code> for backwards-compatibility, but a
+<p><code>&lt;base_folder&gt;</code> defaults to <code>mycroft</code> for backwards compatibility. A
 system-wide <code>ovos.conf</code> (or the <code>OVOS_CONFIG_BASE_FOLDER</code> environment
-variable) can rename it — commonly to <code>OpenVoiceOS</code>. On most Linux
+variable) can rename it, commonly to <code>OpenVoiceOS</code>. On most Linux
 installs <code>XDG_CONFIG_HOME</code> is <code>~/.config</code>, so the effective default is
 <code>~/.config/mycroft/skills/&lt;skill_id&gt;/settings.json</code>.</p>
 <p>For <code>OVOSAbstractApplication</code>:</p>
@@ -1786,8 +1786,8 @@ regardless of how the running system is configured.</p>
 </span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="c1"># Persist immediately (normally auto-saved on shutdown)</span>
 </span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">store</span><span class="p">()</span>
 </span></code></pre></div>
-<p>Always use <code>.get(key, default)</code> — never <code>self.settings["key"]</code> directly, as that raises <code>KeyError</code> if the key is absent.</p>
-<p>Do not access <code>self.settings</code> in <code>__init__()</code>. Wait until <code>initialize()</code> to ensure settings are fully loaded.</p>
+<p>Always use <code>.get(key, default)</code>. Never use <code>self.settings["key"]</code> directly. That raises <code>KeyError</code> if the key is absent.</p>
+<p>Do not access <code>self.settings</code> in <code>__init__()</code>. Wait until <code>initialize()</code>. This ensures settings are fully loaded.</p>
 <p>Do not replace the whole <code>self.settings</code> dict:</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1"># WRONG — replaces the JsonStorage object</span>
 </span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="bp">self</span><span class="o">.</span><span class="n">settings</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;key&quot;</span><span class="p">:</span> <span class="s2">&quot;value&quot;</span><span class="p">}</span>
@@ -1815,10 +1815,10 @@ regardless of how the running system is configured.</p>
 <p>Settings changes can arrive two ways:</p>
 <ol>
 <li>
-<p><strong>Bus event</strong> (<code>ovos.skills.settings_changed</code>) — emitted by <code>ovos-core</code>'s file watcher. This is the primary mechanism in a standard setup.</p>
+<p><strong>Bus event</strong> (<code>ovos.skills.settings_changed</code>): emitted by <code>ovos-core</code>'s file watcher. This is the primary mechanism in a standard setup.</p>
 </li>
 <li>
-<p><strong>Local file watcher</strong> — enabled by setting <code>monitor_own_settings: true</code> in the skill's own settings. Useful in isolated setups (e.g. containers) where the skill and core do not share a filesystem.</p>
+<p><strong>Local file watcher</strong>: enabled by setting <code>monitor_own_settings: true</code> in the skill's own settings. Useful in isolated setups, for example containers, where the skill and core do not share a filesystem.</p>
 </li>
 </ol>
 <hr />
@@ -1826,7 +1826,7 @@ regardless of how the running system is configured.</p>
 <p>Skills can receive remote settings updates via <code>mycroft.skills.settings.changed</code>. Only settings for this skill (keyed by <code>skill_id</code>) are applied. After applying remote settings the file watcher is started if not already running.</p>
 <hr />
 <h2 id="private-settings">Private Settings<a class="headerlink" href="#private-settings" title="Permanent link">&para;</a></h2>
-<p>Skills also have access to <code>self.private_settings</code> (<code>PrivateSettings</code>) — a separate storage for data that should not be shared or synced. Backed by a JSON file outside the standard settings path.</p>
+<p>Skills also have access to <code>self.private_settings</code> (<code>PrivateSettings</code>), a separate storage for data that should not be shared or synced. It is backed by a JSON file outside the standard settings path.</p>
 <hr />
 <h2 id="web-based-settings-ui-community">Web-Based Settings UI (Community)<a class="headerlink" href="#web-based-settings-ui-community" title="Permanent link">&para;</a></h2>
 <p>A community-built web interface, <a href="https://github.com/OscillateLabsLLC/ovos-skill-config-tool">OVOS Skill Config Tool</a>, provides a modern UI for configuring OVOS skills.</p>
@@ -1874,13 +1874,13 @@ regardless of how the running system is configured.</p>
 <h2 id="related-pages">Related Pages<a class="headerlink" href="#related-pages" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
-<p><a href="../skill-classes/">Skill Classes</a> — <code>OVOSSkill</code> base class</p>
+<p><a href="../skill-classes/">Skill Classes</a>: <code>OVOSSkill</code> base class</p>
 </li>
 <li>
-<p><a href="../skill-settings-meta/">Skill Settings Meta</a> — the legacy <code>settingsmeta.json</code> settings-UI schema (optional, usually absent; only used by community config tools)</p>
+<p><a href="../skill-settings-meta/">Skill Settings Meta</a>: the legacy <code>settingsmeta.json</code> settings-UI schema (optional, usually absent, only used by community config tools)</p>
 </li>
 <li>
-<p><a href="../core/">ovos-core</a> — settings file watcher and <code>ovos.skills.settings_changed</code> event</p>
+<p><a href="../core/">ovos-core</a>: settings file watcher and <code>ovos.skills.settings_changed</code> event</p>
 </li>
 </ul>
 <hr />

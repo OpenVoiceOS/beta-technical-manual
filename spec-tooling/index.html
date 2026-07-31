@@ -771,7 +771,7 @@
         <li class="md-nav__item">
   <a href="#ovos-spec-tools-the-reference-implementation" class="md-nav__link">
     <span class="md-ellipsis">
-      ovos-spec-tools — the reference implementation
+      ovos-spec-tools: the reference implementation
     </span>
   </a>
   
@@ -780,7 +780,7 @@
         <li class="md-nav__item">
   <a href="#ovos-test-harness-the-conformance-suite" class="md-nav__link">
     <span class="md-ellipsis">
-      ovos-test-harness — the conformance suite
+      ovos-test-harness: the conformance suite
     </span>
   </a>
   
@@ -789,7 +789,7 @@
         <li class="md-nav__item">
   <a href="#adopting-the-spec-namespace-without-a-flag-day" class="md-nav__link">
     <span class="md-ellipsis">
-      Adopting the spec namespace — without a flag day
+      Adopting the spec namespace: without a flag day
     </span>
   </a>
   
@@ -1319,7 +1319,7 @@
         <li class="md-nav__item">
   <a href="#ovos-spec-tools-the-reference-implementation" class="md-nav__link">
     <span class="md-ellipsis">
-      ovos-spec-tools — the reference implementation
+      ovos-spec-tools: the reference implementation
     </span>
   </a>
   
@@ -1328,7 +1328,7 @@
         <li class="md-nav__item">
   <a href="#ovos-test-harness-the-conformance-suite" class="md-nav__link">
     <span class="md-ellipsis">
-      ovos-test-harness — the conformance suite
+      ovos-test-harness: the conformance suite
     </span>
   </a>
   
@@ -1337,7 +1337,7 @@
         <li class="md-nav__item">
   <a href="#adopting-the-spec-namespace-without-a-flag-day" class="md-nav__link">
     <span class="md-ellipsis">
-      Adopting the spec namespace — without a flag day
+      Adopting the spec namespace: without a flag day
     </span>
   </a>
   
@@ -1364,7 +1364,7 @@
 <h1 id="specification-tooling">Specification Tooling<a class="headerlink" href="#specification-tooling" title="Permanent link">&para;</a></h1>
 <div class="admonition note">
 <p class="admonition-title">Maturity — Beta ⬤⬤⬤◯◯</p>
-<p>In real use but still settling — watch releases for the occasional breaking change. Rated by <a href="../maturity/">repository health</a>, not version.</p>
+<p>In real use but still settling. Watch releases for the occasional breaking change. Rated by <a href="../maturity/">repository health</a>, not version.</p>
 </div>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
@@ -1378,15 +1378,15 @@ a flag day).</p>
 </div>
 <details class="info">
 <summary>📐 Formal specification</summary>
-<p>These tools serve the <strong><a href="https://github.com/OpenVoiceOS/architecture">OpenVoiceOS/architecture</a></strong> specs — see the <a href="../architecture-specs/">spec index</a>.</p>
+<p>These tools serve the <strong><a href="https://github.com/OpenVoiceOS/architecture">OpenVoiceOS/architecture</a></strong> specs. See the <a href="../architecture-specs/">spec index</a>.</p>
 </details>
 <hr />
-<h2 id="ovos-spec-tools-the-reference-implementation">ovos-spec-tools — the reference implementation<a class="headerlink" href="#ovos-spec-tools-the-reference-implementation" title="Permanent link">&para;</a></h2>
+<h2 id="ovos-spec-tools-the-reference-implementation">ovos-spec-tools: the reference implementation<a class="headerlink" href="#ovos-spec-tools-the-reference-implementation" title="Permanent link">&para;</a></h2>
 <p><a href="https://github.com/OpenVoiceOS/ovos-spec-tools"><strong>ovos-spec-tools</strong></a> is the
 <strong>single conformant implementation</strong> of the low-level primitives the specs
 describe. OVOS components used to reimplement template expansion, resource
-loading, and language matching in several places — and the copies drifted.
-Rather than reimplement (and re-introduce the bugs), depend on this package; it
+loading, and language matching in several places, and the copies drifted.
+Rather than reimplement (and re-introduce the bugs), depend on this package. It
 is dependency-light (the core has <strong>no dependencies</strong>) and tracks the specs
 clause-for-clause.</p>
 <table>
@@ -1467,7 +1467,7 @@ clause-for-clause.</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>ovos-spec-lint<span class="w"> </span>my-skill/locale
 </span></code></pre></div>
 <p>The session carrier, the keyword-intent builder, and the canonical topic
-vocabulary follow the same pattern — plain data plus stdlib-only helpers:</p>
+vocabulary follow the same pattern: plain data plus stdlib-only helpers.</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kn">from</span> <span class="nn">ovos_spec_tools</span> <span class="kn">import</span> <span class="n">IntentBuilder</span><span class="p">,</span> <span class="n">Session</span><span class="p">,</span> <span class="n">SpecMessage</span>
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
 </span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="c1"># OVOS-SESSION-1 wire-shape carrier; SessionManager (in ovos_spec_tools.session)</span>
@@ -1484,62 +1484,62 @@ vocabulary follow the same pattern — plain data plus stdlib-only helpers:</p>
 <p class="admonition-title">When to reach for it</p>
 <p>Building an intent-matching pipeline plugin, a skill loader, a satellite, or any third-party
 tool that touches OVOS templates, locale files, language selection, or the
-bus envelope? Depend on <code>ovos-spec-tools</code> instead of hand-rolling — that is
+bus envelope? Depend on <code>ovos-spec-tools</code> instead of hand-rolling. That is
 exactly the drift the package exists to prevent. See also
 <a href="../resource-files/">Resource Files</a> and <a href="../lang-selection/">Language Selection</a>.</p>
 </div>
 <hr />
-<h2 id="ovos-test-harness-the-conformance-suite">ovos-test-harness — the conformance suite<a class="headerlink" href="#ovos-test-harness-the-conformance-suite" title="Permanent link">&para;</a></h2>
+<h2 id="ovos-test-harness-the-conformance-suite">ovos-test-harness: the conformance suite<a class="headerlink" href="#ovos-test-harness-the-conformance-suite" title="Permanent link">&para;</a></h2>
 <p><a href="https://github.com/OpenVoiceOS/ovos-test-harness"><strong>ovos-test-harness</strong></a> is the
 <strong>executable counterpart</strong> of the specs. Each test asserts one observable bus
 behavior a spec mandates, against a <em>real running OVOS stack</em>. If the specs are
-the law, this harness is the courtroom: it puts a concrete combination of OVOS
-repos on trial against the law and returns a verdict per normative clause —
+the law, this harness is the courtroom. It puts a concrete combination of OVOS
+repos on trial against the law and returns a verdict per normative clause:
 <strong>pass</strong>, <strong><code>xfail</code></strong> (a documented gap), or <strong>fail</strong>.</p>
 <p><strong>Why a separate repo.</strong> A single spec clause is only satisfied when a
-<em>combination</em> of branches across a dozen repos lines up — <code>ovos-core</code>,
+<em>combination</em> of branches across a dozen repos lines up: <code>ovos-core</code>,
 <code>ovos-workshop</code>, <code>ovos-bus-client</code>, the pipeline plugins, fixture skills. You
 cannot prove that from inside any one repo, because that repo's CI installs only
 its own package plus whatever pip resolves, and pip is free to downgrade a
 sibling out of the exact combination you are trying to validate.</p>
-<p><strong>The model.</strong> The harness is <strong>not a package</strong> — there is no <code>pip install .</code>.
+<p><strong>The model.</strong> The harness is <strong>not a package</strong>. There is no <code>pip install .</code>.
 Its <a href="https://github.com/OpenVoiceOS/ovos-test-harness"><code>requirements.txt</code></a> is the
 <strong>stack under test</strong>: every line pins one repo to an exact git ref or version, so
 CI never re-resolves and never downgrades a component. Each test then:</p>
 <ul>
-<li>imports the spec vocabulary from <a href="https://github.com/OpenVoiceOS/ovos-spec-tools"><code>ovos-spec-tools</code></a>, so a topic name is <em>provably spec-defined</em> rather than a magic string;</li>
-<li>drives and captures the live bus through <a href="https://github.com/OpenVoiceOS/ovoscope"><code>ovoscope</code></a> (see <a href="../ovoscope-overview/">Testing Skills</a>);</li>
+<li>imports the spec vocabulary from <a href="https://github.com/OpenVoiceOS/ovos-spec-tools"><code>ovos-spec-tools</code></a>, so a topic name is <em>provably spec-defined</em> rather than a magic string.</li>
+<li>drives and captures the live bus through <a href="https://github.com/OpenVoiceOS/ovoscope"><code>ovoscope</code></a> (see <a href="../ovoscope-overview/">Testing Skills</a>).</li>
 <li>asserts the spec-mandated behavior and records pass / <code>xfail</code> / fail.</li>
 </ul>
 <p><strong>Coverage.</strong> All 20 specs on the architecture <code>dev</code> branch currently have
-conformance suites (SESSION-1 and SESSION-2 share one suite; INTENT-4 has both an
+conformance suites (SESSION-1 and SESSION-2 share one suite. INTENT-4 has both an
 orchestrator suite and a per-plugin registration-compliance suite). The
 authoritative spec→suite traceability matrix lives in the repo's
-<a href="https://github.com/OpenVoiceOS/ovos-test-harness/blob/dev/docs/coverage.md"><code>docs/coverage.md</code></a>;
-documented conformance gaps are recorded as <code>xfail</code> entries and catalogued in
+<a href="https://github.com/OpenVoiceOS/ovos-test-harness/blob/dev/docs/coverage.md"><code>docs/coverage.md</code></a>.
+Documented conformance gaps are recorded as <code>xfail</code> entries and catalogued in
 <a href="https://github.com/OpenVoiceOS/ovos-test-harness/blob/dev/docs/known-gaps.md"><code>docs/known-gaps.md</code></a>.</p>
 <p><strong>Pre-flighting a cross-repo change.</strong> To certify an unmerged combination,
 maintainers pin the candidate branches in <code>requirements.txt</code> and open a harness
-PR — CI then installs exactly that stack and runs the full conformance suite
+PR. CI then installs exactly that stack and runs the full conformance suite
 against it, flipping each ref to <code>@dev</code> as it merges. One structural limit: two
 branches of the <em>same</em> repo cannot both be installed, so pick one ref per repo.</p>
 <p>This is where an implementation is <strong>proven to conform</strong> to the merged
-architecture specs — the bridge between the prescriptive Markdown and the code
+architecture specs. It is the bridge between the prescriptive Markdown and the code
 that has to honour it.</p>
 <hr />
-<h2 id="adopting-the-spec-namespace-without-a-flag-day">Adopting the spec namespace — without a flag day<a class="headerlink" href="#adopting-the-spec-namespace-without-a-flag-day" title="Permanent link">&para;</a></h2>
+<h2 id="adopting-the-spec-namespace-without-a-flag-day">Adopting the spec namespace: without a flag day<a class="headerlink" href="#adopting-the-spec-namespace-without-a-flag-day" title="Permanent link">&para;</a></h2>
 <p>The specs rename many bus topics into the <code>ovos.*</code> namespace (for example
 <code>recognizer_loop:utterance</code> → <code>ovos.utterance.handle</code>). Migrating an ecosystem
-of independently-released repos to new topic names all at once is impossible —
-so <a href="../bus-service/"><strong>ovos-bus-client</strong></a> does it <strong>automatically and
+of independently-released repos to new topic names all at once is impossible.
+So <a href="../bus-service/"><strong>ovos-bus-client</strong></a> does it <strong>automatically and
 incrementally</strong>. A single message travels the wire once, and each
 connected client translates on receive: a subscription to either the legacy or
 the <code>ovos.*</code> name is also delivered its migrated counterpart locally
 (de-duplicated), so a producer and consumer can each switch to <code>ovos.*</code>
 <strong>in any order, with no coordination</strong>.</p>
 <p>This is what makes spec adoption gradual rather than a breaking change. The full
-mechanism — and how to turn the bridges off once a deployment is fully
-modernised — is documented under
+mechanism, and how to turn the bridges off once a deployment is fully
+modernised, is documented under
 <a href="../bus-service/#namespace-migration"><strong>messagebus Service → Namespace migration</strong></a>.</p>
 
 

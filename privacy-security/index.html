@@ -1425,19 +1425,19 @@
 <p>OVOS is designed to run locally and without a cloud account, but a <strong>default
 install still talks to the network</strong> for speech recognition and speech
 synthesis unless you change the plugins, and the <a href="../bus-service/">messagebus</a>
-that skills use to talk to each other has <strong>no authentication</strong> — anything
+that skills use to talk to each other has <strong>no authentication</strong>. Anything
 that can reach it, or any skill you install, has full control of the
 assistant. This page inventories what a stock install actually sends over
 the network, who you're trusting when you install a skill, and how to
 lock things down. See the <a href="../glossary/">Glossary</a> for unfamiliar terms.</p>
 </div>
 <p>This page describes the <strong><code>ovos</code> profile installed by the <a href="../ovos-installer/"><code>ovos-installer</code></a>
-with its bundled defaults</strong> — the most common path. Anything below can be
+with its bundled defaults</strong>, the most common path. Anything below can be
 changed by picking different plugins or a different <a href="../composable-deployments/">profile</a>,
 so where behavior depends on a choice you made, this page says so instead of
 guessing.</p>
-<p>None of this is unusual for a local-only Linux service: the trust model below is the same
-one any local daemon or dev server has — it mostly starts to matter once you expose a port
+<p>None of this is unusual for a local-only Linux service. The trust model below is the same
+one any local daemon or dev server has. It mostly starts to matter once you expose a port
 to a network you don't control, or install a skill whose source you haven't vetted.</p>
 <hr />
 <h2 id="network-surface-of-a-default-install">Network surface of a default install<a class="headerlink" href="#network-surface-of-a-default-install" title="Permanent link">&para;</a></h2>
@@ -1453,22 +1453,22 @@ to a network you don't control, or install a skill whose source you haven't vett
 <tr>
 <td>Speech-to-text (STT)</td>
 <td><code>ovos-stt-plugin-server</code>, which by default talks to a <strong>public whisper server</strong> run by the OVOS community</td>
-<td><strong>No</strong> — your voice audio leaves the device</td>
+<td><strong>No</strong>, your voice audio leaves the device</td>
 </tr>
 <tr>
 <td>Text-to-speech (TTS)</td>
 <td><code>ovos-tts-plugin-server</code>, which by default talks to a <strong>public Piper server</strong> (the "Alan Pope" voice)</td>
-<td><strong>No</strong> — the text you want spoken leaves the device</td>
+<td><strong>No</strong>, the text you want spoken leaves the device</td>
 </tr>
 <tr>
 <td>Translation / language detection</td>
-<td><code>language.translation_module</code> defaults to <code>ovos-translate-plugin-server</code> and <code>language.detection_module</code> to <code>ovos-lang-detector-plugin-server</code>, both pointed at <strong>public servers</strong> run by the OVOS community; the declared fallbacks are <code>ovos-google-translate-plugin</code> / <code>ovos-google-lang-detector-plugin</code></td>
-<td><strong>No</strong> — text to be translated or language-detected leaves the device. Self-host <a href="https://github.com/OpenVoiceOS/ovos-translate-server">ovos-translate-server</a> and point the plugins at it, or pick an offline plugin</td>
+<td><code>language.translation_module</code> defaults to <code>ovos-translate-plugin-server</code> and <code>language.detection_module</code> to <code>ovos-lang-detector-plugin-server</code>, both pointed at <strong>public servers</strong> run by the OVOS community. The declared fallbacks are <code>ovos-google-translate-plugin</code> / <code>ovos-google-lang-detector-plugin</code></td>
+<td><strong>No</strong>. Text to be translated or language-detected leaves the device. Self-host <a href="https://github.com/OpenVoiceOS/ovos-translate-server">ovos-translate-server</a> and point the plugins at it, or pick an offline plugin</td>
 </tr>
 <tr>
 <td>LLM / persona solvers</td>
-<td>Not configured by default — but as soon as an LLM-backed solver or persona plugin is configured (e.g. an OpenAI-compatible <code>llm.module</code>), the user's query and/or conversation text is sent to whichever third-party cloud LLM provider that plugin points at. This includes the pre-built <code>Remote Llama</code> demo persona shipped with <a href="../openai-plugin/"><code>ovos-openai-plugin</code></a>, which is pointed at a public ollama/LLama server by default</td>
-<td>Depends on the plugin — see the <a href="../llm-transformers/">LLM transformers</a>, <a href="../personas/">personas</a> and <a href="../openai-plugin/">OpenAI plugin</a> pages for offline vs. cloud options</td>
+<td>Not configured by default, but as soon as an LLM-backed solver or persona plugin is configured (e.g. an OpenAI-compatible <code>llm.module</code>), the user's query and/or conversation text is sent to whichever third-party cloud LLM provider that plugin points at. This includes the pre-built <code>Remote Llama</code> demo persona shipped with <a href="../openai-plugin/"><code>ovos-openai-plugin</code></a>, which is pointed at a public ollama/LLama server by default</td>
+<td>Depends on the plugin. See the <a href="../llm-transformers/">LLM transformers</a>, <a href="../personas/">personas</a> and <a href="../openai-plugin/">OpenAI plugin</a> pages for offline vs. cloud options</td>
 </tr>
 <tr>
 <td>Wake word</td>
@@ -1478,31 +1478,31 @@ to a network you don't control, or install a skill whose source you haven't vett
 <tr>
 <td>Connectivity checks</td>
 <td><code>network_tests</code> polls <code>https://api.ipify.org</code>, <code>1.1.1.1</code>, <code>8.8.8.8</code>, <code>http://nmcheck.gnome.org/check_network_status.txt</code> and <code>https://checkonline.home-assistant.io/online.txt</code> to decide whether the device is online and behind a captive portal</td>
-<td><strong>No</strong> — but every URL is a config key; point <code>network_tests</code> at your own infrastructure</td>
+<td><strong>No</strong>, but every URL is a config key. Point <code>network_tests</code> at your own infrastructure</td>
 </tr>
 <tr>
 <td>Backend / pairing</td>
-<td>OVOS is <strong>backendless</strong> by default — there is no backend key in the shipped <code>mycroft.conf</code> at all, nothing is paired, and no account exists unless you add one yourself</td>
+<td>OVOS is <strong>backendless</strong> by default. There is no backend key in the shipped <code>mycroft.conf</code> at all, nothing is paired, and no account exists unless you add one yourself</td>
 <td><strong>Yes</strong></td>
 </tr>
 <tr>
 <td>Remote config</td>
-<td>OVOS has no remote/backend config layer — nothing on the network can push settings into your <code>mycroft.conf</code></td>
+<td>OVOS has no remote/backend config layer. Nothing on the network can push settings into your <code>mycroft.conf</code></td>
 <td><strong>Yes</strong></td>
 </tr>
 <tr>
 <td>Update checks</td>
-<td>The installer does <strong>not</strong> automatically contact a server; you re-run it manually to check for a newer release</td>
+<td>The installer does <strong>not</strong> automatically contact a server. You re-run it manually to check for a newer release</td>
 <td><strong>Yes</strong></td>
 </tr>
 <tr>
 <td>Install-time telemetry</td>
-<td>One-time, opt-in — see below</td>
+<td>One-time, opt-in, see below</td>
 <td>Depends on your answer</td>
 </tr>
 <tr>
 <td>Ongoing usage telemetry</td>
-<td>Opt-in, continues to run after install — see below</td>
+<td>Opt-in, continues to run after install, see below</td>
 <td>Depends on your answer</td>
 </tr>
 </tbody>
@@ -1512,7 +1512,7 @@ to a network you don't control, or install a skill whose source you haven't vett
 <p>Out of the box, speech recognition, speech synthesis <strong>and</strong> translation /
 language detection are all configured against <strong>public servers operated by
 the OVOS community</strong>, not services running on your device. If you care about
-audio or text never leaving the machine, switch to an offline plugin — see
+audio or text never leaving the machine, switch to an offline plugin. See
 <a href="../stt-plugins/">STT plugins</a> and <a href="../tts-plugins/">TTS plugins</a> for the
 offline options (for example <code>onnx-asr</code>-based STT or <code>ovos-tts-plugin-piper</code>
 running locally), or point the server plugins at a server you run yourself
@@ -1532,9 +1532,9 @@ servers entirely: fully offline plugins exist for everything.</p>
 <h3 id="a-fully-offline-stack">A fully offline stack<a class="headerlink" href="#a-fully-offline-stack" title="Permanent link">&para;</a></h3>
 <p>Each row above links to its own offline alternative, but assembling all of them into one
 working config means cross-referencing four separate catalog pages. Here they are combined
-into a single <code>~/.config/mycroft/mycroft.conf</code> — offline STT, TTS, VAD, wake word, and
+into a single <code>~/.config/mycroft/mycroft.conf</code>: offline STT, TTS, VAD, wake word, and
 translation/language-detection, all running on-device:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>// ~/.config/mycroft/mycroft.conf — fully offline stack
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>// ~/.config/mycroft/mycroft.conf: fully offline stack
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>{
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>  &quot;stt&quot;: {
 </span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>    &quot;module&quot;: &quot;ovos-stt-plugin-onnx-asr&quot;
@@ -1560,14 +1560,14 @@ translation/language-detection, all running on-device:</p>
 </span><span id="__span-0-24"><a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>}
 </span></code></pre></div>
 <p>LLM-backed solvers and personas are not part of this table because they're not configured
-by default at all — see <a href="../llm-transformers/">LLM transformers</a> and <a href="../personas/">personas</a>.
+by default at all. See <a href="../llm-transformers/">LLM transformers</a> and <a href="../personas/">personas</a>.
 If you do want one, it's still possible to keep the whole stack offline: point it at a
 <strong>local</strong> model (for example one served by <code>llama.cpp</code> on the same machine) instead of a
 cloud provider, so the query and conversation text never leave the device.</p>
 <div class="admonition tip">
 <p class="admonition-title">depends on selected profile</p>
 <p>A <code>server</code> or <code>satellite</code> install (<a href="../composable-deployments/">composable deployments</a>)
-changes which of these components even run on this particular device — the
+changes which of these components even run on this particular device. The
 table above describes the all-in-one <code>ovos</code> profile.</p>
 </div>
 <h3 id="point-a-device-at-your-own-lan-servers">Point a device at your own LAN servers<a class="headerlink" href="#point-a-device-at-your-own-lan-servers" title="Permanent link">&para;</a></h3>
@@ -1576,7 +1576,7 @@ machine on your local network (say <code>192.168.1.50</code>), keep your voice a
 internet without giving up the server model. Both companion plugins go in the same
 <code>~/.config/mycroft/mycroft.conf</code>, but note the client-side config keys differ: the STT
 plugin uses <code>urls</code> (a list), the TTS plugin uses <code>host</code>.</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>// ~/.config/mycroft/mycroft.conf — LAN speech backend at 192.168.1.50
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>// ~/.config/mycroft/mycroft.conf: LAN speech backend at 192.168.1.50
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>{
 </span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>  &quot;stt&quot;: {
 </span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>    &quot;module&quot;: &quot;ovos-stt-plugin-server&quot;,
@@ -1607,9 +1607,9 @@ same thing:</p>
   when the installer finishes: things like CPU architecture, OS, the chosen
   channel/profile, and which features were enabled. It is sent once, during
   installation, to a metrics endpoint run by the community, and nothing about
-  this is ongoing — see the field table on the
+  this is ongoing. See the field table on the
   <a href="../ovos-installer/#anonymous-telemetry">installer page</a> for the exact list.</li>
-<li><strong>Ongoing usage telemetry</strong> (<code>share_usage_telemetry</code>) is different: saying
+<li><strong>Ongoing usage telemetry</strong> (<code>share_usage_telemetry</code>) is different. Saying
   yes here adds an <code>open_data.intent_urls</code> entry to your installed
   <code>mycroft.conf</code>, which makes the <strong>running assistant</strong> report intent-matching
   data on an ongoing basis, not just during setup. If you want telemetry to
@@ -1624,13 +1624,13 @@ connection is at that moment.</p>
 <hr />
 <h2 id="opt-in-wake-word-and-stt-sample-donation">Opt-in wake-word and STT sample donation<a class="headerlink" href="#opt-in-wake-word-and-stt-sample-donation" title="Permanent link">&para;</a></h2>
 <p>Beyond intent-matching metrics, <code>ovos-dinkum-listener</code> can optionally upload the
-audio samples it captures — wake-word detections and transcribed utterances — to
+audio samples it captures (wake-word detections and transcribed utterances) to
 an <a href="https://github.com/OpenVoiceOS/ovos-opendata-server">ovos-opendata-server</a>
 instance, so contributors can help improve wake-word and STT plugins with real
 recordings. This is exclusively opt-in and off by default: nothing is ever
 uploaded unless <code>open_data.ww_urls</code> or <code>open_data.stt_urls</code> is explicitly
 configured with at least one server, and there is no default server. Uploads run
-in a background thread and never block the listener; failures are logged and
+in a background thread and never block the listener. Failures are logged and
 otherwise ignored. See <a href="../config-reference/#all-keys-generated"><code>open_data.ww_urls</code> / <code>open_data.stt_urls</code></a> for the exact config keys.</p>
 <hr />
 <h2 id="what-is-written-to-disk">What is written to disk<a class="headerlink" href="#what-is-written-to-disk" title="Permanent link">&para;</a></h2>
@@ -1659,32 +1659,32 @@ to <code>~/.local/share/mycroft/listener/</code>.</p>
 <tr>
 <td><code>&lt;save_path&gt;/recordings/</code></td>
 <td>Whenever a recording session runs</td>
-<td>none — always written</td>
+<td>none, always written</td>
 </tr>
 </tbody>
 </table>
 <p>Because <code>record_wake_words</code> and <code>save_utterances</code> are both off by default, ordinary
 wake-word detections and spoken commands are <strong>not</strong> written to disk on a stock install.</p>
-<p>A <strong>recording session</strong> — the dictation-style listener state a skill enters to capture a
-block of audio, rather than the normal wake-word-then-command flow — is different: it
+<p>A <strong>recording session</strong>, the dictation-style listener state a skill enters to capture a
+block of audio rather than the normal wake-word-then-command flow, is different. It
 writes the captured audio as a <code>.wav</code> plus a JSON sidecar of its metadata into
 <code>&lt;save_path&gt;/recordings/</code>, and this does not depend on the two keys above. Nothing prunes
 that directory, so the files stay until you remove them. On shared or multi-user devices,
 audit and clear it as part of your routine, and set restrictive permissions on <code>save_path</code>.</p>
 <hr />
 <h2 id="the-messagebus-is-a-trust-boundary-not-a-security-boundary">The messagebus is a trust boundary, not a security boundary<a class="headerlink" href="#the-messagebus-is-a-trust-boundary-not-a-security-boundary" title="Permanent link">&para;</a></h2>
-<p>Everything inside OVOS — skills, plugins, the voice pipeline — talks over the
+<p>Everything inside OVOS (skills, plugins, the voice pipeline) talks over the
 local <a href="../bus-service/">messagebus</a>. As documented there:</p>
 <div class="admonition danger">
 <p class="admonition-title">The bus has no authentication and no encryption</p>
 <p>Any process that can open a WebSocket connection to the bus (default
-<code>127.0.0.1:8181</code>) has full control of the assistant: it can trigger any
-skill, read everything crossing the bus, and — through plugins that expose
-subprocess or file access — potentially run arbitrary code. This is not
-limited to skill-level mischief: if any <a href="../phal/#security-model">AdminPHAL</a>
+<code>127.0.0.1:8181</code>) has full control of the assistant. It can trigger any
+skill, read everything crossing the bus, and, through plugins that expose
+subprocess or file access, potentially run arbitrary code. This is not
+limited to skill-level mischief. If any <a href="../phal/#security-model">AdminPHAL</a>
 system plugin is enabled (for example <code>ovos-PHAL-plugin-system</code>), the same
 unauthenticated bus can trigger reboot, shutdown or factory-reset with root
-privilege — an exposed bus is a root-privileged attack surface, not just an
+privilege. An exposed bus is a root-privileged attack surface, not just an
 assistant-control one. Never bind the bus to <code>0.0.0.0</code> or port-forward it to
 the internet. For remote access (satellites, phones, other rooms) use
 <a href="../hivemind-agents/">HiveMind</a> instead, which adds authentication and
@@ -1693,8 +1693,8 @@ encryption on top of the same bus protocol.</p>
 <h2 id="skills-are-not-sandboxed">Skills are not sandboxed<a class="headerlink" href="#skills-are-not-sandboxed" title="Permanent link">&para;</a></h2>
 <p>There is no sandbox, permission model, or capability system for skills.
 <strong>Installing a skill means running arbitrary Python code as the OVOS user</strong>,
-with the same filesystem and network access as the rest of the assistant —
-exactly like installing a Python package from PyPI or <code>pip install</code>ing
+with the same filesystem and network access as the rest of the assistant.
+This is exactly like installing a Python package from PyPI or <code>pip install</code>ing
 something from GitHub, because that is literally the mechanism (see
 <a href="../skill-installer/">Skill Installer</a>). Only install skills whose source you
 trust, the same way you'd vet any other code you run.</p>
@@ -1710,10 +1710,10 @@ root-equivalent power over the device, and only combine it with a bus that is
 kept strictly local.</p>
 <hr />
 <h2 id="mycroftconf-can-contain-plaintext-secrets"><code>mycroft.conf</code> can contain plaintext secrets<a class="headerlink" href="#mycroftconf-can-contain-plaintext-secrets" title="Permanent link">&para;</a></h2>
-<p>Anything you configure for cloud integrations — LLM API keys (<code>llm.key</code>), a
+<p>Anything you configure for cloud integrations (LLM API keys (<code>llm.key</code>), a
 Home Assistant long-lived access token, custom STT/TTS server credentials,
 an <a href="https://github.com/OpenVoiceOS/ovos-opendata-server"><code>ovos-opendata-server</code></a>
-<code>open_data.api_key</code> — is stored <strong>as plaintext</strong> in your user config, typically
+<code>open_data.api_key</code>) is stored <strong>as plaintext</strong> in your user config, typically
 <code>~/.config/mycroft/mycroft.conf</code> (see <a href="../config/#file-locations">Configuration Management</a>).
 There is no secrets manager or encryption layer.</p>
 <div class="admonition warning">
@@ -1721,7 +1721,7 @@ There is no secrets manager or encryption layer.</p>
 <ul>
 <li>Set restrictive file permissions on it (<code>chmod 600 ~/.config/mycroft/mycroft.conf</code>)
   if the account is shared with anyone else.</li>
-<li><strong>Don't sync it as part of your dotfiles</strong> to a public repository — a
+<li><strong>Don't sync it as part of your dotfiles</strong> to a public repository. A
   GitHub search for <code>llm.key</code> or a Home Assistant token is exactly how
   these things leak. If you version-control your dotfiles, exclude this
   file (or template it and inject secrets from an untracked source) instead
@@ -1733,27 +1733,27 @@ There is no secrets manager or encryption layer.</p>
 <hr />
 <h2 id="summary-checklist">Summary checklist<a class="headerlink" href="#summary-checklist" title="Permanent link">&para;</a></h2>
 <ul class="task-list">
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Decide whether public STT/TTS servers are acceptable for your use case;
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Decide whether public STT/TTS servers are acceptable for your use case.
       switch to offline or self-hosted plugins if not (<a href="../stt-plugins/">STT plugins</a>,
       <a href="../tts-plugins/">TTS plugins</a>).</li>
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Keep the messagebus bound to <code>127.0.0.1</code>; never expose port <code>8181</code>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Keep the messagebus bound to <code>127.0.0.1</code>. Never expose port <code>8181</code>
       directly to the internet (<a href="../bus-service/">Bus Service</a>).</li>
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Keep <code>gui_websocket.host</code> at its shipped default <code>127.0.0.1</code>; never widen it to
-      <code>0.0.0.0</code> for a remote display without a VPN or an authenticating proxy — that
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Keep <code>gui_websocket.host</code> at its shipped default <code>127.0.0.1</code>. Never widen it to
+      <code>0.0.0.0</code> for a remote display without a VPN or an authenticating proxy. That
       socket carries the same authority as the bus
       (<a href="../gui-service/">GUI Service</a>).</li>
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Point <code>network_tests</code> at your own infrastructure if the default connectivity
       probes are not acceptable.</li>
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Audit and clear <code>~/.local/share/mycroft/listener/recordings/</code> on shared
-      devices — nothing prunes it.</li>
+      devices. Nothing prunes it.</li>
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Leave <code>allow_pip</code> off unless you specifically need runtime skill
       installation, and never combine it with a non-local bus
       (<a href="../skill-installer/">Skill Installer</a>).</li>
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Only install skills whose source you trust — there is no sandbox.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Only install skills whose source you trust. There is no sandbox.</li>
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Protect <code>mycroft.conf</code>'s file permissions and keep it out of shared
       dotfile repositories.</li>
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Decide independently on install-time telemetry and ongoing usage
-      telemetry — they are separate opt-ins (<a href="../ovos-installer/#anonymous-telemetry">installer telemetry</a>).</li>
+      telemetry. They are separate opt-ins (<a href="../ovos-installer/#anonymous-telemetry">installer telemetry</a>).</li>
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> For remote/multi-room setups, use <a href="../hivemind-agents/">HiveMind</a> instead
       of exposing the bus directly.</li>
 </ul>

@@ -1728,24 +1728,24 @@
 <h1 id="skill-installer-skillsstore">Skill Installer (SkillsStore)<a class="headerlink" href="#skill-installer-skillsstore" title="Permanent link">&para;</a></h1>
 <div class="admonition success">
 <p class="admonition-title">Maturity — Mature ⬤⬤⬤⬤⬤</p>
-<p>Long-lived, battle-tested, and actively maintained — depend on it freely. Rated by <a href="../maturity/">repository health</a>, not version.</p>
+<p>Long-lived and actively maintained. Depend on it freely. Rated by <a href="../maturity/">repository health</a>, not version.</p>
 </div>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>This is the built-in part of OVOS that can add or remove <a href="../skill-examples/">skills</a> (and other software packages) while the assistant is running — no need to open a terminal or restart anything. Think of it as an app-store back end: something asks "install this skill," and OVOS downloads and wires it in on the fly. It is switched off unless explicitly enabled, for safety. See <a href="../skill-manager/">Skill Manager</a> for how skills then get loaded, or the <a href="../glossary/">Glossary</a> for terms.</p>
+<p>This is the built-in part of OVOS that can add or remove <a href="../skill-examples/">skills</a> (and other software packages) while the assistant is running. No terminal or restart is needed. Something asks "install this skill," and OVOS downloads and wires it in on the fly. It is switched off unless explicitly enabled, for safety. See <a href="../skill-manager/">Skill Manager</a> for how skills then get loaded, or the <a href="../glossary/">Glossary</a> for terms.</p>
 </div>
-<p><strong>Module:</strong> <code>ovos_core.skill_installer.SkillsStore</code> — <a href="https://github.com/OpenVoiceOS/ovos-core/blob/dev/ovos_core/skill_installer.py"><code>ovos_core/skill_installer.py</code></a></p>
+<p><strong>Module:</strong> <code>ovos_core.skill_installer.SkillsStore</code>: <a href="https://github.com/OpenVoiceOS/ovos-core/blob/dev/ovos_core/skill_installer.py"><code>ovos_core/skill_installer.py</code></a></p>
 <p>The <code>SkillsStore</code> is a built-in subsystem of <code>ovos-core</code> that provides runtime skill and package management via the <a href="../bus-service/">messagebus</a>.</p>
-<p><strong>In plain terms:</strong> other parts of the system (or you, over the bus) can ask OVOS to <code>pip install</code> a skill or library while it is running — no shell access or restart needed. It is opt-in and guarded behind the <code>allow_pip</code> config flag.</p>
+<p><strong>In plain terms:</strong> other parts of the system (or you, over the bus) can ask OVOS to <code>pip install</code> a skill or library while it is running. No shell access or restart is needed. It is opt-in and guarded behind the <code>allow_pip</code> config flag.</p>
 <hr />
 <details class="abstract">
 <summary>Technical Reference</summary>
 <ul>
 <li>
-<p><code>SkillsStore.pip_install()</code> — <a href="https://github.com/OpenVoiceOS/ovos-core/blob/dev/ovos_core/skill_installer.py"><code>ovos_core/skill_installer.py:85</code></a> — Core logic for calling <code>pip</code> or <code>uv</code>.</p>
+<p><code>SkillsStore.pip_install()</code>: <a href="https://github.com/OpenVoiceOS/ovos-core/blob/dev/ovos_core/skill_installer.py"><code>ovos_core/skill_installer.py:85</code></a>. Core logic for calling <code>pip</code> or <code>uv</code>.</p>
 </li>
 <li>
-<p><code>SkillsStore.handle_install_skill()</code> — <a href="https://github.com/OpenVoiceOS/ovos-core/blob/dev/ovos_core/skill_installer.py"><code>ovos_core/skill_installer.py:288</code></a> — Bus event handler for <code>ovos.skills.install</code>.</p>
+<p><code>SkillsStore.handle_install_skill()</code>: <a href="https://github.com/OpenVoiceOS/ovos-core/blob/dev/ovos_core/skill_installer.py"><code>ovos_core/skill_installer.py:288</code></a>. Bus event handler for <code>ovos.skills.install</code>.</p>
 </li>
 <li>
 <p>After a successful install, <code>ovos_core/skill_installer.py</code> re-imports <code>ovos_plugin_manager</code> (Python's <code>importlib.reload</code>) so the new entry points are picked up.</p>
@@ -1778,24 +1778,24 @@ package named there.</p>
 <div class="admonition note">
 <p class="admonition-title">Uninstall protection is an accident guard, not a security control</p>
 <p>The protected list stops a request from removing OVOS's own components by name. It is not a
-privilege boundary — anything that can reach the <a href="../bus-service/">messagebus</a> already has
+privilege boundary. Anything that can reach the <a href="../bus-service/">messagebus</a> already has
 full control of the device, and <code>allow_pip: true</code> gives it package-management rights.
 Security comes from keeping the bus local and <code>allow_pip</code> off, not from this list.</p>
 </div>
 <div class="admonition danger">
 <p class="admonition-title">Skills are not sandboxed — this installs and runs arbitrary code</p>
 <p>There is no sandbox or permission model. Installing a skill through
-<code>SkillsStore</code> means <code>pip</code>/<code>uv install</code>ing a Python package and loading it —
-it runs with the same access as the rest of OVOS on the OVOS user account.
-Combined with the fact that the <a href="../bus-service/">messagebus</a> has <strong>no
-authentication</strong>, turning <code>allow_pip</code> on while the bus is reachable by
+<code>SkillsStore</code> means <code>pip</code>/<code>uv install</code>ing a Python package and loading it.
+It runs with the same access as the rest of OVOS on the OVOS user account.
+The <a href="../bus-service/">messagebus</a> has <strong>no authentication</strong>. Combined with that fact,
+turning <code>allow_pip</code> on while the bus is reachable by
 anyone untrusted is effectively a remote-code-execution switch: anyone who
 can reach the bus can request an install of code they control. See
 <a href="../privacy-security/#skills-are-not-sandboxed">Privacy &amp; Security</a> for the
 full picture before enabling this in production.</p>
 </div>
 <h2 id="installuninstall-events">Install/Uninstall Events<a class="headerlink" href="#installuninstall-events" title="Permanent link">&para;</a></h2>
-<p>You can trigger installation and uninstallation by emitting messages on the messagebus. Note that the <strong>skill</strong> events and the <strong>pip</strong> events take different payloads: skills are installed from a single GitHub URL, while the generic pip events take a list of package specifiers.</p>
+<p>You can trigger installation and uninstallation by emitting messages on the messagebus. The <strong>skill</strong> events and the <strong>pip</strong> events take different payloads. Skills are installed from a single GitHub URL, while the generic pip events take a list of package specifiers.</p>
 <h3 id="skill-installation">Skill installation<a class="headerlink" href="#skill-installation" title="Permanent link">&para;</a></h3>
 <p>A skill is installed from a GitHub repo URL (it is validated and then installed as <code>git+&lt;url&gt;</code>):</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>ovos.skills.install        data: {&quot;url&quot;: &quot;https://github.com/OpenVoiceOS/skill-foo&quot;}
@@ -1803,7 +1803,7 @@ full picture before enabling this in production.</p>
 </span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>  → ovos.skills.install.failed    (error)
 </span></code></pre></div>
 <h3 id="skill-uninstallation">Skill uninstallation<a class="headerlink" href="#skill-uninstallation" title="Permanent link">&para;</a></h3>
-<p>Uninstall by <code>skill_id</code> (or package name); a <code>skill_id</code> like <code>skill-foo.author</code> is mapped to the package name <code>skill-foo-author</code>:</p>
+<p>Uninstall by <code>skill_id</code> (or package name). A <code>skill_id</code> like <code>skill-foo.author</code> is mapped to the package name <code>skill-foo-author</code>:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>ovos.skills.uninstall      data: {&quot;skill&quot;: &quot;skill-foo.author&quot;}
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>  → ovos.skills.uninstall.complete
 </span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>  → ovos.skills.uninstall.failed

@@ -1387,8 +1387,8 @@
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
 <p>A single OVOS assistant on your desk needs almost no care and feeding. Running many of
-them — a fleet of kiosks, a house full of satellite devices, a product built on top of
-OVOS — is a different job: you need services that restart themselves when they crash,
+them (a fleet of kiosks, a house full of satellite devices, a product built on top of
+OVOS) is a different job. You need services that restart themselves when they crash,
 a way to know the assistant is actually ready before you rely on it, logs you can ship
 somewhere central, and a safe way to upgrade a device (and undo the upgrade if it goes
 wrong) without physically touching it. This page collects the real, verified pieces for
@@ -1399,7 +1399,7 @@ are already comfortable with <a href="../ovos-installer/">installing OVOS</a> an
 </div>
 <hr />
 <h2 id="keep-services-running-systemd-units">Keep services running: systemd units<a class="headerlink" href="#keep-services-running-systemd-units" title="Permanent link">&para;</a></h2>
-<p>OVOS itself does not manage process supervision — that is left to the OS. The
+<p>OVOS itself does not manage process supervision. That is left to the OS. The
 <a href="../ovos-installer/"><code>ovos-installer</code></a> and the <a href="../install-raspovos/">raspOVOS</a> image both use
 <strong>systemd user units</strong> for this. The examples below are adapted from the units raspOVOS
 actually ships (<code>overlays/base_ovos/home/ovos/.config/systemd/user/</code> in the
@@ -1458,18 +1458,18 @@ without disturbing its siblings:</p>
 <p>If you are writing your own unit for a custom service (a skill runner, a persona server, a
 thin-client bridge), the pattern worth keeping is:</p>
 <ul>
-<li><code>Restart=on-failure</code> — restart on crash, not on a clean stop.</li>
-<li><code>StartLimitInterval=</code> / <code>StartLimitBurst=</code> — give up (rather than loop forever) after
+<li><code>Restart=on-failure</code>: restart on crash, not on a clean stop.</li>
+<li><code>StartLimitInterval=</code> / <code>StartLimitBurst=</code>: give up (rather than loop forever) after
   repeated failures in a short window, so a broken deploy doesn't spin your CPU.</li>
 <li><code>PartOf=</code>/<code>After=</code> the messagebus unit for anything that needs a live bus connection at
   startup.</li>
 </ul>
-<p><code>After=</code> only orders unit <em>start</em>; it says nothing about whether the messagebus is actually
+<p><code>After=</code> only orders unit <em>start</em>. It says nothing about whether the messagebus is actually
 accepting connections yet, and it says nothing about what happens when the bus unit <em>restarts</em>
-later — see <a href="../bus-service/#bus-restart-reconnect-behavior">Bus restart / reconnect behavior</a> for
+later. See <a href="../bus-service/#bus-restart-reconnect-behavior">Bus restart / reconnect behavior</a> for
 what a dependent service's existing bus connection does when that happens (short version: it
-reconnects on its own with backoff, so <code>Restart=on-failure</code> on the messagebus unit is enough —
-you do not need to also restart every dependent service).</p>
+reconnects on its own with backoff, so <code>Restart=on-failure</code> on the messagebus unit is enough.
+You do not need to also restart every dependent service).</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>systemctl<span class="w"> </span>--user<span class="w"> </span>daemon-reload
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>systemctl<span class="w"> </span>--user<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>--now<span class="w"> </span>ovos.service
 </span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>systemctl<span class="w"> </span>--user<span class="w"> </span>status<span class="w"> </span>ovos-skills.service
@@ -1480,7 +1480,7 @@ you do not need to also restart every dependent service).</p>
 <p>The units above are <strong>user</strong> units (<code>~/.config/systemd/user/</code>), matching how raspOVOS and
 the installer run OVOS as the <code>ovos</code> user. If you need OVOS to start before any user logs
 in (a headless kiosk), install the same unit files under <code>/etc/systemd/system/</code> instead and
-use <code>systemctl enable --now</code> (no <code>--user</code>); you will also need
+use <code>systemctl enable --now</code> (no <code>--user</code>). You will also need
 <code>loginctl enable-linger ovos</code> if you keep user units but want them running without an
 active login session.</p>
 </div>
@@ -1490,7 +1490,7 @@ active login session.</p>
 the <a href="https://github.com/OpenVoiceOS/ovos-skill-boot-finished"><code>ovos-skill-boot-finished</code></a> skill
 polls each one and emits a single <code>mycroft.ready</code> message once every service it is configured to
 wait on has reported ready. This is the signal to use in health checks, readiness probes, or an
-<code>ExecStartPost</code> step — not "is the process running", which says nothing about whether the
+<code>ExecStartPost</code> step, not "is the process running," which says nothing about whether the
 voice pipeline can actually hear and answer you yet.</p>
 <div class="admonition note">
 <p class="admonition-title">Requires the boot-finished skill to be installed</p>
@@ -1520,14 +1520,14 @@ ever get a response.</p>
 </span></code></pre></div>
 <div class="admonition warning">
 <p class="admonition-title">Timeout, not certainty</p>
-<p><code>wait_for_response</code> returns <code>None</code> on timeout, it does not raise. Always check for <code>None</code>
-— a bare <code>response.data</code> on a timed-out call raises <code>AttributeError</code>, not a clean failure.</p>
+<p><code>wait_for_response</code> returns <code>None</code> on timeout. It does not raise. Always check for <code>None</code>.
+A bare <code>response.data</code> on a timed-out call raises <code>AttributeError</code>, not a clean failure.</p>
 </div>
 <h3 id="headless-devices-choosing-what-ready-means">Headless devices: choosing what "ready" means<a class="headerlink" href="#headless-devices-choosing-what-ready-means" title="Permanent link">&para;</a></h3>
 <p><a href="https://github.com/OpenVoiceOS/ovos-skill-boot-finished"><code>ovos-skill-boot-finished</code></a> is the
 skill that actually answers <code>mycroft.ready.check</code> and decides what to wait for, via its
 <code>ready_settings</code> setting. By default it waits for <code>skills</code> plus every installed skill to
-register; for a server or a device with no GUI/audio you usually want to name only the
+register. For a server or a device with no GUI/audio you usually want to name only the
 services that actually apply:</p>
 <div class="language-yaml highlight"><span class="filename">settings.json for ovos-skill-boot-finished</span><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nt">ready_settings</span><span class="p">:</span>
 </span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">skills</span><span class="w">     </span><span class="c1"># ovos-core skill loader reported ready</span>
@@ -1540,15 +1540,15 @@ services that actually apply:</p>
 service exposing an OVOS <code>ProcessStatus</code> (including <code>PHAL</code>) can be named by its status key.</p>
 <div class="admonition warning">
 <p class="admonition-title"><code>mycroft.ready</code> only covers what you list</p>
-<p><code>mycroft.ready</code> only tracks the components named in <code>ready_settings</code> — skills, voice, and
+<p><code>mycroft.ready</code> only tracks the components named in <code>ready_settings</code>: skills, voice, and
 audio by default. It does <strong>not</strong> track the GUI or the media daemon unless you add
 <code>gui_connected</code> (or a media status key) yourself. That means a fleet can report "ready"
 while the screen is stuck (see <a href="../gui-status/">GUI status</a>) or the media daemon
-(see <a href="../ovos-media/">ovos-media</a>) is non-functional — the health check simply never asked
+(see <a href="../ovos-media/">ovos-media</a>) is non-functional. The health check simply never asked
 about them.</p>
 </div>
 <div class="admonition note">
-<p class="admonition-title">Upcoming — a bundled health check script</p>
+<p class="admonition-title">Upcoming: a bundled health check script</p>
 <p>A ready-to-use OVOS health check script for the <code>ovos-installer</code> is in progress
 (<a href="https://github.com/OpenVoiceOS/ovos-installer/pull/542">ovos-installer#542</a>), covering
 the same "is the assistant actually ready" question as the readiness probe above without
@@ -1556,7 +1556,7 @@ writing your own.</p>
 </div>
 <hr />
 <h2 id="log-locations-and-shipping-them-out">Log locations and shipping them out<a class="headerlink" href="#log-locations-and-shipping-them-out" title="Permanent link">&para;</a></h2>
-<p>OVOS logs to stdout by default; every real deployment (systemd, raspOVOS, the installer) sets
+<p>OVOS logs to stdout by default. Every real deployment (systemd, raspOVOS, the installer) sets
 a <code>logging</code> section in <code>mycroft.conf</code> so each service writes its own rotating file instead:</p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="p">{</span>
 </span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">  </span><span class="nt">&quot;logging&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
@@ -1568,7 +1568,7 @@ a <code>logging</code> section in <code>mycroft.conf</code> so each service writ
 </span></code></pre></div>
 <p>Without that section, <code>ovos-utils</code>' logger still defaults to a file under
 <code>$XDG_STATE_HOME/mycroft/&lt;service&gt;.log</code> (typically <code>~/.local/state/mycroft/</code>) rather than pure
-stdout — check that directory first if you can't find a log file. Each service gets its own
+stdout. Check that directory first if you can't find a log file. Each service gets its own
 file named after it (<code>skills.log</code>, <code>bus.log</code>, <code>audio.log</code>, <code>voice.log</code>, <code>gui.log</code>, ...).</p>
 <p><code>ovos-utils</code> also ships a small CLI, <code>ovos-logs</code>, for navigating those files without hunting
 through each one by hand:</p>
@@ -1577,15 +1577,15 @@ through each one by hand:</p>
 </span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>ovos-logs<span class="w"> </span>slice<span class="w"> </span>-s<span class="w"> </span><span class="s2">&quot;01-12-2023&quot;</span><span class="w"> </span>-u<span class="w"> </span><span class="s2">&quot;01-12-2023 17:00&quot;</span><span class="w"> </span><span class="c1"># slice a specific window</span>
 </span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>ovos-logs<span class="w"> </span>reduce<span class="w"> </span>-s<span class="w"> </span><span class="m">1000000</span><span class="w">         </span><span class="c1"># trim every log down to ~1MB (keep the tail)</span>
 </span></code></pre></div>
-<p>For centralized log shipping (many devices → one place), point a standard log-forwarding
+<p>For centralized log shipping (many devices to one place), point a standard log-forwarding
 agent (Vector, Fluent Bit, Promtail, <code>rsyslog</code>) at the log directory, or redirect the systemd
-unit's stdout to the journal (the default) and ship <code>journalctl</code> output instead — OVOS itself
+unit's stdout to the journal (the default) and ship <code>journalctl</code> output instead. OVOS itself
 does not include a log-shipping client.</p>
 <hr />
 <h2 id="staged-upgrades-and-rollback">Staged upgrades and rollback<a class="headerlink" href="#staged-upgrades-and-rollback" title="Permanent link">&para;</a></h2>
 <p><a href="../release-channels/">Release channels</a> covers <code>stable</code>/<code>testing</code>/<code>alpha</code> constraints files.
 For a fleet, the same mechanism gives you a controlled, reversible upgrade path:</p>
-<p>If only a single package regressed, rolling back the whole stack is unnecessary — see
+<p>If only a single package regressed, rolling back the whole stack is unnecessary. See
 <a href="../release-channels/#pinning-or-rolling-back-a-single-package">Release Channels: Pinning or rolling back a single
 package</a> for pinning and
 restarting just that one package across the fleet.</p>
@@ -1612,7 +1612,7 @@ so store the backup with the same care you'd give the original file.</p>
 </span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>systemctl<span class="w"> </span>--user<span class="w"> </span>restart<span class="w"> </span>ovos.service
 </span></code></pre></div>
 <p><code>--force-reinstall</code> is needed on rollback because a plain <code>pip install</code> treats "already
-satisfies requirement" as nothing to do — it will not downgrade a package back to an older
+satisfies requirement" as nothing to do. It will not downgrade a package back to an older
 pinned version on its own.</p>
 <div class="admonition tip">
 <p class="admonition-title">Stage it on one device first</p>
@@ -1629,7 +1629,7 @@ against the frozen file to check:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>diff<span class="w"> </span>&lt;<span class="o">(</span>uv<span class="w"> </span>pip<span class="w"> </span>freeze<span class="w"> </span><span class="p">|</span><span class="w"> </span>sort<span class="o">)</span><span class="w"> </span>&lt;<span class="o">(</span>sort<span class="w"> </span>/etc/ovos/known-good-2026-07-01.txt<span class="o">)</span>
 </span></code></pre></div>
 <p>Any line in the diff is a package whose installed version does not match the known-good
-snapshot — re-run the <code>--force-reinstall</code> rollback command to finish the job before
+snapshot. Re-run the <code>--force-reinstall</code> rollback command to finish the job before
 restarting the service. <code>uv pip check</code> is also worth running after either an upgrade or a
 rollback: it reports any dependency resolution left inconsistent (declared requirements no
 longer satisfied by what's installed), which a partial rollback commonly causes.</p>
@@ -1644,7 +1644,7 @@ settings is the <strong>system config</strong>, at a fixed path:</p>
 <p>This file sits below each user's own <code>~/.config/mycroft/mycroft.conf</code>, so per-device
 overrides still win, but anything you don't override there comes from the system file. This
 is the layer to drop settings into via configuration management (Ansible, a Debian package
-postinst, a golden image) rather than hand-editing every device's user config — for example,
+postinst, a golden image) rather than hand-editing every device's user config. For example,
 pinning the same wake word, STT/TTS servers, or <code>ready_settings</code> across an entire fleet.</p>
 <hr />
 <h2 id="thin-clients-a-shared-speech-backend">Thin clients + a shared speech backend<a class="headerlink" href="#thin-clients-a-shared-speech-backend" title="Permanent link">&para;</a></h2>
@@ -1658,7 +1658,7 @@ and a worked example on a single LAN IP, see
 <div class="admonition danger">
 <p class="admonition-title">These ports are unauthenticated plain HTTP</p>
 <p><code>8080</code> and <code>9666</code> below serve unauthenticated plain HTTP by default. Never expose them
-to untrusted networks — add API keys and/or put a reverse proxy in front of them before
+to untrusted networks. Add API keys and/or put a reverse proxy in front of them before
 they leave localhost. See <a href="../tts-server/#tips-caveats">tts-server: Tips &amp; Caveats</a> for
 how.</p>
 </div>
@@ -1671,9 +1671,9 @@ how.</p>
 </span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a><span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">docker.io/smartgic/ovos-tts-server-piper:${VERSION}</span><span class="w">      </span><span class="c1"># or your own build, see tts-server.md</span>
 </span><span id="__span-13-8"><a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a><span class="w">    </span><span class="nt">ports</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;9666:9666&quot;</span><span class="p p-Indicator">]</span><span class="w">  </span><span class="c1"># UNAUTHENTICATED — do not expose beyond localhost/VPN</span>
 </span></code></pre></div>
-<p>The speech-server image name encodes the engine baked into it — <code>ovos-stt-server-onnx-asr</code>,
+<p>The speech-server image name encodes the engine baked into it: <code>ovos-stt-server-onnx-asr</code>,
 <code>ovos-stt-server-onnx-asr-cuda</code>, <code>ovos-tts-server-piper</code>, <code>ovos-tts-server-kokoro</code>,
-<code>ovos-tts-server-phoonnx</code> and so on. Pick the variant carrying the plugin you want; there is
+<code>ovos-tts-server-phoonnx</code> and so on. Pick the variant carrying the plugin you want. There is
 no generic image that loads an arbitrary engine at runtime.</p>
 <div class="language-yaml highlight"><span class="filename">docker-compose.yml — thin client (per device)</span><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="nt">services</span><span class="p">:</span>
 </span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="w">  </span><span class="nt">ovos_messagebus</span><span class="p">:</span>
@@ -1710,15 +1710,15 @@ no generic image that loads an arbitrary engine at runtime.</p>
 </span><span id="__span-14-33"><a id="__codelineno-14-33" name="__codelineno-14-33" href="#__codelineno-14-33"></a><span class="w">    </span><span class="nt">network_mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">host</span>
 </span><span id="__span-14-34"><a id="__codelineno-14-34" name="__codelineno-14-34" href="#__codelineno-14-34"></a><span class="w">    </span><span class="nt">depends_on</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">ovos_messagebus</span><span class="p p-Indicator">]</span>
 </span></code></pre></div>
-<p><code>depends_on</code> here only orders <strong>container start</strong> — it starts <code>ovos_messagebus</code> first, but does
+<p><code>depends_on</code> here only orders <strong>container start</strong>. It starts <code>ovos_messagebus</code> first, but does
 not wait for it to actually accept WebSocket connections before starting the services listed
 after it. Use the <a href="#knowing-when-the-assistant-is-actually-ready">readiness probe</a> (or Compose's
 own <code>depends_on: condition: service_healthy</code> against a healthcheck that runs it) as the real gate
 if a dependent service needs the bus to be live, not just the container to exist.</p>
 <p>Audio devices and sockets have to be handed to the containers that touch them: the listener
 needs the microphone, the audio service needs the speaker, and both need the host's PulseAudio
-or PipeWire socket. Anything you want to survive a container rebuild — downloaded models, the
-TTS cache, listener recordings, local state — belongs in a named volume rather than the
+or PipeWire socket. Anything you want to survive a container rebuild (downloaded models, the
+TTS cache, listener recordings, local state) belongs in a named volume rather than the
 container filesystem. The
 <a href="https://github.com/OpenVoiceOS/ovos-docker/blob/dev/compose/docker-compose.yml">reference compose file</a>
 in <code>ovos-docker</code> is the fuller version of the sketch above, with every volume, device,
@@ -1726,21 +1726,21 @@ resource limit and healthcheck spelled out.</p>
 <div class="admonition danger">
 <p class="admonition-title"><code>network_mode: host</code> shares the loopback across every container on that host</p>
 <p>With <code>network_mode: host</code>, <code>127.0.0.1</code> is the <strong>host's</strong> loopback, not a container-private
-one — every container and process on that host shares it. A bus bound to <code>127.0.0.1</code> is
-reachable by any of them, not just <code>ovos_messagebus</code>; "bound to localhost" no longer means
+one. Every container and process on that host shares it. A bus bound to <code>127.0.0.1</code> is
+reachable by any of them, not just <code>ovos_messagebus</code>. "Bound to localhost" no longer means
 "only reachable by this one process" once host networking is in play. Treat the whole host
 as the trust boundary, not the individual container.</p>
 <p>Host networking also exposes any service that binds <code>0.0.0.0</code> straight onto the LAN, not
 just the host's own loopback. <a href="../gui-service/"><code>gui-service.md</code></a> notes that
-<code>gui_websocket.host</code> defaults to <code>0.0.0.0</code> (all interfaces) — combined with
+<code>gui_websocket.host</code> defaults to <code>0.0.0.0</code> (all interfaces). Combined with
 <code>network_mode: host</code> here, that default puts the GUI WebSocket on the LAN, not just the
 device. Set <code>gui_websocket.host</code> to <code>127.0.0.1</code> unless a remote display client genuinely
 needs LAN access.</p>
 </div>
-<p>Each thin client still runs its own bus, listener, audio and core — only the heavy STT/TTS
+<p>Each thin client still runs its own bus, listener, audio and core. Only the heavy STT/TTS
 inference is centralized. This is the same pattern as
 <a href="../wyoming-bridges/">Wyoming bridges</a> and <a href="../hivemind-agents/">HiveMind</a>, just wired directly
-through the companion server plugins instead of a satellite protocol; see
+through the companion server plugins instead of a satellite protocol. See
 <a href="../composable-deployments/">Composable Deployments</a> for the general principle of splitting
 OVOS across machines.</p>
 <hr />
@@ -1756,17 +1756,17 @@ is a telemetry pipeline you opt into, not an operational metrics/monitoring syst
 </div>
 <p>For day-to-day, per-device debugging, use:</p>
 <ul>
-<li><strong><code>ovos-busmon</code></strong> — a browser-based web UI (FastAPI + WebSocket) that streams the live message traffic on a device's bus in
-  real time; the fastest way to see whether wake word → STT → intent → TTS is actually firing.</li>
+<li><strong><code>ovos-busmon</code></strong>: a browser-based web UI (FastAPI + WebSocket) that streams the live message traffic on a device's bus in
+  real time. The fastest way to see whether wake word → STT → intent → TTS is actually firing.</li>
 <li><strong><code>ovos-logs</code></strong> (above) for historical logs.</li>
 <li>The <a href="#knowing-when-the-assistant-is-actually-ready">readiness probe</a> as a synthetic check you
   can run from outside the device (cron, a monitoring agent, a CI job) on a schedule.</li>
 </ul>
-<p>There is no supported way to scrape per-request latency or error rates across a fleet today;
-if you need that, you will need to build it on top of the bus messages yourself.</p>
+<p>There is no supported way to scrape per-request latency or error rates across a fleet today.
+If you need that, you will need to build it on top of the bus messages yourself.</p>
 <h3 id="building-fleet-wide-alerting-yourself">Building fleet-wide alerting yourself<a class="headerlink" href="#building-fleet-wide-alerting-yourself" title="Permanent link">&para;</a></h3>
-<p>Since there's no push-based metrics endpoint, fleet alerting has to be built the other way
-around: something outside each device polls its
+<p>Since there is no push-based metrics endpoint, fleet alerting has to be built the other way
+around. Something outside each device polls its
 <a href="#knowing-when-the-assistant-is-actually-ready">readiness probe</a> on a schedule and reports a
 non-zero exit to whatever already pages you. A <code>systemd</code> timer wrapping the probe script from
 above is enough to get started:</p>
@@ -1790,11 +1790,11 @@ above is enough to get started:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>systemctl<span class="w"> </span>--user<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>--now<span class="w"> </span>ovos-alert.timer
 </span></code></pre></div>
 <p><code>notify-monitoring-agent</code> above is a stand-in for whatever already collects failures on your
-fleet — a <code>curl</code> to a Healthchecks.io/Cronitor-style dead-man's-switch URL, a call into your
+fleet: a <code>curl</code> to a Healthchecks.io/Cronitor-style dead-man's-switch URL, a call into your
 monitoring agent's CLI, an email, a webhook. The same pattern works as a plain <code>cron</code> entry
 (<code>*/5 * * * * /usr/local/bin/ovos-ready-probe || /usr/local/bin/notify-monitoring-agent ...</code>) on a
-system without <code>systemd --user</code> timers. This is something you build, not something OVOS ships —
-but it is the whole shape of a working readiness alert: schedule the probe, act on its exit code.</p>
+system without <code>systemd --user</code> timers. This is something you build, not something OVOS ships.
+But it is the whole shape of a working readiness alert: schedule the probe, act on its exit code.</p>
 
 
 

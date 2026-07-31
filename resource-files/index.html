@@ -1684,11 +1684,11 @@
 <h1 id="resource-files">Resource Files<a class="headerlink" href="#resource-files" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>Skills keep their words in separate text files rather than buried in the program code. These "resource files" hold things like the phrases the assistant can say, the example sentences it listens for, and the keywords it recognizes — each language gets its own folder. This separation makes a skill easy to translate and tweak without touching the code. This page explains the folder layout and the kinds of files. See also <a href="../statements/">Statements</a> for spoken replies and the <a href="../glossary/">Glossary</a>.</p>
+<p>Skills keep their words in separate text files rather than buried in the program code. These "resource files" hold things like the phrases the assistant can say, the example sentences it listens for, and the keywords it recognizes. Each language gets its own folder. This separation makes a skill easy to translate and tweak without touching the code. This page explains the folder layout and the kinds of files. See also <a href="../statements/">Statements</a> for spoken replies and the <a href="../glossary/">Glossary</a>.</p>
 </div>
 <details class="info">
-<summary>📐 Formal specification</summary>
-<p>The locale folder layout and the plain-text resource formats are specified by <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/intent-2.md">OVOS-INTENT-2 — Locale Resource Formats</a></strong> (a formal <a href="../architecture-specs/">architecture spec</a>); the template grammar inside them is <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/intent-1.md">OVOS-INTENT-1</a></strong>. OVOS-INTENT-2 defines <strong>six canonical roles</strong> by extension: <code>.intent</code> and <code>.dialog</code> (slot-bearing — they may use <code>{name}</code> slots), <code>.entity</code>, <code>.voc</code>, and <code>.blacklist</code> (slot-free — expansion only), and <code>.prompt</code> (a whole-file language-model prompt with <code>{{name}}</code> substitution, <strong>not</strong> a template). Resources live under <code>locale/&lt;lang&gt;/</code> (BCP-47 tags, compared case-insensitively, searched recursively), resolved user → skill → core (§2.1). The <code>.rx</code>, <code>.list</code>, and <code>.word</code> files below are <strong>framework extensions</strong>, not OVOS-INTENT-2 roles — prefer <code>.entity</code>/<code>.voc</code>/<code>.blacklist</code> for portability.</p>
+<summary>Formal specification</summary>
+<p>The locale folder layout and the plain-text resource formats are specified by <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/intent-2.md">OVOS-INTENT-2 — Locale Resource Formats</a></strong> (a formal <a href="../architecture-specs/">architecture spec</a>). The template grammar inside them is <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/intent-1.md">OVOS-INTENT-1</a></strong>. OVOS-INTENT-2 defines <strong>six canonical roles</strong> by extension: <code>.intent</code> and <code>.dialog</code> (slot-bearing, they may use <code>{name}</code> slots), <code>.entity</code>, <code>.voc</code>, and <code>.blacklist</code> (slot-free, expansion only), and <code>.prompt</code> (a whole-file language-model prompt with <code>{{name}}</code> substitution, <strong>not</strong> a template). Resources live under <code>locale/&lt;lang&gt;/</code> (BCP-47 tags, compared case-insensitively, searched recursively), resolved user, then skill, then core (§2.1). The <code>.rx</code>, <code>.list</code>, and <code>.word</code> files below are <strong>framework extensions</strong>, not OVOS-INTENT-2 roles. Prefer <code>.entity</code>/<code>.voc</code>/<code>.blacklist</code> for portability.</p>
 </details>
 <p>Skills load localized resources from a structured directory layout. Resources are loaded automatically at startup for every language in <code>native_langs</code> (<code>core_lang</code> + <code>secondary_langs</code>).</p>
 <p><code>.blacklist</code> is a spec-defined role under OVOS-INTENT-2. <code>ovos-workshop</code> has no built-in
@@ -1712,7 +1712,7 @@ loader for it. A skill must read the file itself. The <code>voc_blacklist=</code
 </span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>└── gui/
 </span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>    └── my_page.qml
 </span></code></pre></div>
-<p>Legacy skills may use separate <code>dialog/</code>, <code>vocab/</code>, <code>regex/</code> subdirectories — these are still supported.</p>
+<p>Legacy skills may use separate <code>dialog/</code>, <code>vocab/</code>, <code>regex/</code> subdirectories. These are still supported.</p>
 <h2 id="resource-types">Resource Types<a class="headerlink" href="#resource-types" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -1726,27 +1726,27 @@ loader for it. A skill must read the file itself. The <code>voc_blacklist=</code
 <tr>
 <td><code>.dialog</code></td>
 <td>Dialog</td>
-<td>Spoken responses, one template per line, random selection (OVOS-INTENT-2 role; slot-bearing)</td>
+<td>Spoken responses, one template per line, random selection (OVOS-INTENT-2 role, slot-bearing)</td>
 </tr>
 <tr>
 <td><code>.intent</code></td>
 <td>Intent</td>
-<td><a href="../padatious-pipeline/">Padatious</a> training examples (OVOS-INTENT-2 role; slot-bearing)</td>
+<td><a href="../padatious-pipeline/">Padatious</a> training examples (OVOS-INTENT-2 role, slot-bearing)</td>
 </tr>
 <tr>
 <td><code>.voc</code></td>
 <td>Vocabulary</td>
-<td><a href="../adapt-pipeline/">Adapt</a> keyword definitions, one per line, first is canonical (OVOS-INTENT-2 role; slot-free)</td>
+<td><a href="../adapt-pipeline/">Adapt</a> keyword definitions, one per line, first is canonical (OVOS-INTENT-2 role, slot-free)</td>
 </tr>
 <tr>
 <td><code>.entity</code></td>
 <td>Entity</td>
-<td>Example values for a <code>{slot}</code> (OVOS-INTENT-2 role; slot-free)</td>
+<td>Example values for a <code>{slot}</code> (OVOS-INTENT-2 role, slot-free)</td>
 </tr>
 <tr>
 <td><code>.blacklist</code></td>
 <td>Blacklist</td>
-<td>Phrases that suppress a paired <code>.intent</code> (OVOS-INTENT-2 role; slot-free). No built-in <code>ovos-workshop</code> loader. Skills read this file themselves. Unrelated to <code>voc_blacklist=</code> on <code>@intent_handler</code>, which takes <code>.voc</code> filenames.</td>
+<td>Phrases that suppress a paired <code>.intent</code> (OVOS-INTENT-2 role, slot-free). No built-in <code>ovos-workshop</code> loader. Skills read this file themselves. Unrelated to <code>voc_blacklist=</code> on <code>@intent_handler</code>, which takes <code>.voc</code> filenames.</td>
 </tr>
 <tr>
 <td><code>.prompt</code></td>
@@ -1794,14 +1794,14 @@ loader for it. A skill must read the file itself. The <code>voc_blacklist=</code
 </span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>good morning
 </span></code></pre></div>
 <p>Parenthesized alternation expands <em>within a single line</em>: <code>(hello|hi|hey)</code> becomes several forms
-that share one canonical value — the first — with the rest registered as its aliases. That
+that share one canonical value, the first, with the rest registered as its aliases. That
 canonical/alias relationship exists only inside the line that produced it. Separate plain lines
 are independent keywords with no aliasing between them, so write alternatives on one line if you
 want them collapsed into a single canonical form plus aliases:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a># hello.voc
 </span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>(hello|hi|hey there|good morning)
 </span></code></pre></div>
-<p>The Adapt entity name is the file name without its extension (<code>hello</code> for <code>hello.voc</code>); reference it in an <code>IntentBuilder</code> with <code>.require("hello")</code> / <code>.optionally("hello")</code>. Internally the keyword is namespaced as <code>alphanumeric_skill_id + "hello"</code> so skills never collide.</p>
+<p>The Adapt entity name is the file name without its extension (<code>hello</code> for <code>hello.voc</code>). Reference it in an <code>IntentBuilder</code> with <code>.require("hello")</code> / <code>.optionally("hello")</code>. Internally the keyword is namespaced as <code>alphanumeric_skill_id + "hello"</code> so skills never collide.</p>
 <h2 id="intent-files-padatious">Intent Files (Padatious)<a class="headerlink" href="#intent-files-padatious" title="Permanent link">&para;</a></h2>
 <p>One example utterance per line. Supports entity slots <code>{entity}</code> and alternation <code>(a | b)</code>:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a># my.intent

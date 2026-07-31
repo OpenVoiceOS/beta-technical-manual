@@ -1488,7 +1488,7 @@
 <h1 id="quebra-frases">Quebra Frases<a class="headerlink" href="#quebra-frases" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>This is a small text-handling toolkit that does the everyday chores of breaking writing into pieces — splitting a block of text into sentences, or a sentence into individual words ("tokens") — and comparing several phrases to find what they have in common. OVOS leans on it to tidy up what you said before trying to understand it. The name is Portuguese for "phrase breaking". See the <a href="../glossary/">Glossary</a> for unfamiliar terms.</p>
+<p>This is a small text-handling toolkit that does the everyday chores of breaking writing into pieces. It splits a block of text into sentences, or a sentence into individual words ("tokens"), and compares several phrases to find what they have in common. OVOS leans on it to tidy up what you said before trying to understand it. The name is Portuguese for "phrase breaking". See the <a href="../glossary/">Glossary</a> for unfamiliar terms.</p>
 </div>
 <p><code>quebra_frases</code> is a lightweight text-processing toolkit for tokenization (words / sentences / paragraphs), chunking around delimiters, and comparing several utterances to find their common / uncommon / exclusive parts. OVOS uses it for utterance normalization and intent-sample analysis.</p>
 <p><strong>What you get in 30 seconds:</strong></p>
@@ -1498,7 +1498,7 @@
 </span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="n">quebra_frases</span><span class="o">.</span><span class="n">sentence_tokenize</span><span class="p">(</span><span class="s2">&quot;Hi there. How are you?&quot;</span><span class="p">)</span>
 </span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="c1"># [&#39;Hi there.&#39;, &#39;How are you?&#39;]</span>
 </span></code></pre></div>
-<p><strong>Dependencies:</strong> lightweight — only the <code>regex</code> library is required.</p>
+<p><strong>Dependencies:</strong> lightweight. Only the <code>regex</code> library is required.</p>
 <h2 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">&para;</a></h2>
 <p>You can install the <code>quebra_frases</code> package using pip:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>pip<span class="w"> </span>install<span class="w"> </span>quebra_frases
@@ -1565,7 +1565,7 @@
 <li><code>span_indexed_word_tokenize</code>, <code>char_indexed_word_tokenize</code></li>
 <li><code>span_indexed_sentence_tokenize</code>, <code>char_indexed_sentence_tokenize</code></li>
 <li><code>span_indexed_paragraph_tokenize</code>, <code>char_indexed_paragraph_tokenize</code></li>
-<li><code>empty_space_tokenize</code>, <code>span_indexed_empty_space_tokenize</code>, <code>char_indexed_empty_space_tokenize</code>, <code>get_empty_spans</code> — work with whitespace runs</li>
+<li><code>empty_space_tokenize</code>, <code>span_indexed_empty_space_tokenize</code>, <code>char_indexed_empty_space_tokenize</code>, <code>get_empty_spans</code>: work with whitespace runs</li>
 </ul>
 <p>Other utilities:</p>
 <ul>

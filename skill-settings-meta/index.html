@@ -1792,12 +1792,12 @@
 <h1 id="settingsmetajson">settingsmeta.json<a class="headerlink" href="#settingsmetajson" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>This optional file describes a form for configuring your skill — labeled boxes, checkboxes,
-and drop-downs on a settings screen — so a tool can render a settings UI without you writing
-one. <strong>Heads-up: this is a legacy format and most OVOS skills don't ship it.</strong> It came from
-the old Mycroft backend, which OVOS doesn't run; your skill's settings work fine without it
+<p>This optional file describes a form for configuring your skill: labeled boxes, checkboxes,
+and drop-downs on a settings screen. A tool can then render a settings UI without you writing
+one. <strong>This is a legacy format and most OVOS skills do not ship it.</strong> It came from
+the old Mycroft backend, which OVOS does not run. Your skill's settings work fine without it
 (see <a href="../skill-settings/">Skill Settings</a>). It only matters if you use a community tool that
-reads it. For term definitions see the <a href="../glossary/">Glossary</a>.</p>
+reads it. For term definitions, see the <a href="../glossary/">Glossary</a>.</p>
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Legacy — specified but not used by OVOS itself</p>
@@ -1806,17 +1806,17 @@ server</strong>, which presented a web form to edit skill settings. <strong>OVOS
 so nothing in OVOS core consumes this file, and it is <strong>optional and usually absent</strong> in modern
 skills. Your skill reads and writes its settings perfectly well without it — see
 <a href="../skill-settings/">Skill Settings</a>.</p>
-<p>It is still <em>specified</em> (and <code>ovos-workshop</code> can auto-generate a basic version from a skill's
-settings), and some <strong>community tools still consume it to render a settings UI</strong> — most notably
+<p>It is still <em>specified</em>, and <code>ovos-workshop</code> can auto-generate a basic version from a skill's
+settings. Some <strong>community tools still consume it to render a settings UI</strong>, most notably
 <a href="https://github.com/OscillateLabsLLC/ovos-skill-config-tool"><code>ovos-skill-config-tool</code></a> by
-Oscillate Labs. Provide a <code>settingsmeta</code> file only if you specifically target such a tool; the
+Oscillate Labs. Provide a <code>settingsmeta</code> file only if you specifically target such a tool. The
 rest of this page documents the format for that case.</p>
 </div>
 <h2 id="define-settings-ui-for-a-skill">Define settings UI for a <a href="../skill-design-guidelines/">Skill</a><a class="headerlink" href="#define-settings-ui-for-a-skill" title="Permanent link">&para;</a></h2>
 <p>To define a Skill's settings UI you can provide a <code>settingsmeta.json</code> or <code>settingsmeta.yaml</code> file.
 When present, it lives in the root directory of the Skill and follows the structure below.</p>
-<p>A <code>settingsmeta</code> file does nothing on its own — it is only meaningful to a tool that reads it (a
-community settings editor like the one above), which then presents the described fields to the user.</p>
+<p>A <code>settingsmeta</code> file does nothing on its own. It is only meaningful to a tool that reads it, such as a
+community settings editor like the one above, which then presents the described fields to the user.</p>
 <h3 id="example-settingsmeta-file">Example settingsmeta file<a class="headerlink" href="#example-settingsmeta-file" title="Permanent link">&para;</a></h3>
 <p>To see it in action, here is a simple example, similar to what a legacy date-and-time skill might ship. First using the JSON syntax as a <code>settingsmeta.json</code> file:</p>
 <div class="language-javascript highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="p">{</span>
@@ -1849,21 +1849,21 @@ community settings editor like the one above), which then presents the described
 </span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="w">            </span><span class="nt">label</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Show digital clock when idle</span>
 </span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="w">            </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;true&quot;</span>
 </span></code></pre></div>
-<p>Notice that the checkbox's value, <code>"true"</code>, is a quoted string rather than a bare YAML/JSON boolean. This is intentional — the format expects the literal string <code>"true"</code> or <code>"false"</code>, not a real boolean.</p>
+<p>Notice that the checkbox's value, <code>"true"</code>, is a quoted string rather than a bare YAML/JSON boolean. This is intentional. The format expects the literal string <code>"true"</code> or <code>"false"</code>, not a real boolean.</p>
 <p>Both of these files would result in the same settings block.</p>
 <p>It is up to your personal preference which syntax you choose.</p>
 <h3 id="structure-of-the-settingsmeta-file">Structure of the settingsmeta file<a class="headerlink" href="#structure-of-the-settingsmeta-file" title="Permanent link">&para;</a></h3>
-<p>Whilst the syntax differs, the structure of these two filetypes is the same. This starts at the top level of the file by defining a <code>skillMetadata</code> object. This object must contain one or more <code>sections</code> elements.</p>
+<p>The syntax differs, but the structure of these two file types is the same. It starts at the top level of the file with a <code>skillMetadata</code> object. This object must contain one or more <code>sections</code> elements.</p>
 <h4 id="sections">Sections<a class="headerlink" href="#sections" title="Permanent link">&para;</a></h4>
-<p>Each section represents a group of settings that logically sit together. This enables us to display the settings more clearly in the web interface for users.</p>
-<p>In the simple example above we have just one section. A skill that needs more configuration might use several — for example, one section for account authentication and a separate section for playback preferences.</p>
+<p>Each section represents a group of settings that logically sit together. This lets the web interface display the settings more clearly for users.</p>
+<p>The simple example above has just one section. A skill that needs more configuration might use several. For example, one section for account authentication and a separate section for playback preferences.</p>
 <p>Each section must contain a <code>name</code> attribute that is used as the heading for that section, and an Array of <code>fields</code>.</p>
 <h4 id="fields">Fields<a class="headerlink" href="#fields" title="Permanent link">&para;</a></h4>
 <p>Each section has one or more <code>fields</code>. Each field is a setting available to the user. Each field takes four properties:</p>
 <ul>
 <li>
 <p><code>name</code> (String)</p>
-<p>The <code>name</code> of the <code>field</code> is used by the Skill to get and set the value of the <code>field</code>. It will not usually be displayed to the user, unless the <code>label</code> property has not been set.</p>
+<p>The Skill uses the <code>name</code> of the <code>field</code> to get and set the value of the <code>field</code>. It is not usually shown to the user, unless the <code>label</code> property is not set.</p>
 </li>
 <li>
 <p><code>type</code> (Enum)</p>

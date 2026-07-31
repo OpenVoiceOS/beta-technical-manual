@@ -1172,7 +1172,7 @@
         <li class="md-nav__item">
   <a href="#commonquery-common_query-on-ovosskill" class="md-nav__link">
     <span class="md-ellipsis">
-      CommonQuery — @common_query on OVOSSkill
+      CommonQuery: @common_query on OVOSSkill
     </span>
   </a>
   
@@ -1840,7 +1840,7 @@
         <li class="md-nav__item">
   <a href="#commonquery-common_query-on-ovosskill" class="md-nav__link">
     <span class="md-ellipsis">
-      CommonQuery — @common_query on OVOSSkill
+      CommonQuery: @common_query on OVOSSkill
     </span>
   </a>
   
@@ -1948,7 +1948,7 @@
 <h1 id="skill-classes">Skill Classes<a class="headerlink" href="#skill-classes" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>A "skill" is an add-on that gives your voice assistant a new ability. Rather than building each one from scratch, you start from a ready-made template (a "base class") and customize it. This page lists the available templates — a general-purpose one and specialized ones for things like games, media playback, or catch-all replies — so you can pick the closest fit. Unsure what a term means? See the <a href="../glossary/">Glossary</a>; for hands-on basics see <a href="../skill-best-practices/">Skill Best Practices</a>.</p>
+<p>A "skill" is an add-on that gives your voice assistant a new ability. Rather than building each one from scratch, you start from a ready-made template (a "base class") and customize it. This page lists the available templates: a general-purpose one and specialized ones for things like games, media playback, or catch-all replies, so you can pick the closest fit. Unsure what a term means? See the <a href="../glossary/">Glossary</a>. For hands-on basics see <a href="../skill-best-practices/">Skill Best Practices</a>.</p>
 </div>
 <p><code>ovos-workshop</code> provides all base classes needed to write skills for OpenVoiceOS. Every skill ultimately inherits from <code>OVOSSkill</code>.</p>
 <p><strong>Package:</strong> <code>ovos-workshop</code> | <strong>Entry point group:</strong> <code>opm.skill</code></p>
@@ -2033,7 +2033,7 @@
 <tr>
 <td><code>stop_session(session)</code></td>
 <td>Per-session stop</td>
-<td>Called before <code>stop()</code>; return <code>True</code> to prevent global <code>stop()</code></td>
+<td>Called before <code>stop()</code>. Return <code>True</code> to prevent global <code>stop()</code></td>
 </tr>
 <tr>
 <td><code>can_stop(message)</code></td>
@@ -2089,7 +2089,7 @@
 <h3 id="shutdown-sequence">Shutdown Sequence<a class="headerlink" href="#shutdown-sequence" title="Permanent link">&para;</a></h3>
 <ol>
 <li>
-<p><code>SkillManager</code> calls <code>shutdown()</code> — skill-specific cleanup</p>
+<p><code>SkillManager</code> calls <code>shutdown()</code>: skill-specific cleanup</p>
 </li>
 <li>
 <p><code>SkillManager</code> calls <code>default_shutdown()</code>, which:</p>
@@ -2105,9 +2105,9 @@
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p><code>shutdown()</code> and <code>default_shutdown()</code> are two separate calls made by
-<code>SkillManager</code> when it unloads a skill — <code>default_shutdown()</code> does not call
-<code>shutdown()</code> itself. Override <code>shutdown()</code> for your own cleanup code;
-never call <code>default_shutdown()</code> directly.</p>
+<code>SkillManager</code> when it unloads a skill. <code>default_shutdown()</code> does not call
+<code>shutdown()</code> itself. Override <code>shutdown()</code> for your own cleanup code.
+Never call <code>default_shutdown()</code> directly.</p>
 </div>
 <p>This constructor/lifecycle/startup/shutdown sequence is shared by every <code>OVOSSkill</code>
 subclass below. See <a href="../ovos-skill/">OVOSSkill</a> for <code>SkillApi</code> (inter-skill RPC),
@@ -2225,7 +2225,7 @@ event scheduling, and the full list of bus events an <code>OVOSSkill</code> hand
 <h3 id="runtimerequirements">RuntimeRequirements<a class="headerlink" href="#runtimerequirements" title="Permanent link">&para;</a></h3>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p><code>RuntimeRequirements</code> is a deprecated mechanism — see <a href="../skill-runtime-requirements/">Runtime Requirements</a> for what it currently does.</p>
+<p><code>RuntimeRequirements</code> is a deprecated mechanism. See <a href="../skill-runtime-requirements/">Runtime Requirements</a> for what it currently does.</p>
 </div>
 <p>Override the class property to declare connectivity needs:</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kn">from</span> <span class="nn">ovos_utils</span> <span class="kn">import</span> <span class="n">classproperty</span>
@@ -2247,12 +2247,12 @@ event scheduling, and the full list of bus events an <code>OVOSSkill</code> hand
 </span></code></pre></div>
 <p>All nine fields default <code>True</code> except <code>gui_before_load</code>, <code>requires_gui</code>,
 <code>no_internet_fallback</code>, and <code>no_network_fallback</code> (default <code>False</code>). Used by <code>SkillManager</code>
-to defer loading until requirements are met. See <a href="../ovos-skill/#runtimerequirements">OVOSSkill — RuntimeRequirements</a>
+to defer loading until requirements are met. See <a href="../ovos-skill/#runtimerequirements">OVOSSkill: RuntimeRequirements</a>
 for the full field reference.</p>
 <hr />
 <h2 id="conversationalskill">ConversationalSkill<a class="headerlink" href="#conversationalskill" title="Permanent link">&para;</a></h2>
 <p><strong>Module:</strong> <code>ovos_workshop.skills.converse.ConversationalSkill</code></p>
-<p>Extends <code>OVOSSkill</code> with explicit converse support — <code>activate()</code>, <code>deactivate()</code>, and <code>@conversational_intent</code> decorated handlers. The skill registers itself in the active-skills list after handling an intent.</p>
+<p>Extends <code>OVOSSkill</code> with explicit converse support: <code>activate()</code>, <code>deactivate()</code>, and <code>@conversational_intent</code> decorated handlers. The skill registers itself in the active-skills list after handling an intent.</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="kn">from</span> <span class="nn">ovos_workshop.skills.converse</span> <span class="kn">import</span> <span class="n">ConversationalSkill</span>
 </span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>
 </span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="k">class</span> <span class="nc">MySkill</span><span class="p">(</span><span class="n">ConversationalSkill</span><span class="p">):</span>
@@ -2266,10 +2266,10 @@ for the full field reference.</p>
 <p>Additional bus events registered:</p>
 <ul>
 <li>
-<p><code>{skill_id}.converse.ping</code> — capability advertisement</p>
+<p><code>{skill_id}.converse.ping</code>: capability advertisement</p>
 </li>
 <li>
-<p><code>{skill_id}.converse.request</code> — converse request from pipeline</p>
+<p><code>{skill_id}.converse.request</code>: converse request from pipeline</p>
 </li>
 <li>
 <p><code>{skill_id}.activate</code> / <code>{skill_id}.deactivate</code></p>
@@ -2278,7 +2278,7 @@ for the full field reference.</p>
 <hr />
 <h2 id="activeskill">ActiveSkill<a class="headerlink" href="#activeskill" title="Permanent link">&para;</a></h2>
 <p><strong>Module:</strong> <code>ovos_workshop.skills.active.ActiveSkill</code></p>
-<p>Extends <code>ConversationalSkill</code>. Always present in the converse active-skills list — the skill never deactivates unless explicitly told to. Useful for always-on assistants or global command handlers.</p>
+<p>Extends <code>ConversationalSkill</code>. Always present in the converse active-skills list. The skill never deactivates unless explicitly told to. Useful for always-on assistants or global command handlers.</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="kn">from</span> <span class="nn">ovos_workshop.skills.active</span> <span class="kn">import</span> <span class="n">ActiveSkill</span>
 </span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>
 </span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="k">class</span> <span class="nc">AlwaysListeningSkill</span><span class="p">(</span><span class="n">ActiveSkill</span><span class="p">):</span>
@@ -2302,11 +2302,11 @@ for the full field reference.</p>
 </span><span id="__span-10-9"><a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a>    <span class="nd">@fallback_handler</span><span class="p">(</span><span class="n">priority</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
 </span><span id="__span-10-10"><a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a>    <span class="k">def</span> <span class="nf">handle_fallback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
 </span><span id="__span-10-11"><a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">speak</span><span class="p">(</span><span class="s2">&quot;I don&#39;t know, but I tried.&quot;</span><span class="p">)</span>
-</span><span id="__span-10-12"><a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a>        <span class="k">return</span> <span class="kc">True</span>   <span class="c1"># consumed — stop checking other fallbacks</span>
+</span><span id="__span-10-12"><a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a>        <span class="k">return</span> <span class="kc">True</span>   <span class="c1"># consumed: stop checking other fallbacks</span>
 </span></code></pre></div>
 <p>Priority determines which internal pipeline stage checks the fallback first (lower runs
 earlier). These are the dispatch stage boundaries, verified in <code>FallbackService</code>
-(<code>ovos_core/intent_services/fallback_service.py</code>) — a separate fact from <em>which</em> priority
+(<code>ovos_core/intent_services/fallback_service.py</code>). This is a separate fact from <em>which</em> priority
 you should actually pick for a handler, covered in <a href="../fallbacks/#order-of-precedence">Fallback Skill</a>:</p>
 <table>
 <thead>
@@ -2334,11 +2334,11 @@ you should actually pick for a handler, covered in <a href="../fallbacks/#order-
 <div class="language-json highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="p">{</span><span class="nt">&quot;skills&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;fallbacks&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;fallback_priorities&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;my-skill-id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">}}}}</span>
 </span></code></pre></div>
 <hr />
-<h2 id="commonquery-common_query-on-ovosskill">CommonQuery — <code>@common_query</code> on <code>OVOSSkill</code><a class="headerlink" href="#commonquery-common_query-on-ovosskill" title="Permanent link">&para;</a></h2>
-<p>There is no dedicated <code>CommonQuerySkill</code> base class — decorate a method on a
+<h2 id="commonquery-common_query-on-ovosskill">CommonQuery: <code>@common_query</code> on <code>OVOSSkill</code><a class="headerlink" href="#commonquery-common_query-on-ovosskill" title="Permanent link">&para;</a></h2>
+<p>There is no dedicated <code>CommonQuerySkill</code> base class. Decorate a method on a
 regular <code>OVOSSkill</code> with <code>@common_query()</code> to join the <code>question:query</code> /
 <code>ovos-common-query-pipeline-plugin</code> pipeline. The handler answers a natural language question and returns
-a confidence score; the pipeline collects responses from all skills and speaks
+a confidence score. The pipeline collects responses from all skills and speaks
 the highest-confidence answer.</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="kn">from</span> <span class="nn">ovos_workshop.skills.ovos</span> <span class="kn">import</span> <span class="n">OVOSSkill</span>
 </span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="kn">from</span> <span class="nn">ovos_workshop.decorators</span> <span class="kn">import</span> <span class="n">common_query</span>
@@ -2354,7 +2354,7 @@ the highest-confidence answer.</p>
 <p class="admonition-title">Under the hood</p>
 <p>On startup <code>OVOSSkill</code> scans for a method tagged by <code>@common_query</code>
 (in <code>ovos_workshop/skills/ovos.py</code>) and wires up the CommonQuery ping/answer bus handlers
-automatically — only one such handler per skill is supported.</p>
+automatically. Only one such handler per skill is supported.</p>
 </div>
 <hr />
 <h2 id="ovoscommonplaybackskill">OVOSCommonPlaybackSkill<a class="headerlink" href="#ovoscommonplaybackskill" title="Permanent link">&para;</a></h2>
@@ -2423,7 +2423,7 @@ automatically — only one such handler per skill is supported.</p>
 <p>Extends <code>OVOSGameSkill</code>. Adds a <strong>converse loop</strong>: every utterance that does not match a registered intent is piped to <code>on_game_command()</code> while the game is playing. Also adds auto-save support, default pause/resume dialogs, and <code>on_abandon_game()</code>.</p>
 <p>Remaining abstract methods (you must implement these): <code>on_play_game</code>, <code>on_stop_game</code>,
 <code>on_game_command</code>. <code>on_save_game</code> and <code>on_load_game</code> get a default implementation that just
-speaks a "can't save/load" dialog — override them if your game supports saving. <code>on_pause_game</code>,
+speaks a "can't save/load" dialog. Override them if your game supports saving. <code>on_pause_game</code>,
 <code>on_resume_game</code>, and <code>on_abandon_game</code> also get working default implementations (pause/resume
 dialogs gated by the <code>pause_dialog</code> setting, and a no-op abandon hook) that you can leave alone or
 override.</p>
@@ -2587,25 +2587,25 @@ override.</p>
 <h2 id="related-pages">Related Pages<a class="headerlink" href="#related-pages" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
-<p><a href="../core/">ovos-core</a> — <code>SkillManager</code>, <code>IntentService</code>, skill loading</p>
+<p><a href="../core/">ovos-core</a>: <code>SkillManager</code>, <code>IntentService</code>, skill loading</p>
 </li>
 <li>
-<p><a href="../converse-pipeline/">Converse Pipeline</a> — <code>ConversationalSkill</code> in action</p>
+<p><a href="../converse-pipeline/">Converse Pipeline</a>: <code>ConversationalSkill</code> in action</p>
 </li>
 <li>
-<p><a href="../fallback-pipeline/">Fallback Pipeline</a> — <code>FallbackSkill</code> in action</p>
+<p><a href="../fallback-pipeline/">Fallback Pipeline</a>: <code>FallbackSkill</code> in action</p>
 </li>
 <li>
-<p><a href="../skill-settings/">Skill Settings</a> — <code>self.settings</code> persistence</p>
+<p><a href="../skill-settings/">Skill Settings</a>: <code>self.settings</code> persistence</p>
 </li>
 <li>
-<p><a href="../skill-filesystem/">Skill Filesystem</a> — <code>self.file_system</code></p>
+<p><a href="../skill-filesystem/">Skill Filesystem</a>: <code>self.file_system</code></p>
 </li>
 <li>
-<p><a href="../ovos-skill/">Skill API</a> — <code>@skill_api_method</code>, inter-skill calls</p>
+<p><a href="../ovos-skill/">Skill API</a>: <code>@skill_api_method</code>, inter-skill calls</p>
 </li>
 <li>
-<p><a href="../session/">Bus Session</a> — session state available to skills</p>
+<p><a href="../session/">Bus Session</a>: session state available to skills</p>
 </li>
 </ul>
 <hr />

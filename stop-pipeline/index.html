@@ -1646,18 +1646,18 @@
 <h1 id="stop-pipeline">Stop Pipeline<a class="headerlink" href="#stop-pipeline" title="Permanent link">&para;</a></h1>
 <div class="admonition success">
 <p class="admonition-title">Maturity — Mature ⬤⬤⬤⬤⬤</p>
-<p>Long-lived, battle-tested, and actively maintained — depend on it freely. Rated by <a href="../maturity/">repository health</a>, not version.</p>
+<p>Long-lived and actively maintained. Depend on it freely. Rated by <a href="../maturity/">repository health</a>, not version.</p>
 </div>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>This is the part of OVOS that listens for "stop", "cancel", or the same word in your language and makes the assistant quit whatever it is doing — interrupting a spoken reply, ending a question, or halting a task a skill started. Because being able to stop is so essential to a voice assistant, OVOS treats it as a built-in, always-on feature rather than an optional add-on, and it works in any language that ships the right word list. For the wider system this fits into, see the <a href="../fallback-pipeline/">Fallback Pipeline</a> or the <a href="../glossary/">Glossary</a>.</p>
+<p>This is the part of OVOS that listens for "stop", "cancel", or the same word in your language and makes the assistant quit whatever it is doing: interrupting a spoken reply, ending a question, or halting a task a skill started. Because being able to stop is so essential to a voice assistant, OVOS treats it as a built-in, always-on feature rather than an optional add-on. It works in any language that ships the right word list. For the wider system this fits into, see the <a href="../fallback-pipeline/">Fallback Pipeline</a> or the <a href="../glossary/">Glossary</a>.</p>
 </div>
 <details class="info">
 <summary>📐 Formal specification</summary>
 <p>The stop plugin is specified by <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/stop-1.md">OVOS-STOP-1 — Stop Pipeline Plugin</a></strong>, built on <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md">OVOS-PIPELINE-1</a></strong>. See the <a href="../architecture-specs/">spec index</a>.</p>
 </details>
-<p>The <strong>stop pipeline</strong> is a core component of the OpenVoiceOS (OVOS) pipeline architecture. It defines the logic responsible for stopping ongoing interactions with active skills. This includes aborting responses, halting speech, and terminating background tasks that skills may be performing. </p>
-<p>Because stopping is a <strong>fundamental feature of a voice assistant</strong>, it is implemented as a <strong>dedicated pipeline plugin</strong>, not just a fallback or intent handler. STOP-1 is emphatic that stop is a <strong>pipeline plugin and not a skill</strong> — <code>skill-ovos-stop</code> is superseded. Stop only works because PIPELINE-1's first-match-wins lets a high-confidence stop stage placed <em>first</em> in <code>session.pipeline</code> (STOP-1 §7) intercept "stop" before any other pipeline plugin claims the bare word.</p>
+<p>The <strong>stop pipeline</strong> is a core component of the OpenVoiceOS (OVOS) pipeline architecture. It defines the logic responsible for stopping ongoing interactions with active skills. This includes aborting responses, halting speech, and terminating background tasks that skills may be performing.</p>
+<p>Because stopping is a <strong>fundamental feature of a voice assistant</strong>, it is implemented as a <strong>dedicated pipeline plugin</strong>, rather than a fallback or intent handler. STOP-1 is emphatic that stop is a <strong>pipeline plugin and not a skill</strong>. <code>skill-ovos-stop</code> is superseded. Stop only works because PIPELINE-1's first-match-wins lets a high-confidence stop stage placed <em>first</em> in <code>session.pipeline</code> (STOP-1 §7) intercept "stop" before any other pipeline plugin claims the bare word.</p>
 <div class="admonition note">
 <p class="admonition-title">Spec model and topic names</p>
 <p>STOP-1 distinguishes two outcomes, both via reserved <code>intent_name</code>s. A generic <strong>stop</strong> cascades to the <em>most recently active</em> handler: the plugin reads <code>session.active_handlers</code> (the recency record, PIPELINE-1 §7.1), pings them with <code>ovos.stop.ping</code>, collects <code>ovos.stop.pong</code> (<code>can_handle</code>) within a recommended 0.5s ceiling, and returns a <code>Match</code> on the reserved <code>stop</code> name targeting the highest-<code>activated_at</code> positive responder — dispatched on <code>&lt;skill_id&gt;:stop</code>. A handler that does not answer within the timeout counts as <code>can_handle: false</code>.</p>
@@ -1698,7 +1698,7 @@
 <p><strong>Module:</strong> <code>ovos_core.intent_services.stop_service.StopService</code>
 <strong>Pipeline plugin ID:</strong> <code>ovos-stop-pipeline-plugin</code>
 <strong>Stage names:</strong> <code>ovos-stop-pipeline-plugin-high</code>, <code>ovos-stop-pipeline-plugin-medium</code>, <code>ovos-stop-pipeline-plugin-low</code> (deprecated aliases: <code>stop_high</code>, <code>stop_medium</code>, <code>stop_low</code>)</p>
-<p><code>StopService</code> subclasses both <code>ConfidenceMatcherPipeline</code> and <code>OVOSAbstractApplication</code> (its <code>skill_id</code> is <code>stop.openvoiceos</code>). Because it is a <code>ConfidenceMatcherPipeline</code>, the single base plugin ID auto-expands into three confidence-tier matchers — <code>match_high</code>, <code>match_medium</code> and <code>match_low</code> — which you reference in the pipeline as <code>ovos-stop-pipeline-plugin-high</code>, <code>-medium</code>, and <code>-low</code>. It ships inside <code>ovos-core</code>:</p>
+<p><code>StopService</code> subclasses both <code>ConfidenceMatcherPipeline</code> and <code>OVOSAbstractApplication</code> (its <code>skill_id</code> is <code>stop.openvoiceos</code>). Because it is a <code>ConfidenceMatcherPipeline</code>, the single base plugin ID auto-expands into three confidence-tier matchers: <code>match_high</code>, <code>match_medium</code> and <code>match_low</code>. You reference these in the pipeline as <code>ovos-stop-pipeline-plugin-high</code>, <code>-medium</code>, and <code>-low</code>. It ships inside <code>ovos-core</code>:</p>
 <div class="language-ini highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">[project.entry-points.&quot;opm.pipeline&quot;]</span>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="na">ovos-stop-pipeline-plugin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;ovos_core.intent_services.stop_service:StopService&quot;</span>
 </span></code></pre></div>
@@ -1766,7 +1766,7 @@
 </span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>    stop.voc
 </span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>    global_stop.voc
 </span></code></pre></div>
-<p><code>match_high</code>/<code>match_medium</code> look up the <code>stop</code> and <code>global_stop</code> vocab groups; <code>match_low</code> uses the <code>stop</code> list only. Not every language ships both files (some provide only <code>stop.voc</code>).</p>
+<p><code>match_high</code>/<code>match_medium</code> look up the <code>stop</code> and <code>global_stop</code> vocab groups. <code>match_low</code> uses the <code>stop</code> list only. Not every language ships both files (some provide only <code>stop.voc</code>).</p>
 <hr />
 <h2 id="session-integration">Session Integration<a class="headerlink" href="#session-integration" title="Permanent link">&para;</a></h2>
 <p>The stop plugin interfaces with the OVOS session system:</p>
@@ -1819,7 +1819,7 @@
 </tr>
 </tbody>
 </table>
-<p><code>&lt;skill_id&gt;:stop</code> and <code>&lt;pipeline_id&gt;:global_stop</code> are dispatch topics and fire the handler-lifecycle trio; the <code>ovos.stop.*</code> topics and <code>ovos.stop</code> do not.</p>
+<p><code>&lt;skill_id&gt;:stop</code> and <code>&lt;pipeline_id&gt;:global_stop</code> are dispatch topics and fire the handler-lifecycle trio. The <code>ovos.stop.*</code> topics and <code>ovos.stop</code> do not.</p>
 <h2 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">&para;</a></h2>
 <p>The service reads its config from <code>mycroft.conf</code> under <code>skills.stop</code>. The only key it consults is <code>min_conf</code> (default <code>0.5</code>), the floor used by the low-confidence matcher:</p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="p">{</span>
@@ -1847,8 +1847,8 @@
 </ul>
 <hr />
 <h2 id="summary">Summary<a class="headerlink" href="#summary" title="Permanent link">&para;</a></h2>
-<p>The <code>stop</code> pipeline ensures that OVOS is always in control. Whether a user needs to quickly interrupt a skill, cancel a conversation, or shut down all interactions, the <code>StopService</code> plugin provides the robust, language-aware foundation to make that possible.</p>
-<p>It is <strong>not considered optional</strong>, all OVOS installations should include this pipeline by default.</p>
+<p>The <code>stop</code> pipeline ensures that OVOS is always in control. It handles interrupting a skill, canceling a conversation, or shutting down all interactions, with a language-aware foundation built into <code>StopService</code>.</p>
+<p>It is <strong>not considered optional</strong>. All OVOS installations should include this pipeline by default.</p>
 
 
 

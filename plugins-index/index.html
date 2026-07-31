@@ -1369,16 +1369,16 @@
 <h1 id="plugins-index">Plugins Index<a class="headerlink" href="#plugins-index" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>OpenVoiceOS is built from interchangeable building blocks called <em>plugins</em> — small add-ons that each handle one job, like turning speech into text or text into speech. This works much like browser extensions: you can mix and match the pieces you want and swap them out later. This page is a map of every plugin <strong>type</strong>, each linking to its catalog of available plugins. See the <a href="../glossary/">Glossary</a> for related terms, or the <a href="../plugin-manager/">Plugin Manager</a> for how they are discovered and loaded.</p>
+<p>OpenVoiceOS is built from interchangeable building blocks called <em>plugins</em>: small add-ons that each handle one job, like turning speech into text or text into speech. This works much like browser extensions. You can mix and match the pieces you want and swap them out later. This page is a map of every plugin <strong>type</strong>, each linking to its catalog of available plugins. See the <a href="../glossary/">Glossary</a> for related terms, or the <a href="../plugin-manager/">Plugin Manager</a> for how they are discovered and loaded.</p>
 </div>
 <p>Every plugin registers under an <strong>entry-point group</strong> (the <code>opm.*</code> name below) so the
 <a href="../plugin-manager/">Plugin Manager</a> can find it. Pick a type to see the available plugins,
 their config, and install commands.</p>
 <div class="admonition tip">
 <p class="admonition-title">Too many choices? Start with <strong><a href="../choosing-plugins/">Choosing Plugins</a></strong></p>
-<p>A side-by-side comparison of every plugin type — the recommended default, each option's
+<p>A side-by-side comparison of every plugin type: the recommended default, each option's
 maturity, offline/cloud, and licence, plus a copy-paste fully-offline stack and
-scenario-based picks. This page is the <em>map of types</em>; that page helps you <em>pick one</em>.</p>
+scenario-based picks. This page is the <em>map of types</em>. That page helps you <em>pick one</em>.</p>
 </div>
 <h2 id="speech-audio">Speech &amp; Audio<a class="headerlink" href="#speech-audio" title="Permanent link">&para;</a></h2>
 <div class="admonition tip">
@@ -1508,7 +1508,7 @@ that way.</p>
 <tr>
 <td><a href="../gui-adapters/">GUI Adapters</a></td>
 <td><code>opm.gui_adapter</code> <strong>(unreleased)</strong></td>
-<td>Render backends for the GUI — not yet built or released; see the <a href="../gui-adapters/">GUI Adapters</a> page.</td>
+<td>Render backends for the GUI. Not yet built or released. See the <a href="../gui-adapters/">GUI Adapters</a> page.</td>
 </tr>
 </tbody>
 </table>
@@ -1563,14 +1563,14 @@ that way.</p>
 </table>
 <h2 id="other-plugin-types">Other plugin types<a class="headerlink" href="#other-plugin-types" title="Permanent link">&para;</a></h2>
 <p>These plugin types are defined by the Plugin Manager but don't yet have a dedicated catalog
-page here — see <a href="../plugin-manager/#plugin-types">Plugin Manager → Plugin Types</a> for their
+page here. See <a href="../plugin-manager/#plugin-types">Plugin Manager → Plugin Types</a> for their
 entry-point group and template base class:</p>
 <ul>
-<li><strong>Voice Clone</strong> (<code>opm.vc</code>) — clones a voice for TTS synthesis</li>
-<li><strong>Audio→IPA</strong> (<code>opm.audio2ipa</code>) — transcribes audio directly to phonemes (IPA)</li>
-<li><strong>Embeddings</strong> (<code>opm.embeddings</code>, plus <code>opm.embeddings.text</code> / <code>.voice</code> / <code>.image</code> / <code>.face</code>) —
+<li><strong>Voice Clone</strong> (<code>opm.vc</code>): clones a voice for TTS synthesis</li>
+<li><strong>Audio→IPA</strong> (<code>opm.audio2ipa</code>): transcribes audio directly to phonemes (IPA)</li>
+<li><strong>Embeddings</strong> (<code>opm.embeddings</code>, plus <code>opm.embeddings.text</code> / <code>.voice</code> / <code>.image</code> / <code>.face</code>):
   generic and modality-specific embedding backends</li>
-<li><strong>Knowledge Triples</strong> (<code>opm.triples</code>) — extracts subject-predicate-object triples from text</li>
+<li><strong>Knowledge Triples</strong> (<code>opm.triples</code>): extracts subject-predicate-object triples from text</li>
 </ul>
 <p>For the full machine-readable list of plugin types and template base classes, see the
 <strong><a href="../plugin-manager/#plugin-types">Plugin Manager → Plugin Types</a></strong> table. To create your own

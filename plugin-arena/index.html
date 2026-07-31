@@ -1423,15 +1423,18 @@
 <h1 id="plugin-arena">Plugin Arena<a class="headerlink" href="#plugin-arena" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>OVOS lets you swap in different plugins for jobs like understanding speech or recognizing commands — but which one is actually best? The Plugin Arena answers that by comparing them two ways: objective scores measured against test data, and a "which sounds better?" vote where people blindly pick between two plugins' results, scored a bit like chess rankings. It is purely a scoreboard for comparing plugins; it never installs or runs them itself. See the <a href="../glossary/">Glossary</a> for unfamiliar terms.</p>
+<p>OVOS lets you swap in different plugins for jobs like understanding speech or recognizing commands. Which one is best? The Plugin Arena answers that by comparing them two ways: objective scores measured against test data, and a "which sounds better?" vote where people blindly pick between two plugins' results, scored a bit like chess rankings. It is purely a scoreboard for comparing plugins. It never installs or runs them itself. See the <a href="../glossary/">Glossary</a> for unfamiliar terms.</p>
 </div>
 <p>The arena lives at <a href="https://github.com/OpenVoiceOS/ovos-plugin-arena">OpenVoiceOS/ovos-plugin-arena</a>. The <strong>intent</strong>, <strong>STT</strong>, <strong>wake word</strong> and <strong>VAD</strong> leagues carry live battles and ELO standings. The <strong>TTS</strong> league lists its competitors at the seed ELO, awaiting battles.</p>
 <p><strong>What this is:</strong> a way to answer <em>"which OVOS plugin should I use?"</em> It compares plugins on two signals:</p>
 <ol>
-<li><strong>Benchmarks</strong> — accuracy/F1 for intent, WER for STT, detection metrics for wake word — computed offline against labeled datasets and published openly as HuggingFace datasets.</li>
-<li><strong>Human preference</strong> — chess-style ELO ratings from blind A/B "battles" where people pick the better of two plugin outputs. The initial ELO is seeded from the benchmarks; human votes refine it.</li>
+<li><strong>Benchmarks</strong>: accuracy/F1 for intent, WER for STT, detection metrics for wake word. These are
+   computed offline against labeled datasets and published openly as HuggingFace datasets.</li>
+<li><strong>Human preference</strong>: chess-style ELO ratings from blind A/B "battles" where people pick the
+   better of two plugin outputs. The initial ELO is seeded from the benchmarks. Human votes refine
+   it.</li>
 </ol>
-<p>The arena is the <em>rating and voting</em> venue — <strong>not</strong> an execution venue. It never installs, isolates, or runs plugins.</p>
+<p>The arena is the <em>rating and voting</em> venue, <strong>not</strong> an execution venue. It never installs, isolates, or runs plugins.</p>
 <hr />
 <h2 id="github-native-zero-servers">GitHub-Native, Zero Servers<a class="headerlink" href="#github-native-zero-servers" title="Permanent link">&para;</a></h2>
 <p>The arena is a <strong>repository</strong>, not a service. There is no backend, no database, and no account system:</p>
@@ -1470,11 +1473,11 @@
 </tr>
 <tr>
 <td><strong>Replayable ratings</strong></td>
-<td>Battle ids are content hashes; the ELO seed is a deterministic function of the published predictions; human votes replay in <strong>issue-number order</strong>. Standings are reproducible from public data alone.</td>
+<td>Battle ids are content hashes. The ELO seed is a deterministic function of the published predictions. Human votes replay in <strong>issue-number order</strong>. Standings are reproducible from public data alone.</td>
 </tr>
 <tr>
 <td><strong>All predictions kept</strong></td>
-<td>Bad predictions are first-class content — failure cases guide plugin improvements.</td>
+<td>Bad predictions are kept, not deleted. Failure cases guide plugin improvements.</td>
 </tr>
 </tbody>
 </table>
@@ -1503,34 +1506,34 @@
 </tr>
 </tbody>
 </table>
-<p>A "competitor" is a <strong>shippable config</strong>, not just a plugin: a single-stage pipeline benchmarks one engine, a multi-stage pipeline is an ensemble fighter in its own right, and the same plugin under a different config is a <em>different competitor</em>. <code>competitor_id</code> is the stable key for predictions, battles, ELO and leaderboards.</p>
+<p>A "competitor" is a <strong>shippable config</strong>, not only a plugin. A single-stage pipeline benchmarks one engine. A multi-stage pipeline is an ensemble fighter in its own right. The same plugin under a different config is a <em>different competitor</em>. <code>competitor_id</code> is the stable key for predictions, battles, ELO and leaderboards.</p>
 <hr />
 <h2 id="declarative-registry">Declarative Registry<a class="headerlink" href="#declarative-registry" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>Competitors</strong> — <code>registry/competitors/&lt;modality&gt;/&lt;id&gt;.json</code>. For intent, <code>config</code> is a valid <code>mycroft.conf</code> fragment (an <code>intents</code> section with an ordered <code>pipeline</code> of <code>&lt;plugin&gt;-&lt;tier&gt;</code> stages).</li>
-<li><strong>Datasets</strong> — <code>registry/datasets/&lt;modality&gt;/&lt;id&gt;.json</code>. One corpus per entry: HF source id + revision, <code>reference_fields</code> (the datashape contract), license, <code>lang</code> (or <code>lang: multi</code> + <code>langs</code>), and a <code>role</code> (<code>train</code>/<code>eval</code>). Keyword and template training corpora are distinct datasets with distinct datashapes.</li>
+<li><strong>Competitors</strong>: <code>registry/competitors/&lt;modality&gt;/&lt;id&gt;.json</code>. For intent, <code>config</code> is a valid <code>mycroft.conf</code> fragment (an <code>intents</code> section with an ordered <code>pipeline</code> of <code>&lt;plugin&gt;-&lt;tier&gt;</code> stages).</li>
+<li><strong>Datasets</strong>: <code>registry/datasets/&lt;modality&gt;/&lt;id&gt;.json</code>. One corpus per entry: HF source id + revision, <code>reference_fields</code> (the datashape contract), license, <code>lang</code> (or <code>lang: multi</code> + <code>langs</code>), and a <code>role</code> (<code>train</code>/<code>eval</code>). Keyword and template training corpora are distinct datasets with distinct datashapes.</li>
 </ul>
 <h2 id="getting-your-plugin-ranked">Getting Your Plugin Ranked<a class="headerlink" href="#getting-your-plugin-ranked" title="Permanent link">&para;</a></h2>
-<p>You do not run any benchmarks yourself. A competitor is <em>a configuration you could ship</em> — the
-same plugin under a different config counts as a different fighter — and once its registry entry
+<p>You do not run any benchmarks yourself. A competitor is <em>a configuration you could ship</em>. The
+same plugin under a different config counts as a different fighter. Once its registry entry
 is merged, the arena's sweep runs it against the pinned datasets and it appears on the boards.</p>
-<p>The plugin must be published to PyPI first: the arena itself never installs plugins (see
-<a href="#github-native-zero-servers">GitHub-Native, Zero Servers</a> above), so whoever runs the offline
+<p>The plugin must be published to PyPI first. The arena itself never installs plugins (see
+<a href="#github-native-zero-servers">GitHub-Native, Zero Servers</a> above). Whoever runs the offline
 prediction job that produces the competitor's HuggingFace dataset needs to <code>pip install</code> the
-plugin by name, which only works once it is on PyPI. See <a href="../tts-plugins/#package-and-publish">TTS Plugins — Package and
-publish</a> or <a href="../transformer-plugins/#package-and-publish">Transformer Plugins — Package and
+plugin by name, which only works once it is on PyPI. See <a href="../tts-plugins/#package-and-publish">TTS Plugins: Package and
+publish</a> or <a href="../transformer-plugins/#package-and-publish">Transformer Plugins: Package and
 publish</a> for the steps to get there.</p>
 <ol>
 <li>Add a JSON file at <code>registry/competitors/&lt;modality&gt;/&lt;competitor-id&gt;.json</code>, where <code>&lt;modality&gt;</code>
    is one of <code>stt</code>, <code>tts</code>, <code>wake_word</code>, <code>vad</code>, <code>intent</code>, <code>intent_keyword</code>, <code>intent_template</code>
    (the three intent leagues are separate competitor directories). Required fields are <code>competitor_id</code>, <code>modality</code>
-   and <code>config</code> (a valid <code>mycroft.conf</code> fragment); non-intent fighters also need <code>plugin</code>, the OPM
+   and <code>config</code> (a valid <code>mycroft.conf</code> fragment). Non-intent fighters also need <code>plugin</code>, the OPM
    entry-point name. Intent fighters describe an ordered <code>config.intents.pipeline</code> of
-   <code>&lt;plugin&gt;-&lt;tier&gt;</code> stages — a single stage benchmarks one engine, several stages make an
-   ensemble — and <code>plugin</code> is derived automatically for the single-stage case.</li>
+   <code>&lt;plugin&gt;-&lt;tier&gt;</code> stages. A single stage benchmarks one engine, several stages make an
+   ensemble, and <code>plugin</code> is derived automatically for the single-stage case.</li>
 <li>Validate locally with <code>uv run pytest tests/test_registry.py</code>, which checks every competitor
    file against the schema. CI runs the same test under the reusable <code>build_tests</code> job (<code>test_path: tests/</code>).</li>
-<li>Open a pull request. The sweep and the boards do the rest, and the fighter gets an embeddable
+<li>Open a pull request. The sweep and the boards do the rest. The fighter then gets an embeddable
    rank badge for its README.</li>
 </ol>
 <p>Optional metadata — <code>display_name</code>, <code>species</code>, <code>types</code>, <code>size</code>, <code>description</code>, <code>model</code>, <code>links</code> —
@@ -1597,9 +1600,9 @@ footprint classes, lives in
 <h2 id="elo-ratings">ELO Ratings<a class="headerlink" href="#elo-ratings" title="Permanent link">&para;</a></h2>
 <ul>
 <li>Standard ELO formula (<code>arena/elo.py</code>): <code>K_FACTOR = 32</code> for new competitors (<code>&lt; 30</code> battles), <code>K_FACTOR_VETERAN = 16</code> once past the <code>VETERAN_THRESHOLD = 30</code> battles.</li>
-<li>The ELO seed is derived deterministically from the published benchmark predictions; human votes (GitHub issues) replay in issue-number order on top of it.</li>
-<li>Automatic benchmark-seeded votes are down-weighted relative to human votes: <code>AUTO_K_DIVISOR = 4.0</code>, so auto votes carry a quarter of the K-weight of a human vote (<code>k_factor(battles, auto=True)</code> divides K by 4; the Bradley-Terry path uses the matching <code>BT_AUTO_WEIGHT = 1/4</code>).</li>
-<li>Standings are fully recomputable from public data alone — the leaderboard JSON committed by <code>tally.yml</code> is a cache, not the source of truth.</li>
+<li>The ELO seed is derived deterministically from the published benchmark predictions. Human votes (GitHub issues) replay in issue-number order on top of it.</li>
+<li>Automatic benchmark-seeded votes are down-weighted relative to human votes: <code>AUTO_K_DIVISOR = 4.0</code>, so auto votes carry a quarter of the K-weight of a human vote. <code>k_factor(battles, auto=True)</code> divides K by 4. The Bradley-Terry path uses the matching <code>BT_AUTO_WEIGHT = 1/4</code>.</li>
+<li>Standings are fully recomputable from public data alone. The leaderboard JSON committed by <code>tally.yml</code> is a cache, not the source of truth.</li>
 </ul>
 <hr />
 <h2 id="supported-modalities">Supported Modalities<a class="headerlink" href="#supported-modalities" title="Permanent link">&para;</a></h2>
@@ -1636,10 +1639,10 @@ footprint classes, lives in
 <hr />
 <h2 id="registry-validation-scoring-and-provenance">Registry Validation, Scoring, and Provenance<a class="headerlink" href="#registry-validation-scoring-and-provenance" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>Registry validation</strong> — <code>tests/test_registry.py</code> validates every competitor/dataset JSON file under <code>registry/</code> against the schema, so a malformed registry entry is caught in CI (under the reusable <code>build_tests</code> job) before it can silently break assembly. Run it locally with <code>uv run pytest tests/test_registry.py</code>.</li>
-<li><strong>WER normalization</strong> — STT scoring keeps normalization deliberately minimal: <code>_wer_components</code> (<code>arena/metrics.py</code>) lowercases both reference and hypothesis and splits on whitespace, then computes a word-level Levenshtein distance. <code>row_wer</code> returns a row's stored <code>wer</code> when present and only recomputes from <code>reference_text</code>/<code>prediction</code> when it is <code>None</code>. The recompute-first behaviour belongs instead to <code>row_wer_components</code> (used for WER bootstrap CIs), which recomputes word errors and reference word count from raw text and falls back to the stored <code>wer</code> (with unit word count) only when raw text is unavailable.</li>
-<li><strong>Version-blend guard</strong> — if a competitor's rows span more than one <code>plugin_version</code>, the board build logs a warning rather than silently averaging scores across versions.</li>
-<li><strong>Reproducible predictions provenance</strong> — <code>assemble</code> pins every HuggingFace predictions source to an immutable commit SHA (the dataset registry entry's <code>predictions_revision</code> when set, else <code>--revision</code>) and records the resolved mapping on each benchmark board (<code>predictions_revisions</code>) and in the top-level index, so a third party can re-fetch the exact predictions that produced any published score.</li>
+<li><strong>Registry validation</strong>: <code>tests/test_registry.py</code> validates every competitor/dataset JSON file under <code>registry/</code> against the schema. This catches a malformed registry entry in CI (under the reusable <code>build_tests</code> job) before it can silently break assembly. Run it locally with <code>uv run pytest tests/test_registry.py</code>.</li>
+<li><strong>WER normalization</strong>: STT scoring keeps normalization deliberately minimal. <code>_wer_components</code> (<code>arena/metrics.py</code>) lowercases both reference and hypothesis and splits on whitespace, then computes a word-level Levenshtein distance. <code>row_wer</code> returns a row's stored <code>wer</code> when present and only recomputes from <code>reference_text</code>/<code>prediction</code> when it is <code>None</code>. The recompute-first behavior belongs instead to <code>row_wer_components</code> (used for WER bootstrap CIs). It recomputes word errors and reference word count from raw text, and falls back to the stored <code>wer</code> (with unit word count) only when raw text is unavailable.</li>
+<li><strong>Version-blend guard</strong>: if a competitor's rows span more than one <code>plugin_version</code>, the board build logs a warning rather than silently averaging scores across versions.</li>
+<li><strong>Reproducible predictions provenance</strong>: <code>assemble</code> pins every HuggingFace predictions source to an immutable commit SHA (the dataset registry entry's <code>predictions_revision</code> when set, else <code>--revision</code>). It records the resolved mapping on each benchmark board (<code>predictions_revisions</code>) and in the top-level index. This lets a third party re-fetch the exact predictions that produced any published score.</li>
 </ul>
 <h2 id="related-pages">Related Pages<a class="headerlink" href="#related-pages" title="Permanent link">&para;</a></h2>
 <ul>

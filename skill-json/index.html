@@ -1723,9 +1723,9 @@
 <h1 id="skill-metadata-file">Skill Metadata File<a class="headerlink" href="#skill-metadata-file" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p><code>skill.json</code> is a small "info card" for your skill — its name, a short description, an icon, and a few example phrases. OVOS and skill stores read this card to install your skill and show it off nicely in menus and on screens, much like the listing page for an app in an app store. It does not change what the skill does; it just describes it. For the saved-preferences side of things see <a href="../skill-settings/">Skill Settings</a>; for term definitions see the <a href="../glossary/">Glossary</a>.</p>
+<p><code>skill.json</code> is a small "info card" for your skill: its name, a short description, an icon, and a few example phrases. OVOS and skill stores read this card to install your skill and show it in menus and on screens, much like the listing page for an app in an app store. It does not change what the skill does. It just describes it. For the saved-preferences side of things, see <a href="../skill-settings/">Skill Settings</a>. For term definitions, see the <a href="../glossary/">Glossary</a>.</p>
 </div>
-<p>The <code>skill.json</code> file is an optional but powerful way to describe your Open Voice OS (OVOS) skill. It provides metadata used for installation, discovery, and display in GUIs or app stores.</p>
+<p>The <code>skill.json</code> file is an optional way to describe your Open Voice OS (OVOS) skill. It provides metadata used for installation, discovery, and display in GUIs or app stores.</p>
 <h2 id="purpose">Purpose<a class="headerlink" href="#purpose" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
@@ -1784,12 +1784,12 @@
 </span></code></pre></div>
 <hr />
 <h2 id="field-reference">Field Reference<a class="headerlink" href="#field-reference" title="Permanent link">&para;</a></h2>
-<p>None of these fields are enforced by <code>ovos-workshop</code> at runtime — only
+<p>None of these fields are enforced by <code>ovos-workshop</code> at runtime. Only
 <code>examples</code> is actually read (it is registered with the homescreen so it can
 show sample phrases for the skill). Everything else is a convention followed
 by skill-store and CI tooling. Ecosystem lint tooling (the <code>check_skill.py</code>
 compliance check used in CI) treats <code>skill_id</code>, <code>name</code>, <code>description</code>,
-<code>examples</code>, and <code>tags</code> as the fields it expects to be present; treat the rest
+<code>examples</code>, and <code>tags</code> as the fields it expects to be present. Treat the rest
 as recommended, not mandatory.</p>
 <table>
 <thead>
@@ -1883,13 +1883,13 @@ as recommended, not mandatory.</p>
 </table>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>In practice, real-world <code>skill.json</code> files vary quite a bit — some use
+<p>In practice, real-world <code>skill.json</code> files vary quite a bit. Some use
 <code>title</code> instead of <code>name</code>, some carry a <code>category</code> string (e.g. <code>"Daily"</code>,
 <code>"Information"</code>, <code>"Configuration"</code>) that the skill store uses to group
 listings, and older, auto-generated <code>skill.json</code> files
 (from the legacy skills-manager tooling) carry many more fields
 (<code>version</code>, <code>url</code>, <code>requirements</code>, <code>platforms</code>, and more). Stick to the
-fields above for new skills; anything extra is ignored by <code>ovos-workshop</code>.</p>
+fields above for new skills. Anything extra is ignored by <code>ovos-workshop</code>.</p>
 </div>
 <hr />
 <h2 id="language-support">Language Support<a class="headerlink" href="#language-support" title="Permanent link">&para;</a></h2>
@@ -1897,7 +1897,7 @@ fields above for new skills; anything extra is ignored by <code>ovos-workshop</c
 <hr />
 <h2 id="installation-behavior">Installation Behavior<a class="headerlink" href="#installation-behavior" title="Permanent link">&para;</a></h2>
 <p><code>pip_spec</code>, <code>package_name</code>, and <code>source</code> are hints for skill-installer /
-skill-store tooling about where to fetch a skill from — <code>ovos-workshop</code>
+skill-store tooling about where to fetch a skill from. <code>ovos-workshop</code>
 itself does not install skills or read these fields. Provide at least one
 so external installers have somewhere to pull the skill from.</p>
 <hr />
@@ -1930,7 +1930,7 @@ so external installers have somewhere to pull the skill from.</p>
    <code>package_name</code> in <code>skill.json</code> to that PyPI name. Skills without a PyPI release are still
    installable directly from git via <code>pip_spec</code> (see the <a href="https://peps.python.org/pep-0508/">PEP 508</a>
    spec syntax used there).</li>
-<li><strong>List it on the <a href="https://store.openvoiceos.org">OVOS Skill store</a></strong> — see
+<li><strong>List it on the <a href="https://store.openvoiceos.org">OVOS Skill store</a></strong>. See
    <a href="https://github.com/OpenVoiceOS/OVOS-skills-store">OVOS-skills-store</a> for how skills get added.
    The store reads the <code>skill.json</code> fields above (<code>name</code>, <code>description</code>, <code>examples</code>, <code>tags</code>,
    <code>icon</code>, <code>images</code>) to build the listing card, and <code>source</code>/<code>pip_spec</code>/<code>package_name</code> to know how
@@ -1939,7 +1939,7 @@ so external installers have somewhere to pull the skill from.</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p>A complete, accurate <code>skill.json</code> is what makes the difference between a bare repository link
-and a nicely presented store entry — see the <a href="#field-reference">Field Reference</a> above.</p>
+and a nicely presented store entry. See the <a href="#field-reference">Field Reference</a> above.</p>
 </div>
 <h2 id="see-also">See Also<a class="headerlink" href="#see-also" title="Permanent link">&para;</a></h2>
 <ul>

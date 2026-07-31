@@ -1698,32 +1698,32 @@
 <h1 id="skill-manager">Skill Manager<a class="headerlink" href="#skill-manager" title="Permanent link">&para;</a></h1>
 <div class="admonition success">
 <p class="admonition-title">Maturity — Mature ⬤⬤⬤⬤⬤</p>
-<p>Long-lived, battle-tested, and actively maintained — depend on it freely. Rated by <a href="../maturity/">repository health</a>, not version.</p>
+<p>Long-lived and actively maintained. Depend on it freely. Rated by <a href="../maturity/">repository health</a>, not version.</p>
 </div>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>The Skill Manager is the part of OVOS that finds all your installed <a href="../skill-examples/">skills</a> and starts them up when the assistant boots. It also decides <em>when</em> each one is allowed to run — some skills need the internet or a screen before they can work — and keeps re-checking, so a skill you install later appears without a restart. Think of it as the floor manager that knows which staff are on duty and clocks them in. See <a href="../skill-installer/">Skill Installer</a> for how skills get added, or the <a href="../glossary/">Glossary</a> for terms.</p>
+<p>The Skill Manager is the part of OVOS that finds all your installed <a href="../skill-examples/">skills</a> and starts them when the assistant boots. It also decides when each skill is allowed to run. Some skills need the internet or a screen before they can work. The Skill Manager keeps re-checking, so a skill you install later appears without a restart. See <a href="../skill-installer/">Skill Installer</a> for how skills get added, or the <a href="../glossary/">Glossary</a> for terms.</p>
 </div>
-<p><strong>Module:</strong> <code>ovos_core.skill_manager.SkillManager</code> — <a href="https://github.com/OpenVoiceOS/ovos-core/blob/dev/ovos_core/skill_manager.py"><code>ovos_core/skill_manager.py</code></a></p>
+<p><strong>Module:</strong> <code>ovos_core.skill_manager.SkillManager</code>: <a href="https://github.com/OpenVoiceOS/ovos-core/blob/dev/ovos_core/skill_manager.py"><code>ovos_core/skill_manager.py</code></a></p>
 <p>The <code>SkillManager</code> is a core component of <code>ovos-core</code>. It is a daemon <code>Thread</code> that owns the full lifecycle of skill plugins: discovery, loading, connectivity-gating, and graceful shutdown.</p>
-<p><strong>In plain terms:</strong> when OVOS starts, the SkillManager finds every installed skill, decides which ones are allowed to load right now (some need the network or a screen first), starts them, and re-scans periodically so newly installed skills show up without a restart.</p>
+<p><strong>In plain terms:</strong> when OVOS starts, the SkillManager finds every installed skill. It decides which ones are allowed to load right now. Some skills need the network or a screen first. The SkillManager starts the ready skills and re-scans periodically, so newly installed skills show up without a restart.</p>
 <hr />
 <details class="abstract">
 <summary>Technical Reference</summary>
 <ul>
 <li>
-<p><code>SkillManager.run()</code> — <a href="https://github.com/OpenVoiceOS/ovos-core/blob/dev/ovos_core/skill_manager.py"><code>ovos_core/skill_manager.py:476</code></a> — Main loop; re-scans for new skills every 30 s via <code>self._stop_event.wait(30)</code>.</p>
+<p><code>SkillManager.run()</code>: <a href="https://github.com/OpenVoiceOS/ovos-core/blob/dev/ovos_core/skill_manager.py"><code>ovos_core/skill_manager.py:476</code></a>. This is the main loop. It re-scans for new skills every 30 s via <code>self._stop_event.wait(30)</code>.</p>
 </li>
 <li>
-<p><code>SkillManager.load_plugin_skills()</code> — <a href="https://github.com/OpenVoiceOS/ovos-core/blob/dev/ovos_core/skill_manager.py"><code>ovos_core/skill_manager.py:347</code></a> — loads discovered skills via <code>PluginSkillLoader</code> (from <code>ovos_workshop.skill_launcher</code>); applies each skill's <code>RuntimeRequirements</code> (<code>network_before_load</code> / <code>internet_before_load</code>) as the connectivity gate.</p>
+<p><code>SkillManager.load_plugin_skills()</code>: <a href="https://github.com/OpenVoiceOS/ovos-core/blob/dev/ovos_core/skill_manager.py"><code>ovos_core/skill_manager.py:347</code></a>. It loads discovered skills via <code>PluginSkillLoader</code> (from <code>ovos_workshop.skill_launcher</code>). It applies each skill's <code>RuntimeRequirements</code> (<code>network_before_load</code> / <code>internet_before_load</code>) as the connectivity gate.</p>
 </li>
 <li>
-<p><code>SkillManager._sync_skill_loading_state()</code> — <a href="https://github.com/OpenVoiceOS/ovos-core/blob/dev/ovos_core/skill_manager.py"><code>ovos_core/skill_manager.py:181</code></a> — queries connectivity (via <code>ovos.PHAL.internet_check</code> / GUI state) and emits <code>mycroft.network.connected</code> / <code>mycroft.internet.connected</code>; the actual gating happens in <code>load_plugin_skills()</code> and only when <code>skills.use_deferred_loading</code> is enabled.</p>
+<p><code>SkillManager._sync_skill_loading_state()</code>: <a href="https://github.com/OpenVoiceOS/ovos-core/blob/dev/ovos_core/skill_manager.py"><code>ovos_core/skill_manager.py:181</code></a>. It queries connectivity (via <code>ovos.PHAL.internet_check</code> / GUI state) and emits <code>mycroft.network.connected</code> / <code>mycroft.internet.connected</code>. The actual gating happens in <code>load_plugin_skills()</code>, and only when <code>skills.use_deferred_loading</code> is enabled.</p>
 </li>
 </ul>
 </details>
 <h2 id="skill-discovery">Skill Discovery<a class="headerlink" href="#skill-discovery" title="Permanent link">&para;</a></h2>
-<p>Skills are Python packages that register themselves via the <code>opm.skill</code> entry point group (the older <code>ovos.plugin.skill</code> group is still accepted as a deprecated alias). <code>ovos-plugin-manager</code> discovers them with <code>find_skill_plugins()</code>, which returns a <code>{skill_id: SkillClass}</code> dict.</p>
+<p>Skills are Python packages. They register themselves via the <code>opm.skill</code> entry point group. The older <code>ovos.plugin.skill</code> group is still accepted as a deprecated alias. <code>ovos-plugin-manager</code> discovers them with <code>find_skill_plugins()</code>, which returns a <code>{skill_id: SkillClass}</code> dict.</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span> <span class="nn">ovos_plugin_manager.skills</span> <span class="kn">import</span> <span class="n">find_skill_plugins</span>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="n">plugins</span> <span class="o">=</span> <span class="n">find_skill_plugins</span><span class="p">()</span>
 </span></code></pre></div>
@@ -1731,8 +1731,8 @@
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p><code>RuntimeRequirements</code> (<code>network_before_load</code>, <code>internet_before_load</code>, <code>requires_gui</code>, …) is
-a deprecated mechanism — see <a href="../skill-runtime-requirements/">Runtime Requirements</a> for the
-full picture. Crucially, the gating described below is <strong>opt-in</strong>: it only applies when
+a deprecated mechanism. See <a href="../skill-runtime-requirements/">Runtime Requirements</a> for the
+full picture. The gating described below is <strong>opt-in</strong>: it only applies when
 <code>skills.use_deferred_loading</code> is set to <code>true</code> in config. With the default configuration,
 every installed skill loads unconditionally at startup regardless of its declared
 requirements.</p>
@@ -1766,7 +1766,7 @@ are met:</p>
 </tr>
 </tbody>
 </table>
-<p>Network/internet state is queried from <a href="../phal/">PHAL</a> at startup via <code>ovos.PHAL.internet_check</code>; falls back to a direct HTTP check if PHAL is unavailable.</p>
+<p>Network/internet state is queried from <a href="../phal/">PHAL</a> at startup via <code>ovos.PHAL.internet_check</code>. It falls back to a direct HTTP check if PHAL is unavailable.</p>
 <h2 id="loading-a-skill">Loading a Skill<a class="headerlink" href="#loading-a-skill" title="Permanent link">&para;</a></h2>
 <p>The loading process follows this flow:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>load_plugin_skills()

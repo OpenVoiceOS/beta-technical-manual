@@ -1651,20 +1651,20 @@
 <h1 id="session-aware-skills">Session Aware Skills<a class="headerlink" href="#session-aware-skills" title="Permanent link">&para;</a></h1>
 <div class="admonition success">
 <p class="admonition-title">Maturity — Mature ⬤⬤⬤⬤⬤</p>
-<p>Long-lived, battle-tested, and actively maintained — depend on it freely. Rated by <a href="../maturity/">repository health</a>, not version.</p>
+<p>Long-lived and actively maintained. Depend on it freely. Rated by <a href="../maturity/">repository health</a>, not version.</p>
 </div>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
 <p>One OVOS device can talk to several people at once: your phone, a kitchen speaker, and other connected devices may all be asking it things at the same time. A <em>session</em> is simply the information that says who is asking and in what language. If your skill remembers anything between requests, like a running game or a chat history, it needs to keep each person's information separate so two users don't get each other's answers, much like separate tables at a restaurant. This page shows how to make a skill session aware. New terms are explained in the <a href="../glossary/">Glossary</a>.</p>
 </div>
 <details class="info">
-<summary>📐 Formal specification</summary>
-<p>The session's wire shape and field registry are specified by <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/session-1.md">OVOS-SESSION-1 — Session Carrier</a></strong>; who owns and may mutate session state, and the reserved <code>"default"</code> device-local session, by <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/session-2.md">OVOS-SESSION-2 — Session Lifecycle &amp; State Ownership</a></strong>; and the decaying per-session <code>intent_context</code> that gates which intents may match across turns by <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/intent-context.md">OVOS-CONTEXT-1 — Intent Context</a></strong>. See also the <a href="../architecture-specs/">spec index</a>. SESSION-1 is the field registry; other specs <em>claim</em> fields into it (e.g. <code>intent_context</code> → CONTEXT-1, the transformer-chain lists → OVOS-TRANSFORM-1).</p>
+<summary>Formal specification</summary>
+<p>The session's wire shape and field registry are specified by <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/session-1.md">OVOS-SESSION-1 — Session Carrier</a></strong>. Who owns and may mutate session state, and the reserved <code>"default"</code> device-local session, is specified by <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/session-2.md">OVOS-SESSION-2 — Session Lifecycle &amp; State Ownership</a></strong>. The decaying per-session <code>intent_context</code> that gates which intents may match across turns is specified by <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/intent-context.md">OVOS-CONTEXT-1 — Intent Context</a></strong>. See also the <a href="../architecture-specs/">spec index</a>. SESSION-1 is the field registry. Other specs <em>claim</em> fields into it (e.g. <code>intent_context</code> → CONTEXT-1, the transformer-chain lists → OVOS-TRANSFORM-1).</p>
 </details>
-<p><strong>What / why (beginners):</strong> a single OVOS device can be talking to many clients at once — your phone, a kitchen satellite, a HiveMind node. Each request arrives carrying a <code>Session</code> that identifies <em>who</em> is asking and <em>in what language</em>. If your skill stores any state (a chat history, a game in progress, a "current selection"), you must key that state by <code>session_id</code> instead of stashing it in a single instance variable — otherwise two users would clobber each other.</p>
-<p>If you want your skills to handle simultaneous users you need to make them <strong>Session</strong> aware</p>
-<p>Each remote client, usually a <a href="https://jarbashivemind.github.io/HiveMind-community-docs/07_voicesat/">voice satellite</a>, will send a <code>Session</code> with the <code>Message</code></p>
-<p>Your skill should keep track of any Session specific state separately, eg, a chat history</p>
+<p><strong>What / why (beginners):</strong> a single OVOS device can be talking to many clients at once: your phone, a kitchen satellite, a HiveMind node. Each request arrives carrying a <code>Session</code> that identifies <em>who</em> is asking and <em>in what language</em>. If your skill stores any state (a chat history, a game in progress, a "current selection"), key that state by <code>session_id</code> instead of stashing it in a single instance variable. Otherwise two users would clobber each other.</p>
+<p>If you want your skills to handle simultaneous users, make them <strong>Session</strong> aware.</p>
+<p>Each remote client, usually a <a href="https://jarbashivemind.github.io/HiveMind-community-docs/07_voicesat/">voice satellite</a>, sends a <code>Session</code> with the <code>Message</code>.</p>
+<p>Your skill should keep track of any session-specific state separately, for example a chat history.</p>
 <blockquote>
 <p><strong>WARNING</strong>: Stateful Skills need to be Session Aware to play well with <a href="https://jarbashivemind.github.io/HiveMind-community-docs/">HiveMind</a></p>
 </blockquote>
@@ -1678,11 +1678,11 @@
 </span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>        <span class="n">sess</span> <span class="o">=</span> <span class="n">SessionManager</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
 </span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>        <span class="nb">print</span><span class="p">(</span><span class="n">sess</span><span class="o">.</span><span class="n">session_id</span><span class="p">)</span>
 </span></code></pre></div>
-<p>If the message originated in the device itself, the <code>session_id</code> is always equal to the reserved value <code>"default"</code>; if it comes from an external client then it will be a unique uuid. The <code>"default"</code> session is special: it is the device-local session whose state the orchestrator holds and persists in-process, rather than receiving it from a client on every message (OVOS-SESSION-2 §5).</p>
+<p>If the message originated in the device itself, the <code>session_id</code> is always equal to the reserved value <code>"default"</code>. If it comes from an external client, it will be a unique uuid. The <code>"default"</code> session is special: it is the device-local session whose state the orchestrator holds and persists in-process, rather than receiving it from a client on every message (OVOS-SESSION-2 §5).</p>
 <div class="admonition note">
 <p class="admonition-title">A present-but-malformed session never crashes the bus client</p>
 <p><code>Session.from_message</code> treats an <em>absent</em> <code>session</code> key (or an explicit
-<code>null</code>) as "use the default session" — completely normal. A <code>session</code>
+<code>null</code>) as "use the default session," which is completely normal. A <code>session</code>
 key that <em>is</em> present but is not a JSON object (a bare string, a number)
 is a different case: a producer bug. Rather than raising and tearing
 down the whole bus connection, the client discards just that one
@@ -1691,9 +1691,9 @@ force every other client into a reconnect loop.</p>
 </div>
 <h2 id="language-signals">Language signals<a class="headerlink" href="#language-signals" title="Permanent link">&para;</a></h2>
 <p><code>lang</code> is one of <strong>six</strong> BCP-47 language fields a session may carry (SESSION-1 §3.2). Each
-names a different <em>kind</em> of signal, each is optional, and each is written independently — by
-different components or different stages of the pipeline. Their meanings are fixed; how a
-consumer folds them into one language for a given operation is not, and is left to the stage
+names a different <em>kind</em> of signal. Each is optional and written independently, by
+different components or different stages of the pipeline. Their meanings are fixed. How a
+consumer folds them into one language for a given operation is not fixed, and is left to the stage
 doing the work.</p>
 <table>
 <thead>
@@ -1706,8 +1706,8 @@ doing the work.</p>
 <tbody>
 <tr>
 <td><code>lang</code></td>
-<td>The participant's <strong>preferred language</strong> — the stable base signal for the session, and the fallback when nothing per-utterance is available</td>
-<td>The client or bridge that opened the session; the deployment default otherwise</td>
+<td>The participant's <strong>preferred language</strong>: the stable base signal for the session, and the fallback when nothing per-utterance is available</td>
+<td>The client or bridge that opened the session, or the deployment default otherwise</td>
 </tr>
 <tr>
 <td><code>secondary_langs</code></td>
@@ -1717,7 +1717,7 @@ doing the work.</p>
 <tr>
 <td><code>output_lang</code></td>
 <td>The language the participant wants <strong>replies rendered in</strong>, independently of what they speak</td>
-<td>The client, or a user preference; consumed by dialog/prompt rendering</td>
+<td>The client, or a user preference. Consumed by dialog/prompt rendering</td>
 </tr>
 <tr>
 <td><code>stt_lang</code></td>
@@ -1726,25 +1726,25 @@ doing the work.</p>
 </tr>
 <tr>
 <td><code>request_lang</code></td>
-<td>The language the <strong>emitter reported</strong> for this utterance — a hint, never authoritative (e.g. the language bound to the wake word that fired)</td>
+<td>The language the <strong>emitter reported</strong> for this utterance: a hint, never authoritative (e.g. the language bound to the wake word that fired)</td>
 <td>The emitter: listener, UI selector, or a routing layer</td>
 </tr>
 <tr>
 <td><code>detected_lang</code></td>
-<td>The language a <strong>detection component</strong> classified the utterance as. May disagree with both <code>stt_lang</code> and <code>lang</code>; disagreement is normal</td>
+<td>The language a <strong>detection component</strong> classified the utterance as. May disagree with both <code>stt_lang</code> and <code>lang</code>. Disagreement is normal</td>
 <td>A language-detection plugin or transformer</td>
 </tr>
 </tbody>
 </table>
-<p>Rough guidance on which to read: render responses in <code>output_lang</code> when it is set; constrain a
+<p>Rough guidance on which to read: render responses in <code>output_lang</code> when it is set. Constrain a
 detector's candidate set with <code>lang</code> plus <code>secondary_langs</code>. For intent matching, <code>ovos-core</code>
-does not read a single field in isolation — see <a href="../lang-selection/">Language Selection</a> for the
+does not read a single field in isolation. See <a href="../lang-selection/">Language Selection</a> for the
 authoritative resolution order (<code>stt_lang</code> → <code>request_lang</code> → <code>detected_lang</code> → configured
 default). Never assume a field is present, and never assume one equals another.</p>
 <div class="admonition warning">
 <p class="admonition-title"><code>data.lang</code> is per-payload, not session state</p>
 <p>Many bus topics carry a <code>data.lang</code> describing the language of the content <em>in that
-message</em> — the utterance just transcribed, the dialog just rendered. It is owned by the
+message</em>, the utterance just transcribed, the dialog just rendered. It is owned by the
 spec defining the topic, is not a session field, and is not propagated with the session
 (SESSION-1 §3.2.8). A consumer that needs a payload's content language reads <code>data.lang</code>
 directly and <strong>must not</strong> assume it equals <code>session.lang</code> or any other session signal.
@@ -1756,24 +1756,24 @@ these signals into the language it matches an utterance in.</p>
 <p>A session also carries <code>intent_context</code>: a per-key decaying context store that gates which
 intents may match across turns (e.g. "book a flight" setting context so a follow-up "to
 Paris" is understood without repeating "flight"). It is a session field claimed into the
-SESSION-1 registry by <strong>OVOS-CONTEXT-1</strong>, holding <code>{value, expires_at}</code> per key — each entry
+SESSION-1 registry by <strong>OVOS-CONTEXT-1</strong>, holding <code>{value, expires_at}</code> per key. Each entry
 decays after a <code>timeout</code> (default ~2 minutes) unless refreshed. See
 <a href="../intent-service/">Intent Service</a> for how context is set, read, and consumed during
 pipeline matching.</p>
 <h2 id="presentation-preferences">Presentation preferences<a class="headerlink" href="#presentation-preferences" title="Permanent link">&para;</a></h2>
 <p>Beyond <code>session_id</code> and the language signals, a session carries <strong>presentation
-preferences</strong> that follow the session's originator rather than the device —
-useful when a remote participant (a HiveMind satellite, a different-locale
+preferences</strong> that follow the session's originator rather than the device.
+This is useful when a remote participant (a HiveMind satellite, a different-locale
 caller) wants times, dates, units, and place-relative answers rendered for
 <em>their</em> locale: <code>location</code> (an object holding city/coordinate/timezone),
 <code>system_unit</code> (<code>"metric"</code> / <code>"imperial"</code>), <code>time_format</code> (<code>"full"</code> for
 24-hour, <code>"half"</code> for 12-hour), and <code>date_format</code> (e.g. <code>"DMY"</code> / <code>"MDY"</code>).
-All four are optional — an absence falls back to the deployment default —
+All four are optional. An absence falls back to the deployment default,
 and <code>location</code> is what backs the <code>location</code> / <code>location_pretty</code> /
 <code>location_timezone</code> magic properties below.</p>
 <h2 id="magic-properties">Magic Properties<a class="headerlink" href="#magic-properties" title="Permanent link">&para;</a></h2>
-<p>Skills have some "magic properties" — these reflect the current <code>Session</code>'s value when it has
-one, falling back to Configuration otherwise</p>
+<p>Skills have some "magic properties." These reflect the current <code>Session</code>'s value when it has
+one, falling back to Configuration otherwise.</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>    <span class="c1"># magic properties -&gt; depend on message.context / Session</span>
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>    <span class="nd">@property</span>
 </span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>    <span class="k">def</span> <span class="nf">lang</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
@@ -1821,7 +1821,7 @@ one, falling back to Configuration otherwise</p>
 <div class="admonition note">
 <p class="admonition-title">Two different ways a session gets updated</p>
 <p>An inbound client message <strong>merges</strong> field-by-field onto the stored
-<code>"default"</code> session — a field the client omits is left alone, so a
+<code>"default"</code> session. A field the client omits is left alone, so a
 client can never delete a stored field just by not sending it. A
 pipeline plugin's <code>Match.updated_session</code>, by contrast, is a <strong>complete
 snapshot</strong>: whatever it doesn't include is treated as deleted. Deletion
