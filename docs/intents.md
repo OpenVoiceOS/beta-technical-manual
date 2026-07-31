@@ -1,5 +1,8 @@
 # Intent Design
 
+See also: [Intent Service](intent-service.md) for how OVOS routes an utterance through the
+pipeline plugins that match the intents described on this page.
+
 !!! abstract "In a nutshell"
     People ask for the same thing in many different ways: "what's the weather?", "weather in Melbourne", or just "weather" all mean roughly the same. An *intent* is what the user is actually trying to do, and the part of OVOS that figures it out is a *pipeline plugin* (older docs call this an "intent parser" or "intent engine" — see the [Glossary](glossary.md)). This page explains how OVOS recognizes intents and pulls out the useful details (like a place or a date), and describes the two different styles you can use to define them. New terms are explained in the [Glossary](glossary.md).
 

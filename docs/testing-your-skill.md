@@ -321,4 +321,7 @@ jobs:
   session state, GUI pages, and every other harness `ovoscope` ships — lives in
   [Testing Skills with ovoscope](ovoscope-overview.md).
 - Give the skill something to extract from what the user said — see [Intent Design](intents.md).
+- **Make it sound good and behave well** — see [Skill Best Practices](skill-best-practices.md)
+  and [Design Guidelines](skill-design-guidelines.md).
+- **Publish it** so others can install it — see [Sharing your skill](skill-json.md#sharing-your-skill).
 - Back to the beginning — see [Your First Skill](first-skill.md).

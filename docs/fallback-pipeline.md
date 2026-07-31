@@ -173,6 +173,9 @@ Just like with converse, a badly designed or malicious skill can hijack the fall
 
 ## Related Pages
 
+- [Fallback Skill](fallbacks.md) — the skill-side `FallbackSkill` API this pipeline plugin drives
+
+
 - [ovos-core](core.md) — `FallbackService` implementation and bus events
 
 

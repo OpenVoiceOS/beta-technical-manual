@@ -38,7 +38,7 @@ ovos-skill-my-first/
 └── ovos_skill_my_first/
     ├── __init__.py
     └── locale/
-        └── en-US/
+        └── en-us/
             ├── intents/
             │   └── Hello.intent
             └── dialog/
@@ -48,8 +48,8 @@ ovos-skill-my-first/
 !!! note "Both layouts work"
     OVOS walks the *entire* `locale/<lang>/` folder looking for a file by name, so grouping
     files into `intents/`/`dialog/` subfolders (as above) or dropping them flat directly in
-    `locale/en-US/` both work equally well — pick whichever keeps your skill readable. The
-    language folder name itself is also case-insensitive (`en-US` and `en-us` are the same
+    `locale/en-us/` both work equally well — pick whichever keeps your skill readable. The
+    language folder name itself is also case-insensitive (`en-us` and `en-US` are the same
     folder to OVOS). See [Anatomy of a Skill](skill-structure.md) and
     [Intent Design](intents.md) for more on this layout.
 
@@ -87,7 +87,7 @@ extra event handlers, and so on).
 
 ## Step 3 — Tell OVOS what the user might say
 
-`ovos_skill_my_first/locale/en-US/intents/Hello.intent` — one example phrase per line. OVOS
+`ovos_skill_my_first/locale/en-us/intents/Hello.intent` — one example phrase per line. OVOS
 learns the *pattern* from these, so you don't have to list every wording:
 
 ```text
@@ -99,7 +99,7 @@ greet me
 
 ## Step 4 — Write what OVOS says back
 
-`ovos_skill_my_first/locale/en-US/dialog/hello.dialog` — one option per line; OVOS picks one at
+`ovos_skill_my_first/locale/en-us/dialog/hello.dialog` — one option per line; OVOS picks one at
 random so the assistant doesn't sound robotic:
 
 ```text
@@ -125,8 +125,9 @@ build-backend = "setuptools.build_meta"
 name = "ovos-skill-my-first"
 version = "0.0.1"
 description = "My first OVOS skill"
+requires-python = ">=3.9"
 license = {text = "Apache-2.0"}
-dependencies = ["ovos-workshop"]
+dependencies = ["ovos-workshop>=0.0.1"]
 
 # "<skill-name>.<author>" becomes the skill_id; the right-hand side is package:ClassName
 [project.entry-points."opm.skill"]
@@ -136,7 +137,10 @@ dependencies = ["ovos-workshop"]
 packages = ["ovos_skill_my_first"]
 
 [tool.setuptools.package-data]
-ovos_skill_my_first = ["locale/*/*/*"]
+# match whichever locale layout you picked: the first glob covers files placed flat
+# directly in locale/<lang>/, the second covers files grouped in locale/<lang>/intents/
+# and locale/<lang>/dialog/ subfolders — list both if you're not sure which you'll use
+ovos_skill_my_first = ["locale/*/*", "locale/*/*/*"]
 ```
 
 The entry-point key (`my-first.youruser`) becomes your skill's **`skill_id`**
@@ -178,12 +182,25 @@ for exactly how to start/restart the OVOS services. Then say your configured wak
 
 !!! note "If OVOS doesn't reply"
     Check the skills log for your skill_id: `ovos-logs show -l skills` — see
-    [Troubleshooting](troubleshooting.md) for how to read what it's telling you.
+    [Troubleshooting](troubleshooting.md) for how to read what it's telling you. `Hello.intent`
+    is a **Padatious** template intent, so the live device also needs
+    `ovos-padatious-pipeline-plugin` installed and listed in its `intents.pipeline` config for
+    the file to match at all — see [Test Your Skill](testing-your-skill.md) for the same
+    requirement in the automated test.
 
 !!! tip "No microphone handy, or want to test without talking?"
     You can send the utterance straight onto the bus as text, skipping the wake word and mic
     entirely: `ovos-say-to "hello"`. See [Troubleshooting](troubleshooting.md#stage-3-did-stt-produce-text)
     for more on this and other text-based ways to test a skill.
+
+## Adding a file later? Know which install you have
+
+If you add a new `.intent` or `.dialog` file after this walkthrough, what you do next depends on
+how the skill is installed. With an editable install (`pip install -e .`, as used above), the
+files live on disk where you edited them, so a restart of `ovos-core` (or the skills service) is
+enough — no reinstall needed. With a normal wheel install, the files were copied into the package
+at install time, so you must reinstall the skill (`pip install .` again, or the equivalent for a
+built wheel) before OVOS can see the new file.
 
 ## Where to go next
 
@@ -192,6 +209,7 @@ for exactly how to start/restart the OVOS services. Then say your configured wak
 - **Save settings or files** — see [Skill Settings](skill-settings.md) and [Filesystem](skill-filesystem.md).
 - **Make it sound good and behave well** — see [Skill Best Practices](skill-best-practices.md).
 - **Test it automatically** — see [Skill Testing](ovoscope-overview.md).
+- **Publish it** so others can install it — see [Sharing your skill](skill-json.md#sharing-your-skill).
 - **See how an utterance actually travels through OVOS** — see [Life of an Utterance](life-of-an-utterance.md).
 - Browse real skills for ideas in [Skill Examples](skill-examples.md).
 - Questions along the way? Ask in the

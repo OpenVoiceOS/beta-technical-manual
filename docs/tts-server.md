@@ -191,6 +191,13 @@ pip install ovos-tts-plugin-server
 
 ```
 
+!!! note "Key name: `host`, not `urls`"
+    This TTS companion plugin reads the **`host`** key. The
+    [STT companion plugin](stt-server.md#companion-plugin) reads a different key,
+    **`urls`** (a list). The two are not interchangeable. If you set the wrong key, the
+    plugin does not error — it silently ignores the value and falls back to the
+    public servers described below.
+
 **Configuration** `mycroft.conf`:
 
 ```json
@@ -208,6 +215,23 @@ pip install ovos-tts-plugin-server
 }
 
 ```
+
+**Restart and verify**
+
+After editing the config, restart the client so it picks up the change, then confirm it
+is actually talking to your server:
+
+```bash
+# raspOVOS
+ovos-restart
+
+# any other systemd-managed install
+systemctl --user restart ovos.service
+```
+
+Ask the assistant to say something and check the voice/audio logs, or watch live traffic
+with [`ovos-busmon`](bus-service.md), to confirm the configured `host` server is the one
+receiving the request, not a public fallback.
 
 !!! warning "No `host` configured → public servers, not local failure"
     If you omit `host`, the plugin does **not** fail — it silently falls back to a built-in
@@ -282,7 +306,8 @@ repository.
 
 
 - **Security**: Consider adding API keys or putting a reverse proxy (NGINX, Traefik) in front for SSL termination and
-  rate limiting.
+  rate limiting. See [stt-server: a minimal NGINX server block](stt-server.md#tips-caveats) for a worked example —
+  the same shape applies here, just point `proxy_pass` at port 9666 instead of 8080.
 
 - **Plugin Dependencies**: Some voices require native libraries (e.g., TensorFlow). Bake them into your Docker image to
   avoid runtime surprises.

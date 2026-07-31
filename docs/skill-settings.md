@@ -12,6 +12,14 @@ Settings provide per-skill persistent key-value storage backed by a JSON file. T
 Building on the `MyFirstSkill` from [Your First Skill](first-skill.md), here's the smallest useful
 use of settings — a greeting that remembers a name the user gave it once:
 
+`ovos_skill_my_first/locale/en-us/SetName.intent` — one example phrase per line:
+
+```text
+call me {name}
+my name is {name}
+set my name to {name}
+```
+
 ```python
 from ovos_workshop.skills import OVOSSkill
 from ovos_workshop.decorators import intent_handler

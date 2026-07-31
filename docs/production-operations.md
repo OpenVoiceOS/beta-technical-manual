@@ -241,9 +241,16 @@ If only a single package regressed, rolling back the whole stack is unnecessary 
 package](release-channels.md#pinning-or-rolling-back-a-single-package) for pinning and
 restarting just that one package across the fleet.
 
+!!! tip "Back up your configuration too"
+    Package freezing protects the code. It does not protect your settings. Before an
+    upgrade, also copy `~/.config/mycroft/mycroft.conf` somewhere safe. It can contain
+    plaintext tokens and API keys (see [privacy-security](privacy-security.md#mycroftconf-can-contain-plaintext-secrets)),
+    so store the backup with the same care you'd give the original file.
+
 ```bash
 # 1. Freeze exactly what's currently installed, in case you need to go back
 uv pip freeze > /etc/ovos/known-good-$(date +%F).txt
+cp ~/.config/mycroft/mycroft.conf ~/.config/mycroft/mycroft.conf.bak-$(date +%F)
 
 # 2. Upgrade against a pinned constraints file (stays within one release channel)
 uv pip install --upgrade ovos-core[mycroft] \
@@ -311,7 +318,9 @@ A common fleet topology is several low-power "thin" devices that only run the bu
 and audio services, all pointed at one shared, more capable machine that does the actual
 speech-to-text and text-to-speech work over HTTP (see [STT server](stt-server.md) and
 [TTS server](tts-server.md)). A sketch, based on the real container images published by
-[`ovos-docker`](https://github.com/OpenVoiceOS/ovos-docker):
+[`ovos-docker`](https://github.com/OpenVoiceOS/ovos-docker). For the client-side config keys
+and a worked example on a single LAN IP, see
+[privacy-security: point a device at your own LAN servers](privacy-security.md#point-a-device-at-your-own-lan-servers).
 
 !!! danger "These ports are unauthenticated plain HTTP"
     `8080` and `9666` below serve unauthenticated plain HTTP by default. Never expose them
@@ -349,7 +358,9 @@ services:
     volumes:
       - ${XDG_RUNTIME_DIR}/pulse:${XDG_RUNTIME_DIR}/pulse:ro
       - ~/.config/pulse/cookie:/home/${OVOS_USER}/.config/pulse/cookie:ro
-    # configure stt.module = ovos-stt-plugin-server, urls -> the central STT server above
+      - ~/.config/mycroft:/home/${OVOS_USER}/.config/mycroft
+    # set stt.module = ovos-stt-plugin-server and stt.ovos-stt-plugin-server.urls to the
+    # central STT server above, in the mounted /home/${OVOS_USER}/.config/mycroft/mycroft.conf
 
   ovos_audio:
     image: docker.io/smartgic/ovos-audio:${VERSION}
@@ -359,8 +370,10 @@ services:
     volumes:
       - ${XDG_RUNTIME_DIR}/pulse:${XDG_RUNTIME_DIR}/pulse:ro
       - ~/.config/pulse/cookie:/home/${OVOS_USER}/.config/pulse/cookie:ro
+      - ~/.config/mycroft:/home/${OVOS_USER}/.config/mycroft
       - ovos_tts_cache:/home/${OVOS_USER}/.cache/mycroft/tts
-    # configure tts.module = ovos-tts-plugin-server, host -> the central TTS server above
+    # set tts.module = ovos-tts-plugin-server and tts.ovos-tts-plugin-server.host to the
+    # central TTS server above, in the mounted /home/${OVOS_USER}/.config/mycroft/mycroft.conf
 
   ovos_core:
     image: docker.io/smartgic/ovos-core:${VERSION}

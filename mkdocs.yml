@@ -169,7 +169,6 @@ nav:
   - Skill Development:
       - Tutorials:
           - Your First Skill: first-skill.md
-          - Testing Your Skill: testing-your-skill.md
           - Skill Cookbook: skill-cookbook.md
       - Guides:
           - Design Guidelines: skill-design-guidelines.md
@@ -198,6 +197,7 @@ nav:
           - Resource Files: resource-files.md
           - GUI Support (legacy): skill-gui.md
           - Runtime Requirements (deprecated): skill-runtime-requirements.md
+      - Testing Your Skill: testing-your-skill.md
       - Advanced Skill Types:
           - Fallback Skills: fallbacks.md
           - Common Query Skills: common-query.md

@@ -284,6 +284,9 @@ Protections include:
 
 ## Related Pages
 
+- [Converse](converse.md) — the skill-side `converse()` API this pipeline plugin drives
+
+
 - [ovos-core](core.md) — `ConverseService` implementation and bus events
 
 

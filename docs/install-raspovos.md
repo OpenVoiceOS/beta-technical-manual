@@ -40,7 +40,11 @@ tier (see [STT Plugins](stt-plugins.md), [TTS Plugins](tts-plugins.md),
   // ~/.config/mycroft/mycroft.conf — Pi 3 / lightweight tier: cloud STT, local energy VAD
   {
     "stt": {
-      "module": "ovos-stt-plugin-server"
+      "module": "ovos-stt-plugin-server",
+      "ovos-stt-plugin-server": {
+        // without "urls", this plugin silently falls back to public community servers
+        "urls": ["http://<your-server-ip>:8080/stt"]
+      }
     },
     "listener": {
       "VAD": {
@@ -49,6 +53,9 @@ tier (see [STT Plugins](stt-plugins.md), [TTS Plugins](tts-plugins.md),
     }
   }
   ```
+
+  See [STT server](stt-server.md) if you want to self-host that server instead of using a
+  public one.
 
 - **Pi 4:** a comfortable middle ground for local, on-device models — e.g.
   [`ovos-stt-plugin-onnx-asr`](stt-plugins.md#ovos-stt-plugin-onnx-asr) with a small,

@@ -158,6 +158,24 @@ ovos-config set -k /tts/module -v ovos-tts-plugin-phoonnx
 
 See the **Secrets and permissions** warning above — `ovos-config set` does not restrict the file's permissions itself.
 
+**Restart and verify**
+
+`ovos-config set` writes the change to disk. It does not restart the running services, so
+they keep using the old value until you restart them:
+
+```bash
+# raspOVOS
+ovos-restart
+
+# any other systemd-managed install
+systemctl --user restart ovos.service
+```
+
+Then confirm the new value took effect — for an STT or TTS server change, check the
+voice/audio logs, or watch live traffic with [`ovos-busmon`](bus-service.md), to see which
+server actually receives the request. See [STT server](stt-server.md#companion-plugin) and
+[TTS server](tts-server.md#companion-plugin) for the plugin-side config keys.
+
 ---
 
 ## Protected Keys and System Restrictions

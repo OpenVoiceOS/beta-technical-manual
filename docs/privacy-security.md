@@ -99,6 +99,38 @@ cloud provider, so the query and conversation text never leave the device.
     changes which of these components even run on this particular device — the
     table above describes the all-in-one `ovos` profile.
 
+### Point a device at your own LAN servers
+
+If you run your own [STT server](stt-server.md) and [TTS server](tts-server.md) on a
+machine on your local network (say `192.168.1.50`), keep your voice and text off the public
+internet without giving up the server model. Both companion plugins go in the same
+`~/.config/mycroft/mycroft.conf`, but note the client-side config keys differ: the STT
+plugin uses `urls` (a list), the TTS plugin uses `host`.
+
+```jsonc
+// ~/.config/mycroft/mycroft.conf — LAN speech backend at 192.168.1.50
+{
+  "stt": {
+    "module": "ovos-stt-plugin-server",
+    "ovos-stt-plugin-server": {
+      "urls": ["http://192.168.1.50:8080/stt"]
+    }
+  },
+  "tts": {
+    "module": "ovos-tts-plugin-server",
+    "ovos-tts-plugin-server": {
+      "host": "http://192.168.1.50:9666"
+    }
+  }
+}
+```
+
+After saving the file, restart the client (`ovos-restart` on raspOVOS, or
+`systemctl --user restart ovos.service` elsewhere) and check the voice/audio logs to
+confirm requests go to `192.168.1.50`, not a public server. See
+[production-operations: thin clients + a shared speech backend](production-operations.md#thin-clients-a-shared-speech-backend)
+for the server-side Docker Compose setup.
+
 ---
 
 ## Install-time telemetry vs. ongoing usage telemetry

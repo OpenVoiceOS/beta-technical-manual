@@ -45,16 +45,16 @@ A normal OVOS install (not this server) selects its STT plugin under the `stt` s
 ovos-stt-server \
  --engine ovos-stt-plugin-xxx \
  --host 0.0.0.0 \
- --port 9666
+ --port 8080
 
 ```
 
 **Verify it's running**  
 
-Visit [http://localhost:9666/status](http://localhost:9666/status) in your browser or run:  
+Visit [http://localhost:8080/status](http://localhost:8080/status) in your browser or run:  
 
 ```bash
-curl http://localhost:9666/status
+curl http://localhost:8080/status
 
 ```
 
@@ -193,6 +193,13 @@ pip install ovos-stt-plugin-server
     A `server_type` option is planned for this companion plugin, so a single config shape can
     target different self-hosted or cloud STT server APIs without a dedicated plugin per vendor.
 
+!!! note "Key name: `urls`, not `host`"
+    This STT companion plugin reads the **`urls`** key (a list of strings). The
+    [TTS companion plugin](tts-server.md#companion-plugin) reads a different key,
+    **`host`**. The two are not interchangeable. If you set the wrong key, the
+    plugin does not error — it silently ignores the value and falls back to the
+    public servers described below.
+
 **Configure**
 
 Point it at your own server (localhost, or wherever you run the container above):
@@ -209,6 +216,23 @@ Point it at your own server (localhost, or wherever you run the container above)
  }
 
 ```
+
+**Restart and verify**
+
+After editing the config, restart the client so it picks up the change, then confirm it
+is actually talking to your server:
+
+```bash
+# raspOVOS
+ovos-restart
+
+# any other systemd-managed install
+systemctl --user restart ovos.service
+```
+
+Say a command and check the voice/audio logs, or watch live traffic with
+[`ovos-busmon`](bus-service.md), to confirm the configured `urls` server is the one
+receiving the request, not a public fallback.
 
 for audio language detection
 
@@ -306,7 +330,23 @@ Pre-built containers are also available via the [ovos-docker-stt](https://github
 - **Audio Formats**: Ensure client sends PCM‑compatible formats (`.wav`, `.mp3` recommended).
 
 
-- **Securing Endpoints**: Consider putting a reverse proxy (NGINX, Traefik) in front for SSL or API keys.
+- **Securing Endpoints**: Consider putting a reverse proxy (NGINX, Traefik) in front for SSL or API keys. Minimal NGINX server block, proxying plain HTTP to the server on port 8080:
+
+  ```nginx
+  server {
+      listen 80;
+      server_name stt.example.lan;
+
+      location / {
+          proxy_pass http://127.0.0.1:8080;
+          proxy_set_header Host $host;
+      }
+  }
+  ```
+
+  Add TLS yourself, for example with `certbot --nginx` (see the
+  [Certbot documentation](https://certbot.eff.org/)). See also
+  [tts-server: reverse proxy](tts-server.md#tips-caveats) for the TTS side.
 
 
 - **Plugin Dependencies**: Some STT engines require heavy native libraries — bake them into your Docker image.

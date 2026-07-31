@@ -367,7 +367,7 @@ itself — a separate concern from the `speech_begin`/`silence_end` timing above
 | `segmentation.module` | `"ovos-segmentation-plugin-quebrafrases"` |  |
 | `keyword_extract.module` | `"ovos-keyword-extractor-heuristic"` |  |
 | `coref.module` | `"ovos-coref-solver-heuristic"` |  |
-| `postag.module` | `"ovos-classifiers-postag-plugin"` |  |
+| `postag.module` | `"ovos-classifiers-postag-plugin"` | Ships from `ovos-classifiers`. ⚠️ **Archived** — the shipped default still works, but the repo is no longer maintained. |
 | `g2p.module` | `""` |  |
 | `padatious.regex_only` | `false` |  |
 | `padatious.fuzz` | `true` |  |
