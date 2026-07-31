@@ -1,12 +1,14 @@
 # Skill Design Best Practices
 
 !!! abstract "In a nutshell"
-    A "skill" is an add-on that teaches OVOS to do something, like answering a question or setting a timer. This guide collects hard-won advice on making a skill that feels natural and reliable to talk to, not just one that technically works. It is written for skill makers. See [Skill Examples](skill-examples.md) and the [Glossary](glossary.md).
+    A "skill" is an add-on that teaches OVOS to do something, like answering a question or setting a timer. This guide collects hard-won advice on making a skill that feels natural and reliable to talk to. It is written for skill makers. See [Skill Examples](skill-examples.md) and the [Glossary](glossary.md).
 
-Creating a high-quality OVOS skill is not just about writing code; it's about designing a user experience that is intuitive, robust, and respects the user's intent. This guide outlines the best practices for developing skills that feel "native" to the OVOS ecosystem.
+A high-quality OVOS skill needs more than working code. It needs a user experience that is
+intuitive and respects the user's intent. This guide outlines the best practices for developing
+skills that feel "native" to the OVOS ecosystem.
 
 !!! note "Scope: code-level practices"
-    This page is about **how to write the code** of a skill — which API to call, which method to implement, how to structure error handling. For guidance on **how to design the voice interaction itself** (when to ask for confirmation, how to phrase prompts, how much to say), see [Skill Design Guidelines](skill-design-guidelines.md).
+    This page is about **how to write the code** of a skill: which API to call, which method to implement, how to structure error handling. For guidance on **how to design the voice interaction itself** (when to ask for confirmation, how to phrase prompts, how much to say), see [Skill Design Guidelines](skill-design-guidelines.md).
 
 ---
 
@@ -58,11 +60,11 @@ def stop(self):
     return False
 ```
 
-### Handle Context Correcty
+### Handle Context Correctly
 If your skill asks a follow-up question (using `expect_response=True`), make sure you are prepared to handle the user's answer in a `converse()` method or a specific intent.
 
 !!! warning "Requires `ConversationalSkill`"
-    Plain `OVOSSkill` subclasses never have `converse()` called — it is silently ignored. To
+    Plain `OVOSSkill` subclasses never have `converse()` called. OVOS silently ignores it. To
     receive follow-up utterances, subclass `ConversationalSkill` instead (see
     [Skill Classes](skill-classes.md#conversationalskill) and [Converse](converse.md)).
 

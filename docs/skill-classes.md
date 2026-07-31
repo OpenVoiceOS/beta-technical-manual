@@ -1,7 +1,7 @@
 # Skill Classes
 
 !!! abstract "In a nutshell"
-    A "skill" is an add-on that gives your voice assistant a new ability. Rather than building each one from scratch, you start from a ready-made template (a "base class") and customize it. This page lists the available templates — a general-purpose one and specialized ones for things like games, media playback, or catch-all replies — so you can pick the closest fit. Unsure what a term means? See the [Glossary](glossary.md); for hands-on basics see [Skill Best Practices](skill-best-practices.md).
+    A "skill" is an add-on that gives your voice assistant a new ability. Rather than building each one from scratch, you start from a ready-made template (a "base class") and customize it. This page lists the available templates: a general-purpose one and specialized ones for things like games, media playback, or catch-all replies, so you can pick the closest fit. Unsure what a term means? See the [Glossary](glossary.md). For hands-on basics see [Skill Best Practices](skill-best-practices.md).
 
 `ovos-workshop` provides all base classes needed to write skills for OpenVoiceOS. Every skill ultimately inherits from `OVOSSkill`.
 
@@ -92,7 +92,7 @@ Override these in your skill class:
 | `initialize()` | After full startup | Legacy. Prefer `__init__`. |
 | `get_intro_message()` | First run only | Return a dialog name or string to speak on first install |
 | `stop()` | User/system stop | Return `True` if the skill handled the stop |
-| `stop_session(session)` | Per-session stop | Called before `stop()`; return `True` to prevent global `stop()` |
+| `stop_session(session)` | Per-session stop | Called before `stop()`. Return `True` to prevent global `stop()` |
 | `can_stop(message)` | Before stop | Must be implemented if `stop()` or `stop_session()` is defined |
 | `shutdown()` | Skill unload | Final cleanup after all other shutdown steps |
 
@@ -135,7 +135,7 @@ Override these in your skill class:
 
 ### Shutdown Sequence
 
-1. `SkillManager` calls `shutdown()` — skill-specific cleanup
+1. `SkillManager` calls `shutdown()`: skill-specific cleanup
 
 
 2. `SkillManager` calls `default_shutdown()`, which:
@@ -147,9 +147,9 @@ Override these in your skill class:
 
 !!! note
     `shutdown()` and `default_shutdown()` are two separate calls made by
-    `SkillManager` when it unloads a skill — `default_shutdown()` does not call
-    `shutdown()` itself. Override `shutdown()` for your own cleanup code;
-    never call `default_shutdown()` directly.
+    `SkillManager` when it unloads a skill. `default_shutdown()` does not call
+    `shutdown()` itself. Override `shutdown()` for your own cleanup code.
+    Never call `default_shutdown()` directly.
 
 This constructor/lifecycle/startup/shutdown sequence is shared by every `OVOSSkill`
 subclass below. See [OVOSSkill](ovos-skill.md) for `SkillApi` (inter-skill RPC),
@@ -208,7 +208,7 @@ choice = self.ask_selection(["A", "B", "C"], "Pick one")
 ### RuntimeRequirements
 
 !!! note
-    `RuntimeRequirements` is a deprecated mechanism — see [Runtime Requirements](skill-runtime-requirements.md) for what it currently does.
+    `RuntimeRequirements` is a deprecated mechanism. See [Runtime Requirements](skill-runtime-requirements.md) for what it currently does.
 
 Override the class property to declare connectivity needs:
 
@@ -234,7 +234,7 @@ def runtime_requirements(cls):
 
 All nine fields default `True` except `gui_before_load`, `requires_gui`,
 `no_internet_fallback`, and `no_network_fallback` (default `False`). Used by `SkillManager`
-to defer loading until requirements are met. See [OVOSSkill — RuntimeRequirements](ovos-skill.md#runtimerequirements)
+to defer loading until requirements are met. See [OVOSSkill: RuntimeRequirements](ovos-skill.md#runtimerequirements)
 for the full field reference.
 
 ---
@@ -243,7 +243,7 @@ for the full field reference.
 
 **Module:** `ovos_workshop.skills.converse.ConversationalSkill`
 
-Extends `OVOSSkill` with explicit converse support — `activate()`, `deactivate()`, and `@conversational_intent` decorated handlers. The skill registers itself in the active-skills list after handling an intent.
+Extends `OVOSSkill` with explicit converse support: `activate()`, `deactivate()`, and `@conversational_intent` decorated handlers. The skill registers itself in the active-skills list after handling an intent.
 
 ```python
 from ovos_workshop.skills.converse import ConversationalSkill
@@ -260,10 +260,10 @@ class MySkill(ConversationalSkill):
 
 Additional bus events registered:
 
-- `{skill_id}.converse.ping` — capability advertisement
+- `{skill_id}.converse.ping`: capability advertisement
 
 
-- `{skill_id}.converse.request` — converse request from pipeline
+- `{skill_id}.converse.request`: converse request from pipeline
 
 
 - `{skill_id}.activate` / `{skill_id}.deactivate`
@@ -274,7 +274,7 @@ Additional bus events registered:
 
 **Module:** `ovos_workshop.skills.active.ActiveSkill`
 
-Extends `ConversationalSkill`. Always present in the converse active-skills list — the skill never deactivates unless explicitly told to. Useful for always-on assistants or global command handlers.
+Extends `ConversationalSkill`. Always present in the converse active-skills list. The skill never deactivates unless explicitly told to. Useful for always-on assistants or global command handlers.
 
 ```python
 from ovos_workshop.skills.active import ActiveSkill
@@ -307,13 +307,13 @@ class MyFallback(FallbackSkill):
     @fallback_handler(priority=50)
     def handle_fallback(self, message):
         self.speak("I don't know, but I tried.")
-        return True   # consumed — stop checking other fallbacks
+        return True   # consumed: stop checking other fallbacks
 
 ```
 
 Priority determines which internal pipeline stage checks the fallback first (lower runs
 earlier). These are the dispatch stage boundaries, verified in `FallbackService`
-(`ovos_core/intent_services/fallback_service.py`) — a separate fact from *which* priority
+(`ovos_core/intent_services/fallback_service.py`). This is a separate fact from *which* priority
 you should actually pick for a handler, covered in [Fallback Skill](fallbacks.md#order-of-precedence):
 
 | Range (inclusive start, exclusive stop) | Pipeline stage |
@@ -331,12 +331,12 @@ Priority can be overridden in config:
 
 ---
 
-## CommonQuery — `@common_query` on `OVOSSkill`
+## CommonQuery: `@common_query` on `OVOSSkill`
 
-There is no dedicated `CommonQuerySkill` base class — decorate a method on a
+There is no dedicated `CommonQuerySkill` base class. Decorate a method on a
 regular `OVOSSkill` with `@common_query()` to join the `question:query` /
 `ovos-common-query-pipeline-plugin` pipeline. The handler answers a natural language question and returns
-a confidence score; the pipeline collects responses from all skills and speaks
+a confidence score. The pipeline collects responses from all skills and speaks
 the highest-confidence answer.
 
 ```python
@@ -355,7 +355,7 @@ class MyQuerySkill(OVOSSkill):
 !!! note "Under the hood"
     On startup `OVOSSkill` scans for a method tagged by `@common_query`
     (in `ovos_workshop/skills/ovos.py`) and wires up the CommonQuery ping/answer bus handlers
-    automatically — only one such handler per skill is supported.
+    automatically. Only one such handler per skill is supported.
 
 ---
 
@@ -442,7 +442,7 @@ Extends `OVOSGameSkill`. Adds a **converse loop**: every utterance that does not
 
 Remaining abstract methods (you must implement these): `on_play_game`, `on_stop_game`,
 `on_game_command`. `on_save_game` and `on_load_game` get a default implementation that just
-speaks a "can't save/load" dialog — override them if your game supports saving. `on_pause_game`,
+speaks a "can't save/load" dialog. Override them if your game supports saving. `on_pause_game`,
 `on_resume_game`, and `on_abandon_game` also get working default implementations (pause/resume
 dialogs gated by the `pause_dialog` setting, and a no-op abandon hook) that you can leave alone or
 override.
@@ -594,25 +594,25 @@ All decorators are importable from `ovos_workshop.decorators`:
 
 ## Related Pages
 
-- [ovos-core](core.md) — `SkillManager`, `IntentService`, skill loading
+- [ovos-core](core.md): `SkillManager`, `IntentService`, skill loading
 
 
-- [Converse Pipeline](converse-pipeline.md) — `ConversationalSkill` in action
+- [Converse Pipeline](converse-pipeline.md): `ConversationalSkill` in action
 
 
-- [Fallback Pipeline](fallback-pipeline.md) — `FallbackSkill` in action
+- [Fallback Pipeline](fallback-pipeline.md): `FallbackSkill` in action
 
 
-- [Skill Settings](skill-settings.md) — `self.settings` persistence
+- [Skill Settings](skill-settings.md): `self.settings` persistence
 
 
-- [Skill Filesystem](skill-filesystem.md) — `self.file_system`
+- [Skill Filesystem](skill-filesystem.md): `self.file_system`
 
 
-- [Skill API](ovos-skill.md) — `@skill_api_method`, inter-skill calls
+- [Skill API](ovos-skill.md): `@skill_api_method`, inter-skill calls
 
 
-- [Bus Session](session.md) — session state available to skills
+- [Bus Session](session.md): session state available to skills
 
 ---
 

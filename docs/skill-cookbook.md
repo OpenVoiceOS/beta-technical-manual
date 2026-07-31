@@ -1,12 +1,12 @@
 # Skill Cookbook
 
 !!! abstract "In a nutshell"
-    The rest of this manual documents individual building blocks — settings, scheduling, playback, a GUI — one at a time. This page instead shows them **combined**, the way a real skill uses them: a complete, working file for each common job a skill needs to do. If you already know what `schedule_event` or `@ocp_search` does and just want to see it used correctly next to everything else it needs, start here.
+    The rest of this manual documents individual building blocks (settings, scheduling, playback, a GUI) one at a time. This page instead shows them **combined**, the way a real skill uses them: a complete, working file for each common job a skill needs to do. If you already know what `schedule_event` or `@ocp_search` does and just want to see it used correctly next to everything else it needs, start here.
 
 Each recipe below is a **complete skill module** (or a clearly-marked excerpt of one), followed by notes on the moving parts and links to the reference page that documents each API in full. None of these recipes invent new methods: every class, method signature, and bus event name was checked against the installed `ovos-workshop`, `ovos-bus-client`, and `ovos-utils` packages.
 
 !!! note "Scaffolding not shown"
-    To keep each recipe focused, `requirements.txt`, `manifest.yml`, `setup.py`/`pyproject.toml`, and the `__init__.py` boilerplate needed to actually publish a skill are omitted here — see [Skill Anatomy](skill-design-guidelines.md) and [Skill Structure](core.md) for those. Intent files (`.intent`, `.voc`) referenced below live under `locale/<lang>/`.
+    To keep each recipe focused, `requirements.txt`, `manifest.yml`, `setup.py`/`pyproject.toml`, and the `__init__.py` boilerplate needed to actually publish a skill are omitted here. See [Skill Anatomy](skill-design-guidelines.md) and [Skill Structure](core.md) for those. Intent files (`.intent`, `.voc`) referenced below live under `locale/<lang>/`.
 
 ---
 
@@ -14,7 +14,7 @@ Each recipe below is a **complete skill module** (or a clearly-marked excerpt of
 
 **When you'd want this:** the user says "remind me in 10 minutes to check the oven", and the reminder must still fire even if the device rebooted in the meantime.
 
-The scheduler (`self.schedule_event`) lives entirely in memory — if the skill process restarts, every pending timer is gone. The only thing that survives a restart is the skill's [settings](skill-settings.md) file, so a reminder skill must write down *when* each reminder is due and re-schedule anything still in the future the moment the skill reloads.
+The scheduler (`self.schedule_event`) lives entirely in memory. If the skill process restarts, every pending timer is gone. The only thing that survives a restart is the skill's [settings](skill-settings.md) file, so a reminder skill must write down *when* each reminder is due and re-schedule anything still in the future the moment the skill reloads.
 
 ```python
 import datetime
@@ -87,13 +87,13 @@ Reminder: {text}
 
 ### Moving parts
 
-- `self.schedule_event(handler, when, data=None, name=None)` — `when` accepts a
+- `self.schedule_event(handler, when, data=None, name=None)`: `when` accepts a
   `datetime.datetime` (absolute) or an `int`/`float` (seconds from now). `name` is
   the handle you cancel or update by later. Full signature and semantics: [Scheduling Events](ovos-skill.md#scheduling-events).
-- `self.cancel_scheduled_event(name)` / `self.update_scheduled_event(name, data)` — manage an existing timer by name.
-- For a recurring alarm (not a one-shot reminder) use `self.schedule_repeating_event(handler, when, frequency, name=...)` instead — same page.
-- `self.settings` is a `JsonStorage` (dict-like) backed by `settings.json`; `self.settings.store()` writes it to disk immediately. See [Skill Settings](skill-settings.md) for the storage location and lifecycle.
-- The pattern of "write intended future state to settings, replay it in `initialize()`" is the standard way any OVOS skill survives a restart — there is no separate scheduler persistence API.
+- `self.cancel_scheduled_event(name)` / `self.update_scheduled_event(name, data)`: manage an existing timer by name.
+- For a recurring alarm (not a one-shot reminder), use `self.schedule_repeating_event(handler, when, frequency, name=...)` instead. Same page.
+- `self.settings` is a `JsonStorage` (dict-like) backed by `settings.json`. `self.settings.store()` writes it to disk immediately. See [Skill Settings](skill-settings.md) for the storage location and lifecycle.
+- The pattern of "write intended future state to settings, replay it in `initialize()`" is the standard way any OVOS skill survives a restart. There is no separate scheduler persistence API.
 
 !!! tip "Full production example"
     [`ovos-skill-alarm`](https://github.com/OpenVoiceOS/ovos-skill-alarm) implements exactly this pattern for real alarms and timers, including recurring (weekday) alarms via `schedule_repeating_event`.
@@ -102,7 +102,7 @@ Reminder: {text}
 
 ## 2. User-configurable behavior: settings + settingsmeta + live reload
 
-**When you'd want this:** a skill has a behavior the user should be able to tune — a unit system, a greeting name, an API key — and it should react immediately when that value changes, whether the change came from a config file edit or a remote settings backend.
+**When you'd want this:** a skill has a behavior the user should be able to tune, such as a unit system, a greeting name, or an API key, and it should react immediately when that value changes, whether the change came from a config file edit or a remote settings backend.
 
 ```python
 from ovos_workshop.skills import OVOSSkill
@@ -149,9 +149,9 @@ skillMetadata:
 
 ### Moving parts
 
-- `self.settings_change_callback` is a plain attribute you assign a callable to (there is no decorator for it) — the base class checks `if self.settings_change_callback is not None` both on a local file-watcher change and on a remote `mycroft.skills.settings.changed` push, and calls it with no arguments either way. See [Skill Settings](skill-settings.md) for the two trigger paths.
-- Read settings defensively with `.get(key, default)` — a fresh install has an empty `settings.json` until `settingsmeta.yaml` defaults are applied by a settings UI, or you seed `self.settings` yourself in `initialize()`.
-- `settingsmeta.yaml`/`.json` is descriptive only: it drives a *UI* for editing settings, it does not itself create or validate keys — [Skill Settings Meta](skill-settings-meta.md) covers the full field-type table and where the file must live.
+- `self.settings_change_callback` is a plain attribute you assign a callable to (there is no decorator for it). The base class checks `if self.settings_change_callback is not None` both on a local file-watcher change and on a remote `mycroft.skills.settings.changed` push, and calls it with no arguments either way. See [Skill Settings](skill-settings.md) for the two trigger paths.
+- Read settings defensively with `.get(key, default)`. A fresh install has an empty `settings.json` until `settingsmeta.yaml` defaults are applied by a settings UI, or you seed `self.settings` yourself in `initialize()`.
+- `settingsmeta.yaml`/`.json` is descriptive only. It drives a *UI* for editing settings, and does not itself create or validate keys. See [Skill Settings Meta](skill-settings-meta.md) for the full field-type table and where the file must live.
 
 ---
 
@@ -161,7 +161,7 @@ skillMetadata:
 
 !!! note
     This recipe also shows `runtime_requirements`, a deprecated, legacy declaration kept here
-    for skills that already use it — see [Runtime Requirements](skill-runtime-requirements.md)
+    for skills that already use it. See [Runtime Requirements](skill-runtime-requirements.md)
     for what it currently does. New skills don't need it for the timeout/cache/spoken-error
     pattern below, which works regardless.
 
@@ -238,9 +238,9 @@ class ExchangeRateSkill(OVOSSkill):
 
 ### Moving parts
 
-- `runtime_requirements` (a `@classproperty` you override, returning `RuntimeRequirements(...)`) is a deprecated, legacy declaration. Its `*_before_load` flags only gate loading when `skills.use_deferred_loading` is enabled in config — with the default config, all skills load unconditionally regardless of this declaration. See [Runtime Requirements](skill-runtime-requirements.md) for the current behavior.
-- Always pass `timeout=` to `requests.get`/`.post` — an OVOS skill runs on the shared bus-handling thread pool and a hung HTTP call can stall other skill callbacks.
-- `self.file_system` (a `FileSystemAccess`, exposing `.path`) is a writable, skill-private directory distinct from `settings.json` — the right place for a response cache, downloaded assets, or anything larger than a few settings keys.
+- `runtime_requirements` (a `@classproperty` you override, returning `RuntimeRequirements(...)`) is a deprecated, legacy declaration. Its `*_before_load` flags only gate loading when `skills.use_deferred_loading` is enabled in config. With the default config, all skills load unconditionally regardless of this declaration. See [Runtime Requirements](skill-runtime-requirements.md) for the current behavior.
+- Always pass `timeout=` to `requests.get`/`.post`. An OVOS skill runs on the shared bus-handling thread pool, and a hung HTTP call can stall other skill callbacks.
+- `self.file_system` (a `FileSystemAccess`, exposing `.path`) is a writable, skill-private directory distinct from `settings.json`. It is the right place for a response cache, downloaded assets, or anything larger than a few settings keys.
 - Wrap the network call narrowly (`requests.exceptions.Timeout` / `.RequestException`) so a real bug elsewhere in the handler still raises normally instead of being swallowed by a broad `except Exception`.
 
 ---
@@ -249,15 +249,15 @@ class ExchangeRateSkill(OVOSSkill):
 
 !!! warning "Testing multi-turn flows over the bus"
     When driving this recipe from a test or script, re-fetch the live session before each
-    follow-up utterance — reusing a stale serialized `Session` erases the activation from
+    follow-up utterance. Reusing a stale serialized `Session` erases the activation from
     turn 1. See [Testing Your Skill](testing-your-skill.md#multi-turn-tests-always-re-pull-the-session).
 
-**When you'd want this:** the interaction needs more than one exchange — booking a table means asking for a time, a party size, and a name in sequence, or reacting to whatever the user says next without them repeating the skill's name.
+**When you'd want this:** the interaction needs more than one exchange. Booking a table means asking for a time, a party size, and a name in sequence, or reacting to whatever the user says next without them repeating the skill's name.
 
 There are two complementary tools for this:
 
-- `self.get_response(...)` — call it *from inside an intent handler* to ask one question and block until an answer (or timeout) comes back. Best for a short, linear form.
-- `ConversationalSkill.converse(message)` — override this to intercept **every** utterance while your skill is "active" (recently used), before intent matching even runs. Best for an open-ended back-and-forth.
+- `self.get_response(...)`: call it *from inside an intent handler* to ask one question and block until an answer (or timeout) comes back. Best for a short, linear form.
+- `ConversationalSkill.converse(message)`: override this to intercept **every** utterance while your skill is "active" (recently used), before intent matching even runs. Best for an open-ended back-and-forth.
 
 ```python
 from ovos_workshop.skills.converse import ConversationalSkill
@@ -303,9 +303,9 @@ class TableBookingSkill(ConversationalSkill):
 
 ### Moving parts
 
-- `get_response(dialog="", data=None, validator=None, on_fail=None, num_retries=-1)` speaks `dialog` (rendered with `data`), then waits for a reply; it returns the utterance string, or `None` if the user didn't answer / said "cancel". `validator` can reject and re-ask (e.g. requiring a number).
-- `converse()` only runs while the skill is **active** — recently handled an intent, or explicitly kept alive with `self.activate(duration_minutes=...)` as shown above. It must subclass `ConversationalSkill` (not plain `OVOSSkill`) to be dispatched; returning `True` claims the utterance, `False` lets normal pipeline processing continue. See [Converse](converse.md) and the [Converse Pipeline](converse-pipeline.md) for how a skill enters and leaves the active list.
-- `self.voc_match(utterance, "yes")` checks against `locale/en-us/vocab/yes.voc` — see [Skill Design Guidelines](skill-design-guidelines.md) for vocab file conventions.
+- `get_response(dialog="", data=None, validator=None, on_fail=None, num_retries=-1)` speaks `dialog` (rendered with `data`), then waits for a reply. It returns the utterance string, or `None` if the user didn't answer / said "cancel". `validator` can reject and re-ask (e.g. requiring a number).
+- `converse()` only runs while the skill is **active**: recently handled an intent, or explicitly kept alive with `self.activate(duration_minutes=...)` as shown above. It must subclass `ConversationalSkill` (not plain `OVOSSkill`) to be dispatched. Returning `True` claims the utterance, `False` lets normal pipeline processing continue. See [Converse](converse.md) and the [Converse Pipeline](converse-pipeline.md) for how a skill enters and leaves the active list.
+- `self.voc_match(utterance, "yes")` checks against `locale/en-us/vocab/yes.voc`. See [Skill Design Guidelines](skill-design-guidelines.md) for vocab file conventions.
 - [Context](context.md) (`self.set_context()`) is the lighter-weight alternative when you only need to bias which of *your own* intents can match next, rather than intercepting raw utterances.
 
 ---
@@ -364,17 +364,17 @@ lobby music
 
 ### Moving parts
 
-- `MediaType` and `PlaybackType` are enums imported from `ovos_utils.ocp`; results are plain dicts, not a dedicated result class — mandatory keys are `uri`, `title`, `media_type`, `playback`, `match_confidence` (0-100), with `artist`, `album`, `image`, `length` (seconds) optional. Full field table: [OCP Skills](ocp-skills.md).
-- `@ocp_search()` (imported from `ovos_workshop.decorators.ocp`) marks a method as a search provider; OCP calls every registered provider's search method in parallel and keeps the best-confidence result across all installed OCP skills. A search method may `return` a list or `yield` results incrementally.
+- `MediaType` and `PlaybackType` are enums imported from `ovos_utils.ocp`. Results are plain dicts, not a dedicated result class. Mandatory keys are `uri`, `title`, `media_type`, `playback`, `match_confidence` (0-100), with `artist`, `album`, `image`, `length` (seconds) optional. Full field table: [OCP Skills](ocp-skills.md).
+- `@ocp_search()` (imported from `ovos_workshop.decorators.ocp`) marks a method as a search provider. OCP calls every registered provider's search method in parallel and keeps the best-confidence result across all installed OCP skills. A search method may `return` a list or `yield` results incrementally.
 - `supported_media` (passed to `super().__init__()`) tells OCP which `MediaType`s this skill should even be asked about.
 - `self.voc_match(phrase, "office_playlist")` reuses the same vocabulary mechanism as intents to give a confident match a high score, while still falling back to a loose substring check.
-- [OCP Skills](ocp-skills.md) also documents `self.extend_timeout()` (ask OCP to wait longer for a slow search) and notes that new integrations not needing the full skill lifecycle may prefer a `MediaProvider` plugin instead — see that page's opening warning.
+- [OCP Skills](ocp-skills.md) also documents `self.extend_timeout()` (ask OCP to wait longer for a slow search) and notes that new integrations not needing the full skill lifecycle may prefer a `MediaProvider` plugin instead. See that page's opening warning.
 
 ---
 
 ## 6. GUI + voice together: show a page while speaking, update it live
 
-**When you'd want this:** a skill on a screen-equipped device (a Mark 2, say) should show a result — a weather card, a list, a picture — at the same moment it speaks about it, and keep the screen in sync as things change (e.g. counting down a timer).
+**When you'd want this:** a skill on a screen-equipped device (a Mark 2, say) should show a result, such as a weather card, a list, or a picture, at the same moment it speaks about it, and keep the screen in sync as things change (e.g. counting down a timer).
 
 ```python
 from ovos_workshop.skills import OVOSSkill
@@ -398,21 +398,21 @@ class WeatherCardSkill(OVOSSkill):
         self.gui["temperature"] = message.data["temperature"]
 ```
 
-`gui/qt5/weather.qml` renders `temperature`/`condition` as GUI session data; see [Skill GUI](skill-gui.md) for the full page/session-data lifecycle and `gui/qt6`/other render-backend layout conventions.
+`gui/qt5/weather.qml` renders `temperature`/`condition` as GUI session data. See [Skill GUI](skill-gui.md) for the full page/session-data lifecycle and `gui/qt6`/other render-backend layout conventions.
 
 ### Moving parts
 
-- `self.gui` is a `SkillGUI` instance (a subclass of `GUIInterface`), set up automatically once a skill initializes — no separate import or manual construction needed.
-- `self.gui["key"] = value` sets session data the page template reads; `self.gui.show_page(name, override_idle=...)` requests that page be displayed (`override_idle` keeps it up for N seconds even if something would otherwise return to the idle screen).
+- `self.gui` is a `SkillGUI` instance (a subclass of `GUIInterface`), set up automatically once a skill initializes. No separate import or manual construction is needed.
+- `self.gui["key"] = value` sets session data the page template reads. `self.gui.show_page(name, override_idle=...)` requests that page be displayed (`override_idle` keeps it up for N seconds even if something would otherwise return to the idle screen).
 - Updating `self.gui[...]` again while the page is already showing (as in `handle_temperature_update`) pushes fresh data to an already-visible page without calling `show_page` again.
 - !!! danger "This is the legacy GUI stack"
-    Everything in this recipe targets the current, **deprecated** `.qml`-based GUI stack, which [Skill GUI](skill-gui.md) documents as effectively unusable outside Mark 2 maintenance today. The forward-looking replacement is the **Upcoming** [GUI rework](gui-adapters.md) (spec OVOS-GUI-1), which instead has a skill declare intent via a closed `SYSTEM_*` template vocabulary rather than shipping custom `.qml`; that page is the one to design new screen support against.
+    Everything in this recipe targets the current, **deprecated** `.qml`-based GUI stack, which [Skill GUI](skill-gui.md) documents as effectively unusable outside Mark 2 maintenance today. The forward-looking replacement is the **Upcoming** [GUI rework](gui-adapters.md) (spec OVOS-GUI-1), which instead has a skill declare intent via a closed `SYSTEM_*` template vocabulary rather than shipping custom `.qml`. That page is the one to design new screen support against.
 
 ---
 
 ## 7. Fallback + LLM: delegating unmatched utterances to a solver plugin
 
-**When you'd want this:** every intent-matching skill has had its turn and none of them understood the utterance — instead of a flat "sorry, I don't understand", hand it to a language-model-backed plugin and speak whatever it comes back with.
+**When you'd want this:** every intent-matching skill has had its turn and none of them understood the utterance. Instead of a flat "sorry, I don't understand," hand it to a language-model-backed plugin and speak whatever it comes back with.
 
 ```python
 from ovos_plugin_manager.templates.solvers import QuestionSolver
@@ -449,17 +449,17 @@ class LLMFallbackSkill(FallbackSkill):
 
 ### Moving parts
 
-- A `FallbackSkill` subclass calls `self.register_fallback(handler, priority)` in `initialize()`; `handler` must return `True` if it produced an answer (stopping the chain) or `False` to let the next-priority fallback try. Priority `90` is deliberately high (tried late) since an LLM should be the *last* resort, not the first — see [Fallback Skill](fallbacks.md) for the recommended priority tiers.
-- `QuestionSolver.get_spoken_answer(query, lang=None, units=None)` is the common template every question-answering solver plugin implements — a plugin is just a Python entry point (`opm.solver`) you load by id, the same plugin-discovery pattern used everywhere else in OVOS.
-- !!! warning "Upcoming — solver templates are being replaced"
-      `ovos_plugin_manager.templates.solvers` (including `QuestionSolver`, used above because it is what ships and runs today) is deprecated in favor of `ovos_plugin_manager.templates.agents.AbstractAgentEngine` and the `opm.agents.*` entry point groups. New solver plugins should target the newer API; see [Specialized Agent Engine Types](advanced-solvers.md) for the full migration table and what each new agent type replaces.
-- `self.speak(text)` (a raw string) is used here instead of `self.speak_dialog(...)` because the LLM's answer is not a template — it's already the exact sentence to say.
+- A `FallbackSkill` subclass calls `self.register_fallback(handler, priority)` in `initialize()`. `handler` must return `True` if it produced an answer (stopping the chain) or `False` to let the next-priority fallback try. Priority `90` is deliberately high (tried late) since an LLM should be the *last* resort, not the first. See [Fallback Skill](fallbacks.md) for the recommended priority tiers.
+- `QuestionSolver.get_spoken_answer(query, lang=None, units=None)` is the common template every question-answering solver plugin implements. A plugin is just a Python entry point (`opm.solver`) you load by id, the same plugin-discovery pattern used everywhere else in OVOS.
+- !!! warning "Upcoming: solver templates are being replaced"
+      `ovos_plugin_manager.templates.solvers` (including `QuestionSolver`, used above because it is what ships and runs today) is deprecated in favor of `ovos_plugin_manager.templates.agents.AbstractAgentEngine` and the `opm.agents.*` entry point groups. New solver plugins should target the newer API. See [Specialized Agent Engine Types](advanced-solvers.md) for the full migration table and what each new agent type replaces.
+- `self.speak(text)` (a raw string) is used here instead of `self.speak_dialog(...)` because the LLM's answer is not a template. It is already the exact sentence to say.
 
 ---
 
 ## 8. Ambient behavior from bus events: react to listening state and time of day
 
-**When you'd want this:** a skill needs to do something not triggered by an utterance at all — dim a light while the device is actively listening, or change its greeting depending on whether it's morning or night, driven purely by bus events other services already emit.
+**When you'd want this:** a skill needs to do something not triggered by an utterance at all. Examples include dimming a light while the device is actively listening, or changing its greeting depending on whether it's morning or night, driven purely by bus events other services already emit.
 
 ```python
 import datetime
@@ -505,9 +505,9 @@ class AmbientMoodSkill(OVOSSkill):
 
 ### Moving parts
 
-- `recognizer_loop:record_begin` / `recognizer_loop:record_end` bracket an active recording (wake word already triggered); `recognizer_loop:audio_output_start` / `_end` bracket the device speaking — both pairs are emitted by the listener service regardless of which skill (if any) is involved. There is also `recognizer_loop:wakeword`, emitted the instant the wake word itself is detected, slightly before recording begins.
-- `self.add_event(msg_type, handler)` subscribes for the lifetime of the skill (auto-removed on shutdown) — the general-purpose alternative to a decorator-based intent handler, for any bus event that isn't an utterance.
-- `schedule_repeating_event(handler, when, frequency, name=...)` with `when=None` starts the first run after one `frequency` interval; pass a `datetime` for `when` instead if the first run needs to happen at a specific moment.
+- `recognizer_loop:record_begin` / `recognizer_loop:record_end` bracket an active recording (wake word already triggered). `recognizer_loop:audio_output_start` / `_end` bracket the device speaking. Both pairs are emitted by the listener service regardless of which skill (if any) is involved. There is also `recognizer_loop:wakeword`, emitted the instant the wake word itself is detected, slightly before recording begins.
+- `self.add_event(msg_type, handler)` subscribes for the lifetime of the skill (auto-removed on shutdown). This is the general-purpose alternative to a decorator-based intent handler, for any bus event that isn't an utterance.
+- `schedule_repeating_event(handler, when, frequency, name=...)` with `when=None` starts the first run after one `frequency` interval. Pass a `datetime` for `when` instead if the first run needs to happen at a specific moment.
 - This skill emits its own `ovos.ambient_mood.changed` event rather than reaching into a light/hardware plugin directly, keeping it decoupled from whatever actually consumes the mood (a PHAL plugin, another skill, a GUI). See [Bus Service](bus-service.md) for the emit/on API and [PIPELINE-1 correlation](converse-pipeline.md) for how bus events relate to a given utterance's session.
 
 ---

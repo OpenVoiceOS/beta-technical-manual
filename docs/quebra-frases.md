@@ -1,7 +1,7 @@
 # Quebra Frases
 
 !!! abstract "In a nutshell"
-    This is a small text-handling toolkit that does the everyday chores of breaking writing into pieces — splitting a block of text into sentences, or a sentence into individual words ("tokens") — and comparing several phrases to find what they have in common. OVOS leans on it to tidy up what you said before trying to understand it. The name is Portuguese for "phrase breaking". See the [Glossary](glossary.md) for unfamiliar terms.
+    This is a small text-handling toolkit that does the everyday chores of breaking writing into pieces. It splits a block of text into sentences, or a sentence into individual words ("tokens"), and compares several phrases to find what they have in common. OVOS leans on it to tidy up what you said before trying to understand it. The name is Portuguese for "phrase breaking". See the [Glossary](glossary.md) for unfamiliar terms.
 
 `quebra_frases` is a lightweight text-processing toolkit for tokenization (words / sentences / paragraphs), chunking around delimiters, and comparing several utterances to find their common / uncommon / exclusive parts. OVOS uses it for utterance normalization and intent-sample analysis.
 
@@ -15,7 +15,7 @@ quebra_frases.sentence_tokenize("Hi there. How are you?")
 # ['Hi there.', 'How are you?']
 ```
 
-**Dependencies:** lightweight — only the `regex` library is required.
+**Dependencies:** lightweight. Only the `regex` library is required.
 
 ## Installation
 
@@ -86,7 +86,7 @@ For every tokenizer there are `span_indexed_*` and `char_indexed_*` variants tha
 - `span_indexed_word_tokenize`, `char_indexed_word_tokenize`
 - `span_indexed_sentence_tokenize`, `char_indexed_sentence_tokenize`
 - `span_indexed_paragraph_tokenize`, `char_indexed_paragraph_tokenize`
-- `empty_space_tokenize`, `span_indexed_empty_space_tokenize`, `char_indexed_empty_space_tokenize`, `get_empty_spans` — work with whitespace runs
+- `empty_space_tokenize`, `span_indexed_empty_space_tokenize`, `char_indexed_empty_space_tokenize`, `get_empty_spans`: work with whitespace runs
 
 Other utilities:
 

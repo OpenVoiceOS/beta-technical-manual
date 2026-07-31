@@ -1,21 +1,21 @@
 # Session Aware Skills
 
 !!! success "Maturity — Mature ⬤⬤⬤⬤⬤"
-    Long-lived, battle-tested, and actively maintained — depend on it freely. Rated by [repository health](maturity.md), not version.
+    Long-lived and actively maintained. Depend on it freely. Rated by [repository health](maturity.md), not version.
 
 !!! abstract "In a nutshell"
     One OVOS device can talk to several people at once: your phone, a kitchen speaker, and other connected devices may all be asking it things at the same time. A *session* is simply the information that says who is asking and in what language. If your skill remembers anything between requests, like a running game or a chat history, it needs to keep each person's information separate so two users don't get each other's answers, much like separate tables at a restaurant. This page shows how to make a skill session aware. New terms are explained in the [Glossary](glossary.md).
 
-??? info "📐 Formal specification"
-    The session's wire shape and field registry are specified by **[OVOS-SESSION-1 — Session Carrier](https://github.com/OpenVoiceOS/architecture/blob/dev/session-1.md)**; who owns and may mutate session state, and the reserved `"default"` device-local session, by **[OVOS-SESSION-2 — Session Lifecycle & State Ownership](https://github.com/OpenVoiceOS/architecture/blob/dev/session-2.md)**; and the decaying per-session `intent_context` that gates which intents may match across turns by **[OVOS-CONTEXT-1 — Intent Context](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-context.md)**. See also the [spec index](architecture-specs.md). SESSION-1 is the field registry; other specs *claim* fields into it (e.g. `intent_context` → CONTEXT-1, the transformer-chain lists → OVOS-TRANSFORM-1).
+??? info "Formal specification"
+    The session's wire shape and field registry are specified by **[OVOS-SESSION-1 — Session Carrier](https://github.com/OpenVoiceOS/architecture/blob/dev/session-1.md)**. Who owns and may mutate session state, and the reserved `"default"` device-local session, is specified by **[OVOS-SESSION-2 — Session Lifecycle & State Ownership](https://github.com/OpenVoiceOS/architecture/blob/dev/session-2.md)**. The decaying per-session `intent_context` that gates which intents may match across turns is specified by **[OVOS-CONTEXT-1 — Intent Context](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-context.md)**. See also the [spec index](architecture-specs.md). SESSION-1 is the field registry. Other specs *claim* fields into it (e.g. `intent_context` → CONTEXT-1, the transformer-chain lists → OVOS-TRANSFORM-1).
 
-**What / why (beginners):** a single OVOS device can be talking to many clients at once — your phone, a kitchen satellite, a HiveMind node. Each request arrives carrying a `Session` that identifies *who* is asking and *in what language*. If your skill stores any state (a chat history, a game in progress, a "current selection"), you must key that state by `session_id` instead of stashing it in a single instance variable — otherwise two users would clobber each other.
+**What / why (beginners):** a single OVOS device can be talking to many clients at once: your phone, a kitchen satellite, a HiveMind node. Each request arrives carrying a `Session` that identifies *who* is asking and *in what language*. If your skill stores any state (a chat history, a game in progress, a "current selection"), key that state by `session_id` instead of stashing it in a single instance variable. Otherwise two users would clobber each other.
 
-If you want your skills to handle simultaneous users you need to make them **Session** aware
+If you want your skills to handle simultaneous users, make them **Session** aware.
 
-Each remote client, usually a [voice satellite](https://jarbashivemind.github.io/HiveMind-community-docs/07_voicesat/), will send a `Session` with the `Message`
+Each remote client, usually a [voice satellite](https://jarbashivemind.github.io/HiveMind-community-docs/07_voicesat/), sends a `Session` with the `Message`.
 
-Your skill should keep track of any Session specific state separately, eg, a chat history
+Your skill should keep track of any session-specific state separately, for example a chat history.
 
 > **WARNING**: Stateful Skills need to be Session Aware to play well with [HiveMind](https://jarbashivemind.github.io/HiveMind-community-docs/)
 
@@ -34,11 +34,11 @@ class MySkill(OVOSSkill):
 
 ```
 
-If the message originated in the device itself, the `session_id` is always equal to the reserved value `"default"`; if it comes from an external client then it will be a unique uuid. The `"default"` session is special: it is the device-local session whose state the orchestrator holds and persists in-process, rather than receiving it from a client on every message (OVOS-SESSION-2 §5).
+If the message originated in the device itself, the `session_id` is always equal to the reserved value `"default"`. If it comes from an external client, it will be a unique uuid. The `"default"` session is special: it is the device-local session whose state the orchestrator holds and persists in-process, rather than receiving it from a client on every message (OVOS-SESSION-2 §5).
 
 !!! note "A present-but-malformed session never crashes the bus client"
     `Session.from_message` treats an *absent* `session` key (or an explicit
-    `null`) as "use the default session" — completely normal. A `session`
+    `null`) as "use the default session," which is completely normal. A `session`
     key that *is* present but is not a JSON object (a bare string, a number)
     is a different case: a producer bug. Rather than raising and tearing
     down the whole bus connection, the client discards just that one
@@ -48,29 +48,29 @@ If the message originated in the device itself, the `session_id` is always equal
 ## Language signals
 
 `lang` is one of **six** BCP-47 language fields a session may carry (SESSION-1 §3.2). Each
-names a different *kind* of signal, each is optional, and each is written independently — by
-different components or different stages of the pipeline. Their meanings are fixed; how a
-consumer folds them into one language for a given operation is not, and is left to the stage
+names a different *kind* of signal. Each is optional and written independently, by
+different components or different stages of the pipeline. Their meanings are fixed. How a
+consumer folds them into one language for a given operation is not fixed, and is left to the stage
 doing the work.
 
 | Field | Meaning | Typically written by |
 |---|---|---|
-| `lang` | The participant's **preferred language** — the stable base signal for the session, and the fallback when nothing per-utterance is available | The client or bridge that opened the session; the deployment default otherwise |
+| `lang` | The participant's **preferred language**: the stable base signal for the session, and the fallback when nothing per-utterance is available | The client or bridge that opened the session, or the deployment default otherwise |
 | `secondary_langs` | Additional languages the participant also speaks, most-preferred first. Never contains `lang` itself | The client or bridge that opened the session |
-| `output_lang` | The language the participant wants **replies rendered in**, independently of what they speak | The client, or a user preference; consumed by dialog/prompt rendering |
+| `output_lang` | The language the participant wants **replies rendered in**, independently of what they speak | The client, or a user preference. Consumed by dialog/prompt rendering |
 | `stt_lang` | The language the **speech-to-text stage was configured to assume** for the audio. Diverges from the transcript's language when a speech-translation model is used | The audio input service, before or at STT invocation |
-| `request_lang` | The language the **emitter reported** for this utterance — a hint, never authoritative (e.g. the language bound to the wake word that fired) | The emitter: listener, UI selector, or a routing layer |
-| `detected_lang` | The language a **detection component** classified the utterance as. May disagree with both `stt_lang` and `lang`; disagreement is normal | A language-detection plugin or transformer |
+| `request_lang` | The language the **emitter reported** for this utterance: a hint, never authoritative (e.g. the language bound to the wake word that fired) | The emitter: listener, UI selector, or a routing layer |
+| `detected_lang` | The language a **detection component** classified the utterance as. May disagree with both `stt_lang` and `lang`. Disagreement is normal | A language-detection plugin or transformer |
 
-Rough guidance on which to read: render responses in `output_lang` when it is set; constrain a
+Rough guidance on which to read: render responses in `output_lang` when it is set. Constrain a
 detector's candidate set with `lang` plus `secondary_langs`. For intent matching, `ovos-core`
-does not read a single field in isolation — see [Language Selection](lang-selection.md) for the
+does not read a single field in isolation. See [Language Selection](lang-selection.md) for the
 authoritative resolution order (`stt_lang` → `request_lang` → `detected_lang` → configured
 default). Never assume a field is present, and never assume one equals another.
 
 !!! warning "`data.lang` is per-payload, not session state"
     Many bus topics carry a `data.lang` describing the language of the content *in that
-    message* — the utterance just transcribed, the dialog just rendered. It is owned by the
+    message*, the utterance just transcribed, the dialog just rendered. It is owned by the
     spec defining the topic, is not a session field, and is not propagated with the session
     (SESSION-1 §3.2.8). A consumer that needs a payload's content language reads `data.lang`
     directly and **must not** assume it equals `session.lang` or any other session signal.
@@ -84,7 +84,7 @@ these signals into the language it matches an utterance in.
 A session also carries `intent_context`: a per-key decaying context store that gates which
 intents may match across turns (e.g. "book a flight" setting context so a follow-up "to
 Paris" is understood without repeating "flight"). It is a session field claimed into the
-SESSION-1 registry by **OVOS-CONTEXT-1**, holding `{value, expires_at}` per key — each entry
+SESSION-1 registry by **OVOS-CONTEXT-1**, holding `{value, expires_at}` per key. Each entry
 decays after a `timeout` (default ~2 minutes) unless refreshed. See
 [Intent Service](intent-service.md) for how context is set, read, and consumed during
 pipeline matching.
@@ -92,20 +92,20 @@ pipeline matching.
 ## Presentation preferences
 
 Beyond `session_id` and the language signals, a session carries **presentation
-preferences** that follow the session's originator rather than the device —
-useful when a remote participant (a HiveMind satellite, a different-locale
+preferences** that follow the session's originator rather than the device.
+This is useful when a remote participant (a HiveMind satellite, a different-locale
 caller) wants times, dates, units, and place-relative answers rendered for
 *their* locale: `location` (an object holding city/coordinate/timezone),
 `system_unit` (`"metric"` / `"imperial"`), `time_format` (`"full"` for
 24-hour, `"half"` for 12-hour), and `date_format` (e.g. `"DMY"` / `"MDY"`).
-All four are optional — an absence falls back to the deployment default —
+All four are optional. An absence falls back to the deployment default,
 and `location` is what backs the `location` / `location_pretty` /
 `location_timezone` magic properties below.
 
 ## Magic Properties
 
-Skills have some "magic properties" — these reflect the current `Session`'s value when it has
-one, falling back to Configuration otherwise
+Skills have some "magic properties." These reflect the current `Session`'s value when it has
+one, falling back to Configuration otherwise.
 
 ```python
     # magic properties -> depend on message.context / Session
@@ -156,7 +156,7 @@ one, falling back to Configuration otherwise
 
 !!! note "Two different ways a session gets updated"
     An inbound client message **merges** field-by-field onto the stored
-    `"default"` session — a field the client omits is left alone, so a
+    `"default"` session. A field the client omits is left alone, so a
     client can never delete a stored field just by not sending it. A
     pipeline plugin's `Match.updated_session`, by contrast, is a **complete
     snapshot**: whatever it doesn't include is treated as deleted. Deletion

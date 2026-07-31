@@ -4,7 +4,7 @@
     Established and production-ready, actively maintained. Rated by [repository health](maturity.md), not version.
 
 !!! abstract "In a nutshell"
-    PHAL is how OpenVoiceOS talks to the physical device it runs on — things like volume controls, Wi-Fi setup, buttons, LEDs, and other hardware. It works through small add-ons (plugins) that each handle one piece of hardware and quietly run in the background, so the assistant can adjust the speaker volume or set up a network connection without you saying a word. Some hardware needs extra system permissions, so PHAL comes in a regular version and a privileged "admin" version. If you're building your own hardware and want to write a PHAL plugin for it, see [Building Hardware on OVOS](hardware-integrators.md). New to the terms? See the [Glossary](glossary.md).
+    PHAL is how OpenVoiceOS talks to the physical device it runs on: things like volume controls, Wi-Fi setup, buttons, LEDs, and other hardware. It works through small add-ons (plugins) that each handle one piece of hardware and quietly run in the background, so the assistant can adjust the speaker volume or set up a network connection without you saying a word. Some hardware needs extra system permissions, so PHAL comes in a regular version and a privileged "admin" version. If you're building your own hardware and want to write a PHAL plugin for it, see [Building Hardware on OVOS](hardware-integrators.md). New to the terms? See the [Glossary](glossary.md).
 
 PHAL (Platform/Hardware Abstraction Layer) provides a plugin-based system for integrating
 hardware-specific and platform-level functionality into OVOS. PHAL plugins run as
@@ -15,13 +15,13 @@ client at construction, and may listen to or emit any bus event.
 
 ??? abstract "Technical Reference"
 
-    - `PHAL.start()` — [`ovos_PHAL/service.py:97`](https://github.com/OpenVoiceOS/ovos-PHAL/blob/dev/ovos_PHAL/service.py) — Loads user-level plugins and reports `ProcessStatus` ready. `PHAL` is a plain object, not a thread.
+    - `PHAL.start()` ([`ovos_PHAL/service.py:97`](https://github.com/OpenVoiceOS/ovos-PHAL/blob/dev/ovos_PHAL/service.py)): loads user-level plugins and reports `ProcessStatus` ready. `PHAL` is a plain object, not a thread.
 
 
-    - `AdminPHAL.load_plugins()` — [`ovos_PHAL/admin.py:45`](https://github.com/OpenVoiceOS/ovos-PHAL/blob/dev/ovos_PHAL/admin.py) — Discovery/validation for privileged/root-level plugins (`find_admin_plugins`).
+    - `AdminPHAL.load_plugins()` ([`ovos_PHAL/admin.py:45`](https://github.com/OpenVoiceOS/ovos-PHAL/blob/dev/ovos_PHAL/admin.py)): discovery/validation for privileged/root-level plugins (`find_admin_plugins`).
 
 
-    - `PHAL.load_plugins()` — [`ovos_PHAL/service.py:67`](https://github.com/OpenVoiceOS/ovos-PHAL/blob/dev/ovos_PHAL/service.py) — discovery and validation of user plugins via OPM (`find_phal_plugins`).
+    - `PHAL.load_plugins()` ([`ovos_PHAL/service.py:67`](https://github.com/OpenVoiceOS/ovos-PHAL/blob/dev/ovos_PHAL/service.py)): discovery and validation of user plugins via OPM (`find_phal_plugins`).
     
     ---
     
@@ -89,13 +89,13 @@ phal.shutdown()  # set ProcessStatus to stopping
 `load_plugins()` iterates over all plugins discovered via `find_phal_plugins()` (entry
 point group `opm.phal`) and applies these rules in order:
 
-1. **Admin-only check** — if the plugin name appears in `admin_config`, skip it (it will
+1. **Admin-only check**: if the plugin name appears in `admin_config`, skip it (it will
    be loaded by `AdminPHAL` instead).
 
-2. **Explicit disable** — if `config.get("enabled") is False`, skip.
+2. **Explicit disable**: if `config.get("enabled") is False`, skip.
 
 
-3. **Validator** — if the plugin class has a `validator` attribute, call
+3. **Validator**: if the plugin class has a `validator` attribute, call
    `plug.validator.validate(config)`:
 
    - Returns `True` → load
@@ -107,14 +107,14 @@ point group `opm.phal`) and applies these rules in order:
    - Raises exception → skip, log error
 
 
-4. **No validator** — defaults to enabled; only `enabled: false` can disable.
+4. **No validator**: defaults to enabled. Only `enabled: false` can disable.
    Note: the `PHALPlugin` base sets `validator = PHALValidator` by default, so most
    plugins do take the validator path. The default validator just returns
-   `config.get("enabled", True) is True`; a subclass overrides `validate()` to add a
+   `config.get("enabled", True) is True`. A subclass overrides `validate()` to add a
    real hardware probe.
 
 
-5. **Instantiation** — `plug(bus=self.bus, config=config)`; stored in `self.drivers[name]`.
+5. **Instantiation**: `plug(bus=self.bus, config=config)`, stored in `self.drivers[name]`.
 
 ### ProcessStatus lifecycle
 
@@ -129,7 +129,7 @@ services can query over the bus:
 | `stopping` | `shutdown()` called (`set_stopping()`) |
 
 The `alive` callback exists in the hook map but `PHAL.start()` does not call
-`set_alive()`; the status goes straight to `started` then `ready`.
+`set_alive()`. The status goes straight to `started` then `ready`.
 
 ### Configuration
 
@@ -151,11 +151,11 @@ The `alive` callback exists in the hook map but `PHAL.start()` does not call
 | Config key | Effect |
 |---|---|
 | `"enabled": false` | Explicitly disable this plugin (skipped before the validator runs) |
-| `"enabled": true` | Passed to the validator; the default validator treats it as enabled, but a custom `validate()` can still skip on missing hardware |
+| `"enabled": true` | Passed to the validator. The default validator treats it as enabled, but a custom `validate()` can still skip on missing hardware |
 | Any other keys | Passed as `config` to the plugin constructor |
 
-Plugins with a passing validator and no `enabled: false` are loaded automatically —
-no config entry is needed just to enable a plugin.
+Plugins with a passing validator and no `enabled: false` are loaded automatically.
+No config entry is needed just to enable a plugin.
 
 ---
 
@@ -181,7 +181,7 @@ admin = AdminPHAL(
 
 ```bash
 
-# Run it via its systemd unit — not casually/interactively as root — and confirm the
+# Run it via its systemd unit, not casually/interactively as root, and confirm the
 # bus is bound to localhost (see bus-service.md) before enabling any admin plugin: this
 # is a root, bus-reachable process, and the bus itself is unauthenticated.
 sudo ovos_PHAL_admin
@@ -194,24 +194,24 @@ sudo ovos_PHAL_admin
 |---|---|---|
 | Entry point group | `opm.phal` | `opm.phal.admin` |
 | Config section | `PHAL` | `PHAL.admin` |
-| Default enable | Yes (validator + not `enabled: false`) | **No — requires `"enabled": true`** |
+| Default enable | Yes (validator + not `enabled: false`) | **No, requires `"enabled": true`** |
 | Skip logic | Skips plugins in `admin_config` | Skips plugins in `user_config` |
 
 ### Security model
 
 Admin plugins are intended for hardware requiring elevated permissions: I²C, SPI, GPIO,
 system power management, thermal control. The explicit `enabled: true` requirement is a
-security boundary — installed-but-unconfigured admin plugins never run accidentally.
+security boundary. Installed-but-unconfigured admin plugins never run accidentally.
 Skills and the core pipeline never run as root.
 
 !!! danger "AdminPHAL plugins run enabled bus actions with root privilege"
     `AdminPHAL` receives the same **unauthenticated** [messagebus](bus-service.md) client
-    as every other service — construction takes a plain `MessageBusClient`, with no
+    as every other service. Construction takes a plain `MessageBusClient`, with no
     separate credential or capability check. If the bus is reachable, anyone who can emit
     bus messages can trigger any *enabled* admin plugin's actions, and those actions run
     with root privilege: for example, `ovos-PHAL-plugin-system` exposes reboot, shutdown
     and factory-reset over the bus. This is a stronger consequence of the bus's lack of
-    authentication than "skills aren't sandboxed" — it is root-equivalent remote control,
+    authentication than "skills aren't sandboxed." It is root-equivalent remote control,
     not just assistant control. See [Privacy & Security](privacy-security.md) for the full
     trust-boundary picture.
 
@@ -261,25 +261,25 @@ class MyHardwarePlugin(PHALPlugin):
 The base class (`PHALPlugin`) is a `threading.Thread`. Key points:
 
 - Stores `self.bus`, `self.config` and `self.name`. There is **no** `self.skill_id`
-  attribute; when it emits events it derives a per-plugin id of the form
+  attribute. When it emits events it derives a per-plugin id of the form
   `ovos.PHAL.<name>`.
 
 
-- Its `__init__` calls `self.start()` itself — instantiating a plugin already runs
+- Its `__init__` calls `self.start()` itself. Instantiating a plugin already runs
   its thread. Do all setup **before** `super().__init__()` returns, or guard against
   the thread already running.
 
 
 - It auto-registers a large set of legacy enclosure (`enclosure.eyes.*`,
-  `enclosure.mouth.*`) and `recognizer_loop:*` bus handlers; override the matching
+  `enclosure.mouth.*`) and `recognizer_loop:*` bus handlers. Override the matching
   `on_*` methods to react to them. Call `super().shutdown()` to unregister them.
 
 !!! note "Hardware-interface ABCs live in `ovos-hardware-helpers`"
-    The abstract base classes that hardware PHAL plugins implement —
+    The abstract base classes that hardware PHAL plugins implement,
     `AbstractLed`, `AbstractFan`, and `AbstractSwitches` (plus a suite of ready-made
-    LED animations) — live in the
+    LED animations) live in the
     [`ovos-hardware-helpers`](https://github.com/OpenVoiceOS/ovos-hardware-helpers)
-    library; subclass them there when writing a hardware PHAL plugin. See
+    library. Subclass them there when writing a hardware PHAL plugin. See
     [Building Hardware on OVOS](hardware-integrators.md#writing-your-own-hardware-driver-abstractled-abstractswitches)
     for a worked example.
 
@@ -328,8 +328,8 @@ my-admin-phal-plugin = "my_package:MyAdminPlugin"
 
 ```
 
-**Dual registration** (plugin can run as either user or admin — the service that has the
-plugin name in its config section loads it; the other skips it):
+**Dual registration** (plugin can run as either user or admin. The service that has the
+plugin name in its config section loads it. The other skips it):
 
 ```toml
 [project.entry-points."opm.phal"]
@@ -371,7 +371,7 @@ class MyPlugin(PHALPlugin):
 - Provide a `shutdown()` method for clean teardown
 
 
-- No hot-reload — configuration changes require restarting the PHAL service
+- No hot-reload. Configuration changes require restarting the PHAL service
 
 ---
 
@@ -380,7 +380,7 @@ class MyPlugin(PHALPlugin):
 | Use PHAL when… | Use a Skill when… |
 |---|---|
 | Low-level system or hardware integration | Voice interactions and user-facing features |
-| No voice trigger needed — reacts to hardware events | Responds to user utterances |
+| No voice trigger needed, reacts to hardware events | Responds to user utterances |
 | Needs to run at startup regardless of voice activity | Should only activate when invoked |
 | Requires root (`AdminPHAL`) | Always runs unprivileged |
 
@@ -413,7 +413,7 @@ skill as a voice frontend.
 | [ovos-PHAL-plugin-camera](#ovos-phal-plugin-camera) | Interact with cameras using OpenCV or libcamera: snapshots, video streams over HTTP, and messagebus control |
 | [ovos-PHAL-plugin-wallpaper-manager](#ovos-phal-plugin-wallpaper-manager) | Central wallpaper management interface for homescreens and other desktops |
 | [ovos-PHAL-plugin-oauth](#ovos-phal-plugin-oauth) | Handles OAuth authentication flows for OVOS skills and services |
-| [ovos-PHAL-plugin-hotkeys](#ovos-phal-plugin-hotkeys) | Keyboard hotkeys — define key combos to trigger bus events |
+| [ovos-PHAL-plugin-hotkeys](#ovos-phal-plugin-hotkeys) | Keyboard hotkeys: define key combos to trigger bus events |
 | [ovos-PHAL-sensors](#ovos-phal-sensors) | Exposes the OVOS device and its sensors to Home Assistant |
 
 ## ovos-PHAL-plugin-network-manager

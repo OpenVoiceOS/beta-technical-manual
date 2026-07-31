@@ -1,10 +1,10 @@
 # Resource Files
 
 !!! abstract "In a nutshell"
-    Skills keep their words in separate text files rather than buried in the program code. These "resource files" hold things like the phrases the assistant can say, the example sentences it listens for, and the keywords it recognizes — each language gets its own folder. This separation makes a skill easy to translate and tweak without touching the code. This page explains the folder layout and the kinds of files. See also [Statements](statements.md) for spoken replies and the [Glossary](glossary.md).
+    Skills keep their words in separate text files rather than buried in the program code. These "resource files" hold things like the phrases the assistant can say, the example sentences it listens for, and the keywords it recognizes. Each language gets its own folder. This separation makes a skill easy to translate and tweak without touching the code. This page explains the folder layout and the kinds of files. See also [Statements](statements.md) for spoken replies and the [Glossary](glossary.md).
 
-??? info "📐 Formal specification"
-    The locale folder layout and the plain-text resource formats are specified by **[OVOS-INTENT-2 — Locale Resource Formats](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-2.md)** (a formal [architecture spec](architecture-specs.md)); the template grammar inside them is **[OVOS-INTENT-1](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-1.md)**. OVOS-INTENT-2 defines **six canonical roles** by extension: `.intent` and `.dialog` (slot-bearing — they may use `{name}` slots), `.entity`, `.voc`, and `.blacklist` (slot-free — expansion only), and `.prompt` (a whole-file language-model prompt with `{{name}}` substitution, **not** a template). Resources live under `locale/<lang>/` (BCP-47 tags, compared case-insensitively, searched recursively), resolved user → skill → core (§2.1). The `.rx`, `.list`, and `.word` files below are **framework extensions**, not OVOS-INTENT-2 roles — prefer `.entity`/`.voc`/`.blacklist` for portability.
+??? info "Formal specification"
+    The locale folder layout and the plain-text resource formats are specified by **[OVOS-INTENT-2 — Locale Resource Formats](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-2.md)** (a formal [architecture spec](architecture-specs.md)). The template grammar inside them is **[OVOS-INTENT-1](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-1.md)**. OVOS-INTENT-2 defines **six canonical roles** by extension: `.intent` and `.dialog` (slot-bearing, they may use `{name}` slots), `.entity`, `.voc`, and `.blacklist` (slot-free, expansion only), and `.prompt` (a whole-file language-model prompt with `{{name}}` substitution, **not** a template). Resources live under `locale/<lang>/` (BCP-47 tags, compared case-insensitively, searched recursively), resolved user, then skill, then core (§2.1). The `.rx`, `.list`, and `.word` files below are **framework extensions**, not OVOS-INTENT-2 roles. Prefer `.entity`/`.voc`/`.blacklist` for portability.
 
 Skills load localized resources from a structured directory layout. Resources are loaded automatically at startup for every language in `native_langs` (`core_lang` + `secondary_langs`).
 
@@ -35,17 +35,17 @@ my-skill/
 
 ```
 
-Legacy skills may use separate `dialog/`, `vocab/`, `regex/` subdirectories — these are still supported.
+Legacy skills may use separate `dialog/`, `vocab/`, `regex/` subdirectories. These are still supported.
 
 ## Resource Types
 
 | Extension | Type | Description |
 |---|---|---|
-| `.dialog` | Dialog | Spoken responses, one template per line, random selection (OVOS-INTENT-2 role; slot-bearing) |
-| `.intent` | Intent | [Padatious](padatious-pipeline.md) training examples (OVOS-INTENT-2 role; slot-bearing) |
-| `.voc` | Vocabulary | [Adapt](adapt-pipeline.md) keyword definitions, one per line, first is canonical (OVOS-INTENT-2 role; slot-free) |
-| `.entity` | Entity | Example values for a `{slot}` (OVOS-INTENT-2 role; slot-free) |
-| `.blacklist` | Blacklist | Phrases that suppress a paired `.intent` (OVOS-INTENT-2 role; slot-free). No built-in `ovos-workshop` loader. Skills read this file themselves. Unrelated to `voc_blacklist=` on `@intent_handler`, which takes `.voc` filenames. |
+| `.dialog` | Dialog | Spoken responses, one template per line, random selection (OVOS-INTENT-2 role, slot-bearing) |
+| `.intent` | Intent | [Padatious](padatious-pipeline.md) training examples (OVOS-INTENT-2 role, slot-bearing) |
+| `.voc` | Vocabulary | [Adapt](adapt-pipeline.md) keyword definitions, one per line, first is canonical (OVOS-INTENT-2 role, slot-free) |
+| `.entity` | Entity | Example values for a `{slot}` (OVOS-INTENT-2 role, slot-free) |
+| `.blacklist` | Blacklist | Phrases that suppress a paired `.intent` (OVOS-INTENT-2 role, slot-free). No built-in `ovos-workshop` loader. Skills read this file themselves. Unrelated to `voc_blacklist=` on `@intent_handler`, which takes `.voc` filenames. |
 | `.prompt` | Prompt | A whole-file language-model prompt with `{{name}}` substitution (OVOS-INTENT-2 role) |
 | `.rx` | Regex | Adapt regex patterns (**framework extension**, not an OVOS-INTENT-2 role) |
 | `.list` | List | A flat list resource (**framework extension**) |
@@ -87,7 +87,7 @@ good morning
 ```
 
 Parenthesized alternation expands *within a single line*: `(hello|hi|hey)` becomes several forms
-that share one canonical value — the first — with the rest registered as its aliases. That
+that share one canonical value, the first, with the rest registered as its aliases. That
 canonical/alias relationship exists only inside the line that produced it. Separate plain lines
 are independent keywords with no aliasing between them, so write alternatives on one line if you
 want them collapsed into a single canonical form plus aliases:
@@ -99,7 +99,7 @@ want them collapsed into a single canonical form plus aliases:
 
 ```
 
-The Adapt entity name is the file name without its extension (`hello` for `hello.voc`); reference it in an `IntentBuilder` with `.require("hello")` / `.optionally("hello")`. Internally the keyword is namespaced as `alphanumeric_skill_id + "hello"` so skills never collide.
+The Adapt entity name is the file name without its extension (`hello` for `hello.voc`). Reference it in an `IntentBuilder` with `.require("hello")` / `.optionally("hello")`. Internally the keyword is namespaced as `alphanumeric_skill_id + "hello"` so skills never collide.
 
 ## Intent Files (Padatious)
 

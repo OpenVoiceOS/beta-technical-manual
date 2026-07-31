@@ -1,16 +1,19 @@
 # Plugin Arena
 
 !!! abstract "In a nutshell"
-    OVOS lets you swap in different plugins for jobs like understanding speech or recognizing commands — but which one is actually best? The Plugin Arena answers that by comparing them two ways: objective scores measured against test data, and a "which sounds better?" vote where people blindly pick between two plugins' results, scored a bit like chess rankings. It is purely a scoreboard for comparing plugins; it never installs or runs them itself. See the [Glossary](glossary.md) for unfamiliar terms.
+    OVOS lets you swap in different plugins for jobs like understanding speech or recognizing commands. Which one is best? The Plugin Arena answers that by comparing them two ways: objective scores measured against test data, and a "which sounds better?" vote where people blindly pick between two plugins' results, scored a bit like chess rankings. It is purely a scoreboard for comparing plugins. It never installs or runs them itself. See the [Glossary](glossary.md) for unfamiliar terms.
 
 The arena lives at [OpenVoiceOS/ovos-plugin-arena](https://github.com/OpenVoiceOS/ovos-plugin-arena). The **intent**, **STT**, **wake word** and **VAD** leagues carry live battles and ELO standings. The **TTS** league lists its competitors at the seed ELO, awaiting battles.
 
 **What this is:** a way to answer *"which OVOS plugin should I use?"* It compares plugins on two signals:
 
-1. **Benchmarks** — accuracy/F1 for intent, WER for STT, detection metrics for wake word — computed offline against labeled datasets and published openly as HuggingFace datasets.
-2. **Human preference** — chess-style ELO ratings from blind A/B "battles" where people pick the better of two plugin outputs. The initial ELO is seeded from the benchmarks; human votes refine it.
+1. **Benchmarks**: accuracy/F1 for intent, WER for STT, detection metrics for wake word. These are
+   computed offline against labeled datasets and published openly as HuggingFace datasets.
+2. **Human preference**: chess-style ELO ratings from blind A/B "battles" where people pick the
+   better of two plugin outputs. The initial ELO is seeded from the benchmarks. Human votes refine
+   it.
 
-The arena is the *rating and voting* venue — **not** an execution venue. It never installs, isolates, or runs plugins.
+The arena is the *rating and voting* venue, **not** an execution venue. It never installs, isolates, or runs plugins.
 
 ---
 
@@ -35,8 +38,8 @@ Forking the repo and editing JSON yields a working arena. A local FastAPI shim m
 | **Decentralized predictions** | Plugins run outside the arena as offline jobs anywhere. The arena never installs or executes plugins in CI. |
 | **HuggingFace as artifact layer** | Every prediction run is published as a queryable HF dataset, independent of the arena. |
 | **Everything declarative** | Every competitor and dataset is a JSON file under `registry/`. Editing JSON is enough to extend the arena. |
-| **Replayable ratings** | Battle ids are content hashes; the ELO seed is a deterministic function of the published predictions; human votes replay in **issue-number order**. Standings are reproducible from public data alone. |
-| **All predictions kept** | Bad predictions are first-class content — failure cases guide plugin improvements. |
+| **Replayable ratings** | Battle ids are content hashes. The ELO seed is a deterministic function of the published predictions. Human votes replay in **issue-number order**. Standings are reproducible from public data alone. |
+| **All predictions kept** | Bad predictions are kept, not deleted. Failure cases guide plugin improvements. |
 
 ---
 
@@ -50,38 +53,38 @@ Each modality is an independent league with its own benchmarks, battle pools and
 | `intent_keyword` | keyword engines (Adapt, Palavreado, …) |
 | `intent` | open league — mixed-paradigm pipeline **fusions** (ensembles) |
 
-A "competitor" is a **shippable config**, not just a plugin: a single-stage pipeline benchmarks one engine, a multi-stage pipeline is an ensemble fighter in its own right, and the same plugin under a different config is a *different competitor*. `competitor_id` is the stable key for predictions, battles, ELO and leaderboards.
+A "competitor" is a **shippable config**, not only a plugin. A single-stage pipeline benchmarks one engine. A multi-stage pipeline is an ensemble fighter in its own right. The same plugin under a different config is a *different competitor*. `competitor_id` is the stable key for predictions, battles, ELO and leaderboards.
 
 ---
 
 ## Declarative Registry
 
-- **Competitors** — `registry/competitors/<modality>/<id>.json`. For intent, `config` is a valid `mycroft.conf` fragment (an `intents` section with an ordered `pipeline` of `<plugin>-<tier>` stages).
-- **Datasets** — `registry/datasets/<modality>/<id>.json`. One corpus per entry: HF source id + revision, `reference_fields` (the datashape contract), license, `lang` (or `lang: multi` + `langs`), and a `role` (`train`/`eval`). Keyword and template training corpora are distinct datasets with distinct datashapes.
+- **Competitors**: `registry/competitors/<modality>/<id>.json`. For intent, `config` is a valid `mycroft.conf` fragment (an `intents` section with an ordered `pipeline` of `<plugin>-<tier>` stages).
+- **Datasets**: `registry/datasets/<modality>/<id>.json`. One corpus per entry: HF source id + revision, `reference_fields` (the datashape contract), license, `lang` (or `lang: multi` + `langs`), and a `role` (`train`/`eval`). Keyword and template training corpora are distinct datasets with distinct datashapes.
 
 ## Getting Your Plugin Ranked
 
-You do not run any benchmarks yourself. A competitor is *a configuration you could ship* — the
-same plugin under a different config counts as a different fighter — and once its registry entry
+You do not run any benchmarks yourself. A competitor is *a configuration you could ship*. The
+same plugin under a different config counts as a different fighter. Once its registry entry
 is merged, the arena's sweep runs it against the pinned datasets and it appears on the boards.
 
-The plugin must be published to PyPI first: the arena itself never installs plugins (see
-[GitHub-Native, Zero Servers](#github-native-zero-servers) above), so whoever runs the offline
+The plugin must be published to PyPI first. The arena itself never installs plugins (see
+[GitHub-Native, Zero Servers](#github-native-zero-servers) above). Whoever runs the offline
 prediction job that produces the competitor's HuggingFace dataset needs to `pip install` the
-plugin by name, which only works once it is on PyPI. See [TTS Plugins — Package and
-publish](tts-plugins.md#package-and-publish) or [Transformer Plugins — Package and
+plugin by name, which only works once it is on PyPI. See [TTS Plugins: Package and
+publish](tts-plugins.md#package-and-publish) or [Transformer Plugins: Package and
 publish](transformer-plugins.md#package-and-publish) for the steps to get there.
 
 1. Add a JSON file at `registry/competitors/<modality>/<competitor-id>.json`, where `<modality>`
    is one of `stt`, `tts`, `wake_word`, `vad`, `intent`, `intent_keyword`, `intent_template`
    (the three intent leagues are separate competitor directories). Required fields are `competitor_id`, `modality`
-   and `config` (a valid `mycroft.conf` fragment); non-intent fighters also need `plugin`, the OPM
+   and `config` (a valid `mycroft.conf` fragment). Non-intent fighters also need `plugin`, the OPM
    entry-point name. Intent fighters describe an ordered `config.intents.pipeline` of
-   `<plugin>-<tier>` stages — a single stage benchmarks one engine, several stages make an
-   ensemble — and `plugin` is derived automatically for the single-stage case.
+   `<plugin>-<tier>` stages. A single stage benchmarks one engine, several stages make an
+   ensemble, and `plugin` is derived automatically for the single-stage case.
 2. Validate locally with `uv run pytest tests/test_registry.py`, which checks every competitor
    file against the schema. CI runs the same test under the reusable `build_tests` job (`test_path: tests/`).
-3. Open a pull request. The sweep and the boards do the rest, and the fighter gets an embeddable
+3. Open a pull request. The sweep and the boards do the rest. The fighter then gets an embeddable
    rank badge for its README.
 
 Optional metadata — `display_name`, `species`, `types`, `size`, `description`, `model`, `links` —
@@ -120,9 +123,9 @@ Modality-specific fields (kept inline or in `extras`):
 ## ELO Ratings
 
 - Standard ELO formula (`arena/elo.py`): `K_FACTOR = 32` for new competitors (`< 30` battles), `K_FACTOR_VETERAN = 16` once past the `VETERAN_THRESHOLD = 30` battles.
-- The ELO seed is derived deterministically from the published benchmark predictions; human votes (GitHub issues) replay in issue-number order on top of it.
-- Automatic benchmark-seeded votes are down-weighted relative to human votes: `AUTO_K_DIVISOR = 4.0`, so auto votes carry a quarter of the K-weight of a human vote (`k_factor(battles, auto=True)` divides K by 4; the Bradley-Terry path uses the matching `BT_AUTO_WEIGHT = 1/4`).
-- Standings are fully recomputable from public data alone — the leaderboard JSON committed by `tally.yml` is a cache, not the source of truth.
+- The ELO seed is derived deterministically from the published benchmark predictions. Human votes (GitHub issues) replay in issue-number order on top of it.
+- Automatic benchmark-seeded votes are down-weighted relative to human votes: `AUTO_K_DIVISOR = 4.0`, so auto votes carry a quarter of the K-weight of a human vote. `k_factor(battles, auto=True)` divides K by 4. The Bradley-Terry path uses the matching `BT_AUTO_WEIGHT = 1/4`.
+- Standings are fully recomputable from public data alone. The leaderboard JSON committed by `tally.yml` is a cache, not the source of truth.
 
 ---
 
@@ -140,10 +143,10 @@ Modality-specific fields (kept inline or in `extras`):
 
 ## Registry Validation, Scoring, and Provenance
 
-- **Registry validation** — `tests/test_registry.py` validates every competitor/dataset JSON file under `registry/` against the schema, so a malformed registry entry is caught in CI (under the reusable `build_tests` job) before it can silently break assembly. Run it locally with `uv run pytest tests/test_registry.py`.
-- **WER normalization** — STT scoring keeps normalization deliberately minimal: `_wer_components` (`arena/metrics.py`) lowercases both reference and hypothesis and splits on whitespace, then computes a word-level Levenshtein distance. `row_wer` returns a row's stored `wer` when present and only recomputes from `reference_text`/`prediction` when it is `None`. The recompute-first behaviour belongs instead to `row_wer_components` (used for WER bootstrap CIs), which recomputes word errors and reference word count from raw text and falls back to the stored `wer` (with unit word count) only when raw text is unavailable.
-- **Version-blend guard** — if a competitor's rows span more than one `plugin_version`, the board build logs a warning rather than silently averaging scores across versions.
-- **Reproducible predictions provenance** — `assemble` pins every HuggingFace predictions source to an immutable commit SHA (the dataset registry entry's `predictions_revision` when set, else `--revision`) and records the resolved mapping on each benchmark board (`predictions_revisions`) and in the top-level index, so a third party can re-fetch the exact predictions that produced any published score.
+- **Registry validation**: `tests/test_registry.py` validates every competitor/dataset JSON file under `registry/` against the schema. This catches a malformed registry entry in CI (under the reusable `build_tests` job) before it can silently break assembly. Run it locally with `uv run pytest tests/test_registry.py`.
+- **WER normalization**: STT scoring keeps normalization deliberately minimal. `_wer_components` (`arena/metrics.py`) lowercases both reference and hypothesis and splits on whitespace, then computes a word-level Levenshtein distance. `row_wer` returns a row's stored `wer` when present and only recomputes from `reference_text`/`prediction` when it is `None`. The recompute-first behavior belongs instead to `row_wer_components` (used for WER bootstrap CIs). It recomputes word errors and reference word count from raw text, and falls back to the stored `wer` (with unit word count) only when raw text is unavailable.
+- **Version-blend guard**: if a competitor's rows span more than one `plugin_version`, the board build logs a warning rather than silently averaging scores across versions.
+- **Reproducible predictions provenance**: `assemble` pins every HuggingFace predictions source to an immutable commit SHA (the dataset registry entry's `predictions_revision` when set, else `--revision`). It records the resolved mapping on each benchmark board (`predictions_revisions`) and in the top-level index. This lets a third party re-fetch the exact predictions that produced any published score.
 
 ## Related Pages
 

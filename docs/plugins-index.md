@@ -1,16 +1,16 @@
 # Plugins Index
 
 !!! abstract "In a nutshell"
-    OpenVoiceOS is built from interchangeable building blocks called *plugins* — small add-ons that each handle one job, like turning speech into text or text into speech. This works much like browser extensions: you can mix and match the pieces you want and swap them out later. This page is a map of every plugin **type**, each linking to its catalog of available plugins. See the [Glossary](glossary.md) for related terms, or the [Plugin Manager](plugin-manager.md) for how they are discovered and loaded.
+    OpenVoiceOS is built from interchangeable building blocks called *plugins*: small add-ons that each handle one job, like turning speech into text or text into speech. This works much like browser extensions. You can mix and match the pieces you want and swap them out later. This page is a map of every plugin **type**, each linking to its catalog of available plugins. See the [Glossary](glossary.md) for related terms, or the [Plugin Manager](plugin-manager.md) for how they are discovered and loaded.
 
 Every plugin registers under an **entry-point group** (the `opm.*` name below) so the
 [Plugin Manager](plugin-manager.md) can find it. Pick a type to see the available plugins,
 their config, and install commands.
 
 !!! tip "Too many choices? Start with **[Choosing Plugins](choosing-plugins.md)**"
-    A side-by-side comparison of every plugin type — the recommended default, each option's
+    A side-by-side comparison of every plugin type: the recommended default, each option's
     maturity, offline/cloud, and licence, plus a copy-paste fully-offline stack and
-    scenario-based picks. This page is the *map of types*; that page helps you *pick one*.
+    scenario-based picks. This page is the *map of types*. That page helps you *pick one*.
 
 ## Speech & Audio
 
@@ -53,7 +53,7 @@ their config, and install commands.
 | [OCP Stream Extractors](ocp-plugins.md) | `opm.ocp.extractor` | Resolve a playable stream from a URL (YouTube, RSS, …) |
 | [OCP Media Classifiers](media-plugins.md#ovos-media-classifier) | `opm.media.classifier` | Recognize media intent + entities (artist, title, station, …) in an utterance |
 | [Media Playback](media-plugins.md) | `opm.media.audio` / `.video` / `.web` | Backend players for [ovos-media](ovos-media.md) |
-| [GUI Adapters](gui-adapters.md) | `opm.gui_adapter` **(unreleased)** | Render backends for the GUI — not yet built or released; see the [GUI Adapters](gui-adapters.md) page. |
+| [GUI Adapters](gui-adapters.md) | `opm.gui_adapter` **(unreleased)** | Render backends for the GUI. Not yet built or released. See the [GUI Adapters](gui-adapters.md) page. |
 
 ## AI Agents & Personas
 
@@ -73,14 +73,14 @@ their config, and install commands.
 ## Other plugin types
 
 These plugin types are defined by the Plugin Manager but don't yet have a dedicated catalog
-page here — see [Plugin Manager → Plugin Types](plugin-manager.md#plugin-types) for their
+page here. See [Plugin Manager → Plugin Types](plugin-manager.md#plugin-types) for their
 entry-point group and template base class:
 
-- **Voice Clone** (`opm.vc`) — clones a voice for TTS synthesis
-- **Audio→IPA** (`opm.audio2ipa`) — transcribes audio directly to phonemes (IPA)
-- **Embeddings** (`opm.embeddings`, plus `opm.embeddings.text` / `.voice` / `.image` / `.face`) —
+- **Voice Clone** (`opm.vc`): clones a voice for TTS synthesis
+- **Audio→IPA** (`opm.audio2ipa`): transcribes audio directly to phonemes (IPA)
+- **Embeddings** (`opm.embeddings`, plus `opm.embeddings.text` / `.voice` / `.image` / `.face`):
   generic and modality-specific embedding backends
-- **Knowledge Triples** (`opm.triples`) — extracts subject-predicate-object triples from text
+- **Knowledge Triples** (`opm.triples`): extracts subject-predicate-object triples from text
 
 For the full machine-readable list of plugin types and template base classes, see the
 **[Plugin Manager → Plugin Types](plugin-manager.md#plugin-types)** table. To create your own
