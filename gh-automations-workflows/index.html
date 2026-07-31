@@ -3536,7 +3536,7 @@
 <h1 id="reusable-workflow-reference">Reusable Workflow Reference<a class="headerlink" href="#reusable-workflow-reference" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>This page is the detailed reference for every shared automation recipe ("workflow") that OVOS projects can plug in — one section per recipe, listing all its settings and what each does. It is aimed at maintainers wiring up a project's testing and release machinery, so it reads like a settings catalog rather than a tutorial. If you just want the big picture of what these automations are for, start with the <a href="../gh-automations-overview/">gh-automations overview</a>; see also the <a href="../glossary/">Glossary</a>.</p>
+<p>This page is the detailed reference for every shared automation recipe ("workflow") that OVOS projects can plug in, one section per recipe, listing all its settings and what each does. It is aimed at maintainers wiring up a project's testing and release machinery, so it reads like a settings catalog rather than a tutorial. If you just want the big picture of what these automations are for, start with the <a href="../gh-automations-overview/">gh-automations overview</a>. See also the <a href="../glossary/">Glossary</a>.</p>
 </div>
 <p>All reusable workflows are in <code>.github/workflows/</code> and are called via:</p>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">OpenVoiceOS/gh-automations/.github/workflows/&lt;name&gt;.yml@dev</span>
@@ -3771,7 +3771,7 @@
 <tr>
 <td><code>notify</code></td>
 <td><code>notify_matrix: true</code> + <code>bump_version</code> succeeded + PR merged</td>
-<td>Calls <code>notify-matrix.yml</code> with a canned message</td>
+<td>Sends a Matrix notification directly (duplicates, does not call, notify-matrix.yml) with a canned message</td>
 </tr>
 </tbody>
 </table>
@@ -3814,7 +3814,7 @@
 <p><code>publish_pypi: true</code> uses <code>pypa/gh-action-pypi-publish@release/v1</code> (pinned to stable tag).</p>
 </li>
 <li>
-<p><code>propose_release</code> uses <code>git checkout -B</code> (force-create) and <code>gh pr create</code> with duplicate-check — both steps are idempotent on retry.</p>
+<p><code>propose_release</code> uses <code>git checkout -B</code> (force-create) and <code>gh pr create</code> with duplicate-check, both steps are idempotent on retry.</p>
 </li>
 </ul>
 <hr />
@@ -3985,7 +3985,7 @@
 <tr>
 <td><code>notify</code></td>
 <td><code>notify_matrix: true</code> + <code>bump_version</code> succeeded</td>
-<td>Calls <code>notify-matrix.yml@dev</code> with configurable channel and message</td>
+<td>Sends a Matrix notification directly (duplicates, does not call, notify-matrix.yml) with configurable channel and message</td>
 </tr>
 </tbody>
 </table>
@@ -4257,7 +4257,7 @@
 </table>
 <h3 id="pr-comment-content">PR comment content<a class="headerlink" href="#pr-comment-content" title="Permanent link">&para;</a></h3>
 <p>The report is split into two tables:</p>
-<p><strong>OPM Detection</strong> — one row per plugin type (e.g. <code>skill</code>, <code>tts</code>):</p>
+<p><strong>OPM Detection</strong>, one row per plugin type (e.g. <code>skill</code>, <code>tts</code>):</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>✅ Plugin Status: PASS
 </span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
 </span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>Plugin Info:
@@ -4279,7 +4279,7 @@
 </span><span id="__span-4-19"><a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a>|------|-----------|--------------|-----------------|
 </span><span id="__span-4-20"><a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a>| tts  | ✅        | ✅           | ✅ &gt;=3.10       |
 </span></code></pre></div>
-<p><strong>Entry Point Validation</strong> — one row per named entry point (supports packages that register multiple entry points per type, e.g. a multi-voice <a href="../tts-plugins/">TTS</a>):</p>
+<p><strong>Entry Point Validation</strong>, one row per named entry point (supports packages that register multiple entry points per type, e.g. a multi-voice <a href="../tts-plugins/">TTS</a>):</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>Entry Point Validation:
 </span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>
 </span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>| Entry Point | Import | Interface | Config Docs |
@@ -4289,7 +4289,7 @@
 </span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>
 </span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>🔗 Downstream Impact: 3 package(s) depend on this plugin
 </span></code></pre></div>
-<p>Non-plugin repos: <code>ℹ️ Not an OVOS plugin — OPM check skipped.</code></p>
+<p>Non-plugin repos: <code>ℹ️ Not an OVOS plugin, OPM check skipped.</code></p>
 <h3 id="typical-usage_3">Typical usage<a class="headerlink" href="#typical-usage_3" title="Permanent link">&para;</a></h3>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">OPM Check</span>
 </span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="nt">on</span><span class="p">:</span>
@@ -4548,7 +4548,7 @@
 </span><span id="__span-8-12"><a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a><span class="w">      </span><span class="nt">test_path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;test/end2end/&quot;</span>
 </span><span id="__span-8-13"><a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a><span class="w">      </span><span class="nt">require_adapt</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 </span></code></pre></div>
-<p>To require Padatious (C extension — add <code>swig</code> to system_deps):</p>
+<p>To require Padatious (C extension, add <code>swig</code> to system_deps):</p>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="w">    </span><span class="nt">with</span><span class="p">:</span>
 </span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="w">      </span><span class="nt">test_path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;test/end2end/&quot;</span>
 </span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">      </span><span class="nt">system_deps</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;swig&quot;</span>
@@ -4561,10 +4561,10 @@
 <p>The <code>require_*</code> inputs trigger a <strong>pre-test</strong> pipeline availability check. If the required plugin is absent the job fails immediately with a clear error message, without running any tests.</p>
 </li>
 <li>
-<p>The pipeline check reads the <code>opm.pipeline</code> entry point group using <code>importlib.metadata</code> — no import of the plugin itself is required.</p>
+<p>The pipeline check reads the <code>opm.pipeline</code> entry point group using <code>importlib.metadata</code>, no import of the plugin itself is required.</p>
 </li>
 <li>
-<p><code>PADACIOSO_PIPELINE</code> (pure Python padacioso) is always available via <code>ovos-workshop</code>; there is no <code>require_padacioso</code> input.</p>
+<p><code>PADACIOSO_PIPELINE</code> (pure Python padacioso) is always available via <code>ovos-workshop</code>. There is no <code>require_padacioso</code> input.</p>
 </li>
 <li>
 <p>Set <code>require_adapt: true</code> in skill repos that test Adapt intents so CI fails explicitly if the Adapt plugin is missing from <code>[test]</code> deps rather than silently skipping those tests.</p>
@@ -4572,7 +4572,7 @@
 </ul>
 <hr />
 <h2 id="coverageyml"><code>coverage.yml</code><a class="headerlink" href="#coverageyml" title="Permanent link">&para;</a></h2>
-<p>Runs <code>pytest --cov</code>, generates a coverage report, posts it to the job summary, uploads the XML as an artifact, and (on pull requests) posts a <code>📊 Coverage</code> section in the shared OVOS PR Checks comment. Set <code>deploy_pages: true</code> to also push the HTML report to a <code>gh-pages</code> branch — this <strong>replaces</strong> the deprecated <a href="#coverage-pagesyml-deprecated"><code>coverage-pages.yml</code></a>.</p>
+<p>Runs <code>pytest --cov</code>, generates a coverage report, posts it to the job summary, uploads the XML as an artifact, and (on pull requests) posts a <code>📊 Coverage</code> section in the shared OVOS PR Checks comment. Set <code>deploy_pages: true</code> to also push the HTML report to a <code>gh-pages</code> branch, this <strong>replaces</strong> the deprecated <a href="#coverage-pagesyml-deprecated"><code>coverage-pages.yml</code></a>.</p>
 <p><strong>Source:</strong> <code>.github/workflows/coverage.yml</code></p>
 <!-- BEGIN GENERATED: workflow-io:coverage.yml -->
 <!-- This section is auto-generated by tools/gen_reference.py from the upstream source of truth. Do not hand-edit; re-run the script instead. -->
@@ -4760,7 +4760,7 @@
 <h3 id="behavior-notes">Behavior notes<a class="headerlink" href="#behavior-notes" title="Permanent link">&para;</a></h3>
 <ul>
 <li>
-<p><code>pr_comment</code> only fires on <code>pull_request</code> events — job summary is written for all events.</p>
+<p><code>pr_comment</code> only fires on <code>pull_request</code> events, job summary is written for all events.</p>
 </li>
 <li>
 <p>If all tests are skipped and <code>coverage.xml</code> is never generated, the PR comment will note that coverage data is unavailable rather than failing.</p>
@@ -4769,7 +4769,7 @@
 <hr />
 <h2 id="coverage-pagesyml-deprecated"><code>coverage-pages.yml</code> <em>(deprecated)</em><a class="headerlink" href="#coverage-pagesyml-deprecated" title="Permanent link">&para;</a></h2>
 <blockquote>
-<p><strong>Deprecated — use <a href="#coverageyml"><code>coverage.yml</code></a> with <code>deploy_pages: true</code> instead.</strong> Kept for backward compatibility with existing callers; scheduled for removal after 2027-01-01. New repos should not adopt it.</p>
+<p><strong>Deprecated, use <a href="#coverageyml"><code>coverage.yml</code></a> with <code>deploy_pages: true</code> instead.</strong> Kept for backward compatibility with existing callers. Scheduled for removal after 2027-01-01. New repos should not adopt it.</p>
 </blockquote>
 <p>Runs <code>pytest --cov</code> and deploys the HTML coverage report to GitHub Pages.</p>
 <p><strong>Source:</strong> <code>.github/workflows/coverage-pages.yml</code></p>
@@ -5260,7 +5260,7 @@
 </span><span id="__span-15-9"><a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a>⚠️ No conventional commit prefix — alpha-only bump.
 </span><span id="__span-15-10"><a id="__codelineno-15-10" name="__codelineno-15-10" href="#__codelineno-15-10"></a>Suggested: `fix: update the thing` or `feat: update the thing`
 </span></code></pre></div>
-<p>No <code>version.py</code> found: <code>ℹ️ No version.py found — release preview not available.</code></p>
+<p>No <code>version.py</code> found: <code>ℹ️ No version.py found, release preview not available.</code></p>
 <h3 id="typical-usage_9">Typical usage<a class="headerlink" href="#typical-usage_9" title="Permanent link">&para;</a></h3>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Release Preview</span>
 </span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>
@@ -5469,7 +5469,7 @@
 </span><span id="__span-18-11"><a id="__codelineno-18-11" name="__codelineno-18-11" href="#__codelineno-18-11"></a>
 </span><span id="__span-18-12"><a id="__codelineno-18-12" name="__codelineno-18-12" href="#__codelineno-18-12"></a>&lt;/details&gt;
 </span></code></pre></div>
-<p>Coverage icons: ✅ ≥95% · ⚠️ 50–94% · ❌ &lt;50%. Non-skill repos: <code>ℹ️ Not an OVOS skill repo — check skipped.</code></p>
+<p>Coverage icons: ✅ ≥95% · ⚠️ 50–94% · ❌ &lt;50%. Non-skill repos: <code>ℹ️ Not an OVOS skill repo, check skipped.</code></p>
 <h3 id="typical-usage_11">Typical usage<a class="headerlink" href="#typical-usage_11" title="Permanent link">&para;</a></h3>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Skill Check</span>
 </span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>
@@ -5580,7 +5580,7 @@
 <hr />
 <h2 id="python-supportyml-deprecated"><code>python-support.yml</code> <em>(deprecated)</em><a class="headerlink" href="#python-supportyml-deprecated" title="Permanent link">&para;</a></h2>
 <blockquote>
-<p><strong>Deprecated — use <a href="#build-testsyml"><code>build-tests.yml</code></a> instead</strong> (and <a href="#opm-checkyml"><code>opm-check.yml</code></a> for OPM detection). Kept for backward compatibility; scheduled for removal after 2027-01-01. New repos should not adopt it.</p>
+<p><strong>Deprecated, use <a href="#build-testsyml"><code>build-tests.yml</code></a> instead</strong> (and <a href="#opm-checkyml"><code>opm-check.yml</code></a> for OPM detection). Kept for backward compatibility. Scheduled for removal after 2027-01-01. New repos should not adopt it.</p>
 </blockquote>
 <p>Runs an install matrix across Python versions and install modes (regular + editable). Optionally checks OPM detection using a legacy <code>entry_point</code> ID. Posts a <code>🐍 Python Support</code> section to the PR comment.</p>
 <p><strong>Source:</strong> <code>.github/workflows/python-support.yml</code></p>
@@ -5726,7 +5726,7 @@
 
 <hr />
 <h2 id="type-checkyml"><code>type-check.yml</code><a class="headerlink" href="#type-checkyml" title="Permanent link">&para;</a></h2>
-<p>Runs <code>mypy</code> and posts a <code>🔎 Type Check</code> section. Informational only — never blocks merges unless <code>fail_on_errors: true</code>.</p>
+<p>Runs <code>mypy</code> and posts a <code>🔎 Type Check</code> section. Informational only, never blocks merges unless <code>fail_on_errors: true</code>.</p>
 <p><strong>Source:</strong> <code>.github/workflows/type-check.yml</code></p>
 <!-- BEGIN GENERATED: workflow-io:type-check.yml -->
 <!-- This section is auto-generated by tools/gen_reference.py from the upstream source of truth. Do not hand-edit; re-run the script instead. -->
@@ -5807,7 +5807,7 @@
 
 <hr />
 <h2 id="docs-checkyml"><code>docs-check.yml</code><a class="headerlink" href="#docs-checkyml" title="Permanent link">&para;</a></h2>
-<p>Verifies required documentation files exist and optionally lints Markdown. Posts a <code>📚 Docs</code> section. Informational only — never blocks merges unless <code>fail_on_missing: true</code>.</p>
+<p>Verifies required documentation files exist and optionally lints Markdown. Posts a <code>📚 Docs</code> section. Informational only, never blocks merges unless <code>fail_on_missing: true</code>.</p>
 <p><strong>Source:</strong> <code>.github/workflows/docs-check.yml</code></p>
 <!-- BEGIN GENERATED: workflow-io:docs-check.yml -->
 <!-- This section is auto-generated by tools/gen_reference.py from the upstream source of truth. Do not hand-edit; re-run the script instead. -->
@@ -6114,7 +6114,7 @@
 
 <hr />
 <h2 id="tts-intelligibilityyml"><code>tts-intelligibility.yml</code><a class="headerlink" href="#tts-intelligibilityyml" title="Permanent link">&para;</a></h2>
-<p>End-to-end TTS intelligibility scoring: synthesises speech with the TTS plugin under test, transcribes it back with a reference STT (faster-whisper tiny), and scores the round-trip with WER/CER. Posts a <code>🗣️ TTS Intelligibility</code> section. <strong>Gates by default</strong> — the job fails when mean WER exceeds <code>max_wer</code> or the test errors. Set <code>warn_only: true</code> for engines/langs still being tuned.</p>
+<p>End-to-end TTS intelligibility scoring: synthesises speech with the TTS plugin under test, transcribes it back with a reference STT (faster-whisper tiny), and scores the round-trip with WER/CER. Posts a <code>🗣️ TTS Intelligibility</code> section. <strong>Gates by default</strong>, the job fails when mean WER exceeds <code>max_wer</code> or the test errors. Set <code>warn_only: true</code> for engines/langs still being tuned.</p>
 <p><strong>Source:</strong> <code>.github/workflows/tts-intelligibility.yml</code></p>
 <!-- BEGIN GENERATED: workflow-io:tts-intelligibility.yml -->
 <!-- This section is auto-generated by tools/gen_reference.py from the upstream source of truth. Do not hand-edit; re-run the script instead. -->
@@ -6399,7 +6399,7 @@
 </span><span id="__span-22-59"><a id="__codelineno-22-59" name="__codelineno-22-59" href="#__codelineno-22-59"></a>&lt;!-- /section:release --&gt;
 </span></code></pre></div>
 <p>Sections appear as each workflow completes. Reruns update only the relevant section without touching others.</p>
-<p>The aggregation logic lives in <code>scripts/update_pr_comment.py</code> — see the <a href="#scripts-reference">Scripts Reference</a> below.</p>
+<p>The aggregation logic lives in <code>scripts/update_pr_comment.py</code>, see the <a href="#scripts-reference">Scripts Reference</a> below.</p>
 <h3 id="adding-a-new-section">Adding a new section<a class="headerlink" href="#adding-a-new-section" title="Permanent link">&para;</a></h3>
 <p>To add a new check type to the aggregated comment from any workflow:</p>
 <ol>
@@ -6439,13 +6439,13 @@
 <p><strong>Key functions:</strong></p>
 <ul>
 <li>
-<p><code>read_version(version_file: str) -&gt; tuple[int, int, int, int]</code> — parses <code>START_VERSION_BLOCK/END_VERSION_BLOCK</code>, returns <code>(major, minor, build, alpha)</code></p>
+<p><code>read_version(version_file: str) -&gt; tuple[int, int, int, int]</code>, parses <code>START_VERSION_BLOCK/END_VERSION_BLOCK</code>, returns <code>(major, minor, build, alpha)</code></p>
 </li>
 <li>
-<p><code>format_version(major, minor, build, alpha) -&gt; str</code> — formats PEP 440 string</p>
+<p><code>format_version(major, minor, build, alpha) -&gt; str</code>, formats PEP 440 string</p>
 </li>
 <li>
-<p><code>write_version_block(version_file, major, minor, build, alpha)</code> — rewrites only the block, preserving all surrounding content</p>
+<p><code>write_version_block(version_file, major, minor, build, alpha)</code>, rewrites only the block, preserving all surrounding content</p>
 </li>
 </ul>
 <h3 id="scriptsupdate_versionpy"><code>scripts/update_version.py</code><a class="headerlink" href="#scriptsupdate_versionpy" title="Permanent link">&para;</a></h3>
@@ -6505,31 +6505,31 @@
 <p><strong>Key functions:</strong></p>
 <ul>
 <li>
-<p><code>auto_detect_plugin_types()</code> — scans <code>[project.entry-points."opm.*"]</code> in <code>pyproject.toml</code> or <code>setup.py</code></p>
+<p><code>auto_detect_plugin_types()</code>, scans <code>[project.entry-points."opm.*"]</code> in <code>pyproject.toml</code> or <code>setup.py</code></p>
 </li>
 <li>
-<p><code>validate_plugin_import(module_path, class_name)</code> — imports the class, measures time in ms, detects missing dependencies</p>
+<p><code>validate_plugin_import(module_path, class_name)</code>, imports the class, measures time in ms, detects missing dependencies</p>
 </li>
 <li>
-<p><code>check_plugin_interface(plugin_cls, short_type)</code> — verifies <code>issubclass()</code> against the correct abstract base (~30 types, including the <code>agents.*</code> family, <code>vc</code>, and <code>wake_word.verifier</code>)</p>
+<p><code>check_plugin_interface(plugin_cls, short_type)</code>, verifies <code>issubclass()</code> against the correct abstract base (~30 types, including the <code>agents.*</code> family, <code>vc</code>, and <code>wake_word.verifier</code>)</p>
 </li>
 <li>
-<p><code>extract_metadata()</code> — reads name, version, authors, description, homepage, requires_python</p>
+<p><code>extract_metadata()</code>, reads name, version, authors, description, homepage, requires_python</p>
 </li>
 <li>
-<p><code>extract_system_deps()</code> — reads <code>[tool.ovos.build] system-dependencies</code></p>
+<p><code>extract_system_deps()</code>, reads <code>[tool.ovos.build] system-dependencies</code></p>
 </li>
 <li>
-<p><code>validate_config_docs(repo_root)</code> — searches for <code>settingsmeta.json</code></p>
+<p><code>validate_config_docs(repo_root)</code>, searches for <code>settingsmeta.json</code></p>
 </li>
 <li>
-<p><code>collect_issues(result)</code> — aggregates issues list</p>
+<p><code>collect_issues(result)</code>, aggregates issues list</p>
 </li>
 <li>
-<p><code>compute_status(issues)</code> — returns <code>pass</code>, <code>warning</code>, or <code>fail</code></p>
+<p><code>compute_status(issues)</code>, returns <code>pass</code>, <code>warning</code>, or <code>fail</code></p>
 </li>
 <li>
-<p><code>check_opm(plugin_type, entry_point, output_json, ...)</code> — main entry point</p>
+<p><code>check_opm(plugin_type, entry_point, output_json, ...)</code>, main entry point</p>
 </li>
 </ul>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>usage: check_opm.py \
@@ -6582,14 +6582,14 @@
 </span></code></pre></div>
 <h3 id="scriptsupdate_pr_commentpy"><code>scripts/update_pr_comment.py</code><a class="headerlink" href="#scriptsupdate_pr_commentpy" title="Permanent link">&para;</a></h3>
 <p>Manages the shared <strong>OVOS PR Checks</strong> comment on a pull request. Finds the comment by the invisible HTML marker <code>&lt;!-- ovos-pr-checks --&gt;</code>, then replaces or appends the named section. Creates the comment if it doesn't exist yet.</p>
-<p>Uses only Python stdlib (<code>urllib</code>, <code>json</code>, <code>re</code>) — no extra dependencies.</p>
+<p>Uses only Python stdlib (<code>urllib</code>, <code>json</code>, <code>re</code>), no extra dependencies.</p>
 <p><strong>Key logic:</strong></p>
 <ul>
 <li>
-<p><code>find_ovos_comment(repo, pr_number)</code> — paginates the PR comments API to find the marker</p>
+<p><code>find_ovos_comment(repo, pr_number)</code>, paginates the PR comments API to find the marker</p>
 </li>
 <li>
-<p><code>insert_or_replace_section(body, section_id, title, content)</code> — regex replace within <code>&lt;!-- section:X --&gt; … &lt;!-- /section:X --&gt;</code> delimiters</p>
+<p><code>insert_or_replace_section(body, section_id, title, content)</code>, regex replace within <code>&lt;!-- section:X --&gt; … &lt;!-- /section:X --&gt;</code> delimiters</p>
 </li>
 </ul>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>usage: update_pr_comment.py \

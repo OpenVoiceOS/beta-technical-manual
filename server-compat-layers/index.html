@@ -1161,18 +1161,9 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#openai-compatible-example-existing-stable" class="md-nav__link">
+  <a href="#openai-compatible-example" class="md-nav__link">
     <span class="md-ellipsis">
-      OpenAI-compatible example (existing, stable)
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#anthropic-compatible-example" class="md-nav__link">
-    <span class="md-ellipsis">
-      Anthropic-compatible example
+      OpenAI-compatible example
     </span>
   </a>
   
@@ -1395,18 +1386,9 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#openai-compatible-example-existing-stable" class="md-nav__link">
+  <a href="#openai-compatible-example" class="md-nav__link">
     <span class="md-ellipsis">
-      OpenAI-compatible example (existing, stable)
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#anthropic-compatible-example" class="md-nav__link">
-    <span class="md-ellipsis">
-      Anthropic-compatible example
+      OpenAI-compatible example
     </span>
   </a>
   
@@ -1447,22 +1429,22 @@
 <h1 id="server-compatibility-layers">Server Compatibility Layers<a class="headerlink" href="#server-compatibility-layers" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>The OVOS servers (for speech-to-text, text-to-speech, translation, and chat personas) can <em>impersonate</em> the popular commercial services people already build software for — OpenAI, Google, DeepL, ElevenLabs, Anthropic, and many more. This page lists which imitations each server offers. The benefit: an app written to talk to one of those big-name services can be pointed at your own OVOS server instead, with no code changes, like a power adapter that lets the same plug fit a different socket. See the <a href="../stt-server/">STT Server</a>, <a href="../tts-server/">TTS Server</a>, <a href="../translate-server/">Translate Server</a>, and <a href="../persona-server/">Persona Server</a> pages, or the <a href="../glossary/">Glossary</a>.</p>
+<p>The OVOS servers (for speech-to-text, text-to-speech, translation, and chat personas) can <em>impersonate</em> popular commercial services such as OpenAI, Google, DeepL, and ElevenLabs. This page lists which imitations each server offers. The benefit is simple: an app written to talk to one of those services can point at your own OVOS server instead, with no code changes. Think of it as a power adapter that lets the same plug fit a different socket. See the <a href="../stt-server/">STT Server</a>, <a href="../tts-server/">TTS Server</a>, <a href="../translate-server/">Translate Server</a>, and <a href="../persona-server/">Persona Server</a> pages, or the <a href="../glossary/">Glossary</a>.</p>
 </div>
-<p>Each OVOS service server exposes vendor-prefixed routers so existing clients and integrations can connect without modification. Every router accepts the vendor's original request format and translates it to the native OVOS plugin call.</p>
+<p>Each OVOS service server exposes vendor-prefixed routers. Existing clients and integrations can connect without modification. Every router accepts the vendor's original request format and translates it to the native OVOS plugin call.</p>
 <div class="admonition warning">
 <p class="admonition-title">A compatible wire format does not guarantee identical capabilities</p>
-<p>Mimicking a vendor's request/response shape does not always mean the <em>behavior</em> underneath
-matches, especially around streaming. For example, the TTS server's ElevenLabs
-<code>stream-input</code> WebSocket router accepts text incrementally and sends audio back in frames,
-exactly like the real ElevenLabs protocol — but underneath, each buffered chunk of text is
-still synthesized with one ordinary, blocking call to the configured OVOS TTS plugin, and
-only the resulting complete audio is sliced into fixed-size frames afterward. Most OVOS TTS
-plugins do not support true incremental (word-by-word) synthesis, so the first audio frame
-is not available until that chunk has finished generating in full — clients built around the
-real API's low first-byte latency may not see the same latency here. Check the specific
-router and the underlying plugin's capabilities before assuming parity beyond the wire
-format.</p>
+<p>Matching a vendor's request and response shape does not always mean the <em>behavior</em>
+underneath matches, especially around streaming. For example, the TTS server's
+ElevenLabs <code>stream-input</code> WebSocket router accepts text incrementally. It sends audio
+back in frames, exactly like the real ElevenLabs protocol. Underneath, though, each
+buffered chunk of text is still synthesized with one ordinary, blocking call to the
+configured OVOS TTS plugin. Only the resulting complete audio is sliced into
+fixed-size frames afterward. Most OVOS TTS plugins do not support true incremental,
+word-by-word synthesis. The first audio frame is not available until that chunk has
+finished generating in full. Clients built around the real API's low first-byte
+latency may not see the same latency here. Check the specific router and the
+underlying plugin's capabilities before assuming parity beyond the wire format.</p>
 </div>
 <hr />
 <h2 id="pattern">Pattern<a class="headerlink" href="#pattern" title="Permanent link">&para;</a></h2>
@@ -1472,10 +1454,10 @@ format.</p>
 <li>Translates to the server's internal <code>process()</code> call.</li>
 <li>Returns the vendor's expected response format.</li>
 </ol>
-<p>All compat routers are always loaded; no feature flag is needed.</p>
+<p>All compat routers are always loaded. No feature flag is needed.</p>
 <hr />
 <h2 id="stt-server-compat-routes">STT Server Compat Routes<a class="headerlink" href="#stt-server-compat-routes" title="Permanent link">&para;</a></h2>
-<p><code>pip install ovos-stt-http-server</code> — routers implemented in <code>ovos_stt_http_server.routers</code>.</p>
+<p><code>pip install ovos-stt-http-server</code>. Routers are implemented in <code>ovos_stt_http_server.routers</code>.</p>
 <table>
 <thead>
 <tr>
@@ -1556,7 +1538,7 @@ format.</p>
 </table>
 <hr />
 <h2 id="tts-server-compat-routes">TTS Server Compat Routes<a class="headerlink" href="#tts-server-compat-routes" title="Permanent link">&para;</a></h2>
-<p><code>pip install ovos-tts-server</code> — routers implemented in <code>ovos_tts_server.routers</code>.</p>
+<p><code>pip install ovos-tts-server</code>. Routers are implemented in <code>ovos_tts_server.routers</code>.</p>
 <table>
 <thead>
 <tr>
@@ -1609,7 +1591,7 @@ format.</p>
 </table>
 <hr />
 <h2 id="translate-server-compat-routes">Translate Server Compat Routes<a class="headerlink" href="#translate-server-compat-routes" title="Permanent link">&para;</a></h2>
-<p><code>pip install ovos-translate-server</code> — routers implemented in <code>ovos_translate_server.routers</code>.</p>
+<p><code>pip install ovos-translate-server</code>. Routers are implemented in <code>ovos_translate_server.routers</code>.</p>
 <table>
 <thead>
 <tr>
@@ -1650,11 +1632,10 @@ format.</p>
 </table>
 <hr />
 <h2 id="persona-server-compat-routes">Persona Server Compat Routes<a class="headerlink" href="#persona-server-compat-routes" title="Permanent link">&para;</a></h2>
-<p><code>pip install ovos-persona-server</code> — each vendor router lives in its own module in
-<code>ovos_persona_server</code> (e.g. <code>anthropic.py</code>, <code>gemini.py</code>, <code>cohere.py</code>, <code>ollama.py</code>,
-<code>huggingface_tgi.py</code>, <code>aws_bedrock.py</code>); the deprecated bare-<code>/v1</code> routes live in
-<code>deprecated_routers.py</code>.</p>
-<p>The persona server baseline is an OpenAI-compatible chat API at <strong><code>/openai/v1/chat/completions</code></strong>. (The unprefixed <code>/v1/...</code> path is also mounted but is <strong>deprecated legacy</strong> — it returns a <code>Deprecation</code> header; a bare-root base URL 404s, so always include the <code>/openai/v1</code> prefix.) Additional vendor routers are layered on top:</p>
+<p><code>pip install ovos-persona-server</code>. <code>create_persona_app()</code> mounts the routes below.
+It mounts a chat router at prefix <code>/v1</code> (<code>POST /v1/chat/completions</code>, OpenAI-compatible),
+an Ollama router at prefix <code>/api</code>, and a UTCP router at <code>/tools</code>. It also mounts <code>/mcp</code>
+when the <code>mcp</code> extra is installed.</p>
 <table>
 <thead>
 <tr>
@@ -1664,54 +1645,38 @@ format.</p>
 </thead>
 <tbody>
 <tr>
-<td><code>/openai/v1</code>, <code>/ollama/api</code></td>
-<td>OpenAI + Ollama</td>
+<td><code>/v1</code></td>
+<td>OpenAI-compatible chat (<code>POST /v1/chat/completions</code>)</td>
 </tr>
 <tr>
-<td><code>/anthropic/v1</code></td>
-<td>Anthropic Claude</td>
+<td><code>/api</code></td>
+<td>Ollama</td>
 </tr>
 <tr>
-<td><code>/gemini/v1beta/models</code></td>
-<td>Google Gemini</td>
+<td><code>/tools</code></td>
+<td>UTCP tool manifest and invocation</td>
 </tr>
 <tr>
-<td><code>/cohere/v1</code></td>
-<td>Cohere</td>
-</tr>
-<tr>
-<td><code>/tgi</code></td>
-<td>HuggingFace TGI</td>
-</tr>
-<tr>
-<td><code>/bedrock/model</code></td>
-<td>AWS Bedrock</td>
+<td><code>/mcp</code></td>
+<td>MCP server (requires the <code>mcp</code> extra)</td>
 </tr>
 </tbody>
 </table>
-<h3 id="openai-compatible-example-existing-stable">OpenAI-compatible example (existing, stable)<a class="headerlink" href="#openai-compatible-example-existing-stable" title="Permanent link">&para;</a></h3>
+<div class="admonition note">
+<p class="admonition-title">Other vendor routers exist but are not mounted</p>
+<p>The source tree also has vendor-specific router modules for Anthropic, Gemini,
+Cohere, HuggingFace TGI, and AWS Bedrock. <code>create_persona_app()</code> does not mount
+any of them yet, so their routes are not reachable in the shipped app.</p>
+</div>
+<h3 id="openai-compatible-example">OpenAI-compatible example<a class="headerlink" href="#openai-compatible-example" title="Permanent link">&para;</a></h3>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span> <span class="nn">openai</span>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">client</span> <span class="o">=</span> <span class="n">openai</span><span class="o">.</span><span class="n">OpenAI</span><span class="p">(</span><span class="n">api_key</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;http://localhost:8337/openai/v1&quot;</span><span class="p">)</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">client</span> <span class="o">=</span> <span class="n">openai</span><span class="o">.</span><span class="n">OpenAI</span><span class="p">(</span><span class="n">api_key</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;http://localhost:8337/v1&quot;</span><span class="p">)</span>
 </span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">completions</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
 </span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
 </span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>    <span class="n">messages</span><span class="o">=</span><span class="p">[{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;tell me a joke&quot;</span><span class="p">}]</span>
 </span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="p">)</span>
 </span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
-</span></code></pre></div>
-<h3 id="anthropic-compatible-example">Anthropic-compatible example<a class="headerlink" href="#anthropic-compatible-example" title="Permanent link">&para;</a></h3>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">import</span> <span class="nn">anthropic</span>
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="n">client</span> <span class="o">=</span> <span class="n">anthropic</span><span class="o">.</span><span class="n">Anthropic</span><span class="p">(</span>
-</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>    <span class="n">api_key</span><span class="o">=</span><span class="s2">&quot;sk-fake&quot;</span><span class="p">,</span>
-</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>    <span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;http://localhost:8337/anthropic/v1&quot;</span>
-</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="p">)</span>
-</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="n">message</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">messages</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
-</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;&lt;model&gt;&quot;</span><span class="p">,</span>  <span class="c1"># e.g. an Anthropic model id</span>
-</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>    <span class="n">max_tokens</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span>
-</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>    <span class="n">messages</span><span class="o">=</span><span class="p">[{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;Hello!&quot;</span><span class="p">}]</span>
-</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="p">)</span>
-</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="nb">print</span><span class="p">(</span><span class="n">message</span><span class="o">.</span><span class="n">content</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
 </span></code></pre></div>
 <hr />
 <h2 id="related-pages">Related Pages<a class="headerlink" href="#related-pages" title="Permanent link">&para;</a></h2>
@@ -1720,7 +1685,7 @@ format.</p>
 <li><a href="../tts-server/">TTS Server</a></li>
 <li><a href="../translate-server/">Translate Server</a></li>
 <li><a href="../persona-server/">Persona Server</a></li>
-<li><a href="../agent-interop/">Agent Interoperability</a> — MCP/UTCP endpoints on these same servers</li>
+<li><a href="../agent-interop/">Agent Interoperability</a>: MCP/UTCP endpoints on these same servers</li>
 </ul>
 <hr />
 <p><em>Source code: <a href="https://github.com/OpenVoiceOS/ovos-stt-http-server">ovos-stt-http-server</a>, <a href="https://github.com/OpenVoiceOS/ovos-tts-server">ovos-tts-server</a>, <a href="https://github.com/OpenVoiceOS/ovos-translate-server">ovos-translate-server</a>, <a href="https://github.com/OpenVoiceOS/ovos-persona-server">ovos-persona-server</a>.</em></p>

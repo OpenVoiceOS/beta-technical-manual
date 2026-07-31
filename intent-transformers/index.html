@@ -1520,11 +1520,11 @@
 <h1 id="intent-transformers">Intent Transformers<a class="headerlink" href="#intent-transformers" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>Once the assistant has figured out <em>what you want</em> (your "intent" — for example, "set a timer"), these plugins can add extra detail or tidy up that request before the matching feature actually runs. It's a chance to fill in or pull out the specifics — like spotting names, places, or numbers in what you said — in one shared place instead of repeating that work everywhere. See <a href="../transformer-plugins/">Transformer Plugins</a> and the <a href="../glossary/">Glossary</a> for unfamiliar terms.</p>
+<p>Once the assistant has figured out <em>what you want</em> (your "intent," for example, "set a timer"), these plugins can add extra detail or tidy up that request before the matching feature actually runs. It gives you a chance to fill in or pull out the specifics, like spotting names, places, or numbers in what you said, in one shared place instead of repeating that work everywhere. See <a href="../transformer-plugins/">Transformer Plugins</a> and the <a href="../glossary/">Glossary</a> for unfamiliar terms.</p>
 </div>
 <details class="info">
 <summary>📐 Formal specification</summary>
-<p>Intent transformers are the <strong><code>intent</code> chain</strong> of <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/transformer.md">OVOS-TRANSFORM-1 — Transformer Plugins</a> §3.4</strong> (a formal <a href="../architecture-specs/">architecture spec</a>). The spec's post-match, pre-dispatch injection point receives the <code>Match</code> a pipeline plugin produced (<a href="https://github.com/OpenVoiceOS/architecture/blob/dev/intent-3.md">OVOS-INTENT-3</a> — <code>skill_id</code>, <code>intent_name</code>, <code>slots</code>) and may <strong>enrich <code>Match.slots</code></strong> — it is the canonical home for slot/entity injection. It <strong>MUST NOT</strong> change <code>Match.skill_id</code> or <code>Match.intent_name</code> (that would re-route the handler); an orchestrator treats such a change as a shape violation and discards it. <strong>Ordering:</strong> the chain runs by <strong>ascending</strong> <code>priority</code> — <code>priority</code> 1 runs <strong>first</strong>, matching the spec; a chain authored for the opposite (descending) convention is the exact inverse of a conformant one and must be renumbered, or it runs backwards.</p>
+<p>Intent transformers are the <strong><code>intent</code> chain</strong> of <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/transformer.md">OVOS-TRANSFORM-1: Transformer Plugins</a> §3.4</strong> (a formal <a href="../architecture-specs/">architecture spec</a>). The spec's post-match, pre-dispatch injection point receives the <code>Match</code> a pipeline plugin produced (<a href="https://github.com/OpenVoiceOS/architecture/blob/dev/intent-3.md">OVOS-INTENT-3</a>: <code>skill_id</code>, <code>intent_name</code>, <code>slots</code>). It may <strong>enrich <code>Match.slots</code></strong>. This is the canonical home for slot and entity injection. It <strong>MUST NOT</strong> change <code>Match.skill_id</code> or <code>Match.intent_name</code>, since that would re-route the handler. An orchestrator treats such a change as a shape violation and discards it. <strong>Ordering:</strong> the chain runs by <strong>ascending</strong> <code>priority</code>. <code>priority</code> 1 runs <strong>first</strong>, matching the spec. A chain authored for the opposite, descending, convention is the exact inverse of a conformant one. It must be renumbered, or it runs backwards.</p>
 </details>
 <p><strong>Intent Transformers</strong> are a pluggable mechanism in OVOS that allow you to enrich or transform intent data <strong>after</strong> an intent is matched by an engine (<a href="../padatious-pipeline/">Padatious</a>, <a href="../adapt-pipeline/">Adapt</a>, etc.), but <strong>before</strong> it is passed to the skill handler.</p>
 <p>This is useful for:</p>
@@ -1543,7 +1543,7 @@
 </li>
 </ul>
 <p>Each transformer subclasses <code>IntentTransformer</code> (<code>ovos_plugin_manager.templates.transformers</code>), registers under the <code>opm.transformer.intent</code> entry-point group, and operates on the <code>IntentHandlerMatch</code> object returned by the matching pipeline. They are loaded and chained by <code>IntentTransformersService</code> in <code>ovos-core</code> (<code>ovos_core/transformers.py</code>).</p>
-<p>Transformers run sorted by <code>priority</code>, <strong>lowest first</strong> — so a transformer with <code>priority</code> 1 runs <em>first</em>, and later transformers see and may build on its output, per OVOS-TRANSFORM-1 §4. This lets you reimplement entity logic once instead of in every skill.</p>
+<p>Transformers run sorted by <code>priority</code>, <strong>lowest first</strong>. A transformer with <code>priority</code> 1 runs <em>first</em>, and later transformers see and may build on its output, per OVOS-TRANSFORM-1 §4. This lets you implement entity logic once instead of in every skill.</p>
 <hr />
 <h2 id="default-transformers">Default Transformers<a class="headerlink" href="#default-transformers" title="Permanent link">&para;</a></h2>
 <p><code>ovos-core</code> declares these two plugins as dependencies, so a standard install ships with them present. Each one only <em>runs</em> when its plugin name is listed under <code>intent_transformers</code> in your config:</p>
@@ -1571,12 +1571,12 @@
 </tr>
 </tbody>
 </table>
-<p>A transformer is loaded only if its plugin name appears under <code>intent_transformers</code>; set <code>"active": false</code> to skip it. (Note: <code>keyword-template-matcher</code> runs before <code>ahocorasick-ner</code>, since 1 &lt; 5.)</p>
+<p>A transformer is loaded only if its plugin name appears under <code>intent_transformers</code>. Set <code>"active": false</code> to skip it. (Note: <code>keyword-template-matcher</code> runs before <code>ahocorasick-ner</code>, since 1 &lt; 5.)</p>
 <hr />
 <h2 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">&para;</a></h2>
 <p>To enable or disable specific transformers, modify your <code>mycroft.conf</code>:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>&quot;intent_transformers&quot;: {
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>  &quot;ovos-keyword-template-matcher&quot;: {
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>  &quot;keyword-templates&quot;: {
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>    &quot;active&quot;: true
 </span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>  },
 </span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>  &quot;ovos-ahocorasick-ner-plugin&quot;: {
@@ -1584,6 +1584,10 @@
 </span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>  }
 </span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>}
 </span></code></pre></div>
+<p>Note: <code>ovos-keyword-template-matcher</code> is the plugin's entry-point name, used for
+installation and discovery. <code>keyword-templates</code> is the config key the plugin
+registers itself under (<code>super().__init__("keyword-templates", 1, config)</code>), and
+is the key <code>intent_transformers</code> must use.</p>
 <hr />
 <h2 id="how-it-works">How It Works<a class="headerlink" href="#how-it-works" title="Permanent link">&para;</a></h2>
 <h3 id="example-workflow">Example Workflow<a class="headerlink" href="#example-workflow" title="Permanent link">&para;</a></h3>
@@ -1630,7 +1634,7 @@
 </span></code></pre></div>
 <hr />
 <h2 id="writing-your-own-intent-transformer">Writing Your Own Intent <a href="../transformer-plugins/">Transformer</a><a class="headerlink" href="#writing-your-own-intent-transformer" title="Permanent link">&para;</a></h2>
-<p>Subclass <code>IntentTransformer</code> and implement <code>transform()</code> (the base declares it abstract). The method receives and must return an <code>IntentHandlerMatch</code>; mutate its <code>match_data</code> in place and return it. Register under the <code>opm.transformer.intent</code> entry-point group.</p>
+<p>Subclass <code>IntentTransformer</code> and implement <code>transform()</code> (the base declares it abstract). The method receives and must return an <code>IntentHandlerMatch</code>. Mutate its <code>match_data</code> in place and return it. Register under the <code>opm.transformer.intent</code> entry-point group.</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kn">from</span> <span class="nn">ovos_plugin_manager.templates.transformers</span> <span class="kn">import</span> <span class="n">IntentTransformer</span>
 </span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="kn">from</span> <span class="nn">ovos_plugin_manager.templates.pipeline</span> <span class="kn">import</span> <span class="n">IntentHandlerMatch</span>
 </span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>

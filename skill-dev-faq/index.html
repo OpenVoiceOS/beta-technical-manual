@@ -718,7 +718,7 @@
           <li class="md-nav__item">
   <a href="#my-utterance-doesnt-do-anything-where-do-i-even-start-looking" class="md-nav__link">
     <span class="md-ellipsis">
-      My utterance doesn't do anything — where do I even start looking?
+      My utterance doesn't do anything. Where do I even start looking?
     </span>
   </a>
   
@@ -787,7 +787,7 @@
           <li class="md-nav__item">
   <a href="#my-skill-needs-a-follow-up-question-how-do-multi-turn-conversations-work" class="md-nav__link">
     <span class="md-ellipsis">
-      My skill needs a follow-up question — how do multi-turn conversations work?
+      My skill needs a follow-up question. How do multi-turn conversations work?
     </span>
   </a>
   
@@ -796,7 +796,7 @@
           <li class="md-nav__item">
   <a href="#i-implemented-converse-but-it-never-fires-why" class="md-nav__link">
     <span class="md-ellipsis">
-      I implemented converse() but it never fires — why?
+      I implemented converse() but it never fires. Why?
     </span>
   </a>
   
@@ -853,7 +853,7 @@
           <li class="md-nav__item">
   <a href="#where-do-my-skills-python-dependencies-go-skilljson-or-pyprojecttoml" class="md-nav__link">
     <span class="md-ellipsis">
-      Where do my skill's Python dependencies go — skill.json or pyproject.toml?
+      Where do my skill's Python dependencies go, skill.json or pyproject.toml?
     </span>
   </a>
   
@@ -1307,7 +1307,7 @@
           <li class="md-nav__item">
   <a href="#my-utterance-doesnt-do-anything-where-do-i-even-start-looking" class="md-nav__link">
     <span class="md-ellipsis">
-      My utterance doesn't do anything — where do I even start looking?
+      My utterance doesn't do anything. Where do I even start looking?
     </span>
   </a>
   
@@ -1376,7 +1376,7 @@
           <li class="md-nav__item">
   <a href="#my-skill-needs-a-follow-up-question-how-do-multi-turn-conversations-work" class="md-nav__link">
     <span class="md-ellipsis">
-      My skill needs a follow-up question — how do multi-turn conversations work?
+      My skill needs a follow-up question. How do multi-turn conversations work?
     </span>
   </a>
   
@@ -1385,7 +1385,7 @@
           <li class="md-nav__item">
   <a href="#i-implemented-converse-but-it-never-fires-why" class="md-nav__link">
     <span class="md-ellipsis">
-      I implemented converse() but it never fires — why?
+      I implemented converse() but it never fires. Why?
     </span>
   </a>
   
@@ -1442,7 +1442,7 @@
           <li class="md-nav__item">
   <a href="#where-do-my-skills-python-dependencies-go-skilljson-or-pyprojecttoml" class="md-nav__link">
     <span class="md-ellipsis">
-      Where do my skill's Python dependencies go — skill.json or pyproject.toml?
+      Where do my skill's Python dependencies go, skill.json or pyproject.toml?
     </span>
   </a>
   
@@ -1516,15 +1516,15 @@
 <h1 id="developer-faq">Developer FAQ<a class="headerlink" href="#developer-faq" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>Short, direct answers to the questions that come up most often while building an OVOS skill —
-mined from real questions asked in the community and from the sticking points people hit while
-working through this manual. Each answer routes you to the full page for the depth you need; skim
-this page when you hit one of these, then dive into the linked page. It assumes you've already
-built a basic skill — start with <a href="../first-skill/">Your First Skill</a> if not.</p>
+<p>Short, direct answers to the questions that come up most often while building an OVOS skill.
+They come from real questions asked in the community and from the sticking points people hit
+while working through this manual. Each answer routes you to the full page for the depth you
+need. Skim this page when you hit one of these, then open the linked page. It assumes you have
+already built a basic skill. Start with <a href="../first-skill/">Your First Skill</a> if not.</p>
 </div>
 <hr />
 <h2 id="getting-started-and-the-inner-dev-loop">Getting started and the inner dev loop<a class="headerlink" href="#getting-started-and-the-inner-dev-loop" title="Permanent link">&para;</a></h2>
-<h3 id="my-utterance-doesnt-do-anything-where-do-i-even-start-looking">My utterance doesn't do anything — where do I even start looking?<a class="headerlink" href="#my-utterance-doesnt-do-anything-where-do-i-even-start-looking" title="Permanent link">&para;</a></h3>
+<h3 id="my-utterance-doesnt-do-anything-where-do-i-even-start-looking">My utterance doesn't do anything. Where do I even start looking?<a class="headerlink" href="#my-utterance-doesnt-do-anything-where-do-i-even-start-looking" title="Permanent link">&para;</a></h3>
 <p>Work through it stage by stage: is the messagebus up, did the mic/wake word fire, did STT produce
 text, did a pipeline stage match, did the handler raise, did TTS speak. Each stage has an exact log
 line to grep for and a bus message to filter on. Start by injecting the text directly, skipping the
@@ -1534,8 +1534,8 @@ mic entirely:</p>
 <p>→ full story: <a href="../troubleshooting/">Troubleshooting &amp; Debugging</a></p>
 <h3 id="how-do-i-test-a-skill-without-talking-into-a-microphone">How do I test a skill without talking into a microphone?<a class="headerlink" href="#how-do-i-test-a-skill-without-talking-into-a-microphone" title="Permanent link">&para;</a></h3>
 <p>Three options, cheapest first: <code>ovos-say-to "some phrase"</code> injects a <code>recognizer_loop:utterance</code>
-message as if STT had already produced it; <code>ovos-busmon</code> gives you a browser view of every bus
-message live, including a button to inject arbitrary messages yourself; and
+message as if STT had already produced it. <code>ovos-busmon</code> gives you a browser view of every bus
+message live, including a button to inject arbitrary messages yourself. And
 <a href="../ovoscope-overview/"><code>ovoscope</code></a> runs a real in-process assistant (<code>MiniCroft</code>) with no audio
 hardware at all, so you can write pytest assertions instead of speaking out loud every time.</p>
 <p>→ full story: <a href="../testing-your-skill/">Test Your Skill</a>, <a href="../troubleshooting/#stage-3-did-stt-produce-text">Troubleshooting</a></p>
@@ -1545,21 +1545,21 @@ reloads) one skill by ID, and stays attached so you can edit-and-rerun without t
 the stack:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>ovos-skill-launcher<span class="w"> </span>my-first.youruser<span class="w"> </span>/path/to/ovos-skill-my-first
 </span></code></pre></div>
-<p>Pass just the <code>skill_id</code> if the skill is already discoverable on the standard skill directories;
-pass a second argument to point at an arbitrary local path instead.</p>
+<p>Pass just the <code>skill_id</code> if the skill is already discoverable on the standard skill directories.
+Pass a second argument to point at an arbitrary local path instead.</p>
 <p>→ full story: <a href="../cli-tools/">Command-line Tools</a></p>
 <h3 id="why-isnt-my-skill-loading-at-all">Why isn't my skill loading at all?<a class="headerlink" href="#why-isnt-my-skill-loading-at-all" title="Permanent link">&para;</a></h3>
 <p>Almost always one of two things: the <code>opm.skill</code> entry point in <code>pyproject.toml</code> doesn't match what
 OVOS is looking for, or the package failed to import. Check <code>skills.log</code> for your <code>skill_id</code> right
-after startup — a traceback there names the exact import problem. If nothing about your skill
+after startup. A traceback there names the exact import problem. If nothing about your skill
 appears in the log at all, <code>pip show &lt;your-package&gt;</code> to confirm it actually installed, then confirm
 the entry point:</p>
 <div class="language-toml highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">[project.entry-points.</span><span class="s2">&quot;opm.skill&quot;</span><span class="k">]</span>
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="s2">&quot;my-first.youruser&quot;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;ovos_skill_my_first:MyFirstSkill&quot;</span>
 </span></code></pre></div>
-<p>The left-hand side (<code>&lt;skill-name&gt;.&lt;author&gt;</code>) becomes the <code>skill_id</code>; the right-hand side is
-<code>package:ClassName</code>. <code>find_skill_plugins()</code> in <code>ovos-plugin-manager</code> enumerates this exact group —
-a typo here means the skill is invisible, not broken.</p>
+<p>The left-hand side (<code>&lt;skill-name&gt;.&lt;author&gt;</code>) becomes the <code>skill_id</code>. The right-hand side is
+<code>package:ClassName</code>. <code>find_skill_plugins()</code> in <code>ovos-plugin-manager</code> enumerates this exact group.
+A typo here means the skill is invisible, not broken.</p>
 <p>→ full story: <a href="../first-skill/#step-5-make-it-installable">Your First Skill</a>, <a href="../skill-manager/">Skill Manager</a></p>
 <hr />
 <h2 id="why-isnt-it-doing-what-i-expect">Why isn't it doing what I expect<a class="headerlink" href="#why-isnt-it-doing-what-i-expect" title="Permanent link">&para;</a></h2>
@@ -1571,21 +1571,21 @@ claim the utterance:</p>
 </span></code></pre></div>
 <p>Reproduce it deterministically with <code>ovos-say-to "the exact phrase"</code>, then grep <code>skills.log</code> for
 that text. If every matcher rejects it, it's a training-data problem in your intent files (missing
-sample phrase, wrong vocab), not a bug in the pipeline — add the phrasing to your <code>.intent</code>/<code>.voc</code>
+sample phrase, wrong vocab), not a bug in the pipeline. Add the phrasing to your <code>.intent</code>/<code>.voc</code>
 file and retrain.</p>
-<p>→ full story: <a href="../troubleshooting/#stage-4-which-pipeline-stage-matched-or-didnt">Troubleshooting — Stage 4</a>, <a href="../pipelines-overview/">Pipelines Overview</a></p>
+<p>→ full story: <a href="../troubleshooting/#stage-4-which-pipeline-stage-matched-or-didnt">Troubleshooting: Stage 4</a>, <a href="../pipelines-overview/">Pipelines Overview</a></p>
 <h3 id="should-my-skill-use-adapt-or-padatious-for-intent-matching">Should my skill use Adapt or Padatious for intent matching?<a class="headerlink" href="#should-my-skill-use-adapt-or-padatious-for-intent-matching" title="Permanent link">&para;</a></h3>
 <p>Padatious is the better default for most skills: it's a trained neural matcher that generalizes
 across paraphrasing and localizes easily to other languages. Reach for Adapt instead only for a
 personal/private skill where you need strict, predictable command-and-control matching in a single
 language you fully control.</p>
 <p>→ full story: <a href="../adapt-pipeline/#when-to-use-adapt-in-ovos">Adapt Pipeline</a>, <a href="../padatious-pipeline/#when-to-use">Padatious Pipeline</a></p>
-<h3 id="my-skill-needs-a-follow-up-question-how-do-multi-turn-conversations-work">My skill needs a follow-up question — how do multi-turn conversations work?<a class="headerlink" href="#my-skill-needs-a-follow-up-question-how-do-multi-turn-conversations-work" title="Permanent link">&para;</a></h3>
+<h3 id="my-skill-needs-a-follow-up-question-how-do-multi-turn-conversations-work">My skill needs a follow-up question. How do multi-turn conversations work?<a class="headerlink" href="#my-skill-needs-a-follow-up-question-how-do-multi-turn-conversations-work" title="Permanent link">&para;</a></h3>
 <p>Two different mechanisms depending on the shape of the follow-up. If you're waiting for the answer
-to a specific question you just asked, call <code>self.get_response(...)</code> — it blocks and returns the
+to a specific question you just asked, call <code>self.get_response(...)</code>. It blocks and returns the
 next utterance (or <code>None</code> on timeout). If instead you want your skill to keep intercepting <em>any</em>
-follow-up for a while after it last acted ("yes", "no", "the red one"), implement <code>converse()</code> —
-but that requires subclassing <code>ConversationalSkill</code>, not the plain <code>OVOSSkill</code>:</p>
+follow-up for a while after it last acted ("yes", "no", "the red one"), implement <code>converse()</code>.
+That requires subclassing <code>ConversationalSkill</code>, not the plain <code>OVOSSkill</code>:</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kn">from</span> <span class="nn">ovos_workshop.skills.converse</span> <span class="kn">import</span> <span class="n">ConversationalSkill</span>
 </span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
 </span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="k">class</span> <span class="nc">MySkill</span><span class="p">(</span><span class="n">ConversationalSkill</span><span class="p">):</span>
@@ -1596,12 +1596,12 @@ but that requires subclassing <code>ConversationalSkill</code>, not the plain <c
 </span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>        <span class="k">return</span> <span class="kc">False</span>
 </span></code></pre></div>
 <p>→ full story: <a href="../converse/">Converse</a></p>
-<h3 id="i-implemented-converse-but-it-never-fires-why">I implemented <code>converse()</code> but it never fires — why?<a class="headerlink" href="#i-implemented-converse-but-it-never-fires-why" title="Permanent link">&para;</a></h3>
+<h3 id="i-implemented-converse-but-it-never-fires-why">I implemented <code>converse()</code> but it never fires. Why?<a class="headerlink" href="#i-implemented-converse-but-it-never-fires-why" title="Permanent link">&para;</a></h3>
 <p>Two common gates sit in front of it, both outside your skill's own code. First, converse
-participation is opt-in/opt-out per skill via <code>ConverseMode</code> and the converse whitelist/blacklist —
-if your skill isn't allowed to converse at all, <code>converse()</code> is never called no matter what it
+participation is opt-in/opt-out per skill via <code>ConverseMode</code> and the converse whitelist/blacklist.
+If your skill isn't allowed to converse at all, <code>converse()</code> is never called no matter what it
 returns. Second, converse only runs for skills the orchestrator considers "active" for the
-session (typically the last skill that spoke or handled an intent) — an unrelated skill sitting
+session (typically the last skill that spoke or handled an intent). An unrelated skill sitting
 idle won't get a chance either. Check both before assuming your <code>converse()</code> logic itself is
 broken.</p>
 <p>→ full story: <a href="../permissions/">Permissions &amp; Activation Control</a>, <a href="../converse/">Converse</a></p>
@@ -1613,56 +1613,57 @@ in the same folder if you want a localized store listing. Padatious intents loca
 friction since they're trained from example phrases rather than hand-written grammar rules.</p>
 <p>→ full story: <a href="../skill-structure/">Skill Structure</a>, <a href="../lang-support/">Language Support</a>, <a href="../skill-json/#language-support">Skill Metadata File</a></p>
 <h3 id="where-do-my-skills-settings-and-files-actually-live-on-disk">Where do my skill's settings and files actually live on disk?<a class="headerlink" href="#where-do-my-skills-settings-and-files-actually-live-on-disk" title="Permanent link">&para;</a></h3>
-<p>Settings live at <code>$XDG_CONFIG_HOME/&lt;base_folder&gt;/skills/&lt;skill_id&gt;/settings.json</code> — on most Linux
+<p>Settings live at <code>$XDG_CONFIG_HOME/&lt;base_folder&gt;/skills/&lt;skill_id&gt;/settings.json</code>. On most Linux
 systems that's <code>~/.config/mycroft/skills/&lt;skill_id&gt;/settings.json</code>, since <code>&lt;base_folder&gt;</code> defaults
 to <code>mycroft</code> for backwards-compatibility (a system-wide <code>ovos.conf</code>, or the
-<code>OVOS_CONFIG_BASE_FOLDER</code> environment variable, can rename it — commonly to <code>OpenVoiceOS</code>). A
-<code>FileWatcher</code> on that path fires <code>ovos.skills.settings_changed</code> whenever it changes. Persistent skill data belongs under
-<code>self.file_system</code>, not a path you build yourself — it resolves to
+<code>OVOS_CONFIG_BASE_FOLDER</code> environment variable, can rename it, commonly to <code>OpenVoiceOS</code>). A
+<code>FileWatcher</code> on that path fires <code>ovos.skills.settings_changed</code> whenever it changes. Persistent
+skill data belongs under <code>self.file_system</code>, not a path you build yourself. It resolves to
 <code>$XDG_DATA_HOME/mycroft/filesystem/&lt;skill_id&gt;/</code> and survives skill reinstalls.</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;my_key&quot;</span><span class="p">,</span> <span class="s2">&quot;default&quot;</span><span class="p">)</span>   <span class="c1"># read</span>
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="p">[</span><span class="s2">&quot;my_key&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;value&quot;</span>        <span class="c1"># write — auto-saved on shutdown</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="p">[</span><span class="s2">&quot;my_key&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;value&quot;</span>        <span class="c1"># write, auto-saved on shutdown</span>
 </span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">file_system</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;cache.json&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
 </span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>    <span class="o">...</span>
 </span></code></pre></div>
 <p>→ full story: <a href="../skill-settings/">Skill Settings</a>, <a href="../skill-filesystem/">Filesystem Access</a>, <a href="../locations-ref/">Locations</a></p>
 <hr />
 <h2 id="dependencies-packaging-and-sharing">Dependencies, packaging, and sharing<a class="headerlink" href="#dependencies-packaging-and-sharing" title="Permanent link">&para;</a></h2>
-<h3 id="where-do-my-skills-python-dependencies-go-skilljson-or-pyprojecttoml">Where do my skill's Python dependencies go — <code>skill.json</code> or <code>pyproject.toml</code>?<a class="headerlink" href="#where-do-my-skills-python-dependencies-go-skilljson-or-pyprojecttoml" title="Permanent link">&para;</a></h3>
-<p><code>pyproject.toml</code>'s <code>dependencies</code> list is what actually gets installed by <code>pip</code> — that's the real
+<h3 id="where-do-my-skills-python-dependencies-go-skilljson-or-pyprojecttoml">Where do my skill's Python dependencies go, <code>skill.json</code> or <code>pyproject.toml</code>?<a class="headerlink" href="#where-do-my-skills-python-dependencies-go-skilljson-or-pyprojecttoml" title="Permanent link">&para;</a></h3>
+<p><code>pyproject.toml</code>'s <code>dependencies</code> list is what actually gets installed by <code>pip</code>. That's the real
 dependency mechanism. <code>skill.json</code> only carries <code>extra_plugins</code>, for companion OVOS plugins (a TTS
-voice, a G2P engine) your skill expects to be present but doesn't import as a Python dependency;
+voice, a G2P engine) your skill expects to be present but doesn't import as a Python dependency.
 <code>ovos-workshop</code> never reads <code>skill.json</code> to install anything.</p>
 <p>→ full story: <a href="../skill-json/#installation-behavior">Skill Metadata File</a></p>
 <h3 id="how-do-i-share-or-publish-my-skill">How do I share or publish my skill?<a class="headerlink" href="#how-do-i-share-or-publish-my-skill" title="Permanent link">&para;</a></h3>
-<p>Push it to a GitHub repository (<code>source</code> in <code>skill.json</code> should point there); optionally publish it
+<p>Push it to a GitHub repository (<code>source</code> in <code>skill.json</code> should point there). Optionally publish it
 to PyPI too and set <code>package_name</code> so people can <code>pip install</code> it directly. A skill without a PyPI
 release is still installable straight from git via <code>pip_spec</code>. From there, list it on the
-<a href="https://store.openvoiceos.org">OVOS Skill store</a> — the store reads <code>name</code>, <code>description</code>,
+<a href="https://store.openvoiceos.org">OVOS Skill store</a>. The store reads <code>name</code>, <code>description</code>,
 <code>examples</code>, <code>tags</code>, <code>icon</code>, and <code>images</code> from <code>skill.json</code> to build the listing card.</p>
-<p>→ full story: <a href="../skill-json/#sharing-your-skill">Skill Metadata File — Sharing your skill</a></p>
+<p>→ full story: <a href="../skill-json/#sharing-your-skill">Skill Metadata File: Sharing your skill</a></p>
 <hr />
 <h2 id="using-aillms-from-a-skill">Using AI/LLMs from a skill<a class="headerlink" href="#using-aillms-from-a-skill" title="Permanent link">&para;</a></h2>
 <h3 id="can-i-use-an-llm-inside-my-skill">Can I use an LLM inside my skill?<a class="headerlink" href="#can-i-use-an-llm-inside-my-skill" title="Permanent link">&para;</a></h3>
 <p>Yes, two ways. If you just want conversational fallback behavior for your whole assistant, that's
-what a <a href="../personas/">persona</a> is for — no skill code needed. If you specifically want your skill's
+what a <a href="../personas/">persona</a> is for, with no skill code needed. If you specifically want your skill's
 own handler to call an LLM (to phrase a reply, summarize something, classify an answer), load an
 agent engine plugin directly and call it like any other object:</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kn">from</span> <span class="nn">ovos_plugin_manager.agents</span> <span class="kn">import</span> <span class="n">load_chat_plugin</span>
-</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>
-</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="n">engine_cls</span> <span class="o">=</span> <span class="n">load_chat_plugin</span><span class="p">(</span><span class="s2">&quot;ovos-openai-plugin&quot;</span><span class="p">)</span>  <span class="c1"># or ovos-gguf-plugin, etc.</span>
-</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="n">engine</span> <span class="o">=</span> <span class="n">engine_cls</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="p">{})</span>  <span class="c1"># see the plugin&#39;s own README for its config keys (API URL, key, model)</span>
-</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="n">reply</span> <span class="o">=</span> <span class="n">engine</span><span class="o">.</span><span class="n">get_response</span><span class="p">(</span><span class="s2">&quot;summarize this in one sentence: ...&quot;</span><span class="p">)</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="kn">from</span> <span class="nn">ovos_plugin_manager.templates.agents</span> <span class="kn">import</span> <span class="n">AgentMessage</span><span class="p">,</span> <span class="n">MessageRole</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="n">engine_cls</span> <span class="o">=</span> <span class="n">load_chat_plugin</span><span class="p">(</span><span class="s2">&quot;ovos-openai-plugin&quot;</span><span class="p">)</span>  <span class="c1"># or ovos-gguf-plugin, etc.</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="n">engine</span> <span class="o">=</span> <span class="n">engine_cls</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="p">{})</span>  <span class="c1"># see the plugin&#39;s own README for its config keys (API URL, key, model)</span>
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="n">reply</span> <span class="o">=</span> <span class="n">engine</span><span class="o">.</span><span class="n">continue_chat</span><span class="p">([</span><span class="n">AgentMessage</span><span class="p">(</span><span class="n">role</span><span class="o">=</span><span class="n">MessageRole</span><span class="o">.</span><span class="n">USER</span><span class="p">,</span> <span class="n">content</span><span class="o">=</span><span class="s2">&quot;summarize this in one sentence: ...&quot;</span><span class="p">)])</span>
 </span></code></pre></div>
-<p><code>get_response(utterance, session_id="default", lang=None, units=None) -&gt; str</code> is the same method
-every <code>ChatEngine</code> implements, regardless of backend, so swapping providers doesn't touch your
-skill's logic.</p>
+<p><code>continue_chat(messages: List[AgentMessage], session_id="default", lang=None, units=None, tools=None) -&gt; AgentMessage</code>
+is the same method every <code>ChatEngine</code> implements, regardless of backend, so swapping providers
+doesn't touch your skill's logic.</p>
 <p>→ full story: <a href="../agent-plugins/">Agent Plugins</a>, <a href="../advanced-solvers/">Specialized Agent Engine Types</a>, <a href="../personas/">Personas</a></p>
 <hr />
 <h2 id="still-stuck">Still stuck?<a class="headerlink" href="#still-stuck" title="Permanent link">&para;</a></h2>
 <p>Ask in the <strong><a href="https://matrix.to/#/#openvoiceos-skills:matrix.org">skills channel on OVOS Chat</a></strong>, or
 post a longer question on the <strong><a href="https://community.openconversational.ai/">Open Conversational AI forum</a></strong>.
-Include a log excerpt or <code>ovos-busmon</code> export for the stage where the trail goes cold — see
+Include a log excerpt or <code>ovos-busmon</code> export for the stage where the trail goes cold. See
 <a href="../troubleshooting/#where-to-ask-for-help">Troubleshooting</a>.</p>
 
 

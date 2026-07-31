@@ -1141,7 +1141,7 @@
           <li class="md-nav__item">
   <a href="#persona-server-tool-plugins-via-mcp-utcp" class="md-nav__link">
     <span class="md-ellipsis">
-      Persona Server — Tool Plugins via MCP + UTCP
+      Persona Server: Tool Plugins via MCP + UTCP
     </span>
   </a>
   
@@ -1188,11 +1188,11 @@
         <li class="md-nav__item">
   <a href="#ovos-tool-adapters-consuming-mcputcp-from-the-agentic-loop" class="md-nav__link">
     <span class="md-ellipsis">
-      ovos-tool-adapters — Consuming MCP/UTCP from the Agentic Loop
+      ovos-tool-adapters: Consuming MCP/UTCP from the Agentic Loop
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="ovos-tool-adapters — Consuming MCP/UTCP from the Agentic Loop">
+    <nav class="md-nav" aria-label="ovos-tool-adapters: Consuming MCP/UTCP from the Agentic Loop">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1453,7 +1453,7 @@
           <li class="md-nav__item">
   <a href="#persona-server-tool-plugins-via-mcp-utcp" class="md-nav__link">
     <span class="md-ellipsis">
-      Persona Server — Tool Plugins via MCP + UTCP
+      Persona Server: Tool Plugins via MCP + UTCP
     </span>
   </a>
   
@@ -1500,11 +1500,11 @@
         <li class="md-nav__item">
   <a href="#ovos-tool-adapters-consuming-mcputcp-from-the-agentic-loop" class="md-nav__link">
     <span class="md-ellipsis">
-      ovos-tool-adapters — Consuming MCP/UTCP from the Agentic Loop
+      ovos-tool-adapters: Consuming MCP/UTCP from the Agentic Loop
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="ovos-tool-adapters — Consuming MCP/UTCP from the Agentic Loop">
+    <nav class="md-nav" aria-label="ovos-tool-adapters: Consuming MCP/UTCP from the Agentic Loop">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1560,9 +1560,9 @@
 <h1 id="agent-interoperability-mcp-utcp-and-a2a">Agent Interoperability: MCP, UTCP, and A2A<a class="headerlink" href="#agent-interoperability-mcp-utcp-and-a2a" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>This page is about letting OVOS work <em>together with other AI systems</em>. OVOS can offer its abilities — like speech, translation, and reasoning — to outside AI tools, and can also call on them, using a few shared "languages" (the protocols MCP, UTCP, and A2A) so different systems can find and use each other. Think of it as agents agreeing on a common plug and socket so they can cooperate. See the <a href="../glossary/">Glossary</a> for unfamiliar terms.</p>
+<p>This page is about letting OVOS work <em>together with other AI systems</em>. OVOS can offer its abilities, like speech, translation, and reasoning, to outside AI tools. It can also call on them, using a few shared "languages" (the protocols MCP, UTCP, and A2A) so different systems can find and use each other. Think of it as agents agreeing on a common plug and socket so they can cooperate. See the <a href="../glossary/">Glossary</a> for unfamiliar terms.</p>
 </div>
-<p>OVOS exposes its speech, translation, and reasoning services as first-class agent tools via two discovery/calling protocols — <strong>MCP</strong> (Model Context Protocol) and <strong>UTCP</strong> (Universal Tool Calling Protocol) — and implements bidirectional <strong>A2A</strong> (Agent-to-Agent) bridging.</p>
+<p>OVOS exposes its speech, translation, and reasoning services as agent tools via two discovery and calling protocols: <strong>MCP</strong> (Model Context Protocol) and <strong>UTCP</strong> (Universal Tool Calling Protocol). It also implements bidirectional <strong>A2A</strong> (Agent-to-Agent) bridging.</p>
 <div class="admonition note">
 <p class="admonition-title">Not what you're looking for?</p>
 <p>This page is about LLM/agent tool protocols (MCP/A2A). If you're building a voice
@@ -1664,7 +1664,7 @@ satellite or a remote voice client instead, see <a href="../hivemind-agents/">Hi
 </tbody>
 </table>
 <p>UTCP tools exposed: <code>tts_status</code>, <code>tts_synthesize_v2</code>, <code>tts_synthesize_legacy</code>.</p>
-<p>MCP tool: <code>synthesize</code> — parameters: <code>text</code> (str), <code>voice</code> (str, optional), <code>lang</code> (str, optional). Returns base64 WAV.</p>
+<p>MCP tool: <code>synthesize</code>. Parameters: <code>text</code> (str), <code>voice</code> (str, optional), <code>lang</code> (str, optional). Returns base64 WAV.</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># Discover all TTS tools via UTCP</span>
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>curl<span class="w"> </span>-s<span class="w"> </span>http://localhost:9667/utcp<span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span><span class="s1">&#39;.tools[].name&#39;</span>
 </span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
@@ -1698,7 +1698,7 @@ satellite or a remote voice client instead, see <a href="../hivemind-agents/">Hi
 </table>
 <p>UTCP tools: <code>ovos_translate.translate</code>, <code>ovos_translate.detect_language</code>, and the native HTTP REST endpoints.</p>
 <p>MCP tools: <code>translate</code> (params: <code>text</code>, <code>target_lang</code>, optional <code>source_lang</code>), <code>detect_language</code> (param: <code>text</code>).</p>
-<h3 id="persona-server-tool-plugins-via-mcp-utcp">Persona Server — Tool Plugins via MCP + UTCP<a class="headerlink" href="#persona-server-tool-plugins-via-mcp-utcp" title="Permanent link">&para;</a></h3>
+<h3 id="persona-server-tool-plugins-via-mcp-utcp">Persona Server: Tool Plugins via MCP + UTCP<a class="headerlink" href="#persona-server-tool-plugins-via-mcp-utcp" title="Permanent link">&para;</a></h3>
 <p>The persona server surfaces every installed OPM <code>ToolBox</code> plugin as both a UTCP tool and an MCP tool.</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>pip<span class="w"> </span>install<span class="w"> </span><span class="s2">&quot;ovos-persona-server[mcp]&quot;</span>
 </span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>ovos-persona-server<span class="w"> </span>--persona<span class="w"> </span>my_persona.json
@@ -1739,9 +1739,18 @@ satellite or a remote voice client instead, see <a href="../hivemind-agents/">Hi
 <p>A2A is the <a href="https://google.github.io/A2A/">Google A2A open protocol</a>. An A2A server publishes a discovery document (agent card) and accepts tasks via JSON-RPC 2.0.</p>
 <h3 id="persona-server-as-a2a-server">Persona Server as A2A Server<a class="headerlink" href="#persona-server-as-a2a-server" title="Permanent link">&para;</a></h3>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>pip<span class="w"> </span>install<span class="w"> </span><span class="s2">&quot;ovos-persona-server[a2a]&quot;</span>
-</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>ovos-persona-server<span class="w"> </span>--persona<span class="w"> </span>my_persona.json<span class="w"> </span>--a2a-base-url<span class="w"> </span>http://localhost:8337
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>ovos-persona-server<span class="w"> </span>--persona<span class="w"> </span>my_persona.json
 </span></code></pre></div>
-<p>The <code>OVOSPersonaAgentExecutor</code> wraps the active persona and exposes it at <code>/a2a</code>. The agent card at <code>/a2a/.well-known/agent.json</code> advertises the persona's skills and capabilities. Both blocking (<code>tasks/send</code>) and streaming (<code>tasks/sendSubscribe</code>) modes are supported when the persona solver supports streaming.</p>
+<p>The <code>OVOSPersonaAgentExecutor</code> wraps the active persona. <code>create_a2a_application()</code>
+builds the A2A app, with an agent card at <code>/.well-known/agent.json</code> and support for
+blocking (<code>tasks/send</code>) and streaming (<code>tasks/sendSubscribe</code>) modes when the persona
+solver supports streaming.</p>
+<div class="admonition note">
+<p class="admonition-title">A2A support exists in source but the CLI does not expose it yet</p>
+<p>The <code>ovos-persona-server</code> argparse only accepts <code>--persona</code>, <code>--host</code>, and <code>--port</code>.
+There is no <code>--a2a-base-url</code> flag or other CLI option to start the A2A app.
+<code>create_a2a_application()</code> is currently called only from the test suite.</p>
+</div>
 <h3 id="ovos-as-a2a-consumer">OVOS as A2A Consumer<a class="headerlink" href="#ovos-as-a2a-consumer" title="Permanent link">&para;</a></h3>
 <p><a href="https://github.com/OpenVoiceOS/ovos-a2a-agent-plugin">OpenVoiceOS/ovos-a2a-agent-plugin</a> (pip: <code>ovos-a2a-solver-plugin</code>) is an <code>A2AChatEngine</code> <code>ChatEngine</code> plugin (OPM group <code>opm.agents.chat</code>, entry point <code>ovos-a2a-solver</code>) that delegates persona reasoning to any external A2A server.</p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="p">{</span>
@@ -1788,7 +1797,7 @@ satellite or a remote voice client instead, see <a href="../hivemind-agents/">Hi
 </tbody>
 </table>
 <hr />
-<h2 id="ovos-tool-adapters-consuming-mcputcp-from-the-agentic-loop">ovos-tool-adapters — Consuming MCP/UTCP from the Agentic Loop<a class="headerlink" href="#ovos-tool-adapters-consuming-mcputcp-from-the-agentic-loop" title="Permanent link">&para;</a></h2>
+<h2 id="ovos-tool-adapters-consuming-mcputcp-from-the-agentic-loop">ovos-tool-adapters: Consuming MCP/UTCP from the Agentic Loop<a class="headerlink" href="#ovos-tool-adapters-consuming-mcputcp-from-the-agentic-loop" title="Permanent link">&para;</a></h2>
 <p><a href="https://github.com/OpenVoiceOS/ovos-tool-adapters">OpenVoiceOS/ovos-tool-adapters</a> bridges external MCP and UTCP servers into the OVOS agentic loop as standard <code>ToolBox</code> plugins.</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>pip<span class="w"> </span>install<span class="w"> </span>ovos-tool-adapters<span class="o">[</span>mcp<span class="o">]</span><span class="w">     </span><span class="c1"># MCP support</span>
 </span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>pip<span class="w"> </span>install<span class="w"> </span>ovos-tool-adapters<span class="o">[</span>utcp<span class="o">]</span><span class="w">    </span><span class="c1"># UTCP support</span>
@@ -1810,7 +1819,7 @@ satellite or a remote voice client instead, see <a href="../hivemind-agents/">Hi
 </span><span id="__span-9-14"><a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a><span class="p">}</span>
 </span></code></pre></div>
 <blockquote>
-<p><code>ovos-persona</code> selects its engine via <code>solvers</code> (or the legacy alias <code>handlers</code>); the agentic loop names its inner LLM with <code>brain</code> and loads adapters via <code>toolboxes</code>. The <code>chat_module</code> key seen in some READMEs is not consumed by either <code>ovos-persona</code> or <code>ovos-tool-adapters</code>.</p>
+<p><code>ovos-persona</code> selects its engine via <code>solvers</code> (or the legacy alias <code>handlers</code>). The agentic loop names its inner LLM with <code>brain</code> and loads adapters via <code>toolboxes</code>. Neither <code>ovos-persona</code> nor <code>ovos-tool-adapters</code> reads the <code>chat_module</code> key seen in some READMEs.</p>
 </blockquote>
 <h3 id="mcp-transports-ovos-mcp-toolbox">MCP transports (<code>ovos-mcp-toolbox</code>)<a class="headerlink" href="#mcp-transports-ovos-mcp-toolbox" title="Permanent link">&para;</a></h3>
 <table>
@@ -1857,7 +1866,7 @@ multiple servers of the same type can run side by side, and a <code>timeout</cod
 <p>Tool discovery degrades gracefully: if the <code>mcp</code>/<code>utcp</code> extra is missing, or the
 configured server cannot be reached, <code>list_tools()</code> logs a <code>LOG.warning</code> and
 returns an empty list rather than crashing the agent loop. A misconfigured
-toolbox therefore loads zero tools silently — check the logs when expected tools
+toolbox therefore loads zero tools silently. Check the logs when expected tools
 are absent.</p>
 <div class="admonition note">
 <p class="admonition-title"><code>ovos-tool-adapters</code> and the Persona Server's own MCP/UTCP bridge</p>
@@ -1873,7 +1882,7 @@ full contract.</p>
 </div>
 <h2 id="further-reading">Further reading<a class="headerlink" href="#further-reading" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="https://blog.openvoiceos.org/posts/2025-10-24-protocol_interoperability">Building an Open and Interoperable Voice Ecosystem (MCP / UTCP / A2A)</a> — OVOS blog</li>
+<li><a href="https://blog.openvoiceos.org/posts/2025-10-24-protocol_interoperability">Building an Open and Interoperable Voice Ecosystem (MCP / UTCP / A2A)</a>: OVOS blog</li>
 </ul>
 
 

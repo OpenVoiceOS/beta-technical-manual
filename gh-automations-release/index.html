@@ -1586,7 +1586,7 @@
 </span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>
 </span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="n">__version__</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">VERSION_MAJOR</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">VERSION_MINOR</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">VERSION_BUILD</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="p">(</span><span class="sa">f</span><span class="s2">&quot;a</span><span class="si">{</span><span class="n">VERSION_ALPHA</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">if</span> <span class="n">VERSION_ALPHA</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
 </span></code></pre></div>
-<p><code>read_version()</code> in <code>scripts/_version_utils.py</code> parses this block; <code>update_version()</code> in <code>scripts/update_version.py</code> rewrites it via <code>write_version_block()</code>. <code>update_alpha()</code> in <code>scripts/remove_alpha.py</code> sets <code>VERSION_ALPHA = 0</code> (declare stable). <code>get_version()</code> in <code>scripts/get_version.py</code> reads and formats the string.</p>
+<p><code>read_version()</code> in <code>scripts/_version_utils.py</code> parses this block. <code>update_version()</code> in <code>scripts/update_version.py</code> rewrites it via <code>write_version_block()</code>. <code>update_alpha()</code> in <code>scripts/remove_alpha.py</code> sets <code>VERSION_ALPHA = 0</code> to declare stable. <code>get_version()</code> in <code>scripts/get_version.py</code> reads and formats the string.</p>
 <h3 id="version-bump-rules">Version bump rules<a class="headerlink" href="#version-bump-rules" title="Permanent link">&para;</a></h3>
 <p><code>publish-alpha.yml</code>'s <code>bump_version</code> job reads the <strong>PR labels</strong> of the merged PR (it does not parse the PR title). The label-to-bump mapping is:</p>
 <table>
@@ -1621,7 +1621,7 @@
 </blockquote>
 <hr />
 <h2 id="alpha-release-on-pr-merge-to-dev">Alpha Release (on PR merge to <code>dev</code>)<a class="headerlink" href="#alpha-release-on-pr-merge-to-dev" title="Permanent link">&para;</a></h2>
-<p>Your repo's workflow calls <code>publish-alpha.yml@dev</code>. <strong>All steps — version bump, changelog, pre-release tag, release PR, PyPI publish, and Matrix notify — are jobs inside <code>publish-alpha.yml</code> itself</strong>, each gated by an input. Your wrapper file is just the trigger plus the <code>uses:</code> call.</p>
+<p>Your repo's workflow calls <code>publish-alpha.yml@dev</code>. <strong>The version bump, changelog, pre-release tag, release PR, PyPI publish, and Matrix notify are all jobs inside <code>publish-alpha.yml</code> itself</strong>, each gated by an input. Your wrapper file is just the trigger plus the <code>uses:</code> call.</p>
 <p>Worked example: a repo currently at version <code>1.2.3</code> merges a PR to <code>dev</code> labeled <code>minor</code>.</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>PR merged → dev   (repo currently at version 1.2.3, PR labeled &quot;minor&quot;)
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>    │
@@ -1658,7 +1658,9 @@
 </span><span id="__span-1-33"><a id="__codelineno-1-33" name="__codelineno-1-33" href="#__codelineno-1-33"></a>                │   pypa/gh-action-pypi-publish@release/v1 → PyPI as 1.3.0a1 (uses PYPI_TOKEN)
 </span><span id="__span-1-34"><a id="__codelineno-1-34" name="__codelineno-1-34" href="#__codelineno-1-34"></a>                │
 </span><span id="__span-1-35"><a id="__codelineno-1-35" name="__codelineno-1-35" href="#__codelineno-1-35"></a>                └─ [notify job]   if: notify_matrix &amp;&amp; PR merged
-</span><span id="__span-1-36"><a id="__codelineno-1-36" name="__codelineno-1-36" href="#__codelineno-1-36"></a>                    calls notify-matrix.yml@dev → OVOS Matrix channel (uses MATRIX_TOKEN)
+</span><span id="__span-1-36"><a id="__codelineno-1-36" name="__codelineno-1-36" href="#__codelineno-1-36"></a>                    sends the notification itself with a raw curl to the Matrix API
+</span><span id="__span-1-37"><a id="__codelineno-1-37" name="__codelineno-1-37" href="#__codelineno-1-37"></a>                    (notify-matrix.yml exposes the same logic standalone; the two are
+</span><span id="__span-1-38"><a id="__codelineno-1-38" name="__codelineno-1-38" href="#__codelineno-1-38"></a>                    not wired together) (uses MATRIX_TOKEN)
 </span></code></pre></div>
 <blockquote>
 <p>Note: <code>publish_pypi</code> and <code>notify_matrix</code> both default to <strong><code>false</code></strong>, so a bare call only bumps the version and opens the release PR. Set them explicitly (and provide <code>PYPI_TOKEN</code>/<code>MATRIX_TOKEN</code> via <code>secrets: inherit</code>) to publish and notify.</p>
@@ -1697,10 +1699,12 @@ to <code>master</code>.</p>
 </span><span id="__span-2-26"><a id="__codelineno-2-26" name="__codelineno-2-26" href="#__codelineno-2-26"></a>                │   ad-m/github-push-action → push master → dev
 </span><span id="__span-2-27"><a id="__codelineno-2-27" name="__codelineno-2-27" href="#__codelineno-2-27"></a>                │
 </span><span id="__span-2-28"><a id="__codelineno-2-28" name="__codelineno-2-28" href="#__codelineno-2-28"></a>                └─ [notify job]   if: notify_matrix
-</span><span id="__span-2-29"><a id="__codelineno-2-29" name="__codelineno-2-29" href="#__codelineno-2-29"></a>                    calls notify-matrix.yml@dev → OVOS Matrix channel
+</span><span id="__span-2-29"><a id="__codelineno-2-29" name="__codelineno-2-29" href="#__codelineno-2-29"></a>                    sends the notification itself with a raw curl to the Matrix API
+</span><span id="__span-2-30"><a id="__codelineno-2-30" name="__codelineno-2-30" href="#__codelineno-2-30"></a>                    (notify-matrix.yml exposes the same logic standalone; the two are
+</span><span id="__span-2-31"><a id="__codelineno-2-31" name="__codelineno-2-31" href="#__codelineno-2-31"></a>                    not wired together)
 </span></code></pre></div>
 <h3 id="why-the-bot-guard-is-critical">Why the bot guard is critical<a class="headerlink" href="#why-the-bot-guard-is-critical" title="Permanent link">&para;</a></h3>
-<p><code>git-auto-commit-action</code> pushes the version commit (removing alpha) directly to the stable branch. Without the <code>if: github.actor != 'github-actions[bot]'</code> guard, that push would re-trigger the <code>push: master</code> event → another run → another tag attempt → failure (tag already exists) or an infinite loop.</p>
+<p><code>git-auto-commit-action</code> pushes the version commit (removing alpha) directly to the stable branch. Without the <code>if: github.actor != 'github-actions[bot]'</code> guard, that push would re-trigger the <code>push: master</code> event. That would start another run, and another tag attempt, which fails because the tag already exists, or loops forever.</p>
 <p>The guard exists at both layers for belt-and-suspenders protection:</p>
 <ul>
 <li>Inside <code>publish-stable.yml</code>, on the <code>bump_version</code> job (<code>if: github.actor != 'github-actions[bot]'</code>).</li>
@@ -1731,7 +1735,7 @@ to <code>master</code>.</p>
 </tr>
 </tbody>
 </table>
-<p>The bounds tighten by channel: <code>constraints-alpha.txt</code> uses pure <code>&gt;=</code> (e.g. <code>ovos-audio&gt;=2.1.1a1</code>) to always pull the newest pre-release; <code>constraints-testing.txt</code> caps at the next major (e.g. <code>ovos-audio&gt;=1.1.0,&lt;2.0.0</code>); <code>constraints-stable.txt</code> caps at the next minor (e.g. <code>ovos-audio&gt;=0.4.0,&lt;0.5.0</code>). Users get the latest compatible version within their chosen channel. <code>downstream-check.yml</code> reads <code>constraints-alpha.txt</code> (default branch <code>main</code>) to compute reverse dependencies; the channel-compatibility check in <code>release-preview.yml</code> reads all three.</p>
+<p>The bounds tighten by channel. <code>constraints-alpha.txt</code> uses pure <code>&gt;=</code> (e.g. <code>ovos-audio&gt;=2.1.1a1</code>) to always pull the newest pre-release. <code>constraints-testing.txt</code> caps at the next major (e.g. <code>ovos-audio&gt;=1.1.0,&lt;2.0.0</code>). <code>constraints-stable.txt</code> caps at the next minor (e.g. <code>ovos-audio&gt;=0.4.0,&lt;0.5.0</code>). Users get the latest compatible version within their chosen channel. <code>downstream-check.yml</code> reads <code>constraints-alpha.txt</code> (default branch <code>main</code>) to compute reverse dependencies. The channel-compatibility check in <code>release-preview.yml</code> reads all three.</p>
 <hr />
 <h2 id="manual-reruns">Manual Reruns<a class="headerlink" href="#manual-reruns" title="Permanent link">&para;</a></h2>
 <p>Both <code>publish-alpha.yml</code> and <code>publish-stable.yml</code> support <code>workflow_dispatch</code>, so the wrapper workflows in your repo can be triggered manually from the GitHub Actions UI. This is useful when:</p>
@@ -1740,7 +1744,7 @@ to <code>master</code>.</p>
 <li>A version bump was needed but the PR was merged without the right labels (dispatch forces an alpha bump).</li>
 <li>Testing the release pipeline on a new repo.</li>
 </ul>
-<p>For this to work your wrapper's job condition must allow dispatch — <code>bump_version</code> runs on either a merged PR or a manual dispatch:</p>
+<p>For this to work, your wrapper's job condition must allow dispatch. <code>bump_version</code> runs on either a merged PR or a manual dispatch:</p>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nt">if</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">github.event.pull_request.merged == true || github.event_name == &#39;workflow_dispatch&#39;</span>
 </span></code></pre></div>
 

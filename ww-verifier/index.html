@@ -1613,7 +1613,7 @@
 </span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">  </span><span class="p">}</span>
 </span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="p">}</span>
 </span></code></pre></div>
-<p>Multiple verifiers can be listed; a detection is accepted only if all verifiers pass. Combine either <code>ww_verifiers</code> or <code>vad_pre_wake_enabled</code> — enabling both is redundant.</p>
+<p>You can list multiple verifiers. A detection is accepted only if all verifiers pass. Use either <code>ww_verifiers</code> or <code>vad_pre_wake_enabled</code>. Enabling both is redundant.</p>
 <hr />
 <h2 id="opm-verifier-interface">OPM Verifier Interface<a class="headerlink" href="#opm-verifier-interface" title="Permanent link">&para;</a></h2>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">from</span> <span class="nn">ovos_plugin_manager.templates.hotwords</span> <span class="kn">import</span> <span class="n">HotWordVerifier</span>
@@ -1639,18 +1639,18 @@
 </span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">  </span><span class="p">}</span>
 </span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="p">}</span>
 </span></code></pre></div>
-<p>A lower <code>threshold</code> accepts quieter speech; raise it to require stronger speech confidence.</p>
+<p>A lower <code>threshold</code> accepts quieter speech. Raise it to require stronger speech confidence.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p><code>ovos-ww-verifier-silero</code> is the reference verifier used throughout the listener's own examples and end-to-end tests. It is not a separate PyPI package — it is an <code>opm.wake_word.verifier</code> entry point registered by <a href="../vad-plugins/"><code>ovos-vad-plugin-silero</code></a>, so <code>pip install ovos-vad-plugin-silero</code> is what makes it available.</p>
+<p><code>ovos-ww-verifier-silero</code> is the reference verifier used throughout the listener's own examples and end-to-end tests. It is not a separate PyPI package. It is an <code>opm.wake_word.verifier</code> entry point registered by <a href="../vad-plugins/"><code>ovos-vad-plugin-silero</code></a>. Run <code>pip install ovos-vad-plugin-silero</code> to make it available.</p>
 </div>
 <hr />
 <h2 id="speaker-verification">Speaker Verification<a class="headerlink" href="#speaker-verification" title="Permanent link">&para;</a></h2>
-<p>The <code>ovos-ww-verifier-plugin-speaker</code> plugin gates wake-word detections against enrolled household profiles — only recognized household members can activate the assistant; guests are silently ignored. With no profiles enrolled the verifier fails open (everyone allowed).</p>
+<p>The <code>ovos-ww-verifier-plugin-speaker</code> plugin gates wake-word detections against enrolled household profiles. Only recognized household members can activate the assistant. The plugin silently ignores guests. With no profiles enrolled, the verifier fails open and allows everyone.</p>
 <p>Enrollment is a one-time CLI step per person:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>ovos-speaker-enroll<span class="w"> </span>Alice<span class="w"> </span>clip1.wav<span class="w"> </span>clip2.wav<span class="w"> </span>clip3.wav
 </span></code></pre></div>
-<p>Profiles are stored as embedding vectors in <code>~/.local/share/ovos_speaker_verifier/profiles.json</code> — no audio is retained. The plugin registers under <code>opm.wake_word.verifier</code> as <code>ovos-ww-verifier-speaker</code>, so wire it like any other verifier:</p>
+<p>Profiles are stored as embedding vectors in <code>~/.local/share/ovos_speaker_verifier/profiles.json</code>. No audio is retained. The plugin registers under <code>opm.wake_word.verifier</code> as <code>ovos-ww-verifier-speaker</code>. Wire it like any other verifier:</p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="p">{</span>
 </span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">  </span><span class="nt">&quot;listener&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 </span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">    </span><span class="nt">&quot;ww_verifiers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
@@ -1716,12 +1716,12 @@
 </tr>
 </tbody>
 </table>
-<p>The <code>model</code> key accepts any alias from <a href="https://github.com/TigreGotico/speakeronnx"><code>speakeronnx</code></a>'s model registry — <code>wespeaker-resnet34</code> (default), <code>wespeaker-ecapa512</code>, <code>campplus</code>, <code>titanet-small</code>/<code>titanet-large</code>, <code>eres2net</code>, <code>redimnet-b2</code>, and others — or a direct <code>.onnx</code> path.</p>
+<p>The <code>model</code> key accepts any alias from <a href="https://github.com/TigreGotico/speakeronnx"><code>speakeronnx</code></a>'s model registry: <code>wespeaker-resnet34</code> (default), <code>wespeaker-ecapa512</code>, <code>campplus</code>, <code>titanet-small</code>/<code>titanet-large</code>, <code>eres2net</code>, <code>redimnet-b2</code>, and others. It also accepts a direct <code>.onnx</code> path.</p>
 <div class="admonition note">
 <p class="admonition-title">Threshold is model-specific</p>
-<p>The <code>threshold</code> does <strong>not</strong> transfer between models. Cosine-similarity scales differ enormously by architecture — the same enrolled-vs-guest pair scored ~0.95 on <code>titanet-small</code> but ~0.17 on <code>campplus</code>. The default <code>0.45</code> is calibrated only for <code>wespeaker-resnet34</code>; if you change <code>model</code>, you must re-tune <code>threshold</code>.</p>
+<p>The <code>threshold</code> does <strong>not</strong> transfer between models. Cosine-similarity scales differ greatly by architecture. The same enrolled-vs-guest pair scored ~0.95 on <code>titanet-small</code> but ~0.17 on <code>campplus</code>. The default <code>0.45</code> is calibrated only for <code>wespeaker-resnet34</code>. If you change <code>model</code>, you must re-tune <code>threshold</code>.</p>
 </div>
-<p>Use case: household authorization — a shared-wake-word deployment where each registered user's voice profile allows or denies activation.</p>
+<p>Use case: household authorization, a shared-wake-word deployment where each registered user's voice profile allows or denies activation.</p>
 <hr />
 <h2 id="precise-onnx-plugin">Precise-ONNX Plugin<a class="headerlink" href="#precise-onnx-plugin" title="Permanent link">&para;</a></h2>
 <p><code>ovos-ww-plugin-precise-onnx</code> provides high-accuracy wake word detection from <code>.onnx</code> model files, without TensorFlow Lite dependency.</p>
@@ -1739,19 +1739,19 @@
 <hr />
 <h2 id="microwakeword-plugin">microWakeWord Plugin<a class="headerlink" href="#microwakeword-plugin" title="Permanent link">&para;</a></h2>
 <blockquote>
-<p><strong>Status:</strong> <a href="https://github.com/OpenVoiceOS/ovos-ww-plugin-microwakeword">OpenVoiceOS/ovos-ww-plugin-microwakeword</a> — in development, not yet published to PyPI.</p>
+<p><strong>Status:</strong> <a href="https://github.com/OpenVoiceOS/ovos-ww-plugin-microwakeword">OpenVoiceOS/ovos-ww-plugin-microwakeword</a> is in development. It is not yet published to PyPI.</p>
 </blockquote>
 <p>OVOS wake-word plugin wrapping <a href="https://github.com/kahrendt/microWakeWord">microWakeWord</a> TFLite streaming models from the ESPHome ecosystem. Enables zero-cost sub-1 MB wake word models originally designed for microcontrollers.</p>
 <hr />
 <h2 id="related-pages">Related Pages<a class="headerlink" href="#related-pages" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="../wake-word-plugins/">Wake Word Plugins</a> — detection plugin reference</li>
+<li><a href="../wake-word-plugins/">Wake Word Plugins</a>: detection plugin reference</li>
 <li><a href="../vad-plugins/">VAD Plugins</a></li>
 <li><a href="../speech-service/">Listener / Speech Service</a></li>
 </ul>
 <h2 id="further-reading">Further reading<a class="headerlink" href="#further-reading" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="https://blog.openvoiceos.org/posts/2025-11-06-prewake-vad">A Noise Filter for Better Listening (Pre-Wake VAD)</a> — OVOS blog</li>
+<li><a href="https://blog.openvoiceos.org/posts/2025-11-06-prewake-vad">A Noise Filter for Better Listening (Pre-Wake VAD)</a>: OVOS blog</li>
 </ul>
 
 

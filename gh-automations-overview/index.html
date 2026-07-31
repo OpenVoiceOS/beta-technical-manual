@@ -1256,7 +1256,7 @@
           <li class="md-nav__item">
   <a href="#deprecated-kept-for-backward-compatibility-remove-after-2027-01-01" class="md-nav__link">
     <span class="md-ellipsis">
-      Deprecated (kept for backward compatibility — remove after 2027-01-01)
+      Deprecated (kept for backward compatibility, remove after 2027-01-01)
     </span>
   </a>
   
@@ -1593,7 +1593,7 @@
           <li class="md-nav__item">
   <a href="#deprecated-kept-for-backward-compatibility-remove-after-2027-01-01" class="md-nav__link">
     <span class="md-ellipsis">
-      Deprecated (kept for backward compatibility — remove after 2027-01-01)
+      Deprecated (kept for backward compatibility, remove after 2027-01-01)
     </span>
   </a>
   
@@ -1656,11 +1656,11 @@
 </div>
 <p><code>gh-automations</code> (hosted at <a href="https://github.com/OpenVoiceOS/gh-automations">OpenVoiceOS/gh-automations</a>) is the shared GitHub Actions automation library for OpenVoiceOS repositories.</p>
 <h2 id="what-it-does-in-plain-terms">What it does, in plain terms<a class="headerlink" href="#what-it-does-in-plain-terms" title="Permanent link">&para;</a></h2>
-<p>Instead of every OVOS repo copy-pasting its own CI/CD YAML, this repo holds a set of <strong>reusable workflows</strong>. Your repo's workflow file is just a few lines that <em>call</em> one of these — GitHub runs the shared definition with your inputs. Update the shared workflow once, and every repo that references it gets the change.</p>
+<p>Instead of every OVOS repo copy-pasting its own CI/CD YAML, this repo holds a set of <strong>reusable workflows</strong>. Your repo's workflow file is just a few lines that <em>call</em> one of these. GitHub runs the shared definition with your inputs. Update the shared workflow once, and every repo that references it gets the change.</p>
 <p>The workflows cover two jobs:</p>
 <ul>
-<li><strong>Release automation</strong> — bump the version on PR merge to <code>dev</code>, publish an alpha to PyPI, open a release PR to <code>master</code>, then on merge declare the version stable and tag it. See <a href="../gh-automations-release/">Release Flow</a>.</li>
-<li><strong>PR checks</strong> — build/install/test, plugin detection, license/CVE scanning, coverage, linting, version preview, and more. Most of these post their result as a section in a single shared <strong>OVOS PR Checks</strong> comment on the PR.</li>
+<li><strong>Release automation</strong>: bump the version on PR merge to <code>dev</code>, publish an alpha to PyPI, open a release PR to <code>master</code>, then on merge declare the version stable and tag it. See <a href="../gh-automations-release/">Release Flow</a>.</li>
+<li><strong>PR checks</strong>: build/install/test, plugin detection, license/CVE scanning, coverage, linting, version preview, and more. Most of these post their result as a section in a single shared <strong>OVOS PR Checks</strong> comment on the PR.</li>
 </ul>
 <h3 id="how-to-wire-one-into-your-repo">How to wire one into your repo<a class="headerlink" href="#how-to-wire-one-into-your-repo" title="Permanent link">&para;</a></h3>
 <p>Add a workflow file under <code>.github/workflows/</code> in your repo that calls the reusable one. The <code>uses:</code> ref is <strong>always <code>@dev</code></strong> (never a pinned tag or SHA):</p>
@@ -1733,9 +1733,9 @@
 </span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="w">      </span><span class="nt">publish_pypi</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 </span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="w">      </span><span class="nt">sync_dev</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 </span></code></pre></div>
-<p>The three form a pipeline: <code>build-tests</code> must pass before a PR can merge to <code>dev</code>;
+<p>The three form a pipeline. <code>build-tests</code> must pass before a PR can merge to <code>dev</code>.
 <code>publish-alpha</code> then bumps the version, tags a pre-release, publishes it to PyPI, and opens the
-release PR to <code>master</code>; merging that PR triggers <code>publish-stable</code>, which drops the alpha suffix,
+release PR to <code>master</code>. Merging that PR triggers <code>publish-stable</code>, which drops the alpha suffix,
 tags the stable release, publishes it, and (with <code>sync_dev: true</code>) pushes <code>master</code> back into
 <code>dev</code> so both branches stay aligned. <code>secrets: inherit</code> is required on every call so
 <code>PYPI_TOKEN</code> reaches the reusable workflow. See <a href="../gh-automations-release/">Release Flow</a> for the
@@ -1877,11 +1877,11 @@ full diagram of this same pipeline.</p>
 </tr>
 <tr>
 <td><code>notify-matrix.yml</code></td>
-<td>Send a message to the OVOS Matrix channel (called by the publish workflows).</td>
+<td>Send a message to the OVOS Matrix channel (the publish workflows duplicate this logic inline rather than calling it).</td>
 </tr>
 </tbody>
 </table>
-<h3 id="deprecated-kept-for-backward-compatibility-remove-after-2027-01-01">Deprecated (kept for backward compatibility — remove after 2027-01-01)<a class="headerlink" href="#deprecated-kept-for-backward-compatibility-remove-after-2027-01-01" title="Permanent link">&para;</a></h3>
+<h3 id="deprecated-kept-for-backward-compatibility-remove-after-2027-01-01">Deprecated (kept for backward compatibility, remove after 2027-01-01)<a class="headerlink" href="#deprecated-kept-for-backward-compatibility-remove-after-2027-01-01" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
 <tr>
@@ -1972,8 +1972,8 @@ full diagram of this same pipeline.</p>
 <hr />
 <h2 id="documentation">Documentation<a class="headerlink" href="#documentation" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="../gh-automations-release/">Release Flow</a> — Full lifecycle: alpha → stable → release channels</li>
-<li><a href="../gh-automations-workflows/">Workflow Reference</a> — Every input, output, job, and bot guard for each reusable workflow</li>
+<li><a href="../gh-automations-release/">Release Flow</a>: full lifecycle from alpha to stable to release channels</li>
+<li><a href="../gh-automations-workflows/">Workflow Reference</a>: every input, output, job, and bot guard for each reusable workflow</li>
 </ul>
 <hr />
 <h2 id="related-repos">Related repos<a class="headerlink" href="#related-repos" title="Permanent link">&para;</a></h2>
