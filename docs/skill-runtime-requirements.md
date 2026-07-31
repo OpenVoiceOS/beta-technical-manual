@@ -6,9 +6,9 @@
     `ovos-workshop`. New skills should not be built around it.
 
 !!! abstract "In a nutshell"
-    Some skills only make sense under certain conditions — a weather skill needs internet, a smart-home skill needs the local network, a picture skill needs a screen. "Runtime requirements" is a legacy declaration where a skill states what it needs, so OVOS can optionally defer loading it until those things are available. For where this fits in a skill's lifecycle see [Skill Classes](skill-classes.md); for term definitions see the [Glossary](glossary.md).
+    Some skills only make sense under certain conditions. A weather skill needs internet, a smart-home skill needs the local network, a picture skill needs a screen. "Runtime requirements" is a legacy declaration where a skill states what it needs, so OVOS can optionally defer loading it until those things are available. For where this fits in a skill's lifecycle, see [Skill Classes](skill-classes.md). For term definitions, see the [Glossary](glossary.md).
 
-`RuntimeRequirements` lets a skill declare, up front, what conditions (internet, network, GUI) it needs — historically intended to let OVOS defer loading a skill until the system is ready for it, and to skip premature activation on offline, headless, or GUI-enabled setups.
+`RuntimeRequirements` lets a skill declare, up front, what conditions (internet, network, GUI) it needs. It was historically intended to let OVOS defer loading a skill until the system is ready for it. It also skips premature activation on offline, headless, or GUI-enabled setups.
 
 ---
 
@@ -16,7 +16,7 @@
 
 ### Step 1: Customize `ready_settings` (boot-finished skill)
 
-The `mycroft.ready` message — signalling that the device has finished booting — is
+The `mycroft.ready` message, which signals that the device has finished booting, is
 not emitted by `ovos-core` itself. It comes from the `ovos-skill-boot-finished`
 skill, which polls the other services and emits `mycroft.ready` once they all
 report ready. Configure what it waits for through **that skill's own settings**
@@ -39,10 +39,10 @@ This is the skill's `settings.json` (see [Skill Settings](skill-settings.md)),
 not `mycroft.conf`. In this example, boot-finished is configured to wait for
 network and internet connectivity, plus the audio and voice services, before
 emitting `mycroft.ready`. (The listener reports readiness under `voice`, not
-`speech` — there is no `speech` service key, so waiting on it would never
+`speech`. There is no `speech` service key, so waiting on it would never
 resolve.) Each setup can customize this list based on its
-needs — an offline install won't want to wait on internet-dependent skills, a
-headless server won't want to wait on an audio stack, etc. If `ready_settings`
+needs. An offline install will not want to wait on internet-dependent skills, and a
+headless server will not want to wait on an audio stack. If `ready_settings`
 is not set, the skill defaults to waiting for `skills` plus every currently
 installed skill_id.
 
@@ -73,33 +73,33 @@ class MySkill(OVOSSkill):
 
 ### `ready_settings`
 
-`ready_settings` is a setting on the `ovos-skill-boot-finished` skill; it controls when that skill emits `mycroft.ready`, which signals that the system is ready for use. Each entry in the list waits for a different component:
+`ready_settings` is a setting on the `ovos-skill-boot-finished` skill. It controls when that skill emits `mycroft.ready`, which signals that the system is ready for use. Each entry in the list waits for a different component:
 
-- **"skills"** – Waits for `ovos-core` to report ready.
-
-
-- **"network_skills"** / **"network"** – Waits for the system to detect a network connection (`mycroft.network.connected`).
+- **"skills"**: Waits for `ovos-core` to report ready.
 
 
-- **"internet_skills"** / **"internet"** – Waits for an internet connection (`mycroft.internet.connected`).
+- **"network_skills"** / **"network"**: Waits for the system to detect a network connection (`mycroft.network.connected`).
 
 
-- **"gui_connected"** – Waits for a GUI client to connect over the GUI socket.
+- **"internet_skills"** / **"internet"**: Waits for an internet connection (`mycroft.internet.connected`).
 
 
-- **"voice"** – Waits for `ovos-dinkum-listener` to report ready.
+- **"gui_connected"**: Waits for a GUI client to connect over the GUI socket.
 
 
-- **"audio"** – Waits for `ovos-audio` to report ready.
+- **"voice"**: Waits for `ovos-dinkum-listener` to report ready.
 
 
-- **"gui"** – Waits for the `ovos-gui` websocket to report ready.
+- **"audio"**: Waits for `ovos-audio` to report ready.
 
 
-- **"PHAL"** – Waits for PHAL to report ready.
+- **"gui"**: Waits for the `ovos-gui` websocket to report ready.
 
 
-- **{skill_id}** – Waits for a specific skill to be available.
+- **"PHAL"**: Waits for PHAL to report ready.
+
+
+- **{skill_id}**: Waits for a specific skill to be available.
 
 Any other name is treated generically: the skill waits for a `mycroft.<name>.is_ready` response, so third-party services can plug into the same mechanism.
 
@@ -109,10 +109,10 @@ Any other name is treated generically: the skill waits for a `mycroft.<name>.is_
 > timing can impact anything that depends on the `mycroft.ready` message.
 
 > ⚠️ **Troubleshooting**: A readiness check polls every 3s and gives up after
-> 60s; if any service is still not ready it sleeps 5s and re-emits
+> 60s. If any service is still not ready it sleeps 5s and re-emits
 > `mycroft.ready.check`, retrying indefinitely. So an unsatisfiable
-> `ready_settings` entry — a wrong service key (e.g. `speech` instead of
-> `voice`) or a service that never starts — makes the skill loop forever and
+> `ready_settings` entry, such as a wrong service key (e.g. `speech` instead of
+> `voice`) or a service that never starts, makes the skill loop forever and
 > never emit `mycroft.ready`.
 
 ---
@@ -120,7 +120,7 @@ Any other name is treated generically: the skill waits for a `mycroft.<name>.is_
 ## Deferred Loading (before-load gating only)
 
 `ovos-core`'s `SkillManager` can defer loading a skill until its declared requirements are
-met — a skill with `internet_before_load=True` is not instantiated until the internet
+met. A skill with `internet_before_load=True` is not instantiated until the internet
 connection event fires, and likewise for `network_before_load` and `gui_before_load`. This
 gating is **opt-in**: it only applies when `skills.use_deferred_loading` is set to `true` in
 config. With the default configuration (`use_deferred_loading` unset/`false`), all installed
@@ -146,7 +146,7 @@ skills load unconditionally at startup regardless of their declared requirements
 - Simplifies skill logic (e.g., no need to check for connectivity manually before doing network I/O in `initialize()`).
 
 `requires_internet`, `requires_network`, and `requires_gui` are also present on
-`RuntimeRequirements`, but they do not currently trigger an unload — `SkillManager`'s
+`RuntimeRequirements`, but they do not currently trigger an unload. `SkillManager`'s
 connection-loss handlers exist as no-op placeholders, so a running skill is **not** unloaded
 when a required resource disappears. Only the before-load gate above is active.
 
@@ -182,7 +182,7 @@ The `RuntimeRequirements` class property lets a skill declare its connectivity/G
 In this example, a fully offline skill is defined. The skill does not require internet or network connectivity during
 loading or runtime. If the network or internet is unavailable, the skill can still operate.
 
-Defining this documents that your skill has no connectivity needs; with `skills.use_deferred_loading: true` it also ensures the skill loads as soon as possible instead of waiting on internet.
+Defining this documents that your skill has no connectivity needs. With `skills.use_deferred_loading: true` it also ensures the skill loads as soon as possible instead of waiting on internet.
 
 ```python
 from ovos_utils import classproperty
@@ -243,7 +243,7 @@ With `skills.use_deferred_loading: true`, loads only once internet is available.
 
 Consider a skill that should only load once we have a network connection.
 By specifying that requirement (with `skills.use_deferred_loading: true`), we can ensure the
-skill is only loaded once the network is available, and it is safe to utilize network
+skill is only loaded once the network is available, and it is safe to use network
 resources on initialization.
 
 In this example, an IOT skill controlling devices via LAN is defined.
@@ -278,10 +278,10 @@ With `skills.use_deferred_loading: true`, loads once the local network is connec
 
 Consider a skill with both graphical user interface (GUI) and internet dependencies.
 
-The skill declares both GUI and internet requirements — with `skills.use_deferred_loading: true`,
+The skill declares both GUI and internet requirements. With `skills.use_deferred_loading: true`,
 loading waits until both are available.
 
-If the user asks "show me the picture of the day" and we have both internet and a GUI, our skill will match the intent. If we do not have internet but have a GUI, the skill can still operate using a cached picture — that's what `no_internet_fallback=True` documents.
+If the user asks "show me the picture of the day" and we have both internet and a GUI, our skill will match the intent. If we do not have internet but have a GUI, the skill can still operate using a cached picture. That is what `no_internet_fallback=True` documents.
 
 ```python
 from ovos_utils import classproperty
@@ -318,7 +318,7 @@ With `skills.use_deferred_loading: true`, requires both GUI and internet to load
 - You can combine different requirements to handle a wide range of usage patterns (e.g., headless servers, embedded devices, smart displays).
 
 
-- Before-load gating only takes effect with `skills.use_deferred_loading: true`; otherwise
+- Before-load gating only takes effect with `skills.use_deferred_loading: true`. Otherwise,
   `RuntimeRequirements` is documentation only and every skill loads unconditionally at startup.
 
 ---

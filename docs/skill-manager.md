@@ -1,33 +1,33 @@
 # Skill Manager
 
 !!! success "Maturity — Mature ⬤⬤⬤⬤⬤"
-    Long-lived, battle-tested, and actively maintained — depend on it freely. Rated by [repository health](maturity.md), not version.
+    Long-lived and actively maintained. Depend on it freely. Rated by [repository health](maturity.md), not version.
 
 !!! abstract "In a nutshell"
-    The Skill Manager is the part of OVOS that finds all your installed [skills](skill-examples.md) and starts them up when the assistant boots. It also decides *when* each one is allowed to run — some skills need the internet or a screen before they can work — and keeps re-checking, so a skill you install later appears without a restart. Think of it as the floor manager that knows which staff are on duty and clocks them in. See [Skill Installer](skill-installer.md) for how skills get added, or the [Glossary](glossary.md) for terms.
+    The Skill Manager is the part of OVOS that finds all your installed [skills](skill-examples.md) and starts them when the assistant boots. It also decides when each skill is allowed to run. Some skills need the internet or a screen before they can work. The Skill Manager keeps re-checking, so a skill you install later appears without a restart. See [Skill Installer](skill-installer.md) for how skills get added, or the [Glossary](glossary.md) for terms.
 
-**Module:** `ovos_core.skill_manager.SkillManager` — [`ovos_core/skill_manager.py`](https://github.com/OpenVoiceOS/ovos-core/blob/dev/ovos_core/skill_manager.py)
+**Module:** `ovos_core.skill_manager.SkillManager`: [`ovos_core/skill_manager.py`](https://github.com/OpenVoiceOS/ovos-core/blob/dev/ovos_core/skill_manager.py)
 
 The `SkillManager` is a core component of `ovos-core`. It is a daemon `Thread` that owns the full lifecycle of skill plugins: discovery, loading, connectivity-gating, and graceful shutdown.
 
-**In plain terms:** when OVOS starts, the SkillManager finds every installed skill, decides which ones are allowed to load right now (some need the network or a screen first), starts them, and re-scans periodically so newly installed skills show up without a restart.
+**In plain terms:** when OVOS starts, the SkillManager finds every installed skill. It decides which ones are allowed to load right now. Some skills need the network or a screen first. The SkillManager starts the ready skills and re-scans periodically, so newly installed skills show up without a restart.
 
 ---
 
 ??? abstract "Technical Reference"
 
-    - `SkillManager.run()` — [`ovos_core/skill_manager.py:476`](https://github.com/OpenVoiceOS/ovos-core/blob/dev/ovos_core/skill_manager.py) — Main loop; re-scans for new skills every 30 s via `self._stop_event.wait(30)`.
+    - `SkillManager.run()`: [`ovos_core/skill_manager.py:476`](https://github.com/OpenVoiceOS/ovos-core/blob/dev/ovos_core/skill_manager.py). This is the main loop. It re-scans for new skills every 30 s via `self._stop_event.wait(30)`.
 
 
-    - `SkillManager.load_plugin_skills()` — [`ovos_core/skill_manager.py:347`](https://github.com/OpenVoiceOS/ovos-core/blob/dev/ovos_core/skill_manager.py) — loads discovered skills via `PluginSkillLoader` (from `ovos_workshop.skill_launcher`); applies each skill's `RuntimeRequirements` (`network_before_load` / `internet_before_load`) as the connectivity gate.
+    - `SkillManager.load_plugin_skills()`: [`ovos_core/skill_manager.py:347`](https://github.com/OpenVoiceOS/ovos-core/blob/dev/ovos_core/skill_manager.py). It loads discovered skills via `PluginSkillLoader` (from `ovos_workshop.skill_launcher`). It applies each skill's `RuntimeRequirements` (`network_before_load` / `internet_before_load`) as the connectivity gate.
 
 
-    - `SkillManager._sync_skill_loading_state()` — [`ovos_core/skill_manager.py:181`](https://github.com/OpenVoiceOS/ovos-core/blob/dev/ovos_core/skill_manager.py) — queries connectivity (via `ovos.PHAL.internet_check` / GUI state) and emits `mycroft.network.connected` / `mycroft.internet.connected`; the actual gating happens in `load_plugin_skills()` and only when `skills.use_deferred_loading` is enabled.
+    - `SkillManager._sync_skill_loading_state()`: [`ovos_core/skill_manager.py:181`](https://github.com/OpenVoiceOS/ovos-core/blob/dev/ovos_core/skill_manager.py). It queries connectivity (via `ovos.PHAL.internet_check` / GUI state) and emits `mycroft.network.connected` / `mycroft.internet.connected`. The actual gating happens in `load_plugin_skills()`, and only when `skills.use_deferred_loading` is enabled.
     
 
 ## Skill Discovery
 
-Skills are Python packages that register themselves via the `opm.skill` entry point group (the older `ovos.plugin.skill` group is still accepted as a deprecated alias). `ovos-plugin-manager` discovers them with `find_skill_plugins()`, which returns a `{skill_id: SkillClass}` dict.
+Skills are Python packages. They register themselves via the `opm.skill` entry point group. The older `ovos.plugin.skill` group is still accepted as a deprecated alias. `ovos-plugin-manager` discovers them with `find_skill_plugins()`, which returns a `{skill_id: SkillClass}` dict.
 
 ```python
 from ovos_plugin_manager.skills import find_skill_plugins
@@ -39,8 +39,8 @@ plugins = find_skill_plugins()
 
 !!! note
     `RuntimeRequirements` (`network_before_load`, `internet_before_load`, `requires_gui`, …) is
-    a deprecated mechanism — see [Runtime Requirements](skill-runtime-requirements.md) for the
-    full picture. Crucially, the gating described below is **opt-in**: it only applies when
+    a deprecated mechanism. See [Runtime Requirements](skill-runtime-requirements.md) for the
+    full picture. The gating described below is **opt-in**: it only applies when
     `skills.use_deferred_loading` is set to `true` in config. With the default configuration,
     every installed skill loads unconditionally at startup regardless of its declared
     requirements.
@@ -56,7 +56,7 @@ are met:
 | `mycroft.internet.connected` | Load skills requiring internet |
 | `mycroft.gui.available` | Load skills requiring GUI |
 
-Network/internet state is queried from [PHAL](phal.md) at startup via `ovos.PHAL.internet_check`; falls back to a direct HTTP check if PHAL is unavailable.
+Network/internet state is queried from [PHAL](phal.md) at startup via `ovos.PHAL.internet_check`. It falls back to a direct HTTP check if PHAL is unavailable.
 
 ## Loading a Skill
 

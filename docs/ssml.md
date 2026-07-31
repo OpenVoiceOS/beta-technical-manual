@@ -2,14 +2,14 @@
 
 !!! warning "Experimental — most TTS plugins do not support SSML"
     SSML support is an **experimental**, engine-dependent feature, not a universal one. Most
-    TTS plugins ignore or strip SSML tags entirely rather than acting on them — currently only
-    the **espeakNG** and **Amazon Polly** plugins actually interpret SSML markup; every other
+    TTS plugins ignore or strip SSML tags entirely rather than acting on them. Currently only
+    the **espeakNG** and **Amazon Polly** plugins actually interpret SSML markup. Every other
     plugin just reads the plain words underneath. Sending SSML is always harmless (unsupported
-    tags are stripped), but don't build a skill that *depends* on SSML for meaning — if a
+    tags are stripped), but do not build a skill that *depends* on SSML for meaning. If a
     voice effect matters, choose a TTS plugin/voice that can actually produce it instead.
 
 !!! abstract "In a nutshell"
-    Normally the assistant just reads text aloud in a flat voice. SSML is a way to add stage directions to that text — pause here, say this word louder, slow down, whisper, change the pitch — so speech sounds more natural and expressive. It's like the difference between reading a script plainly and acting it out. The `SSMLBuilder` helper on this page lets you add those directions without memorizing the markup by hand. Heads-up: **most TTS voices don't actually support SSML** — but that's harmless, OVOS just strips the directions and reads the plain words, so it's always safe to send. For spoken replies in general see [Statements](statements.md); for term definitions see the [Glossary](glossary.md).
+    Normally the assistant just reads text aloud in a flat voice. SSML is a way to add stage directions to that text: pause here, say this word louder, slow down, whisper, change the pitch. This makes speech sound more natural and expressive. The `SSMLBuilder` helper on this page lets you add those directions without memorizing the markup by hand. **Most TTS voices do not actually support SSML.** That is harmless: OVOS just strips the directions and reads the plain words, so it is always safe to send. For spoken replies in general, see [Statements](statements.md). For term definitions, see the [Glossary](glossary.md).
 
 ## What is SSML?
 
@@ -28,7 +28,7 @@ These use cases demonstrate how SSML can be applied in various contexts to impro
 3. **Educational Content**: SSML can be valuable in educational applications where synthesized speech is used to deliver instructional content or quizzes. Developers can use SSML to modify the speaking rate to accommodate different learning paces or employ phonetic pronunciation tags to ensure correct pronunciation of specialized terms or foreign words.
 
 
-4. **Accessibility Features**: For applications designed to assist users with visual impairments or reading difficulties, SSML can play a crucial role in enhancing accessibility. Developers can use SSML to provide auditory cues, such as tone changes or speech emphasis, to indicate important information or user interface elements.
+4. **Accessibility Features**: For applications designed to assist users with visual impairments or reading difficulties, SSML can improve accessibility. Developers can use SSML to provide auditory cues, such as tone changes or speech emphasis, to indicate important information or user interface elements.
 
 
 ## SSMLBuilder
@@ -162,14 +162,14 @@ OVOS plugin set actually parse and act on SSML tags:
 | [ovos-tts-plugin-espeakNG](tts-plugins.md#ovos-tts-plugin-espeakng) | `speak`, `say-as`, `voice`, `prosody`, `break`, `emphasis`, `sub` |
 | [ovos-tts-plugin-polly](tts-plugins.md#ovos-tts-plugin-polly) | `speak`, `say-as`, `voice`, `prosody`, `break`, `emphasis`, `sub`, `lang`, `phoneme`, `w`, `whisper`, `p`, `s`, `mark`, plus the Amazon-specific `amazon:auto-breaths` and `amazon:effect` |
 
-For any other engine, SSML tags are stripped before synthesis (see below) — check a specific
+For any other engine, SSML tags are stripped before synthesis (see below). Check a specific
 plugin's source for its `ssml_tags` list if you need to confirm support beyond these two.
 
 !!! tip "It is always safe to send SSML — even to engines that don't support it"
     **Most TTS engines do not support SSML.** That's fine: you can emit SSML from any skill
     without checking the engine first. The base `TTS` class **strips the tags before the engine
-    ever sees them**, so a non-SSML engine simply speaks the plain text — the markup is dropped,
-    nothing breaks. You only need an SSML-capable engine if you actually want the *effect* (a
+    ever sees them**, so a non-SSML engine simply speaks the plain text. The markup is dropped,
+    and nothing breaks. You only need an SSML-capable engine if you actually want the *effect* (a
     pause, emphasis, a pitch change) to be heard.
 
 By default a plugin declares **no** SSML support: the `ssml_tags` list is empty, so OVOS removes
@@ -186,7 +186,7 @@ handle) to the `TTS` base class. The base class then does the filtering for it:
   rewrite each one (e.g. translate a standard tag into a vendor-specific form) before it is passed
   through to synthesis.
 
-In other words, the plugin never has to worry about unsupported tags — by the time its `get_tts()`
+In other words, the plugin never has to worry about unsupported tags. By the time its `get_tts()`
 sees the text, the markup has already been reduced to what it declared it can handle.
 
 Source: `TTS.modify_tag()` and `TTS.validate_ssml()` in
@@ -280,13 +280,13 @@ When synthesizing speech using Amazon Polly, the plugin translates platform-spec
 
 ### Behavior with Plugins That Do Not Support SSML
 
-When SSML text is sent to a TTS plugin that does not support SSML — again, **the common case** —
+When SSML text is sent to a TTS plugin that does not support SSML, again **the common case**,
 OVOS strips the tags (via `remove_ssml()`) before the engine runs, and the engine speaks the
-remaining plain text. The SSML-specific effects (pauses, emphasis, prosody) are simply **dropped**;
-nothing errors and the user still hears the words.
+remaining plain text. The SSML-specific effects (pauses, emphasis, prosody) are simply **dropped**.
+Nothing errors, and the user still hears the words.
 
-Because of this, **you do not need to check whether the engine supports SSML before sending it** —
-it is always safe. The only consideration is whether the effect *matters*: if a pause or emphasis
+Because of this, **you do not need to check whether the engine supports SSML before sending it.**
+It is always safe. The only consideration is whether the effect *matters*: if a pause or emphasis
 is essential to be heard, choose an SSML-capable engine (such as Amazon Polly above). If it is just
 a nice-to-have, emit the SSML anyway and let non-supporting engines fall back to the plain text.
 

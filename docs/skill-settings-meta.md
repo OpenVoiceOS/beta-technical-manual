@@ -1,12 +1,12 @@
 # settingsmeta.json
 
 !!! abstract "In a nutshell"
-    This optional file describes a form for configuring your skill — labeled boxes, checkboxes,
-    and drop-downs on a settings screen — so a tool can render a settings UI without you writing
-    one. **Heads-up: this is a legacy format and most OVOS skills don't ship it.** It came from
-    the old Mycroft backend, which OVOS doesn't run; your skill's settings work fine without it
+    This optional file describes a form for configuring your skill: labeled boxes, checkboxes,
+    and drop-downs on a settings screen. A tool can then render a settings UI without you writing
+    one. **This is a legacy format and most OVOS skills do not ship it.** It came from
+    the old Mycroft backend, which OVOS does not run. Your skill's settings work fine without it
     (see [Skill Settings](skill-settings.md)). It only matters if you use a community tool that
-    reads it. For term definitions see the [Glossary](glossary.md).
+    reads it. For term definitions, see the [Glossary](glossary.md).
 
 !!! warning "Legacy — specified but not used by OVOS itself"
     `settingsmeta.json` / `.yaml` is a **legacy format inherited from the Mycroft backend
@@ -15,10 +15,10 @@
     skills. Your skill reads and writes its settings perfectly well without it — see
     [Skill Settings](skill-settings.md).
 
-    It is still *specified* (and `ovos-workshop` can auto-generate a basic version from a skill's
-    settings), and some **community tools still consume it to render a settings UI** — most notably
+    It is still *specified*, and `ovos-workshop` can auto-generate a basic version from a skill's
+    settings. Some **community tools still consume it to render a settings UI**, most notably
     [`ovos-skill-config-tool`](https://github.com/OscillateLabsLLC/ovos-skill-config-tool) by
-    Oscillate Labs. Provide a `settingsmeta` file only if you specifically target such a tool; the
+    Oscillate Labs. Provide a `settingsmeta` file only if you specifically target such a tool. The
     rest of this page documents the format for that case.
 
 ## Define settings UI for a [Skill](skill-design-guidelines.md)
@@ -26,8 +26,8 @@
 To define a Skill's settings UI you can provide a `settingsmeta.json` or `settingsmeta.yaml` file.
 When present, it lives in the root directory of the Skill and follows the structure below.
 
-A `settingsmeta` file does nothing on its own — it is only meaningful to a tool that reads it (a
-community settings editor like the one above), which then presents the described fields to the user.
+A `settingsmeta` file does nothing on its own. It is only meaningful to a tool that reads it, such as a
+community settings editor like the one above, which then presents the described fields to the user.
 
 ### Example settingsmeta file
 
@@ -70,7 +70,7 @@ skillMetadata:
 
 ```
 
-Notice that the checkbox's value, `"true"`, is a quoted string rather than a bare YAML/JSON boolean. This is intentional — the format expects the literal string `"true"` or `"false"`, not a real boolean.
+Notice that the checkbox's value, `"true"`, is a quoted string rather than a bare YAML/JSON boolean. This is intentional. The format expects the literal string `"true"` or `"false"`, not a real boolean.
 
 Both of these files would result in the same settings block.
 
@@ -79,13 +79,13 @@ It is up to your personal preference which syntax you choose.
 
 ### Structure of the settingsmeta file
 
-Whilst the syntax differs, the structure of these two filetypes is the same. This starts at the top level of the file by defining a `skillMetadata` object. This object must contain one or more `sections` elements.
+The syntax differs, but the structure of these two file types is the same. It starts at the top level of the file with a `skillMetadata` object. This object must contain one or more `sections` elements.
 
 #### Sections
 
-Each section represents a group of settings that logically sit together. This enables us to display the settings more clearly in the web interface for users.
+Each section represents a group of settings that logically sit together. This lets the web interface display the settings more clearly for users.
 
-In the simple example above we have just one section. A skill that needs more configuration might use several — for example, one section for account authentication and a separate section for playback preferences.
+The simple example above has just one section. A skill that needs more configuration might use several. For example, one section for account authentication and a separate section for playback preferences.
 
 Each section must contain a `name` attribute that is used as the heading for that section, and an Array of `fields`.
 
@@ -95,7 +95,7 @@ Each section has one or more `fields`. Each field is a setting available to the 
 
 *   `name` (String)
 
-    The `name` of the `field` is used by the Skill to get and set the value of the `field`. It will not usually be displayed to the user, unless the `label` property has not been set.
+    The Skill uses the `name` of the `field` to get and set the value of the `field`. It is not usually shown to the user, unless the `label` property is not set.
 
 *   `type` (Enum)
 

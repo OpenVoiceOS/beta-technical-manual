@@ -1,17 +1,17 @@
 # Stop Pipeline
 
 !!! success "Maturity — Mature ⬤⬤⬤⬤⬤"
-    Long-lived, battle-tested, and actively maintained — depend on it freely. Rated by [repository health](maturity.md), not version.
+    Long-lived and actively maintained. Depend on it freely. Rated by [repository health](maturity.md), not version.
 
 !!! abstract "In a nutshell"
-    This is the part of OVOS that listens for "stop", "cancel", or the same word in your language and makes the assistant quit whatever it is doing — interrupting a spoken reply, ending a question, or halting a task a skill started. Because being able to stop is so essential to a voice assistant, OVOS treats it as a built-in, always-on feature rather than an optional add-on, and it works in any language that ships the right word list. For the wider system this fits into, see the [Fallback Pipeline](fallback-pipeline.md) or the [Glossary](glossary.md).
+    This is the part of OVOS that listens for "stop", "cancel", or the same word in your language and makes the assistant quit whatever it is doing: interrupting a spoken reply, ending a question, or halting a task a skill started. Because being able to stop is so essential to a voice assistant, OVOS treats it as a built-in, always-on feature rather than an optional add-on. It works in any language that ships the right word list. For the wider system this fits into, see the [Fallback Pipeline](fallback-pipeline.md) or the [Glossary](glossary.md).
 
 ??? info "📐 Formal specification"
     The stop plugin is specified by **[OVOS-STOP-1 — Stop Pipeline Plugin](https://github.com/OpenVoiceOS/architecture/blob/dev/stop-1.md)**, built on **[OVOS-PIPELINE-1](https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md)**. See the [spec index](architecture-specs.md).
 
-The **stop pipeline** is a core component of the OpenVoiceOS (OVOS) pipeline architecture. It defines the logic responsible for stopping ongoing interactions with active skills. This includes aborting responses, halting speech, and terminating background tasks that skills may be performing. 
+The **stop pipeline** is a core component of the OpenVoiceOS (OVOS) pipeline architecture. It defines the logic responsible for stopping ongoing interactions with active skills. This includes aborting responses, halting speech, and terminating background tasks that skills may be performing.
 
-Because stopping is a **fundamental feature of a voice assistant**, it is implemented as a **dedicated pipeline plugin**, not just a fallback or intent handler. STOP-1 is emphatic that stop is a **pipeline plugin and not a skill** — `skill-ovos-stop` is superseded. Stop only works because PIPELINE-1's first-match-wins lets a high-confidence stop stage placed *first* in `session.pipeline` (STOP-1 §7) intercept "stop" before any other pipeline plugin claims the bare word.
+Because stopping is a **fundamental feature of a voice assistant**, it is implemented as a **dedicated pipeline plugin**, rather than a fallback or intent handler. STOP-1 is emphatic that stop is a **pipeline plugin and not a skill**. `skill-ovos-stop` is superseded. Stop only works because PIPELINE-1's first-match-wins lets a high-confidence stop stage placed *first* in `session.pipeline` (STOP-1 §7) intercept "stop" before any other pipeline plugin claims the bare word.
 
 !!! note "Spec model and topic names"
     STOP-1 distinguishes two outcomes, both via reserved `intent_name`s. A generic **stop** cascades to the *most recently active* handler: the plugin reads `session.active_handlers` (the recency record, PIPELINE-1 §7.1), pings them with `ovos.stop.ping`, collects `ovos.stop.pong` (`can_handle`) within a recommended 0.5s ceiling, and returns a `Match` on the reserved `stop` name targeting the highest-`activated_at` positive responder — dispatched on `<skill_id>:stop`. A handler that does not answer within the timeout counts as `can_handle: false`.
@@ -34,7 +34,7 @@ Because stopping is a **fundamental feature of a voice assistant**, it is implem
 **Pipeline plugin ID:** `ovos-stop-pipeline-plugin`
 **Stage names:** `ovos-stop-pipeline-plugin-high`, `ovos-stop-pipeline-plugin-medium`, `ovos-stop-pipeline-plugin-low` (deprecated aliases: `stop_high`, `stop_medium`, `stop_low`)
 
-`StopService` subclasses both `ConfidenceMatcherPipeline` and `OVOSAbstractApplication` (its `skill_id` is `stop.openvoiceos`). Because it is a `ConfidenceMatcherPipeline`, the single base plugin ID auto-expands into three confidence-tier matchers — `match_high`, `match_medium` and `match_low` — which you reference in the pipeline as `ovos-stop-pipeline-plugin-high`, `-medium`, and `-low`. It ships inside `ovos-core`:
+`StopService` subclasses both `ConfidenceMatcherPipeline` and `OVOSAbstractApplication` (its `skill_id` is `stop.openvoiceos`). Because it is a `ConfidenceMatcherPipeline`, the single base plugin ID auto-expands into three confidence-tier matchers: `match_high`, `match_medium` and `match_low`. You reference these in the pipeline as `ovos-stop-pipeline-plugin-high`, `-medium`, and `-low`. It ships inside `ovos-core`:
 
 ```ini
 [project.entry-points."opm.pipeline"]
@@ -116,7 +116,7 @@ ovos_core/intent_services/locale/
 
 ```
 
-`match_high`/`match_medium` look up the `stop` and `global_stop` vocab groups; `match_low` uses the `stop` list only. Not every language ships both files (some provide only `stop.voc`).
+`match_high`/`match_medium` look up the `stop` and `global_stop` vocab groups. `match_low` uses the `stop` list only. Not every language ships both files (some provide only `stop.voc`).
 
 ---
 
@@ -144,7 +144,7 @@ The stop plugin interfaces with the OVOS session system:
 | `ovos.stop.pong` (legacy: `skill.stop.pong`) | in | Handler's `can_handle` reply |
 | `ovos.stop` (legacy: `mycroft.stop`) | out | Universal stop broadcast |
 
-`<skill_id>:stop` and `<pipeline_id>:global_stop` are dispatch topics and fire the handler-lifecycle trio; the `ovos.stop.*` topics and `ovos.stop` do not.
+`<skill_id>:stop` and `<pipeline_id>:global_stop` are dispatch topics and fire the handler-lifecycle trio. The `ovos.stop.*` topics and `ovos.stop` do not.
 
 ## Configuration
 
@@ -177,6 +177,6 @@ The service reads its config from `mycroft.conf` under `skills.stop`. The only k
 
 ## Summary
 
-The `stop` pipeline ensures that OVOS is always in control. Whether a user needs to quickly interrupt a skill, cancel a conversation, or shut down all interactions, the `StopService` plugin provides the robust, language-aware foundation to make that possible.
+The `stop` pipeline ensures that OVOS is always in control. It handles interrupting a skill, canceling a conversation, or shutting down all interactions, with a language-aware foundation built into `StopService`.
 
-It is **not considered optional**, all OVOS installations should include this pipeline by default.
+It is **not considered optional**. All OVOS installations should include this pipeline by default.

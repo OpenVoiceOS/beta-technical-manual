@@ -1,7 +1,7 @@
 # Specification Tooling
 
 !!! note "Maturity — Beta ⬤⬤⬤◯◯"
-    In real use but still settling — watch releases for the occasional breaking change. Rated by [repository health](maturity.md), not version.
+    In real use but still settling. Watch releases for the occasional breaking change. Rated by [repository health](maturity.md), not version.
 
 !!! abstract "In a nutshell"
     The [Formal Specifications](architecture-specs.md) say *what* must happen.
@@ -13,17 +13,17 @@
     a flag day).
 
 ??? info "📐 Formal specification"
-    These tools serve the **[OpenVoiceOS/architecture](https://github.com/OpenVoiceOS/architecture)** specs — see the [spec index](architecture-specs.md).
+    These tools serve the **[OpenVoiceOS/architecture](https://github.com/OpenVoiceOS/architecture)** specs. See the [spec index](architecture-specs.md).
 
 ---
 
-## ovos-spec-tools — the reference implementation
+## ovos-spec-tools: the reference implementation
 
 [**ovos-spec-tools**](https://github.com/OpenVoiceOS/ovos-spec-tools) is the
 **single conformant implementation** of the low-level primitives the specs
 describe. OVOS components used to reimplement template expansion, resource
-loading, and language matching in several places — and the copies drifted.
-Rather than reimplement (and re-introduce the bugs), depend on this package; it
+loading, and language matching in several places, and the copies drifted.
+Rather than reimplement (and re-introduce the bugs), depend on this package. It
 is dependency-light (the core has **no dependencies**) and tracks the specs
 clause-for-clause.
 
@@ -64,7 +64,7 @@ ovos-spec-lint my-skill/locale
 ```
 
 The session carrier, the keyword-intent builder, and the canonical topic
-vocabulary follow the same pattern — plain data plus stdlib-only helpers:
+vocabulary follow the same pattern: plain data plus stdlib-only helpers.
 
 ```python
 from ovos_spec_tools import IntentBuilder, Session, SpecMessage
@@ -83,63 +83,63 @@ SpecMessage.SPEAK.value  # -> 'ovos.utterance.speak', the spec-canonical topic n
 !!! tip "When to reach for it"
     Building an intent-matching pipeline plugin, a skill loader, a satellite, or any third-party
     tool that touches OVOS templates, locale files, language selection, or the
-    bus envelope? Depend on `ovos-spec-tools` instead of hand-rolling — that is
+    bus envelope? Depend on `ovos-spec-tools` instead of hand-rolling. That is
     exactly the drift the package exists to prevent. See also
     [Resource Files](resource-files.md) and [Language Selection](lang-selection.md).
 
 ---
 
-## ovos-test-harness — the conformance suite
+## ovos-test-harness: the conformance suite
 
 [**ovos-test-harness**](https://github.com/OpenVoiceOS/ovos-test-harness) is the
 **executable counterpart** of the specs. Each test asserts one observable bus
 behavior a spec mandates, against a *real running OVOS stack*. If the specs are
-the law, this harness is the courtroom: it puts a concrete combination of OVOS
-repos on trial against the law and returns a verdict per normative clause —
+the law, this harness is the courtroom. It puts a concrete combination of OVOS
+repos on trial against the law and returns a verdict per normative clause:
 **pass**, **`xfail`** (a documented gap), or **fail**.
 
 **Why a separate repo.** A single spec clause is only satisfied when a
-*combination* of branches across a dozen repos lines up — `ovos-core`,
+*combination* of branches across a dozen repos lines up: `ovos-core`,
 `ovos-workshop`, `ovos-bus-client`, the pipeline plugins, fixture skills. You
 cannot prove that from inside any one repo, because that repo's CI installs only
 its own package plus whatever pip resolves, and pip is free to downgrade a
 sibling out of the exact combination you are trying to validate.
 
-**The model.** The harness is **not a package** — there is no `pip install .`.
+**The model.** The harness is **not a package**. There is no `pip install .`.
 Its [`requirements.txt`](https://github.com/OpenVoiceOS/ovos-test-harness) is the
 **stack under test**: every line pins one repo to an exact git ref or version, so
 CI never re-resolves and never downgrades a component. Each test then:
 
-- imports the spec vocabulary from [`ovos-spec-tools`](https://github.com/OpenVoiceOS/ovos-spec-tools), so a topic name is *provably spec-defined* rather than a magic string;
-- drives and captures the live bus through [`ovoscope`](https://github.com/OpenVoiceOS/ovoscope) (see [Testing Skills](ovoscope-overview.md));
+- imports the spec vocabulary from [`ovos-spec-tools`](https://github.com/OpenVoiceOS/ovos-spec-tools), so a topic name is *provably spec-defined* rather than a magic string.
+- drives and captures the live bus through [`ovoscope`](https://github.com/OpenVoiceOS/ovoscope) (see [Testing Skills](ovoscope-overview.md)).
 - asserts the spec-mandated behavior and records pass / `xfail` / fail.
 
 **Coverage.** All 20 specs on the architecture `dev` branch currently have
-conformance suites (SESSION-1 and SESSION-2 share one suite; INTENT-4 has both an
+conformance suites (SESSION-1 and SESSION-2 share one suite. INTENT-4 has both an
 orchestrator suite and a per-plugin registration-compliance suite). The
 authoritative spec→suite traceability matrix lives in the repo's
-[`docs/coverage.md`](https://github.com/OpenVoiceOS/ovos-test-harness/blob/dev/docs/coverage.md);
-documented conformance gaps are recorded as `xfail` entries and catalogued in
+[`docs/coverage.md`](https://github.com/OpenVoiceOS/ovos-test-harness/blob/dev/docs/coverage.md).
+Documented conformance gaps are recorded as `xfail` entries and catalogued in
 [`docs/known-gaps.md`](https://github.com/OpenVoiceOS/ovos-test-harness/blob/dev/docs/known-gaps.md).
 
 **Pre-flighting a cross-repo change.** To certify an unmerged combination,
 maintainers pin the candidate branches in `requirements.txt` and open a harness
-PR — CI then installs exactly that stack and runs the full conformance suite
+PR. CI then installs exactly that stack and runs the full conformance suite
 against it, flipping each ref to `@dev` as it merges. One structural limit: two
 branches of the *same* repo cannot both be installed, so pick one ref per repo.
 
 This is where an implementation is **proven to conform** to the merged
-architecture specs — the bridge between the prescriptive Markdown and the code
+architecture specs. It is the bridge between the prescriptive Markdown and the code
 that has to honour it.
 
 ---
 
-## Adopting the spec namespace — without a flag day
+## Adopting the spec namespace: without a flag day
 
 The specs rename many bus topics into the `ovos.*` namespace (for example
 `recognizer_loop:utterance` → `ovos.utterance.handle`). Migrating an ecosystem
-of independently-released repos to new topic names all at once is impossible —
-so [**ovos-bus-client**](bus-service.md) does it **automatically and
+of independently-released repos to new topic names all at once is impossible.
+So [**ovos-bus-client**](bus-service.md) does it **automatically and
 incrementally**. A single message travels the wire once, and each
 connected client translates on receive: a subscription to either the legacy or
 the `ovos.*` name is also delivered its migrated counterpart locally
@@ -147,6 +147,6 @@ the `ovos.*` name is also delivered its migrated counterpart locally
 **in any order, with no coordination**.
 
 This is what makes spec adoption gradual rather than a breaking change. The full
-mechanism — and how to turn the bridges off once a deployment is fully
-modernised — is documented under
+mechanism, and how to turn the bridges off once a deployment is fully
+modernised, is documented under
 [**messagebus Service → Namespace migration**](bus-service.md#namespace-migration).

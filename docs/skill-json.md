@@ -1,9 +1,9 @@
 # Skill Metadata File
 
 !!! abstract "In a nutshell"
-    `skill.json` is a small "info card" for your skill — its name, a short description, an icon, and a few example phrases. OVOS and skill stores read this card to install your skill and show it off nicely in menus and on screens, much like the listing page for an app in an app store. It does not change what the skill does; it just describes it. For the saved-preferences side of things see [Skill Settings](skill-settings.md); for term definitions see the [Glossary](glossary.md).
+    `skill.json` is a small "info card" for your skill: its name, a short description, an icon, and a few example phrases. OVOS and skill stores read this card to install your skill and show it in menus and on screens, much like the listing page for an app in an app store. It does not change what the skill does. It just describes it. For the saved-preferences side of things, see [Skill Settings](skill-settings.md). For term definitions, see the [Glossary](glossary.md).
 
-The `skill.json` file is an optional but powerful way to describe your Open Voice OS (OVOS) skill. It provides metadata used for installation, discovery, and display in GUIs or app stores.
+The `skill.json` file is an optional way to describe your Open Voice OS (OVOS) skill. It provides metadata used for installation, discovery, and display in GUIs or app stores.
 
 ## Purpose
 
@@ -66,12 +66,12 @@ The `skill.json` file is an optional but powerful way to describe your Open Voic
 
 ## Field Reference
 
-None of these fields are enforced by `ovos-workshop` at runtime — only
+None of these fields are enforced by `ovos-workshop` at runtime. Only
 `examples` is actually read (it is registered with the homescreen so it can
 show sample phrases for the skill). Everything else is a convention followed
 by skill-store and CI tooling. Ecosystem lint tooling (the `check_skill.py`
 compliance check used in CI) treats `skill_id`, `name`, `description`,
-`examples`, and `tags` as the fields it expects to be present; treat the rest
+`examples`, and `tags` as the fields it expects to be present. Treat the rest
 as recommended, not mandatory.
 
 | Field            | Type     | Recommended | Description |
@@ -91,13 +91,13 @@ as recommended, not mandatory.
 | `tags`           | list     | ✅ Yes    | Keywords for searchability. |
 
 !!! note
-    In practice, real-world `skill.json` files vary quite a bit — some use
+    In practice, real-world `skill.json` files vary quite a bit. Some use
     `title` instead of `name`, some carry a `category` string (e.g. `"Daily"`,
     `"Information"`, `"Configuration"`) that the skill store uses to group
     listings, and older, auto-generated `skill.json` files
     (from the legacy skills-manager tooling) carry many more fields
     (`version`, `url`, `requirements`, `platforms`, and more). Stick to the
-    fields above for new skills; anything extra is ignored by `ovos-workshop`.
+    fields above for new skills. Anything extra is ignored by `ovos-workshop`.
 
 ---
 
@@ -110,7 +110,7 @@ To support multiple languages, place a `skill.json` file in each corresponding `
 ## Installation Behavior
 
 `pip_spec`, `package_name`, and `source` are hints for skill-installer /
-skill-store tooling about where to fetch a skill from — `ovos-workshop`
+skill-store tooling about where to fetch a skill from. `ovos-workshop`
 itself does not install skills or read these fields. Provide at least one
 so external installers have somewhere to pull the skill from.
 
@@ -151,7 +151,7 @@ Once your skill works, publishing it is the same as publishing any Python packag
    `package_name` in `skill.json` to that PyPI name. Skills without a PyPI release are still
    installable directly from git via `pip_spec` (see the [PEP 508](https://peps.python.org/pep-0508/)
    spec syntax used there).
-3. **List it on the [OVOS Skill store](https://store.openvoiceos.org)** — see
+3. **List it on the [OVOS Skill store](https://store.openvoiceos.org)**. See
    [OVOS-skills-store](https://github.com/OpenVoiceOS/OVOS-skills-store) for how skills get added.
    The store reads the `skill.json` fields above (`name`, `description`, `examples`, `tags`,
    `icon`, `images`) to build the listing card, and `source`/`pip_spec`/`package_name` to know how
@@ -159,7 +159,7 @@ Once your skill works, publishing it is the same as publishing any Python packag
 
 !!! tip
     A complete, accurate `skill.json` is what makes the difference between a bare repository link
-    and a nicely presented store entry — see the [Field Reference](#field-reference) above.
+    and a nicely presented store entry. See the [Field Reference](#field-reference) above.
 
 ## See Also
 

@@ -1,25 +1,25 @@
 # Skill Installer (SkillsStore)
 
 !!! success "Maturity — Mature ⬤⬤⬤⬤⬤"
-    Long-lived, battle-tested, and actively maintained — depend on it freely. Rated by [repository health](maturity.md), not version.
+    Long-lived and actively maintained. Depend on it freely. Rated by [repository health](maturity.md), not version.
 
 !!! abstract "In a nutshell"
-    This is the built-in part of OVOS that can add or remove [skills](skill-examples.md) (and other software packages) while the assistant is running — no need to open a terminal or restart anything. Think of it as an app-store back end: something asks "install this skill," and OVOS downloads and wires it in on the fly. It is switched off unless explicitly enabled, for safety. See [Skill Manager](skill-manager.md) for how skills then get loaded, or the [Glossary](glossary.md) for terms.
+    This is the built-in part of OVOS that can add or remove [skills](skill-examples.md) (and other software packages) while the assistant is running. No terminal or restart is needed. Something asks "install this skill," and OVOS downloads and wires it in on the fly. It is switched off unless explicitly enabled, for safety. See [Skill Manager](skill-manager.md) for how skills then get loaded, or the [Glossary](glossary.md) for terms.
 
-**Module:** `ovos_core.skill_installer.SkillsStore` — [`ovos_core/skill_installer.py`](https://github.com/OpenVoiceOS/ovos-core/blob/dev/ovos_core/skill_installer.py)
+**Module:** `ovos_core.skill_installer.SkillsStore`: [`ovos_core/skill_installer.py`](https://github.com/OpenVoiceOS/ovos-core/blob/dev/ovos_core/skill_installer.py)
 
 The `SkillsStore` is a built-in subsystem of `ovos-core` that provides runtime skill and package management via the [messagebus](bus-service.md).
 
-**In plain terms:** other parts of the system (or you, over the bus) can ask OVOS to `pip install` a skill or library while it is running — no shell access or restart needed. It is opt-in and guarded behind the `allow_pip` config flag.
+**In plain terms:** other parts of the system (or you, over the bus) can ask OVOS to `pip install` a skill or library while it is running. No shell access or restart is needed. It is opt-in and guarded behind the `allow_pip` config flag.
 
 ---
 
 ??? abstract "Technical Reference"
 
-    - `SkillsStore.pip_install()` — [`ovos_core/skill_installer.py:85`](https://github.com/OpenVoiceOS/ovos-core/blob/dev/ovos_core/skill_installer.py) — Core logic for calling `pip` or `uv`.
+    - `SkillsStore.pip_install()`: [`ovos_core/skill_installer.py:85`](https://github.com/OpenVoiceOS/ovos-core/blob/dev/ovos_core/skill_installer.py). Core logic for calling `pip` or `uv`.
 
 
-    - `SkillsStore.handle_install_skill()` — [`ovos_core/skill_installer.py:288`](https://github.com/OpenVoiceOS/ovos-core/blob/dev/ovos_core/skill_installer.py) — Bus event handler for `ovos.skills.install`.
+    - `SkillsStore.handle_install_skill()`: [`ovos_core/skill_installer.py:288`](https://github.com/OpenVoiceOS/ovos-core/blob/dev/ovos_core/skill_installer.py). Bus event handler for `ovos.skills.install`.
 
 
     - After a successful install, `ovos_core/skill_installer.py` re-imports `ovos_plugin_manager` (Python's `importlib.reload`) so the new entry points are picked up.
@@ -60,16 +60,16 @@ package named there.
 
 !!! note "Uninstall protection is an accident guard, not a security control"
     The protected list stops a request from removing OVOS's own components by name. It is not a
-    privilege boundary — anything that can reach the [messagebus](bus-service.md) already has
+    privilege boundary. Anything that can reach the [messagebus](bus-service.md) already has
     full control of the device, and `allow_pip: true` gives it package-management rights.
     Security comes from keeping the bus local and `allow_pip` off, not from this list.
 
 !!! danger "Skills are not sandboxed — this installs and runs arbitrary code"
     There is no sandbox or permission model. Installing a skill through
-    `SkillsStore` means `pip`/`uv install`ing a Python package and loading it —
-    it runs with the same access as the rest of OVOS on the OVOS user account.
-    Combined with the fact that the [messagebus](bus-service.md) has **no
-    authentication**, turning `allow_pip` on while the bus is reachable by
+    `SkillsStore` means `pip`/`uv install`ing a Python package and loading it.
+    It runs with the same access as the rest of OVOS on the OVOS user account.
+    The [messagebus](bus-service.md) has **no authentication**. Combined with that fact,
+    turning `allow_pip` on while the bus is reachable by
     anyone untrusted is effectively a remote-code-execution switch: anyone who
     can reach the bus can request an install of code they control. See
     [Privacy & Security](privacy-security.md#skills-are-not-sandboxed) for the
@@ -77,7 +77,7 @@ package named there.
 
 ## Install/Uninstall Events
 
-You can trigger installation and uninstallation by emitting messages on the messagebus. Note that the **skill** events and the **pip** events take different payloads: skills are installed from a single GitHub URL, while the generic pip events take a list of package specifiers.
+You can trigger installation and uninstallation by emitting messages on the messagebus. The **skill** events and the **pip** events take different payloads. Skills are installed from a single GitHub URL, while the generic pip events take a list of package specifiers.
 
 ### Skill installation
 
@@ -92,7 +92,7 @@ ovos.skills.install        data: {"url": "https://github.com/OpenVoiceOS/skill-f
 
 ### Skill uninstallation
 
-Uninstall by `skill_id` (or package name); a `skill_id` like `skill-foo.author` is mapped to the package name `skill-foo-author`:
+Uninstall by `skill_id` (or package name). A `skill_id` like `skill-foo.author` is mapped to the package name `skill-foo-author`:
 
 ```text
 ovos.skills.uninstall      data: {"skill": "skill-foo.author"}

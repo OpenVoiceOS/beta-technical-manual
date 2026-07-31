@@ -1,18 +1,18 @@
 # Skill Settings
 
 !!! abstract "In a nutshell"
-    "Settings" are a skill's saved preferences — things like a username, an API key, or a chosen option — that stick around even after a restart. Think of it as a small notepad each skill keeps to remember how the user wants it to behave. This page shows how a skill reads and writes those values, and how it reacts when a user changes them. To describe an optional (legacy) settings form for community config tools, see [Skill Settings Meta](skill-settings-meta.md); for term definitions see the [Glossary](glossary.md).
+    "Settings" are a skill's saved preferences, such as a username, an API key, or a chosen option. They stick around even after a restart. This page shows how a skill reads and writes those values, and how it reacts when a user changes them. For an optional (legacy) settings form used by community config tools, see [Skill Settings Meta](skill-settings-meta.md). For term definitions, see the [Glossary](glossary.md).
 
-Settings provide per-skill persistent key-value storage backed by a JSON file. They allow users to configure and personalize skill behavior — changing defaults, providing API keys, or adjusting integration preferences.
+Settings provide per-skill persistent key-value storage backed by a JSON file. They let users configure skill behavior: changing defaults, providing API keys, or adjusting integration preferences.
 
 ---
 
 ## Quick start
 
-Building on the `MyFirstSkill` from [Your First Skill](first-skill.md), here's the smallest useful
-use of settings — a greeting that remembers a name the user gave it once:
+Building on the `MyFirstSkill` from [Your First Skill](first-skill.md), here is the smallest useful
+use of settings: a greeting that remembers a name the user gave it once.
 
-`ovos_skill_my_first/locale/en-us/SetName.intent` — one example phrase per line:
+`ovos_skill_my_first/locale/en-us/SetName.intent`, one example phrase per line:
 
 ```text
 call me {name}
@@ -56,9 +56,9 @@ $XDG_CONFIG_HOME/<base_folder>/skills/<skill_id>/settings.json
 
 ```
 
-`<base_folder>` defaults to `mycroft` for backwards-compatibility, but a
+`<base_folder>` defaults to `mycroft` for backwards compatibility. A
 system-wide `ovos.conf` (or the `OVOS_CONFIG_BASE_FOLDER` environment
-variable) can rename it — commonly to `OpenVoiceOS`. On most Linux
+variable) can rename it, commonly to `OpenVoiceOS`. On most Linux
 installs `XDG_CONFIG_HOME` is `~/.config`, so the effective default is
 `~/.config/mycroft/skills/<skill_id>/settings.json`.
 
@@ -93,9 +93,9 @@ self.settings.store()
 
 ```
 
-Always use `.get(key, default)` — never `self.settings["key"]` directly, as that raises `KeyError` if the key is absent.
+Always use `.get(key, default)`. Never use `self.settings["key"]` directly. That raises `KeyError` if the key is absent.
 
-Do not access `self.settings` in `__init__()`. Wait until `initialize()` to ensure settings are fully loaded.
+Do not access `self.settings` in `__init__()`. Wait until `initialize()`. This ensures settings are fully loaded.
 
 Do not replace the whole `self.settings` dict:
 
@@ -140,10 +140,10 @@ def on_settings_changed(self):
 
 Settings changes can arrive two ways:
 
-1. **Bus event** (`ovos.skills.settings_changed`) — emitted by `ovos-core`'s file watcher. This is the primary mechanism in a standard setup.
+1. **Bus event** (`ovos.skills.settings_changed`): emitted by `ovos-core`'s file watcher. This is the primary mechanism in a standard setup.
 
 
-2. **Local file watcher** — enabled by setting `monitor_own_settings: true` in the skill's own settings. Useful in isolated setups (e.g. containers) where the skill and core do not share a filesystem.
+2. **Local file watcher**: enabled by setting `monitor_own_settings: true` in the skill's own settings. Useful in isolated setups, for example containers, where the skill and core do not share a filesystem.
 
 ---
 
@@ -155,7 +155,7 @@ Skills can receive remote settings updates via `mycroft.skills.settings.changed`
 
 ## Private Settings
 
-Skills also have access to `self.private_settings` (`PrivateSettings`) — a separate storage for data that should not be shared or synced. Backed by a JSON file outside the standard settings path.
+Skills also have access to `self.private_settings` (`PrivateSettings`), a separate storage for data that should not be shared or synced. It is backed by a JSON file outside the standard settings path.
 
 ---
 
@@ -213,13 +213,13 @@ export OVOS_CONFIG_PASSWORD=mypassword
 
 ## Related Pages
 
-- [Skill Classes](skill-classes.md) — `OVOSSkill` base class
+- [Skill Classes](skill-classes.md): `OVOSSkill` base class
 
 
-- [Skill Settings Meta](skill-settings-meta.md) — the legacy `settingsmeta.json` settings-UI schema (optional, usually absent; only used by community config tools)
+- [Skill Settings Meta](skill-settings-meta.md): the legacy `settingsmeta.json` settings-UI schema (optional, usually absent, only used by community config tools)
 
 
-- [ovos-core](core.md) — settings file watcher and `ovos.skills.settings_changed` event
+- [ovos-core](core.md): settings file watcher and `ovos.skills.settings_changed` event
 
 ---
 

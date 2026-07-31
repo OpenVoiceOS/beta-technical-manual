@@ -1,7 +1,7 @@
-# What Can I Say? — Default Skills Overview
+# What Can I Say? Default Skills Overview
 
 !!! abstract "In a nutshell"
-    A "skill" is an add-on that teaches your assistant to do one thing — tell the weather, set an
+    A "skill" is an add-on that teaches your assistant to do one thing: tell the weather, set an
     alarm, play the radio, answer trivia. This page is a browsable catalog of ready-made skills you
     can add to OVOS, grouped by what they're for, each with real example phrases and how to install
     it. Some come pre-loaded depending on how you set OVOS up; others you add yourself. See
@@ -9,14 +9,14 @@
     [Glossary](glossary.md) for terms.
 
 A non-exhaustive list of skills available for OpenVoiceOS. Whether a given skill is already on your
-assistant depends on how you installed it — see the legend below.
+assistant depends on how you installed it. See the legend below.
 
-Each skill below shows a **Maturity** rating from its repository health — see the [Maturity Scale](maturity.md).
+Each skill below shows a **Maturity** rating from its repository health. See the [Maturity Scale](maturity.md).
 
 !!! tip "How to get a skill"
     Many of these ship with the [`ovos-installer`](ovos-installer.md)'s skill selection. To add
     one yourself, install its package (the repo link and install command are in the
-    collapsed "Install" block under each skill below) and restart `ovos-core` — it scans for
+    collapsed "Install" block under each skill below) and restart `ovos-core`. It scans for
     installed skills automatically. On RaspOVOS, prefer `ovos-install <package>`, RaspOVOS's own
     helper, which installs with the correct version constraints; on any other setup, `pip install
     <package>` works the same way. If a skill isn't published to PyPI, install straight from
@@ -24,11 +24,11 @@ Each skill below shows a **Maturity** rating from its repository health — see 
     own, follow [Your First Skill](first-skill.md).
 
 !!! info "Availability legend"
-    - 🟢 **Installer default** — installed automatically when the `ovos-installer`'s `skills`
+    - 🟢 **Installer default**: installed automatically when the `ovos-installer`'s `skills`
       feature is on (the default).
-    - 🟡 **Installer optional** — installed only if you also enable the installer's
+    - 🟡 **Installer optional**: installed only if you also enable the installer's
       `extra-skills` feature.
-    - ⚪ **Manual install only** — not offered by the installer at all; add it yourself with
+    - ⚪ **Manual install only**: not offered by the installer at all. Add it yourself with
       `ovos-install` (on RaspOVOS) or `pip install` (otherwise).
 
 ---
@@ -85,7 +85,7 @@ Get the current time, date, or information about specific calendar days.
 🟢 **Installer default**
 
 Put the assistant to sleep when you don't want to be disturbed. While asleep, the wake word stops
-triggering listening — say "Wake up" (or the configured stand-up word) to bring it back.
+triggering listening. Say "Wake up" (or the configured stand-up word) to bring it back.
 
 **Usage examples:**
 
@@ -126,7 +126,7 @@ cities around the world. Current conditions and weather forecasts come from Open
 ## Smart Home
 
 Controlling actual smart-home devices (lights, plugs, thermostats, scenes) isn't built into OVOS
-itself — it's a separate skill that talks to [Home Assistant](https://www.home-assistant.io/).
+itself. It is a separate skill that talks to [Home Assistant](https://www.home-assistant.io/).
 See [OVOS & Home Assistant](home-assistant.md) for the full setup story in both directions
 (OVOS controlling HA devices, and HA using OVOS's own speech engines).
 
@@ -145,7 +145,7 @@ access token.
 - Activate the movie night scene.
 
 ??? note "Install"
-    [:material-github: OscillateLabsLLC/skill-homeassistant](https://github.com/OscillateLabsLLC/skill-homeassistant) · On RaspOVOS, `ovos-install skill-homeassistant` (installs with the correct version constraints); otherwise `pip install skill-homeassistant` — or tick `homeassistant` in the [ovos-installer](ovos-installer.md#feature-selection) feature list, which prompts for the URL and token for you · Maturity: Stable
+    [:material-github: OscillateLabsLLC/skill-homeassistant](https://github.com/OscillateLabsLLC/skill-homeassistant) · On RaspOVOS, `ovos-install skill-homeassistant` (installs with the correct version constraints). Otherwise, `pip install skill-homeassistant`, or tick `homeassistant` in the [ovos-installer](ovos-installer.md#feature-selection) feature list, which prompts for the URL and token for you · Maturity: Stable
 
 -------
 
@@ -155,7 +155,7 @@ access token.
 
 🟡 **Installer optional** (`extra-skills` feature)
 
-A client for the Radio Browser API — a large, community-maintained directory of internet radio
+A client for the Radio Browser API, a large, community-maintained directory of internet radio
 stations.
 
 **Usage examples:**
@@ -203,7 +203,7 @@ News streams from around the globe.
 
 🟡 **Installer optional** (`extra-skills` feature)
 
-Local media file browser for OpenVoiceOS — browse and play audio/video files from a USB drive or
+Local media file browser for OpenVoiceOS. Browse and play audio/video files from a USB drive or
 local folder.
 
 **Usage examples:**
@@ -223,7 +223,7 @@ local folder.
     [:material-github: OpenVoiceOS/ovos-skill-local-media](https://github.com/OpenVoiceOS/ovos-skill-local-media) · `pip install ovos-skill-local-media` · Maturity: Mature
 
 !!! note "Playing your own music or a streaming service"
-    Out of the box, OVOS plays internet radio (PyRadios, SomaFM) and local files — it does not
+    Out of the box, OVOS plays internet radio (PyRadios, SomaFM) and local files. It does not
     include Spotify or another streaming-service player by default. See
     [Cool Things You Can Do](showcase.md) and [Media Plugins](media-plugins.md) for what's
     available to add.
@@ -559,7 +559,7 @@ Runs an internet bandwidth test using speedtest.net.
 
 Provides notifications when OpenVoiceOS has fully started and all core services are ready. It
 listens for the `mycroft.ready` bus event (emitted once every core service reports ready) and
-speaks a short confirmation — useful on headless devices where you can't otherwise tell startup
+speaks a short confirmation. This is useful on headless devices where you cannot otherwise tell startup
 finished.
 
 **Usage examples:**

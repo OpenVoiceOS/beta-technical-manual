@@ -1,14 +1,14 @@
 # GUI Skills (GUIInterface)
 
 !!! abstract "In a nutshell"
-    When an OVOS device has a screen, a skill can show things on it — text, images, a page of results — not just speak. This page describes the small Python toolkit a skill author uses to push data to the screen and ask for a page to be displayed. It is a developer topic, and the screen system is being rebuilt (see [GUI Adapters](gui-adapters.md)), so voice should stay the main way you interact while the screen support is treated as a bonus. See the [Glossary](glossary.md) for terms.
+    When an OVOS device has a screen, a skill can show things on it: text, images, a page of results. This page describes the small Python toolkit a skill author uses to push data to the screen and ask for a page to be displayed. It is a developer topic, and the screen system is being rebuilt (see [GUI Adapters](gui-adapters.md)). Voice should stay the main way you interact, while the screen is a bonus. See the [Glossary](glossary.md) for terms.
 
 !!! danger "The OVOS GUI is deprecated — see [Screens on OVOS Today](gui-status.md) for the full picture"
     This page documents the legacy skill GUI API. There is no generally usable OVOS GUI right
     now, and a replacement is **Upcoming**. Voice should remain the primary interface.
 
 ??? info "📐 Formal specification"
-    The **forward** model a skill targets is **[OVOS-GUI-1 — GUI Display Subsystem](https://github.com/OpenVoiceOS/architecture/blob/dev/gui-1.md)** (a formal [architecture spec](architecture-specs.md)). Under it, `self.gui` declares display intent by naming a template from the **closed `SYSTEM_*` vocabulary** (`SYSTEM_text`, `SYSTEM_image`, `SYSTEM_list`, `SYSTEM_weather`, `SYSTEM_confirm`, …) and pushing flat session-data; interchangeable **render backends** draw it, routed by `session_id`. Two rules matter for skill authors: a skill **MUST NOT** invent template names or ship its own home/resting screen (the resting display is owned entirely by the backend, §6.9), and image keys carry an `http(s)` URL or `data:` URI — **never a local filesystem path**. The `show_*` helpers below map onto these templates; the custom-`.qml` path is legacy and unsupported under OVOS-GUI-1. Where this page and the spec differ, the spec is the canonical target.
+    The **forward** model a skill targets is **[OVOS-GUI-1 — GUI Display Subsystem](https://github.com/OpenVoiceOS/architecture/blob/dev/gui-1.md)** (a formal [architecture spec](architecture-specs.md)). Under it, `self.gui` declares display intent by naming a template from the **closed `SYSTEM_*` vocabulary** (`SYSTEM_text`, `SYSTEM_image`, `SYSTEM_list`, `SYSTEM_weather`, `SYSTEM_confirm`, …) and pushing flat session-data. Interchangeable **render backends** draw it, routed by `session_id`. Two rules matter for skill authors. A skill **MUST NOT** invent template names or ship its own home/resting screen (the resting display is owned entirely by the backend, §6.9). Image keys carry an `http(s)` URL or `data:` URI, **never a local filesystem path**. The `show_*` helpers below map onto these templates. The custom-`.qml` path is legacy and unsupported under OVOS-GUI-1. Where this page and the spec differ, the spec is the canonical target.
 
 Many OVOS devices have a screen. A skill can drive that screen the same way it
 speaks: through a small Python API. You set some values, ask for a page to be
@@ -19,7 +19,7 @@ shown, and any connected GUI client (Qt shell, web, terminal, ...) renders it.
 
 Under the hood, `self.gui` is a `SkillGUI` instance (a subclass of `GUIInterface`)
 created automatically for every `OVOSSkill`. On current `ovos-workshop` v8 the base class
-lives in `ovos_bus_client.apis.gui.GUIInterface`; the skill wrapper is
+lives in `ovos_bus_client.apis.gui.GUIInterface`. The skill wrapper is
 `ovos_workshop.skills.ovos.SkillGUI`, namespaced to your `skill_id`.
 
 !!! warning "Upcoming — unreleased"
@@ -28,7 +28,7 @@ lives in `ovos_bus_client.apis.gui.GUIInterface`; the skill wrapper is
     `ovos_bus_client.apis.gui`) and drops the `ui_directories` constructor argument (today,
     `ui_directories` is a `dict` mapping a framework name, e.g. `"qt5"`, to its local resource
     directory, which `GUIInterface` searches when resolving a relative image/page name to a
-    file on disk), since skills under the [GUI rework](gui-service.md) no longer ship QML. This is **not** on a released `ovos-workshop`; on stable installs `self.gui` is
+    file on disk), since skills under the [GUI rework](gui-service.md) no longer ship QML. This is **not** on a released `ovos-workshop`. On stable installs `self.gui` is
     still the `ovos_bus_client.apis.gui.GUIInterface`-based `SkillGUI` described above. Tracked in
     [ovos-workshop#420](https://github.com/OpenVoiceOS/ovos-workshop/pull/420).
 
@@ -40,7 +40,7 @@ def handle_hello(self, message):
     self.gui.show_text("Hello from OVOS!")
 ```
 
-`self.gui` behaves like a dictionary — values you set are synced to the active
+`self.gui` behaves like a dictionary. Values you set are synced to the active
 page whenever it (re)renders. The keys you set are visible to the page under the
 skill's namespace.
 
@@ -79,14 +79,14 @@ gui.show_image(url, caption=None, title=None, fill=None,
 ```
 
 `fill` accepts `"PreserveAspectFit"`, `"PreserveAspectCrop"`, or `"Stretch"`.
-`url` may be a local file path or an `http(s)` URL; missing local files are
+`url` may be a local file path or an `http(s)` URL. Missing local files are
 logged and the call returns without showing anything.
 
 !!! note "Local paths work today, but the spec says not to rely on them"
     The installed `show_image()` (`ovos_bus_client.apis.gui.GUIInterface`) does accept and
-    resolve a local filesystem path — that's the current, working behavior described above.
+    resolve a local filesystem path. That is the current, working behavior described above.
     The OVOS-GUI-1 spec box further up this page nonetheless says image keys should carry only
-    an `http(s)` URL or `data:` URI, never a local path — that's the forward-looking contract
+    an `http(s)` URL or `data:` URI, never a local path. That is the forward-looking contract
     for interchangeable render backends, not a rule the current code enforces. Prefer a URL or
     `data:` URI in new skills if you want to stay forward-compatible.
 
@@ -137,11 +137,11 @@ gui.show_controlled_notification(content, style="info")
 gui.remove_controlled_notification()
 ```
 
-`style` is one of `info`, `warning`, `success`, `error`; `noticetype` is
+`style` is one of `info`, `warning`, `success`, `error`. `noticetype` is
 `transient` (auto-timeout) or `sticky`.
 
 !!! note "`override_idle`"
-    `override_idle=True` keeps your page up indefinitely; an `int` delays the
+    `override_idle=True` keeps your page up indefinitely. An `int` delays the
     return to the idle/home screen for that many seconds. `override_animations=True`
     disables platform transition animations for the page.
 
@@ -152,8 +152,8 @@ gui.remove_controlled_notification()
     `self.gui` to) adds more `SYSTEM_*` helpers: `show_list`, `show_grid`, `show_table`,
     `show_weather`, `show_clock`, `show_timer`, `show_map`, `show_media_player`, `show_face`,
     and the two voice-first dialogue helpers `show_confirm(question, ...)` and
-    `show_select(items, prompt=None, ...)`. These are **not** on a released `ovos-workshop`;
-    treat them as the template set new skills will target once the rebind lands.
+    `show_select(items, prompt=None, ...)`. These are **not** on a released `ovos-workshop`.
+    Treat them as the template set new skills will target once the rebind lands.
 
     Two behavioural notes for that package:
 
@@ -161,8 +161,8 @@ gui.remove_controlled_notification()
       `"stretch"`, not the `"PreserveAspectFit"` / `"PreserveAspectCrop"` / `"Stretch"` values
       the installed `ovos_bus_client` `show_image()` expects. The value set flips when
       `self.gui` rebinds.
-    - **Dialogue helpers round-trip.** These are visual accompaniments to a spoken question —
-      the skill must still ask and handle the voice response, and must not block on a GUI
+    - **Dialogue helpers round-trip.** These are visual accompaniments to a spoken question. The
+      skill must still ask and handle the voice response, and must not block on a GUI
       event. Where the display layer supports a touch shortcut, `show_confirm` fires
       `<skill_id>.confirm.response` with `{"confirmed": bool}` and `show_select` fires
       `<skill_id>.select.response` with `{"value": ...}`. The interface also auto-registers an
@@ -182,7 +182,7 @@ def handle_food_places(self, message):
     self.gui.show_page("foodplaces")   # resolves your gui/ resource
 ```
 
-For the Qt/QML client, custom pages are `.qml` files; see
+For the Qt/QML client, custom pages are `.qml` files. See
 [Mycroft-GUI QT5](qt5-gui.md) for the QML component reference, theming, event
 handling, and resting faces. Other clients resolve the same logical page name to
 their own format.

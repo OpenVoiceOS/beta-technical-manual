@@ -4,12 +4,12 @@
     Designing for voice is different from designing a screen: people speak to your skill in many different ways, and you can't show them buttons or menus to guide them. This page shares simple methods to plan, sketch, and test a skill idea before you start coding, so the finished result feels natural to talk to instead of something you have to learn. Think of it as drawing a conversation on paper first. New terms are explained in the [Glossary](glossary.md).
 
 Applying principles of Voice User Interface Design helps you define and validate a skill's
-features before diving deep into development — the methods below help plan, prototype, and test
+features before you start development. The methods below help plan, prototype, and test
 your skill during the early design stages.
 
 !!! note "Scope: voice interaction design"
-    This page is about **designing the conversation** — when to confirm, how much to say, how
-    to phrase prompts — independent of any programming language. For the **code-level**
+    This page is about **designing the conversation**: when to confirm, how much to say, how
+    to phrase prompts. It is independent of any programming language. For the **code-level**
     practices that implement these ideas (which method to override, which API to call), see
     [Skill Design Best Practices](skill-best-practices.md).
 
@@ -60,7 +60,7 @@ Voice Response\). Many phone systems are notorious for being too verbose and dif
 
 With OVOS we're trying to break that mold and make the interaction natural. If you follow the phone system method you
 may be giving the user the exact phrasing to say, but you're also taking up valuable time and training them to think the
-system is very narrow in capability. In the event that the user does give a response that your skill can not handle,
+system is very narrow in capability. If the user gives a response that your skill cannot handle,
 create follow-up questions that steer the user back on track.
 
 Remember, there are no errors in a cooperative conversation.
@@ -92,7 +92,7 @@ the wording slightly to make it clear that the user needs to say a number. The n
 Skill, they will likely say a number in their first interaction.
 
 Determining whether to respond to the user with a statement or a question can be a bit tricky. When the user is
-somewhat vague it is tempting to assume the user's intent in order to speed along the interaction. Sometimes this is the
+somewhat vague it is tempting to assume the user's intent to speed along the interaction. Sometimes this is the
 right approach and sometimes it is not. If you are very confident in the user's input then it is alright to assume, and
 respond with a statement. For example in the Wikipedia Skill the Wikipedia API is used to confidently select the best response.
 
@@ -265,7 +265,7 @@ For example the Alarm skill allows the user to set a complicated alarm all in on
 
 ### Context
 
-Conversational context is a given when speaking to another person, but not always when interacting with a computer based system. Many skills are designed with only a quick back and forth interaction in mind, and can operate well without conversational context, but conversational context can be a powerful addition to a skill and can make the interaction much more life like. Here are some examples of how to use context in conversation. 
+Conversational context is a given when speaking to another person, but not always when interacting with a computer-based system. Many skills are designed for only a quick back-and-forth interaction and can operate well without conversational context. Context can still add much to a skill and make the interaction feel more natural. Here are some examples of how to use context in conversation. 
 
 | Speaker     |                                                                                                                                                                                                                                          |
 |:------------|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
