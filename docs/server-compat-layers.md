@@ -1,22 +1,22 @@
 # Server Compatibility Layers
 
 !!! abstract "In a nutshell"
-    The OVOS servers (for speech-to-text, text-to-speech, translation, and chat personas) can *impersonate* the popular commercial services people already build software for — OpenAI, Google, DeepL, ElevenLabs, Anthropic, and many more. This page lists which imitations each server offers. The benefit: an app written to talk to one of those big-name services can be pointed at your own OVOS server instead, with no code changes, like a power adapter that lets the same plug fit a different socket. See the [STT Server](stt-server.md), [TTS Server](tts-server.md), [Translate Server](translate-server.md), and [Persona Server](persona-server.md) pages, or the [Glossary](glossary.md).
+    The OVOS servers (for speech-to-text, text-to-speech, translation, and chat personas) can *impersonate* popular commercial services such as OpenAI, Google, DeepL, and ElevenLabs. This page lists which imitations each server offers. The benefit is simple: an app written to talk to one of those services can point at your own OVOS server instead, with no code changes. Think of it as a power adapter that lets the same plug fit a different socket. See the [STT Server](stt-server.md), [TTS Server](tts-server.md), [Translate Server](translate-server.md), and [Persona Server](persona-server.md) pages, or the [Glossary](glossary.md).
 
-Each OVOS service server exposes vendor-prefixed routers so existing clients and integrations can connect without modification. Every router accepts the vendor's original request format and translates it to the native OVOS plugin call.
+Each OVOS service server exposes vendor-prefixed routers. Existing clients and integrations can connect without modification. Every router accepts the vendor's original request format and translates it to the native OVOS plugin call.
 
 !!! warning "A compatible wire format does not guarantee identical capabilities"
-    Mimicking a vendor's request/response shape does not always mean the *behavior* underneath
-    matches, especially around streaming. For example, the TTS server's ElevenLabs
-    `stream-input` WebSocket router accepts text incrementally and sends audio back in frames,
-    exactly like the real ElevenLabs protocol — but underneath, each buffered chunk of text is
-    still synthesized with one ordinary, blocking call to the configured OVOS TTS plugin, and
-    only the resulting complete audio is sliced into fixed-size frames afterward. Most OVOS TTS
-    plugins do not support true incremental (word-by-word) synthesis, so the first audio frame
-    is not available until that chunk has finished generating in full — clients built around the
-    real API's low first-byte latency may not see the same latency here. Check the specific
-    router and the underlying plugin's capabilities before assuming parity beyond the wire
-    format.
+    Matching a vendor's request and response shape does not always mean the *behavior*
+    underneath matches, especially around streaming. For example, the TTS server's
+    ElevenLabs `stream-input` WebSocket router accepts text incrementally. It sends audio
+    back in frames, exactly like the real ElevenLabs protocol. Underneath, though, each
+    buffered chunk of text is still synthesized with one ordinary, blocking call to the
+    configured OVOS TTS plugin. Only the resulting complete audio is sliced into
+    fixed-size frames afterward. Most OVOS TTS plugins do not support true incremental,
+    word-by-word synthesis. The first audio frame is not available until that chunk has
+    finished generating in full. Clients built around the real API's low first-byte
+    latency may not see the same latency here. Check the specific router and the
+    underlying plugin's capabilities before assuming parity beyond the wire format.
 
 ---
 
@@ -28,13 +28,13 @@ Each compat router is a self-contained FastAPI `APIRouter` mounted under a fixed
 2. Translates to the server's internal `process()` call.
 3. Returns the vendor's expected response format.
 
-All compat routers are always loaded; no feature flag is needed.
+All compat routers are always loaded. No feature flag is needed.
 
 ---
 
 ## STT Server Compat Routes
 
-`pip install ovos-stt-http-server` — routers implemented in `ovos_stt_http_server.routers`.
+`pip install ovos-stt-http-server`. Routers are implemented in `ovos_stt_http_server.routers`.
 
 | Prefix | Vendor |
 |--------|--------|
@@ -60,7 +60,7 @@ All compat routers are always loaded; no feature flag is needed.
 
 ## TTS Server Compat Routes
 
-`pip install ovos-tts-server` — routers implemented in `ovos_tts_server.routers`.
+`pip install ovos-tts-server`. Routers are implemented in `ovos_tts_server.routers`.
 
 | Prefix | Vendor |
 |--------|--------|
@@ -79,7 +79,7 @@ All compat routers are always loaded; no feature flag is needed.
 
 ## Translate Server Compat Routes
 
-`pip install ovos-translate-server` — routers implemented in `ovos_translate_server.routers`.
+`pip install ovos-translate-server`. Routers are implemented in `ovos_translate_server.routers`.
 
 | Prefix | Vendor |
 |--------|--------|
@@ -95,50 +95,34 @@ All compat routers are always loaded; no feature flag is needed.
 
 ## Persona Server Compat Routes
 
-`pip install ovos-persona-server` — each vendor router lives in its own module in
-`ovos_persona_server` (e.g. `anthropic.py`, `gemini.py`, `cohere.py`, `ollama.py`,
-`huggingface_tgi.py`, `aws_bedrock.py`); the deprecated bare-`/v1` routes live in
-`deprecated_routers.py`.
-
-The persona server baseline is an OpenAI-compatible chat API at **`/openai/v1/chat/completions`**. (The unprefixed `/v1/...` path is also mounted but is **deprecated legacy** — it returns a `Deprecation` header; a bare-root base URL 404s, so always include the `/openai/v1` prefix.) Additional vendor routers are layered on top:
+`pip install ovos-persona-server`. `create_persona_app()` mounts the routes below.
+It mounts a chat router at prefix `/v1` (`POST /v1/chat/completions`, OpenAI-compatible),
+an Ollama router at prefix `/api`, and a UTCP router at `/tools`. It also mounts `/mcp`
+when the `mcp` extra is installed.
 
 | Prefix | Vendor |
 |--------|--------|
-| `/openai/v1`, `/ollama/api` | OpenAI + Ollama |
-| `/anthropic/v1` | Anthropic Claude |
-| `/gemini/v1beta/models` | Google Gemini |
-| `/cohere/v1` | Cohere |
-| `/tgi` | HuggingFace TGI |
-| `/bedrock/model` | AWS Bedrock |
+| `/v1` | OpenAI-compatible chat (`POST /v1/chat/completions`) |
+| `/api` | Ollama |
+| `/tools` | UTCP tool manifest and invocation |
+| `/mcp` | MCP server (requires the `mcp` extra) |
 
-### OpenAI-compatible example (existing, stable)
+!!! note "Other vendor routers exist but are not mounted"
+    The source tree also has vendor-specific router modules for Anthropic, Gemini,
+    Cohere, HuggingFace TGI, and AWS Bedrock. `create_persona_app()` does not mount
+    any of them yet, so their routes are not reachable in the shipped app.
+
+### OpenAI-compatible example
 
 ```python
 import openai
 
-client = openai.OpenAI(api_key="", base_url="http://localhost:8337/openai/v1")
+client = openai.OpenAI(api_key="", base_url="http://localhost:8337/v1")
 response = client.chat.completions.create(
     model="",
     messages=[{"role": "user", "content": "tell me a joke"}]
 )
 print(response.choices[0].message.content)
-```
-
-### Anthropic-compatible example
-
-```python
-import anthropic
-
-client = anthropic.Anthropic(
-    api_key="sk-fake",
-    base_url="http://localhost:8337/anthropic/v1"
-)
-message = client.messages.create(
-    model="<model>",  # e.g. an Anthropic model id
-    max_tokens=256,
-    messages=[{"role": "user", "content": "Hello!"}]
-)
-print(message.content[0].text)
 ```
 
 ---
@@ -149,7 +133,7 @@ print(message.content[0].text)
 - [TTS Server](tts-server.md)
 - [Translate Server](translate-server.md)
 - [Persona Server](persona-server.md)
-- [Agent Interoperability](agent-interop.md) — MCP/UTCP endpoints on these same servers
+- [Agent Interoperability](agent-interop.md): MCP/UTCP endpoints on these same servers
 
 ---
 

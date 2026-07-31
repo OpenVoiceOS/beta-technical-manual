@@ -1,10 +1,10 @@
 # ovos-workshop Documentation
 
 !!! success "Maturity — Mature ⬤⬤⬤⬤⬤"
-    Long-lived, battle-tested, and actively maintained — depend on it freely. Rated by [repository health](maturity.md), not version.
+    This package is long-lived, tested in production, and actively maintained. You can depend on it freely. It is rated by [repository health](maturity.md), not by version number.
 
 !!! abstract "In a nutshell"
-    A "skill" is an add-on that teaches OVOS to do one thing — tell the weather, set a timer, play music. `ovos-workshop` is the starter kit that gives skill makers the building blocks so they do not have to start from scratch. This page is for people who want to build their own skills; if you just use OVOS, you can skip it. See [Skill Design Best Practices](skill-best-practices.md) and the [Glossary](glossary.md).
+    A "skill" is an add-on that teaches OVOS to do one thing. It can tell the weather, set a timer, or play music. `ovos-workshop` is the starter kit that gives skill makers the building blocks, so they do not have to start from scratch. This page is for people who want to build their own skills. If you just use OVOS, you can skip it. See [Skill Design Best Practices](skill-best-practices.md) and the [Glossary](glossary.md).
 
 `ovos-workshop` provides all base classes, decorators, and helpers needed to write skills and applications for OpenVoiceOS.
 
@@ -81,7 +81,7 @@ OVOSSkill                             ovos_workshop/skills/ovos.py
 | [ovos-skill.md](ovos-skill.md) | `SkillApi`, `skill_api_method` | Inter-skill RPC over the [messagebus](bus-service.md) |
 | [skill-filesystem.md](skill-filesystem.md) | `FileSystemAccess` | Sandboxed, XDG-compliant file storage for skills |
 | [resource-files.md](resource-files.md) | `SkillResources` | Locale, dialog, vocab, regex, and other resource files |
-| [skill-settings.md](skill-settings.md) | `JsonStorage`, `PrivateSettings` | Skill settings — persistence, change callbacks, file watching |
+| [skill-settings.md](skill-settings.md) | `JsonStorage`, `PrivateSettings` | Skill settings: persistence, change callbacks, file watching |
 |  [layers.md](layers.md) | `IntentLayers` | Enable/disable intent sets at runtime |
 | [skill-classes.md#skill-launcher](skill-classes.md#skill-launcher) | `SkillLoader`, `PluginSkillLoader` | Loading skills as plugins or in standalone mode |
 
@@ -136,18 +136,18 @@ See [resource-files.md](resource-files.md).
 
 !!! note "Nested or flat, both work"
     Resource lookup walks the whole language directory recursively (`find_resource`'s
-    `os.walk`), so both the nested-by-type layout shown above (`locale/en-us/dialog/x.dialog`)
-    and a flat layout (`locale/en-us/x.dialog`) resolve correctly — pick whichever keeps your
+    `os.walk`). Both the nested-by-type layout shown above (`locale/en-us/dialog/x.dialog`)
+    and a flat layout (`locale/en-us/x.dialog`) resolve correctly. Pick whichever layout keeps your
     skill's `locale/` folder easier to navigate.
 
 ### Intents
 
 Two intent-matching pipeline plugins are supported:
 
-- **[Adapt](adapt-pipeline.md)** — keyword-based, uses `IntentBuilder` and `.voc` files.
+- **[Adapt](adapt-pipeline.md)**: keyword-based, uses `IntentBuilder` and `.voc` files.
 
 
-- **[Padatious](padatious-pipeline.md)** — ML phrase-matching, uses `.intent` files.
+- **[Padatious](padatious-pipeline.md)**: ML phrase-matching, uses `.intent` files.
 
 Register intents with `@intent_handler` or `self.register_intent()`.
 See [decorators.md](decorators.md) and [ovos-skill.md](ovos-skill.md).
@@ -176,7 +176,7 @@ my-skill-id = "my_skill.skill:MySkill"
 
 ```
 
-`ovos-plugin-manager` scans the `opm.skill` group at runtime (via `find_skill_plugins()`) and loads matching classes. The older `ovos.plugin.skill` group name is still accepted as a deprecated alias.
+`ovos-plugin-manager` scans the `opm.skill` group at runtime (via `find_skill_plugins()`) and loads the matching classes. It still accepts the older `ovos.plugin.skill` group name as a deprecated alias.
 
 ---
 

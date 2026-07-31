@@ -11,12 +11,12 @@ and `show_page("MyPage.qml")` for custom QML. `self.gui` is **not** deprecated.
 
 A template/adapter rework is in progress but **not yet released**. It is specified in
 [OVOS-GUI-1](https://github.com/OpenVoiceOS/architecture/blob/dev/ovos-gui-1.md) (a
-closed vocabulary of 22 `SYSTEM_*` templates; `ovos-gui` becomes a pure state/dispatch
-hub; `session_id`-only addressing) and lands via these open PRs:
+closed vocabulary of 22 `SYSTEM_*` templates, `ovos-gui` becomes a pure state/dispatch
+hub, and addressing uses only `session_id`) and lands via these open PRs:
 
-- [ovos-gui#112](https://github.com/OpenVoiceOS/ovos-gui/pull/112) — adapter/template rework
-- [ovos-workshop#420](https://github.com/OpenVoiceOS/ovos-workshop/pull/420) — rebinds `self.gui` to the standalone `ovos-gui-api-client`
-- [ovos-legacy-mycroft-gui-plugin#3](https://github.com/OpenVoiceOS/ovos-legacy-mycroft-gui-plugin/pull/3) and [pyhtmx-gui-client#1](https://github.com/OpenVoiceOS/pyhtmx-gui-client/pull/1) — `opm.gui_adapter` adapters
+- [ovos-gui#112](https://github.com/OpenVoiceOS/ovos-gui/pull/112): adapter/template rework
+- [ovos-workshop#420](https://github.com/OpenVoiceOS/ovos-workshop/pull/420): rebinds `self.gui` to the standalone `ovos-gui-api-client`
+- [ovos-legacy-mycroft-gui-plugin#3](https://github.com/OpenVoiceOS/ovos-legacy-mycroft-gui-plugin/pull/3) and [pyhtmx-gui-client#1](https://github.com/OpenVoiceOS/pyhtmx-gui-client/pull/1): `opm.gui_adapter` adapters
 
 Until these merge, build against the current `self.gui` API described in
 [GUI Support](docs/skill-gui.md). Pages describing the rework are marked **Upcoming**.
@@ -40,10 +40,10 @@ uv venv && uv pip install mkdocs mkdocs-material pymdown-extensions pygments==2.
 mkdocs serve   # preview at http://127.0.0.1:8000
 ```
 
-(`pygments` must be pinned `<2.19`; newer pygments crashes `pymdown-extensions`.)
+(You must pin `pygments` to `<2.19`. Newer pygments crashes `pymdown-extensions`.)
 
 ## Where do I report documentation errors?
 
 Open an issue or PR on
-[ovos-technical-manual](https://github.com/OpenVoiceOS/ovos-technical-manual);
-the site deploys from `master`.
+[ovos-technical-manual](https://github.com/OpenVoiceOS/ovos-technical-manual).
+The site deploys from `master`.

@@ -36,7 +36,7 @@ When enabled, audio frames pass through the configured VAD plugin before reachin
 }
 ```
 
-Multiple verifiers can be listed; a detection is accepted only if all verifiers pass. Combine either `ww_verifiers` or `vad_pre_wake_enabled` — enabling both is redundant.
+You can list multiple verifiers. A detection is accepted only if all verifiers pass. Use either `ww_verifiers` or `vad_pre_wake_enabled`. Enabling both is redundant.
 
 ---
 
@@ -75,16 +75,16 @@ The reference verifier wraps the Silero VAD model to confirm that captured audio
 }
 ```
 
-A lower `threshold` accepts quieter speech; raise it to require stronger speech confidence.
+A lower `threshold` accepts quieter speech. Raise it to require stronger speech confidence.
 
 !!! note
-    `ovos-ww-verifier-silero` is the reference verifier used throughout the listener's own examples and end-to-end tests. It is not a separate PyPI package — it is an `opm.wake_word.verifier` entry point registered by [`ovos-vad-plugin-silero`](vad-plugins.md), so `pip install ovos-vad-plugin-silero` is what makes it available.
+    `ovos-ww-verifier-silero` is the reference verifier used throughout the listener's own examples and end-to-end tests. It is not a separate PyPI package. It is an `opm.wake_word.verifier` entry point registered by [`ovos-vad-plugin-silero`](vad-plugins.md). Run `pip install ovos-vad-plugin-silero` to make it available.
 
 ---
 
 ## Speaker Verification
 
-The `ovos-ww-verifier-plugin-speaker` plugin gates wake-word detections against enrolled household profiles — only recognized household members can activate the assistant; guests are silently ignored. With no profiles enrolled the verifier fails open (everyone allowed).
+The `ovos-ww-verifier-plugin-speaker` plugin gates wake-word detections against enrolled household profiles. Only recognized household members can activate the assistant. The plugin silently ignores guests. With no profiles enrolled, the verifier fails open and allows everyone.
 
 Enrollment is a one-time CLI step per person:
 
@@ -92,7 +92,7 @@ Enrollment is a one-time CLI step per person:
 ovos-speaker-enroll Alice clip1.wav clip2.wav clip3.wav
 ```
 
-Profiles are stored as embedding vectors in `~/.local/share/ovos_speaker_verifier/profiles.json` — no audio is retained. The plugin registers under `opm.wake_word.verifier` as `ovos-ww-verifier-speaker`, so wire it like any other verifier:
+Profiles are stored as embedding vectors in `~/.local/share/ovos_speaker_verifier/profiles.json`. No audio is retained. The plugin registers under `opm.wake_word.verifier` as `ovos-ww-verifier-speaker`. Wire it like any other verifier:
 
 ```json
 {
@@ -122,12 +122,12 @@ Profiles are stored as embedding vectors in `~/.local/share/ovos_speaker_verifie
 | `profiles_path` | str | XDG data dir | Override the profile-storage location |
 | `sample_rate` / `sample_width` / `channels` | int | `16000` / `2` / `1` | PCM format of the incoming audio chunk |
 
-The `model` key accepts any alias from [`speakeronnx`](https://github.com/TigreGotico/speakeronnx)'s model registry — `wespeaker-resnet34` (default), `wespeaker-ecapa512`, `campplus`, `titanet-small`/`titanet-large`, `eres2net`, `redimnet-b2`, and others — or a direct `.onnx` path.
+The `model` key accepts any alias from [`speakeronnx`](https://github.com/TigreGotico/speakeronnx)'s model registry: `wespeaker-resnet34` (default), `wespeaker-ecapa512`, `campplus`, `titanet-small`/`titanet-large`, `eres2net`, `redimnet-b2`, and others. It also accepts a direct `.onnx` path.
 
 !!! note "Threshold is model-specific"
-    The `threshold` does **not** transfer between models. Cosine-similarity scales differ enormously by architecture — the same enrolled-vs-guest pair scored ~0.95 on `titanet-small` but ~0.17 on `campplus`. The default `0.45` is calibrated only for `wespeaker-resnet34`; if you change `model`, you must re-tune `threshold`.
+    The `threshold` does **not** transfer between models. Cosine-similarity scales differ greatly by architecture. The same enrolled-vs-guest pair scored ~0.95 on `titanet-small` but ~0.17 on `campplus`. The default `0.45` is calibrated only for `wespeaker-resnet34`. If you change `model`, you must re-tune `threshold`.
 
-Use case: household authorization — a shared-wake-word deployment where each registered user's voice profile allows or denies activation.
+Use case: household authorization, a shared-wake-word deployment where each registered user's voice profile allows or denies activation.
 
 ---
 
@@ -152,7 +152,7 @@ Use case: household authorization — a shared-wake-word deployment where each r
 
 ## microWakeWord Plugin
 
-> **Status:** [OpenVoiceOS/ovos-ww-plugin-microwakeword](https://github.com/OpenVoiceOS/ovos-ww-plugin-microwakeword) — in development, not yet published to PyPI.
+> **Status:** [OpenVoiceOS/ovos-ww-plugin-microwakeword](https://github.com/OpenVoiceOS/ovos-ww-plugin-microwakeword) is in development. It is not yet published to PyPI.
 
 OVOS wake-word plugin wrapping [microWakeWord](https://github.com/kahrendt/microWakeWord) TFLite streaming models from the ESPHome ecosystem. Enables zero-cost sub-1 MB wake word models originally designed for microcontrollers.
 
@@ -160,10 +160,10 @@ OVOS wake-word plugin wrapping [microWakeWord](https://github.com/kahrendt/micro
 
 ## Related Pages
 
-- [Wake Word Plugins](wake-word-plugins.md) — detection plugin reference
+- [Wake Word Plugins](wake-word-plugins.md): detection plugin reference
 - [VAD Plugins](vad-plugins.md)
 - [Listener / Speech Service](speech-service.md)
 
 ## Further reading
 
-- [A Noise Filter for Better Listening (Pre-Wake VAD)](https://blog.openvoiceos.org/posts/2025-11-06-prewake-vad) — OVOS blog
+- [A Noise Filter for Better Listening (Pre-Wake VAD)](https://blog.openvoiceos.org/posts/2025-11-06-prewake-vad): OVOS blog

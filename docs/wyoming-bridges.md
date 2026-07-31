@@ -1,7 +1,7 @@
 # Wyoming Bridges
 
 !!! abstract "In a nutshell"
-    "Wyoming" is a common language (a network protocol) that voice gadgets use to talk to each other — most famously Home Assistant's voice features. These bridges are small adapter programs that let OVOS's own engines speak that common language, so Home Assistant and similar tools can use an OVOS wake word, speech-to-text, or text-to-speech engine without knowing anything about OVOS. Think of them as translators that let OVOS plug into the wider voice-assistant world. See [STT plugins](stt-plugins.md), [TTS plugins](tts-plugins.md), and the [Glossary](glossary.md).
+    "Wyoming" is a common language (a network protocol) that voice gadgets use to talk to each other. Home Assistant's voice features are the best-known example. These bridges are small adapter programs that let OVOS's own engines speak that common language. Home Assistant and similar tools can then use an OVOS wake word, speech-to-text, or text-to-speech engine without knowing anything about OVOS. Think of them as translators that let OVOS plug into the wider voice-assistant world. See [STT plugins](stt-plugins.md), [TTS plugins](tts-plugins.md), and the [Glossary](glossary.md).
 
 [Wyoming](https://github.com/rhasspy/wyoming) is a simple TCP-based peer-to-peer protocol
 for voice assistant components, originally developed for Home Assistant's voice pipeline.
@@ -18,14 +18,10 @@ to use OVOS engines without knowing anything about the OVOS plugin system.
 | `wyoming-ovos-tts` | `wyoming-ovos-tts` | 7892 | `opm.tts` |
 | `wyoming-ovos-wakeword` | `wyoming-ovos-wakeword` | 7893 | `opm.wake_word` |
 
-> The port is not a built-in default — it is set by the `--uri` you pass. The
-> values above are the conventional ports used in this manual's examples (the
-> upstream READMEs use overlapping values). `wyoming-ovos-stt` requires `--uri`;
-> `wyoming-ovos-tts` and
-> `wyoming-ovos-wakeword` default to `stdio://`.
+> The port is not a built-in default. You set it with the `--uri` flag. The values above are the conventional ports used in this manual's examples (the upstream READMEs use overlapping values). `wyoming-ovos-stt` requires `--uri`. `wyoming-ovos-tts` and `wyoming-ovos-wakeword` default to `stdio://`.
 
 These three are standalone Wyoming **servers** (console-script entry points), not
-OVOS plugins themselves — each loads an installed OVOS plugin from the matching OPM
+OVOS plugins themselves. Each loads an installed OVOS plugin from the matching OPM
 entry-point group and re-exposes it over the Wyoming protocol.
 
 All three bridges:
@@ -287,7 +283,7 @@ Wyoming client                   wyoming-ovos-wakeword              OVOS plugin 
 **`OVOSWakeWordEventHandler`**
 
 One instance per client connection. Maintains a dict of loaded `HotWordEngine` instances,
-keyed by hotword name (lazy-loaded on first use). The connection is persistent — the
+keyed by hotword name (lazy-loaded on first use). The connection is persistent. The
 handler keeps running (`return True`) for continuous detection.
 
 | Event type | Action |
@@ -301,8 +297,8 @@ handler keeps running (`return True`) for continuous detection.
 ### Lazy model loading
 
 Models are loaded the first time they are requested. Once loaded, they are cached for
-the lifetime of the connection. All hotwords in `mycroft.conf["hotwords"]` are available;
-clients select which to activate via the `Detect` event.
+the lifetime of the connection. All hotwords in `mycroft.conf["hotwords"]` are available.
+Clients select which to activate with the `Detect` event.
 
 ### Running
 
@@ -340,10 +336,10 @@ wyoming-ovos-wakeword --uri tcp://0.0.0.0:7893 --zeroconf my-ovos-wakeword
 
 Configuration is read entirely from `mycroft.conf`:
 
-- `mycroft.conf["listener"]["wake_word"]` — default active wake word name (if no `Detect` event is sent)
+- `mycroft.conf["listener"]["wake_word"]`: default active wake word name (if no `Detect` event is sent)
 
 
-- `mycroft.conf["hotwords"]` — dict of all configured hotword definitions
+- `mycroft.conf["hotwords"]`: dict of all configured hotword definitions
 
 ```json
 {

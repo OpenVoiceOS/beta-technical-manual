@@ -40,7 +40,7 @@ __version__ = f"{VERSION_MAJOR}.{VERSION_MINOR}.{VERSION_BUILD}" + (f"a{VERSION_
 
 ```
 
-`read_version()` in `scripts/_version_utils.py` parses this block; `update_version()` in `scripts/update_version.py` rewrites it via `write_version_block()`. `update_alpha()` in `scripts/remove_alpha.py` sets `VERSION_ALPHA = 0` (declare stable). `get_version()` in `scripts/get_version.py` reads and formats the string.
+`read_version()` in `scripts/_version_utils.py` parses this block. `update_version()` in `scripts/update_version.py` rewrites it via `write_version_block()`. `update_alpha()` in `scripts/remove_alpha.py` sets `VERSION_ALPHA = 0` to declare stable. `get_version()` in `scripts/get_version.py` reads and formats the string.
 
 ### Version bump rules
 
@@ -61,7 +61,7 @@ Priority is major > minor > build > alpha. If the current version is already sta
 
 ## Alpha Release (on PR merge to `dev`)
 
-Your repo's workflow calls `publish-alpha.yml@dev`. **All steps — version bump, changelog, pre-release tag, release PR, PyPI publish, and Matrix notify — are jobs inside `publish-alpha.yml` itself**, each gated by an input. Your wrapper file is just the trigger plus the `uses:` call.
+Your repo's workflow calls `publish-alpha.yml@dev`. **The version bump, changelog, pre-release tag, release PR, PyPI publish, and Matrix notify are all jobs inside `publish-alpha.yml` itself**, each gated by an input. Your wrapper file is just the trigger plus the `uses:` call.
 
 Worked example: a repo currently at version `1.2.3` merges a PR to `dev` labeled `minor`.
 
@@ -101,7 +101,9 @@ your-repo workflow  (e.g. release.yml)
                 │   pypa/gh-action-pypi-publish@release/v1 → PyPI as 1.3.0a1 (uses PYPI_TOKEN)
                 │
                 └─ [notify job]   if: notify_matrix && PR merged
-                    calls notify-matrix.yml@dev → OVOS Matrix channel (uses MATRIX_TOKEN)
+                    sends the notification itself with a raw curl to the Matrix API
+                    (notify-matrix.yml exposes the same logic standalone; the two are
+                    not wired together) (uses MATRIX_TOKEN)
 
 ```
 
@@ -147,13 +149,15 @@ your-repo workflow  (e.g. publish_stable.yml)
                 │   ad-m/github-push-action → push master → dev
                 │
                 └─ [notify job]   if: notify_matrix
-                    calls notify-matrix.yml@dev → OVOS Matrix channel
+                    sends the notification itself with a raw curl to the Matrix API
+                    (notify-matrix.yml exposes the same logic standalone; the two are
+                    not wired together)
 
 ```
 
 ### Why the bot guard is critical
 
-`git-auto-commit-action` pushes the version commit (removing alpha) directly to the stable branch. Without the `if: github.actor != 'github-actions[bot]'` guard, that push would re-trigger the `push: master` event → another run → another tag attempt → failure (tag already exists) or an infinite loop.
+`git-auto-commit-action` pushes the version commit (removing alpha) directly to the stable branch. Without the `if: github.actor != 'github-actions[bot]'` guard, that push would re-trigger the `push: master` event. That would start another run, and another tag attempt, which fails because the tag already exists, or loops forever.
 
 The guard exists at both layers for belt-and-suspenders protection:
 
@@ -172,7 +176,7 @@ After a stable release is published to PyPI, the constraints files in [ovos-rele
 | `constraints-testing.txt` | Testing |
 | `constraints-stable.txt` | Stable |
 
-The bounds tighten by channel: `constraints-alpha.txt` uses pure `>=` (e.g. `ovos-audio>=2.1.1a1`) to always pull the newest pre-release; `constraints-testing.txt` caps at the next major (e.g. `ovos-audio>=1.1.0,<2.0.0`); `constraints-stable.txt` caps at the next minor (e.g. `ovos-audio>=0.4.0,<0.5.0`). Users get the latest compatible version within their chosen channel. `downstream-check.yml` reads `constraints-alpha.txt` (default branch `main`) to compute reverse dependencies; the channel-compatibility check in `release-preview.yml` reads all three.
+The bounds tighten by channel. `constraints-alpha.txt` uses pure `>=` (e.g. `ovos-audio>=2.1.1a1`) to always pull the newest pre-release. `constraints-testing.txt` caps at the next major (e.g. `ovos-audio>=1.1.0,<2.0.0`). `constraints-stable.txt` caps at the next minor (e.g. `ovos-audio>=0.4.0,<0.5.0`). Users get the latest compatible version within their chosen channel. `downstream-check.yml` reads `constraints-alpha.txt` (default branch `main`) to compute reverse dependencies. The channel-compatibility check in `release-preview.yml` reads all three.
 
 ---
 
@@ -184,7 +188,7 @@ Both `publish-alpha.yml` and `publish-stable.yml` support `workflow_dispatch`, s
 - A version bump was needed but the PR was merged without the right labels (dispatch forces an alpha bump).
 - Testing the release pipeline on a new repo.
 
-For this to work your wrapper's job condition must allow dispatch — `bump_version` runs on either a merged PR or a manual dispatch:
+For this to work, your wrapper's job condition must allow dispatch. `bump_version` runs on either a merged PR or a manual dispatch:
 
 ```yaml
 if: github.event.pull_request.merged == true || github.event_name == 'workflow_dispatch'

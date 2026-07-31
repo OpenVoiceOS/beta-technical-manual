@@ -1,17 +1,17 @@
 # OVOS Release Channels & Installation Options
 
 !!! abstract "In a nutshell"
-    OVOS is built from many small swappable pieces, and this page explains the different ways to install them and how to pick how cutting-edge (or how rock-stable) your version is — a "release channel" is like choosing between a tested, stable edition or an early-preview edition with the newest features but more rough edges. Most people should ignore the details and just use the guided [`ovos-installer`](ovos-installer.md); the manual steps here are for tinkerers who want precise control (see the [Glossary](glossary.md) for terms).
+    OVOS is built from many small swappable pieces. This page explains the different ways to install them and how to pick how new (or how stable) your version is. A "release channel" is like choosing between a tested, stable edition or an early-preview edition with the newest features but more rough edges. Most people should ignore the details and just use the guided [`ovos-installer`](ovos-installer.md). The manual steps here are for tinkerers who want precise control (see the [Glossary](glossary.md) for terms).
 
 !!! tip "Just want it working? Use the installer."
-    Most people should install OVOS with the **[`ovos-installer`](ovos-installer.md)** — a guided
+    Most people should install OVOS with the **[`ovos-installer`](ovos-installer.md)**, a guided
     wizard that handles everything. The manual `pip` commands and version bounds below are for
     people who want fine-grained control (custom/headless setups). A few terms used on this page:
-    **extras** = optional add-on bundles you list in brackets, e.g. `ovos-core[mycroft]`;
-    **constraints file** = a version "filter" that bounds which package versions may be installed;
+    **extras** = optional add-on bundles you list in brackets, e.g. `ovos-core[mycroft]`.
+    **constraints file** = a version "filter" that bounds which package versions may be installed.
     **headless** = a device with no monitor/keyboard (e.g. a Raspberry Pi you SSH into).
 
-Open Voice OS (OVOS) is a **modular voice assistant platform** that lets you install only the components you need. Whether you're building a lightweight voice interface or a full-featured smart assistant, OVOS gives you flexibility through modular packages and optional feature sets called **extras**.
+Open Voice OS (OVOS) is a **modular voice assistant platform** that lets you install only the components you need. You might build a lightweight voice interface or a full-featured smart assistant. Either way, OVOS gives you flexibility through modular packages and optional feature sets called **extras**.
 
 ---
 
@@ -22,9 +22,9 @@ Depending on your experience level and goals, you can choose one of the followin
 ### 1. [The `ovos-installer`](ovos-installer.md) (Recommended)
 The easiest way for most users. A guided TUI (Text User Interface) script that handles dependencies, environment setup, and service configuration for you.
 
-### 2. [raspOVOS](install-raspovos.md) — turnkey Raspberry Pi image
+### 2. [raspOVOS](install-raspovos.md): pre-built Raspberry Pi image
 The flagship, actively maintained pre-built image for the Raspberry Pi. Flash it and
-boot straight into a working assistant — no manual install steps required.
+boot straight into a working assistant. No manual install steps are required.
 
 ### 3. Manual Installation (Advanced)
 Install individual components via `pip` or `uv`. Best for developers or custom integration (e.g., headless nodes, Docker containers).
@@ -43,17 +43,17 @@ ovos-core --version                 # if the CLI entry point is available on thi
 
 `pip show` also lists a package's declared `Requires:`, which is a quick way to check
 whether a dependency bump you're considering is even compatible with what else is
-installed. If `ovos-core --version` isn't recognized, fall back to `pip show ovos-core`
-— not every release exposes a `--version` flag on the CLI.
+installed. If `ovos-core --version` isn't recognized, fall back to `pip show ovos-core`.
+Not every release exposes a `--version` flag on the CLI.
 
 ## Before you upgrade: see what changed
 
-This manual intentionally never hardcodes a current version number — by the time you
+This manual intentionally never hardcodes a current version number. By the time you
 read this page, any number here would already be stale. Before upgrading, check the
 **source of truth** for what actually changed in the version you're moving to:
 
 - Each repository's **GitHub Releases** page (e.g.
-  [ovos-core/releases](https://github.com/OpenVoiceOS/ovos-core/releases)) — swap
+  [ovos-core/releases](https://github.com/OpenVoiceOS/ovos-core/releases)). Swap
   `ovos-core` for the package you're upgrading.
 - Its `CHANGELOG.md`, where the repository keeps one (generated from conventional
   commits — see [Semantic Versioning](https://semver.org/)).
@@ -61,7 +61,7 @@ read this page, any number here would already be stale. Before upgrading, check 
 ## Pinning or rolling back a single package
 
 The [freeze/force-reinstall pattern](#rolling-back) below rolls back your *entire*
-environment. If only one package regressed, you don't need the sledgehammer — pin
+environment. If only one package regressed, you don't need the sledgehammer. Pin
 just that package instead:
 
 ```bash
@@ -80,13 +80,13 @@ so the pin survives the next time you reinstall from that constraints file, inst
 being silently overwritten by the channel's range.
 
 Either way, you need to know what the old, working version was. Get it from your frozen
-snapshot — `grep ovos-stt-plugin-whisper known-good.txt` (see [Rolling Back](#rolling-back)
-below) — or, if you didn't freeze one, from `pip show ovos-stt-plugin-whisper` run *before*
+snapshot with `grep ovos-stt-plugin-whisper known-good.txt` (see [Rolling Back](#rolling-back)
+below), or, if you didn't freeze one, from `pip show ovos-stt-plugin-whisper` run *before*
 you upgraded.
 
-Pinning the package alone isn't enough: the process that already loaded the old, broken
+Pinning the package alone isn't enough. The process that already loaded the old, broken
 version keeps running it in memory until it restarts. Restart whichever service loads that
-package — e.g. `systemctl --user restart ovos-dinkum-listener.service` for an STT plugin —
+package (e.g. `systemctl --user restart ovos-dinkum-listener.service` for an STT plugin)
 before you consider the rollback complete.
 
 !!! note "A release channel isn't a maturity guarantee"
@@ -99,9 +99,9 @@ before you consider the rollback complete.
 
 ## Choosing a Release Channel
 
-OVOS follows [**semantic versioning**](https://semver.org/) (SemVer) with a **rolling release model** and supports three release channels — **stable**, **testing**, and **alpha** — so you can pick the right balance between cutting-edge features and system reliability.
+OVOS follows [**semantic versioning**](https://semver.org/) (SemVer) with a **rolling release model**. It supports three release channels: **stable**, **testing**, and **alpha**. Pick the right balance between newer features and system reliability.
 
-These channels are managed via the [constraints files](https://pip.pypa.io/en/stable/user_guide/#constraints-files) hosted in the [ovos-releases](https://github.com/OpenVoiceOS/ovos-releases) repository. **If unsure, choose Testing** — it gets bug fixes and new features without the instability of Alpha.
+These channels are managed via the [constraints files](https://pip.pypa.io/en/stable/user_guide/#constraints-files) hosted in the [ovos-releases](https://github.com/OpenVoiceOS/ovos-releases) repository. **If unsure, choose Testing.** It gets bug fixes and new features without the instability of Alpha.
 
 ### 1. Stable Channel (Production-Ready)
 
@@ -110,17 +110,18 @@ These channels are managed via the [constraints files](https://pip.pypa.io/en/st
 - ✅ Recommended for production or everyday use
 
 !!! note "\"Production-ready\" means package-version stability, not a hardened default"
-    This channel guarantees the *package versions* are stable and tested — it says nothing
+    This channel guarantees the *package versions* are stable and tested. It says nothing
     about the default plugin configuration. Out of the box, that config still ships cloud
     STT/TTS/translation and an unauthenticated bus. See
     [Privacy & Security](privacy-security.md) for the actual network surface and how to
     harden it.
 
-!!! warning "Stable is currently a stale snapshot — Testing is recommended today"
-    Formal codename releases have not landed yet, so `constraints-stable.txt` reflects an
-    older, unmaintained snapshot (ovos-core `1.3.1`) rather than the most polished or actively
-    supported versions. Until the first codename release is cut, **Testing** (ovos-core `2.1.1`)
-    is the recommended channel for most distros and users, matching upstream guidance in
+!!! warning "Stable pins an older snapshot than Testing"
+    Formal codename releases have not landed yet. `constraints-stable.txt` still pins the
+    versions from the last stable release (ovos-core `1.3.1` at that time), an older,
+    unmaintained snapshot. `constraints-testing.txt` tracks newer versions (ovos-core `2.1.1`
+    at the time of writing). Until the next codename release ships, use **Testing** as the
+    recommended channel for most distros and users. This matches upstream guidance in
     [ovos-releases](https://github.com/OpenVoiceOS/ovos-releases).
 
 ```bash
@@ -147,7 +148,7 @@ uv pip install ovos-core[mycroft] -c https://raw.githubusercontent.com/OpenVoice
 
 !!! warning "`--pre` is not scoped to OVOS"
     `--pre` tells `pip`/`uv` to allow pre-release versions of **every** dependency it
-    resolves, not just the `ovos-*` packages — a transitive dependency you didn't expect
+    resolves, not just the `ovos-*` packages. A transitive dependency you didn't expect
     can also jump to a pre-release. Use a dedicated virtual environment for alpha testing.
 
 ```bash
@@ -178,7 +179,7 @@ uv pip install ovos-core[mycroft] --pre -c https://raw.githubusercontent.com/Ope
     ovos-busmon
     ```
 
-    Say "Hey Mycroft, what time is it" once everything above has settled — if you get a spoken
+    Say "Hey Mycroft, what time is it" once everything above has settled. If you get a spoken
     answer, the install is working end to end. See
     [Production Operations](production-operations.md#keep-services-running-systemd-units) to
     turn these into supervised systemd services instead of foreground processes.
@@ -189,19 +190,19 @@ uv pip install ovos-core[mycroft] --pre -c https://raw.githubusercontent.com/Ope
 
 Rather than using a full distro, you can manually pick which components to install:
 
-- [`ovos-messagebus`](https://github.com/OpenVoiceOS/ovos-messagebus) – internal messaging between services
-- [`ovos-core`](https://github.com/OpenVoiceOS/ovos-core) – skill handling
-- [`ovos-audio`](https://github.com/OpenVoiceOS/ovos-audio) – text-to-speech ([TTS](tts-plugins.md)), audio playback
-- [`ovos-dinkum-listener`](https://github.com/OpenVoiceOS/ovos-dinkum-listener) – wake word, voice activation
-- [`ovos-gui`](https://github.com/OpenVoiceOS/ovos-gui) – GUI integration (⚠️ the legacy [GUI](gui-service.md) is deprecated and not usable right now; a replacement is in progress — you can omit this on most setups)
-- [`ovos-PHAL`](https://github.com/OpenVoiceOS/ovos-PHAL) – hardware abstraction layer
+- [`ovos-messagebus`](https://github.com/OpenVoiceOS/ovos-messagebus): internal messaging between services
+- [`ovos-core`](https://github.com/OpenVoiceOS/ovos-core): skill handling
+- [`ovos-audio`](https://github.com/OpenVoiceOS/ovos-audio): text-to-speech ([TTS](tts-plugins.md)), audio playback
+- [`ovos-dinkum-listener`](https://github.com/OpenVoiceOS/ovos-dinkum-listener): wake word, voice activation
+- [`ovos-gui`](https://github.com/OpenVoiceOS/ovos-gui): GUI integration (warning: the legacy [GUI](gui-service.md) is deprecated and not usable right now. A replacement is in progress, so you can omit this on most setups)
+- [`ovos-PHAL`](https://github.com/OpenVoiceOS/ovos-PHAL): hardware abstraction layer
 
-Media playback (music, podcasts, video) is a separate concern from the components above —
-by default it's handled by a bundled backend inside `ovos-audio`
-(`enable_old_audioservice: true`); see [ovos-media](ovos-media.md) for the upcoming
+Media playback (music, podcasts, video) is a separate concern from the components above.
+By default it is handled by a bundled backend inside `ovos-audio`
+(`enable_old_audioservice: true`). See [ovos-media](ovos-media.md) for the upcoming
 standalone player and how to opt into it.
 
-This is useful if you're building something like a **Hivemind node** or **headless device**, where you might not need audio output or a GUI.
+This is useful if you are building something like a **Hivemind node** or **headless device**, where you might not need audio output or a GUI.
 
 ---
 
@@ -212,7 +213,7 @@ OVOS uses Python extras (e.g., `[mycroft]`) to let you install predefined groups
 | Extra Name           | Purpose                                                                 |
 |----------------------|-------------------------------------------------------------------------|
 | `mycroft`            | Core services for full voice assistant experience                      |
-| `lgpl`               | Adds [Padatious](padatious-pipeline.md) and its neural-network backend `fann2` (LGPL). Needs system build tools — see below |
+| `lgpl`               | Adds [Padatious](padatious-pipeline.md) and its neural-network backend `fann2` (LGPL). Needs system build tools, see below |
 | `plugins`            | Includes various plugin interfaces                                     |
 | `skills-essential`   | Must-have skills (like system control, clock, weather)                 |
 | `skills-audio`       | Audio I/O-based skills                                                  |
@@ -221,13 +222,13 @@ OVOS uses Python extras (e.g., `[mycroft]`) to let you install predefined groups
 | `skills-media`       | [OCP](ocp-pipeline.md) (OpenVoiceOS [Common Play](ocp-pipeline.md)) media playback skills                    |
 | `skills-desktop`     | Desktop environment integrations                                       |
 
-Extras and a release channel are independent choices — combine them in one command by
+Extras and a release channel are independent choices. Combine them in one command by
 adding both the bracketed extras and a `-c` constraints file:
 
 ### Full Installation Example
 
-The `lgpl` extra pulls in `fann2`, which is published as a source distribution only — there are
-no wheels — so pip/uv compiles it during install. On Debian/Ubuntu, install its build
+The `lgpl` extra pulls in `fann2`, which is published as a source distribution only. There are
+no wheels, so pip/uv compiles it during install. On Debian/Ubuntu, install its build
 prerequisites first:
 
 ```bash
@@ -235,7 +236,7 @@ sudo apt install -y swig libfann-dev
 ```
 
 Without them the install below fails while building `fann2`. Omit the `lgpl` extra if you do not
-need the Padatious pipeline; [padacioso](padatious-pipeline.md) is the pure-Python alternative.
+need the Padatious pipeline. [padacioso](padatious-pipeline.md) is the pure-Python alternative.
 
 ```bash
 uv pip install "ovos-core[mycroft,lgpl,plugins,skills-essential,skills-audio,skills-gui,skills-internet,skills-media,skills-desktop]" \
@@ -268,7 +269,7 @@ uv pip install "ovos-core[mycroft]" -c /srv/ovos/constraints-stable.txt
 then install with the index disabled:
 
 ```bash
-# connected machine (uv has no download subcommand — use pip here)
+# connected machine (uv has no download subcommand, use pip here)
 pip download "ovos-core[mycroft]" -c constraints-stable.txt -d ./wheels
 # isolated machine
 uv pip install --no-index --find-links ./wheels "ovos-core[mycroft]"
@@ -292,7 +293,7 @@ fetch the channel file on every operation:
     Installing a skill *at runtime* over the bus resolves the skill repository through
     `api.github.com` and `raw.githubusercontent.com`. A local constraints file removes one
     network dependency, but runtime skill installation cannot work on a network where those
-    endpoints are unreachable — install skills as ordinary packages from your wheelhouse
+    endpoints are unreachable. Install skills as ordinary packages from your wheelhouse
     instead. See [Skill Installer](skill-installer.md).
 
 ---
@@ -301,8 +302,8 @@ fetch the channel file on every operation:
 
 - OVOS is **fully modularized**, with each major service in its own repository, so you install only what you need.
 - All packages follow [Semantic Versioning (SemVer)](https://semver.org/), so you can rely on versioning to understand stability and compatibility.
-- Constraints files hosted in [ovos-releases](https://github.com/OpenVoiceOS/ovos-releases) are the current mechanism for bounding system versions across the channels. Formal codename releases are still pending — see the note under the Stable channel.
-- Once **codename releases** begin, packagers should pin to the versioned (tagged) constraints file URL rather than the `main` branch, so a package doesn't silently pick up constraint changes after its QA cycle is done.
+- Constraints files hosted in [ovos-releases](https://github.com/OpenVoiceOS/ovos-releases) are the current mechanism for bounding system versions across the channels. Formal codename releases are still pending. See the note under the Stable channel.
+- Once **codename releases** begin, packagers should pin to the versioned (tagged) constraints file URL rather than the `main` branch. This way a package doesn't silently pick up constraint changes after its QA cycle is done.
 
 !!! note "Channel constraints are ranges, not exact pins"
     Every entry in the published channel constraints files is a compatible **range**
@@ -332,11 +333,11 @@ uv pip freeze > known-good.txt
 
 This plain `known-good.txt` in the current directory is the single-machine form of the same
 convention [Production Operations](production-operations.md#staged-upgrades-and-rollback) uses
-for a fleet — a dated, absolute path like `/etc/ovos/known-good-2026-07-01.txt`. Same pattern,
+for a fleet: a dated, absolute path like `/etc/ovos/known-good-2026-07-01.txt`. Same pattern,
 just scaled from one machine to many.
 
 If an upgrade misbehaves, `pip`/`uv` won't downgrade a package on their own just because a
-newer constraints file changed — an ordinary `install` call treats an already-satisfied
+newer constraints file changed. An ordinary `install` call treats an already-satisfied
 requirement as nothing to do. Force the reinstall of the exact frozen versions instead:
 
 ```bash
@@ -350,9 +351,9 @@ for the same pattern applied across a fleet of devices rather than one machine.
 
 ## ⚠️ Tips & Caveats
 
-- Using `--pre` installs pre-releases across all dependencies, not just OVOS-specific ones — so use with caution.
+- Using `--pre` installs pre-releases across all dependencies, not just OVOS-specific ones. Use it with caution.
 - You can mix and match extras based on your hardware or use case, e.g., omit GUI skills on a headless server.
-- A constraints file only bounds packages it lists; anything absent resolves freely. If you need an exact, repeatable set of versions, install from your own `uv pip freeze` output rather than from a channel file.
+- A constraints file only bounds packages it lists. Anything absent resolves freely. If you need an exact, repeatable set of versions, install from your own `uv pip freeze` output rather than from a channel file.
 - After installing you need to launch the individual ovos services, either manually or by creating a systemd service
 
 ---

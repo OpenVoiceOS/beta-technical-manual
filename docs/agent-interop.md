@@ -1,9 +1,9 @@
 # Agent Interoperability: MCP, UTCP, and A2A
 
 !!! abstract "In a nutshell"
-    This page is about letting OVOS work *together with other AI systems*. OVOS can offer its abilities — like speech, translation, and reasoning — to outside AI tools, and can also call on them, using a few shared "languages" (the protocols MCP, UTCP, and A2A) so different systems can find and use each other. Think of it as agents agreeing on a common plug and socket so they can cooperate. See the [Glossary](glossary.md) for unfamiliar terms.
+    This page is about letting OVOS work *together with other AI systems*. OVOS can offer its abilities, like speech, translation, and reasoning, to outside AI tools. It can also call on them, using a few shared "languages" (the protocols MCP, UTCP, and A2A) so different systems can find and use each other. Think of it as agents agreeing on a common plug and socket so they can cooperate. See the [Glossary](glossary.md) for unfamiliar terms.
 
-OVOS exposes its speech, translation, and reasoning services as first-class agent tools via two discovery/calling protocols — **MCP** (Model Context Protocol) and **UTCP** (Universal Tool Calling Protocol) — and implements bidirectional **A2A** (Agent-to-Agent) bridging.
+OVOS exposes its speech, translation, and reasoning services as agent tools via two discovery and calling protocols: **MCP** (Model Context Protocol) and **UTCP** (Universal Tool Calling Protocol). It also implements bidirectional **A2A** (Agent-to-Agent) bridging.
 
 !!! note "Not what you're looking for?"
     This page is about LLM/agent tool protocols (MCP/A2A). If you're building a voice
@@ -64,7 +64,7 @@ ovos-tts-server --engine ovos-tts-plugin-piper --port 9667 --mcp
 
 UTCP tools exposed: `tts_status`, `tts_synthesize_v2`, `tts_synthesize_legacy`.
 
-MCP tool: `synthesize` — parameters: `text` (str), `voice` (str, optional), `lang` (str, optional). Returns base64 WAV.
+MCP tool: `synthesize`. Parameters: `text` (str), `voice` (str, optional), `lang` (str, optional). Returns base64 WAV.
 
 ```bash
 # Discover all TTS tools via UTCP
@@ -90,7 +90,7 @@ UTCP tools: `ovos_translate.translate`, `ovos_translate.detect_language`, and th
 
 MCP tools: `translate` (params: `text`, `target_lang`, optional `source_lang`), `detect_language` (param: `text`).
 
-### Persona Server — Tool Plugins via MCP + UTCP
+### Persona Server: Tool Plugins via MCP + UTCP
 
 The persona server surfaces every installed OPM `ToolBox` plugin as both a UTCP tool and an MCP tool.
 
@@ -116,10 +116,18 @@ A2A is the [Google A2A open protocol](https://google.github.io/A2A/). An A2A ser
 
 ```bash
 pip install "ovos-persona-server[a2a]"
-ovos-persona-server --persona my_persona.json --a2a-base-url http://localhost:8337
+ovos-persona-server --persona my_persona.json
 ```
 
-The `OVOSPersonaAgentExecutor` wraps the active persona and exposes it at `/a2a`. The agent card at `/a2a/.well-known/agent.json` advertises the persona's skills and capabilities. Both blocking (`tasks/send`) and streaming (`tasks/sendSubscribe`) modes are supported when the persona solver supports streaming.
+The `OVOSPersonaAgentExecutor` wraps the active persona. `create_a2a_application()`
+builds the A2A app, with an agent card at `/.well-known/agent.json` and support for
+blocking (`tasks/send`) and streaming (`tasks/sendSubscribe`) modes when the persona
+solver supports streaming.
+
+!!! note "A2A support exists in source but the CLI does not expose it yet"
+    The `ovos-persona-server` argparse only accepts `--persona`, `--host`, and `--port`.
+    There is no `--a2a-base-url` flag or other CLI option to start the A2A app.
+    `create_a2a_application()` is currently called only from the test suite.
 
 ### OVOS as A2A Consumer
 
@@ -149,7 +157,7 @@ Config keys:
 
 ---
 
-## ovos-tool-adapters — Consuming MCP/UTCP from the Agentic Loop
+## ovos-tool-adapters: Consuming MCP/UTCP from the Agentic Loop
 
 [OpenVoiceOS/ovos-tool-adapters](https://github.com/OpenVoiceOS/ovos-tool-adapters) bridges external MCP and UTCP servers into the OVOS agentic loop as standard `ToolBox` plugins.
 
@@ -177,7 +185,7 @@ Add to a persona JSON:
 }
 ```
 
-> `ovos-persona` selects its engine via `solvers` (or the legacy alias `handlers`); the agentic loop names its inner LLM with `brain` and loads adapters via `toolboxes`. The `chat_module` key seen in some READMEs is not consumed by either `ovos-persona` or `ovos-tool-adapters`.
+> `ovos-persona` selects its engine via `solvers` (or the legacy alias `handlers`). The agentic loop names its inner LLM with `brain` and loads adapters via `toolboxes`. Neither `ovos-persona` nor `ovos-tool-adapters` reads the `chat_module` key seen in some READMEs.
 
 ### MCP transports (`ovos-mcp-toolbox`)
 
@@ -214,7 +222,7 @@ A background asyncio event loop keeps sessions alive between tool calls. Each se
 Tool discovery degrades gracefully: if the `mcp`/`utcp` extra is missing, or the
 configured server cannot be reached, `list_tools()` logs a `LOG.warning` and
 returns an empty list rather than crashing the agent loop. A misconfigured
-toolbox therefore loads zero tools silently — check the logs when expected tools
+toolbox therefore loads zero tools silently. Check the logs when expected tools
 are absent.
 
 !!! note "`ovos-tool-adapters` and the Persona Server's own MCP/UTCP bridge"
@@ -230,4 +238,4 @@ are absent.
 
 ## Further reading
 
-- [Building an Open and Interoperable Voice Ecosystem (MCP / UTCP / A2A)](https://blog.openvoiceos.org/posts/2025-10-24-protocol_interoperability) — OVOS blog
+- [Building an Open and Interoperable Voice Ecosystem (MCP / UTCP / A2A)](https://blog.openvoiceos.org/posts/2025-10-24-protocol_interoperability): OVOS blog

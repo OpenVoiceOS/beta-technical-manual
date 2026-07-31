@@ -2,7 +2,7 @@
 # Reusable Workflow Reference
 
 !!! abstract "In a nutshell"
-    This page is the detailed reference for every shared automation recipe ("workflow") that OVOS projects can plug in — one section per recipe, listing all its settings and what each does. It is aimed at maintainers wiring up a project's testing and release machinery, so it reads like a settings catalog rather than a tutorial. If you just want the big picture of what these automations are for, start with the [gh-automations overview](gh-automations-overview.md); see also the [Glossary](glossary.md).
+    This page is the detailed reference for every shared automation recipe ("workflow") that OVOS projects can plug in, one section per recipe, listing all its settings and what each does. It is aimed at maintainers wiring up a project's testing and release machinery, so it reads like a settings catalog rather than a tutorial. If you just want the big picture of what these automations are for, start with the [gh-automations overview](gh-automations-overview.md). See also the [Glossary](glossary.md).
 
 All reusable workflows are in `.github/workflows/` and are called via:
 
@@ -94,7 +94,7 @@ Runs on PR merge to `dev`. Bumps the version, optionally updates changelog and c
 | `tag_prerelease` | `publish_prerelease: true` + `bump_version` succeeded | Creates GitHub pre-release via `ncipollo/release-action@v1` |
 | `propose_release` | `propose_release: true` + `bump_version` succeeded | Creates `release-X.Y.ZaN` branch, opens PR to `master` via GitHub API |
 | `publish_pypi` | `publish_pypi: true` + `bump_version` succeeded | Builds with `uv build`, publishes via `pypa/gh-action-pypi-publish@release/v1` (uses `PYPI_TOKEN`) |
-| `notify` | `notify_matrix: true` + `bump_version` succeeded + PR merged | Calls `notify-matrix.yml` with a canned message |
+| `notify` | `notify_matrix: true` + `bump_version` succeeded + PR merged | Sends a Matrix notification directly (duplicates, does not call, notify-matrix.yml) with a canned message |
 
 ### Bot guard
 
@@ -138,7 +138,7 @@ jobs:
 - `publish_pypi: true` uses `pypa/gh-action-pypi-publish@release/v1` (pinned to stable tag).
 
 
-- `propose_release` uses `git checkout -B` (force-create) and `gh pr create` with duplicate-check — both steps are idempotent on retry.
+- `propose_release` uses `git checkout -B` (force-create) and `gh pr create` with duplicate-check, both steps are idempotent on retry.
 
 ---
 
@@ -190,7 +190,7 @@ Runs on push to `master` (typically triggered by merging the release PR). Remove
 | `publish_pypi` | `publish_pypi: true` + `bump_version` succeeded | Builds and publishes to PyPI (stable) via `pypa/gh-action-pypi-publish@release/v1` |
 | `cleanup` | after `bump_version` | Tidies up the short-lived release branch |
 | `sync_dev` | `sync_dev: true` + `bump_version` succeeded | Pushes `master` → `dev` via `ad-m/github-push-action` |
-| `notify` | `notify_matrix: true` + `bump_version` succeeded | Calls `notify-matrix.yml@dev` with configurable channel and message |
+| `notify` | `notify_matrix: true` + `bump_version` succeeded | Sends a Matrix notification directly (duplicates, does not call, notify-matrix.yml) with configurable channel and message |
 
 ### Bot guard
 
@@ -322,7 +322,7 @@ Runs OPM (OVOS Plugin Manager) plugin detection and validation on a **single Pyt
 
 The report is split into two tables:
 
-**OPM Detection** — one row per plugin type (e.g. `skill`, `tts`):
+**OPM Detection**, one row per plugin type (e.g. `skill`, `tts`):
 
 ```text
 ✅ Plugin Status: PASS
@@ -348,7 +348,7 @@ OPM Detection:
 
 ```
 
-**Entry Point Validation** — one row per named entry point (supports packages that register multiple entry points per type, e.g. a multi-voice [TTS](tts-plugins.md)):
+**Entry Point Validation**, one row per named entry point (supports packages that register multiple entry points per type, e.g. a multi-voice [TTS](tts-plugins.md)):
 
 ```text
 Entry Point Validation:
@@ -362,7 +362,7 @@ Entry Point Validation:
 
 ```
 
-Non-plugin repos: `ℹ️ Not an OVOS plugin — OPM check skipped.`
+Non-plugin repos: `ℹ️ Not an OVOS plugin, OPM check skipped.`
 
 ### Typical usage
 
@@ -488,7 +488,7 @@ jobs:
 
 ```
 
-To require Padatious (C extension — add `swig` to system_deps):
+To require Padatious (C extension, add `swig` to system_deps):
 
 ```yaml
     with:
@@ -504,10 +504,10 @@ To require Padatious (C extension — add `swig` to system_deps):
 - The `require_*` inputs trigger a **pre-test** pipeline availability check. If the required plugin is absent the job fails immediately with a clear error message, without running any tests.
 
 
-- The pipeline check reads the `opm.pipeline` entry point group using `importlib.metadata` — no import of the plugin itself is required.
+- The pipeline check reads the `opm.pipeline` entry point group using `importlib.metadata`, no import of the plugin itself is required.
 
 
-- `PADACIOSO_PIPELINE` (pure Python padacioso) is always available via `ovos-workshop`; there is no `require_padacioso` input.
+- `PADACIOSO_PIPELINE` (pure Python padacioso) is always available via `ovos-workshop`. There is no `require_padacioso` input.
 
 
 - Set `require_adapt: true` in skill repos that test Adapt intents so CI fails explicitly if the Adapt plugin is missing from `[test]` deps rather than silently skipping those tests.
@@ -516,7 +516,7 @@ To require Padatious (C extension — add `swig` to system_deps):
 
 ## `coverage.yml`
 
-Runs `pytest --cov`, generates a coverage report, posts it to the job summary, uploads the XML as an artifact, and (on pull requests) posts a `📊 Coverage` section in the shared OVOS PR Checks comment. Set `deploy_pages: true` to also push the HTML report to a `gh-pages` branch — this **replaces** the deprecated [`coverage-pages.yml`](#coverage-pagesyml-deprecated).
+Runs `pytest --cov`, generates a coverage report, posts it to the job summary, uploads the XML as an artifact, and (on pull requests) posts a `📊 Coverage` section in the shared OVOS PR Checks comment. Set `deploy_pages: true` to also push the HTML report to a `gh-pages` branch, this **replaces** the deprecated [`coverage-pages.yml`](#coverage-pagesyml-deprecated).
 
 **Source:** `.github/workflows/coverage.yml`
 
@@ -584,7 +584,7 @@ jobs:
 
 ### Behavior notes
 
-- `pr_comment` only fires on `pull_request` events — job summary is written for all events.
+- `pr_comment` only fires on `pull_request` events, job summary is written for all events.
 
 
 - If all tests are skipped and `coverage.xml` is never generated, the PR comment will note that coverage data is unavailable rather than failing.
@@ -593,7 +593,7 @@ jobs:
 
 ## `coverage-pages.yml` *(deprecated)*
 
-> **Deprecated — use [`coverage.yml`](#coverageyml) with `deploy_pages: true` instead.** Kept for backward compatibility with existing callers; scheduled for removal after 2027-01-01. New repos should not adopt it.
+> **Deprecated, use [`coverage.yml`](#coverageyml) with `deploy_pages: true` instead.** Kept for backward compatibility with existing callers. Scheduled for removal after 2027-01-01. New repos should not adopt it.
 
 Runs `pytest --cov` and deploys the HTML coverage report to GitHub Pages.
 
@@ -844,7 +844,7 @@ Suggested: `fix: update the thing` or `feat: update the thing`
 
 ```
 
-No `version.py` found: `ℹ️ No version.py found — release preview not available.`
+No `version.py` found: `ℹ️ No version.py found, release preview not available.`
 
 ### Typical usage
 
@@ -974,7 +974,7 @@ Follows the canonical 3-phase pattern (`continue-on-error` → format → post �
 
 ```
 
-Coverage icons: ✅ ≥95% · ⚠️ 50–94% · ❌ <50%. Non-skill repos: `ℹ️ Not an OVOS skill repo — check skipped.`
+Coverage icons: ✅ ≥95% · ⚠️ 50–94% · ❌ <50%. Non-skill repos: `ℹ️ Not an OVOS skill repo, check skipped.`
 
 ### Typical usage
 
@@ -1047,7 +1047,7 @@ jobs:
 
 ## `python-support.yml` *(deprecated)*
 
-> **Deprecated — use [`build-tests.yml`](#build-testsyml) instead** (and [`opm-check.yml`](#opm-checkyml) for OPM detection). Kept for backward compatibility; scheduled for removal after 2027-01-01. New repos should not adopt it.
+> **Deprecated, use [`build-tests.yml`](#build-testsyml) instead** (and [`opm-check.yml`](#opm-checkyml) for OPM detection). Kept for backward compatibility. Scheduled for removal after 2027-01-01. New repos should not adopt it.
 
 Runs an install matrix across Python versions and install modes (regular + editable). Optionally checks OPM detection using a legacy `entry_point` ID. Posts a `🐍 Python Support` section to the PR comment.
 
@@ -1098,7 +1098,7 @@ Runs `ruff` and/or `pre-commit` and posts results to the OVOS PR Checks comment.
 
 ## `type-check.yml`
 
-Runs `mypy` and posts a `🔎 Type Check` section. Informational only — never blocks merges unless `fail_on_errors: true`.
+Runs `mypy` and posts a `🔎 Type Check` section. Informational only, never blocks merges unless `fail_on_errors: true`.
 
 **Source:** `.github/workflows/type-check.yml`
 
@@ -1124,7 +1124,7 @@ Runs `mypy` and posts a `🔎 Type Check` section. Informational only — never 
 
 ## `docs-check.yml`
 
-Verifies required documentation files exist and optionally lints Markdown. Posts a `📚 Docs` section. Informational only — never blocks merges unless `fail_on_missing: true`.
+Verifies required documentation files exist and optionally lints Markdown. Posts a `📚 Docs` section. Informational only, never blocks merges unless `fail_on_missing: true`.
 
 **Source:** `.github/workflows/docs-check.yml`
 
@@ -1227,7 +1227,7 @@ Use alongside [`ovoscope.yml`](#ovoscopeyml): `ovoscope.yml` for hand-written E2
 
 ## `tts-intelligibility.yml`
 
-End-to-end TTS intelligibility scoring: synthesises speech with the TTS plugin under test, transcribes it back with a reference STT (faster-whisper tiny), and scores the round-trip with WER/CER. Posts a `🗣️ TTS Intelligibility` section. **Gates by default** — the job fails when mean WER exceeds `max_wer` or the test errors. Set `warn_only: true` for engines/langs still being tuned.
+End-to-end TTS intelligibility scoring: synthesises speech with the TTS plugin under test, transcribes it back with a reference STT (faster-whisper tiny), and scores the round-trip with WER/CER. Posts a `🗣️ TTS Intelligibility` section. **Gates by default**, the job fails when mean WER exceeds `max_wer` or the test errors. Set `warn_only: true` for engines/langs still being tuned.
 
 **Source:** `.github/workflows/tts-intelligibility.yml`
 
@@ -1379,7 +1379,7 @@ The comment is identified by the HTML marker `<!-- ovos-pr-checks -->` in its bo
 
 Sections appear as each workflow completes. Reruns update only the relevant section without touching others.
 
-The aggregation logic lives in `scripts/update_pr_comment.py` — see the [Scripts Reference](#scripts-reference) below.
+The aggregation logic lives in `scripts/update_pr_comment.py`, see the [Scripts Reference](#scripts-reference) below.
 
 ### Adding a new section
 
@@ -1428,13 +1428,13 @@ Shared version-block parsing utilities imported by all other scripts.
 
 **Key functions:**
 
-- `read_version(version_file: str) -> tuple[int, int, int, int]` — parses `START_VERSION_BLOCK/END_VERSION_BLOCK`, returns `(major, minor, build, alpha)`
+- `read_version(version_file: str) -> tuple[int, int, int, int]`, parses `START_VERSION_BLOCK/END_VERSION_BLOCK`, returns `(major, minor, build, alpha)`
 
 
-- `format_version(major, minor, build, alpha) -> str` — formats PEP 440 string
+- `format_version(major, minor, build, alpha) -> str`, formats PEP 440 string
 
 
-- `write_version_block(version_file, major, minor, build, alpha)` — rewrites only the block, preserving all surrounding content
+- `write_version_block(version_file, major, minor, build, alpha)`, rewrites only the block, preserving all surrounding content
 
 ### `scripts/update_version.py`
 
@@ -1503,31 +1503,31 @@ Detects and validates OVOS plugins via OPM. Supports multi-plugin-type repos. Ou
 
 **Key functions:**
 
-- `auto_detect_plugin_types()` — scans `[project.entry-points."opm.*"]` in `pyproject.toml` or `setup.py`
+- `auto_detect_plugin_types()`, scans `[project.entry-points."opm.*"]` in `pyproject.toml` or `setup.py`
 
 
-- `validate_plugin_import(module_path, class_name)` — imports the class, measures time in ms, detects missing dependencies
+- `validate_plugin_import(module_path, class_name)`, imports the class, measures time in ms, detects missing dependencies
 
 
-- `check_plugin_interface(plugin_cls, short_type)` — verifies `issubclass()` against the correct abstract base (~30 types, including the `agents.*` family, `vc`, and `wake_word.verifier`)
+- `check_plugin_interface(plugin_cls, short_type)`, verifies `issubclass()` against the correct abstract base (~30 types, including the `agents.*` family, `vc`, and `wake_word.verifier`)
 
 
-- `extract_metadata()` — reads name, version, authors, description, homepage, requires_python
+- `extract_metadata()`, reads name, version, authors, description, homepage, requires_python
 
 
-- `extract_system_deps()` — reads `[tool.ovos.build] system-dependencies`
+- `extract_system_deps()`, reads `[tool.ovos.build] system-dependencies`
 
 
-- `validate_config_docs(repo_root)` — searches for `settingsmeta.json`
+- `validate_config_docs(repo_root)`, searches for `settingsmeta.json`
 
 
-- `collect_issues(result)` — aggregates issues list
+- `collect_issues(result)`, aggregates issues list
 
 
-- `compute_status(issues)` — returns `pass`, `warning`, or `fail`
+- `compute_status(issues)`, returns `pass`, `warning`, or `fail`
 
 
-- `check_opm(plugin_type, entry_point, output_json, ...)` — main entry point
+- `check_opm(plugin_type, entry_point, output_json, ...)`, main entry point
 
 ```text
 usage: check_opm.py \
@@ -1590,14 +1590,14 @@ env vars (override CLI): PR_LABELS_JSON, PR_TITLE
 
 Manages the shared **OVOS PR Checks** comment on a pull request. Finds the comment by the invisible HTML marker `<!-- ovos-pr-checks -->`, then replaces or appends the named section. Creates the comment if it doesn't exist yet.
 
-Uses only Python stdlib (`urllib`, `json`, `re`) — no extra dependencies.
+Uses only Python stdlib (`urllib`, `json`, `re`), no extra dependencies.
 
 **Key logic:**
 
-- `find_ovos_comment(repo, pr_number)` — paginates the PR comments API to find the marker
+- `find_ovos_comment(repo, pr_number)`, paginates the PR comments API to find the marker
 
 
-- `insert_or_replace_section(body, section_id, title, content)` — regex replace within `<!-- section:X --> … <!-- /section:X -->` delimiters
+- `insert_or_replace_section(body, section_id, title, content)`, regex replace within `<!-- section:X --> … <!-- /section:X -->` delimiters
 
 ```text
 usage: update_pr_comment.py \

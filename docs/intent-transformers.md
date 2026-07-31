@@ -1,10 +1,10 @@
 # Intent Transformers
 
 !!! abstract "In a nutshell"
-    Once the assistant has figured out *what you want* (your "intent" — for example, "set a timer"), these plugins can add extra detail or tidy up that request before the matching feature actually runs. It's a chance to fill in or pull out the specifics — like spotting names, places, or numbers in what you said — in one shared place instead of repeating that work everywhere. See [Transformer Plugins](transformer-plugins.md) and the [Glossary](glossary.md) for unfamiliar terms.
+    Once the assistant has figured out *what you want* (your "intent," for example, "set a timer"), these plugins can add extra detail or tidy up that request before the matching feature actually runs. It gives you a chance to fill in or pull out the specifics, like spotting names, places, or numbers in what you said, in one shared place instead of repeating that work everywhere. See [Transformer Plugins](transformer-plugins.md) and the [Glossary](glossary.md) for unfamiliar terms.
 
 ??? info "📐 Formal specification"
-    Intent transformers are the **`intent` chain** of **[OVOS-TRANSFORM-1 — Transformer Plugins](https://github.com/OpenVoiceOS/architecture/blob/dev/transformer.md) §3.4** (a formal [architecture spec](architecture-specs.md)). The spec's post-match, pre-dispatch injection point receives the `Match` a pipeline plugin produced ([OVOS-INTENT-3](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-3.md) — `skill_id`, `intent_name`, `slots`) and may **enrich `Match.slots`** — it is the canonical home for slot/entity injection. It **MUST NOT** change `Match.skill_id` or `Match.intent_name` (that would re-route the handler); an orchestrator treats such a change as a shape violation and discards it. **Ordering:** the chain runs by **ascending** `priority` — `priority` 1 runs **first**, matching the spec; a chain authored for the opposite (descending) convention is the exact inverse of a conformant one and must be renumbered, or it runs backwards.
+    Intent transformers are the **`intent` chain** of **[OVOS-TRANSFORM-1: Transformer Plugins](https://github.com/OpenVoiceOS/architecture/blob/dev/transformer.md) §3.4** (a formal [architecture spec](architecture-specs.md)). The spec's post-match, pre-dispatch injection point receives the `Match` a pipeline plugin produced ([OVOS-INTENT-3](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-3.md): `skill_id`, `intent_name`, `slots`). It may **enrich `Match.slots`**. This is the canonical home for slot and entity injection. It **MUST NOT** change `Match.skill_id` or `Match.intent_name`, since that would re-route the handler. An orchestrator treats such a change as a shape violation and discards it. **Ordering:** the chain runs by **ascending** `priority`. `priority` 1 runs **first**, matching the spec. A chain authored for the opposite, descending, convention is the exact inverse of a conformant one. It must be renumbered, or it runs backwards.
 
 **Intent Transformers** are a pluggable mechanism in OVOS that allow you to enrich or transform intent data **after** an intent is matched by an engine ([Padatious](padatious-pipeline.md), [Adapt](adapt-pipeline.md), etc.), but **before** it is passed to the skill handler.
 
@@ -23,7 +23,7 @@ This is useful for:
 
 Each transformer subclasses `IntentTransformer` (`ovos_plugin_manager.templates.transformers`), registers under the `opm.transformer.intent` entry-point group, and operates on the `IntentHandlerMatch` object returned by the matching pipeline. They are loaded and chained by `IntentTransformersService` in `ovos-core` (`ovos_core/transformers.py`).
 
-Transformers run sorted by `priority`, **lowest first** — so a transformer with `priority` 1 runs *first*, and later transformers see and may build on its output, per OVOS-TRANSFORM-1 §4. This lets you reimplement entity logic once instead of in every skill.
+Transformers run sorted by `priority`, **lowest first**. A transformer with `priority` 1 runs *first*, and later transformers see and may build on its output, per OVOS-TRANSFORM-1 §4. This lets you implement entity logic once instead of in every skill.
 
 ---
 
@@ -36,7 +36,7 @@ Transformers run sorted by `priority`, **lowest first** — so a transformer wit
 | `ovos-keyword-template-matcher` | `keyword-template-matcher`  | Extracts values from `{placeholder}`-style intent templates                                        | 1        |
 | `ovos-ahocorasick-ner-plugin`   | `ahocorasick-ner`           | Performs NER using Aho-Corasick keyword matching based on registered entities from skill templates | 5        |
 
-A transformer is loaded only if its plugin name appears under `intent_transformers`; set `"active": false` to skip it. (Note: `keyword-template-matcher` runs before `ahocorasick-ner`, since 1 < 5.)
+A transformer is loaded only if its plugin name appears under `intent_transformers`. Set `"active": false` to skip it. (Note: `keyword-template-matcher` runs before `ahocorasick-ner`, since 1 < 5.)
 
 ---
 
@@ -46,7 +46,7 @@ To enable or disable specific transformers, modify your `mycroft.conf`:
 
 ```jsonc
 "intent_transformers": {
-  "ovos-keyword-template-matcher": {
+  "keyword-templates": {
     "active": true
   },
   "ovos-ahocorasick-ner-plugin": {
@@ -55,6 +55,11 @@ To enable or disable specific transformers, modify your `mycroft.conf`:
 }
 
 ```
+
+Note: `ovos-keyword-template-matcher` is the plugin's entry-point name, used for
+installation and discovery. `keyword-templates` is the config key the plugin
+registers itself under (`super().__init__("keyword-templates", 1, config)`), and
+is the key `intent_transformers` must use.
 
 
 ---
@@ -125,7 +130,7 @@ match_data = {
 
 ## Writing Your Own Intent [Transformer](transformer-plugins.md)
 
-Subclass `IntentTransformer` and implement `transform()` (the base declares it abstract). The method receives and must return an `IntentHandlerMatch`; mutate its `match_data` in place and return it. Register under the `opm.transformer.intent` entry-point group.
+Subclass `IntentTransformer` and implement `transform()` (the base declares it abstract). The method receives and must return an `IntentHandlerMatch`. Mutate its `match_data` in place and return it. Register under the `opm.transformer.intent` entry-point group.
 
 ```python
 from ovos_plugin_manager.templates.transformers import IntentTransformer

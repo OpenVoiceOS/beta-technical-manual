@@ -8,12 +8,12 @@
 
 ## What it does, in plain terms
 
-Instead of every OVOS repo copy-pasting its own CI/CD YAML, this repo holds a set of **reusable workflows**. Your repo's workflow file is just a few lines that *call* one of these — GitHub runs the shared definition with your inputs. Update the shared workflow once, and every repo that references it gets the change.
+Instead of every OVOS repo copy-pasting its own CI/CD YAML, this repo holds a set of **reusable workflows**. Your repo's workflow file is just a few lines that *call* one of these. GitHub runs the shared definition with your inputs. Update the shared workflow once, and every repo that references it gets the change.
 
 The workflows cover two jobs:
 
-- **Release automation** — bump the version on PR merge to `dev`, publish an alpha to PyPI, open a release PR to `master`, then on merge declare the version stable and tag it. See [Release Flow](gh-automations-release.md).
-- **PR checks** — build/install/test, plugin detection, license/CVE scanning, coverage, linting, version preview, and more. Most of these post their result as a section in a single shared **OVOS PR Checks** comment on the PR.
+- **Release automation**: bump the version on PR merge to `dev`, publish an alpha to PyPI, open a release PR to `master`, then on merge declare the version stable and tag it. See [Release Flow](gh-automations-release.md).
+- **PR checks**: build/install/test, plugin detection, license/CVE scanning, coverage, linting, version preview, and more. Most of these post their result as a section in a single shared **OVOS PR Checks** comment on the PR.
 
 ### How to wire one into your repo
 
@@ -106,9 +106,9 @@ jobs:
       sync_dev: true
 ```
 
-The three form a pipeline: `build-tests` must pass before a PR can merge to `dev`;
+The three form a pipeline. `build-tests` must pass before a PR can merge to `dev`.
 `publish-alpha` then bumps the version, tags a pre-release, publishes it to PyPI, and opens the
-release PR to `master`; merging that PR triggers `publish-stable`, which drops the alpha suffix,
+release PR to `master`. Merging that PR triggers `publish-stable`, which drops the alpha suffix,
 tags the stable release, publishes it, and (with `sync_dev: true`) pushes `master` back into
 `dev` so both branches stay aligned. `secrets: inherit` is required on every call so
 `PYPI_TOKEN` reaches the reusable workflow. See [Release Flow](gh-automations-release.md) for the
@@ -170,9 +170,9 @@ The filename below is the actual file in this repo (the `<name>.yml`). The name 
 | Workflow | Purpose |
 |---|---|
 | `downstream-check.yml` | Report which packages in the alpha constraints depend on a given package. |
-| `notify-matrix.yml` | Send a message to the OVOS Matrix channel (called by the publish workflows). |
+| `notify-matrix.yml` | Send a message to the OVOS Matrix channel (the publish workflows duplicate this logic inline rather than calling it). |
 
-### Deprecated (kept for backward compatibility — remove after 2027-01-01)
+### Deprecated (kept for backward compatibility, remove after 2027-01-01)
 
 | Workflow | Replacement |
 |---|---|
@@ -217,8 +217,8 @@ VERSION_ALPHA = 4   # 0 = stable
 
 ## Documentation
 
-- [Release Flow](gh-automations-release.md) — Full lifecycle: alpha → stable → release channels
-- [Workflow Reference](gh-automations-workflows.md) — Every input, output, job, and bot guard for each reusable workflow
+- [Release Flow](gh-automations-release.md): full lifecycle from alpha to stable to release channels
+- [Workflow Reference](gh-automations-workflows.md): every input, output, job, and bot guard for each reusable workflow
 
 ---
 

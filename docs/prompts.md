@@ -1,25 +1,25 @@
 # Asking the User for Responses in OVOS Skills
 
 !!! abstract "In a nutshell"
-    Sometimes a skill needs to ask the user something back — "which flavor?", "are you sure?",
+    Sometimes a skill needs to ask the user something back: "which flavor?", "are you sure?",
     "pick one of these". This page shows the four built-in ways an OVOS skill does that: an
     open-ended question, a specific question that captures the reply (`get_response`), a yes/no
     question (`ask_yesno`), and a multiple-choice question (`ask_selection`). OVOS keeps the
-    microphone open and parses the answer for you. For the *design* side — when to ask versus
-    just tell the user — see the [Skill Design Guidelines](skill-design-guidelines.md).
+    microphone open and parses the answer for you. For the *design* side, when to ask versus
+    just tell the user, see the [Skill Design Guidelines](skill-design-guidelines.md).
 
 ??? info "📐 Formal specification"
     Asking the user back is the spec's **response mode**, defined by
-    **[OVOS-CONVERSE-1 — Active Handlers and Interactive Response](https://github.com/OpenVoiceOS/architecture/blob/dev/converse.md)**.
+    **[OVOS-CONVERSE-1: Active Handlers and Interactive Response](https://github.com/OpenVoiceOS/architecture/blob/dev/converse.md)**.
     When a handler enters response mode (it sets `session.response_mode`), the
     orchestrator suspends normal intent matching and routes the *next*
-    utterance straight back to that handler as the awaited reply — the
+    utterance straight back to that handler as the awaited reply. This is the
     interactive-response window. The methods below (`get_response`,
     `ask_yesno`, `ask_selection`) are the skill-API surface over this one
     session-resident mechanism. For the full set see the
     **[spec index](architecture-specs.md)**.
 
-OVOS provides several built-in methods for engaging users in interactive conversations. These include asking open-ended questions, confirming yes/no responses, and offering multiple-choice selections — all handled in a natural, voice-first way.
+OVOS provides several built-in methods for engaging users in interactive conversations. These include asking open-ended questions, confirming yes/no responses, and offering multiple-choice selections, all handled in a natural, voice-first way.
 
 Here we look at how to implement the most common ways of asking the user for input. For more information on conversation design see
 the [Skill Design Guidelines](skill-design-guidelines.md).
@@ -75,7 +75,7 @@ class IceCreamSkill(OVOSSkill):
 - `validator`: A function `(str) -> bool` to check if the user response is valid
 
 
-- `on_fail`: A fallback string — or a `(str) -> str` callable — to say if validation fails
+- `on_fail`: A fallback string, or a `(str) -> str` callable, to say if validation fails
 
 
 - `num_retries`: How many times to retry if the response isn't valid (default `-1`, retry until valid)
@@ -116,10 +116,12 @@ class IceCreamSkill(OVOSSkill):
 
 - Returns `None` if no valid response is detected.
 
-> Yes/No detection is a pluggable OPM agent plugin (group `opm.agents.yesno`). The
-> default is [ovos-yes-no-plugin](https://github.com/OpenVoiceOS/ovos-YesNo-plugin), a
-> heuristic engine that understands complex affirmations and denials — even double
-> negations. Override it per skill via the `ask_yesno_plugin` setting.
+> Yes/No detection is a pluggable OPM agent plugin (group `opm.agents.yesno`). Override
+> it per skill via the `ask_yesno_plugin` setting. `OVOSSkill._get_yesno_engine` uses the
+> default plugin name `ovos-solver-yes-no-plugin`, but no registered `opm.agents.yesno`
+> entry point uses that name. The shipped plugin registers as `ovos-yes-no-plugin`. In
+> practice, loading falls back to the bundled `HeuristicYesNoEngine`, a heuristic engine
+> that understands complex affirmations and denials, even double negations.
 
 Example mappings:
 
@@ -131,10 +133,10 @@ Example mappings:
 | "that's affirmative"             | yes          |
 | "no, but actually, yes"          | yes          |
 | "yes, but actually, no"          | no           |
-| "correct, he is lying"            | no           |
+| "correct, he is lying"            | yes          |
 | "beans"                           | None            |
 
-??? example "More mappings — the plugin handles double negatives, sarcasm cues, and indirection"
+??? example "More mappings: the plugin handles double negatives, sarcasm cues, and indirection"
     | User Says                        | Detected As |
     |----------------------------------|--------------|
     | "yes, yes, yes, but actually, no" | no            |
