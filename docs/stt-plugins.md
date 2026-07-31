@@ -4,10 +4,10 @@
     STT stands for *Speech-to-Text*: this is the part that listens to your spoken words and writes them down as text the assistant can read. It is the same idea as the dictation feature on a phone. Different STT plugins offer different trade-offs in speed, accuracy, and whether they run on your own device or in the cloud, so you can pick the one that suits you. See the [Glossary](glossary.md) for related terms.
 
 ??? info "📐 Formal specification"
-    STT sits inside the audio input service, specified by **[OVOS-AUDIO-IN-1 — Audio Input Service](https://github.com/OpenVoiceOS/architecture/blob/dev/audio-in.md)**: capture → audio-transformer chain → STT → utterance. The transcript is emitted on `ovos.utterance.handle` ([OVOS-PIPELINE-1 §9.1](https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md)). See the [spec index](architecture-specs.md).
+    STT sits inside the audio input service, specified by **[OVOS-AUDIO-IN-1: Audio Input Service](https://github.com/OpenVoiceOS/architecture/blob/dev/audio-in.md)**: capture → audio-transformer chain → STT → utterance. The transcript is emitted on `ovos.utterance.handle` ([OVOS-PIPELINE-1 §9.1](https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md)). See the [spec index](architecture-specs.md).
 
 !!! note "Audio format contract"
-    Everything upstream of an STT plugin — the [microphone plugin](mic-plugins.md#the-microphone-interface) and any audio transformers — hands over raw PCM in a fixed shape: **16 kHz sample rate, 16-bit samples, mono, little-endian**, delivered in **4096-byte chunks** by default (the `Microphone` template's `sample_rate`/`sample_width`/`sample_channels`/`chunk_size` defaults). A batch `STT.execute()` plugin gets this bundled into a `speech_recognition.AudioData` object; a `StreamingSTT` plugin receives it chunk-by-chunk, still at this same format, unless a deployment explicitly reconfigures the microphone. Neither the `STT` nor the `StreamingSTT` template resamples on the plugin's behalf: if the wrapped model expects a different native rate, converting the incoming 16 kHz PCM is the plugin's own job.
+    Everything upstream of an STT plugin, the [microphone plugin](mic-plugins.md#the-microphone-interface) and any audio transformers, hands over raw PCM in a fixed shape: **16 kHz sample rate, 16-bit samples, mono, little-endian**, delivered in **4096-byte chunks** by default (the `Microphone` template's `sample_rate`/`sample_width`/`sample_channels`/`chunk_size` defaults). A batch `STT.execute()` plugin gets this bundled into a `speech_recognition.AudioData` object. A `StreamingSTT` plugin receives it chunk-by-chunk, still at this same format, unless a deployment explicitly reconfigures the microphone. Neither the `STT` nor the `StreamingSTT` template resamples on the plugin's behalf. If the wrapped model expects a different native rate, converting the incoming 16 kHz PCM is the plugin's own job.
 
 STT (Speech-to-Text) plugins convert spoken audio into text. They are the bridge
 between the listener and the intent pipeline.
@@ -25,7 +25,7 @@ between the listener and the intent pipeline.
 
     **Footprint:** as noted in the [plugin's own entry](#ovos-stt-plugin-onnx-asr), most models
     in the [OpenVoiceOS/stt-asr-onnx](https://huggingface.co/collections/OpenVoiceOS/stt-asr-onnx)
-    collection ship both `fp32` and `int8` weights — pick `int8` for the lower-RAM, lower-compute
+    collection ship both `fp32` and `int8` weights. Pick `int8` for the lower-RAM, lower-compute
     option on constrained hardware. Beyond quantization, footprint is mostly driven by model
     family/size: a small Parakeet/wav2vec2-class model is far lighter than a large
     Whisper-class one, independent of the plugin wrapping it.
@@ -49,7 +49,7 @@ pip install ovos-stt-plugin-onnx-asr
 }
 ```
 
-The roster below lists available plugins with a recommended starting configuration for each (which may differ from a plugin's built-in default — noted where relevant).
+The roster below lists available plugins with a recommended starting configuration for each. This may differ from a plugin's built-in default, noted where relevant.
 
 ## `STT`
 
@@ -105,9 +105,9 @@ An STT plugin can be paired with an audio language detector. The audio service c
 
 * `detect_language(audio, valid_langs=None)` → `(lang, confidence)`. It delegates to the bound
   detector, defaulting `valid_langs` to the plugin's own `available_languages`. With no detector
-  bound it raises `NotImplementedError` — language detection is opt-in per deployment.
+  bound it raises `NotImplementedError`. Language detection is opt-in per deployment.
 
-* `transcribe(audio, lang="auto")` — the `"auto"` sentinel runs `detect_language()` first and
+* `transcribe(audio, lang="auto")`. The `"auto"` sentinel runs `detect_language()` first and
   transcribes in whatever it returns. If detection fails, the plugin falls back to `self.lang`
   and transcribes anyway, so `"auto"` never turns a detector problem into a failed
   transcription.
@@ -118,23 +118,23 @@ A more advanced STT class for streaming data to the STT. This will receive chunk
 
 The plugin author needs to implement the `create_streaming_thread()` method creating a thread for handling data sent through `self.queue`. 
 
-The thread this method creates should be based on the `StreamThread` class. Its abstract `handle_audio_stream(audio, language)` method also needs to be implemented — it receives a generator of audio chunks and should set `self.text` to the transcript; `finalize()` returns that stored text once the stream ends.
+The thread this method creates should be based on the `StreamThread` class. Its abstract `handle_audio_stream(audio, language)` method also needs to be implemented. It receives a generator of audio chunks and should set `self.text` to the transcript; `finalize()` returns that stored text once the stream ends.
 
 ### Chunk semantics
 
 Audio arrives synchronously per chunk: `stream_data()` is called once per captured
 chunk on the mic thread, so it must return well under the per-chunk time budget
 (the same real-time cadence constraint a wake-word plugin's `update(chunk)` runs
-under — see [Wake Word Plugins: Key Methods](wake-word-plugins.md#key-methods)). Do any
+under. See [Wake Word Plugins: Key Methods](wake-word-plugins.md#key-methods)). Do any
 slow work (network calls, heavy inference) on the `StreamThread` this class
 manages, not inline in `stream_data()`.
 
 `StreamingSTT` runs the streaming work on a background thread, fed through a queue:
 
 - `stream_start(language=None)` creates a fresh `Queue`, builds a `StreamThread` via `create_streaming_thread()`, and starts it.
-- Each call to `stream_data(chunk)` puts one raw PCM `bytes` chunk (16 kHz/16-bit/mono, `chunk_size`-sized — see the audio format contract above) onto that queue.
-- The `StreamThread`'s `run()` calls your `handle_audio_stream(audio, language)` with `audio` as a **generator** that yields chunks off the queue until a `None` sentinel appears — your implementation should loop over it (e.g. `for chunk in audio:`) and feed each chunk to the underlying engine, setting `self.text` as partial/final results arrive.
-- `stream_stop()` pushes the `None` sentinel, joins the thread, and calls `finalize()` on it to retrieve the stored `self.text` as the final transcript — this is also what `execute()` returns for a `StreamingSTT` plugin.
+- Each call to `stream_data(chunk)` puts one raw PCM `bytes` chunk (16 kHz/16-bit/mono, `chunk_size`-sized, see the audio format contract above) onto that queue.
+- The `StreamThread`'s `run()` calls your `handle_audio_stream(audio, language)` with `audio` as a **generator** that yields chunks off the queue until a `None` sentinel appears. Your implementation should loop over it (e.g. `for chunk in audio:`) and feed each chunk to the underlying engine, setting `self.text` as partial/final results arrive.
+- `stream_stop()` pushes the `None` sentinel, joins the thread, and calls `finalize()` on it to retrieve the stored `self.text` as the final transcript. This is also what `execute()` returns for a `StreamingSTT` plugin.
 
 A complete minimal streaming plugin:
 
@@ -294,19 +294,19 @@ separately-licensed model, that is called out under "model".
 | [ovos-stt-plugin-vosk](#ovos-stt-plugin-vosk) | Mycroft STT plugin for [Vosk](https://alphacephei.com/vosk/) | Apache-2.0 (model: see model card) | Stable |
 | [ovos-stt-plugin-onnx-asr](#ovos-stt-plugin-onnx-asr) | Runs [onnx-asr](https://github.com/istupakov/onnx-asr) models (NeMo Parakeet/Canary, Whisper, wav2vec2, …) fully offline via ONNX Runtime — a strong default for on-device, offline recognition. | Apache-2.0 (model: see model card) | Beta |
 
-Maturity reflects repository health (age, activity, open issues/PRs, in-repo docs), not version — see the [Maturity Scale](maturity.md).
+Maturity reflects repository health (age, activity, open issues/PRs, in-repo docs), not version. See the [Maturity Scale](maturity.md).
 
 !!! note "License and Maturity are independent axes"
-    The **License** column reports what the repository itself declares (or doesn't — "no
-    license file" just means no SPDX license was found, not that the code is unmature) and the
-    **Maturity** column reports repository health (age, activity, issues/PRs, docs). A plugin can
-    be **Mature** and still ship no license file, or be **Stable** with a permissive license but
-    thin docs — don't read one column as implying the other.
+    The **License** column reports what the repository itself declares. "No
+    license file" just means no SPDX license was found, not that the code is unmature.
+    The **Maturity** column reports repository health (age, activity, issues/PRs, docs).
+    A plugin can be **Mature** and still ship no license file. A plugin can be **Stable**
+    with a permissive license but thin docs. Don't read one column as implying the other.
 
 ## ovos-stt-plugin-wav2vec
 
 - **GitHub**: [https://github.com/OpenVoiceOS/ovos-stt-plugin-wav2vec](https://github.com/OpenVoiceOS/ovos-stt-plugin-wav2vec) (aliased by
-  [ovos-stt-plugin-wav2vec2](https://github.com/OpenVoiceOS/ovos-stt-plugin-wav2vec2) — a
+  [ovos-stt-plugin-wav2vec2](https://github.com/OpenVoiceOS/ovos-stt-plugin-wav2vec2). A
   separate GitHub repo that installs the same package and module id, `ovos-stt-plugin-wav2vec`;
   the repo name differs but the entry point does not, so both resolve to the same plugin)
 
@@ -351,7 +351,7 @@ languages resolve to different pretrained models.
 
 !!! note
     This plugin talks to the same unofficial, undocumented endpoint used by the Chrome
-    browser's speech recognition feature — not a published Google Cloud Speech-to-Text
+    browser's speech recognition feature. It is not a published Google Cloud Speech-to-Text
     API with an API key. Google can change or revoke access to this endpoint at any time.
 
 ---
@@ -402,7 +402,7 @@ languages resolve to different pretrained models.
 
 ```
 
-Leaving `urls` unset falls back to public community-run STT servers rather than failing — see
+Leaving `urls` unset falls back to public community-run STT servers rather than failing. See
 [stt-server](stt-server.md#companion-plugin) for a self-hosted alternative, or pick a fully
 offline engine from the table above.
 
@@ -470,7 +470,7 @@ offline engine from the table above.
 
 - **Description**: OpenVoiceOS STT plugin for [Faster Whisper](https://github.com/guillaumekln/faster-whisper)
 
-CTranslate2 also supports `int8` / `int8_float16` compute types for lower-RAM CPU deployments — change `compute_type` to use them.
+CTranslate2 also supports `int8` / `int8_float16` compute types for lower-RAM CPU deployments. Change `compute_type` to use them.
 
 ### Default Configuration
 
@@ -497,7 +497,7 @@ CTranslate2 also supports `int8` / `int8_float16` compute types for lower-RAM CP
 
 - **Description**: OpenVoiceOS STT plugin for [Nemo](https://docs.nvidia.com/nemo-framework/user-guide/latest/nemotoolkit/asr/models.html), GPU is **strongly recommended**
 
-CPU is the shipped default (`use_cuda: false`); set `use_cuda: true` for acceptable throughput on supported GPUs — the GPU recommendation is about speed, not a required default.
+CPU is the shipped default (`use_cuda: false`); set `use_cuda: true` for acceptable throughput on supported GPUs. The GPU recommendation is about speed, not a required default.
 
 ### Default Configuration
 
@@ -566,7 +566,7 @@ CPU is the shipped default (`use_cuda: false`); set `use_cuda: true` for accepta
 - **GitHub**: [https://github.com/OpenVoiceOS/ovos-stt-plugin-nos](https://github.com/OpenVoiceOS/ovos-stt-plugin-nos)
 
 
-- **Description**: Galician STT using [Proxecto Nós](https://github.com/proxectonos) wav2vec2 models. ⚠️ **Archived** — superseded by [ovos-stt-plugin-wav2vec2](https://github.com/OpenVoiceOS/ovos-stt-plugin-wav2vec2).
+- **Description**: Galician STT using [Proxecto Nós](https://github.com/proxectonos) wav2vec2 models. ⚠️ **Archived**. Superseded by [ovos-stt-plugin-wav2vec2](https://github.com/OpenVoiceOS/ovos-stt-plugin-wav2vec2).
 
 ### Default Configuration
 
@@ -627,11 +627,11 @@ CPU is the shipped default (`use_cuda: false`); set `use_cuda: true` for accepta
 - **GitHub**: [https://github.com/OpenVoiceOS/ovos-stt-plugin-onnx-asr](https://github.com/OpenVoiceOS/ovos-stt-plugin-onnx-asr)
 
 
-- **Description**: Runs [onnx-asr](https://github.com/istupakov/onnx-asr) models via ONNX Runtime with no PyTorch/transformers dependency. Inference is fully offline; models are downloaded from Hugging Face on first load, so it runs offline **after the model has been fetched once** (there is currently no plugin-level option to pin a purely-local model directory). Supports NeMo Parakeet and Canary, Whisper, and wav2vec2 model families.
+- **Description**: Runs [onnx-asr](https://github.com/istupakov/onnx-asr) models via ONNX Runtime with no PyTorch/transformers dependency. Inference is fully offline. Models are downloaded from Hugging Face on first load, so it runs offline **after the model has been fetched once** (there is currently no plugin-level option to pin a purely-local model directory). Supports NeMo Parakeet and Canary, Whisper, and wav2vec2 model families.
 
 ### Recommended Configuration
 
-If `model` is omitted, the plugin loads its **built-in default `nemo-canary-1b-v2`** — a ~1B-parameter model with strong accuracy but a heavier footprint. For typical offline devices we recommend setting the lighter `nemo-parakeet-tdt-0.6b-v3` explicitly:
+If `model` is omitted, the plugin loads its **built-in default `nemo-canary-1b-v2`**, a ~1B-parameter model with strong accuracy but a heavier footprint. For typical offline devices we recommend setting the lighter `nemo-parakeet-tdt-0.6b-v3` explicitly:
 
 ```jsonc
   "stt": {
@@ -651,12 +651,12 @@ If `model` is omitted, the plugin loads its **built-in default `nemo-canary-1b-v
 | `providers` | unset | Explicit list of onnxruntime execution providers; takes precedence over `use_cuda` |
 
 !!! note "Language handling is model-family-gated"
-    The configured/utterance language is only passed to the ASR call for **Whisper** and **Canary** (NeMo Conformer AED) families. Other families (Parakeet, GigaAM, Vosk, wav2vec2, T-one) ignore `lang` — for those, pick a language-specific model instead of relying on a `lang` setting to steer a multilingual one.
+    The configured/utterance language is only passed to the ASR call for **Whisper** and **Canary** (NeMo Conformer AED) families. Other families (Parakeet, GigaAM, Vosk, wav2vec2, T-one) ignore `lang`. For those, pick a language-specific model instead of relying on a `lang` setting to steer a multilingual one.
 
-Besides the built-in aliases and the `onnx-asr` repository's own model hub, the plugin loads any repo id from the [OpenVoiceOS/stt-asr-onnx](https://huggingface.co/collections/OpenVoiceOS/stt-asr-onnx) collection — curated single-language and regional ONNX conversions of NeMo Conformer/Parakeet and Whisper checkpoints, grouped roughly by family: AI4Bharat/Vaani models for Indian languages, NVIDIA Conformer/Parakeet models for major European languages (plus Kabyle, Belarusian, Esperanto, Kinyarwanda), Iberian-language Conformer models, and per-language Whisper finetunes. Most ship both fp32 and int8 weights (`quantization: "int8"` works); a few large models are fp32-only. See the collection itself for the exhaustive, current list — it grows independently of this plugin's release cycle.
+Besides the built-in aliases and the `onnx-asr` repository's own model hub, the plugin loads any repo id from the [OpenVoiceOS/stt-asr-onnx](https://huggingface.co/collections/OpenVoiceOS/stt-asr-onnx) collection. This collection holds curated single-language and regional ONNX conversions of NeMo Conformer/Parakeet and Whisper checkpoints, grouped roughly by family: AI4Bharat/Vaani models for Indian languages, NVIDIA Conformer/Parakeet models for major European languages (plus Kabyle, Belarusian, Esperanto, Kinyarwanda), Iberian-language Conformer models, and per-language Whisper finetunes. Most ship both fp32 and int8 weights (`quantization: "int8"` works). A few large models are fp32-only. See the collection itself for the exhaustive, current list. It grows independently of this plugin's release cycle.
 
 ---
 
 ## Further reading
 
-- [Real-Time Offline Speech Recognition on OVOS (ONNX ASR)](https://blog.openvoiceos.org/posts/2026-02-16-onnx-asr) — OVOS blog
+- [Real-Time Offline Speech Recognition on OVOS (ONNX ASR)](https://blog.openvoiceos.org/posts/2026-02-16-onnx-asr), OVOS blog

@@ -6,9 +6,9 @@
 ??? info "📐 Formal specification"
     TTS transformers are the **`tts` chain** of **[OVOS-TRANSFORM-1 — Transformer Plugins](https://github.com/OpenVoiceOS/architecture/blob/dev/transformer.md) §3.6** (a formal [architecture spec](architecture-specs.md)). The spec's post-TTS, pre-playback injection point receives a path/handle to the synthesized audio, an optional `lang`, and the full `Message.context`; it may replace the audio with a transformed version (pitch, reverb, EQ, tempo, super-resolution, watermarking, earcons). It **SHOULD NOT** re-synthesize speech in a different language or with different content — translation and rewriting are [dialog-transformer](dialog-transformers.md) concerns, done against the text before TTS. **Ordering:** the chain runs by **ascending** `priority` (lowest first), matching the spec.
 
-**TTS Transformers** in OpenVoiceOS (OVOS) are plugins that process synthesized speech audio after the [Text-to-Speech](tts-plugins.md) (TTS) engine generates it but before it's played back to the user. 
+**TTS Transformers** in OpenVoiceOS (OVOS) are plugins that process synthesized speech audio. They run after the [Text-to-Speech](tts-plugins.md) (TTS) engine generates it but before it's played back to the user.
 
-They enable post-processing of audio to apply effects, enhance clarity, voice clone or tailor the output to specific needs.
+They post-process audio to apply effects, enhance clarity, clone a voice, or tailor the output to specific needs.
 
 ---
 
@@ -30,9 +30,9 @@ The typical flow for speech output in OVOS is:
 
 5. **Playback**: The final audio is played back to the user.
 
-TTS Transformers operate in step 4, allowing for dynamic audio enhancements without altering the original TTS output.
+TTS Transformers operate in step 4. They add dynamic audio enhancements without altering the original TTS output.
 
-They run inside the **ovos-audio** service, in the playback path: once the TTS engine has written a wav file, each loaded transformer's `transform(wav_file, context)` is called and is expected to return the path to the (possibly new) wav file to play. Transformers run in **ascending priority** order (lower `priority` first), each receiving the previous one's output path.
+They run inside the **ovos-audio** service, in the playback path. Once the TTS engine has written a wav file, each loaded transformer's `transform(wav_file, context)` is called. It is expected to return the path to the (possibly new) wav file to play. Transformers run in **ascending priority** order (lower `priority` first), each receiving the previous one's output path.
 
 ---
 
@@ -123,11 +123,11 @@ Replace `"plugin_name"` with the identifier of the desired plugin and provide an
 
 ### **OVOS AudioSR TTS Transformer**
 
-Engine-agnostic ONNX audio super-resolution transformer (`opm.transformer.tts`) that upscales
+Engine-agnostic ONNX audio super-resolution transformer (`opm.transformer.tts`). It upscales
 **any** TTS engine's output to 48 kHz just before playback, rather than being tied to one voice
 or engine. It wraps [`audiosronnx`](https://github.com/TigreGotico/audiosronnx) (pure ONNX, no
 Torch at runtime) and picks between `novasr` (default), `lavasr`, and `hifiganbwe` engines via
-config; if audio is already 48 kHz, or the model/weights are unavailable, it returns the
+config. If audio is already 48 kHz, or the model/weights are unavailable, it returns the
 original audio unchanged so synthesis never breaks.
 
 ```jsonc
@@ -185,5 +185,5 @@ After installation, add your transformer to the `mycroft.conf`:
 
 ---
 
-By leveraging TTS Transformers, you can enhance the auditory experience of your OVOS assistant, tailoring speech output to better suit your preferences or application requirements.
+TTS Transformers let you enhance the sound of your OVOS assistant, tailoring speech output to your preferences or application requirements.
 

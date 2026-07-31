@@ -1,9 +1,9 @@
 # Voice Activity Detection (VAD) Plugins
 
 !!! abstract "In a nutshell"
-    *Voice Activity Detection* (VAD) is how the assistant tells the difference between someone actually speaking and plain silence or background noise. It is what lets the system know when you have started talking and, just as importantly, when you have finished, so it knows when to stop listening and respond. Without it, the assistant wouldn't know where your command begins and ends. See the [Glossary](glossary.md) for related terms.
+    *Voice Activity Detection* (VAD) is how the assistant tells the difference between someone actually speaking and plain silence or background noise. It lets the system know when you have started talking. It also tells the system when you have finished, so it knows when to stop listening and respond. Without it, the assistant would not know where your command begins and ends. See the [Glossary](glossary.md) for related terms.
 
-Voice Activity Detection (VAD) is a critical component in the OVOS listener pipeline. It is responsible for identifying segments of audio that contain human speech, allowing the system to ignore silence and background noise.
+Voice Activity Detection (VAD) is a critical component in the OVOS listener pipeline. It identifies segments of audio that contain human speech, so the system can ignore silence and background noise.
 
 !!! note "Audio format contract"
     Like STT and wake-word plugins, VAD plugins receive raw PCM from the [microphone plugin](mic-plugins.md#the-microphone-interface): **16 kHz sample rate, 16-bit samples, mono, little-endian**, delivered in **4096-byte chunks** by default.
@@ -18,20 +18,20 @@ The VAD engine continuously monitors the microphone's audio stream. Its primary 
 2.  **Speech End Detection**: Identifying when the user has finished speaking, so the audio can be sent for processing (STT).
 
 !!! tip "Recommended: silero"
-    `ovos-vad-plugin-silero` gives the most accurate speech/silence boundary detection,
-    using a small neural model, and is the recommended default when you can afford the
-    (modest) extra CPU cost of running it. `ovos-vad-plugin-webrtcvad` is a good lighter
-    fallback — CPU-only and widely used, at somewhat lower accuracy. `ovos-vad-plugin-noise`
+    `ovos-vad-plugin-silero` uses a small neural model and gives the most accurate
+    speech/silence boundary detection. It is the recommended default when you can afford
+    the modest extra CPU cost of running it. `ovos-vad-plugin-webrtcvad` is a good lighter
+    fallback: CPU-only and widely used, at somewhat lower accuracy. `ovos-vad-plugin-noise`
     trades the most accuracy for requiring no model download at all.
 
     **Relative footprint:** silero runs a small neural model, so it is heavier than the
-    energy/noise or WebRTC VADs — but still light next to a wake-word or STT model, since VAD
-    only has to classify one chunk as speech/silence, not decode it.
+    energy/noise or WebRTC VADs. It is still light next to a wake-word or STT model, since
+    VAD only has to classify one chunk as speech/silence, not decode it.
 
 ## Configuration
 
 You can configure the VAD plugin in your `mycroft.conf`. The example below uses
-`ovos-vad-plugin-webrtcvad` purely to show the shape of the config — see
+`ovos-vad-plugin-webrtcvad` purely to show the shape of the config. See
 [ovos-vad-plugin-silero](#ovos-vad-plugin-silero) below for the recommended plugin's config:
 
 ```json
@@ -56,9 +56,9 @@ You can configure the VAD plugin in your `mycroft.conf`. The example below uses
 | [ovos-vad-plugin-silero](https://github.com/OpenVoiceOS/ovos-vad-plugin-silero) | Uses the Silero deep-learning model for high-accuracy VAD, particularly in noisy environments. | Stable |
 | [ovos-vad-plugin-noise](https://github.com/OpenVoiceOS/ovos-vad-plugin-noise) | Simple energy/noise-threshold VAD with no model download. | Stable |
 
-Maturity reflects repository health (age, activity, open issues/PRs, in-repo docs), not version — see the [Maturity Scale](maturity.md).
+Maturity reflects repository health (age, activity, open issues/PRs, in-repo docs), not version. See the [Maturity Scale](maturity.md).
 
-> Specification: audio capture and VAD are deployer-defined components feeding the listener; see [OVOS-AUDIO-IN-1](https://github.com/OpenVoiceOS/architecture/blob/dev/audio-in.md) for the audio-input service that consumes their output.
+> Specification: audio capture and VAD are deployer-defined components feeding the listener. See [OVOS-AUDIO-IN-1](https://github.com/OpenVoiceOS/architecture/blob/dev/audio-in.md) for the audio-input service that consumes their output.
 
 ---
 
@@ -188,7 +188,7 @@ Detailed per-plugin configuration for the same roster listed in
             "ovos-vad-plugin-silero": {
                 // speech-probability cutoff; below this a chunk is treated as silence
                 "threshold": 0.2,
-                // optional — override the bundled model with a custom ONNX file
+                // optional: override the bundled model with a custom ONNX file
                 "model": "/optional/path/to/model.onnx"
             }
         }
@@ -205,11 +205,11 @@ Detailed per-plugin configuration for the same roster listed in
 !!! tip "Same package also provides a pre-wake VAD verifier"
     `ovos-vad-plugin-silero` registers a second entry point, `ovos-ww-verifier-silero`
     (`opm.wake_word.verifier`), which re-checks that a wake-word activation actually
-    contains speech before waking — a "noise filter" that cuts false wakes. It has its
-    own `threshold` (default `0.1`). See the Pre-Wake VAD blog post below.
+    contains speech before waking. It works as a "noise filter" that cuts false wakes.
+    It has its own `threshold` (default `0.1`). See the Pre-Wake VAD blog post below.
 
 ---
 
 ## Further reading
 
-- [OVOS Just Got a Noise Filter (Pre-Wake VAD)](https://blog.openvoiceos.org/posts/2025-11-06-prewake-vad) — OVOS blog
+- [OVOS Just Got a Noise Filter (Pre-Wake VAD)](https://blog.openvoiceos.org/posts/2025-11-06-prewake-vad), OVOS blog

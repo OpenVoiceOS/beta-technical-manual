@@ -1,14 +1,19 @@
 # OpenVoiceOS [TTS](tts-plugins.md) Server
 
 !!! abstract "In a nutshell"
-    This is a small standalone program that turns any OVOS text-to-speech voice — the part that reads written text aloud — into a web service. You send it some text over a simple web request and it sends back the spoken audio, so one capable machine can do the talking for many lightweight devices. It can also imitate popular cloud voice services (like ElevenLabs or OpenAI), letting software built for those use your own server instead. See [TTS plugins](tts-plugins.md) and the [Glossary](glossary.md).
+    This is a small standalone program that turns any OVOS text-to-speech voice into a web
+    service. Text-to-speech is the part that reads written text aloud. You send it some text
+    over a simple web request, and it sends back the spoken audio. This lets one capable machine
+    do the talking for many lightweight devices. It can also imitate popular cloud voice services
+    (like ElevenLabs or OpenAI), letting software built for those use your own server instead.
+    See [TTS plugins](tts-plugins.md) and the [Glossary](glossary.md).
 
 **Lightweight HTTP microservice for any OVOS text‑to‑speech plugin, with optional caching.**
 
-Wrap your favorite OVOS TTS engine in a FastAPI service — ready to deploy locally, in Docker, or behind a load balancer.
+Wrap your favorite OVOS TTS engine in a FastAPI service. It is ready to deploy locally, in Docker, or behind a load balancer.
 
-The OpenVoiceOS TTS HTTP Server exposes any OVOS TTS plugin over a simple HTTP API. Send text, receive audio — no extra
-glue code required.
+The OpenVoiceOS TTS HTTP Server exposes any OVOS TTS plugin over a simple HTTP API. Send text, receive audio. No extra
+glue code is required.
 
 ---
 
@@ -96,13 +101,13 @@ options:
   Spins up a FastAPI application exposing RESTful endpoints for synthesis and status checks.
 
 - **Plugin Loading**  
-  `--engine` names any `opm.tts` plugin entry point; it is loaded dynamically via the OVOS Plugin Manager — no code changes needed when adding new voices. Plugin config is read from the `tts` section of your `mycroft.conf`.
+  `--engine` names any `opm.tts` plugin entry point. It is loaded dynamically via the OVOS Plugin Manager, so no code changes are needed when adding new voices. Plugin config is read from the `tts` section of your `mycroft.conf`.
 
 - **Caching**  
   When `--cache` is enabled, every synthesis request is stored on disk for debugging or reuse.
 
 - **Compatibility routers**  
-  The app also mounts drop-in compatible routers so existing cloud-TTS clients work unchanged: ElevenLabs, OpenAI, Coqui, Google, Amazon Polly, Azure, MaryTTS, Cartesia, Deepgram Aura, and PlayHT. A `GET /utcp` manual advertises the endpoints to UTCP agents, and `--mcp` mounts an MCP server at `/mcp` (requires the `mcp` extra).
+  The app also mounts drop-in compatible routers so existing cloud-TTS clients work unchanged: ElevenLabs, OpenAI, Coqui, Google, Amazon Polly, Azure, MaryTTS, Cartesia, Deepgram Aura, and PlayHT. A `GET /utcp` manual advertises the endpoints to UTCP agents. `--mcp` mounts an MCP server at `/mcp` (requires the `mcp` extra).
 
 - **Scalability**  
   Stateless by design — run multiple instances behind NGINX, Traefik, or Kubernetes with round‑robin or load‑based
@@ -136,7 +141,7 @@ synthesis, on every synthesis surface (native endpoints and vendor-compat router
 - **TTS transformers** post-process the *synthesized audio* (e.g. loudness normalization,
   effects).
 
-Loading is config-gated and opt-in via the standard `mycroft.conf` sections; with no config
+Loading is config-gated and opt-in via the standard `mycroft.conf` sections. With no config
 the server behaves exactly as before:
 
 ```json
@@ -157,26 +162,26 @@ the server behaves exactly as before:
 
 Besides the plain HTTP ElevenLabs-compatible routes (`/v1/voices`, `/v1/models`,
 `/v1/text-to-speech/{voice_id}`), the server also implements ElevenLabs' WebSocket
-streaming protocol at `/v1/text-to-speech/{voice_id}/stream-input`, so clients written
+streaming protocol at `/v1/text-to-speech/{voice_id}/stream-input`. This lets clients written
 against the real ElevenLabs streaming SDK work unmodified.
 
 The client connects with the voice in the path and synthesis options in the query string
 (`model_id`, `output_format`, `language_code`, `sync_alignment`, …), then sends JSON text
 frames:
 
-1. **BOS** — `{"text": " ", "voice_settings": {...}, "generation_config": {...}}` opens the
+1. **BOS**: `{"text": " ", "voice_settings": {...}, "generation_config": {...}}` opens the
    stream (its text payload is a single space and carries no content).
-2. **Content** — `{"text": "Hello there "}`, repeated; text accumulates until a generation
+2. **Content**: `{"text": "Hello there "}`, repeated. Text accumulates until a generation
    is triggered.
 3. `{"flush": true}` (optionally with more text) forces the buffered text to synthesize
    immediately.
-4. **EOS** — `{"text": ""}` closes the stream: whatever is buffered is generated, then the
+4. **EOS**: `{"text": ""}` closes the stream. Whatever is buffered is generated, then the
    connection terminates.
 
 The server answers with JSON frames carrying base64-encoded audio
 (`{"audio": "<base64>", "isFinal": null, ...}`) and a final frame with no audio and
 `isFinal: true`. The `xi-api-key` header (or `xi_api_key` in the BOS message) is accepted
-but ignored — a self-hosted server has no keys to check.
+but ignored. A self-hosted server has no keys to check.
 
 ---
 
@@ -195,7 +200,7 @@ pip install ovos-tts-plugin-server
     This TTS companion plugin reads the **`host`** key. The
     [STT companion plugin](stt-server.md#companion-plugin) reads a different key,
     **`urls`** (a list). The two are not interchangeable. If you set the wrong key, the
-    plugin does not error — it silently ignores the value and falls back to the
+    plugin does not error. It silently ignores the value and falls back to the
     public servers described below.
 
 **Configuration** `mycroft.conf`:
@@ -234,7 +239,7 @@ with [`ovos-busmon`](bus-service.md), to confirm the configured `host` server is
 receiving the request, not a public fallback.
 
 !!! warning "No `host` configured → public servers, not local failure"
-    If you omit `host`, the plugin does **not** fail — it silently falls back to a built-in
+    If you omit `host`, the plugin does **not** fail. It silently falls back to a built-in
     list of **public** OVOS TTS servers run by community members, shuffled and tried in order.
     That's fine for a quick test, but every sentence your assistant speaks is sent to a
     third-party server by default until you set `host` yourself. Always set `host` explicitly
@@ -263,7 +268,7 @@ Config keys:
 
 ## Docker Deployment
 
-**Upcoming** — a ready-made Docker Compose proxy setup for this server is in progress.
+**Upcoming**: a ready-made Docker Compose proxy setup for this server is in progress.
 
 !!! tip "An interim path: some TTS plugins ship their own Docker image"
     A few TTS plugin repositories (for example the eSpeak NG, S.A.M., and Mimic engines)
@@ -302,12 +307,12 @@ repository.
 - **Audio Formats**: By default, outputs WAV (PCM). If you need MP3 or OGG, wrap with an external converter or check
   plugin support.
 
-- **Disk Usage**: `--cache` saves every synthesis to disk; that directory grows unbounded. Omit the flag to disable caching (there is no `--no-cache` flag — caching is simply off by default).
+- **Disk Usage**: `--cache` saves every synthesis to disk, and that directory grows unbounded. Omit the flag to disable caching. There is no `--no-cache` flag. Caching is simply off by default.
 
 
 - **Security**: Consider adding API keys or putting a reverse proxy (NGINX, Traefik) in front for SSL termination and
-  rate limiting. See [stt-server: a minimal NGINX server block](stt-server.md#tips-caveats) for a worked example —
-  the same shape applies here, just point `proxy_pass` at port 9666 instead of 8080.
+  rate limiting. See [stt-server: a minimal NGINX server block](stt-server.md#tips-caveats) for a worked example.
+  The same shape applies here, just point `proxy_pass` at port 9666 instead of 8080.
 
 - **Plugin Dependencies**: Some voices require native libraries (e.g., TensorFlow). Bake them into your Docker image to
   avoid runtime surprises.

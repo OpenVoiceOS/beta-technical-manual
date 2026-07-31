@@ -1,10 +1,10 @@
 # TTS Plugins
 
 !!! abstract "In a nutshell"
-    TTS stands for *Text-to-Speech*: this is the part that gives your assistant its voice, turning written replies into spoken audio you can hear. It is the opposite of dictation — instead of listening to you, it talks back. Different TTS plugins offer different voices and qualities, and some run on your own device while others use a cloud service. See the [Glossary](glossary.md) for related terms.
+    TTS stands for *Text-to-Speech*: this is the part that gives your assistant its voice, turning written replies into spoken audio you can hear. It is the opposite of dictation. Instead of listening to you, it talks back. Different TTS plugins offer different voices and qualities, and some run on your own device while others use a cloud service. See the [Glossary](glossary.md) for related terms.
 
 ??? info "📐 Formal specification"
-    TTS sits inside the audio output service, specified by **[OVOS-AUDIO-1 — Audio Output Service](https://github.com/OpenVoiceOS/architecture/blob/dev/audio-out.md)**: an `ovos.utterance.speak` response runs through the dialog-transformer chain → TTS → tts-transformer chain → playback queue. See the [spec index](architecture-specs.md).
+    TTS sits inside the audio output service, specified by **[OVOS-AUDIO-1: Audio Output Service](https://github.com/OpenVoiceOS/architecture/blob/dev/audio-out.md)**: an `ovos.utterance.speak` response runs through the dialog-transformer chain → TTS → tts-transformer chain → playback queue. See the [spec index](architecture-specs.md).
 
 TTS plugins are responsible for converting text into audio for playback.
 
@@ -14,7 +14,7 @@ TTS plugins are responsible for converting text into audio for playback.
     handed and returns that path; the container format must match the plugin's `audio_ext`
     (default `"wav"`, set via the `TTS.__init__` argument), because `audio_ext` is what names
     the cache file and what playback dispatches on. Sample rate, bit depth and channel count
-    are the plugin's own choice and travel inside the file's header — nothing between
+    are the plugin's own choice and travel inside the file's header. Nothing between
     `get_tts()` and the speakers resamples, remixes or re-encodes the audio, so whatever the
     engine emits is what is played. The one constraint is that the deployment must have a
     player for the extension: playback shells out to the command configured as
@@ -22,7 +22,7 @@ TTS plugins are responsible for converting text into audio for playback.
     system player), so `wav`, `ogg` and `mp3` are the extensions a stock deployment can play.
     Plain 16-bit mono WAV is the safe default.
 
-    `get_tts()` returns the tuple `(audio_path, phonemes)`. `phonemes` is optional — return
+    `get_tts()` returns the tuple `(audio_path, phonemes)`. `phonemes` is optional. Return
     `None` when the engine exposes none. When present it is a space-separated string of
     `phoneme:duration` pairs, which the base class's `viseme()` converts into a list of
     `(viseme_code, duration_seconds)` tuples for mouth animation; a pair with no `:duration`
@@ -33,12 +33,12 @@ TTS plugins are responsible for converting text into audio for playback.
     For fully offline, on-device synthesis, `ovos-tts-plugin-phoonnx` is the recommended
     starting point: it's OVOS's own ONNX-based multilingual neural TTS engine, installed with
     a single `pip install phoonnx`, and it fetches its model automatically the first time a
-    voice is used — no separate download step. Cloud plugins like `ovos-tts-plugin-polly`,
+    voice is used. No separate download step. Cloud plugins like `ovos-tts-plugin-polly`,
     `ovos-tts-plugin-azure`, `ovos-tts-plugin-edge-tts` or `ovos-tts-plugin-google-tx` are a
     fair choice when you need a specific commercial voice or don't want to spend local compute
     on synthesis.
 
-    **Footprint:** phoonnx voices are small, single-purpose ONNX models — the class of model
+    **Footprint:** phoonnx voices are small, single-purpose ONNX models. The class of model
     ONNX Runtime is built to run efficiently on-device, unlike the heavier general-purpose
     engines further down this page (Coqui, Whisper-class transformers, etc.). Exact size varies
     per voice, since each one is a separate model fetched on first use.
@@ -57,20 +57,20 @@ TTS plugins are responsible for converting text into audio for playback.
      }
    }
    ```
-   Leaving out a `"voice"` key like this is a valid, minimal config — the plugin picks the
+   Leaving out a `"voice"` key like this is a valid, minimal config. The plugin picks the
    first bundled model that supports the configured language. See the
    [ovos-tts-plugin-phoonnx](#ovos-tts-plugin-phoonnx) section below for how to pin a
    specific voice.
 
    Installing a plugin's package (like `pip install phoonnx`) only makes it available to
-   OVOS if it lands in the same Python environment OVOS itself runs in — activate that venv
+   OVOS if it lands in the same Python environment OVOS itself runs in. Activate that venv
    or container first, the same way [Your First Skill](first-skill.md) does before installing
    a skill.
-3. Save the file — it's JSONC (comments allowed) — and restart OVOS for the change to take effect.
+3. Save the file. It's JSONC (comments allowed). Restart OVOS for the change to take effect.
 
 !!! tip
     Don't want to hand-pick a plugin and voice yourself? `ovos-config autoconfigure -l <lang> ...`
-    picks a recommended offline/online voice for your language automatically — see
+    picks a recommended offline/online voice for your language automatically. See
     [Language Support](lang-support.md#auto-configuration).
 
 ## TTS
@@ -155,7 +155,7 @@ plugin instance, which runs, in order: `validate_dependencies()`, `validate_inst
 `validate_filename()`, `validate_lang()`, `validate_connection()`.
 
 In the base class every one of those methods is a no-op. A new plugin does not need to write a
-`TTSValidator` at all — the default passes automatically. Write one only if the plugin needs a
+`TTSValidator` at all. The default passes automatically. Write one only if the plugin needs a
 real startup check, for example confirming a binary is on `PATH` or that a cloud endpoint
 answers, and raise inside the relevant `validate_*` method to fail fast with a clear error
 instead of failing later on the first `get_tts()` call.
@@ -177,7 +177,7 @@ class MyTTSPlugin(TTS):
         super().__init__(*args, **kwargs, validator=MyTTSValidator(self))
 ```
 
-See [OVOS Plugin Manager — Writing a Plugin](plugin-manager.md#writing-a-plugin) for how
+See [OVOS Plugin Manager: Writing a Plugin](plugin-manager.md#writing-a-plugin) for how
 `get_tts_class()`/registration and the `opm.tts` entry point fit together at load time.
 
 ## Config plumbing
@@ -193,13 +193,13 @@ plugin instance through `OVOSTTSFactory.create()`:
 
 So a setting only reaches the plugin if it lives under `tts.<module-name>` (or as a shared
 top-level key under `tts`), and the plugin reads it back with `self.config.get("my_setting")`.
-See [OVOS Plugin Manager — Configuration Priority](plugin-manager.md#configuration-priority) for
+See [OVOS Plugin Manager: Configuration Priority](plugin-manager.md#configuration-priority) for
 the full precedence rules.
 
 ## Plugin Template
 
 !!! note
-    SSML: experimental, engine-dependent — see [SSML](ssml.md). Most plugins declare no
+    SSML: experimental, engine-dependent. See [SSML](ssml.md). Most plugins declare no
     `ssml_tags` and OVOS strips all SSML before synthesis.
 
 ```python
@@ -270,14 +270,14 @@ separately-licensed model or a paid cloud service, that is called out under "mod
 | [ovos-tts-plugin-phoonnx](#ovos-tts-plugin-phoonnx) | Built into [phoonnx](https://pypi.org/project/phoonnx), OVOS's own ONNX-based multilingual neural TTS engine — the default choice for fully offline synthesis, with automatic model fetching. | see repo (no license file; models: see model card) | Stable |
 | [ovos-tts-plugin-omnivoice](https://github.com/OpenVoiceOS/ovos-tts-plugin-omnivoice) | Wraps [OmniVoice](https://github.com/k2-fsa/OmniVoice), a massively multilingual (600+ languages) zero-shot TTS model with `auto`, voice-design (`instruct`), and voice-cloning (`ref_audio`) modes. ⚠️ No packaged release yet — install from source. *(not yet packaged / no dedicated section — see repo)* | Apache-2.0 (model: see model card) | Alpha |
 
-Maturity reflects repository health (age, activity, open issues/PRs, in-repo docs), not version — see the [Maturity Scale](maturity.md).
+Maturity reflects repository health (age, activity, open issues/PRs, in-repo docs), not version. See the [Maturity Scale](maturity.md).
 
 !!! note "License and Maturity are independent axes"
-    The **License** column reports what the repository itself declares (or doesn't — "no
-    license file" just means no SPDX license was found, not that the code is unmature) and the
-    **Maturity** column reports repository health (age, activity, issues/PRs, docs). A plugin can
-    be **Mature** and still ship no license file, or be **Stable** with a permissive license but
-    thin docs — don't read one column as implying the other.
+    The **License** column reports what the repository itself declares. "No
+    license file" just means no SPDX license was found, not that the code is unmature.
+    The **Maturity** column reports repository health (age, activity, issues/PRs, docs).
+    A plugin can be **Mature** and still ship no license file. A plugin can be **Stable**
+    with a permissive license but thin docs. Don't read one column as implying the other.
 
 ## ovos-tts-server
 
@@ -306,7 +306,7 @@ Maturity reflects repository health (age, activity, open issues/PRs, in-repo doc
 
 !!! note
     gTTS works by calling the same unofficial, undocumented endpoint used by the Google
-    Translate web UI's "listen" feature — not a published, API-keyed Google Cloud
+    Translate web UI's "listen" feature. It is not a published, API-keyed Google Cloud
     Text-to-Speech API. Google can change or revoke access to this endpoint at any time.
 
 ### Default Configuration
@@ -439,7 +439,7 @@ Maturity reflects repository health (age, activity, open issues/PRs, in-repo doc
 - **GitHub**: [https://github.com/OpenVoiceOS/ovos-tts-plugin-SAM](https://github.com/OpenVoiceOS/ovos-tts-plugin-SAM)
 
 
-- **Description**: S.A.M. — Software Automatic Mouth, the classic retro speech synthesizer.
+- **Description**: S.A.M., Software Automatic Mouth, the classic retro speech synthesizer.
 
 ---
 
@@ -454,7 +454,7 @@ Maturity reflects repository health (age, activity, open issues/PRs, in-repo doc
 
 !!! warning "Never commit a real `api_key`"
     Treat this like any other credential: keep the real value out of version control and
-    shared config files — use a local, untracked config or an environment-backed secret
+    shared config files. Use a local, untracked config or an environment-backed secret
     store instead of hard-coding it in `mycroft.conf`.
 
 ```jsonc
@@ -519,7 +519,7 @@ Maturity reflects repository health (age, activity, open issues/PRs, in-repo doc
 
 ```
 
-That default `host` is a public community-run Piper server, not an address on your network — see
+That default `host` is a public community-run Piper server, not an address on your network. See
 [tts-server](tts-server.md#companion-plugin) to self-host, or pick a fully offline voice from the
 table above.
 
@@ -561,7 +561,7 @@ table above.
 - **GitHub**: [https://github.com/TigreGotico/phoonnx](https://github.com/TigreGotico/phoonnx)
 
 
-- **Description**: OVOS's own multilingual, ONNX-based neural TTS engine, distributed as part of the `phoonnx` package. Registering the plugin only requires `pip install phoonnx` — model files are fetched and cached automatically the first time a voice is used.
+- **Description**: OVOS's own multilingual, ONNX-based neural TTS engine, distributed as part of the `phoonnx` package. Registering the plugin only requires `pip install phoonnx`. Model files are fetched and cached automatically the first time a voice is used.
 
 ### Default Configuration
 
@@ -586,11 +586,11 @@ table above.
    breaking release slip in unnoticed; a ceiling alone lets an old install miss a needed feature.
 2. **Install for local development.** Run `pip install -e .` from the plugin's own repository so
    changes to the source take effect without reinstalling. See
-   [OVOS Plugin Manager — Install and verify](plugin-manager.md#3-install-and-verify) for the
+   [OVOS Plugin Manager: Install and verify](plugin-manager.md#3-install-and-verify) for the
    command that confirms OVOS can see the new plugin.
 3. **Publish to PyPI.** OVOS deployments and the Plugin Arena's benchmark sweep both install
    plugins from PyPI, not from a git checkout, so a plugin needs a PyPI release before either can
-   use it. See [Plugin Arena — Getting Your Plugin Ranked](plugin-arena.md#getting-your-plugin-ranked)
+   use it. See [Plugin Arena: Getting Your Plugin Ranked](plugin-arena.md#getting-your-plugin-ranked)
    for what a published plugin needs to be picked up by the sweep.
 
 ## Test your plugin locally
@@ -627,5 +627,5 @@ your voice](#change-your-voice) above.
 
 ## Further reading
 
-- [Introducing phoonnx — OVOS's next-gen TTS engine](https://blog.openvoiceos.org/posts/2025-10-06-phoonnx) — OVOS blog
-- [Making Synthetic Voices From Scratch](https://blog.openvoiceos.org/posts/2025-06-26-making-synthetic-voices-from-scratch) — OVOS blog
+- [Introducing phoonnx — OVOS's next-gen TTS engine](https://blog.openvoiceos.org/posts/2025-10-06-phoonnx), OVOS blog
+- [Making Synthetic Voices From Scratch](https://blog.openvoiceos.org/posts/2025-06-26-making-synthetic-voices-from-scratch), OVOS blog

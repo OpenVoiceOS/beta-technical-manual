@@ -1,7 +1,7 @@
 # Agent Tool Plugins
 
 !!! abstract "In a nutshell"
-    These plugins give an AI assistant real *abilities* it can reach for — like fetching information or performing an action — rather than only talking. Each "tool" is described in a standard way so the AI knows what it does and what information it needs, much like labeled buttons on a control panel. See [Agentic Loops](agentic-loop.md) for how an assistant decides to use them, and the [Glossary](glossary.md) for unfamiliar terms.
+    These plugins give an AI assistant real *abilities*, like fetching information or performing an action, instead of only talking. Each "tool" is described in a standard way. The AI can read this description to learn what the tool does and what information it needs. See [Agentic Loops](agentic-loop.md) for how an assistant decides to use them, and the [Glossary](glossary.md) for unfamiliar terms.
 
 The OPM `ToolBox` framework provides a standardized mechanism for exposing discoverable, schema-validated functions to OVOS agents (persona solvers, agentic loops, MCP/UTCP clients). For full authoring documentation see the [Plugin Manager reference](plugin-manager.md).
 
@@ -75,7 +75,7 @@ registers the messagebus handlers described below. The full authoring guide with
 
 ## PHAL Bus Provider
 
-[OpenVoiceOS/ovos-PHAL-plugin-tools](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-tools) is a PHAL plugin that loads all installed `ToolBox` plugins and registers them on the messagebus, making them available to any component that can emit bus messages.
+[OpenVoiceOS/ovos-PHAL-plugin-tools](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-tools) is a PHAL plugin that loads all installed `ToolBox` plugins and registers them on the messagebus. Any component that can emit bus messages can then use them.
 
 ```bash
 pip install ovos-PHAL-plugin-tools
@@ -96,8 +96,8 @@ Entry point group: `opm.phal`; plugin name `ovos-phal-plugin-tools`.
 | `ovos.tools.reload` | → plugin | *(none)* |
 | `ovos.tools.reload.response` | plugin → | `{loaded: [str, ...], total_tools: int}` |
 
-Every request is answered — unknown tools, bad arguments, and tool exceptions
-come back as an `error` field, never silence.
+Every request gets an answer. Unknown tools, bad arguments, and tool exceptions
+come back as an `error` field. The plugin never stays silent.
 
 ### Third-party usage
 

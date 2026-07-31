@@ -1,35 +1,42 @@
 # Transformer Plugins
 
 !!! abstract "In a nutshell"
-    As your voice travels through the assistant — from raw sound, to written words, to a matched request, to the spoken reply — transformer plugins are optional helpers that can tidy or tweak the information at each step. Think of them as filters on an assembly line: one might clean up background noise, another might fix a misheard word before the system tries to understand it. They don't take over any step; they just polish what passes between steps. See the [Glossary](glossary.md) for related terms.
+    Your voice travels through the assistant: from raw sound, to written words, to a matched
+    request, to the spoken reply. Transformer plugins are optional helpers that can tidy or tweak
+    the information at each step. Think of them as filters on an assembly line. One might clean
+    up background noise. Another might fix a misheard word before the system tries to understand
+    it. They don't take over any step. They just polish what passes between steps. See the
+    [Glossary](glossary.md) for related terms.
 
 ??? info "📐 Formal specification"
-    The transformer subsystem is specified by **[OVOS-TRANSFORM-1 — Transformer Plugins](https://github.com/OpenVoiceOS/architecture/blob/dev/transformer.md)** (one of the formal [architecture specs](architecture-specs.md)). It defines **six ordered chains** — `audio`, `utterance`, `metadata`, `intent`, `dialog`, `tts` — that run at fixed points in the utterance lifecycle, the per-type input/output contract for each, the per-session ordering and denylist overrides, and the utterance-cancellation signal. A transformer is identified by its `(type, transformer_id)` pair. Where this manual or the current code diverges from the spec, the spec is canonical.
+    The transformer subsystem is specified by **[OVOS-TRANSFORM-1: Transformer Plugins](https://github.com/OpenVoiceOS/architecture/blob/dev/transformer.md)** (one of the formal [architecture specs](architecture-specs.md)). It defines **six ordered chains**, `audio`, `utterance`, `metadata`, `intent`, `dialog`, `tts`, that run at fixed points in the utterance lifecycle. It also defines the per-type input/output contract for each, the per-session ordering and denylist overrides, and the utterance-cancellation signal. A transformer is identified by its `(type, transformer_id)` pair. Where this manual or the current code diverges from the spec, the spec is canonical.
 
-    **Ordering.** OVOS-TRANSFORM-1 §4 orders each chain by **ascending** `priority`: a lower number runs **earlier**, the default is `50`. The current OVOS code follows this: a plugin with `priority=1` runs first, and later plugins see and may override its output. A legacy descending order is still available as an explicit opt-in (`sort_ascending=False`, marked deprecated in `ovos_plugin_manager/transformer_services.py`) for deployments that depend on the old behavior.
+    **Ordering.** OVOS-TRANSFORM-1 §4 orders each chain by **ascending** `priority`. A lower number runs **earlier**, and the default is `50`. The current OVOS code follows this: a plugin with `priority=1` runs first, and later plugins see and may override its output. A legacy descending order is still available as an explicit opt-in (`sort_ascending=False`, marked deprecated in `ovos_plugin_manager/transformer_services.py`) for deployments that depend on the old behavior.
 
-Transformer plugins let you intercept and modify data as it flows through the transformer chain. Each type is a small class with a `transform()` method that runs at a fixed stage — turning raw audio into cleaner audio, fixing transcribed text before intent matching, enriching a matched intent, or post-processing speech before playback.
+Transformer plugins let you intercept and modify data as it flows through the transformer chain. Each type is a small class with a `transform()` method that runs at a fixed stage. Examples are turning raw audio into cleaner audio, fixing transcribed text before intent matching, enriching a matched intent, or post-processing speech before playback.
 
-A transformer never *replaces* a stage; it sits between two stages and reshapes what passes through. Several plugins of the same type can be active at once — they run in sequence, lowest `priority` first, so each one builds on the output of the previous.
+A transformer never *replaces* a stage. It sits between two stages and reshapes what passes through. Several plugins of the same type can be active at once. They run in sequence, lowest `priority` first, so each one builds on the output of the previous.
 
 !!! note "Synchronous contract — keep transformers fast"
-    `transform()` (and `on_audio()`/`on_speech()`) are plain synchronous methods; the chain
+    `transform()` (and `on_audio()`/`on_speech()`) are plain synchronous methods. The chain
     runner calls each one inline, in order, on the thread that owns the chain. A slow
-    transformer blocks the owning service for its full duration — there is no background
+    transformer blocks the owning service for its full duration. There is no background
     execution or timeout. This matters most for `AudioTransformer`, which sits on the
-    real-time audio path: keep its work fast and offload anything heavy (model inference,
+    real-time audio path. Keep its work fast, and offload anything heavy (model inference,
     network calls) to a background thread/process instead of doing it inside `transform()`.
 
-    There is no async return path back into the chain: `transform()` is called inline and
+    There is no async return path back into the chain. `transform()` is called inline and
     must return before the chain can proceed, so it cannot await a background job's result
     mid-chain. "Offload the heavy work" only helps if `transform()` can return
     cached/previous data immediately on each call, while the background thread/process
-    updates that cache for the *next* call to pick up — the current call never blocks on
+    updates that cache for the *next* call to pick up. The current call never blocks on
     the background job finishing.
 
 ## Transformer Types
 
-All base classes live in `ovos_plugin_manager.templates.transformers` and share the same constructor: `__init__(self, name, priority=50, config=None)`, plus `bind(bus)` and `initialize()`. The loader (`TransformersService.load_plugins()` in `ovos_plugin_manager.transformer_services`) only ever instantiates a plugin as `plug(config=plugin_config)` — it does not pass `name` or `priority`. Since the base class has no default for `name`, every plugin must override `__init__` to supply its own `name` (and usually a default `priority`), and must call `super().__init__(name, priority, config)` so the base class still gets them. A `"priority"` key in a plugin's `mycroft.conf` block is not applied automatically — the plugin must read it back out of `self.config` itself if it wants deployments to override priority (see [Utterance Transformers — Config-driven priority](utterance-transformers.md#config-driven-priority)).
+All base classes live in `ovos_plugin_manager.templates.transformers` and share the same constructor: `__init__(self, name, priority=50, config=None)`, plus `bind(bus)` and `initialize()`. The loader (`TransformersService.load_plugins()` in `ovos_plugin_manager.transformer_services`) only ever instantiates a plugin as `plug(config=plugin_config)`. It does not pass `name` or `priority`. Since the base class has no default for `name`, every plugin must override `__init__` to supply its own `name` (and usually a default `priority`). Each plugin must call `super().__init__(name, priority, config)` so the base class still gets them.
+
+A `"priority"` key in a plugin's `mycroft.conf` block is not applied automatically. The plugin must read it back out of `self.config` itself if it wants deployments to override priority (see [Utterance Transformers: Config-driven priority](utterance-transformers.md#config-driven-priority)).
 
 | Type | Stage | Base Class | Entry-point group |
 |------|-------|------------|-------------------|
@@ -40,7 +47,7 @@ All base classes live in `ovos_plugin_manager.templates.transformers` and share 
 | **Dialog** | Before TTS | `DialogTransformer` | `opm.transformer.dialog` |
 | **TTS** | After TTS, before Playback | `TTSTransformer` | `opm.transformer.tts` |
 
-The runner classes that load and chain these plugins — `UtteranceTransformersService`, `MetadataTransformersService`, `IntentTransformersService`, `AudioTransformersService`, `DialogTransformersService`, `TTSTransformersService` — live in `ovos-plugin-manager` (`ovos_plugin_manager.transformer_services`). Each consumer imports the one it needs: `ovos-core` runs the utterance/metadata/intent chains, the listener the audio chain, and the audio/TTS stacks the dialog/TTS chains.
+The runner classes that load and chain these plugins live in `ovos-plugin-manager` (`ovos_plugin_manager.transformer_services`): `UtteranceTransformersService`, `MetadataTransformersService`, `IntentTransformersService`, `AudioTransformersService`, `DialogTransformersService`, `TTSTransformersService`. Each consumer imports the one it needs. `ovos-core` runs the utterance/metadata/intent chains, the listener runs the audio chain, and the audio/TTS stacks run the dialog/TTS chains.
 
 ---
 
@@ -140,9 +147,9 @@ print(f"Transformed: {transformed}")
 
 The discovery helpers (`find_*_transformer_plugins`, `load_*_transformer_plugin`) live in
 `ovos_plugin_manager.text_transformers`, `.intent_transformers`, `.metadata_transformers`,
-`.audio_transformers`, and `.dialog_transformers` (the dialog module also exposes the
-`find_tts_transformer_plugins` / `load_tts_transformer_plugin` helpers — there is no
-separate `tts_transformers` module).
+`.audio_transformers`, and `.dialog_transformers`. The dialog module also exposes the
+`find_tts_transformer_plugins` / `load_tts_transformer_plugin` helpers. There is no
+separate `tts_transformers` module.
 
 ## Creating a Plugin
 
@@ -162,7 +169,7 @@ my-transformer = "my_package.module:MyTransformer"
 
 !!! note "No config-discovery entry point for transformers"
     TTS and STT plugins can register a second entry point (`opm.tts.config`, `opm.stt.config`)
-    that exposes sample configurations for UI discovery — see
+    that exposes sample configurations for UI discovery. See
     [TTS Plugins — Entry point](tts-plugins.md#entry-point). `ovos-plugin-manager`'s
     `PluginConfigTypes` enum has no matching entry for any transformer type (audio, utterance,
     metadata, intent, dialog, or tts transformers). A transformer plugin only registers under
@@ -222,11 +229,11 @@ restart OVOS.
 | [ovos-utterance-normalizer](#ovos-utterance-normalizer) | normalizes utterances before intent parsing | Stable |
 | [ovos-utterance-plugin-cancel](#ovos-utterance-plugin-cancel) | plugin to look at the tail end of the transcribed phrase, ignoring the utterance if it ends with "nevermind that" or "cancel it" or "ignore that". | Stable |
 | [ovos-audio-transformer-plugin-ggwave](#ovos-audio-transformer-plugin-ggwave) | plugin for https://github.com/ggerganov/ggwave | Mature |
-| [ovos-tts-transformer-sox-plugin](#ovos-tts-transformer-sox-plugin) | This repository contains a Python package for a Text-to-Speech (TTS) transformer that utilizes SoX (Sound eXchange) for audio processing. The transformer applies various effects to the generated audio before playback. | Beta |
+| [ovos-tts-transformer-sox-plugin](#ovos-tts-transformer-sox-plugin) | A Text-to-Speech (TTS) transformer that uses SoX (Sound eXchange) for audio processing. The transformer applies various effects to the generated audio before playback. | Beta |
 | [ovos_tts_transformer_FlashSR](#ovos_tts_transformer_flashsr) | ONNX-based audio super-resolution that upsamples synthesized TTS audio before playback (not yet on PyPI). | Proof-of-concept |
 | [ovos_tts_transformer_NovaSR](#ovos_tts_transformer_novasr) | torch-based audio super-resolution upsampler for synthesized TTS audio (not yet on PyPI). | Proof-of-concept |
 
-Maturity reflects repository health (age, activity, open issues/PRs, in-repo docs), not version — see the [Maturity Scale](maturity.md).
+Maturity reflects repository health (age, activity, open issues/PRs, in-repo docs), not version. See the [Maturity Scale](maturity.md).
 
 ## ovos-dialog-normalizer-plugin
 
@@ -296,7 +303,7 @@ Maturity reflects repository health (age, activity, open issues/PRs, in-repo doc
 - **GitHub**: [https://github.com/OpenVoiceOS/ovos-tts-transformer-sox-plugin](https://github.com/OpenVoiceOS/ovos-tts-transformer-sox-plugin)
 
 
-- **Description**: This repository contains a Python package for a Text-to-Speech (TTS) transformer that utilizes SoX (Sound eXchange) for audio processing. The transformer applies various effects to the generated audio before playback.
+- **Description**: A Text-to-Speech (TTS) transformer that uses SoX (Sound eXchange) for audio processing. The transformer applies various effects to the generated audio before playback.
 
 ---
 
@@ -305,7 +312,7 @@ Maturity reflects repository health (age, activity, open issues/PRs, in-repo doc
 - **GitHub**: [https://github.com/OpenVoiceOS/ovos_tts_transformer_FlashSR](https://github.com/OpenVoiceOS/ovos_tts_transformer_FlashSR)
 
 
-- **Description**: ONNX-based audio super-resolution TTS transformer (`FlashSRTTSTransformer`); upsamples synthesized audio before playback, downloading its model from the Hugging Face Hub. Entry point `ovos-tts-transformer-FlashSR` under `opm.transformer.tts`. **Upcoming** — not yet published to PyPI.
+- **Description**: ONNX-based audio super-resolution TTS transformer (`FlashSRTTSTransformer`). It upsamples synthesized audio before playback, downloading its model from the Hugging Face Hub. Entry point `ovos-tts-transformer-FlashSR` under `opm.transformer.tts`. **Upcoming**: not yet published to PyPI.
 
 ---
 
@@ -314,7 +321,7 @@ Maturity reflects repository health (age, activity, open issues/PRs, in-repo doc
 - **GitHub**: [https://github.com/OpenVoiceOS/ovos_tts_transformer_NovaSR](https://github.com/OpenVoiceOS/ovos_tts_transformer_NovaSR)
 
 
-- **Description**: torch-based super-resolution upsampler TTS transformer (`NovaSRTTSTransformer`). Entry point `ovos-tts-transformer-NovaSR` under `opm.transformer.tts`. **Upcoming** — not yet published to PyPI.
+- **Description**: torch-based super-resolution upsampler TTS transformer (`NovaSRTTSTransformer`). Entry point `ovos-tts-transformer-NovaSR` under `opm.transformer.tts`. **Upcoming**: not yet published to PyPI.
 
 ---
 

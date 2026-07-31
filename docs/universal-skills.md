@@ -1,17 +1,17 @@
 # UniversalSkill
 
 !!! abstract "In a nutshell"
-    A "Universal" skill is one you write in a single language but that works in many. It automatically translates what the user said into your chosen working language before your code runs, and translates your replies back into the user's language afterward — so you handle everything in, say, English while users speak whatever they like. Think of it as a built-in interpreter sitting on either side of your skill. It needs translation plugins set up to work. For the family of skill templates see [Skill Classes](skill-classes.md); for term definitions see the [Glossary](glossary.md).
+    A "Universal" skill is one you write in a single language but that works in many. It automatically translates what the user said into your chosen working language before your code runs. It translates your replies back into the user's language afterward. This lets you handle everything in, say, English while users speak whatever they like. Think of it as a built-in interpreter sitting on either side of your skill. It needs translation plugins set up to work. For the family of skill templates see [Skill Classes](skill-classes.md). For term definitions see the [Glossary](glossary.md).
 
-The `UniversalSkill` class is designed to facilitate automatic translation of input and output messages between different languages. 
+The `UniversalSkill` class automatically translates input and output messages between different languages.
 
-This skill is particularly useful when native language support is not feasible, providing a convenient way to handle multilingual interactions.
+Use it when native language support is not feasible. It gives you a simple way to handle multilingual interactions.
 
 > A `UniversalFallback` class (`ovos_workshop.skills.auto_translatable.UniversalFallback`) combines `UniversalSkill` with `FallbackSkill` for auto-translating [fallback](fallbacks.md) handlers. There is no `UniversalCommonQuerySkill` — for translated question answering, combine the `@common_query` decorator with the translation helpers yourself.
 
 ## Overview
 
-This skill ensures that intent handlers receive utterances in the skill's internal language and are expected to produce responses in the same internal language. 
+This skill ensures that intent handlers receive utterances in the skill's internal language. Handlers must also produce responses in the same internal language.
 
 The `speak` method, used for generating spoken responses, automatically translates utterances from the internal language to the original query language.
 
@@ -19,7 +19,7 @@ The `speak` method, used for generating spoken responses, automatically translat
 
 ## Language Plugins
 
-To run `UniversalSkills` you need to configure [Translation plugins](translation-plugins.md) in `mycroft.conf`
+To run `UniversalSkills` you need to configure [Translation plugins](translation-plugins.md) in `mycroft.conf`:
 
 ```javascript
   // Translation plugins
@@ -34,15 +34,15 @@ To run `UniversalSkills` you need to configure [Translation plugins](translation
 
 !!! warning "Latency and missing-plugin behavior"
     Every incoming utterance and every spoken reply that needs translating adds a round trip
-    to the configured translation plugin (a remote server call for `ovos-translate-plugin-server`,
-    or local model inference for an offline plugin) — plan for this extra delay before speech
-    starts. If no `translation_module` (or `detection_module`) is configured, or the configured
-    plugin fails to load, `self.translator` / `self.lang_detector` raise the underlying exception
-    the first time they are accessed — there is no silent fallback to "no translation"; the
-    `OVOSLangTranslationFactory.create()` call is deliberately left unguarded
-    (`ovos_workshop/skills/ovos.py`, `translator` property) so a missing plugin surfaces loudly
-    instead of silently mistranslating. If you want your skill to degrade gracefully instead of
-    crashing, wrap the access yourself:
+    to the configured translation plugin. This can be a remote server call for
+    `ovos-translate-plugin-server`, or local model inference for an offline plugin. Plan for
+    this extra delay before speech starts. If no `translation_module` (or `detection_module`)
+    is configured, or the configured plugin fails to load, `self.translator` /
+    `self.lang_detector` raise the underlying exception the first time they are accessed.
+    There is no silent fallback to "no translation". The `OVOSLangTranslationFactory.create()`
+    call is deliberately left unguarded (`ovos_workshop/skills/ovos.py`, `translator` property),
+    so a missing plugin surfaces loudly instead of silently mistranslating. If you want your
+    skill to degrade gracefully instead of crashing, wrap the access yourself:
 
     ```python
     try:
@@ -105,7 +105,7 @@ class MyMultilingualSkill(UniversalSkill):
 
 ### Intents and Utterances
 
-Use the `register_intent` and `register_intent_file` methods to register intents with universal intent handlers. The usual decorators also work
+Use the `register_intent` and `register_intent_file` methods to register intents with universal intent handlers. The usual decorators also work.
 
 The `speak` method is used to generate spoken responses.
 It automatically translates utterances if the output language is different from the skill's internal language or autodetection is enabled.
@@ -120,7 +120,7 @@ self.speak("Hello, how are you?")
 ### Universal Intent Handler
 
 !!! info
-    Users should NOT use the `create_universal_handler` method manually in skill intents; it is automatically utilized by `self.register_intent`. 
+    Users should NOT use the `create_universal_handler` method manually in skill intents. `self.register_intent` already calls it for you.
 
 The following example demonstrates its usage with `self.add_event`.
 
@@ -139,9 +139,9 @@ self.add_event("my_event", my_handler)
 
 ## EnglishCatFacts [Skill](skill-design-guidelines.md) Example
 
-Let's create a simple tutorial skill that interacts with an API to fetch cat facts in English. 
+This tutorial skill interacts with an API to fetch cat facts in English.
 
-We'll use the `UniversalSkill` class to support translations for other languages.
+It uses the `UniversalSkill` class to support translations for other languages.
 
 ```python
 from ovos_workshop.skills.auto_translatable import UniversalSkill
@@ -169,15 +169,14 @@ class EnglishCatFactsSkill(UniversalSkill):
 
 ```
 
-In this example, the `CatFactsSkill` class extends `UniversalSkill`, allowing it to seamlessly translate cat facts into the user's preferred language.
+In this example, the `CatFactsSkill` class extends `UniversalSkill`. This lets it translate cat facts into the user's preferred language.
 
 
 ## SpanishDatabase Skill Example
 
-A more advanced example, let's consider a skill that listens to bus messages.
+This more advanced example is a skill that listens to bus messages.
 
-Our skill listens for messages containing a `"phrase"` payload in message.data that can be in any language, and it saves this phrase *in spanish* to a database. 
-Then it speaks a hardcoded spanish utterance, and it gets translated into the language of the bus message [Session](session.md)
+The skill listens for messages containing a `"phrase"` payload in message.data. This payload can be in any language. The skill saves this phrase *in spanish* to a database. Then it speaks a hardcoded spanish utterance. That utterance gets translated into the language of the bus message [Session](session.md).
 
 ```python
 from ovos_bus_client.message import Message

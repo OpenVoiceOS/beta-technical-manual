@@ -2,25 +2,26 @@
 
 !!! abstract "In a nutshell"
     This page picks up right after [Your First Skill](first-skill.md): the `ovos-skill-my-first`
-    skill you just wrote. Here you'll add an automated test for it — one that sends it the
+    skill you just wrote. Here you'll add an automated test for it. It sends the skill the
     utterance "hello" and checks it replies correctly, without needing a microphone, speakers, or
     a running assistant. By the end you'll have a test you can run locally and in CI on every
     change.
 
 ## Why test a skill end-to-end?
 
-A skill can *look* correct — the code imports cleanly, the files are in the right place — and
-still fail the moment a real user talks to it: the intent phrasing might not actually match, the
-dialog file might have a typo, or the entry point might not point at the right class. An
-**end-to-end (E2E) test** catches these by running a small, in-process copy of OVOS, sending it a
-real utterance, and checking what comes back out — the same journey a spoken command takes, minus
-the microphone. `ovoscope` is the tool the OVOS project itself uses for this; every skill accepted
-into the ecosystem is expected to ship at least one.
+A skill can *look* correct: the code imports cleanly, the files are in the right place. It can
+still fail the moment a real user talks to it. The intent phrasing might not actually match, the
+dialog file might have a typo, or the entry point might not point at the right class.
+
+An **end-to-end (E2E) test** catches these by running a small, in-process copy of OVOS, sending it a
+real utterance, and checking what comes back out. This is the same journey a spoken command takes,
+minus the microphone. `ovoscope` is the tool the OVOS project itself uses for this. Every skill
+accepted into the ecosystem is expected to ship at least one.
 
 ## Step 1 — Install ovoscope
 
-Activate the same environment you installed the skill into in [Your First Skill](first-skill.md)
-(the venv or container you ran `pip install -e .` in) — `ovoscope` needs to be importable
+Activate the same environment you installed the skill into in [Your First Skill](first-skill.md),
+the venv or container you ran `pip install -e .` in. `ovoscope` needs to be importable
 alongside the skill and OVOS itself, not just present somewhere on the machine.
 
 Add it as a test dependency of the skill you built in [Your First Skill](first-skill.md):
@@ -44,7 +45,7 @@ test = ["ovoscope", "ovos-padatious-pipeline-plugin"]
     This test drives `session.pipeline = ["ovos-padatious-pipeline-plugin"]`, so that plugin
     must actually be installed: `pip show ovos-padatious-pipeline-plugin || pip install
     ovos-padatious-pipeline-plugin`. If the test runs but reports no spoken output at all,
-    a missing pipeline plugin — not a bug in your skill — is the first thing to check.
+    check for a missing pipeline plugin first, not a bug in your skill.
 
 Create `test/test_hello.py` next to your skill's `pyproject.toml`:
 
@@ -83,14 +84,14 @@ def test_hello_matches_and_speaks():
 ```
 
 !!! note "Why `ovos-padatious-pipeline-plugin`, not Adapt?"
-    `Hello.intent` is a **Padatious** intent file (one example phrase per line) — that's a
+    `Hello.intent` is a **Padatious** intent file (one example phrase per line). That's a
     different matcher from Adapt's keyword grammar. `session.pipeline` tells OVOS which intent
-    engines to try, and in which order; it has to include the engine that actually understands
+    engines to try, and in which order. It has to include the engine that actually understands
     your intent file, or the utterance is never matched. See [Pipelines Overview](pipelines-overview.md)
     for how the stages fit together.
 
 `skill_ids` restricts which skill(s) `ovoscope` loads for the test, so you're only ever testing
-your own skill — not every skill installed on the machine.
+your own skill, not every skill installed on the machine.
 
 ## Step 3 — Run it
 
@@ -99,8 +100,8 @@ PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 pytest test/test_hello.py -v
 ```
 
 `PYTEST_DISABLE_PLUGIN_AUTOLOAD=1` avoids autoloading unrelated pytest plugins that some OVOS
-dependencies register — harmless to leave set for any OVOS test run. A real run looks like this
-(trimmed of the framework's own deprecation-warning noise):
+dependencies register. It's harmless to leave set for any OVOS test run. A real run looks like
+this (trimmed of the framework's own deprecation-warning noise):
 
 ```text
 test/test_hello.py::test_hello_matches_and_speaks PASSED                [100%]
@@ -111,13 +112,13 @@ test/test_hello.py::test_hello_matches_and_speaks PASSED                [100%]
 !!! tip "First run is slow, and that's normal"
     The bulk of that ~70s is `ovoscope` spinning up a full in-process `SkillManager` and loading
     **every** intent-pipeline plugin installed on the machine (Adapt, Padatious, Padacioso, and any
-    others you have) — not just the one your test needs. On a machine with only the pipeline
+    others you have), not just the one your test needs. On a machine with only the pipeline
     plugins your skill actually depends on, startup is much faster.
 
 ## Step 4 — Test the failure path
 
 A test that only ever sends utterances your skill *should* match doesn't tell you much. Add a
-second test that sends something unrelated and checks the skill stays silent — this is what
+second test that sends something unrelated and checks the skill stays silent. This is what
 catches an intent file matching too eagerly:
 
 ```python
@@ -157,14 +158,14 @@ test/test_hello_nomatch.py::test_unrelated_utterance_is_not_handled PASSED [100%
 
 !!! warning "Testing an *error* dialog"
     If your skill calls `self.speak_dialog("some_error")` on a caught exception (a missing API
-    key, a network failure, …), test that path the same way: drive the skill into the failing
-    condition and assert it spoke the error dialog's text instead of crashing silently or leaking
-    a raw traceback to the user. `ovos-skill-my-first` has no such path — it can't fail — so there
-    is nothing further to add here for this particular skill.
+    key, a network failure, and so on), test that path the same way. Drive the skill into the
+    failing condition and assert it spoke the error dialog's text instead of crashing silently or
+    leaking a raw traceback to the user. `ovos-skill-my-first` has no such path. It can't fail, so
+    there is nothing further to add here for this particular skill.
 
 ## Step 5 — Fixtures and the `ovoscope` CLI
 
-`ovoscope` also ships a standalone CLI (`ovoscope --help`) for working with fixtures — recorded
+`ovoscope` also ships a standalone CLI (`ovoscope --help`) for working with fixtures: recorded
 bus-message sequences you can replay without writing a pytest file:
 
 | Subcommand | What it does |
@@ -178,7 +179,7 @@ bus-message sequences you can replay without writing a pytest file:
 
 A fixture is just the saved output of an `End2EndTest`. `End2EndTest.from_message()` runs the
 utterance through a real `MiniCroft`, captures *every* message that comes back, and hands you a
-test object whose `.save(path)` writes that captured sequence to JSON — this is what `ovoscope
+test object whose `.save(path)` writes that captured sequence to JSON. This is what `ovoscope
 record` does internally:
 
 ```python
@@ -203,9 +204,9 @@ test = End2EndTest.from_message(
 test.save("test/fixtures/hello.json")
 ```
 
-Running it produces a fixture with the full 7-message sequence for this interaction — the
+Running it produces a fixture with the full 7-message sequence for this interaction: the
 utterance coming in, the skill activating, the intent matching, the handler starting, the `speak`,
-and the handler/utterance completing:
+and the handler/utterance completing.
 
 ```text
 $ python3 test/record_hello_fixture.py
@@ -227,34 +228,35 @@ ovoscope run test/fixtures/hello.json -v
 ```
 
 !!! warning "A recorded fixture can be non-deterministic — watch for timestamps"
-    Replaying the fixture above with `ovoscope run` reliably reports a mismatch, not because
-    anything is actually broken, but because the session's `active_handlers` records a Unix
-    timestamp (*when the skill activated*) at capture time — and that timestamp is different every
-    time you re-run it:
+    Replaying the fixture above with `ovoscope run` reliably reports a mismatch. This is not
+    because anything is actually broken. It happens because the session's `active_handlers`
+    records a Unix timestamp (*when the skill activated*) at capture time, and that timestamp is
+    different every time you re-run it:
     ```text
     [run] FAIL: ❌ message context mismatch for key 'session' - expected
     '...activated_at': 1784823640.9039652...' | got '...activated_at': 1784823715.739504...'
     ```
     Timestamps, request IDs, and anything else that legitimately changes between runs will do this
     to any fixture that captures full message context. Compare only the fields you actually care
-    about instead of the whole context — either pass `assert_spoke()`/`execute()` with a narrower
-    `expected_messages` list in a pytest test (as in Steps 2–4), or use `ovoscope diff` with the
+    about instead of the whole context. Either pass `assert_spoke()`/`execute()` with a narrower
+    `expected_messages` list in a pytest test (as in Steps 2-4), or use `ovoscope diff` with the
     default (context-skipping) comparison rather than `--include-context` when comparing fixtures.
 
 !!! tip "`ovoscope record` from the command line"
-    The `ovoscope record` subcommand does the same capture directly from the shell —
-    `ovoscope record --skill-id my-first.youruser --utterance "hello" --output test/fixtures/hello.json`
-    — without writing any Python. Both routes produce the same fixture format; use whichever fits
+    The `ovoscope record` subcommand does the same capture directly from the shell:
+    `ovoscope record --skill-id my-first.youruser --utterance "hello" --output test/fixtures/hello.json`,
+    without writing any Python. Both routes produce the same fixture format. Use whichever fits
     your workflow. The Python API is handy when you want to tweak the `Session` (language,
     pipeline list) before recording.
 
 ## Multi-turn tests: always re-pull the session
 
 Session state (which skills are active for [converse](converse.md), context, pipeline order)
-travels **inside each message** and the server folds it back with last-writer-wins semantics.
+travels **inside each message**, and the server folds it back with last-writer-wins semantics.
+
 If a test builds one `Session` object and reuses it (or an old `.serialize()` snapshot) across
-several injected utterances, every later message re-stamps the stale snapshot and silently
-undoes whatever the previous turn changed — a skill activated in turn 1 will not get its
+several injected utterances, every later message re-stamps the stale snapshot. It silently
+undoes whatever the previous turn changed: a skill activated in turn 1 will not get its
 `converse()` called in turn 2.
 
 Re-fetch the live session right before building each follow-up message:
@@ -266,7 +268,7 @@ from ovos_bus_client.session import SessionManager
 bus.emit(make_utterance_message("book a table", session=my_session))
 # ... wait for the reply ...
 
-# turn 2 — never reuse `my_session`; pull the updated singleton instead
+# turn 2: never reuse `my_session`, pull the updated singleton instead
 live = SessionManager.sessions[my_session.session_id]
 bus.emit(make_utterance_message("yes", session=live))
 ```
@@ -301,7 +303,7 @@ jobs:
 
 !!! tip "A shared workflow already exists"
     Rather than maintaining this yaml by hand in every skill repo, official OVOS skills call a
-    shared, reusable ovoscope workflow instead:
+    shared, reusable ovoscope workflow instead.
     ```yaml
     jobs:
       ovoscope:
@@ -317,11 +319,11 @@ jobs:
 
 ## Where to go next
 
-- The full `End2EndTest` API — multi-turn conversations, asserting exact message sequences,
-  session state, GUI pages, and every other harness `ovoscope` ships — lives in
+- The full `End2EndTest` API covers multi-turn conversations, asserting exact message sequences,
+  session state, GUI pages, and every other harness `ovoscope` ships. See
   [Testing Skills with ovoscope](ovoscope-overview.md).
-- Give the skill something to extract from what the user said — see [Intent Design](intents.md).
-- **Make it sound good and behave well** — see [Skill Best Practices](skill-best-practices.md)
+- Give the skill something to extract from what the user said. See [Intent Design](intents.md).
+- **Make it sound good and behave well.** See [Skill Best Practices](skill-best-practices.md)
   and [Design Guidelines](skill-design-guidelines.md).
-- **Publish it** so others can install it — see [Sharing your skill](skill-json.md#sharing-your-skill).
-- Back to the beginning — see [Your First Skill](first-skill.md).
+- **Publish it** so others can install it. See [Sharing your skill](skill-json.md#sharing-your-skill).
+- Back to the beginning: see [Your First Skill](first-skill.md).
