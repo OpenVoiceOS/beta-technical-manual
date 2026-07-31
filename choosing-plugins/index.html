@@ -1973,8 +1973,9 @@ mouth/face, you don't need a G2P plugin at all.</strong> See the <a href="../g2p
   precise-onnx wake word, onnx-asr STT, phoonnx TTS. Everything runs on-device.</li>
 <li><strong>Lowest-power / tiny device:</strong> swap TTS to <strong>pico</strong> or <strong>espeakNG</strong>, VAD to <strong>webrtcvad</strong>,
   STT to <strong>vosk</strong> (small model). Accept lower accuracy for a smaller footprint.</li>
-<li><strong>Best accuracy, GPU available:</strong> STT <strong>fasterwhisper</strong> (large model) or <strong>nemo</strong>. TTS
-  <strong>coqui</strong>. Still fully offline.</li>
+<li><strong>Best accuracy, GPU available:</strong> STT <strong>onnx-asr</strong> with <code>use_cuda: true</code> (<code>ovos-config
+  autoconfigure --gpu</code> picks a larger model per language automatically), <strong>fasterwhisper</strong>
+  (large model), or <strong>nemo</strong>. TTS <strong>coqui</strong>. Still fully offline.</li>
 <li><strong>Thin satellite / shared backend:</strong> offload with the <code>*-server</code> plugins (STT server, TTS
   server, ww-server) so the heavy models live on one machine.</li>
 <li><strong>Cloud is acceptable (coverage/quality first):</strong> STT <strong>azure</strong>, TTS <strong>edge-tts</strong>/<strong>polly</strong>,

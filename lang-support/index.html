@@ -1760,6 +1760,17 @@ skill data (hosted statically, refreshed daily), under <code>data/datasets/</cod
 <li>
 <p>Many skills contain only partial translations or outdated strings.</p>
 </li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">The recommendations are a living registry</p>
+<p><code>ovos-config</code>'s bundled recommendations are not a fixed list. They track the current best
+known model per language, drawn from the <a href="https://huggingface.co/collections/OpenVoiceOS/stt-asr-onnx">OpenVoiceOS STT ONNX</a>
+and TTS Hugging Face collections. As better models appear for a language, the bundled
+recommendation is updated to point at them. Low-resource languages start with the best
+model available at the time (often a general-purpose Whisper or wav2vec2 finetune) and
+move to a dedicated model as one becomes available.</p>
+</div>
+<ul>
 <li>
 <p>Skills may be partially translated, with only a subset of intents available for your language</p>
 </li>
@@ -1784,11 +1795,17 @@ not a per-language recommendation. Check the <a href="#supported-languages">Supp
 table below for what's actually bundled for a given language before picking a mode.</p>
 </div>
 <p>The recommendations are data-driven: they come from per-language <code>*.conf</code> files bundled in <code>ovos-config</code> (<code>recommends/</code>), so the exact models depend on your installed version. See <a href="../config/"><code>ovos-config</code></a> for full options.</p>
-<p>The bundled offline STT recommendations use <a href="../stt-plugins/#ovos-stt-plugin-citrinet"><code>ovos-stt-plugin-citrinet</code></a>
-or <a href="../stt-plugins/#ovos-stt-plugin-fasterwhisper"><code>ovos-stt-plugin-fasterwhisper</code></a>, depending on
-the language. TTS uses <a href="../tts-plugins/#ovos-tts-plugin-phoonnx"><code>ovos-tts-plugin-phoonnx</code></a> for
-every language. The table below shows the exact per-language plugin/model and voice picked
-for each.</p>
+<p>The bundled offline STT recommendation is <a href="../stt-plugins/#ovos-stt-plugin-onnx-asr"><code>ovos-stt-plugin-onnx-asr</code></a>
+for every covered language, running a per-language ONNX model picked from the
+<a href="https://huggingface.co/collections/OpenVoiceOS/stt-asr-onnx">OpenVoiceOS STT ONNX</a> collection.
+On CPU it prefers <code>int8</code>-quantized weights where the model ships them, for a smaller
+footprint and faster load. TTS uses <a href="../tts-plugins/#ovos-tts-plugin-phoonnx"><code>ovos-tts-plugin-phoonnx</code></a>
+for every language, auto-selecting a default voice. The table below shows the exact
+per-language model and voice picked for each.</p>
+<p>Passing <code>--gpu</code> selects the GPU tier instead: the same model family at full <code>fp32</code> precision
+with <code>use_cuda: true</code>, or, for languages with enough training data, a larger and more accurate
+model than the CPU default (for example a full Whisper or Canary model instead of a
+lighter Conformer). <code>--gpu</code> needs a CUDA-capable GPU and implies <code>--offline</code>.</p>
 <h3 id="flags">Flags<a class="headerlink" href="#flags" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
@@ -1834,116 +1851,367 @@ for each.</p>
 </ul>
 <h3 id="supported-languages">Supported Languages<a class="headerlink" href="#supported-languages" title="Permanent link">&para;</a></h3>
 <blockquote>
-<p>The table below is a snapshot of the bundled recommendations. The authoritative list is whatever <code>recommends/base/*.conf</code>, <code>recommends/offline_stt/*.conf</code>, and related files ship in your installed <code>ovos-config</code>.</p>
+<p>The table below is a snapshot of the bundled recommendations. The authoritative list is whatever <code>recommends/offline_stt/*.conf</code>, <code>recommends/offline_female/*.conf</code>, and <code>recommends/offline_male/*.conf</code> files ship in your installed <code>ovos-config</code>. It grows as new models are added to the OVOS Hugging Face collections.</p>
 </blockquote>
-<p>Plainly: a few widely-spoken variants still have real gaps in the bundled recommendations.
-<strong>en-GB</strong> and <strong>pt-BR</strong> have no bundled offline STT recommendation at all. You'll need to
-configure an online plugin or pick a multilingual offline model (e.g. Whisper) by hand.
-<strong>en-AU</strong> has no bundled offline recommendation on either side. Some regional voices are
-one-gender-only offline (e.g. <strong>da-DK</strong> ships no offline female voice). The missing gender
-still works, just via an online plugin or a manually configured model.</p>
-<p>The table shows the exact offline STT plugin and model, and the offline TTS voice, each
-language is configured with.</p>
+<p>Offline STT is <a href="../stt-plugins/#ovos-stt-plugin-onnx-asr"><code>ovos-stt-plugin-onnx-asr</code></a> everywhere
+it's listed. Offline TTS is always <a href="../tts-plugins/#ovos-tts-plugin-phoonnx"><code>ovos-tts-plugin-phoonnx</code></a>.
+It picks a default voice for the language automatically. A handful of the original
+languages pin an explicit voice instead. Both work the same way from the user's side.
+<code>int8</code> next to a model means a quantized CPU build is available and used by default.
+<code>--gpu</code> switches to the full-precision model with <code>use_cuda: true</code>. For the most
+widely-spoken languages (English, French, German, Italian, Dutch) it swaps in a larger model
+entirely (<code>nemo-canary-1b-v2</code>) instead of just requantizing.</p>
+<p>Several regional variants still have gaps. <strong>EN-GB</strong>, <strong>PT-BR</strong>, <strong>AR-SA</strong>, and the four
+Catalan variants (<strong>CA-BA</strong>, <strong>CA-NW</strong>, <strong>CA-VA</strong>, plus the already-covered <strong>CA-ES</strong>) ship a
+TTS voice but no bundled offline STT recommendation. <strong>EN-AU</strong> has no bundled offline
+recommendation on either side. Configure an online STT plugin, or a multilingual offline model
+(Whisper, MMS) by hand, until a dedicated recommendation lands for these.</p>
+<p>Many low-resource languages have no fine-tuned Conformer or Parakeet model yet. Their
+recommendation falls back to the best general-purpose model available: a Whisper-small
+finetune (Fon, Haitian Creole, Kposo, Malagasy, Lomwe, Shona, Sesotho, Tigre, Setswana,
+Umbundu, Vai) or a wav2vec2 finetune (Irish). These move to a dedicated model as one becomes
+available.</p>
 <table>
 <thead>
 <tr>
 <th>Language</th>
-<th>Offline STT plugin (model)</th>
-<th>Offline TTS voice (Male)</th>
-<th>Offline TTS voice (Female)</th>
+<th>Offline STT model</th>
+<th style="text-align: center;">Offline TTS</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><strong>en-US</strong></td>
-<td><code>ovos-stt-plugin-citrinet</code> (<code>lang=en</code>)</td>
-<td><code>OpenVoiceOS/pipertts_en-US_miro</code></td>
-<td><code>OpenVoiceOS/pipertts_en-GB_dii</code></td>
-</tr>
-<tr>
-<td><strong>en-GB</strong></td>
+<td><strong>AR-SA</strong></td>
 <td>—</td>
-<td><code>OpenVoiceOS/pipertts_en-GB_miro</code></td>
-<td><code>OpenVoiceOS/pipertts_en-GB_dii</code></td>
+<td style="text-align: center;">✅</td>
 </tr>
 <tr>
-<td><strong>de-DE</strong></td>
-<td><code>ovos-stt-plugin-citrinet</code> (<code>lang=de</code>)</td>
-<td><code>OpenVoiceOS/pipertts_de-DE_miro</code></td>
-<td><code>OpenVoiceOS/pipertts_de-DE_dii</code></td>
+<td><strong>AS-IN</strong></td>
+<td><code>OpenVoiceOS/ai4bharat-indicconformer-as-onnx</code></td>
+<td style="text-align: center;">✅</td>
 </tr>
 <tr>
-<td><strong>fr-FR</strong></td>
-<td><code>ovos-stt-plugin-citrinet</code> (<code>lang=fr</code>)</td>
-<td><code>OpenVoiceOS/pipertts_fr-FR_miro</code></td>
-<td><code>piper/fr_FR-siwis-medium</code></td>
+<td><strong>BE-BY</strong></td>
+<td><code>OpenVoiceOS/nvidia-be-conformer-transducer-large-onnx</code> (int8)</td>
+<td style="text-align: center;">✅</td>
 </tr>
 <tr>
-<td><strong>es-ES</strong></td>
-<td><code>ovos-stt-plugin-citrinet</code> (<code>lang=es</code>)</td>
-<td><code>OpenVoiceOS/pipertts_es-ES_miro</code></td>
-<td><code>OpenVoiceOS/phoonnx_es-ES_dii_espeak</code></td>
+<td><strong>BN-IN</strong></td>
+<td><code>OpenVoiceOS/ai4bharat-indicconformer-bn-onnx</code> (int8)</td>
+<td style="text-align: center;">✅</td>
 </tr>
 <tr>
-<td><strong>it-IT</strong></td>
-<td><code>ovos-stt-plugin-citrinet</code> (<code>lang=it</code>)</td>
-<td><code>OpenVoiceOS/pipertts_it-IT_miro</code></td>
-<td><code>OpenVoiceOS/pipertts_it-IT_dii</code></td>
+<td><strong>BRX-IN</strong></td>
+<td><code>OpenVoiceOS/ai4bharat-indicconformer-brx-onnx</code> (int8)</td>
+<td style="text-align: center;">—</td>
 </tr>
 <tr>
-<td><strong>nl-NL</strong></td>
-<td><code>ovos-stt-plugin-citrinet</code> (<code>lang=nl</code>)</td>
-<td><code>OpenVoiceOS/pipertts_nl-NL_miro</code></td>
-<td><code>OpenVoiceOS/pipertts_nl-NL_dii</code></td>
-</tr>
-<tr>
-<td><strong>pt-PT</strong></td>
-<td><code>ovos-stt-plugin-citrinet</code> (<code>lang=pt</code>)</td>
-<td><code>OpenVoiceOS/pipertts_pt-PT_miro</code></td>
-<td><code>OpenVoiceOS/pipertts_pt-PT_dii</code></td>
-</tr>
-<tr>
-<td><strong>pt-BR</strong></td>
+<td><strong>CA-BA</strong></td>
 <td>—</td>
-<td><code>OpenVoiceOS/pipertts_pt-BR_miro</code></td>
-<td><code>OpenVoiceOS/pipertts_pt-BR_dii</code></td>
+<td style="text-align: center;">✅</td>
 </tr>
 <tr>
-<td><strong>ca-ES</strong></td>
-<td><code>ovos-stt-plugin-citrinet</code> (<code>lang=ca</code>)</td>
-<td><code>OpenVoiceOS/matxa-cat-multiaccent-wavenext</code> (speaker 2)</td>
-<td><code>OpenVoiceOS/matxa-cat-multiaccent-wavenext</code> (speaker 3)</td>
+<td><strong>CA-ES</strong></td>
+<td><code>OpenVoiceOS/stt-ca-es-conformer-transducer-large-onnx</code></td>
+<td style="text-align: center;">✅</td>
 </tr>
 <tr>
-<td><strong>gl-ES</strong></td>
-<td><code>ovos-stt-plugin-fasterwhisper</code> (<code>Jarbas/faster-whisper-base-gl-cv13</code>)</td>
-<td><code>OpenVoiceOS/phoonnx_gl-ES_miro_unicode</code></td>
-<td><code>proxectonos/celtia</code></td>
-</tr>
-<tr>
-<td><strong>eu-ES</strong></td>
-<td><code>ovos-stt-plugin-fasterwhisper</code> (<code>Jarbas/faster-whisper-base-eu-cv16</code>)</td>
-<td><code>OpenVoiceOS/phoonnx_eu-ES_miro_espeak</code></td>
-<td><code>OpenVoiceOS/phoonnx_eu-ES_dii_espeak</code></td>
-</tr>
-<tr>
-<td><strong>da-DK</strong></td>
-<td><code>ovos-stt-plugin-fasterwhisper</code> (<code>base</code>)</td>
-<td><code>OpenVoiceOS/phoonnx_da-DK_miro_espeak</code></td>
+<td><strong>CA-NW</strong></td>
 <td>—</td>
+<td style="text-align: center;">✅</td>
 </tr>
 <tr>
-<td><strong>en-AU</strong></td>
+<td><strong>CA-VA</strong></td>
 <td>—</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td><strong>DA-DK</strong></td>
+<td><code>OpenVoiceOS/nvidia-parakeet-rnnt-110m-da-dk-onnx</code> (int8)</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td><strong>DE-DE</strong></td>
+<td><code>nemo-parakeet-tdt-0.6b-v3</code> (int8)</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td><strong>DOI-IN</strong></td>
+<td><code>OpenVoiceOS/ai4bharat-indicconformer-doi-onnx</code> (int8)</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td><strong>EN-GB</strong></td>
 <td>—</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td><strong>EN-US</strong></td>
+<td><code>nemo-parakeet-tdt-0.6b-v3</code> (int8)</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td><strong>EO</strong></td>
+<td><code>OpenVoiceOS/nvidia-eo-conformer-transducer-large-onnx</code> (int8)</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td><strong>ES-ES</strong></td>
+<td><code>OpenVoiceOS/parakeet-rnnt-1.1b-cv17-es-ep18-1270h-onnx</code></td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td><strong>ET-EE</strong></td>
+<td><code>OpenVoiceOS/yuriyvnv-parakeet-tdt-0.6b-et-onnx</code> (int8)</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td><strong>EU-ES</strong></td>
+<td><code>OpenVoiceOS/stt-eu-conformer-transducer-large-onnx</code></td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td><strong>FA-IR</strong></td>
+<td><code>OpenVoiceOS/nvidia-fa-fastconformer-hybrid-large-onnx</code> (int8)</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td><strong>FON-BJ</strong></td>
+<td><code>OpenVoiceOS/misterkissi-whisper-small-fongbe-onnx</code></td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td><strong>FR-FR</strong></td>
+<td><code>nemo-parakeet-tdt-0.6b-v3</code> (int8)</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td><strong>GA-IE</strong></td>
+<td><code>OpenVoiceOS/misterkissi-w2v2-lg-xls-r-300m-ga-onnx</code></td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td><strong>GL-ES</strong></td>
+<td><code>onnx-community/whisper-large-v3-turbo</code> (int8)</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td><strong>GU-IN</strong></td>
+<td><code>OpenVoiceOS/ai4bharat-indicconformer-gu-onnx</code> (int8)</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td><strong>HI-IN</strong></td>
+<td><code>OpenVoiceOS/ai4bharat-indicconformer-hi-onnx</code> (int8)</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td><strong>HR-HR</strong></td>
+<td><code>OpenVoiceOS/nvidia-hr-conformer-transducer-large-onnx</code> (int8)</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td><strong>HT-HT</strong></td>
+<td><code>OpenVoiceOS/misterkissi-whisper-small-haitian-creole-onnx</code></td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td><strong>IT-IT</strong></td>
+<td><code>nemo-parakeet-tdt-0.6b-v3</code> (int8)</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td><strong>JA-JP</strong></td>
+<td><code>OpenVoiceOS/nvidia-parakeet-tdt_ctc-0.6b-ja-onnx</code> (int8)</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td><strong>KAB-DZ</strong></td>
+<td><code>OpenVoiceOS/nvidia-kab-conformer-transducer-large-onnx</code> (int8)</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td><strong>KN-IN</strong></td>
+<td><code>OpenVoiceOS/ai4bharat-indicconformer-kn-onnx</code> (int8)</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td><strong>KOK-IN</strong></td>
+<td><code>OpenVoiceOS/ai4bharat-indicconformer-kok-onnx</code> (int8)</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td><strong>KPO-TG</strong></td>
+<td><code>OpenVoiceOS/misterkissi-whisper-small-kposo-onnx</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td><strong>KS-IN</strong></td>
+<td><code>OpenVoiceOS/ai4bharat-indicconformer-ks-onnx</code> (int8)</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td><strong>MAI-IN</strong></td>
+<td><code>OpenVoiceOS/ai4bharat-indicconformer-mai-onnx</code> (int8)</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td><strong>MG-MG</strong></td>
+<td><code>OpenVoiceOS/misterkissi-whisper-small-malagasy-onnx</code></td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td><strong>ML-IN</strong></td>
+<td><code>OpenVoiceOS/ai4bharat-indicconformer-ml-onnx</code> (int8)</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td><strong>MNI-IN</strong></td>
+<td><code>OpenVoiceOS/ai4bharat-indicconformer-mni-onnx</code> (int8)</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td><strong>MR-IN</strong></td>
+<td><code>OpenVoiceOS/ai4bharat-indicconformer-mr-onnx</code> (int8)</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td><strong>NE-NP</strong></td>
+<td><code>OpenVoiceOS/ai4bharat-indicconformer-ne-onnx</code> (int8)</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td><strong>NGL-MZ</strong></td>
+<td><code>OpenVoiceOS/misterkissi-whisper-small-lomwe-onnx</code></td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td><strong>NL-NL</strong></td>
+<td><code>nemo-parakeet-tdt-0.6b-v3</code> (int8)</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td><strong>OR-IN</strong></td>
+<td><code>OpenVoiceOS/ai4bharat-indicconformer-or-onnx</code> (int8)</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td><strong>PA-IN</strong></td>
+<td><code>OpenVoiceOS/ai4bharat-indicconformer-pa-onnx</code> (int8)</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td><strong>PL-PL</strong></td>
+<td><code>OpenVoiceOS/yuriyvnv-parakeet-tdt-0.6b-pl-onnx</code></td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td><strong>PT-BR</strong></td>
 <td>—</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td><strong>PT-PT</strong></td>
+<td><code>OpenVoiceOS/whisper-medium-pt-onnx</code></td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td><strong>RU-RU</strong></td>
+<td><code>OpenVoiceOS/nvidia-ru-conformer-transducer-large-onnx</code> (int8)</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td><strong>RW-RW</strong></td>
+<td><code>OpenVoiceOS/nvidia-rw-conformer-transducer-large-onnx</code> (int8)</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td><strong>SA-IN</strong></td>
+<td><code>OpenVoiceOS/ai4bharat-indicconformer-sa-onnx</code> (int8)</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td><strong>SAT-IN</strong></td>
+<td><code>OpenVoiceOS/ai4bharat-indicconformer-sat-onnx</code> (int8)</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td><strong>SD-IN</strong></td>
+<td><code>OpenVoiceOS/ai4bharat-indicconformer-sd-onnx</code> (int8)</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td><strong>SL-SI</strong></td>
+<td><code>OpenVoiceOS/yuriyvnv-parakeet-tdt-0.6b-sl-onnx</code> (int8)</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td><strong>SN-ZW</strong></td>
+<td><code>OpenVoiceOS/misterkissi-whisper-small-shona-onnx</code></td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td><strong>ST-ZA</strong></td>
+<td><code>OpenVoiceOS/misterkissi-whisper-small-sesotho-onnx</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td><strong>TA-IN</strong></td>
+<td><code>OpenVoiceOS/ai4bharat-indicconformer-ta-onnx</code> (int8)</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td><strong>TE-IN</strong></td>
+<td><code>OpenVoiceOS/ai4bharat-indicconformer-te-onnx</code> (int8)</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td><strong>TIG-ER</strong></td>
+<td><code>OpenVoiceOS/misterkissi-whisper-small-tigre-onnx</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td><strong>TL-PH</strong></td>
+<td><code>OpenVoiceOS/stt-tl-fastconformer-hybrid-large-onnx</code></td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td><strong>TN-ZA</strong></td>
+<td><code>OpenVoiceOS/misterkissi-whisper-small-setswana-onnx</code></td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td><strong>UMB-AO</strong></td>
+<td><code>OpenVoiceOS/misterkissi-whisper-small-umbundu-onnx</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td><strong>UR-PK</strong></td>
+<td><code>OpenVoiceOS/ai4bharat-indicconformer-ur-onnx</code> (int8)</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td><strong>UZ-UZ</strong></td>
+<td><code>OpenVoiceOS/asr-uz-fastconformer-large-onnx</code></td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td><strong>VAI-LR</strong></td>
+<td><code>OpenVoiceOS/misterkissi-whisper-small-vai-onnx</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td><strong>VI-VN</strong></td>
+<td><code>OpenVoiceOS/nvidia-parakeet-ctc-0.6b-vietnamese-onnx</code> (int8)</td>
+<td style="text-align: center;">✅</td>
 </tr>
 </tbody>
 </table>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Where a cell shows "—", the bundled recommendations don't cover that combination yet.
-<code>autoconfigure</code> will skip that part of the configuration and tell you so.</p>
+<p>Where the STT column shows "—", the bundled recommendations don't cover offline speech
+recognition for that language yet. <code>autoconfigure</code> will skip that part of the
+configuration and tell you so. Use an online STT plugin instead.</p>
 </div>
 <h3 id="per-language-status-matrix">Per-language status matrix<a class="headerlink" href="#per-language-status-matrix" title="Permanent link">&para;</a></h3>
 <p>STT/TTS columns summarize the auto-configuration table above (✅ = a bundled offline
@@ -1951,7 +2219,9 @@ recommendation exists for at least one voice/gender, ⚠️ = only online/partia
 offline recommendation). Number and date parsing come from the language modules actually
 shipped in the installed <code>ovos-number-parser</code> / <code>ovos-date-parser</code>. A ✅ here means a
 dedicated language module exists (<code>numbers_&lt;code&gt;.py</code> / <code>dates_&lt;code&gt;.py</code>), not that every
-phrasing is covered.</p>
+phrasing is covered. This matrix tracks the original, longest-supported languages. See the
+<a href="#supported-languages">Supported Languages</a> table above for the full, larger set of
+languages with a bundled offline STT and/or TTS recommendation.</p>
 <table>
 <thead>
 <tr>
@@ -2063,11 +2333,10 @@ phrasing is covered.</p>
 </tr>
 </tbody>
 </table>
-<p>Both the number and date parsers already cover far more languages than the bundled
-auto-configuration table above, including several with no offline STT/TTS recommendation yet
-(e.g. Arabic, Hebrew, Polish, Turkish, Ukrainian, Russian, and more). Adding a language module
-for parsing text is much cheaper than shipping a full speech model, so this column tends to
-run ahead of STT/TTS.</p>
+<p>Both the number and date parsers already cover far more languages than this original matrix,
+including several with no offline STT/TTS recommendation at all (e.g. Arabic, Hebrew, Turkish,
+Ukrainian, and more). Adding a language module for parsing text is much cheaper than shipping
+a full speech model, so this column tends to run ahead of STT/TTS.</p>
 <div class="admonition warning">
 <p class="admonition-title">pt-BR has no bundled offline STT</p>
 <p>Brazilian Portuguese is a widely-spoken variant with <strong>no bundled offline speech-to-text
