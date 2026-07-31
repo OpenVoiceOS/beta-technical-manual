@@ -4,20 +4,27 @@ See also: [Intent Service](intent-service.md) for how OVOS routes an utterance t
 pipeline plugins that match the intents described on this page.
 
 !!! abstract "In a nutshell"
-    People ask for the same thing in many different ways: "what's the weather?", "weather in Melbourne", or just "weather" all mean roughly the same. An *intent* is what the user is actually trying to do, and the part of OVOS that figures it out is a *pipeline plugin* (older docs call this an "intent parser" or "intent engine" — see the [Glossary](glossary.md)). This page explains how OVOS recognizes intents and pulls out the useful details (like a place or a date), and describes the two different styles you can use to define them. New terms are explained in the [Glossary](glossary.md).
+    People ask for the same thing in many different ways: "what's the weather?", "weather in
+    Melbourne", or just "weather" all mean roughly the same thing. An *intent* is what the
+    user is actually trying to do. The part of OVOS that figures it out is a *pipeline
+    plugin* (older docs call this an "intent parser" or "intent engine"; see the
+    [Glossary](glossary.md)). This page explains how OVOS recognizes intents and pulls out
+    the useful details, like a place or a date, and describes the two styles you can use to
+    define them. New terms are explained in the [Glossary](glossary.md).
 
 ??? info "📐 Formal specification"
     Intents are specified across the **intent stack** of the formal [architecture specs](architecture-specs.md):
 
-    - **[OVOS-INTENT-3 — Intent Definition](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-3.md)** — what an intent *is*: a skill-private binding from a natural-language command to **one handler**, defined by one or both of two methods (**keyword** and/or **template** — an intent may carry one registration of each, two training-data representations of the same handler; each individual registration still uses exactly one method), identified by the qualified name `skill_id:intent_name`, producing a uniform match result (label + slot map).
-    - **[OVOS-INTENT-1 — Sentence Template Grammar](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-1.md)** — the `(a|b)` / `[optional]` / `{slot}` / `<vocab>` grammar that template intents and vocabularies are written in.
-    - **[OVOS-INTENT-4 — Intent & Entity Registration](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-4.md)** — the broadcast, fire-and-forget bus messages (`ovos.intent.register.keyword` / `.template`) a skill emits to declare its intents.
+    - **[OVOS-INTENT-3: Intent Definition](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-3.md)**: what an intent *is*. A skill-private binding from a natural-language command to **one handler**, defined by one or both of two methods, **keyword** and/or **template**. An intent may carry one registration of each, giving two training-data representations of the same handler, but each individual registration still uses exactly one method. It is identified by the qualified name `skill_id:intent_name`, and produces a uniform match result (label + slot map).
+    - **[OVOS-INTENT-1: Sentence Template Grammar](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-1.md)**: the `(a|b)` / `[optional]` / `{slot}` / `<vocab>` grammar that template intents and vocabularies are written in.
+    - **[OVOS-INTENT-4: Intent & Entity Registration](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-4.md)**: the broadcast, fire-and-forget bus messages (`ovos.intent.register.keyword` / `.template`) a skill emits to declare its intents.
 
-    The on-disk file formats (`.intent`, `.voc`, `.entity`) are **[OVOS-INTENT-2 — Locale Resource Formats](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-2.md)**; see [Resource Files](resource-files.md). Where this page's engine-specific syntax diverges from the portable grammar, it is flagged inline and the spec is canonical.
+    The on-disk file formats (`.intent`, `.voc`, `.entity`) are **[OVOS-INTENT-2: Locale Resource Formats](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-2.md)**. See [Resource Files](resource-files.md). Where this page's engine-specific syntax diverges from the portable grammar, it is flagged inline and the spec is canonical.
 
-A user can accomplish the same task by expressing their intent in multiple ways. The role of the matching pipeline plugin is to
-extract from the user's speech key data elements that specify their intent in more detail. This data can then be passed
-to other services, such as Skills to help the user accomplish their intended task.
+A user can accomplish the same task by expressing their intent in multiple ways. The matching
+pipeline plugin's role is to extract key data elements from the user's speech that specify
+their intent in more detail. Other services, such as skills, can then use this data to help
+the user accomplish their intended task.
 
 _Example_: Julie wants to know about today's weather in her current location, which is Melbourne, Australia.
 
@@ -27,52 +34,71 @@ _Example_: Julie wants to know about today's weather in her current location, wh
 >
 > "hey mycroft, weather"
 
-Even though these are three different expressions, for most of us they probably have roughly the same meaning. In each
-case we would assume the user expects OVOS to respond with today's weather for their current location. The role of the matching pipeline plugin is to determine what this intent is.
+Even though these are three different expressions, for most of us they probably have roughly
+the same meaning. In each case we would assume the user expects OVOS to respond with today's
+weather for their current location. The matching pipeline plugin's role is to determine what
+this intent is.
 
 In the example above, we might extract data elements like:
 
-* **weather** - we know that Julie wants to know about the weather, but she has not been specific about the type of
-  weather, such as _wind_, _precipitation_, _snowfall_ or the risk of _fire danger_ from bushfires. Melbourne, Australia
-  rarely experiences snowfall, but falls under bushfire risk every summer.
+* **weather**: we know that Julie wants to know about the weather, but she has not been
+  specific about the type of weather, such as _wind_, _precipitation_, _snowfall_ or the risk
+  of _fire danger_ from bushfires. Melbourne, Australia rarely experiences snowfall, but falls
+  under bushfire risk every summer.
 
-* **location** - Julie has stipulated her location as Melbourne, but she does not state that she means Melbourne,
-  Australia. How do we distinguish this from Melbourne, Florida, United States?
+* **location**: Julie has stated her location as Melbourne, but she does not say that she
+  means Melbourne, Australia. How do we distinguish this from Melbourne, Florida, United States?
 
-* **date** - Julie has been specific about the _timeframe_ she wants weather data for - today. But how do we know what
-  today means in Julie's timezone. Melbourne, Australia is between 14-18 hours ahead of the United States. We don't want
-  to give Julie yesterday's weather, particularly as Melbourne is renowned for having changeable weather.
+* **date**: Julie has been specific about the _timeframe_ she wants weather data for: today.
+  But how do we know what today means in Julie's timezone? Melbourne, Australia is between
+  14-18 hours ahead of the United States. We don't want to give Julie yesterday's weather,
+  particularly as Melbourne is known for changeable weather.
 
+OVOS provides two kinds of intent, each with its own strengths. The
+[OVOS-INTENT-3](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-3.md)
+specification calls them **template intents** and **keyword intents**. Each individual
+registration uses exactly one method. The two shapes are never mixed within one registration.
+But a single intent name may carry **one registration of each method**, giving the same
+handler two independent training-data representations. Registering a new keyword (or
+template) registration replaces only the prior registration under that same method, leaving
+the other method's registration for that intent untouched.
 
-OVOS provides two kinds of intent, each with its own strengths. The [OVOS-INTENT-3](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-3.md) specification calls them **template intents** and **keyword intents**. Each individual registration uses exactly one method — the two shapes are never mixed within one registration — but a single intent name may carry **one registration of each method**, giving the same handler two independent training-data representations; registering a new keyword (or template) registration replaces only the prior registration under that same method, leaving the other method's registration for that intent untouched.
+**Template intents** (example based) are matched against whole phrases. These are generally
+more accurate, but require you to include sample phrases covering the breadth of ways a user
+might ask. They live in `.intent` files.
 
-**Template intents** (example based) are matched against whole phrases. These are generally more accurate, but require you to include sample phrases covering the breadth of ways a user might ask. They live in `.intent` files.
-
-**Keyword intents** (rule based) look for specific required keywords. They are more flexible, but being rule based they can produce false matches; a badly designed keyword intent can throw the parser off. Their main advantage is tight integration with [conversational context](context.md) for continuous dialogs. They are built from `.voc` files.
+**Keyword intents** (rule based) look for specific required keywords. They are more flexible,
+but being rule based they can produce false matches. A badly designed keyword intent can throw
+the parser off. Their main advantage is tight integration with [conversational context](context.md)
+for continuous dialogs. They are built from `.voc` files.
 
 Padatious and Adapt are the two default pipeline plugins that match intents:
 
-- **[Padatious](padatious-pipeline.md)** — a lightweight neural network trained on whole phrases (template intents).
+- **[Padatious](padatious-pipeline.md)**: a lightweight neural network trained on whole phrases (template intents).
 
 
-- **[Adapt](adapt-pipeline.md)** — a keyword based parser (keyword intents).
+- **[Adapt](adapt-pipeline.md)**: a keyword based parser (keyword intents).
 
-> NOTE: Padatious does not handle numbers well — internally it sees all digits as "#". If you need to match digits, use Adapt (keyword intents) instead.
+> NOTE: Padatious does not handle numbers well. Internally it sees all digits as "#". If you need to match digits, use Adapt (keyword intents) instead.
 
 
 We will now look at each in more detail, including how to use them in a [Skill](skill-design-guidelines.md).
 
 ## Keyword Intents
 
-Keyword-based pipeline plugins determine user intent based on a list of keywords or entities contained within a user's utterance.
+Keyword-based pipeline plugins determine user intent from a list of keywords or entities
+contained in a user's utterance.
 
 ### Defining keywords and entities
 
 #### Vocab (.voc) Files
 
-Vocab files define keywords that the pipeline plugin will look for in a Users utterance to determine their intent.
+Vocab files define keywords that the pipeline plugin looks for in a user's utterance to
+determine their intent.
 
-These files live in the Skill's `locale/<lang>/` directory (e.g. `locale/en-us/Potato.voc`). They can have one or more lines listing synonyms or terms with the same meaning in the context of this Skill. OVOS will match _any_ of these keywords with the Intent.
+These files live in the skill's `locale/<lang>/` directory (e.g. `locale/en-us/Potato.voc`).
+They can have one or more lines listing synonyms or terms with the same meaning in the
+context of this skill. OVOS matches _any_ of these keywords with the intent.
 
 > Language directories are named with BCP-47 tags and compared case-insensitively, so `en-us` and `en-US` denote the same language (OVOS-INTENT-2 §3). The older split layout (`vocab/<lang>/`, `regex/<lang>/`, `dialog/<lang>/`) is still supported for legacy skills, but new skills should use a single `locale/<lang>/` folder per language.
 
@@ -97,19 +123,22 @@ or
 
 > spud
 
-OVOS will match this to any Keyword Intents that are using the `Potato` keyword.
+OVOS matches this to any keyword intents that use the `Potato` keyword.
 
 #### Regular Expression (.rx) Files
 
-Regular expressions (or regex) allow us to capture entities based on the structure of an utterance.
+Regular expressions (or regex) let us capture entities based on the structure of an utterance.
 
-We strongly recommend you avoid using regex, it is very hard to make portable across languages, hard to translate and the reported confidence of the intents is not great.
+We strongly recommend you avoid regex. It is hard to make portable across languages, hard to
+translate, and the reported confidence of the intents is not great.
 
 We suggest using template intents (`.intent` files) instead if you find yourself needing regex.
 
-> Regex (`.rx`) is **not** a resource role in the [OVOS-INTENT-2](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-2.md) specification — it is an Adapt-specific extension. Prefer `.entity` slot constraints or template intents for portability.
+> Regex (`.rx`) is **not** a resource role in the [OVOS-INTENT-2](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-2.md) specification. It is an Adapt-specific extension. Prefer `.entity` slot constraints or template intents for portability.
 
-These files live in the Skill's `locale/<lang>/` directory. They can have one or more lines providing different ways an entity may be referenced. OVOS executes these lines in the order they appear and returns the first result as an entity to the Intent Handler.
+These files live in the skill's `locale/<lang>/` directory. They can have one or more lines
+providing different ways an entity may be referenced. OVOS executes these lines in the order
+they appear and returns the first result as an entity to the intent handler.
 
 Let's consider a `type.rx` file to extract the type of potato we are interested in. Within this file we might include:
 
@@ -119,7 +148,10 @@ Let's consider a `type.rx` file to extract the type of potato we are interested 
 
 ```
 
-**What is this regex doing?** `.*` matches zero, one or more of any single character. `(?P<Type>.*)` is known as a Named Capturing Group. The variable name is defined between the "<>", and what is captured is defined after this name. In this case we use `.*` to capture anything.
+**What is this regex doing?** `.*` matches zero, one, or more of any single character.
+`(?P<Type>.*)` is known as a named capturing group. The variable name is defined between the
+"<>", and what is captured is defined after this name. In this case we use `.*` to capture
+anything.
 
 [Learn more about Regular Expressions](https://github.com/ziishaned/learn-regex/blob/master/README.md).
 
@@ -128,7 +160,7 @@ So our first line would match an utterance such as:
 
 > Tell me about _sweet potatoes_
 
-Whilst the second line will match either:
+The second line will match either:
 
 > Do you like _deep fried potato_
 
@@ -150,7 +182,8 @@ message.data.get('Type')
 
 ### Using Keyword Intents in a Skill
 
-Now that we have a Vocab and Regular Expression defined, let's look at how to use these in a simple Skill.
+Now that we have a vocab and a regular expression defined, let's look at how to use these in a
+simple skill.
 
 For the following example we will use the two files we outlined above:
 
@@ -161,17 +194,17 @@ For the following example we will use the two files we outlined above:
 
 We will also add some new `.voc` files:
 
-* `Like.voc` - containing a single line "like"
+* `Like.voc`: containing a single line "like"
 
 
-* `You.voc` - containing a single line "you"
+* `You.voc`: containing a single line "you"
 
 
-* `I.voc` - containing a single line "I"
+* `I.voc`: containing a single line "I"
 
 #### Creating the Intent Handler
 
-To construct a Keyword Intent, we use the intent_handler() \_decorator_ and pass in the IntentBuilder helper class.
+To construct a keyword intent, we use the `intent_handler()` decorator and pass in the `IntentBuilder` helper class.
 
 [Learn more about _decorators_ in Python](https://en.wikipedia.org/wiki/Python\_syntax\_and\_semantics#Decorators).
 
@@ -183,9 +216,10 @@ from ovos_workshop.decorators import intent_handler
 
 ```
 
-The IntentBuilder is then passed the name of the Intent as a string, followed by one or more parameters that correspond with one of our `.voc` or `.rx` files.
+The `IntentBuilder` is then passed the name of the intent as a string, followed by one or more
+parameters that correspond with one of our `.voc` or `.rx` files.
 
-*Excerpt — the decorator on its own (a complete skill using it appears further below):*
+*Excerpt: the decorator on its own. A complete skill using it appears further below.*
 
 ```python
 @intent_handler(IntentBuilder('IntentName')
@@ -198,10 +232,10 @@ The IntentBuilder is then passed the name of the Intent as a string, followed by
 
 In this example:
 
-* the `Potato` and `Like` keywords are required. It must be present for the intent to match.
+* the `Potato` and `Like` keywords are required. Each must be present for the intent to match.
 
 
-* the `Type` entity is optional. A stronger match will be made if this is found, but it is not required.
+* the `Type` entity is optional. A stronger match happens if this is found, but it is not required.
 
 
 * we require at least one of the `You` or `I` keywords.
@@ -214,7 +248,7 @@ What are some utterances that would _not_ match the intent?
 
 > How do I make mashed potato?
 
-_The required `Like` keyword is not found._
+_The required `Like` keyword is missing._
 
 > Is it like a potato?
 
@@ -256,21 +290,26 @@ See [Skill Examples](skill-examples.md) for real, working skills that use keywor
 
 #### More vocab!
 
-One of the most common mistakes when getting started with Skills is that the vocab file doesn't include all the keywords or terms that a User might use to trigger the intent. It is important to map out your Skill and test the interactions with others to see how they might ask questions differently.
+One of the most common mistakes when getting started with skills is that the vocab file
+doesn't include all the keywords or terms a user might use to trigger the intent. Map out
+your skill and test the interactions with others to see how they might ask questions
+differently.
 
 #### I have added new phrases in the .voc file, but Mycroft isn't recognizing them
 
-1. Compound words like "don't", "won't", "shouldn't" etc. are normalized by OVOS - so they become "do not", "will not", "should not". You should use the normalized words in your `.voc` files. Similarly, definite articles like the word "the" are removed in the normalization process, so avoid using them in your `.voc` or `.rx` files as well.
+1. OVOS normalizes compound words like "don't", "won't", and "shouldn't", so they become "do not", "will not", "should not". Use the normalized words in your `.voc` files. Similarly, the normalization process removes definite articles like "the", so avoid using them in your `.voc` or `.rx` files as well.
 
 
-2. Tab != 4 Spaces, sometimes your text editor or IDE automatically replaces tabs with spaces or vice versa. This may lead to an indentation error. So make sure there's no extra tabs and that your editor doesn't replace your spaces!
+2. A tab is not 4 spaces. Sometimes your text editor or IDE automatically replaces tabs with spaces or vice versa. This may lead to an indentation error. Make sure there are no extra tabs and that your editor doesn't replace your spaces.
 
 
-3. Wrong order of files directories is a very common mistake. You have to make a language sub-folder inside the dialog, vocab or locale folders such as `skill-dir/locale/en-us/somefile.dialog`. So make sure that your `.voc` files and `.dialog` files inside a language subfolder.
+3. Wrong order of file directories is a common mistake. You have to make a language sub-folder inside the dialog, vocab, or locale folders, such as `skill-dir/locale/en-us/somefile.dialog`. Make sure your `.voc` files and `.dialog` files sit inside a language subfolder.
 
 #### I am unable to match against the utterance string
 
-The utterance string received from the speech-to-text engine is received all lowercase. As such any string matching you are trying to do should also be converted to lowercase. For example (a method excerpt from inside a skill class):
+The speech-to-text engine returns the utterance string all lowercase. Convert any string
+matching you do to lowercase as well. For example, here is a method excerpt from inside a
+skill class:
 
 ```python
     @intent_handler(IntentBuilder('Example').require('Example').require('Intent'))
@@ -284,24 +323,28 @@ The utterance string received from the speech-to-text engine is received all low
 
 ## Example based Intents
 
-Example based parsers have a number of key benefits over other intent parsing technologies.
+Example-based parsers have several key benefits over other intent parsing technologies.
 
-* Intents are easy to create
-
-
-* You can easily extract entities and then use these in Skills. For example, "Find the nearest gas station" -&gt; `{ "place":"gas station"}`
+* Intents are easy to create.
 
 
-* Disambiguation between intents is easier
+* You can easily extract entities and use these in skills. For example, "Find the nearest gas station" becomes `{ "place":"gas station"}`.
 
 
-* Harder to create a bad intent that throws the pipeline plugin off
+* Disambiguation between intents is easier.
+
+
+* It is harder to create a bad intent that throws the pipeline plugin off.
 
 ### Creating Intents
 
-Most example-based pipeline plugins use a series of example sentences to train a machine learning model to identify an intent. Regex can also be used behind the scenes for example to extract entities
+Most example-based pipeline plugins use a series of example sentences to train a machine
+learning model to identify an intent. Regex can also run behind the scenes, for example to
+extract entities.
 
-The examples are stored in a Skill's `locale/<lang>/` directory, in files ending in the file extension `.intent`. For example, if you were to create a _tomato_ Skill to respond to questions about a _tomato_, you would create the file
+The examples are stored in a skill's `locale/<lang>/` directory, in files ending in `.intent`.
+For example, if you were to create a _tomato_ skill to respond to questions about a _tomato_,
+you would create the file
 
 `locale/en-us/what.is.a.tomato.intent`
 
@@ -315,15 +358,21 @@ what defines a tomato
 
 ```
 
-These sample phrases do not require punctuation like a question mark. We can also leave out contractions such as "what's", as this will be automatically expanded to "what is" by OVOS before the utterance is parsed.
+These sample phrases do not require punctuation like a question mark. We can also leave out
+contractions such as "what's", since OVOS automatically expands this to "what is" before
+parsing the utterance.
 
-As a rule of thumb, aim for several examples per intent covering the different ways a user might phrase the request — too few examples gives the model little to generalize from.
+As a rule of thumb, aim for several examples per intent covering the different ways a user
+might phrase the request. Too few examples gives the model little to generalize from.
 
-The above example allows us to map many phrases to a single intent, however often we need to extract specific data from an utterance. This might be a date, location, category, or some other `entity`.
+The above example lets us map many phrases to a single intent. Often, though, we need to
+extract specific data from an utterance. This might be a date, location, category, or some
+other `entity`.
 
 #### Defining entities
 
-Let's now find out OVOS's opinion on different types of tomatoes. To do this we will create a new intent file: `locale/en-us/do.you.like.intent`
+Let's now find out OVOS's opinion on different types of tomatoes. To do this we will create a
+new intent file: `locale/en-us/do.you.like.intent`
 
 with examples of questions about mycroft's opinion about tomatoes:
 
@@ -337,13 +386,17 @@ what are your thoughts on {type} tomatoes
 
 ```
 
-Note the `{type}` in the above examples. These are wild-cards where matching content is forwarded to the skill's intent handler.
+Note the `{type}` in the above examples. These are wild cards where matching content is
+forwarded to the skill's intent handler.
 
-> **WARNING**: digits are not allowed for the entity name inside the `{}`, **do NOT** use `{room1}`, use `{room_one}`.
+> **WARNING**: digits are not allowed in the entity name inside the `{}`. **Do NOT** use `{room1}`, use `{room_one}`.
 
 #### Specific Entities
 
-In the above example, `{type}` will match anything. While this makes the intent flexible, it will also match if we say something like Do you like eating tomatoes?. It would think the type of tomato is `"eating"` which doesn't make much sense. Instead, we can specify what type of things the {type} of tomato should be. We do this by defining the type entity file here:
+In the above example, `{type}` matches anything. This makes the intent flexible, but it will
+also match if we say something like "Do you like eating tomatoes?" It would think the type of
+tomato is `"eating"`, which doesn't make much sense. Instead, we can specify what type of
+things the `{type}` of tomato should be. We do this by defining the type entity file here:
 
 `locale/en-us/type.entity`
 
@@ -362,7 +415,7 @@ pale
 
 ```
 
-This must be registered in the Skill before use - most commonly in the `initialize()` method:
+You must register this in the skill before use, most commonly in the `initialize()` method:
 
 ```python
 from ovos_workshop.skills import OVOSSkill
@@ -374,13 +427,17 @@ class TomatoSkill(OVOSSkill):
 
 ```
 
-Now, we can say things like "do you like greenish tomatoes?" and it will tag type as: `"greenish"`. However, if we say "do you like eating tomatoes?" - the phrase will not match as `"eating"` is not included in our `type.entity` file.
+Now, we can say things like "do you like greenish tomatoes?" and it will tag type as
+`"greenish"`. However, if we say "do you like eating tomatoes?", the phrase will not match,
+since `"eating"` is not included in our `type.entity` file.
 
 #### Number matching
 
 > **Engine-specific:** the `#` digit token and the `:0` unknown-token shown below are **Padatious extensions**. They are **not** part of the [OVOS-INTENT-1](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-1.md) Sentence Template Grammar (which has no digit token and no wildcard), so they are not portable to other pipeline plugins. Use them only when you know your skill targets Padatious.
 
-Let's say you are writing an Intent to call a phone number. You can make it only match specific formats of numbers by writing out possible arrangements using `#` where a number would go. For example, with the following intent:
+Let's say you are writing an intent to call a phone number. You can make it match only
+specific formats of numbers by writing out possible arrangements using `#` where a number
+would go. For example, with the following intent:
 
 ```text
 Call {number}.
@@ -405,7 +462,7 @@ the number.entity could be written as:
 
 #### Entities with unknown tokens
 
-Let's say you wanted to create an intent to match places:
+Let's say you want to create an intent to match places:
 
 ```text
 Directions to {place}.
@@ -416,7 +473,8 @@ How do I get to {place}?
 
 ```
 
-This alone will work, but it will still get a high confidence with a phrase like "How do I get to the boss in my game?". We can try creating a `.entity` file with things like:
+This alone will work, but it will still get a high confidence with a phrase like "How do I get
+to the boss in my game?" We can try creating a `.entity` file with things like:
 
 ```text
 New York City
@@ -426,7 +484,9 @@ San Francisco
 
 ```
 
-The problem is, now anything that is not specifically a mix of New York City, San Francisco, or something on Georgia Street won't match. Instead, we can specify an unknown word with :0. This would be written as:
+The problem is that now anything that is not specifically a mix of New York City, San
+Francisco, or something on Georgia Street won't match. Instead, we can specify an unknown word
+with `:0`. This would be written as:
 
 ```text
 :0 :0 City
@@ -436,13 +496,16 @@ The problem is, now anything that is not specifically a mix of New York City, Sa
 
 ```
 
-Now, while this will still match quite a lot, it will match things like "Directions to Baldwin City" more than "How do I get to the boss in my game?"
+Now, while this will still match quite a lot, it will match things like "Directions to
+Baldwin City" more than "How do I get to the boss in my game?"
 
-_NOTE: Currently, the number of :0 words is not fully taken into consideration so the above might match quite liberally, but this will change in the future._
+_NOTE: Currently, the number of `:0` words is not fully taken into account, so the above might
+match quite liberally. This will change in the future._
 
 #### Parentheses Expansion
 
-Sometimes you might find yourself writing a lot of variations of the same thing. For example, to write a skill that orders food, you might write the following intent:
+Sometimes you might find yourself writing many variations of the same thing. For example, to
+write a skill that orders food, you might write the following intent:
 
 ```text
 Order some {food}.
@@ -452,7 +515,9 @@ Grab some {food} from {place}.
 
 ```
 
-Rather than writing out all combinations of possibilities, you can embed them into one or more lines by writing each possible option inside parentheses with \| in between each part. For example, that same intent above could be written as:
+Rather than writing out all combinations of possibilities, you can embed them into one or more
+lines by writing each possible option inside parentheses with `|` between each part. For
+example, that same intent above could be written as:
 
 ```text
 (Order | Grab) some {food}
@@ -467,7 +532,7 @@ or even on a single-line:
 
 ```
 
-> The empty-branch trick `(from {place} | )` makes a segment optional. The portable [OVOS-INTENT-1](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-1.md) equivalent is the square-bracket optional `[from {place}]` — `[x]` is defined as exactly equivalent to `(x|)`. Prefer the bracket form when you want spec-conformant templates.
+> The empty-branch trick `(from {place} | )` makes a segment optional. The portable [OVOS-INTENT-1](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-1.md) equivalent is the square-bracket optional `[from {place}]`. `[x]` is defined as exactly equivalent to `(x|)`. Prefer the bracket form when you want spec-conformant templates.
 
 Nested parentheses are supported to create even more complex combinations, such as the following:
 
@@ -485,15 +550,22 @@ Find {object}
 
 ```
 
-There is no performance benefit to using parentheses expansion. When used appropriately, this syntax can be much clearer to read. However, more complex structures should be broken down into multiple lines to aid readability and reduce false utterances being included in the model. Overuse can even result in the model training timing out, rendering the Skill unusable.
+There is no performance benefit to using parentheses expansion. When used appropriately, this
+syntax can be much clearer to read. However, break more complex structures down into multiple
+lines to aid readability and reduce false utterances in the model. Overuse can even cause the
+model training to time out, making the skill unusable.
 
 ### Using it in a Skill
 
-The `intent_handler()` _decorator_ can be used to create an examples based intent handler by passing in the filename of the `.intent` file as a string.
+The `intent_handler()` decorator can create an examples-based intent handler by passing in the
+filename of the `.intent` file as a string.
 
-You may also see the `@intent_file_handler` decorator used in Skills. This has been deprecated and you can now replace any instance of this with the simpler `@intent_handler` decorator.
+You may also see the `@intent_file_handler` decorator used in skills. This is deprecated. You
+can now replace any instance of this with the simpler `@intent_handler` decorator.
 
-From our first example above, we created a file `locale/en-us/what.is.a.tomato.intent`. To register an intent using this file we can use the following decorator (shown on its own; place it above a handler method inside your skill class):
+From our first example above, we created a file `locale/en-us/what.is.a.tomato.intent`. To
+register an intent using this file we can use the following decorator, shown on its own.
+Place it above a handler method inside your skill class:
 
 ```python
 @intent_handler('what.is.a.tomato.intent')
@@ -539,13 +611,13 @@ See [Your First Skill](first-skill.md) for a complete, minimal example of a temp
 
 ### Common Problems
 
-See [I am unable to match against the utterance string](#i-am-unable-to-match-against-the-utterance-string) above — the same lowercase-normalization note applies to template-based intent handlers.
+See [I am unable to match against the utterance string](#i-am-unable-to-match-against-the-utterance-string) above. The same lowercase-normalization note applies to template-based intent handlers.
 
 #### My intent is defined correctly but never matches
 
 If the `.intent`/`.voc` files look right and the utterance still doesn't match anything, check
-whether the intent has actually been **disabled** rather than badly written — a skill can turn
-individual intents off with `disable_intent()`, and a skill or its converse participation can also
-be gated off entirely by the whitelist/blacklist controls. See [Intent Layers](layers.md) for
+whether the intent has actually been **disabled** rather than badly written. A skill can turn
+individual intents off with `disable_intent()`, and whitelist/blacklist controls can also gate
+off a skill or its converse participation entirely. See [Intent Layers](layers.md) for
 per-skill intent enable/disable state and [Permissions & Activation Control](permissions.md) for
 the coarser skill-level gates.

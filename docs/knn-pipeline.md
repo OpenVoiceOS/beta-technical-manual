@@ -1,7 +1,7 @@
 # Hierarchical KNN Intent Pipeline
 
-!!! note "Maturity — Beta ⬤⬤⬤◯◯"
-    In real use but still settling — watch releases for the occasional breaking change. Rated by [repository health](maturity.md), not version.
+!!! note "Maturity: Beta ⬤⬤⬤◯◯"
+    In real use but still settling. Watch releases for the occasional breaking change. Rated by [repository health](maturity.md), not version.
 
 !!! abstract "In a nutshell"
     This is a *semantic* [intent](glossary.md) matcher: instead of matching keywords or example
@@ -11,7 +11,7 @@
     ([Adapt](adapt-pipeline.md), [Padatious](padatious-pipeline.md)) can't confidently decide.
 
 ??? info "📐 Formal specification"
-    Hierarchical KNN is a **pipeline plugin** under **[OVOS-PIPELINE-1 — Utterance Lifecycle & Pipeline](https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md)**, filling the **template-intent** engine role of **[OVOS-INTENT-3 §5–§6](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-3.md)** over the **[OVOS-INTENT-1 grammar](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-1.md)**. Its embedding/k-NN matching is one of the engine-specific strategies INTENT-3 §8 leaves open. See the [spec index](architecture-specs.md).
+    Hierarchical KNN is a **pipeline plugin** under **[OVOS-PIPELINE-1: Utterance Lifecycle & Pipeline](https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md)**. It fills the **template-intent** engine role of **[OVOS-INTENT-3 §5-§6](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-3.md)** over the **[OVOS-INTENT-1 grammar](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-1.md)**. Its embedding/k-NN matching is one of the engine-specific strategies INTENT-3 §8 leaves open. See the [spec index](architecture-specs.md).
 
 [`ovos-hierarchical-knn-pipeline`](https://github.com/OpenVoiceOS/ovos-hierarchical-knn-pipeline)
 is an intent-matching [pipeline plugin](pipelines-overview.md) (entry point `opm.pipeline`,
@@ -22,15 +22,16 @@ index.
 ## How it works
 
 - **Two-stage search**: it first narrows to the likely **domain**, then to the **intent** within
-  it (using Wu–Lin pairwise probability estimation) — keeping search fast as the intent set grows.
-- It classifies utterances into the intent labels **already registered** by loaded skills (Adapt,
-  Padatious, and plugin-specific labels), and **ignores** labels from skills that aren't loaded.
-  Adapt and Padatious intents are synced into the index dynamically at runtime.
+  it, using Wu-Lin pairwise probability estimation. This keeps search fast as the intent set
+  grows.
+- It classifies utterances into the intent labels **already registered** by loaded skills
+  (Adapt, Padatious, and plugin-specific labels), and **ignores** labels from skills that
+  aren't loaded. Adapt and Padatious intents are synced into the index dynamically at runtime.
 - Search is automatically scoped to the **domains of loaded skills** (domain pre-filtering).
 
-It is ideal as a **high-recall semantic stage** for cases where the deterministic engines fail to
-produce a high-confidence match — conceptually similar to [Model2Vec](m2v-pipeline.md), but using
-a pre-built FAISS index and a hierarchical classifier.
+It works well as a **high-recall semantic stage** for cases where the deterministic engines
+fail to produce a high-confidence match. It is conceptually similar to
+[Model2Vec](m2v-pipeline.md), but uses a pre-built FAISS index and a hierarchical classifier.
 
 ## Requirements & footprint
 

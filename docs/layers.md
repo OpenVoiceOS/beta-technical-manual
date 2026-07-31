@@ -1,20 +1,29 @@
 # Intent Layers
 
 !!! abstract "In a nutshell"
-    Normally a skill listens for all of its commands at once. Intent Layers let a skill turn commands on and off as a conversation progresses, so only the choices that make sense right now are available — much like a "choose your own adventure" book where each page unlocks the next set of options. This is handy for step-by-step flows, games, or anything that should react differently depending on what the user just did. For the broader picture, see the [Glossary](glossary.md).
+    Normally a skill listens for all of its commands at once. Intent Layers let a skill turn
+    commands on and off as a conversation progresses, so only the choices that make sense
+    right now are available, much like a "choose your own adventure" book where each page
+    unlocks the next set of options. This is handy for step-by-step flows, games, or anything
+    that should react differently depending on what the user just did. For the broader
+    picture, see the [Glossary](glossary.md).
 
 ??? info "📐 Formal specification"
-    `IntentLayer` gating is implemented through the session's **intent context** — each layer is a session context token its intents require. The mechanism is specified by **[OVOS-CONTEXT-1 — Intent Context](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-context.md)** (see [Context](context.md) and the [spec index](architecture-specs.md)).
+    `IntentLayer` gating is implemented through the session's **intent context**. Each layer is a session context token its intents require. The mechanism is specified by **[OVOS-CONTEXT-1: Intent Context](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-context.md)** (see [Context](context.md) and the [spec index](architecture-specs.md)).
 
 !!! tip "`IntentLayers` are per-session"
-    `IntentLayer` state lives in the **session**, so layered skills are concurrency-safe across [HiveMind](https://jarbashivemind.github.io/HiveMind-community-docs/) satellites — two satellites can be in different layers at the same time. (The lower-level `enable_intent` / `disable_intent` calls in the next section still change the **global** intent set, so prefer layers for per-session flows.)
+    `IntentLayer` state lives in the **session**, so layered skills are concurrency-safe
+    across [HiveMind](https://jarbashivemind.github.io/HiveMind-community-docs/) satellites.
+    Two satellites can be in different layers at the same time. (The lower-level
+    `enable_intent` / `disable_intent` calls in the next section still change the **global**
+    intent set, so prefer layers for per-session flows.)
 
 !!! note "Not the same as skill permissions"
-    Intent layers switch groups of *intents* on and off inside one already-active skill. Whether a skill is even allowed to participate in converse at all (whitelists, blacklists, `ConverseMode`) is a separate, coarser gate — see [Permissions & Activation Control](permissions.md).
+    Intent layers switch groups of *intents* on and off inside one already-active skill. Whether a skill is even allowed to participate in converse at all (whitelists, blacklists, `ConverseMode`) is a separate, coarser gate. See [Permissions & Activation Control](permissions.md).
 
 ## Managing Intents
 
-Sometimes you might want to manually enable or disable an intent, in OVOSSkills you can do this explicitly to create stateful interactions
+Sometimes you might want to manually enable or disable an intent. In OVOSSkills you can do this explicitly to create stateful interactions:
 
 ```python
 class RotatingIntentsSkill(OVOSSkill):
@@ -44,18 +53,18 @@ class RotatingIntentsSkill(OVOSSkill):
 
 ```
 
-> **NOTE**: `enable_intent` / `disable_intent` change the **global** intent set — these states are shared across [Sessions](session.md). For per-session gating, use [Intent Layers](#decorators) (which gate via intent context) instead.
+> **NOTE**: `enable_intent` / `disable_intent` change the **global** intent set. These states are shared across [Sessions](session.md). For per-session gating, use [Intent Layers](#decorators) (which gate via intent context) instead.
 
 
 ## State Machines
 
-Another utils provided by `ovos-workshop` is `IntentLayers`, to manage groups of intent together
+`ovos-workshop` also provides `IntentLayers`, to manage groups of intents together.
 
-`IntentLayers` lend themselves well to implement state machines.
+`IntentLayers` work well for implementing state machines.
 
 ### The Manual way
 
-In this example we implement the [Konami Code](https://en.wikipedia.org/wiki/Konami_Code), doing everything the manual way instead of using decorators
+In this example we implement the [Konami Code](https://en.wikipedia.org/wiki/Konami_Code), doing everything the manual way instead of using decorators.
 
 ![State diagram of the Konami Code intent layers: up1 and up2 lead to down1 and down2, then left1/right1, left2/right2, and finally the B and A layers before resetting](https://github.com/OpenVoiceOS/ovos-technical-manual/assets/33701864/13b9de20-1f8d-44b3-9b65-c13a79a41b1e)
 
@@ -151,15 +160,18 @@ class KonamiCodeSkill(OVOSSkill):
 
 ### Decorators
 
-When you have many complex chained intents `IntentLayers` often makes your life easier, a layer is a named group of intents that you can manage at once.
+When you have many complex chained intents, `IntentLayers` often makes your work easier. A
+layer is a named group of intents that you can manage at once.
 
-Slightly more complex than the previous example, we may want to offer several "forks" on the intent execution, enabling different intent groups depending on previous interactions
+Slightly more complex than the previous example, we may want to offer several "forks" on the
+intent execution, enabling different intent groups depending on previous interactions.
 
-[skill-moon-game](https://github.com/JarbasSkills/skill-moon-game/) is an example full voice game implemented this way
+[skill-moon-game](https://github.com/JarbasSkills/skill-moon-game/) is an example full voice
+game implemented this way.
 
-An excerpt from the game to illustrate usage of `IntentLayer` decorators
+Here is an excerpt from the game to illustrate usage of `IntentLayer` decorators:
 
-> **NOTE**: `IntentLayers` are **per-session** — gated via [intent context](context.md) ([OVOS-CONTEXT-1](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-context.md)), so each [voice satellite](https://jarbashivemind.github.io/HiveMind-community-docs/07_voicesat/) keeps its own layer state instead of all joining the same game.
+> **NOTE**: `IntentLayers` are **per-session**, gated via [intent context](context.md) ([OVOS-CONTEXT-1](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-context.md)), so each [voice satellite](https://jarbashivemind.github.io/HiveMind-community-docs/07_voicesat/) keeps its own layer state instead of all joining the same game.
 
 ```python
 from ovos_workshop.decorators.layers import layer_intent, enables_layer, \
@@ -237,15 +249,15 @@ class Apollo11GameSkill(OVOSSkill):
 (`ovos_workshop.decorators.layers.IntentLayers`), created lazily the first time a layer
 decorator or `layer_intent` runs and bound to the skill instance.
 
-A layer is **not** a separate matching mechanism — it's a named group of intents mapped to a
+A layer is **not** a separate matching mechanism. It's a named group of intents mapped to a
 single synthetic [intent context](context.md) token (`layer_<name>`, prefixed internally with
 the skill id). Every intent registered under that layer is set to *require* the token, so:
 
-- `activate_layer("guard")` calls `self.set_context(...)` for the layer's token — the layer's
+- `activate_layer("guard")` calls `self.set_context(...)` for the layer's token. The layer's
   intents become matchable.
-- `deactivate_layer("guard")` calls `self.remove_context(...)` — they stop matching again.
+- `deactivate_layer("guard")` calls `self.remove_context(...)`. They stop matching again.
 - The intents themselves stay registered with the intent service for the skill's whole
-  lifetime; only whether their required context is present changes. There's no
+  lifetime. Only whether their required context is present changes. There's no
   detach/re-attach churn.
 
 Because layer state rides on intent context, and intent context is per-session, each

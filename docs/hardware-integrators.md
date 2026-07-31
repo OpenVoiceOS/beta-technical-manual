@@ -1,22 +1,22 @@
 # Building Hardware on OVOS
 
 !!! abstract "In a nutshell"
-    If you're designing a physical gadget — a smart speaker, a robot, a Halloween prop, a
-    custom kiosk — and want it to listen and talk using OVOS, most of the software underneath
-    it doesn't care what board you're running on. What *does* care about specific hardware is
-    a small layer called [PHAL](phal.md) (Platform/Hardware Abstraction Layer), which is also
-    where you plug in your own LEDs, buttons, and sensors. This page is the map for makers:
-    what's generic vs Raspberry-Pi-specific, how to write a driver for your own LED ring or
-    button panel, what resources your device actually needs, and what OVOS does and doesn't
-    do for you around over-the-air updates and on-screen UI.
+    You may want to build a physical device, such as a smart speaker, a robot, or a custom
+    kiosk, that listens and talks using OVOS. Most of the software underneath does not care
+    what board you run it on. The part that does care about hardware is a small layer called
+    [PHAL](phal.md) (Platform/Hardware Abstraction Layer). PHAL is also where you plug in
+    your own LEDs, buttons, and sensors. This page maps what is generic and what is
+    Raspberry-Pi-specific. It shows how to write a driver for your own LED ring or button
+    panel, what resources your device needs, and what OVOS does and does not do for
+    over-the-air updates and on-screen UI.
 
 ---
 
 ## SBC-agnostic vs Raspberry-Pi-only
 
 Most of the OVOS stack is just Python talking to ALSA (Linux's standard sound system) and the
-network — it runs the same on a Raspberry Pi, an x86 mini-PC, an Orange Pi, or a laptop. A
-handful of pieces are genuinely tied to specific Raspberry-Pi/Mycroft hardware:
+network. It runs the same way on a Raspberry Pi, an x86 mini-PC, an Orange Pi, or a laptop. A
+few pieces are tied to specific Raspberry-Pi/Mycroft hardware:
 
 | Component | Portability | Why |
 |---|---|---|
@@ -27,10 +27,10 @@ handful of pieces are genuinely tied to specific Raspberry-Pi/Mycroft hardware:
 | [`ovos-PHAL-plugin-mk1`](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-mk1), [`ovos-PHAL-plugin-mk2-v6-fan-control`](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-mk2-v6-fan-control) | **Mycroft Mark 1 / Mark 2 only** | Drive specific hardware that only exists on those boards |
 | [raspOVOS](install-raspovos.md) image | **Raspberry Pi only** | It's a Raspberry Pi OS image |
 
-If you're designing new hardware, the practical takeaway is: **use a generic microphone/ALSA
-sound card and a plain Linux install** (the [`ovos-installer`](ovos-installer.md) works the
-same way on a Pi or an x86 box), and only reach for the Pi-specific pieces above if you are
-specifically reusing an i2c HAT or the SJ201 board design.
+If you are designing new hardware, use a generic microphone or ALSA sound card and a plain
+Linux install. The [`ovos-installer`](ovos-installer.md) works the same way on a Pi or an
+x86 box. Only reach for the Pi-specific pieces above if you reuse an i2c HAT or the SJ201
+board design.
 
 ---
 
@@ -40,15 +40,15 @@ specifically reusing an i2c HAT or the SJ201 board design.
 fan-speed and thermal-shutdown control.
 
 !!! note "Illustrative skeletons"
-    The `MyRingLed` and switch examples below are illustrative skeletons, not complete,
-    copy-pasteable drivers — real hardware needs the actual bus/SPI/GPIO calls for your board
-    filled in where the example stops short.
+    The `MyRingLed` and switch examples below are skeletons, not complete, copy-pasteable
+    drivers. Real hardware needs the actual bus, SPI, or GPIO calls for your board filled in
+    where the example stops short.
 
-Custom LEDs and buttons are the two things almost every maker adds. Rather than writing your
+Custom LEDs and buttons are the two things almost every maker adds. Instead of writing your
 own bus-message plumbing, subclass the abstract base classes in
-[`ovos-hardware-helpers`](https://github.com/OpenVoiceOS/ovos-hardware-helpers) and wrap the
-result in a [PHAL plugin](phal.md#writing-phal-plugins) — see that page for the entry-point and
-validator mechanics; this section is about the hardware interface itself.
+[`ovos-hardware-helpers`](https://github.com/OpenVoiceOS/ovos-hardware-helpers). Wrap the
+result in a [PHAL plugin](phal.md#writing-phal-plugins). See that page for the entry-point
+and validator mechanics. This section covers the hardware interface itself.
 
 ### LEDs: `AbstractLed`
 
@@ -89,15 +89,15 @@ class MyRingLed(AbstractLed):
 ```
 
 For a full, real-hardware reference implementation, see
-[`ovos-PHAL-plugin-dotstar`](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-dotstar) — it wraps
-a DotStar (APA102) LED strip's SPI driver in an `AbstractLed` subclass and the surrounding PHAL
-plugin/validator boilerplate.
+[`ovos-PHAL-plugin-dotstar`](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-dotstar). It wraps
+a DotStar (APA102) LED strip's SPI driver in an `AbstractLed` subclass, plus the surrounding
+PHAL plugin and validator boilerplate.
 
-`AbstractLed` also ships a `scale_brightness(color_val, bright_val)` static helper for dimming,
-and the library's `eval_color()` helper (in `ovos_hardware_helpers.led`) turns a color name,
-hex string, or RGB tuple into a normalized color object using
-[`ovos-color-parser`](color-parser.md) — useful if you want your plugin to accept
-`"Mycroft blue"` as well as `(0, 168, 255)`.
+`AbstractLed` also ships a `scale_brightness(color_val, bright_val)` static helper for dimming.
+The library's `eval_color()` helper (in `ovos_hardware_helpers.led`) turns a color name, hex
+string, or RGB tuple into a normalized color object using
+[`ovos-color-parser`](color-parser.md). This lets your plugin accept `"Mycroft blue"` as well
+as `(0, 168, 255)`.
 
 ### Buttons: `AbstractSwitches`
 
@@ -149,20 +149,21 @@ class MyFanController(AbstractFan):
         pass  # set the fan to a reasonable speed before exit
 ```
 
-Wire an instance of any of these classes up inside a `PHALPlugin.__init__`, polling your GPIO/i2c
-hardware on a background thread (or driving it from an interrupt callback) and calling the
-matching `on_*`/`set_led`/`set_fan_speed` methods. See [PHAL: Writing PHAL Plugins](phal.md#writing-phal-plugins)
-for the full plugin lifecycle, validator, and entry-point registration.
+Wire an instance of any of these classes up inside a `PHALPlugin.__init__`. Poll your GPIO or
+i2c hardware on a background thread, or drive it from an interrupt callback, and call the
+matching `on_*`, `set_led`, or `set_fan_speed` methods. See
+[PHAL: Writing PHAL Plugins](phal.md#writing-phal-plugins) for the full plugin lifecycle,
+validator, and entry-point registration.
 
 ---
 
 ## Resource footprint
 
-There is no published, current benchmark of OVOS's CPU/RAM footprint across hardware targets —
-treat any specific number you see elsewhere with suspicion, since it depends entirely on which
-STT/TTS/wake-word plugins you pick (a tiny wake-word model and a cloud STT server cost almost
-nothing locally; a local Whisper model needs real CPU or a GPU). Rather than repeat an unverified
-number, measure it on your own target hardware:
+There is no published, current benchmark of OVOS's CPU/RAM footprint across hardware targets.
+Treat any specific number you see elsewhere with suspicion. The real cost depends entirely on
+which STT, TTS, and wake-word plugins you pick. A tiny wake-word model and a cloud STT server
+cost almost nothing locally. A local Whisper model needs real CPU or a GPU. Measure the
+footprint on your own target hardware instead of relying on an unverified number:
 
 ```bash
 # Memory: sum RSS of every OVOS process
@@ -175,38 +176,39 @@ systemctl --user status ovos-skills.service | grep Memory
 top -b -n 1 -u ovos
 ```
 
-Run the same commands idle and mid-conversation; the delta tells you what your wake-word/STT/TTS
-choice actually costs on your board, which matters far more than any generic published figure.
+Run the same commands idle and mid-conversation. The delta tells you what your wake-word, STT,
+and TTS choice actually costs on your board. That number matters far more than any generic
+published figure.
 
 ### Sizing by relative cost, not measured numbers
 
-Without a published number to anchor on, the useful thing to reason about is *relative* cost —
-which plugin choices are light, medium, or heavy relative to each other — plus one fixed fact:
-the always-on core (`ovos-messagebus`, `ovos-core`, `ovos-audio`, `ovos-dinkum-listener`,
-`ovos-PHAL`, and whatever skills you load) runs on every device regardless of which STT/TTS/WW
-models you pick. That core has to fit on your board *before* you add any model on top of it —
-size the board for the core first, then budget headroom for the models.
+Without a published number to anchor on, reason about relative cost instead: which plugin
+choices are light, medium, or heavy compared to each other. One fact stays fixed: the
+always-on core (`ovos-messagebus`, `ovos-core`, `ovos-audio`, `ovos-dinkum-listener`,
+`ovos-PHAL`, and whatever skills you load) runs on every device, regardless of which STT, TTS,
+or wake-word models you pick. That core must fit on your board before you add any model on
+top of it. Size the board for the core first, then budget headroom for the models.
 
-On top of that fixed base, roughly from lightest to heaviest:
+On top of that fixed base, from lightest to heaviest:
 
-- **Lightest**: an energy/noise-threshold [VAD](vad-plugins.md#ovos-vad-plugin-noise) (no model
-  download), a small wake-word model (e.g.
-  [`ovos-ww-plugin-precise-onnx`](wake-word-plugins.md#ovos-ww-plugin-precise-onnx)), and cloud
-  [STT](stt-plugins.md#ovos-stt-plugin-azure)/[TTS](tts-plugins.md#ovos-tts-plugin-azure) (Azure,
-  Polly, Edge-TTS, etc.) — inference happens on someone else's server, so the device only needs
-  enough CPU for the always-on core plus audio capture/playback.
-- **Middle**: local, on-device inference using a small/quantized model — e.g.
+- **Lightest**: an energy/noise-threshold [VAD](vad-plugins.md#ovos-vad-plugin-noise) with no
+  model download, a small wake-word model such as
+  [`ovos-ww-plugin-precise-onnx`](wake-word-plugins.md#ovos-ww-plugin-precise-onnx), and cloud
+  [STT](stt-plugins.md#ovos-stt-plugin-azure)/[TTS](tts-plugins.md#ovos-tts-plugin-azure) such as
+  Azure, Polly, or Edge-TTS. Inference happens on someone else's server, so the device only
+  needs enough CPU for the always-on core plus audio capture and playback.
+- **Middle**: local, on-device inference using a small or quantized model. Examples:
   [`ovos-stt-plugin-onnx-asr`](stt-plugins.md#ovos-stt-plugin-onnx-asr) with a small
   `int8`-quantized model, [`ovos-tts-plugin-phoonnx`](tts-plugins.md#ovos-tts-plugin-phoonnx),
   and [`ovos-vad-plugin-silero`](vad-plugins.md#ovos-vad-plugin-silero)'s small neural VAD model.
-  `int8` weights are consistently the lower-footprint choice over `fp32` for the same model.
-- **Heaviest**: local Whisper-class or other large general-purpose models (see the `large`
-  variants in the [STT plugin reference](stt-plugins.md)) — several plugins in that table
-  explicitly recommend a GPU or `use_cuda: true` for this reason. Running these well on a small
-  board without a GPU is the scenario most likely to disappoint.
+  `int8` weights consistently have a lower footprint than `fp32` for the same model.
+- **Heaviest**: local Whisper-class or other large general-purpose models. See the `large`
+  variants in the [STT plugin reference](stt-plugins.md). Several plugins in that table
+  recommend a GPU or `use_cuda: true` for this reason. Running these well on a small board
+  without a GPU is likely to disappoint.
 
-Pick a tier that leaves headroom above the fixed core cost, not one that just barely fits the
-model alone.
+Pick a tier that leaves headroom above the fixed core cost. Do not pick one that just barely
+fits the model alone.
 
 ---
 
@@ -215,27 +217,27 @@ model alone.
 !!! warning "OVOS does not ship an OTA update system"
     There is no built-in over-the-air update mechanism, update server, or delta-update
     protocol. Updating an OVOS device means running `pip`/`uv` against a
-    [release channel's constraints file](release-channels.md#choosing-a-release-channel), the
-    same command whether you run it by hand over SSH or push it out via your own fleet
-    tooling (Ansible, a custom MDM agent, a cron job). See
+    [release channel's constraints file](release-channels.md#choosing-a-release-channel). This
+    is the same command whether you run it by hand over SSH or push it out with your own
+    device-management tooling, such as Ansible, a custom MDM agent, or a cron job. See
     [Production Operations: staged upgrades](production-operations.md#staged-upgrades-and-rollback)
-    for the update-and-rollback pattern. If your product needs image-level OTA (swapping the
-    whole OS image, not just Python packages), you will need to bring your own solution
-    (e.g. Mender, SWUpdate, RAUC) — OVOS has no opinion on that layer.
+    for the update-and-rollback pattern. If your product needs image-level OTA that swaps the
+    whole OS image, not just Python packages, bring your own solution, such as Mender,
+    SWUpdate, or RAUC. OVOS has no opinion on that layer.
 
 ---
 
 ## Screens: where things stand today
 
-If your device has a display, [`ovos-gui`](gui-service.md) provides the protocol and
-[`ovos-shell`](ovos-shell.md) (or a Qt5/QML client speaking the same
-[GUI protocol](gui-protocol.md)) renders it, with a [homescreen](homescreen.md) skill as the
-default idle view — this part works today on Linux desktops and the
+If your device has a display, [`ovos-gui`](gui-service.md) provides the protocol.
+[`ovos-shell`](ovos-shell.md), or a Qt5/QML client speaking the same
+[GUI protocol](gui-protocol.md), renders it, with a [homescreen](homescreen.md) skill as the
+default idle view. This works today on Linux desktops and the
 [GUI-capable installer path](ovos-installer.md), but the legacy Qt5 stack is deprecated
-pending the GUI rework. If you are starting a from-scratch hardware
-design, plan for a voice-first experience with an optional screen rather than the other way
-around: treat the GUI layer as a nice extra your device can degrade gracefully without, not
-a hard dependency for launch.
+pending the GUI rework. If you are starting a from-scratch hardware design, plan for a
+voice-first experience with an optional screen, not the other way around. Treat the GUI
+layer as an extra your device can degrade gracefully without, not a hard dependency for
+launch.
 
 ---
 

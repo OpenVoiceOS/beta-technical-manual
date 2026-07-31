@@ -1,46 +1,46 @@
 <div class="ovos-hero">
   <h1>OpenVoiceOS Technical Manual</h1>
-  <p>The complete guide to using, building on, and understanding the OVOS voice assistant — from your first install to the deepest internals.</p>
+  <p>The complete guide to using, building on, and understanding the OVOS voice assistant, from your first install to the deepest internals.</p>
 </div>
 
 !!! abstract "In a nutshell"
-    OpenVoiceOS (OVOS) is a free, open-source voice assistant you run yourself — an
-    open alternative to Alexa or Google Assistant. This manual covers every layer of
-    it: installing a ready-made device, writing your first skill, and the internals
-    of the messagebus and intent pipeline underneath. Pick a path below that matches
-    what you want to do; you don't need to read it front to back.
+    OpenVoiceOS (OVOS) is a free, open-source voice assistant you run yourself. It is an
+    open alternative to Alexa or Google Assistant. This manual covers every layer of it:
+    installing a ready-made device, writing your first skill, and the internals of the
+    messagebus and intent pipeline underneath. Pick a path below that matches what you
+    want to do. You don't need to read it front to back.
 
 ![OVOS Logo](https://github.com/OpenVoiceOS/ovos_assets/blob/master/Logo/ovos-logo-512.png?raw=true){ align=right width="160" }
 
 ## What is OpenVoiceOS?
 
-**OpenVoiceOS (OVOS)** is a free, open-source, privacy-respecting **voice assistant** —
-think of it as an open alternative to Alexa or Google Assistant that *you* control. It
-listens for a wake word, understands what you ask, and responds with speech (and
-optionally a screen).
+**OpenVoiceOS (OVOS)** is a free, open-source, privacy-respecting **voice assistant**.
+Think of it as an open alternative to Alexa or Google Assistant that *you* control. It
+listens for a wake word, understands what you ask, and responds with speech, and
+optionally a screen.
 
-You can run it on a Raspberry Pi, a desktop, or a server. Because it's **modular** —
-built from many small, swappable pieces called *plugins* and *skills* — you can change
-how it hears, thinks, and speaks, or teach it brand-new abilities.
+You can run it on a Raspberry Pi, a desktop, or a server. It is **modular**, built from
+many small, swappable pieces called *plugins* and *skills*. You can change how it hears,
+thinks, and speaks, or teach it brand-new abilities.
 
 !!! tip "New to all this? Don't worry."
     This manual covers everything from "I just want it working" to "I'm rewriting the
-    intent pipeline." You don't need to read it front to back — pick the path below that
+    intent pipeline." You don't need to read it front to back. Pick the path below that
     matches what you want to do. Unfamiliar word? Check the **[Glossary](glossary.md)**.
 
 !!! note "OVOS is do-it-yourself"
     There's no phone app and no plug-and-play appliance to buy. You get OVOS running by
-    flashing an SD-card image or working from a terminal — see below. It's not hard, but
+    flashing an SD-card image or working from a terminal. See below. It's not hard, but
     it is hands-on.
 
 ---
 
 ## Start here
 
-Just want a working voice assistant with the least fuss? Flash the
-**[raspOVOS](install-raspovos.md)** image onto a Raspberry Pi's SD card and boot it — no
-terminal required. That's the easiest path in this manual. Everyone else, pick your path
-in the grid below.
+If you just want a working voice assistant with the least fuss, flash the
+**[raspOVOS](install-raspovos.md)** image onto a Raspberry Pi's SD card and boot it. No
+terminal is required. That's the easiest path in this manual. Everyone else, pick your
+path in the grid below.
 
 ---
 
@@ -71,7 +71,7 @@ in the grid below.
 
     ---
 
-    Teach OVOS to do something new — your first voice skill, step by step.
+    Teach OVOS to do something new: your first voice skill, step by step.
 
     [:octicons-arrow-right-24: Your first skill (10-min tutorial)](first-skill.md) ·
     [Design guidelines](skill-design-guidelines.md) ·
@@ -91,7 +91,7 @@ in the grid below.
 
     ---
 
-    Make OVOS speak your language — no coding required.
+    Make OVOS speak your language. No coding required.
 
     [:octicons-arrow-right-24: Translator guide](ovos-localize-tutorial.md) ·
     [Language support](lang-support.md)
@@ -100,7 +100,7 @@ in the grid below.
 
     ---
 
-    Give your assistant a chat brain — ChatGPT-style, a local model, or a custom persona.
+    Give your assistant a chat brain: ChatGPT-style, a local model, or a custom persona.
 
     [:octicons-arrow-right-24: Personas](personas.md) ·
     [Agent engines](agent-plugins.md) ·
@@ -165,27 +165,27 @@ in the grid below.
 
 ## How OVOS is organized
 
-OVOS is not one program — it's a small team of cooperating services that talk to each
-other over a shared **[messagebus](bus-service.md)**. Knowing these components
-will make the rest of the manual easier to follow:
+OVOS is not one program. It's a small team of cooperating services that talk to each
+other over a shared **[messagebus](bus-service.md)**. Knowing these components will
+make the rest of the manual easier to follow:
 
 !!! tip "Maturity badges"
-    Most component and plugin pages open with a **maturity** badge (e.g. ⬤⬤⬤⬤◯ Stable) and
+    Most component and plugin pages open with a **maturity** badge (e.g. ⬤⬤⬤⬤◯ Stable), and
     the plugin catalogs carry a Maturity column. It tells you how much a component can be
-    relied on, judged from repository health rather than version number — see the
+    relied on, judged from repository health rather than version number. See the
     [Maturity Scale](maturity.md).
 
 | Piece | In plain terms | Learn more |
 |---|---|---|
 | **Listener** | Hears the wake word and records your speech | [Speech Service](speech-service.md) |
 | **STT** | Turns your speech into text | [STT plugins](stt-plugins.md) |
-| **ovos-core** | The "brain" — decides which skill should answer | [ovos-core](core.md) |
+| **ovos-core** | The "brain": decides which skill should answer | [ovos-core](core.md) |
 | **Skills** | The abilities (weather, timers, music…) | [Skill development](skill-design-guidelines.md) |
 | **TTS** | Turns the reply text back into speech | [TTS plugins](tts-plugins.md) |
-| **GUI** | Shows an optional screen or visuals — *legacy/deprecated, [current status](gui-status.md)* | [GUI Service](gui-service.md) |
+| **GUI** | Shows an optional screen or visuals (*legacy/deprecated, [current status](gui-status.md)*) | [GUI Service](gui-service.md) |
 | **messagebus** | The shared channel they all talk over | [messagebus Service](bus-service.md) |
 
-!!! info "Plugins vs. Skills — the two ways to extend OVOS"
+!!! info "Plugins vs. Skills: the two ways to extend OVOS"
     A **skill** adds an *ability* ("set a timer", "play the news"). A **plugin** swaps
     out a *building block* (a different speech-to-text engine, a new wake word, another
     voice). See the **[Plugin Ecosystem](plugins-index.md)** to explore what's available,
@@ -202,7 +202,7 @@ Understand the "brain" and "nervous system" of the platform:
 
 *   **[Architecture Overview](architecture-overview.md)**: How all the components fit together.
 *   **[Life of an Utterance](life-of-an-utterance.md)**: Trace a command from sound to speech.
-*   **[messagebus Service](bus-service.md)**: Deep dive into the communication backbone.
+*   **[messagebus Service](bus-service.md)**: Look closer at the communication backbone.
 *   **[Configuration](config.md)**: Master the layered configuration system.
 
 ### :material-laptop: Developer Resources
@@ -212,14 +212,14 @@ Ready to build your own plugins or skills?
 *   **[Skill Development](skill-design-guidelines.md)**: Learn how to write your first voice skill.
 *   **[Plugin Ecosystem](plugins-index.md)**: Explore and create plugins for STT, TTS, VAD, and more.
 *   **[Intent Pipelines](pipelines-overview.md)**: Understand how OVOS parses natural language.
-*   **[Skill Testing](ovoscope-overview.md)**: Ensure your skills are robust with `ovoscope`.
+*   **[Skill Testing](ovoscope-overview.md)**: Test your skills with `ovoscope`.
 
 ### :material-earth: Language Support
 
 OVOS is built for a global community:
 
 *   **[Overview](lang-support.md)**: Current status and requirements for full language support.
-*   **[Contributing Translations](ovos-localize-tutorial.md)**: Help translate skills and intents — no coding needed — with OVOS Localize.
+*   **[Contributing Translations](ovos-localize-tutorial.md)**: Help translate skills and intents with OVOS Localize. No coding needed.
 *   **[Technical Parsers](lang-parser.md)**: How OVOS handles numbers, dates, and colors across languages.
 *   **[Translation Plugins](translation-plugins.md)**: Explore translation plugins and self-hosting options.
 

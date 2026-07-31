@@ -1,17 +1,17 @@
 # Language Selection and Disambiguation
 
-!!! success "Maturity — Mature ⬤⬤⬤⬤⬤"
-    Long-lived, battle-tested, and actively maintained — this is `ovos-core` internals; depend on it freely. Rated by [repository health](maturity.md), not version.
+!!! success "Maturity: Mature ⬤⬤⬤⬤⬤"
+    Long-lived, well-tested, and actively maintained. This is `ovos-core` internals. You can depend on it. Rated by [repository health](maturity.md), not version.
 
 !!! tip "Just want to change your language?"
-    See [Language Support](lang-support.md) instead — this page is internals: how `ovos-core`
-    picks a language for a given utterance internally, not how to configure one.
+    See [Language Support](lang-support.md) instead. This page covers internals: how
+    `ovos-core` picks a language for a given utterance internally, not how to configure one.
 
 !!! abstract "In a nutshell"
-    Every utterance carries a language tag (on the message `context`), and `ovos-core` resolves
-    it from the most trustworthy source available — falling back to your configured default —
-    before it tries to match an intent. If you only ever use one language, the default `lang` in
-    `mycroft.conf` is all that matters and you can skip the details below.
+    Every utterance carries a language tag (on the message `context`), and `ovos-core`
+    resolves it from the most trustworthy source available, falling back to your configured
+    default, before it tries to match an intent. If you only ever use one language, the
+    default `lang` in `mycroft.conf` is all that matters, and you can skip the details below.
 
 OpenVoiceOS is designed to be multi-language from the ground up. This page explains the technical logic used by `ovos-core` to determine which language should be used for a given user utterance.
 
@@ -34,7 +34,7 @@ The service inspects the message's `context` dict and picks the **first** of the
 | **2** | `request_lang` | Volunteered by the source (e.g., a specific wake word or remote client). |
 | **3** | `detected_lang` | Set by a [Transformer](transformer-plugins.md) plugin (e.g., a language classifier). |
 
-The message language itself is resolved by `get_message_lang()`, which checks `message.data["lang"]` first and then `message.context["lang"]`; if neither is present it falls back to the system `lang` from `mycroft.conf`.
+The message language itself is resolved by `get_message_lang()`, which checks `message.data["lang"]` first and then `message.context["lang"]`. If neither is present, it falls back to the system `lang` from `mycroft.conf`.
 
 ### Validation against `valid_langs`
 
@@ -53,14 +53,14 @@ language). These are what `ovos-core` itself uses.
 
 !!! note
     The older `ovos_utils.lang` helpers below (`standardize_lang_tag`, `get_language_dir`) are
-    **deprecated** in favour of the `ovos_spec_tools` helpers above; they are documented here
+    **deprecated** in favor of the `ovos_spec_tools` helpers above. They are documented here
     because existing skills still reference them.
 
 ### `standardize_lang_tag(lang_code, macro=True)`
 Normalizes a language tag to a canonical form (e.g., `"en-us"` -> `"en-US"`). It is used internally to ensure comparisons are reliable. With `macro=True` it can also collapse a tag to its macro-language.
 
 ### `get_language_dir(base_path, lang="en-US")`
-A crucial helper for [Skills](skill-design-guidelines.md). It scans a directory (like `locale/`) and returns the best matching subdirectory for the requested language, tolerating regional variations.
+An important helper for [Skills](skill-design-guidelines.md). It scans a directory (like `locale/`) and returns the best matching subdirectory for the requested language, tolerating regional variations.
 
 ---
 
@@ -91,7 +91,7 @@ If `multilingual_matching` is enabled under the `"intents"` section of `mycroft.
 }
 ```
 
-This allows seamless switching between languages without manual reconfiguration, at the cost of extra matching work per failed utterance.
+This allows switching between languages without manual reconfiguration, at the cost of extra matching work per failed utterance.
 
 ---
 
