@@ -1,7 +1,7 @@
 # Decorators
 
 !!! abstract "In a nutshell"
-    A "decorator" is a small label you place on a line just above one of your skill's functions (it starts with an `@`). The label tells OVOS what that function is for — for example, "run this when the user asks about the weather" or "run this only if nothing else understood the request." It's like sticking a labeled note on a drawer so the system knows what's inside without opening it. This page lists the available labels and what each one does. New to skills? See [Skill Classes](skill-classes.md) or the [Glossary](glossary.md).
+    A "decorator" is a small label you place on a line just above one of your skill's functions (it starts with an `@`). The label tells OVOS what that function is for, for example, "run this when the user asks about the weather" or "run this only if nothing else understood the request." It's like sticking a labeled note on a drawer, so the system knows what's inside without opening it. This page lists the available labels and what each one does. New to skills? See [Skill Classes](skill-classes.md) or the [Glossary](glossary.md).
 
 All decorators are importable from `ovos_workshop.decorators`.
 
@@ -46,7 +46,7 @@ from ovos_workshop.decorators.ocp import (
 
 ### `@intent_handler`
 
-`intent_handler` — `ovos_workshop/decorators/__init__.py`
+`intent_handler`: `ovos_workshop/decorators/__init__.py`
 
 Register a method as a [Padatious](padatious-pipeline.md) (`.intent` file) or [Adapt](adapt-pipeline.md) (`IntentBuilder`) intent handler.
 
@@ -74,7 +74,7 @@ A method can have multiple `@intent_handler` decorators to handle multiple inten
 
 ### `@conversational_intent`
 
-`conversational_intent` — `ovos_workshop/decorators/__init__.py`
+`conversational_intent`: `ovos_workshop/decorators/__init__.py`
 
 Register a Padatious `.intent` file as a converse-only matcher. Only active when the skill is in converse mode. Requires the skill to extend `ConversationalSkill`.
 
@@ -92,7 +92,7 @@ def handle_help_in_converse(self, message): ...
 
 ### `@fallback_handler`
 
-`fallback_handler` — `ovos_workshop/decorators/__init__.py`
+`fallback_handler`: `ovos_workshop/decorators/__init__.py`
 
 Register a method as a fallback handler with a given priority (0–100, lower = higher priority).
 
@@ -110,7 +110,7 @@ def handle_unknown(self, message):
 
 ### `@common_query`
 
-`common_query` — `ovos_workshop/decorators/__init__.py`
+`common_query`: `ovos_workshop/decorators/__init__.py`
 
 Register a method as a CommonQuery handler. The method must return `(answer, confidence)` or `None`.
 
@@ -125,7 +125,7 @@ def handle_query(self, phrase, lang):
 
 ```
 
-`callback` is optional. If provided it is called with `(phrase, answer, lang)` after the answer is spoken.
+`callback` is optional. If provided, it is called with `(phrase, answer, lang)` after the answer is spoken.
 
 ---
 
@@ -133,7 +133,7 @@ def handle_query(self, phrase, lang):
 
 ### `@converse_handler`
 
-`converse_handler` — `ovos_workshop/decorators/__init__.py`
+`converse_handler`: `ovos_workshop/decorators/__init__.py`
 
 Alias a method as the skill's `converse` handler instead of overriding `converse()` directly.
 
@@ -150,8 +150,8 @@ def my_converse(self, message):
 
 ## Context Decorators
 
-`adds_context` — `ovos_workshop/decorators/__init__.py`
-`removes_context` — `ovos_workshop/decorators/__init__.py`
+`adds_context`: `ovos_workshop/decorators/__init__.py`
+`removes_context`: `ovos_workshop/decorators/__init__.py`
 
 These run **after** the decorated method completes.
 
@@ -183,9 +183,9 @@ def handle_cancel(self, message):
 
 ### Exception Classes
 
-`AbortEvent` — `ovos_workshop/decorators/killable.py`
-`AbortIntent` — `ovos_workshop/decorators/killable.py`
-`AbortQuestion` — `ovos_workshop/decorators/killable.py`
+`AbortEvent`: `ovos_workshop/decorators/killable.py`
+`AbortIntent`: `ovos_workshop/decorators/killable.py`
+`AbortQuestion`: `ovos_workshop/decorators/killable.py`
 
 ```python
 class AbortEvent(StopIteration):
@@ -199,7 +199,7 @@ class AbortQuestion(AbortEvent):
 
 ```
 
-These exceptions are **raised inside the handler thread** when the kill message is received. They propagate through the call stack; wrap long-running loops to catch and clean up:
+These exceptions are **raised inside the handler thread** when the kill message is received. They propagate through the call stack. Wrap long-running loops to catch and clean up:
 
 ```python
 from ovos_workshop.decorators.killable import killable_intent, AbortIntent
@@ -219,7 +219,7 @@ def handle_long_task(self, message):
 
 ### `@killable_intent`
 
-`killable_intent` — `ovos_workshop/decorators/killable.py`
+`killable_intent`: `ovos_workshop/decorators/killable.py`
 
 Mark an intent handler that can be interrupted mid-execution. Spawns the handler in a daemon thread. When the kill message arrives:
 
@@ -278,7 +278,7 @@ Bus receives "mycroft.skills.abort_execution"
 
 ### `@killable_event`
 
-`killable_event` — `ovos_workshop/decorators/killable.py`
+`killable_event`: `ovos_workshop/decorators/killable.py`
 
 Like `@killable_intent` but for any bus event handler. Does **not** react to stop messages or call `skill.stop()` by default.
 
@@ -310,7 +310,7 @@ Intent layers let you enable or disable groups of intents at runtime, implementi
 
 ### `@layer_intent`
 
-`layer_intent` — `ovos_workshop/decorators/layers.py`
+`layer_intent`: `ovos_workshop/decorators/layers.py`
 
 Register an intent handler that belongs to a named layer. The intent is disabled until the layer is activated.
 
@@ -327,8 +327,8 @@ def handle_move(self, message): ...
 
 ### `@enables_layer` / `@disables_layer`
 
-`enables_layer` — `ovos_workshop/decorators/layers.py`
-`disables_layer` — `ovos_workshop/decorators/layers.py`
+`enables_layer`: `ovos_workshop/decorators/layers.py`
+`disables_layer`: `ovos_workshop/decorators/layers.py`
 
 Activate or deactivate a named intent layer **after** the decorated method runs.
 
@@ -349,7 +349,7 @@ def stop_game_intent(self, message):
 
 ### `@replaces_layer`
 
-`replaces_layer` — `ovos_workshop/decorators/layers.py`
+`replaces_layer`: `ovos_workshop/decorators/layers.py`
 
 Replace the intent list of a named layer after the method runs.
 
@@ -365,7 +365,7 @@ def transition(self, message): ...
 
 ### `@removes_layer`
 
-`removes_layer` — `ovos_workshop/decorators/layers.py`
+`removes_layer`: `ovos_workshop/decorators/layers.py`
 
 Remove a named layer entirely (and disable its intents) after the method runs.
 
@@ -381,7 +381,7 @@ def finish_flow(self, message): ...
 
 ### `@resets_layers`
 
-`resets_layers` — `ovos_workshop/decorators/layers.py`
+`resets_layers`: `ovos_workshop/decorators/layers.py`
 
 Disable **all** intent layers after the method runs.
 
@@ -399,7 +399,7 @@ def reset_everything(self, message):
 ## GUI / Homescreen Decorators
 
 !!! warning "Homescreens are being deprecated"
-    Skill-provided home/idle screens are on their way out: in the GUI rework the
+    Skill-provided home/idle screens are on their way out. In the GUI rework, the
     idle screen becomes a job for the display backend rather than a skill (see
     [Home Screen](homescreen.md) and [Screens on OVOS Today](gui-status.md)). The
     decorators below still work on the legacy stack but should not be treated as
@@ -407,7 +407,7 @@ def reset_everything(self, message):
 
 ### `@homescreen_app`
 
-`homescreen_app` — `ovos_workshop/decorators/__init__.py`
+`homescreen_app`: `ovos_workshop/decorators/__init__.py`
 
 Register a method as a homescreen app launcher. The icon file must be inside the `gui/` subfolder of the skill.
 
@@ -422,7 +422,7 @@ def launch_app(self, message):
 
 ### `@resting_screen_handler`
 
-`resting_screen_handler` — `ovos_workshop/decorators/__init__.py`
+`resting_screen_handler`: `ovos_workshop/decorators/__init__.py`
 
 Register a method as a **resting screen** (idle screen) handler, optionally shown
 when the device enters idle mode. `name` is the name the resting screen registers
@@ -443,7 +443,7 @@ def show_clock(self, message):
 
 ### `@skill_api_method`
 
-`skill_api_method` — `ovos_workshop/decorators/__init__.py`
+`skill_api_method`: `ovos_workshop/decorators/__init__.py`
 
 Expose a method over the bus so other skills or applications can call it via `SkillApi`. See [skill-api.md](ovos-skill.md) for the full RPC documentation.
 
@@ -464,12 +464,12 @@ The method is registered as `{skill_id}.get_data` on the bus.
 ## OCP Decorators
 
 !!! warning "Media search is moving out of skills"
-    The **media search/provider** role — a skill implementing `@ocp_search` to
-    return media results — is being deprecated: a new class of **media-search
+    The **media search/provider** role (a skill implementing `@ocp_search` to
+    return media results) is being deprecated. A new class of **media-search
     plugins**, consumed directly by the [OCP pipeline plugin](ocp-pipeline.md), is
-    replacing it (PRs in progress). Other OCP skill uses are **not** going away —
-    voice games (`OVOSGameSkill`), ebook readers, and playback handlers remain
-    supported. The decorators below still work today; new *media-search*
+    replacing it (PRs in progress). Other OCP skill uses are **not** going away.
+    Voice games (`OVOSGameSkill`), ebook readers, and playback handlers remain
+    supported. The decorators below still work today. New media-search
     integrations should target the upcoming media-search plugin type rather than an
     `@ocp_search` skill.
 
@@ -527,12 +527,12 @@ Python applies stacked decorators **bottom-up** (innermost first). Whether
 order matters depends on what each decorator does to the function:
 
 - `@intent_handler`, `@fallback_handler`, `@common_query`, `@conversational_intent`,
-  `@homescreen_app`, and `@skill_api_method` are pure **tags** — they set an
+  `@homescreen_app`, and `@skill_api_method` are pure **tags**. They set an
   attribute on the function object and return it unchanged, without wrapping
   it. Because of this, stacking one of these with a wrapping decorator (like
-  `@killable_intent` or `@adds_context`) works in **either order**: the tag
+  `@killable_intent` or `@adds_context`) works in **either order**. The tag
   ends up on whatever object is on top by the time it runs, and
-  `functools.wraps` propagates it if another wrapper is added afterwards.
+  `functools.wraps` propagates it if another wrapper is added afterward.
 
 ```python
 # Both of these register the intent correctly — order does not matter here,
@@ -549,11 +549,11 @@ def handle_long_task(self, message):
 ```
 
 - `@adds_context`, `@removes_context`, `@killable_intent`, `@killable_event`,
-  and the intent-layer decorators (`@enables_layer`, `@disables_layer`, etc.)
-  **do** wrap the function — they run code before and/or after calling it.
-  When you stack two *wrapping* decorators together, the order changes what
+  and the intent-layer decorators (`@enables_layer`, `@disables_layer`, and so on)
+  do wrap the function. They run code before and/or after calling it.
+  When you stack two wrapping decorators together, the order changes what
   actually executes and when, so make sure the one that should run
-  last (e.g. `@adds_context`, which fires after the handler body returns) is
+  last (for example, `@adds_context`, which fires after the handler body returns) is
   the outermost:
 
 ```python
@@ -571,7 +571,7 @@ def handle_confirm(self, message):
     mycroft-core split intent registration into two separate decorators:
     `@intent_handler` for Adapt intents and a second `@intent_file_handler`
     for Padatious `.intent` files. In `ovos-workshop`, **`@intent_file_handler`
-    no longer exists** — both cases are handled by the single
+    no longer exists**. Both cases are handled by the single
     [`@intent_handler`](#intent_handler) shown above, which accepts either an
     `.intent` filename (Padatious) or an `IntentBuilder` (Adapt). If you are
     porting an old skill, replace every `@intent_file_handler("x.intent")`

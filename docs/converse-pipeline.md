@@ -1,18 +1,18 @@
 # Converse Pipeline
 
 !!! success "Maturity — Mature ⬤⬤⬤⬤⬤"
-    Long-lived, battle-tested, and actively maintained — depend on it freely. Rated by [repository health](maturity.md), not version.
+    Long-lived and actively maintained. Depend on it freely. Rated by [repository health](maturity.md), not version.
 
 !!! abstract "In a nutshell"
-    Normally each thing you say to the assistant is handled on its own. The Converse pipeline lets a skill stay "in the conversation" for a few turns, so it can ask a follow-up and understand your reply in context — much like a person who remembers what you were just talking about. For example, after a skill asks "which room?", it can keep listening so your answer "the kitchen" lands in the right place. See the [Glossary](glossary.md) for terms, or [Fallbacks](fallbacks.md) for what happens when nothing is actively listening.
+    Normally each thing you say to the assistant is handled on its own. The Converse pipeline lets a skill stay "in the conversation" for a few turns, so it can ask a follow-up and understand your reply in context, much like a person who remembers what you were just talking about. For example, after a skill asks "which room?", it can keep listening so your answer "the kitchen" lands in the right place. See the [Glossary](glossary.md) for terms, or [Fallbacks](fallbacks.md) for what happens when nothing is actively listening.
 
 ??? info "📐 Formal specification"
-    The converse plugin is specified by **[OVOS-CONVERSE-1 — Active Handlers & Interactive Response](https://github.com/OpenVoiceOS/architecture/blob/dev/converse.md)**, built on **[OVOS-PIPELINE-1](https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md)**. It is the *imperative* complement to **[OVOS-CONTEXT-1 — Intent Context](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-context.md)** (the declarative gating primitive, see [Follow up questions](context.md)). See the [spec index](architecture-specs.md).
+    The converse plugin is specified by **[OVOS-CONVERSE-1 — Active Handlers & Interactive Response](https://github.com/OpenVoiceOS/architecture/blob/dev/converse.md)**, built on **[OVOS-PIPELINE-1](https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md)**. It is the imperative complement to **[OVOS-CONTEXT-1 — Intent Context](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-context.md)** (the declarative gating primitive, see [Follow up questions](context.md)). See the [spec index](architecture-specs.md).
 
-The **Converse Pipeline** in **OpenVoiceOS (OVOS)** manages active conversational contexts between the assistant and skills. It allows skills to keep handling user input across multiple turns, enabling more natural, stateful conversations.
+The **Converse Pipeline** in **OpenVoiceOS (OVOS)** manages active conversational contexts between the assistant and skills. It lets skills keep handling user input across multiple turns, enabling more natural, stateful conversations.
 
 !!! note "Spec model vs. current code names"
-    OVOS-CONVERSE-1 frames converse as an **ordinary pipeline plugin**: it is *not* a special case in the orchestrator. During `match` it inspects two session fields and returns a `Match` on a **reserved `intent_name`** (PIPELINE-1 §7.3), which the orchestrator then dispatches like any other intent — `<skill_id>:converse` for a converse claim, `<skill_id>:response` for delivery of a solicited reply. Converse depends on session state ("is a skill still active?", "is someone awaiting a reply?"), so it must be placed **before** the other pipeline plugins in `session.pipeline` — first-match-wins then lets converse intercept before a generic matcher sees the utterance. Two name mappings between spec and current code:
+    OVOS-CONVERSE-1 frames converse as an **ordinary pipeline plugin**. It is not a special case in the orchestrator. During `match` it inspects two session fields and returns a `Match` on a **reserved `intent_name`** (PIPELINE-1 §7.3), which the orchestrator then dispatches like any other intent: `<skill_id>:converse` for a converse claim, `<skill_id>:response` for delivery of a solicited reply. Converse depends on session state ("is a skill still active?", "is someone awaiting a reply?"), so it must be placed **before** the other pipeline plugins in `session.pipeline`. First-match-wins then lets converse intercept before a generic matcher sees the utterance. Two name mappings exist between spec and current code:
 
     | OVOS-CONVERSE-1 (canonical) | Current `ovos-core` code |
     |---|---|
@@ -21,7 +21,7 @@ The **Converse Pipeline** in **OpenVoiceOS (OVOS)** manages active conversationa
     | poll round-trip `<skill_id>.converse.ping` / `.pong` (non-dispatch, dotted form) | `{skill_id}.converse.ping` / `skill.converse.pong`, dispatch via `converse:skill` → `{skill_id}.converse.request` |
     | reserved-name dispatch `<skill_id>:converse` / `<skill_id>:response` | `converse:skill` handler |
 
-    The mechanics below describe the current code; the spec names are the target. Note the two lists are distinct in the spec: `converse_handlers` (converse eligibility) is drained independently of `active_handlers` (the stop cascade's recency record, PIPELINE-1 §7.1).
+    The mechanics below describe the current code. The spec names are the target. Note that the two lists are distinct in the spec: `converse_handlers` (converse eligibility) is drained independently of `active_handlers` (the stop cascade's recency record, PIPELINE-1 §7.1).
 
 ---
 
@@ -53,7 +53,7 @@ Key purposes include:
 **Pipeline plugin ID:** `ovos-converse-pipeline-plugin`
 **Stage name:** `converse`
 
-`ConverseService` ships inside `ovos-core` and is registered via the `opm.pipeline` entry point in its `pyproject.toml`:
+`ConverseService` ships inside `ovos-core`. It is registered via the `opm.pipeline` entry point in its `pyproject.toml`:
 
 ```ini
 [project.entry-points."opm.pipeline"]
@@ -66,15 +66,15 @@ ovos-converse-pipeline-plugin = "ovos_core.intent_services.converse_service:Conv
 
 A skill is considered active if it has been called in the last 5 minutes (configurable via `timeout`).
 
-Skills are called in order of when they were last active. For example, if a user spoke the following commands:
+Skills are called in order of when they were last active. For example, if a user speaks the following commands:
 
 > Hey Mycroft, set a timer for 10 minutes
 >
 > Hey Mycroft, what's the weather
 
-Then the utterance "what's the weather" would first be sent to the Timer Skill's `converse()` method, then to the intent service for normal handling where the Weather Skill would be called.
+The utterance "what's the weather" is first sent to the Timer Skill's `converse()` method, then to the intent service for normal handling, where the Weather Skill is called.
 
-As the Weather Skill was called it has now been added to the front of the Active Skills List. Hence, the next utterance received will be directed to:
+Because the Weather Skill was called, it is now added to the front of the Active Skills List. The next utterance received is directed to:
 
 1. `WeatherSkill.converse()`
 
@@ -86,18 +86,18 @@ As the Weather Skill was called it has now been added to the front of the Active
 
 ### When does a skill become active?
 
-1. **Before** an intent is called the skill is **activated**
+1. **Before** an intent is called, the skill is **activated**.
 
 
-2. If a fallback **returns True** (to consume the utterance) the skill is **activated** right **after** the fallback
+2. If a fallback **returns True** (to consume the utterance), the skill is **activated** right **after** the fallback.
 
 
-3. If converse **returns True** (to consume the utterance) the skill is **reactivated** right **after** converse
+3. If converse **returns True** (to consume the utterance), the skill is **reactivated** right **after** converse.
 
 
-4. A skill can activate/deactivate itself at any time via `self.make_active()` / `self.deactivate()`
+4. A skill can activate or deactivate itself at any time via `self.make_active()` / `self.deactivate()`.
 
-Active skills are tracked in `Session.active_skills` — `ovos_bus_client.session.Session`. The converse service reads and updates this list via `session.activate_skill()` / `session.deactivate_skill()`, which also forward `intent.service.skills.activated` / `intent.service.skills.deactivated` on the bus.
+Active skills are tracked in `Session.active_skills` (`ovos_bus_client.session.Session`). The converse service reads and updates this list via `session.activate_skill()` / `session.deactivate_skill()`, which also forward `intent.service.skills.activated` / `intent.service.skills.deactivated` on the bus.
 
 ---
 
@@ -131,7 +131,7 @@ Active skills are tracked in `Session.active_skills` — `ovos_bus_client.sessio
 
 7. If no active skill accepts the input, the pipeline falls back to normal intent matching
 
-`ConverseService` is a plain `PipelinePlugin` with a single `match()` method — it is **not** a `ConfidenceMatcherPipeline`, so there are no `converse_high/medium/low` stages. The one stage ID is `converse`.
+`ConverseService` is a plain `PipelinePlugin` with a single `match()` method. It is **not** a `ConfidenceMatcherPipeline`, so there are no `converse_high/medium/low` stages. The one stage ID is `converse`.
 
 ---
 
@@ -222,7 +222,7 @@ Customize the pipeline via `mycroft.conf` under `skills.converse`:
 | `whitelist` | Only skills in `converse_whitelist` can activate themselves |
 | `blacklist` | Only skills NOT in `converse_blacklist` can activate themselves |
 
-> Note: `converse_activation` does not apply to regular skill activation, only to skill-initiated activation requests (e.g. `self.make_active()`).
+> Note: `converse_activation` does not apply to regular skill activation, only to skill-initiated activation requests (for example, `self.make_active()`).
 
 ---
 
@@ -284,19 +284,19 @@ Protections include:
 
 ## Related Pages
 
-- [Converse](converse.md) — the skill-side `converse()` API this pipeline plugin drives
+- [Converse](converse.md): the skill-side `converse()` API this pipeline plugin drives
 
 
-- [ovos-core](core.md) — `ConverseService` implementation and bus events
+- [ovos-core](core.md): `ConverseService` implementation and bus events
 
 
-- [Fallback Pipeline](fallback-pipeline.md) — what runs when converse returns nothing
+- [Fallback Pipeline](fallback-pipeline.md): what runs when converse returns nothing
 
 
-- [Skill Classes](skill-classes.md) — `ConversationalSkill`, `ActiveSkill` base classes
+- [Skill Classes](skill-classes.md): `ConversationalSkill`, `ActiveSkill` base classes
 
 
-- [Bus Session](session.md) — `Session.active_skills`, `activate_skill()`, `deactivate_skill()`
+- [Bus Session](session.md): `Session.active_skills`, `activate_skill()`, `deactivate_skill()`
 
 ---
 

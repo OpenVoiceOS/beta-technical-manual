@@ -1,12 +1,12 @@
 # Dialog Transformers
 
 !!! abstract "In a nutshell"
-    These plugins give the assistant's written reply one last edit *just before* it's read aloud. Like a proofreader catching the text on its way out, they can adjust the tone, simplify the wording, or translate it — and because this happens in one shared place, it applies to every feature at once without changing any of them. See [Transformer Plugins](transformer-plugins.md) and the [Glossary](glossary.md) for unfamiliar terms.
+    These plugins give the assistant's written reply one last edit just before it's read aloud. Like a proofreader catching the text on its way out, they can adjust the tone, simplify the wording, or translate it. Because this happens in one shared place, it applies to every feature at once without changing any of them. See [Transformer Plugins](transformer-plugins.md) and the [Glossary](glossary.md) for unfamiliar terms.
 
 ??? info "📐 Formal specification"
-    Dialog transformers are the **`dialog` chain** of **[OVOS-TRANSFORM-1 — Transformer Plugins](https://github.com/OpenVoiceOS/architecture/blob/dev/transformer.md) §3.5** (a formal [architecture spec](architecture-specs.md)). The spec's post-skill, pre-TTS injection point receives the rendered dialog **string**, an optional `lang`, and the full `Message.context`; it may rewrite the string entirely (translate, persona, simplify, length-cap) and mutate `lang`/context — the spec names setting a `voice_id` context hint (for a downstream TTS transformer to act on) as a common case. Rewriting and translation belong **here** (against the text), not in the `tts` chain (against the audio). **Ordering:** the chain runs by **ascending** `priority` (lowest first), matching the spec.
+    Dialog transformers are the **`dialog` chain** of **[OVOS-TRANSFORM-1 — Transformer Plugins](https://github.com/OpenVoiceOS/architecture/blob/dev/transformer.md) §3.5** (a formal [architecture spec](architecture-specs.md)). The spec's post-skill, pre-TTS injection point receives the rendered dialog **string**, an optional `lang`, and the full `Message.context`. It may rewrite the string entirely (translate, persona, simplify, length-cap) and mutate `lang`/context. The spec names setting a `voice_id` context hint (for a downstream TTS transformer to act on) as a common case. Rewriting and translation belong here (against the text), not in the `tts` chain (against the audio). **Ordering:** the chain runs by **ascending** `priority` (lowest first), matching the spec.
 
-**Dialog Transformers** in OpenVoiceOS (OVOS) are plugins that modify or enhance text responses just before they are sent to the [Text-to-Speech](tts-plugins.md) ([TTS](tts-plugins.md)) engine. This allows for dynamic adjustments to the assistant's speech, such as altering tone, simplifying language, or translating content, without requiring changes to individual skills.
+**Dialog Transformers** in OpenVoiceOS (OVOS) are plugins that modify or enhance text responses just before they are sent to the [Text-to-Speech](tts-plugins.md) ([TTS](tts-plugins.md)) engine. This lets the assistant's speech adjust dynamically, such as altering tone, simplifying language, or translating content, without requiring changes to individual skills.
 
 ---
 
@@ -50,7 +50,7 @@ Replace `"plugin_name"` with the identifier of the desired plugin and provide an
 * **Purpose**: Prepares text for TTS by expanding contractions, expanding title abbreviations (`Dr.`→`Doctor`, `Mr.`→`Mister`, `Prof.`→`Professor`), normalizing currency (`€`→`euros`), and converting digits to spoken words, ensuring clearer pronunciation.
 
 
-* **Multilingual coverage**: Contractions are English-only, while title abbreviations are defined per language (en/ca/es/pt/gl/fr/it/nl/de). Numbers are pronounced via `ovos-number-parser`, falling back to `unicode-rbnf` for languages it doesn't yet cover. A few language-specific rules exist too (e.g. `ºC`→`graos centígrados` for Galician).
+* **Multilingual coverage**: Contractions are English-only, while title abbreviations are defined per language (en/ca/es/pt/gl/fr/it/nl/de). Numbers are pronounced via `ovos-number-parser`, falling back to `unicode-rbnf` for languages it doesn't yet cover. A few language-specific rules exist too (for example, `ºC`→`graos centígrados` for Galician).
 
 
 * **Example**:
@@ -84,7 +84,7 @@ pip install ovos-dialog-normalizer-plugin
 
 ### **OVOS OpenAI Dialog Transformer Plugin**
 
-* **Purpose**: Utilizes OpenAI's API to rewrite responses based on a specified persona or tone.
+* **Purpose**: Uses OpenAI's API to rewrite responses based on a specified persona or tone.
 
 
 * **Example**:

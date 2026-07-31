@@ -1,17 +1,17 @@
 # Common Query Framework
 
 !!! abstract "In a nutshell"
-    When you ask a general-knowledge question like "how old is John Cleese?", several skills might each think they can answer. The Common Query Framework asks all of them at once, has each return an answer along with how confident it is, and then speaks only the single best one. It's like asking a room full of experts a question and letting the most confident one reply. This mirrors how the [OCP](ocp-skills.md) framework picks who plays your music. See the [Glossary](glossary.md) for related terms.
+    When you ask a general-knowledge question like "how old is John Cleese?", several skills might each think they can answer. The Common Query Framework asks all of them at once. Each skill returns an answer with a confidence score, and the framework speaks only the single best one. This mirrors how the [OCP](ocp-skills.md) framework picks who plays your music. See the [Glossary](glossary.md) for related terms.
 
 ??? info "📐 Formal specification"
-    The Common Query Framework is specified by **[OVOS-COMMON-QUERY-1 — Common Query Pipeline Plugin](https://github.com/OpenVoiceOS/architecture/blob/dev/common-query.md)** (a formal [architecture spec](architecture-specs.md)). A **pipeline plugin** runs a timed scatter-gather contest: it broadcasts `ovos.common_query.ping`, collects `pong` claims from skills that believe they can answer, requests full answers (`answer` + `conf`) from the claimants, then ranks them. Only answers at or above the minimum self-reported confidence (default **`0.5`**) survive. If a winner clears the bar the plugin speaks it (reserved `intent_name` **`common_query`**); otherwise `match` returns `None` and the pipeline falls through to [fallback](fallbacks.md). This mirrors how [OCP](ocp-skills.md) picks a media provider.
+    The Common Query Framework is specified by **[OVOS-COMMON-QUERY-1 — Common Query Pipeline Plugin](https://github.com/OpenVoiceOS/architecture/blob/dev/common-query.md)** (a formal [architecture spec](architecture-specs.md)). A **pipeline plugin** runs a timed scatter-gather contest. It broadcasts `ovos.common_query.ping`, collects `pong` claims from skills that believe they can answer, and requests full answers (`answer` + `conf`) from the claimants. It then ranks them. Only answers at or above the minimum self-reported confidence (default **`0.5`**) survive. If a winner clears the bar, the plugin speaks it (reserved `intent_name` **`common_query`**). Otherwise `match` returns `None` and the pipeline falls through to [fallback](fallbacks.md). This mirrors how [OCP](ocp-skills.md) picks a media provider.
 
 !!! note "The winner may be re-ranked, not just highest-confidence"
-    If a re-ranker plugin (`ovos-flashrank-reranker-plugin` by default) is installed, the pipeline by default ignores the skills' self-reported confidence for *picking the winner* among all answers that cleared the `0.5` bar, and instead asks the re-ranker to pick the best answer for the phrase. Confidence still gates which answers are eligible; it just isn't the tie-breaker when a re-ranker is present. Without a re-ranker installed, the highest-confidence answer wins (ties are broken arbitrarily).
+    If a re-ranker plugin (`ovos-flashrank-reranker-plugin` by default) is installed, the pipeline ignores the skills' self-reported confidence when it picks the winner among answers that cleared the `0.5` bar. Instead it asks the re-ranker to pick the best answer for the phrase. Confidence still gates which answers are eligible. It just isn't the tie-breaker when a re-ranker is present. Without a re-ranker installed, the highest-confidence answer wins (ties are broken arbitrarily).
 
-The Common Query Framework handles the common use case of "general information" or question answering. Many Skills may implement handlers for "what is X" or "when did Y"; the Common Query Framework queries all of them and selects a single "best" answer to speak. This is similar to the [OCP](ocp-skills.md) framework that handles the common use of "playing" music or other media.
+The Common Query Framework handles general information questions, such as "what is X" or "when did Y". Many skills may implement handlers for the same kind of question. The Common Query Framework queries all of them and selects a single best answer to speak. This works like the [OCP](ocp-skills.md) framework, which handles the common case of "playing" music or other media.
 
-**What / why (beginners):** if your skill can answer free-form questions ("how old is X", "what is Y"), you do *not* register `.intent` files for every phrasing. Instead you mark one method with the `@common_query` decorator. The Common Query pipeline detects question-shaped utterances, asks every common-query skill in parallel, and only the winner gets to speak. You return an answer plus a confidence score and the framework does the arbitration.
+**What / why (beginners):** If your skill can answer free-form questions ("how old is X", "what is Y"), you do not register a `.intent` file for every phrasing. Instead, mark one method with the `@common_query` decorator. The Common Query pipeline detects question-shaped utterances and asks every common-query skill in parallel. Only the winner gets to speak. You return an answer plus a confidence score, and the framework handles the arbitration.
 
 ## The `@common_query` decorator
 
@@ -37,11 +37,11 @@ The handler contract:
 - **Output:** a `(answer: str, confidence: float)` tuple, or `None`.
 - **Confidence** is a float between `0.0` and `1.0`. The pipeline ignores answers with confidence below `0.5`. The highest-confidence answer across all skills is the one spoken to the user.
 
-> The classic `CommonQuerySkill` / `UniversalCommonQuerySkill` base classes and the `CQS_match_query_phrase()` / `CQSMatchLevel` API have been **removed**. Use the `@common_query` decorator on a plain `OVOSSkill` instead. The pipeline still selects a single best answer the same way; only the skill-side API changed.
+> The classic `CommonQuerySkill` / `UniversalCommonQuerySkill` base classes and the `CQS_match_query_phrase()` / `CQSMatchLevel` API have been **removed**. Use the `@common_query` decorator on a plain `OVOSSkill` instead. The pipeline still selects a single best answer the same way. Only the skill-side API changed.
 
 ## An Example
 
-Let's make a simple Skill that tells us the age of the various Monty Python members.
+This example builds a simple skill that tells the age of various Monty Python members.
 
 ```python
 from ovos_workshop.skills import OVOSSkill
@@ -88,27 +88,27 @@ class PythonAgeSkill(OVOSSkill):
         return None
 ```
 
-`match_age_query()` checks whether this is an age-related question that also names a Monty Python member. If both are true it returns the rendered answer plus a confidence; otherwise it returns `None`, signalling it cannot answer.
+`match_age_query()` checks whether this is an age-related question that also names a Monty Python member. If both are true, it returns the rendered answer plus a confidence. Otherwise it returns `None`, to signal it cannot answer.
 
-This will provide answers to queries such as
+This provides answers to queries such as
 
 > "how old is Graham Chapman"
 >
 > "what's Eric Idle's age"
 
-There are many toolkits for parsing the question itself — [Adapt](https://pypi.org/project/adapt-parser/), [little questions](https://pypi.org/project/little-questions/), [padaos](https://pypi.org/project/padaos/) and more — but `self.voc_match` against a `.voc` file is usually enough.
+Several toolkits can parse the question itself, including [Adapt](https://pypi.org/project/adapt-parser/), [little questions](https://pypi.org/project/little-questions/), and [padaos](https://pypi.org/project/padaos/). In most cases, `self.voc_match` against a `.voc` file is enough.
 
 ## Match Confidence
 
-Confidence is a single float in `[0.0, 1.0]`. Use a higher value when you are more certain you have the *exact* answer the user wants, and a lower value when your skill is a more general fallback for a category of questions. In the example above, an explicit "monty python" mention bumps confidence to `1.0`, making this skill very likely to be chosen.
+Confidence is a single float in `[0.0, 1.0]`. Use a higher value when you are more certain you have the exact answer the user wants. Use a lower value when your skill is a general fallback for a category of questions. In the example above, an explicit "monty python" mention bumps confidence to `1.0`, making this skill very likely to be chosen.
 
 Only answers with confidence `>= 0.5` are considered. The pipeline collects all qualifying answers and speaks the single highest-confidence one.
 
 ## Selection Callback
 
-In some cases the Skill should do additional work *only when its answer was the one selected and spoken* — for example, preparing for follow-up questions or showing an image. Pass a callback to the decorator; it runs after your answer is spoken.
+In some cases the skill should do extra work only when its answer was the one selected and spoken, for example preparing for follow-up questions or showing an image. Pass a callback to the decorator. It runs after your answer is spoken.
 
-The callback signature is `(phrase, answer, lang)` for a plain function, or `(self, phrase, answer, lang)` for an instance method — the framework inspects the signature and passes `self` only when the first parameter is named `self`.
+The callback signature is `(phrase, answer, lang)` for a plain function, or `(self, phrase, answer, lang)` for an instance method. The framework inspects the signature and passes `self` only when the first parameter is named `self`.
 
 ```python
 from ovos_workshop.skills import OVOSSkill
@@ -128,4 +128,4 @@ class PythonAgeSkill(OVOSSkill):
         return answer, confidence
 ```
 
-> The selected answer is spoken automatically by the framework; you do **not** call `self.speak()` inside the common-query handler. The callback is purely for side effects (visuals, follow-up state, logging).
+> The framework speaks the selected answer automatically. Do **not** call `self.speak()` inside the common-query handler. The callback is only for side effects, such as visuals, follow-up state, or logging.

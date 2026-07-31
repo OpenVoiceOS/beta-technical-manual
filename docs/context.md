@@ -1,7 +1,7 @@
 # Follow up questions
 
 !!! abstract "In a nutshell"
-    Normally each thing you say to your assistant is treated on its own, with no memory of the last sentence. Conversational context is the short-term memory that lets you ask a follow-up like "where's *he* from?" right after "how tall is John Cleese?" — the assistant remembers you were talking about Cleese and fills in the blank. Skill authors mark which details to remember, and that memory is kept separate for each ongoing conversation so different people or devices don't get mixed up. See [Skill design guidelines](skill-design-guidelines.md) or the [Glossary](glossary.md).
+    Normally each thing you say to your assistant is treated on its own, with no memory of the last sentence. Conversational context is the short-term memory that lets you ask a follow-up like "where's *he* from?" right after "how tall is John Cleese?" The assistant remembers you were talking about Cleese and fills in the blank. Skill authors mark which details to remember. That memory is kept separate for each ongoing conversation, so different people or devices don't get mixed up. See [Skill design guidelines](skill-design-guidelines.md) or the [Glossary](glossary.md).
 
 ??? info "📐 Formal specification"
     Intent context is specified by **[OVOS-CONTEXT-1 — Intent Context](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-context.md)**, the *declarative* gating primitive over **[OVOS-PIPELINE-1](https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md)** (its imperative complement is the converse plugin, **[OVOS-CONVERSE-1](https://github.com/OpenVoiceOS/architecture/blob/dev/converse.md)**, see [Converse Pipeline](converse-pipeline.md)). See the [spec index](architecture-specs.md).
@@ -9,9 +9,9 @@
 Conversational context in OpenVoiceOS (OVOS) allows voice interactions to feel more natural by remembering parts of a conversation, like the subject being discussed. This is especially useful for follow-up questions where repeating context (like a person's name) would otherwise be necessary.
 
 !!! note "The spec model: a decaying per-session store that *gates* matching"
-    In CONTEXT-1 terms, intent context is the field **`session.intent_context`** — a flat map of **entries**, each `{value, expires_at?, turns_remaining?}`. Every entry **decays**: the orchestrator prunes dead entries before each match round and decrements `turns_remaining` after it (CONTEXT-1 §4), so a confirmation flag set with `turns_remaining: 1` lives for exactly the next utterance. An intent **gates** on context by declaring **`requires_context`** (match only while a key is live) and/or **`excludes_context`** (match only while a key is absent) — these are normative across *every* intent engine (CONTEXT-1 §6/§6.1). Keys are **scoped by shape**: a bare key like `person` is **shared** (cross-skill); a prefixed key `<skill_id>:flag` is **private** to that owner. Bare-string `requires_context` entries default to *private* scope — the safe default — so a foreign skill's shared `person` can never accidentally satisfy a private gate (you must write `{key: person, scope: shared}` to read across skills).
+    In CONTEXT-1 terms, intent context is the field **`session.intent_context`**, a flat map of **entries**, each `{value, expires_at?, turns_remaining?}`. Every entry **decays**. The orchestrator prunes dead entries before each match round and decrements `turns_remaining` after it (CONTEXT-1 §4), so a confirmation flag set with `turns_remaining: 1` lives for exactly the next utterance. An intent **gates** on context by declaring **`requires_context`** (match only while a key is live) and/or **`excludes_context`** (match only while a key is absent). These are normative across every intent engine (CONTEXT-1 §6/§6.1). Keys are **scoped by shape**: a bare key like `person` is **shared** (cross-skill), and a prefixed key `<skill_id>:flag` is **private** to that owner. Bare-string `requires_context` entries default to private scope, the safe default, so a foreign skill's shared `person` can never accidentally satisfy a private gate. You must write `{key: person, scope: shared}` to read across skills.
 
-!!! warning "Four different things called 'context' — do not conflate them"
+!!! warning "Four different things called 'context': do not conflate them"
     CONTEXT-1 §1.1 is explicit that the word *context* names four unrelated things:
 
     | Name | What it is | JSON path |
@@ -21,11 +21,11 @@ Conversational context in OpenVoiceOS (OVOS) allows voice interactions to feel m
     | **intent context** (the term) | the decaying key/value state itself — the entries in that field | (entries of the above) |
     | `Match.slots` | the slot map produced *at match time* for one dispatch | `data.slots` |
 
-    This page is about the third (and the field that holds it). It is *not* `Message.context`, and a context entry is *not* a `Match.slot` — though CONTEXT-1 §7's context-supplied-slot rule is the bridge: when a `requires_context` key also names a slot, its value fills that slot if the utterance did not (this is exactly the "remember which person" mechanism below).
+    This page is about the third (and the field that holds it). It is not `Message.context`, and a context entry is not a `Match.slot`. CONTEXT-1 §7's context-supplied-slot rule is the bridge: when a `requires_context` key also names a slot, its value fills that slot if the utterance did not. This is exactly the "remember which person" mechanism below.
 
 `requires_context` and `excludes_context` gate matching in both the
 [Adapt](adapt-pipeline.md) and [Padatious](padatious-pipeline.md) pipelines, as CONTEXT-1 §6
-requires of every intent engine. Adapt gates keyword intents; Padatious gates template intents,
+requires of every intent engine. Adapt gates keyword intents. Padatious gates template intents,
 carrying the two declarations on the intent registration payload and dropping any candidate
 whose gate is not satisfied against `session.intent_context` at match time:
 
@@ -45,8 +45,8 @@ against the registering `skill_id`, and reading a shared key needs the explicit
 `{"key": "person", "scope": "shared"}` form.
 
 Context lives on the per-conversation [Session](session.md) (`Session.context`, an
-`IntentContextManager` from `ovos_bus_client.session`). It is **session-scoped** —
-not a single global store — so concurrent users/devices keep separate context.
+`IntentContextManager` from `ovos_bus_client.session`). It is **session-scoped**,
+not a single global store, so concurrent users and devices keep separate context.
 
 ---
 
@@ -106,7 +106,7 @@ To get a more natural response the functions can be changed to let OVOS know whi
 
 ```
 
-When either of the methods are called the `PythonPerson` keyword is added to OVOS's context, which means that if there is a match with `Length` but `PythonPerson` is missing OVOS will assume the last mention of that keyword. The interaction can now become the one described at the top of the page.
+When either method is called, OVOS adds the `PythonPerson` keyword to its context. If there is a match with `Length` but `PythonPerson` is missing, OVOS assumes the last mention of that keyword. The interaction can now become the one described at the top of the page.
 
 > User: How tall is John Cleese?
 
@@ -118,7 +118,7 @@ John Cleese is added to the current context
 
 > User: Where's he from?
 
-OVOS detects the `WhereFrom` keyword but not any `PythonPerson` keyword. The Context Manager is activated and returns the latest entry of `PythonPerson` which is _John Cleese_
+OVOS detects the `WhereFrom` keyword but not any `PythonPerson` keyword. The Context Manager activates and returns the latest entry of `PythonPerson`, which is _John Cleese_
 
 > OVOS: He's from England
 
@@ -131,9 +131,9 @@ There is also `self.set_cross_skill_context` / `self.remove_cross_skill_context`
 to share a keyword with **other** Skills as well.
 
 `set_cross_skill_context` emits the `mycroft.skill.set_cross_context` bus
-message; every loaded `OVOSSkill` subscribes to it (and to the matching
+message. Every loaded `OVOSSkill` subscribes to it (and to the matching
 `mycroft.skill.remove_cross_context`) and re-applies the keyword under its
-own namespace, which is how it becomes visible to other skills' context
+own namespace. This is how it becomes visible to other skills' context
 gates.
 
 ```python
@@ -161,9 +161,9 @@ OVOS: Raining and 14 degrees...
 
 ## Hint Keyword contexts
 
-Context do not need to have a value, their presence can be used to simply indicate a previous interaction happened
+Context does not need a value. Its presence alone can indicate a previous interaction happened.
 
-In this case Context can also be implemented by using decorators instead of calling `self.set_context`
+In this case, context can also be implemented with decorators instead of calling `self.set_context`.
 
 ```python
 from ovos_workshop.decorators import adds_context, removes_context
@@ -192,9 +192,9 @@ class TeaSkill(OVOSSkill):
 
 ## Using context to enable **Intents**
 
-To make sure certain **Intents** can't be triggered unless some previous stage in a conversation has occurred. Context can be used to create "bubbles" of available intent handlers.
+Context can create "bubbles" of available intent handlers, so certain **intents** can't trigger unless some previous stage in a conversation has occurred.
 
-> This is the **`requires_context`** gate of CONTEXT-1 §6 in action: `MilkContext` is a private flag (the `@adds_context` decorator stores it under the skill's own prefix), and an intent that `.require('MilkContext')` declares it as a precondition — so the `yes`/`no` intents are *invisible except in the narrow window* between the question and the reply, with no skill-side state machine. The complementary `excludes_context` gate (CONTEXT-1 §6.1) handles fire-once intents (e.g. "greet only once per session").
+> This is the **`requires_context`** gate of CONTEXT-1 §6 in action. `MilkContext` is a private flag (the `@adds_context` decorator stores it under the skill's own prefix). An intent that `.require('MilkContext')` declares it as a precondition, so the `yes`/`no` intents are invisible except in the narrow window between the question and the reply, with no skill-side state machine. The complementary `excludes_context` gate (CONTEXT-1 §6.1) handles fire-once intents (for example, "greet only once per session").
 
 ```text
 User: Hey Mycroft, bring me some Tea
@@ -252,7 +252,7 @@ class TeaSkill(OVOSSkill):
 
 ```
 
-When starting up only the `TeaIntent` will be available. When that has been triggered and _MilkContext_ is added the `MilkYesIntent` and `MilkNoIntent` are available since the _MilkContext_ is set. when a _yes_ or _no_ is received the _MilkContext_ is removed and can't be accessed. In it's place the _HoneyContext_ is added making the `YesHoneyIntent` and `NoHoneyIntent` available.
+At startup, only the `TeaIntent` is available. Once it triggers and adds _MilkContext_, the `MilkYesIntent` and `MilkNoIntent` become available, since _MilkContext_ is set. When a _yes_ or _no_ is received, _MilkContext_ is removed and can't be accessed. In its place, _HoneyContext_ is added, making the `YesHoneyIntent` and `NoHoneyIntent` available.
 
 You can find an example [Tea Skill using conversational context on Github](https://github.com/krisgesling/tea-skill).
 
@@ -260,7 +260,7 @@ As you can see, Conversational Context lends itself well to implementing a [dial
 
 ## Under the hood
 
-`set_context` / `remove_context` are thin wrappers — they prefix the keyword with the
+`set_context` / `remove_context` are thin wrappers. They prefix the keyword with the
 skill id and emit bus messages that `ovos-core` handles on the active Session:
 
 | Message | Effect |
@@ -274,7 +274,7 @@ The decorators are equivalent to calling these methods:
 - `@adds_context('MilkContext')` calls `set_context('MilkContext')` after the handler runs.
 - `@removes_context('MilkContext')` calls `remove_context('MilkContext')`.
 
-Because context is attached to the Session, each handler receives the message it was
-triggered by; the Adapt pipeline reads `Session.context` when scoring intents, which is
-why missing keywords fall back to the most recent matching context entry.
+Because context is attached to the Session, each handler receives the message that triggered it.
+The Adapt pipeline reads `Session.context` when scoring intents. This is why missing keywords
+fall back to the most recent matching context entry.
 

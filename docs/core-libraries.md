@@ -2,15 +2,15 @@
 
 !!! abstract "In a nutshell"
     OVOS is built on a handful of shared Python libraries that the services and skills all depend
-    on — the messagebus client, general utilities, typed message models, and so on. Their detailed
+    on, including the messagebus client, general utilities, and typed message models. Their detailed
     API reference lives **in each library's own repository** (every one ships a `docs/` folder), so
     this page is a **map**: what each library is for, and a direct link to its source and docs.
     Keeping the API reference at the source avoids it drifting out of sync with the code. See the
     [Glossary](glossary.md) for terms.
 
 !!! info "Why this is just links"
-    Per-library API docs are maintained **in the library repos themselves** (each has a `docs/`
-    folder rendered on GitHub). Re-hosting them here would mean two copies to keep in sync, so the
+    The library repos themselves maintain per-library API docs (each has a `docs/`
+    folder rendered on GitHub). Re-hosting them here would mean keeping two copies in sync, so the
     manual links out to the authoritative source instead. Use the links below.
 
 ---
@@ -21,6 +21,7 @@ The client for the OVOS [messagebus](bus-service.md): the `MessageBusClient`, th
 object, `Session` handling, and the high-level helper APIs (GUI, Enclosure, OCP) that wrap common
 bus chores. It also ships the `ovos-listen` / `ovos-speak` / `ovos-say-to` / `ovos-simple-cli`
 [command-line tools](cli-tools.md).
+
 
 - Source: [OpenVoiceOS/ovos-bus-client](https://github.com/OpenVoiceOS/ovos-bus-client)
 - API docs: [`/docs`](https://github.com/OpenVoiceOS/ovos-bus-client/tree/dev/docs)
@@ -39,7 +40,7 @@ decorators, language helpers, sound playback, and many small utilities. It also 
 
 ## `ovos-pydantic-models`
 
-Typed [Pydantic](https://docs.pydantic.dev/) models for OVOS bus messages — a schema layer that
+Typed [Pydantic](https://docs.pydantic.dev/) models for OVOS bus messages: a schema layer that
 lets tools validate and introspect message types instead of passing around raw dicts.
 
 - Source: [OpenVoiceOS/ovos-pydantic-models](https://github.com/OpenVoiceOS/ovos-pydantic-models)
@@ -70,7 +71,7 @@ The layered configuration system (defaults → system → user → runtime). Cov
 [Configuration](config.md).
 
 - Source: [OpenVoiceOS/ovos-config](https://github.com/OpenVoiceOS/ovos-config)
-- API docs: unlike the libraries above, `ovos-config` has no separate `docs/` folder — its
+- API docs: unlike the libraries above, `ovos-config` has no separate `docs/` folder. Its
   [`README`](https://github.com/OpenVoiceOS/ovos-config/blob/dev/README.md) is the API reference.
 - License: Apache-2.0
 
@@ -88,7 +89,7 @@ library when hand-authoring or prototyping matching rules.
 
 These libraries are transitive dependencies of `ovos-core` and are version-bounded by
 the same [release-channel constraints files](release-channels.md) rather than pinned
-independently — you don't normally choose their versions yourself.
+independently. You don't normally choose their versions yourself.
 
-For the full list of OVOS repositories — plugins, skills, tools, and more — see the
+For the full list of OVOS repositories, including plugins, skills, and tools, see the
 [OVOS Repository Index](ecosystem-index.md).

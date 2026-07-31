@@ -1,7 +1,7 @@
 # Configuration Management
 
 !!! abstract "In a nutshell"
-    This page is about how you change OVOS's settings — your language, voice, microphone, and so on. OVOS ships with a complete set of sensible defaults you never touch. You write a tiny personal file listing only the things you want different, and OVOS stacks your file on top of the defaults so the rest stays as-is — like adding a sticky note over a printed form. The `ovos-config` command-line tool helps you view and edit those settings. For the full menu of every setting, see the [Configuration Reference](config-reference.md); for term definitions see the [Glossary](glossary.md).
+    This page covers how you change OVOS's settings, such as your language, voice, and microphone. OVOS ships with a complete set of defaults you never touch. You write a small personal file listing only the things you want different. OVOS stacks your file on top of the defaults, so the rest stays as-is, like adding a sticky note over a printed form. The `ovos-config` command-line tool helps you view and edit those settings. For the full list of settings, see the [Configuration Reference](config-reference.md). For term definitions, see the [Glossary](glossary.md).
 
 `ovos-config` is the configuration layer for the entire OVOS ecosystem. It provides a layered, merged `Configuration` singleton that all OVOS components read from, plus XDG-aware path helpers, a CLI tool, and meta-config support for custom distributions.
 
@@ -12,9 +12,9 @@ For a detailed list of every available configuration option, see the **[Configur
 ## Where config lives (start here)
 
 OVOS ships a complete default config bundled inside the `ovos-config` package
-(`mycroft.conf`). You never edit that file. Instead you create a small file at
-**`~/.config/mycroft/mycroft.conf`** containing only the keys you want to change;
-everything you don't mention keeps its default.
+(`mycroft.conf`). You never edit that file. Instead, you create a small file at
+**`~/.config/mycroft/mycroft.conf`** containing only the keys you want to change.
+Everything you don't mention keeps its default.
 
 At read time OVOS stacks several files on top of each other and merges them. The
 file closest to *you* wins:
@@ -25,12 +25,12 @@ bundled default  →  remote cache  →  /usr/share/...  →  /etc/mycroft/...  
 ```
 
 The **remote cache** is an optional layer holding settings pushed from a paired backend
-(the legacy Mycroft-Home / `home.mycroft.ai` model); it sits low in the stack so anything you
-set by hand always wins, and it can be turned off entirely with the `disable_remote_config`
-system constraint. It is not the file you edit — see the [Config Layer Stack](#config-layer-stack)
+(the legacy Mycroft-Home / `home.mycroft.ai` model). It sits low in the stack, so anything you
+set by hand always wins. You can turn it off entirely with the `disable_remote_config`
+system constraint. It is not the file you edit. See the [Config Layer Stack](#config-layer-stack)
 below.
 
-So to switch to a German voice you only need:
+To switch to a German voice, you only need:
 
 ```json
 {
@@ -41,9 +41,9 @@ So to switch to a German voice you only need:
 dropped into `~/.config/mycroft/mycroft.conf`. Dicts are deep-merged, so this leaves
 every other setting untouched. This alone is enough: STT, TTS, and every other
 language-aware plugin follow the global `lang` automatically. A per-plugin `lang`
-setting only *overrides* that default for one plugin (e.g. to keep a second voice
-speaking another language); `ovos-config autoconfigure` (below) is a convenience
-that additionally swaps in the recommended plugins/voices for a language — it is
+setting only overrides that default for one plugin (for example, to keep a second voice
+speaking another language). `ovos-config autoconfigure` (below) is a convenience
+that also swaps in the recommended plugins and voices for a language. It is
 not required just to switch languages. See [Language Support](lang-support.md) for
 the full picture.
 
@@ -51,7 +51,7 @@ the full picture.
 
 ## Config Layer Stack
 
-Layers are merged in this order — later layers override earlier ones:
+Layers are merged in this order. Later layers override earlier ones:
 
 ```text
 MycroftDefaultConfig   (bundled mycroft.conf — read-only to OVOS itself; admins edit the file)
@@ -63,12 +63,12 @@ __patch                (in-memory overlay applied last)
 
 ```
 
-The XDG user layer is actually a *list* of configs (one per XDG config dir, e.g.
+The XDG user layer is actually a list of configs (one per XDG config dir, for example
 `/etc/xdg/mycroft/mycroft.conf` plus `~/.config/mycroft/mycroft.conf`), all merged
 in order. All layers are `LocalConf` dict subclasses backed by a file. Only the user
 config (`~/.config/mycroft/mycroft.conf`) should be edited by users. The **`RemoteConf`**
-layer is the optional backend / paired-server settings cache (the legacy Mycroft-Home /
-`home.mycroft.ai` model); it is merged low in the stack and can be turned off with the
+layer is the optional backend or paired-server settings cache (the legacy Mycroft-Home /
+`home.mycroft.ai` model). It is merged low in the stack and can be turned off with the
 `disable_remote_config` system constraint.
 
 > The merge order in `load_all_configs()` is: default → remote → distribution → system →
@@ -95,7 +95,7 @@ update_mycroft_config({"lang": "de-de"}, bus=bus)
 
 ```
 
-Because `Configuration` is a singleton, all instances share the same merged view. `Configuration.load_all_configs()` is called automatically on first access.
+Because `Configuration` is a singleton, all instances share the same merged view. The framework calls `Configuration.load_all_configs()` automatically on first access.
 
 ---
 
@@ -112,12 +112,12 @@ All paths respect the `OVOS_CONFIG_BASE_FOLDER` environment variable (default: `
 
 In addition to `USER_CONFIG`, every XDG config dir is scanned, so a system-wide
 `/etc/xdg/mycroft/mycroft.conf` is also merged at the user layer (below your
-`~/.config` file). File formats: JSON (`.json` or `.conf`, with C-style `//`
+`~/.config` file). File formats are JSON (`.json` or `.conf`, with C-style `//`
 comments supported) or YAML (`.yml` or `.yaml`).
 
 !!! warning "Secrets and permissions"
-    Anything you add here — an LLM API key, a Home Assistant token, custom
-    server credentials — is stored as **plaintext**, with no encryption or
+    Anything you add here, such as an LLM API key, a Home Assistant token, or a custom
+    server credential, is stored as **plaintext**, with no encryption or
     secrets manager. Restrict the file's permissions (`chmod 600`) on shared
     machines, and don't commit it to a public dotfiles repository. See
     [Privacy & Security](privacy-security.md#mycroftconf-can-contain-plaintext-secrets)
@@ -135,7 +135,7 @@ nano ~/.config/mycroft/mycroft.conf
 
 ```
 
-Add only the keys you want to override — everything else falls back to defaults.
+Add only the keys you want to override. Everything else falls back to defaults.
 
 **2. Override via environment variables (optional):**
 
@@ -156,12 +156,12 @@ ovos-config set -k /tts/module -v ovos-tts-plugin-phoonnx
 
 ```
 
-See the **Secrets and permissions** warning above — `ovos-config set` does not restrict the file's permissions itself.
+See the **Secrets and permissions** warning above. `ovos-config set` does not restrict the file's permissions itself.
 
 **Restart and verify**
 
-`ovos-config set` writes the change to disk. It does not restart the running services, so
-they keep using the old value until you restart them:
+`ovos-config set` writes the change to disk. It does not restart the running services. They
+keep using the old value until you restart them:
 
 ```bash
 # raspOVOS
@@ -171,7 +171,7 @@ ovos-restart
 systemctl --user restart ovos.service
 ```
 
-Then confirm the new value took effect — for an STT or TTS server change, check the
+Then confirm the new value took effect. For an STT or TTS server change, check the
 voice/audio logs, or watch live traffic with [`ovos-busmon`](bus-service.md), to see which
 server actually receives the request. See [STT server](stt-server.md#companion-plugin) and
 [TTS server](tts-server.md#companion-plugin) for the plugin-side config keys.
@@ -184,15 +184,15 @@ The system config (`/etc/mycroft/mycroft.conf`) can enforce constraints:
 
 | Key in system config | Effect |
 |---|---|
-| `protected_keys` | Dict of `{"user": [...], "remote": [...]}` — keys stripped from the user / remote layer before merging |
+| `protected_keys` | Dict of `{"user": [...], "remote": [...]}`: keys stripped from the user / remote layer before merging |
 | `disable_user_config` | If `true`, the user XDG config layer is ignored |
 | `disable_remote_config` | If `true`, the remote / backend config layer is ignored |
 
 These constraints are read from the `system` section, and **only** from the
-distribution or system config — values set in the default or user layers are
-ignored. Nested keys use `:` as the separator (e.g. `"listener:sample_rate"`).
+distribution or system config. Values set in the default or user layers are
+ignored. Nested keys use `:` as the separator (for example, `"listener:sample_rate"`).
 
-Example — stop users from rebinding the messagebus host (must live in the `system` section of `/etc/mycroft/mycroft.conf`):
+Example: stop users from rebinding the messagebus host (must live in the `system` section of `/etc/mycroft/mycroft.conf`):
 
 ```json
 {
@@ -205,13 +205,13 @@ Example — stop users from rebinding the messagebus host (must live in the `sys
 
 ```
 
-> Admin [PHAL](phal.md) is a special service that runs as root — it can **only** access `/etc/mycroft/mycroft.conf`.
+> Admin [PHAL](phal.md) is a special service that runs as root. It can **only** access `/etc/mycroft/mycroft.conf`.
 
 ---
 
 ## Patch Mechanism
 
-The `__patch` overlay is an in-memory dict merged on top of all file-backed layers. Used for temporary overrides that should not be persisted to disk. Writing a key on the singleton goes into this patch:
+The `__patch` overlay is an in-memory dict merged on top of all file-backed layers. It is used for temporary overrides that should not be persisted to disk. Writing a key on the singleton goes into this patch:
 
 ```python
 config = Configuration()
@@ -219,9 +219,9 @@ config["lang"] = "fr-fr"   # stored in the in-memory __patch layer
 
 ```
 
-The patch is applied/cleared via `Configuration.patch(message)` and
-`Configuration.patch_clear(message)` — both are `@staticmethod`s that take a bus
-`Message` (they read `message.data["config"]`), not a plain dict, so in practice they
+The patch is applied and cleared via `Configuration.patch(message)` and
+`Configuration.patch_clear(message)`. Both are `@staticmethod`s that take a bus
+`Message` (they read `message.data["config"]`), not a plain dict. In practice they
 are driven by the bus handlers below rather than called directly.
 
 ---
@@ -239,13 +239,13 @@ are driven by the bus handlers below rather than called directly.
 | `mycroft.paired` | `Configuration.handle_remote_update` | Reload the remote/backend config layer |
 | `mycroft.internet.connected` | `Configuration.handle_remote_update` | Reload the remote/backend config layer |
 
-`Configuration.set_config_watcher()` uses `ovos-utils`' `FileWatcher` (watchdog) to monitor config files on disk and reloads automatically when they change.
+`Configuration.set_config_watcher()` uses `ovos-utils`' `FileWatcher` (watchdog) to monitor config files on disk. It reloads automatically when they change.
 
 ---
 
 ## Config Models
 
-Each layer is a `LocalConf` instance — a file-backed `dict` subclass.
+Each layer is a `LocalConf` instance, a file-backed `dict` subclass.
 
 **Module:** `ovos_config.models`
 
@@ -281,7 +281,7 @@ user.store()   # write to disk
 | `merge(conf)` | Deep-merge another dict into self |
 | `reload()` | Re-read from disk if the file changed since last load |
 
-`LocalConf` uses a single shared `NamedLock("ovos_config")` (class-level) to coordinate concurrent reads and writes across all instances.
+`LocalConf` uses a single shared class-level `NamedLock("ovos_config")` to coordinate concurrent reads and writes across all instances.
 
 ### Merge Semantics
 
@@ -308,9 +308,9 @@ Configuration.xdg_configs   # list[LocalConf] — the user/XDG layer(s)
 
 ```
 
-There is no `.user` attribute; the editable user config is the last entry in
+There is no `.user` attribute. The editable user config is the last entry in
 `Configuration.xdg_configs`. To write the user file directly, use `MycroftUserConfig()`
-(see Config Models above), or call `update_mycroft_config()` to merge a change and emit the
+(see Config Models above). Or call `update_mycroft_config()` to merge a change and emit the
 `configuration.patch` bus notification in one step.
 
 ---
@@ -325,7 +325,7 @@ There is no `.user` attribute; the editable user config is the last entry in
 | `OVOS_CONFIG_FILENAME` | `"mycroft.conf"` | Config filename inside the XDG config directory |
 | `OVOS_DEFAULT_CONFIG` | package `mycroft.conf` | Path to the bundled default config |
 
-These are read at import time. Override at runtime:
+The framework reads these at import time. Override at runtime:
 
 ```python
 from ovos_config.meta import set_xdg_base, set_config_filename, set_default_config
@@ -365,7 +365,7 @@ from ovos_config.locations import (
 
 ```
 
-`get_config_locations()` returns the full list of active config file paths — useful for debugging which files are in use.
+`get_config_locations()` returns the full list of active config file paths. It's useful for debugging which files are in use.
 
 ---
 
@@ -439,7 +439,7 @@ ovos-config telemetry --disable   # opt out
 
 ## Tips
 
-- Always edit `~/.config/mycroft/mycroft.conf` (user layer) — never edit system or default files.
+- Always edit `~/.config/mycroft/mycroft.conf` (user layer). Never edit system or default files.
 
 
 - JSON files support C-style `//` comments.
@@ -448,7 +448,7 @@ ovos-config telemetry --disable   # opt out
 - `get_config_locations()` returns the full list of active config file paths for debugging.
 
 
-- Use `disable_user_config` with caution — it silently skips the user layer.
+- Use `disable_user_config` with caution. It silently skips the user layer.
 
 ---
 
@@ -480,7 +480,7 @@ ovos_config/
 
 ## Entry Points
 
-`ovos-config` registers no plugin entry points of its own. It is consumed by every other OVOS component as a dependency.
+`ovos-config` registers no plugin entry points of its own. Every other OVOS component consumes it as a dependency.
 
 The CLI is registered via `setup.py`:
 

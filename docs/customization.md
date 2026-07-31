@@ -1,22 +1,22 @@
 # Customization
 
 !!! abstract "In a nutshell"
-    You don't have to be a programmer to make a skill behave the way you like. This page shows how to change the things an existing skill says — to give your assistant its own personality — or to add a language it doesn't yet support, all by dropping a few text files into a folder on your device. The original skill stays untouched; your changes simply override it. The later sections are a reference for developers. For more on those text files see [Resource Files](resource-files.md); for term definitions see the [Glossary](glossary.md).
+    You don't have to be a programmer to make a skill behave the way you like. This page shows how to change what an existing skill says, to give your assistant its own personality, or to add a language it doesn't yet support, all by dropping a few text files into a folder on your device. The original skill stays untouched. Your changes simply override it. The later sections are a reference for developers. For more on those text files, see [Resource Files](resource-files.md). For term definitions, see the [Glossary](glossary.md).
 
 ## Resource Files
 
-Resource files are essential components of OVOS skills, containing data such as dialogs, intents, vocabularies, regular expressions, templates, and more. 
+Resource files are essential components of OVOS skills. They contain data such as dialogs, intents, vocabularies, regular expressions, and templates.
 
 These files define how a skill interacts with the user and responds to queries.
 
-> **RECAP**: the skill contains a `locale` folder with subfolders for each lang, eg `en-us`, learn more in [skill structure docs](skill-structure.md)
+> **RECAP**: the skill contains a `locale` folder with subfolders for each lang, for example `en-us`. Learn more in the [skill structure docs](skill-structure.md).
 
 
 ### Customizing Dialogs
 
-Users can personalize the behavior of skills by customizing dialogues to better suit their preferences. 
+Users can personalize the behavior of skills by customizing dialogs to better suit their preferences.
 
-To give a unique twist and personality to your assistant you don't need to fork existing skills only to change dialogs
+To give a unique twist and personality to your assistant, you don't need to fork existing skills just to change dialogs.
 
 Here's a step-by-step guide on how to replace the dialog of an existing skill:
 
@@ -36,9 +36,9 @@ Here's a step-by-step guide on how to replace the dialog of an existing skill:
 
 !!! warning "Your file REPLACES the original, it does not merge with it"
     The user-specific file is used instead of the skill's own `time.current.dialog`, line for
-    line — it is not appended to or merged with the original. If the skill is later updated
-    upstream and new lines are added to its `time.current.dialog`, your override will keep
-    shadowing the whole file and you will not see those new lines until you copy them into
+    line. It is not appended to or merged with the original. If the skill is later updated
+    upstream and new lines are added to its `time.current.dialog`, your override keeps
+    shadowing the whole file, and you will not see those new lines until you copy them into
     your override yourself.
 
 **Locate the User-Specific Resource Directory**:
@@ -49,7 +49,7 @@ Here's a step-by-step guide on how to replace the dialog of an existing skill:
    - The user-specific resource directory is located within the XDG data directory. It follows the path `XDG_DATA_HOME/mycroft/resources/skill-ovos-date-time.openvoiceos` (where `XDG_DATA_HOME` is the user's data directory, usually `~/.local/share` on Linux).
 
 
-   - If it does not exist, create it, This can be done using file manager tools or command-line utilities such as `mkdir` on Unix-like systems.
+   - If it does not exist, create it. You can do this with file manager tools or command-line utilities such as `mkdir` on Unix-like systems.
 
 **Copy the Replacement Dialog File to the User-Specific Directory**:
 
@@ -71,14 +71,14 @@ Here's a step-by-step guide on how to replace the dialog of an existing skill:
      folder casing) and restart OpenVoiceOS so the skill reloads its resources.
 
 
-Customizing dialogues offers users flexibility in tailoring the behavior of skills to their specific needs and preferences.
+Customizing dialogs gives users flexibility to tailor the behavior of skills to their specific needs and preferences.
 
 
 ### Local Language support
 
-Adding support for additional languages to existing skills enables users to interact with OVOS in their preferred language. 
+Adding support for additional languages to existing skills lets users interact with OVOS in their preferred language.
 
-While developing or waiting for skills to support your language you might want to add it locally
+While developing a skill, or waiting for one to support your language, you might want to add it locally.
 
 Users can add language support for a skill by creating a new language folder in the user resources directory and copying the necessary files over:
 
@@ -101,10 +101,10 @@ Users can add language support for a skill by creating a new language folder in 
 
 **Copy the Required Files to the New Language Folder**:
 
-   - Copy all the necessary resource files from an existing language folder (e.g., `en-us`) to the newly created language folder (`es-es`).
+   - Copy all the necessary resource files from an existing language folder (for example, `en-us`) to the newly created language folder (`es-es`).
 
 
-   - This includes files such as dialogues, vocabularies, regex patterns, etc., depending on the resources used by the skill.
+   - This includes files such as dialogs, vocabularies, and regex patterns, depending on the resources used by the skill.
 
 
    - Ensure that all files are placed in the corresponding directories within the new language folder to maintain the directory structure of the original skill.
@@ -121,16 +121,16 @@ Users can add language support for a skill by creating a new language folder in 
 
 By following these steps, users can add support for additional languages to existing skills by creating new language folders and copying the required resource files.
 
-> **NEXT STEPS**: consider sending a Pull Request to the skill to directly add language support!
+> **NEXT STEPS**: consider sending a pull request to the skill to add language support directly.
 
-This allows users to extend the language capabilities of skills beyond the languages provided by default.
+This lets users extend the language capabilities of skills beyond the languages provided by default.
 
 ---
 
 ## Developer: Resource File Reference
 
-The end-user steps above are dropping files into the same `locale/<lang-code>/` layout described
-below — this section is the developer-facing reference for that layout: which resource types
+The end-user steps above drop files into the same `locale/<lang-code>/` layout described
+below. This section is the developer-facing reference for that layout: which resource types
 exist, how they are looked up, and how to load them from code.
 
 Skills load localized resources from a structured directory layout. Resources are loaded automatically at startup for every language in `native_langs` (`core_lang` + `secondary_langs`).
@@ -155,7 +155,7 @@ my-skill/
 
 ```
 
-Legacy skills may use separate `dialog/`, `vocab/`, `regex/` subdirectories — these are still supported.
+Legacy skills may use separate `dialog/`, `vocab/`, `regex/` subdirectories. These are still supported.
 
 ### Resource Types
 
@@ -236,13 +236,13 @@ These examples are emitted to the homescreen as `homescreen.register.examples` o
 
 ## Related Pages
 
-- [Skill Structure](skill-structure.md) — directory layout and skill packaging
+- [Skill Structure](skill-structure.md): directory layout and skill packaging
 
 
-- [Intents](intents.md) — Adapt and Padatious intent files
+- [Intents](intents.md): Adapt and Padatious intent files
 
 
-- [Skill Classes](skill-classes.md) — `OVOSSkill` properties (`resources`, `lang`, `find_resource`)
+- [Skill Classes](skill-classes.md): `OVOSSkill` properties (`resources`, `lang`, `find_resource`)
 
 ---
 

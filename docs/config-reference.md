@@ -1,7 +1,7 @@
 # Configuration Reference
 
 !!! abstract "In a nutshell"
-    This is the settings catalog for OVOS — a lookup table of the main options you can adjust (your language, units, microphone, wake word, which speech and voice engines to use, and so on), with each option's default value and a short note on what it does. You don't need to set most of them; reach for this page when you want to find the name of a particular setting and what it controls. For how to actually apply these settings, see [Configuration Management](config.md); for unfamiliar terms see the [Glossary](glossary.md).
+    This is the settings catalog for OVOS: a lookup table of the main options you can adjust (your language, units, microphone, wake word, and which speech and voice engines to use), with each option's default value and a short note on what it does. You don't need to set most of them. Use this page when you want to find the name of a particular setting and what it controls. For how to apply these settings, see [Configuration Management](config.md). For unfamiliar terms, see the [Glossary](glossary.md).
 
 OVOS uses a layered configuration system, typically stored in `mycroft.conf`.
 
@@ -25,12 +25,12 @@ OVOS uses a layered configuration system, typically stored in `mycroft.conf`.
 
 The `intents.pipeline` defines the order in which matchers are evaluated.
 
-!!! note "This orders matchers — it does not control which pipeline plugins load"
+!!! note "This orders matchers. It does not control which pipeline plugins load"
     Every installed pipeline plugin is loaded and initialized regardless of whether it's
-    listed here; `intents.pipeline` only decides the order candidates are tried in (and
-    filters which of the *loaded* ones actually get a turn). To stop a pipeline plugin from
-    running at all — including any background work it does on load, like downloading a
-    model — uninstall its package; leaving it installed but absent from this list may still
+    listed here. `intents.pipeline` only decides the order candidates are tried in, and
+    filters which of the loaded ones actually get a turn. To stop a pipeline plugin from
+    running at all, including any background work it does on load such as downloading a
+    model, uninstall its package. Leaving it installed but absent from this list may still
     let it initialize.
 
 ```jsonc
@@ -96,8 +96,8 @@ The microphone plugin is nested under `listener.microphone`:
 
 ## 4. Speech Activity (VAD)
 
-The timing thresholds actually read by `ovos-dinkum-listener` to decide when a command
-starts and ends are top-level `listener` keys (not nested under `VAD`):
+The timing thresholds that `ovos-dinkum-listener` reads to decide when a command
+starts and ends are top-level `listener` keys, not nested under `VAD`:
 
 | Key | Default | Description |
 |---|---|---|
@@ -107,14 +107,14 @@ starts and ends are top-level `listener` keys (not nested under `VAD`):
 The shipped config also carries a `listener.VAD` block (`silence_method`, `speech_seconds`,
 `silence_seconds`, plus a per-VAD-plugin `module`/fallback chain such as
 `ovos-vad-plugin-silero` → `ovos-vad-plugin-precise` → `ovos-vad-plugin-webrtcvad` →
-`ovos-vad-plugin-noise`) used to select and configure the [VAD plugin](vad-plugins.md)
-itself — a separate concern from the `speech_begin`/`silence_end` timing above.
+`ovos-vad-plugin-noise`). This block selects and configures the [VAD plugin](vad-plugins.md)
+itself, a separate concern from the `speech_begin`/`silence_end` timing above.
 
 !!! tip "Which one do I edit?"
-    To change *when* a command is considered to start/end, touch the two `listener.*` keys
-    above. To change *which* [VAD plugin](vad-plugins.md) does that detection (or its
-    plugin-specific thresholds), touch the generated `listener.VAD.*` block below instead —
-    it's a different config subtree from the same-named `listener.VAD` section title.
+    To change when a command is considered to start or end, touch the two `listener.*` keys
+    above. To change which [VAD plugin](vad-plugins.md) does that detection, or its
+    plugin-specific thresholds, touch the generated `listener.VAD.*` block below instead.
+    It's a different config subtree from the same-named `listener.VAD` section title.
 
 ---
 
@@ -158,14 +158,14 @@ itself — a separate concern from the `speech_begin`/`silence_end` timing above
 
 !!! note "Blank Description cells"
     A blank cell in the table below means the generator could not pull a description for that
-    key from the upstream source (usually because the shipped default config has no accompanying
-    comment there) — it does not mean the key is unsupported. Most of these are self-explanatory
-    from the key path and default value (e.g. `sounds.error`, `location.city.name`); for anything
+    key from the upstream source, usually because the shipped default config has no accompanying
+    comment there. It does not mean the key is unsupported. Most of these are self-explanatory
+    from the key path and default value (for example, `sounds.error`, `location.city.name`). For anything
     non-obvious, check the linked source or grep the relevant repo for where the key is read.
 
 !!! note "Telemetry keys are intentionally absent"
     `share_telemetry` and `share_usage_telemetry` do not appear below because they are
-    installer-time prompts, not `mycroft.conf` keys — see
+    installer-time prompts, not `mycroft.conf` keys. See
     [ovos-installer.md's telemetry section](ovos-installer.md#anonymous-telemetry) for what
     each one does and where it's actually stored.
 

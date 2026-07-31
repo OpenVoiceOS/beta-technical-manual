@@ -1,7 +1,7 @@
 # ovos-date-parser
 
 !!! abstract "In a nutshell"
-    This is a helper that translates between everyday date and time phrases and the precise dates a computer understands. It works both ways: it can read "next Friday at 3pm" and pin down the exact moment, and it can turn an exact time back into natural words like "three o'clock". It handles many languages, which is what lets the assistant understand and speak dates the way you do. See the [Number parser](number-parser.md) for the same idea applied to numbers, or the [Glossary](glossary.md) for terms.
+    This is a helper that translates between everyday date and time phrases and the precise dates a computer understands. It works both ways. It can read "next Friday at 3pm" and pin down the exact moment, and it can turn an exact time back into natural words like "three o'clock". It handles many languages, which lets the assistant understand and speak dates the way you do. See the [Number parser](number-parser.md) for the same idea applied to numbers, or the [Glossary](glossary.md) for terms.
 
 `ovos-date-parser` is a multilingual library for turning human date/time phrases into Python objects (`extract_datetime`, `extract_duration`) and for turning `datetime`/`timedelta` objects back into natural spoken or written text (`nice_time`, `nice_date`, `nice_duration`, ...).
 
@@ -21,20 +21,20 @@ Every function takes an explicit `lang` (BCP-47 code). For `extract_datetime`, l
 
 ## Features
 
-- **Date and Time Extraction**: Extract specific dates and times from natural language phrases in various languages.
+- **Date and Time Extraction**: extract specific dates and times from natural language phrases in various languages.
 
 
-- **Duration Parsing**: Parse phrases that indicate a span of time, such as "two hours and fifteen minutes."
+- **Duration Parsing**: parse phrases that indicate a span of time, such as "two hours and fifteen minutes."
 
 
-- **Friendly Time Formatting**: Format time for human-friendly output, supporting both 12-hour and 24-hour formats.
+- **Friendly Time Formatting**: format time for human-friendly output, supporting both 12-hour and 24-hour formats.
 
 
-- **Relative Time Descriptions**: Generate relative descriptions (e.g., "tomorrow," "in three days") for given dates.
+- **Relative Time Descriptions**: generate relative descriptions (for example, "tomorrow," "in three days") for given dates.
 
 
-- **Multilingual Support**: Includes extraction and formatting methods for multiple languages, such as English, Spanish,
-  French, German, and more.
+- **Multilingual Support**: extraction and formatting methods for multiple languages, such as English, Spanish,
+  French, and German.
 
 ## Installation
 
@@ -101,7 +101,7 @@ time expressions.
 | uk       | ✅                  | ✅                  |
 
 
-> 💡 If a language is not implemented for `extract_datetime` then [dateparser](https://dateparser.readthedocs.io/en/latest/) will be used as a fallback. Most `extract_duration` languages are driven by a shared lexicon engine (`DURATION_LEXICONS` in `ovos_date_parser/duration.py`), so new languages are added declaratively; `ar`, `ast`, `kab`, `fa` and `sv` have standalone extractors instead.
+> 💡 If a language is not implemented for `extract_datetime`, [dateparser](https://dateparser.readthedocs.io/en/latest/) is used as a fallback. Most `extract_duration` languages are driven by a shared lexicon engine (`DURATION_LEXICONS` in `ovos_date_parser/duration.py`), so new languages are added declaratively. `ar`, `ast`, `kab`, `fa`, and `sv` have standalone extractors instead.
 
 **Format**
 
@@ -163,7 +163,7 @@ print(result)  # [datetime object, "meet me"]
 ```
 
 !!! note
-    `extract_datetime` returns a 2-item `list` — `[datetime, leftover_text]` — not a tuple, and the leftover text is lowercased.
+    `extract_datetime` returns a 2-item `list`, `[datetime, leftover_text]`, not a tuple. The leftover text is lowercased.
 
 ### Duration Extraction
 
@@ -180,12 +180,12 @@ print(remainder)  # "It will take about"
 ```
 
 !!! note
-    The remainder keeps whatever surrounds the extracted duration phrase verbatim, but a connective word ("and" in English, "y" in Spanish) or comma left stranded *between two consumed number groups* is stripped along with them. A connector that still joins unconsumed text on either side is left alone: `extract_duration("two hours and rest and relax", lang="en")` returns remainder `"and rest and relax"`.
+    The remainder keeps whatever surrounds the extracted duration phrase verbatim, but a connective word ("and" in English, "y" in Spanish) or comma left stranded between two consumed number groups is stripped along with them. A connector that still joins unconsumed text on either side is left alone: `extract_duration("two hours and rest and relax", lang="en")` returns remainder `"and rest and relax"`.
 
-`extract_duration` also accepts two keyword-only arguments — but **only for languages on the shared lexicon engine** (the ✅ `extract_duration` rows above except the standalone `ar`, `ast`, `kab`, `fa`, `sv` extractors). Passing them for any other language raises `NotImplementedError`:
+`extract_duration` also accepts two keyword-only arguments, but only for languages on the shared lexicon engine (the ✅ `extract_duration` rows above except the standalone `ar`, `ast`, `kab`, `fa`, `sv` extractors). Passing them for any other language raises `NotImplementedError`:
 
-- **`resolution`** (`DurationResolution`, default `TIMEDELTA`) — controls the return type: `TIMEDELTA` (a `timedelta`), `RELATIVEDELTA` (a calendar-accurate `dateutil.relativedelta`, so "2 months" stays 2 months rather than a fixed number of days), or a single-unit total such as `TOTAL_SECONDS`/`TOTAL_MINUTES`/... returned as a `float`.
-- **`replace_token`** (`str`, default `""`) — the string each consumed duration phrase is replaced with in the remainder, marking where it was found instead of stripping it out.
+- **`resolution`** (`DurationResolution`, default `TIMEDELTA`): controls the return type. `TIMEDELTA` returns a `timedelta`, `RELATIVEDELTA` returns a calendar-accurate `dateutil.relativedelta` (so "2 months" stays 2 months rather than a fixed number of days), or a single-unit total such as `TOTAL_SECONDS`/`TOTAL_MINUTES` is returned as a `float`.
+- **`replace_token`** (`str`, default `""`): the string each consumed duration phrase is replaced with in the remainder, marking where it was found instead of stripping it out.
 
 ```python
 from ovos_date_parser import extract_duration
@@ -224,7 +224,7 @@ print(relative_time)  # "twenty four hours"
 
 ```
 
-> The generic implementation speaks the rounded difference as words — `"two hours"`, `"twenty four hours"`, `"seven days"` — using `pronounce_number` internally (it does not produce words like "tomorrow"). Basque (`eu`) is the only language with a dedicated `nice_relative_time` implementation; everything else uses the generic one.
+> The generic implementation speaks the rounded difference as words, such as `"two hours"`, `"twenty four hours"`, or `"seven days"`, using `pronounce_number` internally (it does not produce words like "tomorrow"). Basque (`eu`) is the only language with a dedicated `nice_relative_time` implementation. Everything else uses the generic one.
 
 !!! note "Upcoming"
     Span extraction (`DateSpan`) and astronomical or era-based dates are in
@@ -234,10 +234,10 @@ print(relative_time)  # "twenty four hours"
 
 ## Related Projects
 
-- [ovos-number-parser](https://github.com/OpenVoiceOS/ovos-number-parser) - for handling numbers
+- [ovos-number-parser](https://github.com/OpenVoiceOS/ovos-number-parser): for handling numbers
 
 
-- [ovos-lang-parser](https://github.com/OpenVoiceOS/ovos-lang-parser) - for handling language names
+- [ovos-lang-parser](https://github.com/OpenVoiceOS/ovos-lang-parser): for handling language names
 
 
-- [ovos-color-parser](https://github.com/OpenVoiceOS/ovos-color-parser) - for handling colors
+- [ovos-color-parser](https://github.com/OpenVoiceOS/ovos-color-parser): for handling colors

@@ -4,10 +4,10 @@ See also: [Converse Pipeline](converse-pipeline.md) for how this feature is impl
 pipeline plugin inside `ovos-core`.
 
 !!! abstract "In a nutshell"
-    Normally a skill answers one request and then forgets about you. "Converse" lets a skill stay in the conversation for a little while after it has spoken, so it can catch a quick follow-up like "yes", "no", "thanks", or "the red one" that only makes sense as a reply. It's the difference between a one-off answer and a short back-and-forth chat. New terms are explained in the [Glossary](glossary.md).
+    Normally a skill answers one request and then forgets about you. "Converse" lets a skill stay in the conversation for a little while after it has spoken, so it can catch a quick follow-up like "yes", "no", "thanks", or "the red one" that only makes sense as a reply. This is the difference between a one-off answer and a short back-and-forth chat. New terms are explained in the [Glossary](glossary.md).
 
 ??? info "📐 Formal specification"
-    Converse is specified by **[OVOS-CONVERSE-1 — Active Handlers & Interactive Response](https://github.com/OpenVoiceOS/architecture/blob/dev/converse.md)** (a formal [architecture spec](architecture-specs.md)). A skill that was recently active stays on the session's **converse-handler list** (`session.converse_handlers` — what this page calls the *Active Skills List*); a **converse pipeline plugin** polls each eligible handler with a `<skill_id>.converse.ping` / `.pong` round-trip and, when one claims, returns a `Match` on the reserved `intent_name` **`converse`**, which the orchestrator dispatches to `<skill_id>:converse`. The "wait for the next reply" feature (the response window) is the session field `session.response_mode`, delivered via the reserved `intent_name` **`response`**. Both `converse` and `response` are reserved names no skill may register. The list and the response window are **session-resident state** that rides every message — which is why session-aware skills behave correctly across satellites.
+    Converse is specified by **[OVOS-CONVERSE-1 — Active Handlers & Interactive Response](https://github.com/OpenVoiceOS/architecture/blob/dev/converse.md)** (a formal [architecture spec](architecture-specs.md)). A skill that was recently active stays on the session's **converse-handler list** (`session.converse_handlers`, what this page calls the *Active Skills List*). A **converse pipeline plugin** polls each eligible handler with a `<skill_id>.converse.ping` / `.pong` round-trip. When one claims, it returns a `Match` on the reserved `intent_name` **`converse`**, which the orchestrator dispatches to `<skill_id>:converse`. The "wait for the next reply" feature (the response window) is the session field `session.response_mode`, delivered via the reserved `intent_name` **`response`**. Both `converse` and `response` are reserved names no skill may register. The list and the response window are **session-resident state** that rides every message. This is why session-aware skills behave correctly across satellites.
 
 !!! note "Upcoming — `stop` joins the reserved names"
     An in-progress change ([ovos-core#802](https://github.com/OpenVoiceOS/ovos-core/pull/802))
@@ -15,17 +15,17 @@ pipeline plugin inside `ovos-core`.
     with a separable legacy-compatibility bridge for existing consumers. See
     [Intent Service](intent-service.md) for the pipeline-plugin side of this change.
 
-**What / why (beginners):** `converse()` lets a skill keep listening *after* it has just spoken, without registering a new intent for every possible follow-up. Once your skill runs, it goes onto the **Active Skills List** for a few minutes; while it is there, every new utterance is offered to its `converse()` method *before* normal intent parsing. This is how you handle "yes / no / thanks / the red one" replies that only make sense right after your skill acted.
+**What / why (beginners):** `converse()` lets a skill keep listening after it has just spoken, without registering a new intent for every possible follow-up. Once your skill runs, it goes onto the **Active Skills List** for a few minutes. While it is there, every new utterance is offered to its `converse()` method before normal intent parsing. This is how you handle "yes / no / thanks / the red one" replies that only make sense right after your skill acted.
 
-Each [Skill](skill-design-guidelines.md) may define a `converse()` method. This method is called any time the Skill has been recently active and a new utterance is processed.
+Each [Skill](skill-design-guidelines.md) may define a `converse()` method. This method is called any time the skill has been recently active and a new utterance is processed.
 
-The converse method expects a single argument, a standard `Message` object — the same object an intent handler receives.
+The converse method expects a single argument, a standard `Message` object, the same object an intent handler receives.
 
 Converse methods must return a Boolean: `True` if the utterance was handled (it is consumed and intent parsing is skipped), otherwise `False`.
 
 !!! warning "Requires `ConversationalSkill`"
     `converse()`, `activate()`, `deactivate()`, `handle_activate()`/`handle_deactivate()`, and
-    `@conversational_intent` are **not** available on the plain `OVOSSkill` base class — subclass
+    `@conversational_intent` are **not** available on the plain `OVOSSkill` base class. Subclass
     `ConversationalSkill` (`from ovos_workshop.skills.converse import ConversationalSkill`) instead
     to use any of the features on this page.
 
@@ -37,7 +37,7 @@ Converse methods must return a Boolean: `True` if the utterance was handled (it 
 
 ## Basic usage
 
-Let's use a version of the Ice Cream Skill we've been building up and add a converse method to catch any brief statements of thanks that might directly follow an order.
+This example extends the Ice Cream Skill built up earlier, adding a converse method to catch any brief statement of thanks that might directly follow an order.
 
 ```python
 from ovos_workshop.skills.converse import ConversationalSkill
@@ -63,23 +63,23 @@ class IceCreamSkill(ConversationalSkill):
 
 In this example:
 
-1. A User might request an ice cream which is handled by `handle_request_icecream()`
+1. A user might request an ice cream, which `handle_request_icecream()` handles.
 
 
-2. The Skill would be added to the system Active Skill list for up to 5 minutes.
+2. The skill is added to the system Active Skill list for up to 5 minutes.
 
 
-3. Any utterance received by OVOS would trigger this Skills converse system whilst it is considered active.
+3. Any utterance OVOS receives triggers this skill's converse system while it is considered active.
 
 
-4. If the User followed up with a pleasantry such as "Hey Mycroft, thanks" - the converse method would match this vocab against the `Thankyou.voc` file in the Skill and speak the contents of the `you-are-welcome.dialog` file. The method would return `True` and the utterance would be consumed meaning the intent parsing service would never be triggered.
+4. If the user follows up with a pleasantry such as "Hey Mycroft, thanks", the converse method matches this vocab against the `Thankyou.voc` file in the skill and speaks the contents of the `you-are-welcome.dialog` file. The method returns `True` and the utterance is consumed, so the intent parsing service never triggers.
 
 
-5. Any utterance that did not match would be silently ignored and allowed to continue on to other converse methods and finally to the intent parsing service.
+5. Any utterance that does not match is silently ignored and continues on to other converse methods, and finally to the intent parsing service.
 
 
 !!! warning
-    skills that are not [Session](session.md) aware may behave weirdly with voice satellites, see the [parrot skill](https://github.com/OpenVoiceOS/ovos-skill-parrot/) for an example.
+    Skills that are not [Session](session.md) aware may behave unpredictably with voice satellites. See the [parrot skill](https://github.com/OpenVoiceOS/ovos-skill-parrot/) for an example.
 
 
 ## Active Skill List
@@ -96,15 +96,15 @@ A Skill is considered active if it has been called in the last 5 minutes. This w
 }
 ```
 
-Skills are called in order of when they were last active. For example, if a user spoke the following commands:
+Skills are called in order of when they were last active. For example, if a user speaks the following commands:
 
 > Hey Mycroft, set a timer for 10 minutes
 >
 > Hey Mycroft, what's the weather
 
-Then the utterance "what's the weather" would first be sent to the Timer Skill's `converse()` method, then to the intent service for normal handling where the Weather Skill would be called.
+The utterance "what's the weather" is first sent to the Timer Skill's `converse()` method, then to the intent service for normal handling, where the Weather Skill is called.
 
-As the Weather Skill was called it has now been added to the front of the Active Skills List. Hence, the next utterance received will be directed to:
+Because the Weather Skill was called, it is now added to the front of the Active Skills List. The next utterance received is directed to:
 
 1. `WeatherSkill.converse()`
 
@@ -116,23 +116,23 @@ As the Weather Skill was called it has now been added to the front of the Active
 
 When does a skill become active?
 
-1. **before** an intent is called the skill is **activated**
+1. **Before** an intent is called, the skill is **activated**.
 
 
-2. if a fallback **returns True** (to consume the utterance) the skill is **activated** right **after** the fallback
+2. If a fallback **returns True** (to consume the utterance), the skill is **activated** right **after** the fallback.
 
 
-3. if converse **returns True** (to consume the utterance) the skill is **reactivated** right **after** converse
+3. If converse **returns True** (to consume the utterance), the skill is **reactivated** right **after** converse.
 
 
-4. a skill can activate/deactivate itself at any time
+4. A skill can activate or deactivate itself at any time.
 
 ## Making a Skill Active
 
-There are occasions where a Skill has not been triggered by the User, but it should still be considered "Active".
+There are occasions where a user has not triggered a skill, but it should still be considered "Active".
 
-In the case of our Ice Cream Skill - we might have a function that will execute when the customers order is ready. 
-At this point, we also want to be responsive to the customers thanks, so we call `self.activate()` to manually add our Skill to the front of the Active Skills List.
+In the case of our Ice Cream Skill, we might have a function that runs when the customer's order is ready.
+At this point, we also want to be responsive to the customer's thanks, so we call `self.activate()` to manually add our skill to the front of the Active Skills List.
 
 ```python
 from ovos_bus_client.message import Message
@@ -156,9 +156,9 @@ class IceCreamSkill(ConversationalSkill):
 
 ## Deactivating a Skill
 
-The active skill list will be pruned by `ovos-core`, any skills that have not been interacted with for longer than 5 minutes will be deactivated
+`ovos-core` prunes the active skill list. Any skill not interacted with for longer than 5 minutes is deactivated.
 
-Individual Skills may react to this event, to clean up state or, in some rare cases, to reactivate themselves
+Individual skills may react to this event, to clean up state or, in some rare cases, to reactivate themselves.
 
 ```python
 from ovos_bus_client.message import Message
@@ -178,7 +178,7 @@ class AlwaysActiveSkill(ConversationalSkill):
 
 ```
 
-A skill can also deactivate itself at any time
+A skill can also deactivate itself at any time.
 
 ```python
 from ovos_bus_client.message import Message
@@ -195,11 +195,11 @@ class LazySkill(ConversationalSkill):
 
 ## Conversational Intents
 
-Skills can have extra intents valid while they are active, those are internal and not part of the main intent system. For an active skill, the order is: its `@conversational_intent`-decorated handlers are checked first; only if none of them match does the skill's own `converse()` method get a chance to run. Both happen before the utterance would fall through to the normal Adapt/Padatious intent pipeline.
+Skills can have extra intents valid while they are active. Those intents are internal and not part of the main intent system. For an active skill, its `@conversational_intent`-decorated handlers are checked first. Only if none of them match does the skill's own `converse()` method get a chance to run. Both happen before the utterance falls through to the normal Adapt/Padatious intent pipeline.
 
-the `@conversational_intent` decorator can be used to define converse intent handlers
+The `@conversational_intent` decorator defines converse intent handlers.
 
-these intents only trigger after an initial interaction, essentially they are only follow up questions
+These intents only trigger after an initial interaction. They are essentially follow-up questions.
 
 ```python
 from ovos_workshop.skills.converse import ConversationalSkill
@@ -219,9 +219,9 @@ class DogFactsSkill(ConversationalSkill):
         self.speak(fact2)
 
 ```
-> **NOTE**: Only works with `.intent` files, [Adapt](adapt-pipeline.md)/Keyword intents are NOT supported
+> **NOTE**: Only works with `.intent` files. [Adapt](adapt-pipeline.md)/keyword intents are NOT supported.
 
-A more complex example, a game skill that allows saving/exiting the game only during playback
+A more complex example: a game skill that allows saving or exiting the game only during playback.
 
 ```python
 class MyGameSkill(ConversationalSkill):
@@ -249,5 +249,5 @@ class MyGameSkill(ConversationalSkill):
 
 ```
 
-> **NOTE**:  if these intents trigger, they are called **INSTEAD** of `converse`
+> **NOTE**: If these intents trigger, they are called **INSTEAD** of `converse`.
 

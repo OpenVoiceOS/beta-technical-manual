@@ -4,15 +4,15 @@
     This page is a reference list of old OVOS code projects that are no longer maintained, together with what replaced each one. It exists so that if you run into an old package name or an out-of-date guide online, you can look it up here, see that it has been retired, and find the current thing to use instead. You do not need to read it top to bottom — treat it as a lookup table. See the [Glossary](glossary.md) for terms.
 
 Looking for an answer to a skill-development question instead? Start at
-[Your First Skill](first-skill.md) or the [Developer FAQ](skill-dev-faq.md) — this page is only
+[Your First Skill](first-skill.md) or the [Developer FAQ](skill-dev-faq.md). This page is only
 about retired repositories, not how to write skills today.
 
 !!! warning "These repositories are archived"
-    The repositories below are **archived** in the [OpenVoiceOS GitHub organization](https://github.com/OpenVoiceOS) — they are read-only and no longer maintained. They are listed here so you can recognize them and find the current replacement. Do **not** start new work against them.
+    The repositories below are **archived** in the [OpenVoiceOS GitHub organization](https://github.com/OpenVoiceOS). They are read-only and no longer maintained. They are listed here so you can recognize them and find the current replacement. Do **not** start new work against them.
 
 This page covers **repo-level** deprecations (an entire repository retired). For
-**entry-point-level** deprecations — an old OPM entry point group renamed to a
-canonical one while the plugin itself keeps working — see
+**entry-point-level** deprecations, an old OPM entry point group renamed to a
+canonical one while the plugin itself keeps working, see
 [Plugin Manager: Deprecated Types](plugin-manager.md#deprecated-types).
 
 There are roughly **84** archived repositories (the exact count drifts as more get archived). They are grouped by area below; each row gives the reason and the current replacement where one exists.

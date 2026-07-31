@@ -4,7 +4,7 @@
     Established and production-ready, actively maintained. Rated by [repository health](maturity.md), not version.
 
 !!! abstract "In a nutshell"
-    When you ask a general-knowledge question like "who wrote Hamlet?", the Common Query pipeline asks *all* your installed knowledge skills (Wikipedia, Wolfram Alpha, and so on) the same question at once, gathers their answers, and reads back the best one. Think of it as a quiz host who puts the question to every contestant and then announces the strongest reply. It never makes up answers itself — every answer comes from a skill, so if you have no knowledge skills installed it simply stays quiet. See the [Intent Pipeline overview](pipelines-overview.md) or the [Glossary](glossary.md).
+    When you ask a general-knowledge question like "who wrote Hamlet?", the Common Query pipeline asks all your installed knowledge skills (Wikipedia, Wolfram Alpha, and so on) the same question at once, gathers their answers, and reads back the best one. Think of it as a quiz host who puts the question to every contestant and then announces the strongest reply. It never makes up answers itself. Every answer comes from a skill, so if you have no knowledge skills installed, it simply stays quiet. See the [Intent Pipeline overview](pipelines-overview.md) or the [Glossary](glossary.md).
 
 ??? info "📐 Formal specification"
     Common Query is specified by **[OVOS-COMMON-QUERY-1 — Common Query Pipeline Plugin](https://github.com/OpenVoiceOS/architecture/blob/dev/common-query.md)**, built on **[OVOS-PIPELINE-1](https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md)**. See the [spec index](architecture-specs.md).
@@ -14,7 +14,7 @@ utterance looks like a question ("Who wrote Hamlet?", "How tall is Everest?"), i
 broadcasts the question to every installed **CommonQuery skill**, collects their
 answers, and picks the best one.
 
-It does **not** generate text or do retrieval-augmented generation — every answer
+It does **not** generate text or do retrieval-augmented generation. Every answer
 comes from a skill. It is also not a chit-chat handler. Think of it as a referee
 that asks all your knowledge skills the same question and returns the strongest
 reply.
@@ -46,13 +46,13 @@ win first:
 }
 ```
 
-Now install one or more CommonQuery skills (e.g. Wikipedia, Wolfram Alpha) and ask
+Now install one or more CommonQuery skills (for example, Wikipedia, Wolfram Alpha) and ask
 a question.
 
 ---
 
 !!! note "Why it never blocks fallback (and spec topic names)"
-    Common Query is a **scatter-gather contest** that runs *entirely inside `match`* (COMMON-QUERY-1 §2): it polls skills, collects full answers, ranks them, and only returns a `Match` if one clears the confidence threshold — otherwise it returns `None` and the orchestrator continues to fallback. The answer *is* the claim decision, so this is the spec's documented exception to PIPELINE-1 §4.4's "return fast" rule (§2.1). On a win it returns a **self-addressed** Match on the reserved `intent_name` `common_query` (PIPELINE-1 §7.3), dispatched on `<pipeline_id>:common_query`, and its own trivial handler speaks the selected answer. The spec topic names differ from the current code:
+    Common Query is a **scatter-gather contest** that runs entirely inside `match` (COMMON-QUERY-1 §2). It polls skills, collects full answers, and ranks them, only returning a `Match` if one clears the confidence threshold. Otherwise it returns `None` and the orchestrator continues to fallback. The answer is the claim decision, so this is the spec's documented exception to PIPELINE-1 §4.4's "return fast" rule (§2.1). On a win it returns a **self-addressed** Match on the reserved `intent_name` `common_query` (PIPELINE-1 §7.3), dispatched on `<pipeline_id>:common_query`, and its own trivial handler speaks the selected answer. The spec topic names differ from the current code:
 
     | OVOS-COMMON-QUERY-1 (canonical) | Current code |
     |---|---|
@@ -64,22 +64,22 @@ a question.
 ## How it works
 
 The matcher class is `CommonQAService` (a `PipelinePlugin`, so it exposes a single
-`match()` — hence the one `ovos-common-query-pipeline-plugin` ID, not high/medium/low tiers).
+`match()`, hence the one `ovos-common-query-pipeline-plugin` ID, not high/medium/low tiers).
 
-1. **Question detection** — `is_question_like()` requires at least 3 words, a
+1. **Question detection**: `is_question_like()` requires at least 3 words and a
    "question word" (`QuestionWord` vocab), and rejects utterances that match
-   `Play`, `Weather`, `Alerts`, or a misc blacklist. Non-questions are skipped so
+   `Play`, `Weather`, `Alerts`, or a misc blacklist. Non-questions are skipped, so
    the query never goes out.
-2. **Broadcast** — emits `question:query` with the phrase. CommonQuery skills are
+2. **Broadcast**: emits `question:query` with the phrase. CommonQuery skills are
    discovered on startup via an `ovos.common_query.ping` / `ovos.common_query.pong`
    handshake.
-3. **Collect** — skills reply on `question:query.response`, each with an answer and
+3. **Collect**: skills reply on `question:query.response`, each with an answer and
    a self-reported confidence. A skill can ask for more time by replying with
    `searching: true`, which extends the timeout.
-4. **Select** — the best answer is chosen. If a reranker plugin is configured and
-   loaded, it scores the candidate answers; otherwise the skills' own confidences
+4. **Select**: the pipeline chooses the best answer. If a reranker plugin is configured and
+   loaded, it scores the candidate answers. Otherwise the skills' own confidences
    order them.
-5. **Deliver** — returns an `IntentHandlerMatch`. The match type is
+5. **Deliver**: returns an `IntentHandlerMatch`. The match type is
    `question:action.<skill_id>` (or plain `question:action` for skills still using
    the deprecated CommonQuery base class), so the selected skill is told to speak
    its answer.
@@ -119,25 +119,25 @@ self-reported confidences.
 !!! note "Shipped defaults differ slightly"
     The bundled `mycroft.conf` ships an `intents.ovos-common-query-pipeline-plugin`
     section that overrides some of the library defaults above: `max_response_wait: 6`
-    and `extension_time: 3`. Its `reranker` is `ovos-flashrank-reranker-plugin` —
+    and `extension_time: 3`. Its `reranker` is `ovos-flashrank-reranker-plugin`,
     the same plugin the library falls back to when no reranker is configured at all.
 
 ---
 
 ## Performance
 
-* Response time tracks the slowest skill you let answer; `max_response_wait` caps
+* Response time tracks the slowest skill you let answer. `max_response_wait` caps
   it, so very slow skills may be dropped.
-* Rerankers add latency, noticeably so on constrained hardware (e.g. Raspberry
+* Rerankers add latency, noticeably so on constrained hardware (for example, a Raspberry
   Pi). Tune the wait times and thresholds to taste.
 
 ---
 
 ## Notes
 
-* **Answers come from skills only** — no generation, no RAG.
-* **Not chit-chat** — strictly factual question answering.
-* **Skills required** — with no CommonQuery skills installed the matcher returns
+* **Answers come from skills only**: no generation, no RAG.
+* **Not chit-chat**: strictly factual question answering.
+* **Skills required**: with no CommonQuery skills installed, the matcher returns
   nothing immediately.
 * Skills using the old CommonQuery base class still work but log a deprecation
   warning and are matched as plain `question:action`.

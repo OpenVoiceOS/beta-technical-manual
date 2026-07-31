@@ -1,36 +1,36 @@
 # Composable Deployments: OVOS as a Library
 
 !!! abstract "In a nutshell"
-    OVOS ships as a "batteries-included" assistant you can install with one command, but under
-    the hood it is really a set of small, independent Python packages that happen to agree on a
-    common protocol — the [messagebus](bus-service.md). Because of that, nothing forces you to run
-    "all of OVOS" as one blob: you can start a single service on its own machine, load a single
-    skill as its own process, or `pip install` a speech plugin into a completely unrelated Python
-    project and call it directly, with no bus and no assistant around it at all. This page is
-    about that second use case — OVOS the **library**, not OVOS the **product**.
+    OVOS ships as a "batteries-included" assistant you can install with one command. Under
+    the hood, it is a set of small, independent Python packages that agree on a
+    common protocol, the [messagebus](bus-service.md). Because of that, nothing forces you to run
+    "all of OVOS" as one blob. You can start a single service on its own machine, load a single
+    skill as its own process, or `pip install` a speech plugin into a separate Python
+    project and call it directly, with no bus and no assistant around it at all. This page
+    covers that second use case: OVOS the **library**, not OVOS the **product**.
 
 ## The principle
 
-Every OVOS service — the bus, the voice pipeline, the audio player, the hardware abstraction
-layer, the GUI — is an ordinary long-running Python process. They do not call each other's
-functions or share memory; they exchange JSON [`Message`](bus-service.md) objects over a
-WebSocket. Anything that can open that WebSocket and speak the same message types is a first-class
+Every OVOS service, including the bus, the voice pipeline, the audio player, the hardware abstraction
+layer, and the GUI, is an ordinary long-running Python process. They do not call each other's
+functions or share memory. They exchange JSON [`Message`](bus-service.md) objects over a
+WebSocket. Anything that can open that WebSocket and speak the same message types is a full
 participant, whether it is `ovos-core` itself, a HiveMind satellite, a shell script, or a Node.js
-prototype. This is what makes the two deployment styles below equally valid:
+prototype. This makes the two deployment styles below equally valid:
 
 | Style | What you get | Typical use |
 |---|---|---|
 | **Batteries-included install** | `ovos-core` metapackage pulls in the bus, listener, audio, PHAL and GUI services and a process manager starts them all on one host | A voice appliance, [raspOVOS](install-raspovos.md), a desktop assistant |
 | **À la carte library use** | You install and import only the pieces you need — one service, one skill, or a single plugin as a bare Python object | Distributed/embedded deployments, custom apps, testing one component in isolation |
 
-Nothing in the code enforces the first style; it is a packaging convenience (`ovos-core` is a
+Nothing in the code enforces the first style. It is a packaging convenience (`ovos-core` is a
 metapackage), not an architectural requirement. The [Architecture Overview](architecture-overview.md)
-covers how these services cooperate at runtime; this page covers how to run them apart.
+covers how these services cooperate at runtime. This page covers how to run them apart.
 
 ## The standard split: one console script per service
 
 Each core service is its own PyPI package with its own console-script entry point. Installing a
-package makes the script available on `PATH`; running it starts that one process and nothing else.
+package makes the script available on `PATH`. Running it starts that one process and nothing else.
 
 | Service | Package | Console script | Role |
 |---|---|---|---|
@@ -45,14 +45,13 @@ package makes the script available on `PATH`; running it starts that one process
 | Standalone skill installer | `ovos-core` | `ovos-skill-installer` | Installs skills without a running `ovos-core` |
 
 !!! note "Names are exact"
-    The console scripts are not all named consistently with their package — notably `ovos-PHAL`
+    The console scripts are not all named consistently with their package. Notably, `ovos-PHAL`
     installs `ovos_PHAL` and `ovos_PHAL_admin` with underscores, and the GUI service script is
     `ovos-gui-service`, not `ovos-gui`. Check `pip show -f <package>` if a script is not found.
 
 ### Pointing services at a shared bus
 
-Every process reads the `websocket` block from its own [configuration](config.md) to find the
-bus:
+Every process reads the `websocket` block from its own [configuration](config.md) to find the bus:
 
 ```jsonc
 {
@@ -65,26 +64,26 @@ bus:
 }
 ```
 
-The default is `127.0.0.1` — **every service assumes the bus is local unless you say otherwise**.
-To split services across hosts or containers, run `ovos-messagebus` on one host, then set
+The default is `127.0.0.1`. **Every service assumes the bus is local unless you say otherwise**.
+To split services across hosts or containers, run `ovos-messagebus` on one host. Then set
 `websocket.host` to that host's address in the configuration of every other service. No other
-wiring is needed: a listener on one machine, `ovos-core` on a second, and `ovos-audio` on a third
-will cooperate exactly as if they were on the same box, as long as each can reach the bus's
+wiring is needed. A listener on one machine, `ovos-core` on a second, and `ovos-audio` on a third
+cooperate exactly as if they were on the same box, as long as each can reach the bus's
 `host:port`. The [GUI service](gui-service.md) has its own analogous `gui_websocket` block, since
 display clients connect over a second WebSocket.
 
 !!! warning "Loopback by default — except the GUI socket"
     `websocket.host` (bus) and most PHAL plugin bindings default to loopback or same-host
-    assumptions, so distributing those services is a deliberate config change rather than the
-    out-of-the-box behavior — see [Caveats](#caveats) below.
+    assumptions. Distributing those services is a deliberate config change, not the
+    out-of-the-box behavior. See [Caveats](#caveats) below.
 
-    `gui_websocket.host` is the exception: it ships as `0.0.0.0`, so the GUI protocol socket is
+    `gui_websocket.host` is the exception. It ships as `0.0.0.0`, so the GUI protocol socket is
     reachable from the whole LAN on a default install. Narrow it to `127.0.0.1` unless a display
     client genuinely runs on another machine.
 
 ## Standalone skills
 
-A skill does not need a running `ovos-core` to execute — `ovos-workshop` ships a launcher that
+A skill does not need a running `ovos-core` to execute. `ovos-workshop` ships a launcher that
 loads exactly one skill and connects it to a bus on its own:
 
 ```bash
@@ -92,8 +91,8 @@ ovos-skill-launcher {skill_id} [path/to/skill/directory]
 ```
 
 This is the `ovos-skill-launcher` console script, backed by `ovos_workshop.skill_launcher.SkillContainer`.
-If you omit the directory it searches the standard skill directories for a folder matching
-`skill_id`; if you pass one explicitly it loads from there, which is convenient for developing a
+If you omit the directory, it searches the standard skill directories for a folder matching
+`skill_id`. If you pass one explicitly, it loads from there. This is convenient for developing a
 skill straight out of a git checkout.
 
 ```python
@@ -105,18 +104,18 @@ skill.run()  # connects to the bus (websocket config) and loads only this skill
 
 Because this is a normal Python process that only needs a reachable bus, it enables:
 
-- **Developing one skill against a remote device** — run the skill on a laptop, point its
+- **Developing one skill against a remote device**: run the skill on a laptop, point its
   `websocket.host` at a Raspberry Pi running the rest of the stack, and iterate without touching
   the device.
-- **Resource isolation** — a heavyweight skill (e.g. one embedding a local LLM) runs in its own
+- **Resource isolation**: a heavyweight skill (for example, one embedding a local LLM) runs in its own
   process with its own memory ceiling, instead of sharing `ovos-core`'s process.
-- **Per-skill containers** — package a single skill and `ovos-skill-launcher` into a minimal
+- **Per-skill containers**: package a single skill and `ovos-skill-launcher` into a minimal
   container image, so a skill can be deployed, scaled, or restarted independently of the rest of
   the assistant.
 
 ## Library reuse outside OVOS
 
-The pattern goes further than "one service, one process" — the packages underneath each service
+The pattern goes further than "one service, one process". The packages underneath each service
 are ordinary importable libraries with no hard dependency on a bus being present.
 
 **HiveMind satellites import audio/listener internals directly.** `hivemind-mic-satellite` (a
@@ -133,11 +132,11 @@ from ovos_PHAL.service import PHAL
 ```
 
 It reuses the audio-playback and microphone/VAD machinery as plain Python classes inside its own
-process, then relays results to the hive over its own protocol — no `ovos-audio` process is ever
+process, then relays results to the hive over its own protocol. No `ovos-audio` process is ever
 started.
 
 **OPM plugins run as plain libraries, with no bus at all.** The OpenVoiceOS Plugin Manager
-(`ovos-plugin-manager`, "OPM") factories construct STT/TTS/VAD engines from configuration; nothing
+(`ovos-plugin-manager`, "OPM") factories construct STT/TTS/VAD engines from configuration. Nothing
 about the returned object requires a bus:
 
 ```python
@@ -149,14 +148,14 @@ audio = (np.random.rand(1600) * 100).astype("int16").tobytes()
 vad.is_silence(audio)  # -> False, plain function call, no messagebus involved
 ```
 
-The same applies to `OVOSSTTFactory.create(config)` and `OVOSTTSFactory.create(config)` — both
+The same applies to `OVOSSTTFactory.create(config)` and `OVOSTTSFactory.create(config)`. Both
 return an engine object you call directly (`.execute(audio)`, `.get_tts(text, path)`) in a script,
-a notebook, or a completely unrelated application that has nothing to do with voice assistants.
+a notebook, or a separate application that has nothing to do with voice assistants.
 
 **`ovos-bus-client` and `ovos-utils` are building blocks in their own right.** `ovos-bus-client`
 supplies `MessageBusClient`/`Message` (and the `ovos-listen`/`ovos-speak`/`ovos-say-to` CLI tools,
-see [CLI Tools](cli-tools.md)) for anything that wants to talk *to* an existing OVOS bus without
-being a skill or a service. `ovos-utils` supplies logging, audio I/O helpers, and — notably —
+see [CLI Tools](cli-tools.md)) for anything that wants to talk to an existing OVOS bus without
+being a skill or a service. `ovos-utils` supplies logging and audio I/O helpers, and also
 `ovos_utils.fakebus.FakeBus`, an in-memory stand-in used to exercise skill/plugin code in tests
 without any network socket at all. See [Core Libraries](core-libraries.md) for the full map of
 these packages and their upstream docs.
@@ -164,10 +163,10 @@ these packages and their upstream docs.
 ## Containers: one service per box
 
 [`ovos-docker`](https://github.com/OpenVoiceOS/ovos-docker) mirrors the same split at the
-container level: it ships one Dockerfile/image per service (`messagebus`, `core`, `listener`,
-`audio`, `phal`, `phal-admin`, `gui`, `gui-websocket`, `skills`) plus compose files that wire them
+container level. It ships one Dockerfile/image per service (`messagebus`, `core`, `listener`,
+`audio`, `phal`, `phal-admin`, `gui`, `gui-websocket`, `skills`), plus compose files that wire them
 together over a shared network. Because each image only installs the one service's package, they
-can be scheduled independently — scaled, restarted, or placed on different hosts — as long as
+can be scheduled independently: scaled, restarted, or placed on different hosts, as long as
 `websocket.host` in each container's configuration resolves to the bus container.
 
 The same idea shows up as standalone servers for individual speech components, packaged as their
@@ -179,7 +178,7 @@ own containers/services rather than as OVOS services at all:
 | `ovos-tts-server` | An HTTP wrapper around a TTS plugin — POST text, get audio back |
 | `ovos-translate-server` | An HTTP wrapper around a machine-translation plugin |
 
-These have no bus dependency and no notion of "skills" or "sessions" — they are thin HTTP
+These have no bus dependency and no notion of "skills" or "sessions". They are thin HTTP
 front-ends over the same OPM factories shown above, useful when another application (OVOS or not)
 just needs a speech primitive over the network.
 
@@ -219,13 +218,13 @@ graph LR
 
 !!! warning "Trust boundary: the bus and HIVE links are localhost/LAN only"
     Every `<-- websocket.host=A -->` link in the diagram above (including the `HIVE` connection)
-    is a direct connection to the raw messagebus and must stay on a trusted localhost/LAN network
-    — it is never meant to be exposed to, or reachable from, the open internet. See
+    is a direct connection to the raw messagebus and must stay on a trusted localhost/LAN network.
+    It is never meant to be exposed to, or reachable from, the open internet. See
     [Bus Service](bus-service.md) (see its "Security: the bus has no authentication" note) for
     why the bus itself is a trust boundary. The
-    **only** link in this topology that is designed to cross an untrusted network is the dotted
-    `SAT -. HiveMind protocol .-> HIVE` edge: the HiveMind satellite talks to `hivemind-core` over
-    HiveMind's own authenticated protocol, not the raw bus, which is precisely what makes it safe
+    **only** link in this topology designed to cross an untrusted network is the dotted
+    `SAT -. HiveMind protocol .-> HIVE` edge. The HiveMind satellite talks to `hivemind-core` over
+    HiveMind's own authenticated protocol, not the raw bus. This is what makes it safe
     to run a satellite from a network you don't otherwise trust.
 
 ## Caveats
@@ -236,7 +235,7 @@ install hides for you. These are the most common sources of confusion.
 ### Plugins must be installed where they load
 
 A plugin is only usable by the process that imports it. Installing an STT plugin next to
-`ovos-core` does nothing if it is `ovos-dinkum-listener` that needs it.
+`ovos-core` does nothing if `ovos-dinkum-listener` is the process that needs it.
 
 | Plugin type | Loaded by | Must be installed in |
 |---|---|---|
@@ -248,21 +247,21 @@ A plugin is only usable by the process that imports it. Installing an STT plugin
 | GUI adapters | `ovos-gui-service` | The GUI service's environment/container |
 | [Transformer](transformer-plugins.md) (`opm.transformer.*`) | `ovos-core` (utterance/metadata/intent chains), `ovos-dinkum-listener` (audio chain), `ovos-audio` (dialog/tts chains) | Whichever of those services' environments runs the chain that plugin belongs to |
 
-There is no cross-process plugin discovery — each service resolves plugins from its **own**
+There is no cross-process plugin discovery. Each service resolves plugins from its **own**
 Python environment's entry points at startup.
 
 ### Configuration is per-process, not shared
 
 Each process reads its own `mycroft.conf` from its own [XDG config path](config.md)
-(`$XDG_CONFIG_HOME/mycroft` — inside a container that is the container's filesystem, not the
+(`$XDG_CONFIG_HOME/mycroft`; inside a container, that is the container's filesystem, not the
 host's). Splitting services means keeping the relevant keys **consistent by hand** across every
-process's configuration — a `websocket.host` mismatch, or a listener that doesn't know which STT
+process's configuration. A `websocket.host` mismatch, or a listener that doesn't know which STT
 module `ovos-core` expects it to have already run, will silently misbehave rather than error
 loudly.
 
 ### Version skew is a real risk
 
-Every process talks over the same bus protocol independently — there is no central version
+Every process talks over the same bus protocol independently. There is no central version
 negotiation. Mismatched major versions across `ovos-bus-client`, `ovos-core`, `ovos-audio`, and
 `ovos-dinkum-listener` can produce message shapes one side doesn't expect. Keep versions aligned
 across a deployment, and check each package's changelog before upgrading only one service.
@@ -270,8 +269,8 @@ across a deployment, and check each package's changelog before upgrading only on
 ### Latency and network reality
 
 A single-host install exchanges messages over loopback, effectively free. Splitting services
-across hosts puts real network latency and reliability on the critical path of every utterance —
-wake word detection, STT, intent matching, and TTS all round-trip through the bus. A slow or
+across hosts puts real network latency and reliability on the critical path of every utterance.
+Wake word detection, STT, intent matching, and TTS all round-trip through the bus. A slow or
 lossy link between the listener and the bus is felt as sluggish or dropped voice interactions, not
 as an error message.
 
@@ -279,18 +278,18 @@ as an error message.
 
 `ovos-core`, `ovos-audio`, and `ovos-dinkum-listener` are each written assuming they are the
 only instance of that service talking to a given bus. The bus itself is pure fan-out with no
-leader election or ownership concept — it has no way to tell two `ovos-core` processes apart
+leader election or ownership concept. It has no way to tell two `ovos-core` processes apart
 or arbitrate between them. Running two instances of the same service against one bus does not
-give you redundancy or failover; it gives you duplicate handling of every message and
-double-emitted lifecycle events (e.g. two `ovos.intent.handler.start`/`.complete` pairs for
+give you redundancy or failover. It gives you duplicate handling of every message and
+double-emitted lifecycle events (for example, two `ovos.intent.handler.start`/`.complete` pairs for
 one utterance), since both instances react to the same broadcast independently.
 
 There is no supported skill-level or bus-level workaround for this. Filtering handlers by
 `session_id` inside a skill does not make it safe to run two instances of a singleton
-service against the same bus: the duplication happens at the message-dispatch level, before
+service against the same bus. The duplication happens at the message-dispatch level, before
 any skill code runs, so every subscriber on both instances still receives and reacts to
-every message. Horizontal scaling for multiple devices/users is a distributed-deployment
-concern, not a duplicate-singleton one — it is done with [HiveMind](hivemind-agents.md)
+every message. Horizontal scaling for multiple devices or users is a distributed-deployment
+concern, not a duplicate-singleton one. It is done with [HiveMind](hivemind-agents.md)
 satellites talking to a single HiveMind server, not by running two copies of `ovos-core`,
 `ovos-audio`, or `ovos-dinkum-listener` against one bus.
 
@@ -298,8 +297,8 @@ satellites talking to a single HiveMind server, not by running two copies of `ov
 
 `websocket.host` (`127.0.0.1`), and most PHAL device-integration plugins, assume everything they
 talk to is on the same machine. Treat every default as loopback-only until you have explicitly
-verified the config for a given deployment — the services will start and look healthy on separate
-hosts with the defaults untouched, they simply will not be able to reach each other.
+verified the config for a given deployment. The services start and look healthy on separate
+hosts with the defaults untouched, but they simply cannot reach each other.
 
 ## See also
 
