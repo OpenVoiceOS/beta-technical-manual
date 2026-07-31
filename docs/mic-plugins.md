@@ -1,11 +1,11 @@
 # Microphone Plugins in OVOS
 
 !!! abstract "In a nutshell"
-    A microphone plugin is the part that listens — it grabs the sound coming in from your device's microphone and hands it to the rest of the assistant so it can hear you. Different devices and setups need different ways of capturing that sound, so these plugins let you switch the "ears" without changing anything else. Think of it like choosing which microphone to plug into a recorder. See the [Glossary](glossary.md) for unfamiliar terms.
+    A microphone plugin is the part that listens. It grabs the sound coming in from your device's microphone and hands it to the rest of the assistant so it can hear you. Different devices and setups need different ways of capturing that sound, so these plugins let you switch the "ears" without changing anything else. Think of it like choosing which microphone to plug into a recorder. See the [Glossary](glossary.md) for unfamiliar terms.
 
 Microphone plugins in Open Voice OS (OVOS) are responsible for capturing audio input and feeding the raw PCM stream to the listener. They let you swap audio backends and platforms without touching the rest of the voice stack.
 
-> The audio-capture mechanism is **deployer-defined** and sits outside the formal audio-input service contract — the listener consumes whatever a microphone plugin produces. See the [OVOS-AUDIO-IN-1](https://github.com/OpenVoiceOS/architecture/blob/dev/audio-in.md) specification for how captured audio enters the utterance lifecycle.
+> The audio-capture mechanism is **deployer-defined** and sits outside the formal audio-input service contract. The listener consumes whatever a microphone plugin produces. See the [OVOS-AUDIO-IN-1](https://github.com/OpenVoiceOS/architecture/blob/dev/audio-in.md) specification for how captured audio enters the utterance lifecycle.
 
 ## Usage Guide
 
@@ -40,9 +40,9 @@ pip install ovos-microphone-plugin-<name>
 | [ovos-microphone-plugin-alsa](https://github.com/OpenVoiceOS/ovos-microphone-plugin-alsa) | Based on [pyalsaaudio](http://larsimmisch.github.io/pyalsaaudio). Offers low-latency and high performance on ALSA-compatible devices. | Linux | Stable |
 | [ovos-microphone-plugin-pyaudio](https://github.com/OpenVoiceOS/ovos-microphone-plugin-pyaudio) | Uses the [PyAudio](https://people.csail.mit.edu/hubert/pyaudio/) PortAudio bindings directly (no `speech_recognition` dependency). Good cross-platform general-purpose plugin. | Linux, macOS, Windows | Beta |
 | [ovos-microphone-plugin-sounddevice](https://github.com/OpenVoiceOS/ovos-microphone-plugin-sounddevice) | Built on [python-sounddevice](https://github.com/spatialaudio/python-sounddevice). Offers cross-platform support. | Linux, macOS, Windows | Stable |
-| [ovos-microphone-plugin-files](https://github.com/OpenVoiceOS/ovos-microphone-plugin-files) | Uses audio files as input instead of a live microphone — ideal for testing and debugging. | Linux, macOS, Windows | Stable |
+| [ovos-microphone-plugin-files](https://github.com/OpenVoiceOS/ovos-microphone-plugin-files) | Uses audio files as input instead of a live microphone. Ideal for testing and debugging. | Linux, macOS, Windows | Stable |
 
-Maturity reflects repository health (age, activity, open issues/PRs, in-repo docs), not version — see the [Maturity Scale](maturity.md).
+Maturity reflects repository health (age, activity, open issues/PRs, in-repo docs), not version. See the [Maturity Scale](maturity.md).
 
 ## Technical Explanation
 
@@ -166,12 +166,12 @@ finally:
 # Microphone Plugins Reference
 
 Default configuration for the plugins listed in [Supported Microphone Plugins](#supported-microphone-plugins)
-above (OS compatibility and a one-line description live in that table; this section only adds
+above (OS compatibility and a one-line description live in that table. This section only adds
 config where a plugin has one).
 
 ## ovos-microphone-plugin-alsa
 
-- **GitHub**: [https://github.com/OpenVoiceOS/ovos-microphone-plugin-alsa](https://github.com/OpenVoiceOS/ovos-microphone-plugin-alsa)
+- **GitHub**: [ovos-microphone-plugin-alsa](https://github.com/OpenVoiceOS/ovos-microphone-plugin-alsa)
 
 
 - **Description**: OpenVoiceOS Microphone plugin
@@ -180,7 +180,7 @@ config where a plugin has one).
 
 ## ovos-microphone-plugin-sounddevice
 
-- **GitHub**: [https://github.com/OpenVoiceOS/ovos-microphone-plugin-sounddevice](https://github.com/OpenVoiceOS/ovos-microphone-plugin-sounddevice)
+- **GitHub**: [ovos-microphone-plugin-sounddevice](https://github.com/OpenVoiceOS/ovos-microphone-plugin-sounddevice)
 
 
 - **Description**: Open Voice OS microphone plugin for [python-sounddevice](https://github.com/spatialaudio/python-sounddevice/) library.
@@ -203,7 +203,7 @@ config where a plugin has one).
 
 ## ovos-microphone-plugin-files
 
-- **GitHub**: [https://github.com/OpenVoiceOS/ovos-microphone-plugin-files](https://github.com/OpenVoiceOS/ovos-microphone-plugin-files)
+- **GitHub**: [ovos-microphone-plugin-files](https://github.com/OpenVoiceOS/ovos-microphone-plugin-files)
 
 
 - **Description**: OpenVoiceOS Microphone Files plugin
@@ -212,7 +212,7 @@ config where a plugin has one).
 
 ## ovos-microphone-plugin-pyaudio
 
-- **GitHub**: [https://github.com/OpenVoiceOS/ovos-microphone-plugin-pyaudio](https://github.com/OpenVoiceOS/ovos-microphone-plugin-pyaudio)
+- **GitHub**: [ovos-microphone-plugin-pyaudio](https://github.com/OpenVoiceOS/ovos-microphone-plugin-pyaudio)
 
 
 - **Description**: OpenVoiceOS Microphone plugin

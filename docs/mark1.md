@@ -1,7 +1,7 @@
 # Mycroft Mark 1 Hardware
 
 !!! abstract "In a nutshell"
-    The **Mark 1** was the original Mycroft smart speaker, recognizable by its little face: a grid of LEDs that forms a scrolling "mouth" and two colored "eyes". This developer page explains how OVOS lets skills control that faceplate — showing text or images on the mouth, and changing the eyes' color, blinking, and animations. It covers both a simple high-level interface and a lower-level library for fine-grained, pixel-by-pixel effects. See the [Glossary](glossary.md) for unfamiliar terms.
+    The **Mark 1** was the original Mycroft smart speaker, recognizable by its little face: a grid of LEDs that forms a scrolling "mouth" and two colored "eyes". This developer page explains how OVOS lets skills control that faceplate: showing text or images on the mouth, and changing the eyes' color, blinking, and animations. It covers both a simple high-level interface and a lower-level library for fine-grained, pixel-by-pixel effects. See the [Glossary](glossary.md) for unfamiliar terms.
 
 The **Mycroft Mark 1** was the first official hardware for Mycroft AI. It features a distinctive faceplate with a 32x8 LED "mouth" and two RGB LED "eyes". OpenVoiceOS provides full support for the Mark 1 hardware, including both a high-level `EnclosureAPI` for common tasks and a low-level `ovos-mark1-utils` library for fine-grained control.
 
@@ -48,8 +48,8 @@ self.enclosure.mouth_display_png('/path/to/image.png', threshold=70, invert=Fals
 ```
 
 !!! warning "`self.enclosure` is leaving the skill base class"
-    `self.enclosure` will **no longer be a built-in `OVOSSkill` property** — the same direction
-    [`self.gui`](skill-gui.md) is going. The `EnclosureAPI` itself is
+    `self.enclosure` will **no longer be a built-in `OVOSSkill` property**. This is the same
+    direction [`self.gui`](skill-gui.md) is going. The `EnclosureAPI` itself is
     **not going away**: it moves into the **[`ovos-mark1-utils`](https://github.com/OpenVoiceOS/ovos-mark1-utils)**
     library, so code that needs it imports it from there rather than reaching for `self.enclosure`.
 
@@ -70,11 +70,11 @@ faceplate over the [messagebus](bus-service.md) (see the
 [PHAL Mark 1 message spec](https://openvoiceos.github.io/message_spec/phal_mk1/)) and offers
 three layers:
 
-- **`Mark1EnclosureAPI`** — the high-level enclosure API (mouth text, mouth animations, eye
+- **`Mark1EnclosureAPI`**: the high-level enclosure API (mouth text, mouth animations, eye
   color, system reset). It subclasses the standard `EnclosureAPI` and is what
   `self.enclosure` resolves to on Mark 1 hardware.
-- **`Eyes`** — fine-grained eye control (color, brightness, blink, spins).
-- **`FaceplateGrid` / `BlackScreen`** — pixel-level drawing on the 32×8 mouth display, plus
+- **`Eyes`**: fine-grained eye control (color, brightness, blink, spins).
+- **`FaceplateGrid` / `BlackScreen`**: pixel-level drawing on the 32×8 mouth display, plus
   ready-made icons and animations.
 
 ```python
@@ -108,7 +108,7 @@ brighter), plus the animated `hue_spin` / `saturation_spin` / `luminance_spin` v
 
 You can define icons using a simple string grid:
 
-Each icon is 32 columns wide by 8 rows tall — `X` is a lit pixel, space is unlit:
+Each icon is 32 columns wide by 8 rows tall. `X` is a lit pixel, space is unlit:
 
 ```python
 from ovos_mark1.faceplate import BlackScreen
@@ -160,11 +160,11 @@ for grid in a:
 
 !!! note "Bus topics follow the OVOS spec namespace"
     The Mark 1 PHAL plugin emits its faceplate/enclosure bus messages under the standard OVOS
-    spec message namespace rather than legacy topic names — see the
+    spec message namespace rather than legacy topic names. See the
     [PHAL Mark 1 message spec](https://openvoiceos.github.io/message_spec/phal_mk1/) for the
     current topic names.
 
-!!! note "Upcoming — enclosure protocol mixin"
+!!! note "Upcoming: enclosure protocol mixin"
     The Mark 1 PHAL plugin is expected to adopt a shared `EnclosureProtocolListener` mixin for
     handling the enclosure protocol, aligning it with how other enclosure PHAL plugins are
     structured.

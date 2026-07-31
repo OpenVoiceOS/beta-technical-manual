@@ -4,25 +4,25 @@
     These plugins are the **playback backends** that actually push audio/video to your
     speakers or screen (VLC, MPV, Chromecast, Spotify…). OVOS is mid-migration between the
     legacy audio-service backend and the upcoming [`ovos-media`](ovos-media.md) daemon, and a
-    single plugin **package is meant to ship a version for both** — see
+    single plugin **package is meant to ship a version for both**. See
     [Media playback: legacy vs. ovos-media](ovos-media.md).
 
 ## Two interfaces, one package
 
 A playback plugin can implement **two separate entry-point families**:
 
-- **Old audio service** — `mycroft.plugin.audioservice` (used by the deprecated
+- **Old audio service**: `mycroft.plugin.audioservice` (used by the deprecated
   [`ovos-ocp-audio-plugin`](#ovos-ocp-audio-plugin) / "old audio service", the shipped default).
-- **[`ovos-media`](ovos-media.md)** — `opm.media.{audio,video,web}` (the upcoming daemon).
+- **[`ovos-media`](ovos-media.md)**: `opm.media.{audio,video,web}` (the upcoming daemon).
 
 Media *classifiers* are a separate concern from playback backends: they recognize the
 media intent and entities (artist, title, station, …) in an utterance before a stream is
 resolved and played. See [ovos-media-classifier](#ovos-media-classifier) below.
 
 These two families are **separate** (different entry-point groups and base classes), **but a
-plugin package is meant to ship a version for *both*** — so a single `pip install` gives you a
-backend that works whichever playback system you run. Packages are not required to ship both
-families; see the table below for what each currently supports.
+plugin package is meant to ship a version for *both***. This way a single `pip install` gives
+you a backend that works whichever playback system you run. Packages are not required to ship
+both families. See the table below for what each currently supports.
 
 | Package | Player | Ships for | License | Maturity |
 |---|---|---|---|---|
@@ -33,25 +33,25 @@ families; see the table below for what each currently supports.
 | [ovos-audio-plugin-mpv](#ovos-audio-plugin-mpv) | MPV (audio + video) | ✅ both | Apache-2.0 | Stable |
 | [ovos-media-plugin-ffplay](#ovos-media-plugin-ffplay) | ffplay (audio) | ✅ both | Apache-2.0 | Stable |
 | [ovos-media-plugin-cli](#ovos-media-plugin-cli) | generic CLI-command player (audio) | ✅ both | Apache-2.0 | Alpha |
-| [ovos-plugin-vlc](#ovos-plugin-vlc) | VLC | old audio service only (legacy) — use ovos-media-plugin-vlc for ovos-media | Apache-2.0 | Stable |
+| [ovos-plugin-vlc](#ovos-plugin-vlc) | VLC | old audio service only (legacy). Use ovos-media-plugin-vlc for ovos-media | Apache-2.0 | Stable |
 
-Maturity reflects repository health (age, activity, open issues/PRs, in-repo docs), not version — see the [Maturity Scale](maturity.md).
+Maturity reflects repository health (age, activity, open issues/PRs, in-repo docs), not version. See the [Maturity Scale](maturity.md).
 
 !!! note "License and Maturity are independent axes"
-    The **License** column reports what the repository itself declares (or doesn't — "no
-    license file" just means no SPDX license was found, not that the code is unmature) and the
+    The **License** column reports what the repository itself declares, or doesn't. "No
+    license file" just means no SPDX license was found, not that the code is unmature. The
     **Maturity** column reports repository health (age, activity, issues/PRs, docs). A plugin can
     be **Mature** and still ship no license file, or be **Stable** with a permissive license but
-    thin docs — don't read one column as implying the other.
+    thin docs. Don't read one column as implying the other.
 
-The [`ovos-ocp-audio-plugin`](#ovos-ocp-audio-plugin) below is not a playback backend — it is the
+The [`ovos-ocp-audio-plugin`](#ovos-ocp-audio-plugin) below is not a playback backend. It is the
 **old audio service itself** (deprecated, still the shipped default).
 
 ---
 
 ## ovos-media-plugin-spotify
 
-- **GitHub**: [https://github.com/OpenVoiceOS/ovos-media-plugin-spotify](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify)
+- **GitHub**: [ovos-media-plugin-spotify](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify)
 
 
 - **Description**: Spotify Connect playback. Ships entry points for **both** the old audio service (`mycroft.plugin.audioservice`) and [ovos-media](https://github.com/OpenVoiceOS/ovos-media) (`opm.media.audio`).
@@ -60,13 +60,13 @@ The [`ovos-ocp-audio-plugin`](#ovos-ocp-audio-plugin) below is not a playback ba
 pip install ovos-media-plugin-spotify
 ```
 
-Then select it in your audio/media backend config — see [Media playback: legacy vs. ovos-media](ovos-media.md).
+Then select it in your audio/media backend config. See [Media playback: legacy vs. ovos-media](ovos-media.md).
 
 ---
 
 ## ovos-media-plugin-vlc
 
-- **GitHub**: [https://github.com/OpenVoiceOS/ovos-media-plugin-vlc](https://github.com/OpenVoiceOS/ovos-media-plugin-vlc)
+- **GitHub**: [ovos-media-plugin-vlc](https://github.com/OpenVoiceOS/ovos-media-plugin-vlc)
 
 
 - **Description**: Headless VLC audio/video playback. Ships entry points for both
@@ -79,13 +79,13 @@ Then select it in your audio/media backend config — see [Media playback: legac
 pip install ovos-media-plugin-vlc
 ```
 
-Then select it in your audio/media backend config — see [Media playback: legacy vs. ovos-media](ovos-media.md).
+Then select it in your audio/media backend config. See [Media playback: legacy vs. ovos-media](ovos-media.md).
 
 ---
 
 ## ovos-media-plugin-chromecast
 
-- **GitHub**: [https://github.com/OpenVoiceOS/ovos-media-plugin-chromecast](https://github.com/OpenVoiceOS/ovos-media-plugin-chromecast)
+- **GitHub**: [ovos-media-plugin-chromecast](https://github.com/OpenVoiceOS/ovos-media-plugin-chromecast)
 
 
 - **Description**: Cast audio/video to a Chromecast. Ships entry points for **both** the old audio service and [ovos-media](https://github.com/OpenVoiceOS/ovos-media) (`opm.media.audio` / `opm.media.video`).
@@ -94,22 +94,22 @@ Then select it in your audio/media backend config — see [Media playback: legac
 pip install ovos-media-plugin-chromecast
 ```
 
-Then select it in your audio/media backend config — see [Media playback: legacy vs. ovos-media](ovos-media.md).
+Then select it in your audio/media backend config. See [Media playback: legacy vs. ovos-media](ovos-media.md).
 
 ---
 
 ## ovos-ocp-audio-plugin
 
-- **GitHub**: [https://github.com/OpenVoiceOS/ovos-ocp-audio-plugin](https://github.com/OpenVoiceOS/ovos-ocp-audio-plugin)
+- **GitHub**: [ovos-ocp-audio-plugin](https://github.com/OpenVoiceOS/ovos-ocp-audio-plugin)
 
 
-- **Description**: The legacy **"old audio service"** OCP backend. It crams OCP search orchestration, the player state machine, MPRIS and the GUI into a single `ovos-audio` `AudioBackend`. ⚠️ **Deprecated but still shipped and enabled by default** (`enable_old_audioservice: true`); superseded by the standalone [ovos-media](ovos-media.md) daemon. See the dedicated **[OCP Audio Plugin](ocp-audio-plugin.md)** page for the full background, configuration, and migration path.
+- **Description**: The legacy **"old audio service"** OCP backend. It crams OCP search orchestration, the player state machine, MPRIS and the GUI into a single `ovos-audio` `AudioBackend`. ⚠️ **Deprecated but still shipped and enabled by default** (`enable_old_audioservice: true`). It is superseded by the standalone [ovos-media](ovos-media.md) daemon. See the dedicated **[OCP Audio Plugin](ocp-audio-plugin.md)** page for the full background, configuration, and migration path.
 
 ---
 
 ## ovos-plugin-vlc
 
-- **PyPI**: [ovos-plugin-vlc](https://pypi.org/project/ovos-plugin-vlc) (legacy package; no separate source repository — superseded by [ovos-media-plugin-vlc](#ovos-media-plugin-vlc))
+- **PyPI**: [ovos-plugin-vlc](https://pypi.org/project/ovos-plugin-vlc) (legacy package, no separate source repository, superseded by [ovos-media-plugin-vlc](#ovos-media-plugin-vlc))
 
 
 - **Description**: VLC `AudioBackend` for the **old audio service** (`mycroft.plugin.audioservice`). For the [ovos-media](ovos-media.md) backend use [ovos-media-plugin-vlc](#ovos-media-plugin-vlc).
@@ -118,13 +118,13 @@ Then select it in your audio/media backend config — see [Media playback: legac
 pip install ovos-plugin-vlc
 ```
 
-Then select it in your audio/media backend config — see [Media playback: legacy vs. ovos-media](ovos-media.md).
+Then select it in your audio/media backend config. See [Media playback: legacy vs. ovos-media](ovos-media.md).
 
 ---
 
 ## ovos-media-plugin-mplayer
 
-- **GitHub**: [https://github.com/OpenVoiceOS/ovos-media-plugin-mplayer](https://github.com/OpenVoiceOS/ovos-media-plugin-mplayer)
+- **GitHub**: [ovos-media-plugin-mplayer](https://github.com/OpenVoiceOS/ovos-media-plugin-mplayer)
 
 
 - **Description**: MPlayer audio/video playback. Ships entry points for both
@@ -135,14 +135,14 @@ Then select it in your audio/media backend config — see [Media playback: legac
 pip install ovos-media-plugin-mplayer
 ```
 
-Then select it in your audio/media backend config — see [Media playback: legacy vs. ovos-media](ovos-media.md).
+Then select it in your audio/media backend config. See [Media playback: legacy vs. ovos-media](ovos-media.md).
 
 ---
 
 ## ovos-audio-plugin-mpv
 
-- **GitHub**: [https://github.com/OpenVoiceOS/ovos-media-plugin-mpv](https://github.com/OpenVoiceOS/ovos-media-plugin-mpv)
-  (the repo lives under this name; the PyPI package is still published as `ovos-audio-plugin-mpv`).
+- **GitHub**: [ovos-media-plugin-mpv](https://github.com/OpenVoiceOS/ovos-media-plugin-mpv)
+  (the repo lives under this name. The PyPI package is still published as `ovos-audio-plugin-mpv`).
 
 
 - **Description**: MPV audio/video playback. Ships entry points for both
@@ -153,13 +153,13 @@ Then select it in your audio/media backend config — see [Media playback: legac
 pip install ovos-audio-plugin-mpv
 ```
 
-Then select it in your audio/media backend config — see [Media playback: legacy vs. ovos-media](ovos-media.md).
+Then select it in your audio/media backend config. See [Media playback: legacy vs. ovos-media](ovos-media.md).
 
 ---
 
 ## ovos-media-plugin-ffplay
 
-- **GitHub**: [https://github.com/OpenVoiceOS/ovos-media-plugin-ffplay](https://github.com/OpenVoiceOS/ovos-media-plugin-ffplay)
+- **GitHub**: [ovos-media-plugin-ffplay](https://github.com/OpenVoiceOS/ovos-media-plugin-ffplay)
 
 
 - **Description**: ffplay-based audio playback backend. Ships entry points for both
@@ -171,18 +171,18 @@ Then select it in your audio/media backend config — see [Media playback: legac
 pip install ovos-media-plugin-ffplay
 ```
 
-Then select it in your audio/media backend config — see [Media playback: legacy vs. ovos-media](ovos-media.md).
+Then select it in your audio/media backend config. See [Media playback: legacy vs. ovos-media](ovos-media.md).
 
 ---
 
 ## ovos-media-plugin-cli
 
-- **GitHub**: [https://github.com/OpenVoiceOS/ovos-media-plugin-cli](https://github.com/OpenVoiceOS/ovos-media-plugin-cli)
+- **GitHub**: [ovos-media-plugin-cli](https://github.com/OpenVoiceOS/ovos-media-plugin-cli)
 
 
-- **Description**: Generic command-line playback backend — shells out to any CLI media
+- **Description**: Generic command-line playback backend. Shells out to any CLI media
   player. With an explicit `command` set (e.g. `"mpv --no-terminal"`, `"ffplay -nodisp
-  -autoexit"`), it appends the track URI as the final argument; with no `command` set it
+  -autoexit"`), it appends the track URI as the final argument. With no `command` set it
   auto-detects the best available player for the platform (`sox`/`play` preferred, then
   `mpg123`/`paplay`/`aplay` on Linux, `afplay` on macOS). Pause/resume use process signals
   (`SIGSTOP`/`SIGCONT`). Ships entry points for both ovos-media (`opm.media.audio`, class
@@ -194,22 +194,22 @@ pip install ovos-media-plugin-cli
 ```
 
 Then select it in your audio/media backend config, optionally setting the `command` to
-a specific CLI player — see [Media playback: legacy vs. ovos-media](ovos-media.md).
+a specific CLI player. See [Media playback: legacy vs. ovos-media](ovos-media.md).
 
 ---
 
 ## ovos-media-classifier
 
-- **GitHub**: [https://github.com/OpenVoiceOS/ovos-media-classifier](https://github.com/OpenVoiceOS/ovos-media-classifier)
+- **GitHub**: [ovos-media-classifier](https://github.com/OpenVoiceOS/ovos-media-classifier)
 
 
 - **Description**: Classifies an utterance's media intent and extracts entities (artist,
   title, station, …) ahead of stream resolution. Several backends are available depending on
-  installed extras — `KeywordMediaClassifier` (bundled locale keyword lists) is the always-available
+  installed extras. `KeywordMediaClassifier` (bundled locale keyword lists) is the always-available
   default, with `EmbeddingMediaClassifier`, `HybridMediaClassifier`, `OnnxMediaClassifier`, an
   Aho-Corasick exact-entity-list matcher (`AhocorasickMediaClassifier`, `[ner]` extra), and a
   `metadatarr`-backed classifier (`MetadatarrMediaClassifier`) as optional upgrades. Every backend
-  is importable from the top-level package; the optional ones resolve lazily so their extras are
+  is importable from the top-level package. The optional ones resolve lazily so their extras are
   only touched when actually used.
 
 ```bash
@@ -226,7 +226,7 @@ The `[ner]` extra adds `AhocorasickMediaClassifier` (in `ovos_media_classifier.a
 !!! note
     The `[ner]` extra's "NER" is exact entity-list matching, not statistical named-entity
     recognition: `AhocorasickMediaClassifier` compiles the configured entity lists (your actual
-    library — artists, titles, stations) into an Aho-Corasick automaton and matches verbatim; no
+    library: artists, titles, stations) into an Aho-Corasick automaton and matches verbatim. No
     model guesses spans.
 
 The keyword backend self-registers under the `opm.media.classifier` entry-point group this

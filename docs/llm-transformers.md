@@ -1,16 +1,22 @@
 # Generative AI [Transformer](transformer-plugins.md) Plugins
 
 !!! abstract "In a nutshell"
-    These plugins let an AI language model quietly tweak things as the assistant works — like a helpful editor sitting in the middle of the conversation. They can step in twice: once to clean up or rephrase what you just said before the assistant tries to understand it, and once to polish the assistant's reply before it's spoken aloud. You can stack several of them and set the order they run in. To learn more, see [Transformer Plugins](transformer-plugins.md) and the [Glossary](glossary.md).
+    These plugins let an AI language model tweak things as the assistant works. They act like an
+    editor sitting in the middle of the conversation. They can step in twice: once to clean up or
+    rephrase what you just said before the assistant tries to understand it, and once to polish
+    the assistant's reply before it's spoken aloud. You can stack several of them and set the
+    order they run in. To learn more, see [Transformer Plugins](transformer-plugins.md) and the
+    [Glossary](glossary.md).
 
-**Transformer plugins** intercept the OVOS processing pipeline at two points — before intent
-matching (utterance transformers) and before [TTS](tts-plugins.md) synthesis (dialog transformers). They operate
-independently of the persona system but can use the same LLM backends.
+**Transformer plugins** intercept the OVOS processing pipeline at two points: before intent
+matching (utterance transformers) and before [TTS](tts-plugins.md) synthesis (dialog
+transformers). They operate independently of the persona system but can use the same LLM
+backends.
 
-- **[Utterance](life-of-an-utterance.md) transformers** (`opm.transformer.text`) — run after [STT](stt-plugins.md), before NLP.
+- **[Utterance](life-of-an-utterance.md) transformers** (`opm.transformer.text`): run after [STT](stt-plugins.md), before NLP.
 
 
-- **Dialog transformers** (`opm.transformer.dialog`) — run after skill response generation, before TTS.
+- **Dialog transformers** (`opm.transformer.dialog`): run after skill response generation, before TTS.
 
 LLM-backed implementations are provided by `ovos-openai-plugin` / `ovos-gguf-plugin`
 (dialog transformers).
@@ -45,7 +51,7 @@ Falls back to the original dialog on API error.
 
 Entry point: `opm.transformer.dialog` (`ovos-dialog-transformer-openai-plugin`)
 
-Works with any OpenAI-compatible endpoint — OpenAI, Ollama, llama.cpp, or
+Works with any OpenAI-compatible endpoint: OpenAI, Ollama, llama.cpp, or
 `ovos-persona-server`:
 
 ```json
@@ -101,10 +107,10 @@ implementations:
 
 ## Stacking Transformers
 
-Multiple transformers of the same type can be active simultaneously; each configured entry under
-`dialog_transformers` runs in turn, **higher `priority` first**, each one's output feeding into
-the next. For example, running a cheap local pass to strip markdown/jargon before an expensive
-cloud model adds personality on top:
+Multiple transformers of the same type can be active at once. Each configured entry under
+`dialog_transformers` runs in turn, **higher `priority` first**. Each one's output feeds into
+the next. For example, you can run a cheap local pass to strip markdown and jargon, then let an
+expensive cloud model add personality on top:
 
 ```json
 {
@@ -145,16 +151,16 @@ ASR output), with higher priority also running first.
 - [Dialog Transformers — audio service](audio-service.md)
 
 
-- [OpenAI Plugin](openai-plugin.md) — OpenAI transformer configuration reference
+- [OpenAI Plugin](openai-plugin.md): OpenAI transformer configuration reference
 
 
-- [GGUF Plugin](gguf-plugin.md) — local GGUF transformer configuration reference
+- [GGUF Plugin](gguf-plugin.md): local GGUF transformer configuration reference
 
 ---
 
 !!! note "Where this code actually lives"
     `ovos-core` only defines the `opm.transformer.text` / `opm.transformer.dialog` entry-point
-    contracts and calls into whatever is installed — it does not implement any transformer
+    contracts and calls into whatever is installed. It does not implement any transformer
     itself. The LLM-backed implementations documented on this page live in their own plugin
     repos: [`ovos-openai-plugin`](https://github.com/OpenVoiceOS/ovos-openai-plugin) and
     [`ovos-gguf-plugin`](https://github.com/OpenVoiceOS/ovos-gguf-plugin).

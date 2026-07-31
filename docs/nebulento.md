@@ -2,9 +2,9 @@
 
 !!! abstract "In a nutshell"
     Nebulento is an [intent](glossary.md) parser that figures out what a user *meant* even when
-    they make typos, reorder words, or phrase things loosely — it matches by *fuzzy similarity*
-    rather than exact words. Think of it as a more forgiving sibling of [Padatious](padatious-pipeline.md):
-    you still give it example sentences, but it tolerates messy input. No training step, no model
+    they make typos, reorder words, or phrase things loosely. It matches by *fuzzy similarity*
+    rather than exact words. Think of it as a more forgiving sibling of [Padatious](padatious-pipeline.md).
+    You still give it example sentences, but it tolerates messy input. It needs no training step and no model
     files. See the [Glossary](glossary.md) for terms like *intent* and *entity*.
 
 *A lightweight fuzzy-matching intent parser.*
@@ -39,8 +39,8 @@ print(match)   # best fuzzy match, with name, entities and a confidence score
 ## In the OVOS pipeline
 
 Installed as a pipeline plugin (`nebulento[ovos]`), Nebulento listens on the **same
-`padatious:register_intent` bus events as [Padatious](padatious-pipeline.md)**, so it is a
-drop-in alternative — skills register their `.intent` files exactly as before. A hierarchical
+`padatious:register_intent` bus events as [Padatious](padatious-pipeline.md)**. This makes it a
+drop-in alternative. Skills register their `.intent` files exactly as before. A hierarchical
 variant is also available. See [Pipelines Overview](pipelines-overview.md) for how matchers are
 ordered and configured.
 

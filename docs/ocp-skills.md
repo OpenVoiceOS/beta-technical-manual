@@ -1,30 +1,30 @@
 # OCP Skills
 
 !!! tip "Just want to play music or radio?"
-    Install a ready-made skill instead of writing one — see
-    [What Can I Say? — Music & Radio](skill-examples.md#music-radio). This page is for
+    Install a ready-made skill instead of writing one. See
+    [What Can I Say? Music & Radio](skill-examples.md#music-radio). This page is for
     developers writing a new OCP media skill.
 
 !!! warning "OCP skills are giving way to MediaProvider plugins"
     OCP **skills** (media-provider skills built on `OVOSCommonPlaybackSkill` /
     [`@ocp_search`](#search-results)) still work and remain fully supported. The intended
-    successor is a dedicated **MediaProvider** plugin type (`opm.media.provider`): the
+    successor is a dedicated **MediaProvider** plugin type (`opm.media.provider`). The
     entry-point group is defined in `ovos-plugin-manager`, and the design is for the
     [`ovos-media`](ovos-media.md) player to load such plugins **in-process** and call
     `search()` on them directly, instead of broadcasting a query over the bus to skills.
     That in-process loading is not wired up in `ovos-media` yet, so writing an OCP skill
-    remains the way to provide media today — and stays the simpler path for setups still on
+    remains the way to provide media today, and stays the simpler path for setups still on
     the legacy audio service.
 
 !!! abstract "In a nutshell"
     OCP (OVOS Common Playback) is the part of OVOS that handles playing media, like music, podcasts, or radio. An OCP skill doesn't listen for "play X" itself; instead it acts as a source of media. When someone asks to play something, OVOS asks every OCP skill "can you find this?", each one answers with whatever it can offer and how good a match it thinks it is, and OVOS plays the best result. It's like asking several record shops for an album and going with whoever has the closest match. New terms are explained in the [Glossary](glossary.md).
 
 ??? info "📐 Formal specification"
-    OCP is specified by **[OVOS-OCP-1 — OVOS Common Playback: the Virtual Media Player](https://github.com/OpenVoiceOS/architecture/blob/dev/ocp-1.md)** (a formal [architecture spec](architecture-specs.md)). The spec defines a single **per-session Virtual Media Player**: one arbitration point that owns the session's now-playing track, queue, and transport state, addressed over the `ovos.common_play.*` bus surface with an MPRIS-style control set (play / search / pause / resume / next / previous / seek / stop) and a three-axis state model (`PlayerState`, `MediaState`, loop/shuffle). It can even be bridged to host-OS MPRIS players so voice controls media OVOS did not start. This page covers the **provider** side — the `@ocp_search` skills that feed candidate media *into* that player; the player and its control surface are the spec's subject. Note both this provider model and OVOS-OCP-1's player are current; the [`ovos-media`](ovos-media.md) refactor (see the note above) adds `opm.media.provider` plugins as an alternative to skill-based providers.
+    OCP is specified by **[OVOS-OCP-1: OVOS Common Playback: the Virtual Media Player](https://github.com/OpenVoiceOS/architecture/blob/dev/ocp-1.md)** (a formal [architecture spec](architecture-specs.md)). The spec defines a single **per-session Virtual Media Player**: one arbitration point that owns the session's now-playing track, queue, and transport state, addressed over the `ovos.common_play.*` bus surface with an MPRIS-style control set (play / search / pause / resume / next / previous / seek / stop) and a three-axis state model (`PlayerState`, `MediaState`, loop/shuffle). It can even be bridged to host-OS MPRIS players so voice controls media OVOS did not start. This page covers the **provider** side: the `@ocp_search` skills that feed candidate media *into* that player. The player and its control surface are the spec's subject. Note both this provider model and OVOS-OCP-1's player are current. The [`ovos-media`](ovos-media.md) refactor (see the note above) adds `opm.media.provider` plugins as an alternative to skill-based providers.
 
 OCP (OVOS Common Playback) skills are built from the `OVOSCommonPlaybackSkill` class.
 
-**What / why (beginners):** an OCP skill is a *media provider*. You do **not** write intents like "play X" — OCP owns the "play music / play a podcast / play the radio" voice interaction. Your skill only answers the question *"given this search phrase, what can you play?"*. You decorate one or more search methods with `@ocp_search`, return a list (or yield a stream) of result dicts with a confidence score, and OCP picks the best match across every installed OCP skill and handles the actual playback, queueing and GUI.
+**What / why (beginners):** an OCP skill is a *media provider*. You do **not** write intents like "play X". OCP owns the "play music / play a podcast / play the radio" voice interaction. Your skill only answers the question *"given this search phrase, what can you play?"*. You decorate one or more search methods with `@ocp_search`. Each one returns a list (or yields a stream) of result dicts with a confidence score. OCP picks the best match across every installed OCP skill and handles the actual playback, queueing and GUI.
 
 ```python
 from ovos_utils.ocp import MediaType, PlaybackType
@@ -36,9 +36,9 @@ from ovos_workshop.skills.common_play import OVOSCommonPlaybackSkill
 
 ## Search Results
 
-Search results are returned as a list of dicts, skills can also use iterators to yield results 1 at a time as they become available
+Search results are returned as a list of dicts. Skills can also use iterators to yield results one at a time as they become available.
 
-Mandatory fields are
+Mandatory fields are:
 
 ```python
 uri: str  # URL/URI of media, OCP will handle formatting and file handling
@@ -49,7 +49,7 @@ match_confidence: int  # 0-100
 
 ```
 
-Other optional metadata includes artists, album, length and images for the GUI
+Other optional metadata includes artists, album, length and images for the GUI:
 
 ```python
 artist: str
@@ -62,11 +62,12 @@ length: int # milliseconds, -1 for unknown/live streams — one time convention 
 ```
 
 ![Annotated OCP search results GUI showing a media entry's title, skill_id, duration, image, skill_icon, and background image fields mapped to the corresponding parts of the on-screen result card](https://github.com/OpenVoiceOS/ovos-technical-manual/assets/33701864/08e31d2d-90e8-45ea-ab2f-dbd235892cb3)
-*The OCP search results GUI, with each `MediaEntry` field labeled next to the part of the card it fills in: `title` and `skill_id` as text, `duration` as the elapsed-time readout, `image`/`skill_icon`/`bg_image` as the thumbnail, corner icon, and card background respectively.*
+*The OCP search results GUI, with each `MediaEntry` field labeled next to the part of the card it fills in.*
+The title and skill ID show as text. Duration shows as the elapsed-time readout. The image, skill icon, and background image show as the thumbnail, corner icon, and card background.
 
 ### OCP [Skill](skill-design-guidelines.md)
 
-General Steps to create a skill
+General steps to create a skill:
 
 - subclass your skill from `OVOSCommonPlaybackSkill`
 
@@ -77,8 +78,8 @@ General Steps to create a skill
 - `self.voc_match(phrase, "skill_name")` to handle specific requests for your skill
 
 
-- `self.remove_voc(phrase, "skill_name")` to remove matched phrases from the search request —
-  for example, `self.remove_voc("play some somafm radio", "somafm")` strips the `somafm` vocab
+- `self.remove_voc(phrase, "skill_name")` to remove matched phrases from the search request.
+  For example, `self.remove_voc("play some somafm radio", "somafm")` strips the `somafm` vocab
   match and returns `"play some radio"`, so the rest of your matching logic scores against the
   cleaned-up phrase instead of the raw one
 
@@ -92,7 +93,7 @@ General Steps to create a skill
   - The search function can be entirely inline or call another Python library, like [pandorinha](https://github.com/OpenJarbas/pandorinha) or [plexapi](https://github.com/pkkid/python-plexapi)
 
 
-- `self.extend_timeout()` to delay OCP from selecting a result, requesting more time to perform the search
+- `self.extend_timeout()` to delay OCP from selecting a result, requesting more time to search
 
 
 - Implement a confidence score formula
@@ -102,12 +103,12 @@ General Steps to create a skill
 
 
   - Results below the `min_score` config threshold (`intents.ovos-ocp-pipeline-plugin.min_score`,
-    default `50`) are filtered out before OCP picks a winner across all responding skills; there
-    is no fixed confidence value that short-circuits and cancels other skills' searches early —
-    higher scores simply make your result more likely to win the cross-skill comparison
+    default `50`) are filtered out before OCP picks a winner across all responding skills. There
+    is no fixed confidence value that short-circuits and cancels other skills' searches early.
+    Higher scores simply make your result more likely to win the cross-skill comparison
 
 
-- `ocp_featured_media`, return a playlist for the OCP menu if selected from GUI (optional)
+- `ocp_featured_media`: return a playlist for the OCP menu if selected from GUI (optional)
 
 
 - Create a `requirements.txt` file with third-party package requirements
@@ -190,9 +191,9 @@ class SomaFMSkill(OVOSCommonPlaybackSkill):
 
 ## OCP Keywords
 
-OCP skills often need to match hundreds or thousands of strings against the query string, `self.voc_match` can quickly become impractical to use in this scenario
+OCP skills often need to match hundreds or thousands of strings against the query string. `self.voc_match` can quickly become impractical to use in this scenario.
 
-To help with this the OCP skill class provides efficient keyword matching
+To help with this the OCP skill class provides efficient keyword matching.
 
 ```python
 def register_ocp_keyword(self, media_type: MediaType, label: str,
@@ -221,13 +222,13 @@ def load_ocp_keyword_from_csv(self, csv_path: str, lang: str = None):
 
 ### OCP Voc match
 
-uses [Aho–Corasick algorithm](https://en.wikipedia.org/wiki/Aho%E2%80%93Corasick_algorithm) to match OCP keywords
+Uses the [Aho–Corasick algorithm](https://en.wikipedia.org/wiki/Aho%E2%80%93Corasick_algorithm) to match OCP keywords.
 
-this efficiently matches many keywords against an utterance
+This efficiently matches many keywords against an utterance.
 
-OCP keywords are registered via `self.register_ocp_keyword`
+OCP keywords are registered via `self.register_ocp_keyword`.
 
-wordlists can also be loaded from a .csv file, see [the OCP dataset](https://github.com/OpenVoiceOS/ovos-classifiers/tree/dev/scripts/training/ocp/datasets) for a list of keywords gathered from wikidata with SPARQL queries
+Wordlists can also be loaded from a .csv file. See [the OCP dataset](https://github.com/OpenVoiceOS/ovos-classifiers/tree/dev/scripts/training/ocp/datasets) for a list of keywords gathered from wikidata with SPARQL queries.
 
 
 ### OCP Database Skill
@@ -293,11 +294,11 @@ print(entities)
 
 ## Playlist Results
 
-Results can also be playlists, not only single tracks, for instance full albums or a full season for a series
+Results can also be playlists, not only single tracks. For instance, a result can be a full album or a full season of a series.
 
-When a playlist is selected from Search Results, it will replace the Now Playing list
+When a playlist is selected from Search Results, it replaces the Now Playing list.
 
-Playlist results look exactly the same as regular results, but instead of a `uri` they provide a `playlist`
+Playlist results look exactly the same as regular results, but instead of a `uri` they provide a `playlist`:
 
 ```python
 playlist: list  # list of dicts, each dict is a regular search result
@@ -308,7 +309,7 @@ match_confidence: int  # 0-100
 
 ```
 
-> NOTE: nested playlists are a work in progress and not guaranteed to be functional, ie, the `"playlist"` dict key should not include other playlists
+> NOTE: nested playlists are a work in progress and not guaranteed to be functional. The `"playlist"` dict key should not include other playlists.
 
 ### Playlist Skill
 

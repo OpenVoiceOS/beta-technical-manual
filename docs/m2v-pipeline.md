@@ -4,10 +4,10 @@
     In real use but still settling — watch releases for the occasional breaking change. Rated by [repository health](maturity.md), not version.
 
 !!! abstract "In a nutshell"
-    This is another tool that figures out which skill should handle what you said. Instead of matching exact keywords or memorized examples, it compares the *meaning* of your words to the commands it knows — so it can still understand you when you phrase things differently than expected. Think of it as recognizing that "turn the music down" and "lower the volume" are asking for the same thing. It is meant to work alongside the keyword-based [Adapt](adapt-pipeline.md) and example-based [Padatious](padatious-pipeline.md) tools, not replace them. See the [Glossary](glossary.md) for unfamiliar terms.
+    This is another tool that figures out which skill should handle what you said. Instead of matching exact keywords or memorized examples, it compares the *meaning* of your words to the commands it knows. This means it can still understand you when you phrase things differently than expected. Think of it as recognizing that "turn the music down" and "lower the volume" are asking for the same thing. It is meant to work alongside the keyword-based [Adapt](adapt-pipeline.md) and example-based [Padatious](padatious-pipeline.md) tools, not replace them. See the [Glossary](glossary.md) for unfamiliar terms.
 
 ??? info "📐 Formal specification"
-    Model2Vec is a **pipeline plugin** under **[OVOS-PIPELINE-1 — Utterance Lifecycle & Pipeline](https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md)**. It serves the same **template-intent** role as Padatious in **[OVOS-INTENT-3 — Intent Definition §5](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-3.md)** — a classifier paired with a slot extractor (INTENT-3 §6.2) — only the matching strategy (static embeddings) differs; INTENT-3 §8 leaves that strategy unconstrained. Skill resources are written in the **[OVOS-INTENT-1 grammar](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-1.md)**. See the [spec index](architecture-specs.md).
+    Model2Vec is a **pipeline plugin** under **[OVOS-PIPELINE-1 — Utterance Lifecycle & Pipeline](https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md)**. It serves the same **template-intent** role as Padatious in **[OVOS-INTENT-3 — Intent Definition §5](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-3.md)**: a classifier paired with a slot extractor (INTENT-3 §6.2). Only the matching strategy (static embeddings) differs, and INTENT-3 §8 leaves that strategy unconstrained. Skill resources are written in the **[OVOS-INTENT-1 grammar](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-1.md)**. See the [spec index](architecture-specs.md).
 
 The **Model2Vec Intent Pipeline** matches utterances to skill intents using
 [Model2Vec](https://github.com/MinishLab/model2vec) static embeddings instead of
@@ -16,7 +16,7 @@ example sentences, this pipeline embeds the utterance as a vector and picks the
 closest known intent. That makes it more forgiving of paraphrases and word order,
 and it works across languages when a multilingual model is used.
 
-It is meant to **augment** Adapt and Padatious, not replace them: put a Model2Vec
+It is meant to **augment** Adapt and Padatious, not replace them. Put a Model2Vec
 matcher in your pipeline alongside the others and let confidence ordering decide.
 
 ---
@@ -56,7 +56,7 @@ run. The sections below cover how matching works and how to tune it.
 ## How it works
 
 The plugin (`Model2VecIntentPipeline`) is a `ConfidenceMatcherPipeline`, so it
-exposes three confidence tiers — `match_high`, `match_medium`, `match_low` — that
+exposes three confidence tiers, `match_high`, `match_medium`, and `match_low`, that
 become the pipeline matcher IDs `ovos-m2v-pipeline-high` / `-medium` / `-low`.
 
 For an utterance it:
@@ -67,8 +67,8 @@ For an utterance it:
    intents (the pipeline tracks them over the bus via
    `intent.service.adapt.manifest` / `intent.service.padatious.manifest` and the
    `register_intent` / `padatious:register_intent` / `detach_intent` /
-   `detach_skill` events). Three special labels — `ocp:play`,
-   `common_query:common_query`, `stop:stop` — are also allowed, but only when the
+   `detach_skill` events). Three special labels, `ocp:play`,
+   `common_query:common_query`, and `stop:stop`, are also allowed, but only when the
    corresponding downstream pipeline (`ovos-ocp-pipeline-plugin`,
    `ovos-common-query-pipeline-plugin`, `ovos-stop-pipeline-plugin`) is present in
    the session's pipeline list.
@@ -84,10 +84,10 @@ ship knowledge of many skills without firing for skills you do not have installe
 
 The pipeline has a `mode` config key:
 
-* **`classifier`** (default) — loads a `StaticModelPipeline` (embedding model plus
+* **`classifier`** (default): loads a `StaticModelPipeline` (embedding model plus
   a trained linear classifier head). Scores are softmax probabilities. This is the
   mode used by the published `Jarbas/ovos-model2vec-intents-*` models.
-* **`prototype`** — loads a bare `StaticModel` (embeddings only, no trained head)
+* **`prototype`**: loads a bare `StaticModel` (embeddings only, no trained head)
   and builds a prototype store at runtime from the example utterances skills
   provide when they register Padatious intents. Scores are cosine similarities.
   Adapt intents (which have no example sentences) are tracked by name but not
@@ -130,7 +130,7 @@ plugin so it can run alongside the classifier one. It reads its config from
 Prototype mode adds `prototype_k`, `prototype_strategy`, `prototype_top_k` and
 `prototype_tau` to control how prototype embeddings are selected per label.
 
-> The model is **pretrained**. It does not learn new skills at runtime — the
+> The model is **pretrained**. It does not learn new skills at runtime. The
 > registered-intent filter just decides which of the model's known labels are
 > eligible. In prototype mode the store is rebuilt at runtime, but only from the
 > example utterances Padatious skills provide.
@@ -141,9 +141,9 @@ Prototype mode adds `prototype_k`, `prototype_strategy`, `prototype_top_k` and
 
 Two families are published on Hugging Face:
 
-* **Multilingual** — distilled from LaBSE, larger, supports many languages and
+* **Multilingual**: distilled from LaBSE, larger, supports many languages and
   partially translated skills (as long as their **dialogs** are localized).
-* **Language-specific** — roughly 10x smaller and nearly as accurate for a single
+* **Language-specific**: roughly 10x smaller and nearly as accurate for a single
   language, well suited to constrained hardware (e.g. Raspberry Pi).
 
 Browse them here:
@@ -160,22 +160,22 @@ The published `Jarbas/ovos-model2vec-intents-*` models are built from a
 `train/` toolchain shipped inside the `ovos-m2v-pipeline` source repository
 (it is not part of the installed pip package). The pipeline is:
 
-1. **Gather a dataset** — `gather_dataset.py` (multilingual) or
+1. **Gather a dataset**: `gather_dataset.py` (multilingual) or
    `gather_dataset_en.py` (English-only) downloads and merges intent examples
    from `Jarbas/ovos_intent_examples` and `Jarbas/music_queries_templates` on
    Hugging Face, plus per-language intent CSVs from the OpenVoiceOS
    [lang-support-tracker](https://github.com/OpenVoiceOS/lang-support-tracker).
    The output is a CSV with columns `lang`, `label`, `sentence`, where `label`
    follows the `<skill_id>:<intent_name>` format.
-2. **Train** — `train_multilingual.py` fine-tunes a classifier head on top of
-   `minishlab/M2V_multilingual_output`; `train_en.py` trains one per English
+2. **Train**: `train_multilingual.py` fine-tunes a classifier head on top of
+   `minishlab/M2V_multilingual_output`. `train_en.py` trains one per English
    Potion base model (`minishlab/potion-base-{2M,4M,8M,32M}`,
    `minishlab/potion-retrieval-32M`). Each run saves a `StaticModelPipeline`
    directory plus a metrics report.
-3. **Optional distillation** — `distill.py` calls `model2vec.distill.distill()`
+3. **Optional distillation**: `distill.py` calls `model2vec.distill.distill()`
    to turn a Sentence Transformer that has no Model2Vec distillate yet into a
    usable base model.
-4. **Smoke-test** — load the saved directory with
+4. **Smoke-test**: load the saved directory with
    `StaticModelPipeline.from_pretrained(...)` and call `.predict()` /
    `.predict_proba()` on a few example sentences before publishing.
 
@@ -188,7 +188,7 @@ dataset schema and script options.
 
 ## Gotcha: ordering against the deterministic engines
 
-Model2Vec generalises well, which also means it can claim an utterance a more
+Model2Vec generalizes well. This also means it can claim an utterance a more
 precise parser would have nailed. The usual setup is to place
 `ovos-m2v-pipeline-high` after the high tiers of Padatious/Adapt (or interleaved by
 confidence) so exact matches win first and Model2Vec catches the paraphrases the

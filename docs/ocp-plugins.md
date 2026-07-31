@@ -1,7 +1,7 @@
 # OCP Plugins Reference
 
 !!! abstract "In a nutshell"
-    OCP (the OpenVoiceOS Common Play system) is the part of OVOS that plays media — music, podcasts, news, radio and the like. Each plugin on this page teaches it to handle one kind of source, such as YouTube links, Bandcamp pages, RSS feeds, or local files. So if you ask to play something, the right plugin knows how to find the actual audio stream and start it. See the [Glossary](glossary.md) for unfamiliar terms.
+    OCP (the OpenVoiceOS Common Play system) is the part of OVOS that plays media: music, podcasts, news, radio and the like. Each plugin on this page teaches it to handle one kind of source, such as YouTube links, Bandcamp pages, RSS feeds, or local files. So if you ask to play something, the right plugin knows how to find the actual audio stream and start it. See the [Glossary](glossary.md) for unfamiliar terms.
 
 | Plugin | Description |
 |--------|-------------|
@@ -11,11 +11,11 @@
 | [ovos-ocp-rss-plugin](#ovos-ocp-rss-plugin) | Parses an RSS/podcast feed and extracts the newest audio enclosure as the playable stream |
 | [ovos-ocp-youtube-plugin](#ovos-ocp-youtube-plugin) | Resolves YouTube/YouTube Music URLs via a selectable `yt-dlp`/pytube/Invidious/webview backend |
 | [ovos-ocp-m3u-plugin](#ovos-ocp-m3u-plugin) | Downloads a `.pls`/`.m3u` playlist and extracts the first playable stream URL inside it |
-| [ovos-media-classifier](#ovos-media-classifier) | ⚠️ experimental — pluggable media-intent classifier that routes a request to the right `MediaProvider`s |
+| [ovos-media-classifier](#ovos-media-classifier) | ⚠️ experimental: pluggable media-intent classifier that routes a request to the right `MediaProvider`s |
 
 ## ovos-ocp-files-plugin
 
-- **GitHub**: [https://github.com/OpenVoiceOS/ovos-ocp-files-plugin](https://github.com/OpenVoiceOS/ovos-ocp-files-plugin)
+- **GitHub**: [ovos-ocp-files-plugin](https://github.com/OpenVoiceOS/ovos-ocp-files-plugin)
 
 
 - **Description**: A stream extractor that lets OCP play local files (`file://` URIs, or plain
@@ -26,11 +26,11 @@
 
 ## ovos-ocp-news-plugin
 
-- **GitHub**: [https://github.com/OpenVoiceOS/ovos-ocp-news-plugin](https://github.com/OpenVoiceOS/ovos-ocp-news-plugin)
+- **GitHub**: [ovos-ocp-news-plugin](https://github.com/OpenVoiceOS/ovos-ocp-news-plugin)
 
 
 - **Description**: A stream extractor for spoken-news providers. It registers the stream
-  extractor id (SEI) `news`, so any result URI of the form `news//<url>` is routed to it; it
+  extractor id (SEI) `news`, so any result URI of the form `news//<url>` is routed to it. It
   also recognizes a hardcoded table of known news-provider URLs directly (`URL_MAPPINGS`) so
   skills can hand it a raw provider URL without the `news//` prefix. At playback time it looks
   the URL up in that table and calls the matching extractor function to resolve the real,
@@ -40,7 +40,7 @@
 
 ## ovos-ocp-bandcamp-plugin
 
-- **GitHub**: [https://github.com/OpenVoiceOS/ovos-ocp-bandcamp-plugin](https://github.com/OpenVoiceOS/ovos-ocp-bandcamp-plugin)
+- **GitHub**: [ovos-ocp-bandcamp-plugin](https://github.com/OpenVoiceOS/ovos-ocp-bandcamp-plugin)
 
 
 - **Description**: A stream extractor for [Bandcamp](https://bandcamp.com) pages, registering
@@ -52,12 +52,12 @@
 
 ## ovos-ocp-rss-plugin
 
-- **GitHub**: [https://github.com/OpenVoiceOS/ovos-ocp-rss-plugin](https://github.com/OpenVoiceOS/ovos-ocp-rss-plugin)
+- **GitHub**: [ovos-ocp-rss-plugin](https://github.com/OpenVoiceOS/ovos-ocp-rss-plugin)
 
 
 - **Description**: A stream extractor for RSS/podcast feeds, registering the SEI `rss`. Given a
   `rss//<feed-url>` (or bare feed URL), it parses the feed with `feedparser`, takes the most
-  recent entry, and returns the first enclosure link whose MIME type contains `audio` — along
+  recent entry, and returns the first enclosure link whose MIME type contains `audio`, along
   with that entry's title, publish timestamp, and duration when the feed provides them. It only
   ever surfaces the newest playable item in the feed, not the whole episode list.
 
@@ -65,12 +65,12 @@
 
 ## ovos-ocp-youtube-plugin
 
-- **GitHub**: [https://github.com/OpenVoiceOS/ovos-ocp-youtube-plugin](https://github.com/OpenVoiceOS/ovos-ocp-youtube-plugin)
+- **GitHub**: [ovos-ocp-youtube-plugin](https://github.com/OpenVoiceOS/ovos-ocp-youtube-plugin)
 
 
 - **Description**: A stream extractor for YouTube and YouTube Music links. Unlike the other
-  extractors on this page, it is a small router over multiple interchangeable backends —
-  `youtube-dl`/`yt-dlp`, `pytube`, an Invidious mirror, or a webview fallback — selectable via
+  extractors on this page, it is a small router over multiple interchangeable backends:
+  `youtube-dl`/`yt-dlp`, `pytube`, an Invidious mirror, or a webview fallback, selectable via
   the `youtube_backend` / `ydl_backend` / `invidious_host` settings, since any single scraping
   approach tends to break whenever YouTube changes its page format. It also has a dedicated path
   for resolving a channel's current live stream.
@@ -79,7 +79,7 @@
 
 ## ovos-ocp-m3u-plugin
 
-- **GitHub**: [https://github.com/OpenVoiceOS/ovos-ocp-m3u-plugin](https://github.com/OpenVoiceOS/ovos-ocp-m3u-plugin)
+- **GitHub**: [ovos-ocp-m3u-plugin](https://github.com/OpenVoiceOS/ovos-ocp-m3u-plugin)
 
 
 - **Description**: A stream extractor for `.m3u` and `.pls` playlist URLs, registering the SEIs
@@ -91,15 +91,15 @@
 
 ## ovos-media-classifier
 
-- **GitHub**: [https://github.com/OpenVoiceOS/ovos-media-classifier](https://github.com/OpenVoiceOS/ovos-media-classifier)
+- **GitHub**: [ovos-media-classifier](https://github.com/OpenVoiceOS/ovos-media-classifier)
 
 
-- **Description**: ⚠️ **Experimental — work in progress, not yet deployed in OpenVoiceOS.**
+- **Description**: ⚠️ **Experimental. Work in progress, not yet deployed in OpenVoiceOS.**
   A self-describing, pluggable media-intent classifier: given a spoken request, it decides
   whether it is a media request at all and, if so, classifies it along several axes at once
   (media type, playback modality, structure, explicitness, tags, qualifiers) so OCP can route
   it to the right `MediaProvider`s and apply content policy. It is a router, not a
-  resolver — it does not turn a title into a playable stream, the OCP stream-extractor
+  resolver. It does not turn a title into a playable stream. The OCP stream-extractor
   plugins on this page do that.
 
 ---

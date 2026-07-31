@@ -1,9 +1,9 @@
 # OVOS Number Parser
 
 !!! abstract "In a nutshell"
-    Computers store numbers as digits (`123`), but people say them as words ("one hundred and twenty-three") — and the words differ in every language. This library is the translator between the two: it can read a number out loud for the assistant to speak, or pick a number out of something you said ("set a timer for twenty-five minutes") and turn it back into digits. It also understands fractions and ordinals like "third". See the [Glossary](glossary.md) for unfamiliar terms.
+    Computers store numbers as digits (`123`), but people say them as words ("one hundred and twenty-three"). The words differ in every language. This library is the translator between the two: it can read a number out loud for the assistant to speak, or pick a number out of something you said ("set a timer for twenty-five minutes") and turn it back into digits. It also understands fractions and ordinals like "third". See the [Glossary](glossary.md) for unfamiliar terms.
 
-`ovos-number-parser` converts numbers between digits and spoken words across many languages: it speaks a number aloud (`123` → "one hundred and twenty-three"), pulls a number out of free text ("I have twenty apples" → `20`), and detects fractions and ordinals.
+`ovos-number-parser` converts numbers between digits and spoken words across many languages. It speaks a number aloud (`123` → "one hundred and twenty-three"), pulls a number out of free text ("I have twenty apples" → `20`), and detects fractions and ordinals.
 
 **What you get in 30 seconds:**
 
@@ -14,7 +14,7 @@ pronounce_number(123, "en")            # "one hundred and twenty three"
 extract_number("I have twenty apples", "en")   # 20
 ```
 
-Every function takes an explicit `lang` (a BCP-47 code such as `"en"` or `"pt-br"`); there is no global default language. When a language lacks a hand-written implementation for `pronounce_number`/`pronounce_ordinal`, the library falls back to [unicode-rbnf](https://github.com/rhasspy/unicode-rbnf). For functions without a fallback (`extract_number`, `is_fractional`), an unsupported language raises `NotImplementedError`. `numbers_to_digits` never raises — an unsupported language is left unchanged.
+Every function takes an explicit `lang` (a BCP-47 code such as `"en"` or `"pt-br"`). There is no global default language. When a language lacks a hand-written implementation for `pronounce_number`/`pronounce_ordinal`, the library falls back to [unicode-rbnf](https://github.com/rhasspy/unicode-rbnf). For functions without a fallback (`extract_number`, `is_fractional`), an unsupported language raises `NotImplementedError`. `numbers_to_digits` never raises. An unsupported language is left unchanged.
 
 ## Features
 
@@ -24,7 +24,7 @@ Every function takes an explicit `lang` (a BCP-47 code such as `"en"` or `"pt-br
 - **Pronounce Ordinals:** Converts numbers to their ordinal forms (`pronounce_ordinal`).
 
 
-- **Pronounce Fractions:** Speaks a fraction string such as `"3/2"` (`pronounce_fraction`). Hand-written for `pt`, `ast`, `ca`, `oc`, `an`, `mwl`, `gl`, and `ro`; every other language uses a generic fallback.
+- **Pronounce Fractions:** Speaks a fraction string such as `"3/2"` (`pronounce_fraction`). Hand-written for `pt`, `ast`, `ca`, `oc`, `an`, `mwl`, `gl`, and `ro`. Every other language uses a generic fallback.
 
 
 - **Extract Numbers:** Extracts a number from text (`extract_number`).
@@ -127,7 +127,7 @@ def pronounce_number(number: Union[int, float], lang: str, places: int = 3, shor
 
 > Most language backends only consume `number`, `places`, `short_scale`, `scientific`, and `ordinals`. The `digits`, `gender`, and `scale` arguments (and `DigitPronunciation`/`GrammaticalGender`/`Scale`, importable from `ovos_number_parser.util`) currently only affect Portuguese (`pt`) and Mirandese (`mwl`).
 
-> `pronounce_number` also accepts a Python `complex` value and speaks it in rectangular `a+bi` form, e.g. `pronounce_number(complex(3, 2), "en")` → `"three plus two i"`. The number itself is composed from the per-language cardinal pronunciation; only the "plus"/"minus"/"i" connectives are language-specific (English used as the default).
+> `pronounce_number` also accepts a Python `complex` value and speaks it in rectangular `a+bi` form, e.g. `pronounce_number(complex(3, 2), "en")` → `"three plus two i"`. The number itself is composed from the per-language cardinal pronunciation. Only the "plus"/"minus"/"i" connectives are language-specific (English used as the default).
 
 **Example Usage:**
 
@@ -166,7 +166,7 @@ def pronounce_ordinal(number: Union[int, float], lang: str, short_scale: Optiona
 
 ```
 
-Hand-written ordinal pronunciation exists for most languages in the support table above; a handful (`en`, `az`, `es`, `fr`, `it`, among others) route through the unicode-rbnf fallback instead.
+Hand-written ordinal pronunciation exists for most languages in the support table above. A handful (`en`, `az`, `es`, `fr`, `it`, among others) route through the unicode-rbnf fallback instead.
 
 **Example Usage:**
 
@@ -291,14 +291,14 @@ numbers_to_digits("set a timer for twenty five minutes", "en")
 def numbers_to_digits(utterance: str, lang: str, scale: Optional[Scale] = None) -> str: ...
 ```
 
-`scale` (`Scale.LONG` / `Scale.SHORT`, from `ovos_number_parser.util`) only matters for languages that distinguish short/long scale (e.g. `pt`/`mwl`). Hand-written rewriting is dispatched for `ast`, `oc`, `an`, `fy`, `gl`, `de`, `pt`, `mwl`, `ro`, `bg`, `hr`, `ru`, `sk`, `id`, `ms`, `tr`, and `uk`; every other language (including `en` and `kab`) gets a generic word-span replacement instead — it works but is less precise about compound numerals than a hand-written implementation. A language is never raised on: one that has no parser at all is simply left unchanged.
+`scale` (`Scale.LONG` / `Scale.SHORT`, from `ovos_number_parser.util`) only matters for languages that distinguish short/long scale (e.g. `pt`/`mwl`). Hand-written rewriting is dispatched for `ast`, `oc`, `an`, `fy`, `gl`, `de`, `pt`, `mwl`, `ro`, `bg`, `hr`, `ru`, `sk`, `id`, `ms`, `tr`, and `uk`. Every other language (including `en` and `kab`) gets a generic word-span replacement instead. It works but is less precise about compound numerals than a hand-written implementation. No language ever raises here. One that has no parser at all is simply left unchanged.
 
 !!! note
     Kabyle (`kab`) has two coexisting numeral systems: everyday loan-word counting (Arabic-derived above ten, e.g. `waḥed u ɛecrin` = 21) used for pronunciation, and a formalized pan-Amazigh proposal (invariable tens, descending magnitudes, no connectors) that extraction also recognizes. `kab` counts only up to 9999 and has no scale or fraction vocabulary.
 
 ### Pronounce a Fraction
 
-Speak a fraction string such as `"3/2"`. Hand-written pronunciation exists for `pt`, `ast`, `ca`, `oc`, `an`, `mwl`, `gl`, and `ro`; every other language routes through a generic fallback rather than raising.
+Speak a fraction string such as `"3/2"`. Hand-written pronunciation exists for `pt`, `ast`, `ca`, `oc`, `an`, `mwl`, `gl`, and `ro`. Every other language routes through a generic fallback rather than raising.
 
 ```python
 from ovos_number_parser import pronounce_fraction
@@ -312,13 +312,13 @@ def pronounce_fraction(fraction_word: str, lang: str, scale: Optional[Scale] = N
 
 ## Related Projects
 
-- [ovos-date-parser](https://github.com/OpenVoiceOS/ovos-date-parser) - for handling dates and times
+- [ovos-date-parser](https://github.com/OpenVoiceOS/ovos-date-parser): for handling dates and times
 
 
-- [ovos-lang-parser](https://github.com/OpenVoiceOS/ovos-lang-parser) - for handling language names
+- [ovos-lang-parser](https://github.com/OpenVoiceOS/ovos-lang-parser): for handling language names
 
 
-- [ovos-color-parser](https://github.com/OpenVoiceOS/ovos-color-parser) - for handling colors
+- [ovos-color-parser](https://github.com/OpenVoiceOS/ovos-color-parser): for handling colors
 
 ## License
 

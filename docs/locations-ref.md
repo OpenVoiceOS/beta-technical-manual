@@ -1,7 +1,10 @@
 # Locations
 
 !!! abstract "In a nutshell"
-    Like any program, OVOS keeps its settings files in specific folders on your computer. This developer reference lists where those folders are and the rules OVOS follows to find them. You only need it if you are troubleshooting where a setting lives or writing code that reads configuration. See the [Glossary](glossary.md).
+    Like any program, OVOS keeps its settings files in specific folders on your computer. This
+    developer reference lists where those folders are and the rules OVOS follows to find them.
+    You need it only when you troubleshoot where a setting lives, or write code that reads
+    configuration. See the [Glossary](glossary.md).
 
 **Module:** `ovos_config.locations`
 
@@ -38,7 +41,8 @@ path = get_xdg_config_save_path()
 
 ```
 
-Returns the XDG config save directory for the current base folder. (At import time the module ensures the user-config and web-cache directories exist, but these helpers only build the path string.)
+Returns the XDG config save directory for the current base folder. At import time the module
+creates the user-config and web-cache directories. These helpers only build the path string.
 
 ### `get_xdg_data_save_path()`
 
@@ -75,7 +79,8 @@ path = find_user_config()
 
 ```
 
-Returns the path to the user config file. Checks `USER_CONFIG` (XDG) first, then falls back to the legacy pre-XDG location `~/.mycroft/mycroft.conf` if that is the one that exists on disk.
+Returns the path to the user config file. It checks `USER_CONFIG` (XDG) first. If that file does
+not exist on disk, it falls back to the legacy pre-XDG location `~/.mycroft/mycroft.conf`.
 
 ### `get_config_locations()`
 

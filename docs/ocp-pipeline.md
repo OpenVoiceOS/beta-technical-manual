@@ -7,12 +7,13 @@
     When you say "play some jazz" or "next song", the assistant first has to realise you are talking about *media* and not, say, the weather. This is the part that does that: it spots that an utterance is a playback request, figures out what kind of media you want, asks the installed music/podcast/video skills to search for it, and hands the best result off to be played. Think of it as the dispatcher that turns "play X" into actual playback. See the [Intent Pipeline](pipelines-overview.md) overview or the [Glossary](glossary.md) for related terms.
 
 ??? info "📐 Formal specification"
-    The media player this pipeline drives is specified by **[OVOS-OCP-1 — OVOS Common Playback](https://github.com/OpenVoiceOS/architecture/blob/dev/ocp-1.md)** — the per-session *Virtual Media Player* and its `ovos.common_play.*` control surface. The matching/classification side is a **pipeline plugin** under **[OVOS-PIPELINE-1](https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md)** (OCP-1 explicitly leaves the NLU to PIPELINE-1). Media stop is one subscriber to the **[OVOS-STOP-1](https://github.com/OpenVoiceOS/architecture/blob/dev/stop-1.md)** cascade. See the [spec index](architecture-specs.md).
+    The media player this pipeline drives is specified by **[OVOS-OCP-1 — OVOS Common Playback](https://github.com/OpenVoiceOS/architecture/blob/dev/ocp-1.md)**: the per-session *Virtual Media Player* and its `ovos.common_play.*` control surface. The matching/classification side is a **pipeline plugin** under **[OVOS-PIPELINE-1](https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md)** (OCP-1 explicitly leaves the NLU to PIPELINE-1). Media stop is one subscriber to the **[OVOS-STOP-1](https://github.com/OpenVoiceOS/architecture/blob/dev/stop-1.md)** cascade. See the [spec index](architecture-specs.md).
 
-The **OCP (OVOS Common Play)** Pipeline Plugin handles media playback commands —
+The **OCP (OVOS Common Play)** Pipeline Plugin handles media playback commands:
 "play some jazz", "pause", "next song". It recognises that an utterance is about
 media, works out what kind of media is wanted, asks OCP-enabled skills to search
-for it, filters the results, and hands the best one to the active player — `ovos-audio`'s legacy OCP backend by default, or the [`ovos-media`](ovos-media.md) daemon if enabled — to play.
+for it, filters the results, and hands the best one to the active player to play.
+That player is `ovos-audio`'s legacy OCP backend by default, or the [`ovos-media`](ovos-media.md) daemon if enabled.
 
 Skills act purely as catalogs: they return search results, they do not play
 anything themselves. OCP centralises selection and playback.
@@ -68,8 +69,8 @@ them in the pipeline by the IDs below (the short `ocp_*` aliases are deprecated)
 
 A separate class, `MycroftCPSLegacyPipeline`, is registered as its own entry point
 `ovos-ocp-pipeline-plugin-legacy` (alias `ocp_legacy`). It
-bridges to deprecated Mycroft CommonPlaySkill (CPS) skills and is off by default —
-only useful if you still run legacy CPS skills.
+bridges to deprecated Mycroft CommonPlaySkill (CPS) skills and is off by default.
+It is only useful if you still run legacy CPS skills.
 
 > `ocp_low` keys off skill-registered media keywords, so it can fire on phrases
 > that merely contain a known artist or show name even when no playback was
@@ -78,20 +79,20 @@ only useful if you still run legacy CPS skills.
 ---
 
 !!! note "Playback vs. control, and why ordering matters"
-    OCP-1 §2 splits media commands into two classes the player must distinguish: **playback requests** ("play X", "open X") that acquire new media, and **control requests** ("pause", "resume", "next", "previous", "stop", seek) that act on whatever is *already* playing — including media OVOS did not start, when the MPRIS bridge (OCP-1 §6) is enabled. There is exactly **one Virtual Media Player per session** (OCP-1 §2, §5); a request names *the player*, not a backend, and the player routes. This is why a high-tier OCP stage belongs early in `session.pipeline`: as a selective pipeline plugin it claims a control utterance like "resume" or "next" only *while it holds paused media for that session*, and first-match-wins (PIPELINE-1 §6.2) lets it intercept those bare words before a general intent engine does — exactly the conservative, state-aware claiming pattern the spec describes. Seek is **absolute** on the wire (`ovos.common_play.seek` carries a millisecond `position` within now-playing) — a relative "skip forward 10 seconds" utterance is resolved to that absolute position by the matcher itself, reading the player's own state reports, so two concurrent "skip forward" requests can't compound each other's offset. The `ovos.common_play.*` bus surface in the spec is the formal counterpart of the `ovos.common_play.query` / `…status` / `…track.state` topics used below.
+    OCP-1 §2 splits media commands into two classes the player must distinguish: **playback requests** ("play X", "open X") that acquire new media, and **control requests** ("pause", "resume", "next", "previous", "stop", seek) that act on whatever is *already* playing. This includes media OVOS did not start, when the MPRIS bridge (OCP-1 §6) is enabled. There is exactly **one Virtual Media Player per session** (OCP-1 §2, §5). A request names *the player*, not a backend, and the player routes. This is why a high-tier OCP stage belongs early in `session.pipeline`: as a selective pipeline plugin it claims a control utterance like "resume" or "next" only *while it holds paused media for that session*. First-match-wins (PIPELINE-1 §6.2) lets it intercept those bare words before a general intent engine does. This is exactly the conservative, state-aware claiming pattern the spec describes. Seek is **absolute** on the wire (`ovos.common_play.seek` carries a millisecond `position` within now-playing). A relative "skip forward 10 seconds" utterance is resolved to that absolute position by the matcher itself, reading the player's own state reports, so two concurrent "skip forward" requests can't compound each other's offset. The `ovos.common_play.*` bus surface in the spec is the formal counterpart of the `ovos.common_play.query` / `…status` / `…track.state` topics used below.
 
 ## How a media intent is recognized
 
 OCP combines several signals:
 
-* **Explicit intents** (`ocp_high`) — localized `.intent` files for play, pause,
+* **Explicit intents** (`ocp_high`): localized `.intent` files for play, pause,
   resume, stop, next, previous, shuffle, etc.
-* **Keyword matching** (`ocp_medium` / `ocp_low`) — `voc_match_media()` maps
+* **Keyword matching** (`ocp_medium` / `ocp_low`): `voc_match_media()` maps
   vocabulary (MusicKeyword, PodcastKeyword, MovieKeyword, NewsKeyword, …) to a
   `MediaType` with a heuristic confidence. `is_ocp_query()` treats any non-GENERIC
   media type as a playback query.
-* **Skill-registered keywords** — skills announce entities (artist names, show
-  titles) over `ovos.common_play.register_keyword`; these feed the
+* **Skill-registered keywords**: skills announce entities (artist names, show
+  titles) over `ovos.common_play.register_keyword`. These feed the
   `AhocorasickNER` entity matcher and bias media-type classification.
 
 Media-type classification on `dev` is keyword/vocab based (localizable, but
@@ -109,19 +110,19 @@ After classifying, OCP emits `ovos.common_play.query` and gathers
 `ovos.common_play.query.response` results from skills, then filters them in
 `filter_results()`:
 
-* **Confidence** — drops results whose `match_confidence` is below `min_score`.
-* **Media-type consistency** — when a non-GENERIC type was classified, results of
+* **Confidence**: drops results whose `match_confidence` is below `min_score`.
+* **Media-type consistency**: when a non-GENERIC type was classified, results of
   other types are removed (`filter_media`).
-* **Stream-extractor availability** — results needing a Stream Extractor plugin
+* **Stream-extractor availability**: results needing a Stream Extractor plugin
   (SEI) that is not installed are removed (`filter_SEI`). Available extractors come
   from the `opm.ocp.extractor` plugin group, queried via
   `ovos.common_play.SEI.get`.
-* **Playback mode** — audio-only / video-only preferences drop incompatible
+* **Playback mode**: audio-only / video-only preferences drop incompatible
   results (`playback_mode`).
 
 OCP tracks player state per `Session` over the bus (`ovos.common_play.status`,
-`ovos.common_play.track.state`), so context-dependent commands behave correctly —
-e.g. "next song" does nothing when no player is active.
+`ovos.common_play.track.state`), so context-dependent commands behave correctly.
+For example, "next song" does nothing when no player is active.
 
 ---
 
@@ -158,7 +159,7 @@ entry-point ID), falling back to the older `intents.OCP` key.
 
 !!! note "Shipped defaults differ slightly"
     The bundled `mycroft.conf` ships an `intents.ovos-ocp-pipeline-plugin` section
-    with `min_score: 40` (not the library's own fallback of `50`); the other keys
+    with `min_score: 40` (not the library's own fallback of `50`). The other keys
     above match the library defaults.
 
 ---
@@ -166,7 +167,7 @@ entry-point ID), falling back to the older `intents.OCP` key.
 ## Gotcha: legacy vs. OCP playback
 
 `ocp_legacy` and `legacy: true` are two different things. `ocp_legacy` is a
-pipeline matcher that routes to deprecated Mycroft CPS skills; `legacy: true` forces
+pipeline matcher that routes to deprecated Mycroft CPS skills. `legacy: true` forces
 OCP to drive playback through the classic audio service API instead of OCP itself.
 Leave both off unless you specifically need to support pre-OCP skills.
 
