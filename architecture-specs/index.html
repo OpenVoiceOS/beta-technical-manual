@@ -1484,13 +1484,13 @@
 <h1 id="formal-specifications">Formal Specifications<a class="headerlink" href="#formal-specifications" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>OVOS is not only an implementation — its component contracts are written
+<p>OVOS is not only an implementation. Its component contracts are written
 down as a set of <strong>formal, implementation-agnostic specifications</strong>. They
 define <em>exactly</em> how the parts talk to each other: the bus messages, the
 session, the intent pipeline, and each plugin role. If you are new, treat
 them as the authoritative "how it really works." If you are building
 plugins, skills, or a whole new orchestrator, they are the <strong>source of
-truth</strong> — where this manual or the current code diverges from a spec, the
+truth</strong>. Where this manual or the current code diverges from a spec, the
 spec wins.</p>
 </div>
 <p>The specifications live in the
@@ -1498,9 +1498,9 @@ spec wins.</p>
 repository. They are <strong>prescriptive, not descriptive</strong>: they describe the
 intended architecture, not a transcript of any one codebase. That is what lets
 a skill written against the intent stack run on <em>any</em> conformant orchestrator,
-in any language, under any pipeline configuration — and what lets a second
-project adopt the same formats and bus contracts without buying into OVOS as a
-whole.</p>
+in any language, under any pipeline configuration. It is also what lets a
+second project adopt the same formats and bus contracts without buying into
+OVOS as a whole.</p>
 <p>Throughout this manual you will see a callout like this on the page for each
 subsystem:</p>
 <details class="info">
@@ -1513,7 +1513,7 @@ requirements.</p>
 <h2 id="the-voice-operating-system-model">The voice operating system model<a class="headerlink" href="#the-voice-operating-system-model" title="Permanent link">&para;</a></h2>
 <p>The specifications are organized around one idea: OVOS is a <strong>voice operating
 system</strong>, not a voice assistant. A voice assistant is a product that answers
-questions; a voice OS is a <em>platform</em> that defines the boundary between user
+questions. A voice OS is a <em>platform</em> that defines the boundary between user
 input and computation, arbitrates which application handles each utterance, and
 provides a stable ABI that arbitrary third-party applications run against
 without knowing anything about each other. The analogy to a general-purpose OS
@@ -1639,7 +1639,7 @@ is direct:</p>
 </tr>
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/persona.md"><strong>OVOS-PERSONA-1</strong> — Persona Pipeline Plugin</a></td>
-<td>A complete conversational agent (e.g. an LLM) as a first-class, summonable pipeline stage.</td>
+<td>A complete conversational agent (e.g. an LLM) as a summonable pipeline stage.</td>
 </tr>
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/fallback.md"><strong>OVOS-FALLBACK-1</strong> — Fallback Pipeline Plugin</a></td>
@@ -1697,18 +1697,18 @@ format, and a conformance section. The key words <strong>MUST</strong>, <strong>
 <p>Every spec header carries two separate numbers, and it matters which one you
 cite:</p>
 <ul>
-<li><strong>Version</strong> — the spec's compatibility class (V0/V1/V2, see the README
+<li><strong>Version</strong>: the spec's compatibility class (V0/V1/V2, see the README
   registry below). It changes only when an edit breaks compatibility with the
-  prior class; a spec is cited by class (<code>OVOS-MSG-1 v1</code>).</li>
+  prior class. A spec is cited by class (<code>OVOS-MSG-1 v1</code>).</li>
 <li>
-<p><strong>Revision</strong> — a monotonic counter of normative edits <em>within</em> a class,
-  starting at <code>1</code>. A refinement — tightening a requirement, adding an
-  optional field, correcting a cross-reference — bumps the revision, not the
+<p><strong>Revision</strong>: a monotonic counter of normative edits <em>within</em> a class,
+  starting at <code>1</code>. A refinement, such as tightening a requirement, adding an
+  optional field, or correcting a cross-reference, bumps the revision, not the
   version. <code>Revision</code> disambiguates which text of a given class you mean
-  (<code>v1 rev 3</code>); non-normative edits (typos, formatting) don't bump it at all.</p>
+  (<code>v1 rev 3</code>). Non-normative edits (typos, formatting) don't bump it at all.</p>
 </li>
 <li>
-<p><strong>Newcomers:</strong> read the scope and the worked examples; skip the conformance
+<p><strong>Newcomers:</strong> read the scope and the worked examples. Skip the conformance
   tables until you need them. Start with
   <a href="https://github.com/OpenVoiceOS/architecture/blob/dev/msg-1.md">OVOS-MSG-1</a>
   (the message), then
@@ -1716,9 +1716,9 @@ cite:</p>
   (how an utterance is handled).</p>
 </li>
 <li><strong>Skill authors:</strong> OVOS-INTENT-1 → INTENT-2 → INTENT-3 cover everything you
-  declare; add INTENT-4 only if you need the registration wire format.</li>
+  declare. Add INTENT-4 only if you need the registration wire format.</li>
 <li><strong>Plugin / orchestrator builders:</strong> the conformance sections are your test
-  checklist; the
+  checklist. The
   <a href="https://github.com/OpenVoiceOS/architecture/blob/dev/README.md">README registry</a>
   lists every spec and its compatibility class.</li>
 </ul>

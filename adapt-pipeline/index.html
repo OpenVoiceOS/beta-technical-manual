@@ -1508,20 +1508,20 @@
 <h1 id="adapt-pipeline-plugin">Adapt Pipeline Plugin<a class="headerlink" href="#adapt-pipeline-plugin" title="Permanent link">&para;</a></h1>
 <div class="admonition info">
 <p class="admonition-title">Maturity — Stable ⬤⬤⬤⬤◯</p>
-<p>Stable, actively-maintained code — but its <em>use</em> is scenario-limited: see the Recommendation on this page before choosing it for a broad deployment. Maturity rates <a href="../maturity/">repository health</a>, <a href="../maturity/">not fitness for your use case</a>.</p>
+<p>Stable, actively-maintained code, but its <em>use</em> is scenario-limited. See the Recommendation on this page before choosing it for a broad deployment. Maturity rates <a href="../maturity/">repository health</a>, <a href="../maturity/">not fitness for your use case</a>.</p>
 </div>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>Adapt is one of the tools that helps the assistant figure out what you want when you speak to it. It works like a checklist: a skill says "if you hear these keywords together, this is the command for me." When you say "switch on the lamp", Adapt spots the keywords "switch on" and "lamp" and routes your request to the right skill. There is no guessing or learning involved — it simply matches the words it was told to look for. See the <a href="../glossary/">Glossary</a> for terms, or <a href="../padatious-pipeline/">Padatious</a> for a sister tool that learns from example sentences instead.</p>
+<p>Adapt is one of the tools that helps the assistant figure out what you want when you speak to it. It works like a checklist: a skill says "if you hear these keywords together, this is the command for me." When you say "switch on the lamp", Adapt spots the keywords "switch on" and "lamp" and routes your request to the right skill. There is no guessing or learning involved. It simply matches the words it was told to look for. See the <a href="../glossary/">Glossary</a> for terms, or <a href="../padatious-pipeline/">Padatious</a> for a sister tool that learns from example sentences instead.</p>
 </div>
 <details class="info">
 <summary>📐 Formal specification</summary>
 <p>Adapt is a <strong>pipeline plugin</strong> under <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md">OVOS-PIPELINE-1 — Utterance Lifecycle &amp; Pipeline</a></strong>. It is a <strong>keyword-intent</strong> engine in the sense of <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/intent-3.md">OVOS-INTENT-3 — Intent Definition §4</a></strong>: it matches by <em>which vocabularies occur</em> (required / optional / one-of / excluded), with each occurring vocabulary doubling as a slot. The <code>.voc</code> vocabularies are written in the <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/intent-1.md">OVOS-INTENT-1 — Sentence Template Grammar</a></strong> (<code>(a|b)</code> / <code>[optional]</code> expansion). See the <a href="../architecture-specs/">spec index</a>.</p>
 </details>
-<p>The <strong>Adapt Pipeline Plugin</strong> brings rule-based, keyword-driven intent parsing to the <strong>OVOS intent pipeline</strong> using the Adapt parser. A skill registers keywords (vocabulary) and a rule describing which keywords must appear; Adapt scores an utterance by how many of those keywords it finds. There is no training step and no neural network — matching is deterministic.</p>
-<p>In OVOS-PIPELINE-1 terms Adapt is a pipeline plugin exposing <code>match(utterances, lang, message) → Match | None</code>; the orchestrator runs it in <code>session.pipeline</code> order and takes the first match. Its <code>conf_high/medium/low</code> thresholds are Adapt's own accept gate per stage, not a score the orchestrator ranks against other plugins (INTENT-3 §1.1 leaves scoring engine-specific). The <code>required</code>/<code>one-of</code>/<code>excluded</code> keyword roles are INTENT-3 §4.2 constraint roles; <code>.rx</code> regex entities are an OVOS implementation extension that INTENT-3 §4.4 deliberately leaves out of the spec (free-form text is better modelled as a template-intent slot).</p>
-<p><strong>When it runs:</strong> Adapt's high-confidence stage runs just after Padatious's, so an exact example match wins over a keyword rule, but a strong keyword match still beats most fallbacks. Its medium and low stages run later in the pipeline.</p>
-<p><strong>Minimal example</strong> — a skill registers vocabulary and a rule:</p>
+<p>The <strong>Adapt Pipeline Plugin</strong> brings rule-based, keyword-driven intent parsing to the <strong>OVOS intent pipeline</strong> using the Adapt parser. A skill registers keywords (vocabulary) and a rule describing which keywords must appear. Adapt scores an utterance by how many of those keywords it finds. There is no training step and no neural network. Matching is deterministic.</p>
+<p>In OVOS-PIPELINE-1 terms, Adapt is a pipeline plugin that exposes <code>match(utterances, lang, message) → Match | None</code>. The orchestrator runs it in <code>session.pipeline</code> order and takes the first match. Its <code>conf_high/medium/low</code> thresholds are Adapt's own accept gate per stage, not a score the orchestrator ranks against other plugins (INTENT-3 §1.1 leaves scoring engine-specific). The <code>required</code>/<code>one-of</code>/<code>excluded</code> keyword roles are INTENT-3 §4.2 constraint roles. <code>.rx</code> regex entities are an OVOS implementation extension. INTENT-3 §4.4 deliberately leaves them out of the spec, because free-form text is better modeled as a template-intent slot.</p>
+<p><strong>When it runs:</strong> Adapt's high-confidence stage runs just after Padatious's. So an exact example match wins over a keyword rule, but a strong keyword match still beats most fallbacks. Its medium and low stages run later in the pipeline.</p>
+<p><strong>Minimal example.</strong> A skill registers vocabulary and a rule:</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="bp">self</span><span class="o">.</span><span class="n">register_vocabulary</span><span class="p">(</span><span class="s2">&quot;Light&quot;</span><span class="p">,</span> <span class="s2">&quot;lamp&quot;</span><span class="p">)</span>        <span class="c1"># locale/.../Light.voc</span>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="bp">self</span><span class="o">.</span><span class="n">register_vocabulary</span><span class="p">(</span><span class="s2">&quot;On&quot;</span><span class="p">,</span> <span class="s2">&quot;switch on&quot;</span><span class="p">)</span>      <span class="c1"># locale/.../On.voc</span>
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
@@ -1531,10 +1531,11 @@
 </span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>    <span class="o">...</span>
 </span></code></pre></div>
 <p>"switch on the lamp" then matches with high confidence because both required keywords are present.</p>
-<p>While Adapt is good for <strong>explicit, deterministic command-and-control</strong>, it scales poorly across many skills and is hard to localize. <strong>It is not recommended for broad deployments</strong> — prefer it for <strong>personal skills</strong> where you control the full vocabulary.</p>
+<p>Adapt is good for <strong>explicit, deterministic command-and-control</strong>. But it scales poorly across many skills, and it is hard to localize. <strong>It is not recommended for broad deployments.</strong></p>
+<p>Prefer it for <strong>personal skills</strong> where you control the full vocabulary.</p>
 <hr />
 <h2 id="pipeline-stages">Pipeline Stages<a class="headerlink" href="#pipeline-stages" title="Permanent link">&para;</a></h2>
-<p>The plugin ships an OPM entry point, <code>ovos-adapt-pipeline-plugin</code>, mapped to the <code>AdaptPipeline</code> class. That class is a <code>ConfidenceMatcherPipeline</code>, so OVOS exposes three matcher stages from it, selected in your pipeline config by these IDs (the short <code>adapt_*</code> aliases still work but are deprecated):</p>
+<p>The plugin ships an OPM entry point, <code>ovos-adapt-pipeline-plugin</code>, mapped to the <code>AdaptPipeline</code> class. That class is a <code>ConfidenceMatcherPipeline</code>. OVOS exposes three matcher stages from it, selected in your pipeline config by these IDs. The short <code>adapt_*</code> aliases still work but are deprecated.</p>
 <table>
 <thead>
 <tr>
@@ -1565,19 +1566,19 @@
 </tr>
 </tbody>
 </table>
-<p>Each stage scores the utterance with Adapt and accepts it if the score clears that stage's threshold.</p>
+<p>Each stage scores the utterance with Adapt. It accepts the utterance if the score clears that stage's threshold.</p>
 <hr />
 <h2 id="limitations">Limitations<a class="headerlink" href="#limitations" title="Permanent link">&para;</a></h2>
 <p>Adapt requires <strong>hand-crafted rules</strong> for every intent:</p>
 <ul>
 <li>
-<p>❌ <strong>Poor scalability</strong> — hard to manage with many skills</p>
+<p>❌ <strong>Poor scalability</strong>: hard to manage with many skills</p>
 </li>
 <li>
-<p>❌ <strong>Difficult to localize</strong> — rules rely on exact words and phrases</p>
+<p>❌ <strong>Difficult to localize</strong>: rules rely on exact words and phrases</p>
 </li>
 <li>
-<p>❌ <strong>Prone to conflicts</strong> — multiple skills defining overlapping rules can cause collisions or missed matches</p>
+<p>❌ <strong>Prone to conflicts</strong>: multiple skills defining overlapping rules can cause collisions or missed matches</p>
 </li>
 </ul>
 <p>As your skill library grows or if you operate in a multilingual setup, these problems increase.</p>
@@ -1634,9 +1635,9 @@
 </span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="s2">&quot;ovos-adapt-domain-pipeline-plugin&quot;</span><span class="w">       </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;ovos_adapt.opm:DomainAdaptPipeline&quot;</span>
 </span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="s2">&quot;ovos-adapt-hierarchical-pipeline-plugin&quot;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;ovos_adapt.opm:HierarchicalAdaptPipeline&quot;</span>
 </span></code></pre></div>
-<p><code>AdaptPipeline</code> is the flat parser most deployments use. <code>DomainAdaptPipeline</code> and <code>HierarchicalAdaptPipeline</code> partition intents per skill/domain to cut down on cross-skill keyword collisions; they read extra config under <code>intents.ovos_adapt_domain_pipeline</code> and <code>intents.ovos_adapt_hierarchical_pipeline</code>. All three subclass <code>ConfidenceMatcherPipeline</code> and expose <code>match_high</code>/<code>match_medium</code>/<code>match_low</code>.</p>
-<p><strong>Vocabulary files.</strong> Skills supply keyword lists as <code>.voc</code> files (one phrase per line, with <code>(a|b)</code> alternatives and <code>[optional]</code> words expanded at registration), and regular-expression entities as <code>.rx</code> files using Python named groups, e.g. <code>(?P&lt;Location&gt;.+)</code>. Registration flows over the bus via <code>register_vocab</code> and <code>register_intent</code>.</p>
-<p><strong>Gotcha — collisions are silent.</strong> Two skills that require overlapping vocabulary can shadow each other; the higher-scoring match wins with no warning. Make each skill's required keywords as specific as possible, and prefer the domain/hierarchical entry points when running many skills together.</p>
+<p><code>AdaptPipeline</code> is the flat parser most deployments use. <code>DomainAdaptPipeline</code> and <code>HierarchicalAdaptPipeline</code> partition intents per skill or domain to cut down on cross-skill keyword collisions. They read extra config under <code>intents.ovos_adapt_domain_pipeline</code> and <code>intents.ovos_adapt_hierarchical_pipeline</code>. All three subclass <code>ConfidenceMatcherPipeline</code> and expose <code>match_high</code>/<code>match_medium</code>/<code>match_low</code>.</p>
+<p><strong>Vocabulary files.</strong> Skills supply keyword lists as <code>.voc</code> files (one phrase per line, with <code>(a|b)</code> alternatives and <code>[optional]</code> words expanded at registration). They supply regular-expression entities as <code>.rx</code> files using Python named groups, for example <code>(?P&lt;Location&gt;.+)</code>. Registration flows over the bus via <code>register_vocab</code> and <code>register_intent</code>.</p>
+<p><strong>Gotcha: collisions are silent.</strong> Two skills that require overlapping vocabulary can shadow each other. The higher-scoring match wins with no warning. Make each skill's required keywords as specific as possible. Prefer the domain/hierarchical entry points when running many skills together.</p>
 <hr />
 <p><em>Source code: <a href="https://github.com/OpenVoiceOS/ovos-adapt-pipeline-plugin">OpenVoiceOS/ovos-adapt-pipeline-plugin</a>.</em></p>
 

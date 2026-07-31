@@ -1536,13 +1536,13 @@
 <h1 id="specialized-agent-engine-types">Specialized <a href="../agent-plugins/">Agent Engine</a> Types<a class="headerlink" href="#specialized-agent-engine-types" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>Beyond plain chatting, OVOS offers a toolbox of small, specialized AI helpers — each good at one narrow job, like ranking which answer is most relevant, summarizing text, or detecting a language. Because each is a separate, swappable piece, you can mix and match them to build more capable assistants. See <a href="../agent-plugins/">Agent Plugins</a> for the broader idea and the <a href="../glossary/">Glossary</a> for unfamiliar terms.</p>
+<p>Beyond plain chatting, OVOS offers a toolbox of small, specialized AI helpers. Each is good at one narrow job, like ranking which answer is most relevant, summarizing text, or detecting a language. Because each is a separate, swappable piece, you can mix and match them to build more capable assistants. See <a href="../agent-plugins/">Agent Plugins</a> for the broader idea and the <a href="../glossary/">Glossary</a> for unfamiliar terms.</p>
 </div>
 <p>OVOS provides a full suite of specialized agent engine types beyond simple chat. Each type solves
 a specific NLP sub-problem and registers under its own OPM entry point group, making it
 independently discoverable, configurable, and composable.</p>
 <p>All base classes live in <code>ovos_plugin_manager.templates.agents</code>. The deprecated solver API
-(<code>opm.solver.*</code>) is covered at the bottom — migrate to <code>opm.agents.*</code> for all new plugins.</p>
+(<code>opm.solver.*</code>) is covered at the bottom. Migrate to <code>opm.agents.*</code> for all new plugins.</p>
 <hr />
 <h2 id="reranker-opmagentsreranker">ReRanker — <code>opm.agents.reranker</code><a class="headerlink" href="#reranker-opmagentsreranker" title="Permanent link">&para;</a></h2>
 <p><strong>Base class:</strong> <code>ReRankerEngine</code></p>
@@ -1558,13 +1558,13 @@ Used internally by the <a href="../cq-pipeline/">Common Query pipeline</a> and
 <div class="admonition note">
 <p class="admonition-title">Score semantics</p>
 <p><code>ReRankerEngine.rerank()</code> returns <code>(score, option)</code> pairs, but the base class does
-<strong>not</strong> fix the score's scale — it is whatever the underlying model produces. The
+<strong>not</strong> fix the score's scale. It is whatever the underlying model produces. The
 shipped default, <a href="../agent-plugins/"><code>ovos-flashrank-reranker-plugin</code></a>, applies a
 sigmoid (binary cross-encoder) or softmax (multi-class) normalization internally,
-so its scores land in <strong><code>[0, 1]</code></strong> and read as a relevance/similarity value — a
+so its scores land in <strong><code>[0, 1]</code></strong> and read as a relevance/similarity value. A
 higher score is a better match, and <code>min_reranker_score</code> can be tuned as a
 plain probability-like threshold against it. A different reranker plugin backed
-by a raw-logit model would need its own calibration; check that plugin's docs
+by a raw-logit model would need its own calibration. Check that plugin's docs
 before reusing the same threshold.</p>
 </div>
 <h3 id="common-query-pipeline-config">Common Query pipeline config<a class="headerlink" href="#common-query-pipeline-config" title="Permanent link">&para;</a></h3>
@@ -1579,7 +1579,7 @@ before reusing the same threshold.</p>
 </span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="w">  </span><span class="p">}</span>
 </span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="p">}</span>
 </span></code></pre></div>
-<p>The <code>reranker</code> key names any installed <code>opm.agents.reranker</code> plugin — see
+<p>The <code>reranker</code> key names any installed <code>opm.agents.reranker</code> plugin. See
 <a href="../agent-plugins/">Agent Plugins</a> for the engine-type reference.</p>
 <hr />
 <h2 id="extractive-qa-opmagentsextractive_qa">Extractive QA — <code>opm.agents.extractive_qa</code><a class="headerlink" href="#extractive-qa-opmagentsextractive_qa" title="Permanent link">&para;</a></h2>
@@ -1640,7 +1640,7 @@ Returns <code>None</code> on API error.</p>
 <hr />
 <h2 id="option-matcher-opmagentsoption_matcher">Option Matcher — <code>opm.agents.option_matcher</code><a class="headerlink" href="#option-matcher-opmagentsoption_matcher" title="Permanent link">&para;</a></h2>
 <p><strong>Base class:</strong> <code>OptionMatcherEngine</code></p>
-<p>Resolves a free-form user reply to one entry in a fixed list of options — the engine behind a
+<p>Resolves a free-form user reply to one entry in a fixed list of options. This is the engine behind a
 skill's <code>ask_selection()</code>. The reference implementation,
 <a href="https://github.com/OpenVoiceOS/ovos-option-matcher-fuzzy-plugin"><code>ovos-option-matcher-fuzzy-plugin</code></a>
 (<code>FuzzyOptionMatcherPlugin</code>), resolves in order: fuzzy match via ovos-utils <code>match_one</code> (difflib <code>SequenceMatcher</code> ratio) when the score
@@ -1654,7 +1654,7 @@ skill's <code>settings.json</code> first, then <code>mycroft.conf</code>), defau
 <h2 id="coreference-resolution-opmagentscoref">Coreference Resolution — <code>opm.agents.coref</code><a class="headerlink" href="#coreference-resolution-opmagentscoref" title="Permanent link">&para;</a></h2>
 <p><strong>Base class:</strong> <code>CoreferenceEngine</code></p>
 <p>Resolves pronouns and ambiguous references in voice commands against recent conversation context.
-The base class owns the <em>state</em> (a per-language context vault); the plugin subclass provides the
+The base class owns the <em>state</em> (a per-language context vault). The plugin subclass provides the
 <em>intelligence</em> (the NLP that rewrites the text). <code>resolve()</code> first calls <code>contains_corefs()</code> to
 skip expensive work when no pronouns are present.</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1"># Stateless one-shot resolution:</span>
@@ -1666,7 +1666,7 @@ skip expensive work when no pronouns are present.</p>
 </span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>
 </span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="c1"># &quot;Turn Bohemian Rhapsody off&quot;</span>
 </span></code></pre></div>
-<p><code>use_memory</code> (default <code>False</code>) gates the learn/apply-context steps — pass <code>use_memory=True</code> to
+<p><code>use_memory</code> (default <code>False</code>) gates the learn/apply-context steps. Pass <code>use_memory=True</code> to
 have <code>resolve()</code> apply previously registered context and learn new mappings from each turn.
 <code>context_ttl</code> (config key, default <code>120</code> s) controls how long a tracked context entry remains
 valid before it is pruned.</p>
@@ -1762,22 +1762,22 @@ release. Migrate existing plugins to the corresponding <code>opm.agents.*</code>
 </tbody>
 </table>
 <p>The deprecated classes remain in <code>ovos_plugin_manager.templates.solvers</code> and are still loaded
-by <code>PersonaService</code> and <code>QuestionSolversService</code> for backwards compatibility — but no new
+by <code>PersonaService</code> and <code>QuestionSolversService</code> for backwards compatibility. But no new
 plugins should use them.</p>
 <hr />
 <h2 id="cross-references">Cross-References<a class="headerlink" href="#cross-references" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
-<p><a href="../agent-plugins/">Agent Plugins</a> — complete engine configuration reference</p>
+<p><a href="../agent-plugins/">Agent Plugins</a>: complete engine configuration reference</p>
 </li>
 <li>
-<p><a href="../openai-plugin/">OpenAI Plugin</a> — OpenAI-compatible engine implementations</p>
+<p><a href="../openai-plugin/">OpenAI Plugin</a>: OpenAI-compatible engine implementations</p>
 </li>
 <li>
-<p><a href="../gguf-plugin/">GGUF Plugin</a> — local offline engine implementations</p>
+<p><a href="../gguf-plugin/">GGUF Plugin</a>: local offline engine implementations</p>
 </li>
 <li>
-<p><a href="../plugin-manager/">OPM Plugin Types</a> — full solver plugin reference</p>
+<p><a href="../plugin-manager/">OPM Plugin Types</a>: full solver plugin reference</p>
 </li>
 </ul>
 

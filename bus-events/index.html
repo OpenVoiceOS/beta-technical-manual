@@ -1154,7 +1154,7 @@
           <li class="md-nav__item">
   <a href="#not-bridged-adopt-the-spec-directly" class="md-nav__link">
     <span class="md-ellipsis">
-      Not bridged — adopt the spec directly
+      Not bridged: adopt the spec directly
     </span>
   </a>
   
@@ -1532,7 +1532,7 @@
           <li class="md-nav__item">
   <a href="#not-bridged-adopt-the-spec-directly" class="md-nav__link">
     <span class="md-ellipsis">
-      Not bridged — adopt the spec directly
+      Not bridged: adopt the spec directly
     </span>
   </a>
   
@@ -1574,20 +1574,20 @@
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
 <p>Every OVOS component talks to every other one by sending small named messages over the
-shared <a href="../bus-service/">messagebus</a> — a bit like a group chat where each service watches
-for the message types it cares about. This page collects the message types documented
-elsewhere in the manual into one place, grouped by which stage of the
+shared <a href="../bus-service/">messagebus</a>. It works a bit like a group chat where each service
+watches for the message types it cares about. This page collects the message types
+documented elsewhere in the manual into one place, grouped by which stage of the
 <a href="../life-of-an-utterance/">utterance lifecycle</a> they belong to, so you don't have to hunt
 through six different pages to find one event name. Each row links back to the page that
-documents that event in context; this page does not introduce anything new.</p>
+documents that event in context. This page does not introduce anything new.</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Many events have a legacy <code>mycroft.*</code>/bare name alongside a newer <code>ovos.*</code> name. Only one
-of the two is actually put on the wire — each connected client's bus library locally
+of the two is actually put on the wire. Each connected client's bus library locally
 re-dispatches it under the other name too, so a handler on either name receives it (see
 <a href="../bus-service/#namespace-migration">Bus Service: legacy/modern topic pairs</a> for the
-mechanism); the tables below show both names where applicable.</p>
+mechanism). The tables below show both names where applicable.</p>
 </div>
 <h2 id="listener-wake-word">Listener / wake word<a class="headerlink" href="#listener-wake-word" title="Permanent link">&para;</a></h2>
 <p>Emitted by <code>ovos-dinkum-listener</code> as the audio pipeline runs. See
@@ -1698,7 +1698,7 @@ mechanism); the tables below show both names where applicable.</p>
 </tr>
 </tbody>
 </table>
-<p><code>IntentService</code> also <strong>emits</strong> these on a successful match (in order — see <a href="../intent-service/#intent-match-emission">Intent Service</a>):</p>
+<p><code>IntentService</code> also <strong>emits</strong> these on a successful match, in order (see <a href="../intent-service/#intent-match-emission">Intent Service</a>):</p>
 <table>
 <thead>
 <tr>
@@ -2047,7 +2047,7 @@ on by default, so a message emitted on either the legacy or the spec topic is re
 other (see <a href="../bus-service/#namespace-migration">Bus Service — namespace migration</a>). A direct bus
 consumer can therefore subscribe on either name today and switch to the spec name at its own pace.</p>
 <p>The pairs below are the authoritative rename map (<code>ovos_spec_tools</code>'s <code>MIGRATION_MAP</code>). Unless
-marked <strong>shape-changing</strong>, the payload is identical on both topics; shape-changing pairs are
+marked <strong>shape-changing</strong>, the payload is identical on both topics. Shape-changing pairs are
 reshaped best-effort by the translator and may lose fields, so prefer adopting the spec payload
 directly.</p>
 <table>
@@ -2171,31 +2171,31 @@ directly.</p>
 </tr>
 </tbody>
 </table>
-<h3 id="not-bridged-adopt-the-spec-directly">Not bridged — adopt the spec directly<a class="headerlink" href="#not-bridged-adopt-the-spec-directly" title="Permanent link">&para;</a></h3>
+<h3 id="not-bridged-adopt-the-spec-directly">Not bridged: adopt the spec directly<a class="headerlink" href="#not-bridged-adopt-the-spec-directly" title="Permanent link">&para;</a></h3>
 <p>A few areas are deliberately <strong>not</strong> in the translator, so subscribing on the spec name alone will
-<em>not</em> transparently receive the legacy traffic (or vice-versa). These need real adoption in the
-producer and consumer, not a topic swap:</p>
+<em>not</em> transparently receive the legacy traffic, or the other way around. These need real adoption
+in the producer and consumer, not a topic swap:</p>
 <ul>
-<li><strong>Handler-lifecycle trio</strong> — <code>mycroft.skill.handler.start</code> / <code>.complete</code> are orchestrator-vs-skill
-  private signals; the orchestrator emits the spec <code>ovos.intent.handler.start</code> / <code>.complete</code> /
-  <code>.error</code> directly. The two namespaces are kept separate by design (PIPELINE-1 §8/§11) — the pair
-  is shape-changing and bridging would double-emit.</li>
-<li><strong>Intent/entity registration</strong> — <code>register_vocab</code> + <code>register_intent</code> (Adapt's N legacy messages)
+<li><strong>Handler-lifecycle trio.</strong> <code>mycroft.skill.handler.start</code> / <code>.complete</code> are orchestrator-vs-skill
+  private signals. The orchestrator emits the spec <code>ovos.intent.handler.start</code> / <code>.complete</code> /
+  <code>.error</code> directly. The two namespaces are kept separate by design (PIPELINE-1 §8/§11). The pair
+  is shape-changing, and bridging would double-emit.</li>
+<li><strong>Intent/entity registration.</strong> <code>register_vocab</code> + <code>register_intent</code> (Adapt's N legacy messages)
   do not map 1:1 onto the single <code>ovos.intent.register.keyword</code> / <code>.register.template</code> /
   <code>ovos.entity.register</code> message (INTENT-4 §5), which inlines the vocab descriptors. This requires
-  producers/consumers to adopt INTENT-4, not a rename.</li>
-<li><strong>Per-skill stop</strong> — the legacy <code>{skill_id}.stop</code> / <code>{skill_id}.stop.ping</code> handshake uses
+  producers and consumers to adopt INTENT-4, not a rename.</li>
+<li><strong>Per-skill stop.</strong> The legacy <code>{skill_id}.stop</code> / <code>{skill_id}.stop.ping</code> handshake uses
   runtime-assembled per-skill topics, which cannot be static map keys. STOP-1 replaces them with the
-  broadcast <code>ovos.stop</code> / <code>ovos.stop.ping</code> / <code>ovos.stop.pong</code>; the skill base class subscribes on both
-  forms rather than relying on the translator.</li>
+  broadcast <code>ovos.stop</code> / <code>ovos.stop.ping</code> / <code>ovos.stop.pong</code>. The skill base class subscribes on
+  both forms rather than relying on the translator.</li>
 </ul>
 <h2 id="related-pages">Related pages<a class="headerlink" href="#related-pages" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="../bus-service/">Bus Service</a> — the messagebus itself, connection details, legacy/modern topic pairs</li>
-<li><a href="../life-of-an-utterance/">Life of an Utterance</a> — the full request/response journey these events trace</li>
-<li><a href="../intent-service/">Intent Service</a>, <a href="../converse-pipeline/">Converse Pipeline</a>, <a href="../stop-pipeline/">Stop Pipeline</a>, <a href="../fallback-pipeline/">Fallback Pipeline</a>, <a href="../cq-pipeline/">Common Query Pipeline</a> — per-pipeline detail</li>
-<li><a href="../audio-service/">Audio Service</a>, <a href="../gui-service/">GUI Service</a> — output-side detail</li>
-<li><a href="../ovos-skill/">OVOSSkill API</a> — the skill-side handlers for these events</li>
+<li><a href="../bus-service/">Bus Service</a>: the messagebus itself, connection details, legacy/modern topic pairs</li>
+<li><a href="../life-of-an-utterance/">Life of an Utterance</a>: the full request/response journey these events trace</li>
+<li><a href="../intent-service/">Intent Service</a>, <a href="../converse-pipeline/">Converse Pipeline</a>, <a href="../stop-pipeline/">Stop Pipeline</a>, <a href="../fallback-pipeline/">Fallback Pipeline</a>, <a href="../cq-pipeline/">Common Query Pipeline</a>: per-pipeline detail</li>
+<li><a href="../audio-service/">Audio Service</a>, <a href="../gui-service/">GUI Service</a>: output-side detail</li>
+<li><a href="../ovos-skill/">OVOSSkill API</a>: the skill-side handlers for these events</li>
 </ul>
 
 

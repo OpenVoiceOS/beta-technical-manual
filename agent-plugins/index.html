@@ -1560,10 +1560,10 @@
 <h1 id="agent-plugins">Agent Plugins<a class="headerlink" href="#agent-plugins" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>Agent plugins are the swappable "brains" your assistant can use to do thinking work: holding a conversation, answering a factual question, summarizing a document, picking the best of several answers, remembering what was said earlier, or figuring out who "she" refers to. You don't run them yourself — you list the ones you want in a <a href="../personas/">persona</a>, and OVOS loads them. Think of it like choosing which browser extensions to install, except each "extension" is a different reasoning skill. See <a href="../personas/">Agents &amp; Personas</a> or the <a href="../glossary/">Glossary</a> for related terms.</p>
+<p>Agent plugins are the swappable "brains" your assistant can use to do thinking work: holding a conversation, answering a factual question, summarizing a document, picking the best of several answers, remembering what was said earlier, or figuring out who "she" refers to. You don't run them yourself. You list the ones you want in a <a href="../personas/">persona</a>, and OVOS loads them. Think of it like choosing which browser extensions to install, except each "extension" is a different reasoning skill. See <a href="../personas/">Agents &amp; Personas</a> or the <a href="../glossary/">Glossary</a> for related terms.</p>
 </div>
 <p><strong>For beginners:</strong> agent plugins are the installable building blocks that let a persona think,
-answer, rank, summarize, remember, or resolve pronouns. You don't call them directly — you list
+answer, rank, summarize, remember, or resolve pronouns. You don't call them directly. You list
 them in a <a href="../personas/">persona</a> and the <a href="../personas/#personaservice-pipeline-plugin">PersonaService</a>
 loads them. Each plugin advertises itself to OVOS through an OPM entry-point group.</p>
 <div class="admonition note">
@@ -1668,7 +1668,7 @@ parallel <code>*.config</code> group for config metadata). The discovery helpers
 </tbody>
 </table>
 <p>The legacy <code>opm.solver.*</code> groups (and the <code>QuestionSolver</code> family in
-<code>ovos_plugin_manager.templates.solvers</code>) are deprecated — see <a href="../advanced-solvers/">Specialized Agent Engine
+<code>ovos_plugin_manager.templates.solvers</code>) are deprecated. See <a href="../advanced-solvers/">Specialized Agent Engine
 Types</a> for the migration map. For per-engine method contracts and config
 examples, see <a href="../personas/">Agents &amp; Personas</a> and <a href="../advanced-solvers/">Advanced Solvers</a>.</p>
 <hr />
@@ -1683,7 +1683,7 @@ examples, see <a href="../personas/">Agents &amp; Personas</a> and <a href="../a
 <tbody>
 <tr>
 <td><a href="#ovos-qdrant-embeddings-plugin">ovos-qdrant-embeddings-plugin</a></td>
-<td>The <code>QdrantEmbeddingsDB</code> plugin integrates with the <a href="https://qdrant.tech/">qdrant</a> database to provide a robust solution for managing and querying embeddings. This plugin extends the abstract <code>EmbeddingsDB</code> class, allowing you to store, retrieve, and query embeddings efficiently using qdrant's capabilities.</td>
+<td>The <code>QdrantEmbeddingsDB</code> plugin integrates with the <a href="https://qdrant.tech/">qdrant</a> database to store, retrieve, and query embeddings. This plugin extends the abstract <code>EmbeddingsDB</code> class, using qdrant's capabilities.</td>
 </tr>
 <tr>
 <td><a href="#ovos-solver-plugin-aiml">ovos-solver-plugin-aiml</a></td>
@@ -1691,11 +1691,11 @@ examples, see <a href="../personas/">Agents &amp; Personas</a> and <a href="../a
 </tr>
 <tr>
 <td><a href="#ovos-persona">ovos-persona</a></td>
-<td>The <strong><code>PersonaPipeline</code></strong> brings multi-persona management to OpenVoiceOS (OVOS), enabling interactive conversations with virtual assistants. 🎙️ With personas, you can customize how queries are handled by assigning specific solvers to each persona.</td>
+<td>The <strong><code>PersonaPipeline</code></strong> brings multi-persona management to OpenVoiceOS (OVOS), enabling interactive conversations with virtual assistants. With personas, you can customize how queries are handled by assigning specific solvers to each persona.</td>
 </tr>
 <tr>
 <td><a href="#ovos-openai-plugin">ovos-openai-plugin</a></td>
-<td>Leverages the <a href="https://platform.openai.com/docs/api-reference/completions/create">OpenAI Completions API</a> to provide a chat engine, a dialog-rewriting transformer, and a summarizer, all pointed at any OpenAI-compatible endpoint.</td>
+<td>Uses the <a href="https://platform.openai.com/docs/api-reference/completions/create">OpenAI Completions API</a> to provide a chat engine, a dialog-rewriting transformer, and a summarizer, all pointed at any OpenAI-compatible endpoint.</td>
 </tr>
 <tr>
 <td><a href="#ovos-messagebus-chat-plugin">ovos-messagebus-chat-plugin</a></td>
@@ -1707,7 +1707,7 @@ examples, see <a href="../personas/">Agents &amp; Personas</a> and <a href="../a
 </tr>
 <tr>
 <td><a href="#ovos-chromadb-embeddings-plugin">ovos-chromadb-embeddings-plugin</a></td>
-<td>The <code>ChromaEmbeddingsDB</code> plugin integrates with the <a href="https://www.trychroma.com/">ChromaDB</a> database to provide a robust solution for managing and querying embeddings. This plugin extends the abstract <code>EmbeddingsDB</code> class, allowing you to store, retrieve, and query embeddings efficiently using ChromaDB's capabilities.</td>
+<td>The <code>ChromaEmbeddingsDB</code> plugin integrates with the <a href="https://www.trychroma.com/">ChromaDB</a> database to store, retrieve, and query embeddings. This plugin extends the abstract <code>EmbeddingsDB</code> class, using ChromaDB's capabilities.</td>
 </tr>
 <tr>
 <td><a href="#ovos-wolfram-alpha-solver">ovos-wolfram-alpha-solver</a></td>
@@ -1745,7 +1745,7 @@ examples, see <a href="../personas/">Agents &amp; Personas</a> and <a href="../a
 <p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-qdrant-embeddings-plugin">https://github.com/OpenVoiceOS/ovos-qdrant-embeddings-plugin</a></p>
 </li>
 <li>
-<p><strong>Description</strong>: The <code>QdrantEmbeddingsDB</code> plugin integrates with the <a href="https://qdrant.tech/">qdrant</a> database to provide a robust solution for managing and querying embeddings. This plugin extends the abstract <code>EmbeddingsDB</code> class, allowing you to store, retrieve, and query embeddings efficiently using qdrant's capabilities.</p>
+<p><strong>Description</strong>: The <code>QdrantEmbeddingsDB</code> plugin integrates with the <a href="https://qdrant.tech/">qdrant</a> database to store, retrieve, and query embeddings. This plugin extends the abstract <code>EmbeddingsDB</code> class, using qdrant's capabilities.</p>
 </li>
 <li>
 <p><strong>Entry point group</strong>: <code>opm.embeddings</code> (the <code>EmbeddingsDB</code> backends register here, not under <code>opm.agents.*</code>).</p>
@@ -1800,7 +1800,7 @@ examples, see <a href="../personas/">Agents &amp; Personas</a> and <a href="../a
 <p><strong>Description</strong>: A rule-based chatbot answer engine for OVOS, using AIML pattern matching.</p>
 </li>
 <li>
-<p><strong>Config</strong>: <code>"enable_tx"</code> (bool, default <code>false</code>) — auto-translate the utterance to English before matching AIML patterns.</p>
+<p><strong>Config</strong>: <code>"enable_tx"</code> (bool, default <code>false</code>): auto-translate the utterance to English before matching AIML patterns.</p>
 </li>
 </ul>
 <hr />
@@ -1810,7 +1810,7 @@ examples, see <a href="../personas/">Agents &amp; Personas</a> and <a href="../a
 <p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-persona">https://github.com/OpenVoiceOS/ovos-persona</a></p>
 </li>
 <li>
-<p><strong>Description</strong>: The <strong><code>PersonaPipeline</code></strong> brings multi-persona management to OpenVoiceOS (OVOS), enabling interactive conversations with virtual assistants. 🎙️ With personas, you can customize how queries are handled by assigning specific solvers to each persona.</p>
+<p><strong>Description</strong>: The <strong><code>PersonaPipeline</code></strong> brings multi-persona management to OpenVoiceOS (OVOS), enabling interactive conversations with virtual assistants. With personas, you can customize how queries are handled by assigning specific solvers to each persona.</p>
 </li>
 </ul>
 <hr />
@@ -1820,7 +1820,7 @@ examples, see <a href="../personas/">Agents &amp; Personas</a> and <a href="../a
 <p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-openai-plugin">https://github.com/OpenVoiceOS/ovos-openai-plugin</a></p>
 </li>
 <li>
-<p><strong>Description</strong>: An OpenAI-compatible engine family — chat, dialog-rewriting, and summarization — usable with any OpenAI-compatible endpoint. See <a href="../openai-plugin/">OpenAI Plugin</a> for the full entry-point table, config keys, and examples.</p>
+<p><strong>Description</strong>: An OpenAI-compatible engine family (chat, dialog-rewriting, and summarization) usable with any OpenAI-compatible endpoint. See <a href="../openai-plugin/">OpenAI Plugin</a> for the full entry-point table, config keys, and examples.</p>
 </li>
 </ul>
 <hr />
@@ -1846,7 +1846,7 @@ examples, see <a href="../personas/">Agents &amp; Personas</a> and <a href="../a
 <p><strong>Description</strong>: Answers factual questions by querying Wikipedia.</p>
 </li>
 <li>
-<p><strong>Config</strong>: <code>"extractive_qa"</code> — module name of the <code>ExtractiveQAEngine</code> plugin used to pull the exact answering passage out of a Wikipedia summary.</p>
+<p><strong>Config</strong>: <code>"extractive_qa"</code>: module name of the <code>ExtractiveQAEngine</code> plugin used to pull the exact answering passage out of a Wikipedia summary.</p>
 </li>
 </ul>
 <hr />
@@ -1856,7 +1856,7 @@ examples, see <a href="../personas/">Agents &amp; Personas</a> and <a href="../a
 <p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-chromadb-embeddings-plugin">https://github.com/OpenVoiceOS/ovos-chromadb-embeddings-plugin</a></p>
 </li>
 <li>
-<p><strong>Description</strong>: The <code>ChromaEmbeddingsDB</code> plugin integrates with the <a href="https://www.trychroma.com/">ChromaDB</a> database to provide a robust solution for managing and querying embeddings. This plugin extends the abstract <code>EmbeddingsDB</code> class, allowing you to store, retrieve, and query embeddings efficiently using ChromaDB's capabilities.</p>
+<p><strong>Description</strong>: The <code>ChromaEmbeddingsDB</code> plugin integrates with the <a href="https://www.trychroma.com/">ChromaDB</a> database to store, retrieve, and query embeddings. This plugin extends the abstract <code>EmbeddingsDB</code> class, using ChromaDB's capabilities.</p>
 </li>
 <li>
 <p><strong>Entry point group</strong>: <code>opm.embeddings</code> (the <code>EmbeddingsDB</code> backends register here, not under <code>opm.agents.*</code>).</p>
@@ -1902,7 +1902,7 @@ examples, see <a href="../personas/">Agents &amp; Personas</a> and <a href="../a
 <p><strong>Description</strong>: Answers computational and factual questions via the Wolfram Alpha API.</p>
 </li>
 <li>
-<p><strong>Config</strong>: <code>"appid"</code> — your own Wolfram Alpha AppID. Without one, queries go to Wolfram's
+<p><strong>Config</strong>: <code>"appid"</code>: your own Wolfram Alpha AppID. Without one, queries go to Wolfram's
   servers on a shared demo key. Either way this solver is a call to a third-party cloud
   service; it has no offline mode.</p>
 </li>
@@ -1917,7 +1917,7 @@ examples, see <a href="../personas/">Agents &amp; Personas</a> and <a href="../a
 <p><strong>Description</strong>: Answers questions using DuckDuckGo instant-answer results.</p>
 </li>
 <li>
-<p><strong>Config</strong>: <code>"keyword_extractor"</code> — module name of the keyword-extraction plugin used to pull search terms out of the question (defaults to <code>ovos-rake-keyword-extractor</code>).</p>
+<p><strong>Config</strong>: <code>"keyword_extractor"</code>: module name of the keyword-extraction plugin used to pull search terms out of the question (defaults to <code>ovos-rake-keyword-extractor</code>).</p>
 </li>
 </ul>
 <hr />
@@ -1930,7 +1930,7 @@ examples, see <a href="../personas/">Agents &amp; Personas</a> and <a href="../a
 <p><strong>Description</strong>: A simple tool to indicate whether a user answered "yes" or "no" to a yes/no prompt.</p>
 </li>
 <li>
-<p><strong>Config</strong>: no config keys — it works out of the box with no settings to tune.</p>
+<p><strong>Config</strong>: no config keys. It works out of the box with no settings to tune.</p>
 </li>
 </ul>
 <hr />
@@ -1943,7 +1943,7 @@ examples, see <a href="../personas/">Agents &amp; Personas</a> and <a href="../a
 <p><strong>Description</strong>: Extreme fallback, just complains it does not have a brain</p>
 </li>
 <li>
-<p><strong>Config</strong>: no config keys — it works out of the box with no settings to tune.</p>
+<p><strong>Config</strong>: no config keys. It works out of the box with no settings to tune.</p>
 </li>
 </ul>
 <hr />
@@ -1976,7 +1976,7 @@ examples, see <a href="../personas/">Agents &amp; Personas</a> and <a href="../a
 <p><strong>Description</strong>: A rule-based chatbot answer engine for OVOS, using RiveScript pattern matching.</p>
 </li>
 <li>
-<p><strong>Config</strong>: <code>"lang"</code> — language code used to pick the bundled RiveScript brain (defaults to <code>en-us</code>).</p>
+<p><strong>Config</strong>: <code>"lang"</code>: language code used to pick the bundled RiveScript brain (defaults to <code>en-us</code>).</p>
 </li>
 </ul>
 <hr />

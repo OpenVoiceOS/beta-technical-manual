@@ -1560,9 +1560,9 @@
 </div>
 <details class="info">
 <summary>📐 Formal specification</summary>
-<p>Audio transformers are the <strong><code>audio</code> chain</strong> of <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/transformer.md">OVOS-TRANSFORM-1 — Transformer Plugins</a> §3.1</strong> (a formal <a href="../architecture-specs/">architecture spec</a>). The spec's pre-STT injection point takes a raw audio chunk plus an audio-format metadata object (sample rate, width, channels) and an optional <code>lang</code>, and returns a (possibly rewritten) chunk, updated metadata, and <code>lang</code> — the natural place to set <code>session.detected_lang</code> from acoustic features (§7.1). A transformer that changes the audio's physical format <strong>MUST</strong> update the metadata to match. <strong>Ordering:</strong> the chain runs by <strong>ascending</strong> <code>priority</code> (lowest first), matching the spec.</p>
+<p>Audio transformers are the <strong><code>audio</code> chain</strong> of <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/transformer.md">OVOS-TRANSFORM-1 — Transformer Plugins</a> §3.1</strong> (a formal <a href="../architecture-specs/">architecture spec</a>). The spec's pre-STT injection point takes a raw audio chunk plus an audio-format metadata object (sample rate, width, channels) and an optional <code>lang</code>, and returns a (possibly rewritten) chunk, updated metadata, and <code>lang</code>. This is the natural place to set <code>session.detected_lang</code> from acoustic features (§7.1). A transformer that changes the audio's physical format <strong>MUST</strong> update the metadata to match. <strong>Ordering:</strong> the chain runs by <strong>ascending</strong> <code>priority</code> (lowest first), matching the spec.</p>
 </details>
-<p><strong>Audio Transformers</strong> in OpenVoiceOS (OVOS) are plugins designed to process raw audio input before it reaches the <a href="../stt-plugins/">Speech-to-Text</a> (<a href="../stt-plugins/">STT</a>) engine. They enable functionalities such as noise reduction, language detection, and data transmission over sound, thereby enhancing the accuracy and versatility of voice interactions.</p>
+<p><strong>Audio Transformers</strong> in OpenVoiceOS (OVOS) are plugins designed to process raw audio input before it reaches the <a href="../stt-plugins/">Speech-to-Text</a> (<a href="../stt-plugins/">STT</a>) engine. They enable functions such as noise reduction, language detection, and data transmission over sound.</p>
 <hr />
 <h2 id="processing-flow">Processing Flow<a class="headerlink" href="#processing-flow" title="Permanent link">&para;</a></h2>
 <p>The typical audio processing pipeline in OVOS is as follows:</p>
@@ -1581,7 +1581,7 @@
 </li>
 </ol>
 <p>Audio Transformers operate in step 2, allowing for enhancements and modifications to the audio signal before transcription.</p>
-<p>They run inside the <strong>listener</strong> (e.g. <code>ovos-dinkum-listener</code>), driven by the voice loop. As audio is captured, the loop feeds chunks to each loaded transformer (<code>feed_hotword</code>/<code>feed_speech</code> populate internal buffers); just before STT, the service calls each transformer's <code>transform(audio_data)</code>, which returns <code>(audio_data, context)</code>. Any returned context is merged into the <code>recognize_loop:utterance</code> message. Transformers run in <strong>ascending priority</strong> order (lower <code>priority</code> first), and <code>reset()</code> clears the buffers at the end of each cycle.</p>
+<p>They run inside the <strong>listener</strong> (e.g. <code>ovos-dinkum-listener</code>), driven by the voice loop. As audio is captured, the loop feeds chunks to each loaded transformer (<code>feed_hotword</code>/<code>feed_speech</code> populate internal buffers). Just before STT, the service calls each transformer's <code>transform(audio_data)</code>, which returns <code>(audio_data, context)</code>. Any returned context is merged into the <code>recognize_loop:utterance</code> message. Transformers run in <strong>ascending priority</strong> order (lower <code>priority</code> first), and <code>reset()</code> clears the buffers at the end of each cycle.</p>
 <hr />
 <h2 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">&para;</a></h2>
 <p>To enable Audio Transformers, add them to your <code>mycroft.conf</code> under the <code>audio_transformers</code> section:</p>
@@ -1638,10 +1638,10 @@
 <p>Subclasses <code>AudioLanguageDetector</code>, so its <code>transform</code> attaches <code>stt_lang</code> and <code>lang_probability</code> to the message context for downstream language routing.</p>
 </li>
 <li>
-<p>Utilizes SpeechBrain models for language identification.</p>
+<p>Uses SpeechBrain models for language identification.</p>
 </li>
 <li>
-<p>Enhances multilingual support by dynamically selecting the correct language model.</p>
+<p>Adds multilingual support by dynamically selecting the correct language model.</p>
 </li>
 </ul>
 </li>

@@ -1746,7 +1746,7 @@
 <h1 id="ovos-color-parser">ovos-color-parser<a class="headerlink" href="#ovos-color-parser" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>This is a small library that turns everyday color descriptions into exact color values a computer can use. Say "make the lamp a bright, slightly warm muted blue" and it figures out the actual red/green/blue numbers — handy for voice-controlled smart lights. It knows nearly 6,000 English color names plus words like "bright", "warm", and "muted", and can even handle "set it to 520 nanometres" for the science-minded. See the <a href="../glossary/">Glossary</a> for related terms.</p>
+<p>This is a small library that turns everyday color descriptions into exact color values a computer can use. Say "make the lamp a bright, slightly warm muted blue" and it figures out the actual red/green/blue numbers. This is handy for voice-controlled smart lights. It knows nearly 6,000 English color names plus words like "bright", "warm", and "muted", and can even handle "set it to 520 nanometres" for the science-minded. See the <a href="../glossary/">Glossary</a> for related terms.</p>
 </div>
 <p>OpenVoiceOS's multilingual color parsing and color-space conversion library. It turns natural-language color descriptions ("bright, slightly warm muted blue") into concrete RGB/HLS/HSV values, and provides color-space utilities needed for smart-light control and similar voice-driven color applications.</p>
 <p><strong>What you get in 30 seconds:</strong></p>
@@ -1756,11 +1756,11 @@
 </span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="nb">print</span><span class="p">(</span><span class="n">color</span><span class="o">.</span><span class="n">hex_str</span><span class="p">,</span> <span class="n">color</span><span class="o">.</span><span class="n">r</span><span class="p">,</span> <span class="n">color</span><span class="o">.</span><span class="n">g</span><span class="p">,</span> <span class="n">color</span><span class="o">.</span><span class="n">b</span><span class="p">)</span>   <span class="c1"># an sRGBAColor, or None if nothing matched</span>
 </span></code></pre></div>
 <blockquote>
-<p><strong>Import note:</strong> the top-level <code>ovos_color_parser</code> package re-exports most of the API, including <code>palette_from_description</code>, <code>lookup_name</code>, <code>rgb_to_cmyk</code>, <code>cmyk_to_rgb</code>, and <code>is_hex_code_valid</code> — import them directly from <code>ovos_color_parser</code> (see <a href="#api-reference">API reference</a>). Only the less common pre-built spectral/language palette constants still need a submodule import from <code>ovos_color_parser.models</code>.</p>
+<p><strong>Import note:</strong> the top-level <code>ovos_color_parser</code> package re-exports most of the API, including <code>palette_from_description</code>, <code>lookup_name</code>, <code>rgb_to_cmyk</code>, <code>cmyk_to_rgb</code>, and <code>is_hex_code_valid</code>. Import them directly from <code>ovos_color_parser</code> (see <a href="#api-reference">API reference</a>). Only the less common pre-built spectral/language palette constants still need a submodule import from <code>ovos_color_parser.models</code>.</p>
 </blockquote>
 <h2 id="why-it-exists">Why it exists<a class="headerlink" href="#why-it-exists" title="Permanent link">&para;</a></h2>
-<p>Voice assistants frequently need to interpret color commands: "change the lamp to moss green", "make it darker", "a bit more saturated". Standard CSS/X11 color name lookups only cover exact matches. <code>ovos-color-parser</code> layers on top of a multilingual color-name database (nearly 6 000 English name-to-hex mappings) and a language-keyed adjective/modifier system so that fuzzy descriptions and modifier words ("bright", "warm", "muted") are resolved to a real sRGB value.</p>
-<p>A secondary use-case is scientific: the library supports the full electromagnetic spectrum (including UV, IR, microwaves and radio waves) mapped through spectral color palettes, so physicists who say "set the lamp to 520 nanometres" are handled without special-casing in skills.</p>
+<p>Voice assistants frequently need to interpret color commands: "change the lamp to moss green", "make it darker", "a bit more saturated". Standard CSS/X11 color name lookups only cover exact matches. <code>ovos-color-parser</code> layers on top of a multilingual color-name database (nearly 6 000 English name-to-hex mappings) and a language-keyed adjective/modifier system. This resolves fuzzy descriptions and modifier words ("bright", "warm", "muted") to a real sRGB value.</p>
+<p>A secondary use case is scientific. The library supports the full electromagnetic spectrum (including UV, IR, microwaves, and radio waves), mapped through spectral color palettes. Physicists who say "set the lamp to 520 nanometres" are handled without special-casing in skills.</p>
 <hr />
 <h2 id="package-layout">Package layout<a class="headerlink" href="#package-layout" title="Permanent link">&para;</a></h2>
 <table>
@@ -1801,11 +1801,11 @@
 </tr>
 </tbody>
 </table>
-<p>Dependencies: <code>ovos-utils</code> (fuzzy matching via <code>MatchStrategy</code>). Color-name matching and CIEDE2000 distance are implemented in-house — no third-party <code>ahocorasick</code> or <code>colorspacious</code> dependency.</p>
+<p>Dependencies: <code>ovos-utils</code> (fuzzy matching via <code>MatchStrategy</code>). Color-name matching and CIEDE2000 distance are implemented in-house, with no third-party <code>ahocorasick</code> or <code>colorspacious</code> dependency.</p>
 <hr />
 <h2 id="architecture">Architecture<a class="headerlink" href="#architecture" title="Permanent link">&para;</a></h2>
 <h3 id="color-space-model-modelspy">Color space model (<code>models.py</code>)<a class="headerlink" href="#color-space-model-modelspy" title="Permanent link">&para;</a></h3>
-<p>All color representations are Python <code>@dataclass</code> objects. Internal operations are performed in HLS space; conversions between spaces are implemented as properties.</p>
+<p>All color representations are Python <code>@dataclass</code> objects. Internal operations are performed in HLS space. Conversions between spaces are implemented as properties.</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>sRGBAColor  ──as_hls──►  HLSColor  ──as_hsv──►  HSVColor
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>     │                      │                       │
 </span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>     │◄──────as_rgb─────────│◄──────as_rgb──────────│
@@ -1817,16 +1817,16 @@
 <p><code>color_from_description()</code> runs four steps:</p>
 <ol>
 <li>
-<p><strong>Exact / substring lookup</strong> — loads a language-specific <code>SubstringMatcher</code> automaton (<code>ovos_color_parser.match.automaton</code>) built from the per-language JSON word lists. The automaton is built once per language and cached thread-safely in <code>ColorMatcher._color_automatons</code>.</p>
+<p><strong>Exact / substring lookup</strong>: loads a language-specific <code>SubstringMatcher</code> automaton (<code>ovos_color_parser.match.automaton</code>) built from the per-language JSON word lists. The automaton is built once per language and cached thread-safely in <code>ColorMatcher._color_automatons</code>.</p>
 </li>
 <li>
-<p><strong>Fuzzy fallback</strong> — when <code>fuzzy=True</code>, iterates all color names with <code>fuzzy_match()</code> using <code>TOKEN_SET_RATIO</code> pre-screening and the requested <code>MatchStrategy</code>.</p>
+<p><strong>Fuzzy fallback</strong>: when <code>fuzzy=True</code>, iterates all color names with <code>fuzzy_match()</code> using <code>TOKEN_SET_RATIO</code> pre-screening and the requested <code>MatchStrategy</code>.</p>
 </li>
 <li>
-<p><strong>Object-color lookup</strong> — checks <code>object_colors.json</code> for object-to-color mappings (e.g. "sky" → #87CEEB).</p>
+<p><strong>Object-color lookup</strong>: checks <code>object_colors.json</code> for object-to-color mappings (e.g. "sky" → #87CEEB).</p>
 </li>
 <li>
-<p><strong>Adjective adjustment</strong> — reads <code>color_descriptors.json</code> for the language and applies saturation, brightness, opacity, and temperature modifiers to the averaged candidate color.</p>
+<p><strong>Adjective adjustment</strong>: reads <code>color_descriptors.json</code> for the language and applies saturation, brightness, opacity, and temperature modifiers to the averaged candidate color.</p>
 </li>
 </ol>
 <p>Weighted circular-mean hue averaging (<code>average_colors()</code>) prevents wrap-around errors for hues near 0°/360°.</p>
@@ -2047,7 +2047,7 @@
 </tbody>
 </table>
 <h3 id="colormatcher-class-ovos_color_parsermatchingpy"><code>ColorMatcher</code> class (<code>ovos_color_parser/matching.py</code>)<a class="headerlink" href="#colormatcher-class-ovos_color_parsermatchingpy" title="Permanent link">&para;</a></h3>
-<p>Thread-safe class that owns the <code>SubstringMatcher</code> automata. Can be used statically (backed by the per-language class-level caches <code>_color_automatons</code>/<code>_object_automatons</code>, built lazily) or as an instance with a fixed language and optional custom vocabularies for isolated, injectable matching.</p>
+<p>Thread-safe class that owns the <code>SubstringMatcher</code> automata. It can be used statically (backed by the per-language class-level caches <code>_color_automatons</code>/<code>_object_automatons</code>, built lazily), or as an instance with a fixed language and optional custom vocabularies for isolated, injectable matching.</p>
 <table>
 <thead>
 <tr>
@@ -2171,7 +2171,7 @@
 color resolves to a spectral color term.</p>
 <hr />
 <h2 id="language-support">Language support<a class="headerlink" href="#language-support" title="Permanent link">&para;</a></h2>
-<p>Language-keyed resources live in <code>ovos_color_parser/res/&lt;locale&gt;/</code>, named with full locale codes (<code>en-US</code>, <code>de-DE</code>, <code>es-ES</code>, <code>pt-BR</code>, ...). The loader resolves either a bare primary subtag (<code>"es"</code>) or a full locale tag (<code>"es-ES"</code>) to the matching resource directory, so both forms work when calling <code>color_from_description</code>, <code>lookup_name</code>, and related functions.</p>
+<p>Language-keyed resources live in <code>ovos_color_parser/res/&lt;locale&gt;/</code>, named with full locale codes (<code>en-US</code>, <code>de-DE</code>, <code>es-ES</code>, <code>pt-BR</code>, ...). The loader resolves either a bare primary subtag (<code>"es"</code>) or a full locale tag (<code>"es-ES"</code>) to the matching resource directory. Both forms work when calling <code>color_from_description</code>, <code>lookup_name</code>, and related functions.</p>
 <p>Each language directory may contain:</p>
 <table>
 <thead>
@@ -2195,7 +2195,7 @@ color resolves to a spectral color term.</p>
 </tr>
 </tbody>
 </table>
-<p>English (<code>en</code>) ships over 15 000 hex-to-name entries across its bundled catalogs — the primary word list alone (<code>colors.json</code>) has about 6 200 entries, and it's joined by X11/web colors, Crayola, XKCD, Wikipedia's color list, Pantone, RAL, and other named color standards.</p>
+<p>English (<code>en</code>) ships over 15 000 hex-to-name entries across its bundled catalogs. The primary word list alone (<code>colors.json</code>) has about 6 200 entries, joined by X11/web colors, Crayola, XKCD, Wikipedia's color list, Pantone, RAL, and other named color standards.</p>
 <hr />
 <h2 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">&para;</a></h2>
 <p>No runtime configuration object is used. Language selection is passed explicitly to every function via the <code>lang</code> parameter. <code>MatchStrategy</code> (imported from <code>ovos_utils.parse</code>) controls the fuzzy matching algorithm:</p>

@@ -1463,7 +1463,7 @@
 <h1 id="agentic-loop-architectures">Agentic Loop Architectures<a class="headerlink" href="#agentic-loop-architectures" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>Normally an AI answers in one shot. An "agentic loop" lets it work more like a person solving a problem: think a little, take an action (such as looking something up), see the result, then think again — repeating until it has a good answer. This page describes several ready-made styles of that step-by-step reasoning, each suited to different kinds of tasks. The "tools" it can reach for are described in <a href="../tool-plugins/">Tool Plugins</a>; see the <a href="../glossary/">Glossary</a> for unfamiliar terms.</p>
+<p>Normally an AI answers in one shot. An "agentic loop" lets it work more like a person solving a problem: think a little, take an action (such as looking something up), see the result, then think again, repeating until it has a good answer. This page describes several ready-made styles of that step-by-step reasoning, each suited to different kinds of tasks. The "tools" it can reach for are described in <a href="../tool-plugins/">Tool Plugins</a>. See the <a href="../glossary/">Glossary</a> for unfamiliar terms.</p>
 </div>
 <details class="info">
 <summary>📐 Formal specification</summary>
@@ -1473,18 +1473,18 @@ role:
 defines a persona as a <strong>complete conversational agent</strong>, summonable as a
 first-class pipeline stage. When the active persona (selected by
 <code>session.persona_id</code>) is reached, it claims the utterance and generates the
-response — exactly the slot the agentic brains on this page fill. For the
+response, exactly the slot the agentic brains on this page fill. For the
 full set see the <strong><a href="../architecture-specs/">spec index</a></strong>.</p>
 </details>
 <p><a href="https://github.com/OpenVoiceOS/ovos-agentic-loop">ovos-agentic-loop</a> implements eight agentic reasoning patterns as standard OPM <code>ChatEngine</code> plugins. Each pattern wires a configurable inner LLM brain with one or more <code>ToolBox</code> plugins to produce multi-step reasoning over OVOS personas.</p>
 <div class="admonition tip">
 <p class="admonition-title">Which loop should I pick?</p>
 <ul>
-<li>Just need the model to use a tool and answer? Start with <strong><code>ovos-react-loop</code></strong> — it's the
+<li>Just need the model to use a tool and answer? Start with <strong><code>ovos-react-loop</code></strong>. It's the
   general-purpose default, and every other loop is a variation for a specific need.</li>
 <li>Your model's API supports native <code>tool_calls</code> (most modern hosted LLMs)? Use
-  <strong><code>ovos-native-toolcall-loop</code></strong> instead — same job, less prompt overhead, and it falls
-  back to the ReAct text loop automatically if the model doesn't support it.</li>
+  <strong><code>ovos-native-toolcall-loop</code></strong> instead. It does the same job with less prompt overhead,
+  and it falls back to the ReAct text loop automatically if the model doesn't support it.</li>
 <li>Multi-step task where doing the steps in the wrong order matters (e.g. booking a trip)?
   Use <strong><code>ovos-plan-execute-loop</code></strong> to plan up front, then execute.</li>
 <li>The model's first attempt is often wrong and could improve on a second pass? Use
@@ -1495,8 +1495,8 @@ full set see the <strong><a href="../architecture-specs/">spec index</a></strong
 <li>Pure reasoning with no tools involved (math, logic puzzles)? Use
   <strong><code>ovos-chain-of-thought-loop</code></strong>.</li>
 <li>Open-ended exploration where several candidate solution paths are worth comparing before
-  committing? Use <strong><code>ovos-tree-of-thoughts-loop</code></strong> — the most expensive option, reserve it
-  for problems where a single reasoning path is unreliable.</li>
+  committing? Use <strong><code>ovos-tree-of-thoughts-loop</code></strong>. It is the most expensive option, so
+  reserve it for problems where a single reasoning path is unreliable.</li>
 </ul>
 </div>
 <hr />
@@ -1707,7 +1707,7 @@ the engine config (each defaults if unset):</p>
 </table>
 <hr />
 <h2 id="skillmd-integration">SKILL.md Integration<a class="headerlink" href="#skillmd-integration" title="Permanent link">&para;</a></h2>
-<p>Any package shipping a <code>SKILL.md</code> file is automatically discovered and exposed as an agent tool. The <code>name</code> frontmatter field becomes the tool name; the body becomes the system prompt for a sub-LLM call:</p>
+<p>Any package shipping a <code>SKILL.md</code> file is automatically discovered and exposed as an agent tool. The <code>name</code> frontmatter field becomes the tool name. The body becomes the system prompt for a sub-LLM call:</p>
 <div class="language-markdown highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>---
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>name: my-skill
 </span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="gu">description: Does something useful.</span>
@@ -1725,13 +1725,13 @@ the engine config (each defaults if unset):</p>
 </span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="p">})</span>
 </span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="n">messages</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">build_conversation_context</span><span class="p">(</span><span class="n">utterance</span><span class="p">,</span> <span class="n">session_id</span><span class="o">=</span><span class="s2">&quot;s1&quot;</span><span class="p">)</span>
 </span></code></pre></div>
-<p>It also registers as an OPM plugin — entry point <code>ovos-agents-md-context-plugin</code> under the <code>opm.agents.memory</code> group — so it can be wired declaratively from persona JSON, the same way loops and toolboxes are.</p>
+<p>It also registers as an OPM plugin, entry point <code>ovos-agents-md-context-plugin</code> under the <code>opm.agents.memory</code> group, so it can be wired declaratively from persona JSON, the same way loops and toolboxes are.</p>
 <hr />
 <h2 id="security-notes">Security Notes<a class="headerlink" href="#security-notes" title="Permanent link">&para;</a></h2>
 <ul>
-<li><code>ShellToolBox</code> — <code>allow_shell</code> defaults to <code>false</code>. Only enable with fully-trusted LLMs; commands are passed directly to <code>/bin/sh</code>.</li>
-<li><code>FileSystemToolBox</code> — set <code>root_path</code> to restrict file access to a subtree.</li>
-<li><code>MathToolBox</code> — uses <code>ast.parse</code> with an allowlist; <code>eval()</code> is never called.</li>
+<li><code>ShellToolBox</code>: <code>allow_shell</code> defaults to <code>false</code>. Only enable with fully-trusted LLMs. Commands are passed directly to <code>/bin/sh</code>.</li>
+<li><code>FileSystemToolBox</code>: set <code>root_path</code> to restrict file access to a subtree.</li>
+<li><code>MathToolBox</code>: uses <code>ast.parse</code> with an allowlist. <code>eval()</code> is never called.</li>
 </ul>
 <h3 id="toolbox-security-keys">Toolbox security keys<a class="headerlink" href="#toolbox-security-keys" title="Permanent link">&para;</a></h3>
 <p>These keys go in the per-toolbox config block:</p>
@@ -1783,9 +1783,9 @@ the engine config (each defaults if unset):</p>
 <hr />
 <h2 id="related-pages">Related Pages<a class="headerlink" href="#related-pages" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="../tool-plugins/">Agent Tool Plugins</a> — OPM <code>ToolBox</code> interface and the PHAL bus provider</li>
-<li><a href="../agent-interop/">Agent Interoperability</a> — MCP, UTCP, A2A wiring</li>
-<li><a href="../personas/">Personas</a> — composing personas from agentic loop engines</li>
+<li><a href="../tool-plugins/">Agent Tool Plugins</a>: OPM <code>ToolBox</code> interface and the PHAL bus provider</li>
+<li><a href="../agent-interop/">Agent Interoperability</a>: MCP, UTCP, A2A wiring</li>
+<li><a href="../personas/">Personas</a>: composing personas from agentic loop engines</li>
 </ul>
 
 

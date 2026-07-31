@@ -1513,7 +1513,7 @@
 <h1 id="choosing-plugins-comparison-recommendations">Choosing Plugins — Comparison &amp; Recommendations<a class="headerlink" href="#choosing-plugins-comparison-recommendations" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>OVOS ships <strong>dozens</strong> of interchangeable plugins for each job — a great thing, but
+<p>OVOS ships <strong>dozens</strong> of interchangeable plugins for each job. That's useful, but
 it's easy to feel lost picking one. This page is the shortcut: for every plugin type
 it names a <strong>recommended default</strong>, then a small <strong>comparison table</strong> so you can see at
 a glance which option fits your situation (offline vs cloud, hardware budget, licence,
@@ -1522,8 +1522,8 @@ catalog. New here? Start with the <a href="../plugins-index/">Plugins Index</a>.
 </div>
 <div class="admonition tip">
 <p class="admonition-title">Don't want to choose? Use the recommended offline stack</p>
-<p>Every ⭐ below is a sensible, <strong>fully-offline, on-device</strong> default — a complete private
-stack, no cloud, no account. First install them:</p>
+<p>Every ⭐ below is a sensible, <strong>fully-offline, on-device</strong> default. It forms a complete
+private stack: no cloud, no account. First install them:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pip<span class="w"> </span>install<span class="w"> </span>ovos-microphone-plugin-alsa<span class="w"> </span>ovos-vad-plugin-silero<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">            </span>ovos-stt-plugin-onnx-asr<span class="w"> </span>phoonnx
 </span></code></pre></div>
@@ -1538,7 +1538,7 @@ stack, no cloud, no account. First install them:</p>
 </span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="p">}</span>
 </span></code></pre></div>
 <p>The wake word is <strong>not</strong> in the snippet because it already defaults to <strong>precise-onnx</strong>
-(<code>hey_mycroft</code>) — see <a href="#wake-word">Wake Word</a> to change the phrase. Prefer one command?
+(<code>hey_mycroft</code>). See <a href="#wake-word">Wake Word</a> to change the phrase. Prefer one command?
 <code>ovos-config autoconfigure -l en-us --offline</code> writes the language + these defaults for
 you (it needs <code>ovos-config</code> already installed, and configures rather than installs plugins).</p>
 </div>
@@ -1546,8 +1546,8 @@ you (it needs <code>ovos-config</code> already installed, and configures rather 
 OK)? Jump straight to <strong><a href="#pick-by-scenario">Pick by scenario</a></strong>.</p>
 <p><strong>How to read the tables.</strong> ⭐ marks the recommended default. <strong>Maturity</strong> rates
 <a href="../maturity/">repository health</a> (PoC → Alpha → Beta → Stable → Mature), <em>not</em> how good the
-plugin is — a Beta default can be the right pick. <strong>Offline</strong> means it runs on-device with
-no network; <strong>online</strong> calls a cloud service (separate terms); <strong>hybrid</strong> talks to a server
+plugin is. A Beta default can be the right pick. <strong>Offline</strong> means it runs on-device with
+no network. <strong>Online</strong> calls a cloud service (separate terms). <strong>Hybrid</strong> talks to a server
 you can self-host. Pick the row whose <em>"choose this if"</em> matches you, then open the catalog
 page for its config.</p>
 <hr />
@@ -1672,10 +1672,10 @@ page for its config.</p>
 </tr>
 </tbody>
 </table>
-<p><em><code>ovos-ww-plugin-precise-lite</code> is <strong>deprecated</strong> — the TFLite predecessor of precise-onnx,
+<p><em><code>ovos-ww-plugin-precise-lite</code> is <strong>deprecated</strong>. It is the TFLite predecessor of precise-onnx,
 kept working as a fallback but not a pick for new setups.</em></p>
 <h3 id="stt-speech-to-text">STT (Speech-to-Text)<a class="headerlink" href="#stt-speech-to-text" title="Permanent link">&para;</a></h3>
-<p>Transcribes speech to text. See the <a href="../stt-plugins/">STT catalog</a> (15 plugins; top picks shown).</p>
+<p>Transcribes speech to text. See the <a href="../stt-plugins/">STT catalog</a> (15 plugins, top picks shown).</p>
 <table>
 <thead>
 <tr>
@@ -1733,7 +1733,7 @@ kept working as a fallback but not a pick for new setups.</em></p>
 <hr />
 <h2 id="speech-output">Speech output<a class="headerlink" href="#speech-output" title="Permanent link">&para;</a></h2>
 <h3 id="tts-text-to-speech">TTS (Text-to-Speech)<a class="headerlink" href="#tts-text-to-speech" title="Permanent link">&para;</a></h3>
-<p>Turns replies into speech. See the <a href="../tts-plugins/">TTS catalog</a> (17 plugins; top picks shown).</p>
+<p>Turns replies into speech. See the <a href="../tts-plugins/">TTS catalog</a> (17 plugins, top picks shown).</p>
 <table>
 <thead>
 <tr>
@@ -1790,15 +1790,15 @@ kept working as a fallback but not a pick for new setups.</em></p>
 </table>
 <div class="admonition note">
 <p class="admonition-title">Licence watch</p>
-<p>Most speech plugins are Apache-2.0, but a few differ — e.g. <strong>espeakNG is GPL-3.0</strong>, and
-cloud engines (Azure, Polly, …) add the vendor's separate terms. The catalog pages carry
-the exact licence per plugin.</p>
+<p>Most speech plugins are Apache-2.0, but a few differ. For example, <strong>espeakNG is
+GPL-3.0</strong>, and cloud engines (Azure, Polly, and others) add the vendor's separate terms.
+The catalog pages carry the exact licence per plugin.</p>
 </div>
 <h3 id="g2p-grapheme-to-phoneme">G2P (Grapheme-to-Phoneme)<a class="headerlink" href="#g2p-grapheme-to-phoneme" title="Permanent link">&para;</a></h3>
 <p>Converts text to phonemes to drive <strong>mouth-movement / viseme animation</strong> (e.g. a Mark 1
-face). This is a <strong>Beta, Mark 1-era</strong> capability: most TTS voices don't emit phoneme timing,
+face). This is a <strong>Beta, Mark 1-era</strong> capability. Most TTS voices don't emit phoneme timing,
 so a G2P plugin <em>estimates</em> it from the text. Only <strong>Mimic 1</strong> provides phoneme timing
-natively; for any other voice the G2P plugin simulates the timing. <strong>If you don't drive a
+natively. For any other voice the G2P plugin simulates the timing. <strong>If you don't drive a
 mouth/face, you don't need a G2P plugin at all.</strong> See the <a href="../g2p-plugins/">G2P catalog</a>.</p>
 <table>
 <thead>
@@ -1969,20 +1969,20 @@ mouth/face, you don't need a G2P plugin at all.</strong> See the <a href="../g2p
 <hr />
 <h2 id="pick-by-scenario">Pick by scenario<a class="headerlink" href="#pick-by-scenario" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>Fully offline / private (Raspberry Pi or mini-PC):</strong> the ⭐ stack — alsa mic, silero VAD,
+<li><strong>Fully offline / private (Raspberry Pi or mini-PC):</strong> the ⭐ stack: alsa mic, silero VAD,
   precise-onnx wake word, onnx-asr STT, phoonnx TTS. Everything runs on-device.</li>
 <li><strong>Lowest-power / tiny device:</strong> swap TTS to <strong>pico</strong> or <strong>espeakNG</strong>, VAD to <strong>webrtcvad</strong>,
   STT to <strong>vosk</strong> (small model). Accept lower accuracy for a smaller footprint.</li>
-<li><strong>Best accuracy, GPU available:</strong> STT <strong>fasterwhisper</strong> (large model) or <strong>nemo</strong>; TTS
+<li><strong>Best accuracy, GPU available:</strong> STT <strong>fasterwhisper</strong> (large model) or <strong>nemo</strong>. TTS
   <strong>coqui</strong>. Still fully offline.</li>
 <li><strong>Thin satellite / shared backend:</strong> offload with the <code>*-server</code> plugins (STT server, TTS
   server, ww-server) so the heavy models live on one machine.</li>
 <li><strong>Cloud is acceptable (coverage/quality first):</strong> STT <strong>azure</strong>, TTS <strong>edge-tts</strong>/<strong>polly</strong>,
-  translation <strong>google</strong> — each adds the vendor's separate terms.</li>
+  translation <strong>google</strong>. Each adds the vendor's separate terms.</li>
 </ul>
-<p>Maturity here is a <strong>repository-health</strong> signal, not a quality score — see the
+<p>Maturity here is a <strong>repository-health</strong> signal, not a quality score. See the
 <a href="../maturity/">Maturity scale</a>. For discovery/loading internals see the
-<a href="../plugin-manager/">Plugin Manager</a>; for head-to-head benchmark data see the
+<a href="../plugin-manager/">Plugin Manager</a>. For head-to-head benchmark data see the
 <a href="../plugin-arena/">Plugin Arena</a>.</p>
 
 
