@@ -230,11 +230,12 @@ model alone.
 If your device has a display, [`ovos-gui`](gui-service.md) provides the protocol and
 [`ovos-shell`](ovos-shell.md) (or a Qt5/QML client speaking the same
 [GUI protocol](gui-protocol.md)) renders it, with a [homescreen](homescreen.md) skill as the
-default idle view — this part is real and works today on Linux desktops and the
-[GUI-capable installer path](ovos-installer.md). If you are starting a from-scratch hardware
+default idle view — this part works today on Linux desktops and the
+[GUI-capable installer path](ovos-installer.md), but the legacy Qt5 stack is deprecated
+pending the GUI rework. If you are starting a from-scratch hardware
 design, plan for a voice-first experience with an optional screen rather than the other way
-around: the GUI layer is functional but is going through active rework, so treat it as a nice
-extra your device can degrade gracefully without, not a hard dependency for launch.
+around: treat the GUI layer as a nice extra your device can degrade gracefully without, not
+a hard dependency for launch.
 
 ---
 

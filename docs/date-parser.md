@@ -226,37 +226,11 @@ print(relative_time)  # "twenty four hours"
 
 > The generic implementation speaks the rounded difference as words — `"two hours"`, `"twenty four hours"`, `"seven days"` — using `pronounce_number` internally (it does not produce words like "tomorrow"). Basque (`eu`) is the only language with a dedicated `nice_relative_time` implementation; everything else uses the generic one.
 
-### Spans, not just instants
-
-A date phrase often refers to a *stretch* of time rather than a single instant — "July 2026" is a whole month, "the 1980s" a whole decade. `extract_timespan` returns that stretch as a **`DateSpan`**: a half-open `[start, end)` interval whose endpoints are **`AstroDate`** objects — datetime-like points that are not capped at years 1–9999, so BC dates and far-future dates work too. The span's *width carries its precision*.
-
-`nice_span` is the inverse: give it a `DateSpan` and it picks the label that matches the width — a one-day span reads as a date, a month-wide span as a month, a decade as "the 1980s", a century as "the 19th century". For English this round-trips: what `nice_span` writes, `extract_timespan` reads back.
-
-<!-- docs-check: skip-next -->
-```python
-from ovos_date_parser import extract_timespan, nice_span
-
-span, _ = extract_timespan("the 19th century", "en")
-print(span.start, "..", span.end)   # 1800-01-01 .. 1900-01-01
-print(nice_span(span, "en"))        # 'the 19th century'
-```
-
-The `nice_*` datetime formatters also accept an `AstroDate` directly — it is projected to a regular `datetime` when it fits, so extracted points can be formatted without unwrapping them first:
-
-<!-- docs-check: skip-next -->
-```python
-from ovos_date_parser import nice_date, nice_time
-from ovos_date_parser.astrodate import AstroDate
-
-when = AstroDate(2026, 7, 21, 15, 30)
-nice_date(when, lang="en")   # "tuesday, july twenty-first, twenty twenty six"
-nice_time(when, lang="en")   # "half past three"
-```
-
-`nice_span` gives a sensible label in every formatting language, but the round-trip guarantee (label back through `extract_timespan` to the same span) currently holds for English only; matching span grammars for other languages live in the `chronologia` reckoning core the package builds on.
-
-!!! note
-    English also gains historical calendar and era vocabulary — Julian/holocene/anno-mundi style era references, regnal and Roman-numeral year forms, and richer date-range parsing — as part of this declarative datetime engine. Other languages keep their existing scanners.
+!!! note "Upcoming"
+    Span extraction (`DateSpan`) and astronomical or era-based dates are in
+    development. This work lives on feature branches of
+    [OpenVoiceOS/ovos-date-parser](https://github.com/OpenVoiceOS/ovos-date-parser)
+    and is not part of the released API yet.
 
 ## Related Projects
 

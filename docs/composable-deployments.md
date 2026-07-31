@@ -291,7 +291,7 @@ service against the same bus: the duplication happens at the message-dispatch le
 any skill code runs, so every subscriber on both instances still receives and reacts to
 every message. Horizontal scaling for multiple devices/users is a distributed-deployment
 concern, not a duplicate-singleton one — it is done with [HiveMind](hivemind-agents.md)
-satellites talking to a single hub, not by running two copies of `ovos-core`,
+satellites talking to a single HiveMind server, not by running two copies of `ovos-core`,
 `ovos-audio`, or `ovos-dinkum-listener` against one bus.
 
 ### Defaults assume localhost
