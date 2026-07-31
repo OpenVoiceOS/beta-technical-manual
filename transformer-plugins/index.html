@@ -1007,6 +1007,24 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#package-and-publish" class="md-nav__link">
+    <span class="md-ellipsis">
+      Package and publish
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#test-your-plugin-locally" class="md-nav__link">
+    <span class="md-ellipsis">
+      Test your plugin locally
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1535,6 +1553,24 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#package-and-publish" class="md-nav__link">
+    <span class="md-ellipsis">
+      Package and publish
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#test-your-plugin-locally" class="md-nav__link">
+    <span class="md-ellipsis">
+      Test your plugin locally
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1581,7 +1617,7 @@ updates that cache for the <em>next</em> call to pick up — the current call ne
 the background job finishing.</p>
 </div>
 <h2 id="transformer-types">Transformer Types<a class="headerlink" href="#transformer-types" title="Permanent link">&para;</a></h2>
-<p>All base classes live in <code>ovos_plugin_manager.templates.transformers</code> and share the same constructor: <code>__init__(self, name, priority=50, config=None)</code>, plus <code>bind(bus)</code> and <code>initialize()</code>. The loader supplies <code>name</code>, <code>priority</code>, and <code>config</code> from configuration when it instantiates your class — a plugin usually does not need to override <code>__init__</code> at all; if it does, it must call <code>super().__init__(name, priority, config)</code> so the loader-supplied values still reach the base class.</p>
+<p>All base classes live in <code>ovos_plugin_manager.templates.transformers</code> and share the same constructor: <code>__init__(self, name, priority=50, config=None)</code>, plus <code>bind(bus)</code> and <code>initialize()</code>. The loader (<code>TransformersService.load_plugins()</code> in <code>ovos_plugin_manager.transformer_services</code>) only ever instantiates a plugin as <code>plug(config=plugin_config)</code> — it does not pass <code>name</code> or <code>priority</code>. Since the base class has no default for <code>name</code>, every plugin must override <code>__init__</code> to supply its own <code>name</code> (and usually a default <code>priority</code>), and must call <code>super().__init__(name, priority, config)</code> so the base class still gets them. A <code>"priority"</code> key in a plugin's <code>mycroft.conf</code> block is not applied automatically — the plugin must read it back out of <code>self.config</code> itself if it wants deployments to override priority (see <a href="../utterance-transformers/#config-driven-priority">Utterance Transformers — Config-driven priority</a>).</p>
 <table>
 <thead>
 <tr>
@@ -1715,6 +1751,50 @@ separate <code>tts_transformers</code> module).</p>
 <div class="language-toml highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">[project.entry-points.</span><span class="s2">&quot;opm.transformer.text&quot;</span><span class="k">]</span>
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="n">my-transformer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;my_package.module:MyTransformer&quot;</span>
 </span></code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">No config-discovery entry point for transformers</p>
+<p>TTS and STT plugins can register a second entry point (<code>opm.tts.config</code>, <code>opm.stt.config</code>)
+that exposes sample configurations for UI discovery — see
+<a href="../tts-plugins/#entry-point">TTS Plugins — Entry point</a>. <code>ovos-plugin-manager</code>'s
+<code>PluginConfigTypes</code> enum has no matching entry for any transformer type (audio, utterance,
+metadata, intent, dialog, or tts transformers). A transformer plugin only registers under
+its <code>opm.transformer.*</code> group; there is no equivalent <code>opm.transformer.text.config</code> group to
+advertise its settings.</p>
+</div>
+<h2 id="package-and-publish">Package and publish<a class="headerlink" href="#package-and-publish" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>Pin the dependency version.</strong> Put a floor and a ceiling on <code>ovos-plugin-manager</code> in
+   <code>pyproject.toml</code>, for example <code>ovos-plugin-manager&gt;=0.5.0,&lt;1.0.0</code>, so a future breaking
+   release does not silently pull in.</li>
+<li><strong>Install for local development.</strong> Run <code>pip install -e .</code> from the plugin's own repository.
+   See <a href="../plugin-manager/#3-install-and-verify">OVOS Plugin Manager — Install and verify</a> for the
+   check that confirms the plugin is discoverable.</li>
+<li><strong>Publish to PyPI.</strong> The Plugin Arena's benchmark sweep installs competitors from PyPI, so a
+   transformer plugin needs a PyPI release before it can be entered. See
+   <a href="../plugin-arena/#getting-your-plugin-ranked">Plugin Arena — Getting Your Plugin Ranked</a> and
+   <a href="../tts-plugins/#package-and-publish">TTS Plugins — Package and publish</a> for the shared steps.</li>
+</ol>
+<h2 id="test-your-plugin-locally">Test your plugin locally<a class="headerlink" href="#test-your-plugin-locally" title="Permanent link">&para;</a></h2>
+<p>Instantiate the class directly and call <code>transform()</code> on it:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kn">from</span> <span class="nn">my_transformer_package</span> <span class="kn">import</span> <span class="n">MyCustomTransformer</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="n">transformer</span> <span class="o">=</span> <span class="n">MyCustomTransformer</span><span class="p">()</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="n">utterances</span><span class="p">,</span> <span class="n">context</span> <span class="o">=</span> <span class="n">transformer</span><span class="o">.</span><span class="n">transform</span><span class="p">([</span><span class="s2">&quot;HELLO WORLD&quot;</span><span class="p">])</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="k">assert</span> <span class="n">utterances</span> <span class="o">==</span> <span class="p">[</span><span class="s2">&quot;hello world&quot;</span><span class="p">]</span>
+</span></code></pre></div>
+<p>Turn that into a pytest test that checks both return values:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kn">from</span> <span class="nn">my_transformer_package</span> <span class="kn">import</span> <span class="n">MyCustomTransformer</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="k">def</span> <span class="nf">test_transform_lowercases_utterances</span><span class="p">():</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>    <span class="n">transformer</span> <span class="o">=</span> <span class="n">MyCustomTransformer</span><span class="p">()</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>    <span class="n">utterances</span><span class="p">,</span> <span class="n">context</span> <span class="o">=</span> <span class="n">transformer</span><span class="o">.</span><span class="n">transform</span><span class="p">([</span><span class="s2">&quot;HELLO WORLD&quot;</span><span class="p">],</span> <span class="n">context</span><span class="o">=</span><span class="p">{})</span>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>    <span class="k">assert</span> <span class="n">utterances</span> <span class="o">==</span> <span class="p">[</span><span class="s2">&quot;hello world&quot;</span><span class="p">]</span>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span>
+</span></code></pre></div>
+<p>To exercise the plugin inside a full OVOS install, <code>pip install -e .</code> it into the same virtual
+environment or container <code>ovos-core</code> runs in, then add its name under the matching section of
+<code>mycroft.conf</code> (for example <code>"utterance_transformers": {"my-custom-transformer": {}}</code>) and
+restart OVOS.</p>
 <h1 id="transformer-plugins-reference">Transformer plugins Reference<a class="headerlink" href="#transformer-plugins-reference" title="Permanent link">&para;</a></h1>
 <table>
 <thead>

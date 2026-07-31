@@ -1514,6 +1514,12 @@
 <p>You do not run any benchmarks yourself. A competitor is <em>a configuration you could ship</em> — the
 same plugin under a different config counts as a different fighter — and once its registry entry
 is merged, the arena's sweep runs it against the pinned datasets and it appears on the boards.</p>
+<p>The plugin must be published to PyPI first: the arena itself never installs plugins (see
+<a href="#github-native-zero-servers">GitHub-Native, Zero Servers</a> above), so whoever runs the offline
+prediction job that produces the competitor's HuggingFace dataset needs to <code>pip install</code> the
+plugin by name, which only works once it is on PyPI. See <a href="../tts-plugins/#package-and-publish">TTS Plugins — Package and
+publish</a> or <a href="../transformer-plugins/#package-and-publish">Transformer Plugins — Package and
+publish</a> for the steps to get there.</p>
 <ol>
 <li>Add a JSON file at <code>registry/competitors/&lt;modality&gt;/&lt;competitor-id&gt;.json</code>, where <code>&lt;modality&gt;</code>
    is one of <code>stt</code>, <code>tts</code>, <code>wake_word</code>, <code>vad</code>, <code>intent</code>, <code>intent_keyword</code>, <code>intent_template</code>
