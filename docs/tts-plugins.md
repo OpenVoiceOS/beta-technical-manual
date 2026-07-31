@@ -76,8 +76,11 @@ TTS plugins are responsible for converting text into audio for playback.
 ## TTS
 
 All OVOS TTS plugins need to define a class based on the TTS base class from `ovos_plugin_manager`.
+The base class marks two members abstract: `get_tts()` and `available_languages`. A plugin must
+implement both, so the minimal example below includes `available_languages` from the start.
 
 ```python
+from typing import Set
 from ovos_plugin_manager.templates.tts import TTS
 
 class MyTTS(TTS):
@@ -87,7 +90,18 @@ class MyTTS(TTS):
         # return the output path and optional per-phoneme visemes (or None)
         return wav_file, phonemes
 
+    @property
+    def available_languages(self) -> Set[str]:
+        # Languages this plugin can synthesize, as a set of language codes
+        return {"en-us"}
+
 ```
+
+`available_languages` tells OVOS which languages the plugin supports in its current state (for
+example, only the languages whose voice files are already installed). OVOS uses it to pick a TTS
+plugin for the configured language and to filter plugin choices in a UI. A plugin that skips it
+still loads, but any code that inspects `available_languages` sees an empty set and treats the
+plugin as supporting no language.
 
 ## Entry point
 
@@ -131,6 +145,56 @@ tts.get_tts("Hello world", wav_file)
 print(f"Audio saved to {wav_file}")
 
 ```
+
+## TTSValidator
+
+`TTSValidator` is the class OVOS uses to check that a TTS engine is installed and usable before
+it starts speaking. `TTS.__init__` creates a default `TTSValidator(self)` when a plugin does not
+pass one in. `OVOSTTSFactory.create()` calls `tts.validator.validate()` right after building the
+plugin instance, which runs, in order: `validate_dependencies()`, `validate_instance()`,
+`validate_filename()`, `validate_lang()`, `validate_connection()`.
+
+In the base class every one of those methods is a no-op. A new plugin does not need to write a
+`TTSValidator` at all — the default passes automatically. Write one only if the plugin needs a
+real startup check, for example confirming a binary is on `PATH` or that a cloud endpoint
+answers, and raise inside the relevant `validate_*` method to fail fast with a clear error
+instead of failing later on the first `get_tts()` call.
+
+```python
+from ovos_plugin_manager.templates.tts import TTS, TTSValidator
+
+class MyTTSValidator(TTSValidator):
+    def validate_dependencies(self):
+        # Raise if a required binary or library is missing
+        pass
+
+    def validate_connection(self):
+        # Raise if the backend (local process or remote server) is unreachable
+        pass
+
+class MyTTSPlugin(TTS):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs, validator=MyTTSValidator(self))
+```
+
+See [OVOS Plugin Manager — Writing a Plugin](plugin-manager.md#writing-a-plugin) for how
+`get_tts_class()`/registration and the `opm.tts` entry point fit together at load time.
+
+## Config plumbing
+
+The `"tts": {"module": "...", "ovos-tts-plugin-x": {...}}` block in `mycroft.conf` reaches the
+plugin instance through `OVOSTTSFactory.create()`:
+
+1. `get_tts_config(config)` calls `get_plugin_config(config, "tts", module)`.
+2. `get_plugin_config` reads `config["tts"]["ovos-tts-plugin-x"]` (the module-specific block) and
+   fills in any top-level `tts` keys, such as `lang`, that the module block does not already set.
+3. `OVOSTTSFactory.create()` passes the merged dict to the plugin class as `clazz(config=tts_config)`.
+4. `TTS.__init__` stores it as `self.config`.
+
+So a setting only reaches the plugin if it lives under `tts.<module-name>` (or as a shared
+top-level key under `tts`), and the plugin reads it back with `self.config.get("my_setting")`.
+See [OVOS Plugin Manager — Configuration Priority](plugin-manager.md#configuration-priority) for
+the full precedence rules.
 
 ## Plugin Template
 
@@ -514,6 +578,52 @@ table above.
 > If `"voice"` is omitted, the plugin picks the first bundled model that supports the configured language.
 
 ---
+
+## Package and publish
+
+1. **Pin the dependency version.** Put a floor and a ceiling on `ovos-plugin-manager` in
+   `pyproject.toml`, for example `ovos-plugin-manager>=0.5.0,<1.0.0`. A floor alone lets a future
+   breaking release slip in unnoticed; a ceiling alone lets an old install miss a needed feature.
+2. **Install for local development.** Run `pip install -e .` from the plugin's own repository so
+   changes to the source take effect without reinstalling. See
+   [OVOS Plugin Manager — Install and verify](plugin-manager.md#3-install-and-verify) for the
+   command that confirms OVOS can see the new plugin.
+3. **Publish to PyPI.** OVOS deployments and the Plugin Arena's benchmark sweep both install
+   plugins from PyPI, not from a git checkout, so a plugin needs a PyPI release before either can
+   use it. See [Plugin Arena — Getting Your Plugin Ranked](plugin-arena.md#getting-your-plugin-ranked)
+   for what a published plugin needs to be picked up by the sweep.
+
+## Test your plugin locally
+
+Instantiate the class directly and call `get_tts()` on it, the same way the [Standalone
+Usage](#standalone-usage) example does, then check the file it wrote:
+
+```python
+from my_tts_package import MyTTSPlugin
+
+tts = MyTTSPlugin(config={"lang": "en-us"})
+wav_file, phonemes = tts.get_tts("Hello world", "hello.wav")
+assert wav_file == "hello.wav"
+```
+
+Turn that into a pytest test that asserts a real audio file came out:
+
+```python
+import os
+from my_tts_package import MyTTSPlugin
+
+def test_get_tts_writes_wav_file(tmp_path):
+    tts = MyTTSPlugin(config={"lang": "en-us"})
+    out_file = str(tmp_path / "hello.wav")
+    wav_file, phonemes = tts.get_tts("Hello world", out_file)
+    assert os.path.isfile(wav_file)
+    assert os.path.getsize(wav_file) > 0
+```
+
+To exercise the plugin inside a full OVOS install, `pip install -e .` it into the same virtual
+environment or container `ovos-core`/`ovos-audio` run in, then set `"tts": {"module":
+"<your-plugin-entry-point-name>"}` in `mycroft.conf` and restart OVOS, as described in [Change
+your voice](#change-your-voice) above.
 
 ## Further reading
 

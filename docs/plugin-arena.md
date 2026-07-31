@@ -65,6 +65,13 @@ You do not run any benchmarks yourself. A competitor is *a configuration you cou
 same plugin under a different config counts as a different fighter — and once its registry entry
 is merged, the arena's sweep runs it against the pinned datasets and it appears on the boards.
 
+The plugin must be published to PyPI first: the arena itself never installs plugins (see
+[GitHub-Native, Zero Servers](#github-native-zero-servers) above), so whoever runs the offline
+prediction job that produces the competitor's HuggingFace dataset needs to `pip install` the
+plugin by name, which only works once it is on PyPI. See [TTS Plugins — Package and
+publish](tts-plugins.md#package-and-publish) or [Transformer Plugins — Package and
+publish](transformer-plugins.md#package-and-publish) for the steps to get there.
+
 1. Add a JSON file at `registry/competitors/<modality>/<competitor-id>.json`, where `<modality>`
    is one of `stt`, `tts`, `wake_word`, `vad`, `intent`, `intent_keyword`, `intent_template`
    (the three intent leagues are separate competitor directories). Required fields are `competitor_id`, `modality`

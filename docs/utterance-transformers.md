@@ -242,23 +242,53 @@ To develop your own utterance transformer:
 **Create a Python Class**:
 
 ```python
-from typing import List, Tuple
+from typing import List, Tuple, Optional, Dict, Any
 from ovos_plugin_manager.templates.transformers import UtteranceTransformer
 
 class MyCustomTransformer(UtteranceTransformer):
-   def __init__(self, config=None):
-       super().__init__("my-custom-transformer", priority=10, config=config)
+    def __init__(self, name: str = "my-custom-transformer", priority: int = 50,
+                 config: Optional[Dict[str, Any]] = None):
+        super().__init__(name, priority, config)
 
-   def transform(self, utterances: List[str],
-                 context: dict = None) -> Tuple[List[str], dict]:
-       # utterances is a list of strings; return (utterances, extra_context)
-       context = context or {}
-       modified_utterances = [u.lower() for u in utterances]
-       return modified_utterances, context
+    def transform(self, utterances: List[str],
+                  context: dict = None) -> Tuple[List[str], dict]:
+        # utterances is a list of strings; return (utterances, extra_context)
+        context = context or {}
+        modified_utterances = [u.lower() for u in utterances]
+        return modified_utterances, context
 
 ```
 
-The second return value is *additional* context that gets merged into the message context, not a replacement for it.
+The base `UtteranceTransformer.__init__(self, name, priority=50, config=None)` requires `name`,
+and the loader only ever calls a transformer plugin as `plug(config=plugin_config)`. So a plugin
+must override `__init__` to supply its own `name`, as shown above, and must pass `name`,
+`priority`, and `config` through to `super().__init__()` so the base class still sees them.
+
+The second return value is *additional* context that gets merged into the message context, not a
+replacement for it.
+
+### Config-driven priority
+
+The loader passes only the plugin's config block into `__init__`, not a separate `priority`
+argument. To let a deployment override priority from `mycroft.conf` instead of the hard-coded
+default, read it back out of `self.config` after calling `super().__init__()`:
+
+```python
+class MyCustomTransformer(UtteranceTransformer):
+    def __init__(self, name: str = "my-custom-transformer", priority: int = 50,
+                 config: Optional[Dict[str, Any]] = None):
+        super().__init__(name, priority, config)
+        self.priority = self.config.get("priority", self.priority)
+```
+
+```jsonc
+"utterance_transformers": {
+  "my-custom-transformer": {"priority": 10}
+}
+```
+
+Without that explicit `self.config.get("priority", ...)` line, a `"priority"` key in
+`mycroft.conf` is inert — the loader does not read it back into `self.priority` on its own.
 
 !!! note "Where `lang` fits"
     The spec box above describes the transform as receiving `utterances`, `lang`, and
