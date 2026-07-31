@@ -1,13 +1,13 @@
 # Formal Specifications
 
 !!! abstract "In a nutshell"
-    OVOS is not only an implementation — its component contracts are written
+    OVOS is not only an implementation. Its component contracts are written
     down as a set of **formal, implementation-agnostic specifications**. They
     define *exactly* how the parts talk to each other: the bus messages, the
     session, the intent pipeline, and each plugin role. If you are new, treat
     them as the authoritative "how it really works." If you are building
     plugins, skills, or a whole new orchestrator, they are the **source of
-    truth** — where this manual or the current code diverges from a spec, the
+    truth**. Where this manual or the current code diverges from a spec, the
     spec wins.
 
 The specifications live in the
@@ -15,9 +15,9 @@ The specifications live in the
 repository. They are **prescriptive, not descriptive**: they describe the
 intended architecture, not a transcript of any one codebase. That is what lets
 a skill written against the intent stack run on *any* conformant orchestrator,
-in any language, under any pipeline configuration — and what lets a second
-project adopt the same formats and bus contracts without buying into OVOS as a
-whole.
+in any language, under any pipeline configuration. It is also what lets a
+second project adopt the same formats and bus contracts without buying into
+OVOS as a whole.
 
 Throughout this manual you will see a callout like this on the page for each
 subsystem:
@@ -34,7 +34,7 @@ requirements.
 
 The specifications are organized around one idea: OVOS is a **voice operating
 system**, not a voice assistant. A voice assistant is a product that answers
-questions; a voice OS is a *platform* that defines the boundary between user
+questions. A voice OS is a *platform* that defines the boundary between user
 input and computation, arbitrates which application handles each utterance, and
 provides a stable ABI that arbitrary third-party applications run against
 without knowing anything about each other. The analogy to a general-purpose OS
@@ -80,7 +80,7 @@ is direct:
 | [**OVOS-CONTEXT-1** — Intent Context](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-context.md) | The decaying, per-session key/value store that **gates** which intents may match across conversational turns. |
 | [**OVOS-CONVERSE-1** — Active Handlers & Interactive Response](https://github.com/OpenVoiceOS/architecture/blob/dev/converse.md) | How a skill stays "active" to intercept follow-ups, and the response window that collects a single follow-up reply. |
 | [**OVOS-STOP-1** — Stop Pipeline Plugin](https://github.com/OpenVoiceOS/architecture/blob/dev/stop-1.md) | How "stop" cascades to the most recently active handler, or triggers a global stop. |
-| [**OVOS-PERSONA-1** — Persona Pipeline Plugin](https://github.com/OpenVoiceOS/architecture/blob/dev/persona.md) | A complete conversational agent (e.g. an LLM) as a first-class, summonable pipeline stage. |
+| [**OVOS-PERSONA-1** — Persona Pipeline Plugin](https://github.com/OpenVoiceOS/architecture/blob/dev/persona.md) | A complete conversational agent (e.g. an LLM) as a summonable pipeline stage. |
 | [**OVOS-FALLBACK-1** — Fallback Pipeline Plugin](https://github.com/OpenVoiceOS/architecture/blob/dev/fallback.md) | The priority-ordered handlers that catch utterances no earlier stage claimed. |
 | [**OVOS-COMMON-QUERY-1** — Common Query Pipeline Plugin](https://github.com/OpenVoiceOS/architecture/blob/dev/common-query.md) | The scatter-gather question-answering contest across every skill that can answer. |
 
@@ -109,25 +109,25 @@ format, and a conformance section. The key words **MUST**, **SHOULD**, and
 Every spec header carries two separate numbers, and it matters which one you
 cite:
 
-- **Version** — the spec's compatibility class (V0/V1/V2, see the README
+- **Version**: the spec's compatibility class (V0/V1/V2, see the README
   registry below). It changes only when an edit breaks compatibility with the
-  prior class; a spec is cited by class (`OVOS-MSG-1 v1`).
-- **Revision** — a monotonic counter of normative edits *within* a class,
-  starting at `1`. A refinement — tightening a requirement, adding an
-  optional field, correcting a cross-reference — bumps the revision, not the
+  prior class. A spec is cited by class (`OVOS-MSG-1 v1`).
+- **Revision**: a monotonic counter of normative edits *within* a class,
+  starting at `1`. A refinement, such as tightening a requirement, adding an
+  optional field, or correcting a cross-reference, bumps the revision, not the
   version. `Revision` disambiguates which text of a given class you mean
-  (`v1 rev 3`); non-normative edits (typos, formatting) don't bump it at all.
+  (`v1 rev 3`). Non-normative edits (typos, formatting) don't bump it at all.
 
-- **Newcomers:** read the scope and the worked examples; skip the conformance
+- **Newcomers:** read the scope and the worked examples. Skip the conformance
   tables until you need them. Start with
   [OVOS-MSG-1](https://github.com/OpenVoiceOS/architecture/blob/dev/msg-1.md)
   (the message), then
   [OVOS-PIPELINE-1](https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md)
   (how an utterance is handled).
 - **Skill authors:** OVOS-INTENT-1 → INTENT-2 → INTENT-3 cover everything you
-  declare; add INTENT-4 only if you need the registration wire format.
+  declare. Add INTENT-4 only if you need the registration wire format.
 - **Plugin / orchestrator builders:** the conformance sections are your test
-  checklist; the
+  checklist. The
   [README registry](https://github.com/OpenVoiceOS/architecture/blob/dev/README.md)
   lists every spec and its compatibility class.
 

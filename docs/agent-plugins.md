@@ -1,10 +1,10 @@
 # Agent Plugins
 
 !!! abstract "In a nutshell"
-    Agent plugins are the swappable "brains" your assistant can use to do thinking work: holding a conversation, answering a factual question, summarizing a document, picking the best of several answers, remembering what was said earlier, or figuring out who "she" refers to. You don't run them yourself — you list the ones you want in a [persona](personas.md), and OVOS loads them. Think of it like choosing which browser extensions to install, except each "extension" is a different reasoning skill. See [Agents & Personas](personas.md) or the [Glossary](glossary.md) for related terms.
+    Agent plugins are the swappable "brains" your assistant can use to do thinking work: holding a conversation, answering a factual question, summarizing a document, picking the best of several answers, remembering what was said earlier, or figuring out who "she" refers to. You don't run them yourself. You list the ones you want in a [persona](personas.md), and OVOS loads them. Think of it like choosing which browser extensions to install, except each "extension" is a different reasoning skill. See [Agents & Personas](personas.md) or the [Glossary](glossary.md) for related terms.
 
 **For beginners:** agent plugins are the installable building blocks that let a persona think,
-answer, rank, summarize, remember, or resolve pronouns. You don't call them directly — you list
+answer, rank, summarize, remember, or resolve pronouns. You don't call them directly. You list
 them in a [persona](personas.md) and the [PersonaService](personas.md#personaservice-pipeline-plugin)
 loads them. Each plugin advertises itself to OVOS through an OPM entry-point group.
 
@@ -38,7 +38,7 @@ parallel `*.config` group for config metadata). The discovery helpers live in
 | `opm.agents.toolbox` | — | Tool / function-calling registry |
 
 The legacy `opm.solver.*` groups (and the `QuestionSolver` family in
-`ovos_plugin_manager.templates.solvers`) are deprecated — see [Specialized Agent Engine
+`ovos_plugin_manager.templates.solvers`) are deprecated. See [Specialized Agent Engine
 Types](advanced-solvers.md) for the migration map. For per-engine method contracts and config
 examples, see [Agents & Personas](personas.md) and [Advanced Solvers](advanced-solvers.md).
 
@@ -48,13 +48,13 @@ examples, see [Agents & Personas](personas.md) and [Advanced Solvers](advanced-s
 
 | Plugin | Description |
 |--------|-------------|
-| [ovos-qdrant-embeddings-plugin](#ovos-qdrant-embeddings-plugin) | The `QdrantEmbeddingsDB` plugin integrates with the [qdrant](https://qdrant.tech/) database to provide a robust solution for managing and querying embeddings. This plugin extends the abstract `EmbeddingsDB` class, allowing you to store, retrieve, and query embeddings efficiently using qdrant's capabilities. |
+| [ovos-qdrant-embeddings-plugin](#ovos-qdrant-embeddings-plugin) | The `QdrantEmbeddingsDB` plugin integrates with the [qdrant](https://qdrant.tech/) database to store, retrieve, and query embeddings. This plugin extends the abstract `EmbeddingsDB` class, using qdrant's capabilities. |
 | [ovos-solver-plugin-aiml](#ovos-solver-plugin-aiml) | A rule-based chatbot answer engine for OVOS, using AIML pattern matching. |
-| [ovos-persona](#ovos-persona) | The **`PersonaPipeline`** brings multi-persona management to OpenVoiceOS (OVOS), enabling interactive conversations with virtual assistants. 🎙️ With personas, you can customize how queries are handled by assigning specific solvers to each persona. |
-| [ovos-openai-plugin](#ovos-openai-plugin) | Leverages the [OpenAI Completions API](https://platform.openai.com/docs/api-reference/completions/create) to provide a chat engine, a dialog-rewriting transformer, and a summarizer, all pointed at any OpenAI-compatible endpoint. |
+| [ovos-persona](#ovos-persona) | The **`PersonaPipeline`** brings multi-persona management to OpenVoiceOS (OVOS), enabling interactive conversations with virtual assistants. With personas, you can customize how queries are handled by assigning specific solvers to each persona. |
+| [ovos-openai-plugin](#ovos-openai-plugin) | Uses the [OpenAI Completions API](https://platform.openai.com/docs/api-reference/completions/create) to provide a chat engine, a dialog-rewriting transformer, and a summarizer, all pointed at any OpenAI-compatible endpoint. |
 | [ovos-messagebus-chat-plugin](#ovos-messagebus-chat-plugin) | `OVOSMessagebusChatAgent` — a `ChatEngine` (`opm.agents.chat`, entry point `ovos-messagebus`) that proxies each turn through a connected OVOS messagebus pipeline. |
 | [ovos-wikipedia-solver](#ovos-wikipedia-solver) | Answers factual questions by querying Wikipedia. |
-| [ovos-chromadb-embeddings-plugin](#ovos-chromadb-embeddings-plugin) | The `ChromaEmbeddingsDB` plugin integrates with the [ChromaDB](https://www.trychroma.com/) database to provide a robust solution for managing and querying embeddings. This plugin extends the abstract `EmbeddingsDB` class, allowing you to store, retrieve, and query embeddings efficiently using ChromaDB's capabilities. |
+| [ovos-chromadb-embeddings-plugin](#ovos-chromadb-embeddings-plugin) | The `ChromaEmbeddingsDB` plugin integrates with the [ChromaDB](https://www.trychroma.com/) database to store, retrieve, and query embeddings. This plugin extends the abstract `EmbeddingsDB` class, using ChromaDB's capabilities. |
 | [ovos-wolfram-alpha-solver](#ovos-wolfram-alpha-solver) | Answers computational and factual questions via the Wolfram Alpha API. |
 | [ovos-ddg-solver-plugin](#ovos-ddg-solver-plugin) | Answers questions using DuckDuckGo instant-answer results. |
 | [ovos-solver-YesNo-plugin](#ovos-solver-yesno-plugin) | A simple tool to indicate whether a user answered "yes" or "no" to a yes/no prompt. |
@@ -68,7 +68,7 @@ examples, see [Agents & Personas](personas.md) and [Advanced Solvers](advanced-s
 - **GitHub**: [https://github.com/OpenVoiceOS/ovos-qdrant-embeddings-plugin](https://github.com/OpenVoiceOS/ovos-qdrant-embeddings-plugin)
 
 
-- **Description**: The `QdrantEmbeddingsDB` plugin integrates with the [qdrant](https://qdrant.tech/) database to provide a robust solution for managing and querying embeddings. This plugin extends the abstract `EmbeddingsDB` class, allowing you to store, retrieve, and query embeddings efficiently using qdrant's capabilities.
+- **Description**: The `QdrantEmbeddingsDB` plugin integrates with the [qdrant](https://qdrant.tech/) database to store, retrieve, and query embeddings. This plugin extends the abstract `EmbeddingsDB` class, using qdrant's capabilities.
 
 - **Entry point group**: `opm.embeddings` (the `EmbeddingsDB` backends register here, not under `opm.agents.*`).
 
@@ -91,7 +91,7 @@ examples, see [Agents & Personas](personas.md) and [Advanced Solvers](advanced-s
 
 - **Description**: A rule-based chatbot answer engine for OVOS, using AIML pattern matching.
 
-- **Config**: `"enable_tx"` (bool, default `false`) — auto-translate the utterance to English before matching AIML patterns.
+- **Config**: `"enable_tx"` (bool, default `false`): auto-translate the utterance to English before matching AIML patterns.
 
 ---
 
@@ -100,7 +100,7 @@ examples, see [Agents & Personas](personas.md) and [Advanced Solvers](advanced-s
 - **GitHub**: [https://github.com/OpenVoiceOS/ovos-persona](https://github.com/OpenVoiceOS/ovos-persona)
 
 
-- **Description**: The **`PersonaPipeline`** brings multi-persona management to OpenVoiceOS (OVOS), enabling interactive conversations with virtual assistants. 🎙️ With personas, you can customize how queries are handled by assigning specific solvers to each persona.
+- **Description**: The **`PersonaPipeline`** brings multi-persona management to OpenVoiceOS (OVOS), enabling interactive conversations with virtual assistants. With personas, you can customize how queries are handled by assigning specific solvers to each persona.
 
 ---
 
@@ -109,7 +109,7 @@ examples, see [Agents & Personas](personas.md) and [Advanced Solvers](advanced-s
 - **GitHub**: [https://github.com/OpenVoiceOS/ovos-openai-plugin](https://github.com/OpenVoiceOS/ovos-openai-plugin)
 
 
-- **Description**: An OpenAI-compatible engine family — chat, dialog-rewriting, and summarization — usable with any OpenAI-compatible endpoint. See [OpenAI Plugin](openai-plugin.md) for the full entry-point table, config keys, and examples.
+- **Description**: An OpenAI-compatible engine family (chat, dialog-rewriting, and summarization) usable with any OpenAI-compatible endpoint. See [OpenAI Plugin](openai-plugin.md) for the full entry-point table, config keys, and examples.
 
 ---
 
@@ -130,7 +130,7 @@ examples, see [Agents & Personas](personas.md) and [Advanced Solvers](advanced-s
 
 - **Description**: Answers factual questions by querying Wikipedia.
 
-- **Config**: `"extractive_qa"` — module name of the `ExtractiveQAEngine` plugin used to pull the exact answering passage out of a Wikipedia summary.
+- **Config**: `"extractive_qa"`: module name of the `ExtractiveQAEngine` plugin used to pull the exact answering passage out of a Wikipedia summary.
 
 ---
 
@@ -139,7 +139,7 @@ examples, see [Agents & Personas](personas.md) and [Advanced Solvers](advanced-s
 - **GitHub**: [https://github.com/OpenVoiceOS/ovos-chromadb-embeddings-plugin](https://github.com/OpenVoiceOS/ovos-chromadb-embeddings-plugin)
 
 
-- **Description**: The `ChromaEmbeddingsDB` plugin integrates with the [ChromaDB](https://www.trychroma.com/) database to provide a robust solution for managing and querying embeddings. This plugin extends the abstract `EmbeddingsDB` class, allowing you to store, retrieve, and query embeddings efficiently using ChromaDB's capabilities.
+- **Description**: The `ChromaEmbeddingsDB` plugin integrates with the [ChromaDB](https://www.trychroma.com/) database to store, retrieve, and query embeddings. This plugin extends the abstract `EmbeddingsDB` class, using ChromaDB's capabilities.
 
 - **Entry point group**: `opm.embeddings` (the `EmbeddingsDB` backends register here, not under `opm.agents.*`).
 
@@ -162,7 +162,7 @@ Per-collection metadata defaults `hnsw:space` to `cosine` when not specified.
 
 - **Description**: Answers computational and factual questions via the Wolfram Alpha API.
 
-- **Config**: `"appid"` — your own Wolfram Alpha AppID. Without one, queries go to Wolfram's
+- **Config**: `"appid"`: your own Wolfram Alpha AppID. Without one, queries go to Wolfram's
   servers on a shared demo key. Either way this solver is a call to a third-party cloud
   service; it has no offline mode.
 
@@ -175,7 +175,7 @@ Per-collection metadata defaults `hnsw:space` to `cosine` when not specified.
 
 - **Description**: Answers questions using DuckDuckGo instant-answer results.
 
-- **Config**: `"keyword_extractor"` — module name of the keyword-extraction plugin used to pull search terms out of the question (defaults to `ovos-rake-keyword-extractor`).
+- **Config**: `"keyword_extractor"`: module name of the keyword-extraction plugin used to pull search terms out of the question (defaults to `ovos-rake-keyword-extractor`).
 
 ---
 
@@ -186,7 +186,7 @@ Per-collection metadata defaults `hnsw:space` to `cosine` when not specified.
 
 - **Description**: A simple tool to indicate whether a user answered "yes" or "no" to a yes/no prompt.
 
-- **Config**: no config keys — it works out of the box with no settings to tune.
+- **Config**: no config keys. It works out of the box with no settings to tune.
 
 ---
 
@@ -197,7 +197,7 @@ Per-collection metadata defaults `hnsw:space` to `cosine` when not specified.
 
 - **Description**: Extreme fallback, just complains it does not have a brain
 
-- **Config**: no config keys — it works out of the box with no settings to tune.
+- **Config**: no config keys. It works out of the box with no settings to tune.
 
 ---
 
@@ -226,6 +226,6 @@ Per-collection metadata defaults `hnsw:space` to `cosine` when not specified.
 
 - **Description**: A rule-based chatbot answer engine for OVOS, using RiveScript pattern matching.
 
-- **Config**: `"lang"` — language code used to pick the bundled RiveScript brain (defaults to `en-us`).
+- **Config**: `"lang"`: language code used to pick the bundled RiveScript brain (defaults to `en-us`).
 
 ---

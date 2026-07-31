@@ -14,9 +14,9 @@
     (after a skill responds). For the full set see the
     **[spec index](architecture-specs.md)**.
 
-The **Bidirectional Translation Plugin** (`ovos-bidirectional-translation-plugin`) is a powerful tool that allows OpenVoiceOS to interact in **any language**, even if the installed skills are only available in a single primary language (like English).
+The **Bidirectional Translation Plugin** (`ovos-bidirectional-translation-plugin`) lets OpenVoiceOS interact in **any language**, even if the installed skills are only available in a single primary language, like English.
 
-It works by translating user utterances into the system's native language before intent matching, and then translating the system's spoken responses back into the user's original language.
+It translates user utterances into the system's native language before intent matching. Then it translates the system's spoken responses back into the user's original language.
 
 ---
 
@@ -43,7 +43,7 @@ The plugin consists of two main components:
 
 ## Configuration
 
-This plugin only *orchestrates* translation; it does not translate anything itself. You must **first** configure a language **detection** plugin and a **translation** plugin under the `"language"` section of `mycroft.conf` (see [Translation Plugins](translation-plugins.md)). The transformers below then call whatever you configured there.
+This plugin only *orchestrates* translation. It does not translate anything itself. You must **first** configure a language **detection** plugin and a **translation** plugin under the `"language"` section of `mycroft.conf` (see [Translation Plugins](translation-plugins.md)). The transformers below then call whatever you configured there.
 
 ### Recommended Plugins
 - **Local**: `ovos-translate-plugin-nllb` (No Language Left Behind, offline) paired with an offline detector such as `ovos-lang-detector-classics-plugin` or `ovos-lang-detector-fasttext-plugin`.
@@ -84,16 +84,16 @@ These keys go in the `ovos-utterance-translation-plugin` config block. Defaults 
 |-----|---------|--------|
 | `bidirectional` | `true` | When an utterance is translated in, also translate the spoken response back to the user's language. If `false`, OVOS understands the user but answers in its primary language. |
 | `verify_lang` | `false` | Run the detector on every utterance and trust the detected language over the `Session` language. Useful for chat-style clients where the incoming language tag is unreliable. |
-| `ignore_invalid_langs` | `false` | Only meaningful with `verify_lang`. If the detected language is not one of the valid (primary + secondary) languages, ignore the detection rather than acting on it — guards against false positives on short text. |
+| `ignore_invalid_langs` | `false` | Only meaningful with `verify_lang`. If the detected language is not one of the valid (primary + secondary) languages, ignore the detection instead of acting on it. This guards against false positives on short text. |
 | `translate_secondary_langs` | `false` | If `true`, only the primary `lang` counts as "native" and even configured `secondary_langs` get translated to the primary language. If `false`, secondary languages are treated as already understood and pass through untranslated. |
 
-The valid-language set is computed from `lang` + `secondary_langs` in `mycroft.conf`; an utterance is only translated when its session language is **not** in that set.
+The valid-language set is computed from `lang` + `secondary_langs` in `mycroft.conf`. An utterance is only translated when its session language is **not** in that set.
 
 ---
 
 ## Forcing the Output Language (Bus API)
 
-The `DialogTranslator` listens on the [messagebus](bus-service.md) so a skill or client can pin the response language for a session, independent of what the user spoke:
+The `DialogTranslator` listens on the [messagebus](bus-service.md). A skill or client can use it to pin the response language for a session, independent of what the user spoke:
 
 | Message | `data` | Effect |
 |---------|--------|--------|
@@ -105,5 +105,5 @@ The `DialogTranslator` listens on the [messagebus](bus-service.md) so a skill or
 ## Technical Considerations
 
 *   **Alpha Status**: This plugin is in **alpha** and adds latency, since each turn may incur two translation round-trips (utterance in, dialog out).
-*   **First-utterance only:** when STT emits multiple candidate utterances, only the first is translated; the rest pass through untranslated.
-*   **Where to install:** in a split deployment (e.g. ovos-docker), the **utterance** transformer must run where intents are processed (`ovos-core`) and the **dialog** transformer where speech is produced (`ovos-audio`); the translation/detection plugins must be installed in both.
+*   **First-utterance only:** when STT emits multiple candidate utterances, only the first is translated. The rest pass through untranslated.
+*   **Where to install:** in a split deployment (e.g. ovos-docker), the **utterance** transformer must run where intents are processed (`ovos-core`). The **dialog** transformer must run where speech is produced (`ovos-audio`). The translation and detection plugins must be installed in both places.

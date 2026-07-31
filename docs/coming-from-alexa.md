@@ -1,50 +1,50 @@
 # Coming From Alexa or Google Assistant?
 
 !!! abstract "In a nutshell"
-    OVOS is a voice assistant you run yourself, not a product you buy off a shelf — so the
-    on-ramp looks different from Alexa or Google Assistant. This page is an honest comparison:
-    what's the same, what's missing, what setup looks like, and what actually works the moment
-    you're done, so you know what you're getting into before you start.
+    OVOS is a voice assistant you run yourself, not a product you buy off a shelf. So the
+    on-ramp looks different from Alexa or Google Assistant. This page gives an honest
+    comparison: what's the same, what's missing, what setup looks like, and what works the
+    moment you're done. Read it before you start.
 
 ## The short version
 
 - There is **no retail OVOS device** you can buy today and plug in. The closest equivalent is
-  flashing the [RaspOVOS](install-raspovos.md) image onto a Raspberry Pi and its SD card — a
-  half-hour, one-time setup rather than an unbox-and-go experience.
+  flashing the [RaspOVOS](install-raspovos.md) image onto a Raspberry Pi and its SD card. That
+  is a half-hour, one-time setup, not an unbox-and-go experience.
 - There is **no companion phone app** for pairing or day-to-day control, the way the Alexa or
-  Google Home apps work. Setup and configuration happen over SSH in a terminal, or by editing a
-  text file — see [Make It Yours](personalize.md).
-- There is **no generally usable on-screen visual assistant** right now — see
-  [Screens on OVOS Today](gui-status.md) for the honest state of that. OVOS is voice-first; a
+  Google Home apps work. You set up and configure OVOS over SSH in a terminal, or by editing a
+  text file. See [Make It Yours](personalize.md).
+- There is **no generally usable on-screen visual assistant** right now. See
+  [Screens on OVOS Today](gui-status.md) for the honest state of that. OVOS is voice-first. A
   screen, where present, is a bonus, not the primary interface.
-- **Smart-home control isn't automatic.** Alexa/Google devices come with smart-home skills
-  built in; OVOS needs a one-time Home Assistant setup — see
+- **Smart-home control isn't automatic.** Alexa and Google devices come with smart-home skills
+  built in. OVOS needs a one-time Home Assistant setup. See
   [OVOS & Home Assistant](home-assistant.md).
 - **"Skill" means something different here.** Both platforms use the word, but OVOS has no
-  centralized skill store or certification process — skills are installed directly, via
-  `pip` or the OVOS installer, not approved and published through a marketplace.
-- In exchange, you get an assistant that runs on hardware you choose, is not tied to one
-  company's cloud, and — for the parts you choose to run locally — doesn't have to send your
-  voice anywhere at all. See [Privacy & Security](privacy-security.md) for exactly what a
-  default install does and doesn't send over the network.
+  centralized skill store or certification process. You install skills directly, with
+  `pip` or the OVOS installer, not through a marketplace.
+- In exchange, you get an assistant that runs on hardware you choose and is not tied to one
+  company's cloud. For the parts you choose to run locally, it doesn't have to send your voice
+  anywhere at all. See [Privacy & Security](privacy-security.md) for exactly what a default
+  install does and doesn't send over the network.
 
 ## What setup actually looks like
 
 There's no pairing screen or app-based wizard. You either:
 
 1. Flash the [RaspOVOS](install-raspovos.md) image to an SD card and boot a Raspberry Pi with
-   it — the closest thing to "unbox and go" that exists today, or
+   it. This is the closest thing to "unbox and go" that exists today.
 2. Run the [ovos-installer](ovos-installer.md) against an existing Linux install (Raspberry Pi
-   OS or a regular desktop/laptop) — a guided, menu-driven wizard, but one you run from a
-   terminal, typically over SSH if the device is headless.
+   OS or a regular desktop or laptop). This is a guided, menu-driven wizard, but you run it from
+   a terminal, typically over SSH if the device is headless.
 
-If you've never used SSH before, budget a bit of extra time for that step, or lean on the
-RaspOVOS image, which needs none of it.
+If you've never used SSH before, budget extra time for that step. Or use the RaspOVOS image,
+which needs none of it.
 
 ## What works on day one
 
-Once installed, these work immediately with no extra setup, roughly matching what you'd expect
-from Alexa or Google Assistant out of the box:
+Once installed, these work immediately with no extra setup. They roughly match what you'd
+expect from Alexa or Google Assistant out of the box:
 
 - Timers, alarms, and reminders
 - Weather
@@ -52,44 +52,44 @@ from Alexa or Google Assistant out of the box:
 - Internet radio
 - Jokes and small talk
 
-See [What can I say?](skill-examples.md) for the full, browsable list, and
+See [What can I say?](skill-examples.md) for the full, browsable list. See
 [Screens on OVOS Today](gui-status.md) if you're wondering about visual responses on a device
 with a screen.
 
 ## What needs extra setup
 
 - **Smart-home control** (lights, thermostats, scenes) needs a Home Assistant instance and a
-  one-time skill setup — see [OVOS & Home Assistant](home-assistant.md).
+  one-time skill setup. See [OVOS & Home Assistant](home-assistant.md).
 - **A specific wake word, voice, or language** other than the defaults needs an edit to a config
-  file (not a voice command or an app toggle) — see [Make It Yours](personalize.md).
+  file, not a voice command or an app toggle. See [Make It Yours](personalize.md).
 - **Playing your own music library or a streaming service** beyond internet radio needs an
-  additional plugin — see [What can I say?](skill-examples.md).
+  additional plugin. See [What can I say?](skill-examples.md).
 
 ## What you won't be able to move across
 
-Some Echo habits have no equivalent, and it is better to know that before you unplug anything:
+Some Echo habits have no equivalent. It is better to know that before you unplug anything.
 
-- **Synchronised multi-room audio.** Speaker groups that play the same thing in step across
+- **Synchronized multi-room audio.** Speaker groups that play the same thing in step across
   rooms are not part of OVOS itself. Each device is independent. The
   [RaspOVOS](install-raspovos.md) image ships [Snapcast](https://github.com/badaix/snapcast),
-  which solves synchronised playback at the system level, but you wire it up yourself and it
-  is not driven by voice.
+  which solves synchronized playback at the system level. You wire it up yourself, and it is
+  not driven by voice.
 - **Shopping and to-do lists.** There is no bundled list skill, and nothing syncs to a phone
-  app. Adding items by voice means installing a community skill or writing one — the
+  app. Adding items by voice means installing a community skill or writing one. The
   [Skill Cookbook](skill-cookbook.md) has the pattern.
-- **Voice shopping, calling, and messaging.** No purchasing, no drop-in, no announcements
-  between devices, no calls.
-- **A phone app.** Configuration is a file you edit, not an app screen —
+- **Voice shopping, calling, and messaging.** OVOS has no purchasing, no drop-in, no
+  announcements between devices, and no calls.
+- **A phone app.** Configuration is a file you edit, not an app screen.
   [Make It Yours](personalize.md) walks through the edits you are most likely to want.
 
-Everything in this list is something you can build — OVOS is a toolkit, and skills are Python.
-But none of it arrives working the way it does on an Echo.
+Everything in this list is something you can build. OVOS is a toolkit, and skills are Python.
+None of it arrives working the way it does on an Echo.
 
 ## Related pages
 
-- [ovos-installer](ovos-installer.md) — the guided install wizard
-- [RaspOVOS](install-raspovos.md) — the closest thing to a ready-made device image
-- [OVOS & Home Assistant](home-assistant.md) — smart-home setup
-- [Screens on OVOS Today](gui-status.md) — the honest state of on-device visuals
-- [What can I say?](skill-examples.md) — everything OVOS can do out of the box
-- [Privacy & Security](privacy-security.md) — what a default install sends over the network
+- [ovos-installer](ovos-installer.md): the guided install wizard
+- [RaspOVOS](install-raspovos.md): the closest thing to a ready-made device image
+- [OVOS & Home Assistant](home-assistant.md): smart-home setup
+- [Screens on OVOS Today](gui-status.md): the honest state of on-device visuals
+- [What can I say?](skill-examples.md): everything OVOS can do out of the box
+- [Privacy & Security](privacy-security.md): what a default install sends over the network

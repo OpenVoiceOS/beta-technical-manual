@@ -4,9 +4,9 @@
     Audio transformers clean up and inspect the sound from your microphone *before* the assistant tries to turn it into words. Like a sound engineer adjusting a recording, they can do things such as reduce background noise or detect which language is being spoken, which helps the assistant understand you more reliably. See [Transformer Plugins](transformer-plugins.md) for the wider family and the [Glossary](glossary.md) for unfamiliar terms.
 
 ??? info "📐 Formal specification"
-    Audio transformers are the **`audio` chain** of **[OVOS-TRANSFORM-1 — Transformer Plugins](https://github.com/OpenVoiceOS/architecture/blob/dev/transformer.md) §3.1** (a formal [architecture spec](architecture-specs.md)). The spec's pre-STT injection point takes a raw audio chunk plus an audio-format metadata object (sample rate, width, channels) and an optional `lang`, and returns a (possibly rewritten) chunk, updated metadata, and `lang` — the natural place to set `session.detected_lang` from acoustic features (§7.1). A transformer that changes the audio's physical format **MUST** update the metadata to match. **Ordering:** the chain runs by **ascending** `priority` (lowest first), matching the spec.
+    Audio transformers are the **`audio` chain** of **[OVOS-TRANSFORM-1 — Transformer Plugins](https://github.com/OpenVoiceOS/architecture/blob/dev/transformer.md) §3.1** (a formal [architecture spec](architecture-specs.md)). The spec's pre-STT injection point takes a raw audio chunk plus an audio-format metadata object (sample rate, width, channels) and an optional `lang`, and returns a (possibly rewritten) chunk, updated metadata, and `lang`. This is the natural place to set `session.detected_lang` from acoustic features (§7.1). A transformer that changes the audio's physical format **MUST** update the metadata to match. **Ordering:** the chain runs by **ascending** `priority` (lowest first), matching the spec.
 
-**Audio Transformers** in OpenVoiceOS (OVOS) are plugins designed to process raw audio input before it reaches the [Speech-to-Text](stt-plugins.md) ([STT](stt-plugins.md)) engine. They enable functionalities such as noise reduction, language detection, and data transmission over sound, thereby enhancing the accuracy and versatility of voice interactions.
+**Audio Transformers** in OpenVoiceOS (OVOS) are plugins designed to process raw audio input before it reaches the [Speech-to-Text](stt-plugins.md) ([STT](stt-plugins.md)) engine. They enable functions such as noise reduction, language detection, and data transmission over sound.
 
 ---
 
@@ -27,7 +27,7 @@ The typical audio processing pipeline in OVOS is as follows:
 
 Audio Transformers operate in step 2, allowing for enhancements and modifications to the audio signal before transcription.
 
-They run inside the **listener** (e.g. `ovos-dinkum-listener`), driven by the voice loop. As audio is captured, the loop feeds chunks to each loaded transformer (`feed_hotword`/`feed_speech` populate internal buffers); just before STT, the service calls each transformer's `transform(audio_data)`, which returns `(audio_data, context)`. Any returned context is merged into the `recognize_loop:utterance` message. Transformers run in **ascending priority** order (lower `priority` first), and `reset()` clears the buffers at the end of each cycle.
+They run inside the **listener** (e.g. `ovos-dinkum-listener`), driven by the voice loop. As audio is captured, the loop feeds chunks to each loaded transformer (`feed_hotword`/`feed_speech` populate internal buffers). Just before STT, the service calls each transformer's `transform(audio_data)`, which returns `(audio_data, context)`. Any returned context is merged into the `recognize_loop:utterance` message. Transformers run in **ascending priority** order (lower `priority` first), and `reset()` clears the buffers at the end of each cycle.
 
 ---
 
@@ -95,10 +95,10 @@ For more information, visit the [GitHub repository](https://github.com/OpenVoice
     * Subclasses `AudioLanguageDetector`, so its `transform` attaches `stt_lang` and `lang_probability` to the message context for downstream language routing.
 
 
-    * Utilizes SpeechBrain models for language identification.
+    * Uses SpeechBrain models for language identification.
 
 
-    * Enhances multilingual support by dynamically selecting the correct language model.
+    * Adds multilingual support by dynamically selecting the correct language model.
 
 
 * **Installation**:

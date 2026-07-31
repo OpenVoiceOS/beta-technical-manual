@@ -1,17 +1,17 @@
 # Bus Service
 
 !!! success "Maturity — Mature ⬤⬤⬤⬤⬤"
-    Long-lived, battle-tested, and actively maintained — depend on it freely. Rated by [repository health](maturity.md), not version.
+    Long-lived and actively maintained. Depend on it freely. Rated by [repository health](maturity.md), not version.
 
 !!! abstract "In a nutshell"
-    The messagebus is the shared channel that lets all the separate parts of OpenVoiceOS talk to one another. Picture a group radio frequency: whatever one part says is heard by everyone tuned in, and each part simply pays attention to the messages meant for it and ignores the rest. There's no traffic controller deciding who gets what — every message goes to everybody. It's how the listener, the brain, the audio, and the screen all stay in sync. See the [Architecture Overview](architecture-overview.md) for how the pieces fit together, or the [Glossary](glossary.md) for unfamiliar terms.
+    The messagebus is the shared channel that lets all the separate parts of OpenVoiceOS talk to one another. Picture a group radio frequency: whatever one part says is heard by everyone tuned in, and each part simply pays attention to the messages meant for it and ignores the rest. There's no traffic controller deciding who gets what. Every message goes to everybody. It's how the listener, the brain, the audio, and the screen all stay in sync. See the [Architecture Overview](architecture-overview.md) for how the pieces fit together, or the [Glossary](glossary.md) for unfamiliar terms.
 
 ??? info "📐 Formal specification"
     The `{type, data, context}` envelope, the `source`/`destination` routing keys, the `forward`/`reply`/`response` derivations, and the session carrier that rides in every message are all normative. See **[OVOS-MSG-1 — Bus Message](https://github.com/OpenVoiceOS/architecture/blob/dev/msg-1.md)**, **[OVOS-SESSION-1 — Session Carrier](https://github.com/OpenVoiceOS/architecture/blob/dev/session-1.md)**, **[OVOS-SESSION-2 — Session Lifecycle](https://github.com/OpenVoiceOS/architecture/blob/dev/session-2.md)**, and **[OVOS-BRIDGE-1 — Bus Bridge & Opaque Relay](https://github.com/OpenVoiceOS/architecture/blob/dev/bridge-1.md)** (how satellites relay messages across a [HiveMind](hivemind-agents.md) mesh), plus the [spec index](architecture-specs.md). This page describes the reference implementation; where it diverges from the spec, the spec wins.
 
 The **messagebus** is the central nervous system of the OVOS platform. All services communicate by publishing and subscribing to typed `Message` objects through this central WebSocket broker.
 
-**In plain terms:** every OVOS service (core, audio, listener, GUI) connects to one shared WebSocket. Whatever any service emits, every other service receives — there is no central router deciding who gets what. Services just listen for the message types they care about and ignore the rest.
+**In plain terms:** every OVOS service (core, audio, listener, GUI) connects to one shared WebSocket. Whatever any service emits, every other service receives. There is no central router deciding who gets what. Services just listen for the message types they care about and ignore the rest.
 
 ---
 
@@ -40,10 +40,10 @@ The **messagebus** is the central nervous system of the OVOS platform. All servi
 ```
 
 The broker itself has no logic beyond fan-out: it holds a list of open WebSocket connections and,
-for every message any one client sends, writes that same message to every other open connection
-(the Tornado I/O loop shown in the box runs this on its own daemon thread, so it does not block
-whichever process embeds it). `ovos-core`, `ovos-audio`, and `ovos-gui` above are just three
-example clients — anything speaking the same WebSocket protocol, including your own scripts, can
+for every message any one client sends, writes that same message to every other open connection.
+The Tornado I/O loop shown in the box runs this on its own daemon thread, so it does not block
+whichever process embeds it. `ovos-core`, `ovos-audio`, and `ovos-gui` above are just three
+example clients. Anything speaking the same WebSocket protocol, including your own scripts, can
 connect and take part with the same permissions as any other client.
 
 ---
@@ -58,7 +58,7 @@ python -m ovos_messagebus
 
 ```
 
-The server reads connection parameters from `mycroft.conf` (`websocket` section) and starts listening on a daemon thread. On SIGTERM/SIGINT the daemon thread exits with the main process — no explicit cleanup is required.
+The server reads connection parameters from `mycroft.conf` (`websocket` section) and starts listening on a daemon thread. On SIGTERM/SIGINT the daemon thread exits with the main process. No explicit cleanup is required.
 
 ---
 
@@ -93,9 +93,9 @@ All settings live under the `websocket` key in `mycroft.conf`:
 handler — `filter` off, `filter_logs` `["gui.status.request", "gui.page.upload"]`) but are not
 part of the shipped `mycroft.conf` `websocket` section.
 
-!!! danger "Security: the bus has no authentication — keep it local"
+!!! danger "Security: the bus has no authentication, keep it local"
     The messagebus has **no authentication and no encryption**, and **any** client that can
-    connect gets control of everything installed skills and plugins expose over the bus — up
+    connect gets control of everything installed skills and plugins expose over the bus, up
     to root-level system control (reboot, shutdown, factory-reset) **if** an AdminPHAL system
     plugin such as `ovos-PHAL-plugin-system` is installed and enabled (see
     [phal.md](phal.md#security-model)). Treat it like an open door to the whole assistant.
@@ -109,15 +109,15 @@ part of the shipped `mycroft.conf` `websocket` section.
       already has full access, so only install software you trust.
     - **The GUI WebSocket needs the same treatment.** `ovos-gui` serves a second, equally
       unauthenticated socket on port `18181`, and messages received there are translated into
-      emits on this bus — so it carries the same authority. Like the bus, it ships bound to
-      `127.0.0.1`; widening `gui_websocket.host` to `0.0.0.0` for a remote display exposes that
+      emits on this bus, so it carries the same authority. Like the bus, it ships bound to
+      `127.0.0.1`. Widening `gui_websocket.host` to `0.0.0.0` for a remote display exposes that
       unauthenticated socket to the whole network.
 
 ---
 
 ## Implementation: `MessageBusEventHandler`
 
-**Module:** `ovos_messagebus.event_handler.MessageBusEventHandler` — [`ovos_messagebus/event_handler.py`](https://github.com/OpenVoiceOS/ovos-messagebus/blob/dev/ovos_messagebus/event_handler.py)
+**Module:** `ovos_messagebus.event_handler.MessageBusEventHandler`, in [`ovos_messagebus/event_handler.py`](https://github.com/OpenVoiceOS/ovos-messagebus/blob/dev/ovos_messagebus/event_handler.py)
 
 Tornado `WebSocketHandler` subclass implementing the OVOS messagebus. All connected clients share a single module-level connection list (`client_connections`).
 
@@ -139,13 +139,13 @@ Subscription filtering is handled entirely in the client library (`ovos-bus-clie
 
 ??? abstract "Technical Reference"
 
-    - `main()` — [`ovos_messagebus/__main__.py`](https://github.com/OpenVoiceOS/ovos-messagebus/blob/dev/ovos_messagebus/__main__.py) — Entry point initializing the Tornado application and IOLoop.
+    - `main()`, in [`ovos_messagebus/__main__.py`](https://github.com/OpenVoiceOS/ovos-messagebus/blob/dev/ovos_messagebus/__main__.py): entry point initializing the Tornado application and IOLoop.
 
 
-    - `MessageBusEventHandler.on_message()` — [`ovos_messagebus/event_handler.py`](https://github.com/OpenVoiceOS/ovos-messagebus/blob/dev/ovos_messagebus/event_handler.py) — Core broadcast logic.
+    - `MessageBusEventHandler.on_message()`, in [`ovos_messagebus/event_handler.py`](https://github.com/OpenVoiceOS/ovos-messagebus/blob/dev/ovos_messagebus/event_handler.py): core broadcast logic.
 
 
-    - `load_message_bus_config()` — [`ovos_messagebus/load_config.py`](https://github.com/OpenVoiceOS/ovos-messagebus/blob/dev/ovos_messagebus/load_config.py) — Configuration loader using `ovos-config`.
+    - `load_message_bus_config()`, in [`ovos_messagebus/load_config.py`](https://github.com/OpenVoiceOS/ovos-messagebus/blob/dev/ovos_messagebus/load_config.py): configuration loader using `ovos-config`.
     
     ### `open()`
     
@@ -185,18 +185,18 @@ Every message on the bus is a JSON object with three fields:
 
 ```
 
-- `type` — identifies the event
+- `type`: identifies the event
 
 
-- `data` — arbitrary JSON payload
+- `data`: arbitrary JSON payload
 
 
-- `context` — routing/session metadata
+- `context`: routing/session metadata
 
 The bus recognises only one special message type: `connected` (emitted to a new client immediately after it opens a connection). All other types are application-level.
 
 !!! note "Colon vs. dot: what a topic's shape tells you"
-    A `:` in a topic's `type` marks it as **runtime-assembled dispatch** — built from identifiers to address a specific handler rather than broadcast. The canonical, most common shape is `<skill_id>:<intent_name>` (intent dispatch), but a few pipeline-internal topics also use the colon form — e.g. `<pipeline_id>:global_stop`, the fixed-name `converse:skill` and `question:query` handlers (note these are literal names, not `<skill_id>` templates — the per-skill dispatch they trigger is the dotted `{skill_id}.converse.request`). So a colon means "dispatch / pipeline-internal, addressed at runtime", not exclusively skill-intent. Everything else — events, requests, responses, lifecycle signals — uses the dotted `<x>.<y>.<verb>` form.
+    A `:` in a topic's `type` marks it as **runtime-assembled dispatch**, built from identifiers to address a specific handler rather than broadcast. The canonical, most common shape is `<skill_id>:<intent_name>` (intent dispatch), but a few pipeline-internal topics also use the colon form, such as `<pipeline_id>:global_stop`, and the fixed-name `converse:skill` and `question:query` handlers. Note these are literal names, not `<skill_id>` templates. The per-skill dispatch they trigger is the dotted `{skill_id}.converse.request`. So a colon means "dispatch / pipeline-internal, addressed at runtime", not exclusively skill-intent. Everything else, including events, requests, responses, and lifecycle signals, uses the dotted `<x>.<y>.<verb>` form.
 
 See [Bus Client](core-libraries.md#ovos-bus-client) for the `Message` Python API.
 
@@ -219,7 +219,7 @@ Every message may carry a `session` object inside its `context`. Sessions enable
 
 The default session (`session_id="default"`) is used by the local microphone. HiveMind satellites each have their own session.
 
-A `session` that is entirely absent (or explicitly `null`) is normal — it just means "use the default session." A `session` key that is present but isn't a JSON object is a different case, a producer bug: the bus client discards that one message and logs a warning rather than raising, so a single malformed producer can't force every client on the bus into a reconnect loop.
+A `session` that is entirely absent (or explicitly `null`) is normal. It just means "use the default session." A `session` key that is present but isn't a JSON object is a different case, a producer bug: the bus client discards that one message and logs a warning rather than raising, so a single malformed producer can't force every client on the bus into a reconnect loop.
 
 See [Bus Session](session.md) for full `Session` and `SessionManager` documentation.
 
@@ -231,15 +231,15 @@ The bus itself performs no routing — every client receives every message. Howe
 
 The `Message` object provides the three derivations defined in [OVOS-MSG-1 §5](https://github.com/OpenVoiceOS/architecture/blob/dev/msg-1.md) (the spec mandates the resulting message *shape*, not the method names):
 
-- `.reply(msg_type, data)` — swap `source`↔`destination`, preserving context (MSG-1 §5.2)
+- `.reply(msg_type, data)`: swap `source`↔`destination`, preserving context (MSG-1 §5.2)
 
 
-- `.forward(msg_type, data)` — copy context verbatim under a new type (MSG-1 §5.1)
+- `.forward(msg_type, data)`: copy context verbatim under a new type (MSG-1 §5.1)
 
 
-- `.response(data)` — shorthand for `reply(self.msg_type + ".response", ...)` (MSG-1 §5.3)
+- `.response(data)`: shorthand for `reply(self.msg_type + ".response", ...)` (MSG-1 §5.3)
 
-There is **no** central correlation/in-reply-to mechanism: messages are fully async and self-contained, and an asker that wants to match a `.response` back to its request does so itself, keyed on the `session` (MSG-1 §5.4).
+There is **no** central correlation/in-reply-to mechanism. Messages are fully async and self-contained. An asker that wants to match a `.response` back to its request does so itself, keyed on the `session` (MSG-1 §5.4).
 
 ---
 
@@ -283,34 +283,34 @@ Topic names below are the canonical spec names ([OVOS-PIPELINE-1 §9](https://gi
 ## Namespace migration
 
 The [Formal Specifications](architecture-specs.md) rename many bus topics into
-the `ovos.*` namespace — for example `recognizer_loop:utterance` →
+the `ovos.*` namespace, for example `recognizer_loop:utterance` →
 `ovos.utterance.handle` and `complete_intent_failure` → `ovos.intent.unmatched`
-(the full list is the [legacy ↔ spec table](bus-events.md#legacy-spec-migration);
-a few families, such as the `mycroft.skill.handler.*` / `ovos.intent.handler.*`
-trio, are deliberately **not** bridged — see that page's "Not bridged" note).
+(the full list is the [legacy ↔ spec table](bus-events.md#legacy-spec-migration)).
+A few families, such as the `mycroft.skill.handler.*` / `ovos.intent.handler.*`
+trio, are deliberately **not** bridged. See that page's "Not bridged" note.
 Renaming a topic across an
-ecosystem of independently-released repos cannot happen in one coordinated step,
-so **`ovos-bus-client` migrates automatically and incrementally** — the legacy
+ecosystem of independently-released repos cannot happen in one coordinated step.
+So **`ovos-bus-client` migrates automatically and incrementally**. The legacy
 and the new names interoperate transparently while the ecosystem moves over.
 
 The canonical legacy ↔ spec topic map lives in the `NamespaceTranslator` from
 [`ovos-spec-tools`](spec-tooling.md), and each `MessageBusClient` applies it on the
 **receive** side, not by putting a second copy on the wire:
 
-- A single logical `emit()` sends exactly **one** message over the websocket — the topic the
+- A single logical `emit()` sends exactly **one** message over the websocket: the topic the
   caller actually chose.
 - When that message arrives back over the websocket (to every connected client, including the
   sender), each client's `on_message` handler locally re-dispatches it under its counterpart
   topic(s) too, using the translator to reshape the payload where the shape changed. This is a
-  listener-delivery convenience *inside each process*, not a second bus message — the broadcast
+  listener-delivery convenience *inside each process*, not a second bus message. The broadcast
   server never sees or re-broadcasts a counterpart frame.
-- **listen** — subscribing to *either* name (`bus.on(...)`) also delivers the counterpart, with
+- **listen**: subscribing to *either* name (`bus.on(...)`) also delivers the counterpart, with
   **de-duplication** so a handler that would match both fires exactly once.
 
-The result is the same practical guarantee — a producer and a consumer can each switch from a
+The result is the same practical guarantee: a producer and a consumer can each switch from a
 legacy topic to its `ovos.*` spec name **in any order, with no coordination**, and without every
-component having to switch over at the same time — achieved by translating on receipt in every connected process rather than by widening what goes
-out on the wire.
+component having to switch over at the same time. This is achieved by translating on receipt in
+every connected process rather than by widening what goes out on the wire.
 
 ### Turning the bridges off
 
@@ -323,17 +323,17 @@ variable or bus configuration:
 | emit_legacy | `OVOS_BUS_EMIT_LEGACY` | `emit_legacy` | a received **`ovos.*`** topic is also locally re-dispatched under its legacy counterpart |
 
 Because the bridging happens per-process on receive, turning a direction off only stops that
-process from locally delivering the counterpart to its own handlers — it does not add or remove
+process from locally delivering the counterpart to its own handlers. It does not add or remove
 any traffic on the wire. A deployment whose components all speak `ovos.*` can set
-`emit_legacy=false` once no local handler still needs the legacy delivery; one with no legacy
-producers left can also disable `modernize`. Until then, leave both on — that is what keeps
+`emit_legacy=false` once no local handler still needs the legacy delivery. One with no legacy
+producers left can also disable `modernize`. Until then, leave both on. That is what keeps
 adoption gradual and safe.
 
-!!! note "Bridged ≠ conformant"
+!!! note "Bridged is not the same as conformant"
     [`ovos-test-harness`](spec-tooling.md) asserts spec behavior on the
     canonical `ovos.*` topics. A component becomes *spec-conformant* once it
-    speaks `ovos.*` directly; the bridge keeps it **interoperable** in the
-    meantime, it does not make it conformant.
+    speaks `ovos.*` directly. The bridge keeps it **interoperable** in the
+    meantime, but it does not make it conformant.
 
 ---
 
@@ -354,14 +354,14 @@ GUI clients connect to `ovos-gui`'s own WebSocket (`ws://localhost:18181/gui`), 
 ## Bus restart / reconnect behavior
 
 Restarting `ovos-messagebus` is the single most common operational disruption, because every
-other service — `ovos-core`, `ovos-dinkum-listener`, `ovos-audio`, `ovos-PHAL` — holds a
+other service (`ovos-core`, `ovos-dinkum-listener`, `ovos-audio`, `ovos-PHAL`) holds a
 `MessageBusClient` connection to it. What each of those clients does when that connection drops
 is defined once, in `ovos-bus-client`'s `MessageBusClient`, and applies identically to every
 service built on it.
 
-**Detecting the drop.** A closed socket reaches the client's `on_error` handler (a clean close
-that never errors is not distinguished from one that does — both a `WebSocketConnectionClosedException`
-and a plain `ConnectionRefusedError`/`ConnectionResetError` land there). `on_error` clears the
+**Detecting the drop.** A closed socket reaches the client's `on_error` handler. A clean close
+that never errors is not distinguished from one that does. Both a `WebSocketConnectionClosedException`
+and a plain `ConnectionRefusedError`/`ConnectionResetError` land there. `on_error` clears the
 "connected" flag, closes the socket, and reconnects.
 
 **Backoff.** Reconnection starts at a 5-second delay and doubles on each further failure, capped
@@ -370,15 +370,15 @@ does not overload the bus with reconnect attempts. A successful reconnect resets
 5 seconds for next time.
 
 **In-flight calls during the outage.** `emit()` (and therefore `wait_for_response()`, which calls
-`emit()` internally) waits for the connection to come back rather than failing fast: it waits up
+`emit()` internally) waits for the connection to come back rather than failing fast. It waits up
 to 10 seconds, and if the client had already started running before that, it then waits with
 **no further timeout** until the socket reconnects. `wait_for_message()` / `wait_for_response()`'s
-own reply-timeout only starts counting once the message is actually sent — so a call made while
+own reply-timeout only starts counting once the message is actually sent. So a call made while
 the bus is down can block well past the `timeout` value you passed it, for as long as the bus
 stays down. Once the client is reconnected, waits resume normally and time out as documented.
 
 **Messages sent during the outage are lost, not queued.** The client does not buffer messages
-while disconnected — nothing is stored and re-sent once the socket reopens. Any `emit()` that was
+while disconnected. Nothing is stored and re-sent once the socket reopens. Any `emit()` that was
 allowed through only unblocks (and actually sends) after reconnection, but nothing produced by a
 process that isn't running a client at all during the gap is retried later. Downstream services
 should treat a bus restart as a full session reset for anything time-sensitive: session state
@@ -387,7 +387,7 @@ socket reopens), but any request/response pair straddling the restart is simply 
 requester's point of view until it emits again.
 
 **Malformed frames don't trigger a reconnect.** A frame that fails to deserialize, or whose
-session carrier isn't a JSON object, is dropped and logged — it does not tear the connection down
+session carrier isn't a JSON object, is dropped and logged. It does not tear the connection down
 or trigger the reconnect path above. Only a genuine socket-level failure does.
 
 See [Production Operations](production-operations.md#keep-services-running-systemd-units) for how
@@ -407,22 +407,22 @@ this interacts with `systemd`'s own `Restart=`/`After=` ordering across the OVOS
     ```
 
     If `ssl` is on but no cert/key are configured, the bus generates a self-signed pair on first
-    start (under `$XDG_DATA_HOME/OpenVoiceOS/ovos-messagebus/certs/`); this path needs the `ssl`
+    start (under `$XDG_DATA_HOME/OpenVoiceOS/ovos-messagebus/certs/`). This path needs the `ssl`
     extra (`pip install "ovos-messagebus[ssl]"`), and the bus refuses to start rather than fall
     back to plaintext if it's missing. Clients built on `ovos-bus-client` reach a `wss://` bus by
     setting the same `websocket.ssl: true`. [HiveMind](hivemind-agents.md) is the other route to
     encrypted transport across hosts. (The alternative `webrockets` backend does not terminate TLS
-    itself — use the default Tornado backend to serve `wss://` directly.)
+    itself. Use the default Tornado backend to serve `wss://` directly.)
 
 ---
 
 ## Alternative Implementations
 
-`ovos-messagebus` is the reference **Tornado**-based server and is all you need for a normal install (`pip install ovos-messagebus`); the Tornado backend is the default. Because the wire protocol is just JSON frames over a WebSocket, the server is interchangeable — any process that fans messages out to all connected clients on the same route will work, and a drop-in replacement can be swapped in without touching clients. The RaspOVOS image, for example, ships a separate Rust reimplementation (`ovos_rust_messagebus`) as its default for performance; see [Production Operations](production-operations.md).
+`ovos-messagebus` is the reference **Tornado**-based server and is all you need for a normal install (`pip install ovos-messagebus`). The Tornado backend is the default. Because the wire protocol is just JSON frames over a WebSocket, the server is interchangeable. Any process that fans messages out to all connected clients on the same route will work, and a drop-in replacement can be swapped in without touching clients. The RaspOVOS image, for example, ships a separate Rust reimplementation (`ovos_rust_messagebus`) as its default for performance. See [Production Operations](production-operations.md).
 
 A separate, drop-in Rust implementation exists as its own project for deployments that want lower overhead:
 
-- [OscillateLabsLLC/ovos-rust-messagebus](https://github.com/OscillateLabsLLC/ovos-rust-messagebus) — speaks the same OVOS wire protocol; build and run it in place of the Python server. See that project's README for build and configuration details.
+- [OscillateLabsLLC/ovos-rust-messagebus](https://github.com/OscillateLabsLLC/ovos-rust-messagebus): speaks the same OVOS wire protocol. Build and run it in place of the Python server. See that project's README for build and configuration details.
 
 **In plain terms:** on a stable install, run the default Python (Tornado) server; only reach for the Rust build if profiling shows the bus is a bottleneck.
 
@@ -438,7 +438,7 @@ A separate, drop-in Rust implementation exists as its own project for deployment
     It is early/alpha and not the default: it does **not** terminate TLS and does not honour
     `websocket.max_msg_size` (it refuses to start when `websocket.ssl` is set), so serve
     `wss://` with the Tornado backend. The repo ships a benchmark (`benchmark/run_benchmark.py`,
-    `--compare`) that pits Tornado, webrockets, and the Rust server against each other; early
+    `--compare`) that pits Tornado, webrockets, and the Rust server against each other. Early
     numbers put webrockets ahead at higher concurrency. On a stable install, stay on the
     default Tornado server unless profiling shows the bus is a bottleneck.
 
@@ -456,7 +456,7 @@ DEBUG: <msg_type> source: [...] destination: [...]
 
 Messages listed in `filter_logs` are excluded from the log to reduce noise (default: `["gui.status.request", "gui.page.upload"]`).
 
-When `filter` is off (the default), the bus never deserializes messages — it emits and re-broadcasts the raw frame as-is. Deserialization only happens in `filter` mode for the log line; if a frame fails to deserialize there, it is dropped (not logged, not re-broadcast).
+When `filter` is off (the default), the bus never deserializes messages. It emits and re-broadcasts the raw frame as-is. Deserialization only happens in `filter` mode for the log line. If a frame fails to deserialize there, it is dropped (not logged, not re-broadcast).
 
 ---
 
@@ -489,16 +489,16 @@ bus.close()
 
 !!! warning "`ovos.session.sync` can't be used this way"
     A tempting-looking request/response pair is `Message("ovos.session.sync")` replying with
-    `ovos.session.update_default` — but `MessageBusClient.emit()` always auto-injects a
+    `ovos.session.update_default`. But `MessageBusClient.emit()` always auto-injects a
     `session` object into `message.context` before sending if one isn't already present. That
     turns every `ovos.session.sync` this client emits into a *session sync* (carrying context),
-    not the legacy *bare default-session request* that triggers an echo — so it never gets a
+    not the legacy *bare default-session request* that triggers an echo. So it never gets a
     reply this way. `intent.service.adapt.manifest.get` above is a plain request/response pair
     with no such caveat.
 
 `MessageBusClient()` with no arguments reads `host`/`port`/`route` from `mycroft.conf`'s
 `websocket` section (see [Configuration](#configuration) above). `run_in_thread()` starts the
-WebSocket loop on a daemon thread so the call returns immediately; `wait_for_response` blocks the
+WebSocket loop on a daemon thread so the call returns immediately. `wait_for_response` blocks the
 calling thread until a message of `reply_type` arrives or the timeout elapses, returning `None` on
 timeout.
 
@@ -507,18 +507,18 @@ timeout.
 The [`ovos-bus-client` CLI tools](cli-tools.md#talking-to-a-running-ovos-ovos-bus-client) wrap
 the same client for quick, no-code interaction with a running assistant:
 
-- `ovos-say-to "what time is it"` — inject an utterance as if spoken.
-- `ovos-listen` — trigger listening, as if the wake word fired.
-- `ovos-speak "hello"` — make OVOS speak a phrase.
+- `ovos-say-to "what time is it"`: inject an utterance as if spoken.
+- `ovos-listen`: trigger listening, as if the wake word fired.
+- `ovos-speak "hello"`: make OVOS speak a phrase.
 
 ### Watching the bus live
 
 For interactively inspecting every message flowing across the bus (useful when a recipe above
-isn't behaving as expected), run `ovos-busmon` — a browser-based web UI (FastAPI + WebSocket)
+isn't behaving as expected), run `ovos-busmon`, a browser-based web UI (FastAPI + WebSocket)
 for live bus traffic. It subscribes like any other client and streams each message to the
-browser as it is broadcast; install it with `pip install ovos-busmon`.
+browser as it is broadcast. Install it with `pip install ovos-busmon`.
 
-!!! note "Upcoming — `AsyncMessageBusClient`"
+!!! note "Upcoming: `AsyncMessageBusClient`"
     An in-progress change adds an async/await-native `AsyncMessageBusClient` alongside the
     threaded `MessageBusClient` used in the recipes above, for callers already running an
     asyncio event loop (e.g. FastAPI servers) that would rather avoid a background thread.
@@ -527,12 +527,12 @@ browser as it is broadcast; install it with `pip install ovos-busmon`.
 
 ## Related Pages
 
-- [Bus Events Reference](bus-events.md) — a consolidated table of message types by domain
-- [Bus Client](core-libraries.md#ovos-bus-client) — `MessageBusClient`, `Message`, `Session` Python API
-- [Bus Session](session.md) — `Session`, `SessionManager`, `IntentContextManager`
-- [ovos-core](core.md) — Intent service, skill manager
+- [Bus Events Reference](bus-events.md): a consolidated table of message types by domain
+- [Bus Client](core-libraries.md#ovos-bus-client): `MessageBusClient`, `Message`, `Session` Python API
+- [Bus Session](session.md): `Session`, `SessionManager`, `IntentContextManager`
+- [ovos-core](core.md): Intent service, skill manager
 
 
-- [Configuration](config.md) — `mycroft.conf` configuration
+- [Configuration](config.md): `mycroft.conf` configuration
 
 Further reading: [protocol interoperability between OVOS and other assistant frameworks](https://blog.openvoiceos.org/posts/2025-10-24-protocol_interoperability).

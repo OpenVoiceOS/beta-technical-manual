@@ -1,7 +1,7 @@
 # Choosing Plugins — Comparison & Recommendations
 
 !!! abstract "In a nutshell"
-    OVOS ships **dozens** of interchangeable plugins for each job — a great thing, but
+    OVOS ships **dozens** of interchangeable plugins for each job. That's useful, but
     it's easy to feel lost picking one. This page is the shortcut: for every plugin type
     it names a **recommended default**, then a small **comparison table** so you can see at
     a glance which option fits your situation (offline vs cloud, hardware budget, licence,
@@ -9,8 +9,8 @@
     catalog. New here? Start with the [Plugins Index](plugins-index.md).
 
 !!! tip "Don't want to choose? Use the recommended offline stack"
-    Every ⭐ below is a sensible, **fully-offline, on-device** default — a complete private
-    stack, no cloud, no account. First install them:
+    Every ⭐ below is a sensible, **fully-offline, on-device** default. It forms a complete
+    private stack: no cloud, no account. First install them:
 
     ```bash
     pip install ovos-microphone-plugin-alsa ovos-vad-plugin-silero \
@@ -31,7 +31,7 @@
     ```
 
     The wake word is **not** in the snippet because it already defaults to **precise-onnx**
-    (`hey_mycroft`) — see [Wake Word](#wake-word) to change the phrase. Prefer one command?
+    (`hey_mycroft`). See [Wake Word](#wake-word) to change the phrase. Prefer one command?
     `ovos-config autoconfigure -l en-us --offline` writes the language + these defaults for
     you (it needs `ovos-config` already installed, and configures rather than installs plugins).
 
@@ -40,8 +40,8 @@ OK)? Jump straight to **[Pick by scenario](#pick-by-scenario)**.
 
 **How to read the tables.** ⭐ marks the recommended default. **Maturity** rates
 [repository health](maturity.md) (PoC → Alpha → Beta → Stable → Mature), *not* how good the
-plugin is — a Beta default can be the right pick. **Offline** means it runs on-device with
-no network; **online** calls a cloud service (separate terms); **hybrid** talks to a server
+plugin is. A Beta default can be the right pick. **Offline** means it runs on-device with
+no network. **Online** calls a cloud service (separate terms). **Hybrid** talks to a server
 you can self-host. Pick the row whose *"choose this if"* matches you, then open the catalog
 page for its config.
 
@@ -83,12 +83,12 @@ Listens for the activation phrase. See the [Wake Word catalog](wake-word-plugins
 | ovos-ww-plugin-wakeforge | Alpha | offline | Train a custom detector from a single phrase (install from source) |
 | ovos-ww-plugin-server | Alpha | hybrid | Thin satellite offloading detection to a self-hosted ww-server |
 
-*`ovos-ww-plugin-precise-lite` is **deprecated** — the TFLite predecessor of precise-onnx,
+*`ovos-ww-plugin-precise-lite` is **deprecated**. It is the TFLite predecessor of precise-onnx,
 kept working as a fallback but not a pick for new setups.*
 
 ### STT (Speech-to-Text)
 
-Transcribes speech to text. See the [STT catalog](stt-plugins.md) (15 plugins; top picks shown).
+Transcribes speech to text. See the [STT catalog](stt-plugins.md) (15 plugins, top picks shown).
 
 | Plugin | Maturity | Runs | Choose this if |
 |---|---|---|---|
@@ -106,7 +106,7 @@ Transcribes speech to text. See the [STT catalog](stt-plugins.md) (15 plugins; t
 
 ### TTS (Text-to-Speech)
 
-Turns replies into speech. See the [TTS catalog](tts-plugins.md) (17 plugins; top picks shown).
+Turns replies into speech. See the [TTS catalog](tts-plugins.md) (17 plugins, top picks shown).
 
 | Plugin | Maturity | Runs | Choose this if |
 |---|---|---|---|
@@ -119,16 +119,16 @@ Turns replies into speech. See the [TTS catalog](tts-plugins.md) (17 plugins; to
 | ovos-tts-plugin-polly | Mature | online | A specific commercial cloud voice (Amazon Polly) |
 
 !!! note "Licence watch"
-    Most speech plugins are Apache-2.0, but a few differ — e.g. **espeakNG is GPL-3.0**, and
-    cloud engines (Azure, Polly, …) add the vendor's separate terms. The catalog pages carry
-    the exact licence per plugin.
+    Most speech plugins are Apache-2.0, but a few differ. For example, **espeakNG is
+    GPL-3.0**, and cloud engines (Azure, Polly, and others) add the vendor's separate terms.
+    The catalog pages carry the exact licence per plugin.
 
 ### G2P (Grapheme-to-Phoneme)
 
 Converts text to phonemes to drive **mouth-movement / viseme animation** (e.g. a Mark 1
-face). This is a **Beta, Mark 1-era** capability: most TTS voices don't emit phoneme timing,
+face). This is a **Beta, Mark 1-era** capability. Most TTS voices don't emit phoneme timing,
 so a G2P plugin *estimates* it from the text. Only **Mimic 1** provides phoneme timing
-natively; for any other voice the G2P plugin simulates the timing. **If you don't drive a
+natively. For any other voice the G2P plugin simulates the timing. **If you don't drive a
 mouth/face, you don't need a G2P plugin at all.** See the [G2P catalog](g2p-plugins.md).
 
 | Plugin | Maturity | Runs | Choose this if |
@@ -185,18 +185,18 @@ Hook into the text / audio / dialog / TTS stages. See the [Transformers catalog]
 
 ## Pick by scenario
 
-- **Fully offline / private (Raspberry Pi or mini-PC):** the ⭐ stack — alsa mic, silero VAD,
+- **Fully offline / private (Raspberry Pi or mini-PC):** the ⭐ stack: alsa mic, silero VAD,
   precise-onnx wake word, onnx-asr STT, phoonnx TTS. Everything runs on-device.
 - **Lowest-power / tiny device:** swap TTS to **pico** or **espeakNG**, VAD to **webrtcvad**,
   STT to **vosk** (small model). Accept lower accuracy for a smaller footprint.
-- **Best accuracy, GPU available:** STT **fasterwhisper** (large model) or **nemo**; TTS
+- **Best accuracy, GPU available:** STT **fasterwhisper** (large model) or **nemo**. TTS
   **coqui**. Still fully offline.
 - **Thin satellite / shared backend:** offload with the `*-server` plugins (STT server, TTS
   server, ww-server) so the heavy models live on one machine.
 - **Cloud is acceptable (coverage/quality first):** STT **azure**, TTS **edge-tts**/**polly**,
-  translation **google** — each adds the vendor's separate terms.
+  translation **google**. Each adds the vendor's separate terms.
 
-Maturity here is a **repository-health** signal, not a quality score — see the
+Maturity here is a **repository-health** signal, not a quality score. See the
 [Maturity scale](maturity.md). For discovery/loading internals see the
-[Plugin Manager](plugin-manager.md); for head-to-head benchmark data see the
+[Plugin Manager](plugin-manager.md). For head-to-head benchmark data see the
 [Plugin Arena](plugin-arena.md).

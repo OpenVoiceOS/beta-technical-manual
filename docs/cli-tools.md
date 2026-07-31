@@ -1,11 +1,11 @@
 # Command-line Tools
 
 !!! abstract "In a nutshell"
-    Installing OVOS also installs a handful of **terminal commands** — small programs you run from
+    Installing OVOS also installs a handful of **terminal commands**: small programs you run from
     a shell to configure the assistant, poke a running system ("say this", "listen now"), read the
     logs, or launch the individual services by hand. This page is a catalog of the ones the core
-    OVOS packages provide, what each does, and which package ships it. (These are the *core* CLIs;
-    the [RaspOVOS image](install-raspovos.md) adds its own extra convenience commands on top.) See
+    OVOS packages provide, what each does, and which package ships it. (These are the *core* CLIs.
+    The [RaspOVOS image](install-raspovos.md) adds its own extra convenience commands on top.) See
     the [Glossary](glossary.md) for unfamiliar terms.
 
 Each command below is a console-script entry point declared by a core OVOS package, so it lands on
@@ -85,11 +85,11 @@ can launch it directly — useful for debugging or minimal/headless setups.
 
 ## Related Pages
 
-- [ovos-config](config.md) — the configuration system the `ovos-config` CLI edits.
-- [ovos-bus-client Overview](core-libraries.md#ovos-bus-client) — the library behind the `ovos-*` bus commands.
-- [Logging](core-libraries.md#ovos-utils) — log locations and levels that `ovos-logs` reads.
-- [ovos-docs-viewer](docs-viewer.md) — the in-terminal documentation browser.
-- [RaspOVOS helper commands](install-raspovos.md#helpful-commands) — extra CLIs added by the RaspOVOS image.
+- [ovos-config](config.md): the configuration system the `ovos-config` CLI edits.
+- [ovos-bus-client Overview](core-libraries.md#ovos-bus-client): the library behind the `ovos-*` bus commands.
+- [Logging](core-libraries.md#ovos-utils): log locations and levels that `ovos-logs` reads.
+- [ovos-docs-viewer](docs-viewer.md): the in-terminal documentation browser.
+- [RaspOVOS helper commands](install-raspovos.md#helpful-commands): extra CLIs added by the RaspOVOS image.
 
 ---
 

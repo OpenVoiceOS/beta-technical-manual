@@ -2,7 +2,7 @@
 # ovos-color-parser
 
 !!! abstract "In a nutshell"
-    This is a small library that turns everyday color descriptions into exact color values a computer can use. Say "make the lamp a bright, slightly warm muted blue" and it figures out the actual red/green/blue numbers — handy for voice-controlled smart lights. It knows nearly 6,000 English color names plus words like "bright", "warm", and "muted", and can even handle "set it to 520 nanometres" for the science-minded. See the [Glossary](glossary.md) for related terms.
+    This is a small library that turns everyday color descriptions into exact color values a computer can use. Say "make the lamp a bright, slightly warm muted blue" and it figures out the actual red/green/blue numbers. This is handy for voice-controlled smart lights. It knows nearly 6,000 English color names plus words like "bright", "warm", and "muted", and can even handle "set it to 520 nanometres" for the science-minded. See the [Glossary](glossary.md) for related terms.
 
 OpenVoiceOS's multilingual color parsing and color-space conversion library. It turns natural-language color descriptions ("bright, slightly warm muted blue") into concrete RGB/HLS/HSV values, and provides color-space utilities needed for smart-light control and similar voice-driven color applications.
 
@@ -15,13 +15,13 @@ color = color_from_description("bright vibrant green")
 print(color.hex_str, color.r, color.g, color.b)   # an sRGBAColor, or None if nothing matched
 ```
 
-> **Import note:** the top-level `ovos_color_parser` package re-exports most of the API, including `palette_from_description`, `lookup_name`, `rgb_to_cmyk`, `cmyk_to_rgb`, and `is_hex_code_valid` — import them directly from `ovos_color_parser` (see [API reference](#api-reference)). Only the less common pre-built spectral/language palette constants still need a submodule import from `ovos_color_parser.models`.
+> **Import note:** the top-level `ovos_color_parser` package re-exports most of the API, including `palette_from_description`, `lookup_name`, `rgb_to_cmyk`, `cmyk_to_rgb`, and `is_hex_code_valid`. Import them directly from `ovos_color_parser` (see [API reference](#api-reference)). Only the less common pre-built spectral/language palette constants still need a submodule import from `ovos_color_parser.models`.
 
 ## Why it exists
 
-Voice assistants frequently need to interpret color commands: "change the lamp to moss green", "make it darker", "a bit more saturated". Standard CSS/X11 color name lookups only cover exact matches. `ovos-color-parser` layers on top of a multilingual color-name database (nearly 6 000 English name-to-hex mappings) and a language-keyed adjective/modifier system so that fuzzy descriptions and modifier words ("bright", "warm", "muted") are resolved to a real sRGB value.
+Voice assistants frequently need to interpret color commands: "change the lamp to moss green", "make it darker", "a bit more saturated". Standard CSS/X11 color name lookups only cover exact matches. `ovos-color-parser` layers on top of a multilingual color-name database (nearly 6 000 English name-to-hex mappings) and a language-keyed adjective/modifier system. This resolves fuzzy descriptions and modifier words ("bright", "warm", "muted") to a real sRGB value.
 
-A secondary use-case is scientific: the library supports the full electromagnetic spectrum (including UV, IR, microwaves and radio waves) mapped through spectral color palettes, so physicists who say "set the lamp to 520 nanometres" are handled without special-casing in skills.
+A secondary use case is scientific. The library supports the full electromagnetic spectrum (including UV, IR, microwaves, and radio waves), mapped through spectral color palettes. Physicists who say "set the lamp to 520 nanometres" are handled without special-casing in skills.
 
 ---
 
@@ -37,7 +37,7 @@ A secondary use-case is scientific: the library supports the full electromagneti
 | `ovos_color_parser/vocab/` | Vocabulary loading helpers for the per-language resource files |
 | `ovos_color_parser/res/<lang>/` | Per-language JSON word-lists (`*.json`) and object-color mappings (`object_colors.json`) and adjective descriptors (`color_descriptors.json`) |
 
-Dependencies: `ovos-utils` (fuzzy matching via `MatchStrategy`). Color-name matching and CIEDE2000 distance are implemented in-house — no third-party `ahocorasick` or `colorspacious` dependency.
+Dependencies: `ovos-utils` (fuzzy matching via `MatchStrategy`). Color-name matching and CIEDE2000 distance are implemented in-house, with no third-party `ahocorasick` or `colorspacious` dependency.
 
 ---
 
@@ -45,7 +45,7 @@ Dependencies: `ovos-utils` (fuzzy matching via `MatchStrategy`). Color-name matc
 
 ### Color space model (`models.py`)
 
-All color representations are Python `@dataclass` objects. Internal operations are performed in HLS space; conversions between spaces are implemented as properties.
+All color representations are Python `@dataclass` objects. Internal operations are performed in HLS space. Conversions between spaces are implemented as properties.
 
 ```text
 sRGBAColor  ──as_hls──►  HLSColor  ──as_hsv──►  HSVColor
@@ -62,16 +62,16 @@ The `HueRange` dataclass bridges the hue angle (0–360°) to the physical wavel
 
 `color_from_description()` runs four steps:
 
-1. **Exact / substring lookup** — loads a language-specific `SubstringMatcher` automaton (`ovos_color_parser.match.automaton`) built from the per-language JSON word lists. The automaton is built once per language and cached thread-safely in `ColorMatcher._color_automatons`.
+1. **Exact / substring lookup**: loads a language-specific `SubstringMatcher` automaton (`ovos_color_parser.match.automaton`) built from the per-language JSON word lists. The automaton is built once per language and cached thread-safely in `ColorMatcher._color_automatons`.
 
 
-2. **Fuzzy fallback** — when `fuzzy=True`, iterates all color names with `fuzzy_match()` using `TOKEN_SET_RATIO` pre-screening and the requested `MatchStrategy`.
+2. **Fuzzy fallback**: when `fuzzy=True`, iterates all color names with `fuzzy_match()` using `TOKEN_SET_RATIO` pre-screening and the requested `MatchStrategy`.
 
 
-3. **Object-color lookup** — checks `object_colors.json` for object-to-color mappings (e.g. "sky" → #87CEEB).
+3. **Object-color lookup**: checks `object_colors.json` for object-to-color mappings (e.g. "sky" → #87CEEB).
 
 
-4. **Adjective adjustment** — reads `color_descriptors.json` for the language and applies saturation, brightness, opacity, and temperature modifiers to the averaged candidate color.
+4. **Adjective adjustment**: reads `color_descriptors.json` for the language and applies saturation, brightness, opacity, and temperature modifiers to the averaged candidate color.
 
 Weighted circular-mean hue averaging (`average_colors()`) prevents wrap-around errors for hues near 0°/360°.
 
@@ -138,7 +138,7 @@ Type aliases exported from `models.py`:
 
 ### `ColorMatcher` class (`ovos_color_parser/matching.py`)
 
-Thread-safe class that owns the `SubstringMatcher` automata. Can be used statically (backed by the per-language class-level caches `_color_automatons`/`_object_automatons`, built lazily) or as an instance with a fixed language and optional custom vocabularies for isolated, injectable matching.
+Thread-safe class that owns the `SubstringMatcher` automata. It can be used statically (backed by the per-language class-level caches `_color_automatons`/`_object_automatons`, built lazily), or as an instance with a fixed language and optional custom vocabularies for isolated, injectable matching.
 
 | Method | Signature | Description |
 |--------|-----------|-------------|
@@ -256,7 +256,7 @@ color resolves to a spectral color term.
 
 ## Language support
 
-Language-keyed resources live in `ovos_color_parser/res/<locale>/`, named with full locale codes (`en-US`, `de-DE`, `es-ES`, `pt-BR`, ...). The loader resolves either a bare primary subtag (`"es"`) or a full locale tag (`"es-ES"`) to the matching resource directory, so both forms work when calling `color_from_description`, `lookup_name`, and related functions.
+Language-keyed resources live in `ovos_color_parser/res/<locale>/`, named with full locale codes (`en-US`, `de-DE`, `es-ES`, `pt-BR`, ...). The loader resolves either a bare primary subtag (`"es"`) or a full locale tag (`"es-ES"`) to the matching resource directory. Both forms work when calling `color_from_description`, `lookup_name`, and related functions.
 
 Each language directory may contain:
 
@@ -266,7 +266,7 @@ Each language directory may contain:
 | `object_colors.json` | Map of `"#RRGGBB"` → `"object name"` (e.g. sky, grass, ocean) |
 | `color_descriptors.json` | Adjective lists keyed by `very_high_saturation`, `high_saturation`, `low_saturation`, `very_low_saturation`, `very_high_brightness`, `high_brightness`, `low_brightness`, `very_low_brightness`, `very_high_opacity`, `high_opacity`, `low_opacity`, `very_low_opacity`, `very_high_temperature`, `high_temperature`, `low_temperature`, `very_low_temperature` |
 
-English (`en`) ships over 15 000 hex-to-name entries across its bundled catalogs — the primary word list alone (`colors.json`) has about 6 200 entries, and it's joined by X11/web colors, Crayola, XKCD, Wikipedia's color list, Pantone, RAL, and other named color standards.
+English (`en`) ships over 15 000 hex-to-name entries across its bundled catalogs. The primary word list alone (`colors.json`) has about 6 200 entries, joined by X11/web colors, Crayola, XKCD, Wikipedia's color list, Pantone, RAL, and other named color standards.
 
 ---
 

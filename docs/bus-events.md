@@ -2,19 +2,19 @@
 
 !!! abstract "In a nutshell"
     Every OVOS component talks to every other one by sending small named messages over the
-    shared [messagebus](bus-service.md) — a bit like a group chat where each service watches
-    for the message types it cares about. This page collects the message types documented
-    elsewhere in the manual into one place, grouped by which stage of the
+    shared [messagebus](bus-service.md). It works a bit like a group chat where each service
+    watches for the message types it cares about. This page collects the message types
+    documented elsewhere in the manual into one place, grouped by which stage of the
     [utterance lifecycle](life-of-an-utterance.md) they belong to, so you don't have to hunt
     through six different pages to find one event name. Each row links back to the page that
-    documents that event in context; this page does not introduce anything new.
+    documents that event in context. This page does not introduce anything new.
 
 !!! note
     Many events have a legacy `mycroft.*`/bare name alongside a newer `ovos.*` name. Only one
-    of the two is actually put on the wire — each connected client's bus library locally
+    of the two is actually put on the wire. Each connected client's bus library locally
     re-dispatches it under the other name too, so a handler on either name receives it (see
     [Bus Service: legacy/modern topic pairs](bus-service.md#namespace-migration) for the
-    mechanism); the tables below show both names where applicable.
+    mechanism). The tables below show both names where applicable.
 
 ## Listener / wake word
 
@@ -50,7 +50,7 @@ Handled by `ovos-core`'s `IntentService`; see [Intent Service](intent-service.md
 | `intent.service.pipelines.reload` | `handle_reload_pipelines` | Reload the configured pipeline plugin stack |
 | `ovos.intent.unmatched` (legacy: `complete_intent_failure`) | — | No pipeline stage claimed the utterance — including the [fallback](fallback-pipeline.md) stages, which run *inside* the match loop; this is the terminal "nothing handled it" marker, not a hand-off |
 
-`IntentService` also **emits** these on a successful match (in order — see [Intent Service](intent-service.md#intent-match-emission)):
+`IntentService` also **emits** these on a successful match, in order (see [Intent Service](intent-service.md#intent-match-emission)):
 
 | Event | Meaning |
 |---|---|
@@ -173,7 +173,7 @@ other (see [Bus Service — namespace migration](bus-service.md#namespace-migrat
 consumer can therefore subscribe on either name today and switch to the spec name at its own pace.
 
 The pairs below are the authoritative rename map (`ovos_spec_tools`'s `MIGRATION_MAP`). Unless
-marked **shape-changing**, the payload is identical on both topics; shape-changing pairs are
+marked **shape-changing**, the payload is identical on both topics. Shape-changing pairs are
 reshaped best-effort by the translator and may lose fields, so prefer adopting the spec payload
 directly.
 
@@ -202,29 +202,29 @@ directly.
 | `mycroft.skill.enable_intent` | `ovos.intent.enable` | **shape-changing** — enable an intent (INTENT-4 §8.5) |
 | `mycroft.skill.disable_intent` | `ovos.intent.disable` | **shape-changing** — disable an intent (INTENT-4 §8.5) |
 
-### Not bridged — adopt the spec directly
+### Not bridged: adopt the spec directly
 
 A few areas are deliberately **not** in the translator, so subscribing on the spec name alone will
-*not* transparently receive the legacy traffic (or vice-versa). These need real adoption in the
-producer and consumer, not a topic swap:
+*not* transparently receive the legacy traffic, or the other way around. These need real adoption
+in the producer and consumer, not a topic swap:
 
-- **Handler-lifecycle trio** — `mycroft.skill.handler.start` / `.complete` are orchestrator-vs-skill
-  private signals; the orchestrator emits the spec `ovos.intent.handler.start` / `.complete` /
-  `.error` directly. The two namespaces are kept separate by design (PIPELINE-1 §8/§11) — the pair
-  is shape-changing and bridging would double-emit.
-- **Intent/entity registration** — `register_vocab` + `register_intent` (Adapt's N legacy messages)
+- **Handler-lifecycle trio.** `mycroft.skill.handler.start` / `.complete` are orchestrator-vs-skill
+  private signals. The orchestrator emits the spec `ovos.intent.handler.start` / `.complete` /
+  `.error` directly. The two namespaces are kept separate by design (PIPELINE-1 §8/§11). The pair
+  is shape-changing, and bridging would double-emit.
+- **Intent/entity registration.** `register_vocab` + `register_intent` (Adapt's N legacy messages)
   do not map 1:1 onto the single `ovos.intent.register.keyword` / `.register.template` /
   `ovos.entity.register` message (INTENT-4 §5), which inlines the vocab descriptors. This requires
-  producers/consumers to adopt INTENT-4, not a rename.
-- **Per-skill stop** — the legacy `{skill_id}.stop` / `{skill_id}.stop.ping` handshake uses
+  producers and consumers to adopt INTENT-4, not a rename.
+- **Per-skill stop.** The legacy `{skill_id}.stop` / `{skill_id}.stop.ping` handshake uses
   runtime-assembled per-skill topics, which cannot be static map keys. STOP-1 replaces them with the
-  broadcast `ovos.stop` / `ovos.stop.ping` / `ovos.stop.pong`; the skill base class subscribes on both
-  forms rather than relying on the translator.
+  broadcast `ovos.stop` / `ovos.stop.ping` / `ovos.stop.pong`. The skill base class subscribes on
+  both forms rather than relying on the translator.
 
 ## Related pages
 
-- [Bus Service](bus-service.md) — the messagebus itself, connection details, legacy/modern topic pairs
-- [Life of an Utterance](life-of-an-utterance.md) — the full request/response journey these events trace
-- [Intent Service](intent-service.md), [Converse Pipeline](converse-pipeline.md), [Stop Pipeline](stop-pipeline.md), [Fallback Pipeline](fallback-pipeline.md), [Common Query Pipeline](cq-pipeline.md) — per-pipeline detail
-- [Audio Service](audio-service.md), [GUI Service](gui-service.md) — output-side detail
-- [OVOSSkill API](ovos-skill.md) — the skill-side handlers for these events
+- [Bus Service](bus-service.md): the messagebus itself, connection details, legacy/modern topic pairs
+- [Life of an Utterance](life-of-an-utterance.md): the full request/response journey these events trace
+- [Intent Service](intent-service.md), [Converse Pipeline](converse-pipeline.md), [Stop Pipeline](stop-pipeline.md), [Fallback Pipeline](fallback-pipeline.md), [Common Query Pipeline](cq-pipeline.md): per-pipeline detail
+- [Audio Service](audio-service.md), [GUI Service](gui-service.md): output-side detail
+- [OVOSSkill API](ovos-skill.md): the skill-side handlers for these events

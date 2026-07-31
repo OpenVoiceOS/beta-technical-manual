@@ -1,14 +1,14 @@
 # Specialized [Agent Engine](agent-plugins.md) Types
 
 !!! abstract "In a nutshell"
-    Beyond plain chatting, OVOS offers a toolbox of small, specialized AI helpers — each good at one narrow job, like ranking which answer is most relevant, summarizing text, or detecting a language. Because each is a separate, swappable piece, you can mix and match them to build more capable assistants. See [Agent Plugins](agent-plugins.md) for the broader idea and the [Glossary](glossary.md) for unfamiliar terms.
+    Beyond plain chatting, OVOS offers a toolbox of small, specialized AI helpers. Each is good at one narrow job, like ranking which answer is most relevant, summarizing text, or detecting a language. Because each is a separate, swappable piece, you can mix and match them to build more capable assistants. See [Agent Plugins](agent-plugins.md) for the broader idea and the [Glossary](glossary.md) for unfamiliar terms.
 
 OVOS provides a full suite of specialized agent engine types beyond simple chat. Each type solves
 a specific NLP sub-problem and registers under its own OPM entry point group, making it
 independently discoverable, configurable, and composable.
 
 All base classes live in `ovos_plugin_manager.templates.agents`. The deprecated solver API
-(`opm.solver.*`) is covered at the bottom — migrate to `opm.agents.*` for all new plugins.
+(`opm.solver.*`) is covered at the bottom. Migrate to `opm.agents.*` for all new plugins.
 
 ---
 
@@ -31,13 +31,13 @@ best = engine.select_answer("play bohemian rhapsody", candidates)
 
 !!! note "Score semantics"
     `ReRankerEngine.rerank()` returns `(score, option)` pairs, but the base class does
-    **not** fix the score's scale — it is whatever the underlying model produces. The
+    **not** fix the score's scale. It is whatever the underlying model produces. The
     shipped default, [`ovos-flashrank-reranker-plugin`](agent-plugins.md), applies a
     sigmoid (binary cross-encoder) or softmax (multi-class) normalization internally,
-    so its scores land in **`[0, 1]`** and read as a relevance/similarity value — a
+    so its scores land in **`[0, 1]`** and read as a relevance/similarity value. A
     higher score is a better match, and `min_reranker_score` can be tuned as a
     plain probability-like threshold against it. A different reranker plugin backed
-    by a raw-logit model would need its own calibration; check that plugin's docs
+    by a raw-logit model would need its own calibration. Check that plugin's docs
     before reusing the same threshold.
 
 ### Common Query pipeline config
@@ -56,7 +56,7 @@ best = engine.select_answer("play bohemian rhapsody", candidates)
 
 ```
 
-The `reranker` key names any installed `opm.agents.reranker` plugin — see
+The `reranker` key names any installed `opm.agents.reranker` plugin. See
 [Agent Plugins](agent-plugins.md) for the engine-type reference.
 
 ---
@@ -160,7 +160,7 @@ Implementations: `GGUFYesNoEngine`.
 
 **Base class:** `OptionMatcherEngine`
 
-Resolves a free-form user reply to one entry in a fixed list of options — the engine behind a
+Resolves a free-form user reply to one entry in a fixed list of options. This is the engine behind a
 skill's `ask_selection()`. The reference implementation,
 [`ovos-option-matcher-fuzzy-plugin`](https://github.com/OpenVoiceOS/ovos-option-matcher-fuzzy-plugin)
 (`FuzzyOptionMatcherPlugin`), resolves in order: fuzzy match via ovos-utils `match_one` (difflib `SequenceMatcher` ratio) when the score
@@ -179,7 +179,7 @@ skill's `settings.json` first, then `mycroft.conf`), defaulting to
 **Base class:** `CoreferenceEngine`
 
 Resolves pronouns and ambiguous references in voice commands against recent conversation context.
-The base class owns the *state* (a per-language context vault); the plugin subclass provides the
+The base class owns the *state* (a per-language context vault). The plugin subclass provides the
 *intelligence* (the NLP that rewrites the text). `resolve()` first calls `contains_corefs()` to
 skip expensive work when no pronouns are present.
 
@@ -196,7 +196,7 @@ result = engine.resolve("Turn it off", lang="en", use_memory=True)
 
 ```
 
-`use_memory` (default `False`) gates the learn/apply-context steps — pass `use_memory=True` to
+`use_memory` (default `False`) gates the learn/apply-context steps. Pass `use_memory=True` to
 have `resolve()` apply previously registered context and learn new mappings from each turn.
 `context_ttl` (config key, default `120` s) controls how long a tracked context entry remains
 valid before it is pruned.
@@ -280,20 +280,20 @@ release. Migrate existing plugins to the corresponding `opm.agents.*` types.
 | `opm.coreference` | `opm.agents.coref` | Moved under the unified `opm.agents.*` namespace alongside the other engine types. |
 
 The deprecated classes remain in `ovos_plugin_manager.templates.solvers` and are still loaded
-by `PersonaService` and `QuestionSolversService` for backwards compatibility — but no new
+by `PersonaService` and `QuestionSolversService` for backwards compatibility. But no new
 plugins should use them.
 
 ---
 
 ## Cross-References
 
-- [Agent Plugins](agent-plugins.md) — complete engine configuration reference
+- [Agent Plugins](agent-plugins.md): complete engine configuration reference
 
 
-- [OpenAI Plugin](openai-plugin.md) — OpenAI-compatible engine implementations
+- [OpenAI Plugin](openai-plugin.md): OpenAI-compatible engine implementations
 
 
-- [GGUF Plugin](gguf-plugin.md) — local offline engine implementations
+- [GGUF Plugin](gguf-plugin.md): local offline engine implementations
 
 
-- [OPM Plugin Types](plugin-manager.md) — full solver plugin reference
+- [OPM Plugin Types](plugin-manager.md): full solver plugin reference

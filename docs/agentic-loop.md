@@ -1,7 +1,7 @@
 # Agentic Loop Architectures
 
 !!! abstract "In a nutshell"
-    Normally an AI answers in one shot. An "agentic loop" lets it work more like a person solving a problem: think a little, take an action (such as looking something up), see the result, then think again — repeating until it has a good answer. This page describes several ready-made styles of that step-by-step reasoning, each suited to different kinds of tasks. The "tools" it can reach for are described in [Tool Plugins](tool-plugins.md); see the [Glossary](glossary.md) for unfamiliar terms.
+    Normally an AI answers in one shot. An "agentic loop" lets it work more like a person solving a problem: think a little, take an action (such as looking something up), see the result, then think again, repeating until it has a good answer. This page describes several ready-made styles of that step-by-step reasoning, each suited to different kinds of tasks. The "tools" it can reach for are described in [Tool Plugins](tool-plugins.md). See the [Glossary](glossary.md) for unfamiliar terms.
 
 ??? info "📐 Formal specification"
     These loops run *inside* a **persona**, and a persona is a formal pipeline
@@ -10,17 +10,17 @@
     defines a persona as a **complete conversational agent**, summonable as a
     first-class pipeline stage. When the active persona (selected by
     `session.persona_id`) is reached, it claims the utterance and generates the
-    response — exactly the slot the agentic brains on this page fill. For the
+    response, exactly the slot the agentic brains on this page fill. For the
     full set see the **[spec index](architecture-specs.md)**.
 
 [ovos-agentic-loop](https://github.com/OpenVoiceOS/ovos-agentic-loop) implements eight agentic reasoning patterns as standard OPM `ChatEngine` plugins. Each pattern wires a configurable inner LLM brain with one or more `ToolBox` plugins to produce multi-step reasoning over OVOS personas.
 
 !!! tip "Which loop should I pick?"
-    - Just need the model to use a tool and answer? Start with **`ovos-react-loop`** — it's the
+    - Just need the model to use a tool and answer? Start with **`ovos-react-loop`**. It's the
       general-purpose default, and every other loop is a variation for a specific need.
     - Your model's API supports native `tool_calls` (most modern hosted LLMs)? Use
-      **`ovos-native-toolcall-loop`** instead — same job, less prompt overhead, and it falls
-      back to the ReAct text loop automatically if the model doesn't support it.
+      **`ovos-native-toolcall-loop`** instead. It does the same job with less prompt overhead,
+      and it falls back to the ReAct text loop automatically if the model doesn't support it.
     - Multi-step task where doing the steps in the wrong order matters (e.g. booking a trip)?
       Use **`ovos-plan-execute-loop`** to plan up front, then execute.
     - The model's first attempt is often wrong and could improve on a second pass? Use
@@ -31,8 +31,8 @@
     - Pure reasoning with no tools involved (math, logic puzzles)? Use
       **`ovos-chain-of-thought-loop`**.
     - Open-ended exploration where several candidate solution paths are worth comparing before
-      committing? Use **`ovos-tree-of-thoughts-loop`** — the most expensive option, reserve it
-      for problems where a single reasoning path is unreliable.
+      committing? Use **`ovos-tree-of-thoughts-loop`**. It is the most expensive option, so
+      reserve it for problems where a single reasoning path is unreliable.
 
 ---
 
@@ -123,7 +123,7 @@ the engine config (each defaults if unset):
 
 ## SKILL.md Integration
 
-Any package shipping a `SKILL.md` file is automatically discovered and exposed as an agent tool. The `name` frontmatter field becomes the tool name; the body becomes the system prompt for a sub-LLM call:
+Any package shipping a `SKILL.md` file is automatically discovered and exposed as an agent tool. The `name` frontmatter field becomes the tool name. The body becomes the system prompt for a sub-LLM call:
 
 ```markdown
 ---
@@ -149,15 +149,15 @@ ctx = AgentsMDContextManager({
 messages = ctx.build_conversation_context(utterance, session_id="s1")
 ```
 
-It also registers as an OPM plugin — entry point `ovos-agents-md-context-plugin` under the `opm.agents.memory` group — so it can be wired declaratively from persona JSON, the same way loops and toolboxes are.
+It also registers as an OPM plugin, entry point `ovos-agents-md-context-plugin` under the `opm.agents.memory` group, so it can be wired declaratively from persona JSON, the same way loops and toolboxes are.
 
 ---
 
 ## Security Notes
 
-- `ShellToolBox` — `allow_shell` defaults to `false`. Only enable with fully-trusted LLMs; commands are passed directly to `/bin/sh`.
-- `FileSystemToolBox` — set `root_path` to restrict file access to a subtree.
-- `MathToolBox` — uses `ast.parse` with an allowlist; `eval()` is never called.
+- `ShellToolBox`: `allow_shell` defaults to `false`. Only enable with fully-trusted LLMs. Commands are passed directly to `/bin/sh`.
+- `FileSystemToolBox`: set `root_path` to restrict file access to a subtree.
+- `MathToolBox`: uses `ast.parse` with an allowlist. `eval()` is never called.
 
 ### Toolbox security keys
 
@@ -181,6 +181,6 @@ Use [ovos-tool-adapters](agent-interop.md) to wire any MCP or UTCP server into t
 
 ## Related Pages
 
-- [Agent Tool Plugins](tool-plugins.md) — OPM `ToolBox` interface and the PHAL bus provider
-- [Agent Interoperability](agent-interop.md) — MCP, UTCP, A2A wiring
-- [Personas](personas.md) — composing personas from agentic loop engines
+- [Agent Tool Plugins](tool-plugins.md): OPM `ToolBox` interface and the PHAL bus provider
+- [Agent Interoperability](agent-interop.md): MCP, UTCP, A2A wiring
+- [Personas](personas.md): composing personas from agentic loop engines
