@@ -1378,10 +1378,10 @@
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
 <p><code>ovoscope</code> is the official tool for testing OpenVoiceOS skills and core parts. It runs a small,
-fast, pretend version of the whole assistant in one process, so you can confirm a request is
+fast, pretend version of the whole assistant in one process. This lets you confirm a request is
 understood and answered correctly without real hardware. "End-to-end" just means it checks the
-whole journey — from what the user said to what the assistant did. This page gets you started;
-the <strong>full, always-current reference lives in the <a href="https://github.com/OpenVoiceOS/ovoscope/tree/dev/docs">ovoscope repo's <code>docs/</code></a></strong>. See the <a href="../glossary/">Glossary</a>.</p>
+whole journey, from what the user said to what the assistant did. This page gets you started.
+The <strong>full, always-current reference lives in the <a href="https://github.com/OpenVoiceOS/ovoscope/tree/dev/docs">ovoscope repo's <code>docs/</code></a></strong>. See the <a href="../glossary/">Glossary</a>.</p>
 </div>
 <div class="admonition info">
 <p class="admonition-title">This page is a guide; the reference is in the repo</p>
@@ -1395,19 +1395,19 @@ without a full system installation. Every official OVOS skill is required to pas
 tests.</p>
 <hr />
 <h2 id="why-e2e-testing">Why E2E testing?<a class="headerlink" href="#why-e2e-testing" title="Permanent link">&para;</a></h2>
-<p>Traditional unit tests miss integration issues (e.g. a skill that loads fine but fails to match a
-Padatious intent). <code>ovoscope</code> solves this by running a <strong>MiniCroft</strong> instance — a real in-process
+<p>Traditional unit tests miss integration issues (for example, a skill that loads fine but fails to match a
+Padatious intent). <code>ovoscope</code> solves this by running a <strong>MiniCroft</strong> instance, a real in-process
 <code>SkillManager</code>:</p>
 <ul>
-<li><strong>Real intent matching</strong> — uses the actual Adapt and Padatious engines.</li>
-<li><strong>Bus-level verification</strong> — asserts the correct <code>speak</code> / <code>gui.page.show</code> messages are emitted.</li>
-<li><strong>No hardware</strong> — uses a <code>FakeBus</code> and mocked audio/hardware layers.</li>
-<li><strong>CI ready</strong> — designed to run in GitHub Actions on every pull request.</li>
+<li><strong>Real intent matching</strong>: uses the actual Adapt and Padatious engines.</li>
+<li><strong>Bus-level verification</strong>: asserts the correct <code>speak</code> / <code>gui.page.show</code> messages are emitted.</li>
+<li><strong>No hardware</strong>: uses a <code>FakeBus</code> and mocked audio/hardware layers.</li>
+<li><strong>CI ready</strong>: designed to run in GitHub Actions on every pull request.</li>
 </ul>
 <hr />
 <h2 id="your-first-test">Your first test<a class="headerlink" href="#your-first-test" title="Permanent link">&para;</a></h2>
 <p><code>End2EndTest</code> is declarative: give it the skill(s) to load, the utterance to send, and the messages
-you expect back. The simplest assertion is <code>assert_spoke()</code> — it runs the interaction and checks the
+you expect back. The simplest assertion is <code>assert_spoke()</code>. It runs the interaction and checks the
 skill spoke a given line, without spelling out the full message sequence:</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span> <span class="nn">ovos_bus_client.message</span> <span class="kn">import</span> <span class="n">Message</span>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kn">from</span> <span class="nn">ovos_bus_client.session</span> <span class="kn">import</span> <span class="n">Session</span>
@@ -1433,8 +1433,8 @@ skill spoke a given line, without spelling out the full message sequence:</p>
 </span></code></pre></div>
 <p><code>assert_spoke(text, lang="en-US", timeout=30)</code> runs <code>execute()</code> and then raises <code>AssertionError</code> if
 no <code>speak</code> message with that exact utterance (and <code>lang</code>) was emitted. Because it still runs the full
-<code>execute()</code>, leave <code>expected_messages</code> empty <strong>and</strong> set <code>test_message_number=False</code> — otherwise
-<code>execute()</code> first asserts the received-message count equals the (empty) expected list and fails before
+<code>execute()</code>, leave <code>expected_messages</code> empty <strong>and</strong> set <code>test_message_number=False</code>. Otherwise
+<code>execute()</code> first asserts the received-message count equals the (empty) expected list. It then fails before
 the speak is ever checked.</p>
 <p>For full sequence assertions — message types, ordering, routing, and session state — populate
 <code>expected_messages</code> and call <code>test.execute()</code> directly (see the
@@ -1526,7 +1526,7 @@ the speak is ever checked.</p>
 <a href="https://github.com/OpenVoiceOS/ovoscope/blob/dev/docs/ci-integration.md">CI Integration</a> and the
 manual's <a href="../gh-automations-overview/">gh-automations</a> page for the OVOS CI conventions.</p>
 <hr />
-<p><em>Source code &amp; full reference: <a href="https://github.com/OpenVoiceOS/ovoscope">OpenVoiceOS/ovoscope</a> — see its <a href="https://github.com/OpenVoiceOS/ovoscope/tree/dev/docs"><code>docs/</code></a>.</em></p>
+<p><em>Source code &amp; full reference: <a href="https://github.com/OpenVoiceOS/ovoscope">OpenVoiceOS/ovoscope</a>. See its <a href="https://github.com/OpenVoiceOS/ovoscope/tree/dev/docs"><code>docs/</code></a>.</em></p>
 
 
 

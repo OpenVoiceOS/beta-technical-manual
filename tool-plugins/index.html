@@ -1476,7 +1476,7 @@
 <h1 id="agent-tool-plugins">Agent Tool Plugins<a class="headerlink" href="#agent-tool-plugins" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>These plugins give an AI assistant real <em>abilities</em> it can reach for — like fetching information or performing an action — rather than only talking. Each "tool" is described in a standard way so the AI knows what it does and what information it needs, much like labeled buttons on a control panel. See <a href="../agentic-loop/">Agentic Loops</a> for how an assistant decides to use them, and the <a href="../glossary/">Glossary</a> for unfamiliar terms.</p>
+<p>These plugins give an AI assistant real <em>abilities</em>, like fetching information or performing an action, instead of only talking. Each "tool" is described in a standard way. The AI can read this description to learn what the tool does and what information it needs. See <a href="../agentic-loop/">Agentic Loops</a> for how an assistant decides to use them, and the <a href="../glossary/">Glossary</a> for unfamiliar terms.</p>
 </div>
 <p>The OPM <code>ToolBox</code> framework provides a standardized mechanism for exposing discoverable, schema-validated functions to OVOS agents (persona solvers, agentic loops, MCP/UTCP clients). For full authoring documentation see the <a href="../plugin-manager/">Plugin Manager reference</a>.</p>
 <hr />
@@ -1536,7 +1536,7 @@ registers the messagebus handlers described below. The full authoring guide with
 <a href="../plugin-manager/">Plugin Manager reference</a>.</p>
 <hr />
 <h2 id="phal-bus-provider">PHAL Bus Provider<a class="headerlink" href="#phal-bus-provider" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/OpenVoiceOS/ovos-PHAL-plugin-tools">OpenVoiceOS/ovos-PHAL-plugin-tools</a> is a PHAL plugin that loads all installed <code>ToolBox</code> plugins and registers them on the messagebus, making them available to any component that can emit bus messages.</p>
+<p><a href="https://github.com/OpenVoiceOS/ovos-PHAL-plugin-tools">OpenVoiceOS/ovos-PHAL-plugin-tools</a> is a PHAL plugin that loads all installed <code>ToolBox</code> plugins and registers them on the messagebus. Any component that can emit bus messages can then use them.</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>pip<span class="w"> </span>install<span class="w"> </span>ovos-PHAL-plugin-tools
 </span></code></pre></div>
 <p>Entry point group: <code>opm.phal</code>; plugin name <code>ovos-phal-plugin-tools</code>.</p>
@@ -1592,8 +1592,8 @@ registers the messagebus handlers described below. The full authoring guide with
 </tr>
 </tbody>
 </table>
-<p>Every request is answered — unknown tools, bad arguments, and tool exceptions
-come back as an <code>error</code> field, never silence.</p>
+<p>Every request gets an answer. Unknown tools, bad arguments, and tool exceptions
+come back as an <code>error</code> field. The plugin never stays silent.</p>
 <h3 id="third-party-usage">Third-party usage<a class="headerlink" href="#third-party-usage" title="Permanent link">&para;</a></h3>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kn">from</span> <span class="nn">ovos_bus_client</span> <span class="kn">import</span> <span class="n">MessageBusClient</span>
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="kn">from</span> <span class="nn">ovos_bus_client.message</span> <span class="kn">import</span> <span class="n">Message</span>

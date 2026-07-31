@@ -1352,7 +1352,7 @@
 <h1 id="make-it-yours">Make It Yours<a class="headerlink" href="#make-it-yours" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>You just installed OVOS and it works — now you want it to sound like <em>your</em> assistant: a
+<p>You just installed OVOS and it works. Now you want it to sound like <em>your</em> assistant: a
 different name to wake it up, a different voice answering you, or a different language
 altogether. All three are small edits to the same file, <code>~/.config/mycroft/mycroft.conf</code>.
 This page is a quick-reference for all three; each section links to the full page with
@@ -1362,20 +1362,20 @@ more detail and more options.</p>
 <p class="admonition-title">Want to do this by voice instead of editing files?</p>
 <p>Everything below needs opening a text file and a restart. If you'd rather change your wake
 word, voice, or volume by <em>talking</em> to your assistant, see
-<a href="../skill-examples/">What can I say?</a> and <a href="../everyday-help/">It's Not Working — Quick Fixes</a>
+<a href="../skill-examples/">What can I say?</a> and <a href="../everyday-help/">It's Not Working: Quick Fixes</a>
 for what's already possible hands-free (e.g. volume) versus what still needs a config edit
 (wake word, voice, language).</p>
 </div>
 <p>All the settings below live in your personal config file at
-<strong><code>~/.config/mycroft/mycroft.conf</code></strong> (create it if it doesn't exist yet — see
+<strong><code>~/.config/mycroft/mycroft.conf</code></strong> (create it if it doesn't exist yet. See
 <a href="../config/">Configuration Management</a> for how the layering works). It's JSON with comments
 allowed (JSONC). Open it with any text editor, for example:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>nano<span class="w"> </span>~/.config/mycroft/mycroft.conf
 </span></code></pre></div>
-<p>Before restarting, double-check the file still parses — a stray missing comma or bracket will
+<p>Before restarting, double-check the file still parses. A stray missing comma or bracket will
 stop it from loading. Because <code>mycroft.conf</code> allows <code>//</code> comments, plain <code>json.tool</code> will
-reject it even when it's fine — use the same comment-aware loader OVOS itself uses. This runs
-a small Python command directly in the terminal — paste it exactly as shown:</p>
+reject it even when it's fine. Use the same comment-aware loader OVOS itself uses. This runs
+a small Python command directly in the terminal. Paste it exactly as shown:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>python3<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;from ovos_utils.json_helper import load_commented_json; load_commented_json(&#39;</span><span class="nv">$HOME</span><span class="s2">/.config/mycroft/mycroft.conf&#39;); print(&#39;OK&#39;)&quot;</span>
 </span></code></pre></div>
 <p>This prints <code>OK</code> if the file is valid, or a <code>JSONDecodeError</code> with a line/column pointing at the
@@ -1415,13 +1415,13 @@ restart them depends on how OVOS was installed:</p>
 </span></code></pre></div>
 <p>Full walkthrough, plugin choices, and tuning: <a href="../wake-word-plugins/#change-your-wake-word">Wake Word Plugins</a>.</p>
 <h2 id="change-your-voice">Change your voice<a class="headerlink" href="#change-your-voice" title="Permanent link">&para;</a></h2>
-<p>Install the plugin's package first — <code>phoonnx</code> ships the <code>ovos-tts-plugin-phoonnx</code> plugin,
+<p>Install the plugin's package first. <code>phoonnx</code> ships the <code>ovos-tts-plugin-phoonnx</code> plugin,
 so without it OVOS has nothing to load and the voice won't actually change. Activate the
 same Python environment OVOS runs in <em>before</em> running this, or the plugin installs
 somewhere OVOS never looks:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>pip<span class="w"> </span>install<span class="w"> </span>phoonnx
 </span></code></pre></div>
-<p>Make sure to install it into the same Python environment OVOS itself runs in — see the
+<p>Make sure to install it into the same Python environment OVOS itself runs in. See the
 note in <a href="../tts-plugins/#change-your-voice">TTS Plugins</a>.</p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="p">{</span>
 </span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">  </span><span class="nt">&quot;tts&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
@@ -1441,16 +1441,16 @@ walks through picking a voice that stays clear at a reduced rate.</p>
 </span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">  </span><span class="nt">&quot;lang&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;de-de&quot;</span>
 </span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="p">}</span>
 </span></code></pre></div>
-<p>This one line is enough on its own — STT, TTS, and every language-aware plugin follow the
+<p>This one line is enough on its own. STT, TTS, and every language-aware plugin follow the
 global <code>lang</code> automatically. Want the <em>recommended</em> plugins/voices for that language instead
 of your current ones? Run <code>ovos-config autoconfigure -l de-de --offline</code> afterwards. Full
 picture, supported-language table, and gaps to watch for: <a href="../lang-support/">Language Support</a>.</p>
 <h2 id="related-pages">Related pages<a class="headerlink" href="#related-pages" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="../config/">Configuration Management</a> — how the config layers stack, and the full CLI</li>
-<li><a href="../wake-word-plugins/">Wake Word Plugins</a> — every available wake-word engine</li>
-<li><a href="../tts-plugins/">TTS Plugins</a> — every available voice engine</li>
-<li><a href="../lang-support/">Language Support</a> — translation coverage and per-language plugin gaps</li>
+<li><a href="../config/">Configuration Management</a>: how the config layers stack, and the full CLI</li>
+<li><a href="../wake-word-plugins/">Wake Word Plugins</a>: every available wake-word engine</li>
+<li><a href="../tts-plugins/">TTS Plugins</a>: every available voice engine</li>
+<li><a href="../lang-support/">Language Support</a>: translation coverage and per-language plugin gaps</li>
 </ul>
 
 

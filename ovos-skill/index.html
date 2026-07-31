@@ -1762,7 +1762,7 @@
 <h1 id="ovosskill">OVOSSkill<a class="headerlink" href="#ovosskill" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>A "skill" is an add-on that teaches your voice assistant to do one new thing — like telling the weather or setting a timer. Every skill is built on top of a shared starter kit called <code>OVOSSkill</code>, which quietly handles the housekeeping: starting up, listening for commands, speaking replies, remembering settings, and shutting down. This page is a reference for that starter kit and its methods. New to all this? Start with <a href="../skill-classes/">Skill Classes</a> or the <a href="../glossary/">Glossary</a>.</p>
+<p>A "skill" is an add-on that teaches your voice assistant to do one new thing, like telling the weather or setting a timer. Every skill is built on top of a shared starter kit called <code>OVOSSkill</code>, which quietly handles the housekeeping: starting up, listening for commands, speaking replies, remembering settings, and shutting down. This page is a reference for that starter kit and its methods. New to all this? Start with <a href="../skill-classes/">Skill Classes</a> or the <a href="../glossary/">Glossary</a>.</p>
 </div>
 <p><strong>Module:</strong> <code>ovos_workshop.skills.ovos.OVOSSkill</code></p>
 <p><code>OVOSSkill</code> is the base class that all OVOS skills inherit from. It handles startup, intent registration, resource loading, settings, event management, GUI, and shutdown.</p>
@@ -1770,7 +1770,7 @@
 <p class="admonition-title">Constructor, lifecycle, and startup/shutdown sequence</p>
 <p>The constructor signature, the lifecycle methods to override (<code>initialize()</code>, <code>stop()</code>,
 <code>shutdown()</code>, etc.), and the full startup/shutdown sequence are documented once, on
-<a href="../skill-classes/#ovosskill">Skill Classes</a> — this page covers <code>OVOSSkill</code>'s remaining
+<a href="../skill-classes/#ovosskill">Skill Classes</a>. This page covers <code>OVOSSkill</code>'s remaining
 surface: properties, speaking, user input, scheduling, <code>SkillApi</code>, and the bus events it
 handles.</p>
 </div>
@@ -1865,7 +1865,7 @@ handles.</p>
 <tr>
 <td><code>enclosure</code></td>
 <td><code>EnclosureAPI</code></td>
-<td>Mark 1 faceplate interface (⚠️ <a href="../mark1/">being removed from the base class</a> like <code>self.gui</code> → moves to <code>ovos-mark1-utils</code>; faceplate becomes a GUI plugin)</td>
+<td>Mark 1 faceplate interface (⚠️ <a href="../mark1/">being removed from the base class</a> like <code>self.gui</code>, moves to <code>ovos-mark1-utils</code>, faceplate becomes a GUI plugin)</td>
 </tr>
 <tr>
 <td><code>file_system</code></td>
@@ -1933,15 +1933,15 @@ handles.</p>
 </span></code></pre></div>
 <p>Both <code>speak()</code> and <code>speak_dialog()</code> accept <code>expect_response=False</code>. Set it to <code>True</code> and OVOS
 re-opens the microphone as soon as the prompt finishes speaking, so the user's next utterance is
-captured without a wake word — the basis of a follow-up question. (To capture and <em>return</em> that
-reply inside your handler, use <code>get_response</code> instead — see <a href="#getting-user-input">Getting User Input</a>
+captured without a wake word. This is the basis of a follow-up question. (To capture and <em>return</em> that
+reply inside your handler, use <code>get_response</code> instead. See <a href="#getting-user-input">Getting User Input</a>
 below and the <a href="../skill-cookbook/">Skill Cookbook</a>.)</p>
 <h3 id="playing-audio-files">Playing audio files<a class="headerlink" href="#playing-audio-files" title="Permanent link">&para;</a></h3>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="bp">self</span><span class="o">.</span><span class="n">play_audio</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">find_resource</span><span class="p">(</span><span class="s2">&quot;chime.mp3&quot;</span><span class="p">,</span> <span class="s2">&quot;snd&quot;</span><span class="p">))</span>
 </span></code></pre></div>
 <p><code>play_audio(filename, instant=False, wait=False)</code> queues (or, with <code>instant=True</code>,
 immediately plays) an audio file through <code>ovos-audio</code>. <code>filename</code> must be a path to a real
-file on disk or a URI — <code>play_audio</code> does <strong>not</strong> search skill resource directories for you,
+file on disk or a URI. <code>play_audio</code> does <strong>not</strong> search skill resource directories for you,
 so resolve the path yourself first, typically with <code>self.find_resource(name, "snd")</code> (looking
 up <code>&lt;skill&gt;/snd/&lt;name&gt;</code> or a locale-specific variant). Pass <code>wait=True</code> to block until playback
 finishes or a 30-second default timeout elapses, or <code>wait=&lt;seconds&gt;</code> for a custom timeout.</p>
@@ -1996,21 +1996,21 @@ once or repeatedly:</p>
   from now.</li>
 <li><strong><code>schedule_repeating_event(handler, when, frequency, data=None, name=None, context=None)</code></strong>:
   repeating. <code>frequency</code> is the interval <strong>in seconds</strong> between calls. <code>when=None</code> fires the
-  first call <code>frequency</code> seconds from now; pass a <code>datetime</code>/number to control the first firing
+  first call <code>frequency</code> seconds from now. Pass a <code>datetime</code>/number to control the first firing
   explicitly.</li>
 <li>Both accept an optional <code>name</code> used to reference/cancel the event later with
   <code>cancel_scheduled_event(name)</code>. Reusing a <code>name</code> for <code>schedule_event</code> does <strong>not</strong> warn or
-  replace a previously scheduled event of the same name — use unique names, or cancel the old
+  replace a previously scheduled event of the same name. Use unique names, or cancel the old
   one first.</li>
 <li>Scheduled events are persisted by the <a href="../bus-service/"><code>EventScheduler</code></a> so they survive an
-  <code>ovos-core</code> restart; they are not tied to the skill instance staying in memory.</li>
+  <code>ovos-core</code> restart. They are not tied to the skill instance staying in memory.</li>
 </ul>
 <h2 id="public-skill-api">Public Skill API<a class="headerlink" href="#public-skill-api" title="Permanent link">&para;</a></h2>
 <p>Decorate a method with <code>@skill_api_method</code> to expose it over the bus. Other skills or tools can call it via <code>SkillApi</code>.</p>
 <h2 id="runtimerequirements">RuntimeRequirements<a class="headerlink" href="#runtimerequirements" title="Permanent link">&para;</a></h2>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p><code>RuntimeRequirements</code> is a deprecated mechanism — see <a href="../skill-runtime-requirements/">Runtime Requirements</a> for what it currently does.</p>
+<p><code>RuntimeRequirements</code> is a deprecated mechanism. See <a href="../skill-runtime-requirements/">Runtime Requirements</a> for what it currently does.</p>
 </div>
 <p>Override the class property to declare connectivity needs:</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kn">from</span> <span class="nn">ovos_utils</span> <span class="kn">import</span> <span class="n">classproperty</span>
@@ -2045,15 +2045,15 @@ available.</p>
 <tbody>
 <tr>
 <td><code>mycroft.stop</code></td>
-<td>Global stop broadcast — cease all activity for the inbound session</td>
+<td>Global stop broadcast, cease all activity for the inbound session</td>
 </tr>
 <tr>
 <td><code>{skill_id}.stop</code></td>
-<td>Skill-directed stop — cease the stoppable activity for the inbound session</td>
+<td>Skill-directed stop, cease the stoppable activity for the inbound session</td>
 </tr>
 <tr>
 <td><code>{skill_id}.stop.ping</code></td>
-<td>Check if the skill can stop; the base class answers with <code>{skill_id}.stop.response</code> carrying whether it can handle the stop</td>
+<td>Check if the skill can stop. The base class answers with <code>{skill_id}.stop.response</code> carrying whether it can handle the stop</td>
 </tr>
 <tr>
 <td><code>{skill_id}.converse.get_response</code></td>
@@ -2114,24 +2114,24 @@ targeted dispatch that ceases only its own stoppable activity for the inbound se
 <code>ovos.stop</code>, the universal broadcast that ceases everything for that session. A duplicate
 arrival on either topic while the skill is already stopping is a no-op. See the
 <a href="../stop-pipeline/">Stop Pipeline</a>.</p>
-<h1 id="skill-api-inter-skill-rpc">Skill API — Inter-Skill RPC<a class="headerlink" href="#skill-api-inter-skill-rpc" title="Permanent link">&para;</a></h1>
-<p><code>SkillApi</code> provides a <a href="../bus-service/">messagebus</a>-based remote procedure call (RPC) mechanism. Methods decorated with <code>@skill_api_method</code> are exposed on the bus; any other skill (or application) can call them by fetching a <code>SkillApi</code> proxy object.</p>
+<h1 id="skill-api-inter-skill-rpc">Skill API: Inter-Skill RPC<a class="headerlink" href="#skill-api-inter-skill-rpc" title="Permanent link">&para;</a></h1>
+<p><code>SkillApi</code> provides a <a href="../bus-service/">messagebus</a>-based remote procedure call (RPC) mechanism. Methods decorated with <code>@skill_api_method</code> are exposed on the bus. Any other skill (or application) can call them by fetching a <code>SkillApi</code> proxy object.</p>
 <p><strong>Source:</strong> <code>ovos_workshop/skills/api.py</code></p>
 <hr />
 <h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
 <p>The bus message protocol for <code>SkillApi</code> has two phases:</p>
 <ol>
 <li>
-<p><strong>Discovery</strong> — the caller emits <code>&lt;skill_id&gt;.public_api</code> on the bus. The target skill responds with a dict mapping method names to their bus message type and docstring.</p>
+<p><strong>Discovery</strong>: the caller emits <code>&lt;skill_id&gt;.public_api</code> on the bus. The target skill responds with a dict mapping method names to their bus message type and docstring.</p>
 </li>
 <li>
-<p><strong>Call</strong> — the caller emits a <code>Message</code> of the method's registered type with <code>{"args": [...], "kwargs": {...}}</code>. The target skill responds with <code>{"result": &lt;return value&gt;}</code>.</p>
+<p><strong>Call</strong>: the caller emits a <code>Message</code> of the method's registered type with <code>{"args": [...], "kwargs": {...}}</code>. The target skill responds with <code>{"result": &lt;return value&gt;}</code>.</p>
 </li>
 </ol>
 <p>Return values must be JSON-serializable. Standard Python builtins (<code>str</code>, <code>int</code>, <code>list</code>, <code>dict</code>, <code>None</code>, <code>bool</code>) work. Custom classes are not supported.</p>
 <hr />
 <h2 id="skill_api_method-decorator"><code>@skill_api_method</code> Decorator<a class="headerlink" href="#skill_api_method-decorator" title="Permanent link">&para;</a></h2>
-<p><code>skill_api_method</code> — defined in <code>ovos_workshop/decorators/__init__.py</code></p>
+<p><code>skill_api_method</code>, defined in <code>ovos_workshop/decorators/__init__.py</code></p>
 <p>Tag a skill method as part of the public API. The decorator sets <code>func.api_method = True</code>. During skill initialization <code>OVOSSkill</code> discovers all methods with this attribute and registers a bus listener for each one at <code>&lt;skill_id&gt;.&lt;method_name&gt;</code>.</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kn">from</span> <span class="nn">ovos_workshop.decorators</span> <span class="kn">import</span> <span class="n">skill_api_method</span>
 </span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>
@@ -2144,7 +2144,7 @@ arrival on either topic while the skill is already stopping is a no-op. See the
 </span></code></pre></div>
 <hr />
 <h2 id="skillapi-class"><code>SkillApi</code> Class<a class="headerlink" href="#skillapi-class" title="Permanent link">&para;</a></h2>
-<p><code>SkillApi</code> — defined in <code>ovos_workshop/skills/api.py</code></p>
+<p><code>SkillApi</code>, defined in <code>ovos_workshop/skills/api.py</code></p>
 <h3 id="setup">Setup<a class="headerlink" href="#setup" title="Permanent link">&para;</a></h3>
 <p>Before calling <code>SkillApi.get()</code>, register the bus client once during skill initialization:</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="kn">from</span> <span class="nn">ovos_workshop.skills.api</span> <span class="kn">import</span> <span class="n">SkillApi</span>
@@ -2242,7 +2242,7 @@ arrival on either topic while the skill is already stopping is a no-op. See the
 <p>Return values must be JSON-serializable.</p>
 </li>
 <li>
-<p>The target skill must be running when <code>SkillApi.get()</code> is called — it emits a live bus message.</p>
+<p>The target skill must be running when <code>SkillApi.get()</code> is called. It emits a live bus message.</p>
 </li>
 <li>
 <p>Method calls time out after <code>api_timeout</code> seconds (default <code>3</code>). The caller receives <code>None</code> on timeout.</p>
@@ -2255,13 +2255,13 @@ arrival on either topic while the skill is already stopping is a no-op. See the
 <h2 id="related-pages">Related Pages<a class="headerlink" href="#related-pages" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
-<p><a href="../skill-classes/">Skill Classes</a> — <code>OVOSSkill</code> base class</p>
+<p><a href="../skill-classes/">Skill Classes</a>: <code>OVOSSkill</code> base class</p>
 </li>
 <li>
-<p><a href="../skill-classes/#decorators-quick-reference">Decorators</a> — <code>@skill_api_method</code> and other decorators</p>
+<p><a href="../skill-classes/#decorators-quick-reference">Decorators</a>: <code>@skill_api_method</code> and other decorators</p>
 </li>
 <li>
-<p><a href="../core-libraries/#ovos-bus-client">Bus Client</a> — <code>MessageBusClient</code> used internally by <code>SkillApi</code></p>
+<p><a href="../core-libraries/#ovos-bus-client">Bus Client</a>: <code>MessageBusClient</code> used internally by <code>SkillApi</code></p>
 </li>
 </ul>
 <hr />

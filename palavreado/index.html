@@ -1326,16 +1326,12 @@
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
 <p>Palavreado is an <a href="../glossary/">intent</a> parser that decides what a user wants by looking for
-specific <strong>keywords</strong> in what they said — if the right words are present, the intent fires.
+specific <strong>keywords</strong> in what they said. If the right words are present, the intent fires.
 It is a dead-simple, drop-in replacement for <a href="../adapt-pipeline/">Adapt</a>. See the
 <a href="../glossary/">Glossary</a> for terms like <em>intent</em> and <em>entity</em>.</p>
 </div>
-<p><em>A keyword-based intent parser — the drop-in replacement for <a href="../adapt-pipeline/">Adapt</a>.</em></p>
-<p><a href="https://github.com/OpenVoiceOS/palavreado"><code>palavreado</code></a> matches utterances against named
-intents built from <strong>required</strong> and <strong>optional</strong> keyword slots. Each slot holds a list of
-vocabulary words; if the required words are present in the utterance, the intent fires. An
-<code>autoregex</code> variant enables <strong>keyword extraction</strong> (pulling out a value, like an item name)
-using <a href="https://github.com/tfeldmann/simplematch">simplematch</a>-style templates.</p>
+<p><em>A keyword-based intent parser. The drop-in replacement for <a href="../adapt-pipeline/">Adapt</a>.</em></p>
+<p><a href="https://github.com/OpenVoiceOS/palavreado"><code>palavreado</code></a> matches utterances against named intents built from <strong>required</strong> and <strong>optional</strong> keyword slots. Each slot holds a list of vocabulary words. If the required words are present in the utterance, the intent fires. An <code>autoregex</code> variant enables <strong>keyword extraction</strong>, pulling out a value like an item name, using <a href="https://github.com/tfeldmann/simplematch">simplematch</a>-style templates.</p>
 <h2 id="install">Install<a class="headerlink" href="#install" title="Permanent link">&para;</a></h2>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pip<span class="w"> </span>install<span class="w"> </span>palavreado<span class="w">            </span><span class="c1"># the library</span>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>pip<span class="w"> </span>install<span class="w"> </span><span class="s2">&quot;palavreado[ovos]&quot;</span><span class="w">    </span><span class="c1"># + the OVOS pipeline plugin</span>
@@ -1361,12 +1357,9 @@ using <a href="https://github.com/tfeldmann/simplematch">simplematch</a>-style t
 </span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s2">&quot;utterance_remainder&quot;</span><span class="p">])</span> <span class="c1"># &#39;there&#39; — words not consumed by any slot</span>
 </span></code></pre></div>
 <p>An intent only fires when <strong>every required slot</strong> has at least one keyword match in the
-utterance; optional slots add to the result when present but are not required to fire.</p>
+utterance. Optional slots add to the result when present, but they are not required to fire.</p>
 <h2 id="in-the-ovos-pipeline">In the OVOS pipeline<a class="headerlink" href="#in-the-ovos-pipeline" title="Permanent link">&para;</a></h2>
-<p>Installed as a pipeline plugin (<code>palavreado[ovos]</code>), Palavreado responds to the <strong>same
-<code>register_vocab</code> / <code>register_intent</code> bus events as <a href="../adapt-pipeline/">Adapt</a></strong>, so swapping it
-in requires zero skill changes — your <code>.voc</code> files keep working. See
-<a href="../pipelines-overview/">Pipelines Overview</a> for how matchers are ordered and configured.</p>
+<p>Installed as a pipeline plugin (<code>palavreado[ovos]</code>), Palavreado responds to the <strong>same <code>register_vocab</code> / <code>register_intent</code> bus events as <a href="../adapt-pipeline/">Adapt</a></strong>. Swapping it in requires zero skill changes. Your <code>.voc</code> files keep working. See <a href="../pipelines-overview/">Pipelines Overview</a> for how matchers are ordered and configured.</p>
 <div class="admonition tip">
 <p class="admonition-title">When to choose Palavreado</p>
 <p>Use it as a lighter, simpler stand-in for Adapt when you want keyword matching without

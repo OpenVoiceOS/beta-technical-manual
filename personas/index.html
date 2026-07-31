@@ -1569,20 +1569,20 @@
 <h1 id="ai-agents-personas-in-openvoiceos">AI Agents &amp; Personas in OpenVoiceOS<a class="headerlink" href="#ai-agents-personas-in-openvoiceos" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>A "persona" is a chosen personality and brain for your assistant — think of it as deciding <em>who</em> answers you and how they sound, much like picking a character. Behind each persona are interchangeable "engines" (the actual AI pieces that do the thinking), and a routing layer decides which persona should handle each thing you say. This lets you swap or combine brains without rebuilding the whole assistant. To dig deeper see <a href="../tool-plugins/">Tool Plugins</a> and <a href="../persona-memory/">Persona Memory</a>, or the <a href="../glossary/">Glossary</a> for unfamiliar terms.</p>
+<p>A "persona" is a chosen personality and brain for your assistant. Think of it as deciding <em>who</em> answers you and how they sound, much like picking a character. Behind each persona are interchangeable "engines" (the actual AI pieces that do the thinking), and a routing layer decides which persona should handle each thing you say. This lets you swap or combine brains without rebuilding the whole assistant. To dig deeper see <a href="../tool-plugins/">Tool Plugins</a> and <a href="../persona-memory/">Persona Memory</a>, or the <a href="../glossary/">Glossary</a> for unfamiliar terms.</p>
 </div>
 <div class="admonition tip">
-<p class="admonition-title">Just want an LLM (ChatGPT-style) answering your questions? — 3 steps</p>
+<p class="admonition-title">Just want an LLM (ChatGPT-style) answering your questions? 3 steps</p>
 <ol>
-<li><strong>Install a chat backend</strong> — a cloud <a href="../openai-plugin/">OpenAI-compatible</a> model, or a
+<li><strong>Install a chat backend</strong>: a cloud <a href="../openai-plugin/">OpenAI-compatible</a> model, or a
    fully-local <a href="../gguf-plugin/">GGUF</a> model (no account, no internet).</li>
-<li><strong>Create a persona</strong> that points at it — a small JSON file in <code>~/.config/ovos_persona/</code>
+<li><strong>Create a persona</strong> that points at it: a small JSON file in <code>~/.config/ovos_persona/</code>
    (see <a href="#personas-named-agent-identities">Defining a persona</a> below).</li>
-<li><strong>Send unanswered questions to it</strong> — enable the <a href="../persona-pipeline/">persona pipeline</a>
+<li><strong>Send unanswered questions to it</strong>: enable the <a href="../persona-pipeline/">persona pipeline</a>
    with <code>handle_fallback: true</code>.</li>
 </ol>
 <p>Now anything no skill handles is answered by the LLM. The rest of this page is the full
-architecture — you don't need it to get started.</p>
+architecture. You don't need it to get started.</p>
 </div>
 <p>OpenVoiceOS (OVOS) provides a flexible, modular system for integrating AI agents into voice-first
 environments. The architecture is built in layers: low-level <strong>agent engine plugins</strong> registered
@@ -1710,8 +1710,8 @@ configuration inline.</p>
 </span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="w">  </span><span class="p">}</span>
 </span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="p">}</span>
 </span></code></pre></div>
-<p>The <code>"solvers"</code> key is an alias for <code>"handlers"</code> (legacy compat). Plugins are tried in order;
-the first non-<code>None</code> response wins.</p>
+<p>The <code>"solvers"</code> key is an alias for <code>"handlers"</code> (legacy compat). Plugins are tried in order.
+The first non-<code>None</code> response wins.</p>
 <h3 id="persona-with-session-memory">Persona with session memory<a class="headerlink" href="#persona-with-session-memory" title="Permanent link">&para;</a></h3>
 <p>Pair any chat engine with an <code>opm.agents.memory</code> plugin to persist per-session conversation
 history across turns:</p>
@@ -1732,7 +1732,7 @@ history across turns:</p>
 </span><span id="__span-2-15"><a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a><span class="p">}</span>
 </span></code></pre></div>
 <p>The <code>memory_module</code> key names an <code>opm.agents.memory</code> plugin. The default when omitted is
-<code>"ovos-agents-short-term-memory-plugin"</code> — <code>BasicShortTermMemory</code> from <code>ovos-persona</code>.</p>
+<code>"ovos-agents-short-term-memory-plugin"</code>, <code>BasicShortTermMemory</code> from <code>ovos-persona</code>.</p>
 <details class="example">
 <summary>Memory backend reference</summary>
 <table>
@@ -1904,7 +1904,7 @@ fully local, privacy-preserving conversational agents:</p>
 </tr>
 </tbody>
 </table>
-<p>(<code>memory_module</code> is <strong>not</strong> a PersonaService key — it is a <strong>per-persona</strong> JSON key set inside each persona file; see above.)</p>
+<p>(<code>memory_module</code> is <strong>not</strong> a PersonaService key. It is a <strong>per-persona</strong> JSON key set inside each persona file. See above.)</p>
 <h3 id="voice-intents">Voice intents<a class="headerlink" href="#voice-intents" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
@@ -1936,17 +1936,17 @@ fully local, privacy-preserving conversational agents:</p>
 </tr>
 </tbody>
 </table>
-<p>Summon, ask, list, check, and release are <strong>ordinary intents</strong> — locale <code>.intent</code> / <code>.entity</code> resources matched with the same intent machinery any other intent uses. A persona plugin earns no bespoke matching layer of its own; what makes it a persona plugin is that it <em>also</em> catches everything else once a persona is active (the low-confidence catch-all above), not how it recognizes its own commands.</p>
+<p>Summon, ask, list, check, and release are <strong>ordinary intents</strong>: locale <code>.intent</code> / <code>.entity</code> resources matched with the same intent machinery any other intent uses. A persona plugin earns no special matching layer of its own. What makes it a persona plugin is that it <em>also</em> catches everything else once a persona is active (the low-confidence catch-all above), not how it recognizes its own commands.</p>
 <hr />
 <h2 id="persona-loading">Persona Loading<a class="headerlink" href="#persona-loading" title="Permanent link">&para;</a></h2>
 <p><code>PersonaService.load_personas()</code> loads from two sources:</p>
 <ol>
 <li>
-<p><strong>User JSON files</strong> in <code>~/.config/ovos_persona/</code> — each <code>.json</code> file becomes a <code>Persona</code>. The
+<p><strong>User JSON files</strong> in <code>~/.config/ovos_persona/</code>: each <code>.json</code> file becomes a <code>Persona</code>. The
    <code>"name"</code> field inside the JSON overrides the filename.</p>
 </li>
 <li>
-<p><strong>OPM plugin personas</strong> — packages that register via the <code>opm.plugin.persona</code> entry point
+<p><strong>OPM plugin personas</strong>: packages that register via the <code>opm.plugin.persona</code> entry point
    group (unless <code>ignore_plugin_personas: true</code>).</p>
 </li>
 </ol>
@@ -1956,8 +1956,8 @@ silently skipped. Both sources respect <code>persona_blacklist</code>.</p>
 <h2 id="ovos-core-as-a-chat-engine">OVOS Core as a Chat Engine<a class="headerlink" href="#ovos-core-as-a-chat-engine" title="Permanent link">&para;</a></h2>
 <p><code>ovos-messagebus-chat-plugin</code> (entry point <code>ovos-messagebus</code>, class <code>OVOSMessagebusChatAgent</code>,
 group <code>opm.agents.chat</code>) exposes a running <code>ovos-core</code> instance as a persona handler. This
-enables OVOS to act as an agent inside another system — for example a Docker network or a
-<a href="../hivemind-agents/">HiveMind</a> satellite — without exposing the <a href="../bus-service/">messagebus</a> directly.</p>
+enables OVOS to act as an agent inside another system, for example a Docker network or a
+<a href="../hivemind-agents/">HiveMind</a> satellite, without exposing the <a href="../bus-service/">messagebus</a> directly.</p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="p">{</span>
 </span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Open Voice OS&quot;</span><span class="p">,</span>
 </span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">  </span><span class="nt">&quot;handlers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;ovos-messagebus&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;ovos-solver-failure-plugin&quot;</span><span class="p">],</span>
@@ -1979,17 +1979,17 @@ cross-instance bridging, not local routing. For secure remote access see
 <hr />
 <h2 id="related-pages">Related pages<a class="headerlink" href="#related-pages" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="../agent-plugins/">Agent Plugins</a> — full engine-type (<code>opm.agents.*</code>) reference with config examples.</li>
-<li><a href="../openai-plugin/">OpenAI Plugin</a> — OpenAI-compatible engine implementations and translation plugins.</li>
-<li><a href="../gguf-plugin/">GGUF Plugin</a> — fully offline local GGUF engine implementations.</li>
-<li><a href="../persona-memory/">Persona Memory</a> — the <code>opm.agents.memory</code> backends, in depth.</li>
-<li><a href="../hivemind-agents/">HiveMind Agents</a> — remote satellite-to-persona connections.</li>
-<li><a href="../persona-pipeline/">Persona Pipeline</a> — detailed pipeline matching logic.</li>
-<li><a href="../persona-server/">Persona Server</a> — expose a persona via an OpenAI-compatible HTTP API.</li>
+<li><a href="../agent-plugins/">Agent Plugins</a>: full engine-type (<code>opm.agents.*</code>) reference with config examples.</li>
+<li><a href="../openai-plugin/">OpenAI Plugin</a>: OpenAI-compatible engine implementations and translation plugins.</li>
+<li><a href="../gguf-plugin/">GGUF Plugin</a>: fully offline local GGUF engine implementations.</li>
+<li><a href="../persona-memory/">Persona Memory</a>: the <code>opm.agents.memory</code> backends, in depth.</li>
+<li><a href="../hivemind-agents/">HiveMind Agents</a>: remote satellite-to-persona connections.</li>
+<li><a href="../persona-pipeline/">Persona Pipeline</a>: detailed pipeline matching logic.</li>
+<li><a href="../persona-server/">Persona Server</a>: expose a persona via an OpenAI-compatible HTTP API.</li>
 </ul>
 <h2 id="further-reading">Further reading<a class="headerlink" href="#further-reading" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="https://blog.openvoiceos.org/posts/2025-05-06-when-your-voice-assistant-becomes-a-persona">When Your Voice Assistant Becomes a Persona: The Power and Peril of LLMs</a> — OVOS blog</li>
+<li><a href="https://blog.openvoiceos.org/posts/2025-05-06-when-your-voice-assistant-becomes-a-persona">When Your Voice Assistant Becomes a Persona: The Power and Peril of LLMs</a>, OVOS blog</li>
 </ul>
 
 

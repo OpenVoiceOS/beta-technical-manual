@@ -1641,11 +1641,11 @@
 <h1 id="persona-memory-plugins">Persona Memory Plugins<a class="headerlink" href="#persona-memory-plugins" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>This controls what your assistant's persona <em>remembers</em> from earlier in a conversation. Rather than always carrying the whole chat along, a memory plugin decides which past messages — or short summaries of them — to bring back into the next reply, like a notepad that keeps the bits worth keeping. It also decides whether those notes survive between separate conversations. See <a href="../personas/">AI Agents &amp; Personas</a> for the bigger picture and the <a href="../glossary/">Glossary</a> for unfamiliar terms.</p>
+<p>This controls what your assistant's persona <em>remembers</em> from earlier in a conversation. Rather than always carrying the whole chat along, a memory plugin decides which past messages, or short summaries of them, to bring back into the next reply, like a notepad that keeps the bits worth keeping. It also decides whether those notes survive between separate conversations. See <a href="../personas/">AI Agents &amp; Personas</a> for the bigger picture and the <a href="../glossary/">Glossary</a> for unfamiliar terms.</p>
 </div>
-<p><strong>What this is:</strong> a pluggable way to control what an OVOS persona "remembers". Instead of a fixed conversation buffer, a memory plugin decides which past messages (and any summaries or retrieved snippets) get prepended to the LLM call on each turn, and how that history is persisted across turns and sessions.</p>
-<p>Persona memory is managed through the <code>AgentContextManager</code> interface (OPM <code>opm.agents.memory</code>), which <code>ovos-persona</code> loads for each persona. The persona owns the chat engine and tools; the memory plugin owns <strong>conversation state and context assembly</strong>, composing with any chat backend instead of generating answers itself.</p>
-<p><code>ovos-memory-plugins</code> is <strong>local-first</strong>: most backends need no external service at all. Only <code>longterm</code> and <code>entity</code> call an OpenAI-compatible chat endpoint — and that endpoint can be your own local LLM, never a hosted provider.</p>
+<p><strong>What this is:</strong> a pluggable way to control what an OVOS persona "remembers". Instead of a fixed conversation buffer, a memory plugin decides which past messages (and any summaries or retrieved snippets) get prepended to the LLM call on each turn. It also decides how that history is persisted across turns and sessions.</p>
+<p>Persona memory is managed through the <code>AgentContextManager</code> interface (OPM <code>opm.agents.memory</code>), which <code>ovos-persona</code> loads for each persona. The persona owns the chat engine and tools. The memory plugin owns <strong>conversation state and context assembly</strong>, composing with any chat backend instead of generating answers itself.</p>
+<p><code>ovos-memory-plugins</code> is <strong>local-first</strong>: most backends need no external service at all. Only <code>longterm</code> and <code>entity</code> call an OpenAI-compatible chat endpoint, and that endpoint can be your own local LLM, never a hosted provider.</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pip<span class="w"> </span>install<span class="w"> </span>ovos-memory-plugins
 </span></code></pre></div>
 <hr />
@@ -1670,8 +1670,8 @@
 <p><code>AgentMessage</code> (<code>role</code>, <code>content</code>, optional <code>tool_calls</code> / <code>tool_call_id</code> / <code>name</code>) is the canonical message type, from <code>ovos_plugin_manager.templates.agents</code>. The persona calls <code>build_conversation_context</code> before each turn and <code>update_history</code> after each exchange.</p>
 <p>Two rules hold for every backend in this package:</p>
 <ul>
-<li>the <strong>first</strong> message MAY be a <code>system</code> message carrying the persona's <code>system_prompt</code>;</li>
-<li>the <strong>last</strong> message is ALWAYS the current user utterance.</li>
+<li>The <strong>first</strong> message MAY be a <code>system</code> message carrying the persona's <code>system_prompt</code>.</li>
+<li>The <strong>last</strong> message is ALWAYS the current user utterance.</li>
 </ul>
 <p>The short-term memory previously hard-coded in <code>ovos-persona</code> is now a plugin under this interface, so all memory strategies are composable.</p>
 <hr />
@@ -1697,7 +1697,7 @@
 </span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="w">  </span><span class="p">}</span>
 </span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="p">}</span>
 </span></code></pre></div>
-<p>A persona selects exactly <strong>one</strong> backend — but that one may be <code>ovos-memory-plugin-composite</code>, which loads and consolidates several of the others.</p>
+<p>A persona selects exactly <strong>one</strong> backend, but that one may be <code>ovos-memory-plugin-composite</code>, which loads and consolidates several of the others.</p>
 <hr />
 <h2 id="choosing-a-backend">Choosing a backend<a class="headerlink" href="#choosing-a-backend" title="Permanent link">&para;</a></h2>
 <table>
@@ -1733,11 +1733,11 @@
 </tr>
 </tbody>
 </table>
-<p>Full details for each — external service, extra dependencies, offline behavior, persistence, config
-keys — are in the <a href="#backends">per-backend sections</a> below.</p>
+<p>Full details for each (external service, extra dependencies, offline behavior, persistence, config
+keys) are in the <a href="#backends">per-backend sections</a> below.</p>
 <p>Rules of thumb:</p>
 <ul>
-<li>Private/offline assistant needing specifics → <strong>local-rag</strong> (semantic) and/or <strong>lexical</strong> (keywords); combine them with <strong>composite</strong> for hybrid recall.</li>
+<li>Private/offline assistant needing specifics → <strong>local-rag</strong> (semantic) and/or <strong>lexical</strong> (keywords). Combine them with <strong>composite</strong> for hybrid recall.</li>
 <li>Remember <em>who the user is</em> across sessions → <strong>entity</strong>.</li>
 <li>Just the last few turns → <strong>recency</strong>.</li>
 <li>A running gist of very long chats and you have an LLM endpoint → <strong>longterm</strong>.</li>
@@ -1785,15 +1785,15 @@ keys — are in the <a href="#backends">per-backend sections</a> below.</p>
 <h3 id="retrieval-knobs">Retrieval knobs<a class="headerlink" href="#retrieval-knobs" title="Permanent link">&para;</a></h3>
 <p>Set under the backend's <code>retrieval</code> block:</p>
 <ul>
-<li><code>max_num_results</code> (default <code>5</code>) — top-k documents per query.</li>
-<li><code>min_score</code> (default <code>null</code>) — drop hits below this score; <code>null</code> keeps all. Scale is backend specific: <code>local-rag</code> is <code>1 - cosine_distance</code> (~0..1), <code>lexical</code> is <code>-bm25</code>.</li>
-<li><code>query_mode</code> (default <code>utterance</code>) — <code>utterance</code> searches on the current turn; <code>history</code> folds the last <code>query_history_turns</code> (default <code>3</code>) user turns into the search query for follow-up questions.</li>
+<li><code>max_num_results</code> (default <code>5</code>): top-k documents per query.</li>
+<li><code>min_score</code> (default <code>null</code>): drop hits below this score. <code>null</code> keeps all. Scale is backend specific: <code>local-rag</code> is <code>1 - cosine_distance</code> (~0..1), <code>lexical</code> is <code>-bm25</code>.</li>
+<li><code>query_mode</code> (default <code>utterance</code>): <code>utterance</code> searches on the current turn. <code>history</code> folds the last <code>query_history_turns</code> (default <code>3</code>) user turns into the search query for follow-up questions.</li>
 </ul>
 <hr />
 <h2 id="backends">Backends<a class="headerlink" href="#backends" title="Permanent link">&para;</a></h2>
 <h3 id="ovos-memory-plugin-longterm">ovos-memory-plugin-longterm<a class="headerlink" href="#ovos-memory-plugin-longterm" title="Permanent link">&para;</a></h3>
 <p>Class <code>LongTermMemory</code>. Keeps a compact <strong>rolling summary</strong> of a long conversation with a verbatim recent window. Every <code>summarize_every</code> exchanges it sends the oldest turns to an OpenAI-compatible chat endpoint, replaces them with the returned summary, and keeps only <code>recent_window</code> exchanges verbatim. The summary plus the recent window are persisted per session (JSON or SQLite).</p>
-<p><strong>Use it when</strong> a <em>gist</em> of the conversation is enough and you already have an LLM endpoint — it trades exact recall for a bounded, cheap-to-carry context.</p>
+<p><strong>Use it when</strong> a <em>gist</em> of the conversation is enough and you already have an LLM endpoint. It trades exact recall for a bounded, cheap-to-carry context.</p>
 <table>
 <thead>
 <tr>
@@ -1851,7 +1851,7 @@ keys — are in the <a href="#backends">per-backend sections</a> below.</p>
 </tbody>
 </table>
 <h3 id="ovos-memory-plugin-local-rag">ovos-memory-plugin-local-rag<a class="headerlink" href="#ovos-memory-plugin-local-rag" title="Permanent link">&para;</a></h3>
-<p>Class <code>LocalRAGMemory</code>. Runs Retrieval-Augmented Generation <strong>entirely in-process</strong>: it loads an OVOS text-embeddings plugin (<code>opm.embeddings.text</code>) and an <code>EmbeddingsDB</code> plugin directly — no HTTP, no cloud key — embedding every exchange and retrieving the top-k <strong>semantically</strong> similar past turns at query time. This is the local-first replacement for any server- or OpenAI-coupled RAG; server-coupled RAG lives in <a href="../openai-plugin/"><code>ovos-openai-plugin</code></a> instead.</p>
+<p>Class <code>LocalRAGMemory</code>. Runs Retrieval-Augmented Generation <strong>entirely in-process</strong>. It loads an OVOS text-embeddings plugin (<code>opm.embeddings.text</code>) and an <code>EmbeddingsDB</code> plugin directly, with no HTTP and no cloud key. It embeds every exchange and retrieves the top-k <strong>semantically</strong> similar past turns at query time. This is the local-first replacement for any server- or OpenAI-coupled RAG. Server-coupled RAG lives in <a href="../openai-plugin/"><code>ovos-openai-plugin</code></a> instead.</p>
 <p><strong>Use it when</strong> a private/offline assistant needs exact semantic recall of past detail.</p>
 <p>Install the known-good offline stack with the extra:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>pip<span class="w"> </span>install<span class="w"> </span><span class="s1">&#39;ovos-memory-plugins[local-rag]&#39;</span>
@@ -1931,7 +1931,7 @@ keys — are in the <a href="#backends">per-backend sections</a> below.</p>
 <p>Document ids are stable and deterministic (<code>"&lt;session_id&gt;_&lt;n&gt;"</code>), so storage and tests are reproducible.</p>
 <h3 id="ovos-memory-plugin-lexical">ovos-memory-plugin-lexical<a class="headerlink" href="#ovos-memory-plugin-lexical" title="Permanent link">&para;</a></h3>
 <p>Class <code>LexicalMemory</code>. Recalls prior exchanges by <strong>keyword</strong> match using SQLite's built-in FTS5 full-text index and its <code>bm25()</code> ranking. It needs <strong>no extra dependencies</strong> (<code>sqlite3</code> is stdlib, FTS5 ships with CPython's bundled SQLite), runs fully offline, and persists to a single <code>.db</code> file. It is a retriever (exposes <code>search()</code>), so it works standalone <em>and</em> as a composite member.</p>
-<p><strong>Use it when</strong> you need exact-term recall — names, codes, IDs, rare words — that dense embeddings blur. Pair it with <code>local-rag</code> through the composite for hybrid recall.</p>
+<p><strong>Use it when</strong> you need exact-term recall (names, codes, IDs, rare words) that dense embeddings blur. Pair it with <code>local-rag</code> through the composite for hybrid recall.</p>
 <table>
 <thead>
 <tr>
@@ -2028,8 +2028,8 @@ keys — are in the <a href="#backends">per-backend sections</a> below.</p>
 </table>
 <p><code>build_conversation_context</code> returns <code>[system?] + recent window + [USER utterance]</code>. JSON persistence stores message role and content; tool-call structure (<code>tool_calls</code>, <code>tool_call_id</code>) is not persisted across restarts.</p>
 <h3 id="ovos-memory-plugin-entity">ovos-memory-plugin-entity<a class="headerlink" href="#ovos-memory-plugin-entity" title="Permanent link">&para;</a></h3>
-<p>Class <code>EntityMemory</code>. Distills <strong>durable facts</strong> about the user — name, preferences, relationships, constraints, goals — and re-injects them into every turn. After each exchange it asks a <strong>local</strong> OpenAI-compatible endpoint to extract short fact lines, then merges them (deduplicated) into a per-session fact store. Local-first, same kind of endpoint <code>longterm</code> uses. If the endpoint is unreachable, extraction simply no-ops and the turn proceeds.</p>
-<p><strong>Use it when</strong> you want the assistant to remember <em>who the user is</em> across sessions, no matter how long ago a fact was said — without embeddings or a vector store.</p>
+<p>Class <code>EntityMemory</code>. Distills <strong>durable facts</strong> about the user (name, preferences, relationships, constraints, goals) and re-injects them into every turn. After each exchange it asks a <strong>local</strong> OpenAI-compatible endpoint to extract short fact lines, then merges them (deduplicated) into a per-session fact store. Local-first, same kind of endpoint <code>longterm</code> uses. If the endpoint is unreachable, extraction simply no-ops and the turn proceeds.</p>
+<p><strong>Use it when</strong> you want the assistant to remember <em>who the user is</em> across sessions, no matter how long ago a fact was said, without embeddings or a vector store.</p>
 <table>
 <thead>
 <tr>
@@ -2092,16 +2092,16 @@ keys — are in the <a href="#backends">per-backend sections</a> below.</p>
 </tbody>
 </table>
 <h3 id="ovos-memory-plugin-composite">ovos-memory-plugin-composite<a class="headerlink" href="#ovos-memory-plugin-composite" title="Permanent link">&para;</a></h3>
-<p>Class <code>CompositeMemory</code>. A <strong>pure ensemble orchestrator</strong>: it loads several member memory plugins by name (via <code>ovos-plugin-manager</code>) and consolidates them, so a persona's single <code>memory_module</code> slot can combine many memories. It stores and retrieves nothing itself — every contribution comes from a member.</p>
+<p>Class <code>CompositeMemory</code>. A <strong>pure ensemble orchestrator</strong>: it loads several member memory plugins by name (via <code>ovos-plugin-manager</code>) and consolidates them, so a persona's single <code>memory_module</code> slot can combine many memories. It stores and retrieves nothing itself. Every contribution comes from a member.</p>
 <p>How it consolidates:</p>
 <ul>
 <li><strong>Retriever members</strong> (anything exposing <code>search() -&gt; List[MemoryHit]</code>, e.g. <code>local-rag</code>, <code>lexical</code>) have their hits <strong>fused</strong> into one ranked, deduplicated list (RRF by default), rendered once and injected per the composite's own <code>inject_mode</code>.</li>
-<li><strong>Plain members</strong> (<code>longterm</code>, <code>entity</code>, <code>recency</code>, …) contribute their leading <code>system</code>/<code>developer</code> block(s) — a rolling summary, known facts, etc. Their own history and user turn are ignored.</li>
+<li><strong>Plain members</strong> (<code>longterm</code>, <code>entity</code>, <code>recency</code>, …) contribute their leading <code>system</code>/<code>developer</code> block(s), such as a rolling summary or known facts. Their own history and user turn are ignored.</li>
 <li><strong>History</strong> comes from the designated <code>primary</code> member (default: the first).</li>
 <li><strong><code>update_history</code> is written through to every member</strong>, so each advances its own state.</li>
-<li><strong>Fault tolerance:</strong> members that fail to load, or raise at runtime, are skipped — the composite keeps working with whatever remains. With zero members it is a harmless passthrough.</li>
+<li><strong>Fault tolerance:</strong> members that fail to load, or raise at runtime, are skipped. The composite keeps working with whatever remains. With zero members it is a harmless passthrough.</li>
 </ul>
-<p><strong>Use it when</strong> you want hybrid recall (e.g. semantic + lexical) or to layer durable facts on top of recall — combining several backends behind one slot.</p>
+<p><strong>Use it when</strong> you want hybrid recall (e.g. semantic + lexical) or to layer durable facts on top of recall, combining several backends behind one slot.</p>
 <table>
 <thead>
 <tr>
@@ -2173,7 +2173,7 @@ keys — are in the <a href="#backends">per-backend sections</a> below.</p>
 </span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>  }
 </span><span id="__span-4-14"><a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a>}
 </span></code></pre></div>
-<p><strong>Why RRF is the default.</strong> Different retrievers score on incompatible scales: semantic cosine similarity is ~0..1, lexical BM25 is unbounded. Summing raw scores would let the larger-magnitude scale dominate. RRF (<code>score(d) = Σ weight · 1/(k + rank)</code>) throws magnitudes away and fuses on <strong>rank position</strong> only, so a semantic top-1 and a lexical top-1 count equally — the standard hybrid-search fusion. Give each retriever member a <strong>distinct</strong> storage path/collection so they don't collide, and leave <code>system_prompt</code> to the composite.</p>
+<p><strong>Why RRF is the default.</strong> Different retrievers score on incompatible scales: semantic cosine similarity is ~0..1, lexical BM25 is unbounded. Summing raw scores would let the larger-magnitude scale dominate. RRF (<code>score(d) = Σ weight · 1/(k + rank)</code>) throws magnitudes away and fuses on <strong>rank position</strong> only, so a semantic top-1 and a lexical top-1 count equally. This is the standard hybrid-search fusion. Give each retriever member a <strong>distinct</strong> storage path/collection so they don't collide, and leave <code>system_prompt</code> to the composite.</p>
 <hr />
 <h2 id="plugin-entry-points">Plugin Entry Points<a class="headerlink" href="#plugin-entry-points" title="Permanent link">&para;</a></h2>
 <p>All six backends are registered under the <code>opm.agents.memory</code> group.</p>

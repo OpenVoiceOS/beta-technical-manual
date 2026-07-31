@@ -1552,21 +1552,21 @@
 <h1 id="universalskill">UniversalSkill<a class="headerlink" href="#universalskill" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>A "Universal" skill is one you write in a single language but that works in many. It automatically translates what the user said into your chosen working language before your code runs, and translates your replies back into the user's language afterward — so you handle everything in, say, English while users speak whatever they like. Think of it as a built-in interpreter sitting on either side of your skill. It needs translation plugins set up to work. For the family of skill templates see <a href="../skill-classes/">Skill Classes</a>; for term definitions see the <a href="../glossary/">Glossary</a>.</p>
+<p>A "Universal" skill is one you write in a single language but that works in many. It automatically translates what the user said into your chosen working language before your code runs. It translates your replies back into the user's language afterward. This lets you handle everything in, say, English while users speak whatever they like. Think of it as a built-in interpreter sitting on either side of your skill. It needs translation plugins set up to work. For the family of skill templates see <a href="../skill-classes/">Skill Classes</a>. For term definitions see the <a href="../glossary/">Glossary</a>.</p>
 </div>
-<p>The <code>UniversalSkill</code> class is designed to facilitate automatic translation of input and output messages between different languages. </p>
-<p>This skill is particularly useful when native language support is not feasible, providing a convenient way to handle multilingual interactions.</p>
+<p>The <code>UniversalSkill</code> class automatically translates input and output messages between different languages.</p>
+<p>Use it when native language support is not feasible. It gives you a simple way to handle multilingual interactions.</p>
 <blockquote>
 <p>A <code>UniversalFallback</code> class (<code>ovos_workshop.skills.auto_translatable.UniversalFallback</code>) combines <code>UniversalSkill</code> with <code>FallbackSkill</code> for auto-translating <a href="../fallbacks/">fallback</a> handlers. There is no <code>UniversalCommonQuerySkill</code> — for translated question answering, combine the <code>@common_query</code> decorator with the translation helpers yourself.</p>
 </blockquote>
 <h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
-<p>This skill ensures that intent handlers receive utterances in the skill's internal language and are expected to produce responses in the same internal language. </p>
+<p>This skill ensures that intent handlers receive utterances in the skill's internal language. Handlers must also produce responses in the same internal language.</p>
 <p>The <code>speak</code> method, used for generating spoken responses, automatically translates utterances from the internal language to the original query language.</p>
 <blockquote>
 <p><strong>NOTE:</strong> The <code>self.lang</code> attribute reflects the original query language, while received utterances are always in <code>self.internal_language</code>.</p>
 </blockquote>
 <h2 id="language-plugins">Language Plugins<a class="headerlink" href="#language-plugins" title="Permanent link">&para;</a></h2>
-<p>To run <code>UniversalSkills</code> you need to configure <a href="../translation-plugins/">Translation plugins</a> in <code>mycroft.conf</code></p>
+<p>To run <code>UniversalSkills</code> you need to configure <a href="../translation-plugins/">Translation plugins</a> in <code>mycroft.conf</code>:</p>
 <div class="language-javascript highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="w">  </span><span class="c1">// Translation plugins</span>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span><span class="s2">&quot;language&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">    </span><span class="c1">// by default uses public servers</span>
@@ -1578,15 +1578,15 @@
 <div class="admonition warning">
 <p class="admonition-title">Latency and missing-plugin behavior</p>
 <p>Every incoming utterance and every spoken reply that needs translating adds a round trip
-to the configured translation plugin (a remote server call for <code>ovos-translate-plugin-server</code>,
-or local model inference for an offline plugin) — plan for this extra delay before speech
-starts. If no <code>translation_module</code> (or <code>detection_module</code>) is configured, or the configured
-plugin fails to load, <code>self.translator</code> / <code>self.lang_detector</code> raise the underlying exception
-the first time they are accessed — there is no silent fallback to "no translation"; the
-<code>OVOSLangTranslationFactory.create()</code> call is deliberately left unguarded
-(<code>ovos_workshop/skills/ovos.py</code>, <code>translator</code> property) so a missing plugin surfaces loudly
-instead of silently mistranslating. If you want your skill to degrade gracefully instead of
-crashing, wrap the access yourself:</p>
+to the configured translation plugin. This can be a remote server call for
+<code>ovos-translate-plugin-server</code>, or local model inference for an offline plugin. Plan for
+this extra delay before speech starts. If no <code>translation_module</code> (or <code>detection_module</code>)
+is configured, or the configured plugin fails to load, <code>self.translator</code> /
+<code>self.lang_detector</code> raise the underlying exception the first time they are accessed.
+There is no silent fallback to "no translation". The <code>OVOSLangTranslationFactory.create()</code>
+call is deliberately left unguarded (<code>ovos_workshop/skills/ovos.py</code>, <code>translator</code> property),
+so a missing plugin surfaces loudly instead of silently mistranslating. If you want your
+skill to degrade gracefully instead of crashing, wrap the access yourself:</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">try</span><span class="p">:</span>
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>    <span class="n">translated</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">translator</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="s2">&quot;en&quot;</span><span class="p">)</span>
 </span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
@@ -1640,7 +1640,7 @@ crashing, wrap the access yourself:</p>
 </span><span id="__span-2-42"><a id="__codelineno-2-42" name="__codelineno-2-42" href="#__codelineno-2-42"></a>                         <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 </span></code></pre></div>
 <h3 id="intents-and-utterances">Intents and Utterances<a class="headerlink" href="#intents-and-utterances" title="Permanent link">&para;</a></h3>
-<p>Use the <code>register_intent</code> and <code>register_intent_file</code> methods to register intents with universal intent handlers. The usual decorators also work</p>
+<p>Use the <code>register_intent</code> and <code>register_intent_file</code> methods to register intents with universal intent handlers. The usual decorators also work.</p>
 <p>The <code>speak</code> method is used to generate spoken responses.
 It automatically translates utterances if the output language is different from the skill's internal language or autodetection is enabled.</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># Example speaking utterance, hardcoded to self.internal_language</span>
@@ -1649,7 +1649,7 @@ It automatically translates utterances if the output language is different from 
 <h3 id="universal-intent-handler">Universal Intent Handler<a class="headerlink" href="#universal-intent-handler" title="Permanent link">&para;</a></h3>
 <div class="admonition info">
 <p class="admonition-title">Info</p>
-<p>Users should NOT use the <code>create_universal_handler</code> method manually in skill intents; it is automatically utilized by <code>self.register_intent</code>. </p>
+<p>Users should NOT use the <code>create_universal_handler</code> method manually in skill intents. <code>self.register_intent</code> already calls it for you.</p>
 </div>
 <p>The following example demonstrates its usage with <code>self.add_event</code>.</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1"># Example universal handler creation</span>
@@ -1662,8 +1662,8 @@ It automatically translates utterances if the output language is different from 
 </span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="bp">self</span><span class="o">.</span><span class="n">add_event</span><span class="p">(</span><span class="s2">&quot;my_event&quot;</span><span class="p">,</span> <span class="n">my_handler</span><span class="p">)</span>
 </span></code></pre></div>
 <h2 id="englishcatfacts-skill-example">EnglishCatFacts <a href="../skill-design-guidelines/">Skill</a> Example<a class="headerlink" href="#englishcatfacts-skill-example" title="Permanent link">&para;</a></h2>
-<p>Let's create a simple tutorial skill that interacts with an API to fetch cat facts in English. </p>
-<p>We'll use the <code>UniversalSkill</code> class to support translations for other languages.</p>
+<p>This tutorial skill interacts with an API to fetch cat facts in English.</p>
+<p>It uses the <code>UniversalSkill</code> class to support translations for other languages.</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kn">from</span> <span class="nn">ovos_workshop.skills.auto_translatable</span> <span class="kn">import</span> <span class="n">UniversalSkill</span>
 </span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="kn">from</span> <span class="nn">ovos_workshop.decorators</span> <span class="kn">import</span> <span class="n">intent_handler</span>
 </span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>
@@ -1687,11 +1687,10 @@ It automatically translates utterances if the output language is different from 
 </span><span id="__span-5-21"><a id="__codelineno-5-21" name="__codelineno-5-21" href="#__codelineno-5-21"></a>        <span class="c1"># Speak the cat fact, it will be translated to self.lang if needed</span>
 </span><span id="__span-5-22"><a id="__codelineno-5-22" name="__codelineno-5-22" href="#__codelineno-5-22"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">speak</span><span class="p">(</span><span class="n">cat_fact</span><span class="p">)</span>
 </span></code></pre></div>
-<p>In this example, the <code>CatFactsSkill</code> class extends <code>UniversalSkill</code>, allowing it to seamlessly translate cat facts into the user's preferred language.</p>
+<p>In this example, the <code>CatFactsSkill</code> class extends <code>UniversalSkill</code>. This lets it translate cat facts into the user's preferred language.</p>
 <h2 id="spanishdatabase-skill-example">SpanishDatabase Skill Example<a class="headerlink" href="#spanishdatabase-skill-example" title="Permanent link">&para;</a></h2>
-<p>A more advanced example, let's consider a skill that listens to bus messages.</p>
-<p>Our skill listens for messages containing a <code>"phrase"</code> payload in message.data that can be in any language, and it saves this phrase <em>in spanish</em> to a database. 
-Then it speaks a hardcoded spanish utterance, and it gets translated into the language of the bus message <a href="../session/">Session</a></p>
+<p>This more advanced example is a skill that listens to bus messages.</p>
+<p>The skill listens for messages containing a <code>"phrase"</code> payload in message.data. This payload can be in any language. The skill saves this phrase <em>in spanish</em> to a database. Then it speaks a hardcoded spanish utterance. That utterance gets translated into the language of the bus message <a href="../session/">Session</a>.</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kn">from</span> <span class="nn">ovos_bus_client.message</span> <span class="kn">import</span> <span class="n">Message</span>
 </span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="kn">from</span> <span class="nn">ovos_workshop.skills.auto_translatable</span> <span class="kn">import</span> <span class="n">UniversalSkill</span>
 </span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>

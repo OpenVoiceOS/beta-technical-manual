@@ -1587,11 +1587,11 @@
 </div>
 <details class="info">
 <summary>📐 Formal specification</summary>
-<p>STT sits inside the audio input service, specified by <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/audio-in.md">OVOS-AUDIO-IN-1 — Audio Input Service</a></strong>: capture → audio-transformer chain → STT → utterance. The transcript is emitted on <code>ovos.utterance.handle</code> (<a href="https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md">OVOS-PIPELINE-1 §9.1</a>). See the <a href="../architecture-specs/">spec index</a>.</p>
+<p>STT sits inside the audio input service, specified by <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/audio-in.md">OVOS-AUDIO-IN-1: Audio Input Service</a></strong>: capture → audio-transformer chain → STT → utterance. The transcript is emitted on <code>ovos.utterance.handle</code> (<a href="https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md">OVOS-PIPELINE-1 §9.1</a>). See the <a href="../architecture-specs/">spec index</a>.</p>
 </details>
 <div class="admonition note">
 <p class="admonition-title">Audio format contract</p>
-<p>Everything upstream of an STT plugin — the <a href="../mic-plugins/#the-microphone-interface">microphone plugin</a> and any audio transformers — hands over raw PCM in a fixed shape: <strong>16 kHz sample rate, 16-bit samples, mono, little-endian</strong>, delivered in <strong>4096-byte chunks</strong> by default (the <code>Microphone</code> template's <code>sample_rate</code>/<code>sample_width</code>/<code>sample_channels</code>/<code>chunk_size</code> defaults). A batch <code>STT.execute()</code> plugin gets this bundled into a <code>speech_recognition.AudioData</code> object; a <code>StreamingSTT</code> plugin receives it chunk-by-chunk, still at this same format, unless a deployment explicitly reconfigures the microphone. Neither the <code>STT</code> nor the <code>StreamingSTT</code> template resamples on the plugin's behalf: if the wrapped model expects a different native rate, converting the incoming 16 kHz PCM is the plugin's own job.</p>
+<p>Everything upstream of an STT plugin, the <a href="../mic-plugins/#the-microphone-interface">microphone plugin</a> and any audio transformers, hands over raw PCM in a fixed shape: <strong>16 kHz sample rate, 16-bit samples, mono, little-endian</strong>, delivered in <strong>4096-byte chunks</strong> by default (the <code>Microphone</code> template's <code>sample_rate</code>/<code>sample_width</code>/<code>sample_channels</code>/<code>chunk_size</code> defaults). A batch <code>STT.execute()</code> plugin gets this bundled into a <code>speech_recognition.AudioData</code> object. A <code>StreamingSTT</code> plugin receives it chunk-by-chunk, still at this same format, unless a deployment explicitly reconfigures the microphone. Neither the <code>STT</code> nor the <code>StreamingSTT</code> template resamples on the plugin's behalf. If the wrapped model expects a different native rate, converting the incoming 16 kHz PCM is the plugin's own job.</p>
 </div>
 <p>STT (Speech-to-Text) plugins convert spoken audio into text. They are the bridge
 between the listener and the intent pipeline.</p>
@@ -1607,7 +1607,7 @@ it is recommended here for its offline quality and footprint, and per the
 <a href="../maturity/">Maturity Scale</a> maturity is not the same as a recommendation.</p>
 <p><strong>Footprint:</strong> as noted in the <a href="#ovos-stt-plugin-onnx-asr">plugin's own entry</a>, most models
 in the <a href="https://huggingface.co/collections/OpenVoiceOS/stt-asr-onnx">OpenVoiceOS/stt-asr-onnx</a>
-collection ship both <code>fp32</code> and <code>int8</code> weights — pick <code>int8</code> for the lower-RAM, lower-compute
+collection ship both <code>fp32</code> and <code>int8</code> weights. Pick <code>int8</code> for the lower-RAM, lower-compute
 option on constrained hardware. Beyond quantization, footprint is mostly driven by model
 family/size: a small Parakeet/wav2vec2-class model is far lighter than a large
 Whisper-class one, independent of the plugin wrapping it.</p>
@@ -1625,7 +1625,7 @@ Whisper-class one, independent of the plugin wrapping it.</p>
 </span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">  </span><span class="p">}</span>
 </span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="p">}</span>
 </span></code></pre></div>
-<p>The roster below lists available plugins with a recommended starting configuration for each (which may differ from a plugin's built-in default — noted where relevant).</p>
+<p>The roster below lists available plugins with a recommended starting configuration for each. This may differ from a plugin's built-in default, noted where relevant.</p>
 <h2 id="stt"><code>STT</code><a class="headerlink" href="#stt" title="Permanent link">&para;</a></h2>
 <p>The base STT, this handles the audio in "batch mode" taking a complete audio file, and returning the complete transcription.</p>
 <p>Each STT plugin class needs to define the <code>execute()</code> method taking two arguments:</p>
@@ -1671,10 +1671,10 @@ candidates read it. <code>execute()</code> then remains the single-best convenie
 <li>
 <p><code>detect_language(audio, valid_langs=None)</code> → <code>(lang, confidence)</code>. It delegates to the bound
   detector, defaulting <code>valid_langs</code> to the plugin's own <code>available_languages</code>. With no detector
-  bound it raises <code>NotImplementedError</code> — language detection is opt-in per deployment.</p>
+  bound it raises <code>NotImplementedError</code>. Language detection is opt-in per deployment.</p>
 </li>
 <li>
-<p><code>transcribe(audio, lang="auto")</code> — the <code>"auto"</code> sentinel runs <code>detect_language()</code> first and
+<p><code>transcribe(audio, lang="auto")</code>. The <code>"auto"</code> sentinel runs <code>detect_language()</code> first and
   transcribes in whatever it returns. If detection fails, the plugin falls back to <code>self.lang</code>
   and transcribes anyway, so <code>"auto"</code> never turns a detector problem into a failed
   transcription.</p>
@@ -1683,20 +1683,20 @@ candidates read it. <code>execute()</code> then remains the single-best convenie
 <h2 id="streamingstt"><code>StreamingSTT</code><a class="headerlink" href="#streamingstt" title="Permanent link">&para;</a></h2>
 <p>A more advanced STT class for streaming data to the STT. This will receive chunks of audio data as they become available and they are streamed to an STT engine.</p>
 <p>The plugin author needs to implement the <code>create_streaming_thread()</code> method creating a thread for handling data sent through <code>self.queue</code>. </p>
-<p>The thread this method creates should be based on the <code>StreamThread</code> class. Its abstract <code>handle_audio_stream(audio, language)</code> method also needs to be implemented — it receives a generator of audio chunks and should set <code>self.text</code> to the transcript; <code>finalize()</code> returns that stored text once the stream ends.</p>
+<p>The thread this method creates should be based on the <code>StreamThread</code> class. Its abstract <code>handle_audio_stream(audio, language)</code> method also needs to be implemented. It receives a generator of audio chunks and should set <code>self.text</code> to the transcript; <code>finalize()</code> returns that stored text once the stream ends.</p>
 <h3 id="chunk-semantics">Chunk semantics<a class="headerlink" href="#chunk-semantics" title="Permanent link">&para;</a></h3>
 <p>Audio arrives synchronously per chunk: <code>stream_data()</code> is called once per captured
 chunk on the mic thread, so it must return well under the per-chunk time budget
 (the same real-time cadence constraint a wake-word plugin's <code>update(chunk)</code> runs
-under — see <a href="../wake-word-plugins/#key-methods">Wake Word Plugins: Key Methods</a>). Do any
+under. See <a href="../wake-word-plugins/#key-methods">Wake Word Plugins: Key Methods</a>). Do any
 slow work (network calls, heavy inference) on the <code>StreamThread</code> this class
 manages, not inline in <code>stream_data()</code>.</p>
 <p><code>StreamingSTT</code> runs the streaming work on a background thread, fed through a queue:</p>
 <ul>
 <li><code>stream_start(language=None)</code> creates a fresh <code>Queue</code>, builds a <code>StreamThread</code> via <code>create_streaming_thread()</code>, and starts it.</li>
-<li>Each call to <code>stream_data(chunk)</code> puts one raw PCM <code>bytes</code> chunk (16 kHz/16-bit/mono, <code>chunk_size</code>-sized — see the audio format contract above) onto that queue.</li>
-<li>The <code>StreamThread</code>'s <code>run()</code> calls your <code>handle_audio_stream(audio, language)</code> with <code>audio</code> as a <strong>generator</strong> that yields chunks off the queue until a <code>None</code> sentinel appears — your implementation should loop over it (e.g. <code>for chunk in audio:</code>) and feed each chunk to the underlying engine, setting <code>self.text</code> as partial/final results arrive.</li>
-<li><code>stream_stop()</code> pushes the <code>None</code> sentinel, joins the thread, and calls <code>finalize()</code> on it to retrieve the stored <code>self.text</code> as the final transcript — this is also what <code>execute()</code> returns for a <code>StreamingSTT</code> plugin.</li>
+<li>Each call to <code>stream_data(chunk)</code> puts one raw PCM <code>bytes</code> chunk (16 kHz/16-bit/mono, <code>chunk_size</code>-sized, see the audio format contract above) onto that queue.</li>
+<li>The <code>StreamThread</code>'s <code>run()</code> calls your <code>handle_audio_stream(audio, language)</code> with <code>audio</code> as a <strong>generator</strong> that yields chunks off the queue until a <code>None</code> sentinel appears. Your implementation should loop over it (e.g. <code>for chunk in audio:</code>) and feed each chunk to the underlying engine, setting <code>self.text</code> as partial/final results arrive.</li>
+<li><code>stream_stop()</code> pushes the <code>None</code> sentinel, joins the thread, and calls <code>finalize()</code> on it to retrieve the stored <code>self.text</code> as the final transcript. This is also what <code>execute()</code> returns for a <code>StreamingSTT</code> plugin.</li>
 </ul>
 <p>A complete minimal streaming plugin:</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kn">from</span> <span class="nn">queue</span> <span class="kn">import</span> <span class="n">Queue</span>
@@ -1923,20 +1923,20 @@ separately-licensed model, that is called out under "model".</p>
 </tr>
 </tbody>
 </table>
-<p>Maturity reflects repository health (age, activity, open issues/PRs, in-repo docs), not version — see the <a href="../maturity/">Maturity Scale</a>.</p>
+<p>Maturity reflects repository health (age, activity, open issues/PRs, in-repo docs), not version. See the <a href="../maturity/">Maturity Scale</a>.</p>
 <div class="admonition note">
 <p class="admonition-title">License and Maturity are independent axes</p>
-<p>The <strong>License</strong> column reports what the repository itself declares (or doesn't — "no
-license file" just means no SPDX license was found, not that the code is unmature) and the
-<strong>Maturity</strong> column reports repository health (age, activity, issues/PRs, docs). A plugin can
-be <strong>Mature</strong> and still ship no license file, or be <strong>Stable</strong> with a permissive license but
-thin docs — don't read one column as implying the other.</p>
+<p>The <strong>License</strong> column reports what the repository itself declares. "No
+license file" just means no SPDX license was found, not that the code is unmature.
+The <strong>Maturity</strong> column reports repository health (age, activity, issues/PRs, docs).
+A plugin can be <strong>Mature</strong> and still ship no license file. A plugin can be <strong>Stable</strong>
+with a permissive license but thin docs. Don't read one column as implying the other.</p>
 </div>
 <h2 id="ovos-stt-plugin-wav2vec">ovos-stt-plugin-wav2vec<a class="headerlink" href="#ovos-stt-plugin-wav2vec" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
 <p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-stt-plugin-wav2vec">https://github.com/OpenVoiceOS/ovos-stt-plugin-wav2vec</a> (aliased by
-  <a href="https://github.com/OpenVoiceOS/ovos-stt-plugin-wav2vec2">ovos-stt-plugin-wav2vec2</a> — a
+  <a href="https://github.com/OpenVoiceOS/ovos-stt-plugin-wav2vec2">ovos-stt-plugin-wav2vec2</a>. A
   separate GitHub repo that installs the same package and module id, <code>ovos-stt-plugin-wav2vec</code>;
   the repo name differs but the entry point does not, so both resolve to the same plugin)</p>
 </li>
@@ -1980,7 +1980,7 @@ languages resolve to different pretrained models.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>This plugin talks to the same unofficial, undocumented endpoint used by the Chrome
-browser's speech recognition feature — not a published Google Cloud Speech-to-Text
+browser's speech recognition feature. It is not a published Google Cloud Speech-to-Text
 API with an API key. Google can change or revoke access to this endpoint at any time.</p>
 </div>
 <hr />
@@ -2026,7 +2026,7 @@ a private or guaranteed-available endpoint. Point it at your own self-hosted ser
 </span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>    },
 </span><span id="__span-11-7"><a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a> }
 </span></code></pre></div>
-<p>Leaving <code>urls</code> unset falls back to public community-run STT servers rather than failing — see
+<p>Leaving <code>urls</code> unset falls back to public community-run STT servers rather than failing. See
 <a href="../stt-server/#companion-plugin">stt-server</a> for a self-hosted alternative, or pick a fully
 offline engine from the table above.</p>
 <div class="admonition warning">
@@ -2093,7 +2093,7 @@ servers entirely: fully offline plugins exist for everything.</p>
 <p><strong>Description</strong>: OpenVoiceOS STT plugin for <a href="https://github.com/guillaumekln/faster-whisper">Faster Whisper</a></p>
 </li>
 </ul>
-<p>CTranslate2 also supports <code>int8</code> / <code>int8_float16</code> compute types for lower-RAM CPU deployments — change <code>compute_type</code> to use them.</p>
+<p>CTranslate2 also supports <code>int8</code> / <code>int8_float16</code> compute types for lower-RAM CPU deployments. Change <code>compute_type</code> to use them.</p>
 <h3 id="default-configuration_5">Default Configuration<a class="headerlink" href="#default-configuration_5" title="Permanent link">&para;</a></h3>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>  &quot;stt&quot;: {
 </span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>    &quot;module&quot;: &quot;ovos-stt-plugin-fasterwhisper&quot;,
@@ -2116,7 +2116,7 @@ servers entirely: fully offline plugins exist for everything.</p>
 <p><strong>Description</strong>: OpenVoiceOS STT plugin for <a href="https://docs.nvidia.com/nemo-framework/user-guide/latest/nemotoolkit/asr/models.html">Nemo</a>, GPU is <strong>strongly recommended</strong></p>
 </li>
 </ul>
-<p>CPU is the shipped default (<code>use_cuda: false</code>); set <code>use_cuda: true</code> for acceptable throughput on supported GPUs — the GPU recommendation is about speed, not a required default.</p>
+<p>CPU is the shipped default (<code>use_cuda: false</code>); set <code>use_cuda: true</code> for acceptable throughput on supported GPUs. The GPU recommendation is about speed, not a required default.</p>
 <h3 id="default-configuration_6">Default Configuration<a class="headerlink" href="#default-configuration_6" title="Permanent link">&para;</a></h3>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>  &quot;stt&quot;: {
 </span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>    &quot;module&quot;: &quot;ovos-stt-plugin-nemo&quot;,
@@ -2174,7 +2174,7 @@ servers entirely: fully offline plugins exist for everything.</p>
 <p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-stt-plugin-nos">https://github.com/OpenVoiceOS/ovos-stt-plugin-nos</a></p>
 </li>
 <li>
-<p><strong>Description</strong>: Galician STT using <a href="https://github.com/proxectonos">Proxecto Nós</a> wav2vec2 models. ⚠️ <strong>Archived</strong> — superseded by <a href="https://github.com/OpenVoiceOS/ovos-stt-plugin-wav2vec2">ovos-stt-plugin-wav2vec2</a>.</p>
+<p><strong>Description</strong>: Galician STT using <a href="https://github.com/proxectonos">Proxecto Nós</a> wav2vec2 models. ⚠️ <strong>Archived</strong>. Superseded by <a href="https://github.com/OpenVoiceOS/ovos-stt-plugin-wav2vec2">ovos-stt-plugin-wav2vec2</a>.</p>
 </li>
 </ul>
 <h3 id="default-configuration_9">Default Configuration<a class="headerlink" href="#default-configuration_9" title="Permanent link">&para;</a></h3>
@@ -2225,11 +2225,11 @@ servers entirely: fully offline plugins exist for everything.</p>
 <p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-stt-plugin-onnx-asr">https://github.com/OpenVoiceOS/ovos-stt-plugin-onnx-asr</a></p>
 </li>
 <li>
-<p><strong>Description</strong>: Runs <a href="https://github.com/istupakov/onnx-asr">onnx-asr</a> models via ONNX Runtime with no PyTorch/transformers dependency. Inference is fully offline; models are downloaded from Hugging Face on first load, so it runs offline <strong>after the model has been fetched once</strong> (there is currently no plugin-level option to pin a purely-local model directory). Supports NeMo Parakeet and Canary, Whisper, and wav2vec2 model families.</p>
+<p><strong>Description</strong>: Runs <a href="https://github.com/istupakov/onnx-asr">onnx-asr</a> models via ONNX Runtime with no PyTorch/transformers dependency. Inference is fully offline. Models are downloaded from Hugging Face on first load, so it runs offline <strong>after the model has been fetched once</strong> (there is currently no plugin-level option to pin a purely-local model directory). Supports NeMo Parakeet and Canary, Whisper, and wav2vec2 model families.</p>
 </li>
 </ul>
 <h3 id="recommended-configuration">Recommended Configuration<a class="headerlink" href="#recommended-configuration" title="Permanent link">&para;</a></h3>
-<p>If <code>model</code> is omitted, the plugin loads its <strong>built-in default <code>nemo-canary-1b-v2</code></strong> — a ~1B-parameter model with strong accuracy but a heavier footprint. For typical offline devices we recommend setting the lighter <code>nemo-parakeet-tdt-0.6b-v3</code> explicitly:</p>
+<p>If <code>model</code> is omitted, the plugin loads its <strong>built-in default <code>nemo-canary-1b-v2</code></strong>, a ~1B-parameter model with strong accuracy but a heavier footprint. For typical offline devices we recommend setting the lighter <code>nemo-parakeet-tdt-0.6b-v3</code> explicitly:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>  &quot;stt&quot;: {
 </span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>    &quot;module&quot;: &quot;ovos-stt-plugin-onnx-asr&quot;,
 </span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>    &quot;ovos-stt-plugin-onnx-asr&quot;: {
@@ -2270,13 +2270,13 @@ servers entirely: fully offline plugins exist for everything.</p>
 </table>
 <div class="admonition note">
 <p class="admonition-title">Language handling is model-family-gated</p>
-<p>The configured/utterance language is only passed to the ASR call for <strong>Whisper</strong> and <strong>Canary</strong> (NeMo Conformer AED) families. Other families (Parakeet, GigaAM, Vosk, wav2vec2, T-one) ignore <code>lang</code> — for those, pick a language-specific model instead of relying on a <code>lang</code> setting to steer a multilingual one.</p>
+<p>The configured/utterance language is only passed to the ASR call for <strong>Whisper</strong> and <strong>Canary</strong> (NeMo Conformer AED) families. Other families (Parakeet, GigaAM, Vosk, wav2vec2, T-one) ignore <code>lang</code>. For those, pick a language-specific model instead of relying on a <code>lang</code> setting to steer a multilingual one.</p>
 </div>
-<p>Besides the built-in aliases and the <code>onnx-asr</code> repository's own model hub, the plugin loads any repo id from the <a href="https://huggingface.co/collections/OpenVoiceOS/stt-asr-onnx">OpenVoiceOS/stt-asr-onnx</a> collection — curated single-language and regional ONNX conversions of NeMo Conformer/Parakeet and Whisper checkpoints, grouped roughly by family: AI4Bharat/Vaani models for Indian languages, NVIDIA Conformer/Parakeet models for major European languages (plus Kabyle, Belarusian, Esperanto, Kinyarwanda), Iberian-language Conformer models, and per-language Whisper finetunes. Most ship both fp32 and int8 weights (<code>quantization: "int8"</code> works); a few large models are fp32-only. See the collection itself for the exhaustive, current list — it grows independently of this plugin's release cycle.</p>
+<p>Besides the built-in aliases and the <code>onnx-asr</code> repository's own model hub, the plugin loads any repo id from the <a href="https://huggingface.co/collections/OpenVoiceOS/stt-asr-onnx">OpenVoiceOS/stt-asr-onnx</a> collection. This collection holds curated single-language and regional ONNX conversions of NeMo Conformer/Parakeet and Whisper checkpoints, grouped roughly by family: AI4Bharat/Vaani models for Indian languages, NVIDIA Conformer/Parakeet models for major European languages (plus Kabyle, Belarusian, Esperanto, Kinyarwanda), Iberian-language Conformer models, and per-language Whisper finetunes. Most ship both fp32 and int8 weights (<code>quantization: "int8"</code> works). A few large models are fp32-only. See the collection itself for the exhaustive, current list. It grows independently of this plugin's release cycle.</p>
 <hr />
 <h2 id="further-reading">Further reading<a class="headerlink" href="#further-reading" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="https://blog.openvoiceos.org/posts/2026-02-16-onnx-asr">Real-Time Offline Speech Recognition on OVOS (ONNX ASR)</a> — OVOS blog</li>
+<li><a href="https://blog.openvoiceos.org/posts/2026-02-16-onnx-asr">Real-Time Offline Speech Recognition on OVOS (ONNX ASR)</a>, OVOS blog</li>
 </ul>
 
 

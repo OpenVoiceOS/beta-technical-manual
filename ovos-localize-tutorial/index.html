@@ -1430,11 +1430,11 @@
 <h1 id="contribute-translations-with-ovos-localize">Contribute Translations with OVOS Localize<a class="headerlink" href="#contribute-translations-with-ovos-localize" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>OVOS only speaks the languages that volunteers have translated it into — and you can be one of them without writing any code. OVOS Localize is a website where you translate the short phrases the assistant says and listens for, right in your browser. If you can use a translation app, you can help OVOS understand and speak your language. See the <a href="../glossary/">Glossary</a> for unfamiliar terms.</p>
+<p>OVOS only speaks the languages that volunteers have translated it into. You can be one of them without writing any code. OVOS Localize is a website where you translate the short phrases the assistant says and listens for, right in your browser. If you can use a translation app, you can help OVOS understand and speak your language. See the <a href="../glossary/">Glossary</a> for unfamiliar terms.</p>
 </div>
 <p>Want OVOS to speak your language? You don't need to be a programmer to help. <strong>OVOS
 Localize</strong> is a web app where you translate the phrases OVOS says and understands,
-right in your browser — no code, no setup, no command line.</p>
+right in your browser. It needs no code, no setup, and no command line.</p>
 <div class="admonition info">
 <p class="admonition-title">What replaced GitLocalize</p>
 <p>OVOS used to translate on a third-party service called <em>GitLocalize</em>. That has
@@ -1476,7 +1476,7 @@ have old GitLocalize bookmarks, switch to the link above.</p>
 </tbody>
 </table>
 <p>You translate the <em>meaning</em>, not word-for-word. The tool shows you, on screen, which
-skill and which line of code each phrase comes from — so you always have context.</p>
+skill and which line of code each phrase comes from, so you always have context.</p>
 <hr />
 <h2 id="step-1-open-the-site-and-pick-a-language">Step 1 — Open the site and pick a language<a class="headerlink" href="#step-1-open-the-site-and-pick-a-language" title="Permanent link">&para;</a></h2>
 <ol>
@@ -1494,17 +1494,17 @@ we'll enable it.</p>
 <h2 id="step-2-translate">Step 2 — Translate<a class="headerlink" href="#step-2-translate" title="Permanent link">&para;</a></h2>
 <p>The editor has three columns:</p>
 <ul>
-<li><strong>Left</strong> — the original English phrase.</li>
-<li><strong>Center</strong> — where you type your translation (with a live preview so you can see how
+<li><strong>Left</strong>: the original English phrase.</li>
+<li><strong>Center</strong>: where you type your translation (with a live preview so you can see how
   it expands).</li>
-<li><strong>Right</strong> — the <strong>skill code context</strong>: the actual Python function that uses this
+<li><strong>Right</strong>: the <strong>skill code context</strong>, the actual Python function that uses this
   phrase, so you understand <em>when</em> OVOS says or expects it.</li>
 </ul>
 <p>You can also use the <strong>auto-translate</strong> button to get a machine-translation starting
-point, then fix it up — much faster than starting from a blank box.</p>
-<p>You submit one file at a time: when you're happy with a file, you file it for
-translation and OVOS Localize opens a pre-filled GitHub issue for that single file, which
-a bot turns into a pull request.</p>
+point, then fix it up. This is much faster than starting from a blank box.</p>
+<p>You submit one file at a time. When you're happy with a file, you file it for
+translation and OVOS Localize opens a pre-filled GitHub issue for that single file. A bot
+turns it into a pull request.</p>
 <h2 id="step-3-submit">Step 3 — Submit<a class="headerlink" href="#step-3-submit" title="Permanent link">&para;</a></h2>
 <p>When you're happy with a file, click <strong>Submit</strong>. OVOS Localize files your work for you
 and a bot turns it into a pull request on GitHub. A native speaker or maintainer reviews
@@ -1521,9 +1521,9 @@ it, and once merged your translation ships in the next skill release. You'll nee
 </ul>
 <p><strong>Rules:</strong></p>
 <ul>
-<li><strong>Never translate</strong> the text inside <code>{ }</code> — copy it exactly.</li>
+<li><strong>Never translate</strong> the text inside <code>{ }</code>. Copy it exactly.</li>
 <li>You may <strong>move</strong> a variable to fit your language's grammar.</li>
-<li>Don't invent new variables, and don't let two variables touch — keep at least one
+<li>Don't invent new variables, and don't let two variables touch. Keep at least one
   real word between them.</li>
 </ul>
 <h3 id="alternatives-optional-words-abc">Alternatives &amp; optional words — <code>(a|b|c)</code><a class="headerlink" href="#alternatives-optional-words-abc" title="Permanent link">&para;</a></h3>
@@ -1538,17 +1538,17 @@ word optional.</p>
 Each variation is a <strong>slot</strong>.</p>
 <ul>
 <li>Translate <strong>at least one</strong> slot per file.</li>
-<li>If a slot doesn't make sense in your language, enter <code>[UNUSED]</code> — that tells us you
+<li>If a slot doesn't make sense in your language, enter <code>[UNUSED]</code>. That tells us you
   reviewed it on purpose.</li>
 <li>Need more room for natural variations? Add a new line and write another translation.</li>
 </ul>
 <hr />
 <h2 id="tips-for-good-translations">Tips for good translations<a class="headerlink" href="#tips-for-good-translations" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>Meaning over literalness</strong> — convey what's meant, not a word-for-word swap.</li>
-<li><strong>Be consistent</strong> — use the same term for the same concept throughout.</li>
+<li><strong>Meaning over literalness</strong>: convey what's meant, not a word-for-word swap.</li>
+<li><strong>Be consistent</strong>: use the same term for the same concept throughout.</li>
 <li><strong>Use the code context</strong> (right column) when a phrase is ambiguous.</li>
-<li><strong>Sound natural</strong> — these are things a person says out loud to a voice assistant.</li>
+<li><strong>Sound natural</strong>: these are things a person says out loud to a voice assistant.</li>
 </ul>
 <hr />
 <h2 id="where-this-fits-in-ovos">Where this fits in OVOS<a class="headerlink" href="#where-this-fits-in-ovos" title="Permanent link">&para;</a></h2>
@@ -1556,15 +1556,15 @@ Each variation is a <strong>slot</strong>.</p>
 files described in <strong><a href="../lang-customization/">Customizing Language Resources</a></strong> and
 feeds the broader <strong><a href="../lang-support/">Language Support</a></strong> effort. Developers who want to
 validate locale files in CI can use its <code>ovos-localize-cli</code> tool; translators never need it.</p>
-<p>For the technical side of multilingual support — language selection, parsers, and
-translation plugins — see the <strong><a href="../lang-support/">Language Support overview</a></strong>.</p>
+<p>For the technical side of multilingual support, language selection, parsers, and
+translation plugins, see the <strong><a href="../lang-support/">Language Support overview</a></strong>.</p>
 <hr />
 <h2 id="need-help">Need help?<a class="headerlink" href="#need-help" title="Permanent link">&para;</a></h2>
 <ul>
 <li><strong>Matrix chat:</strong> <a href="https://matrix.to/#/#openvoiceos-languages:matrix.org">#openvoiceos-languages:matrix.org</a></li>
 <li><strong>Email:</strong> <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#117;&#112;&#112;&#111;&#114;&#116;&#64;&#111;&#112;&#101;&#110;&#118;&#111;&#105;&#99;&#101;&#111;&#115;&#46;&#111;&#114;&#103;">&#115;&#117;&#112;&#112;&#111;&#114;&#116;&#64;&#111;&#112;&#101;&#110;&#118;&#111;&#105;&#99;&#101;&#111;&#115;&#46;&#111;&#114;&#103;</a></li>
 </ul>
-<p>Thank you — every translation makes OVOS usable for more people around the world. 🌍</p>
+<p>Every translation makes OVOS usable for more people around the world.</p>
 
 
 

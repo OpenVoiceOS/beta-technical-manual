@@ -1307,11 +1307,11 @@
 <h1 id="padacioso">Padacioso<a class="headerlink" href="#padacioso" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>Padacioso is a simple tool that figures out what a user <em>meant</em> by matching what they said against a list of example phrases you write out by hand — like a phrasebook. Unlike its smarter sibling Padatious, it does no machine learning and needs no training: it just checks the words literally, with a little flexibility for optional words and fill-in-the-blank slots. It also pulls out useful pieces (an "entity", e.g. the city name in "weather in Lisbon"). See the <a href="../glossary/">Glossary</a> for terms like <em>intent</em> and <em>entity</em>.</p>
+<p>Padacioso is a simple tool that figures out what a user <em>meant</em>. It matches what they said against a list of example phrases you write by hand, like a phrasebook. Unlike its smarter sibling Padatious, it does no machine learning and needs no training. It checks the words literally, with some flexibility for optional words and fill-in-the-blank slots. It also pulls out useful pieces, called an "entity" (for example, the city name in "weather in Lisbon"). See the <a href="../glossary/">Glossary</a> for terms like <em>intent</em> and <em>entity</em>.</p>
 </div>
 <p><em>A lightweight, dead-simple intent parser</em></p>
 <p>Built on top of <a href="https://github.com/tfeldmann/simplematch">simplematch</a>, inspired by <a href="https://github.com/MycroftAI/padaos">Padaos</a>.</p>
-<p>Padacioso matches an utterance against example sentences using plain string templates — no training, no model files. It is the pure-Python sibling of Padatious: where Padatious learns from examples, Padacioso matches them literally (with a few placeholder syntaxes). Each call to <code>calc_intent</code> returns the best match as <code>{"name", "entities", "conf"}</code>, or <code>name: None</code> when nothing matches.</p>
+<p>Padacioso matches an utterance against example sentences using plain string templates. It needs no training and no model files. It is the pure-Python sibling of Padatious. Padatious learns from examples, but Padacioso matches them literally, with a few placeholder syntaxes. Each call to <code>calc_intent</code> returns the best match as <code>{"name", "entities", "conf"}</code>, or <code>name: None</code> when nothing matches.</p>
 <h2 id="example">Example<a class="headerlink" href="#example" title="Permanent link">&para;</a></h2>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span> <span class="nn">padacioso</span> <span class="kn">import</span> <span class="n">IntentContainer</span>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
@@ -1340,31 +1340,26 @@
 </span><span id="__span-0-25"><a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a><span class="n">container</span><span class="o">.</span><span class="n">calc_intent</span><span class="p">(</span><span class="s1">&#39;say something, whatever&#39;</span><span class="p">)</span>
 </span><span id="__span-0-26"><a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a><span class="c1"># {&#39;name&#39;: &#39;say&#39;, &#39;entities&#39;: {}, &#39;conf&#39;: 0.85}</span>
 </span></code></pre></div>
-<p>Slot names follow the OVOS sentence-template grammar (<code>{lowercase_with_underscores}</code>);
-the colon-typed <code>simplematch</code> syntax such as <code>{number:int}</code> is <strong>not</strong> supported —
-templates are expanded and normalized through <code>ovos_spec_tools</code>, which rejects it.</p>
-<p>A wildcard (<code>*</code>) carries a confidence penalty proportional to how much of the
-template it covers — <code>"say *"</code> is one wildcard out of two tokens, so the score
-drops from <code>1.0</code> to <code>0.85</code>. Entity placeholders like <code>{number}</code> are not
-wildcards and carry no penalty. An entity whose name was never registered with
-<code>add_entity</code> still matches but at a slightly reduced confidence (a small <code>0.04</code>
-penalty, e.g. <code>0.96</code>).</p>
+<p>Slot names follow the OVOS sentence-template grammar (<code>{lowercase_with_underscores}</code>).
+The colon-typed <code>simplematch</code> syntax such as <code>{number:int}</code> is <strong>not</strong> supported.
+Templates are expanded and normalized through <code>ovos_spec_tools</code>, which rejects it.</p>
+<p>A wildcard (<code>*</code>) carries a confidence penalty proportional to how much of the template it covers. For example, <code>"say *"</code> is one wildcard out of two tokens, so the score drops from <code>1.0</code> to <code>0.85</code>. Entity placeholders like <code>{number}</code> are not wildcards and carry no penalty. An entity whose name was never registered with <code>add_entity</code> still matches, but at a slightly reduced confidence (a small <code>0.04</code> penalty, e.g. <code>0.96</code>).</p>
 <h2 id="context-and-keyword-gating">Context and keyword gating<a class="headerlink" href="#context-and-keyword-gating" title="Permanent link">&para;</a></h2>
 <p>Intents can be gated at runtime by session context or suppressed by keyword:</p>
 <ul>
-<li><code>set_context(intent_name, context_name, context_val=None)</code> / <code>require_context(intent_name, context_name)</code> — only consider the intent when the given context is active; <code>unset_context</code> / <code>unrequire_context</code> reverse them.</li>
-<li><code>exclude_context(intent_name, context_name)</code> — suppress the intent while a context is active (<code>unexclude_context</code> reverses it).</li>
-<li><code>exclude_keywords(intent_name, samples)</code> — drop the intent from matching when the query contains any of the given keywords.</li>
+<li><code>set_context(intent_name, context_name, context_val=None)</code> / <code>require_context(intent_name, context_name)</code>: only consider the intent when the given context is active. <code>unset_context</code> / <code>unrequire_context</code> reverse them.</li>
+<li><code>exclude_context(intent_name, context_name)</code>: suppress the intent while a context is active (<code>unexclude_context</code> reverses it).</li>
+<li><code>exclude_keywords(intent_name, samples)</code>: drop the intent from matching when the query contains any of the given keywords.</li>
 </ul>
 <p>These let a container activate or hide intents based on conversational state without rebuilding it.</p>
 <div class="admonition tip">
 <p class="admonition-title">When to choose Padacioso</p>
 <p>Use it when you want Padatious-style example-based matching with entity extraction, but
-without a training step or model files — handy for tests, tiny scripts, or resource-constrained
-devices. Padacioso also has an optional built-in fuzzy mode — <code>IntentContainer(fuzz=True)</code>
+without a training step or model files. It suits tests, tiny scripts, or resource-constrained
+devices. Padacioso also has an optional built-in fuzzy mode. <code>IntentContainer(fuzz=True)</code>
 enables rapidfuzz-based typo-tolerant matching against template variants, scored with a
-confidence penalty. For a dedicated fuzzy parser use <a href="../nebulento/">Nebulento</a>; for keyword-only
-matching use <a href="../palavreado/">Palavreado</a>; for the full neural version use
+confidence penalty. For a dedicated fuzzy parser, use <a href="../nebulento/">Nebulento</a>. For keyword-only
+matching, use <a href="../palavreado/">Palavreado</a>. For the full neural version, use
 <a href="../padatious-pipeline/">Padatious</a>.</p>
 </div>
 <hr />

@@ -1583,9 +1583,9 @@
 <h1 id="voice-activity-detection-vad-plugins">Voice Activity Detection (VAD) Plugins<a class="headerlink" href="#voice-activity-detection-vad-plugins" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p><em>Voice Activity Detection</em> (VAD) is how the assistant tells the difference between someone actually speaking and plain silence or background noise. It is what lets the system know when you have started talking and, just as importantly, when you have finished, so it knows when to stop listening and respond. Without it, the assistant wouldn't know where your command begins and ends. See the <a href="../glossary/">Glossary</a> for related terms.</p>
+<p><em>Voice Activity Detection</em> (VAD) is how the assistant tells the difference between someone actually speaking and plain silence or background noise. It lets the system know when you have started talking. It also tells the system when you have finished, so it knows when to stop listening and respond. Without it, the assistant would not know where your command begins and ends. See the <a href="../glossary/">Glossary</a> for related terms.</p>
 </div>
-<p>Voice Activity Detection (VAD) is a critical component in the OVOS listener pipeline. It is responsible for identifying segments of audio that contain human speech, allowing the system to ignore silence and background noise.</p>
+<p>Voice Activity Detection (VAD) is a critical component in the OVOS listener pipeline. It identifies segments of audio that contain human speech, so the system can ignore silence and background noise.</p>
 <div class="admonition note">
 <p class="admonition-title">Audio format contract</p>
 <p>Like STT and wake-word plugins, VAD plugins receive raw PCM from the <a href="../mic-plugins/#the-microphone-interface">microphone plugin</a>: <strong>16 kHz sample rate, 16-bit samples, mono, little-endian</strong>, delivered in <strong>4096-byte chunks</strong> by default.</p>
@@ -1602,18 +1602,18 @@
 </ol>
 <div class="admonition tip">
 <p class="admonition-title">Recommended: silero</p>
-<p><code>ovos-vad-plugin-silero</code> gives the most accurate speech/silence boundary detection,
-using a small neural model, and is the recommended default when you can afford the
-(modest) extra CPU cost of running it. <code>ovos-vad-plugin-webrtcvad</code> is a good lighter
-fallback — CPU-only and widely used, at somewhat lower accuracy. <code>ovos-vad-plugin-noise</code>
+<p><code>ovos-vad-plugin-silero</code> uses a small neural model and gives the most accurate
+speech/silence boundary detection. It is the recommended default when you can afford
+the modest extra CPU cost of running it. <code>ovos-vad-plugin-webrtcvad</code> is a good lighter
+fallback: CPU-only and widely used, at somewhat lower accuracy. <code>ovos-vad-plugin-noise</code>
 trades the most accuracy for requiring no model download at all.</p>
 <p><strong>Relative footprint:</strong> silero runs a small neural model, so it is heavier than the
-energy/noise or WebRTC VADs — but still light next to a wake-word or STT model, since VAD
-only has to classify one chunk as speech/silence, not decode it.</p>
+energy/noise or WebRTC VADs. It is still light next to a wake-word or STT model, since
+VAD only has to classify one chunk as speech/silence, not decode it.</p>
 </div>
 <h2 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">&para;</a></h2>
 <p>You can configure the VAD plugin in your <code>mycroft.conf</code>. The example below uses
-<code>ovos-vad-plugin-webrtcvad</code> purely to show the shape of the config — see
+<code>ovos-vad-plugin-webrtcvad</code> purely to show the shape of the config. See
 <a href="#ovos-vad-plugin-silero">ovos-vad-plugin-silero</a> below for the recommended plugin's config:</p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="p">{</span>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w"> </span><span class="nt">&quot;listener&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
@@ -1653,9 +1653,9 @@ only has to classify one chunk as speech/silence, not decode it.</p>
 </tr>
 </tbody>
 </table>
-<p>Maturity reflects repository health (age, activity, open issues/PRs, in-repo docs), not version — see the <a href="../maturity/">Maturity Scale</a>.</p>
+<p>Maturity reflects repository health (age, activity, open issues/PRs, in-repo docs), not version. See the <a href="../maturity/">Maturity Scale</a>.</p>
 <blockquote>
-<p>Specification: audio capture and VAD are deployer-defined components feeding the listener; see <a href="https://github.com/OpenVoiceOS/architecture/blob/dev/audio-in.md">OVOS-AUDIO-IN-1</a> for the audio-input service that consumes their output.</p>
+<p>Specification: audio capture and VAD are deployer-defined components feeding the listener. See <a href="https://github.com/OpenVoiceOS/architecture/blob/dev/audio-in.md">OVOS-AUDIO-IN-1</a> for the audio-input service that consumes their output.</p>
 </blockquote>
 <hr />
 <h2 id="technical-explanation">Technical Explanation<a class="headerlink" href="#technical-explanation" title="Permanent link">&para;</a></h2>
@@ -1761,7 +1761,7 @@ used by the plugin manager to advertise network/offline behavior.</p>
 </span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>            &quot;ovos-vad-plugin-silero&quot;: {
 </span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>                // speech-probability cutoff; below this a chunk is treated as silence
 </span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>                &quot;threshold&quot;: 0.2,
-</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>                // optional — override the bundled model with a custom ONNX file
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>                // optional: override the bundled model with a custom ONNX file
 </span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>                &quot;model&quot;: &quot;/optional/path/to/model.onnx&quot;
 </span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>            }
 </span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>        }
@@ -1793,13 +1793,13 @@ used by the plugin manager to advertise network/offline behavior.</p>
 <p class="admonition-title">Same package also provides a pre-wake VAD verifier</p>
 <p><code>ovos-vad-plugin-silero</code> registers a second entry point, <code>ovos-ww-verifier-silero</code>
 (<code>opm.wake_word.verifier</code>), which re-checks that a wake-word activation actually
-contains speech before waking — a "noise filter" that cuts false wakes. It has its
-own <code>threshold</code> (default <code>0.1</code>). See the Pre-Wake VAD blog post below.</p>
+contains speech before waking. It works as a "noise filter" that cuts false wakes.
+It has its own <code>threshold</code> (default <code>0.1</code>). See the Pre-Wake VAD blog post below.</p>
 </div>
 <hr />
 <h2 id="further-reading">Further reading<a class="headerlink" href="#further-reading" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="https://blog.openvoiceos.org/posts/2025-11-06-prewake-vad">OVOS Just Got a Noise Filter (Pre-Wake VAD)</a> — OVOS blog</li>
+<li><a href="https://blog.openvoiceos.org/posts/2025-11-06-prewake-vad">OVOS Just Got a Noise Filter (Pre-Wake VAD)</a>, OVOS blog</li>
 </ul>
 
 

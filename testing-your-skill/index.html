@@ -1468,22 +1468,22 @@
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
 <p>This page picks up right after <a href="../first-skill/">Your First Skill</a>: the <code>ovos-skill-my-first</code>
-skill you just wrote. Here you'll add an automated test for it — one that sends it the
+skill you just wrote. Here you'll add an automated test for it. It sends the skill the
 utterance "hello" and checks it replies correctly, without needing a microphone, speakers, or
 a running assistant. By the end you'll have a test you can run locally and in CI on every
 change.</p>
 </div>
 <h2 id="why-test-a-skill-end-to-end">Why test a skill end-to-end?<a class="headerlink" href="#why-test-a-skill-end-to-end" title="Permanent link">&para;</a></h2>
-<p>A skill can <em>look</em> correct — the code imports cleanly, the files are in the right place — and
-still fail the moment a real user talks to it: the intent phrasing might not actually match, the
-dialog file might have a typo, or the entry point might not point at the right class. An
-<strong>end-to-end (E2E) test</strong> catches these by running a small, in-process copy of OVOS, sending it a
-real utterance, and checking what comes back out — the same journey a spoken command takes, minus
-the microphone. <code>ovoscope</code> is the tool the OVOS project itself uses for this; every skill accepted
-into the ecosystem is expected to ship at least one.</p>
+<p>A skill can <em>look</em> correct: the code imports cleanly, the files are in the right place. It can
+still fail the moment a real user talks to it. The intent phrasing might not actually match, the
+dialog file might have a typo, or the entry point might not point at the right class.</p>
+<p>An <strong>end-to-end (E2E) test</strong> catches these by running a small, in-process copy of OVOS, sending it a
+real utterance, and checking what comes back out. This is the same journey a spoken command takes,
+minus the microphone. <code>ovoscope</code> is the tool the OVOS project itself uses for this. Every skill
+accepted into the ecosystem is expected to ship at least one.</p>
 <h2 id="step-1-install-ovoscope">Step 1 — Install ovoscope<a class="headerlink" href="#step-1-install-ovoscope" title="Permanent link">&para;</a></h2>
-<p>Activate the same environment you installed the skill into in <a href="../first-skill/">Your First Skill</a>
-(the venv or container you ran <code>pip install -e .</code> in) — <code>ovoscope</code> needs to be importable
+<p>Activate the same environment you installed the skill into in <a href="../first-skill/">Your First Skill</a>,
+the venv or container you ran <code>pip install -e .</code> in. <code>ovoscope</code> needs to be importable
 alongside the skill and OVOS itself, not just present somewhere on the machine.</p>
 <p>Add it as a test dependency of the skill you built in <a href="../first-skill/">Your First Skill</a>:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pip<span class="w"> </span>install<span class="w"> </span>ovoscope
@@ -1500,7 +1500,7 @@ contributor needs:</p>
 <p>This test drives <code>session.pipeline = ["ovos-padatious-pipeline-plugin"]</code>, so that plugin
 must actually be installed: <code>pip show ovos-padatious-pipeline-plugin || pip install
 ovos-padatious-pipeline-plugin</code>. If the test runs but reports no spoken output at all,
-a missing pipeline plugin — not a bug in your skill — is the first thing to check.</p>
+check for a missing pipeline plugin first, not a bug in your skill.</p>
 </div>
 <p>Create <code>test/test_hello.py</code> next to your skill's <code>pyproject.toml</code>:</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">from</span> <span class="nn">ovos_bus_client.message</span> <span class="kn">import</span> <span class="n">Message</span>
@@ -1537,20 +1537,20 @@ a missing pipeline plugin — not a bug in your skill — is the first thing to 
 </span></code></pre></div>
 <div class="admonition note">
 <p class="admonition-title">Why <code>ovos-padatious-pipeline-plugin</code>, not Adapt?</p>
-<p><code>Hello.intent</code> is a <strong>Padatious</strong> intent file (one example phrase per line) — that's a
+<p><code>Hello.intent</code> is a <strong>Padatious</strong> intent file (one example phrase per line). That's a
 different matcher from Adapt's keyword grammar. <code>session.pipeline</code> tells OVOS which intent
-engines to try, and in which order; it has to include the engine that actually understands
+engines to try, and in which order. It has to include the engine that actually understands
 your intent file, or the utterance is never matched. See <a href="../pipelines-overview/">Pipelines Overview</a>
 for how the stages fit together.</p>
 </div>
 <p><code>skill_ids</code> restricts which skill(s) <code>ovoscope</code> loads for the test, so you're only ever testing
-your own skill — not every skill installed on the machine.</p>
+your own skill, not every skill installed on the machine.</p>
 <h2 id="step-3-run-it">Step 3 — Run it<a class="headerlink" href="#step-3-run-it" title="Permanent link">&para;</a></h2>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nv">PYTEST_DISABLE_PLUGIN_AUTOLOAD</span><span class="o">=</span><span class="m">1</span><span class="w"> </span>pytest<span class="w"> </span>test/test_hello.py<span class="w"> </span>-v
 </span></code></pre></div>
 <p><code>PYTEST_DISABLE_PLUGIN_AUTOLOAD=1</code> avoids autoloading unrelated pytest plugins that some OVOS
-dependencies register — harmless to leave set for any OVOS test run. A real run looks like this
-(trimmed of the framework's own deprecation-warning noise):</p>
+dependencies register. It's harmless to leave set for any OVOS test run. A real run looks like
+this (trimmed of the framework's own deprecation-warning noise):</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>test/test_hello.py::test_hello_matches_and_speaks PASSED                [100%]
 </span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
 </span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>================== 1 passed, 563 warnings in 70.16s (0:01:10) ==================
@@ -1559,12 +1559,12 @@ dependencies register — harmless to leave set for any OVOS test run. A real ru
 <p class="admonition-title">First run is slow, and that's normal</p>
 <p>The bulk of that ~70s is <code>ovoscope</code> spinning up a full in-process <code>SkillManager</code> and loading
 <strong>every</strong> intent-pipeline plugin installed on the machine (Adapt, Padatious, Padacioso, and any
-others you have) — not just the one your test needs. On a machine with only the pipeline
+others you have), not just the one your test needs. On a machine with only the pipeline
 plugins your skill actually depends on, startup is much faster.</p>
 </div>
 <h2 id="step-4-test-the-failure-path">Step 4 — Test the failure path<a class="headerlink" href="#step-4-test-the-failure-path" title="Permanent link">&para;</a></h2>
 <p>A test that only ever sends utterances your skill <em>should</em> match doesn't tell you much. Add a
-second test that sends something unrelated and checks the skill stays silent — this is what
+second test that sends something unrelated and checks the skill stays silent. This is what
 catches an intent file matching too eagerly:</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1"># test/test_hello_nomatch.py</span>
 </span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="kn">from</span> <span class="nn">ovos_bus_client.message</span> <span class="kn">import</span> <span class="n">Message</span>
@@ -1600,13 +1600,13 @@ catches an intent file matching too eagerly:</p>
 <div class="admonition warning">
 <p class="admonition-title">Testing an <em>error</em> dialog</p>
 <p>If your skill calls <code>self.speak_dialog("some_error")</code> on a caught exception (a missing API
-key, a network failure, …), test that path the same way: drive the skill into the failing
-condition and assert it spoke the error dialog's text instead of crashing silently or leaking
-a raw traceback to the user. <code>ovos-skill-my-first</code> has no such path — it can't fail — so there
-is nothing further to add here for this particular skill.</p>
+key, a network failure, and so on), test that path the same way. Drive the skill into the
+failing condition and assert it spoke the error dialog's text instead of crashing silently or
+leaking a raw traceback to the user. <code>ovos-skill-my-first</code> has no such path. It can't fail, so
+there is nothing further to add here for this particular skill.</p>
 </div>
 <h2 id="step-5-fixtures-and-the-ovoscope-cli">Step 5 — Fixtures and the <code>ovoscope</code> CLI<a class="headerlink" href="#step-5-fixtures-and-the-ovoscope-cli" title="Permanent link">&para;</a></h2>
-<p><code>ovoscope</code> also ships a standalone CLI (<code>ovoscope --help</code>) for working with fixtures — recorded
+<p><code>ovoscope</code> also ships a standalone CLI (<code>ovoscope --help</code>) for working with fixtures: recorded
 bus-message sequences you can replay without writing a pytest file:</p>
 <table>
 <thead>
@@ -1644,7 +1644,7 @@ bus-message sequences you can replay without writing a pytest file:</p>
 </table>
 <p>A fixture is just the saved output of an <code>End2EndTest</code>. <code>End2EndTest.from_message()</code> runs the
 utterance through a real <code>MiniCroft</code>, captures <em>every</em> message that comes back, and hands you a
-test object whose <code>.save(path)</code> writes that captured sequence to JSON — this is what <code>ovoscope
+test object whose <code>.save(path)</code> writes that captured sequence to JSON. This is what <code>ovoscope
 record</code> does internally:</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1"># test/record_hello_fixture.py — one-off script, not a pytest file</span>
 </span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="kn">from</span> <span class="nn">ovos_bus_client.message</span> <span class="kn">import</span> <span class="n">Message</span>
@@ -1666,9 +1666,9 @@ record</code> does internally:</p>
 </span><span id="__span-7-18"><a id="__codelineno-7-18" name="__codelineno-7-18" href="#__codelineno-7-18"></a><span class="p">)</span>
 </span><span id="__span-7-19"><a id="__codelineno-7-19" name="__codelineno-7-19" href="#__codelineno-7-19"></a><span class="n">test</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;test/fixtures/hello.json&quot;</span><span class="p">)</span>
 </span></code></pre></div>
-<p>Running it produces a fixture with the full 7-message sequence for this interaction — the
+<p>Running it produces a fixture with the full 7-message sequence for this interaction: the
 utterance coming in, the skill activating, the intent matching, the handler starting, the <code>speak</code>,
-and the handler/utterance completing:</p>
+and the handler/utterance completing.</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>$ python3 test/record_hello_fixture.py
 </span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>saved OK
 </span></code></pre></div>
@@ -1681,33 +1681,33 @@ and the handler/utterance completing:</p>
 </span></code></pre></div>
 <div class="admonition warning">
 <p class="admonition-title">A recorded fixture can be non-deterministic — watch for timestamps</p>
-<p>Replaying the fixture above with <code>ovoscope run</code> reliably reports a mismatch, not because
-anything is actually broken, but because the session's <code>active_handlers</code> records a Unix
-timestamp (<em>when the skill activated</em>) at capture time — and that timestamp is different every
-time you re-run it:
+<p>Replaying the fixture above with <code>ovoscope run</code> reliably reports a mismatch. This is not
+because anything is actually broken. It happens because the session's <code>active_handlers</code>
+records a Unix timestamp (<em>when the skill activated</em>) at capture time, and that timestamp is
+different every time you re-run it:
 <div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>[run] FAIL: ❌ message context mismatch for key &#39;session&#39; - expected
 </span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>&#39;...activated_at&#39;: 1784823640.9039652...&#39; | got &#39;...activated_at&#39;: 1784823715.739504...&#39;
 </span></code></pre></div>
 Timestamps, request IDs, and anything else that legitimately changes between runs will do this
 to any fixture that captures full message context. Compare only the fields you actually care
-about instead of the whole context — either pass <code>assert_spoke()</code>/<code>execute()</code> with a narrower
-<code>expected_messages</code> list in a pytest test (as in Steps 2–4), or use <code>ovoscope diff</code> with the
+about instead of the whole context. Either pass <code>assert_spoke()</code>/<code>execute()</code> with a narrower
+<code>expected_messages</code> list in a pytest test (as in Steps 2-4), or use <code>ovoscope diff</code> with the
 default (context-skipping) comparison rather than <code>--include-context</code> when comparing fixtures.</p>
 </div>
 <div class="admonition tip">
 <p class="admonition-title"><code>ovoscope record</code> from the command line</p>
-<p>The <code>ovoscope record</code> subcommand does the same capture directly from the shell —
-<code>ovoscope record --skill-id my-first.youruser --utterance "hello" --output test/fixtures/hello.json</code>
-— without writing any Python. Both routes produce the same fixture format; use whichever fits
+<p>The <code>ovoscope record</code> subcommand does the same capture directly from the shell:
+<code>ovoscope record --skill-id my-first.youruser --utterance "hello" --output test/fixtures/hello.json</code>,
+without writing any Python. Both routes produce the same fixture format. Use whichever fits
 your workflow. The Python API is handy when you want to tweak the <code>Session</code> (language,
 pipeline list) before recording.</p>
 </div>
 <h2 id="multi-turn-tests-always-re-pull-the-session">Multi-turn tests: always re-pull the session<a class="headerlink" href="#multi-turn-tests-always-re-pull-the-session" title="Permanent link">&para;</a></h2>
 <p>Session state (which skills are active for <a href="../converse/">converse</a>, context, pipeline order)
-travels <strong>inside each message</strong> and the server folds it back with last-writer-wins semantics.
-If a test builds one <code>Session</code> object and reuses it (or an old <code>.serialize()</code> snapshot) across
-several injected utterances, every later message re-stamps the stale snapshot and silently
-undoes whatever the previous turn changed — a skill activated in turn 1 will not get its
+travels <strong>inside each message</strong>, and the server folds it back with last-writer-wins semantics.</p>
+<p>If a test builds one <code>Session</code> object and reuses it (or an old <code>.serialize()</code> snapshot) across
+several injected utterances, every later message re-stamps the stale snapshot. It silently
+undoes whatever the previous turn changed: a skill activated in turn 1 will not get its
 <code>converse()</code> called in turn 2.</p>
 <p>Re-fetch the live session right before building each follow-up message:</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="kn">from</span> <span class="nn">ovos_bus_client.session</span> <span class="kn">import</span> <span class="n">SessionManager</span>
@@ -1716,7 +1716,7 @@ undoes whatever the previous turn changed — a skill activated in turn 1 will n
 </span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="n">bus</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">make_utterance_message</span><span class="p">(</span><span class="s2">&quot;book a table&quot;</span><span class="p">,</span> <span class="n">session</span><span class="o">=</span><span class="n">my_session</span><span class="p">))</span>
 </span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="c1"># ... wait for the reply ...</span>
 </span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>
-</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a><span class="c1"># turn 2 — never reuse `my_session`; pull the updated singleton instead</span>
+</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a><span class="c1"># turn 2: never reuse `my_session`, pull the updated singleton instead</span>
 </span><span id="__span-13-8"><a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a><span class="n">live</span> <span class="o">=</span> <span class="n">SessionManager</span><span class="o">.</span><span class="n">sessions</span><span class="p">[</span><span class="n">my_session</span><span class="o">.</span><span class="n">session_id</span><span class="p">]</span>
 </span><span id="__span-13-9"><a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a><span class="n">bus</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">make_utterance_message</span><span class="p">(</span><span class="s2">&quot;yes&quot;</span><span class="p">,</span> <span class="n">session</span><span class="o">=</span><span class="n">live</span><span class="p">))</span>
 </span></code></pre></div>
@@ -1747,7 +1747,7 @@ undoes whatever the previous turn changed — a skill activated in turn 1 will n
 <div class="admonition tip">
 <p class="admonition-title">A shared workflow already exists</p>
 <p>Rather than maintaining this yaml by hand in every skill repo, official OVOS skills call a
-shared, reusable ovoscope workflow instead:
+shared, reusable ovoscope workflow instead.
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="nt">jobs</span><span class="p">:</span>
 </span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="w">  </span><span class="nt">ovoscope</span><span class="p">:</span>
 </span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="w">    </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">OpenVoiceOS/gh-automations/.github/workflows/ovoscope.yml@dev</span>
@@ -1762,14 +1762,14 @@ building blocks and what each input configures.</p>
 </div>
 <h2 id="where-to-go-next">Where to go next<a class="headerlink" href="#where-to-go-next" title="Permanent link">&para;</a></h2>
 <ul>
-<li>The full <code>End2EndTest</code> API — multi-turn conversations, asserting exact message sequences,
-  session state, GUI pages, and every other harness <code>ovoscope</code> ships — lives in
+<li>The full <code>End2EndTest</code> API covers multi-turn conversations, asserting exact message sequences,
+  session state, GUI pages, and every other harness <code>ovoscope</code> ships. See
   <a href="../ovoscope-overview/">Testing Skills with ovoscope</a>.</li>
-<li>Give the skill something to extract from what the user said — see <a href="../intents/">Intent Design</a>.</li>
-<li><strong>Make it sound good and behave well</strong> — see <a href="../skill-best-practices/">Skill Best Practices</a>
+<li>Give the skill something to extract from what the user said. See <a href="../intents/">Intent Design</a>.</li>
+<li><strong>Make it sound good and behave well.</strong> See <a href="../skill-best-practices/">Skill Best Practices</a>
   and <a href="../skill-design-guidelines/">Design Guidelines</a>.</li>
-<li><strong>Publish it</strong> so others can install it — see <a href="../skill-json/#sharing-your-skill">Sharing your skill</a>.</li>
-<li>Back to the beginning — see <a href="../first-skill/">Your First Skill</a>.</li>
+<li><strong>Publish it</strong> so others can install it. See <a href="../skill-json/#sharing-your-skill">Sharing your skill</a>.</li>
+<li>Back to the beginning: see <a href="../first-skill/">Your First Skill</a>.</li>
 </ul>
 
 

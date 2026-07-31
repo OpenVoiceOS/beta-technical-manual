@@ -1131,9 +1131,9 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#listener-side-fallback-a-second-stt-engine-not-just-a-second-url" class="md-nav__link">
+  <a href="#listener-side-fallback-a-second-stt-engine-separate-from-the-url-retry" class="md-nav__link">
     <span class="md-ellipsis">
-      Listener-side fallback: a second STT engine, not just a second URL
+      Listener-side fallback: a second STT engine, separate from the URL retry
     </span>
   </a>
   
@@ -1470,9 +1470,9 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#listener-side-fallback-a-second-stt-engine-not-just-a-second-url" class="md-nav__link">
+  <a href="#listener-side-fallback-a-second-stt-engine-separate-from-the-url-retry" class="md-nav__link">
     <span class="md-ellipsis">
-      Listener-side fallback: a second STT engine, not just a second URL
+      Listener-side fallback: a second STT engine, separate from the URL retry
     </span>
   </a>
   
@@ -1531,19 +1531,25 @@
 <h1 id="openvoiceos-stt-http-server">OpenVoiceOS <a href="../stt-plugins/">STT</a> HTTP Server<a class="headerlink" href="#openvoiceos-stt-http-server" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>This is a small standalone program that turns any OVOS speech-to-text engine — the part that converts spoken audio into written text — into a web service. Once it's running, other devices on your network (or the internet) can send it audio over a simple web request and get back the transcribed text, so one capable machine can do the listening for many lightweight devices. It can even pretend to be popular cloud services (like OpenAI Whisper or Google), so software written for those works against your own server unchanged. See <a href="../stt-plugins/">STT plugins</a> and the <a href="../glossary/">Glossary</a>.</p>
+<p>This is a small standalone program that turns any OVOS speech-to-text engine into a web
+service. Speech-to-text is the part that converts spoken audio into written text. Once it's
+running, other devices on your network (or the internet) can send it audio over a simple web
+request and get back the transcribed text. This lets one capable machine do the listening for
+many lightweight devices. It can even pretend to be popular cloud services (like OpenAI
+Whisper or Google), so software written for those works against your own server unchanged.
+See <a href="../stt-plugins/">STT plugins</a> and the <a href="../glossary/">Glossary</a>.</p>
 </div>
 <p><strong>Lightweight HTTP microservice for any OVOS speech‑to‑text plugin.</strong></p>
-<p>The OpenVoiceOS STT HTTP Server wraps your chosen OVOS STT plugin inside a FastAPI service (complete with automatic language detection), making it easy to deploy on your local machine, in Docker, or behind a load balancer.</p>
+<p>The OpenVoiceOS STT HTTP Server wraps your chosen OVOS STT plugin inside a FastAPI service, complete with automatic language detection. This makes it easy to deploy on your local machine, in Docker, or behind a load balancer.</p>
 <hr />
 <h2 id="usage-guide">Usage Guide<a class="headerlink" href="#usage-guide" title="Permanent link">&para;</a></h2>
 <p><strong>Install the server</strong> </p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pip<span class="w"> </span>install<span class="w"> </span>ovos-stt-http-server
 </span></code></pre></div>
 <p><strong>Choose your STT plugin</strong></p>
-<p>You name the plugin to serve with the <code>--engine</code> flag (below). Note that — unlike a full OVOS
-install — the standalone server instantiates the plugin with an <strong>empty config</strong>, so it runs
-with the plugin's <strong>built-in defaults</strong>; it does <strong>not</strong> read the <code>stt</code> section of
+<p>You name the plugin to serve with the <code>--engine</code> flag (below). Unlike a full OVOS
+install, the standalone server instantiates the plugin with an <strong>empty config</strong>, so it runs
+with the plugin's <strong>built-in defaults</strong>. It does <strong>not</strong> read the <code>stt</code> section of
 <code>mycroft.conf</code>. Pick a plugin whose defaults suit you, or one that loads its own configuration.</p>
 <p>A normal OVOS install (not this server) selects its STT plugin under the <code>stt</code> section instead:</p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="p">{</span>
@@ -1587,7 +1593,7 @@ with the plugin's <strong>built-in defaults</strong>; it does <strong>not</stron
 </li>
 <li>
 <p><strong>Plugin wrapping</strong><br />
-<code>--engine</code> names any <code>opm.stt</code> plugin entry point (Whisper, Deepgram, etc.); it is loaded dynamically via the OVOS Plugin Manager. The server instantiates it with an empty config (built-in defaults), not the <code>stt</code> section of <code>mycroft.conf</code>.</p>
+<code>--engine</code> names any <code>opm.stt</code> plugin entry point (Whisper, Deepgram, and so on). It is loaded dynamically via the OVOS Plugin Manager. The server instantiates it with an empty config (built-in defaults), not the <code>stt</code> section of <code>mycroft.conf</code>.</p>
 </li>
 <li>
 <p><strong>Language detection</strong><br />
@@ -1599,7 +1605,7 @@ with the plugin's <strong>built-in defaults</strong>; it does <strong>not</stron
 </li>
 <li>
 <p><strong>Compatibility routers</strong><br />
-  Beyond the native endpoints, the app mounts drop-in compatible routers so existing cloud-STT clients work unchanged, e.g. Wit.ai (<code>POST /wit/speech</code>, override the SDK host with the <code>WIT_URL</code> env var), Chromium speech-api (<code>POST /speech-api/v2/recognize</code>), and routers for OpenAI Whisper, Whisper.cpp server, Deepgram, Google, AssemblyAI, Azure, IBM Watson, AWS Transcribe, Vosk, Speechmatics, Gladia, ElevenLabs Scribe, Groq and Kaldi GStreamer. See <code>/docs</code> for the authoritative set. A <code>GET /utcp</code> manual advertises the endpoints to UTCP agents, and an MCP server mounts when <code>pip install 'ovos-stt-http-server[mcp]'</code> is present.</p>
+  Beyond the native endpoints, the app mounts drop-in compatible routers so existing cloud-STT clients work unchanged. Examples are Wit.ai (<code>POST /wit/speech</code>, override the SDK host with the <code>WIT_URL</code> env var), Chromium speech-api (<code>POST /speech-api/v2/recognize</code>), and routers for OpenAI Whisper, Whisper.cpp server, Deepgram, Google, AssemblyAI, Azure, IBM Watson, AWS Transcribe, Vosk, Speechmatics, Gladia, ElevenLabs Scribe, Groq, and Kaldi GStreamer. See <code>/docs</code> for the authoritative set. A <code>GET /utcp</code> manual advertises the endpoints to UTCP agents. An MCP server mounts when <code>pip install 'ovos-stt-http-server[mcp]'</code> is present.</p>
 </li>
 <li>
 <p><strong>Scalability</strong><br />
@@ -1648,8 +1654,8 @@ with the plugin's <strong>built-in defaults</strong>; it does <strong>not</stron
 <p>Compatibility routers (selection): <code>POST /wit/speech</code> (Wit.ai), <code>POST /speech-api/v2/recognize</code> (Chromium), plus OpenAI/Deepgram/Google/etc. See <code>/docs</code> for the full list.</p>
 <h3 id="openai-compatible-translation-endpoint">OpenAI-Compatible Translation Endpoint<a class="headerlink" href="#openai-compatible-translation-endpoint" title="Permanent link">&para;</a></h3>
 <p><code>POST /openai/v1/audio/translations</code> mirrors OpenAI's Whisper translations endpoint. OpenAI's
-contract for this endpoint always returns <strong>English</strong>, regardless of the spoken language, so
-after transcribing the request runs an extra translate step using the configured OVOS
+contract for this endpoint always returns <strong>English</strong>, regardless of the spoken language. So
+after transcribing, the request runs an extra translate step using the configured OVOS
 translate plugin. If no translate plugin is configured, the endpoint falls back to returning
 the untranslated transcript instead of failing.</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>{
@@ -1669,7 +1675,7 @@ vendor-compat routers, the websocket streaming routes, MCP, and UTCP.</p>
   resolves <code>lang=auto</code> (an explicitly requested language always wins).</li>
 <li><strong>Utterance transformers</strong> rewrite the <em>transcript</em> after ASR, before it is returned.</li>
 </ul>
-<p>Loading is config-gated and opt-in via the standard <code>mycroft.conf</code> sections; with no config
+<p>Loading is config-gated and opt-in via the standard <code>mycroft.conf</code> sections. With no config
 the server behaves exactly as before:</p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="p">{</span>
 </span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">  </span><span class="nt">&quot;audio_transformers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
@@ -1680,16 +1686,16 @@ the server behaves exactly as before:</p>
 </span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="w">  </span><span class="p">}</span>
 </span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="p">}</span>
 </span></code></pre></div>
-<p>Chains run in ascending priority order; an explicit <code>"order"</code> list in a section wins over
+<p>Chains run in ascending priority order. An explicit <code>"order"</code> list in a section wins over
 priorities. In multi-model mode (<code>--multi</code>) one set of transformer instances is shared
 across the per-language engines. See the
 <a href="../transformer-plugins/">transformer plugins reference</a> for the full contract.</p>
 <div class="admonition tip">
 <p class="admonition-title">Server-side transforms are a client-invisible change</p>
 <p>An utterance transformer on the server means clients receive a <strong>different transcript</strong>
-than what the STT engine actually heard. Use it deliberately — fleet-wide vocabulary
+than what the STT engine actually heard. Use it deliberately: for fleet-wide vocabulary
 corrections, language routing via an <code>AudioLanguageDetector</code>, or server-side audio
-cleanup for thin clients — and never enable the same plugin on both the server and a
+cleanup for thin clients. Never enable the same plugin on both the server and a
 downstream OVOS stack that also runs transformers, or it will run twice.</p>
 </div>
 <hr />
@@ -1699,7 +1705,7 @@ downstream OVOS stack that also runs transformers, or it will run twice.</p>
 <p class="admonition-title">Package name vs. repository name</p>
 <p>The PyPI package is <code>ovos-stt-plugin-server</code>, but its source repository is named
 <code>OpenVoiceOS/ovos-stt-server-plugin</code> (the words are swapped). Both names refer to the same
-plugin — use the pip name to install, the repo name to find the source.</p>
+plugin. Use the pip name to install, the repo name to find the source.</p>
 </div>
 <p><strong>Install</strong>  </p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>pip<span class="w"> </span>install<span class="w"> </span>ovos-stt-plugin-server
@@ -1714,7 +1720,7 @@ target different self-hosted or cloud STT server APIs without a dedicated plugin
 <p>This STT companion plugin reads the <strong><code>urls</code></strong> key (a list of strings). The
 <a href="../tts-server/#companion-plugin">TTS companion plugin</a> reads a different key,
 <strong><code>host</code></strong>. The two are not interchangeable. If you set the wrong key, the
-plugin does not error — it silently ignores the value and falls back to the
+plugin does not error. It silently ignores the value and falls back to the
 public servers described below.</p>
 </div>
 <p><strong>Configure</strong></p>
@@ -1753,11 +1759,11 @@ receiving the request, not a public fallback.</p>
 </span></code></pre></div>
 <p>The singular <code>url</code> key (a single string or a list) is also accepted as an alias for <code>urls</code>,
 and takes precedence over <code>urls</code> when both are set. The optional <code>user_agent</code> (STT client and
-lang-detect classifier alike) overrides the request <code>User-Agent</code> sent to servers; it defaults
+lang-detect classifier alike) overrides the request <code>User-Agent</code> sent to servers. It defaults
 to the standard OVOS client UA.</p>
 <div class="admonition warning">
 <p class="admonition-title">No <code>urls</code> configured → public servers, not local failure</p>
-<p>If you omit <code>urls</code> entirely, the plugin does <strong>not</strong> fail — it silently falls back to a
+<p>If you omit <code>urls</code> entirely, the plugin does <strong>not</strong> fail. It silently falls back to a
 small built-in list of <strong>public</strong> OVOS STT servers (shuffled, tried in order) run by
 community members. That's convenient for a quick test, but it means your audio leaves your
 network by default unless you set <code>urls</code> yourself. Always set <code>urls</code> explicitly for any
@@ -1773,16 +1779,16 @@ servers entirely: fully offline plugins exist for everything.</p>
 <p>See <a href="../stt-plugins/">STT plugins</a> for fully offline engines if you'd rather not depend on any server.</p>
 <p><code>urls</code> semantics:</p>
 <ul>
-<li><strong>List, tried in order until one succeeds</strong> — if you list more than one server, the plugin
+<li><strong>List, tried in order until one succeeds</strong>: if you list more than one server, the plugin
   tries each in turn (each attempt bounded by <code>timeout</code>, default 5 seconds) and returns the
-  first successful transcription; it does not race them in parallel.</li>
+  first successful transcription. It does not race them in parallel.</li>
 <li><strong><code>timeout</code></strong> is per-attempt, in seconds, not a total budget across the whole list.</li>
 <li>A request that exhausts every URL without success raises no exception from the plugin call
-  itself — the caller (the listener, below) just gets no transcript back.</li>
+  itself. The caller (the listener, below) just gets no transcript back.</li>
 </ul>
-<h3 id="listener-side-fallback-a-second-stt-engine-not-just-a-second-url">Listener-side fallback: a second STT engine, not just a second URL<a class="headerlink" href="#listener-side-fallback-a-second-stt-engine-not-just-a-second-url" title="Permanent link">&para;</a></h3>
+<h3 id="listener-side-fallback-a-second-stt-engine-separate-from-the-url-retry">Listener-side fallback: a second STT engine, separate from the URL retry<a class="headerlink" href="#listener-side-fallback-a-second-stt-engine-separate-from-the-url-retry" title="Permanent link">&para;</a></h3>
 <p>Independent of this plugin's own multi-URL retry, <code>ovos-dinkum-listener</code> supports a completely
-separate <strong>fallback STT engine</strong> — a different plugin entirely, used only if the primary
+separate <strong>fallback STT engine</strong>. This is a different plugin entirely, used only if the primary
 engine returns no utterance. Configure it under the <code>stt</code> section:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>{
 </span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>  &quot;stt&quot;: {
@@ -1794,7 +1800,7 @@ engine returns no utterance. Configure it under the <code>stt</code> section:</p
 </span><span id="__span-11-8"><a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a>  }
 </span><span id="__span-11-9"><a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a>}
 </span></code></pre></div>
-<p>This is useful the other way around too — a fast/light primary engine locally, with a heavier
+<p>This is also useful the other way around: a fast, light primary engine locally, with a heavier
 server-backed engine as the fallback for when the light one comes back empty.</p>
 <hr />
 <h2 id="docker-deployment">Docker Deployment<a class="headerlink" href="#docker-deployment" title="Permanent link">&para;</a></h2>
@@ -1814,7 +1820,7 @@ server-backed engine as the fallback for when the light one comes back empty.</p
 <h2 id="tips-caveats">Tips &amp; Caveats<a class="headerlink" href="#tips-caveats" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
-<p><strong><code>/stt</code> takes raw audio bytes, not a multipart upload.</strong> Send the PCM/WAV bytes as the request body (<code>curl --data-binary @audio.wav</code>), and pass <code>sample_rate</code>/<code>sample_width</code> as query params if they differ from the 16000/2 defaults — those defaults are assumed when reading the raw body.</p>
+<p><strong><code>/stt</code> takes raw audio bytes, not a multipart upload.</strong> Send the PCM/WAV bytes as the request body (<code>curl --data-binary @audio.wav</code>), and pass <code>sample_rate</code>/<code>sample_width</code> as query params if they differ from the 16000/2 defaults. Those defaults are assumed when reading the raw body.</p>
 </li>
 <li>
 <p><strong>Audio Formats</strong>: Ensure client sends PCM‑compatible formats (<code>.wav</code>, <code>.mp3</code> recommended).</p>
@@ -1837,7 +1843,7 @@ server-backed engine as the fallback for when the light one comes back empty.</p
   <a href="https://certbot.eff.org/">Certbot documentation</a>). See also
   <a href="../tts-server/#tips-caveats">tts-server: reverse proxy</a> for the TTS side.</p>
 <ul>
-<li><strong>Plugin Dependencies</strong>: Some STT engines require heavy native libraries — bake them into your Docker image.</li>
+<li><strong>Plugin Dependencies</strong>: Some STT engines require heavy native libraries. Bake them into your Docker image.</li>
 </ul>
 <hr />
 <h2 id="links-references">Links &amp; References<a class="headerlink" href="#links-references" title="Permanent link">&para;</a></h2>

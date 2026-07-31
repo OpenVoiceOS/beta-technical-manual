@@ -1418,7 +1418,7 @@
 <h1 id="language-detection-and-translation-plugins">Language Detection and Translation Plugins<a class="headerlink" href="#language-detection-and-translation-plugins" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>These add-ons give OVOS two related abilities: working out <em>what language</em> some text is in, and <em>rewriting</em> text from one language into another. They power features like <a href="../bidirectional-translation/">Bidirectional Translation</a>, so your assistant can understand and reply across languages. Some run entirely offline on your device; others call an online service. You pick which ones to use in the configuration file. See the <a href="../glossary/">Glossary</a> for terms.</p>
+<p>These add-ons give OVOS two related abilities. They work out <em>what language</em> some text is in, and they <em>rewrite</em> text from one language into another. They power features like <a href="../bidirectional-translation/">Bidirectional Translation</a>, so your assistant can understand and reply across languages. Some run entirely offline on your device. Others call an online service. You pick which ones to use in the configuration file. See the <a href="../glossary/">Glossary</a> for terms.</p>
 </div>
 <p>Language detection and translation plugins let OVOS identify the language of a piece of text and translate it between languages. They are the building blocks used by features like <a href="../bidirectional-translation/">Bidirectional Translation</a>, and they can also be called directly from your own code.</p>
 <p><strong>New here?</strong> Two separate jobs are involved:</p>
@@ -1429,11 +1429,11 @@
 <p>A single package may ship one or both. In <code>mycroft.conf</code> you select them under the <code>"language"</code> section with <code>"detection_module"</code> (a detect plugin) and <code>"translation_module"</code> (a translate plugin).</p>
 <div class="admonition tip">
 <p class="admonition-title">Recommended: NLLB + fastText (offline)</p>
-<p>For offline translation, <code>ovos-translate-plugin-nllb</code> (NLLB-200) paired with
-<code>ovos-lang-detector-fasttext-plugin</code> for offline detection is the recommended default —
-both run fully on-device once their models are downloaded. <code>ovos-google-translate-plugin</code>
-or <code>ovos-translate-plugin-server</code> are a fair choice when translation coverage or quality
-matters more than keeping text off the network, or when the device doesn't have the
+<p>For offline translation, the recommended default is <code>ovos-translate-plugin-nllb</code> (NLLB-200)
+paired with <code>ovos-lang-detector-fasttext-plugin</code> for offline detection. Both run fully
+on-device once their models are downloaded. Use <code>ovos-google-translate-plugin</code> or
+<code>ovos-translate-plugin-server</code> when translation coverage or quality matters more than
+keeping text off the network. They are also a good choice when the device lacks the
 compute budget to run NLLB locally.</p>
 </div>
 <h2 id="available-language-plugins">Available Language Plugins<a class="headerlink" href="#available-language-plugins" title="Permanent link">&para;</a></h2>
@@ -1483,7 +1483,7 @@ compute budget to run NLLB locally.</p>
 <td>❌</td>
 <td>FOSS (Offline)</td>
 <td>no license file</td>
-<td>A <em>voter</em> (<code>ovos-lang-detector-plugin-voter</code>) that averages classic detectors — by default cld2, langdetect and fastlang (cld3 is also available as a separate sub-plugin).</td>
+<td>A <em>voter</em> (<code>ovos-lang-detector-plugin-voter</code>) that averages classic detectors. By default it uses cld2, langdetect and fastlang. cld3 is also available as a separate sub-plugin.</td>
 <td>Stable</td>
 </tr>
 <tr>
@@ -1497,20 +1497,20 @@ compute budget to run NLLB locally.</p>
 </tr>
 </tbody>
 </table>
-<p>Maturity reflects repository health (age, activity, open issues/PRs, in-repo docs), not version — see the <a href="../maturity/">Maturity Scale</a>.</p>
+<p>Maturity reflects repository health (age, activity, open issues/PRs, in-repo docs), not version. See the <a href="../maturity/">Maturity Scale</a>.</p>
 <div class="admonition note">
 <p class="admonition-title">License and Maturity are independent axes</p>
-<p>The <strong>License</strong> column reports what the repository itself declares (or doesn't — "no
-license file" just means no SPDX license was found, not that the code is unmature) and the
-<strong>Maturity</strong> column reports repository health (age, activity, issues/PRs, docs). A plugin can
-be <strong>Mature</strong> and still ship no license file, or be <strong>Stable</strong> with a permissive license but
-thin docs — don't read one column as implying the other.</p>
+<p>The <strong>License</strong> column reports what the repository itself declares. "No
+license file" just means no SPDX license was found, not that the code is unmature.
+The <strong>Maturity</strong> column reports repository health (age, activity, issues/PRs, docs).
+A plugin can be <strong>Mature</strong> and still ship no license file. A plugin can be <strong>Stable</strong>
+with a permissive license but thin docs. Do not read one column as implying the other.</p>
 </div>
 <blockquote>
-<p><strong>Heads up:</strong> the package repo name, the pip name, and the <strong>entry-point name you put in config</strong> are not always the same. Configure plugins by their <em>entry-point name</em> (e.g. <code>ovos-translate-plugin-server</code>, not the repo <code>ovos-translate-server-plugin</code>). The names in the table above are the entry-point names.</p>
+<p><strong>Heads up:</strong> the package repo name, the pip name, and the <strong>entry-point name you put in config</strong> are not always the same. Configure plugins by their <em>entry-point name</em> (for example <code>ovos-translate-plugin-server</code>, not the repo <code>ovos-translate-server-plugin</code>). The names in the table above are entry-point names.</p>
 </blockquote>
 <h3 id="configuring-ovos-translate-plugin-server">Configuring <code>ovos-translate-plugin-server</code><a class="headerlink" href="#configuring-ovos-translate-plugin-server" title="Permanent link">&para;</a></h3>
-<p>If you don't set anything, the client shuffles through its built-in public-server list and fails over to the next server whenever one errors or times out. To point it at your own <a href="https://github.com/OpenVoiceOS/ovos-translate-server">ovos-translate-server</a> instance(s), set <code>host</code> — a single URL, or a list of URLs for failover:</p>
+<p>If you don't set anything, the client shuffles through its built-in public-server list. It fails over to the next server whenever one errors or times out. To point it at your own <a href="https://github.com/OpenVoiceOS/ovos-translate-server">ovos-translate-server</a> instance(s), set <code>host</code>. Use a single URL, or a list of URLs for failover:</p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="p">{</span>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span><span class="nt">&quot;language&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">    </span><span class="nt">&quot;translation_module&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ovos-translate-plugin-server&quot;</span><span class="p">,</span>
@@ -1524,9 +1524,9 @@ thin docs — don't read one column as implying the other.</p>
 </span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="p">}</span>
 </span></code></pre></div>
 <ul>
-<li><strong><code>host</code></strong> — a URL string or a list of URLs. When a list, the client tries each in order on failure. Omit it to use the built-in public servers (tried in random order to spread load).</li>
-<li><strong><code>timeout</code></strong> — per-request timeout in seconds (default <code>5</code>).</li>
-<li><strong><code>skip_detection</code></strong> (translator only) — when <code>true</code>, the plugin skips the pre-translate <code>/detect/{text}</code> round-trip and lets the server infer the source language directly from the <code>/translate/{target}/{text}</code> endpoint, halving the request count when the server can self-detect. Defaults to <code>false</code>.</li>
+<li><strong><code>host</code></strong>: a URL string or a list of URLs. When a list, the client tries each in order on failure. Omit it to use the built-in public servers (tried in random order to spread load).</li>
+<li><strong><code>timeout</code></strong>: per-request timeout in seconds (default <code>5</code>).</li>
+<li><strong><code>skip_detection</code></strong> (translator only): when <code>true</code>, the plugin skips the pre-translate <code>/detect/{text}</code> round-trip. The server then infers the source language directly from the <code>/translate/{target}/{text}</code> endpoint. This halves the request count when the server can self-detect. Defaults to <code>false</code>.</li>
 </ul>
 <hr />
 <h2 id="technical-explanation">Technical Explanation<a class="headerlink" href="#technical-explanation" title="Permanent link">&para;</a></h2>
@@ -1547,7 +1547,7 @@ thin docs — don't read one column as implying the other.</p>
 </span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="k">class</span> <span class="nc">LanguageTranslator</span><span class="p">:</span>
 </span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>    <span class="k">def</span> <span class="nf">translate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">target</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 </span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>                  <span class="n">source</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Abstract — every backend implements this. Translate `text` to</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Abstract. Every backend implements this. Translate `text` to</span>
 </span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="sd">        `target`; if `source` is None the plugin detects it.&quot;&quot;&quot;</span>
 </span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>
 </span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>    <span class="nd">@classproperty</span>
@@ -1555,7 +1555,7 @@ thin docs — don't read one column as implying the other.</p>
 </span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Languages this backend supports (may be empty if unknown/dynamic).&quot;&quot;&quot;</span>
 </span></code></pre></div>
 <blockquote>
-<p><strong>Gotcha (advanced):</strong> <code>available_languages</code> is a <code>classproperty</code> and several real plugins return an empty set when the backend's language list is dynamic or unknown (e.g. <code>ovos-translate-plugin-server</code> and <code>ovos-google-translate-plugin</code>). Don't assume it is populated.</p>
+<p><strong>Gotcha (advanced):</strong> <code>available_languages</code> is a <code>classproperty</code>. Several real plugins return an empty set when the backend's language list is dynamic or unknown (for example <code>ovos-translate-plugin-server</code> and <code>ovos-google-translate-plugin</code>). Don't assume it is populated.</p>
 </blockquote>
 <h2 id="creating-your-own-plugin">Creating Your Own Plugin<a class="headerlink" href="#creating-your-own-plugin" title="Permanent link">&para;</a></h2>
 <h3 id="1-implementation-template-translator">1. Implementation Template (Translator)<a class="headerlink" href="#1-implementation-template-translator" title="Permanent link">&para;</a></h3>
@@ -1572,7 +1572,7 @@ thin docs — don't read one column as implying the other.</p>
 </span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;en&quot;</span><span class="p">,</span> <span class="s2">&quot;es&quot;</span><span class="p">,</span> <span class="s2">&quot;fr&quot;</span><span class="p">,</span> <span class="s2">&quot;de&quot;</span><span class="p">}</span>
 </span></code></pre></div>
 <h3 id="2-registration">2. Registration<a class="headerlink" href="#2-registration" title="Permanent link">&para;</a></h3>
-<p>Register your plugin in <code>pyproject.toml</code> under the correct entry-point groups. Translators use <code>opm.lang.translate</code>; detectors use <code>opm.lang.detect</code>:</p>
+<p>Register your plugin in <code>pyproject.toml</code> under the correct entry-point groups. Translators use <code>opm.lang.translate</code>. Detectors use <code>opm.lang.detect</code>:</p>
 <div class="language-toml highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="k">[project.entry-points.</span><span class="s2">&quot;opm.lang.translate&quot;</span><span class="k">]</span>
 </span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="n">my-translator</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;my_package.module:MyTranslator&quot;</span>
 </span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>

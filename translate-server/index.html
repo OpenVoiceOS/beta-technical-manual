@@ -1657,11 +1657,17 @@
 <h1 id="ovos-translate-server-http-translation-server"><code>ovos-translate-server</code> — HTTP Translation Server<a class="headerlink" href="#ovos-translate-server-http-translation-server" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>This is a small standalone program that puts OVOS's language tools — translating text between languages and guessing what language a piece of text is in — online as a web service. Other devices send it text over a simple web request and get back the translation (or the detected language), so one machine can do this work for many. It can also imitate popular translation services (like DeepL, Google Translate, or LibreTranslate), so software written for those works against your own server unchanged. See <a href="../translation-plugins/">Translation Plugins</a> and the <a href="../glossary/">Glossary</a>.</p>
+<p>This is a small standalone program. It puts OVOS's language tools online as a web service:
+translating text between languages, and guessing what language a piece of text is in. Other
+devices send it text over a simple web request and get back the translation (or the detected
+language), so one machine can do this work for many. It can also imitate popular translation
+services (like DeepL, Google Translate, or LibreTranslate), so software written for those
+works against your own server unchanged. See <a href="../translation-plugins/">Translation Plugins</a>
+and the <a href="../glossary/">Glossary</a>.</p>
 </div>
 <h2 id="what-it-does">What it Does<a class="headerlink" href="#what-it-does" title="Permanent link">&para;</a></h2>
-<p><code>ovos-translate-server</code> wraps any OVOS translation plugin and language-detection plugin and exposes them as a FastAPI HTTP service (served by <code>uvicorn</code>). It is the standard way to make OVOS language plugins available to remote clients or to use them as a microservice in a Docker-based deployment.</p>
-<p>The companion client plugin <code>ovos-translate-server-plugin</code> can point an OVOS device at this server so that translation and language detection are offloaded from the device. Left unconfigured, that client plugin falls back to a built-in list of public community-run servers rather than failing (see <a href="../translation-plugins/">Translation Plugins</a>) — set it to your own server, deployed as taught below, for anything beyond a quick test.</p>
+<p><code>ovos-translate-server</code> wraps any OVOS translation plugin and language-detection plugin. It exposes them as a FastAPI HTTP service (served by <code>uvicorn</code>). It is the standard way to make OVOS language plugins available to remote clients, or to use them as a microservice in a Docker-based deployment.</p>
+<p>The companion client plugin <code>ovos-translate-server-plugin</code> can point an OVOS device at this server so that translation and language detection are offloaded from the device. Left unconfigured, that client plugin falls back to a built-in list of public community-run servers rather than failing (see <a href="../translation-plugins/">Translation Plugins</a>). Set it to your own server, deployed as taught below, for anything beyond a quick test.</p>
 <div class="admonition warning">
 <p class="admonition-title">Community servers are best-effort demos</p>
 <p>The public OVOS servers exist for easy onboarding and demos only. They are best-effort,
@@ -1718,7 +1724,7 @@ servers entirely: fully offline plugins exist for everything.</p>
 </tr>
 </tbody>
 </table>
-<p>If <code>--detect-engine</code> is omitted, no dedicated detection plugin is loaded; <code>/detect</code> and <code>/classify</code> fall back to the translation plugin's own <code>detect()</code> / <code>detect_probs()</code> methods.</p>
+<p>If <code>--detect-engine</code> is omitted, no dedicated detection plugin is loaded. <code>/detect</code> and <code>/classify</code> fall back to the translation plugin's own <code>detect()</code> / <code>detect_probs()</code> methods.</p>
 <h3 id="python-api">Python API<a class="headerlink" href="#python-api" title="Permanent link">&para;</a></h3>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kn">import</span> <span class="nn">uvicorn</span>
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="kn">from</span> <span class="nn">ovos_translate_server</span> <span class="kn">import</span> <span class="n">start_translate_server</span>
@@ -1729,7 +1735,7 @@ servers entirely: fully offline plugins exist for everything.</p>
 </span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="p">)</span>
 </span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="n">uvicorn</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="n">host</span><span class="o">=</span><span class="s2">&quot;0.0.0.0&quot;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">9686</span><span class="p">)</span>
 </span></code></pre></div>
-<p><code>start_translate_server()</code> loads the plugins and returns <code>(app, engine)</code> where <code>app</code> is a FastAPI application; you run it with <code>uvicorn</code> (the <code>ovos-translate-server</code> CLI does exactly this). The translate and detect plugins are instantiated with an empty config (<code>config={}</code>); the server does not read plugin configuration from <code>mycroft.conf</code>.</p>
+<p><code>start_translate_server()</code> loads the plugins and returns <code>(app, engine)</code> where <code>app</code> is a FastAPI application. You run it with <code>uvicorn</code> (the <code>ovos-translate-server</code> CLI does exactly this). The translate and detect plugins are instantiated with an empty config (<code>config={}</code>). The server does not read plugin configuration from <code>mycroft.conf</code>.</p>
 <hr />
 <h2 id="http-api-endpoints">HTTP API Endpoints<a class="headerlink" href="#http-api-endpoints" title="Permanent link">&para;</a></h2>
 <p>All endpoints accept <code>GET</code> requests. There is no authentication.</p>
@@ -1843,21 +1849,21 @@ servers entirely: fully offline plugins exist for everything.</p>
 </span></code></pre></div></p>
 <hr />
 <h3 id="get-utcp"><code>GET /utcp</code><a class="headerlink" href="#get-utcp" title="Permanent link">&para;</a></h3>
-<p>Returns the UTCP (Universal Tool Calling Protocol) manual describing every HTTP endpoint, so UTCP-compatible agents can discover and invoke the translation tools. No extra dependency required.</p>
+<p>Returns the UTCP (Universal Tool Calling Protocol) manual describing every HTTP endpoint. UTCP-compatible agents can use it to discover and invoke the translation tools. No extra dependency is required.</p>
 <hr />
 <h2 id="vendor-compatible-routers">Vendor-Compatible Routers<a class="headerlink" href="#vendor-compatible-routers" title="Permanent link">&para;</a></h2>
-<p>Beyond the native endpoints above, the app mounts drop-in compatible routers so clients written for hosted translation APIs can talk to this server unchanged: DeepL, DeepLX, LibreTranslate, Lingva, Amazon Translate, Google Translate and Azure Translator. See the server's <code>/docs</code> (OpenAPI) for their exact paths.</p>
+<p>Beyond the native endpoints above, the app mounts drop-in compatible routers. Clients written for hosted translation APIs can talk to this server unchanged: DeepL, DeepLX, LibreTranslate, Lingva, Amazon Translate, Google Translate, and Azure Translator. See the server's <code>/docs</code> (OpenAPI) for their exact paths.</p>
 <hr />
 <h2 id="mcp-server">MCP Server<a class="headerlink" href="#mcp-server" title="Permanent link">&para;</a></h2>
-<p>A separate Model Context Protocol server exposes the translate/detect tools to MCP clients. It is a distinct process from the HTTP server and requires the <code>mcp</code> extra (<code>pip install 'ovos-translate-server[mcp]'</code>):</p>
+<p>A separate Model Context Protocol server exposes the translate/detect tools to MCP clients. It is a distinct process from the HTTP server. It requires the <code>mcp</code> extra (<code>pip install 'ovos-translate-server[mcp]'</code>):</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>python<span class="w"> </span>-m<span class="w"> </span>ovos_translate_server.mcp_server<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="w">  </span>--tx-engine<span class="w"> </span>ovos-translate-plugin-nllb<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">  </span>--host<span class="w"> </span><span class="m">127</span>.0.0.1<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="w">  </span>--port<span class="w"> </span><span class="m">9687</span>
 </span></code></pre></div>
-<p>It defaults to host <code>127.0.0.1</code> and port <code>9687</code> (note: different default host/port from the HTTP server's <code>0.0.0.0:9686</code>). The <code>FastMCP</code> instance can also be embedded into an existing FastAPI app.</p>
-<p>It exposes two tools: <code>translate(text, target_lang, source_lang=None)</code> (returns the translated
-string; omit <code>source_lang</code> to auto-detect) and <code>detect_language(text)</code> (returns a BCP-47 tag). A
+<p>It defaults to host <code>127.0.0.1</code> and port <code>9687</code>. Note the different default host and port from the HTTP server's <code>0.0.0.0:9686</code>. The <code>FastMCP</code> instance can also be embedded into an existing FastAPI app.</p>
+<p>It exposes two tools: <code>translate(text, target_lang, source_lang=None)</code> returns the translated
+string (omit <code>source_lang</code> to auto-detect), and <code>detect_language(text)</code> returns a BCP-47 tag. A
 minimal MCP client call to <code>translate</code> looks like:</p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="p">{</span>
 </span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;translate&quot;</span><span class="p">,</span>
@@ -1874,14 +1880,14 @@ minimal MCP client call to <code>translate</code> looks like:</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="kn">from</span> <span class="nn">ovos_plugin_manager.language</span> <span class="kn">import</span> <span class="n">load_lang_detect_plugin</span><span class="p">,</span> <span class="n">load_tx_plugin</span>
 </span></code></pre></div>
 <ul>
-<li><code>load_tx_plugin(name)</code> — looks up the <code>opm.lang.translate</code> entry-point group for the named plugin</li>
-<li><code>load_lang_detect_plugin(name)</code> — looks up the <code>opm.lang.detect</code> entry-point group</li>
+<li><code>load_tx_plugin(name)</code>: looks up the <code>opm.lang.translate</code> entry-point group for the named plugin</li>
+<li><code>load_lang_detect_plugin(name)</code>: looks up the <code>opm.lang.detect</code> entry-point group</li>
 </ul>
 <p>Both return the plugin class. Each class is instantiated with an empty config:</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="bp">self</span><span class="o">.</span><span class="n">tx</span> <span class="o">=</span> <span class="n">tx_cls</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="p">{})</span>
 </span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="bp">self</span><span class="o">.</span><span class="n">detect</span> <span class="o">=</span> <span class="n">detect_cls</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="p">{})</span>   <span class="c1"># only when --detect-engine is given</span>
 </span></code></pre></div>
-<p>The translator (<code>engine.tx</code>) and optional detector (<code>engine.detect</code>) are held on a <code>TranslateEngineWrapper</code> and used by all FastAPI route handlers. When no detection plugin is configured, <code>/detect</code> and <code>/classify</code> call the translator's own <code>detect()</code> / <code>detect_probs()</code>.</p>
+<p>The translator (<code>engine.tx</code>) and optional detector (<code>engine.detect</code>) are held on a <code>TranslateEngineWrapper</code>. All FastAPI route handlers use them. When no detection plugin is configured, <code>/detect</code> and <code>/classify</code> call the translator's own <code>detect()</code> / <code>detect_probs()</code>.</p>
 <hr />
 <h2 id="plugin-interface">Plugin Interface<a class="headerlink" href="#plugin-interface" title="Permanent link">&para;</a></h2>
 <p>Translation plugins must implement <code>LanguageTranslator</code> from <code>ovos_plugin_manager.templates.language</code>:</p>
@@ -1915,8 +1921,8 @@ minimal MCP client call to <code>translate</code> looks like:</p>
 <hr />
 <h2 id="gotchas">Gotchas<a class="headerlink" href="#gotchas" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>All endpoints are <code>GET</code> with the text in the URL path.</strong> Long or special-character utterances must be URL-encoded by the client; there is no request body and no authentication. Don't expose this server directly to untrusted networks — front it with a reverse proxy.</li>
-<li>The HTTP server (<code>9686</code>) and the optional MCP server (<code>9687</code>) are <strong>separate processes</strong> with different default hosts; running one does not start the other.</li>
+<li><strong>All endpoints are <code>GET</code> with the text in the URL path.</strong> Long or special-character utterances must be URL-encoded by the client. There is no request body and no authentication. Don't expose this server directly to untrusted networks. Front it with a reverse proxy.</li>
+<li>The HTTP server (<code>9686</code>) and the optional MCP server (<code>9687</code>) are <strong>separate processes</strong> with different default hosts. Running one does not start the other.</li>
 </ul>
 <hr />
 <h2 id="cross-references">Cross-References<a class="headerlink" href="#cross-references" title="Permanent link">&para;</a></h2>

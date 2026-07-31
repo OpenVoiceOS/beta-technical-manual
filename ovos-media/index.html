@@ -2063,22 +2063,22 @@
 <h1 id="ovos-media">ovos-media<a class="headerlink" href="#ovos-media" title="Permanent link">&para;</a></h1>
 <div class="admonition warning">
 <p class="admonition-title">Maturity — Proof-of-concept ⬤◯◯◯◯</p>
-<p>The <code>ovos-media</code> daemon is <strong>unfinished</strong> — a work in progress that is opt-in and not the default playback stack (see the Upcoming note below). For exploration only; the OCP-in-<code>ovos-audio</code> path remains the way to play media today. Rated by <a href="../maturity/">repository health</a>, not version.</p>
+<p>The <code>ovos-media</code> daemon is <strong>unfinished</strong>. It is a work in progress that is opt-in and not the default playback stack (see the Upcoming note below). For exploration only. The OCP-in-<code>ovos-audio</code> path remains the way to play media today. Rated by <a href="../maturity/">repository health</a>, not version.</p>
 </div>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p><code>ovos-media</code> is the planned future replacement for how OVOS plays music, podcasts and videos. Today, stock installs still use the older audio backend; <code>ovos-media</code> is an opt-in, work-in-progress rewrite meant to handle audio, video and web playback more cleanly and to support several players at once. If you are not deliberately trying it out, you are not using it yet — this page describes where things are heading. See the <a href="../ocp-pipeline/">OCP Pipeline</a> for how playback requests are recognized, or the <a href="../glossary/">Glossary</a> for terms.</p>
+<p><code>ovos-media</code> is the planned future replacement for how OVOS plays music, podcasts and videos. Today, stock installs still use the older audio backend. <code>ovos-media</code> is an opt-in, work-in-progress rewrite meant to handle audio, video and web playback more cleanly and to support several players at once. If you are not deliberately trying it out, you are not using it yet. This page describes where things are heading. See the <a href="../ocp-pipeline/">OCP Pipeline</a> for how playback requests are recognized, or the <a href="../glossary/">Glossary</a> for terms.</p>
 </div>
 <details class="info">
 <summary>📐 Formal specification</summary>
 <p>Media playback is specified by two architecture documents:
 <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/ocp-1.md">OVOS-OCP-1 — OVOS Common Playback</a></strong>
-defines the per-session <strong>virtual media player</strong> — the single logical
+defines the per-session <strong>virtual media player</strong>, the single logical
 player every "play / pause / next / louder / stop" command targets, plus
-the MPRIS bridge to and from the host OS — while
+the MPRIS bridge to and from the host OS. Meanwhile,
 <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/audio-out.md">OVOS-AUDIO-1 — Audio Output Service</a></strong>
 defines the <strong>output service</strong> that actually renders queued audio. OCP-1
-fixes the <em>observable control surface</em>; how a URI becomes bytes on a
+fixes the <em>observable control surface</em>. How a URI becomes bytes on a
 speaker is a backend concern. <code>ovos-media</code> is the implementation moving
 toward that contract. For the full set see the
 <strong><a href="../architecture-specs/">spec index</a></strong>.</p>
@@ -2087,7 +2087,7 @@ toward that contract. For the full set see the
 <p class="admonition-title">Upcoming — a refactor that is not the default yet</p>
 <p><code>ovos-media</code> is the <strong>upcoming</strong> media-playback service for OVOS, still being refactored.
 It is <strong>not enabled by default</strong>. Today, stock installs play media through the <strong>legacy
-audio backend</strong> — the <a href="../media-plugins/#ovos-ocp-audio-plugin"><code>ovos-ocp-audio-plugin</code></a>
+audio backend</strong>, the <a href="../media-plugins/#ovos-ocp-audio-plugin"><code>ovos-ocp-audio-plugin</code></a>
 ("old audio service") inside <a href="../audio-service/"><code>ovos-audio</code></a>, which is <strong>deprecated but
 still shipped</strong>. Switching to <code>ovos-media</code> is opt-in (see below) and some parts are still
 coupled (Qt5 GUI, player-as-skill). Treat this page as the <em>target architecture</em>.</p>
@@ -2122,7 +2122,7 @@ search framework (pipeline + skills + extractors):</p>
 </tr>
 <tr>
 <td><strong>Extras</strong></td>
-<td>—</td>
+<td>none</td>
 <td>MPRIS, per-session state, multiple players</td>
 </tr>
 <tr>
@@ -2132,13 +2132,13 @@ search framework (pipeline + skills + extractors):</p>
 </tr>
 </tbody>
 </table>
-<p>The OCP <strong>pipeline</strong> and <strong>stream extractors</strong> are unaffected by which backend you use —
-only the <em>playback</em> layer differs. (OCP <strong>skills</strong> are a separate, longer-term change —
-see the next note.)</p>
+<p>The OCP <strong>pipeline</strong> and <strong>stream extractors</strong> are unaffected by which backend you use.
+Only the <em>playback</em> layer differs. (OCP <strong>skills</strong> are a separate, longer-term change.
+See the next note.)</p>
 </div>
 <div class="admonition info">
 <p class="admonition-title">Upcoming — MediaProvider plugins replace OCP skills</p>
-<p>Media catalogs are moving <strong>out of skills and into plugins</strong>: a new <strong>MediaProvider</strong> plugin
+<p>Media catalogs are moving <strong>out of skills and into plugins</strong>. A new <strong>MediaProvider</strong> plugin
 type (<code>opm.media.provider</code> / <code>PluginTypes.MEDIA_PROVIDER</code>) that the OCP pipeline loads
 <strong>in-process</strong> and calls <code>search()</code> on directly, in place of today's
 <a href="../ocp-skills/">OCP skills</a>. This first ships in <strong><code>ovos-plugin-manager 2.8.0a1</code></strong>
@@ -2146,9 +2146,9 @@ type (<code>opm.media.provider</code> / <code>PluginTypes.MEDIA_PROVIDER</code>)
 Tracked in <a href="https://github.com/OpenVoiceOS/ovos-workshop/pull/423">ovos-workshop#423</a>.</p>
 </div>
 <p><code>ovos-media</code> is the standalone audio/video daemon for OpenVoiceOS. It is the <strong>upcoming
-replacement</strong> for the legacy audio service, providing a more robust and modular media player
+replacement</strong> for the legacy audio service, and it provides a more capable and modular media player
 built on the OpenVoiceOS <a href="../ocp-pipeline/">Common Play</a> (<a href="../ocp-pipeline/">OCP</a>) framework.</p>
-<p><strong>In plain terms:</strong> the old audio service could only play one kind of stream through a thin wrapper. <code>ovos-media</code> is a proper media daemon: it has separate audio/video/web players you pick per request, supports MPRIS (so your phone's media controls work), and keeps per-session state so multiple devices can each play their own thing.</p>
+<p><strong>In plain terms:</strong> the old audio service could only play one kind of stream through a thin wrapper. <code>ovos-media</code> is a proper media daemon. It has separate audio/video/web players you pick per request. It supports MPRIS, so your phone's media controls work, and it keeps per-session state so multiple devices can each play their own thing.</p>
 <p>To use <code>ovos-media</code> you need to disable the old audio service and enable the OCP pipeline in <code>ovos-core</code>:</p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="p">{</span>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span><span class="nt">&quot;enable_old_audioservice&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
@@ -2172,7 +2172,7 @@ built on the OpenVoiceOS <a href="../ocp-pipeline/">Common Play</a> (<a href="..
 <hr />
 <h2 id="architecture">Architecture<a class="headerlink" href="#architecture" title="Permanent link">&para;</a></h2>
 <p>OCP (OVOS Common Play) splits into a <strong>search/match layer</strong> and a <strong>playback layer</strong>. The search
-layer — the <a href="../ocp-pipeline/"><code>ocp-pipeline</code></a>, OCP skills (media catalogs), and stream extractors —
+layer, made up of the <a href="../ocp-pipeline/"><code>ocp-pipeline</code></a>, OCP skills (media catalogs), and stream extractors,
 is shared regardless of which playback layer you run. The playback layer has two implementations
 that currently run in parallel: the legacy <a href="../media-plugins/#ovos-ocp-audio-plugin">"old audio service"</a>
 (<code>ovos-ocp-audio-plugin</code> inside <a href="../audio-service/"><code>ovos-audio</code></a>) and the standalone <code>ovos-media</code>
@@ -2186,35 +2186,35 @@ daemon described here, which is the target:</p>
 </span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>    ├── Player state machine (OCPMediaPlayer)
 </span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>    ├── MPRIS
 </span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>    ├── Media backend plugins
-</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>    └── GUI (still coupled — target: GUI adapter plugins)
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>    └── GUI (still coupled, target: GUI adapter plugins)
 </span></code></pre></div>
 <hr />
 <h2 id="ocp-pipeline-plugin">OCP Pipeline Plugin<a class="headerlink" href="#ocp-pipeline-plugin" title="Permanent link">&para;</a></h2>
 <p><strong>Package:</strong> import name <code>ocp_pipeline</code> (PyPI distribution <code>ovos-ocp-pipeline-plugin</code>)
 <strong>Entry point group:</strong> <code>opm.pipeline</code>
-<strong>Class:</strong> <code>OCPPipelineMatcher</code> (entry point <code>ovos-ocp-pipeline-plugin</code>); the legacy bridge is <code>MycroftCPSLegacyPipeline</code> (<code>ovos-ocp-pipeline-plugin-legacy</code>)</p>
+<strong>Class:</strong> <code>OCPPipelineMatcher</code> (entry point <code>ovos-ocp-pipeline-plugin</code>). The legacy bridge is <code>MycroftCPSLegacyPipeline</code> (<code>ovos-ocp-pipeline-plugin-legacy</code>)</p>
 <p>The OCP pipeline plugin is the NLP brain of the media stack. It integrates with <code>ovos-core</code>'s
 intent pipeline, handles all media query classification, and dispatches search to OCP skills.
 It does NOT handle playback.</p>
 <h3 id="what-it-does">What It Does<a class="headerlink" href="#what-it-does" title="Permanent link">&para;</a></h3>
 <ol>
 <li>
-<p><strong>Classification</strong> — determines the media type (music, podcast, radio, video, audiobook, news, etc.)
+<p><strong>Classification</strong>: determines the media type (music, podcast, radio, video, audiobook, news, etc.)
    using a trained <code>AhocorasickNER</code> classifier and vocabulary files from <code>ocp_pipeline/locale/</code>.</p>
 </li>
 <li>
-<p><strong>Search dispatch</strong> — emits <code>ovos.common_play.query</code> on the bus. All registered OCP skills
+<p><strong>Search dispatch</strong>: emits <code>ovos.common_play.query</code> on the bus. All registered OCP skills
    respond with <code>ovos.common_play.query.response</code>, providing <code>MediaEntry</code>/<code>Playlist</code> objects scored 0–100.</p>
 </li>
 <li>
-<p><strong>Result selection</strong> — collects responses up to a timeout, sorts by score, picks the best result.</p>
+<p><strong>Result selection</strong>: collects responses up to a timeout, sorts by score, picks the best result.</p>
 </li>
 <li>
-<p><strong>Playback routing</strong> — emits <code>ovos.common_play.play</code> with the selected result to the active player.</p>
+<p><strong>Playback routing</strong>: emits <code>ovos.common_play.play</code> with the selected result to the active player.</p>
 </li>
 </ol>
 <h3 id="per-session-player-state">Per-<a href="../session/">Session</a> Player State<a class="headerlink" href="#per-session-player-state" title="Permanent link">&para;</a></h3>
-<p>The pipeline plugin tracks one <code>OCPPlayerProxy</code> per session — important for <a href="../hivemind-agents/">HiveMind</a> where each
+<p>The pipeline plugin tracks one <code>OCPPlayerProxy</code> per session. This matters for <a href="../hivemind-agents/">HiveMind</a>, where each
 satellite has its own player:</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nd">@dataclass</span>
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="k">class</span> <span class="nc">OCPPlayerProxy</span><span class="p">:</span>
@@ -2227,7 +2227,7 @@ satellite has its own player:</p>
 </span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>    <span class="n">skill_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 </span></code></pre></div>
 <h3 id="pipeline-configuration">Pipeline Configuration<a class="headerlink" href="#pipeline-configuration" title="Permanent link">&para;</a></h3>
-<p>The OCP matcher contributes several confidence-ranked pipeline stages — <code>ovos-ocp-pipeline-plugin-high</code>, <code>-medium</code>, <code>-low</code>, plus <code>ovos-ocp-pipeline-plugin-legacy</code> for old-style CommonPlay skills. Place them at the appropriate confidence tier in your pipeline:</p>
+<p>The OCP matcher contributes several confidence-ranked pipeline stages: <code>ovos-ocp-pipeline-plugin-high</code>, <code>-medium</code>, <code>-low</code>, plus <code>ovos-ocp-pipeline-plugin-legacy</code> for old-style CommonPlay skills. Place them at the appropriate confidence tier in your pipeline:</p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="p">{</span>
 </span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">  </span><span class="nt">&quot;intents&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 </span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">    </span><span class="nt">&quot;pipeline&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
@@ -2341,23 +2341,23 @@ satellite has its own player:</p>
 <p>Key modules:</p>
 <ul>
 <li>
-<p><code>ovos_media/player.py</code> — <code>OCPMediaPlayer</code>, the player state machine (playlist, track history, playback/media/loop state); <code>OCPMediaCatalog</code> (an <code>OVOSCommonPlaybackSkill</code> subclass, instantiated as <code>self.media</code>) manages only the liked-songs store and search-results playlist</p>
+<p><code>ovos_media/player.py</code>: <code>OCPMediaPlayer</code>, the player state machine (playlist, track history, playback/media/loop state). <code>OCPMediaCatalog</code> (an <code>OVOSCommonPlaybackSkill</code> subclass, instantiated as <code>self.media</code>) manages only the liked-songs store and search-results playlist</p>
 </li>
 <li>
-<p><code>ovos_media/media_backends/</code> — <code>AudioService</code>, <code>VideoService</code>, <code>WebService</code> — each manages typed backend plugins</p>
+<p><code>ovos_media/media_backends/</code>: <code>AudioService</code>, <code>VideoService</code>, <code>WebService</code>. Each manages typed backend plugins</p>
 </li>
 <li>
-<p><code>ovos_media/player.py</code> — uses a <code>GUIInterface</code> from <code>ovos-gui-api-client</code> (<code>self.gui.show_media_player(...)</code>) to push player state via the template API (the old <code>ovos_media/gui.py</code> / <code>OCPGUIInterface</code> is gone)</p>
+<p><code>ovos_media/player.py</code>: uses a <code>GUIInterface</code> from <code>ovos-gui-api-client</code> (<code>self.gui.show_media_player(...)</code>) to push player state via the template API (the old <code>ovos_media/gui.py</code> / <code>OCPGUIInterface</code> is gone)</p>
 </li>
 <li>
-<p><code>ovos_media/mpris.py</code> — MPRIS integration</p>
+<p><code>ovos_media/mpris.py</code>: MPRIS integration</p>
 </li>
 </ul>
 <h3 id="available-media-backend-plugins">Available Media Backend Plugins<a class="headerlink" href="#available-media-backend-plugins" title="Permanent link">&para;</a></h3>
 <p>Media backends are typed: audio players register on the <code>opm.media.audio</code> entry-point group,
 video players on <code>opm.media.video</code>, and web players on <code>opm.media.web</code>. They are configured under
 <code>media.audio_players</code> / <code>media.video_players</code> / <code>media.web_players</code> (see the config example below).</p>
-<p>The table below lists the <strong>pip package</strong> to install; each package registers one entry point per
+<p>The table below lists the <strong>pip package</strong> to install. Each package registers one entry point per
 type it supports, named <code>ovos-media-&lt;type&gt;-plugin-&lt;name&gt;</code> (e.g. the <code>ovos-media-plugin-vlc</code>
 package registers <code>ovos-media-audio-plugin-vlc</code> and <code>ovos-media-video-plugin-vlc</code>). You configure
 the player by its entry-point name.</p>
@@ -2383,7 +2383,7 @@ the player by its entry-point name.</p>
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/ovos-media-plugin-cli"><code>ovos-media-plugin-cli</code></a></td>
 <td>audio</td>
-<td>Generic CLI-command player — minimal/default audio fallback</td>
+<td>Generic CLI-command player, minimal/default audio fallback</td>
 </tr>
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/ovos-media-plugin-spotify"><code>ovos-media-plugin-spotify</code></a></td>
@@ -2398,52 +2398,52 @@ the player by its entry-point name.</p>
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/ovos-media-plugin-qt5"><code>ovos-media-plugin-qt5</code></a></td>
 <td>audio, video, web</td>
-<td>Hand off to the <a href="../gui-service/">GUI</a> player — <strong>legacy</strong>, depends on the deprecated <a href="../ovos-shell/">ovos-shell</a> (see <a href="../gui-status/">GUI status</a>)</td>
+<td>Hand off to the <a href="../gui-service/">GUI</a> player. <strong>Legacy</strong>, depends on the deprecated <a href="../ovos-shell/">ovos-shell</a> (see <a href="../gui-status/">GUI status</a>)</td>
 </tr>
 </tbody>
 </table>
 <h3 id="stream-extractor-plugins">Stream Extractor Plugins<a class="headerlink" href="#stream-extractor-plugins" title="Permanent link">&para;</a></h3>
-<p>OCP supports stream extractor plugins (<code>opm.ocp.extractor</code> entry-point group; the older
+<p>OCP supports stream extractor plugins (<code>opm.ocp.extractor</code> entry-point group. The older
 <code>ovos.ocp.extractor</code> group is a deprecated alias) that transform non-playable URIs into playable
 streams before handing them to the media backend:</p>
 <ul>
 <li>
-<p><code>ovos-ocp-youtube-plugin</code> — extracts audio stream from YouTube URLs</p>
+<p><code>ovos-ocp-youtube-plugin</code>: extracts audio stream from YouTube URLs</p>
 </li>
 <li>
-<p><code>ovos-ocp-m3u-plugin</code> — parses M3U playlists</p>
+<p><code>ovos-ocp-m3u-plugin</code>: parses M3U playlists</p>
 </li>
 <li>
-<p><code>ovos-ocp-rss-plugin</code> — parses podcast RSS feeds</p>
+<p><code>ovos-ocp-rss-plugin</code>: parses podcast RSS feeds</p>
 </li>
 </ul>
 <hr />
 <h2 id="media-intents">Media Intents<a class="headerlink" href="#media-intents" title="Permanent link">&para;</a></h2>
 <p>These are the utterances the <a href="#pipeline-configuration">OCP pipeline plugin</a> described above
 actually matches, at whichever confidence tier (<code>-high</code> / <code>-medium</code> / <code>-low</code>) it's configured
-for — before the regular intent stage, OCP handles these utterances (taking into account
+for. Before the regular intent stage, OCP handles these utterances (taking into account
 current player state):</p>
 <ul>
 <li>
-<p><code>"play {query}"</code> — always available</p>
+<p><code>"play {query}"</code>: always available</p>
 </li>
 <li>
-<p><code>"previous"</code> — requires media loaded</p>
+<p><code>"previous"</code>: requires media loaded</p>
 </li>
 <li>
-<p><code>"next"</code> — requires media loaded</p>
+<p><code>"next"</code>: requires media loaded</p>
 </li>
 <li>
-<p><code>"pause"</code> — requires media loaded</p>
+<p><code>"pause"</code>: requires media loaded</p>
 </li>
 <li>
-<p><code>"play"</code> / <code>"resume"</code> — requires media loaded</p>
+<p><code>"play"</code> / <code>"resume"</code>: requires media loaded</p>
 </li>
 <li>
-<p><code>"stop"</code> — requires media loaded</p>
+<p><code>"stop"</code>: requires media loaded</p>
 </li>
 <li>
-<p><code>"I like that song"</code> — requires music playing</p>
+<p><code>"I like that song"</code>: requires music playing</p>
 </li>
 </ul>
 <hr />
@@ -2501,7 +2501,7 @@ players interchangeably.</p>
 </span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>
 </span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>    // message sources trusted to bypass per-session validation
 </span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>    &quot;native_sources&quot;: [&quot;debug_cli&quot;, &quot;audio&quot;],
-</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>    // when true, the daemon only acts on the local (&quot;default&quot;) session —
+</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>    // when true, the daemon only acts on the local (&quot;default&quot;) session.
 </span><span id="__span-9-10"><a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a>    // set false for HiveMind/multi-session setups that drive playback remotely
 </span><span id="__span-9-11"><a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a>    &quot;validate_source&quot;: true,
 </span><span id="__span-9-12"><a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a>
@@ -2521,19 +2521,19 @@ players interchangeably.</p>
 </span></code></pre></div>
 <blockquote>
 <p>The <code>gui</code> / <code>browser</code> module names shown in earlier drafts are not real
-backends — the bundled players are <code>vlc</code>, <code>mplayer</code>, <code>cli</code>, <code>spotify</code>,
+backends. The bundled players are <code>vlc</code>, <code>mplayer</code>, <code>cli</code>, <code>spotify</code>,
 <code>chromecast</code>, and the legacy <code>qt5</code> GUI hand-off (see the
 <a href="#available-media-backend-plugins">backend table</a>).</p>
 </blockquote>
-<p>Each entry's key is a local name; <code>module</code> is the plugin's <strong>entry-point name</strong>
+<p>Each entry's key is a local name. <code>module</code> is the plugin's <strong>entry-point name</strong>
 (e.g. <code>ovos-media-audio-plugin-vlc</code>), which can differ from its pip package name
-(<code>ovos-media-plugin-vlc</code>). <code>preferred_*_services</code> are ordered fallback lists; the
+(<code>ovos-media-plugin-vlc</code>). <code>preferred_*_services</code> are ordered fallback lists. The
 audio list is also the generic fallback when a type-specific list is empty. To
 hand playback to the legacy GUI player, add the <code>qt5</code> entry points
-(<code>ovos-media-audio-plugin-qt5</code>, <code>…-video-plugin-qt5</code>, <code>…-web-plugin-qt5</code>) — that
+(<code>ovos-media-audio-plugin-qt5</code>, <code>…-video-plugin-qt5</code>, <code>…-web-plugin-qt5</code>). That
 backend is legacy and needs the deprecated <a href="../ovos-shell/">ovos-shell</a>.</p>
 <p>Other <code>media.*</code> keys read by the player (all optional): <code>autoplay</code> (default
-<code>true</code> — play the next queued track automatically), <code>merge_search</code> (fold new
+<code>true</code>, play the next queued track automatically), <code>merge_search</code> (fold new
 search results into the active playlist vs. replacing it), and
 <code>force_audioservice</code> (route audio through the audio backend even when a GUI is
 available).</p>
@@ -2554,7 +2554,7 @@ available).</p>
 </tr>
 <tr>
 <td><code>ovos.common_play.ping</code></td>
-<td>Liveness probe — lets callers detect a running <code>ovos-media</code></td>
+<td>Liveness probe. Lets callers detect a running <code>ovos-media</code></td>
 </tr>
 <tr>
 <td><code>ovos.common_play.search.start</code> / <code>ovos.common_play.search.end</code></td>
@@ -2592,11 +2592,11 @@ plugin includes a bridge:</p>
 <h3 id="ocpmediacatalog-is-a-skill">OCPMediaCatalog is a skill<a class="headerlink" href="#ocpmediacatalog-is-a-skill" title="Permanent link">&para;</a></h3>
 <p><code>OCPMediaCatalog</code> in <code>ovos_media/player.py</code> inherits from <code>OVOSCommonPlaybackSkill</code>. This registers
 <code>ovos-media</code> as a skill on the bus and loads skill infrastructure (settings, locale, etc.). It
-registers <code>@ocp_search()</code> to expose liked songs as a search result; there is no
+registers <code>@ocp_search()</code> to expose liked songs as a search result. There is no
 <code>@ocp_featured_media()</code> handler.</p>
 <h3 id="no-nextprev-in-some-backends">No next/prev in some backends<a class="headerlink" href="#no-nextprev-in-some-backends" title="Permanent link">&para;</a></h3>
 <p>The Music Assistant audio backend does not implement <code>next()</code> or <code>previous()</code> through the legacy
-<code>AudioBackend</code> interface — only through the MA queue API.</p>
+<code>AudioBackend</code> interface. Only through the MA queue API.</p>
 <hr />
 <h2 id="features">Features<a class="headerlink" href="#features" title="Permanent link">&para;</a></h2>
 <h3 id="liked-songs">Liked Songs<a class="headerlink" href="#liked-songs" title="Permanent link">&para;</a></h3>

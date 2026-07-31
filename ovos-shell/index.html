@@ -1665,7 +1665,7 @@
 </div>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p><code>ovos-shell</code> is the old on-screen interface for OVOS — the full-screen app that draws the assistant's face, status, settings panel and skill screens on devices with a display (like the Mark 2). It is the <em>legacy</em> GUI: deprecated, effectively broken today, and being replaced by a ground-up rework. This page is kept mainly for reference and for maintaining existing Mark 2 devices. See the <a href="../glossary/">Glossary</a> for unfamiliar terms.</p>
+<p><code>ovos-shell</code> is the old on-screen interface for OVOS. It is the full-screen app that draws the assistant's face, status, settings panel, and skill screens on devices with a display (like the Mark 2). It is the <em>legacy</em> GUI: deprecated, effectively broken today, and being replaced by a ground-up rework. This page is kept mainly for reference and for maintaining existing Mark 2 devices. See the <a href="../glossary/">Glossary</a> for unfamiliar terms.</p>
 </div>
 <div class="admonition danger">
 <p class="admonition-title">The OVOS GUI is deprecated — see <a href="../gui-status/">Screens on OVOS Today</a> for the full picture</p>
@@ -1676,14 +1676,14 @@ and a replacement is <strong>Upcoming</strong>.</p>
 shell application</strong> for OVOS on embedded and desktop devices (Mark 2, Raspberry Pi with
 touchscreen, laptop). It wraps the <code>mycroft-gui-qt5</code> library (<code>Mycroft 1.0</code> <a href="../qt5-gui/">QML</a> module)
 inside a full-screen, frameless Kirigami application window.</p>
-<p>It is distinct from the standalone <code>mycroft-gui-qt5</code> developer app: <code>ovos-shell</code> provides
-the production UI chrome — status indicator, sliding quick-settings panel, notifications,
-OSD, splash screen, pairing/OAuth loaders, and shutdown dialog — while delegating all skill
-rendering to <code>Mycroft.SkillView</code>. The idle screen itself is supplied by a homescreen
-skill (see <a href="../homescreen/">Home Screen</a>), not by the shell.</p>
+<p>It is distinct from the standalone <code>mycroft-gui-qt5</code> developer app. <code>ovos-shell</code> provides
+the production UI chrome (status indicator, sliding quick-settings panel, notifications,
+OSD, splash screen, pairing/OAuth loaders, and shutdown dialog), while it delegates all skill
+rendering to <code>Mycroft.SkillView</code>. A homescreen skill supplies the idle screen itself
+(see <a href="../homescreen/">Home Screen</a>), not the shell.</p>
 <blockquote>
 <p><strong>Voice First.</strong> The visual interface is always secondary to the voice interface.
-All interactions should be completable with voice alone; touchscreen controls supplement
+All interactions should be completable with voice alone. Touchscreen controls supplement
 but never replace voice.</p>
 </blockquote>
 <hr />
@@ -1717,7 +1717,7 @@ but never replace voice.</p>
 <tbody>
 <tr>
 <td><code>mycroft-gui-qt5</code></td>
-<td><code>Mycroft 1.0</code> QML module — <code>SkillView</code>, <code>MycroftController</code>, system templates</td>
+<td><code>Mycroft 1.0</code> QML module: <code>SkillView</code>, <code>MycroftController</code>, system templates</td>
 </tr>
 <tr>
 <td>Qt5 (≥ 5.12)</td>
@@ -1737,14 +1737,14 @@ but never replace voice.</p>
 </tr>
 </tbody>
 </table>
-<p><code>ovos-shell</code> does not bundle skill-page QML itself. Skill pages and the built-in
-<code>SYSTEM_*</code> pages are resolved by the <code>Mycroft.SkillView</code> runtime from <code>mycroft-gui-qt5</code>.</p>
+<p><code>ovos-shell</code> does not bundle skill-page QML itself. The <code>Mycroft.SkillView</code> runtime from
+<code>mycroft-gui-qt5</code> resolves skill pages and the built-in <code>SYSTEM_*</code> pages.</p>
 <hr />
 <h2 id="component-responsibilities">Component Responsibilities<a class="headerlink" href="#component-responsibilities" title="Permanent link">&para;</a></h2>
 <h3 id="mainqml"><code>main.qml</code><a class="headerlink" href="#mainqml" title="Permanent link">&para;</a></h3>
 <ul>
 <li>
-<p>Root <code>Kirigami.AbstractApplicationWindow</code> — full screen, frameless</p>
+<p>Root <code>Kirigami.AbstractApplicationWindow</code>: full screen, frameless</p>
 </li>
 <li>
 <p>Monitors <code>Mycroft.MycroftController.status</code> to restart GUI/skill service watchers</p>
@@ -1756,8 +1756,8 @@ but never replace voice.</p>
 <p>Hosts <code>StatusIndicator</code>, <code>ListenerAnimation</code>, <code>SlidingPanel</code>, notification popups, OSD</p>
 </li>
 <li>
-<p>When the skill stack is empty, the shell shows a plain background image; the actual idle
-  screen is drawn by a homescreen skill rendered through <code>Mycroft.SkillView</code>:</p>
+<p>When the skill stack is empty, the shell shows a plain background image. A homescreen skill
+  draws the actual idle screen, rendered through <code>Mycroft.SkillView</code>:</p>
 </li>
 </ul>
 <div class="language-qml highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nx">Image</span> <span class="p">{</span>
@@ -1803,8 +1803,8 @@ but never replace voice.</p>
 <hr />
 <h2 id="homescreen-idle-screen">Homescreen (Idle Screen)<a class="headerlink" href="#homescreen-idle-screen" title="Permanent link">&para;</a></h2>
 <p>The shell does not draw the idle screen itself. When the namespace stack is empty it shows
-a plain background image; the actual homescreen is provided by a skill (default
-<code>skill-ovos-homescreen.openvoiceos</code>) whose resting-screen page is rendered through
+a plain background image. A skill (default <code>skill-ovos-homescreen.openvoiceos</code>) provides the
+actual homescreen, and its resting-screen page renders through
 <code>Mycroft.SkillView</code>. Skills register idle screens with <code>@resting_screen_handler</code>. See
 <a href="../homescreen/">Home Screen</a> for the configuration and the resting-screen API.</p>
 <div class="admonition warning">
@@ -1826,8 +1826,8 @@ remains the supported mechanism on released OVOS. A Qt6 client successor is in d
 (standard KConfig format).</p>
 <div class="admonition tip">
 <p class="admonition-title">Start here</p>
-<p>Most users only ever touch the <code>[ColorScheme]</code> group — <code>primaryColor</code>, <code>secondaryColor</code>,
-<code>textColor</code>, and <code>themeStyle</code> — either directly in this file or through the quick-settings
+<p>Most users only ever touch the <code>[ColorScheme]</code> group (<code>primaryColor</code>, <code>secondaryColor</code>,
+<code>textColor</code>, and <code>themeStyle</code>) either directly in this file or through the quick-settings
 panel. The <code>[SelectedScheme]</code> keys are managed automatically and rarely need to be edited
 by hand.</p>
 </div>
@@ -1926,7 +1926,7 @@ emits <code>schemeListChanged()</code> when files are added or removed.</p>
 <p><em>(Both GIFs are hosted in the <a href="https://github.com/OpenVoiceOS/ovos_assets">OpenVoiceOS/ovos_assets</a> repo and verified reachable.)</em></p>
 <hr />
 <h2 id="companion-plugins">Companion Plugins<a class="headerlink" href="#companion-plugins" title="Permanent link">&para;</a></h2>
-<p>To unlock full functionality, configure <code>ovos-gui-plugin-shell-companion</code> in
+<p>To enable full functionality, configure <code>ovos-gui-plugin-shell-companion</code> in
 <code>mycroft.conf</code>. This plugin integrates with <code>ovos-gui</code> to provide:</p>
 <ul>
 <li>
@@ -1980,7 +1980,7 @@ recommendation for new setups.</p>
 <hr />
 <h2 id="qt-version-policy">Qt Version Policy<a class="headerlink" href="#qt-version-policy" title="Permanent link">&para;</a></h2>
 <p>This repository targets <strong>Qt5</strong> and links against <code>mycroft-gui-qt5</code>. Do not introduce
-Qt6-only API into this repository; a <code>mycroft-gui-qt6</code> client is developed as its own
+Qt6-only API into this repository. A <code>mycroft-gui-qt6</code> client is developed as its own
 project (see the <a href="../gui-adapters/">GUI Adapter Plugins</a> rework) rather than as a fork of
 <code>ovos-shell</code> itself.</p>
 

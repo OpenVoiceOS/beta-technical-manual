@@ -1592,32 +1592,38 @@
 <h1 id="transformer-plugins">Transformer Plugins<a class="headerlink" href="#transformer-plugins" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>As your voice travels through the assistant — from raw sound, to written words, to a matched request, to the spoken reply — transformer plugins are optional helpers that can tidy or tweak the information at each step. Think of them as filters on an assembly line: one might clean up background noise, another might fix a misheard word before the system tries to understand it. They don't take over any step; they just polish what passes between steps. See the <a href="../glossary/">Glossary</a> for related terms.</p>
+<p>Your voice travels through the assistant: from raw sound, to written words, to a matched
+request, to the spoken reply. Transformer plugins are optional helpers that can tidy or tweak
+the information at each step. Think of them as filters on an assembly line. One might clean
+up background noise. Another might fix a misheard word before the system tries to understand
+it. They don't take over any step. They just polish what passes between steps. See the
+<a href="../glossary/">Glossary</a> for related terms.</p>
 </div>
 <details class="info">
 <summary>📐 Formal specification</summary>
-<p>The transformer subsystem is specified by <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/transformer.md">OVOS-TRANSFORM-1 — Transformer Plugins</a></strong> (one of the formal <a href="../architecture-specs/">architecture specs</a>). It defines <strong>six ordered chains</strong> — <code>audio</code>, <code>utterance</code>, <code>metadata</code>, <code>intent</code>, <code>dialog</code>, <code>tts</code> — that run at fixed points in the utterance lifecycle, the per-type input/output contract for each, the per-session ordering and denylist overrides, and the utterance-cancellation signal. A transformer is identified by its <code>(type, transformer_id)</code> pair. Where this manual or the current code diverges from the spec, the spec is canonical.</p>
-<p><strong>Ordering.</strong> OVOS-TRANSFORM-1 §4 orders each chain by <strong>ascending</strong> <code>priority</code>: a lower number runs <strong>earlier</strong>, the default is <code>50</code>. The current OVOS code follows this: a plugin with <code>priority=1</code> runs first, and later plugins see and may override its output. A legacy descending order is still available as an explicit opt-in (<code>sort_ascending=False</code>, marked deprecated in <code>ovos_plugin_manager/transformer_services.py</code>) for deployments that depend on the old behavior.</p>
+<p>The transformer subsystem is specified by <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/transformer.md">OVOS-TRANSFORM-1: Transformer Plugins</a></strong> (one of the formal <a href="../architecture-specs/">architecture specs</a>). It defines <strong>six ordered chains</strong>, <code>audio</code>, <code>utterance</code>, <code>metadata</code>, <code>intent</code>, <code>dialog</code>, <code>tts</code>, that run at fixed points in the utterance lifecycle. It also defines the per-type input/output contract for each, the per-session ordering and denylist overrides, and the utterance-cancellation signal. A transformer is identified by its <code>(type, transformer_id)</code> pair. Where this manual or the current code diverges from the spec, the spec is canonical.</p>
+<p><strong>Ordering.</strong> OVOS-TRANSFORM-1 §4 orders each chain by <strong>ascending</strong> <code>priority</code>. A lower number runs <strong>earlier</strong>, and the default is <code>50</code>. The current OVOS code follows this: a plugin with <code>priority=1</code> runs first, and later plugins see and may override its output. A legacy descending order is still available as an explicit opt-in (<code>sort_ascending=False</code>, marked deprecated in <code>ovos_plugin_manager/transformer_services.py</code>) for deployments that depend on the old behavior.</p>
 </details>
-<p>Transformer plugins let you intercept and modify data as it flows through the transformer chain. Each type is a small class with a <code>transform()</code> method that runs at a fixed stage — turning raw audio into cleaner audio, fixing transcribed text before intent matching, enriching a matched intent, or post-processing speech before playback.</p>
-<p>A transformer never <em>replaces</em> a stage; it sits between two stages and reshapes what passes through. Several plugins of the same type can be active at once — they run in sequence, lowest <code>priority</code> first, so each one builds on the output of the previous.</p>
+<p>Transformer plugins let you intercept and modify data as it flows through the transformer chain. Each type is a small class with a <code>transform()</code> method that runs at a fixed stage. Examples are turning raw audio into cleaner audio, fixing transcribed text before intent matching, enriching a matched intent, or post-processing speech before playback.</p>
+<p>A transformer never <em>replaces</em> a stage. It sits between two stages and reshapes what passes through. Several plugins of the same type can be active at once. They run in sequence, lowest <code>priority</code> first, so each one builds on the output of the previous.</p>
 <div class="admonition note">
 <p class="admonition-title">Synchronous contract — keep transformers fast</p>
-<p><code>transform()</code> (and <code>on_audio()</code>/<code>on_speech()</code>) are plain synchronous methods; the chain
+<p><code>transform()</code> (and <code>on_audio()</code>/<code>on_speech()</code>) are plain synchronous methods. The chain
 runner calls each one inline, in order, on the thread that owns the chain. A slow
-transformer blocks the owning service for its full duration — there is no background
+transformer blocks the owning service for its full duration. There is no background
 execution or timeout. This matters most for <code>AudioTransformer</code>, which sits on the
-real-time audio path: keep its work fast and offload anything heavy (model inference,
+real-time audio path. Keep its work fast, and offload anything heavy (model inference,
 network calls) to a background thread/process instead of doing it inside <code>transform()</code>.</p>
-<p>There is no async return path back into the chain: <code>transform()</code> is called inline and
+<p>There is no async return path back into the chain. <code>transform()</code> is called inline and
 must return before the chain can proceed, so it cannot await a background job's result
 mid-chain. "Offload the heavy work" only helps if <code>transform()</code> can return
 cached/previous data immediately on each call, while the background thread/process
-updates that cache for the <em>next</em> call to pick up — the current call never blocks on
+updates that cache for the <em>next</em> call to pick up. The current call never blocks on
 the background job finishing.</p>
 </div>
 <h2 id="transformer-types">Transformer Types<a class="headerlink" href="#transformer-types" title="Permanent link">&para;</a></h2>
-<p>All base classes live in <code>ovos_plugin_manager.templates.transformers</code> and share the same constructor: <code>__init__(self, name, priority=50, config=None)</code>, plus <code>bind(bus)</code> and <code>initialize()</code>. The loader (<code>TransformersService.load_plugins()</code> in <code>ovos_plugin_manager.transformer_services</code>) only ever instantiates a plugin as <code>plug(config=plugin_config)</code> — it does not pass <code>name</code> or <code>priority</code>. Since the base class has no default for <code>name</code>, every plugin must override <code>__init__</code> to supply its own <code>name</code> (and usually a default <code>priority</code>), and must call <code>super().__init__(name, priority, config)</code> so the base class still gets them. A <code>"priority"</code> key in a plugin's <code>mycroft.conf</code> block is not applied automatically — the plugin must read it back out of <code>self.config</code> itself if it wants deployments to override priority (see <a href="../utterance-transformers/#config-driven-priority">Utterance Transformers — Config-driven priority</a>).</p>
+<p>All base classes live in <code>ovos_plugin_manager.templates.transformers</code> and share the same constructor: <code>__init__(self, name, priority=50, config=None)</code>, plus <code>bind(bus)</code> and <code>initialize()</code>. The loader (<code>TransformersService.load_plugins()</code> in <code>ovos_plugin_manager.transformer_services</code>) only ever instantiates a plugin as <code>plug(config=plugin_config)</code>. It does not pass <code>name</code> or <code>priority</code>. Since the base class has no default for <code>name</code>, every plugin must override <code>__init__</code> to supply its own <code>name</code> (and usually a default <code>priority</code>). Each plugin must call <code>super().__init__(name, priority, config)</code> so the base class still gets them.</p>
+<p>A <code>"priority"</code> key in a plugin's <code>mycroft.conf</code> block is not applied automatically. The plugin must read it back out of <code>self.config</code> itself if it wants deployments to override priority (see <a href="../utterance-transformers/#config-driven-priority">Utterance Transformers: Config-driven priority</a>).</p>
 <table>
 <thead>
 <tr>
@@ -1666,7 +1672,7 @@ the background job finishing.</p>
 </tr>
 </tbody>
 </table>
-<p>The runner classes that load and chain these plugins — <code>UtteranceTransformersService</code>, <code>MetadataTransformersService</code>, <code>IntentTransformersService</code>, <code>AudioTransformersService</code>, <code>DialogTransformersService</code>, <code>TTSTransformersService</code> — live in <code>ovos-plugin-manager</code> (<code>ovos_plugin_manager.transformer_services</code>). Each consumer imports the one it needs: <code>ovos-core</code> runs the utterance/metadata/intent chains, the listener the audio chain, and the audio/TTS stacks the dialog/TTS chains.</p>
+<p>The runner classes that load and chain these plugins live in <code>ovos-plugin-manager</code> (<code>ovos_plugin_manager.transformer_services</code>): <code>UtteranceTransformersService</code>, <code>MetadataTransformersService</code>, <code>IntentTransformersService</code>, <code>AudioTransformersService</code>, <code>DialogTransformersService</code>, <code>TTSTransformersService</code>. Each consumer imports the one it needs. <code>ovos-core</code> runs the utterance/metadata/intent chains, the listener runs the audio chain, and the audio/TTS stacks run the dialog/TTS chains.</p>
 <hr />
 <h2 id="1-audio-transformers">1. Audio Transformers<a class="headerlink" href="#1-audio-transformers" title="Permanent link">&para;</a></h2>
 <p><strong>Entry point:</strong> <code>opm.transformer.audio</code></p>
@@ -1733,9 +1739,9 @@ the background job finishing.</p>
 </span></code></pre></div>
 <p>The discovery helpers (<code>find_*_transformer_plugins</code>, <code>load_*_transformer_plugin</code>) live in
 <code>ovos_plugin_manager.text_transformers</code>, <code>.intent_transformers</code>, <code>.metadata_transformers</code>,
-<code>.audio_transformers</code>, and <code>.dialog_transformers</code> (the dialog module also exposes the
-<code>find_tts_transformer_plugins</code> / <code>load_tts_transformer_plugin</code> helpers — there is no
-separate <code>tts_transformers</code> module).</p>
+<code>.audio_transformers</code>, and <code>.dialog_transformers</code>. The dialog module also exposes the
+<code>find_tts_transformer_plugins</code> / <code>load_tts_transformer_plugin</code> helpers. There is no
+separate <code>tts_transformers</code> module.</p>
 <h2 id="creating-a-plugin">Creating a Plugin<a class="headerlink" href="#creating-a-plugin" title="Permanent link">&para;</a></h2>
 <ol>
 <li>
@@ -1754,7 +1760,7 @@ separate <code>tts_transformers</code> module).</p>
 <div class="admonition note">
 <p class="admonition-title">No config-discovery entry point for transformers</p>
 <p>TTS and STT plugins can register a second entry point (<code>opm.tts.config</code>, <code>opm.stt.config</code>)
-that exposes sample configurations for UI discovery — see
+that exposes sample configurations for UI discovery. See
 <a href="../tts-plugins/#entry-point">TTS Plugins — Entry point</a>. <code>ovos-plugin-manager</code>'s
 <code>PluginConfigTypes</code> enum has no matching entry for any transformer type (audio, utterance,
 metadata, intent, dialog, or tts transformers). A transformer plugin only registers under
@@ -1842,7 +1848,7 @@ restart OVOS.</p>
 </tr>
 <tr>
 <td><a href="#ovos-tts-transformer-sox-plugin">ovos-tts-transformer-sox-plugin</a></td>
-<td>This repository contains a Python package for a Text-to-Speech (TTS) transformer that utilizes SoX (Sound eXchange) for audio processing. The transformer applies various effects to the generated audio before playback.</td>
+<td>A Text-to-Speech (TTS) transformer that uses SoX (Sound eXchange) for audio processing. The transformer applies various effects to the generated audio before playback.</td>
 <td>Beta</td>
 </tr>
 <tr>
@@ -1857,7 +1863,7 @@ restart OVOS.</p>
 </tr>
 </tbody>
 </table>
-<p>Maturity reflects repository health (age, activity, open issues/PRs, in-repo docs), not version — see the <a href="../maturity/">Maturity Scale</a>.</p>
+<p>Maturity reflects repository health (age, activity, open issues/PRs, in-repo docs), not version. See the <a href="../maturity/">Maturity Scale</a>.</p>
 <h2 id="ovos-dialog-normalizer-plugin">ovos-dialog-normalizer-plugin<a class="headerlink" href="#ovos-dialog-normalizer-plugin" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
@@ -1934,7 +1940,7 @@ restart OVOS.</p>
 <p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-tts-transformer-sox-plugin">https://github.com/OpenVoiceOS/ovos-tts-transformer-sox-plugin</a></p>
 </li>
 <li>
-<p><strong>Description</strong>: This repository contains a Python package for a Text-to-Speech (TTS) transformer that utilizes SoX (Sound eXchange) for audio processing. The transformer applies various effects to the generated audio before playback.</p>
+<p><strong>Description</strong>: A Text-to-Speech (TTS) transformer that uses SoX (Sound eXchange) for audio processing. The transformer applies various effects to the generated audio before playback.</p>
 </li>
 </ul>
 <hr />
@@ -1944,7 +1950,7 @@ restart OVOS.</p>
 <p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos_tts_transformer_FlashSR">https://github.com/OpenVoiceOS/ovos_tts_transformer_FlashSR</a></p>
 </li>
 <li>
-<p><strong>Description</strong>: ONNX-based audio super-resolution TTS transformer (<code>FlashSRTTSTransformer</code>); upsamples synthesized audio before playback, downloading its model from the Hugging Face Hub. Entry point <code>ovos-tts-transformer-FlashSR</code> under <code>opm.transformer.tts</code>. <strong>Upcoming</strong> — not yet published to PyPI.</p>
+<p><strong>Description</strong>: ONNX-based audio super-resolution TTS transformer (<code>FlashSRTTSTransformer</code>). It upsamples synthesized audio before playback, downloading its model from the Hugging Face Hub. Entry point <code>ovos-tts-transformer-FlashSR</code> under <code>opm.transformer.tts</code>. <strong>Upcoming</strong>: not yet published to PyPI.</p>
 </li>
 </ul>
 <hr />
@@ -1954,7 +1960,7 @@ restart OVOS.</p>
 <p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos_tts_transformer_NovaSR">https://github.com/OpenVoiceOS/ovos_tts_transformer_NovaSR</a></p>
 </li>
 <li>
-<p><strong>Description</strong>: torch-based super-resolution upsampler TTS transformer (<code>NovaSRTTSTransformer</code>). Entry point <code>ovos-tts-transformer-NovaSR</code> under <code>opm.transformer.tts</code>. <strong>Upcoming</strong> — not yet published to PyPI.</p>
+<p><strong>Description</strong>: torch-based super-resolution upsampler TTS transformer (<code>NovaSRTTSTransformer</code>). Entry point <code>ovos-tts-transformer-NovaSR</code> under <code>opm.transformer.tts</code>. <strong>Upcoming</strong>: not yet published to PyPI.</p>
 </li>
 </ul>
 <hr />

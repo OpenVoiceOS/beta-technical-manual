@@ -1379,21 +1379,21 @@
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
 <p>You said something to OVOS and nothing happened. This page is a decision tree for finding out
-why. It follows the same journey as <a href="../life-of-an-utterance/">The Life of an Utterance</a> — mic,
-wake word, speech-to-text, intent matching, skill, text-to-speech — and at each stop shows where
+why. It follows the same journey as <a href="../life-of-an-utterance/">The Life of an Utterance</a>: mic,
+wake word, speech-to-text, intent matching, skill, text-to-speech. At each stop it shows where
 the evidence lives (which log file, which bus message), what a healthy result looks like, and
-the exact command to check it yourself. No programming background required to follow along;
-deeper technical detail is layered in as the page goes.</p>
+the exact command to check it yourself. No programming background is required to follow along.
+Deeper technical detail is layered in as the page goes.</p>
 </div>
 <p>Every stage below can be checked two ways: <strong>tail a log file</strong> (works everywhere, including headless
 boxes over SSH), or <strong>watch the bus live</strong> with <code>ovos-busmon</code> (works anywhere a browser can reach the
-device, and shows every stage in one place instead of six log files). Start with the logs — they
-need no extra install — then reach for <code>ovos-busmon</code> when you want everything in one filterable view.</p>
+device, and shows every stage in one place instead of six log files). Start with the logs. They
+need no extra install. Then reach for <code>ovos-busmon</code> when you want everything in one filterable view.</p>
 <hr />
 <h2 id="where-the-logs-live">Where the logs live<a class="headerlink" href="#where-the-logs-live" title="Permanent link">&para;</a></h2>
 <p>OVOS runs several independent services (listener, intent/skills, audio, messagebus, GUI), and each
 one writes its <strong>own</strong> log file, named after the service. By default they land under the XDG state
-directory — on a typical Linux install that is:</p>
+directory. On a typical Linux install that is:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>~/.local/state/mycroft/
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>├── audio.log     # ovos-audio — TTS + playback
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>├── bus.log       # ovos-messagebus
@@ -1403,11 +1403,11 @@ directory — on a typical Linux install that is:</p>
 </span></code></pre></div>
 <div class="admonition note">
 <p class="admonition-title">Where <code>ovos.log</code> comes from</p>
-<p>The shared logger (<code>ovos-utils</code>) names its log file after whatever service name was set;
-if a process never sets one — a one-off script, a plugin running standalone, or a service
-started before it calls its own name-setting step — it falls back to the logger's own
-default name, <code>OVOS</code>, lower-cased to <code>ovos.log</code>. Seeing this file usually just means some
-component is logging under the generic default rather than its own service log.</p>
+<p>The shared logger (<code>ovos-utils</code>) names its log file after whatever service name was set.
+If a process never sets one, such as a one-off script, a plugin running standalone, or a
+service started before it calls its own name-setting step, it falls back to the logger's
+own default name, <code>OVOS</code>, lower-cased to <code>ovos.log</code>. Seeing this file usually just means
+some component is logging under the generic default rather than its own service log.</p>
 </div>
 <p>The directory can be overridden per-service via the <code>logs.path</code> config key (or <code>logging.&lt;service&gt;.
 logs.path</code> for a per-service override); see <a href="#turning-up-log-detail">Turning up log detail</a> below.
@@ -1429,7 +1429,7 @@ the bus as a client and streams every one of those messages live to a browser ta
 filterable, searchable timeline.</p>
 <div class="admonition note">
 <p class="admonition-title">Bus messages, not logs</p>
-<p><code>ovos-busmon</code> shows <strong>live bus messages only</strong> — it does <strong>not</strong> parse the log files. It
+<p><code>ovos-busmon</code> shows <strong>live bus messages only</strong>. It does <strong>not</strong> parse the log files. It
 complements the log tooling (<a href="../cli-tools/#reading-the-logs-ovos-logs"><code>ovos-logs</code></a> and the
 per-service <code>*.log</code> files), it doesn't replace it. For a terminal-based <strong>log</strong> viewer, the
 community project <a href="https://github.com/andlo/ovos-tui-client">ovos-tui-client</a> reads the OVOS
@@ -1438,7 +1438,7 @@ logs directly.</p>
 <div class="admonition tip">
 <p class="admonition-title">Zero-install demo</p>
 <p>A hosted static build is available at
-<a href="https://openvoiceos.github.io/ovos-busmon/">openvoiceos.github.io/ovos-busmon</a> — no <code>pip
+<a href="https://openvoiceos.github.io/ovos-busmon/">openvoiceos.github.io/ovos-busmon</a>. No <code>pip
 install</code> needed. Because it's the <strong>static-page</strong> build (not the FastAPI-backed server), the
 browser connects straight to the bus itself, so it only works when the <strong>browser runs on the
 same machine as OVOS</strong>. For remote or multi-device use, run the full <code>pip install ovos-busmon</code>
@@ -1453,15 +1453,15 @@ the messagebus and keeps an in-memory ring buffer of everything it sees. The bro
 <li>pause/resume capture and sort newest/oldest first</li>
 <li>export the captured buffer as JSON/JSONL for later inspection</li>
 <li>inject an arbitrary message onto the bus from the UI (the same trick as <code>ovos-say-to</code>, but visual)</li>
-<li>group the live stream into a <strong>timeline</strong> — per-session, expandable traces with category badges, so
-  you can follow a single utterance across Stages 2–5 as one interaction instead of scanning the raw feed</li>
-<li>type an utterance into the <strong>chat panel</strong> (<code>POST /api/chat</code>) — it emits a <code>recognizer_loop:utterance</code>
+<li>group the live stream into a <strong>timeline</strong>: per-session, expandable traces with category badges, so
+  you can follow a single utterance across Stages 2-5 as one interaction instead of scanning the raw feed</li>
+<li>type an utterance into the <strong>chat panel</strong> (<code>POST /api/chat</code>). It emits a <code>recognizer_loop:utterance</code>
   with a stable session ID (so multi-turn/converse works), letting you replay a failing interaction
   deterministically without speaking</li>
 </ul>
 <p>There is also a zero-install mode: the UI is a single static page that can open a WebSocket straight
-to <code>ws://&lt;device&gt;:8181/core</code> with no server component at all — useful for a one-off look without
-installing anything.</p>
+to <code>ws://&lt;device&gt;:8181/core</code> with no server component at all. This is useful for a one-off look
+without installing anything.</p>
 <h3 id="installing-and-running-it">Installing and running it<a class="headerlink" href="#installing-and-running-it" title="Permanent link">&para;</a></h3>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>pip<span class="w"> </span>install<span class="w"> </span>ovos-busmon
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>ovos-busmon
@@ -1510,9 +1510,9 @@ where you run it):</p>
 <code>jarbasai/ovos-busmon:latest</code>; its bundled compose file binds the container to <code>127.0.0.1:8005</code> only
 and sets <code>OVOS_BUS_HOST=host.docker.internal</code> so it can reach a bus running on the host.</p>
 <div class="admonition warning">
-<p class="admonition-title">Local debugging only — never expose this to the internet</p>
-<p><code>ovos-busmon</code> mirrors <strong>every</strong> message on the bus — including STT transcripts, intent matches,
-and skill responses — and ships with a default username/password (<code>ovos</code> / <code>ovos</code>) that most
+<p class="admonition-title">Local debugging only: never expose this to the internet</p>
+<p><code>ovos-busmon</code> mirrors <strong>every</strong> message on the bus, including STT transcripts, intent matches,
+and skill responses. It ships with a default username/password (<code>ovos</code> / <code>ovos</code>) that most
 people never change. Its message-injection feature also lets anyone who can reach it emit
 arbitrary commands onto your assistant's bus. Keep it bound to <code>127.0.0.1</code> or your local LAN,
 change the default credentials before leaving it running, and never port-forward it to the
@@ -1520,27 +1520,27 @@ public internet.</p>
 </div>
 <h3 id="a-concrete-walkthrough">A concrete walkthrough<a class="headerlink" href="#a-concrete-walkthrough" title="Permanent link">&para;</a></h3>
 <ol>
-<li>Start <code>ovos-busmon</code> — it comes up even if the bus is unreachable, but does <strong>not</strong> auto-retry the
+<li>Start <code>ovos-busmon</code>. It comes up even if the bus is unreachable, but does <strong>not</strong> auto-retry the
    connection, so start it once the OVOS device is up (or restart busmon after the bus is running).</li>
 <li>Open <code>http://127.0.0.1:8005</code> in a browser and log in with the configured credentials.</li>
 <li>Speak (or trigger) an utterance on the OVOS device.</li>
-<li>Filter by <code>recognizer_loop:*</code> — the first hit is the raw utterance leaving the listener
+<li>Filter by <code>recognizer_loop:*</code>. The first hit is the raw utterance leaving the listener
    (Stage 2 below); if nothing appears here, the problem is upstream of the bus entirely (Stage 1).</li>
-<li>Filter by <code>ovos.intent.matched</code> and <code>ovos.utterance.handled</code> — these tell you which pipeline
+<li>Filter by <code>ovos.intent.matched</code> and <code>ovos.utterance.handled</code>. These tell you which pipeline
    stage claimed the utterance and confirm the lifecycle actually closed (Stage &#8536; below).</li>
-<li>Filter by <code>ovos.utterance.speak</code> — its absence, with everything else present, points at a silent
+<li>Filter by <code>ovos.utterance.speak</code>. Its absence, with everything else present, points at a silent
    skill handler; its presence with no audio points at the TTS/playback stage (Stage 6).</li>
 </ol>
 <p>Each stage further down cites the exact message type to filter on, so this same walkthrough can be
 repeated stage-by-stage instead of glancing at the whole stream at once.</p>
 <hr />
 <h2 id="stage-1-is-the-service-even-running-and-is-the-bus-reachable">Stage 1 — Is the service even running, and is the bus reachable?<a class="headerlink" href="#stage-1-is-the-service-even-running-and-is-the-bus-reachable" title="Permanent link">&para;</a></h2>
-<p><strong>Log:</strong> <code>bus.log</code> — <strong>Bus visual:</strong> any message appearing at all in <code>ovos-busmon</code></p>
+<p><strong>Log:</strong> <code>bus.log</code>. <strong>Bus visual:</strong> any message appearing at all in <code>ovos-busmon</code></p>
 <p>Before anything else, confirm the <a href="../bus-service/">messagebus</a> server is up: everything else in
 OVOS is a client of it, so if it is down nothing downstream can work.</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>ovos-listen
 </span></code></pre></div>
-<p><code>ovos-listen</code> is the simplest possible probe — it just emits <code>mycroft.mic.listen</code> and exits. If the
+<p><code>ovos-listen</code> is the simplest possible probe. It just emits <code>mycroft.mic.listen</code> and exits. If the
 bus isn't reachable, the client itself logs the failure to the terminal:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>WARNING - Connection Refused. Is Messagebus Service running?
 </span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>WARNING - Message Bus Client will reconnect in 5.0 seconds.
@@ -1548,19 +1548,19 @@ bus isn't reachable, the client itself logs the failure to the terminal:</p>
 <p>If you see that, start (or restart) <code>ovos-messagebus</code>, then <code>ovos-core</code> and <code>ovos-dinkum-listener</code>,
 and check <code>bus.log</code> for a clean startup (no repeated <code>Connection Refused</code> lines). Clients
 reconnect on their own with a backing-off retry (5 s → 60 s cap), so a bus restart does <strong>not</strong>
-require restarting every client by hand — see <a href="../bus-service/#bus-restart-reconnect-behavior">Bus restart / reconnect
+require restarting every client by hand. See <a href="../bus-service/#bus-restart-reconnect-behavior">Bus restart / reconnect
 behavior</a> for exactly what to expect while they
 recover. In <code>ovos-busmon</code>,
 this stage is trivially visible: if the bus was down when busmon started, its connection never came
-up (busmon does not auto-retry) and the stream stays empty — restart busmon once the bus is back.</p>
+up (busmon does not auto-retry) and the stream stays empty. Restart busmon once the bus is back.</p>
 <div class="admonition tip">
 <p class="admonition-title">Nothing wrong with the mic yet</p>
-<p>This stage says nothing about audio hardware — it only confirms the messagebus itself accepts
+<p>This stage says nothing about audio hardware. It only confirms the messagebus itself accepts
 connections. Hardware problems show up in Stage 2.</p>
 </div>
 <hr />
 <h2 id="stage-2-did-the-micwake-word-fire">Stage 2 — Did the mic/wake word fire?<a class="headerlink" href="#stage-2-did-the-micwake-word-fire" title="Permanent link">&para;</a></h2>
-<p><strong>Log:</strong> <code>voice.log</code> (service <code>ovos-dinkum-listener</code>) — <strong>Bus filter:</strong> <code>recognizer_loop:record_begin</code>
+<p><strong>Log:</strong> <code>voice.log</code> (service <code>ovos-dinkum-listener</code>). <strong>Bus filter:</strong> <code>recognizer_loop:record_begin</code>
 / <code>record_end</code>, <code>ovos.listener.record.started</code> / <code>ovos.listener.record.ended</code></p>
 <p>A healthy wake-word trigger and recording cycle looks like this in <code>voice.log</code>:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>DEBUG - Record begin
@@ -1608,7 +1608,7 @@ connections. Hardware problems show up in Stage 2.</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>ovos-config<span class="w"> </span><span class="nb">set</span><span class="w"> </span>-k<span class="w"> </span>save_utterances<span class="w"> </span>-v<span class="w"> </span><span class="nb">true</span>
 </span></code></pre></div>
 <p>These files are raw recordings of everything the microphone picked up, and they stay on disk
-until you delete them — nothing prunes the directory. Turn both keys back off and clear
+until you delete them. Nothing prunes the directory. Turn both keys back off and clear
 <code>&lt;save_path&gt;</code> once you have finished debugging. See
 <a href="../privacy-security/#what-is-written-to-disk">Privacy &amp; Security</a> for what the listener writes
 to disk by default.</p>
@@ -1616,7 +1616,7 @@ to disk by default.</p>
 useful for isolating STT problems (Stage 3) from wake-word problems.</p>
 <hr />
 <h2 id="stage-3-did-stt-produce-text">Stage 3 — Did STT produce text?<a class="headerlink" href="#stage-3-did-stt-produce-text" title="Permanent link">&para;</a></h2>
-<p><strong>Log:</strong> <code>voice.log</code> — <strong>Bus filter:</strong> <code>recognizer_loop:utterance</code> (spec name <code>ovos.utterance.handle</code>)</p>
+<p><strong>Log:</strong> <code>voice.log</code>. <strong>Bus filter:</strong> <code>recognizer_loop:utterance</code> (spec name <code>ovos.utterance.handle</code>)</p>
 <p>Once recording stops, the audio is handed to the <a href="../stt-plugins/">STT plugin</a>. A healthy
 transcription shows up as:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>DEBUG - STT: [&#39;what time is it&#39;]
@@ -1649,14 +1649,14 @@ text directly onto the bus as if STT had already produced it:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>ovos-say-to<span class="w"> </span><span class="s2">&quot;what time is it&quot;</span>
 </span></code></pre></div>
 <p>This runs <code>MessageBusClient().emit(Message("recognizer_loop:utterance", {"utterances": ["what time
-is it"], "lang": "en-us"}))</code> — exactly the same message the listener would have emitted. It is the
+is it"], "lang": "en-us"}))</code>, exactly the same message the listener would have emitted. It is the
 single most useful command for isolating "is my problem in audio, or in matching/skills?" without
 having to speak into a microphone at all.</p>
 <p>In <code>ovos-busmon</code>, filter by <code>recognizer_loop:*</code> (or the spec name <code>ovos.utterance.handle</code>): seeing
 the utterance land there with the right text confirms STT worked, regardless of what happens next.</p>
 <hr />
 <h2 id="stage-4-which-pipeline-stage-matched-or-didnt">Stage 4 — Which pipeline stage matched (or didn't)?<a class="headerlink" href="#stage-4-which-pipeline-stage-matched-or-didnt" title="Permanent link">&para;</a></h2>
-<p><strong>Log:</strong> <code>skills.log</code> (or <code>intents.log</code> if the intent service runs standalone) — <strong>Bus filter:</strong>
+<p><strong>Log:</strong> <code>skills.log</code> (or <code>intents.log</code> if the intent service runs standalone). <strong>Bus filter:</strong>
 <code>ovos.intent.matched</code>, <code>ovos.utterance.handled</code></p>
 <p><code>ovos-core</code>'s <code>IntentService</code> logs every step of matching. A healthy match looks like:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>INFO - Parsing utterance: [&#39;what time is it&#39;]
@@ -1686,18 +1686,18 @@ utterance falls through to the next stage, and eventually to nothing:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>ovos-say-to<span class="w"> </span><span class="s2">&quot;some phrase that does nothing&quot;</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>ovos-logs<span class="w"> </span>show<span class="w"> </span>-l<span class="w"> </span>skills
 </span></code></pre></div>
 <p>Every request ends with exactly one <code>ovos.utterance.handled</code> event, whether an intent matched or
-not — its absence means the intent service itself crashed or hung; its presence with no matched
+not. Its absence means the intent service itself crashed or hung; its presence with no matched
 intent means every pipeline plugin genuinely rejected the utterance (usually a vocabulary/training
 data problem in the target skill, not a bug). See <a href="../layers/">Intent Layers</a> and the
 <a href="../pipelines-overview/">Pipelines Overview</a> for how to add or reorder matchers.</p>
 <p>In <code>ovos-busmon</code>, filter by <code>ovos.intent.matched</code> (see which skill/intent name claimed it) or by
-<code>ovos.utterance.handled</code> (confirm the lifecycle closed at all) — this reproduces the same
+<code>ovos.utterance.handled</code> (confirm the lifecycle closed at all). This reproduces the same
 information as the log grep above but across the whole pipeline at a glance, and lets you inspect
 the full JSON payload of the match.</p>
 <hr />
 <h2 id="stage-5-did-the-skill-handler-raise">Stage 5 — Did the skill handler raise?<a class="headerlink" href="#stage-5-did-the-skill-handler-raise" title="Permanent link">&para;</a></h2>
-<p><strong>Log:</strong> <code>skills.log</code> — <strong>Bus filter:</strong> <code>ovos.intent.handler.error</code> (legacy <code>mycroft.skill.handler.
-error</code>) — part of the handler-lifecycle trio <code>...handler.start</code> → <code>...complete</code> / <code>...error</code>
+<p><strong>Log:</strong> <code>skills.log</code>. <strong>Bus filter:</strong> <code>ovos.intent.handler.error</code> (legacy <code>mycroft.skill.handler.
+error</code>). Part of the handler-lifecycle trio <code>...handler.start</code> → <code>...complete</code> / <code>...error</code>
 described in <a href="../life-of-an-utterance/#5-skill-execution">The Life of an Utterance</a></p>
 <p>Once a skill's intent handler is invoked, any unhandled exception inside it is caught by the skill
 base class, logged, and (unless disabled) spoken back as a generic error dialog:</p>
@@ -1732,7 +1732,7 @@ failed rather than silently returning nothing. Common failure signatures to grep
 every skill in one view, or filter by the specific skill's ID to isolate its traffic.</p>
 <hr />
 <h2 id="stage-6-did-tts-speak">Stage 6 — Did TTS speak?<a class="headerlink" href="#stage-6-did-tts-speak" title="Permanent link">&para;</a></h2>
-<p><strong>Log:</strong> <code>audio.log</code> (service <code>ovos-audio</code>) — <strong>Bus filter:</strong> <code>ovos.utterance.speak</code> (legacy
+<p><strong>Log:</strong> <code>audio.log</code> (service <code>ovos-audio</code>). <strong>Bus filter:</strong> <code>ovos.utterance.speak</code> (legacy
 <code>speak</code>), <code>ovos.utterance.handled</code></p>
 <p>Once a skill calls <code>self.speak()</code>, <code>ovos-audio</code> picks up the message. A healthy synthesis + playback
 cycle logs:</p>
@@ -1782,7 +1782,7 @@ absent (with everything upstream present) points at a silent or failed skill han
 <div class="admonition note">
 <p class="admonition-title"><code>ovos-config set</code> only edits keys that already exist somewhere</p>
 <p><code>ovos-config set -k log_level -v DEBUG</code> looks for <code>log_level</code> in the <em>currently merged</em>
-configuration first, and on a fresh install nothing ships that key by default — so the
+configuration first, and on a fresh install nothing ships that key by default. So the
 command fails with <code>Error: No key that fits the query</code> before you've ever set a log level.
 The reliable first-time path is to add the key directly to your user config file
 (<code>~/.config/mycroft/mycroft.conf</code>, creating it if it doesn't exist yet):</p>
@@ -1795,7 +1795,7 @@ this way once), <code>ovos-config set -k log_level -v DEBUG</code> will find and
 </div>
 <p>This applies to every service (they all watch the same configuration and pick up the change
 without a restart). To raise the level for only one service, add the nested <code>"logging"</code> section
-instead — the same first-time caveat applies, so add it directly to the user config file:</p>
+instead. The same first-time caveat applies, so add it directly to the user config file:</p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="p">{</span>
 </span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="w">  </span><span class="nt">&quot;logging&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 </span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="w">    </span><span class="nt">&quot;voice&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;log_level&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;DEBUG&quot;</span><span class="w"> </span><span class="p">}</span>
@@ -1805,14 +1805,14 @@ instead — the same first-time caveat applies, so add it directly to the user c
 <div class="admonition note">
 <p class="admonition-title"><code>log_level</code> only takes effect from user or system configuration</p>
 <p>This key is deliberately not honored in the bundled defaults or the remote/backend
-configuration layer — it must be set locally (user or system config) to take effect. See
+configuration layer. It must be set locally (user or system config) to take effect. See
 <a href="../config/">Configuration</a> for how the configuration layers are merged.</p>
 </div>
 <p>Two environment variables set the <em>starting</em> level and logger name before any configuration loads,
 mostly useful when running a service by hand: <code>OVOS_DEFAULT_LOG_LEVEL</code> and <code>OVOS_DEFAULT_LOG_NAME</code>.</p>
 <hr />
 <h2 id="reproducing-an-issue-offline-with-ovoscope">Reproducing an issue offline with <code>ovoscope</code><a class="headerlink" href="#reproducing-an-issue-offline-with-ovoscope" title="Permanent link">&para;</a></h2>
-<p>If a bug reproduces reliably, don't keep re-triggering it on real hardware — capture it once and
+<p>If a bug reproduces reliably, don't keep re-triggering it on real hardware. Capture it once and
 replay it. <strong><a href="../ovoscope-overview/"><code>ovoscope</code></a></strong> runs an in-process, mocked assistant (<code>MiniCroft</code>)
 that loads real skills and the real intent-matching engines without any audio hardware, and its CLI
 can turn a live bus session into a fixture file:</p>
@@ -1828,30 +1828,30 @@ can turn a live bus session into a fixture file:</p>
 <p><code>record</code> also takes <code>--skill-id</code> to choose which skills load, <code>--lang</code> (default <code>en-US</code>),
 <code>--pipeline</code> to restrict the stages, and <code>--bus-url</code> for a non-default bus address.</p>
 <p>This turns "it happens sometimes on the device but I can't tell why" into a fixed, replayable test
-case — see the <a href="../ovoscope-overview/">ovoscope guide</a> for the full workflow, including
+case. See the <a href="../ovoscope-overview/">ovoscope guide</a> for the full workflow, including
 <code>End2EndTest</code> for writing an assertion once the fixture is captured.</p>
 <hr />
 <h2 id="where-to-ask-for-help">Where to ask for help<a class="headerlink" href="#where-to-ask-for-help" title="Permanent link">&para;</a></h2>
 <p>If the logs and bus traffic don't explain the problem, the OpenVoiceOS community is active on:</p>
 <ul>
-<li><strong><a href="https://matrix.to/#/!XFpdtmgyCoPDxOMPpH:matrix.org?via=matrix.org">OVOS Chat on Matrix</a></strong> —
-  real-time chat with maintainers and other users; the
+<li><strong><a href="https://matrix.to/#/!XFpdtmgyCoPDxOMPpH:matrix.org?via=matrix.org">OVOS Chat on Matrix</a></strong>,
+  real-time chat with maintainers and other users. The
   <a href="https://matrix.to/#/#openvoiceos-skills:matrix.org">skills channel</a> is specific to skill
   development questions.</li>
-<li><strong><a href="https://community.openconversational.ai/">Open Conversational AI forum</a></strong> — longer-form
+<li><strong><a href="https://community.openconversational.ai/">Open Conversational AI forum</a></strong>. Longer-form
   questions, bug reports, and searchable past discussions.</li>
 </ul>
 <p>When asking for help, include the relevant log excerpt (or an <code>ovos-busmon</code> JSON export) for the
-stage where you stop seeing the expected messages — it is almost always faster to diagnose with the actual message
+stage where you stop seeing the expected messages. It is almost always faster to diagnose with the actual message
 sequence than with a description of the symptom alone.</p>
 <hr />
 <h2 id="related-pages">Related Pages<a class="headerlink" href="#related-pages" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="../life-of-an-utterance/">The Life of an Utterance</a> — the full journey this page's stages mirror.</li>
-<li><a href="../cli-tools/">Command-line Tools</a> — every CLI referenced above, with full flag references.</li>
-<li><a href="../config/">Configuration</a> — how <code>log_level</code> and other keys are layered and merged.</li>
-<li><a href="../ovoscope-overview/">ovoscope Overview</a> — full end-to-end testing reference.</li>
-<li><a href="../bus-service/">Bus Service</a> — what the messagebus is and how clients connect to it.</li>
+<li><a href="../life-of-an-utterance/">The Life of an Utterance</a>, the full journey this page's stages mirror.</li>
+<li><a href="../cli-tools/">Command-line Tools</a>, every CLI referenced above, with full flag references.</li>
+<li><a href="../config/">Configuration</a>, how <code>log_level</code> and other keys are layered and merged.</li>
+<li><a href="../ovoscope-overview/">ovoscope Overview</a>, full end-to-end testing reference.</li>
+<li><a href="../bus-service/">Bus Service</a>, what the messagebus is and how clients connect to it.</li>
 </ul>
 
 

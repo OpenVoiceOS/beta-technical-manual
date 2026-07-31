@@ -1523,11 +1523,11 @@
 <h1 id="tts-plugins">TTS Plugins<a class="headerlink" href="#tts-plugins" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>TTS stands for <em>Text-to-Speech</em>: this is the part that gives your assistant its voice, turning written replies into spoken audio you can hear. It is the opposite of dictation — instead of listening to you, it talks back. Different TTS plugins offer different voices and qualities, and some run on your own device while others use a cloud service. See the <a href="../glossary/">Glossary</a> for related terms.</p>
+<p>TTS stands for <em>Text-to-Speech</em>: this is the part that gives your assistant its voice, turning written replies into spoken audio you can hear. It is the opposite of dictation. Instead of listening to you, it talks back. Different TTS plugins offer different voices and qualities, and some run on your own device while others use a cloud service. See the <a href="../glossary/">Glossary</a> for related terms.</p>
 </div>
 <details class="info">
 <summary>📐 Formal specification</summary>
-<p>TTS sits inside the audio output service, specified by <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/audio-out.md">OVOS-AUDIO-1 — Audio Output Service</a></strong>: an <code>ovos.utterance.speak</code> response runs through the dialog-transformer chain → TTS → tts-transformer chain → playback queue. See the <a href="../architecture-specs/">spec index</a>.</p>
+<p>TTS sits inside the audio output service, specified by <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/audio-out.md">OVOS-AUDIO-1: Audio Output Service</a></strong>: an <code>ovos.utterance.speak</code> response runs through the dialog-transformer chain → TTS → tts-transformer chain → playback queue. See the <a href="../architecture-specs/">spec index</a>.</p>
 </details>
 <p>TTS plugins are responsible for converting text into audio for playback.</p>
 <div class="admonition note">
@@ -1537,14 +1537,14 @@ receiving one. <code>get_tts()</code> writes a complete, self-describing audio f
 handed and returns that path; the container format must match the plugin's <code>audio_ext</code>
 (default <code>"wav"</code>, set via the <code>TTS.__init__</code> argument), because <code>audio_ext</code> is what names
 the cache file and what playback dispatches on. Sample rate, bit depth and channel count
-are the plugin's own choice and travel inside the file's header — nothing between
+are the plugin's own choice and travel inside the file's header. Nothing between
 <code>get_tts()</code> and the speakers resamples, remixes or re-encodes the audio, so whatever the
 engine emits is what is played. The one constraint is that the deployment must have a
 player for the extension: playback shells out to the command configured as
 <code>play_wav_cmdline</code>, <code>play_ogg_cmdline</code> or <code>play_mp3_cmdline</code> (falling back to a detected
 system player), so <code>wav</code>, <code>ogg</code> and <code>mp3</code> are the extensions a stock deployment can play.
 Plain 16-bit mono WAV is the safe default.</p>
-<p><code>get_tts()</code> returns the tuple <code>(audio_path, phonemes)</code>. <code>phonemes</code> is optional — return
+<p><code>get_tts()</code> returns the tuple <code>(audio_path, phonemes)</code>. <code>phonemes</code> is optional. Return
 <code>None</code> when the engine exposes none. When present it is a space-separated string of
 <code>phoneme:duration</code> pairs, which the base class's <code>viseme()</code> converts into a list of
 <code>(viseme_code, duration_seconds)</code> tuples for mouth animation; a pair with no <code>:duration</code>
@@ -1556,11 +1556,11 @@ hash.</p>
 <p>For fully offline, on-device synthesis, <code>ovos-tts-plugin-phoonnx</code> is the recommended
 starting point: it's OVOS's own ONNX-based multilingual neural TTS engine, installed with
 a single <code>pip install phoonnx</code>, and it fetches its model automatically the first time a
-voice is used — no separate download step. Cloud plugins like <code>ovos-tts-plugin-polly</code>,
+voice is used. No separate download step. Cloud plugins like <code>ovos-tts-plugin-polly</code>,
 <code>ovos-tts-plugin-azure</code>, <code>ovos-tts-plugin-edge-tts</code> or <code>ovos-tts-plugin-google-tx</code> are a
 fair choice when you need a specific commercial voice or don't want to spend local compute
 on synthesis.</p>
-<p><strong>Footprint:</strong> phoonnx voices are small, single-purpose ONNX models — the class of model
+<p><strong>Footprint:</strong> phoonnx voices are small, single-purpose ONNX models. The class of model
 ONNX Runtime is built to run efficiently on-device, unlike the heavier general-purpose
 engines further down this page (Coqui, Whisper-class transformers, etc.). Exact size varies
 per voice, since each one is a separate model fetched on first use.</p>
@@ -1578,20 +1578,20 @@ per voice, since each one is a separate model fetched on first use.</p>
 </span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">  </span><span class="p">}</span>
 </span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="p">}</span>
 </span></code></pre></div>
-   Leaving out a <code>"voice"</code> key like this is a valid, minimal config — the plugin picks the
+   Leaving out a <code>"voice"</code> key like this is a valid, minimal config. The plugin picks the
    first bundled model that supports the configured language. See the
    <a href="#ovos-tts-plugin-phoonnx">ovos-tts-plugin-phoonnx</a> section below for how to pin a
    specific voice.</li>
 </ol>
 <p>Installing a plugin's package (like <code>pip install phoonnx</code>) only makes it available to
-   OVOS if it lands in the same Python environment OVOS itself runs in — activate that venv
+   OVOS if it lands in the same Python environment OVOS itself runs in. Activate that venv
    or container first, the same way <a href="../first-skill/">Your First Skill</a> does before installing
    a skill.
-3. Save the file — it's JSONC (comments allowed) — and restart OVOS for the change to take effect.</p>
+3. Save the file. It's JSONC (comments allowed). Restart OVOS for the change to take effect.</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p>Don't want to hand-pick a plugin and voice yourself? <code>ovos-config autoconfigure -l &lt;lang&gt; ...</code>
-picks a recommended offline/online voice for your language automatically — see
+picks a recommended offline/online voice for your language automatically. See
 <a href="../lang-support/#auto-configuration">Language Support</a>.</p>
 </div>
 <h2 id="tts">TTS<a class="headerlink" href="#tts" title="Permanent link">&para;</a></h2>
@@ -1656,7 +1656,7 @@ pass one in. <code>OVOSTTSFactory.create()</code> calls <code>tts.validator.vali
 plugin instance, which runs, in order: <code>validate_dependencies()</code>, <code>validate_instance()</code>,
 <code>validate_filename()</code>, <code>validate_lang()</code>, <code>validate_connection()</code>.</p>
 <p>In the base class every one of those methods is a no-op. A new plugin does not need to write a
-<code>TTSValidator</code> at all — the default passes automatically. Write one only if the plugin needs a
+<code>TTSValidator</code> at all. The default passes automatically. Write one only if the plugin needs a
 real startup check, for example confirming a binary is on <code>PATH</code> or that a cloud endpoint
 answers, and raise inside the relevant <code>validate_*</code> method to fail fast with a clear error
 instead of failing later on the first <code>get_tts()</code> call.</p>
@@ -1675,7 +1675,7 @@ instead of failing later on the first <code>get_tts()</code> call.</p>
 </span><span id="__span-5-13"><a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 </span><span id="__span-5-14"><a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span> <span class="n">validator</span><span class="o">=</span><span class="n">MyTTSValidator</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
 </span></code></pre></div>
-<p>See <a href="../plugin-manager/#writing-a-plugin">OVOS Plugin Manager — Writing a Plugin</a> for how
+<p>See <a href="../plugin-manager/#writing-a-plugin">OVOS Plugin Manager: Writing a Plugin</a> for how
 <code>get_tts_class()</code>/registration and the <code>opm.tts</code> entry point fit together at load time.</p>
 <h2 id="config-plumbing">Config plumbing<a class="headerlink" href="#config-plumbing" title="Permanent link">&para;</a></h2>
 <p>The <code>"tts": {"module": "...", "ovos-tts-plugin-x": {...}}</code> block in <code>mycroft.conf</code> reaches the
@@ -1689,12 +1689,12 @@ plugin instance through <code>OVOSTTSFactory.create()</code>:</p>
 </ol>
 <p>So a setting only reaches the plugin if it lives under <code>tts.&lt;module-name&gt;</code> (or as a shared
 top-level key under <code>tts</code>), and the plugin reads it back with <code>self.config.get("my_setting")</code>.
-See <a href="../plugin-manager/#configuration-priority">OVOS Plugin Manager — Configuration Priority</a> for
+See <a href="../plugin-manager/#configuration-priority">OVOS Plugin Manager: Configuration Priority</a> for
 the full precedence rules.</p>
 <h2 id="plugin-template">Plugin Template<a class="headerlink" href="#plugin-template" title="Permanent link">&para;</a></h2>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>SSML: experimental, engine-dependent — see <a href="../ssml/">SSML</a>. Most plugins declare no
+<p>SSML: experimental, engine-dependent. See <a href="../ssml/">SSML</a>. Most plugins declare no
 <code>ssml_tags</code> and OVOS strips all SSML before synthesis.</p>
 </div>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kn">from</span> <span class="nn">ovos_plugin_manager.templates.tts</span> <span class="kn">import</span> <span class="n">TTS</span>
@@ -1864,14 +1864,14 @@ separately-licensed model or a paid cloud service, that is called out under "mod
 </tr>
 </tbody>
 </table>
-<p>Maturity reflects repository health (age, activity, open issues/PRs, in-repo docs), not version — see the <a href="../maturity/">Maturity Scale</a>.</p>
+<p>Maturity reflects repository health (age, activity, open issues/PRs, in-repo docs), not version. See the <a href="../maturity/">Maturity Scale</a>.</p>
 <div class="admonition note">
 <p class="admonition-title">License and Maturity are independent axes</p>
-<p>The <strong>License</strong> column reports what the repository itself declares (or doesn't — "no
-license file" just means no SPDX license was found, not that the code is unmature) and the
-<strong>Maturity</strong> column reports repository health (age, activity, issues/PRs, docs). A plugin can
-be <strong>Mature</strong> and still ship no license file, or be <strong>Stable</strong> with a permissive license but
-thin docs — don't read one column as implying the other.</p>
+<p>The <strong>License</strong> column reports what the repository itself declares. "No
+license file" just means no SPDX license was found, not that the code is unmature.
+The <strong>Maturity</strong> column reports repository health (age, activity, issues/PRs, docs).
+A plugin can be <strong>Mature</strong> and still ship no license file. A plugin can be <strong>Stable</strong>
+with a permissive license but thin docs. Don't read one column as implying the other.</p>
 </div>
 <h2 id="ovos-tts-server">ovos-tts-server<a class="headerlink" href="#ovos-tts-server" title="Permanent link">&para;</a></h2>
 <ul>
@@ -1905,7 +1905,7 @@ thin docs — don't read one column as implying the other.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>gTTS works by calling the same unofficial, undocumented endpoint used by the Google
-Translate web UI's "listen" feature — not a published, API-keyed Google Cloud
+Translate web UI's "listen" feature. It is not a published, API-keyed Google Cloud
 Text-to-Speech API. Google can change or revoke access to this endpoint at any time.</p>
 </div>
 <h3 id="default-configuration">Default Configuration<a class="headerlink" href="#default-configuration" title="Permanent link">&para;</a></h3>
@@ -2023,7 +2023,7 @@ Text-to-Speech API. Google can change or revoke access to this endpoint at any t
 <p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-tts-plugin-SAM">https://github.com/OpenVoiceOS/ovos-tts-plugin-SAM</a></p>
 </li>
 <li>
-<p><strong>Description</strong>: S.A.M. — Software Automatic Mouth, the classic retro speech synthesizer.</p>
+<p><strong>Description</strong>: S.A.M., Software Automatic Mouth, the classic retro speech synthesizer.</p>
 </li>
 </ul>
 <hr />
@@ -2040,7 +2040,7 @@ Text-to-Speech API. Google can change or revoke access to this endpoint at any t
 <div class="admonition warning">
 <p class="admonition-title">Never commit a real <code>api_key</code></p>
 <p>Treat this like any other credential: keep the real value out of version control and
-shared config files — use a local, untracked config or an environment-backed secret
+shared config files. Use a local, untracked config or an environment-backed secret
 store instead of hard-coding it in <code>mycroft.conf</code>.</p>
 </div>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>&quot;tts&quot;: {
@@ -2097,7 +2097,7 @@ or guaranteed-available endpoint. Point it at your own self-hosted server (see
 </span><span id="__span-14-8"><a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a>     }
 </span><span id="__span-14-9"><a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a> } 
 </span></code></pre></div>
-<p>That default <code>host</code> is a public community-run Piper server, not an address on your network — see
+<p>That default <code>host</code> is a public community-run Piper server, not an address on your network. See
 <a href="../tts-server/#companion-plugin">tts-server</a> to self-host, or pick a fully offline voice from the
 table above.</p>
 <div class="admonition warning">
@@ -2140,7 +2140,7 @@ servers entirely: fully offline plugins exist for everything.</p>
 <p><strong>GitHub</strong>: <a href="https://github.com/TigreGotico/phoonnx">https://github.com/TigreGotico/phoonnx</a></p>
 </li>
 <li>
-<p><strong>Description</strong>: OVOS's own multilingual, ONNX-based neural TTS engine, distributed as part of the <code>phoonnx</code> package. Registering the plugin only requires <code>pip install phoonnx</code> — model files are fetched and cached automatically the first time a voice is used.</p>
+<p><strong>Description</strong>: OVOS's own multilingual, ONNX-based neural TTS engine, distributed as part of the <code>phoonnx</code> package. Registering the plugin only requires <code>pip install phoonnx</code>. Model files are fetched and cached automatically the first time a voice is used.</p>
 </li>
 </ul>
 <h3 id="default-configuration_9">Default Configuration<a class="headerlink" href="#default-configuration_9" title="Permanent link">&para;</a></h3>
@@ -2162,11 +2162,11 @@ servers entirely: fully offline plugins exist for everything.</p>
    breaking release slip in unnoticed; a ceiling alone lets an old install miss a needed feature.</li>
 <li><strong>Install for local development.</strong> Run <code>pip install -e .</code> from the plugin's own repository so
    changes to the source take effect without reinstalling. See
-   <a href="../plugin-manager/#3-install-and-verify">OVOS Plugin Manager — Install and verify</a> for the
+   <a href="../plugin-manager/#3-install-and-verify">OVOS Plugin Manager: Install and verify</a> for the
    command that confirms OVOS can see the new plugin.</li>
 <li><strong>Publish to PyPI.</strong> OVOS deployments and the Plugin Arena's benchmark sweep both install
    plugins from PyPI, not from a git checkout, so a plugin needs a PyPI release before either can
-   use it. See <a href="../plugin-arena/#getting-your-plugin-ranked">Plugin Arena — Getting Your Plugin Ranked</a>
+   use it. See <a href="../plugin-arena/#getting-your-plugin-ranked">Plugin Arena: Getting Your Plugin Ranked</a>
    for what a published plugin needs to be picked up by the sweep.</li>
 </ol>
 <h2 id="test-your-plugin-locally">Test your plugin locally<a class="headerlink" href="#test-your-plugin-locally" title="Permanent link">&para;</a></h2>
@@ -2195,8 +2195,8 @@ environment or container <code>ovos-core</code>/<code>ovos-audio</code> run in, 
 your voice</a> above.</p>
 <h2 id="further-reading">Further reading<a class="headerlink" href="#further-reading" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="https://blog.openvoiceos.org/posts/2025-10-06-phoonnx">Introducing phoonnx — OVOS's next-gen TTS engine</a> — OVOS blog</li>
-<li><a href="https://blog.openvoiceos.org/posts/2025-06-26-making-synthetic-voices-from-scratch">Making Synthetic Voices From Scratch</a> — OVOS blog</li>
+<li><a href="https://blog.openvoiceos.org/posts/2025-10-06-phoonnx">Introducing phoonnx — OVOS's next-gen TTS engine</a>, OVOS blog</li>
+<li><a href="https://blog.openvoiceos.org/posts/2025-06-26-making-synthetic-voices-from-scratch">Making Synthetic Voices From Scratch</a>, OVOS blog</li>
 </ul>
 
 

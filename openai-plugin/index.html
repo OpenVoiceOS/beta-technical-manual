@@ -1659,13 +1659,13 @@
 <h1 id="openai-agent-plugin-ovos-openai-plugin">OpenAI Agent Plugin (<code>ovos-openai-plugin</code>)<a class="headerlink" href="#openai-agent-plugin-ovos-openai-plugin" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>This plugin lets OVOS talk to AI chat services that follow OpenAI's popular format — that includes OpenAI itself, but also many private or locally-run alternatives that copy the same style. So it's the bridge that connects your assistant to a chosen AI "brain", whether that brain lives in the cloud or on your own machine. See <a href="../personas/">AI Agents &amp; Personas</a> for how this fits in, and the <a href="../glossary/">Glossary</a> for unfamiliar terms.</p>
+<p>This plugin lets OVOS talk to AI chat services that follow OpenAI's popular format. That includes OpenAI itself, but also many private or locally-run alternatives that copy the same style. It is the bridge that connects your assistant to a chosen AI "brain", whether that brain lives in the cloud or on your own machine. See <a href="../personas/">AI Agents &amp; Personas</a> for how this fits in, and the <a href="../glossary/">Glossary</a> for unfamiliar terms.</p>
 </div>
-<p><code>ovos-openai-plugin</code> connects OVOS to any OpenAI-compatible Chat Completions API — including
+<p><code>ovos-openai-plugin</code> connects OVOS to any OpenAI-compatible Chat Completions API, including
 OpenAI itself, local models via <a href="https://ollama.com">Ollama</a> or <code>llama.cpp</code>, self-hosted
 proxies, and <a href="../persona-server/"><code>ovos-persona-server</code></a>.</p>
 <p>Install: <code>pip install ovos-openai-plugin</code></p>
-<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-openai-plugin">https://github.com/OpenVoiceOS/ovos-openai-plugin</a></p>
+<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-openai-plugin">OpenVoiceOS/ovos-openai-plugin</a></p>
 <div class="admonition note">
 <p class="admonition-title">Removed legacy solver</p>
 <p>The old <code>ovos-solver-openai-plugin</code> entry point and the <code>OpenAIChatCompletionsSolver</code> /
@@ -1811,21 +1811,21 @@ self-hosted endpoint instead of using this demo persona as-is.</p>
 </table>
 <hr />
 <h2 id="chat-engine-opmagentschat">Chat Engine (<code>opm.agents.chat</code>)<a class="headerlink" href="#chat-engine-opmagentschat" title="Permanent link">&para;</a></h2>
-<p><strong>Class:</strong> <code>OpenAIChatEngine</code> — <code>ovos_openai_plugin/chat.py:OpenAIChatEngine</code></p>
+<p><strong>Class:</strong> <code>OpenAIChatEngine</code>, <code>ovos_openai_plugin/chat.py:OpenAIChatEngine</code></p>
 <p><strong>OPM plugin name:</strong> <code>ovos-chat-openai-plugin</code></p>
 <p>Multi-turn conversational LLM. The primary engine type used inside <a href="../personas/">personas</a>.
 Works with any OpenAI-compatible endpoint.</p>
 <h3 id="tool-function-calling">Tool / function calling<a class="headerlink" href="#tool-function-calling" title="Permanent link">&para;</a></h3>
 <p><code>OpenAIChatEngine</code> sets <code>supports_tools = True</code>, so it advertises native
 function-calling to callers. <code>continue_chat(messages, …, tools=…)</code> accepts
-<code>ToolBox</code> objects and/or raw OpenAI tool dicts; when the model decides to call a
+<code>ToolBox</code> objects and/or raw OpenAI tool dicts. When the model decides to call a
 tool, the returned <code>AgentMessage</code> carries <code>tool_calls</code> (assistant <code>tool_calls</code>
 turns and <code>MessageRole.TOOL</code> results are serialized back to the API on the next
 round-trip), letting the caller run a tool loop. This is the same hook the
 <a href="../agentic-loop/">agentic loop</a> engines drive.</p>
 <div class="admonition note">
 <p class="admonition-title">Memory lives in <code>ovos-persona</code>, not this plugin</p>
-<p>The chat engine is stateless — it only sees the <code>messages</code> it is handed each
+<p>The chat engine is stateless. It only sees the <code>messages</code> it is handed each
 turn. Short-term conversational memory is supplied by <code>ovos-persona</code> (which
 accumulates the history), not by <code>ovos-openai-plugin</code>. The only memory backend
 this package ships is the server-coupled RAG memory described below.</p>
@@ -1868,7 +1868,7 @@ this package ships is the server-coupled RAG memory described below.</p>
 <tr>
 <td><code>false</code> (default)</td>
 <td>yes</td>
-<td>Caller's system message stripped; configured <code>system_prompt</code> used</td>
+<td>Caller's system message stripped, configured <code>system_prompt</code> used</td>
 </tr>
 <tr>
 <td><code>false</code></td>
@@ -1933,17 +1933,17 @@ This lets you keep API keys on a single server and offload LLM computation:</p>
 </span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="w">  </span><span class="p">}</span>
 </span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="p">}</span>
 </span></code></pre></div>
-<p>A persona's chat engine can equally be listed under the <code>solvers</code> key — <code>ovos-persona</code>
+<p>A persona's chat engine can equally be listed under the <code>solvers</code> key. <code>ovos-persona</code>
 accepts either <code>handlers</code> or <code>solvers</code> and dispatches the same way.</p>
 <p>Activate by voice: <code>"Chat with My Local LLM"</code>.</p>
 <hr />
 <h2 id="rag-memory-opmagentsmemory">RAG Memory (<code>opm.agents.memory</code>)<a class="headerlink" href="#rag-memory-opmagentsmemory" title="Permanent link">&para;</a></h2>
-<p><strong>Class:</strong> <code>PersonaServerRAGMemory</code> — <code>ovos_openai_plugin/rag_memory.py:PersonaServerRAGMemory</code></p>
+<p><strong>Class:</strong> <code>PersonaServerRAGMemory</code>, <code>ovos_openai_plugin/rag_memory.py:PersonaServerRAGMemory</code></p>
 <p><strong>OPM plugin name:</strong> <code>ovos-openai-rag-memory-plugin</code></p>
 <p>A persona <code>memory_module</code> (an <code>AgentContextManager</code>). Before each turn it queries a vector store
 hosted by an <a href="../persona-server/"><code>ovos-persona-server</code></a> and injects the retrieved chunks into the
-conversation context; the persona's normal chat engine still generates the answer, so RAG
-composes with any chat backend. This is the server/OpenAI-coupled memory backend — local-only
+conversation context. The persona's normal chat engine still generates the answer, so RAG
+composes with any chat backend. This is the server/OpenAI-coupled memory backend. Local-only
 memory plugins live in <code>ovos-memory-plugins</code> instead.</p>
 <table>
 <thead>
@@ -2019,7 +2019,7 @@ memory plugins live in <code>ovos-memory-plugins</code> instead.</p>
 </span></code></pre></div>
 <hr />
 <h2 id="dialog-transformer-opmtransformerdialog">Dialog <a href="../transformer-plugins/">Transformer</a> (<code>opm.transformer.dialog</code>)<a class="headerlink" href="#dialog-transformer-opmtransformerdialog" title="Permanent link">&para;</a></h2>
-<p><strong>Class:</strong> <code>OpenAIDialogTransformer</code> — <code>ovos_openai_plugin/dialog_transformers.py:OpenAIDialogTransformer</code></p>
+<p><strong>Class:</strong> <code>OpenAIDialogTransformer</code>, <code>ovos_openai_plugin/dialog_transformers.py:OpenAIDialogTransformer</code></p>
 <p><strong>OPM plugin name:</strong> <code>ovos-dialog-transformer-openai-plugin</code></p>
 <p>Intercepts OVOS TTS dialog just before it is spoken and rewrites it using an LLM. Useful for
 giving the assistant a distinct personality or adapting the reading level. Default priority: <code>10</code>.</p>
@@ -2090,7 +2090,7 @@ giving the assistant a distinct personality or adapting the reading level. Defau
 </span></code></pre></div>
 <hr />
 <h2 id="summarizer-opmagentssummarizer">Summarizer (<code>opm.agents.summarizer</code>)<a class="headerlink" href="#summarizer-opmagentssummarizer" title="Permanent link">&para;</a></h2>
-<p><strong>Class:</strong> <code>OpenAISummarizer</code> — <code>ovos_openai_plugin/summarizer.py:OpenAISummarizer</code></p>
+<p><strong>Class:</strong> <code>OpenAISummarizer</code>, <code>ovos_openai_plugin/summarizer.py:OpenAISummarizer</code></p>
 <p><strong>OPM plugin name:</strong> <code>ovos-summarizer-openai-plugin</code></p>
 <p>Condenses long documents into a short plain-text summary (2 paragraphs by default). Intended
 for consumption by skills before TTS, not directly by end-users.</p>
@@ -2135,7 +2135,7 @@ for consumption by skills before TTS, not directly by end-users.</p>
 </span></code></pre></div>
 <hr />
 <h2 id="translator-opmlangtranslate">Translator (<code>opm.lang.translate</code>)<a class="headerlink" href="#translator-opmlangtranslate" title="Permanent link">&para;</a></h2>
-<p><strong>Class:</strong> <code>OpenAITextTranslator</code> — <code>ovos_openai_plugin/translate.py:OpenAITextTranslator</code></p>
+<p><strong>Class:</strong> <code>OpenAITextTranslator</code>, <code>ovos_openai_plugin/translate.py:OpenAITextTranslator</code></p>
 <p><strong>OPM plugin name:</strong> <code>ovos-translate-openai-plugin</code></p>
 <p>Translates text between languages using an LLM. Language codes follow BCP-47 (e.g. <code>en-us</code>,
 <code>pt-pt</code>, <code>es-es</code>). Supports translating OVOS <code>.intent</code> files while preserving <code>{variables}</code>,
@@ -2159,7 +2159,7 @@ for consumption by skills before TTS, not directly by end-users.</p>
 </span></code></pre></div>
 <hr />
 <h2 id="language-detector-opmlangdetect">Language Detector (<code>opm.lang.detect</code>)<a class="headerlink" href="#language-detector-opmlangdetect" title="Permanent link">&para;</a></h2>
-<p><strong>Class:</strong> <code>OpenAITextLangDetector</code> — <code>ovos_openai_plugin/translate.py:OpenAITextLangDetector</code></p>
+<p><strong>Class:</strong> <code>OpenAITextLangDetector</code>, <code>ovos_openai_plugin/translate.py:OpenAITextLangDetector</code></p>
 <p><strong>OPM plugin name:</strong> <code>ovos-lang-detect-openai-plugin</code></p>
 <p>Detects the BCP-47 language code of a given text using an LLM.</p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="p">{</span>
@@ -2183,26 +2183,26 @@ for consumption by skills before TTS, not directly by end-users.</p>
 <h2 id="combining-sections-into-one-mycroftconf">Combining sections into one mycroft.conf<a class="headerlink" href="#combining-sections-into-one-mycroftconf" title="Permanent link">&para;</a></h2>
 <p>The <a href="#dialog-transformer-opmtransformerdialog">dialog transformer</a>, <a href="#language-detector-opmlangdetect">language detector</a>,
 and <a href="#translator-opmlangtranslate">translator</a> sections above each show their own <code>mycroft.conf</code>
-block in isolation; in practice they just sit side by side under their own top-level keys
-(<code>dialog_transformers</code>, <code>language</code>) — there's nothing to merge, only to place each block from
+block in isolation. In practice they just sit side by side under their own top-level keys
+(<code>dialog_transformers</code>, <code>language</code>). There's nothing to merge, only to place each block from
 above under its matching top-level key in the same file.</p>
 <hr />
 <h2 id="cross-references">Cross-References<a class="headerlink" href="#cross-references" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
-<p><a href="../agent-plugins/">Agent Engine Types</a> — base class contracts and full type reference</p>
+<p><a href="../agent-plugins/">Agent Engine Types</a>: base class contracts and full type reference</p>
 </li>
 <li>
-<p><a href="../personas/">Personas &amp; PersonaService</a> — how to load and activate personas</p>
+<p><a href="../personas/">Personas &amp; PersonaService</a>: how to load and activate personas</p>
 </li>
 <li>
-<p><a href="../llm-transformers/">LLM Transformers</a> — utterance and dialog transformer pipeline</p>
+<p><a href="../llm-transformers/">LLM Transformers</a>: utterance and dialog transformer pipeline</p>
 </li>
 <li>
-<p><a href="../persona-server/">Persona Server</a> — expose a persona via OpenAI-compatible HTTP API</p>
+<p><a href="../persona-server/">Persona Server</a>: expose a persona via OpenAI-compatible HTTP API</p>
 </li>
 <li>
-<p><a href="../gguf-plugin/">GGUF Plugin</a> — fully offline local alternative</p>
+<p><a href="../gguf-plugin/">GGUF Plugin</a>: fully offline local alternative</p>
 </li>
 </ul>
 <hr />
