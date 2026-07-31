@@ -1558,20 +1558,20 @@
 <h1 id="ocp-skills">OCP Skills<a class="headerlink" href="#ocp-skills" title="Permanent link">&para;</a></h1>
 <div class="admonition tip">
 <p class="admonition-title">Just want to play music or radio?</p>
-<p>Install a ready-made skill instead of writing one — see
-<a href="../skill-examples/#music-radio">What Can I Say? — Music &amp; Radio</a>. This page is for
+<p>Install a ready-made skill instead of writing one. See
+<a href="../skill-examples/#music-radio">What Can I Say? Music &amp; Radio</a>. This page is for
 developers writing a new OCP media skill.</p>
 </div>
 <div class="admonition warning">
 <p class="admonition-title">OCP skills are giving way to MediaProvider plugins</p>
 <p>OCP <strong>skills</strong> (media-provider skills built on <code>OVOSCommonPlaybackSkill</code> /
 <a href="#search-results"><code>@ocp_search</code></a>) still work and remain fully supported. The intended
-successor is a dedicated <strong>MediaProvider</strong> plugin type (<code>opm.media.provider</code>): the
+successor is a dedicated <strong>MediaProvider</strong> plugin type (<code>opm.media.provider</code>). The
 entry-point group is defined in <code>ovos-plugin-manager</code>, and the design is for the
 <a href="../ovos-media/"><code>ovos-media</code></a> player to load such plugins <strong>in-process</strong> and call
 <code>search()</code> on them directly, instead of broadcasting a query over the bus to skills.
 That in-process loading is not wired up in <code>ovos-media</code> yet, so writing an OCP skill
-remains the way to provide media today — and stays the simpler path for setups still on
+remains the way to provide media today, and stays the simpler path for setups still on
 the legacy audio service.</p>
 </div>
 <div class="admonition abstract">
@@ -1580,10 +1580,10 @@ the legacy audio service.</p>
 </div>
 <details class="info">
 <summary>📐 Formal specification</summary>
-<p>OCP is specified by <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/ocp-1.md">OVOS-OCP-1 — OVOS Common Playback: the Virtual Media Player</a></strong> (a formal <a href="../architecture-specs/">architecture spec</a>). The spec defines a single <strong>per-session Virtual Media Player</strong>: one arbitration point that owns the session's now-playing track, queue, and transport state, addressed over the <code>ovos.common_play.*</code> bus surface with an MPRIS-style control set (play / search / pause / resume / next / previous / seek / stop) and a three-axis state model (<code>PlayerState</code>, <code>MediaState</code>, loop/shuffle). It can even be bridged to host-OS MPRIS players so voice controls media OVOS did not start. This page covers the <strong>provider</strong> side — the <code>@ocp_search</code> skills that feed candidate media <em>into</em> that player; the player and its control surface are the spec's subject. Note both this provider model and OVOS-OCP-1's player are current; the <a href="../ovos-media/"><code>ovos-media</code></a> refactor (see the note above) adds <code>opm.media.provider</code> plugins as an alternative to skill-based providers.</p>
+<p>OCP is specified by <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/ocp-1.md">OVOS-OCP-1: OVOS Common Playback: the Virtual Media Player</a></strong> (a formal <a href="../architecture-specs/">architecture spec</a>). The spec defines a single <strong>per-session Virtual Media Player</strong>: one arbitration point that owns the session's now-playing track, queue, and transport state, addressed over the <code>ovos.common_play.*</code> bus surface with an MPRIS-style control set (play / search / pause / resume / next / previous / seek / stop) and a three-axis state model (<code>PlayerState</code>, <code>MediaState</code>, loop/shuffle). It can even be bridged to host-OS MPRIS players so voice controls media OVOS did not start. This page covers the <strong>provider</strong> side: the <code>@ocp_search</code> skills that feed candidate media <em>into</em> that player. The player and its control surface are the spec's subject. Note both this provider model and OVOS-OCP-1's player are current. The <a href="../ovos-media/"><code>ovos-media</code></a> refactor (see the note above) adds <code>opm.media.provider</code> plugins as an alternative to skill-based providers.</p>
 </details>
 <p>OCP (OVOS Common Playback) skills are built from the <code>OVOSCommonPlaybackSkill</code> class.</p>
-<p><strong>What / why (beginners):</strong> an OCP skill is a <em>media provider</em>. You do <strong>not</strong> write intents like "play X" — OCP owns the "play music / play a podcast / play the radio" voice interaction. Your skill only answers the question <em>"given this search phrase, what can you play?"</em>. You decorate one or more search methods with <code>@ocp_search</code>, return a list (or yield a stream) of result dicts with a confidence score, and OCP picks the best match across every installed OCP skill and handles the actual playback, queueing and GUI.</p>
+<p><strong>What / why (beginners):</strong> an OCP skill is a <em>media provider</em>. You do <strong>not</strong> write intents like "play X". OCP owns the "play music / play a podcast / play the radio" voice interaction. Your skill only answers the question <em>"given this search phrase, what can you play?"</em>. You decorate one or more search methods with <code>@ocp_search</code>. Each one returns a list (or yields a stream) of result dicts with a confidence score. OCP picks the best match across every installed OCP skill and handles the actual playback, queueing and GUI.</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span> <span class="nn">ovos_utils.ocp</span> <span class="kn">import</span> <span class="n">MediaType</span><span class="p">,</span> <span class="n">PlaybackType</span>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kn">from</span> <span class="nn">ovos_workshop.decorators.ocp</span> <span class="kn">import</span> <span class="n">ocp_search</span><span class="p">,</span> <span class="n">ocp_featured_media</span>
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kn">from</span> <span class="nn">ovos_workshop.skills.common_play</span> <span class="kn">import</span> <span class="n">OVOSCommonPlaybackSkill</span>
@@ -1592,15 +1592,15 @@ the legacy audio service.</p>
 <p><code>MediaType</code> and <code>PlaybackType</code> are imported from <code>ovos_utils.ocp</code>. The OCP decorators (<code>ocp_search</code>, <code>ocp_featured_media</code>, <code>ocp_play</code>, <code>ocp_pause</code>, <code>ocp_resume</code>, <code>ocp_next</code>, <code>ocp_previous</code>) live in <code>ovos_workshop.decorators.ocp</code>.</p>
 </blockquote>
 <h2 id="search-results">Search Results<a class="headerlink" href="#search-results" title="Permanent link">&para;</a></h2>
-<p>Search results are returned as a list of dicts, skills can also use iterators to yield results 1 at a time as they become available</p>
-<p>Mandatory fields are</p>
+<p>Search results are returned as a list of dicts. Skills can also use iterators to yield results one at a time as they become available.</p>
+<p>Mandatory fields are:</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">uri</span><span class="p">:</span> <span class="nb">str</span>  <span class="c1"># URL/URI of media, OCP will handle formatting and file handling</span>
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="n">title</span><span class="p">:</span> <span class="nb">str</span>
 </span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="n">media_type</span><span class="p">:</span> <span class="n">MediaType</span>
 </span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="n">playback</span><span class="p">:</span> <span class="n">PlaybackType</span>
 </span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="n">match_confidence</span><span class="p">:</span> <span class="nb">int</span>  <span class="c1"># 0-100</span>
 </span></code></pre></div>
-<p>Other optional metadata includes artists, album, length and images for the GUI</p>
+<p>Other optional metadata includes artists, album, length and images for the GUI:</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">artist</span><span class="p">:</span> <span class="nb">str</span>
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="n">album</span><span class="p">:</span> <span class="nb">str</span>
 </span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="n">image</span><span class="p">:</span> <span class="nb">str</span> <span class="c1"># uri/file path</span>
@@ -1609,9 +1609,10 @@ the legacy audio service.</p>
 </span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="n">length</span><span class="p">:</span> <span class="nb">int</span> <span class="c1"># milliseconds, -1 for unknown/live streams — one time convention (ms, -1=unknown/live) across the whole media surface</span>
 </span></code></pre></div>
 <p><img alt="Annotated OCP search results GUI showing a media entry's title, skill_id, duration, image, skill_icon, and background image fields mapped to the corresponding parts of the on-screen result card" src="https://github.com/OpenVoiceOS/ovos-technical-manual/assets/33701864/08e31d2d-90e8-45ea-ab2f-dbd235892cb3" />
-<em>The OCP search results GUI, with each <code>MediaEntry</code> field labeled next to the part of the card it fills in: <code>title</code> and <code>skill_id</code> as text, <code>duration</code> as the elapsed-time readout, <code>image</code>/<code>skill_icon</code>/<code>bg_image</code> as the thumbnail, corner icon, and card background respectively.</em></p>
+<em>The OCP search results GUI, with each <code>MediaEntry</code> field labeled next to the part of the card it fills in.</em>
+The title and skill ID show as text. Duration shows as the elapsed-time readout. The image, skill icon, and background image show as the thumbnail, corner icon, and card background.</p>
 <h3 id="ocp-skill">OCP <a href="../skill-design-guidelines/">Skill</a><a class="headerlink" href="#ocp-skill" title="Permanent link">&para;</a></h3>
-<p>General Steps to create a skill</p>
+<p>General steps to create a skill:</p>
 <ul>
 <li>
 <p>subclass your skill from <code>OVOSCommonPlaybackSkill</code></p>
@@ -1623,8 +1624,8 @@ the legacy audio service.</p>
 <p><code>self.voc_match(phrase, "skill_name")</code> to handle specific requests for your skill</p>
 </li>
 <li>
-<p><code>self.remove_voc(phrase, "skill_name")</code> to remove matched phrases from the search request —
-  for example, <code>self.remove_voc("play some somafm radio", "somafm")</code> strips the <code>somafm</code> vocab
+<p><code>self.remove_voc(phrase, "skill_name")</code> to remove matched phrases from the search request.
+  For example, <code>self.remove_voc("play some somafm radio", "somafm")</code> strips the <code>somafm</code> vocab
   match and returns <code>"play some radio"</code>, so the rest of your matching logic scores against the
   cleaned-up phrase instead of the raw one</p>
 </li>
@@ -1638,7 +1639,7 @@ the legacy audio service.</p>
 <p>The search function can be entirely inline or call another Python library, like <a href="https://github.com/OpenJarbas/pandorinha">pandorinha</a> or <a href="https://github.com/pkkid/python-plexapi">plexapi</a></p>
 </li>
 <li>
-<p><code>self.extend_timeout()</code> to delay OCP from selecting a result, requesting more time to perform the search</p>
+<p><code>self.extend_timeout()</code> to delay OCP from selecting a result, requesting more time to search</p>
 </li>
 <li>
 <p>Implement a confidence score formula</p>
@@ -1648,12 +1649,12 @@ the legacy audio service.</p>
 </li>
 <li>
 <p>Results below the <code>min_score</code> config threshold (<code>intents.ovos-ocp-pipeline-plugin.min_score</code>,
-    default <code>50</code>) are filtered out before OCP picks a winner across all responding skills; there
-    is no fixed confidence value that short-circuits and cancels other skills' searches early —
-    higher scores simply make your result more likely to win the cross-skill comparison</p>
+    default <code>50</code>) are filtered out before OCP picks a winner across all responding skills. There
+    is no fixed confidence value that short-circuits and cancels other skills' searches early.
+    Higher scores simply make your result more likely to win the cross-skill comparison</p>
 </li>
 <li>
-<p><code>ocp_featured_media</code>, return a playlist for the OCP menu if selected from GUI (optional)</p>
+<p><code>ocp_featured_media</code>: return a playlist for the OCP menu if selected from GUI (optional)</p>
 </li>
 <li>
 <p>Create a <code>requirements.txt</code> file with third-party package requirements</p>
@@ -1731,8 +1732,8 @@ the legacy audio service.</p>
 </span><span id="__span-3-70"><a id="__codelineno-3-70" name="__codelineno-3-70" href="#__codelineno-3-70"></a>            <span class="p">}</span>
 </span></code></pre></div>
 <h2 id="ocp-keywords">OCP Keywords<a class="headerlink" href="#ocp-keywords" title="Permanent link">&para;</a></h2>
-<p>OCP skills often need to match hundreds or thousands of strings against the query string, <code>self.voc_match</code> can quickly become impractical to use in this scenario</p>
-<p>To help with this the OCP skill class provides efficient keyword matching</p>
+<p>OCP skills often need to match hundreds or thousands of strings against the query string. <code>self.voc_match</code> can quickly become impractical to use in this scenario.</p>
+<p>To help with this the OCP skill class provides efficient keyword matching.</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="k">def</span> <span class="nf">register_ocp_keyword</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">media_type</span><span class="p">:</span> <span class="n">MediaType</span><span class="p">,</span> <span class="n">label</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
 </span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>                         <span class="n">samples</span><span class="p">:</span> <span class="n">List</span><span class="p">,</span> <span class="n">langs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
 </span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot; register strings as native OCP keywords (eg, movie_name, artist_name ...)</span>
@@ -1756,10 +1757,10 @@ the legacy audio service.</p>
 </span><span id="__span-4-21"><a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a><span class="sd">    &quot;&quot;&quot;</span>
 </span></code></pre></div>
 <h3 id="ocp-voc-match">OCP Voc match<a class="headerlink" href="#ocp-voc-match" title="Permanent link">&para;</a></h3>
-<p>uses <a href="https://en.wikipedia.org/wiki/Aho%E2%80%93Corasick_algorithm">Aho–Corasick algorithm</a> to match OCP keywords</p>
-<p>this efficiently matches many keywords against an utterance</p>
-<p>OCP keywords are registered via <code>self.register_ocp_keyword</code></p>
-<p>wordlists can also be loaded from a .csv file, see <a href="https://github.com/OpenVoiceOS/ovos-classifiers/tree/dev/scripts/training/ocp/datasets">the OCP dataset</a> for a list of keywords gathered from wikidata with SPARQL queries</p>
+<p>Uses the <a href="https://en.wikipedia.org/wiki/Aho%E2%80%93Corasick_algorithm">Aho–Corasick algorithm</a> to match OCP keywords.</p>
+<p>This efficiently matches many keywords against an utterance.</p>
+<p>OCP keywords are registered via <code>self.register_ocp_keyword</code>.</p>
+<p>Wordlists can also be loaded from a .csv file. See <a href="https://github.com/OpenVoiceOS/ovos-classifiers/tree/dev/scripts/training/ocp/datasets">the OCP dataset</a> for a list of keywords gathered from wikidata with SPARQL queries.</p>
 <h3 id="ocp-database-skill">OCP Database Skill<a class="headerlink" href="#ocp-database-skill" title="Permanent link">&para;</a></h3>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kn">import</span> <span class="nn">json</span>
 </span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>
@@ -1814,9 +1815,9 @@ the legacy audio service.</p>
 </span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a><span class="nb">print</span><span class="p">(</span><span class="n">entities</span><span class="p">)</span>
 </span></code></pre></div>
 <h2 id="playlist-results">Playlist Results<a class="headerlink" href="#playlist-results" title="Permanent link">&para;</a></h2>
-<p>Results can also be playlists, not only single tracks, for instance full albums or a full season for a series</p>
-<p>When a playlist is selected from Search Results, it will replace the Now Playing list</p>
-<p>Playlist results look exactly the same as regular results, but instead of a <code>uri</code> they provide a <code>playlist</code></p>
+<p>Results can also be playlists, not only single tracks. For instance, a result can be a full album or a full season of a series.</p>
+<p>When a playlist is selected from Search Results, it replaces the Now Playing list.</p>
+<p>Playlist results look exactly the same as regular results, but instead of a <code>uri</code> they provide a <code>playlist</code>:</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="n">playlist</span><span class="p">:</span> <span class="nb">list</span>  <span class="c1"># list of dicts, each dict is a regular search result</span>
 </span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="n">title</span><span class="p">:</span> <span class="nb">str</span>
 </span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="n">media_type</span><span class="p">:</span> <span class="n">MediaType</span>
@@ -1824,7 +1825,7 @@ the legacy audio service.</p>
 </span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="n">match_confidence</span><span class="p">:</span> <span class="nb">int</span>  <span class="c1"># 0-100</span>
 </span></code></pre></div>
 <blockquote>
-<p>NOTE: nested playlists are a work in progress and not guaranteed to be functional, ie, the <code>"playlist"</code> dict key should not include other playlists</p>
+<p>NOTE: nested playlists are a work in progress and not guaranteed to be functional. The <code>"playlist"</code> dict key should not include other playlists.</p>
 </blockquote>
 <h3 id="playlist-skill">Playlist Skill<a class="headerlink" href="#playlist-skill" title="Permanent link">&para;</a></h3>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="k">class</span> <span class="nc">MyJamsSkill</span><span class="p">(</span><span class="n">OVOSCommonPlaybackSkill</span><span class="p">):</span>

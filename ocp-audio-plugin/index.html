@@ -1038,7 +1038,7 @@
         <li class="md-nav__item">
   <a href="#background-why-ocp-is-an-audio-service-plugin" class="md-nav__link">
     <span class="md-ellipsis">
-      Background — why OCP is an "audio service plugin"
+      Background: why OCP is an "audio service plugin"
     </span>
   </a>
   
@@ -1047,7 +1047,7 @@
         <li class="md-nav__item">
   <a href="#status-today-legacy-but-the-default" class="md-nav__link">
     <span class="md-ellipsis">
-      Status today — legacy, but the default
+      Status today: legacy, but the default
     </span>
   </a>
   
@@ -1376,7 +1376,7 @@
         <li class="md-nav__item">
   <a href="#background-why-ocp-is-an-audio-service-plugin" class="md-nav__link">
     <span class="md-ellipsis">
-      Background — why OCP is an "audio service plugin"
+      Background: why OCP is an "audio service plugin"
     </span>
   </a>
   
@@ -1385,7 +1385,7 @@
         <li class="md-nav__item">
   <a href="#status-today-legacy-but-the-default" class="md-nav__link">
     <span class="md-ellipsis">
-      Status today — legacy, but the default
+      Status today: legacy, but the default
     </span>
   </a>
   
@@ -1458,7 +1458,7 @@
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
 <p><strong>OCP</strong> ("OVOS Common Play") is the voice media player behind "play some jazz" or "play the
-news". Today it ships as a plugin for the old <a href="../audio-service/">audio service</a> — the package
+news". Today it ships as a plugin for the old <a href="../audio-service/">audio service</a>: the package
 <code>ovos-plugin-common-play</code>, which registers as an <em>audio backend</em> called <code>ovos_common_play</code>.
 This is the <strong>default</strong> way OVOS plays media right now. It still works and is enabled out of
 the box, but it is <strong>legacy</strong>: a dedicated replacement, <a href="../ovos-media/"><code>ovos-media</code></a>, is
@@ -1477,7 +1477,7 @@ The pieces:</p>
   (PyPI name <code>ovos-plugin-common-play</code>, import name <code>ovos_plugin_common_play</code>).</li>
 <li><strong>Entry point:</strong> registers in the legacy <code>mycroft.plugin.audioservice</code> group under the type
   name <strong><code>ovos_common_play</code></strong>.</li>
-<li><strong>What it does:</strong> the full OCP player — it receives the chosen media (search results gathered
+<li><strong>What it does:</strong> the full OCP player. It receives the chosen media (search results gathered
   by the <a href="../ocp-pipeline/">OCP pipeline</a> from <a href="../ocp-skills/">OCP skills</a>), manages the
   now-playing queue and player state, runs <a href="../ocp-plugins/">stream extractors</a>, exposes the
   player over <a href="#mpris">MPRIS</a>, and drives the actual audio output through a lower-level audio
@@ -1486,35 +1486,35 @@ The pieces:</p>
 <p>OCP is a <em>coordinator</em>, not an audio codec: it does the voice/queue/MPRIS logic and then hands
 the raw stream to one of the simple audio backends to make sound.</p>
 <hr />
-<h2 id="background-why-ocp-is-an-audio-service-plugin">Background — why OCP is an "audio service plugin"<a class="headerlink" href="#background-why-ocp-is-an-audio-service-plugin" title="Permanent link">&para;</a></h2>
-<p>OCP predates OVOS as a standalone project — it was first built for <strong>mycroft-core</strong>, which was
+<h2 id="background-why-ocp-is-an-audio-service-plugin">Background: why OCP is an "audio service plugin"<a class="headerlink" href="#background-why-ocp-is-an-audio-service-plugin" title="Permanent link">&para;</a></h2>
+<p>OCP predates OVOS as a standalone project. It was first built for <strong>mycroft-core</strong>, which was
 not extensible enough to add a real media player cleanly. At the time the <strong>only</strong> way to
 intercept playback requests (and to sync with the GUI for things like video) was the audio
-service, which had one job — play a sound file — and loaded small <em>audio backend</em> plugins (a VLC
+service, which had one job (play a sound file) and loaded small <em>audio backend</em> plugins (a VLC
 backend, an mpv backend) to do it. The only extension point for "something that plays media" was
 therefore the <code>mycroft.plugin.audioservice</code> group.</p>
 <p>So OCP was bolted on as a <strong>hack</strong>: it registered itself as <strong>the</strong> audio backend (the
 <code>ovos_common_play</code> type, set as the default backend), <strong>captured</strong> every playback request, and
 then <strong>delegated</strong> the actual sound output back to a real audio backend (<code>mpv</code>/<code>vlc</code>/<code>simple</code>).
 Messy, but it slotted into the machinery that existed. The result was a <strong>monolith</strong>: a single
-plugin doing <em>everything</em> — NLP/intent matching, cross-skill search, the player state machine,
-and MPRIS.</p>
+plugin doing <em>everything</em>, including NLP/intent matching, cross-skill search, the player state
+machine, and MPRIS.</p>
 <p>Since OVOS became its own project that monolith has been <strong>split apart, repo by repo, and
 properly integrated</strong> into OVOS: intent matching moved to the <a href="../ocp-pipeline/">OCP pipeline</a>,
 stream resolution to <a href="../ocp-plugins/">stream-extractor plugins</a>, shared types to <code>ovos-utils</code>,
-and so on. <a href="../ovos-media/"><code>ovos-media</code></a> is the <strong>final step</strong> — it gives the media player itself
+and so on. <a href="../ovos-media/"><code>ovos-media</code></a> is the <strong>final step</strong>. It gives the media player itself
 a proper home as a standalone service instead of masquerading as an audio backend inside
 <a href="../audio-service/"><code>ovos-audio</code></a>.</p>
 <div class="admonition note">
 <p class="admonition-title">This is <em>media</em> playback, not TTS/sound playback</p>
 <p>The OCP audio plugin (and the <code>ovos-media</code> daemon that replaces it) handles <strong>media</strong>
-playback only — music, podcasts, video, streams. The spoken-response and sound-effect
+playback only: music, podcasts, video, streams. The spoken-response and sound-effect
 playback queue inside <a href="../audio-service/"><code>ovos-audio</code></a> is a <strong>separate subsystem</strong> that is
 unaffected: turning OCP off (or switching to <code>ovos-media</code>) does not change how TTS or
 notification sounds are played.</p>
 </div>
 <hr />
-<h2 id="status-today-legacy-but-the-default">Status today — legacy, but the default<a class="headerlink" href="#status-today-legacy-but-the-default" title="Permanent link">&para;</a></h2>
+<h2 id="status-today-legacy-but-the-default">Status today: legacy, but the default<a class="headerlink" href="#status-today-legacy-but-the-default" title="Permanent link">&para;</a></h2>
 <p>The OCP audio plugin is <strong>still the default media playback path</strong>:</p>
 <ul>
 <li>It is installed as part of <a href="../audio-service/"><code>ovos-audio</code></a>'s media extra
@@ -1526,10 +1526,10 @@ notification sounds are played.</p>
 <p>So unless you have explicitly switched to <code>ovos-media</code>, your OVOS device is playing media through
 this plugin.</p>
 <div class="admonition warning">
-<p class="admonition-title">Upcoming — breaking</p>
-<p>This legacy audioservice subsystem — including the OCP backend described on this page —
+<p class="admonition-title">Upcoming: breaking</p>
+<p>This legacy audioservice subsystem, including the OCP backend described on this page,
 is planned for removal from <code>ovos-audio</code> entirely. Media playback will then live wholly
-in <a href="../ovos-media/"><code>ovos-media</code></a>; plan a migration if you have not already switched.</p>
+in <a href="../ovos-media/"><code>ovos-media</code></a>. Plan a migration if you have not already switched.</p>
 </div>
 <hr />
 <h2 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">&para;</a></h2>
@@ -1550,28 +1550,28 @@ in <a href="../ovos-media/"><code>ovos-media</code></a>; plan a migration if you
 </span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="p">}</span>
 </span></code></pre></div>
 <ul>
-<li><strong><code>preferred_audio_services</code></strong> — order in which OCP picks a lower-level audio backend to
+<li><strong><code>preferred_audio_services</code></strong>: order in which OCP picks a lower-level audio backend to
   actually emit sound.</li>
-<li><strong><code>dbus_type</code></strong> / MPRIS keys — see <a href="#mpris">MPRIS</a> below.</li>
+<li><strong><code>dbus_type</code></strong> / MPRIS keys: see <a href="#mpris">MPRIS</a> below.</li>
 </ul>
 <div class="admonition warning">
 <p class="admonition-title"><code>default-backend</code> must not be <code>"OCP"</code></p>
 <p>The audio service's <code>default-backend</code> selects the backend for <em>plain</em> <code>speak</code>/audio output
 (it defaults to <code>mpv</code>). OCP installs itself as the <code>OCP</code> backend, but <strong><code>"OCP"</code> is not a
-valid <code>default-backend</code> value</strong> — it only appears in <code>backends</code> for legacy reasons. Leave
+valid <code>default-backend</code> value</strong>. It only appears in <code>backends</code> for legacy reasons. Leave
 <code>default-backend</code> as <code>mpv</code> (or another simple backend).</p>
 </div>
 <hr />
 <h2 id="mpris">MPRIS<a class="headerlink" href="#mpris" title="Permanent link">&para;</a></h2>
 <p>OCP exposes the player over <strong>MPRIS</strong> (the standard Linux D-Bus media-control interface), so
 phones, desktops, and physical media keys can see and control playback. With
-<code>manage_external_players</code> enabled, OCP can also reach the other direction — voice-controlling
+<code>manage_external_players</code> enabled, OCP can also reach the other direction: voice-controlling
 third-party MPRIS apps (Spotify, a browser) and pausing them when OCP starts its own playback.</p>
 <hr />
 <h2 id="standalone-mode">Standalone mode<a class="headerlink" href="#standalone-mode" title="Permanent link">&para;</a></h2>
 <p>Normally OCP is started by <a href="../audio-service/"><code>ovos-audio</code></a>. The package also ships an
 <code>ovos-ocp-standalone</code> console script to run OCP as its own process, reading the usual
-<code>~/.config/mycroft/mycroft.conf</code>. This is useful in distributed setups — e.g. running OCP at a
+<code>~/.config/mycroft/mycroft.conf</code>. This is useful in distributed setups, e.g. running OCP at a
 <a href="../hivemind-agents/">HiveMind</a> Core rather than on a satellite, since the satellite cannot
 register OCP's intents.</p>
 <hr />
@@ -1579,7 +1579,7 @@ register OCP's intents.</p>
 <p><a href="../ovos-media/"><code>ovos-media</code></a> is the <strong>final step</strong> of the decomposition described
 <a href="#background-why-ocp-is-an-audio-service-plugin">above</a> and the <strong>upcoming, opt-in</strong> replacement
 for this plugin. With the NLP, search, and extraction layers already split out into their own
-repos, what remains is the player itself — and instead of cramming it into the audio service,
+repos, what remains is the player itself. Instead of cramming it into the audio service,
 <code>ovos-media</code> gives it a <strong>dedicated media daemon</strong> with a cleaner design:</p>
 <table>
 <thead>
@@ -1603,7 +1603,7 @@ repos, what remains is the player itself — and instead of cramming it into the
 <tr>
 <td>Video / web</td>
 <td>Limited</td>
-<td>First-class audio <strong>and</strong> video <strong>and</strong> web players</td>
+<td>Dedicated audio <strong>and</strong> video <strong>and</strong> web players</td>
 </tr>
 <tr>
 <td>Status</td>
@@ -1613,14 +1613,14 @@ repos, what remains is the player itself — and instead of cramming it into the
 </tbody>
 </table>
 <p>What stays the same: the <strong>search layer is shared</strong>. The <a href="../ocp-pipeline/">OCP pipeline</a>
-(intent matching) and <a href="../ocp-skills/">OCP skills</a> (media providers) are used by <em>both</em> — only the
+(intent matching) and <a href="../ocp-skills/">OCP skills</a> (media providers) are used by <em>both</em>. Only the
 <em>playback backend</em> changes. <code>ovos-media</code> also keeps a <strong>backwards-compatibility bridge</strong> that
 translates the old <code>mycroft.audio.service.*</code> bus messages, so existing skills and clients keep
 working.</p>
 <p>To switch to <code>ovos-media</code>: set <strong><code>"enable_old_audioservice": false</code></strong> in <code>mycroft.conf</code> and run
 the <code>ovos-media</code> daemon. See the <a href="../ovos-media/">ovos-media</a> page for the full setup and the list
 of player plugins.</p>
-<p>The full switch touches two config keys — turning the legacy audio service's OCP backend off, and
+<p>The full switch touches two config keys: turning the legacy audio service's OCP backend off, and
 making sure the OCP intent pipeline (which both backends share) is still enabled in <code>ovos-core</code>:</p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="p">{</span>
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span><span class="nt">&quot;enable_old_audioservice&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
@@ -1643,11 +1643,11 @@ nothing.</p>
 <hr />
 <h2 id="related-pages">Related Pages<a class="headerlink" href="#related-pages" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="../ocp-pipeline/">OCP Pipeline</a> — how "play X" is recognized as a media request.</li>
-<li><a href="../ocp-skills/">Media Skills (OCP)</a> — writing skills that provide media results.</li>
-<li><a href="../ocp-plugins/">OCP Stream Extractors</a> — turning page URLs into playable streams.</li>
-<li><a href="../audio-service/">Audio Service</a> — the service this plugin loads into.</li>
-<li><a href="../ovos-media/">ovos-media</a> — the dedicated replacement.</li>
+<li><a href="../ocp-pipeline/">OCP Pipeline</a>: how "play X" is recognized as a media request.</li>
+<li><a href="../ocp-skills/">Media Skills (OCP)</a>: writing skills that provide media results.</li>
+<li><a href="../ocp-plugins/">OCP Stream Extractors</a>: turning page URLs into playable streams.</li>
+<li><a href="../audio-service/">Audio Service</a>: the service this plugin loads into.</li>
+<li><a href="../ovos-media/">ovos-media</a>: the dedicated replacement.</li>
 </ul>
 <hr />
 <p><em>Source code: <a href="https://github.com/OpenVoiceOS/ovos-ocp-audio-plugin">OpenVoiceOS/ovos-ocp-audio-plugin</a>.</em></p>

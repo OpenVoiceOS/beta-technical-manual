@@ -1326,9 +1326,9 @@
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
 <p>Nebulento is an <a href="../glossary/">intent</a> parser that figures out what a user <em>meant</em> even when
-they make typos, reorder words, or phrase things loosely — it matches by <em>fuzzy similarity</em>
-rather than exact words. Think of it as a more forgiving sibling of <a href="../padatious-pipeline/">Padatious</a>:
-you still give it example sentences, but it tolerates messy input. No training step, no model
+they make typos, reorder words, or phrase things loosely. It matches by <em>fuzzy similarity</em>
+rather than exact words. Think of it as a more forgiving sibling of <a href="../padatious-pipeline/">Padatious</a>.
+You still give it example sentences, but it tolerates messy input. It needs no training step and no model
 files. See the <a href="../glossary/">Glossary</a> for terms like <em>intent</em> and <em>entity</em>.</p>
 </div>
 <p><em>A lightweight fuzzy-matching intent parser.</em></p>
@@ -1354,8 +1354,8 @@ hundreds of training sentences per intent).</p>
 </span></code></pre></div>
 <h2 id="in-the-ovos-pipeline">In the OVOS pipeline<a class="headerlink" href="#in-the-ovos-pipeline" title="Permanent link">&para;</a></h2>
 <p>Installed as a pipeline plugin (<code>nebulento[ovos]</code>), Nebulento listens on the <strong>same
-<code>padatious:register_intent</code> bus events as <a href="../padatious-pipeline/">Padatious</a></strong>, so it is a
-drop-in alternative — skills register their <code>.intent</code> files exactly as before. A hierarchical
+<code>padatious:register_intent</code> bus events as <a href="../padatious-pipeline/">Padatious</a></strong>. This makes it a
+drop-in alternative. Skills register their <code>.intent</code> files exactly as before. A hierarchical
 variant is also available. See <a href="../pipelines-overview/">Pipelines Overview</a> for how matchers are
 ordered and configured.</p>
 <div class="admonition tip">

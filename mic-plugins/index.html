@@ -1583,11 +1583,11 @@
 <h1 id="microphone-plugins-in-ovos">Microphone Plugins in OVOS<a class="headerlink" href="#microphone-plugins-in-ovos" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>A microphone plugin is the part that listens — it grabs the sound coming in from your device's microphone and hands it to the rest of the assistant so it can hear you. Different devices and setups need different ways of capturing that sound, so these plugins let you switch the "ears" without changing anything else. Think of it like choosing which microphone to plug into a recorder. See the <a href="../glossary/">Glossary</a> for unfamiliar terms.</p>
+<p>A microphone plugin is the part that listens. It grabs the sound coming in from your device's microphone and hands it to the rest of the assistant so it can hear you. Different devices and setups need different ways of capturing that sound, so these plugins let you switch the "ears" without changing anything else. Think of it like choosing which microphone to plug into a recorder. See the <a href="../glossary/">Glossary</a> for unfamiliar terms.</p>
 </div>
 <p>Microphone plugins in Open Voice OS (OVOS) are responsible for capturing audio input and feeding the raw PCM stream to the listener. They let you swap audio backends and platforms without touching the rest of the voice stack.</p>
 <blockquote>
-<p>The audio-capture mechanism is <strong>deployer-defined</strong> and sits outside the formal audio-input service contract — the listener consumes whatever a microphone plugin produces. See the <a href="https://github.com/OpenVoiceOS/architecture/blob/dev/audio-in.md">OVOS-AUDIO-IN-1</a> specification for how captured audio enters the utterance lifecycle.</p>
+<p>The audio-capture mechanism is <strong>deployer-defined</strong> and sits outside the formal audio-input service contract. The listener consumes whatever a microphone plugin produces. See the <a href="https://github.com/OpenVoiceOS/architecture/blob/dev/audio-in.md">OVOS-AUDIO-IN-1</a> specification for how captured audio enters the utterance lifecycle.</p>
 </blockquote>
 <h2 id="usage-guide">Usage Guide<a class="headerlink" href="#usage-guide" title="Permanent link">&para;</a></h2>
 <p>To use a microphone plugin in OVOS:</p>
@@ -1641,13 +1641,13 @@
 </tr>
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/ovos-microphone-plugin-files">ovos-microphone-plugin-files</a></td>
-<td>Uses audio files as input instead of a live microphone — ideal for testing and debugging.</td>
+<td>Uses audio files as input instead of a live microphone. Ideal for testing and debugging.</td>
 <td>Linux, macOS, Windows</td>
 <td>Stable</td>
 </tr>
 </tbody>
 </table>
-<p>Maturity reflects repository health (age, activity, open issues/PRs, in-repo docs), not version — see the <a href="../maturity/">Maturity Scale</a>.</p>
+<p>Maturity reflects repository health (age, activity, open issues/PRs, in-repo docs), not version. See the <a href="../maturity/">Maturity Scale</a>.</p>
 <h2 id="technical-explanation">Technical Explanation<a class="headerlink" href="#technical-explanation" title="Permanent link">&para;</a></h2>
 <p>OVOS uses a plugin architecture to decouple the audio input system from the rest of the voice stack. Microphone plugins implement a common interface, making it easy to swap between different audio sources or backends without changing application code.</p>
 <h3 id="the-microphone-interface">The Microphone Interface<a class="headerlink" href="#the-microphone-interface" title="Permanent link">&para;</a></h3>
@@ -1747,12 +1747,12 @@ format (16 kHz, 16-bit, mono) is what the listener expects downstream.</p>
 </ul>
 <h1 id="microphone-plugins-reference">Microphone Plugins Reference<a class="headerlink" href="#microphone-plugins-reference" title="Permanent link">&para;</a></h1>
 <p>Default configuration for the plugins listed in <a href="#supported-microphone-plugins">Supported Microphone Plugins</a>
-above (OS compatibility and a one-line description live in that table; this section only adds
+above (OS compatibility and a one-line description live in that table. This section only adds
 config where a plugin has one).</p>
 <h2 id="ovos-microphone-plugin-alsa">ovos-microphone-plugin-alsa<a class="headerlink" href="#ovos-microphone-plugin-alsa" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
-<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-microphone-plugin-alsa">https://github.com/OpenVoiceOS/ovos-microphone-plugin-alsa</a></p>
+<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-microphone-plugin-alsa">ovos-microphone-plugin-alsa</a></p>
 </li>
 <li>
 <p><strong>Description</strong>: OpenVoiceOS Microphone plugin</p>
@@ -1762,7 +1762,7 @@ config where a plugin has one).</p>
 <h2 id="ovos-microphone-plugin-sounddevice">ovos-microphone-plugin-sounddevice<a class="headerlink" href="#ovos-microphone-plugin-sounddevice" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
-<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-microphone-plugin-sounddevice">https://github.com/OpenVoiceOS/ovos-microphone-plugin-sounddevice</a></p>
+<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-microphone-plugin-sounddevice">ovos-microphone-plugin-sounddevice</a></p>
 </li>
 <li>
 <p><strong>Description</strong>: Open Voice OS microphone plugin for <a href="https://github.com/spatialaudio/python-sounddevice/">python-sounddevice</a> library.</p>
@@ -1782,7 +1782,7 @@ config where a plugin has one).</p>
 <h2 id="ovos-microphone-plugin-files">ovos-microphone-plugin-files<a class="headerlink" href="#ovos-microphone-plugin-files" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
-<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-microphone-plugin-files">https://github.com/OpenVoiceOS/ovos-microphone-plugin-files</a></p>
+<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-microphone-plugin-files">ovos-microphone-plugin-files</a></p>
 </li>
 <li>
 <p><strong>Description</strong>: OpenVoiceOS Microphone Files plugin</p>
@@ -1792,7 +1792,7 @@ config where a plugin has one).</p>
 <h2 id="ovos-microphone-plugin-pyaudio">ovos-microphone-plugin-pyaudio<a class="headerlink" href="#ovos-microphone-plugin-pyaudio" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
-<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-microphone-plugin-pyaudio">https://github.com/OpenVoiceOS/ovos-microphone-plugin-pyaudio</a></p>
+<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-microphone-plugin-pyaudio">ovos-microphone-plugin-pyaudio</a></p>
 </li>
 <li>
 <p><strong>Description</strong>: OpenVoiceOS Microphone plugin</p>

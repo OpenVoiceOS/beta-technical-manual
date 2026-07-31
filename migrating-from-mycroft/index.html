@@ -1370,20 +1370,20 @@
 <h1 id="migrating-from-mycroft">Migrating from Mycroft<a class="headerlink" href="#migrating-from-mycroft" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>OVOS grew out of the original Mycroft AI project, and a lot of the vocabulary — "skills",
-"intents", "dialog files", even the wake word "Hey Mycroft" — is unchanged on purpose, so
-skills and habits carry over. But the underlying Python API was cleaned up along the way:
-class names moved, one central cloud account went away entirely, and a couple of decorators
-were merged into one. This page is a one-stop diff for anyone arriving with old
+<p>OVOS grew out of the original Mycroft AI project. A lot of the vocabulary is unchanged on
+purpose: "skills", "intents", "dialog files", even the wake word "Hey Mycroft". This lets
+skills and habits carry over. The underlying Python API was cleaned up along the way. Class
+names moved, one central cloud account went away entirely, and a couple of decorators
+merged into one. This page is a one-stop diff for anyone arriving with old
 <code>mycroft-core</code> knowledge (a skill, a config file, a habit) who wants to know exactly what
 changed and why. New to the words here? See the <a href="../glossary/">Glossary</a>.</p>
 </div>
 <h2 id="the-short-version">The short version<a class="headerlink" href="#the-short-version" title="Permanent link">&para;</a></h2>
 <p>OVOS is a <strong>backendless</strong>, community-maintained continuation of the ideas behind Mycroft AI.
-There is no cloud account, no pairing step, and no <code>home.mycroft.ai</code> — everything that used to
+There is no cloud account, no pairing step, and no <code>home.mycroft.ai</code>. Everything that used to
 require the Mycroft backend now runs locally or through swappable, self-hosted plugins. The
 skill-writing model (intent files, dialog files, <code>locale/</code> folders) is the same model you already
-know; only a handful of import paths and class/decorator names changed.</p>
+know. Only a handful of import paths and class/decorator names changed.</p>
 <h2 id="before-after-writing-a-skill">Before / after: writing a skill<a class="headerlink" href="#before-after-writing-a-skill" title="Permanent link">&para;</a></h2>
 <div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">mycroft-core (historical)</label><label for="__tabbed_1_2">OVOS (current)</label></div>
 <div class="tabbed-content">
@@ -1418,16 +1418,16 @@ know; only a handful of import paths and class/decorator names changed.</p>
 <p>What changed, line by line:</p>
 <ul>
 <li><code>from mycroft import MycroftSkill</code> → <code>from ovos_workshop.skills import OVOSSkill</code>. The
-  <code>mycroft</code> package and its <code>MycroftSkill</code> class do not exist in the current OVOS stack —
+  <code>mycroft</code> package and its <code>MycroftSkill</code> class do not exist in the current OVOS stack.
   <code>OVOSSkill</code> (in <code>ovos-workshop</code>) is the base class every skill subclasses today.</li>
 <li>No <code>__init__</code> / <code>create_skill()</code> boilerplate is required. A skill is loaded from a Python
   package that declares itself through an <code>opm.skill</code> entry point (see
-  <a href="../first-skill/">Your First Skill</a>); OVOS instantiates the class directly.</li>
+  <a href="../first-skill/">Your First Skill</a>). OVOS instantiates the class directly.</li>
 <li><code>@intent_file_handler(...)</code> → <code>@intent_handler(...)</code>. mycroft-core kept Padatious <code>.intent</code>
-  files and Adapt intents behind two separate decorators; OVOS merged them into a single
+  files and Adapt intents behind two separate decorators. OVOS merged them into a single
   <code>@intent_handler</code> that accepts either an <code>.intent</code> filename or an <code>IntentBuilder</code>. See
   <a href="../decorators/#coming-from-mycroft-core">Decorators</a> for the full note.</li>
-<li><code>self.speak_dialog(...)</code> is unchanged — dialog files and the multilingual <code>locale/</code> layout work
+<li><code>self.speak_dialog(...)</code> is unchanged. Dialog files and the multilingual <code>locale/</code> layout work
   exactly as before (see <a href="../statements/">Statements</a>).</li>
 </ul>
 <h2 id="concept-map">Concept map<a class="headerlink" href="#concept-map" title="Permanent link">&para;</a></h2>
@@ -1453,17 +1453,17 @@ know; only a handful of import paths and class/decorator names changed.</p>
 <tr>
 <td><code>self.translate()</code> / <code>translate_list()</code> / <code>translate_namedvalue()</code> / <code>translate_template()</code></td>
 <td><code>self.resources.render_dialog()</code> / <code>load_list_file()</code> / <code>load_named_value_file()</code> / <code>load_template_file()</code></td>
-<td>The old <code>translate*</code> helpers were <strong>removed</strong>; see <a href="../statements/#using-translatable-resources">Statements → Using translatable resources</a>.</td>
+<td>The old <code>translate*</code> helpers were <strong>removed</strong>. See <a href="../statements/#using-translatable-resources">Statements → Using translatable resources</a>.</td>
 </tr>
 <tr>
 <td><code>home.mycroft.ai</code> (pairing, cloud STT/TTS, remote settings)</td>
-<td><em>Nothing — removed</em></td>
-<td>OVOS is <a href="../deprecated-repos/#backend-services-removed-architecture-5"><strong>backendless</strong></a>: there is no account, no pairing, and no central server. STT/TTS/settings all run through local or self-hosted plugins instead.</td>
+<td><em>Nothing, removed</em></td>
+<td>OVOS is <a href="../deprecated-repos/#backend-services-removed-architecture-5"><strong>backendless</strong></a>. There is no account, no pairing, and no central server. STT/TTS/settings all run through local or self-hosted plugins instead.</td>
 </tr>
 <tr>
 <td>Mycroft Skills Manager (<code>msm</code>, <code>ovos_skill_manager</code>)</td>
 <td>pip / <code>opm.skill</code> entry points</td>
-<td>Skills are ordinary Python packages installed with <code>pip</code>; discovery goes through <a href="../plugin-manager/">OPM</a>, not a separate skill manager.</td>
+<td>Skills are ordinary Python packages installed with <code>pip</code>. Discovery goes through <a href="../plugin-manager/">OPM</a>, not a separate skill manager.</td>
 </tr>
 <tr>
 <td><code>GUITracker</code></td>
@@ -1478,19 +1478,19 @@ know; only a handful of import paths and class/decorator names changed.</p>
 <tr>
 <td><code>~/.config/mycroft/</code> config/settings folder</td>
 <td>Same path, kept for compatibility</td>
-<td><code>mycroft</code> is still the <strong>default</strong> base folder name for config and settings, on purpose — see <a href="../skill-settings/#storage-location">Skill Settings</a>. It can be renamed via <code>ovos.conf</code> / <code>OVOS_CONFIG_BASE_FOLDER</code> if you want a fresh <code>OpenVoiceOS</code> folder instead.</td>
+<td><code>mycroft</code> is still the <strong>default</strong> base folder name for config and settings, on purpose. See <a href="../skill-settings/#storage-location">Skill Settings</a>. It can be renamed via <code>ovos.conf</code> / <code>OVOS_CONFIG_BASE_FOLDER</code> if you want a fresh <code>OpenVoiceOS</code> folder instead.</td>
 </tr>
 <tr>
 <td>"Hey Mycroft" wake word</td>
 <td>Unchanged</td>
-<td>Still the default wake word; nothing to migrate here.</td>
+<td>Still the default wake word. Nothing to migrate here.</td>
 </tr>
 </tbody>
 </table>
 <h2 id="what-you-dont-have-to-change">What you don't have to change<a class="headerlink" href="#what-you-dont-have-to-change" title="Permanent link">&para;</a></h2>
 <ul>
 <li><strong>Intent files, dialog files, and the <code>locale/</code> folder layout</strong> are the same format and the
-  same lookup rules — a skill's resources port over unmodified.</li>
+  same lookup rules. A skill's resources port over unmodified.</li>
 <li><strong><code>self.speak()</code> / <code>self.speak_dialog()</code> / <code>self.get_response()</code></strong> and the general shape of an
   intent handler are unchanged.</li>
 <li><strong>The wake word and general voice interaction model</strong> ("Hey Mycroft, do the thing") are
@@ -1499,14 +1499,14 @@ know; only a handful of import paths and class/decorator names changed.</p>
 <h2 id="what-you-must-change">What you must change<a class="headerlink" href="#what-you-must-change" title="Permanent link">&para;</a></h2>
 <ul>
 <li>Replace <code>from mycroft import MycroftSkill</code> with <code>from ovos_workshop.skills import OVOSSkill</code>
-  (or one of its subclasses — <code>FallbackSkill</code>, <code>OVOSCommonPlaybackSkill</code>, etc. — see
-  <a href="../skill-classes/">Skill Classes</a>). There is no <code>CommonQuerySkill</code> base class; a plain
+  (or one of its subclasses, such as <code>FallbackSkill</code> or <code>OVOSCommonPlaybackSkill</code>. See
+  <a href="../skill-classes/">Skill Classes</a>). There is no <code>CommonQuerySkill</code> base class. A plain
   <code>OVOSSkill</code> joins CommonQuery by decorating a method with
   <a href="../skill-classes/#commonquery-common_query-on-ovosskill"><code>@common_query()</code></a>.</li>
 <li>Replace <code>@intent_file_handler</code> with <code>@intent_handler</code>.</li>
 <li>Drop any code that depends on <code>home.mycroft.ai</code> (pairing checks, remote settings sync, cloud
-  STT/TTS calls) — there is nothing to pair with, and the equivalent functionality is provided by
-  local plugins instead (see <a href="../stt-plugins/">STT Plugins</a>, <a href="../tts-plugins/">TTS Plugins</a>,
+  STT/TTS calls). There is nothing to pair with. Local plugins provide the equivalent
+  functionality instead (see <a href="../stt-plugins/">STT Plugins</a>, <a href="../tts-plugins/">TTS Plugins</a>,
   <a href="../skill-settings/">Skill Settings</a>).</li>
 <li>Replace <code>self.translate*()</code> calls with the corresponding <code>self.resources.*</code> loader (see the
   concept map above).</li>
@@ -1516,12 +1516,12 @@ know; only a handful of import paths and class/decorator names changed.</p>
 </ul>
 <h2 id="where-to-go-from-here">Where to go from here<a class="headerlink" href="#where-to-go-from-here" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="../deprecated-repos/">Deprecated &amp; Archived Repositories</a> — full list of retired
+<li><a href="../deprecated-repos/">Deprecated &amp; Archived Repositories</a>: full list of retired
   mycroft-core-era repositories and their current replacements.</li>
-<li><a href="../first-skill/">Your First Skill</a> — a from-scratch walkthrough using today's API.</li>
-<li><a href="../decorators/">Decorators</a> — every decorator available today, including the note on
+<li><a href="../first-skill/">Your First Skill</a>: a from-scratch walkthrough using today's API.</li>
+<li><a href="../decorators/">Decorators</a>: every decorator available today, including the note on
   <code>@intent_file_handler</code>.</li>
-<li><a href="../glossary/">Glossary</a> — unfamiliar terms, including <a href="../glossary/"><code>home.mycroft.ai</code></a>.</li>
+<li><a href="../glossary/">Glossary</a>: unfamiliar terms, including <a href="../glossary/"><code>home.mycroft.ai</code></a>.</li>
 </ul>
 
 

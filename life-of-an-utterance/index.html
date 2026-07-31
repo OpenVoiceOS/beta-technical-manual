@@ -1472,13 +1472,28 @@
 <h1 id="the-life-of-an-utterance">The Life of an Utterance<a class="headerlink" href="#the-life-of-an-utterance" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>This page follows a single spoken utterance on its whole journey through OpenVoiceOS — from the instant sound reaches the microphone to the moment you hear a reply. Along the way the system notices the wake word, records what you say, turns it into text, works out what you meant, does the task, and speaks back. It's a guided tour of the assembly line that handles everything you say to it. New to the terms here? Start with the <a href="../glossary/">Glossary</a>, or see the <a href="../architecture-overview/">Architecture Overview</a> for the bigger picture.</p>
+<p>This page follows a single spoken utterance on its whole journey through OpenVoiceOS, from
+the instant sound reaches the microphone to the moment you hear a reply. Along the way the
+system notices the wake word, records what you say, turns it into text, works out what you
+meant, does the task, and speaks back. It's a guided tour of the assembly line that handles
+everything you say to it. New to the terms here? Start with the <a href="../glossary/">Glossary</a>, or
+see the <a href="../architecture-overview/">Architecture Overview</a> for the bigger picture.</p>
 </div>
 <details class="info">
 <summary>📐 Formal specification</summary>
-<p>This whole journey is specified end-to-end: audio capture → STT → utterance by <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/audio-in.md">OVOS-AUDIO-IN-1 — Audio Input Service</a></strong>; the utterance lifecycle, matching, and dispatch by <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md">OVOS-PIPELINE-1 — Utterance Lifecycle &amp; Pipeline</a></strong>; the enrichment/rewrite points along the way by <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/transformer.md">OVOS-TRANSFORM-1 — Transformer Plugins</a></strong>; and dialog → TTS → playback by <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/audio-out.md">OVOS-AUDIO-1 — Audio Output Service</a></strong>. See also the <a href="../architecture-specs/">spec index</a>. Spec topic names are canonical below; the legacy name is noted once where current code still emits it.</p>
+<p>This whole journey is specified end-to-end. Audio capture, STT, and utterance dispatch come
+from <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/audio-in.md">OVOS-AUDIO-IN-1 — Audio Input Service</a></strong>.
+The utterance lifecycle, matching, and dispatch come from
+<strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md">OVOS-PIPELINE-1 — Utterance Lifecycle &amp; Pipeline</a></strong>.
+The enrichment and rewrite points along the way come from
+<strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/transformer.md">OVOS-TRANSFORM-1 — Transformer Plugins</a></strong>.
+Dialog, TTS, and playback come from
+<strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/audio-out.md">OVOS-AUDIO-1 — Audio Output Service</a></strong>.
+See also the <a href="../architecture-specs/">spec index</a>. Spec topic names are canonical below. The
+legacy name is noted once where current code still emits it.</p>
 </details>
-<p>This guide provides a technical, step-by-step walkthrough of how an utterance is processed by OpenVoiceOS, from the moment sound hits the microphone to the final spoken response.</p>
+<p>This guide gives a technical, step-by-step walkthrough of how an utterance is processed by
+OpenVoiceOS, from the moment sound hits the microphone to the final spoken response.</p>
 <p>The sequence diagram below traces the same eight stages across the services and bus events involved:</p>
 <pre class="mermaid"><code>sequenceDiagram
     participant Mic as Microphone
@@ -1534,7 +1549,7 @@
 <p>The STT engine (e.g., Whisper, Google, Vosk) transcribes the audio into text. Before STT, the raw audio first passes through the <strong>audio-transformer chain</strong> (OVOS-TRANSFORM-1 §3.1).</p>
 </li>
 <li>
-<p>The listener emits an <code>ovos.utterance.handle</code> message — the lifecycle entry point of <a href="https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md">OVOS-PIPELINE-1 §9.1</a> — containing the transcription candidates in <code>data.utterances</code>.</p>
+<p>The listener emits an <code>ovos.utterance.handle</code> message. This is the lifecycle entry point of <a href="https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md">OVOS-PIPELINE-1 §9.1</a>, and it contains the transcription candidates in <code>data.utterances</code>.</p>
 </li>
 </ul>
 <hr />
@@ -1550,12 +1565,12 @@
 <p><strong>Metadata Transformers</strong> (§3.3): These can enrich the message context with information like the user's emotion or the current environmental noise level.</p>
 </li>
 </ul>
-<p>If the entry message carried no authoritative <code>lang</code> (the producer did not know the content language for certain — a common case for STT output), the orchestrator resolves the utterance's language <strong>once</strong>, from session evidence (user preference, lang-detect signals), and passes that resolved tag to every pipeline plugin's <code>match</code> call for this utterance. Pipeline plugins may refine the tag they receive (a multilingual matcher may detect a different content language) but must not re-derive it independently from session evidence — a single resolution point keeps the whole match round matching in the same language, rather than leaving the outcome to an accident of pipeline ordering.</p>
+<p>The entry message may carry no authoritative <code>lang</code>. This happens when the producer did not know the content language for certain, a common case for STT output. In that case, the orchestrator resolves the utterance's language <strong>once</strong>, from session evidence (user preference, lang-detect signals), and passes that resolved tag to every pipeline plugin's <code>match</code> call for this utterance. Pipeline plugins may refine the tag they receive (a multilingual matcher may detect a different content language), but they must not re-derive it independently from session evidence. A single resolution point keeps the whole match round matching in the same language, instead of leaving the outcome to an accident of pipeline ordering.</p>
 <hr />
 <h2 id="4-intent-pipeline-matching">4. Intent Pipeline Matching<a class="headerlink" href="#4-intent-pipeline-matching" title="Permanent link">&para;</a></h2>
 <p><strong>Service:</strong> <code>ovos-core</code> (Intent Service)
 <strong>Process:</strong> Ordered evaluation of matchers.</p>
-<p>The (potentially modified) utterance is now evaluated against the <strong>Intent Pipeline</strong>. The orchestrator calls each pipeline plugin's <code>match(utterances, lang, message)</code> in order and takes the <strong>first</strong> that returns a <code>Match</code> — <strong>first-match-wins</strong>, with no cross-plugin confidence scoring (OVOS-PIPELINE-1 §6.2). The sequence diagram above collapses this to one step (<code>stop → converse → OCP → padatious → adapt → fallback</code>); that shorthand names each matcher once; the pipeline is <strong>configurable</strong>, and the list below is the full expansion of the actual default order — see <a href="../pipelines-overview/">Pipelines Overview</a> for the authoritative list and how to customize it. A single matcher (e.g. Adapt, Padatious) is often registered several times at decreasing internal-confidence tiers (high → medium → low), which is why those names appear interleaved through the list:</p>
+<p>The (potentially modified) utterance is now evaluated against the <strong>Intent Pipeline</strong>. The orchestrator calls each pipeline plugin's <code>match(utterances, lang, message)</code> in order and takes the <strong>first</strong> that returns a <code>Match</code>. This is <strong>first-match-wins</strong>, with no cross-plugin confidence scoring (OVOS-PIPELINE-1 §6.2). The sequence diagram above collapses this to one step (<code>stop → converse → OCP → padatious → adapt → fallback</code>). That shorthand names each matcher once. The pipeline is <strong>configurable</strong>, and the list below is the full expansion of the actual default order. See <a href="../pipelines-overview/">Pipelines Overview</a> for the authoritative list and how to customize it. A single matcher (e.g. Adapt, Padatious) is often registered several times at decreasing internal-confidence tiers (high → medium → low). This is why those names appear interleaved through the list:</p>
 <ol>
 <li>
 <p><strong><a href="../stop-pipeline/">Stop</a></strong>: "stop" / "cancel" is checked first so the assistant can always be interrupted.</p>
@@ -1577,13 +1592,13 @@
 </li>
 </ol>
 <p>(Other matchers such as <a href="../m2v-pipeline/">Model2Vec</a> and, if installed, <a href="../cq-pipeline/">Common Query</a> for general-knowledge questions, slot into this order too — see <a href="../pipelines-overview/">Pipelines</a> for the full default and how to customize it.)</p>
-<p>Each <code>match</code> call is invoked directly inside a <code>try/except</code>: if a matcher <strong>raises</strong>, the orchestrator logs it and moves on to the next matcher as a no-match. There is <strong>no per-match timeout</strong> — a matcher that merely <em>hangs</em> (never returns, never raises) blocks the pipeline, and because <code>ovos-core</code> runs on a single shared bus connection by default (<code>websocket.shared_connection: true</code>), that same thread is the one servicing the bus, so a hung matcher stalls the whole service until it returns. Keep matchers fast. (The only timeout in this path is the <strong>handler</strong> timeout — default 5 minutes, <code>intents.handler_timeout</code> — which bounds the <em>skill handler</em> invoked after a match, not the match calls themselves.) A corollary of the single shared connection: a matcher that does its own bus round-trip inside <code>match()</code> (e.g. a stop plugin gathering <code>stop.pong</code> replies) is self-blocking — the thread waiting for the replies is the same thread that would deliver them — so such gather windows (e.g. the stop pipeline's ~0.5 s pong wait) are best-effort and typically time out rather than a live, serviced round trip. Only <code>websocket.shared_connection: false</code> gives skills their own connections/threads, and even then the orchestrator and pipeline plugins stay on the one shared bus.</p>
+<p>Each <code>match</code> call is invoked directly inside a <code>try/except</code>. If a matcher <strong>raises</strong>, the orchestrator logs it and moves on to the next matcher as a no-match. There is <strong>no per-match timeout</strong>. A matcher that merely <em>hangs</em> (never returns, never raises) blocks the pipeline. Because <code>ovos-core</code> runs on a single shared bus connection by default (<code>websocket.shared_connection: true</code>), that same thread is the one servicing the bus. A hung matcher stalls the whole service until it returns. Keep matchers fast. (The only timeout in this path is the <strong>handler</strong> timeout, default 5 minutes, <code>intents.handler_timeout</code>. It bounds the <em>skill handler</em> invoked after a match, not the match calls themselves.) One result of the single shared connection: a matcher that does its own bus round-trip inside <code>match()</code> (e.g. a stop plugin gathering <code>stop.pong</code> replies) is self-blocking. The thread waiting for the replies is the same thread that would deliver them. So such gather windows (e.g. the stop pipeline's ~0.5 s pong wait) are best-effort. They typically time out rather than complete a live, serviced round trip. Only <code>websocket.shared_connection: false</code> gives skills their own connections and threads, and even then the orchestrator and pipeline plugins stay on the one shared bus.</p>
 <hr />
 <h2 id="5-skill-execution">5. <a href="../skill-design-guidelines/">Skill</a> Execution<a class="headerlink" href="#5-skill-execution" title="Permanent link">&para;</a></h2>
 <p><strong>Service:</strong> A specific Skill (running in <code>ovos-core</code>)
 <strong>Bus Event:</strong> <code>ovos.intent.matched</code>, <code>{skill_id}.activate</code>, and the specific intent dispatch message.</p>
-<p>Once a match is found, the orchestrator post-processes it through the <strong>intent-transformer chain</strong> (OVOS-TRANSFORM-1 §3.4), emits <code>ovos.intent.matched</code> (§9.2), then dispatches to the winning skill on <code>&lt;skill_id&gt;:&lt;intent_name&gt;</code>. The orchestrator wraps that invocation in the <strong>handler-lifecycle trio</strong> <code>ovos.intent.handler.start</code> → <code>…complete</code> / <code>…error</code> (§8): <code>start</code> goes out immediately before the call and exactly one terminal leg immediately after it returns or raises. The handler is opaque to the trio — it may emit its own messages (e.g. <code>ovos.utterance.speak</code> when a skill calls <code>self.speak()</code>), but nothing it emits is part of the trio's bookkeeping. See <a href="../intent-service/">Intent Service</a> for the exact mechanism.</p>
-<p>A handful of intent names are <strong>reserved</strong>: a <code>Match</code> bearing one of them is a continuation or termination of an already-active skill's participation, not a fresh activation, so the dispatch does not push the skill onto <code>session.active_handlers</code> again. That suppression is keyed on <strong>which pipeline plugin produced the match</strong>: <code>ovos-core</code> checks whether the producing <code>pipeline_id</code> is one of the reserved-name pipeline roles (the converse / stop / fallback / common-query plugins) via <code>_produces_reserved_name(pipeline_id)</code> and skips the <code>session.active_handlers</code> push for those, per OVOS-PIPELINE-1 §7.3.</p>
+<p>Once a match is found, the orchestrator post-processes it through the <strong>intent-transformer chain</strong> (OVOS-TRANSFORM-1 §3.4), emits <code>ovos.intent.matched</code> (§9.2), then dispatches to the winning skill on <code>&lt;skill_id&gt;:&lt;intent_name&gt;</code>. The orchestrator wraps that invocation in the <strong>handler-lifecycle trio</strong> <code>ovos.intent.handler.start</code> → <code>…complete</code> / <code>…error</code> (§8). <code>start</code> goes out immediately before the call, and exactly one terminal leg goes out immediately after it returns or raises. The handler is opaque to the trio. It may emit its own messages (e.g. <code>ovos.utterance.speak</code> when a skill calls <code>self.speak()</code>), but nothing it emits is part of the trio's bookkeeping. See <a href="../intent-service/">Intent Service</a> for the exact mechanism.</p>
+<p>A handful of intent names are <strong>reserved</strong>. A <code>Match</code> bearing one of them is a continuation or termination of an already-active skill's participation, not a fresh activation. So the dispatch does not push the skill onto <code>session.active_handlers</code> again. That suppression is keyed on <strong>which pipeline plugin produced the match</strong>. <code>ovos-core</code> checks whether the producing <code>pipeline_id</code> is one of the reserved-name pipeline roles (the converse / stop / fallback / common-query plugins) via <code>_produces_reserved_name(pipeline_id)</code>, and skips the <code>session.active_handlers</code> push for those, per OVOS-PIPELINE-1 §7.3.</p>
 <ul>
 <li>
 <p>The skill's <strong>intent handler</strong> is triggered.</p>
@@ -1599,7 +1614,7 @@
 <h2 id="6-text-to-speech-tts">6. <a href="../tts-plugins/">Text-to-Speech</a> (<a href="../tts-plugins/">TTS</a>)<a class="headerlink" href="#6-text-to-speech-tts" title="Permanent link">&para;</a></h2>
 <p><strong>Service:</strong> <code>ovos-audio</code>
 <strong>Bus Event:</strong> <code>ovos.utterance.speak</code> (legacy: <code>speak</code>)</p>
-<p>The skill emits an <code>ovos.utterance.speak</code> message containing the response text — the natural-language response exit point of the lifecycle (OVOS-PIPELINE-1 §9.6).</p>
+<p>The skill emits an <code>ovos.utterance.speak</code> message containing the response text. This is the natural-language response exit point of the lifecycle (OVOS-PIPELINE-1 §9.6).</p>
 <ul>
 <li>
 <p>The <code>ovos-audio</code> service receives the message and runs the text through the <strong>dialog-transformer chain</strong> (OVOS-TRANSFORM-1 §3.5) before synthesis.</p>
@@ -1620,18 +1635,18 @@
 <p><strong>Playback</strong>: <code>ovos-audio</code> plays the generated WAV file through the configured audio output (e.g., ALSA, PulseAudio).</p>
 </li>
 <li>
-<p><strong>GUI</strong>: If the skill provided a UI (via <code>self.gui.show_page()</code>), the <code>ovos-gui</code> service renders the <a href="../qt5-gui/">QML</a>/HTML view on the screen, often synchronized with the spoken response. ⚠️ The current ("legacy") <a href="../gui-service/">GUI</a> is <strong>deprecated</strong> — there is no generally usable OVOS GUI right now (a replacement is in progress); the spoken response still works regardless.</p>
+<p><strong>GUI</strong>: If the skill provided a UI (via <code>self.gui.show_page()</code>), the <code>ovos-gui</code> service renders the <a href="../qt5-gui/">QML</a>/HTML view on the screen, often synchronized with the spoken response. ⚠️ The current ("legacy") <a href="../gui-service/">GUI</a> is <strong>deprecated</strong>. There is no generally usable OVOS GUI right now (a replacement is in progress). The spoken response still works regardless.</p>
 </li>
 </ul>
 <hr />
 <h2 id="8-session-wrap-up">8. <a href="../session/">Session</a> Wrap-up<a class="headerlink" href="#8-session-wrap-up" title="Permanent link">&para;</a></h2>
 <p><strong>Service:</strong> <code>ovos-core</code> (Session Manager)</p>
-<p>The lifecycle closes with exactly one <code>ovos.utterance.handled</code> event (OVOS-PIPELINE-1 §9.5) — the universal end-marker that fires whether an intent matched, a fallback answered, or nothing claimed the utterance. Any <code>intent_context</code> entry may carry an optional per-entry <code>turns_remaining</code> field — a declared turn-budget stored alongside the time-based <code>timeout</code> (see <a href="../session/#intent-context">Session</a>) — though most entries instead decay purely on <code>timeout</code>. If the skill requested a follow-up question (e.g., <code>expect_response=True</code> / <code>listen=True</code>), the reply is spoken and the listener is reactivated <strong>directly into recording</strong> — the wake word is bypassed, so the cycle resumes at <strong>Step 2</strong> (recording → STT), not the wake-word gate of Step 1, with the current <strong>Session</strong> context preserved.</p>
+<p>The lifecycle closes with exactly one <code>ovos.utterance.handled</code> event (OVOS-PIPELINE-1 §9.5). This is the universal end-marker that fires whether an intent matched, a fallback answered, or nothing claimed the utterance. Any <code>intent_context</code> entry may carry an optional per-entry <code>turns_remaining</code> field, a declared turn-budget stored alongside the time-based <code>timeout</code> (see <a href="../session/#intent-context">Session</a>). Most entries instead decay purely on <code>timeout</code>. If the skill requested a follow-up question (e.g., <code>expect_response=True</code> / <code>listen=True</code>), the reply is spoken and the listener is reactivated <strong>directly into recording</strong>. The wake word is bypassed, so the cycle resumes at <strong>Step 2</strong> (recording → STT), not the wake-word gate of Step 1, with the current <strong>Session</strong> context preserved.</p>
 <hr />
 <h2 id="further-reading">Further reading<a class="headerlink" href="#further-reading" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="../pipelines-overview/">Pipelines Overview</a> — the full default pipeline order and how to customize it.</li>
-<li><a href="../architecture-specs/">Formal Specifications</a> — the OVOS-PIPELINE-1, OVOS-TRANSFORM-1, and companion specs cited throughout this page.</li>
+<li><a href="../pipelines-overview/">Pipelines Overview</a>: the full default pipeline order and how to customize it.</li>
+<li><a href="../architecture-specs/">Formal Specifications</a>: the OVOS-PIPELINE-1, OVOS-TRANSFORM-1, and companion specs cited throughout this page.</li>
 <li><a href="https://blog.openvoiceos.org/posts/2026-01-25-voice-first">Voice-first</a> — why the assistant's design centers this same utterance journey.</li>
 </ul>
 

@@ -1439,7 +1439,7 @@
 <h1 id="ocp-plugins-reference">OCP Plugins Reference<a class="headerlink" href="#ocp-plugins-reference" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>OCP (the OpenVoiceOS Common Play system) is the part of OVOS that plays media — music, podcasts, news, radio and the like. Each plugin on this page teaches it to handle one kind of source, such as YouTube links, Bandcamp pages, RSS feeds, or local files. So if you ask to play something, the right plugin knows how to find the actual audio stream and start it. See the <a href="../glossary/">Glossary</a> for unfamiliar terms.</p>
+<p>OCP (the OpenVoiceOS Common Play system) is the part of OVOS that plays media: music, podcasts, news, radio and the like. Each plugin on this page teaches it to handle one kind of source, such as YouTube links, Bandcamp pages, RSS feeds, or local files. So if you ask to play something, the right plugin knows how to find the actual audio stream and start it. See the <a href="../glossary/">Glossary</a> for unfamiliar terms.</p>
 </div>
 <table>
 <thead>
@@ -1475,14 +1475,14 @@
 </tr>
 <tr>
 <td><a href="#ovos-media-classifier">ovos-media-classifier</a></td>
-<td>⚠️ experimental — pluggable media-intent classifier that routes a request to the right <code>MediaProvider</code>s</td>
+<td>⚠️ experimental: pluggable media-intent classifier that routes a request to the right <code>MediaProvider</code>s</td>
 </tr>
 </tbody>
 </table>
 <h2 id="ovos-ocp-files-plugin">ovos-ocp-files-plugin<a class="headerlink" href="#ovos-ocp-files-plugin" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
-<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-ocp-files-plugin">https://github.com/OpenVoiceOS/ovos-ocp-files-plugin</a></p>
+<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-ocp-files-plugin">ovos-ocp-files-plugin</a></p>
 </li>
 <li>
 <p><strong>Description</strong>: A stream extractor that lets OCP play local files (<code>file://</code> URIs, or plain
@@ -1494,11 +1494,11 @@
 <h2 id="ovos-ocp-news-plugin">ovos-ocp-news-plugin<a class="headerlink" href="#ovos-ocp-news-plugin" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
-<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-ocp-news-plugin">https://github.com/OpenVoiceOS/ovos-ocp-news-plugin</a></p>
+<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-ocp-news-plugin">ovos-ocp-news-plugin</a></p>
 </li>
 <li>
 <p><strong>Description</strong>: A stream extractor for spoken-news providers. It registers the stream
-  extractor id (SEI) <code>news</code>, so any result URI of the form <code>news//&lt;url&gt;</code> is routed to it; it
+  extractor id (SEI) <code>news</code>, so any result URI of the form <code>news//&lt;url&gt;</code> is routed to it. It
   also recognizes a hardcoded table of known news-provider URLs directly (<code>URL_MAPPINGS</code>) so
   skills can hand it a raw provider URL without the <code>news//</code> prefix. At playback time it looks
   the URL up in that table and calls the matching extractor function to resolve the real,
@@ -1509,7 +1509,7 @@
 <h2 id="ovos-ocp-bandcamp-plugin">ovos-ocp-bandcamp-plugin<a class="headerlink" href="#ovos-ocp-bandcamp-plugin" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
-<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-ocp-bandcamp-plugin">https://github.com/OpenVoiceOS/ovos-ocp-bandcamp-plugin</a></p>
+<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-ocp-bandcamp-plugin">ovos-ocp-bandcamp-plugin</a></p>
 </li>
 <li>
 <p><strong>Description</strong>: A stream extractor for <a href="https://bandcamp.com">Bandcamp</a> pages, registering
@@ -1522,12 +1522,12 @@
 <h2 id="ovos-ocp-rss-plugin">ovos-ocp-rss-plugin<a class="headerlink" href="#ovos-ocp-rss-plugin" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
-<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-ocp-rss-plugin">https://github.com/OpenVoiceOS/ovos-ocp-rss-plugin</a></p>
+<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-ocp-rss-plugin">ovos-ocp-rss-plugin</a></p>
 </li>
 <li>
 <p><strong>Description</strong>: A stream extractor for RSS/podcast feeds, registering the SEI <code>rss</code>. Given a
   <code>rss//&lt;feed-url&gt;</code> (or bare feed URL), it parses the feed with <code>feedparser</code>, takes the most
-  recent entry, and returns the first enclosure link whose MIME type contains <code>audio</code> — along
+  recent entry, and returns the first enclosure link whose MIME type contains <code>audio</code>, along
   with that entry's title, publish timestamp, and duration when the feed provides them. It only
   ever surfaces the newest playable item in the feed, not the whole episode list.</p>
 </li>
@@ -1536,12 +1536,12 @@
 <h2 id="ovos-ocp-youtube-plugin">ovos-ocp-youtube-plugin<a class="headerlink" href="#ovos-ocp-youtube-plugin" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
-<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-ocp-youtube-plugin">https://github.com/OpenVoiceOS/ovos-ocp-youtube-plugin</a></p>
+<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-ocp-youtube-plugin">ovos-ocp-youtube-plugin</a></p>
 </li>
 <li>
 <p><strong>Description</strong>: A stream extractor for YouTube and YouTube Music links. Unlike the other
-  extractors on this page, it is a small router over multiple interchangeable backends —
-  <code>youtube-dl</code>/<code>yt-dlp</code>, <code>pytube</code>, an Invidious mirror, or a webview fallback — selectable via
+  extractors on this page, it is a small router over multiple interchangeable backends:
+  <code>youtube-dl</code>/<code>yt-dlp</code>, <code>pytube</code>, an Invidious mirror, or a webview fallback, selectable via
   the <code>youtube_backend</code> / <code>ydl_backend</code> / <code>invidious_host</code> settings, since any single scraping
   approach tends to break whenever YouTube changes its page format. It also has a dedicated path
   for resolving a channel's current live stream.</p>
@@ -1551,7 +1551,7 @@
 <h2 id="ovos-ocp-m3u-plugin">ovos-ocp-m3u-plugin<a class="headerlink" href="#ovos-ocp-m3u-plugin" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
-<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-ocp-m3u-plugin">https://github.com/OpenVoiceOS/ovos-ocp-m3u-plugin</a></p>
+<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-ocp-m3u-plugin">ovos-ocp-m3u-plugin</a></p>
 </li>
 <li>
 <p><strong>Description</strong>: A stream extractor for <code>.m3u</code> and <code>.pls</code> playlist URLs, registering the SEIs
@@ -1564,15 +1564,15 @@
 <h2 id="ovos-media-classifier">ovos-media-classifier<a class="headerlink" href="#ovos-media-classifier" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
-<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-media-classifier">https://github.com/OpenVoiceOS/ovos-media-classifier</a></p>
+<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-media-classifier">ovos-media-classifier</a></p>
 </li>
 <li>
-<p><strong>Description</strong>: ⚠️ <strong>Experimental — work in progress, not yet deployed in OpenVoiceOS.</strong>
+<p><strong>Description</strong>: ⚠️ <strong>Experimental. Work in progress, not yet deployed in OpenVoiceOS.</strong>
   A self-describing, pluggable media-intent classifier: given a spoken request, it decides
   whether it is a media request at all and, if so, classifies it along several axes at once
   (media type, playback modality, structure, explicitness, tags, qualifiers) so OCP can route
   it to the right <code>MediaProvider</code>s and apply content policy. It is a router, not a
-  resolver — it does not turn a title into a playable stream, the OCP stream-extractor
+  resolver. It does not turn a title into a playable stream. The OCP stream-extractor
   plugins on this page do that.</p>
 </li>
 </ul>

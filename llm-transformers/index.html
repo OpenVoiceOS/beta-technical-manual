@@ -1449,17 +1449,23 @@
 <h1 id="generative-ai-transformer-plugins">Generative AI <a href="../transformer-plugins/">Transformer</a> Plugins<a class="headerlink" href="#generative-ai-transformer-plugins" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>These plugins let an AI language model quietly tweak things as the assistant works — like a helpful editor sitting in the middle of the conversation. They can step in twice: once to clean up or rephrase what you just said before the assistant tries to understand it, and once to polish the assistant's reply before it's spoken aloud. You can stack several of them and set the order they run in. To learn more, see <a href="../transformer-plugins/">Transformer Plugins</a> and the <a href="../glossary/">Glossary</a>.</p>
+<p>These plugins let an AI language model tweak things as the assistant works. They act like an
+editor sitting in the middle of the conversation. They can step in twice: once to clean up or
+rephrase what you just said before the assistant tries to understand it, and once to polish
+the assistant's reply before it's spoken aloud. You can stack several of them and set the
+order they run in. To learn more, see <a href="../transformer-plugins/">Transformer Plugins</a> and the
+<a href="../glossary/">Glossary</a>.</p>
 </div>
-<p><strong>Transformer plugins</strong> intercept the OVOS processing pipeline at two points — before intent
-matching (utterance transformers) and before <a href="../tts-plugins/">TTS</a> synthesis (dialog transformers). They operate
-independently of the persona system but can use the same LLM backends.</p>
+<p><strong>Transformer plugins</strong> intercept the OVOS processing pipeline at two points: before intent
+matching (utterance transformers) and before <a href="../tts-plugins/">TTS</a> synthesis (dialog
+transformers). They operate independently of the persona system but can use the same LLM
+backends.</p>
 <ul>
 <li>
-<p><strong><a href="../life-of-an-utterance/">Utterance</a> transformers</strong> (<code>opm.transformer.text</code>) — run after <a href="../stt-plugins/">STT</a>, before NLP.</p>
+<p><strong><a href="../life-of-an-utterance/">Utterance</a> transformers</strong> (<code>opm.transformer.text</code>): run after <a href="../stt-plugins/">STT</a>, before NLP.</p>
 </li>
 <li>
-<p><strong>Dialog transformers</strong> (<code>opm.transformer.dialog</code>) — run after skill response generation, before TTS.</p>
+<p><strong>Dialog transformers</strong> (<code>opm.transformer.dialog</code>): run after skill response generation, before TTS.</p>
 </li>
 </ul>
 <p>LLM-backed implementations are provided by <code>ovos-openai-plugin</code> / <code>ovos-gguf-plugin</code>
@@ -1483,7 +1489,7 @@ Falls back to the original dialog on API error.</p>
 <h3 id="openai-dialog-transformer">OpenAI Dialog Transformer<a class="headerlink" href="#openai-dialog-transformer" title="Permanent link">&para;</a></h3>
 <p><code>OpenAIDialogTransformer</code> — <code>ovos_openai_plugin/dialog_transformers.py:OpenAIDialogTransformer</code></p>
 <p>Entry point: <code>opm.transformer.dialog</code> (<code>ovos-dialog-transformer-openai-plugin</code>)</p>
-<p>Works with any OpenAI-compatible endpoint — OpenAI, Ollama, llama.cpp, or
+<p>Works with any OpenAI-compatible endpoint: OpenAI, Ollama, llama.cpp, or
 <code>ovos-persona-server</code>:</p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="p">{</span>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span><span class="nt">&quot;dialog_transformers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
@@ -1549,10 +1555,10 @@ implementations:</p>
 </table>
 <hr />
 <h2 id="stacking-transformers">Stacking Transformers<a class="headerlink" href="#stacking-transformers" title="Permanent link">&para;</a></h2>
-<p>Multiple transformers of the same type can be active simultaneously; each configured entry under
-<code>dialog_transformers</code> runs in turn, <strong>higher <code>priority</code> first</strong>, each one's output feeding into
-the next. For example, running a cheap local pass to strip markdown/jargon before an expensive
-cloud model adds personality on top:</p>
+<p>Multiple transformers of the same type can be active at once. Each configured entry under
+<code>dialog_transformers</code> runs in turn, <strong>higher <code>priority</code> first</strong>. Each one's output feeds into
+the next. For example, you can run a cheap local pass to strip markdown and jargon, then let an
+expensive cloud model add personality on top:</p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="p">{</span>
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">  </span><span class="nt">&quot;dialog_transformers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 </span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">    </span><span class="nt">&quot;ovos-dialog-transformer-gguf-plugin&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
@@ -1587,17 +1593,17 @@ ASR output), with higher priority also running first.</p>
 <p><a href="../audio-service/">Dialog Transformers — audio service</a></p>
 </li>
 <li>
-<p><a href="../openai-plugin/">OpenAI Plugin</a> — OpenAI transformer configuration reference</p>
+<p><a href="../openai-plugin/">OpenAI Plugin</a>: OpenAI transformer configuration reference</p>
 </li>
 <li>
-<p><a href="../gguf-plugin/">GGUF Plugin</a> — local GGUF transformer configuration reference</p>
+<p><a href="../gguf-plugin/">GGUF Plugin</a>: local GGUF transformer configuration reference</p>
 </li>
 </ul>
 <hr />
 <div class="admonition note">
 <p class="admonition-title">Where this code actually lives</p>
 <p><code>ovos-core</code> only defines the <code>opm.transformer.text</code> / <code>opm.transformer.dialog</code> entry-point
-contracts and calls into whatever is installed — it does not implement any transformer
+contracts and calls into whatever is installed. It does not implement any transformer
 itself. The LLM-backed implementations documented on this page live in their own plugin
 repos: <a href="https://github.com/OpenVoiceOS/ovos-openai-plugin"><code>ovos-openai-plugin</code></a> and
 <a href="https://github.com/OpenVoiceOS/ovos-gguf-plugin"><code>ovos-gguf-plugin</code></a>.</p>

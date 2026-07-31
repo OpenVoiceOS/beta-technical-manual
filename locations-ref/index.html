@@ -1536,7 +1536,10 @@
 <h1 id="locations">Locations<a class="headerlink" href="#locations" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>Like any program, OVOS keeps its settings files in specific folders on your computer. This developer reference lists where those folders are and the rules OVOS follows to find them. You only need it if you are troubleshooting where a setting lives or writing code that reads configuration. See the <a href="../glossary/">Glossary</a>.</p>
+<p>Like any program, OVOS keeps its settings files in specific folders on your computer. This
+developer reference lists where those folders are and the rules OVOS follows to find them.
+You need it only when you troubleshoot where a setting lives, or write code that reads
+configuration. See the <a href="../glossary/">Glossary</a>.</p>
 </div>
 <p><strong>Module:</strong> <code>ovos_config.locations</code></p>
 <p>Path constants and XDG path helpers used by the rest of <code>ovos-config</code> to locate configuration files.</p>
@@ -1589,7 +1592,8 @@
 </span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
 </span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="c1"># e.g. &quot;/home/user/.config/mycroft&quot;</span>
 </span></code></pre></div>
-<p>Returns the XDG config save directory for the current base folder. (At import time the module ensures the user-config and web-cache directories exist, but these helpers only build the path string.)</p>
+<p>Returns the XDG config save directory for the current base folder. At import time the module
+creates the user-config and web-cache directories. These helpers only build the path string.</p>
 <h3 id="get_xdg_data_save_path"><code>get_xdg_data_save_path()</code><a class="headerlink" href="#get_xdg_data_save_path" title="Permanent link">&para;</a></h3>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">from</span> <span class="nn">ovos_config.locations</span> <span class="kn">import</span> <span class="n">get_xdg_data_save_path</span>
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
@@ -1611,7 +1615,8 @@
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
 </span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="n">path</span> <span class="o">=</span> <span class="n">find_user_config</span><span class="p">()</span>
 </span></code></pre></div>
-<p>Returns the path to the user config file. Checks <code>USER_CONFIG</code> (XDG) first, then falls back to the legacy pre-XDG location <code>~/.mycroft/mycroft.conf</code> if that is the one that exists on disk.</p>
+<p>Returns the path to the user config file. It checks <code>USER_CONFIG</code> (XDG) first. If that file does
+not exist on disk, it falls back to the legacy pre-XDG location <code>~/.mycroft/mycroft.conf</code>.</p>
 <h3 id="get_config_locations"><code>get_config_locations()</code><a class="headerlink" href="#get_config_locations" title="Permanent link">&para;</a></h3>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kn">from</span> <span class="nn">ovos_config.locations</span> <span class="kn">import</span> <span class="n">get_config_locations</span>
 </span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>

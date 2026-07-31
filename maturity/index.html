@@ -1344,25 +1344,26 @@
 
 
 <h1 id="maturity-scale">Maturity Scale<a class="headerlink" href="#maturity-scale" title="Permanent link">&para;</a></h1>
-<p>Many pages in this manual carry a <strong>maturity</strong> badge. It tells you, at a glance, how much
-weight a component can bear in a real deployment — whether it is a rock-solid dependency, a
+<p>Many pages in this manual carry a <strong>maturity</strong> badge. It tells you how much weight a
+component can bear in a real deployment. A component can be a rock-solid dependency, a
 usable-but-moving target, or an early experiment that may change under you.</p>
 <div class="admonition info">
 <p class="admonition-title">How maturity is judged</p>
 <p>A component's rating comes from the <strong>health of its source repository</strong>, not its version
-number. OVOS packages are versioned continuously from conventional commits, so a <code>0.x</code>
-version says little about how battle-tested the code is — a foundational library can sit at
+number. OVOS packages are versioned continuously from conventional commits. A <code>0.x</code>
+version says little about how well-proven the code is. A foundational library can sit at
 <code>0.8</code> with hundreds of releases, while a brand-new experiment can ship a <code>1.0</code>. Instead, the
-rating weighs signals that actually track maturity: how long the repository has existed,
+rating weighs signals that track maturity: how long the repository has existed,
 how actively it is maintained (recent commit activity), the volume of open issues and pull
 requests it fields, and whether it carries real in-repo documentation and tests.</p>
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Maturity is not a recommendation</p>
-<p>A badge rates how <em>reliable and maintained</em> a component is — not whether it is the right
-choice for your use case. A component can be <strong>Mature</strong> (rock-solid, battle-tested) and still
-be the wrong tool for a given job, and a page may recommend against broad use of something its
-code is perfectly stable. Always read the page's own recommendation alongside the badge.</p>
+<p>A badge rates how <em>reliable and maintained</em> a component is. It does not rate whether it is
+the right choice for your use case. A component can be <strong>Mature</strong> (rock-solid and well-proven)
+and still be the wrong tool for a given job. A page may recommend against broad use of
+something whose code is perfectly stable. Always read the page's own recommendation alongside
+the badge.</p>
 </div>
 <h2 id="the-levels">The levels<a class="headerlink" href="#the-levels" title="Permanent link">&para;</a></h2>
 <table>
@@ -1377,7 +1378,7 @@ code is perfectly stable. Always read the page's own recommendation alongside th
 <tr>
 <td>⬤⬤⬤⬤⬤</td>
 <td><strong>Mature</strong></td>
-<td>Long-lived, battle-tested, widely deployed, actively maintained. Depend on it freely.</td>
+<td>Long-lived, well-proven, widely deployed, actively maintained. Depend on it freely.</td>
 </tr>
 <tr>
 <td>⬤⬤⬤⬤◯</td>
@@ -1407,21 +1408,21 @@ code is perfectly stable. Always read the page's own recommendation alongside th
 </tbody>
 </table>
 <h2 id="why-its-not-the-version-number">Why it's not the version number<a class="headerlink" href="#why-its-not-the-version-number" title="Permanent link">&para;</a></h2>
-<p>A version like <code>1.2.0</code> is set by the release pipeline from commit conventions — a single <code>feat:</code>
+<p>A version like <code>1.2.0</code> is set by the release pipeline from commit conventions. A single <code>feat:</code>
 commit can move a <code>0.x</code> library to the next minor, and a <code>chore!:</code> moves it to a new major. That
 makes versions a precise record of <em>what changed</em>, but a poor proxy for <em>how much you can rely on
-it</em>. Repository health — age, sustained maintenance, an engaged issue tracker, and in-repo docs —
-is a better answer to the only question a maturity badge should answer: <strong>if I depend on this,
-will it still be here and still work in a year?</strong></p>
-<p>Ratings are a point-in-time judgement and move as repositories do; treat a badge as guidance, not
+it</em>. Repository health is a better signal: age, sustained maintenance, an engaged issue tracker,
+and in-repo docs. It answers the only question a maturity badge should answer: <strong>if I depend on
+this, will it still be here and still work in a year?</strong></p>
+<p>Ratings are a point-in-time judgement and move as repositories do. Treat a badge as guidance, not
 a guarantee.</p>
 <div class="admonition note">
 <p class="admonition-title">A release channel is not a maturity guarantee</p>
 <p>A <a href="../release-channels/">release channel</a> (stable/testing/alpha) only bounds the version
-range of <code>ovos-core</code> itself — it says nothing about the maturity of the individual
+range of <code>ovos-core</code> itself. It says nothing about the maturity of the individual
 plugins it happens to pull in. A stable-channel install can still resolve to a
 <strong>Beta</strong>-rated (or even Alpha-rated) plugin as a dependency. Check each plugin's own
-maturity badge in the manual before relying on it, rather than assuming "stable
+maturity badge in the manual before relying on it. Do not assume "stable
 channel" means "every component is production-grade."</p>
 </div>
 
