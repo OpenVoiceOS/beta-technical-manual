@@ -2,10 +2,10 @@
 
 !!! abstract "In a nutshell"
     `ovoscope` is the official tool for testing OpenVoiceOS skills and core parts. It runs a small,
-    fast, pretend version of the whole assistant in one process, so you can confirm a request is
+    fast, pretend version of the whole assistant in one process. This lets you confirm a request is
     understood and answered correctly without real hardware. "End-to-end" just means it checks the
-    whole journey — from what the user said to what the assistant did. This page gets you started;
-    the **full, always-current reference lives in the [ovoscope repo's `docs/`](https://github.com/OpenVoiceOS/ovoscope/tree/dev/docs)**. See the [Glossary](glossary.md).
+    whole journey, from what the user said to what the assistant did. This page gets you started.
+    The **full, always-current reference lives in the [ovoscope repo's `docs/`](https://github.com/OpenVoiceOS/ovoscope/tree/dev/docs)**. See the [Glossary](glossary.md).
 
 !!! info "This page is a guide; the reference is in the repo"
     `ovoscope` is actively developed, so its detailed per-harness reference is kept **in the tool's
@@ -21,21 +21,21 @@ tests.
 
 ## Why E2E testing?
 
-Traditional unit tests miss integration issues (e.g. a skill that loads fine but fails to match a
-Padatious intent). `ovoscope` solves this by running a **MiniCroft** instance — a real in-process
+Traditional unit tests miss integration issues (for example, a skill that loads fine but fails to match a
+Padatious intent). `ovoscope` solves this by running a **MiniCroft** instance, a real in-process
 `SkillManager`:
 
-- **Real intent matching** — uses the actual Adapt and Padatious engines.
-- **Bus-level verification** — asserts the correct `speak` / `gui.page.show` messages are emitted.
-- **No hardware** — uses a `FakeBus` and mocked audio/hardware layers.
-- **CI ready** — designed to run in GitHub Actions on every pull request.
+- **Real intent matching**: uses the actual Adapt and Padatious engines.
+- **Bus-level verification**: asserts the correct `speak` / `gui.page.show` messages are emitted.
+- **No hardware**: uses a `FakeBus` and mocked audio/hardware layers.
+- **CI ready**: designed to run in GitHub Actions on every pull request.
 
 ---
 
 ## Your first test
 
 `End2EndTest` is declarative: give it the skill(s) to load, the utterance to send, and the messages
-you expect back. The simplest assertion is `assert_spoke()` — it runs the interaction and checks the
+you expect back. The simplest assertion is `assert_spoke()`. It runs the interaction and checks the
 skill spoke a given line, without spelling out the full message sequence:
 
 ```python
@@ -64,8 +64,8 @@ def test_hello_world():
 
 `assert_spoke(text, lang="en-US", timeout=30)` runs `execute()` and then raises `AssertionError` if
 no `speak` message with that exact utterance (and `lang`) was emitted. Because it still runs the full
-`execute()`, leave `expected_messages` empty **and** set `test_message_number=False` — otherwise
-`execute()` first asserts the received-message count equals the (empty) expected list and fails before
+`execute()`, leave `expected_messages` empty **and** set `test_message_number=False`. Otherwise
+`execute()` first asserts the received-message count equals the (empty) expected list. It then fails before
 the speak is ever checked.
 
 For full sequence assertions — message types, ordering, routing, and session state — populate
@@ -107,4 +107,4 @@ manual's [gh-automations](gh-automations-overview.md) page for the OVOS CI conve
 
 ---
 
-*Source code & full reference: [OpenVoiceOS/ovoscope](https://github.com/OpenVoiceOS/ovoscope) — see its [`docs/`](https://github.com/OpenVoiceOS/ovoscope/tree/dev/docs).*
+*Source code & full reference: [OpenVoiceOS/ovoscope](https://github.com/OpenVoiceOS/ovoscope). See its [`docs/`](https://github.com/OpenVoiceOS/ovoscope/tree/dev/docs).*

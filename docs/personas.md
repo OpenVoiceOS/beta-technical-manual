@@ -1,18 +1,18 @@
 # AI Agents & Personas in OpenVoiceOS
 
 !!! abstract "In a nutshell"
-    A "persona" is a chosen personality and brain for your assistant — think of it as deciding *who* answers you and how they sound, much like picking a character. Behind each persona are interchangeable "engines" (the actual AI pieces that do the thinking), and a routing layer decides which persona should handle each thing you say. This lets you swap or combine brains without rebuilding the whole assistant. To dig deeper see [Tool Plugins](tool-plugins.md) and [Persona Memory](persona-memory.md), or the [Glossary](glossary.md) for unfamiliar terms.
+    A "persona" is a chosen personality and brain for your assistant. Think of it as deciding *who* answers you and how they sound, much like picking a character. Behind each persona are interchangeable "engines" (the actual AI pieces that do the thinking), and a routing layer decides which persona should handle each thing you say. This lets you swap or combine brains without rebuilding the whole assistant. To dig deeper see [Tool Plugins](tool-plugins.md) and [Persona Memory](persona-memory.md), or the [Glossary](glossary.md) for unfamiliar terms.
 
-!!! tip "Just want an LLM (ChatGPT-style) answering your questions? — 3 steps"
-    1. **Install a chat backend** — a cloud [OpenAI-compatible](openai-plugin.md) model, or a
+!!! tip "Just want an LLM (ChatGPT-style) answering your questions? 3 steps"
+    1. **Install a chat backend**: a cloud [OpenAI-compatible](openai-plugin.md) model, or a
        fully-local [GGUF](gguf-plugin.md) model (no account, no internet).
-    2. **Create a persona** that points at it — a small JSON file in `~/.config/ovos_persona/`
+    2. **Create a persona** that points at it: a small JSON file in `~/.config/ovos_persona/`
        (see [Defining a persona](#personas-named-agent-identities) below).
-    3. **Send unanswered questions to it** — enable the [persona pipeline](persona-pipeline.md)
+    3. **Send unanswered questions to it**: enable the [persona pipeline](persona-pipeline.md)
        with `handle_fallback: true`.
 
     Now anything no skill handles is answered by the LLM. The rest of this page is the full
-    architecture — you don't need it to get started.
+    architecture. You don't need it to get started.
 
 OpenVoiceOS (OVOS) provides a flexible, modular system for integrating AI agents into voice-first
 environments. The architecture is built in layers: low-level **agent engine plugins** registered
@@ -84,8 +84,8 @@ configuration inline.
 
 ```
 
-The `"solvers"` key is an alias for `"handlers"` (legacy compat). Plugins are tried in order;
-the first non-`None` response wins.
+The `"solvers"` key is an alias for `"handlers"` (legacy compat). Plugins are tried in order.
+The first non-`None` response wins.
 
 ### Persona with session memory
 
@@ -112,7 +112,7 @@ history across turns:
 ```
 
 The `memory_module` key names an `opm.agents.memory` plugin. The default when omitted is
-`"ovos-agents-short-term-memory-plugin"` — `BasicShortTermMemory` from `ovos-persona`.
+`"ovos-agents-short-term-memory-plugin"`, `BasicShortTermMemory` from `ovos-persona`.
 
 ??? example "Memory backend reference"
 
@@ -216,7 +216,7 @@ All keys live under `"intents": { "persona": { ... } }` in `mycroft.conf`:
 | `ignore_plugin_personas` | `false` | Skip OPM-registered plugin personas |
 | `min_intent_confidence` | `0.6` | Minimum padatious confidence for persona intents |
 
-(`memory_module` is **not** a PersonaService key — it is a **per-persona** JSON key set inside each persona file; see above.)
+(`memory_module` is **not** a PersonaService key. It is a **per-persona** JSON key set inside each persona file. See above.)
 
 ### Voice intents
 
@@ -228,7 +228,7 @@ All keys live under `"intents": { "persona": { ... } }` in `mycroft.conf`:
 | Check | "Who am I talking to right now?" |
 | Release | "Stop the interaction", "Go dormant" |
 
-Summon, ask, list, check, and release are **ordinary intents** — locale `.intent` / `.entity` resources matched with the same intent machinery any other intent uses. A persona plugin earns no bespoke matching layer of its own; what makes it a persona plugin is that it *also* catches everything else once a persona is active (the low-confidence catch-all above), not how it recognizes its own commands.
+Summon, ask, list, check, and release are **ordinary intents**: locale `.intent` / `.entity` resources matched with the same intent machinery any other intent uses. A persona plugin earns no special matching layer of its own. What makes it a persona plugin is that it *also* catches everything else once a persona is active (the low-confidence catch-all above), not how it recognizes its own commands.
 
 ---
 
@@ -236,10 +236,10 @@ Summon, ask, list, check, and release are **ordinary intents** — locale `.inte
 
 `PersonaService.load_personas()` loads from two sources:
 
-1. **User JSON files** in `~/.config/ovos_persona/` — each `.json` file becomes a `Persona`. The
+1. **User JSON files** in `~/.config/ovos_persona/`: each `.json` file becomes a `Persona`. The
    `"name"` field inside the JSON overrides the filename.
 
-2. **OPM plugin personas** — packages that register via the `opm.plugin.persona` entry point
+2. **OPM plugin personas**: packages that register via the `opm.plugin.persona` entry point
    group (unless `ignore_plugin_personas: true`).
 
 User-defined personas take precedence: a plugin persona with the same name as a loaded file is
@@ -251,8 +251,8 @@ silently skipped. Both sources respect `persona_blacklist`.
 
 `ovos-messagebus-chat-plugin` (entry point `ovos-messagebus`, class `OVOSMessagebusChatAgent`,
 group `opm.agents.chat`) exposes a running `ovos-core` instance as a persona handler. This
-enables OVOS to act as an agent inside another system — for example a Docker network or a
-[HiveMind](hivemind-agents.md) satellite — without exposing the [messagebus](bus-service.md) directly.
+enables OVOS to act as an agent inside another system, for example a Docker network or a
+[HiveMind](hivemind-agents.md) satellite, without exposing the [messagebus](bus-service.md) directly.
 
 ```json
 {
@@ -281,14 +281,14 @@ cross-instance bridging, not local routing. For secure remote access see
 
 ## Related pages
 
-- [Agent Plugins](agent-plugins.md) — full engine-type (`opm.agents.*`) reference with config examples.
-- [OpenAI Plugin](openai-plugin.md) — OpenAI-compatible engine implementations and translation plugins.
-- [GGUF Plugin](gguf-plugin.md) — fully offline local GGUF engine implementations.
-- [Persona Memory](persona-memory.md) — the `opm.agents.memory` backends, in depth.
-- [HiveMind Agents](hivemind-agents.md) — remote satellite-to-persona connections.
-- [Persona Pipeline](persona-pipeline.md) — detailed pipeline matching logic.
-- [Persona Server](persona-server.md) — expose a persona via an OpenAI-compatible HTTP API.
+- [Agent Plugins](agent-plugins.md): full engine-type (`opm.agents.*`) reference with config examples.
+- [OpenAI Plugin](openai-plugin.md): OpenAI-compatible engine implementations and translation plugins.
+- [GGUF Plugin](gguf-plugin.md): fully offline local GGUF engine implementations.
+- [Persona Memory](persona-memory.md): the `opm.agents.memory` backends, in depth.
+- [HiveMind Agents](hivemind-agents.md): remote satellite-to-persona connections.
+- [Persona Pipeline](persona-pipeline.md): detailed pipeline matching logic.
+- [Persona Server](persona-server.md): expose a persona via an OpenAI-compatible HTTP API.
 
 ## Further reading
 
-- [When Your Voice Assistant Becomes a Persona: The Power and Peril of LLMs](https://blog.openvoiceos.org/posts/2025-05-06-when-your-voice-assistant-becomes-a-persona) — OVOS blog
+- [When Your Voice Assistant Becomes a Persona: The Power and Peril of LLMs](https://blog.openvoiceos.org/posts/2025-05-06-when-your-voice-assistant-becomes-a-persona), OVOS blog

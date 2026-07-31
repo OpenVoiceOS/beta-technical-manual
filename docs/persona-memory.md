@@ -1,13 +1,13 @@
 # Persona Memory Plugins
 
 !!! abstract "In a nutshell"
-    This controls what your assistant's persona *remembers* from earlier in a conversation. Rather than always carrying the whole chat along, a memory plugin decides which past messages — or short summaries of them — to bring back into the next reply, like a notepad that keeps the bits worth keeping. It also decides whether those notes survive between separate conversations. See [AI Agents & Personas](personas.md) for the bigger picture and the [Glossary](glossary.md) for unfamiliar terms.
+    This controls what your assistant's persona *remembers* from earlier in a conversation. Rather than always carrying the whole chat along, a memory plugin decides which past messages, or short summaries of them, to bring back into the next reply, like a notepad that keeps the bits worth keeping. It also decides whether those notes survive between separate conversations. See [AI Agents & Personas](personas.md) for the bigger picture and the [Glossary](glossary.md) for unfamiliar terms.
 
-**What this is:** a pluggable way to control what an OVOS persona "remembers". Instead of a fixed conversation buffer, a memory plugin decides which past messages (and any summaries or retrieved snippets) get prepended to the LLM call on each turn, and how that history is persisted across turns and sessions.
+**What this is:** a pluggable way to control what an OVOS persona "remembers". Instead of a fixed conversation buffer, a memory plugin decides which past messages (and any summaries or retrieved snippets) get prepended to the LLM call on each turn. It also decides how that history is persisted across turns and sessions.
 
-Persona memory is managed through the `AgentContextManager` interface (OPM `opm.agents.memory`), which `ovos-persona` loads for each persona. The persona owns the chat engine and tools; the memory plugin owns **conversation state and context assembly**, composing with any chat backend instead of generating answers itself.
+Persona memory is managed through the `AgentContextManager` interface (OPM `opm.agents.memory`), which `ovos-persona` loads for each persona. The persona owns the chat engine and tools. The memory plugin owns **conversation state and context assembly**, composing with any chat backend instead of generating answers itself.
 
-`ovos-memory-plugins` is **local-first**: most backends need no external service at all. Only `longterm` and `entity` call an OpenAI-compatible chat endpoint — and that endpoint can be your own local LLM, never a hosted provider.
+`ovos-memory-plugins` is **local-first**: most backends need no external service at all. Only `longterm` and `entity` call an OpenAI-compatible chat endpoint, and that endpoint can be your own local LLM, never a hosted provider.
 
 ```bash
 pip install ovos-memory-plugins
@@ -40,8 +40,8 @@ class MyMemory(AgentContextManager):  # all three methods are abstract
 
 Two rules hold for every backend in this package:
 
-- the **first** message MAY be a `system` message carrying the persona's `system_prompt`;
-- the **last** message is ALWAYS the current user utterance.
+- The **first** message MAY be a `system` message carrying the persona's `system_prompt`.
+- The **last** message is ALWAYS the current user utterance.
 
 The short-term memory previously hard-coded in `ovos-persona` is now a plugin under this interface, so all memory strategies are composable.
 
@@ -76,7 +76,7 @@ In a persona JSON or YAML file, set `memory_module` to the plugin entry point, a
 }
 ```
 
-A persona selects exactly **one** backend — but that one may be `ovos-memory-plugin-composite`, which loads and consolidates several of the others.
+A persona selects exactly **one** backend, but that one may be `ovos-memory-plugin-composite`, which loads and consolidates several of the others.
 
 ---
 
@@ -87,12 +87,12 @@ A persona selects exactly **one** backend — but that one may be `ovos-memory-p
 | Recall style | rolling **summary** | **semantic** top-k | **keyword** (BM25) | recent window | durable **facts** | **ensemble** of members |
 | Best for | gist of long chats | exact semantic recall | exact-term recall | plain short-term | user preferences | hybrid / combine all |
 
-Full details for each — external service, extra dependencies, offline behavior, persistence, config
-keys — are in the [per-backend sections](#backends) below.
+Full details for each (external service, extra dependencies, offline behavior, persistence, config
+keys) are in the [per-backend sections](#backends) below.
 
 Rules of thumb:
 
-- Private/offline assistant needing specifics → **local-rag** (semantic) and/or **lexical** (keywords); combine them with **composite** for hybrid recall.
+- Private/offline assistant needing specifics → **local-rag** (semantic) and/or **lexical** (keywords). Combine them with **composite** for hybrid recall.
 - Remember *who the user is* across sessions → **entity**.
 - Just the last few turns → **recency**.
 - A running gist of very long chats and you have an LLM endpoint → **longterm**.
@@ -117,9 +117,9 @@ The retrieval backends (`local-rag`, `lexical`) and the `composite` share a `Bas
 
 Set under the backend's `retrieval` block:
 
-- `max_num_results` (default `5`) — top-k documents per query.
-- `min_score` (default `null`) — drop hits below this score; `null` keeps all. Scale is backend specific: `local-rag` is `1 - cosine_distance` (~0..1), `lexical` is `-bm25`.
-- `query_mode` (default `utterance`) — `utterance` searches on the current turn; `history` folds the last `query_history_turns` (default `3`) user turns into the search query for follow-up questions.
+- `max_num_results` (default `5`): top-k documents per query.
+- `min_score` (default `null`): drop hits below this score. `null` keeps all. Scale is backend specific: `local-rag` is `1 - cosine_distance` (~0..1), `lexical` is `-bm25`.
+- `query_mode` (default `utterance`): `utterance` searches on the current turn. `history` folds the last `query_history_turns` (default `3`) user turns into the search query for follow-up questions.
 
 ---
 
@@ -129,7 +129,7 @@ Set under the backend's `retrieval` block:
 
 Class `LongTermMemory`. Keeps a compact **rolling summary** of a long conversation with a verbatim recent window. Every `summarize_every` exchanges it sends the oldest turns to an OpenAI-compatible chat endpoint, replaces them with the returned summary, and keeps only `recent_window` exchanges verbatim. The summary plus the recent window are persisted per session (JSON or SQLite).
 
-**Use it when** a *gist* of the conversation is enough and you already have an LLM endpoint — it trades exact recall for a bounded, cheap-to-carry context.
+**Use it when** a *gist* of the conversation is enough and you already have an LLM endpoint. It trades exact recall for a bounded, cheap-to-carry context.
 
 | Key | Default | Description |
 |-----|---------|-------------|
@@ -145,7 +145,7 @@ Class `LongTermMemory`. Keeps a compact **rolling summary** of a long conversati
 
 ### ovos-memory-plugin-local-rag
 
-Class `LocalRAGMemory`. Runs Retrieval-Augmented Generation **entirely in-process**: it loads an OVOS text-embeddings plugin (`opm.embeddings.text`) and an `EmbeddingsDB` plugin directly — no HTTP, no cloud key — embedding every exchange and retrieving the top-k **semantically** similar past turns at query time. This is the local-first replacement for any server- or OpenAI-coupled RAG; server-coupled RAG lives in [`ovos-openai-plugin`](openai-plugin.md) instead.
+Class `LocalRAGMemory`. Runs Retrieval-Augmented Generation **entirely in-process**. It loads an OVOS text-embeddings plugin (`opm.embeddings.text`) and an `EmbeddingsDB` plugin directly, with no HTTP and no cloud key. It embeds every exchange and retrieves the top-k **semantically** similar past turns at query time. This is the local-first replacement for any server- or OpenAI-coupled RAG. Server-coupled RAG lives in [`ovos-openai-plugin`](openai-plugin.md) instead.
 
 **Use it when** a private/offline assistant needs exact semantic recall of past detail.
 
@@ -178,7 +178,7 @@ Document ids are stable and deterministic (`"<session_id>_<n>"`), so storage and
 
 Class `LexicalMemory`. Recalls prior exchanges by **keyword** match using SQLite's built-in FTS5 full-text index and its `bm25()` ranking. It needs **no extra dependencies** (`sqlite3` is stdlib, FTS5 ships with CPython's bundled SQLite), runs fully offline, and persists to a single `.db` file. It is a retriever (exposes `search()`), so it works standalone *and* as a composite member.
 
-**Use it when** you need exact-term recall — names, codes, IDs, rare words — that dense embeddings blur. Pair it with `local-rag` through the composite for hybrid recall.
+**Use it when** you need exact-term recall (names, codes, IDs, rare words) that dense embeddings blur. Pair it with `local-rag` through the composite for hybrid recall.
 
 | Key | Default | Description |
 |---|---|---|
@@ -212,9 +212,9 @@ Class `RecencyMemory`. Keeps a sliding window of the most **recent** turns, boun
 
 ### ovos-memory-plugin-entity
 
-Class `EntityMemory`. Distills **durable facts** about the user — name, preferences, relationships, constraints, goals — and re-injects them into every turn. After each exchange it asks a **local** OpenAI-compatible endpoint to extract short fact lines, then merges them (deduplicated) into a per-session fact store. Local-first, same kind of endpoint `longterm` uses. If the endpoint is unreachable, extraction simply no-ops and the turn proceeds.
+Class `EntityMemory`. Distills **durable facts** about the user (name, preferences, relationships, constraints, goals) and re-injects them into every turn. After each exchange it asks a **local** OpenAI-compatible endpoint to extract short fact lines, then merges them (deduplicated) into a per-session fact store. Local-first, same kind of endpoint `longterm` uses. If the endpoint is unreachable, extraction simply no-ops and the turn proceeds.
 
-**Use it when** you want the assistant to remember *who the user is* across sessions, no matter how long ago a fact was said — without embeddings or a vector store.
+**Use it when** you want the assistant to remember *who the user is* across sessions, no matter how long ago a fact was said, without embeddings or a vector store.
 
 | Key | Default | Description |
 |---|---|---|
@@ -231,17 +231,17 @@ Class `EntityMemory`. Distills **durable facts** about the user — name, prefer
 
 ### ovos-memory-plugin-composite
 
-Class `CompositeMemory`. A **pure ensemble orchestrator**: it loads several member memory plugins by name (via `ovos-plugin-manager`) and consolidates them, so a persona's single `memory_module` slot can combine many memories. It stores and retrieves nothing itself — every contribution comes from a member.
+Class `CompositeMemory`. A **pure ensemble orchestrator**: it loads several member memory plugins by name (via `ovos-plugin-manager`) and consolidates them, so a persona's single `memory_module` slot can combine many memories. It stores and retrieves nothing itself. Every contribution comes from a member.
 
 How it consolidates:
 
 - **Retriever members** (anything exposing `search() -> List[MemoryHit]`, e.g. `local-rag`, `lexical`) have their hits **fused** into one ranked, deduplicated list (RRF by default), rendered once and injected per the composite's own `inject_mode`.
-- **Plain members** (`longterm`, `entity`, `recency`, …) contribute their leading `system`/`developer` block(s) — a rolling summary, known facts, etc. Their own history and user turn are ignored.
+- **Plain members** (`longterm`, `entity`, `recency`, …) contribute their leading `system`/`developer` block(s), such as a rolling summary or known facts. Their own history and user turn are ignored.
 - **History** comes from the designated `primary` member (default: the first).
 - **`update_history` is written through to every member**, so each advances its own state.
-- **Fault tolerance:** members that fail to load, or raise at runtime, are skipped — the composite keeps working with whatever remains. With zero members it is a harmless passthrough.
+- **Fault tolerance:** members that fail to load, or raise at runtime, are skipped. The composite keeps working with whatever remains. With zero members it is a harmless passthrough.
 
-**Use it when** you want hybrid recall (e.g. semantic + lexical) or to layer durable facts on top of recall — combining several backends behind one slot.
+**Use it when** you want hybrid recall (e.g. semantic + lexical) or to layer durable facts on top of recall, combining several backends behind one slot.
 
 | Key | Default | Description |
 |---|---|---|
@@ -272,7 +272,7 @@ How it consolidates:
 }
 ```
 
-**Why RRF is the default.** Different retrievers score on incompatible scales: semantic cosine similarity is ~0..1, lexical BM25 is unbounded. Summing raw scores would let the larger-magnitude scale dominate. RRF (`score(d) = Σ weight · 1/(k + rank)`) throws magnitudes away and fuses on **rank position** only, so a semantic top-1 and a lexical top-1 count equally — the standard hybrid-search fusion. Give each retriever member a **distinct** storage path/collection so they don't collide, and leave `system_prompt` to the composite.
+**Why RRF is the default.** Different retrievers score on incompatible scales: semantic cosine similarity is ~0..1, lexical BM25 is unbounded. Summing raw scores would let the larger-magnitude scale dominate. RRF (`score(d) = Σ weight · 1/(k + rank)`) throws magnitudes away and fuses on **rank position** only, so a semantic top-1 and a lexical top-1 count equally. This is the standard hybrid-search fusion. Give each retriever member a **distinct** storage path/collection so they don't collide, and leave `system_prompt` to the composite.
 
 ---
 

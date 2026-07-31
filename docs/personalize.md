@@ -1,7 +1,7 @@
 # Make It Yours
 
 !!! abstract "In a nutshell"
-    You just installed OVOS and it works — now you want it to sound like *your* assistant: a
+    You just installed OVOS and it works. Now you want it to sound like *your* assistant: a
     different name to wake it up, a different voice answering you, or a different language
     altogether. All three are small edits to the same file, `~/.config/mycroft/mycroft.conf`.
     This page is a quick-reference for all three; each section links to the full page with
@@ -10,12 +10,12 @@
 !!! tip "Want to do this by voice instead of editing files?"
     Everything below needs opening a text file and a restart. If you'd rather change your wake
     word, voice, or volume by *talking* to your assistant, see
-    [What can I say?](skill-examples.md) and [It's Not Working — Quick Fixes](everyday-help.md)
+    [What can I say?](skill-examples.md) and [It's Not Working: Quick Fixes](everyday-help.md)
     for what's already possible hands-free (e.g. volume) versus what still needs a config edit
     (wake word, voice, language).
 
 All the settings below live in your personal config file at
-**`~/.config/mycroft/mycroft.conf`** (create it if it doesn't exist yet — see
+**`~/.config/mycroft/mycroft.conf`** (create it if it doesn't exist yet. See
 [Configuration Management](config.md) for how the layering works). It's JSON with comments
 allowed (JSONC). Open it with any text editor, for example:
 
@@ -23,10 +23,10 @@ allowed (JSONC). Open it with any text editor, for example:
 nano ~/.config/mycroft/mycroft.conf
 ```
 
-Before restarting, double-check the file still parses — a stray missing comma or bracket will
+Before restarting, double-check the file still parses. A stray missing comma or bracket will
 stop it from loading. Because `mycroft.conf` allows `//` comments, plain `json.tool` will
-reject it even when it's fine — use the same comment-aware loader OVOS itself uses. This runs
-a small Python command directly in the terminal — paste it exactly as shown:
+reject it even when it's fine. Use the same comment-aware loader OVOS itself uses. This runs
+a small Python command directly in the terminal. Paste it exactly as shown:
 
 ```bash
 python3 -c "from ovos_utils.json_helper import load_commented_json; load_commented_json('$HOME/.config/mycroft/mycroft.conf'); print('OK')"
@@ -54,7 +54,7 @@ Full walkthrough, plugin choices, and tuning: [Wake Word Plugins](wake-word-plug
 
 ## Change your voice
 
-Install the plugin's package first — `phoonnx` ships the `ovos-tts-plugin-phoonnx` plugin,
+Install the plugin's package first. `phoonnx` ships the `ovos-tts-plugin-phoonnx` plugin,
 so without it OVOS has nothing to load and the voice won't actually change. Activate the
 same Python environment OVOS runs in *before* running this, or the plugin installs
 somewhere OVOS never looks:
@@ -63,7 +63,7 @@ somewhere OVOS never looks:
 pip install phoonnx
 ```
 
-Make sure to install it into the same Python environment OVOS itself runs in — see the
+Make sure to install it into the same Python environment OVOS itself runs in. See the
 note in [TTS Plugins](tts-plugins.md#change-your-voice).
 
 ```json
@@ -92,14 +92,14 @@ walks through picking a voice that stays clear at a reduced rate.
 }
 ```
 
-This one line is enough on its own — STT, TTS, and every language-aware plugin follow the
+This one line is enough on its own. STT, TTS, and every language-aware plugin follow the
 global `lang` automatically. Want the *recommended* plugins/voices for that language instead
 of your current ones? Run `ovos-config autoconfigure -l de-de --offline` afterwards. Full
 picture, supported-language table, and gaps to watch for: [Language Support](lang-support.md).
 
 ## Related pages
 
-- [Configuration Management](config.md) — how the config layers stack, and the full CLI
-- [Wake Word Plugins](wake-word-plugins.md) — every available wake-word engine
-- [TTS Plugins](tts-plugins.md) — every available voice engine
-- [Language Support](lang-support.md) — translation coverage and per-language plugin gaps
+- [Configuration Management](config.md): how the config layers stack, and the full CLI
+- [Wake Word Plugins](wake-word-plugins.md): every available wake-word engine
+- [TTS Plugins](tts-plugins.md): every available voice engine
+- [Language Support](lang-support.md): translation coverage and per-language plugin gaps

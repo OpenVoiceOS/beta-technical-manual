@@ -1,11 +1,11 @@
 # Contribute Translations with OVOS Localize
 
 !!! abstract "In a nutshell"
-    OVOS only speaks the languages that volunteers have translated it into — and you can be one of them without writing any code. OVOS Localize is a website where you translate the short phrases the assistant says and listens for, right in your browser. If you can use a translation app, you can help OVOS understand and speak your language. See the [Glossary](glossary.md) for unfamiliar terms.
+    OVOS only speaks the languages that volunteers have translated it into. You can be one of them without writing any code. OVOS Localize is a website where you translate the short phrases the assistant says and listens for, right in your browser. If you can use a translation app, you can help OVOS understand and speak your language. See the [Glossary](glossary.md) for unfamiliar terms.
 
 Want OVOS to speak your language? You don't need to be a programmer to help. **OVOS
 Localize** is a web app where you translate the phrases OVOS says and understands,
-right in your browser — no code, no setup, no command line.
+right in your browser. It needs no code, no setup, and no command line.
 
 !!! info "What replaced GitLocalize"
     OVOS used to translate on a third-party service called *GitLocalize*. That has
@@ -29,7 +29,7 @@ OVOS skills keep their language in small text files. You'll mostly meet three ki
 | **vocab** (`.voc`) | keywords / fragments | "weather", "forecast" |
 
 You translate the *meaning*, not word-for-word. The tool shows you, on screen, which
-skill and which line of code each phrase comes from — so you always have context.
+skill and which line of code each phrase comes from, so you always have context.
 
 ---
 
@@ -49,18 +49,18 @@ skill and which line of code each phrase comes from — so you always have conte
 
 The editor has three columns:
 
-- **Left** — the original English phrase.
-- **Center** — where you type your translation (with a live preview so you can see how
+- **Left**: the original English phrase.
+- **Center**: where you type your translation (with a live preview so you can see how
   it expands).
-- **Right** — the **skill code context**: the actual Python function that uses this
+- **Right**: the **skill code context**, the actual Python function that uses this
   phrase, so you understand *when* OVOS says or expects it.
 
 You can also use the **auto-translate** button to get a machine-translation starting
-point, then fix it up — much faster than starting from a blank box.
+point, then fix it up. This is much faster than starting from a blank box.
 
-You submit one file at a time: when you're happy with a file, you file it for
-translation and OVOS Localize opens a pre-filled GitHub issue for that single file, which
-a bot turns into a pull request.
+You submit one file at a time. When you're happy with a file, you file it for
+translation and OVOS Localize opens a pre-filled GitHub issue for that single file. A bot
+turns it into a pull request.
 
 ## Step 3 — Submit
 
@@ -84,9 +84,9 @@ Variables are placeholders that get filled in at runtime (a name, a number, a ci
 
 **Rules:**
 
-- **Never translate** the text inside `{ }` — copy it exactly.
+- **Never translate** the text inside `{ }`. Copy it exactly.
 - You may **move** a variable to fit your language's grammar.
-- Don't invent new variables, and don't let two variables touch — keep at least one
+- Don't invent new variables, and don't let two variables touch. Keep at least one
   real word between them.
 
 ### Alternatives & optional words — `(a|b|c)`
@@ -103,7 +103,7 @@ Sometimes one phrase appears several times so OVOS can recognize different phras
 Each variation is a **slot**.
 
 - Translate **at least one** slot per file.
-- If a slot doesn't make sense in your language, enter `[UNUSED]` — that tells us you
+- If a slot doesn't make sense in your language, enter `[UNUSED]`. That tells us you
   reviewed it on purpose.
 - Need more room for natural variations? Add a new line and write another translation.
 
@@ -111,10 +111,10 @@ Each variation is a **slot**.
 
 ## Tips for good translations
 
-- **Meaning over literalness** — convey what's meant, not a word-for-word swap.
-- **Be consistent** — use the same term for the same concept throughout.
+- **Meaning over literalness**: convey what's meant, not a word-for-word swap.
+- **Be consistent**: use the same term for the same concept throughout.
 - **Use the code context** (right column) when a phrase is ambiguous.
-- **Sound natural** — these are things a person says out loud to a voice assistant.
+- **Sound natural**: these are things a person says out loud to a voice assistant.
 
 ---
 
@@ -125,8 +125,8 @@ files described in **[Customizing Language Resources](lang-customization.md)** a
 feeds the broader **[Language Support](lang-support.md)** effort. Developers who want to
 validate locale files in CI can use its `ovos-localize-cli` tool; translators never need it.
 
-For the technical side of multilingual support — language selection, parsers, and
-translation plugins — see the **[Language Support overview](lang-support.md)**.
+For the technical side of multilingual support, language selection, parsers, and
+translation plugins, see the **[Language Support overview](lang-support.md)**.
 
 ---
 
@@ -135,4 +135,4 @@ translation plugins — see the **[Language Support overview](lang-support.md)**
 - **Matrix chat:** [#openvoiceos-languages:matrix.org](https://matrix.to/#/#openvoiceos-languages:matrix.org)
 - **Email:** support@openvoiceos.org
 
-Thank you — every translation makes OVOS usable for more people around the world. 🌍
+Every translation makes OVOS usable for more people around the world.

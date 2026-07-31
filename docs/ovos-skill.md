@@ -1,7 +1,7 @@
 # OVOSSkill
 
 !!! abstract "In a nutshell"
-    A "skill" is an add-on that teaches your voice assistant to do one new thing — like telling the weather or setting a timer. Every skill is built on top of a shared starter kit called `OVOSSkill`, which quietly handles the housekeeping: starting up, listening for commands, speaking replies, remembering settings, and shutting down. This page is a reference for that starter kit and its methods. New to all this? Start with [Skill Classes](skill-classes.md) or the [Glossary](glossary.md).
+    A "skill" is an add-on that teaches your voice assistant to do one new thing, like telling the weather or setting a timer. Every skill is built on top of a shared starter kit called `OVOSSkill`, which quietly handles the housekeeping: starting up, listening for commands, speaking replies, remembering settings, and shutting down. This page is a reference for that starter kit and its methods. New to all this? Start with [Skill Classes](skill-classes.md) or the [Glossary](glossary.md).
 
 **Module:** `ovos_workshop.skills.ovos.OVOSSkill`
 
@@ -10,7 +10,7 @@
 !!! note "Constructor, lifecycle, and startup/shutdown sequence"
     The constructor signature, the lifecycle methods to override (`initialize()`, `stop()`,
     `shutdown()`, etc.), and the full startup/shutdown sequence are documented once, on
-    [Skill Classes](skill-classes.md#ovosskill) — this page covers `OVOSSkill`'s remaining
+    [Skill Classes](skill-classes.md#ovosskill). This page covers `OVOSSkill`'s remaining
     surface: properties, speaking, user input, scheduling, `SkillApi`, and the bus events it
     handles.
 
@@ -38,7 +38,7 @@
 | `settings` | `JsonStorage` | Persistent skill settings |
 | `bus` | `MessageBusClient` | [messagebus](bus-service.md) connection |
 | `gui` | `SkillGUI` | GUI interface |
-| `enclosure` | `EnclosureAPI` | Mark 1 faceplate interface (⚠️ [being removed from the base class](mark1.md) like `self.gui` → moves to `ovos-mark1-utils`; faceplate becomes a GUI plugin) |
+| `enclosure` | `EnclosureAPI` | Mark 1 faceplate interface (⚠️ [being removed from the base class](mark1.md) like `self.gui`, moves to `ovos-mark1-utils`, faceplate becomes a GUI plugin) |
 | `file_system` | `FileSystemAccess` | Managed local file access |
 | `resources` | `SkillResources` | Resource files for `self.lang` |
 | `dialog_renderer` | `MustacheDialogRenderer` | Render dialog templates |
@@ -63,8 +63,8 @@ self.speak("Anything else?", expect_response=True)  # speak, then listen for a r
 
 Both `speak()` and `speak_dialog()` accept `expect_response=False`. Set it to `True` and OVOS
 re-opens the microphone as soon as the prompt finishes speaking, so the user's next utterance is
-captured without a wake word — the basis of a follow-up question. (To capture and *return* that
-reply inside your handler, use `get_response` instead — see [Getting User Input](#getting-user-input)
+captured without a wake word. This is the basis of a follow-up question. (To capture and *return* that
+reply inside your handler, use `get_response` instead. See [Getting User Input](#getting-user-input)
 below and the [Skill Cookbook](skill-cookbook.md).)
 
 ### Playing audio files
@@ -75,7 +75,7 @@ self.play_audio(self.find_resource("chime.mp3", "snd"))
 
 `play_audio(filename, instant=False, wait=False)` queues (or, with `instant=True`,
 immediately plays) an audio file through `ovos-audio`. `filename` must be a path to a real
-file on disk or a URI — `play_audio` does **not** search skill resource directories for you,
+file on disk or a URI. `play_audio` does **not** search skill resource directories for you,
 so resolve the path yourself first, typically with `self.find_resource(name, "snd")` (looking
 up `<skill>/snd/<name>` or a locale-specific variant). Pass `wait=True` to block until playback
 finishes or a 30-second default timeout elapses, or `wait=<seconds>` for a custom timeout.
@@ -149,14 +149,14 @@ self.cancel_scheduled_event("my-tick")
   from now.
 - **`schedule_repeating_event(handler, when, frequency, data=None, name=None, context=None)`**:
   repeating. `frequency` is the interval **in seconds** between calls. `when=None` fires the
-  first call `frequency` seconds from now; pass a `datetime`/number to control the first firing
+  first call `frequency` seconds from now. Pass a `datetime`/number to control the first firing
   explicitly.
 - Both accept an optional `name` used to reference/cancel the event later with
   `cancel_scheduled_event(name)`. Reusing a `name` for `schedule_event` does **not** warn or
-  replace a previously scheduled event of the same name — use unique names, or cancel the old
+  replace a previously scheduled event of the same name. Use unique names, or cancel the old
   one first.
 - Scheduled events are persisted by the [`EventScheduler`](bus-service.md) so they survive an
-  `ovos-core` restart; they are not tied to the skill instance staying in memory.
+  `ovos-core` restart. They are not tied to the skill instance staying in memory.
 
 ## Public Skill API
 
@@ -165,7 +165,7 @@ Decorate a method with `@skill_api_method` to expose it over the bus. Other skil
 ## RuntimeRequirements
 
 !!! note
-    `RuntimeRequirements` is a deprecated mechanism — see [Runtime Requirements](skill-runtime-requirements.md) for what it currently does.
+    `RuntimeRequirements` is a deprecated mechanism. See [Runtime Requirements](skill-runtime-requirements.md) for what it currently does.
 
 Override the class property to declare connectivity needs:
 
@@ -198,9 +198,9 @@ available.
 
 | Event | Description |
 |---|---|
-| `mycroft.stop` | Global stop broadcast — cease all activity for the inbound session |
-| `{skill_id}.stop` | Skill-directed stop — cease the stoppable activity for the inbound session |
-| `{skill_id}.stop.ping` | Check if the skill can stop; the base class answers with `{skill_id}.stop.response` carrying whether it can handle the stop |
+| `mycroft.stop` | Global stop broadcast, cease all activity for the inbound session |
+| `{skill_id}.stop` | Skill-directed stop, cease the stoppable activity for the inbound session |
+| `{skill_id}.stop.ping` | Check if the skill can stop. The base class answers with `{skill_id}.stop.response` carrying whether it can handle the stop |
 | `{skill_id}.converse.get_response` | Feed user response to `get_response` |
 | `mycroft.skill.enable_intent` | Enable a disabled intent (the bus-facing counterpart to calling `self.enable_intent(intent_name)` from Python) |
 | `mycroft.skill.disable_intent` | Disable an active intent (the bus-facing counterpart to calling `self.disable_intent(intent_name)` from Python) |
@@ -221,9 +221,9 @@ targeted dispatch that ceases only its own stoppable activity for the inbound se
 arrival on either topic while the skill is already stopping is a no-op. See the
 [Stop Pipeline](stop-pipeline.md).
 
-# Skill API — Inter-Skill RPC
+# Skill API: Inter-Skill RPC
 
-`SkillApi` provides a [messagebus](bus-service.md)-based remote procedure call (RPC) mechanism. Methods decorated with `@skill_api_method` are exposed on the bus; any other skill (or application) can call them by fetching a `SkillApi` proxy object.
+`SkillApi` provides a [messagebus](bus-service.md)-based remote procedure call (RPC) mechanism. Methods decorated with `@skill_api_method` are exposed on the bus. Any other skill (or application) can call them by fetching a `SkillApi` proxy object.
 
 **Source:** `ovos_workshop/skills/api.py`
 
@@ -233,10 +233,10 @@ arrival on either topic while the skill is already stopping is a no-op. See the
 
 The bus message protocol for `SkillApi` has two phases:
 
-1. **Discovery** — the caller emits `<skill_id>.public_api` on the bus. The target skill responds with a dict mapping method names to their bus message type and docstring.
+1. **Discovery**: the caller emits `<skill_id>.public_api` on the bus. The target skill responds with a dict mapping method names to their bus message type and docstring.
 
 
-2. **Call** — the caller emits a `Message` of the method's registered type with `{"args": [...], "kwargs": {...}}`. The target skill responds with `{"result": <return value>}`.
+2. **Call**: the caller emits a `Message` of the method's registered type with `{"args": [...], "kwargs": {...}}`. The target skill responds with `{"result": <return value>}`.
 
 Return values must be JSON-serializable. Standard Python builtins (`str`, `int`, `list`, `dict`, `None`, `bool`) work. Custom classes are not supported.
 
@@ -244,7 +244,7 @@ Return values must be JSON-serializable. Standard Python builtins (`str`, `int`,
 
 ## `@skill_api_method` Decorator
 
-`skill_api_method` — defined in `ovos_workshop/decorators/__init__.py`
+`skill_api_method`, defined in `ovos_workshop/decorators/__init__.py`
 
 Tag a skill method as part of the public API. The decorator sets `func.api_method = True`. During skill initialization `OVOSSkill` discovers all methods with this attribute and registers a bus listener for each one at `<skill_id>.<method_name>`.
 
@@ -264,7 +264,7 @@ class MySkill(OVOSSkill):
 
 ## `SkillApi` Class
 
-`SkillApi` — defined in `ovos_workshop/skills/api.py`
+`SkillApi`, defined in `ovos_workshop/skills/api.py`
 
 ### Setup
 
@@ -386,7 +386,7 @@ class MyClientSkill(OVOSSkill):
 - Return values must be JSON-serializable.
 
 
-- The target skill must be running when `SkillApi.get()` is called — it emits a live bus message.
+- The target skill must be running when `SkillApi.get()` is called. It emits a live bus message.
 
 
 - Method calls time out after `api_timeout` seconds (default `3`). The caller receives `None` on timeout.
@@ -398,13 +398,13 @@ class MyClientSkill(OVOSSkill):
 
 ## Related Pages
 
-- [Skill Classes](skill-classes.md) — `OVOSSkill` base class
+- [Skill Classes](skill-classes.md): `OVOSSkill` base class
 
 
-- [Decorators](skill-classes.md#decorators-quick-reference) — `@skill_api_method` and other decorators
+- [Decorators](skill-classes.md#decorators-quick-reference): `@skill_api_method` and other decorators
 
 
-- [Bus Client](core-libraries.md#ovos-bus-client) — `MessageBusClient` used internally by `SkillApi`
+- [Bus Client](core-libraries.md#ovos-bus-client): `MessageBusClient` used internally by `SkillApi`
 
 ---
 

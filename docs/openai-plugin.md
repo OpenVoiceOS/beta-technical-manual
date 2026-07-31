@@ -1,15 +1,15 @@
 # OpenAI Agent Plugin (`ovos-openai-plugin`)
 
 !!! abstract "In a nutshell"
-    This plugin lets OVOS talk to AI chat services that follow OpenAI's popular format — that includes OpenAI itself, but also many private or locally-run alternatives that copy the same style. So it's the bridge that connects your assistant to a chosen AI "brain", whether that brain lives in the cloud or on your own machine. See [AI Agents & Personas](personas.md) for how this fits in, and the [Glossary](glossary.md) for unfamiliar terms.
+    This plugin lets OVOS talk to AI chat services that follow OpenAI's popular format. That includes OpenAI itself, but also many private or locally-run alternatives that copy the same style. It is the bridge that connects your assistant to a chosen AI "brain", whether that brain lives in the cloud or on your own machine. See [AI Agents & Personas](personas.md) for how this fits in, and the [Glossary](glossary.md) for unfamiliar terms.
 
-`ovos-openai-plugin` connects OVOS to any OpenAI-compatible Chat Completions API — including
+`ovos-openai-plugin` connects OVOS to any OpenAI-compatible Chat Completions API, including
 OpenAI itself, local models via [Ollama](https://ollama.com) or `llama.cpp`, self-hosted
 proxies, and [`ovos-persona-server`](persona-server.md).
 
 Install: `pip install ovos-openai-plugin`
 
-**GitHub**: [https://github.com/OpenVoiceOS/ovos-openai-plugin](https://github.com/OpenVoiceOS/ovos-openai-plugin)
+**GitHub**: [OpenVoiceOS/ovos-openai-plugin](https://github.com/OpenVoiceOS/ovos-openai-plugin)
 
 !!! note "Removed legacy solver"
     The old `ovos-solver-openai-plugin` entry point and the `OpenAIChatCompletionsSolver` /
@@ -64,7 +64,7 @@ All plugins wrap `OpenAIChatCompletions` internally.
 
 ## Chat Engine (`opm.agents.chat`)
 
-**Class:** `OpenAIChatEngine` — `ovos_openai_plugin/chat.py:OpenAIChatEngine`
+**Class:** `OpenAIChatEngine`, `ovos_openai_plugin/chat.py:OpenAIChatEngine`
 
 **OPM plugin name:** `ovos-chat-openai-plugin`
 
@@ -75,14 +75,14 @@ Works with any OpenAI-compatible endpoint.
 
 `OpenAIChatEngine` sets `supports_tools = True`, so it advertises native
 function-calling to callers. `continue_chat(messages, …, tools=…)` accepts
-`ToolBox` objects and/or raw OpenAI tool dicts; when the model decides to call a
+`ToolBox` objects and/or raw OpenAI tool dicts. When the model decides to call a
 tool, the returned `AgentMessage` carries `tool_calls` (assistant `tool_calls`
 turns and `MessageRole.TOOL` results are serialized back to the API on the next
 round-trip), letting the caller run a tool loop. This is the same hook the
 [agentic loop](agentic-loop.md) engines drive.
 
 !!! note "Memory lives in `ovos-persona`, not this plugin"
-    The chat engine is stateless — it only sees the `messages` it is handed each
+    The chat engine is stateless. It only sees the `messages` it is handed each
     turn. Short-term conversational memory is supplied by `ovos-persona` (which
     accumulates the history), not by `ovos-openai-plugin`. The only memory backend
     this package ships is the server-coupled RAG memory described below.
@@ -98,7 +98,7 @@ round-trip), letting the caller run a tool loop. This is the same hook the
 
 | `allow_system_prompts` | Caller sends system message | Result |
 |---|---|---|
-| `false` (default) | yes | Caller's system message stripped; configured `system_prompt` used |
+| `false` (default) | yes | Caller's system message stripped, configured `system_prompt` used |
 | `false` | no | Configured `system_prompt` prepended |
 | `true` | yes | Both merged: `configured_prompt + "\n" + caller_prompt` |
 | `true` | no | Configured `system_prompt` prepended |
@@ -167,7 +167,7 @@ This lets you keep API keys on a single server and offload LLM computation:
 
 ```
 
-A persona's chat engine can equally be listed under the `solvers` key — `ovos-persona`
+A persona's chat engine can equally be listed under the `solvers` key. `ovos-persona`
 accepts either `handlers` or `solvers` and dispatches the same way.
 
 Activate by voice: `"Chat with My Local LLM"`.
@@ -176,14 +176,14 @@ Activate by voice: `"Chat with My Local LLM"`.
 
 ## RAG Memory (`opm.agents.memory`)
 
-**Class:** `PersonaServerRAGMemory` — `ovos_openai_plugin/rag_memory.py:PersonaServerRAGMemory`
+**Class:** `PersonaServerRAGMemory`, `ovos_openai_plugin/rag_memory.py:PersonaServerRAGMemory`
 
 **OPM plugin name:** `ovos-openai-rag-memory-plugin`
 
 A persona `memory_module` (an `AgentContextManager`). Before each turn it queries a vector store
 hosted by an [`ovos-persona-server`](persona-server.md) and injects the retrieved chunks into the
-conversation context; the persona's normal chat engine still generates the answer, so RAG
-composes with any chat backend. This is the server/OpenAI-coupled memory backend — local-only
+conversation context. The persona's normal chat engine still generates the answer, so RAG
+composes with any chat backend. This is the server/OpenAI-coupled memory backend. Local-only
 memory plugins live in `ovos-memory-plugins` instead.
 
 | Key | Type | Default | Description |
@@ -216,7 +216,7 @@ memory plugins live in `ovos-memory-plugins` instead.
 
 ## Dialog [Transformer](transformer-plugins.md) (`opm.transformer.dialog`)
 
-**Class:** `OpenAIDialogTransformer` — `ovos_openai_plugin/dialog_transformers.py:OpenAIDialogTransformer`
+**Class:** `OpenAIDialogTransformer`, `ovos_openai_plugin/dialog_transformers.py:OpenAIDialogTransformer`
 
 **OPM plugin name:** `ovos-dialog-transformer-openai-plugin`
 
@@ -262,7 +262,7 @@ text, ctx = transformer.transform(dialog, context={"prompt": "make it sound pira
 
 ## Summarizer (`opm.agents.summarizer`)
 
-**Class:** `OpenAISummarizer` — `ovos_openai_plugin/summarizer.py:OpenAISummarizer`
+**Class:** `OpenAISummarizer`, `ovos_openai_plugin/summarizer.py:OpenAISummarizer`
 
 **OPM plugin name:** `ovos-summarizer-openai-plugin`
 
@@ -300,7 +300,7 @@ Focus on the most important information.
 
 ## Translator (`opm.lang.translate`)
 
-**Class:** `OpenAITextTranslator` — `ovos_openai_plugin/translate.py:OpenAITextTranslator`
+**Class:** `OpenAITextTranslator`, `ovos_openai_plugin/translate.py:OpenAITextTranslator`
 
 **OPM plugin name:** `ovos-translate-openai-plugin`
 
@@ -335,7 +335,7 @@ print(result)  # "Olá, mundo!"
 
 ## Language Detector (`opm.lang.detect`)
 
-**Class:** `OpenAITextLangDetector` — `ovos_openai_plugin/translate.py:OpenAITextLangDetector`
+**Class:** `OpenAITextLangDetector`, `ovos_openai_plugin/translate.py:OpenAITextLangDetector`
 
 **OPM plugin name:** `ovos-lang-detect-openai-plugin`
 
@@ -370,27 +370,27 @@ print(lang)  # "en"
 
 The [dialog transformer](#dialog-transformer-opmtransformerdialog), [language detector](#language-detector-opmlangdetect),
 and [translator](#translator-opmlangtranslate) sections above each show their own `mycroft.conf`
-block in isolation; in practice they just sit side by side under their own top-level keys
-(`dialog_transformers`, `language`) — there's nothing to merge, only to place each block from
+block in isolation. In practice they just sit side by side under their own top-level keys
+(`dialog_transformers`, `language`). There's nothing to merge, only to place each block from
 above under its matching top-level key in the same file.
 
 ---
 
 ## Cross-References
 
-- [Agent Engine Types](agent-plugins.md) — base class contracts and full type reference
+- [Agent Engine Types](agent-plugins.md): base class contracts and full type reference
 
 
-- [Personas & PersonaService](personas.md) — how to load and activate personas
+- [Personas & PersonaService](personas.md): how to load and activate personas
 
 
-- [LLM Transformers](llm-transformers.md) — utterance and dialog transformer pipeline
+- [LLM Transformers](llm-transformers.md): utterance and dialog transformer pipeline
 
 
-- [Persona Server](persona-server.md) — expose a persona via OpenAI-compatible HTTP API
+- [Persona Server](persona-server.md): expose a persona via OpenAI-compatible HTTP API
 
 
-- [GGUF Plugin](gguf-plugin.md) — fully offline local alternative
+- [GGUF Plugin](gguf-plugin.md): fully offline local alternative
 
 ---
 

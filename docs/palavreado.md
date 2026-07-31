@@ -2,17 +2,13 @@
 
 !!! abstract "In a nutshell"
     Palavreado is an [intent](glossary.md) parser that decides what a user wants by looking for
-    specific **keywords** in what they said — if the right words are present, the intent fires.
+    specific **keywords** in what they said. If the right words are present, the intent fires.
     It is a dead-simple, drop-in replacement for [Adapt](adapt-pipeline.md). See the
     [Glossary](glossary.md) for terms like *intent* and *entity*.
 
-*A keyword-based intent parser — the drop-in replacement for [Adapt](adapt-pipeline.md).*
+*A keyword-based intent parser. The drop-in replacement for [Adapt](adapt-pipeline.md).*
 
-[`palavreado`](https://github.com/OpenVoiceOS/palavreado) matches utterances against named
-intents built from **required** and **optional** keyword slots. Each slot holds a list of
-vocabulary words; if the required words are present in the utterance, the intent fires. An
-`autoregex` variant enables **keyword extraction** (pulling out a value, like an item name)
-using [simplematch](https://github.com/tfeldmann/simplematch)-style templates.
+[`palavreado`](https://github.com/OpenVoiceOS/palavreado) matches utterances against named intents built from **required** and **optional** keyword slots. Each slot holds a list of vocabulary words. If the required words are present in the utterance, the intent fires. An `autoregex` variant enables **keyword extraction**, pulling out a value like an item name, using [simplematch](https://github.com/tfeldmann/simplematch)-style templates.
 
 ## Install
 
@@ -46,14 +42,11 @@ print(result["utterance_remainder"]) # 'there' — words not consumed by any slo
 ```
 
 An intent only fires when **every required slot** has at least one keyword match in the
-utterance; optional slots add to the result when present but are not required to fire.
+utterance. Optional slots add to the result when present, but they are not required to fire.
 
 ## In the OVOS pipeline
 
-Installed as a pipeline plugin (`palavreado[ovos]`), Palavreado responds to the **same
-`register_vocab` / `register_intent` bus events as [Adapt](adapt-pipeline.md)**, so swapping it
-in requires zero skill changes — your `.voc` files keep working. See
-[Pipelines Overview](pipelines-overview.md) for how matchers are ordered and configured.
+Installed as a pipeline plugin (`palavreado[ovos]`), Palavreado responds to the **same `register_vocab` / `register_intent` bus events as [Adapt](adapt-pipeline.md)**. Swapping it in requires zero skill changes. Your `.voc` files keep working. See [Pipelines Overview](pipelines-overview.md) for how matchers are ordered and configured.
 
 !!! tip "When to choose Palavreado"
     Use it as a lighter, simpler stand-in for Adapt when you want keyword matching without

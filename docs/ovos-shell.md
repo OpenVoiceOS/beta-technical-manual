@@ -4,7 +4,7 @@
     This component's repository is archived and no longer maintained. See the [Maturity Scale](maturity.md) and this page's own notes for what replaces it.
 
 !!! abstract "In a nutshell"
-    `ovos-shell` is the old on-screen interface for OVOS — the full-screen app that draws the assistant's face, status, settings panel and skill screens on devices with a display (like the Mark 2). It is the *legacy* GUI: deprecated, effectively broken today, and being replaced by a ground-up rework. This page is kept mainly for reference and for maintaining existing Mark 2 devices. See the [Glossary](glossary.md) for unfamiliar terms.
+    `ovos-shell` is the old on-screen interface for OVOS. It is the full-screen app that draws the assistant's face, status, settings panel, and skill screens on devices with a display (like the Mark 2). It is the *legacy* GUI: deprecated, effectively broken today, and being replaced by a ground-up rework. This page is kept mainly for reference and for maintaining existing Mark 2 devices. See the [Glossary](glossary.md) for unfamiliar terms.
 
 !!! danger "The OVOS GUI is deprecated — see [Screens on OVOS Today](gui-status.md) for the full picture"
     `ovos-shell` is part of the legacy stack. There is no generally usable OVOS GUI right now,
@@ -15,14 +15,14 @@ shell application** for OVOS on embedded and desktop devices (Mark 2, Raspberry 
 touchscreen, laptop). It wraps the `mycroft-gui-qt5` library (`Mycroft 1.0` [QML](qt5-gui.md) module)
 inside a full-screen, frameless Kirigami application window.
 
-It is distinct from the standalone `mycroft-gui-qt5` developer app: `ovos-shell` provides
-the production UI chrome — status indicator, sliding quick-settings panel, notifications,
-OSD, splash screen, pairing/OAuth loaders, and shutdown dialog — while delegating all skill
-rendering to `Mycroft.SkillView`. The idle screen itself is supplied by a homescreen
-skill (see [Home Screen](homescreen.md)), not by the shell.
+It is distinct from the standalone `mycroft-gui-qt5` developer app. `ovos-shell` provides
+the production UI chrome (status indicator, sliding quick-settings panel, notifications,
+OSD, splash screen, pairing/OAuth loaders, and shutdown dialog), while it delegates all skill
+rendering to `Mycroft.SkillView`. A homescreen skill supplies the idle screen itself
+(see [Home Screen](homescreen.md)), not the shell.
 
 > **Voice First.** The visual interface is always secondary to the voice interface.
-> All interactions should be completable with voice alone; touchscreen controls supplement
+> All interactions should be completable with voice alone. Touchscreen controls supplement
 > but never replace voice.
 
 ---
@@ -54,14 +54,14 @@ ovos-shell/
 
 | Dependency | Role |
 |---|---|
-| `mycroft-gui-qt5` | `Mycroft 1.0` QML module — `SkillView`, `MycroftController`, system templates |
+| `mycroft-gui-qt5` | `Mycroft 1.0` QML module: `SkillView`, `MycroftController`, system templates |
 | Qt5 (≥ 5.12) | Core, Quick, WebView, Widgets, DBus |
 | KF5 Kirigami2 | Application window, theme, layouts |
 | KF5 DBusAddons | D-Bus service registration |
 | KF5 Config / ConfigWidgets | Settings persistence |
 
-`ovos-shell` does not bundle skill-page QML itself. Skill pages and the built-in
-`SYSTEM_*` pages are resolved by the `Mycroft.SkillView` runtime from `mycroft-gui-qt5`.
+`ovos-shell` does not bundle skill-page QML itself. The `Mycroft.SkillView` runtime from
+`mycroft-gui-qt5` resolves skill pages and the built-in `SYSTEM_*` pages.
 
 ---
 
@@ -69,7 +69,7 @@ ovos-shell/
 
 ### `main.qml`
 
-- Root `Kirigami.AbstractApplicationWindow` — full screen, frameless
+- Root `Kirigami.AbstractApplicationWindow`: full screen, frameless
 
 
 - Monitors `Mycroft.MycroftController.status` to restart GUI/skill service watchers
@@ -81,8 +81,8 @@ ovos-shell/
 - Hosts `StatusIndicator`, `ListenerAnimation`, `SlidingPanel`, notification popups, OSD
 
 
-- When the skill stack is empty, the shell shows a plain background image; the actual idle
-  screen is drawn by a homescreen skill rendered through `Mycroft.SkillView`:
+- When the skill stack is empty, the shell shows a plain background image. A homescreen skill
+  draws the actual idle screen, rendered through `Mycroft.SkillView`:
 
 ```qml
 Image {
@@ -126,8 +126,8 @@ Image {
 ## Homescreen (Idle Screen)
 
 The shell does not draw the idle screen itself. When the namespace stack is empty it shows
-a plain background image; the actual homescreen is provided by a skill (default
-`skill-ovos-homescreen.openvoiceos`) whose resting-screen page is rendered through
+a plain background image. A skill (default `skill-ovos-homescreen.openvoiceos`) provides the
+actual homescreen, and its resting-screen page renders through
 `Mycroft.SkillView`. Skills register idle screens with `@resting_screen_handler`. See
 [Home Screen](homescreen.md) for the configuration and the resting-screen API.
 
@@ -152,8 +152,8 @@ The `OVOSPlugin.Configuration` QML singleton reads and writes `~/.config/OvosThe
 (standard KConfig format).
 
 !!! tip "Start here"
-    Most users only ever touch the `[ColorScheme]` group — `primaryColor`, `secondaryColor`,
-    `textColor`, and `themeStyle` — either directly in this file or through the quick-settings
+    Most users only ever touch the `[ColorScheme]` group (`primaryColor`, `secondaryColor`,
+    `textColor`, and `themeStyle`) either directly in this file or through the quick-settings
     panel. The `[SelectedScheme]` keys are managed automatically and rarely need to be edited
     by hand.
 
@@ -232,7 +232,7 @@ Color theme editor:
 
 ## Companion Plugins
 
-To unlock full functionality, configure `ovos-gui-plugin-shell-companion` in
+To enable full functionality, configure `ovos-gui-plugin-shell-companion` in
 `mycroft.conf`. This plugin integrates with `ovos-gui` to provide:
 
 - Color scheme manager
@@ -292,6 +292,6 @@ The `Mycroft 1.0` QML module (from `mycroft-gui-qt5`) must be installed before b
 ## Qt Version Policy
 
 This repository targets **Qt5** and links against `mycroft-gui-qt5`. Do not introduce
-Qt6-only API into this repository; a `mycroft-gui-qt6` client is developed as its own
+Qt6-only API into this repository. A `mycroft-gui-qt6` client is developed as its own
 project (see the [GUI Adapter Plugins](gui-adapters.md) rework) rather than as a fork of
 `ovos-shell` itself.

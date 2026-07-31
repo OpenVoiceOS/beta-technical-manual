@@ -4,7 +4,7 @@
     Not every skill should be allowed to join every conversation. This page covers the
     controls that decide which skills may participate: converse whitelists and blacklists,
     activation modes, and the global skill blacklist. For switching groups of *intents* on
-    and off inside one skill, see [Intent Layers](layers.md) — that page owns the layering
+    and off inside one skill, see [Intent Layers](layers.md). That page owns the layering
     mechanism.
 
 ??? info "📐 Formal specification"
@@ -12,11 +12,11 @@
 
 !!! note "Routing/participation controls, not a security boundary"
     Converse and fallback permission settings decide which already-loaded skills get to
-    *participate* in a given turn — they are not a security or sandboxing mechanism. A
+    *participate* in a given turn. They are not a security or sandboxing mechanism. A
     skill that is loaded has full code-execution rights regardless of its converse
     whitelist/blacklist status; these settings cannot contain a malicious skill, they can
     only stop it from being offered a turn. See
-    [Privacy & Security — skills are not sandboxed](privacy-security.md#skills-are-not-sandboxed).
+    [Privacy & Security: skills are not sandboxed](privacy-security.md#skills-are-not-sandboxed).
 
 ## Permissions
 
@@ -55,11 +55,11 @@ Configure in `mycroft.conf`:
 ```
 
 !!! warning "What you should see in the log when a whitelist blocks converse"
-    `ConverseService` returns `False` from this check silently — there is no dedicated log
+    `ConverseService` returns `False` from this check silently. There is no dedicated log
     line announcing "skill X blocked by whitelist". The observable symptom instead: run
     `ologs | grep converse` (see [RaspOVOS Troubleshooting](raspovos-troubleshooting.md#how-to-debug-intent-matching))
     while talking to the device, and the non-whitelisted skill's `skill_id` simply never
-    shows up as a candidate — no `mycroft.skill.converse.request`/response pair for it appears
+    shows up as a candidate. No `mycroft.skill.converse.request`/response pair for it appears
     at all, and its `converse()` method is never invoked. If a skill you expect to converse is
     silent, check `converse_mode` and `converse_whitelist` in your config before assuming the
     skill itself is broken.
@@ -81,7 +81,7 @@ from ovos_workshop.permissions import ConverseActivationMode
 | `BLACKLIST` | All skills except blacklisted ones may self-activate |
 
 Configure in `mycroft.conf`. `WHITELIST`/`BLACKLIST` here reuse the same
-`converse_whitelist`/`converse_blacklist` lists shown above — there is no separate
+`converse_whitelist`/`converse_blacklist` lists shown above. There is no separate
 activation-specific list:
 
 ```json
@@ -140,7 +140,7 @@ whitelist_skill("my-unwanted-skill-id")
 
 !!! note
     These functions manage a separate, broader kill-switch: `skills.blacklisted_skills` in
-    `mycroft.conf`. A skill listed there is prevented from loading at all — it is unrelated
+    `mycroft.conf`. A skill listed there is prevented from loading at all. It is unrelated
     to the `converse_blacklist`/`fallback_blacklist` keys above, which only restrict
     participation in converse/fallback while the skill still loads normally.
 
@@ -150,16 +150,16 @@ These functions directly modify `mycroft.conf` and take effect on the next skill
 
 ## Related Pages
 
-- [Converse Pipeline](converse-pipeline.md) — `ConverseService`, active skills list, converse protocol
+- [Converse Pipeline](converse-pipeline.md): `ConverseService`, active skills list, converse protocol
 
 
-- [Fallback Pipeline](fallback-pipeline.md) — `FallbackService`, priority ranges, fallback protocol
+- [Fallback Pipeline](fallback-pipeline.md): `FallbackService`, priority ranges, fallback protocol
 
 
-- [Skill Classes](skill-classes.md) — `ConversationalSkill`, `FallbackSkill` base classes
+- [Skill Classes](skill-classes.md): `ConversationalSkill`, `FallbackSkill` base classes
 
 
-- [ovos-core](core.md) — skill manager configuration and pipeline stages
+- [ovos-core](core.md): skill manager configuration and pipeline stages
 
 ---
 

@@ -4,7 +4,7 @@
     Established and production-ready, actively maintained. Rated by [repository health](maturity.md), not version.
 
 !!! abstract "In a nutshell"
-    A "persona" is a configurable AI character — often powered by a chatbot-style language model — that the assistant can hand your request to. This pipeline decides when to let that persona answer you instead of the usual command-matching skills, which is useful for open-ended chat or questions that no specific skill covers. You can set it to handle everything, or only step in when nothing else fits. See the [Glossary](glossary.md) for terms, or [Solver/Agent plugins](agent-plugins.md) for the components a persona uses to come up with answers.
+    A "persona" is a configurable AI character, often powered by a chatbot-style language model, that the assistant can hand your request to. This pipeline decides when to let that persona answer you instead of the usual command-matching skills, which is useful for open-ended chat or questions that no specific skill covers. You can set it to handle everything, or only step in when nothing else fits. See the [Glossary](glossary.md) for terms, or [Solver/Agent plugins](agent-plugins.md) for the components a persona uses to come up with answers.
 
 ??? info "📐 Formal specification"
     The persona plugin is specified by **[OVOS-PERSONA-1 — Persona Pipeline Plugin](https://github.com/OpenVoiceOS/architecture/blob/dev/persona.md)**, built on **[OVOS-PIPELINE-1](https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md)**. See the [spec index](architecture-specs.md).
@@ -12,13 +12,13 @@
 The **`ovos-persona-pipeline-plugin`** provides a dynamic way to integrate persona-based conversational behavior into the OVOS pipeline system. It allows you to route user utterances to AI personas instead of skill matchers, depending on context and configuration.
 
 !!! note "How the spec frames it"
-    A persona is a **complete conversational agent** that, when active, claims *every* utterance reaching its pipeline stage (PERSONA-1 §2). The active persona is held in one session field, **`session.persona_id`** (PERSONA-1 §3) — absent means no-persona mode (deterministic skills only); set means that persona's plugin catches everything that reaches it. The plugin is a self-matching pipeline plugin (PIPELINE-1 §7.0): its `Match.skill_id` equals its own `pipeline_id`. **Summon** sets `persona_id` (via `Match.updated_session`, a client, or a session sync); **dismiss** clears it — and the stop cascade (OVOS-STOP-1) clears it too, which is how "stop" returns control to the skills. The "full control / hybrid / fallback" strategies below are just different positions for the `persona` stage (route 2, active-persona catch-all) and an optional `persona_fallback` stage (route 3) in `session.pipeline` (PERSONA-1 §10).
+    A persona is a **complete conversational agent** that, when active, claims *every* utterance reaching its pipeline stage (PERSONA-1 §2). The active persona is held in one session field, **`session.persona_id`** (PERSONA-1 §3). Absent means no-persona mode (deterministic skills only). Set means that persona's plugin catches everything that reaches it. The plugin is a self-matching pipeline plugin (PIPELINE-1 §7.0): its `Match.skill_id` equals its own `pipeline_id`. **Summon** sets `persona_id` (via `Match.updated_session`, a client, or a session sync). **Dismiss** clears it, and the stop cascade (OVOS-STOP-1) clears it too, which is how "stop" returns control to the skills. The "full control / hybrid / fallback" strategies below are just different positions for the `persona` stage (route 2, active-persona catch-all) and an optional `persona_fallback` stage (route 3) in `session.pipeline` (PERSONA-1 §10).
 
 ---
 
 ## Overview
 
-The `persona-pipeline` is a plugin for the OVOS pipeline architecture, shipped in the separate **`ovos-persona`** package (not part of `ovos-core`). It dynamically delegates user utterances to a configured **Persona**, which attempts to resolve the intent using a sequence of **[Solver](agent-plugins.md) Plugins** (e.g., LLMs, search tools, knowledge bases).
+The `persona-pipeline` is a plugin for the OVOS pipeline architecture, shipped in the separate **`ovos-persona`** package (not part of `ovos-core`). It dynamically delegates user utterances to a configured **Persona**. The persona attempts to resolve the intent using a sequence of **[Solver](agent-plugins.md) Plugins** (e.g., LLMs, search tools, knowledge bases).
 
 You can configure it to:
 
@@ -65,7 +65,7 @@ Insert the tier IDs you need into your `mycroft.conf` under the `intents.pipelin
       "personas_path": "~/.config/ovos_persona"
     },
     "pipeline": [
-      // depending on strategy, insert the persona stage(s) here — see below
+      // depending on strategy, insert the persona stage(s) here, see below
     ]
   }
 }
@@ -131,7 +131,7 @@ Only unmatched or low-confidence utterances are routed to the persona.
 ```
 
 ??? example "A complete, copy-pasteable `mycroft.conf` for Hybrid Mode"
-    This resolves every stage — nothing left as "...remaining stages as needed" — so you can drop it in as-is and adjust from there.
+    This resolves every stage. Nothing is left as "...remaining stages as needed", so you can drop it in as-is and adjust from there.
 
     ```jsonc
     {
@@ -245,9 +245,9 @@ Each persona defines a `handlers` list (the older key `solvers` is still accepte
 
 ## Persona Intents
 
-`"ovos-persona-pipeline-plugin-high"` supports a set of core voice intents to manage persona interactions seamlessly. 
+`"ovos-persona-pipeline-plugin-high"` supports a set of core voice intents to manage persona interactions.
 
-These intents provide **out-of-the-box functionality** for controlling the Persona Service, ensuring smooth integration with the conversational pipeline and enhancing user experience. The backing intent/vocab files are `list_personas.intent`, `active_persona.intent`, `summon.intent` (activate), `ask.intent` (single-shot), and `Release.voc` (stop).
+These intents control the Persona Service directly, without extra setup. The backing intent/vocab files are `list_personas.intent`, `active_persona.intent`, `summon.intent` (activate), `ask.intent` (single-shot), and `Release.voc` (stop).
 
 ### **List Personas**
 
@@ -291,17 +291,17 @@ Enables users to query a persona directly without entering an interactive sessio
 - "Deactivate the chatbot"
 - "Shut up"
 
-Releasing a persona (via the `Release.voc` keyword match) ends the active session: the service marks the session inactive so any in-flight streaming response stops and subsequent utterances flow back through the normal pipeline. Persona uses `skill_id` `persona.openvoiceos`.
+Releasing a persona (via the `Release.voc` keyword match) ends the active session. The service marks the session inactive, so any in-flight streaming response stops and subsequent utterances flow back through the normal pipeline. Persona uses `skill_id` `persona.openvoiceos`.
 
 ---
 
 ## Related Pages
 
-- [Agent / Solver Plugins](agent-plugins.md) — the handler plugins a persona delegates to
-- [Fallback Pipeline](fallback-pipeline.md) — the low-tier fallback persona routing complements
+- [Agent / Solver Plugins](agent-plugins.md): the handler plugins a persona delegates to
+- [Fallback Pipeline](fallback-pipeline.md): the low-tier fallback persona routing complements
 
 
-- [Life of an Utterance](life-of-an-utterance.md) — where the persona stages sit in the pipeline
+- [Life of an Utterance](life-of-an-utterance.md): where the persona stages sit in the pipeline
 
 ---
 

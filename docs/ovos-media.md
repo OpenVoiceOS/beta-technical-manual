@@ -1,20 +1,20 @@
 # ovos-media
 
 !!! warning "Maturity — Proof-of-concept ⬤◯◯◯◯"
-    The `ovos-media` daemon is **unfinished** — a work in progress that is opt-in and not the default playback stack (see the Upcoming note below). For exploration only; the OCP-in-`ovos-audio` path remains the way to play media today. Rated by [repository health](maturity.md), not version.
+    The `ovos-media` daemon is **unfinished**. It is a work in progress that is opt-in and not the default playback stack (see the Upcoming note below). For exploration only. The OCP-in-`ovos-audio` path remains the way to play media today. Rated by [repository health](maturity.md), not version.
 
 !!! abstract "In a nutshell"
-    `ovos-media` is the planned future replacement for how OVOS plays music, podcasts and videos. Today, stock installs still use the older audio backend; `ovos-media` is an opt-in, work-in-progress rewrite meant to handle audio, video and web playback more cleanly and to support several players at once. If you are not deliberately trying it out, you are not using it yet — this page describes where things are heading. See the [OCP Pipeline](ocp-pipeline.md) for how playback requests are recognized, or the [Glossary](glossary.md) for terms.
+    `ovos-media` is the planned future replacement for how OVOS plays music, podcasts and videos. Today, stock installs still use the older audio backend. `ovos-media` is an opt-in, work-in-progress rewrite meant to handle audio, video and web playback more cleanly and to support several players at once. If you are not deliberately trying it out, you are not using it yet. This page describes where things are heading. See the [OCP Pipeline](ocp-pipeline.md) for how playback requests are recognized, or the [Glossary](glossary.md) for terms.
 
 ??? info "📐 Formal specification"
     Media playback is specified by two architecture documents:
     **[OVOS-OCP-1 — OVOS Common Playback](https://github.com/OpenVoiceOS/architecture/blob/dev/ocp-1.md)**
-    defines the per-session **virtual media player** — the single logical
+    defines the per-session **virtual media player**, the single logical
     player every "play / pause / next / louder / stop" command targets, plus
-    the MPRIS bridge to and from the host OS — while
+    the MPRIS bridge to and from the host OS. Meanwhile,
     **[OVOS-AUDIO-1 — Audio Output Service](https://github.com/OpenVoiceOS/architecture/blob/dev/audio-out.md)**
     defines the **output service** that actually renders queued audio. OCP-1
-    fixes the *observable control surface*; how a URI becomes bytes on a
+    fixes the *observable control surface*. How a URI becomes bytes on a
     speaker is a backend concern. `ovos-media` is the implementation moving
     toward that contract. For the full set see the
     **[spec index](architecture-specs.md)**.
@@ -22,7 +22,7 @@
 !!! warning "Upcoming — a refactor that is not the default yet"
     `ovos-media` is the **upcoming** media-playback service for OVOS, still being refactored.
     It is **not enabled by default**. Today, stock installs play media through the **legacy
-    audio backend** — the [`ovos-ocp-audio-plugin`](media-plugins.md#ovos-ocp-audio-plugin)
+    audio backend**, the [`ovos-ocp-audio-plugin`](media-plugins.md#ovos-ocp-audio-plugin)
     ("old audio service") inside [`ovos-audio`](audio-service.md), which is **deprecated but
     still shipped**. Switching to `ovos-media` is opt-in (see below) and some parts are still
     coupled (Qt5 GUI, player-as-skill). Treat this page as the *target architecture*.
@@ -36,15 +36,15 @@
     | **Package** | `ovos-ocp-audio-plugin` in [`ovos-audio`](audio-service.md) | `ovos-media` (standalone daemon) |
     | **Status** | deprecated, still shipped & on by default | opt-in refactor, not default |
     | **Playback** | one bundled audio backend | per-request audio/video/web [media plugins](media-plugins.md) (`opm.media.*`) |
-    | **Extras** | — | MPRIS, per-session state, multiple players |
+    | **Extras** | none | MPRIS, per-session state, multiple players |
     | **Config** | `enable_old_audioservice: true` (default) | `enable_old_audioservice: false` + run `ovos-media` |
 
-    The OCP **pipeline** and **stream extractors** are unaffected by which backend you use —
-    only the *playback* layer differs. (OCP **skills** are a separate, longer-term change —
-    see the next note.)
+    The OCP **pipeline** and **stream extractors** are unaffected by which backend you use.
+    Only the *playback* layer differs. (OCP **skills** are a separate, longer-term change.
+    See the next note.)
 
 !!! info "Upcoming — MediaProvider plugins replace OCP skills"
-    Media catalogs are moving **out of skills and into plugins**: a new **MediaProvider** plugin
+    Media catalogs are moving **out of skills and into plugins**. A new **MediaProvider** plugin
     type (`opm.media.provider` / `PluginTypes.MEDIA_PROVIDER`) that the OCP pipeline loads
     **in-process** and calls `search()` on directly, in place of today's
     [OCP skills](ocp-skills.md). This first ships in **`ovos-plugin-manager 2.8.0a1`**
@@ -52,10 +52,10 @@
     Tracked in [ovos-workshop#423](https://github.com/OpenVoiceOS/ovos-workshop/pull/423).
 
 `ovos-media` is the standalone audio/video daemon for OpenVoiceOS. It is the **upcoming
-replacement** for the legacy audio service, providing a more robust and modular media player
+replacement** for the legacy audio service, and it provides a more capable and modular media player
 built on the OpenVoiceOS [Common Play](ocp-pipeline.md) ([OCP](ocp-pipeline.md)) framework.
 
-**In plain terms:** the old audio service could only play one kind of stream through a thin wrapper. `ovos-media` is a proper media daemon: it has separate audio/video/web players you pick per request, supports MPRIS (so your phone's media controls work), and keeps per-session state so multiple devices can each play their own thing.
+**In plain terms:** the old audio service could only play one kind of stream through a thin wrapper. `ovos-media` is a proper media daemon. It has separate audio/video/web players you pick per request. It supports MPRIS, so your phone's media controls work, and it keeps per-session state so multiple devices can each play their own thing.
 
 To use `ovos-media` you need to disable the old audio service and enable the OCP pipeline in `ovos-core`:
 
@@ -89,7 +89,7 @@ To use `ovos-media` you need to disable the old audio service and enable the OCP
 ## Architecture
 
 OCP (OVOS Common Play) splits into a **search/match layer** and a **playback layer**. The search
-layer — the [`ocp-pipeline`](ocp-pipeline.md), OCP skills (media catalogs), and stream extractors —
+layer, made up of the [`ocp-pipeline`](ocp-pipeline.md), OCP skills (media catalogs), and stream extractors,
 is shared regardless of which playback layer you run. The playback layer has two implementations
 that currently run in parallel: the legacy ["old audio service"](media-plugins.md#ovos-ocp-audio-plugin)
 (`ovos-ocp-audio-plugin` inside [`ovos-audio`](audio-service.md)) and the standalone `ovos-media`
@@ -105,7 +105,7 @@ daemon described here, which is the target:
     ├── Player state machine (OCPMediaPlayer)
     ├── MPRIS
     ├── Media backend plugins
-    └── GUI (still coupled — target: GUI adapter plugins)
+    └── GUI (still coupled, target: GUI adapter plugins)
 
 ```
 
@@ -115,7 +115,7 @@ daemon described here, which is the target:
 
 **Package:** import name `ocp_pipeline` (PyPI distribution `ovos-ocp-pipeline-plugin`)
 **Entry point group:** `opm.pipeline`
-**Class:** `OCPPipelineMatcher` (entry point `ovos-ocp-pipeline-plugin`); the legacy bridge is `MycroftCPSLegacyPipeline` (`ovos-ocp-pipeline-plugin-legacy`)
+**Class:** `OCPPipelineMatcher` (entry point `ovos-ocp-pipeline-plugin`). The legacy bridge is `MycroftCPSLegacyPipeline` (`ovos-ocp-pipeline-plugin-legacy`)
 
 The OCP pipeline plugin is the NLP brain of the media stack. It integrates with `ovos-core`'s
 intent pipeline, handles all media query classification, and dispatches search to OCP skills.
@@ -123,20 +123,20 @@ It does NOT handle playback.
 
 ### What It Does
 
-1. **Classification** — determines the media type (music, podcast, radio, video, audiobook, news, etc.)
+1. **Classification**: determines the media type (music, podcast, radio, video, audiobook, news, etc.)
    using a trained `AhocorasickNER` classifier and vocabulary files from `ocp_pipeline/locale/`.
 
-2. **Search dispatch** — emits `ovos.common_play.query` on the bus. All registered OCP skills
+2. **Search dispatch**: emits `ovos.common_play.query` on the bus. All registered OCP skills
    respond with `ovos.common_play.query.response`, providing `MediaEntry`/`Playlist` objects scored 0–100.
 
-3. **Result selection** — collects responses up to a timeout, sorts by score, picks the best result.
+3. **Result selection**: collects responses up to a timeout, sorts by score, picks the best result.
 
 
-4. **Playback routing** — emits `ovos.common_play.play` with the selected result to the active player.
+4. **Playback routing**: emits `ovos.common_play.play` with the selected result to the active player.
 
 ### Per-[Session](session.md) Player State
 
-The pipeline plugin tracks one `OCPPlayerProxy` per session — important for [HiveMind](hivemind-agents.md) where each
+The pipeline plugin tracks one `OCPPlayerProxy` per session. This matters for [HiveMind](hivemind-agents.md), where each
 satellite has its own player:
 
 ```python
@@ -154,7 +154,7 @@ class OCPPlayerProxy:
 
 ### Pipeline Configuration
 
-The OCP matcher contributes several confidence-ranked pipeline stages — `ovos-ocp-pipeline-plugin-high`, `-medium`, `-low`, plus `ovos-ocp-pipeline-plugin-legacy` for old-style CommonPlay skills. Place them at the appropriate confidence tier in your pipeline:
+The OCP matcher contributes several confidence-ranked pipeline stages: `ovos-ocp-pipeline-plugin-high`, `-medium`, `-low`, plus `ovos-ocp-pipeline-plugin-legacy` for old-style CommonPlay skills. Place them at the appropriate confidence tier in your pipeline:
 
 ```json
 {
@@ -233,16 +233,16 @@ Skills must NOT handle playback. They must NOT have intents for play/pause/stop/
 
 Key modules:
 
-- `ovos_media/player.py` — `OCPMediaPlayer`, the player state machine (playlist, track history, playback/media/loop state); `OCPMediaCatalog` (an `OVOSCommonPlaybackSkill` subclass, instantiated as `self.media`) manages only the liked-songs store and search-results playlist
+- `ovos_media/player.py`: `OCPMediaPlayer`, the player state machine (playlist, track history, playback/media/loop state). `OCPMediaCatalog` (an `OVOSCommonPlaybackSkill` subclass, instantiated as `self.media`) manages only the liked-songs store and search-results playlist
 
 
-- `ovos_media/media_backends/` — `AudioService`, `VideoService`, `WebService` — each manages typed backend plugins
+- `ovos_media/media_backends/`: `AudioService`, `VideoService`, `WebService`. Each manages typed backend plugins
 
 
-- `ovos_media/player.py` — uses a `GUIInterface` from `ovos-gui-api-client` (`self.gui.show_media_player(...)`) to push player state via the template API (the old `ovos_media/gui.py` / `OCPGUIInterface` is gone)
+- `ovos_media/player.py`: uses a `GUIInterface` from `ovos-gui-api-client` (`self.gui.show_media_player(...)`) to push player state via the template API (the old `ovos_media/gui.py` / `OCPGUIInterface` is gone)
 
 
-- `ovos_media/mpris.py` — MPRIS integration
+- `ovos_media/mpris.py`: MPRIS integration
 
 ### Available Media Backend Plugins
 
@@ -250,7 +250,7 @@ Media backends are typed: audio players register on the `opm.media.audio` entry-
 video players on `opm.media.video`, and web players on `opm.media.web`. They are configured under
 `media.audio_players` / `media.video_players` / `media.web_players` (see the config example below).
 
-The table below lists the **pip package** to install; each package registers one entry point per
+The table below lists the **pip package** to install. Each package registers one entry point per
 type it supports, named `ovos-media-<type>-plugin-<name>` (e.g. the `ovos-media-plugin-vlc`
 package registers `ovos-media-audio-plugin-vlc` and `ovos-media-video-plugin-vlc`). You configure
 the player by its entry-point name.
@@ -259,24 +259,24 @@ the player by its entry-point name.
 |---|---|---|
 | [`ovos-media-plugin-vlc`](https://github.com/OpenVoiceOS/ovos-media-plugin-vlc) | audio, video | VLC instance |
 | [`ovos-media-plugin-mplayer`](https://github.com/OpenVoiceOS/ovos-media-plugin-mplayer) | audio, video | mplayer |
-| [`ovos-media-plugin-cli`](https://github.com/OpenVoiceOS/ovos-media-plugin-cli) | audio | Generic CLI-command player — minimal/default audio fallback |
+| [`ovos-media-plugin-cli`](https://github.com/OpenVoiceOS/ovos-media-plugin-cli) | audio | Generic CLI-command player, minimal/default audio fallback |
 | [`ovos-media-plugin-spotify`](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify) | audio | Spotify Connect |
 | [`ovos-media-plugin-chromecast`](https://github.com/OpenVoiceOS/ovos-media-plugin-chromecast) | audio, video | Cast to a Chromecast device |
-| [`ovos-media-plugin-qt5`](https://github.com/OpenVoiceOS/ovos-media-plugin-qt5) | audio, video, web | Hand off to the [GUI](gui-service.md) player — **legacy**, depends on the deprecated [ovos-shell](ovos-shell.md) (see [GUI status](gui-status.md)) |
+| [`ovos-media-plugin-qt5`](https://github.com/OpenVoiceOS/ovos-media-plugin-qt5) | audio, video, web | Hand off to the [GUI](gui-service.md) player. **Legacy**, depends on the deprecated [ovos-shell](ovos-shell.md) (see [GUI status](gui-status.md)) |
 
 ### Stream Extractor Plugins
 
-OCP supports stream extractor plugins (`opm.ocp.extractor` entry-point group; the older
+OCP supports stream extractor plugins (`opm.ocp.extractor` entry-point group. The older
 `ovos.ocp.extractor` group is a deprecated alias) that transform non-playable URIs into playable
 streams before handing them to the media backend:
 
-- `ovos-ocp-youtube-plugin` — extracts audio stream from YouTube URLs
+- `ovos-ocp-youtube-plugin`: extracts audio stream from YouTube URLs
 
 
-- `ovos-ocp-m3u-plugin` — parses M3U playlists
+- `ovos-ocp-m3u-plugin`: parses M3U playlists
 
 
-- `ovos-ocp-rss-plugin` — parses podcast RSS feeds
+- `ovos-ocp-rss-plugin`: parses podcast RSS feeds
 
 ---
 
@@ -284,28 +284,28 @@ streams before handing them to the media backend:
 
 These are the utterances the [OCP pipeline plugin](#pipeline-configuration) described above
 actually matches, at whichever confidence tier (`-high` / `-medium` / `-low`) it's configured
-for — before the regular intent stage, OCP handles these utterances (taking into account
+for. Before the regular intent stage, OCP handles these utterances (taking into account
 current player state):
 
-- `"play {query}"` — always available
+- `"play {query}"`: always available
 
 
-- `"previous"` — requires media loaded
+- `"previous"`: requires media loaded
 
 
-- `"next"` — requires media loaded
+- `"next"`: requires media loaded
 
 
-- `"pause"` — requires media loaded
+- `"pause"`: requires media loaded
 
 
-- `"play"` / `"resume"` — requires media loaded
+- `"play"` / `"resume"`: requires media loaded
 
 
-- `"stop"` — requires media loaded
+- `"stop"`: requires media loaded
 
 
-- `"I like that song"` — requires music playing
+- `"I like that song"`: requires music playing
 
 ---
 
@@ -380,7 +380,7 @@ players interchangeably.
 
     // message sources trusted to bypass per-session validation
     "native_sources": ["debug_cli", "audio"],
-    // when true, the daemon only acts on the local ("default") session —
+    // when true, the daemon only acts on the local ("default") session.
     // set false for HiveMind/multi-session setups that drive playback remotely
     "validate_source": true,
 
@@ -400,20 +400,20 @@ players interchangeably.
 ```
 
 > The `gui` / `browser` module names shown in earlier drafts are not real
-> backends — the bundled players are `vlc`, `mplayer`, `cli`, `spotify`,
+> backends. The bundled players are `vlc`, `mplayer`, `cli`, `spotify`,
 > `chromecast`, and the legacy `qt5` GUI hand-off (see the
 > [backend table](#available-media-backend-plugins)).
 
-Each entry's key is a local name; `module` is the plugin's **entry-point name**
+Each entry's key is a local name. `module` is the plugin's **entry-point name**
 (e.g. `ovos-media-audio-plugin-vlc`), which can differ from its pip package name
-(`ovos-media-plugin-vlc`). `preferred_*_services` are ordered fallback lists; the
+(`ovos-media-plugin-vlc`). `preferred_*_services` are ordered fallback lists. The
 audio list is also the generic fallback when a type-specific list is empty. To
 hand playback to the legacy GUI player, add the `qt5` entry points
-(`ovos-media-audio-plugin-qt5`, `…-video-plugin-qt5`, `…-web-plugin-qt5`) — that
+(`ovos-media-audio-plugin-qt5`, `…-video-plugin-qt5`, `…-web-plugin-qt5`). That
 backend is legacy and needs the deprecated [ovos-shell](ovos-shell.md).
 
 Other `media.*` keys read by the player (all optional): `autoplay` (default
-`true` — play the next queued track automatically), `merge_search` (fold new
+`true`, play the next queued track automatically), `merge_search` (fold new
 search results into the active playlist vs. replacing it), and
 `force_audioservice` (route audio through the audio backend even when a GUI is
 available).
@@ -426,7 +426,7 @@ Beyond the per-player `ovos.audio.service.*` / `ovos.video.service.*` API, the
 | Bus message | Purpose |
 |---|---|
 | `ovos.common_play.home` | Open the OCP home/menu |
-| `ovos.common_play.ping` | Liveness probe — lets callers detect a running `ovos-media` |
+| `ovos.common_play.ping` | Liveness probe. Lets callers detect a running `ovos-media` |
 | `ovos.common_play.search.start` / `ovos.common_play.search.end` | Bracket an in-progress OCP search |
 | `opm.audio.query` | OPM plugin-discovery compatibility with the legacy `PlaybackService` handler |
 
@@ -463,13 +463,13 @@ This bridge is marked for removal in `ovos-core 0.1.0`.
 
 `OCPMediaCatalog` in `ovos_media/player.py` inherits from `OVOSCommonPlaybackSkill`. This registers
 `ovos-media` as a skill on the bus and loads skill infrastructure (settings, locale, etc.). It
-registers `@ocp_search()` to expose liked songs as a search result; there is no
+registers `@ocp_search()` to expose liked songs as a search result. There is no
 `@ocp_featured_media()` handler.
 
 ### No next/prev in some backends
 
 The Music Assistant audio backend does not implement `next()` or `previous()` through the legacy
-`AudioBackend` interface — only through the MA queue API.
+`AudioBackend` interface. Only through the MA queue API.
 
 ---
 

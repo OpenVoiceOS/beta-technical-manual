@@ -1,7 +1,7 @@
 # OVOS Persona Server
 
 !!! abstract "In a nutshell"
-    A "persona" is an OVOS chat character — a configured AI personality that answers questions. This server puts a persona online and makes it *look and behave like* the well-known AI chat services (such as OpenAI, Ollama, or Anthropic Claude). The practical upshot: any app or tool that already knows how to talk to one of those services can be pointed at your persona instead, with no changes — handy for plugging an OVOS persona into other software (like Home Assistant). Note it has no built-in password protection, so keep it on a trusted network. See [OVOS Personas](personas.md) and the [Glossary](glossary.md).
+    A "persona" is an OVOS chat character, a configured AI personality that answers questions. This server puts a persona online and makes it *look and behave like* the well-known AI chat services (such as OpenAI, Ollama, or Anthropic Claude). The practical upshot: any app or tool that already knows how to talk to one of those services can be pointed at your persona instead, with no changes. This is handy for plugging an OVOS persona into other software (like Home Assistant). Note it has no built-in password protection, so keep it on a trusted network. See [OVOS Personas](personas.md) and the [Glossary](glossary.md).
 
 The OVOS Persona Server exposes any OVOS [persona](personas.md) over HTTP using the APIs of
 major LLM vendors, so an OVOS persona becomes a drop-in replacement for an LLM backend in
@@ -9,7 +9,7 @@ third-party tools. The running server mounts **OpenAI-** and **Ollama-compatible
 endpoints, a UTCP tool surface, and vendor-compatible routers for **Anthropic**, **Gemini**,
 **Cohere**, **AWS Bedrock**, and **HuggingFace TGI** (plus MCP, if installed).
 
-It is a FastAPI app served by `uvicorn`. A persona is loaded from a JSON file at startup; the persona's `solvers` do the actual work (anything from a local rule-based bot to a remote LLM).
+It is a FastAPI app served by `uvicorn`. The server loads a persona from a JSON file at startup. The persona's `solvers` do the actual work (anything from a local rule-based bot to a remote LLM).
 
 ---
 
@@ -63,7 +63,7 @@ A persona is a JSON object whose `solvers` list names the plugins that answer qu
 }
 ```
 
-Solvers are tried in order; the first that returns an answer wins. Some solvers are **not** LLMs and keep no chat history — in that case only the last user message is processed.
+Solvers are tried in order. The first that returns an answer wins. Some solvers are **not** LLMs and keep no chat history. In that case only the last user message is processed.
 
 ---
 
@@ -92,20 +92,20 @@ Solvers are tried in order; the first that returns an answer wins. Some solvers 
 | `/openai/v1/vector_stores` | POST/GET/DELETE | OpenAI **Vector Stores** API (`{id}`, `{id}/files`, `{id}/search`) — mounted when the `rag` extra is installed |
 
 The legacy unprefixed paths `/v1/...` and `/api/...` (OpenAI and Ollama respectively) remain
-mounted as deprecated aliases of `/openai/v1/...` and `/ollama/api/...`; responses on these
+mounted as deprecated aliases of `/openai/v1/...` and `/ollama/api/...`. Responses on these
 legacy paths carry `Deprecation` and `Link` headers pointing at the canonical path.
 
-There is no authentication; put the server behind a reverse proxy if it is exposed.
+There is no authentication. Put the server behind a reverse proxy if it is exposed.
 
 ### Memory, RAG & embeddings
 
-By default the server is a **stateless passthrough** — the client owns conversation
+By default the server is a **stateless passthrough**. The client owns conversation
 state. Two modes are selected by the `CHAT_MEMORY` environment variable:
 
-- `off` (default) — *backend* mode: stateless; the client drives the Files /
+- `off` (default): *backend* mode, stateless. The client drives the Files /
   Vector-Stores endpoints itself. Use this for multi-user / drop-in-OpenAI
   deployments (a shared server memory would leak across users).
-- `transparent` — single-user *hosted agent* mode: the server keys history by
+- `transparent`: single-user *hosted agent* mode. The server keys history by
   session (the OpenAI `user` field, else a default session) and folds the persona's
   `memory_module` into every turn.
 
@@ -151,7 +151,7 @@ print(resp.choices[0].message.content)
     If instead you get a connection error, double-check the server is actually running on that
     host/port (`ovos-persona-server --persona ... --port 8337`) and that the URL includes the
     `/openai/v1` prefix. An empty or error-shaped `content` usually means the persona's `solvers`
-    failed to answer — check the server logs and the solver's own config (API key, model name).
+    failed to answer. Check the server logs and the solver's own config (API key, model name).
 
 ---
 
@@ -168,15 +168,15 @@ name(s) from the persona's solver config.
 ## Tips
 
 - **Mind the prefix.** Clients must hit `/openai/v1` (OpenAI) or `/ollama/api` (Ollama), not the
-  bare host root — pointing a client at `http://localhost:8337` alone will 404. The legacy
+  bare host root. Pointing a client at `http://localhost:8337` alone will 404. The legacy
   `/v1` and `/api` aliases still work but are deprecated. Tool calling is only supported with
   `stream=false`.
 
-- Make sure your persona file's `solvers` and their config are complete; a missing plugin or model means the persona cannot answer.
+- Make sure your persona file's `solvers` and their config are complete. A missing plugin or model means the persona cannot answer.
 
 - Capabilities (chat history, tool use, embeddings) depend entirely on the chosen solver plugins, so behavior varies by persona.
 
-- For production, secure the endpoint (reverse proxy, rate limits) — the server itself is unauthenticated.
+- For production, secure the endpoint (reverse proxy, rate limits). The server itself is unauthenticated.
 
 ---
 
