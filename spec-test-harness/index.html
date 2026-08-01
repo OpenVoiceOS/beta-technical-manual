@@ -8,9 +8,13 @@
       
       
       
-        <link rel="canonical" href="https://tigregotico.github.io/ovos-technical-manual/snippets/maturity-disclaimer/">
+        <link rel="canonical" href="https://tigregotico.github.io/ovos-technical-manual/spec-test-harness/">
       
       
+        <link rel="prev" href="../spec-tools-lib/">
+      
+      
+        <link rel="next" href="../maturity/">
       
       
       <link rel="icon" href="https://github.com/OpenVoiceOS/ovos_assets/blob/master/Logo/ovos-logo-512.png?raw=true">
@@ -18,14 +22,14 @@
     
     
       
-        <title>Maturity disclaimer - OpenVoiceOS Technical Manual</title>
+        <title>ovos-test-harness - OpenVoiceOS Technical Manual</title>
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.3cba04c6.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.3cba04c6.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
       
       
 
@@ -44,9 +48,9 @@
       
     
     
-      <link rel="stylesheet" href="../../css/extra.css">
+      <link rel="stylesheet" href="../css/extra.css">
     
-    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -71,6 +75,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#ovos-test-harness" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -83,7 +92,7 @@
 
 <header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../.." title="OpenVoiceOS Technical Manual" class="md-header__button md-logo" aria-label="OpenVoiceOS Technical Manual" data-md-component="logo">
+    <a href=".." title="OpenVoiceOS Technical Manual" class="md-header__button md-logo" aria-label="OpenVoiceOS Technical Manual" data-md-component="logo">
       
   <img src="https://github.com/OpenVoiceOS/ovos_assets/blob/master/Logo/ovos-logo-512.png?raw=true" alt="logo">
 
@@ -102,7 +111,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Maturity disclaimer
+              ovos-test-harness
             
           </span>
         </div>
@@ -212,7 +221,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../.." class="md-tabs__link">
+        <a href=".." class="md-tabs__link">
           
   
   Home
@@ -230,7 +239,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../start-here/" class="md-tabs__link">
+        <a href="../start-here/" class="md-tabs__link">
           
   
   Get Started
@@ -244,11 +253,13 @@
         
   
   
+    
+  
   
     
     
-      <li class="md-tabs__item">
-        <a href="../../concepts-overview/" class="md-tabs__link">
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../concepts-overview/" class="md-tabs__link">
           
   
   Concepts
@@ -266,7 +277,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../pipelines-overview/" class="md-tabs__link">
+        <a href="../pipelines-overview/" class="md-tabs__link">
           
   
   Pipeline
@@ -284,7 +295,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../lang-support/" class="md-tabs__link">
+        <a href="../lang-support/" class="md-tabs__link">
           
   
   Language
@@ -302,7 +313,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../skills-overview/" class="md-tabs__link">
+        <a href="../skills-overview/" class="md-tabs__link">
           
   
   Skills
@@ -320,7 +331,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../plugins-index/" class="md-tabs__link">
+        <a href="../plugins-index/" class="md-tabs__link">
           
   
   Plugins
@@ -338,7 +349,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../agents-overview/" class="md-tabs__link">
+        <a href="../agents-overview/" class="md-tabs__link">
           
   
   Agents
@@ -356,7 +367,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../production-overview/" class="md-tabs__link">
+        <a href="../production-overview/" class="md-tabs__link">
           
   
   Production
@@ -374,7 +385,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../reference-overview/" class="md-tabs__link">
+        <a href="../reference-overview/" class="md-tabs__link">
           
   
   Reference
@@ -413,7 +424,7 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../.." title="OpenVoiceOS Technical Manual" class="md-nav__button md-logo" aria-label="OpenVoiceOS Technical Manual" data-md-component="logo">
+    <a href=".." title="OpenVoiceOS Technical Manual" class="md-nav__button md-logo" aria-label="OpenVoiceOS Technical Manual" data-md-component="logo">
       
   <img src="https://github.com/OpenVoiceOS/ovos_assets/blob/master/Logo/ovos-logo-512.png?raw=true" alt="logo">
 
@@ -458,7 +469,7 @@
         
   
   
-    <a href="../.." class="md-nav__link">
+    <a href=".." class="md-nav__link">
       
   
   <span class="md-ellipsis">
@@ -500,7 +511,7 @@
         
   
   
-    <a href="../../start-here/" class="md-nav__link">
+    <a href="../start-here/" class="md-nav__link">
       
   
   <span class="md-ellipsis">
@@ -523,6 +534,442 @@
       
   
   
+    
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Concepts
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Concepts
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../concepts-overview/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Concepts Overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../architecture-overview/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    High-level Overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../life-of-an-utterance/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Life of an Utterance
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../architecture-specs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Formal Specifications
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../spec-tooling/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Specification Tooling
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../spec-tools-lib/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ovos-spec-tools
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    ovos-test-harness
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    ovos-test-harness
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-a-separate-repo" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why a separate repo
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      The model
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#coverage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Coverage
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pre-flighting-a-cross-repo-change" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pre-flighting a cross-repo change
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../maturity/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Maturity Scale
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bus-service/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    MessageBus Service
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bus-reconnect/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Bus Restart & Reconnect
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bus-namespace-migration/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Bus Namespace Migration
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bus-recipes/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Bus Recipes
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../security-model/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Security & Trust Model
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../plugin-manager/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Plugin Manager
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../composable-deployments/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Composable Deployments
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
   
   
     
@@ -542,11 +989,11 @@
         
   
   
-    <a href="../../concepts-overview/" class="md-nav__link">
+    <a href="../config/" class="md-nav__link">
       
   
   <span class="md-ellipsis">
-    Concepts
+    Configuration
   </span>
   
 
@@ -556,6 +1003,100 @@
     </a>
   
 
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../core/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    ovos-core Internals
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../speech-service/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Sibling Services (own processes on the bus)
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
       
     </li>
   
@@ -584,7 +1125,7 @@
         
   
   
-    <a href="../../pipelines-overview/" class="md-nav__link">
+    <a href="../pipelines-overview/" class="md-nav__link">
       
   
   <span class="md-ellipsis">
@@ -626,7 +1167,7 @@
         
   
   
-    <a href="../../lang-support/" class="md-nav__link">
+    <a href="../lang-support/" class="md-nav__link">
       
   
   <span class="md-ellipsis">
@@ -668,7 +1209,7 @@
         
   
   
-    <a href="../../skills-overview/" class="md-nav__link">
+    <a href="../skills-overview/" class="md-nav__link">
       
   
   <span class="md-ellipsis">
@@ -710,7 +1251,7 @@
         
   
   
-    <a href="../../plugins-index/" class="md-nav__link">
+    <a href="../plugins-index/" class="md-nav__link">
       
   
   <span class="md-ellipsis">
@@ -752,7 +1293,7 @@
         
   
   
-    <a href="../../agents-overview/" class="md-nav__link">
+    <a href="../agents-overview/" class="md-nav__link">
       
   
   <span class="md-ellipsis">
@@ -794,7 +1335,7 @@
         
   
   
-    <a href="../../production-overview/" class="md-nav__link">
+    <a href="../production-overview/" class="md-nav__link">
       
   
   <span class="md-ellipsis">
@@ -836,7 +1377,7 @@
         
   
   
-    <a href="../../reference-overview/" class="md-nav__link">
+    <a href="../reference-overview/" class="md-nav__link">
       
   
   <span class="md-ellipsis">
@@ -872,6 +1413,52 @@
   
   
   
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-a-separate-repo" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why a separate repo
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      The model
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#coverage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Coverage
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pre-flighting-a-cross-repo-change" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pre-flighting a cross-repo change
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -889,9 +1476,67 @@
   
 
 
-  <h1>Maturity disclaimer</h1>
-
-<p>Maturity reflects repository health (age, activity, open issues/PRs, in-repo docs), not version. See the <a href="maturity.md">Maturity Scale</a>.</p>
+<h1 id="ovos-test-harness">ovos-test-harness<a class="headerlink" href="#ovos-test-harness" title="Permanent link">&para;</a></h1>
+<div class="admonition note">
+<p class="admonition-title">Maturity: Beta ⬤⬤⬤◯◯</p>
+<p>In real use but still settling. Watch releases for the occasional breaking change. Rated by <a href="../maturity/">repository health</a>, not version.</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">In a nutshell</p>
+<p><a href="https://github.com/OpenVoiceOS/ovos-test-harness"><strong>ovos-test-harness</strong></a> is the
+executable counterpart of the <a href="../architecture-specs/">Formal Specifications</a>. It
+pins an exact combination of OVOS repos, runs a real stack, and asserts one
+observable bus behavior per normative clause. Use it to pre-flight a cross-repo
+change before merge, not just to check one repo in isolation.</p>
+</div>
+<details class="info">
+<summary>Formal specification</summary>
+<p>This suite proves conformance to the <strong><a href="https://github.com/OpenVoiceOS/architecture">OpenVoiceOS/architecture</a></strong> specs. See the <a href="../architecture-specs/">spec index</a>.</p>
+</details>
+<hr />
+<p><a href="https://github.com/OpenVoiceOS/ovos-test-harness"><strong>ovos-test-harness</strong></a> is the
+<strong>executable counterpart</strong> of the specs. Each test asserts one observable bus
+behavior a spec mandates, against a <em>real running OVOS stack</em>. If the specs are
+the law, this harness is the courtroom. It puts a concrete combination of OVOS
+repos on trial against the law and returns a verdict per normative clause:
+<strong>pass</strong>, <strong><code>xfail</code></strong> (a documented gap), or <strong>fail</strong>.</p>
+<h2 id="why-a-separate-repo">Why a separate repo<a class="headerlink" href="#why-a-separate-repo" title="Permanent link">&para;</a></h2>
+<p>A single spec clause is only satisfied when a
+<em>combination</em> of branches across a dozen repos lines up: <code>ovos-core</code>,
+<code>ovos-workshop</code>, <code>ovos-bus-client</code>, the pipeline plugins, fixture skills. You
+cannot prove that from inside any one repo, because that repo's CI installs only
+its own package plus whatever pip resolves, and pip is free to downgrade a
+sibling out of the exact combination you are trying to validate.</p>
+<h2 id="the-model">The model<a class="headerlink" href="#the-model" title="Permanent link">&para;</a></h2>
+<p>The harness is <strong>not a package</strong>. There is no <code>pip install .</code>.
+Its <a href="https://github.com/OpenVoiceOS/ovos-test-harness"><code>requirements.txt</code></a> is the
+<strong>stack under test</strong>: every line pins one repo to an exact git ref or version, so
+CI never re-resolves and never downgrades a component. Each test then:</p>
+<ul>
+<li>imports the spec vocabulary from <a href="../spec-tools-lib/"><code>ovos-spec-tools</code></a>, so a topic name is <em>provably spec-defined</em> rather than a magic string.</li>
+<li>drives and captures the live bus through <a href="https://github.com/OpenVoiceOS/ovoscope"><code>ovoscope</code></a> (see <a href="../ovoscope-overview/">Testing Skills</a>).</li>
+<li>asserts the spec-mandated behavior and records pass / <code>xfail</code> / fail.</li>
+</ul>
+<h2 id="coverage">Coverage<a class="headerlink" href="#coverage" title="Permanent link">&para;</a></h2>
+<p>All 20 specs on the architecture <code>dev</code> branch currently have
+conformance suites (SESSION-1 and SESSION-2 share one suite. INTENT-4 has both an
+orchestrator suite and a per-plugin registration-compliance suite). The
+authoritative spec→suite traceability matrix lives in the repo's
+<a href="https://github.com/OpenVoiceOS/ovos-test-harness/blob/dev/docs/coverage.md"><code>docs/coverage.md</code></a>.
+Documented conformance gaps are recorded as <code>xfail</code> entries and catalogued in
+<a href="https://github.com/OpenVoiceOS/ovos-test-harness/blob/dev/docs/known-gaps.md"><code>docs/known-gaps.md</code></a>.</p>
+<h2 id="pre-flighting-a-cross-repo-change">Pre-flighting a cross-repo change<a class="headerlink" href="#pre-flighting-a-cross-repo-change" title="Permanent link">&para;</a></h2>
+<p>To certify an unmerged combination,
+maintainers pin the candidate branches in <code>requirements.txt</code> and open a harness
+PR. CI then installs exactly that stack and runs the full conformance suite
+against it, flipping each ref to <code>@dev</code> as it merges. One structural limit: two
+branches of the <em>same</em> repo cannot both be installed, so pick one ref per repo.</p>
+<p>This is where an implementation is <strong>proven to conform</strong> to the merged
+architecture specs. It is the bridge between the prescriptive Markdown and the code
+that has to honour it.</p>
+<hr />
+<p><strong>Read next:</strong> <a href="../spec-tooling/">Specification Tooling</a> · <a href="../spec-tools-lib/">ovos-spec-tools</a>
+<strong>Related:</strong> <a href="../architecture-specs/">Formal Specifications</a> · <a href="../ovoscope-overview/">Testing Skills</a> · <a href="../bus-service/">MessageBus Service</a></p>
 
 
 
@@ -944,10 +1589,10 @@
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.path", "navigation.prune", "navigation.top", "navigation.tracking", "navigation.instant", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate"], "search": "../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.path", "navigation.prune", "navigation.top", "navigation.tracking", "navigation.instant", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate"], "search": "../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.fe8b6f2b.min.js"></script>
+      <script src="../assets/javascripts/bundle.fe8b6f2b.min.js"></script>
       
     
   </body>

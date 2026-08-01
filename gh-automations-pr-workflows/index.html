@@ -1806,6 +1806,69 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../gh-automations-coverage-security/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Coverage & Security Workflows
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../gh-automations-lint-docs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lint & Docs Workflows
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../gh-automations-pr-comment-scripts/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    PR Comment Pattern & Scripts
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -2364,7 +2427,7 @@
 <h1 id="reusable-workflow-reference-pr-workflows">Reusable Workflow Reference: PR Workflows<a class="headerlink" href="#reusable-workflow-reference-pr-workflows" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>This page documents the shared workflows that gate a pull request: build/install/test matrices, plugin (OPM) detection, ovoscope skill tests, license and repo-health checks, and the language-specific skill, locale, spec, intent-case, and TTS-intelligibility checks. Most post a section to the shared OVOS PR Checks comment (see the <a href="../gh-automations-quality-workflows/#pr-checks-comment-pattern">PR Checks Comment Pattern</a>). For version-bump and release workflows, see <a href="../gh-automations-release-workflows/">Release Workflows</a>. For lint, coverage, security scans, and notifications, see <a href="../gh-automations-quality-workflows/">Quality Workflows</a>. Start with the <a href="../gh-automations-overview/">gh-automations overview</a> for the big picture, or the full <a href="../gh-automations-workflows/">Workflow Reference index</a>.</p>
+<p>This page documents the shared workflows that gate a pull request: build/install/test matrices, plugin (OPM) detection, ovoscope skill tests, license and repo-health checks, and the language-specific skill, locale, spec, intent-case, and TTS-intelligibility checks. Most post a section to the shared OVOS PR Checks comment (see the <a href="../gh-automations-pr-comment-scripts/#pr-checks-comment-pattern">PR Checks Comment Pattern</a>). For version-bump and release workflows, see <a href="../gh-automations-release-workflows/">Release Workflows</a>. For lint, coverage, security scans, and notifications, see <a href="../gh-automations-quality-workflows/">Quality Workflows</a>. Start with the <a href="../gh-automations-overview/">gh-automations overview</a> for the big picture, or the full <a href="../gh-automations-workflows/">Workflow Reference index</a>.</p>
 </div>
 <p>All reusable workflows are in <code>.github/workflows/</code> and are called via:</p>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">OpenVoiceOS/gh-automations/.github/workflows/&lt;name&gt;.yml@dev</span>

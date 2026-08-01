@@ -687,6 +687,48 @@
   
   
     <li class="md-nav__item">
+      <a href="../spec-tools-lib/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ovos-spec-tools
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../spec-test-harness/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ovos-test-harness
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../maturity/" class="md-nav__link">
         
   
@@ -713,6 +755,69 @@
   
   <span class="md-ellipsis">
     MessageBus Service
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bus-reconnect/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Bus Restart & Reconnect
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bus-namespace-migration/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Bus Namespace Migration
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bus-recipes/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Bus Recipes
   </span>
   
 
@@ -892,10 +997,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_13" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_18" checked>
         
           
-          <label class="md-nav__link" for="__nav_3_13" id="__nav_3_13_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_3_18" id="__nav_3_18_label" tabindex="0">
             
   
   <span class="md-ellipsis">
@@ -906,8 +1011,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_13_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_3_13">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_18_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_18">
             <span class="md-nav__icon md-icon"></span>
             Sibling Services (own processes on the bus)
           </label>
@@ -1145,6 +1250,27 @@
   
   <span class="md-ellipsis">
     PHAL (Hardware Abstraction)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../phal-authoring/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Writing PHAL Plugins
   </span>
   
 
@@ -1608,7 +1734,7 @@
 <p><code>DinkumVoiceLoop.run()</code>: <a href="https://github.com/OpenVoiceOS/ovos-dinkum-listener/blob/dev/ovos_dinkum_listener/voice_loop/voice_loop.py"><code>ovos_dinkum_listener/voice_loop/voice_loop.py</code></a>. This is the per-chunk state machine that drives <a href="../vad-plugins/">VAD</a>, <a href="../wake-word-plugins/">Wake word</a> and <a href="../stt-plugins/">STT</a> via per-state handlers.</p>
 </li>
 <li>
-<p><code>OVOSDinkumVoiceService._stt_text()</code>: <a href="https://github.com/OpenVoiceOS/ovos-dinkum-listener/blob/dev/ovos_dinkum_listener/service.py"><code>ovos_dinkum_listener/service.py</code></a>. It emits the utterance message after <a href="../stt-plugins/">STT</a> returns text. The listener emits the spec topic <code>ovos.utterance.handle</code> (<code>SpecMessage.UTTERANCE</code>) directly, and <code>ovos-bus-client</code>'s <code>NamespaceTranslator</code> (see <a href="../bus-service/#namespace-migration">Bus Service</a>) also emits the legacy <code>recognizer_loop:utterance</code> alias for old consumers.</p>
+<p><code>OVOSDinkumVoiceService._stt_text()</code>: <a href="https://github.com/OpenVoiceOS/ovos-dinkum-listener/blob/dev/ovos_dinkum_listener/service.py"><code>ovos_dinkum_listener/service.py</code></a>. It emits the utterance message after <a href="../stt-plugins/">STT</a> returns text. The listener emits the spec topic <code>ovos.utterance.handle</code> (<code>SpecMessage.UTTERANCE</code>) directly, and <code>ovos-bus-client</code>'s <code>NamespaceTranslator</code> (see <a href="../bus-namespace-migration/#namespace-migration">Bus Service</a>) also emits the legacy <code>recognizer_loop:utterance</code> alias for old consumers.</p>
 </li>
 </ul>
 <hr />
@@ -1661,7 +1787,7 @@ advances chunk by chunk:</p>
 <p>The listener emits its activity on the OVOS <a href="../bus-service/">messagebus</a>. The most
 useful events for downstream services:</p>
 <p>Canonical (spec) names are shown first, with the legacy name in parentheses. The <code>ovos.listener.*</code> and <code>ovos.utterance.handle</code> names come from <a href="https://github.com/OpenVoiceOS/architecture/blob/dev/audio-in.md">OVOS-AUDIO-IN-1 §5-§6</a>. <code>ovos-dinkum-listener</code> emits the spec <code>ovos.*</code> topics directly for the record/awoken/utterance events (via <code>SpecMessage</code>).</p>
-<p>For those, <code>ovos-bus-client</code>'s <code>NamespaceTranslator</code> runs on every client with both directions on by default (see <a href="../bus-service/#namespace-migration">Bus Service</a>). Emitting a spec topic also emits its legacy alias, and vice versa, so subscribers can use either name.</p>
+<p>For those, <code>ovos-bus-client</code>'s <code>NamespaceTranslator</code> runs on every client with both directions on by default (see <a href="../bus-namespace-migration/#namespace-migration">Bus Service</a>). Emitting a spec topic also emits its legacy alias, and vice versa, so subscribers can use either name.</p>
 <p>The wake-word event (<code>recognizer_loop:wakeword</code>) is the exception: it has no spec counterpart in the rename map, so it travels under the legacy name only. See the <a href="../bus-events/#legacy-spec-migration">legacy ↔ spec migration table</a> for the full mapping.</p>
 <table>
 <thead>
@@ -1750,7 +1876,7 @@ transition.</p>
 <p>The listener publishes the transcribed command on the spec topic
 <code>ovos.utterance.handle</code>. <code>ovos-bus-client</code>'s namespace translator (on by default)
 also emits the legacy <code>recognizer_loop:utterance</code> alias, so subscribers can use
-either topic name. See <a href="../bus-service/#namespace-migration">Bus Service: Namespace migration</a>
+either topic name. See <a href="../bus-namespace-migration/#namespace-migration">Bus Service: Namespace migration</a>
 for how to turn that aliasing off once every consumer speaks the spec namespace.</p>
 </div>
 <h2 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">&para;</a></h2>

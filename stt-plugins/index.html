@@ -14,7 +14,7 @@
         <link rel="prev" href="../ww-verifier/">
       
       
-        <link rel="next" href="../tts-plugins/">
+        <link rel="next" href="../stt-plugins-reference/">
       
       
       <link rel="icon" href="https://github.com/OpenVoiceOS/ovos_assets/blob/master/Logo/ovos-logo-512.png?raw=true">
@@ -876,6 +876,27 @@
   
   
     <li class="md-nav__item">
+      <a href="../mic-plugin-development/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Microphone Plugin Development
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../vad-plugins/" class="md-nav__link">
         
   
@@ -902,6 +923,27 @@
   
   <span class="md-ellipsis">
     Wake Word
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../wake-word-plugin-development/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Wake Word Plugin Development
   </span>
   
 
@@ -993,10 +1035,70 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#stt-plugins-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      STT Plugins Reference
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#learn-more" class="md-nav__link">
+    <span class="md-ellipsis">
+      Learn more
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../stt-plugins-reference/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    STT Plugins Reference
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../stt-plugin-development/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    STT Plugin Development
+  </span>
+  
+
+      </a>
     </li>
   
 
@@ -1306,6 +1408,24 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#stt-plugins-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      STT Plugins Reference
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#learn-more" class="md-nav__link">
+    <span class="md-ellipsis">
+      Learn more
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1329,14 +1449,14 @@
 <p class="admonition-title">In a nutshell</p>
 <p>STT stands for <em>Speech-to-Text</em>: this is the part that listens to your spoken words and writes them down as text the assistant can read. It is the same idea as the dictation feature on a phone. Different STT plugins offer different trade-offs in speed, accuracy, and whether they run on your own device or in the cloud, so you can pick the one that suits you. See the <a href="../glossary/">Glossary</a> for related terms.</p>
 </div>
-<p>Writing a plugin instead of choosing one? Jump to <a href="#writing-your-own-stt-plugin">Writing your own</a>.</p>
+<p>Writing a plugin instead of choosing one? See <a href="../stt-plugin-development/">Writing an STT Plugin</a>.</p>
 <details class="info">
 <summary>Formal specification</summary>
 <p>STT sits inside the audio input service, specified by <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/audio-in.md">OVOS-AUDIO-IN-1: Audio Input Service</a></strong>: capture → audio-transformer chain → STT → utterance. The transcript is emitted on <code>ovos.utterance.handle</code> (<a href="https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md">OVOS-PIPELINE-1 §9.1</a>). See the <a href="../architecture-specs/">spec index</a>.</p>
 </details>
 <div class="admonition note">
 <p class="admonition-title">Audio format contract</p>
-<p>Everything upstream of an STT plugin, the <a href="../mic-plugins/#the-microphone-interface">microphone plugin</a> and any audio transformers, hands over raw PCM in a fixed shape: <strong>16 kHz sample rate, 16-bit samples, mono, little-endian</strong>, delivered in <strong>4096-byte chunks</strong> by default (the <code>Microphone</code> template's <code>sample_rate</code>/<code>sample_width</code>/<code>sample_channels</code>/<code>chunk_size</code> defaults). A batch <code>STT.execute()</code> plugin gets this bundled into a <code>speech_recognition.AudioData</code> object. A <code>StreamingSTT</code> plugin receives it chunk-by-chunk, still at this same format, unless a deployment explicitly reconfigures the microphone.</p>
+<p>Everything upstream of an STT plugin, the <a href="../mic-plugin-development/#the-microphone-interface">microphone plugin</a> and any audio transformers, hands over raw PCM in a fixed shape: <strong>16 kHz sample rate, 16-bit samples, mono, little-endian</strong>, delivered in <strong>4096-byte chunks</strong> by default (the <code>Microphone</code> template's <code>sample_rate</code>/<code>sample_width</code>/<code>sample_channels</code>/<code>chunk_size</code> defaults). A batch <code>STT.execute()</code> plugin gets this bundled into a <code>speech_recognition.AudioData</code> object. A <code>StreamingSTT</code> plugin receives it chunk-by-chunk, still at this same format, unless a deployment explicitly reconfigures the microphone.</p>
 <p>Neither the <code>STT</code> nor the <code>StreamingSTT</code> template resamples on the plugin's behalf. If the wrapped model expects a different native rate, converting the incoming 16 kHz PCM is the plugin's own job.</p>
 </div>
 <p>STT (Speech-to-Text) plugins convert spoken audio into text. They are the bridge
@@ -1351,7 +1471,7 @@ the compute budget for on-device recognition.</p>
 <p><code>ovos-stt-plugin-onnx-asr</code> is rated <strong>Beta</strong> while several alternatives are Stable.
 It is recommended here for its offline quality and footprint. Per the
 <a href="../maturity/">Maturity Scale</a>, maturity is not the same as a recommendation.</p>
-<p><strong>Footprint:</strong> as noted in the <a href="#ovos-stt-plugin-onnx-asr">plugin's own entry</a>, most models
+<p><strong>Footprint:</strong> as noted in the <a href="../stt-plugins-reference/#ovos-stt-plugin-onnx-asr">plugin's own entry</a>, most models
 in the <a href="https://huggingface.co/collections/OpenVoiceOS/stt-asr-onnx">OpenVoiceOS/stt-asr-onnx</a>
 collection ship both <code>fp32</code> and <code>int8</code> weights. Pick <code>int8</code> for the lower-RAM, lower-compute
 option on constrained hardware. Beyond quantization, footprint is mostly driven by model
@@ -1372,7 +1492,7 @@ Whisper-class one, independent of the plugin wrapping it.</p>
 </span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="p">}</span>
 </span></code></pre></div>
 <p>The roster below lists available plugins with a recommended starting configuration for each. This may differ from a plugin's built-in default, noted where relevant.</p>
-<h1 id="stt-plugins-reference">STT plugins Reference<a class="headerlink" href="#stt-plugins-reference" title="Permanent link">&para;</a></h1>
+<h2 id="stt-plugins-reference">STT Plugins Reference<a class="headerlink" href="#stt-plugins-reference" title="Permanent link">&para;</a></h2>
 <p>Code license is the SPDX license of the plugin's own repository. Where the plugin wraps a
 separately-licensed model, that is called out under "model".</p>
 <table>
@@ -1386,97 +1506,97 @@ separately-licensed model, that is called out under "model".</p>
 </thead>
 <tbody>
 <tr>
-<td><a href="#ovos-stt-plugin-wav2vec">ovos-stt-plugin-wav2vec</a></td>
+<td><a href="../stt-plugins-reference/#ovos-stt-plugin-wav2vec">ovos-stt-plugin-wav2vec</a></td>
 <td>OVOS plugin for <a href="https://ai.meta.com/blog/wav2vec-20-learning-the-structure-of-speech-from-raw-audio/">Wav2Vec2</a></td>
 <td>Apache-2.0 (model: see model card)</td>
 <td>Stable</td>
 </tr>
 <tr>
-<td><a href="#ovos-stt-plugin-azure">ovos-stt-plugin-azure</a></td>
+<td><a href="../stt-plugins-reference/#ovos-stt-plugin-azure">ovos-stt-plugin-azure</a></td>
 <td>Microsoft Azure cloud speech-to-text.</td>
 <td>Apache-2.0 (cloud service, separate Microsoft terms)</td>
 <td>Stable</td>
 </tr>
 <tr>
-<td><a href="#ovos-stt-plugin-chromium">ovos-stt-plugin-chromium</a></td>
+<td><a href="../stt-plugins-reference/#ovos-stt-plugin-chromium">ovos-stt-plugin-chromium</a></td>
 <td>Speech-to-text using the Google Chrome browser speech API.</td>
 <td>Apache-2.0 (cloud service, unofficial Google endpoint, separate Google terms)</td>
 <td>Stable</td>
 </tr>
 <tr>
-<td><a href="#ovos-stt-plugin-mms">ovos-stt-plugin-mms</a></td>
+<td><a href="../stt-plugins-reference/#ovos-stt-plugin-mms">ovos-stt-plugin-mms</a></td>
 <td>OVOS plugin for <a href="https://huggingface.co/docs/transformers/main/en/model_doc/mms">The Massively Multilingual Speech (MMS) project</a>. Warning: archived. MMS models also run under <a href="https://github.com/OpenVoiceOS/ovos-stt-plugin-wav2vec2">ovos-stt-plugin-wav2vec2</a>.</td>
 <td>Apache-2.0 (model: see model card)</td>
 <td>Deprecated</td>
 </tr>
 <tr>
-<td><a href="#ovos-stt-server-plugin">ovos-stt-server-plugin</a></td>
+<td><a href="../stt-plugins-reference/#ovos-stt-server-plugin">ovos-stt-server-plugin</a></td>
 <td>OpenVoiceOS companion plugin for <a href="https://github.com/OpenVoiceOS/ovos-stt-http-server">OpenVoiceOS STT Server</a></td>
 <td>Apache-2.0</td>
 <td>Stable</td>
 </tr>
 <tr>
-<td><a href="#ovos-stt-http-server">ovos-stt-http-server</a></td>
+<td><a href="../stt-plugins-reference/#ovos-stt-http-server">ovos-stt-http-server</a></td>
 <td>Turn any OVOS STT plugin into a micro service!</td>
 <td>Apache-2.0</td>
 <td>Stable</td>
 </tr>
 <tr>
-<td><a href="#ovos-stt-plugin-whisper">ovos-stt-plugin-whisper</a></td>
+<td><a href="../stt-plugins-reference/#ovos-stt-plugin-whisper">ovos-stt-plugin-whisper</a></td>
 <td>OpenVoiceOS STT plugin for <a href="https://github.com/guillaumekln/faster-whisper">Whisper</a>, using transformers library</td>
 <td>Apache-2.0 (code default model: <code>base</code>. Configure a larger model such as <a href="https://huggingface.co/openai/whisper-large-v3">openai/whisper-large-v3</a> for higher accuracy)</td>
 <td>Beta</td>
 </tr>
 <tr>
-<td><a href="#ovos-stt-plugin-whispercpp">ovos-stt-plugin-whispercpp</a></td>
+<td><a href="../stt-plugins-reference/#ovos-stt-plugin-whispercpp">ovos-stt-plugin-whispercpp</a></td>
 <td>OpenVoiceOS STT plugin for <a href="https://github.com/ggerganov/whisper.cpp">whispercpp</a></td>
 <td>Apache-2.0 (model: see model card)</td>
 <td>Stable</td>
 </tr>
 <tr>
-<td><a href="#ovos-stt-plugin-fasterwhisper">ovos-stt-plugin-fasterwhisper</a></td>
+<td><a href="../stt-plugins-reference/#ovos-stt-plugin-fasterwhisper">ovos-stt-plugin-fasterwhisper</a></td>
 <td>OpenVoiceOS STT plugin for <a href="https://github.com/guillaumekln/faster-whisper">Faster Whisper</a></td>
 <td>Apache-2.0 (code default model: <code>large-v3-turbo</code>)</td>
 <td>Stable</td>
 </tr>
 <tr>
-<td><a href="#ovos-stt-plugin-nemo">ovos-stt-plugin-nemo</a></td>
+<td><a href="../stt-plugins-reference/#ovos-stt-plugin-nemo">ovos-stt-plugin-nemo</a></td>
 <td>OpenVoiceOS STT plugin for <a href="https://docs.nvidia.com/nemo-framework/user-guide/latest/nemotoolkit/asr/models.html">Nemo</a>, GPU is <strong>strongly recommended</strong></td>
 <td>Apache-2.0 (model: see model card)</td>
 <td>Stable</td>
 </tr>
 <tr>
-<td><a href="#ovos-stt-plugin-whisper-lm">ovos-stt-plugin-whisper-lm</a></td>
+<td><a href="../stt-plugins-reference/#ovos-stt-plugin-whisper-lm">ovos-stt-plugin-whisper-lm</a></td>
 <td>OpenVoiceOS STT plugin for <a href="https://github.com/hitz-zentroa/whisper-lm-transformers">Whisper-LM-transformers</a>, KenLM and Large language model integration with Whisper ASR models implemented in Hugging Face library.</td>
 <td>Apache-2.0 (model: see model card)</td>
 <td>Stable</td>
 </tr>
 <tr>
-<td><a href="#ovos-stt-plugin-citrinet">ovos-stt-plugin-citrinet</a></td>
+<td><a href="../stt-plugins-reference/#ovos-stt-plugin-citrinet">ovos-stt-plugin-citrinet</a></td>
 <td>OpenVoiceOS STT plugin</td>
 <td>Apache-2.0 (model: see model card)</td>
 <td>Stable</td>
 </tr>
 <tr>
-<td><a href="#ovos-stt-plugin-nos">ovos-stt-plugin-nos</a></td>
+<td><a href="../stt-plugins-reference/#ovos-stt-plugin-nos">ovos-stt-plugin-nos</a></td>
 <td>Galician STT using Proxecto Nós wav2vec2 models. Warning: archived, superseded by <a href="https://github.com/OpenVoiceOS/ovos-stt-plugin-wav2vec2">ovos-stt-plugin-wav2vec2</a>.</td>
 <td>Apache-2.0 (model: see model card)</td>
 <td>Deprecated</td>
 </tr>
 <tr>
-<td><a href="#ovos-stt-plugin-hitz">ovos-stt-plugin-HiTZ</a></td>
+<td><a href="../stt-plugins-reference/#ovos-stt-plugin-hitz">ovos-stt-plugin-HiTZ</a></td>
 <td>OpenVoiceOS STT plugin for <strong>Basque</strong> models trained by <a href="https://huggingface.co/HiTZ">HiTZ</a>. Warning: archived, deprecated.</td>
 <td>see repo (no license file)</td>
 <td>Deprecated</td>
 </tr>
 <tr>
-<td><a href="#ovos-stt-plugin-vosk">ovos-stt-plugin-vosk</a></td>
+<td><a href="../stt-plugins-reference/#ovos-stt-plugin-vosk">ovos-stt-plugin-vosk</a></td>
 <td>Mycroft STT plugin for <a href="https://alphacephei.com/vosk/">Vosk</a></td>
 <td>Apache-2.0 (model: see model card)</td>
 <td>Stable</td>
 </tr>
 <tr>
-<td><a href="#ovos-stt-plugin-onnx-asr">ovos-stt-plugin-onnx-asr</a></td>
+<td><a href="../stt-plugins-reference/#ovos-stt-plugin-onnx-asr">ovos-stt-plugin-onnx-asr</a></td>
 <td>Runs <a href="https://github.com/istupakov/onnx-asr">onnx-asr</a> models (NeMo Parakeet/Canary, Whisper, wav2vec2, …) fully offline via ONNX Runtime, a strong default for on-device, offline recognition.</td>
 <td>Apache-2.0 (model: see model card)</td>
 <td>Beta</td>
@@ -1492,593 +1612,11 @@ The <strong>Maturity</strong> column reports repository health (age, activity, i
 A plugin can be <strong>Mature</strong> and still ship no license file. A plugin can be <strong>Stable</strong>
 with a permissive license but thin docs. Don't read one column as implying the other.</p>
 </div>
-<h2 id="ovos-stt-plugin-wav2vec">ovos-stt-plugin-wav2vec<a class="headerlink" href="#ovos-stt-plugin-wav2vec" title="Permanent link">&para;</a></h2>
-<ul>
-<li>
-<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-stt-plugin-wav2vec">OpenVoiceOS/ovos-stt-plugin-wav2vec</a> (aliased by
-  <a href="https://github.com/OpenVoiceOS/ovos-stt-plugin-wav2vec2">ovos-stt-plugin-wav2vec2</a>. A
-  separate GitHub repo that installs the same package and module id, <code>ovos-stt-plugin-wav2vec</code>.
-  the repo name differs but the entry point does not, so both resolve to the same plugin)</p>
-</li>
-<li>
-<p><strong>Description</strong>: OVOS plugin for <a href="https://ai.meta.com/blog/wav2vec-20-learning-the-structure-of-speech-from-raw-audio/">Wav2Vec2</a></p>
-</li>
-</ul>
-<h3 id="default-configuration">Default Configuration<a class="headerlink" href="#default-configuration" title="Permanent link">&para;</a></h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>  &quot;stt&quot;: {
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>    &quot;module&quot;: &quot;ovos-stt-plugin-wav2vec&quot;,
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>    &quot;ovos-stt-plugin-wav2vec&quot;: {
-</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>        &quot;model&quot;: &quot;proxectonos/Nos_ASR-wav2vec2-large-xlsr-53-gl-with-lm&quot;
-</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>    }
-</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>  }
-</span></code></pre></div>
-<p>There is no single hardcoded default model: the plugin picks a model from an internal
-per-language table (keyed by BCP-47 language code) unless <code>model</code> is set explicitly, and
-raises an error if the configured <code>lang</code> has no entry and no <code>model</code> is given. The
-<code>proxectonos/Nos_ASR-...</code> model above is only the entry for Galician (<code>gl</code>). Other
-languages resolve to different pretrained models.</p>
-<hr />
-<h2 id="ovos-stt-plugin-azure">ovos-stt-plugin-azure<a class="headerlink" href="#ovos-stt-plugin-azure" title="Permanent link">&para;</a></h2>
-<ul>
-<li>
-<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-stt-plugin-azure">OpenVoiceOS/ovos-stt-plugin-azure</a></p>
-</li>
-<li>
-<p><strong>Description</strong>: Microsoft Azure cloud speech-to-text.</p>
-</li>
-</ul>
-<hr />
-<h2 id="ovos-stt-plugin-chromium">ovos-stt-plugin-chromium<a class="headerlink" href="#ovos-stt-plugin-chromium" title="Permanent link">&para;</a></h2>
-<ul>
-<li>
-<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-stt-plugin-chromium">OpenVoiceOS/ovos-stt-plugin-chromium</a></p>
-</li>
-<li>
-<p><strong>Description</strong>: Speech-to-text using the Google Chrome browser speech API.</p>
-</li>
-</ul>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>This plugin talks to the same unofficial, undocumented endpoint used by the Chrome
-browser's speech recognition feature. It is not a published Google Cloud Speech-to-Text
-API with an API key. Google can change or revoke access to this endpoint at any time.</p>
-</div>
-<hr />
-<h2 id="ovos-stt-plugin-mms">ovos-stt-plugin-mms<a class="headerlink" href="#ovos-stt-plugin-mms" title="Permanent link">&para;</a></h2>
-<ul>
-<li>
-<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-stt-plugin-mms">OpenVoiceOS/ovos-stt-plugin-mms</a></p>
-</li>
-<li>
-<p><strong>Description</strong>: OVOS plugin for <a href="https://huggingface.co/docs/transformers/main/en/model_doc/mms">The Massively Multilingual Speech (MMS) project</a></p>
-</li>
-</ul>
-<h3 id="default-configuration_1">Default Configuration<a class="headerlink" href="#default-configuration_1" title="Permanent link">&para;</a></h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>&quot;stt&quot;: {
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>    &quot;module&quot;: &quot;ovos-stt-plugin-mms&quot;,
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>    &quot;ovos-stt-plugin-mms&quot;: {
-</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>      &quot;model&quot;: &quot;facebook/mms-1b-all&quot;
-</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>    }
-</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>}
-</span></code></pre></div>
-<hr />
-<h2 id="ovos-stt-server-plugin">ovos-stt-server-plugin<a class="headerlink" href="#ovos-stt-server-plugin" title="Permanent link">&para;</a></h2>
-<ul>
-<li>
-<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-stt-server-plugin">OpenVoiceOS/ovos-stt-server-plugin</a></p>
-</li>
-<li>
-<p><strong>Description</strong>: OpenVoiceOS companion plugin for <a href="https://github.com/OpenVoiceOS/ovos-stt-http-server">OpenVoiceOS STT Server</a></p>
-</li>
-</ul>
-<div class="admonition warning">
-<p class="admonition-title">Talks to a public community server by default</p>
-<p>Leaving <code>urls</code> unset falls back to a best-effort, publicly-run community STT server, not
-a private or guaranteed-available endpoint. Point it at your own self-hosted server (see
-<a href="../stt-server/#companion-plugin">stt-server</a>) if you need privacy or reliability.</p>
-</div>
-<h3 id="default-configuration_2">Default Configuration<a class="headerlink" href="#default-configuration_2" title="Permanent link">&para;</a></h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>  &quot;stt&quot;: {
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>    &quot;module&quot;: &quot;ovos-stt-plugin-server&quot;,
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>    &quot;ovos-stt-plugin-server&quot;: {
-</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>      &quot;urls&quot;: [&quot;https://0.0.0.0:8080/stt&quot;],
-</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>      &quot;verify_ssl&quot;: true
-</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>    },
-</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a> }
-</span></code></pre></div>
-<p>Leaving <code>urls</code> unset falls back to public community-run STT servers rather than failing. See
-<a href="../stt-server/#companion-plugin">stt-server</a> for a self-hosted alternative, or pick a fully
-offline engine from the table above.</p>
-<div class="admonition warning">
-<p class="admonition-title">Community servers are best-effort demos</p>
-<p>The public OVOS servers exist for easy onboarding and demos only. They are best-effort,
-not optimized, carry no uptime guarantees, and may vanish at any time. OVOS will be slow
-and unreliable if you rely on them. The official recommendation is to self-host — or skip
-servers entirely: fully offline plugins exist for everything.</p>
-</div>
-<hr />
-<h2 id="ovos-stt-http-server">ovos-stt-http-server<a class="headerlink" href="#ovos-stt-http-server" title="Permanent link">&para;</a></h2>
-<ul>
-<li>
-<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-stt-http-server">OpenVoiceOS/ovos-stt-http-server</a></p>
-</li>
-<li>
-<p><strong>Description</strong>: Turn any OVOS STT plugin into a micro service!</p>
-</li>
-</ul>
-<hr />
-<h2 id="ovos-stt-plugin-whisper">ovos-stt-plugin-whisper<a class="headerlink" href="#ovos-stt-plugin-whisper" title="Permanent link">&para;</a></h2>
-<ul>
-<li>
-<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-stt-plugin-whisper">OpenVoiceOS/ovos-stt-plugin-whisper</a></p>
-</li>
-<li>
-<p><strong>Description</strong>: OpenVoiceOS STT plugin for <a href="https://github.com/guillaumekln/faster-whisper">Whisper</a>, using transformers library</p>
-</li>
-</ul>
-<h3 id="default-configuration_3">Default Configuration<a class="headerlink" href="#default-configuration_3" title="Permanent link">&para;</a></h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>  &quot;stt&quot;: {
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>    &quot;module&quot;: &quot;ovos-stt-plugin-whisper&quot;,
-</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>    &quot;ovos-stt-plugin-whisper&quot;: {
-</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>        &quot;model&quot;: &quot;openai/whisper-large-v3&quot;,
-</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>        &quot;use_cuda&quot;: true
-</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>    }
-</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>  }
-</span></code></pre></div>
-<hr />
-<h2 id="ovos-stt-plugin-whispercpp">ovos-stt-plugin-whispercpp<a class="headerlink" href="#ovos-stt-plugin-whispercpp" title="Permanent link">&para;</a></h2>
-<ul>
-<li>
-<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-stt-plugin-whispercpp">OpenVoiceOS/ovos-stt-plugin-whispercpp</a></p>
-</li>
-<li>
-<p><strong>Description</strong>: OpenVoiceOS STT plugin for <a href="https://github.com/ggerganov/whisper.cpp">whispercpp</a></p>
-</li>
-</ul>
-<h3 id="default-configuration_4">Default Configuration<a class="headerlink" href="#default-configuration_4" title="Permanent link">&para;</a></h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>  &quot;stt&quot;: {
-</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>    &quot;module&quot;: &quot;ovos-stt-plugin-whispercpp&quot;,
-</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>    &quot;ovos-stt-plugin-whispercpp&quot;: {
-</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>        &quot;model&quot;: &quot;tiny&quot;
-</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>    }
-</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>  }
-</span></code></pre></div>
-<hr />
-<h2 id="ovos-stt-plugin-fasterwhisper">ovos-stt-plugin-fasterwhisper<a class="headerlink" href="#ovos-stt-plugin-fasterwhisper" title="Permanent link">&para;</a></h2>
-<ul>
-<li>
-<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-stt-plugin-fasterwhisper">OpenVoiceOS/ovos-stt-plugin-fasterwhisper</a></p>
-</li>
-<li>
-<p><strong>Description</strong>: OpenVoiceOS STT plugin for <a href="https://github.com/guillaumekln/faster-whisper">Faster Whisper</a></p>
-</li>
-</ul>
-<p>CTranslate2 also supports <code>int8</code> / <code>int8_float16</code> compute types for lower-RAM CPU deployments. Change <code>compute_type</code> to use them.</p>
-<h3 id="default-configuration_5">Default Configuration<a class="headerlink" href="#default-configuration_5" title="Permanent link">&para;</a></h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>  &quot;stt&quot;: {
-</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>    &quot;module&quot;: &quot;ovos-stt-plugin-fasterwhisper&quot;,
-</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>    &quot;ovos-stt-plugin-fasterwhisper&quot;: {
-</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>        &quot;model&quot;: &quot;large-v3&quot;,
-</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>        &quot;use_cuda&quot;: true,
-</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>        &quot;compute_type&quot;: &quot;float16&quot;,
-</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>        &quot;beam_size&quot;: 5,
-</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>        &quot;cpu_threads&quot;: 4
-</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>    }
-</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>  }
-</span></code></pre></div>
-<hr />
-<h2 id="ovos-stt-plugin-nemo">ovos-stt-plugin-nemo<a class="headerlink" href="#ovos-stt-plugin-nemo" title="Permanent link">&para;</a></h2>
-<ul>
-<li>
-<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-stt-plugin-nemo">OpenVoiceOS/ovos-stt-plugin-nemo</a></p>
-</li>
-<li>
-<p><strong>Description</strong>: OpenVoiceOS STT plugin for <a href="https://docs.nvidia.com/nemo-framework/user-guide/latest/nemotoolkit/asr/models.html">Nemo</a>, GPU is <strong>strongly recommended</strong></p>
-</li>
-</ul>
-<p>CPU is the shipped default (<code>use_cuda: false</code>). Set <code>use_cuda: true</code> for acceptable throughput on supported GPUs. The GPU recommendation is about speed, not a required default.</p>
-<h3 id="default-configuration_6">Default Configuration<a class="headerlink" href="#default-configuration_6" title="Permanent link">&para;</a></h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>  &quot;stt&quot;: {
-</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>    &quot;module&quot;: &quot;ovos-stt-plugin-nemo&quot;,
-</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>    &quot;ovos-stt-plugin-nemo&quot;: {
-</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>        &quot;model&quot;: &quot;stt_eu_conformer_ctc_large&quot;,
-</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>        &quot;use_cuda&quot;: false
-</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>    }
-</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>  }
-</span></code></pre></div>
-<hr />
-<h2 id="ovos-stt-plugin-whisper-lm">ovos-stt-plugin-whisper-lm<a class="headerlink" href="#ovos-stt-plugin-whisper-lm" title="Permanent link">&para;</a></h2>
-<ul>
-<li>
-<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-stt-plugin-whisper-lm">OpenVoiceOS/ovos-stt-plugin-whisper-lm</a></p>
-</li>
-<li>
-<p><strong>Description</strong>: OpenVoiceOS STT plugin for <a href="https://github.com/hitz-zentroa/whisper-lm-transformers">Whisper-LM-transformers</a>, KenLM and Large language model integration with Whisper ASR models implemented in Hugging Face library.</p>
-</li>
-</ul>
-<h3 id="default-configuration_7">Default Configuration<a class="headerlink" href="#default-configuration_7" title="Permanent link">&para;</a></h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>  &quot;stt&quot;: {
-</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>    &quot;module&quot;: &quot;ovos-stt-plugin-whisper-lm&quot;,
-</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>    &quot;ovos-stt-plugin-whisper-lm&quot;: {
-</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>        &quot;model&quot;: &quot;zuazo/whisper-medium-eu&quot;,
-</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>        &quot;lm_repo&quot;: &quot;HiTZ/whisper-lm-ngrams&quot;,
-</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>        &quot;lm_model&quot;: &quot;5gram-eu.bin&quot;,
-</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>        &quot;lm_alpha&quot;: 0.33582369,
-</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>        &quot;lm_beta&quot;: 0.68825565,
-</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>        &quot;use_cuda&quot;: true
-</span><span id="__span-9-10"><a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a>    }
-</span><span id="__span-9-11"><a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a>  }
-</span></code></pre></div>
-<hr />
-<h2 id="ovos-stt-plugin-citrinet">ovos-stt-plugin-citrinet<a class="headerlink" href="#ovos-stt-plugin-citrinet" title="Permanent link">&para;</a></h2>
-<ul>
-<li>
-<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-stt-plugin-citrinet">OpenVoiceOS/ovos-stt-plugin-citrinet</a></p>
-</li>
-<li>
-<p><strong>Description</strong>: OpenVoiceOS STT plugin</p>
-</li>
-</ul>
-<h3 id="default-configuration_8">Default Configuration<a class="headerlink" href="#default-configuration_8" title="Permanent link">&para;</a></h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>  &quot;stt&quot;: {
-</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>    &quot;module&quot;: &quot;ovos-stt-plugin-citrinet&quot;,
-</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>    &quot;ovos-stt-plugin-citrinet&quot;: {
-</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>      &quot;lang&quot;: &quot;ca&quot;
-</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>    }
-</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>  }
-</span></code></pre></div>
-<hr />
-<h2 id="ovos-stt-plugin-nos">ovos-stt-plugin-nos<a class="headerlink" href="#ovos-stt-plugin-nos" title="Permanent link">&para;</a></h2>
-<ul>
-<li>
-<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-stt-plugin-nos">OpenVoiceOS/ovos-stt-plugin-nos</a></p>
-</li>
-<li>
-<p><strong>Description</strong>: Galician STT using <a href="https://github.com/proxectonos">Proxecto Nós</a> wav2vec2 models. Warning: archived. Superseded by <a href="https://github.com/OpenVoiceOS/ovos-stt-plugin-wav2vec2">ovos-stt-plugin-wav2vec2</a>.</p>
-</li>
-</ul>
-<h3 id="default-configuration_9">Default Configuration<a class="headerlink" href="#default-configuration_9" title="Permanent link">&para;</a></h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>&quot;stt&quot;: {
-</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>    &quot;module&quot;: &quot;ovos-stt-plugin-nos&quot;
-</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>}
-</span></code></pre></div>
-<hr />
-<h2 id="ovos-stt-plugin-hitz">ovos-stt-plugin-HiTZ<a class="headerlink" href="#ovos-stt-plugin-hitz" title="Permanent link">&para;</a></h2>
-<ul>
-<li>
-<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-stt-plugin-HiTZ">OpenVoiceOS/ovos-stt-plugin-HiTZ</a></p>
-</li>
-<li>
-<p><strong>Description</strong>: OpenVoiceOS STT plugin for <strong>Basque</strong> models trained by <a href="https://huggingface.co/HiTZ">HiTZ</a></p>
-</li>
-</ul>
-<h3 id="default-configuration_10">Default Configuration<a class="headerlink" href="#default-configuration_10" title="Permanent link">&para;</a></h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>  &quot;stt&quot;: {
-</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>    &quot;module&quot;: &quot;ovos-stt-plugin-HiTZ&quot;,
-</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>    &quot;ovos-stt-plugin-HiTZ&quot;: {
-</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>        &quot;model&quot;: &quot;stt_eu_conformer_transducer_large&quot;
-</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>    }
-</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>  }
-</span></code></pre></div>
-<hr />
-<h2 id="ovos-stt-plugin-vosk">ovos-stt-plugin-vosk<a class="headerlink" href="#ovos-stt-plugin-vosk" title="Permanent link">&para;</a></h2>
-<ul>
-<li>
-<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk">OpenVoiceOS/ovos-stt-plugin-vosk</a></p>
-</li>
-<li>
-<p><strong>Description</strong>: Mycroft STT plugin for <a href="https://alphacephei.com/vosk/">Vosk</a></p>
-</li>
-</ul>
-<h3 id="default-configuration_11">Default Configuration<a class="headerlink" href="#default-configuration_11" title="Permanent link">&para;</a></h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>  &quot;stt&quot;: {
-</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>    &quot;module&quot;: &quot;ovos-stt-plugin-vosk&quot;,
-</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>    &quot;ovos-stt-plugin-vosk&quot;: {
-</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>        &quot;model&quot;: &quot;/path/to/unzipped/model/folder&quot;
-</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>    }
-</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>  }
-</span></code></pre></div>
-<hr />
-<h2 id="ovos-stt-plugin-onnx-asr">ovos-stt-plugin-onnx-asr<a class="headerlink" href="#ovos-stt-plugin-onnx-asr" title="Permanent link">&para;</a></h2>
-<ul>
-<li>
-<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-stt-plugin-onnx-asr">OpenVoiceOS/ovos-stt-plugin-onnx-asr</a></p>
-</li>
-<li>
-<p><strong>Description</strong>: Runs <a href="https://github.com/istupakov/onnx-asr">onnx-asr</a> models via ONNX Runtime with no PyTorch/transformers dependency. Inference is fully offline. Models are downloaded from Hugging Face on first load, so it runs offline <strong>after the model has been fetched once</strong> (there is currently no plugin-level option to pin a purely-local model directory). Supports NeMo Parakeet and Canary, Whisper, and wav2vec2 model families.</p>
-</li>
-</ul>
-<h3 id="recommended-configuration">Recommended Configuration<a class="headerlink" href="#recommended-configuration" title="Permanent link">&para;</a></h3>
-<p>If <code>model</code> is omitted, the plugin loads its <strong>built-in default <code>nemo-canary-1b-v2</code></strong>, a ~1B-parameter model with strong accuracy but a heavier footprint. For typical offline devices we recommend setting the lighter <code>nemo-parakeet-tdt-0.6b-v3</code> explicitly:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>  &quot;stt&quot;: {
-</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>    &quot;module&quot;: &quot;ovos-stt-plugin-onnx-asr&quot;,
-</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>    &quot;ovos-stt-plugin-onnx-asr&quot;: {
-</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>        &quot;model&quot;: &quot;nemo-parakeet-tdt-0.6b-v3&quot;
-</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>    }
-</span><span id="__span-14-6"><a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a>  }
-</span></code></pre></div>
-<table>
-<thead>
-<tr>
-<th>Config key</th>
-<th>Default</th>
-<th>Effect</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>model</code></td>
-<td><code>nemo-canary-1b-v2</code></td>
-<td>Built-in alias or any Hugging Face ONNX ASR repo id</td>
-</tr>
-<tr>
-<td><code>quantization</code></td>
-<td>unset</td>
-<td>Set <code>"int8"</code> to load int8 weights where a model ships them (smaller/faster)</td>
-</tr>
-<tr>
-<td><code>use_cuda</code></td>
-<td><code>false</code></td>
-<td>Select the CUDA execution provider (with a CPU fallback)</td>
-</tr>
-<tr>
-<td><code>providers</code></td>
-<td>unset</td>
-<td>Explicit list of onnxruntime execution providers, takes precedence over <code>use_cuda</code></td>
-</tr>
-</tbody>
-</table>
-<div class="admonition note">
-<p class="admonition-title">Language handling is model-family-gated</p>
-<p>The configured/utterance language is only passed to the ASR call for <strong>Whisper</strong> and <strong>Canary</strong> (NeMo Conformer AED) families. Other families (Parakeet, GigaAM, Vosk, wav2vec2, T-one) ignore <code>lang</code>. For those, pick a language-specific model instead of relying on a <code>lang</code> setting to steer a multilingual one.</p>
-</div>
-<p>Besides the built-in aliases and the <code>onnx-asr</code> repository's own model hub, the plugin loads any repo id from the <a href="https://huggingface.co/collections/OpenVoiceOS/stt-asr-onnx">OpenVoiceOS/stt-asr-onnx</a> collection. This collection holds curated single-language and regional ONNX conversions of NeMo Conformer/Parakeet and Whisper checkpoints, grouped roughly by family: AI4Bharat/Vaani models for Indian languages, NVIDIA Conformer/Parakeet models for major European languages (plus Kabyle, Belarusian, Esperanto, Kinyarwanda), Iberian-language Conformer models, and per-language Whisper finetunes. Most ship both fp32 and int8 weights (<code>quantization: "int8"</code> works). A few large models are fp32-only. See the collection itself for the exhaustive, current list. It grows independently of this plugin's release cycle.</p>
-<hr />
-<h2 id="writing-your-own-stt-plugin">Writing your own STT plugin<a class="headerlink" href="#writing-your-own-stt-plugin" title="Permanent link">&para;</a></h2>
-<h3 id="stt"><code>STT</code><a class="headerlink" href="#stt" title="Permanent link">&para;</a></h3>
-<p>The base STT, this handles the audio in "batch mode" taking a complete audio file, and returning the complete transcription.</p>
-<p>Each STT plugin class needs to define the <code>execute()</code> method taking two arguments:</p>
-<ul>
-<li>
-<p><code>audio</code> <span class="arithmatex">\([AudioData](https://github.com/Uberi/speech_recognition/blob/master/reference/library-reference.rst#audiodataframe_data-bytes-sample_rate-int-sample_width-int---audiodata) object\)</span> - the audio data to be transcribed.  </p>
-</li>
-<li>
-<p><code>language</code> <span class="arithmatex">\(str\)</span> - <em>optional</em> - the BCP-47 language code. When omitted, the plugin uses its
-  configured or detected language</p>
-</li>
-</ul>
-<p>The bare minimum STT class will look something like</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="kn">from</span> <span class="nn">ovos_plugin_manager.templates.stt</span> <span class="kn">import</span> <span class="n">STT</span>
-</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>
-</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="k">class</span> <span class="nc">MySTT</span><span class="p">(</span><span class="n">STT</span><span class="p">):</span>
-</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>    <span class="k">def</span> <span class="nf">execute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">audio</span><span class="p">,</span> <span class="n">language</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-</span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a>        <span class="c1"># Handle audio data and return transcribed text</span>
-</span><span id="__span-15-6"><a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a>        <span class="p">[</span><span class="o">...</span><span class="p">]</span>
-</span><span id="__span-15-7"><a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a>        <span class="k">return</span> <span class="n">text</span>
-</span></code></pre></div>
-<h4 id="n-best-hypotheses-transcribe">N-best hypotheses: <code>transcribe()</code><a class="headerlink" href="#n-best-hypotheses-transcribe" title="Permanent link">&para;</a></h4>
-<p><code>execute()</code> returns a single best string. The richer method is <code>transcribe(audio, lang=None)</code>,
-which returns a <strong>list of <code>(transcript, confidence)</code> tuples</strong>, confidence a float from <code>0.0</code> to <code>1.0</code>.
-The template implements it for you as <code>[(self.execute(audio, lang), 1.0)]</code>, so a plugin that
-only knows its single best answer needs to implement nothing extra.</p>
-<p>If the wrapped engine can produce several hypotheses with scores, <strong>override <code>transcribe()</code></strong>.
-It is the preferred entry point, and consumers that rescore or disambiguate between
-candidates read it. <code>execute()</code> then remains the single-best convenience wrapper.</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="k">class</span> <span class="nc">MySTT</span><span class="p">(</span><span class="n">STT</span><span class="p">):</span>
-</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>    <span class="k">def</span> <span class="nf">execute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">audio</span><span class="p">,</span> <span class="n">language</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">transcribe</span><span class="p">(</span><span class="n">audio</span><span class="p">,</span> <span class="n">language</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
-</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a>
-</span><span id="__span-16-5"><a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>    <span class="k">def</span> <span class="nf">transcribe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">audio</span><span class="p">,</span> <span class="n">lang</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-</span><span id="__span-16-6"><a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a>        <span class="c1"># return hypotheses best-first</span>
-</span><span id="__span-16-7"><a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a>        <span class="k">return</span> <span class="p">[(</span><span class="s2">&quot;turn on the lights&quot;</span><span class="p">,</span> <span class="mf">0.91</span><span class="p">),</span>
-</span><span id="__span-16-8"><a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a>                <span class="p">(</span><span class="s2">&quot;turn on the light&quot;</span><span class="p">,</span> <span class="mf">0.62</span><span class="p">)]</span>
-</span></code></pre></div>
-<h4 id="language-detection">Language detection<a class="headerlink" href="#language-detection" title="Permanent link">&para;</a></h4>
-<p>An STT plugin can be paired with an audio language detector. The audio service calls
-<code>bind(detector)</code> to hand the plugin an <code>AudioLanguageDetector</code>. The plugin then exposes:</p>
-<ul>
-<li>
-<p><code>detect_language(audio, valid_langs=None)</code> → <code>(lang, confidence)</code>. It delegates to the bound
-  detector, defaulting <code>valid_langs</code> to the plugin's own <code>available_languages</code>. With no detector
-  bound it raises <code>NotImplementedError</code>. Language detection is opt-in per deployment.</p>
-</li>
-<li>
-<p><code>transcribe(audio, lang="auto")</code>. The <code>"auto"</code> sentinel runs <code>detect_language()</code> first and
-  transcribes in whatever it returns. If detection fails, the plugin falls back to <code>self.lang</code>
-  and transcribes anyway, so <code>"auto"</code> never turns a detector problem into a failed
-  transcription.</p>
-</li>
-</ul>
-<h3 id="streamingstt"><code>StreamingSTT</code><a class="headerlink" href="#streamingstt" title="Permanent link">&para;</a></h3>
-<p>A more advanced STT class for streaming data to the STT. This will receive chunks of audio data as they become available and they are streamed to an STT engine.</p>
-<p>The plugin author needs to implement the <code>create_streaming_thread()</code> method creating a thread for handling data sent through <code>self.queue</code>. </p>
-<p>The thread this method creates should be based on the <code>StreamThread</code> class. Its abstract <code>handle_audio_stream(audio, language)</code> method also needs to be implemented. It receives a generator of audio chunks and should set <code>self.text</code> to the transcript. <code>finalize()</code> returns that stored text once the stream ends.</p>
-<h4 id="chunk-semantics">Chunk semantics<a class="headerlink" href="#chunk-semantics" title="Permanent link">&para;</a></h4>
-<pre class="mermaid"><code>sequenceDiagram
-    participant Mic as Mic thread
-    participant STT as StreamingSTT
-    participant Thread as StreamThread
-    Mic-&gt;&gt;STT: stream_start(language)
-    STT-&gt;&gt;Thread: create_streaming_thread()
-    loop each captured chunk
-        Mic-&gt;&gt;STT: stream_data(chunk)
-        STT-&gt;&gt;Thread: queue.put(chunk)
-        Thread-&gt;&gt;Thread: handle_audio_stream(audio, language)
-    end
-    Mic-&gt;&gt;STT: stream_stop()
-    STT-&gt;&gt;Thread: queue.put(None)
-    Thread--&gt;&gt;STT: finalize() returns self.text</code></pre>
-<p><em>Diagram:</em> The sequence starts with the mic thread calling stream_start and ends with the stream thread returning finalize() text, and it loops over each captured audio chunk between those two points.</p>
-<p>Audio arrives synchronously per chunk: <code>stream_data()</code> is called once per captured
-chunk on the mic thread, so it must return well under the per-chunk time budget
-(the same real-time cadence constraint a wake-word plugin's <code>update(chunk)</code> runs
-under. See <a href="../wake-word-plugins/#key-methods">Wake-word Plugins: Key Methods</a>). Do any
-slow work (network calls, heavy inference) on the <code>StreamThread</code> this class
-manages, not inline in <code>stream_data()</code>.</p>
-<p><code>StreamingSTT</code> runs the streaming work on a background thread, fed through a queue:</p>
-<ul>
-<li><code>stream_start(language=None)</code> creates a fresh <code>Queue</code>, builds a <code>StreamThread</code> via <code>create_streaming_thread()</code>, and starts it.</li>
-<li>Each call to <code>stream_data(chunk)</code> puts one raw PCM <code>bytes</code> chunk (16 kHz/16-bit/mono, <code>chunk_size</code>-sized, see the audio format contract above) onto that queue.</li>
-<li>The <code>StreamThread</code>'s <code>run()</code> calls your <code>handle_audio_stream(audio, language)</code> with <code>audio</code> as a <strong>generator</strong> that yields chunks off the queue until a <code>None</code> sentinel appears. Your implementation should loop over it (e.g. <code>for chunk in audio:</code>) and feed each chunk to the underlying engine, setting <code>self.text</code> as partial/final results arrive.</li>
-<li><code>stream_stop()</code> pushes the <code>None</code> sentinel, joins the thread, and calls <code>finalize()</code> on it to retrieve the stored <code>self.text</code> as the final transcript. This is also what <code>execute()</code> returns for a <code>StreamingSTT</code> plugin.</li>
-</ul>
-<p>A complete minimal streaming plugin:</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="kn">from</span> <span class="nn">queue</span> <span class="kn">import</span> <span class="n">Queue</span>
-</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="kn">from</span> <span class="nn">threading</span> <span class="kn">import</span> <span class="n">Thread</span>
-</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="kn">from</span> <span class="nn">ovos_plugin_manager.templates.stt</span> <span class="kn">import</span> <span class="n">StreamingSTT</span><span class="p">,</span> <span class="n">StreamThread</span>
-</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a>
-</span><span id="__span-17-5"><a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a>
-</span><span id="__span-17-6"><a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a><span class="k">class</span> <span class="nc">MyStreamThread</span><span class="p">(</span><span class="n">StreamThread</span><span class="p">):</span>
-</span><span id="__span-17-7"><a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">queue</span><span class="p">:</span> <span class="n">Queue</span><span class="p">,</span> <span class="n">language</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">engine</span><span class="p">):</span>
-</span><span id="__span-17-8"><a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">queue</span><span class="p">,</span> <span class="n">language</span><span class="p">)</span>
-</span><span id="__span-17-9"><a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">engine</span> <span class="o">=</span> <span class="n">engine</span>
-</span><span id="__span-17-10"><a id="__codelineno-17-10" name="__codelineno-17-10" href="#__codelineno-17-10"></a>
-</span><span id="__span-17-11"><a id="__codelineno-17-11" name="__codelineno-17-11" href="#__codelineno-17-11"></a>    <span class="k">def</span> <span class="nf">handle_audio_stream</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">audio</span><span class="p">,</span> <span class="n">language</span><span class="p">):</span>
-</span><span id="__span-17-12"><a id="__codelineno-17-12" name="__codelineno-17-12" href="#__codelineno-17-12"></a>        <span class="c1"># `audio` is a generator of raw PCM byte chunks; `self.queue.get()`</span>
-</span><span id="__span-17-13"><a id="__codelineno-17-13" name="__codelineno-17-13" href="#__codelineno-17-13"></a>        <span class="c1"># returns None once the caller closes the stream.</span>
-</span><span id="__span-17-14"><a id="__codelineno-17-14" name="__codelineno-17-14" href="#__codelineno-17-14"></a>        <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">audio</span><span class="p">:</span>
-</span><span id="__span-17-15"><a id="__codelineno-17-15" name="__codelineno-17-15" href="#__codelineno-17-15"></a>            <span class="n">partial</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">feed</span><span class="p">(</span><span class="n">chunk</span><span class="p">,</span> <span class="n">language</span><span class="p">)</span>
-</span><span id="__span-17-16"><a id="__codelineno-17-16" name="__codelineno-17-16" href="#__codelineno-17-16"></a>            <span class="k">if</span> <span class="n">partial</span><span class="p">:</span>
-</span><span id="__span-17-17"><a id="__codelineno-17-17" name="__codelineno-17-17" href="#__codelineno-17-17"></a>                <span class="bp">self</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">partial</span>
-</span><span id="__span-17-18"><a id="__codelineno-17-18" name="__codelineno-17-18" href="#__codelineno-17-18"></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">text</span>
-</span><span id="__span-17-19"><a id="__codelineno-17-19" name="__codelineno-17-19" href="#__codelineno-17-19"></a>
-</span><span id="__span-17-20"><a id="__codelineno-17-20" name="__codelineno-17-20" href="#__codelineno-17-20"></a>
-</span><span id="__span-17-21"><a id="__codelineno-17-21" name="__codelineno-17-21" href="#__codelineno-17-21"></a><span class="k">class</span> <span class="nc">MyStreamingSTT</span><span class="p">(</span><span class="n">StreamingSTT</span><span class="p">):</span>
-</span><span id="__span-17-22"><a id="__codelineno-17-22" name="__codelineno-17-22" href="#__codelineno-17-22"></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-</span><span id="__span-17-23"><a id="__codelineno-17-23" name="__codelineno-17-23" href="#__codelineno-17-23"></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-</span><span id="__span-17-24"><a id="__codelineno-17-24" name="__codelineno-17-24" href="#__codelineno-17-24"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">engine</span> <span class="o">=</span> <span class="n">MyStreamingEngine</span><span class="p">()</span>
-</span><span id="__span-17-25"><a id="__codelineno-17-25" name="__codelineno-17-25" href="#__codelineno-17-25"></a>
-</span><span id="__span-17-26"><a id="__codelineno-17-26" name="__codelineno-17-26" href="#__codelineno-17-26"></a>    <span class="k">def</span> <span class="nf">create_streaming_thread</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="__span-17-27"><a id="__codelineno-17-27" name="__codelineno-17-27" href="#__codelineno-17-27"></a>        <span class="k">return</span> <span class="n">MyStreamThread</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">queue</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">lang</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="p">)</span>
-</span><span id="__span-17-28"><a id="__codelineno-17-28" name="__codelineno-17-28" href="#__codelineno-17-28"></a>
-</span><span id="__span-17-29"><a id="__codelineno-17-29" name="__codelineno-17-29" href="#__codelineno-17-29"></a>    <span class="nd">@property</span>
-</span><span id="__span-17-30"><a id="__codelineno-17-30" name="__codelineno-17-30" href="#__codelineno-17-30"></a>    <span class="k">def</span> <span class="nf">available_languages</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="__span-17-31"><a id="__codelineno-17-31" name="__codelineno-17-31" href="#__codelineno-17-31"></a>        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;en-us&quot;</span><span class="p">}</span>
-</span></code></pre></div>
-<h3 id="entry-point-and-a-minimal-working-plugin">Entry point and a minimal working plugin<a class="headerlink" href="#entry-point-and-a-minimal-working-plugin" title="Permanent link">&para;</a></h3>
-<p>Project layout:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>ovos-stt-plugin-mymodel/
-</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>├── pyproject.toml
-</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>└── ovos_stt_plugin_mymodel/
-</span><span id="__span-18-4"><a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a>    └── __init__.py
-</span></code></pre></div>
-<p><code>ovos_stt_plugin_mymodel/__init__.py</code>. <code>available_languages</code> is a <code>classproperty</code> on the
-base class, so a plugin overrides it the same way, not as a plain instance <code>@property</code>:</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="kn">from</span> <span class="nn">ovos_utils</span> <span class="kn">import</span> <span class="n">classproperty</span>
-</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="kn">from</span> <span class="nn">ovos_plugin_manager.templates.stt</span> <span class="kn">import</span> <span class="n">STT</span>
-</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>
-</span><span id="__span-19-4"><a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a>
-</span><span id="__span-19-5"><a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a><span class="k">class</span> <span class="nc">MySTTPlugin</span><span class="p">(</span><span class="n">STT</span><span class="p">):</span>
-</span><span id="__span-19-6"><a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-</span><span id="__span-19-7"><a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-</span><span id="__span-19-8"><a id="__codelineno-19-8" name="__codelineno-19-8" href="#__codelineno-19-8"></a>        <span class="c1"># read config settings for your plugin</span>
-</span><span id="__span-19-9"><a id="__codelineno-19-9" name="__codelineno-19-9" href="#__codelineno-19-9"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">lm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;language-model&quot;</span><span class="p">)</span>
-</span><span id="__span-19-10"><a id="__codelineno-19-10" name="__codelineno-19-10" href="#__codelineno-19-10"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">hmm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;acoustic-model&quot;</span><span class="p">)</span>
-</span><span id="__span-19-11"><a id="__codelineno-19-11" name="__codelineno-19-11" href="#__codelineno-19-11"></a>
-</span><span id="__span-19-12"><a id="__codelineno-19-12" name="__codelineno-19-12" href="#__codelineno-19-12"></a>    <span class="k">def</span> <span class="nf">execute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">audio</span><span class="p">,</span> <span class="n">language</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-</span><span id="__span-19-13"><a id="__codelineno-19-13" name="__codelineno-19-13" href="#__codelineno-19-13"></a>        <span class="c1"># Implement STT engine logic here</span>
-</span><span id="__span-19-14"><a id="__codelineno-19-14" name="__codelineno-19-14" href="#__codelineno-19-14"></a>        <span class="n">transcript</span> <span class="o">=</span> <span class="s2">&quot;You said this&quot;</span>
-</span><span id="__span-19-15"><a id="__codelineno-19-15" name="__codelineno-19-15" href="#__codelineno-19-15"></a>        <span class="k">return</span> <span class="n">transcript</span>
-</span><span id="__span-19-16"><a id="__codelineno-19-16" name="__codelineno-19-16" href="#__codelineno-19-16"></a>
-</span><span id="__span-19-17"><a id="__codelineno-19-17" name="__codelineno-19-17" href="#__codelineno-19-17"></a>    <span class="nd">@classproperty</span>
-</span><span id="__span-19-18"><a id="__codelineno-19-18" name="__codelineno-19-18" href="#__codelineno-19-18"></a>    <span class="k">def</span> <span class="nf">available_languages</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
-</span><span id="__span-19-19"><a id="__codelineno-19-19" name="__codelineno-19-19" href="#__codelineno-19-19"></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Return languages supported by this STT implementation in this state.</span>
-</span><span id="__span-19-20"><a id="__codelineno-19-20" name="__codelineno-19-20" href="#__codelineno-19-20"></a><span class="sd">        This property should be overridden by the derived class to advertise</span>
-</span><span id="__span-19-21"><a id="__codelineno-19-21" name="__codelineno-19-21" href="#__codelineno-19-21"></a><span class="sd">        what languages that engine supports.</span>
-</span><span id="__span-19-22"><a id="__codelineno-19-22" name="__codelineno-19-22" href="#__codelineno-19-22"></a><span class="sd">        Returns:</span>
-</span><span id="__span-19-23"><a id="__codelineno-19-23" name="__codelineno-19-23" href="#__codelineno-19-23"></a><span class="sd">            set: supported BCP-47 language codes</span>
-</span><span id="__span-19-24"><a id="__codelineno-19-24" name="__codelineno-19-24" href="#__codelineno-19-24"></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="__span-19-25"><a id="__codelineno-19-25" name="__codelineno-19-25" href="#__codelineno-19-25"></a>        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;en-us&quot;</span><span class="p">,</span> <span class="s2">&quot;es-es&quot;</span><span class="p">}</span>
-</span><span id="__span-19-26"><a id="__codelineno-19-26" name="__codelineno-19-26" href="#__codelineno-19-26"></a>
-</span><span id="__span-19-27"><a id="__codelineno-19-27" name="__codelineno-19-27" href="#__codelineno-19-27"></a>
-</span><span id="__span-19-28"><a id="__codelineno-19-28" name="__codelineno-19-28" href="#__codelineno-19-28"></a><span class="c1"># sample valid configurations per language</span>
-</span><span id="__span-19-29"><a id="__codelineno-19-29" name="__codelineno-19-29" href="#__codelineno-19-29"></a>
-</span><span id="__span-19-30"><a id="__codelineno-19-30" name="__codelineno-19-30" href="#__codelineno-19-30"></a><span class="c1"># &quot;display_name&quot; and &quot;offline&quot; provide metadata for UI</span>
-</span><span id="__span-19-31"><a id="__codelineno-19-31" name="__codelineno-19-31" href="#__codelineno-19-31"></a>
-</span><span id="__span-19-32"><a id="__codelineno-19-32" name="__codelineno-19-32" href="#__codelineno-19-32"></a><span class="c1"># &quot;priority&quot; is used to calculate position in selection dropdown</span>
-</span><span id="__span-19-33"><a id="__codelineno-19-33" name="__codelineno-19-33" href="#__codelineno-19-33"></a>
-</span><span id="__span-19-34"><a id="__codelineno-19-34" name="__codelineno-19-34" href="#__codelineno-19-34"></a><span class="c1">#       0 - top, 100-bottom</span>
-</span><span id="__span-19-35"><a id="__codelineno-19-35" name="__codelineno-19-35" href="#__codelineno-19-35"></a>
-</span><span id="__span-19-36"><a id="__codelineno-19-36" name="__codelineno-19-36" href="#__codelineno-19-36"></a><span class="c1"># all other keys represent an example valid config for the plugin</span>
-</span><span id="__span-19-37"><a id="__codelineno-19-37" name="__codelineno-19-37" href="#__codelineno-19-37"></a><span class="n">MySTTConfig</span> <span class="o">=</span> <span class="p">{</span>
-</span><span id="__span-19-38"><a id="__codelineno-19-38" name="__codelineno-19-38" href="#__codelineno-19-38"></a>    <span class="n">lang</span><span class="p">:</span> <span class="p">[{</span><span class="s2">&quot;lang&quot;</span><span class="p">:</span> <span class="n">lang</span><span class="p">,</span>
-</span><span id="__span-19-39"><a id="__codelineno-19-39" name="__codelineno-19-39" href="#__codelineno-19-39"></a>            <span class="s2">&quot;display_name&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;MySTT (</span><span class="si">{</span><span class="n">lang</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">,</span>
-</span><span id="__span-19-40"><a id="__codelineno-19-40" name="__codelineno-19-40" href="#__codelineno-19-40"></a>            <span class="s2">&quot;priority&quot;</span><span class="p">:</span> <span class="mi">70</span><span class="p">,</span>
-</span><span id="__span-19-41"><a id="__codelineno-19-41" name="__codelineno-19-41" href="#__codelineno-19-41"></a>            <span class="s2">&quot;offline&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}]</span>
-</span><span id="__span-19-42"><a id="__codelineno-19-42" name="__codelineno-19-42" href="#__codelineno-19-42"></a>    <span class="k">for</span> <span class="n">lang</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;en-us&quot;</span><span class="p">,</span> <span class="s2">&quot;es-es&quot;</span><span class="p">]</span>
-</span><span id="__span-19-43"><a id="__codelineno-19-43" name="__codelineno-19-43" href="#__codelineno-19-43"></a><span class="p">}</span>
-</span></code></pre></div>
-<p>The package needs an entry point under the <code>opm.stt</code> group to be detectable as a plugin,
-plus the parallel <code>opm.stt.config</code> group to expose <code>MySTTConfig</code> for UI discovery. The
-entry-point name (left of <code>=</code>) is the string users put in their <code>mycroft.conf</code>:</p>
-<div class="language-toml highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="k">[project]</span>
-</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;ovos-stt-plugin-mymodel&quot;</span>
-</span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a><span class="n">version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;0.1.0&quot;</span>
-</span><span id="__span-20-4"><a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a><span class="n">dependencies</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;ovos-plugin-manager&quot;</span><span class="p">]</span>
-</span><span id="__span-20-5"><a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a>
-</span><span id="__span-20-6"><a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a><span class="k">[project.entry-points.</span><span class="s2">&quot;opm.stt&quot;</span><span class="k">]</span>
-</span><span id="__span-20-7"><a id="__codelineno-20-7" name="__codelineno-20-7" href="#__codelineno-20-7"></a><span class="n">ovos-stt-plugin-mymodel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;ovos_stt_plugin_mymodel:MySTTPlugin&quot;</span>
-</span><span id="__span-20-8"><a id="__codelineno-20-8" name="__codelineno-20-8" href="#__codelineno-20-8"></a>
-</span><span id="__span-20-9"><a id="__codelineno-20-9" name="__codelineno-20-9" href="#__codelineno-20-9"></a><span class="k">[project.entry-points.</span><span class="s2">&quot;opm.stt.config&quot;</span><span class="k">]</span>
-</span><span id="__span-20-10"><a id="__codelineno-20-10" name="__codelineno-20-10" href="#__codelineno-20-10"></a><span class="n">ovos-stt-plugin-mymodel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;ovos_stt_plugin_mymodel:MySTTConfig&quot;</span>
-</span></code></pre></div>
-<blockquote>
-<p><strong>Backward Compatibility</strong>: <code>ovos-plugin-manager</code> still supports legacy <code>mycroft.plugin.stt</code> entry points, but new plugins should use the <code>opm.*</code> namespace.</p>
-</blockquote>
-<h3 id="test-it-without-ovos">Test it without OVOS<a class="headerlink" href="#test-it-without-ovos" title="Permanent link">&para;</a></h3>
-<p><code>STT</code> is a plain class with no messagebus connection, so a unit test needs no running
-OVOS stack:</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="kn">from</span> <span class="nn">ovos_stt_plugin_mymodel</span> <span class="kn">import</span> <span class="n">MySTTPlugin</span>
-</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>
-</span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a><span class="n">plug</span> <span class="o">=</span> <span class="n">MySTTPlugin</span><span class="p">()</span>
-</span><span id="__span-21-4"><a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a><span class="k">assert</span> <span class="s2">&quot;en-us&quot;</span> <span class="ow">in</span> <span class="n">plug</span><span class="o">.</span><span class="n">available_languages</span>
-</span><span id="__span-21-5"><a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a>
-</span><span id="__span-21-6"><a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a><span class="n">transcript</span> <span class="o">=</span> <span class="n">plug</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">audio</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">language</span><span class="o">=</span><span class="s2">&quot;en-us&quot;</span><span class="p">)</span>
-</span><span id="__span-21-7"><a id="__codelineno-21-7" name="__codelineno-21-7" href="#__codelineno-21-7"></a><span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">transcript</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>
-</span></code></pre></div>
-<p>STT plugins can equally be exercised against a real audio file, without a running OVOS
-instance, by importing the plugin class directly. For example, with
-<code>ovos-stt-plugin-vosk</code>:</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="kn">from</span> <span class="nn">ovos_stt_plugin_vosk</span> <span class="kn">import</span> <span class="n">VoskKaldiSTT</span>
-</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a><span class="kn">from</span> <span class="nn">ovos_plugin_manager.utils.audio</span> <span class="kn">import</span> <span class="n">AudioFile</span>
-</span><span id="__span-22-3"><a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>
-</span><span id="__span-22-4"><a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a><span class="n">plug</span> <span class="o">=</span> <span class="n">VoskKaldiSTT</span><span class="p">()</span>
-</span><span id="__span-22-5"><a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a>
-</span><span id="__span-22-6"><a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a><span class="c1"># verify lang is supported</span>
-</span><span id="__span-22-7"><a id="__codelineno-22-7" name="__codelineno-22-7" href="#__codelineno-22-7"></a><span class="n">lang</span> <span class="o">=</span> <span class="s2">&quot;en-us&quot;</span>
-</span><span id="__span-22-8"><a id="__codelineno-22-8" name="__codelineno-22-8" href="#__codelineno-22-8"></a><span class="k">assert</span> <span class="n">lang</span> <span class="ow">in</span> <span class="n">plug</span><span class="o">.</span><span class="n">available_languages</span>
-</span><span id="__span-22-9"><a id="__codelineno-22-9" name="__codelineno-22-9" href="#__codelineno-22-9"></a>
-</span><span id="__span-22-10"><a id="__codelineno-22-10" name="__codelineno-22-10" href="#__codelineno-22-10"></a><span class="c1"># read the whole file into an AudioData object</span>
-</span><span id="__span-22-11"><a id="__codelineno-22-11" name="__codelineno-22-11" href="#__codelineno-22-11"></a><span class="k">with</span> <span class="n">AudioFile</span><span class="p">(</span><span class="s2">&quot;test.wav&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">source</span><span class="p">:</span>
-</span><span id="__span-22-12"><a id="__codelineno-22-12" name="__codelineno-22-12" href="#__codelineno-22-12"></a>    <span class="n">audio</span> <span class="o">=</span> <span class="n">source</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-</span><span id="__span-22-13"><a id="__codelineno-22-13" name="__codelineno-22-13" href="#__codelineno-22-13"></a>
-</span><span id="__span-22-14"><a id="__codelineno-22-14" name="__codelineno-22-14" href="#__codelineno-22-14"></a><span class="c1"># transcribe</span>
-</span><span id="__span-22-15"><a id="__codelineno-22-15" name="__codelineno-22-15" href="#__codelineno-22-15"></a><span class="n">transcript</span> <span class="o">=</span> <span class="n">plug</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">audio</span><span class="p">,</span> <span class="n">lang</span><span class="p">)</span>
-</span></code></pre></div>
-<h3 id="verify-discovery">Verify discovery<a class="headerlink" href="#verify-discovery" title="Permanent link">&para;</a></h3>
-<p>After <code>pip install -e .</code>:</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="kn">from</span> <span class="nn">ovos_plugin_manager.stt</span> <span class="kn">import</span> <span class="n">find_stt_plugins</span>
-</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>
-</span><span id="__span-23-3"><a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a><span class="nb">print</span><span class="p">(</span><span class="n">find_stt_plugins</span><span class="p">())</span>
-</span><span id="__span-23-4"><a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a><span class="c1"># {&#39;ovos-stt-plugin-mymodel&#39;: &lt;class &#39;...MySTTPlugin&#39;&gt;}</span>
-</span></code></pre></div>
-<p><code>load_stt_plugin(name)</code> returns the same uninstantiated class for one plugin name. You
-construct it yourself with your config dict.</p>
-<h3 id="checklist-before-you-publish">Checklist before you publish<a class="headerlink" href="#checklist-before-you-publish" title="Permanent link">&para;</a></h3>
-<ol>
-<li>The class subclasses <code>STT</code> (or <code>StreamingSTT</code>) and implements <code>execute</code>
-   (or <code>create_streaming_thread</code> and <code>StreamThread.handle_audio_stream</code>) plus
-   <code>available_languages</code> as a <code>classproperty</code>.</li>
-<li>The entry-point group in <code>pyproject.toml</code> is <code>opm.stt</code>, with a matching
-   <code>opm.stt.config</code> entry once the plugin has settings worth advertising in UIs.</li>
-<li><code>__init__</code> accepts <code>config=None</code> and works with an empty config.</li>
-<li><code>language=None</code> falls back to the plugin's configured/detected language.</li>
-<li>Unit tests exercise <code>execute</code>/<code>transcribe</code> directly, with no OVOS services running.</li>
-<li><code>find_stt_plugins()</code> discovers the installed plugin under the expected name.</li>
-</ol>
+<h2 id="learn-more">Learn more<a class="headerlink" href="#learn-more" title="Permanent link">&para;</a></h2>
+<p>Full technical detail per plugin (repository link, license notes, default configuration) lives on the <a href="../stt-plugins-reference/">STT Plugins Reference</a> page linked from the table above. Writing a plugin instead of choosing one? See <a href="../stt-plugin-development/">Writing an STT Plugin</a>.</p>
 <hr />
 <p><strong>Read next:</strong> <a href="../tts-plugins/">TTS Plugins</a>
-<strong>Related:</strong> <a href="../wake-word-plugins/">Wake-word Plugins</a> · <a href="../stt-server/">STT Server</a> · <a href="../choosing-plugins/">Choosing Plugins</a> · <a href="https://blog.openvoiceos.org/posts/2026-02-16-onnx-asr">Real-Time Offline Speech Recognition on OVOS (ONNX ASR)</a></p>
+<strong>Related:</strong> <a href="../stt-plugins-reference/">STT Plugins Reference</a> · <a href="../stt-plugin-development/">Writing an STT Plugin</a> · <a href="../wake-word-plugins/">Wake-word Plugins</a> · <a href="../stt-server/">STT Server</a> · <a href="../choosing-plugins/">Choosing Plugins</a> · <a href="https://blog.openvoiceos.org/posts/2026-02-16-onnx-asr">Real-Time Offline Speech Recognition on OVOS (ONNX ASR)</a></p>
 
 
 

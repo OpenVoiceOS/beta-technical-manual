@@ -790,16 +790,38 @@
   
   
   
-    <li class="md-nav__item">
-      <a href="../skill-examples/" class="md-nav__link">
+    
+    
+    
+      
+      
+    
+    
+      
         
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../skill-examples/" class="md-nav__link">
+      
   
   <span class="md-ellipsis">
     What can I say? (Skills)
   </span>
   
 
-      </a>
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
     </li>
   
 
@@ -1372,7 +1394,7 @@ for a Halloween-prop style build.</p>
 </div>
 <hr />
 <h2 id="make-it-tell-jokes">Make it tell jokes<a class="headerlink" href="#make-it-tell-jokes" title="Permanent link">&para;</a></h2>
-<p>The <a href="../skill-examples/#dad-jokes">Dad Jokes skill</a> (<code>ovos-skill-icanhazdadjokes</code>) answers "tell me
+<p>The <a href="../skill-examples-fun/#dad-jokes">Dad Jokes skill</a> (<code>ovos-skill-icanhazdadjokes</code>) answers "tell me
 a joke", "do you know any Chuck Norris jokes?", or "tell me a joke about dentists" with a fresh
 pun every time. Install it with <code>pip install ovos-skill-icanhazdadjokes</code>, then:</p>
 <div class="admonition tip">
@@ -1399,7 +1421,7 @@ restart them depends on how OVOS was installed:</p>
 </ul>
 </div>
 <h2 id="turn-it-into-a-parrot">Turn it into a parrot<a class="headerlink" href="#turn-it-into-a-parrot" title="Permanent link">&para;</a></h2>
-<p>The <a href="../skill-examples/#parrot">Parrot skill</a> (<code>ovos-skill-parrot</code>) makes OVOS repeat whatever you
+<p>The <a href="../skill-examples-fun/#parrot">Parrot skill</a> (<code>ovos-skill-parrot</code>) makes OVOS repeat whatever you
 say back to you. "Repeat Once upon a midnight dreary…" or "say Goodnight, Gracie" gets echoed
 verbatim. Install it with one command (<code>pip install ovos-skill-parrot</code>). It's a fun way to show
 that speech really is captured and understood, not faked.</p>
@@ -1460,15 +1482,15 @@ skeleton that reacts to trick-or-treaters, is really just three ordinary OVOS pi
 together:</p>
 <ol>
 <li><strong>A scheduled greeting.</strong> Use <code>self.schedule_event(...)</code> (see
-   <a href="../skill-cookbook/#1-a-reminder-skill-scheduled-events-with-restart-persistence">Scheduled events with restart persistence</a>
+   <a href="../recipe-reminder-persistence/">Scheduled events with restart persistence</a>
    for the pattern) to have the prop speak on its own every so often, unprompted. For example,
    "Who dares approach?" every few minutes while it's active.</li>
 <li><strong>A spooky voice.</strong> Pick an eerie-sounding <a href="../tts-plugins/">TTS voice</a> so the scheduled lines
    and any replies sound in character.</li>
 <li><strong>A parrot-style reply for trick-or-treaters.</strong> Reuse the same idea as the
-   <a href="../skill-examples/#parrot">Parrot skill</a>. Echo back whatever the kids say, in the spooky
+   <a href="../skill-examples-fun/#parrot">Parrot skill</a>. Echo back whatever the kids say, in the spooky
    voice, for an instant "it's alive!" reaction. Or use
-   <a href="../skill-cookbook/#4-continuous-conversation-multi-turn-dialog-with-converse-and-get_response"><code>converse</code></a>
+   <a href="../recipe-multi-turn-conversation/"><code>converse</code></a>
    to hold a short back-and-forth instead of a single line.</li>
 </ol>
 <p>Nothing here needs custom hardware. A speaker and a device running OVOS is enough to try the
@@ -1481,8 +1503,8 @@ than voice/config alone. If you haven't written a skill yet, <a href="../first-s
 is a gentler starting point.</p>
 </div>
 <h2 id="play-your-own-music-or-control-your-smart-home">Play your own music, or control your smart home<a class="headerlink" href="#play-your-own-music-or-control-your-smart-home" title="Permanent link">&para;</a></h2>
-<p>OVOS plays internet radio (<a href="../skill-examples/#pyradios">PyRadios</a>,
-<a href="../skill-examples/#somafm">SomaFM</a>) and local audio files out of the box. It has no bundled
+<p>OVOS plays internet radio (<a href="../skill-examples-media/#pyradios">PyRadios</a>,
+<a href="../skill-examples-media/#somafm">SomaFM</a>) and local audio files out of the box. It has no bundled
 Spotify or other streaming-service player. See <a href="../media-plugins/">Media Plugins</a> for what can be
 added.</p>
 <p>Turning lights and other smart-home devices on and off by voice is also not built in. It needs a

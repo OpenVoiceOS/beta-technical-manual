@@ -8,9 +8,13 @@
       
       
       
-        <link rel="canonical" href="https://tigregotico.github.io/ovos-technical-manual/snippets/community-servers/">
+        <link rel="canonical" href="https://tigregotico.github.io/ovos-technical-manual/migration-audio-transformer-order/">
       
       
+        <link rel="prev" href="../migration-opm-2/">
+      
+      
+        <link rel="next" href="../updating-skills/">
       
       
       <link rel="icon" href="https://github.com/OpenVoiceOS/ovos_assets/blob/master/Logo/ovos-logo-512.png?raw=true">
@@ -18,14 +22,14 @@
     
     
       
-        <title>Community servers - OpenVoiceOS Technical Manual</title>
+        <title>Audio-Transformer Chain Order - OpenVoiceOS Technical Manual</title>
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.3cba04c6.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.3cba04c6.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
       
       
 
@@ -44,9 +48,9 @@
       
     
     
-      <link rel="stylesheet" href="../../css/extra.css">
+      <link rel="stylesheet" href="../css/extra.css">
     
-    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -71,6 +75,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#migrating-audio-transformer-priority-values" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -83,7 +92,7 @@
 
 <header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../.." title="OpenVoiceOS Technical Manual" class="md-header__button md-logo" aria-label="OpenVoiceOS Technical Manual" data-md-component="logo">
+    <a href=".." title="OpenVoiceOS Technical Manual" class="md-header__button md-logo" aria-label="OpenVoiceOS Technical Manual" data-md-component="logo">
       
   <img src="https://github.com/OpenVoiceOS/ovos_assets/blob/master/Logo/ovos-logo-512.png?raw=true" alt="logo">
 
@@ -102,7 +111,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Community servers
+              Audio-Transformer Chain Order
             
           </span>
         </div>
@@ -212,7 +221,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../.." class="md-tabs__link">
+        <a href=".." class="md-tabs__link">
           
   
   Home
@@ -230,7 +239,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../start-here/" class="md-tabs__link">
+        <a href="../start-here/" class="md-tabs__link">
           
   
   Get Started
@@ -248,7 +257,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../concepts-overview/" class="md-tabs__link">
+        <a href="../concepts-overview/" class="md-tabs__link">
           
   
   Concepts
@@ -266,7 +275,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../pipelines-overview/" class="md-tabs__link">
+        <a href="../pipelines-overview/" class="md-tabs__link">
           
   
   Pipeline
@@ -284,7 +293,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../lang-support/" class="md-tabs__link">
+        <a href="../lang-support/" class="md-tabs__link">
           
   
   Language
@@ -302,7 +311,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../skills-overview/" class="md-tabs__link">
+        <a href="../skills-overview/" class="md-tabs__link">
           
   
   Skills
@@ -320,7 +329,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../plugins-index/" class="md-tabs__link">
+        <a href="../plugins-index/" class="md-tabs__link">
           
   
   Plugins
@@ -338,7 +347,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../agents-overview/" class="md-tabs__link">
+        <a href="../agents-overview/" class="md-tabs__link">
           
   
   Agents
@@ -352,11 +361,13 @@
         
   
   
+    
+  
   
     
     
-      <li class="md-tabs__item">
-        <a href="../../production-overview/" class="md-tabs__link">
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../production-overview/" class="md-tabs__link">
           
   
   Production
@@ -374,7 +385,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../reference-overview/" class="md-tabs__link">
+        <a href="../reference-overview/" class="md-tabs__link">
           
   
   Reference
@@ -413,7 +424,7 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../.." title="OpenVoiceOS Technical Manual" class="md-nav__button md-logo" aria-label="OpenVoiceOS Technical Manual" data-md-component="logo">
+    <a href=".." title="OpenVoiceOS Technical Manual" class="md-nav__button md-logo" aria-label="OpenVoiceOS Technical Manual" data-md-component="logo">
       
   <img src="https://github.com/OpenVoiceOS/ovos_assets/blob/master/Logo/ovos-logo-512.png?raw=true" alt="logo">
 
@@ -458,7 +469,7 @@
         
   
   
-    <a href="../.." class="md-nav__link">
+    <a href=".." class="md-nav__link">
       
   
   <span class="md-ellipsis">
@@ -500,7 +511,7 @@
         
   
   
-    <a href="../../start-here/" class="md-nav__link">
+    <a href="../start-here/" class="md-nav__link">
       
   
   <span class="md-ellipsis">
@@ -542,7 +553,7 @@
         
   
   
-    <a href="../../concepts-overview/" class="md-nav__link">
+    <a href="../concepts-overview/" class="md-nav__link">
       
   
   <span class="md-ellipsis">
@@ -584,7 +595,7 @@
         
   
   
-    <a href="../../pipelines-overview/" class="md-nav__link">
+    <a href="../pipelines-overview/" class="md-nav__link">
       
   
   <span class="md-ellipsis">
@@ -626,7 +637,7 @@
         
   
   
-    <a href="../../lang-support/" class="md-nav__link">
+    <a href="../lang-support/" class="md-nav__link">
       
   
   <span class="md-ellipsis">
@@ -668,7 +679,7 @@
         
   
   
-    <a href="../../skills-overview/" class="md-nav__link">
+    <a href="../skills-overview/" class="md-nav__link">
       
   
   <span class="md-ellipsis">
@@ -710,7 +721,7 @@
         
   
   
-    <a href="../../plugins-index/" class="md-nav__link">
+    <a href="../plugins-index/" class="md-nav__link">
       
   
   <span class="md-ellipsis">
@@ -752,7 +763,7 @@
         
   
   
-    <a href="../../agents-overview/" class="md-nav__link">
+    <a href="../agents-overview/" class="md-nav__link">
       
   
   <span class="md-ellipsis">
@@ -775,6 +786,528 @@
       
   
   
+    
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Production
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            Production
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../production-overview/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Production Overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../privacy-security/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Privacy & Security
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../production-operations/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Production Operations
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../satellites/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Satellites (one brain, many speakers)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../docker-deployment/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Running OVOS in Containers
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9_6" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_9_6" id="__nav_9_6_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Updating from Older OVOS
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_9_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_9_6">
+            <span class="md-nav__icon md-icon"></span>
+            Updating from Older OVOS
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../updating-from-older-ovos/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Overview & Big-Ticket Migrations
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../migration-ovos-utils-0-1/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ovos-utils 0.1.0 Gutting
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../migration-workshop-7/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ovos-workshop 7.0.0 Release Train
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../migration-config-2-0/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ovos-config 2.0.0
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../migration-bus-dual-emit/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Bus-Client Dual-Emit Bridge
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../migration-ocp-to-media/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    OCP to ovos-media
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../migration-opm-2/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Wake-word opm 2.0
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Audio-Transformer Chain Order
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Audio-Transformer Chain Order
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#audio-transformer-chain-order-flip" class="md-nav__link">
+    <span class="md-ellipsis">
+      Audio-transformer chain-order flip
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../updating-skills/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    For Skill Maintainers
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../updating-plugins/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    For Plugin Maintainers
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../updating-deployers/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    For Device & Fleet Operators
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../updating-remote-clients/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    For Remote Bus Clients
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../upcoming-changes/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Upcoming Changes
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
   
   
     
@@ -794,11 +1327,11 @@
         
   
   
-    <a href="../../production-overview/" class="md-nav__link">
+    <a href="../stt-server/" class="md-nav__link">
       
   
   <span class="md-ellipsis">
-    Production
+    Self-hosting Servers
   </span>
   
 
@@ -808,6 +1341,78 @@
     </a>
   
 
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../hivemind-agents/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    HiveMind
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../home-assistant/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Home Assistant
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
       
     </li>
   
@@ -836,7 +1441,7 @@
         
   
   
-    <a href="../../reference-overview/" class="md-nav__link">
+    <a href="../reference-overview/" class="md-nav__link">
       
   
   <span class="md-ellipsis">
@@ -872,6 +1477,25 @@
   
   
   
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#audio-transformer-chain-order-flip" class="md-nav__link">
+    <span class="md-ellipsis">
+      Audio-transformer chain-order flip
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -889,15 +1513,61 @@
   
 
 
-  <h1>Community servers</h1>
-
-<div class="admonition warning">
-<p class="admonition-title">Community servers are best-effort demos</p>
-<p>The public OVOS servers exist for easy onboarding and demos only. They are best-effort,
-not optimized, carry no uptime guarantees, and may vanish at any time. OVOS will be slow
-and unreliable if you rely on them. The official recommendation is to self-host — or skip
-servers entirely: fully offline plugins exist for everything.</p>
+<h1 id="migrating-audio-transformer-priority-values">Migrating Audio-Transformer Priority Values<a class="headerlink" href="#migrating-audio-transformer-priority-values" title="Permanent link">&para;</a></h1>
+<div class="admonition abstract">
+<p class="admonition-title">In a nutshell</p>
+<p>Deployers running more than one audio-transformer plugin are affected.
+<code>ovos-dinkum-listener</code> fixed its transformer chain to run in ascending
+<code>priority</code> order, matching the spec, instead of the descending order
+it used before. Fix it by inverting any <code>priority</code> values you assigned
+under the old order.</p>
 </div>
+<h3 id="audio-transformer-chain-order-flip">Audio-transformer chain-order flip<a class="headerlink" href="#audio-transformer-chain-order-flip" title="Permanent link">&para;</a></h3>
+<p>The transformer chain had been running in the opposite order from what
+its own docstring claimed for some time: plugins sorted by <code>priority</code>
+descending, highest number first, while the OVOS-TRANSFORM-1 spec and
+<code>ovos-core</code>'s own transformer chains expected ascending order. Fixing it
+meant a deployment with more than one active audio transformer plugin
+could see its processing order silently invert after the upgrade, with no
+error to signal the change, only a chain now running its stages in the
+reverse sequence from before.</p>
+<p><code>ovos-dinkum-listener</code>'s <code>AudioTransformersService</code> sorted plugins by
+<code>priority</code> <strong>descending</strong> (highest number ran first) with a docstring that
+said the opposite of what the OVOS-TRANSFORM-1 spec expects. <code>1fd909f</code>
+(<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/236" title="GitHub Issue: TigreGotico/ovos-technical-manual #236">#236</a>, 2026-06-28) dropped <code>reverse=True</code>: the chain now runs in
+<strong>ascending</strong> priority order (lowest number first, highest last), matching
+<code>OVOS-TRANSFORM-1 §4</code> and the ordering <code>ovos-core</code> already used for its own
+transformer chains.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># old: priority=1 ran LAST (reverse=True)</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="c1"># new: priority=1 runs FIRST (ascending)</span>
+</span></code></pre></div>
+<p>If you assigned <code>priority</code> values assuming the old descending order,
+invert them: old <code>priority=P</code> behaved like new <code>priority=(100-P)</code> in
+relative terms. Any deployment with more than one active
+<code>listener.audio_transformers</code> plugin where order matters can see a silent
+behavior change after upgrading past this commit (ovos-dinkum-listener <code>1fd909f</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/236" title="GitHub Issue: TigreGotico/ovos-technical-manual #236">#236</a>).</p>
+<p>Lifecycle:</p>
+<table>
+<thead>
+<tr>
+<th>Change</th>
+<th>Active</th>
+<th>Deprecated but functional</th>
+<th>Dropped</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Descending <code>priority</code> sort (<code>reverse=True</code>)</td>
+<td>before <code>1fd909f</code> (2026-06-28)</td>
+<td>n/a</td>
+<td><code>1fd909f</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><strong>Read next:</strong> <a href="../updating-from-older-ovos/">Updating From Older OVOS</a>
+<strong>Related:</strong> <a href="../updating-deployers/">For Device &amp; Fleet Operators</a> · <a href="../version-compat-guide/">Version-Compatible Skills &amp; Plugins</a></p>
 
 
 
@@ -950,10 +1620,10 @@ servers entirely: fully offline plugins exist for everything.</p>
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.path", "navigation.prune", "navigation.top", "navigation.tracking", "navigation.instant", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate"], "search": "../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.path", "navigation.prune", "navigation.top", "navigation.tracking", "navigation.instant", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate"], "search": "../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.fe8b6f2b.min.js"></script>
+      <script src="../assets/javascripts/bundle.fe8b6f2b.min.js"></script>
       
     
   </body>

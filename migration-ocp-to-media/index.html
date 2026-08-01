@@ -8,9 +8,13 @@
       
       
       
-        <link rel="canonical" href="https://tigregotico.github.io/ovos-technical-manual/snippets/default-pipeline/">
+        <link rel="canonical" href="https://tigregotico.github.io/ovos-technical-manual/migration-ocp-to-media/">
       
       
+        <link rel="prev" href="../migration-bus-dual-emit/">
+      
+      
+        <link rel="next" href="../migration-opm-2/">
       
       
       <link rel="icon" href="https://github.com/OpenVoiceOS/ovos_assets/blob/master/Logo/ovos-logo-512.png?raw=true">
@@ -18,14 +22,14 @@
     
     
       
-        <title>Default pipeline - OpenVoiceOS Technical Manual</title>
+        <title>OCP to ovos-media - OpenVoiceOS Technical Manual</title>
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.3cba04c6.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.3cba04c6.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
       
       
 
@@ -44,9 +48,9 @@
       
     
     
-      <link rel="stylesheet" href="../../css/extra.css">
+      <link rel="stylesheet" href="../css/extra.css">
     
-    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -71,6 +75,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#migrating-ocp-config-to-ovos-media" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -83,7 +92,7 @@
 
 <header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../.." title="OpenVoiceOS Technical Manual" class="md-header__button md-logo" aria-label="OpenVoiceOS Technical Manual" data-md-component="logo">
+    <a href=".." title="OpenVoiceOS Technical Manual" class="md-header__button md-logo" aria-label="OpenVoiceOS Technical Manual" data-md-component="logo">
       
   <img src="https://github.com/OpenVoiceOS/ovos_assets/blob/master/Logo/ovos-logo-512.png?raw=true" alt="logo">
 
@@ -102,7 +111,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Default pipeline
+              OCP to ovos-media
             
           </span>
         </div>
@@ -212,7 +221,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../.." class="md-tabs__link">
+        <a href=".." class="md-tabs__link">
           
   
   Home
@@ -230,7 +239,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../start-here/" class="md-tabs__link">
+        <a href="../start-here/" class="md-tabs__link">
           
   
   Get Started
@@ -248,7 +257,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../concepts-overview/" class="md-tabs__link">
+        <a href="../concepts-overview/" class="md-tabs__link">
           
   
   Concepts
@@ -266,7 +275,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../pipelines-overview/" class="md-tabs__link">
+        <a href="../pipelines-overview/" class="md-tabs__link">
           
   
   Pipeline
@@ -284,7 +293,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../lang-support/" class="md-tabs__link">
+        <a href="../lang-support/" class="md-tabs__link">
           
   
   Language
@@ -302,7 +311,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../skills-overview/" class="md-tabs__link">
+        <a href="../skills-overview/" class="md-tabs__link">
           
   
   Skills
@@ -320,7 +329,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../plugins-index/" class="md-tabs__link">
+        <a href="../plugins-index/" class="md-tabs__link">
           
   
   Plugins
@@ -338,7 +347,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../agents-overview/" class="md-tabs__link">
+        <a href="../agents-overview/" class="md-tabs__link">
           
   
   Agents
@@ -352,11 +361,13 @@
         
   
   
+    
+  
   
     
     
-      <li class="md-tabs__item">
-        <a href="../../production-overview/" class="md-tabs__link">
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../production-overview/" class="md-tabs__link">
           
   
   Production
@@ -374,7 +385,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../reference-overview/" class="md-tabs__link">
+        <a href="../reference-overview/" class="md-tabs__link">
           
   
   Reference
@@ -413,7 +424,7 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../.." title="OpenVoiceOS Technical Manual" class="md-nav__button md-logo" aria-label="OpenVoiceOS Technical Manual" data-md-component="logo">
+    <a href=".." title="OpenVoiceOS Technical Manual" class="md-nav__button md-logo" aria-label="OpenVoiceOS Technical Manual" data-md-component="logo">
       
   <img src="https://github.com/OpenVoiceOS/ovos_assets/blob/master/Logo/ovos-logo-512.png?raw=true" alt="logo">
 
@@ -458,7 +469,7 @@
         
   
   
-    <a href="../.." class="md-nav__link">
+    <a href=".." class="md-nav__link">
       
   
   <span class="md-ellipsis">
@@ -500,7 +511,7 @@
         
   
   
-    <a href="../../start-here/" class="md-nav__link">
+    <a href="../start-here/" class="md-nav__link">
       
   
   <span class="md-ellipsis">
@@ -542,7 +553,7 @@
         
   
   
-    <a href="../../concepts-overview/" class="md-nav__link">
+    <a href="../concepts-overview/" class="md-nav__link">
       
   
   <span class="md-ellipsis">
@@ -584,7 +595,7 @@
         
   
   
-    <a href="../../pipelines-overview/" class="md-nav__link">
+    <a href="../pipelines-overview/" class="md-nav__link">
       
   
   <span class="md-ellipsis">
@@ -626,7 +637,7 @@
         
   
   
-    <a href="../../lang-support/" class="md-nav__link">
+    <a href="../lang-support/" class="md-nav__link">
       
   
   <span class="md-ellipsis">
@@ -668,7 +679,7 @@
         
   
   
-    <a href="../../skills-overview/" class="md-nav__link">
+    <a href="../skills-overview/" class="md-nav__link">
       
   
   <span class="md-ellipsis">
@@ -710,7 +721,7 @@
         
   
   
-    <a href="../../plugins-index/" class="md-nav__link">
+    <a href="../plugins-index/" class="md-nav__link">
       
   
   <span class="md-ellipsis">
@@ -752,7 +763,7 @@
         
   
   
-    <a href="../../agents-overview/" class="md-nav__link">
+    <a href="../agents-overview/" class="md-nav__link">
       
   
   <span class="md-ellipsis">
@@ -775,6 +786,528 @@
       
   
   
+    
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Production
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            Production
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../production-overview/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Production Overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../privacy-security/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Privacy & Security
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../production-operations/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Production Operations
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../satellites/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Satellites (one brain, many speakers)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../docker-deployment/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Running OVOS in Containers
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9_6" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_9_6" id="__nav_9_6_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Updating from Older OVOS
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_9_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_9_6">
+            <span class="md-nav__icon md-icon"></span>
+            Updating from Older OVOS
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../updating-from-older-ovos/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Overview & Big-Ticket Migrations
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../migration-ovos-utils-0-1/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ovos-utils 0.1.0 Gutting
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../migration-workshop-7/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ovos-workshop 7.0.0 Release Train
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../migration-config-2-0/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ovos-config 2.0.0
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../migration-bus-dual-emit/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Bus-Client Dual-Emit Bridge
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    OCP to ovos-media
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    OCP to ovos-media
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#ocp-ovos-media-config-split" class="md-nav__link">
+    <span class="md-ellipsis">
+      OCP → ovos-media config split
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../migration-opm-2/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Wake-word opm 2.0
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../migration-audio-transformer-order/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Audio-Transformer Chain Order
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../updating-skills/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    For Skill Maintainers
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../updating-plugins/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    For Plugin Maintainers
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../updating-deployers/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    For Device & Fleet Operators
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../updating-remote-clients/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    For Remote Bus Clients
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../upcoming-changes/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Upcoming Changes
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
   
   
     
@@ -794,11 +1327,11 @@
         
   
   
-    <a href="../../production-overview/" class="md-nav__link">
+    <a href="../stt-server/" class="md-nav__link">
       
   
   <span class="md-ellipsis">
-    Production
+    Self-hosting Servers
   </span>
   
 
@@ -808,6 +1341,78 @@
     </a>
   
 
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../hivemind-agents/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    HiveMind
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../home-assistant/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Home Assistant
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
       
     </li>
   
@@ -836,7 +1441,7 @@
         
   
   
-    <a href="../../reference-overview/" class="md-nav__link">
+    <a href="../reference-overview/" class="md-nav__link">
       
   
   <span class="md-ellipsis">
@@ -872,6 +1477,25 @@
   
   
   
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#ocp-ovos-media-config-split" class="md-nav__link">
+    <span class="md-ellipsis">
+      OCP → ovos-media config split
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -889,13 +1513,73 @@
   
 
 
-  <h1>Default pipeline</h1>
-
-<p><code>ovos-stop-pipeline-plugin-high</code>, <code>ovos-converse-pipeline-plugin</code>, <code>ovos-ocp-pipeline-plugin-high</code>,
-<code>ovos-padatious-pipeline-plugin-high</code>, <code>ovos-adapt-pipeline-plugin-high</code>, <code>ovos-m2v-pipeline-high</code>,
-<code>ovos-ocp-pipeline-plugin-medium</code>, <code>ovos-fallback-pipeline-plugin-high</code>,
-<code>ovos-stop-pipeline-plugin-medium</code>, <code>ovos-adapt-pipeline-plugin-medium</code>,
-<code>ovos-fallback-pipeline-plugin-medium</code>, <code>ovos-fallback-pipeline-plugin-low</code></p>
+<h1 id="migrating-ocp-config-to-ovos-media">Migrating OCP Config to ovos-media<a class="headerlink" href="#migrating-ocp-config-to-ovos-media" title="Permanent link">&para;</a></h1>
+<div class="admonition abstract">
+<p class="admonition-title">In a nutshell</p>
+<p>Deployers and plugin maintainers with an <code>OCP</code> config block are
+affected. Splitting audio-service responsibility into a dedicated
+<code>ovos-media</code> daemon renamed the config root key and flipped the MPRIS
+toggle's polarity. Fix it by moving <code>OCP</code> to <code>media</code> and setting
+<code>enable_mpris</code> explicitly if you want MPRIS on.</p>
+</div>
+<h3 id="ocp-ovos-media-config-split">OCP → ovos-media config split<a class="headerlink" href="#ocp-ovos-media-config-split" title="Permanent link">&para;</a></h3>
+<p>Splitting audio-service responsibility out of <code>ovos-audio</code> into a
+dedicated <code>ovos-media</code> daemon meant its config moved with it, and the
+config root key changed name in the process: anything a deployer still
+had under the old <code>"OCP"</code> key was silently ignored by the new service
+rather than flagged as invalid. The MPRIS toggle was renamed and its
+polarity flipped in the same commit, so a deployment that had never
+touched the key at all still felt the change, MPRIS integration turning
+itself off after the upgrade with no explicit setting to blame.</p>
+<p>Audio-service responsibility split out of <code>ovos-audio</code> into a dedicated
+<code>ovos-media</code> daemon starting January 2024. Two config changes to track:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>// old (mycroft.conf, read by ovos-media before 89a50c0)
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>{&quot;OCP&quot;: {&quot;disable_mpris&quot;: false}}
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>// new (mycroft.conf, 89a50c0 onward)
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>{&quot;media&quot;: {&quot;enable_mpris&quot;: true}}
+</span></code></pre></div>
+<p>The config root key <code>OCP</code> was renamed to <code>media</code>: anything still under
+<code>"OCP"</code> is silently ignored by <code>ovos-media</code>. The MPRIS toggle was also
+polarity-flipped: <code>disable_mpris</code> (default off, meaning MPRIS was <strong>on</strong> by
+default) became <code>enable_mpris</code> (default <code>False</code>, meaning MPRIS is <strong>off</strong>
+by default). A deployment that never touched this key gets a behavior
+change: MPRIS integration silently turns off after upgrading past
+<code>89a50c0</code> (ovos-media <code>89a50c0</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/19" title="GitHub Issue: TigreGotico/ovos-technical-manual #19">#19</a>, 2024-03-29), unless <code>media.enable_mpris: true</code>
+is set explicitly.</p>
+<p>On the <code>ovos-audio</code> side, <code>AudioService.find_ocp()</code> stopped
+auto-discovering OCP from the generic plugin list and instead instantiates
+it directly, reading its config from the legacy <code>Audio.backends.OCP</code>
+location as a documented transitional shim (ovos-audio <code>3983816</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/80" title="GitHub Issue: TigreGotico/ovos-technical-manual #80">#80</a>,
+2024-07-18).</p>
+<p>Lifecycle:</p>
+<table>
+<thead>
+<tr>
+<th>Change</th>
+<th>Active</th>
+<th>Deprecated but functional</th>
+<th>Dropped</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Config root <code>OCP</code> (ovos-media)</td>
+<td>before <code>89a50c0</code> (2024-03-29)</td>
+<td>n/a</td>
+<td><code>89a50c0</code> (now <code>media</code>)</td>
+</tr>
+<tr>
+<td><code>disable_mpris</code> (MPRIS on by default)</td>
+<td>before <code>89a50c0</code></td>
+<td>n/a</td>
+<td><code>89a50c0</code> (now <code>enable_mpris</code>, off by default)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><strong>Read next:</strong> <a href="../updating-from-older-ovos/">Updating From Older OVOS</a>
+<strong>Related:</strong> <a href="../updating-deployers/">For Device &amp; Fleet Operators</a> · <a href="../version-compat-guide/">Version-Compatible Skills &amp; Plugins</a></p>
 
 
 
@@ -948,10 +1632,10 @@
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.path", "navigation.prune", "navigation.top", "navigation.tracking", "navigation.instant", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate"], "search": "../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.path", "navigation.prune", "navigation.top", "navigation.tracking", "navigation.instant", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate"], "search": "../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.fe8b6f2b.min.js"></script>
+      <script src="../assets/javascripts/bundle.fe8b6f2b.min.js"></script>
       
     
   </body>

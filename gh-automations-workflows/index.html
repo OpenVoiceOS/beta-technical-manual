@@ -1362,6 +1362,69 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../gh-automations-coverage-security/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Coverage & Security Workflows
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../gh-automations-lint-docs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lint & Docs Workflows
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../gh-automations-pr-comment-scripts/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    PR Comment Pattern & Scripts
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -1567,46 +1630,46 @@
 <tr>
 <td><code>coverage.yml</code></td>
 <td>Runs <code>pytest --cov</code>, posts a coverage report, and optionally deploys HTML to <code>gh-pages</code>.</td>
-<td><a href="../gh-automations-quality-workflows/#coverageyml">Quality Workflows</a></td>
+<td><a href="../gh-automations-coverage-security/#coverageyml">Coverage and Security Workflows</a></td>
 </tr>
 <tr>
 <td><code>coverage-pages.yml</code> <em>(deprecated)</em></td>
 <td>Legacy coverage-to-<code>gh-pages</code> deployment, replaced by <code>coverage.yml</code>.</td>
-<td><a href="../gh-automations-quality-workflows/#coverage-pagesyml-deprecated">Quality Workflows</a></td>
+<td><a href="../gh-automations-coverage-security/#coverage-pagesyml-deprecated">Coverage and Security Workflows</a></td>
 </tr>
 <tr>
 <td><code>pip-audit.yml</code></td>
 <td>Scans dependencies for known CVEs and optionally uploads a SARIF report.</td>
-<td><a href="../gh-automations-quality-workflows/#pip-audityml">Quality Workflows</a></td>
+<td><a href="../gh-automations-coverage-security/#pip-audityml">Coverage and Security Workflows</a></td>
 </tr>
 <tr>
 <td><code>downstream-check.yml</code></td>
 <td>Reports which packages depend on a given package, using <code>pipdeptree</code>.</td>
-<td><a href="../gh-automations-quality-workflows/#downstream-checkyml">Quality Workflows</a></td>
+<td><a href="../gh-automations-coverage-security/#downstream-checkyml">Coverage and Security Workflows</a></td>
 </tr>
 <tr>
 <td><code>lint.yml</code></td>
 <td>Runs <code>ruff</code> and/or <code>pre-commit</code>.</td>
-<td><a href="../gh-automations-quality-workflows/#lintyml">Quality Workflows</a></td>
+<td><a href="../gh-automations-lint-docs/#lintyml">Lint and Docs Workflows</a></td>
 </tr>
 <tr>
 <td><code>type-check.yml</code></td>
 <td>Runs <code>mypy</code>, informational only unless <code>fail_on_errors: true</code>.</td>
-<td><a href="../gh-automations-quality-workflows/#type-checkyml">Quality Workflows</a></td>
+<td><a href="../gh-automations-lint-docs/#type-checkyml">Lint and Docs Workflows</a></td>
 </tr>
 <tr>
 <td><code>docs-check.yml</code></td>
 <td>Verifies required documentation files exist and optionally lints Markdown.</td>
-<td><a href="../gh-automations-quality-workflows/#docs-checkyml">Quality Workflows</a></td>
+<td><a href="../gh-automations-lint-docs/#docs-checkyml">Lint and Docs Workflows</a></td>
 </tr>
 <tr>
 <td><code>notify-matrix.yml</code></td>
 <td>Sends a message to the OVOS Matrix channel.</td>
-<td><a href="../gh-automations-quality-workflows/#notify-matrixyml">Quality Workflows</a></td>
+<td><a href="../gh-automations-lint-docs/#notify-matrixyml">Lint and Docs Workflows</a></td>
 </tr>
 </tbody>
 </table>
-<p>The <a href="../gh-automations-quality-workflows/#pr-checks-comment-pattern">PR Checks Comment Pattern</a> and <a href="../gh-automations-quality-workflows/#scripts-reference">Scripts Reference</a> sections, describing the shared PR-comment mechanism and the Python scripts used across all of the above workflows, live on the Quality Workflows page.</p>
+<p>The <a href="../gh-automations-pr-comment-scripts/#pr-checks-comment-pattern">PR Checks Comment Pattern</a> and <a href="../gh-automations-pr-comment-scripts/#scripts-reference">Scripts Reference</a> sections, describing the shared PR-comment mechanism and the Python scripts used across all of the above workflows, live on the PR Comment Pattern and Scripts page.</p>
 <hr />
 <p><em>Source code: <a href="https://github.com/OpenVoiceOS/gh-automations">OpenVoiceOS/gh-automations</a>.</em></p>
 <hr />

@@ -1682,7 +1682,7 @@ not a per-language recommendation. Check the <a href="#supported-languages">Supp
 table below for what's actually bundled for a given language before picking a mode.</p>
 </div>
 <p>The recommendations are data-driven: they come from per-language <code>*.conf</code> files bundled in <code>ovos-config</code> (<code>recommends/</code>), so the exact models depend on your installed version. See <a href="../config/"><code>ovos-config</code></a> for full options.</p>
-<p>The bundled offline STT recommendation is <a href="../stt-plugins/#ovos-stt-plugin-onnx-asr"><code>ovos-stt-plugin-onnx-asr</code></a>
+<p>The bundled offline STT recommendation is <a href="../stt-plugins-reference/#ovos-stt-plugin-onnx-asr"><code>ovos-stt-plugin-onnx-asr</code></a>
 for every covered language, running a per-language ONNX model picked from the
 <a href="https://huggingface.co/collections/OpenVoiceOS/stt-asr-onnx">OpenVoiceOS STT ONNX</a> collection.
 On CPU it prefers <code>int8</code>-quantized weights where the model ships them, for a smaller
@@ -1741,7 +1741,7 @@ lighter Conformer). <code>--gpu</code> needs a CUDA-capable GPU and implies <cod
 <blockquote>
 <p>The table below is a snapshot of the bundled recommendations. The authoritative list is whatever <code>recommends/offline_stt/*.conf</code>, <code>recommends/offline_female/*.conf</code>, and <code>recommends/offline_male/*.conf</code> files ship in your installed <code>ovos-config</code>. It grows as new models are added to the OVOS Hugging Face collections.</p>
 </blockquote>
-<p>Offline STT is <a href="../stt-plugins/#ovos-stt-plugin-onnx-asr"><code>ovos-stt-plugin-onnx-asr</code></a> everywhere
+<p>Offline STT is <a href="../stt-plugins-reference/#ovos-stt-plugin-onnx-asr"><code>ovos-stt-plugin-onnx-asr</code></a> everywhere
 it's listed. Where the table shows an offline TTS entry, it is always
 <a href="../tts-plugins/#ovos-tts-plugin-phoonnx"><code>ovos-tts-plugin-phoonnx</code></a>, pinned to a specific male
 and/or female voice. <code>int8</code> next to a model means a quantized CPU build is available and used

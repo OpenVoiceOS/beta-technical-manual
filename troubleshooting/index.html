@@ -687,16 +687,38 @@
   
   
   
-    <li class="md-nav__item">
-      <a href="../skill-examples/" class="md-nav__link">
+    
+    
+    
+      
+      
+    
+    
+      
         
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../skill-examples/" class="md-nav__link">
+      
   
   <span class="md-ellipsis">
     What can I say? (Skills)
   </span>
   
 
-      </a>
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
     </li>
   
 
@@ -1934,7 +1956,7 @@ bus isn't reachable, the client itself logs the failure to the terminal:</p>
 <p>If you see that, start (or restart) <code>ovos-messagebus</code>, then <code>ovos-core</code> and <code>ovos-dinkum-listener</code>,
 and check <code>bus.log</code> for a clean startup (no repeated <code>Connection Refused</code> lines). Clients
 reconnect on their own with a backing-off retry (5 s → 60 s cap), so a bus restart does <strong>not</strong>
-require restarting every client by hand. See <a href="../bus-service/#bus-restart-reconnect-behavior">Bus restart / reconnect
+require restarting every client by hand. See <a href="../bus-reconnect/#bus-restart-reconnect-behavior">Bus restart / reconnect
 behavior</a> for exactly what to expect while they
 recover.</p>
 <p>In <code>ovos-busmon</code>, this stage is trivially visible: if the bus was down when busmon started, its

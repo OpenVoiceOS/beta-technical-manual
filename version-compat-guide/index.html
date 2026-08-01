@@ -1783,8 +1783,8 @@ it merges, <code>MessageBusClient</code> speaks OVOS-MSG-1 spec topics only and 
 <code>RuntimeError</code>.</p>
 <p>There will be no client-side shim for this: migrate remote clients and
 satellites to <code>ovos.*</code> spec topics while the bridge still covers both spellings. Do
-not write new code that shims legacy topic names. See <a href="../updating-from-older-ovos/#the-bus-client-legacy-topic-dual-emit-and-its-removal">Updating From
-Older OVOS</a>
+not write new code that shims legacy topic names. See <a href="../migration-bus-dual-emit/">The bus-client
+legacy-topic dual-emit and its removal</a>
 for the full migration path.</p>
 <p><strong>Pre-fork mycroft-core.</strong> The <code>MycroftSkill</code> compat metaclass that let classic
 Mycroft skills load under OVOS was removed in <code>ovos-workshop</code> <code>2d684a1</code> (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/235" title="GitHub Issue: TigreGotico/ovos-technical-manual #235">#235</a>,

@@ -1643,7 +1643,7 @@ thin-client bridge), the pattern worth keeping is:</p>
 </ul>
 <p><code>After=</code> only orders unit <em>start</em>. It says nothing about whether the messagebus is actually
 accepting connections yet, and it says nothing about what happens when the bus unit <em>restarts</em>
-later. See <a href="../bus-service/#bus-restart-reconnect-behavior">Bus restart / reconnect behavior</a> for
+later. See <a href="../bus-reconnect/#bus-restart-reconnect-behavior">Bus restart / reconnect behavior</a> for
 what a dependent service's existing bus connection does when that happens (short version: it
 reconnects on its own with backoff, so <code>Restart=on-failure</code> on the messagebus unit is enough.
 You do not need to also restart every dependent service).</p>
@@ -2157,7 +2157,7 @@ full warning and the VPN/reverse-proxy alternative.</p>
   widening the bus itself. See <a href="../satellites/">Composable Deployments: Satellites</a> for how a
   satellite fits into a wider topology.
 - Serving the bus itself over TLS (for the cases above where it does need to leave localhost)
-  is covered in <a href="../bus-service/#configuration">Bus Service: Serving the bus over TLS</a>.</p>
+  is covered in <a href="../bus-reconnect/#bus-restart-reconnect-behavior">Bus restart / reconnect behavior: Serving the bus over TLS</a>.</p>
 <hr />
 <h2 id="observability-what-exists-and-what-doesnt">Observability: what exists and what doesn't<a class="headerlink" href="#observability-what-exists-and-what-doesnt" title="Permanent link">&para;</a></h2>
 <div class="admonition warning">

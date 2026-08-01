@@ -14,7 +14,7 @@
         <link rel="prev" href="../first-skill/">
       
       
-        <link rel="next" href="../migrating-from-mycroft/">
+        <link rel="next" href="../recipe-reminder-persistence/">
       
       
       <link rel="icon" href="https://github.com/OpenVoiceOS/ovos_assets/blob/master/Logo/ovos-logo-512.png?raw=true">
@@ -22,7 +22,7 @@
     
     
       
-        <title>Skill Cookbook - OpenVoiceOS Technical Manual</title>
+        <title>Recipe Index - OpenVoiceOS Technical Manual</title>
       
     
     
@@ -111,7 +111,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Skill Cookbook
+              Recipe Index
             
           </span>
         </div>
@@ -793,6 +793,48 @@
   
   
   
+    
+    
+    
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_2_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_6_2_2" id="__nav_6_2_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Skill Cookbook
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_6_2_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            Skill Cookbook
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
     <li class="md-nav__item md-nav__item--active">
       
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
@@ -805,7 +847,7 @@
           
   
   <span class="md-ellipsis">
-    Skill Cookbook
+    Recipe Index
   </span>
   
 
@@ -816,7 +858,7 @@
         
   
   <span class="md-ellipsis">
-    Skill Cookbook
+    Recipe Index
   </span>
   
 
@@ -847,294 +889,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#1-a-reminder-skill-scheduled-events-with-restart-persistence" class="md-nav__link">
-    <span class="md-ellipsis">
-      1. A reminder skill: scheduled events with restart persistence
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="1. A reminder skill: scheduled events with restart persistence">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#moving-parts" class="md-nav__link">
-    <span class="md-ellipsis">
-      Moving parts
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#2-user-configurable-behavior-settings-settingsmeta-live-reload" class="md-nav__link">
-    <span class="md-ellipsis">
-      2. User-configurable behavior: settings + settingsmeta + live reload
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="2. User-configurable behavior: settings + settingsmeta + live reload">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#moving-parts_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      Moving parts
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#3-calling-an-external-api-safely-timeouts-spoken-errors-and-a-cache" class="md-nav__link">
-    <span class="md-ellipsis">
-      3. Calling an external API safely: timeouts, spoken errors, and a cache
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="3. Calling an external API safely: timeouts, spoken errors, and a cache">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#moving-parts_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      Moving parts
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#4-continuous-conversation-multi-turn-dialog-with-converse-and-get_response" class="md-nav__link">
-    <span class="md-ellipsis">
-      4. Continuous conversation: multi-turn dialog with converse and get_response
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="4. Continuous conversation: multi-turn dialog with converse and get_response">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#moving-parts_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      Moving parts
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#5-a-small-local-media-playlist-an-ocp-skill" class="md-nav__link">
-    <span class="md-ellipsis">
-      5. A small local media playlist: an OCP skill
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="5. A small local media playlist: an OCP skill">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#moving-parts_4" class="md-nav__link">
-    <span class="md-ellipsis">
-      Moving parts
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#6-gui-voice-together-show-a-page-while-speaking-update-it-live" class="md-nav__link">
-    <span class="md-ellipsis">
-      6. GUI + voice together: show a page while speaking, update it live
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="6. GUI + voice together: show a page while speaking, update it live">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#moving-parts_5" class="md-nav__link">
-    <span class="md-ellipsis">
-      Moving parts
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#7-fallback-llm-delegating-unmatched-utterances-to-a-solver-plugin" class="md-nav__link">
-    <span class="md-ellipsis">
-      7. Fallback + LLM: delegating unmatched utterances to a solver plugin
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="7. Fallback + LLM: delegating unmatched utterances to a solver plugin">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#moving-parts_6" class="md-nav__link">
-    <span class="md-ellipsis">
-      Moving parts
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#8-ambient-behavior-from-bus-events-react-to-listening-state-and-time-of-day" class="md-nav__link">
-    <span class="md-ellipsis">
-      8. Ambient behavior from bus events: react to listening state and time of day
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="8. Ambient behavior from bus events: react to listening state and time of day">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#moving-parts_7" class="md-nav__link">
-    <span class="md-ellipsis">
-      Moving parts
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#9-a-voice-game-converse-driven-game-loop" class="md-nav__link">
-    <span class="md-ellipsis">
-      9. A voice game: converse-driven game loop
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="9. A voice game: converse-driven game loop">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#moving-parts_8" class="md-nav__link">
-    <span class="md-ellipsis">
-      Moving parts
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#10-collecting-structured-input-get_response-with-a-validator" class="md-nav__link">
-    <span class="md-ellipsis">
-      10. Collecting structured input: get_response with a validator
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="10. Collecting structured input: get_response with a validator">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#moving-parts_9" class="md-nav__link">
-    <span class="md-ellipsis">
-      Moving parts
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#11-control-an-external-device-publish-to-an-mqtt-broker" class="md-nav__link">
-    <span class="md-ellipsis">
-      11. Control an external device: publish to an MQTT broker
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="11. Control an external device: publish to an MQTT broker">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#moving-parts_10" class="md-nav__link">
-    <span class="md-ellipsis">
-      Moving parts
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#12-a-skill-with-a-settings-ui-declare-edit-read-react" class="md-nav__link">
-    <span class="md-ellipsis">
-      12. A skill with a settings UI: declare, edit, read, react
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="12. A skill with a settings UI: declare, edit, read, react">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#moving-parts_11" class="md-nav__link">
-    <span class="md-ellipsis">
-      Moving parts
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#learn-from-the-official-skills" class="md-nav__link">
     <span class="md-ellipsis">
       Learn from the official skills
@@ -1146,6 +900,266 @@
     </ul>
   
 </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../recipe-reminder-persistence/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Reminder with Restart Persistence
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../recipe-reactive-settings/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Configurable + Reactive Settings
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../recipe-safe-api-call/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Safe External API Call
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../recipe-multi-turn-conversation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Multi-turn Conversation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../recipe-local-media-playlist/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Local Media Playlist
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../recipe-gui-plus-voice/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    GUI + Voice Together
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../recipe-llm-fallback/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Fallback to an LLM Solver
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../recipe-ambient-bus-events/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Ambient Bus-Event Behavior
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../recipe-conversational-game/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Converse-Driven Game Loop
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../recipe-validated-get-response/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Validated Slot Collection
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../recipe-mqtt-device-control/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Control an External Device (MQTT)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../recipe-settings-ui/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    A Skill with a Settings UI
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
       
     </li>
   
@@ -1606,294 +1620,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#1-a-reminder-skill-scheduled-events-with-restart-persistence" class="md-nav__link">
-    <span class="md-ellipsis">
-      1. A reminder skill: scheduled events with restart persistence
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="1. A reminder skill: scheduled events with restart persistence">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#moving-parts" class="md-nav__link">
-    <span class="md-ellipsis">
-      Moving parts
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#2-user-configurable-behavior-settings-settingsmeta-live-reload" class="md-nav__link">
-    <span class="md-ellipsis">
-      2. User-configurable behavior: settings + settingsmeta + live reload
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="2. User-configurable behavior: settings + settingsmeta + live reload">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#moving-parts_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      Moving parts
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#3-calling-an-external-api-safely-timeouts-spoken-errors-and-a-cache" class="md-nav__link">
-    <span class="md-ellipsis">
-      3. Calling an external API safely: timeouts, spoken errors, and a cache
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="3. Calling an external API safely: timeouts, spoken errors, and a cache">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#moving-parts_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      Moving parts
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#4-continuous-conversation-multi-turn-dialog-with-converse-and-get_response" class="md-nav__link">
-    <span class="md-ellipsis">
-      4. Continuous conversation: multi-turn dialog with converse and get_response
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="4. Continuous conversation: multi-turn dialog with converse and get_response">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#moving-parts_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      Moving parts
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#5-a-small-local-media-playlist-an-ocp-skill" class="md-nav__link">
-    <span class="md-ellipsis">
-      5. A small local media playlist: an OCP skill
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="5. A small local media playlist: an OCP skill">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#moving-parts_4" class="md-nav__link">
-    <span class="md-ellipsis">
-      Moving parts
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#6-gui-voice-together-show-a-page-while-speaking-update-it-live" class="md-nav__link">
-    <span class="md-ellipsis">
-      6. GUI + voice together: show a page while speaking, update it live
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="6. GUI + voice together: show a page while speaking, update it live">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#moving-parts_5" class="md-nav__link">
-    <span class="md-ellipsis">
-      Moving parts
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#7-fallback-llm-delegating-unmatched-utterances-to-a-solver-plugin" class="md-nav__link">
-    <span class="md-ellipsis">
-      7. Fallback + LLM: delegating unmatched utterances to a solver plugin
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="7. Fallback + LLM: delegating unmatched utterances to a solver plugin">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#moving-parts_6" class="md-nav__link">
-    <span class="md-ellipsis">
-      Moving parts
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#8-ambient-behavior-from-bus-events-react-to-listening-state-and-time-of-day" class="md-nav__link">
-    <span class="md-ellipsis">
-      8. Ambient behavior from bus events: react to listening state and time of day
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="8. Ambient behavior from bus events: react to listening state and time of day">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#moving-parts_7" class="md-nav__link">
-    <span class="md-ellipsis">
-      Moving parts
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#9-a-voice-game-converse-driven-game-loop" class="md-nav__link">
-    <span class="md-ellipsis">
-      9. A voice game: converse-driven game loop
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="9. A voice game: converse-driven game loop">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#moving-parts_8" class="md-nav__link">
-    <span class="md-ellipsis">
-      Moving parts
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#10-collecting-structured-input-get_response-with-a-validator" class="md-nav__link">
-    <span class="md-ellipsis">
-      10. Collecting structured input: get_response with a validator
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="10. Collecting structured input: get_response with a validator">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#moving-parts_9" class="md-nav__link">
-    <span class="md-ellipsis">
-      Moving parts
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#11-control-an-external-device-publish-to-an-mqtt-broker" class="md-nav__link">
-    <span class="md-ellipsis">
-      11. Control an external device: publish to an MQTT broker
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="11. Control an external device: publish to an MQTT broker">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#moving-parts_10" class="md-nav__link">
-    <span class="md-ellipsis">
-      Moving parts
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#12-a-skill-with-a-settings-ui-declare-edit-read-react" class="md-nav__link">
-    <span class="md-ellipsis">
-      12. A skill with a settings UI: declare, edit, read, react
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="12. A skill with a settings UI: declare, edit, read, react">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#moving-parts_11" class="md-nav__link">
-    <span class="md-ellipsis">
-      Moving parts
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#learn-from-the-official-skills" class="md-nav__link">
     <span class="md-ellipsis">
       Learn from the official skills
@@ -1925,6 +1651,11 @@
 <p class="admonition-title">In a nutshell</p>
 <p>The rest of this manual documents individual building blocks (settings, scheduling, playback, a GUI) one at a time. This page instead shows them <strong>combined</strong>, the way a real skill uses them: a complete, working file for each common job a skill needs to do. If you already know what <code>schedule_event</code> or <code>@ocp_search</code> does and just want to see it used correctly next to everything else it needs, start here.</p>
 </div>
+<p>Each recipe is a <strong>complete skill module</strong> (or a clearly-marked excerpt of one), with notes on the moving parts and links to the reference page that documents each API in full. None of these recipes invent new methods: every class, method signature, and bus event name was checked against the installed <code>ovos-workshop</code>, <code>ovos-bus-client</code>, and <code>ovos-utils</code> packages.</p>
+<div class="admonition note">
+<p class="admonition-title">Scaffolding not shown</p>
+<p>To keep each recipe focused, <code>requirements.txt</code>, <code>manifest.yml</code>, <code>setup.py</code>/<code>pyproject.toml</code>, and the <code>__init__.py</code> boilerplate needed to actually publish a skill are omitted here. See <a href="../skill-structure/">Anatomy of a Skill</a> for those. Intent files (<code>.intent</code>, <code>.voc</code>) referenced below live under <code>locale/&lt;lang&gt;/</code>.</p>
+</div>
 <h2 id="recipe-index">Recipe index<a class="headerlink" href="#recipe-index" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -1932,792 +1663,84 @@
 <th>#</th>
 <th>Recipe</th>
 <th>Base class</th>
-<th>Key APIs</th>
+<th>Teaches</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>1</td>
-<td>Reminder with restart persistence</td>
+<td><a href="../recipe-reminder-persistence/">Reminder with restart persistence</a></td>
 <td><code>OVOSSkill</code></td>
-<td><code>schedule_event</code>, <code>settings</code></td>
+<td><code>schedule_event</code>, <code>settings</code> restart survival</td>
 </tr>
 <tr>
 <td>2</td>
-<td>Configurable + reactive settings</td>
+<td><a href="../recipe-reactive-settings/">Configurable + reactive settings</a></td>
 <td><code>OVOSSkill</code></td>
 <td><code>settings_change_callback</code>, <code>settingsmeta.yaml</code></td>
 </tr>
 <tr>
 <td>3</td>
-<td>Safe external API call</td>
+<td><a href="../recipe-safe-api-call/">Safe external API call</a></td>
 <td><code>OVOSSkill</code></td>
-<td><code>runtime_requirements</code>, <code>file_system</code></td>
+<td><code>runtime_requirements</code>, <code>file_system</code> cache</td>
 </tr>
 <tr>
 <td>4</td>
-<td>Multi-turn conversation</td>
+<td><a href="../recipe-multi-turn-conversation/">Multi-turn conversation</a></td>
 <td><code>ConversationalSkill</code></td>
 <td><code>get_response</code>, <code>converse</code>, <code>activate</code></td>
 </tr>
 <tr>
 <td>5</td>
-<td>Local media playlist</td>
+<td><a href="../recipe-local-media-playlist/">Local media playlist</a></td>
 <td><code>OVOSCommonPlaybackSkill</code></td>
 <td><code>@ocp_search</code>, <code>MediaType</code>/<code>PlaybackType</code></td>
 </tr>
 <tr>
 <td>6</td>
-<td>GUI + voice together</td>
+<td><a href="../recipe-gui-plus-voice/">GUI + voice together</a></td>
 <td><code>OVOSSkill</code></td>
 <td><code>self.gui</code>, <code>show_page</code></td>
 </tr>
 <tr>
 <td>7</td>
-<td>Fallback to an LLM solver</td>
+<td><a href="../recipe-llm-fallback/">Fallback to an LLM solver</a></td>
 <td><code>FallbackSkill</code></td>
 <td><code>register_fallback</code>, <code>QuestionSolver</code></td>
 </tr>
 <tr>
 <td>8</td>
-<td>Ambient bus-event behavior</td>
+<td><a href="../recipe-ambient-bus-events/">Ambient bus-event behavior</a></td>
 <td><code>OVOSSkill</code></td>
 <td><code>add_event</code>, <code>recognizer_loop:*</code></td>
 </tr>
 <tr>
 <td>9</td>
-<td>Converse-driven game loop</td>
+<td><a href="../recipe-conversational-game/">Converse-driven game loop</a></td>
 <td><code>ConversationalGameSkill</code></td>
 <td><code>on_play_game</code>, <code>on_game_command</code>, <code>converse</code></td>
 </tr>
 <tr>
 <td>10</td>
-<td>Validated slot collection</td>
+<td><a href="../recipe-validated-get-response/">Validated slot collection</a></td>
 <td><code>OVOSSkill</code></td>
 <td><code>get_response(validator=..., on_fail=..., num_retries=...)</code></td>
 </tr>
 <tr>
 <td>11</td>
-<td>Control an external device (MQTT)</td>
+<td><a href="../recipe-mqtt-device-control/">Control an external device (MQTT)</a></td>
 <td><code>OVOSSkill</code></td>
 <td><code>paho.mqtt.client.Client</code>, <code>connect</code>, <code>publish</code>, <code>disconnect</code></td>
 </tr>
 <tr>
 <td>12</td>
-<td>A skill with a settings UI</td>
+<td><a href="../recipe-settings-ui/">A skill with a settings UI</a></td>
 <td><code>OVOSSkill</code></td>
 <td><code>settingsmeta.yaml</code>, <code>ovos-skill-config-tool</code>, <code>settings_change_callback</code></td>
 </tr>
 </tbody>
 </table>
-<p>Each recipe below is a <strong>complete skill module</strong> (or a clearly-marked excerpt of one), followed by notes on the moving parts and links to the reference page that documents each API in full. None of these recipes invent new methods: every class, method signature, and bus event name was checked against the installed <code>ovos-workshop</code>, <code>ovos-bus-client</code>, and <code>ovos-utils</code> packages.</p>
-<div class="admonition note">
-<p class="admonition-title">Scaffolding not shown</p>
-<p>To keep each recipe focused, <code>requirements.txt</code>, <code>manifest.yml</code>, <code>setup.py</code>/<code>pyproject.toml</code>, and the <code>__init__.py</code> boilerplate needed to actually publish a skill are omitted here. See <a href="../skill-structure/">Anatomy of a Skill</a> for those. Intent files (<code>.intent</code>, <code>.voc</code>) referenced below live under <code>locale/&lt;lang&gt;/</code>.</p>
-</div>
-<hr />
-<h2 id="1-a-reminder-skill-scheduled-events-with-restart-persistence">1. A reminder skill: scheduled events with restart persistence<a class="headerlink" href="#1-a-reminder-skill-scheduled-events-with-restart-persistence" title="Permanent link">&para;</a></h2>
-<p><strong>When you'd want this:</strong> the user says "remind me in 10 minutes to check the oven", and the reminder must still fire even if the device rebooted in the meantime.</p>
-<p>The scheduler (<code>self.schedule_event</code>) lives entirely in memory. If the skill process restarts, every pending timer is gone. The only thing that survives a restart is the skill's <a href="../skill-settings/">settings</a> file, so a reminder skill must write down <em>when</em> each reminder is due and re-schedule anything still in the future the moment the skill reloads.</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span> <span class="nn">datetime</span>
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kn">from</span> <span class="nn">ovos_workshop.skills</span> <span class="kn">import</span> <span class="n">OVOSSkill</span>
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kn">from</span> <span class="nn">ovos_workshop.decorators</span> <span class="kn">import</span> <span class="n">intent_handler</span>
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>
-</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="k">class</span> <span class="nc">ReminderSkill</span><span class="p">(</span><span class="n">OVOSSkill</span><span class="p">):</span>
-</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>        <span class="c1"># on every load (including after a restart), re-arm anything</span>
-</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>        <span class="c1"># that was still pending when we last shut down</span>
-</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">when_iso</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;pending_reminders&quot;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>            <span class="n">when</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">fromisoformat</span><span class="p">(</span><span class="n">when_iso</span><span class="p">)</span>
-</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>            <span class="k">if</span> <span class="n">when</span> <span class="o">&gt;</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">():</span>
-</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>                <span class="bp">self</span><span class="o">.</span><span class="n">schedule_event</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle_reminder_due</span><span class="p">,</span> <span class="n">when</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
-</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>            <span class="k">else</span><span class="p">:</span>
-</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>                <span class="c1"># missed it while we were down, fire immediately</span>
-</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>                <span class="bp">self</span><span class="o">.</span><span class="n">schedule_event</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle_reminder_due</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
-</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>
-</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>    <span class="nd">@intent_handler</span><span class="p">(</span><span class="s2">&quot;set_reminder.intent&quot;</span><span class="p">)</span>
-</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>    <span class="k">def</span> <span class="nf">handle_set_reminder</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
-</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>        <span class="n">minutes</span> <span class="o">=</span> <span class="n">message</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;minutes&quot;</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
-</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>        <span class="n">text</span> <span class="o">=</span> <span class="n">message</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;utterance&quot;</span><span class="p">,</span> <span class="s2">&quot;your reminder&quot;</span><span class="p">)</span>
-</span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>        <span class="n">when</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span> <span class="o">+</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">minutes</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">minutes</span><span class="p">))</span>
-</span><span id="__span-0-23"><a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>        <span class="n">name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;reminder_</span><span class="si">{</span><span class="n">when</span><span class="o">.</span><span class="n">timestamp</span><span class="p">()</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2">&quot;</span>
-</span><span id="__span-0-24"><a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>
-</span><span id="__span-0-25"><a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">schedule_event</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle_reminder_due</span><span class="p">,</span> <span class="n">when</span><span class="p">,</span>
-</span><span id="__span-0-26"><a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>                             <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="n">text</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">name</span><span class="p">},</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
-</span><span id="__span-0-27"><a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>
-</span><span id="__span-0-28"><a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a>        <span class="n">pending</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;pending_reminders&quot;</span><span class="p">,</span> <span class="p">{})</span>
-</span><span id="__span-0-29"><a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a>        <span class="n">pending</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">when</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span>
-</span><span id="__span-0-30"><a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="p">[</span><span class="s2">&quot;pending_reminders&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pending</span>
-</span><span id="__span-0-31"><a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">store</span><span class="p">()</span>
-</span><span id="__span-0-32"><a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a>
-</span><span id="__span-0-33"><a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">speak_dialog</span><span class="p">(</span><span class="s2">&quot;reminder_set&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;minutes&quot;</span><span class="p">:</span> <span class="n">minutes</span><span class="p">})</span>
-</span><span id="__span-0-34"><a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a>
-</span><span id="__span-0-35"><a id="__codelineno-0-35" name="__codelineno-0-35" href="#__codelineno-0-35"></a>    <span class="k">def</span> <span class="nf">handle_reminder_due</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
-</span><span id="__span-0-36"><a id="__codelineno-0-36" name="__codelineno-0-36" href="#__codelineno-0-36"></a>        <span class="c1"># self.play_audio(self.find_resource(&quot;chime.mp3&quot;, &quot;snd&quot;)) would play a</span>
-</span><span id="__span-0-37"><a id="__codelineno-0-37" name="__codelineno-0-37" href="#__codelineno-0-37"></a>        <span class="c1"># sound file instead of/before speaking — see self.play_audio</span>
-</span><span id="__span-0-38"><a id="__codelineno-0-38" name="__codelineno-0-38" href="#__codelineno-0-38"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">speak_dialog</span><span class="p">(</span><span class="s2">&quot;reminder_due&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="n">message</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">]})</span>
-</span><span id="__span-0-39"><a id="__codelineno-0-39" name="__codelineno-0-39" href="#__codelineno-0-39"></a>        <span class="n">pending</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;pending_reminders&quot;</span><span class="p">,</span> <span class="p">{})</span>
-</span><span id="__span-0-40"><a id="__codelineno-0-40" name="__codelineno-0-40" href="#__codelineno-0-40"></a>        <span class="n">pending</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">message</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">],</span> <span class="kc">None</span><span class="p">)</span>
-</span><span id="__span-0-41"><a id="__codelineno-0-41" name="__codelineno-0-41" href="#__codelineno-0-41"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="p">[</span><span class="s2">&quot;pending_reminders&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pending</span>
-</span><span id="__span-0-42"><a id="__codelineno-0-42" name="__codelineno-0-42" href="#__codelineno-0-42"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">store</span><span class="p">()</span>
-</span><span id="__span-0-43"><a id="__codelineno-0-43" name="__codelineno-0-43" href="#__codelineno-0-43"></a>
-</span><span id="__span-0-44"><a id="__codelineno-0-44" name="__codelineno-0-44" href="#__codelineno-0-44"></a>    <span class="nd">@intent_handler</span><span class="p">(</span><span class="s2">&quot;cancel_reminder.intent&quot;</span><span class="p">)</span>
-</span><span id="__span-0-45"><a id="__codelineno-0-45" name="__codelineno-0-45" href="#__codelineno-0-45"></a>    <span class="k">def</span> <span class="nf">handle_cancel_reminder</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
-</span><span id="__span-0-46"><a id="__codelineno-0-46" name="__codelineno-0-46" href="#__codelineno-0-46"></a>        <span class="n">pending</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;pending_reminders&quot;</span><span class="p">,</span> <span class="p">{})</span>
-</span><span id="__span-0-47"><a id="__codelineno-0-47" name="__codelineno-0-47" href="#__codelineno-0-47"></a>        <span class="c1"># cancel every reminder we know about; a real skill would</span>
-</span><span id="__span-0-48"><a id="__codelineno-0-48" name="__codelineno-0-48" href="#__codelineno-0-48"></a>        <span class="c1"># let the user pick one by name/time instead</span>
-</span><span id="__span-0-49"><a id="__codelineno-0-49" name="__codelineno-0-49" href="#__codelineno-0-49"></a>        <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">pending</span><span class="p">):</span>
-</span><span id="__span-0-50"><a id="__codelineno-0-50" name="__codelineno-0-50" href="#__codelineno-0-50"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">cancel_scheduled_event</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
-</span><span id="__span-0-51"><a id="__codelineno-0-51" name="__codelineno-0-51" href="#__codelineno-0-51"></a>            <span class="n">pending</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
-</span><span id="__span-0-52"><a id="__codelineno-0-52" name="__codelineno-0-52" href="#__codelineno-0-52"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="p">[</span><span class="s2">&quot;pending_reminders&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pending</span>
-</span><span id="__span-0-53"><a id="__codelineno-0-53" name="__codelineno-0-53" href="#__codelineno-0-53"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">store</span><span class="p">()</span>
-</span><span id="__span-0-54"><a id="__codelineno-0-54" name="__codelineno-0-54" href="#__codelineno-0-54"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">speak_dialog</span><span class="p">(</span><span class="s2">&quot;reminders_cleared&quot;</span><span class="p">)</span>
-</span></code></pre></div>
-<p><code>locale/en-us/dialog/reminder_set.dialog</code>:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>I&#39;ll remind you in {minutes} minutes
-</span></code></pre></div>
-<p><code>locale/en-us/dialog/reminder_due.dialog</code>:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>Reminder: {text}
-</span></code></pre></div>
-<h3 id="moving-parts">Moving parts<a class="headerlink" href="#moving-parts" title="Permanent link">&para;</a></h3>
-<ul>
-<li><code>self.schedule_event(handler, when, data=None, name=None)</code>: <code>when</code> accepts a
-  <code>datetime.datetime</code> (absolute) or an <code>int</code>/<code>float</code> (seconds from now). <code>name</code> is
-  the handle you cancel or update by later. Full signature and semantics: <a href="../ovos-skill/#scheduling-events">Scheduling Events</a>.</li>
-<li><code>self.cancel_scheduled_event(name)</code> / <code>self.update_scheduled_event(name, data)</code>: manage an existing timer by name.</li>
-<li>For a recurring alarm (not a one-shot reminder), use <code>self.schedule_repeating_event(handler, when, frequency, name=...)</code> instead. Same page.</li>
-<li><code>self.settings</code> is a <code>JsonStorage</code> (dict-like) backed by <code>settings.json</code>. <code>self.settings.store()</code> writes it to disk immediately. See <a href="../skill-settings/">Skill Settings</a> for the storage location and lifecycle.</li>
-<li>The pattern of "write intended future state to settings, replay it in <code>initialize()</code>" is the standard way any OVOS skill survives a restart. There is no separate scheduler persistence API.</li>
-</ul>
-<div class="admonition tip">
-<p class="admonition-title">Full production example</p>
-<p><a href="https://github.com/OpenVoiceOS/ovos-skill-alerts"><code>ovos-skill-alerts</code></a> implements exactly this pattern for real alarms and timers, including recurring (weekday) alarms via <code>schedule_repeating_event</code>.</p>
-</div>
-<hr />
-<h2 id="2-user-configurable-behavior-settings-settingsmeta-live-reload">2. User-configurable behavior: settings + settingsmeta + live reload<a class="headerlink" href="#2-user-configurable-behavior-settings-settingsmeta-live-reload" title="Permanent link">&para;</a></h2>
-<p><strong>When you'd want this:</strong> a skill has a behavior the user should be able to tune, such as a unit system, a greeting name, or an API key, and it should react immediately when that value changes, whether the change came from a config file edit or a remote settings backend.</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kn">from</span> <span class="nn">ovos_workshop.skills</span> <span class="kn">import</span> <span class="n">OVOSSkill</span>
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="kn">from</span> <span class="nn">ovos_workshop.decorators</span> <span class="kn">import</span> <span class="n">intent_handler</span>
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
-</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>
-</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="k">class</span> <span class="nc">GreeterSkill</span><span class="p">(</span><span class="n">OVOSSkill</span><span class="p">):</span>
-</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">settings_change_callback</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_settings_changed</span>
-</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_apply_settings</span><span class="p">()</span>
-</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>
-</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>    <span class="k">def</span> <span class="nf">_apply_settings</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">greeting_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;friend&quot;</span><span class="p">)</span>
-</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">use_title_case</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;shout&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
-</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>
-</span><span id="__span-3-14"><a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a>    <span class="k">def</span> <span class="nf">on_settings_changed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="__span-3-15"><a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a>        <span class="c1"># called whenever settings.json changes on disk, or a remote</span>
-</span><span id="__span-3-16"><a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a>        <span class="c1"># settings backend pushes an update for this skill</span>
-</span><span id="__span-3-17"><a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_apply_settings</span><span class="p">()</span>
-</span><span id="__span-3-18"><a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;settings updated, now greeting as </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">greeting_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</span><span id="__span-3-19"><a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a>
-</span><span id="__span-3-20"><a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a>    <span class="nd">@intent_handler</span><span class="p">(</span><span class="s2">&quot;greet.intent&quot;</span><span class="p">)</span>
-</span><span id="__span-3-21"><a id="__codelineno-3-21" name="__codelineno-3-21" href="#__codelineno-3-21"></a>    <span class="k">def</span> <span class="nf">handle_greet</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
-</span><span id="__span-3-22"><a id="__codelineno-3-22" name="__codelineno-3-22" href="#__codelineno-3-22"></a>        <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">greeting_name</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_title_case</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">greeting_name</span>
-</span><span id="__span-3-23"><a id="__codelineno-3-23" name="__codelineno-3-23" href="#__codelineno-3-23"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">speak_dialog</span><span class="p">(</span><span class="s2">&quot;greeting&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">name</span><span class="p">})</span>
-</span></code></pre></div>
-<p><code>settingsmeta.yaml</code> (the optional form shown by web/companion-app settings UIs):</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nt">skillMetadata</span><span class="p">:</span>
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">  </span><span class="nt">sections</span><span class="p">:</span>
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Greeter&quot;</span>
-</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">      </span><span class="nt">fields</span><span class="p">:</span>
-</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;name&quot;</span>
-</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;text&quot;</span>
-</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="w">          </span><span class="nt">label</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;What</span><span class="nv"> </span><span class="s">should</span><span class="nv"> </span><span class="s">I</span><span class="nv"> </span><span class="s">call</span><span class="nv"> </span><span class="s">you?&quot;</span>
-</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="w">          </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;friend&quot;</span>
-</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;shout&quot;</span>
-</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;checkbox&quot;</span>
-</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="w">          </span><span class="nt">label</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;SHOUT</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">greeting&quot;</span>
-</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="w">          </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
-</span></code></pre></div>
-<h3 id="moving-parts_1">Moving parts<a class="headerlink" href="#moving-parts_1" title="Permanent link">&para;</a></h3>
-<ul>
-<li><code>self.settings_change_callback</code> is a plain attribute you assign a callable to (there is no decorator for it). The base class checks <code>if self.settings_change_callback is not None</code> both on a local file-watcher change and on a remote <code>mycroft.skills.settings.changed</code> push, and calls it with no arguments either way. See <a href="../skill-settings/">Skill Settings</a> for the two trigger paths.</li>
-<li>Read settings defensively with <code>.get(key, default)</code>. A fresh install has an empty <code>settings.json</code> until <code>settingsmeta.yaml</code> defaults are applied by a settings UI, or you seed <code>self.settings</code> yourself in <code>initialize()</code>.</li>
-<li><code>settingsmeta.yaml</code>/<code>.json</code> is descriptive only. It drives a <em>UI</em> for editing settings, and does not itself create or validate keys. See <a href="../skill-settings-meta/">Skill Settings Meta</a> for the full field-type table and where the file must live.</li>
-</ul>
-<hr />
-<h2 id="3-calling-an-external-api-safely-timeouts-spoken-errors-and-a-cache">3. Calling an external API safely: timeouts, spoken errors, and a cache<a class="headerlink" href="#3-calling-an-external-api-safely-timeouts-spoken-errors-and-a-cache" title="Permanent link">&para;</a></h2>
-<p><strong>When you'd want this:</strong> a skill answers "what's the exchange rate" or similar by hitting a remote HTTP API, and needs to (a) never hang the skill process on a slow/dead endpoint, and (b) fail with a spoken sentence instead of a traceback.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>This recipe also shows <code>runtime_requirements</code>, a deprecated, legacy declaration kept here
-for skills that already use it. See <a href="../skill-runtime-requirements/">Runtime Requirements</a>
-for what it currently does. New skills don't need it for the timeout/cache/spoken-error
-pattern below, which works regardless.</p>
-</div>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kn">import</span> <span class="nn">json</span>
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="kn">import</span> <span class="nn">time</span>
-</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>
-</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="kn">import</span> <span class="nn">requests</span>
-</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="kn">from</span> <span class="nn">ovos_utils</span> <span class="kn">import</span> <span class="n">classproperty</span>
-</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="kn">from</span> <span class="nn">ovos_utils.process_utils</span> <span class="kn">import</span> <span class="n">RuntimeRequirements</span>
-</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="kn">from</span> <span class="nn">ovos_workshop.skills</span> <span class="kn">import</span> <span class="n">OVOSSkill</span>
-</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="kn">from</span> <span class="nn">ovos_workshop.decorators</span> <span class="kn">import</span> <span class="n">intent_handler</span>
-</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>
-</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="n">API_URL</span> <span class="o">=</span> <span class="s2">&quot;https://api.example.com/rate&quot;</span>
-</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="n">CACHE_TTL</span> <span class="o">=</span> <span class="mi">3600</span>  <span class="c1"># seconds</span>
-</span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>
-</span><span id="__span-5-13"><a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>
-</span><span id="__span-5-14"><a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a><span class="k">class</span> <span class="nc">ExchangeRateSkill</span><span class="p">(</span><span class="n">OVOSSkill</span><span class="p">):</span>
-</span><span id="__span-5-15"><a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a>
-</span><span id="__span-5-16"><a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a>    <span class="nd">@classproperty</span>
-</span><span id="__span-5-17"><a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a>    <span class="k">def</span> <span class="nf">runtime_requirements</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="__span-5-18"><a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a>        <span class="c1"># legacy declaration: this skill needs a live network connection.</span>
-</span><span id="__span-5-19"><a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a>        <span class="c1"># only gates loading if &quot;skills.use_deferred_loading&quot; is enabled.</span>
-</span><span id="__span-5-20"><a id="__codelineno-5-20" name="__codelineno-5-20" href="#__codelineno-5-20"></a>        <span class="k">return</span> <span class="n">RuntimeRequirements</span><span class="p">(</span>
-</span><span id="__span-5-21"><a id="__codelineno-5-21" name="__codelineno-5-21" href="#__codelineno-5-21"></a>            <span class="n">network_before_load</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-</span><span id="__span-5-22"><a id="__codelineno-5-22" name="__codelineno-5-22" href="#__codelineno-5-22"></a>            <span class="n">internet_before_load</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-</span><span id="__span-5-23"><a id="__codelineno-5-23" name="__codelineno-5-23" href="#__codelineno-5-23"></a>            <span class="n">requires_internet</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-</span><span id="__span-5-24"><a id="__codelineno-5-24" name="__codelineno-5-24" href="#__codelineno-5-24"></a>            <span class="n">requires_network</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-</span><span id="__span-5-25"><a id="__codelineno-5-25" name="__codelineno-5-25" href="#__codelineno-5-25"></a>            <span class="n">no_internet_fallback</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-</span><span id="__span-5-26"><a id="__codelineno-5-26" name="__codelineno-5-26" href="#__codelineno-5-26"></a>            <span class="n">no_network_fallback</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-</span><span id="__span-5-27"><a id="__codelineno-5-27" name="__codelineno-5-27" href="#__codelineno-5-27"></a>        <span class="p">)</span>
-</span><span id="__span-5-28"><a id="__codelineno-5-28" name="__codelineno-5-28" href="#__codelineno-5-28"></a>
-</span><span id="__span-5-29"><a id="__codelineno-5-29" name="__codelineno-5-29" href="#__codelineno-5-29"></a>    <span class="k">def</span> <span class="nf">_cache_path</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="__span-5-30"><a id="__codelineno-5-30" name="__codelineno-5-30" href="#__codelineno-5-30"></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">file_system</span><span class="o">.</span><span class="n">path</span> <span class="o">+</span> <span class="s2">&quot;/rate_cache.json&quot;</span>
-</span><span id="__span-5-31"><a id="__codelineno-5-31" name="__codelineno-5-31" href="#__codelineno-5-31"></a>
-</span><span id="__span-5-32"><a id="__codelineno-5-32" name="__codelineno-5-32" href="#__codelineno-5-32"></a>    <span class="k">def</span> <span class="nf">_read_cache</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="__span-5-33"><a id="__codelineno-5-33" name="__codelineno-5-33" href="#__codelineno-5-33"></a>        <span class="k">try</span><span class="p">:</span>
-</span><span id="__span-5-34"><a id="__codelineno-5-34" name="__codelineno-5-34" href="#__codelineno-5-34"></a>            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cache_path</span><span class="p">())</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-</span><span id="__span-5-35"><a id="__codelineno-5-35" name="__codelineno-5-35" href="#__codelineno-5-35"></a>                <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
-</span><span id="__span-5-36"><a id="__codelineno-5-36" name="__codelineno-5-36" href="#__codelineno-5-36"></a>            <span class="k">if</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;fetched_at&quot;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">CACHE_TTL</span><span class="p">:</span>
-</span><span id="__span-5-37"><a id="__codelineno-5-37" name="__codelineno-5-37" href="#__codelineno-5-37"></a>                <span class="k">return</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;rate&quot;</span><span class="p">]</span>
-</span><span id="__span-5-38"><a id="__codelineno-5-38" name="__codelineno-5-38" href="#__codelineno-5-38"></a>        <span class="k">except</span> <span class="p">(</span><span class="ne">FileNotFoundError</span><span class="p">,</span> <span class="ne">KeyError</span><span class="p">,</span> <span class="n">json</span><span class="o">.</span><span class="n">JSONDecodeError</span><span class="p">):</span>
-</span><span id="__span-5-39"><a id="__codelineno-5-39" name="__codelineno-5-39" href="#__codelineno-5-39"></a>            <span class="k">pass</span>
-</span><span id="__span-5-40"><a id="__codelineno-5-40" name="__codelineno-5-40" href="#__codelineno-5-40"></a>        <span class="k">return</span> <span class="kc">None</span>
-</span><span id="__span-5-41"><a id="__codelineno-5-41" name="__codelineno-5-41" href="#__codelineno-5-41"></a>
-</span><span id="__span-5-42"><a id="__codelineno-5-42" name="__codelineno-5-42" href="#__codelineno-5-42"></a>    <span class="k">def</span> <span class="nf">_write_cache</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rate</span><span class="p">):</span>
-</span><span id="__span-5-43"><a id="__codelineno-5-43" name="__codelineno-5-43" href="#__codelineno-5-43"></a>        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cache_path</span><span class="p">(),</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-</span><span id="__span-5-44"><a id="__codelineno-5-44" name="__codelineno-5-44" href="#__codelineno-5-44"></a>            <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">({</span><span class="s2">&quot;rate&quot;</span><span class="p">:</span> <span class="n">rate</span><span class="p">,</span> <span class="s2">&quot;fetched_at&quot;</span><span class="p">:</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()},</span> <span class="n">f</span><span class="p">)</span>
-</span><span id="__span-5-45"><a id="__codelineno-5-45" name="__codelineno-5-45" href="#__codelineno-5-45"></a>
-</span><span id="__span-5-46"><a id="__codelineno-5-46" name="__codelineno-5-46" href="#__codelineno-5-46"></a>    <span class="k">def</span> <span class="nf">_fetch_rate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="__span-5-47"><a id="__codelineno-5-47" name="__codelineno-5-47" href="#__codelineno-5-47"></a>        <span class="n">cached</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_read_cache</span><span class="p">()</span>
-</span><span id="__span-5-48"><a id="__codelineno-5-48" name="__codelineno-5-48" href="#__codelineno-5-48"></a>        <span class="k">if</span> <span class="n">cached</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="__span-5-49"><a id="__codelineno-5-49" name="__codelineno-5-49" href="#__codelineno-5-49"></a>            <span class="k">return</span> <span class="n">cached</span>
-</span><span id="__span-5-50"><a id="__codelineno-5-50" name="__codelineno-5-50" href="#__codelineno-5-50"></a>        <span class="k">try</span><span class="p">:</span>
-</span><span id="__span-5-51"><a id="__codelineno-5-51" name="__codelineno-5-51" href="#__codelineno-5-51"></a>            <span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">API_URL</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
-</span><span id="__span-5-52"><a id="__codelineno-5-52" name="__codelineno-5-52" href="#__codelineno-5-52"></a>            <span class="n">resp</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
-</span><span id="__span-5-53"><a id="__codelineno-5-53" name="__codelineno-5-53" href="#__codelineno-5-53"></a>            <span class="n">rate</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;rate&quot;</span><span class="p">]</span>
-</span><span id="__span-5-54"><a id="__codelineno-5-54" name="__codelineno-5-54" href="#__codelineno-5-54"></a>        <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">Timeout</span><span class="p">:</span>
-</span><span id="__span-5-55"><a id="__codelineno-5-55" name="__codelineno-5-55" href="#__codelineno-5-55"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">speak_dialog</span><span class="p">(</span><span class="s2">&quot;api_timeout&quot;</span><span class="p">)</span>
-</span><span id="__span-5-56"><a id="__codelineno-5-56" name="__codelineno-5-56" href="#__codelineno-5-56"></a>            <span class="k">return</span> <span class="kc">None</span>
-</span><span id="__span-5-57"><a id="__codelineno-5-57" name="__codelineno-5-57" href="#__codelineno-5-57"></a>        <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">RequestException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-</span><span id="__span-5-58"><a id="__codelineno-5-58" name="__codelineno-5-58" href="#__codelineno-5-58"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;exchange rate API call failed: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</span><span id="__span-5-59"><a id="__codelineno-5-59" name="__codelineno-5-59" href="#__codelineno-5-59"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">speak_dialog</span><span class="p">(</span><span class="s2">&quot;api_error&quot;</span><span class="p">)</span>
-</span><span id="__span-5-60"><a id="__codelineno-5-60" name="__codelineno-5-60" href="#__codelineno-5-60"></a>            <span class="k">return</span> <span class="kc">None</span>
-</span><span id="__span-5-61"><a id="__codelineno-5-61" name="__codelineno-5-61" href="#__codelineno-5-61"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_write_cache</span><span class="p">(</span><span class="n">rate</span><span class="p">)</span>
-</span><span id="__span-5-62"><a id="__codelineno-5-62" name="__codelineno-5-62" href="#__codelineno-5-62"></a>        <span class="k">return</span> <span class="n">rate</span>
-</span><span id="__span-5-63"><a id="__codelineno-5-63" name="__codelineno-5-63" href="#__codelineno-5-63"></a>
-</span><span id="__span-5-64"><a id="__codelineno-5-64" name="__codelineno-5-64" href="#__codelineno-5-64"></a>    <span class="nd">@intent_handler</span><span class="p">(</span><span class="s2">&quot;exchange_rate.intent&quot;</span><span class="p">)</span>
-</span><span id="__span-5-65"><a id="__codelineno-5-65" name="__codelineno-5-65" href="#__codelineno-5-65"></a>    <span class="k">def</span> <span class="nf">handle_exchange_rate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
-</span><span id="__span-5-66"><a id="__codelineno-5-66" name="__codelineno-5-66" href="#__codelineno-5-66"></a>        <span class="n">rate</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fetch_rate</span><span class="p">()</span>
-</span><span id="__span-5-67"><a id="__codelineno-5-67" name="__codelineno-5-67" href="#__codelineno-5-67"></a>        <span class="k">if</span> <span class="n">rate</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="__span-5-68"><a id="__codelineno-5-68" name="__codelineno-5-68" href="#__codelineno-5-68"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">speak_dialog</span><span class="p">(</span><span class="s2">&quot;exchange_rate&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;rate&quot;</span><span class="p">:</span> <span class="n">rate</span><span class="p">})</span>
-</span></code></pre></div>
-<h3 id="moving-parts_2">Moving parts<a class="headerlink" href="#moving-parts_2" title="Permanent link">&para;</a></h3>
-<ul>
-<li><code>runtime_requirements</code> (a <code>@classproperty</code> you override, returning <code>RuntimeRequirements(...)</code>) is a deprecated, legacy declaration. Its <code>*_before_load</code> flags only gate loading when <code>skills.use_deferred_loading</code> is enabled in config. With the default config, all skills load unconditionally regardless of this declaration. See <a href="../skill-runtime-requirements/">Runtime Requirements</a> for the current behavior.</li>
-<li>Always pass <code>timeout=</code> to <code>requests.get</code>/<code>.post</code>. An OVOS skill runs on the shared bus-handling thread pool, and a hung HTTP call can stall other skill callbacks.</li>
-<li><code>self.file_system</code> (a <code>FileSystemAccess</code>, exposing <code>.path</code>) is a writable, skill-private directory distinct from <code>settings.json</code>. It is the right place for a response cache, downloaded assets, or anything larger than a few settings keys.</li>
-<li>Wrap the network call narrowly (<code>requests.exceptions.Timeout</code> / <code>.RequestException</code>) so a real bug elsewhere in the handler still raises normally instead of being swallowed by a broad <code>except Exception</code>.</li>
-</ul>
-<hr />
-<h2 id="4-continuous-conversation-multi-turn-dialog-with-converse-and-get_response">4. Continuous conversation: multi-turn dialog with <code>converse</code> and <code>get_response</code><a class="headerlink" href="#4-continuous-conversation-multi-turn-dialog-with-converse-and-get_response" title="Permanent link">&para;</a></h2>
-<div class="admonition warning">
-<p class="admonition-title">Testing multi-turn flows over the bus</p>
-<p>When driving this recipe from a test or script, re-fetch the live session before each
-follow-up utterance. Reusing a stale serialized <code>Session</code> erases the activation from
-turn 1. See <a href="../testing-your-skill/#multi-turn-tests-always-re-pull-the-session">Testing Your Skill</a>.</p>
-</div>
-<p><strong>When you'd want this:</strong> the interaction needs more than one exchange. Booking a table means asking for a time, a party size, and a name in sequence, or reacting to whatever the user says next without them repeating the skill's name.</p>
-<p>There are two complementary tools for this:</p>
-<ul>
-<li><code>self.get_response(...)</code>: call it <em>from inside an intent handler</em> to ask one question and block until an answer (or timeout) comes back. Best for a short, linear form.</li>
-<li><code>ConversationalSkill.converse(message)</code>: override this to intercept <strong>every</strong> utterance while your skill is "active" (recently used), before intent matching even runs. Best for an open-ended back-and-forth.</li>
-</ul>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kn">from</span> <span class="nn">ovos_workshop.skills.converse</span> <span class="kn">import</span> <span class="n">ConversationalSkill</span>
-</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="kn">from</span> <span class="nn">ovos_workshop.decorators</span> <span class="kn">import</span> <span class="n">intent_handler</span>
-</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>
-</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>
-</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="k">class</span> <span class="nc">TableBookingSkill</span><span class="p">(</span><span class="n">ConversationalSkill</span><span class="p">):</span>
-</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_pending_booking</span> <span class="o">=</span> <span class="kc">None</span>
-</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>
-</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>    <span class="nd">@intent_handler</span><span class="p">(</span><span class="s2">&quot;book_table.intent&quot;</span><span class="p">)</span>
-</span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a>    <span class="k">def</span> <span class="nf">handle_book_table</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
-</span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a>        <span class="n">party_size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_response</span><span class="p">(</span><span class="s2">&quot;ask_party_size&quot;</span><span class="p">)</span>
-</span><span id="__span-6-12"><a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a>        <span class="k">if</span> <span class="n">party_size</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="__span-6-13"><a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">speak_dialog</span><span class="p">(</span><span class="s2">&quot;booking_cancelled&quot;</span><span class="p">)</span>
-</span><span id="__span-6-14"><a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a>            <span class="k">return</span>
-</span><span id="__span-6-15"><a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a>        <span class="n">time_str</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_response</span><span class="p">(</span><span class="s2">&quot;ask_time&quot;</span><span class="p">)</span>
-</span><span id="__span-6-16"><a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a>        <span class="k">if</span> <span class="n">time_str</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="__span-6-17"><a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">speak_dialog</span><span class="p">(</span><span class="s2">&quot;booking_cancelled&quot;</span><span class="p">)</span>
-</span><span id="__span-6-18"><a id="__codelineno-6-18" name="__codelineno-6-18" href="#__codelineno-6-18"></a>            <span class="k">return</span>
-</span><span id="__span-6-19"><a id="__codelineno-6-19" name="__codelineno-6-19" href="#__codelineno-6-19"></a>
-</span><span id="__span-6-20"><a id="__codelineno-6-20" name="__codelineno-6-20" href="#__codelineno-6-20"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_pending_booking</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;size&quot;</span><span class="p">:</span> <span class="n">party_size</span><span class="p">,</span> <span class="s2">&quot;time&quot;</span><span class="p">:</span> <span class="n">time_str</span><span class="p">}</span>
-</span><span id="__span-6-21"><a id="__codelineno-6-21" name="__codelineno-6-21" href="#__codelineno-6-21"></a>        <span class="c1"># stay &quot;active&quot; so the next thing the user says, even without</span>
-</span><span id="__span-6-22"><a id="__codelineno-6-22" name="__codelineno-6-22" href="#__codelineno-6-22"></a>        <span class="c1"># re-invoking this skill, is routed to converse() below</span>
-</span><span id="__span-6-23"><a id="__codelineno-6-23" name="__codelineno-6-23" href="#__codelineno-6-23"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">activate</span><span class="p">()</span>
-</span><span id="__span-6-24"><a id="__codelineno-6-24" name="__codelineno-6-24" href="#__codelineno-6-24"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">speak_dialog</span><span class="p">(</span><span class="s2">&quot;confirm_booking&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pending_booking</span><span class="p">)</span>
-</span><span id="__span-6-25"><a id="__codelineno-6-25" name="__codelineno-6-25" href="#__codelineno-6-25"></a>
-</span><span id="__span-6-26"><a id="__codelineno-6-26" name="__codelineno-6-26" href="#__codelineno-6-26"></a>    <span class="k">def</span> <span class="nf">converse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
-</span><span id="__span-6-27"><a id="__codelineno-6-27" name="__codelineno-6-27" href="#__codelineno-6-27"></a>        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pending_booking</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="__span-6-28"><a id="__codelineno-6-28" name="__codelineno-6-28" href="#__codelineno-6-28"></a>            <span class="k">return</span> <span class="kc">False</span>  <span class="c1"># not our turn, let normal intent matching happen</span>
-</span><span id="__span-6-29"><a id="__codelineno-6-29" name="__codelineno-6-29" href="#__codelineno-6-29"></a>
-</span><span id="__span-6-30"><a id="__codelineno-6-30" name="__codelineno-6-30" href="#__codelineno-6-30"></a>        <span class="n">utterance</span> <span class="o">=</span> <span class="n">message</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;utterances&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
-</span><span id="__span-6-31"><a id="__codelineno-6-31" name="__codelineno-6-31" href="#__codelineno-6-31"></a>        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">voc_match</span><span class="p">(</span><span class="n">utterance</span><span class="p">,</span> <span class="s2">&quot;yes&quot;</span><span class="p">):</span>
-</span><span id="__span-6-32"><a id="__codelineno-6-32" name="__codelineno-6-32" href="#__codelineno-6-32"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">speak_dialog</span><span class="p">(</span><span class="s2">&quot;booking_confirmed&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pending_booking</span><span class="p">)</span>
-</span><span id="__span-6-33"><a id="__codelineno-6-33" name="__codelineno-6-33" href="#__codelineno-6-33"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_pending_booking</span> <span class="o">=</span> <span class="kc">None</span>
-</span><span id="__span-6-34"><a id="__codelineno-6-34" name="__codelineno-6-34" href="#__codelineno-6-34"></a>            <span class="k">return</span> <span class="kc">True</span>
-</span><span id="__span-6-35"><a id="__codelineno-6-35" name="__codelineno-6-35" href="#__codelineno-6-35"></a>        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">voc_match</span><span class="p">(</span><span class="n">utterance</span><span class="p">,</span> <span class="s2">&quot;no&quot;</span><span class="p">):</span>
-</span><span id="__span-6-36"><a id="__codelineno-6-36" name="__codelineno-6-36" href="#__codelineno-6-36"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">speak_dialog</span><span class="p">(</span><span class="s2">&quot;booking_cancelled&quot;</span><span class="p">)</span>
-</span><span id="__span-6-37"><a id="__codelineno-6-37" name="__codelineno-6-37" href="#__codelineno-6-37"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_pending_booking</span> <span class="o">=</span> <span class="kc">None</span>
-</span><span id="__span-6-38"><a id="__codelineno-6-38" name="__codelineno-6-38" href="#__codelineno-6-38"></a>            <span class="k">return</span> <span class="kc">True</span>
-</span><span id="__span-6-39"><a id="__codelineno-6-39" name="__codelineno-6-39" href="#__codelineno-6-39"></a>        <span class="k">return</span> <span class="kc">False</span>  <span class="c1"># didn&#39;t understand, let something else try</span>
-</span></code></pre></div>
-<h3 id="moving-parts_3">Moving parts<a class="headerlink" href="#moving-parts_3" title="Permanent link">&para;</a></h3>
-<ul>
-<li><code>get_response(dialog="", data=None, validator=None, on_fail=None, num_retries=-1)</code> speaks <code>dialog</code> (rendered with <code>data</code>), then waits for a reply. It returns the utterance string, or <code>None</code> if the user didn't answer / said "cancel". <code>validator</code> can reject and re-ask (e.g. requiring a number).</li>
-<li><code>converse()</code> only runs while the skill is <strong>active</strong>: recently handled an intent, or explicitly kept alive with <code>self.activate(duration_minutes=...)</code> as shown above. It must subclass <code>ConversationalSkill</code> (not plain <code>OVOSSkill</code>) to be dispatched. Returning <code>True</code> claims the utterance, <code>False</code> lets normal pipeline processing continue. See <a href="../converse/">Converse</a> and the <a href="../converse-pipeline/">Converse Pipeline</a> for how a skill enters and leaves the active list.</li>
-<li><code>self.voc_match(utterance, "yes")</code> checks against <code>locale/en-us/vocab/yes.voc</code>. See <a href="../skill-design-guidelines/">Skill Design Guidelines</a> for vocab file conventions.</li>
-<li><a href="../context/">Context</a> (<code>self.set_context()</code>) is the lighter-weight alternative when you only need to bias which of <em>your own</em> intents can match next, rather than intercepting raw utterances.</li>
-</ul>
-<div class="admonition tip">
-<p class="admonition-title">Full production example</p>
-<p><a href="https://github.com/OpenVoiceOS/ovos-skill-parrot"><code>ovos-skill-parrot</code></a> is a minimal <code>ConversationalSkill</code> with an explicit <code>can_converse</code>/<code>converse</code> pair, good for seeing the bare mechanism with nothing else around it. <a href="https://github.com/OpenVoiceOS/ovos-skill-alerts"><code>ovos-skill-alerts</code></a> shows the same tools used for real work, combining <code>converse</code> with <code>get_response</code> to collect an alert's details across several turns.</p>
-</div>
-<hr />
-<h2 id="5-a-small-local-media-playlist-an-ocp-skill">5. A small local media playlist: an OCP skill<a class="headerlink" href="#5-a-small-local-media-playlist-an-ocp-skill" title="Permanent link">&para;</a></h2>
-<p><strong>When you'd want this:</strong> "play the office playlist" should hand back a short, fixed list of local audio files without any external search or streaming service.</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kn">from</span> <span class="nn">ovos_utils.ocp</span> <span class="kn">import</span> <span class="n">MediaType</span><span class="p">,</span> <span class="n">PlaybackType</span>
-</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="kn">from</span> <span class="nn">ovos_workshop.decorators.ocp</span> <span class="kn">import</span> <span class="n">ocp_search</span>
-</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="kn">from</span> <span class="nn">ovos_workshop.skills.common_play</span> <span class="kn">import</span> <span class="n">OVOSCommonPlaybackSkill</span>
-</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>
-</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="n">PLAYLIST</span> <span class="o">=</span> <span class="p">[</span>
-</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>    <span class="p">{</span>
-</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>        <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Morning Briefing&quot;</span><span class="p">,</span>
-</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>        <span class="s2">&quot;uri&quot;</span><span class="p">:</span> <span class="s2">&quot;file:///opt/office-media/morning-briefing.mp3&quot;</span><span class="p">,</span>
-</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>        <span class="s2">&quot;length&quot;</span><span class="p">:</span> <span class="mi">180</span><span class="p">,</span>
-</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>    <span class="p">},</span>
-</span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>    <span class="p">{</span>
-</span><span id="__span-7-12"><a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a>        <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Lobby Loop&quot;</span><span class="p">,</span>
-</span><span id="__span-7-13"><a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a>        <span class="s2">&quot;uri&quot;</span><span class="p">:</span> <span class="s2">&quot;file:///opt/office-media/lobby-loop.mp3&quot;</span><span class="p">,</span>
-</span><span id="__span-7-14"><a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a>        <span class="s2">&quot;length&quot;</span><span class="p">:</span> <span class="mi">600</span><span class="p">,</span>
-</span><span id="__span-7-15"><a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a>    <span class="p">},</span>
-</span><span id="__span-7-16"><a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a><span class="p">]</span>
-</span><span id="__span-7-17"><a id="__codelineno-7-17" name="__codelineno-7-17" href="#__codelineno-7-17"></a>
-</span><span id="__span-7-18"><a id="__codelineno-7-18" name="__codelineno-7-18" href="#__codelineno-7-18"></a>
-</span><span id="__span-7-19"><a id="__codelineno-7-19" name="__codelineno-7-19" href="#__codelineno-7-19"></a><span class="k">class</span> <span class="nc">OfficePlaylistSkill</span><span class="p">(</span><span class="n">OVOSCommonPlaybackSkill</span><span class="p">):</span>
-</span><span id="__span-7-20"><a id="__codelineno-7-20" name="__codelineno-7-20" href="#__codelineno-7-20"></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-</span><span id="__span-7-21"><a id="__codelineno-7-21" name="__codelineno-7-21" href="#__codelineno-7-21"></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">supported_media</span><span class="o">=</span><span class="p">[</span><span class="n">MediaType</span><span class="o">.</span><span class="n">MUSIC</span><span class="p">],</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-</span><span id="__span-7-22"><a id="__codelineno-7-22" name="__codelineno-7-22" href="#__codelineno-7-22"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">skill_icon</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>  <span class="c1"># optional path/URI to an icon shown in OCP&#39;s UI</span>
-</span><span id="__span-7-23"><a id="__codelineno-7-23" name="__codelineno-7-23" href="#__codelineno-7-23"></a>
-</span><span id="__span-7-24"><a id="__codelineno-7-24" name="__codelineno-7-24" href="#__codelineno-7-24"></a>    <span class="nd">@ocp_search</span><span class="p">()</span>
-</span><span id="__span-7-25"><a id="__codelineno-7-25" name="__codelineno-7-25" href="#__codelineno-7-25"></a>    <span class="k">def</span> <span class="nf">search_office_playlist</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">phrase</span><span class="p">,</span> <span class="n">media_type</span><span class="o">=</span><span class="n">MediaType</span><span class="o">.</span><span class="n">GENERIC</span><span class="p">):</span>
-</span><span id="__span-7-26"><a id="__codelineno-7-26" name="__codelineno-7-26" href="#__codelineno-7-26"></a>        <span class="c1"># self.voc_match() lets a skill claim narrow phrases confidently;</span>
-</span><span id="__span-7-27"><a id="__codelineno-7-27" name="__codelineno-7-27" href="#__codelineno-7-27"></a>        <span class="c1"># everything else gets a low, generic confidence</span>
-</span><span id="__span-7-28"><a id="__codelineno-7-28" name="__codelineno-7-28" href="#__codelineno-7-28"></a>        <span class="n">confident</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">voc_match</span><span class="p">(</span><span class="n">phrase</span><span class="p">,</span> <span class="s2">&quot;office_playlist&quot;</span><span class="p">)</span>
-</span><span id="__span-7-29"><a id="__codelineno-7-29" name="__codelineno-7-29" href="#__codelineno-7-29"></a>        <span class="k">for</span> <span class="n">track</span> <span class="ow">in</span> <span class="n">PLAYLIST</span><span class="p">:</span>
-</span><span id="__span-7-30"><a id="__codelineno-7-30" name="__codelineno-7-30" href="#__codelineno-7-30"></a>            <span class="k">if</span> <span class="n">confident</span> <span class="ow">or</span> <span class="n">track</span><span class="p">[</span><span class="s2">&quot;title&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="n">phrase</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
-</span><span id="__span-7-31"><a id="__codelineno-7-31" name="__codelineno-7-31" href="#__codelineno-7-31"></a>                <span class="k">yield</span> <span class="p">{</span>
-</span><span id="__span-7-32"><a id="__codelineno-7-32" name="__codelineno-7-32" href="#__codelineno-7-32"></a>                    <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="n">track</span><span class="p">[</span><span class="s2">&quot;title&quot;</span><span class="p">],</span>
-</span><span id="__span-7-33"><a id="__codelineno-7-33" name="__codelineno-7-33" href="#__codelineno-7-33"></a>                    <span class="s2">&quot;uri&quot;</span><span class="p">:</span> <span class="n">track</span><span class="p">[</span><span class="s2">&quot;uri&quot;</span><span class="p">],</span>
-</span><span id="__span-7-34"><a id="__codelineno-7-34" name="__codelineno-7-34" href="#__codelineno-7-34"></a>                    <span class="s2">&quot;media_type&quot;</span><span class="p">:</span> <span class="n">MediaType</span><span class="o">.</span><span class="n">MUSIC</span><span class="p">,</span>
-</span><span id="__span-7-35"><a id="__codelineno-7-35" name="__codelineno-7-35" href="#__codelineno-7-35"></a>                    <span class="s2">&quot;playback&quot;</span><span class="p">:</span> <span class="n">PlaybackType</span><span class="o">.</span><span class="n">AUDIO</span><span class="p">,</span>
-</span><span id="__span-7-36"><a id="__codelineno-7-36" name="__codelineno-7-36" href="#__codelineno-7-36"></a>                    <span class="s2">&quot;match_confidence&quot;</span><span class="p">:</span> <span class="mi">90</span> <span class="k">if</span> <span class="n">confident</span> <span class="k">else</span> <span class="mi">40</span><span class="p">,</span>
-</span><span id="__span-7-37"><a id="__codelineno-7-37" name="__codelineno-7-37" href="#__codelineno-7-37"></a>                    <span class="s2">&quot;length&quot;</span><span class="p">:</span> <span class="n">track</span><span class="p">[</span><span class="s2">&quot;length&quot;</span><span class="p">],</span>
-</span><span id="__span-7-38"><a id="__codelineno-7-38" name="__codelineno-7-38" href="#__codelineno-7-38"></a>                <span class="p">}</span>
-</span></code></pre></div>
-<p><code>locale/en-us/vocab/office_playlist.voc</code>:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>office playlist
-</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>lobby music
-</span></code></pre></div>
-<h3 id="moving-parts_4">Moving parts<a class="headerlink" href="#moving-parts_4" title="Permanent link">&para;</a></h3>
-<ul>
-<li><code>MediaType</code> and <code>PlaybackType</code> are enums imported from <code>ovos_utils.ocp</code>. Results are plain dicts, not a dedicated result class. Mandatory keys are <code>uri</code>, <code>title</code>, <code>media_type</code>, <code>playback</code>, <code>match_confidence</code> (0-100), with <code>artist</code>, <code>album</code>, <code>image</code>, <code>length</code> (seconds) optional. Full field table: <a href="../ocp-skills/">OCP Skills</a>.</li>
-<li><code>@ocp_search()</code> (imported from <code>ovos_workshop.decorators.ocp</code>) marks a method as a search provider. OCP calls every registered provider's search method in parallel and keeps the best-confidence result across all installed OCP skills. A search method may <code>return</code> a list or <code>yield</code> results incrementally.</li>
-<li><code>supported_media</code> (passed to <code>super().__init__()</code>) tells OCP which <code>MediaType</code>s this skill should even be asked about.</li>
-<li><code>self.voc_match(phrase, "office_playlist")</code> reuses the same vocabulary mechanism as intents to give a confident match a high score, while still falling back to a loose substring check.</li>
-<li><a href="../ocp-skills/">OCP Skills</a> also documents <code>self.extend_timeout()</code> (ask OCP to wait longer for a slow search) and notes that new integrations not needing the full skill lifecycle may prefer a <code>MediaProvider</code> plugin instead. See that page's opening warning.</li>
-</ul>
-<div class="admonition tip">
-<p class="admonition-title">Full production example</p>
-<p><a href="https://github.com/OpenVoiceOS/ovos-skill-somafm"><code>ovos-skill-somafm</code></a> is a full modern OCP skill: <code>@ocp_search</code>, <code>@ocp_featured_media</code>, <code>register_ocp_keyword</code>, and results built as <code>Playlist</code>/<code>MediaEntry</code> objects instead of plain dicts. <a href="https://github.com/OpenVoiceOS/ovos-skill-news"><code>ovos-skill-news</code></a> applies the same pattern for <code>MediaType.NEWS</code>.</p>
-</div>
-<hr />
-<h2 id="6-gui-voice-together-show-a-page-while-speaking-update-it-live">6. GUI + voice together: show a page while speaking, update it live<a class="headerlink" href="#6-gui-voice-together-show-a-page-while-speaking-update-it-live" title="Permanent link">&para;</a></h2>
-<p><strong>When you'd want this:</strong> a skill on a screen-equipped device (a Mark 2, say) should show a result, such as a weather card, a list, or a picture, at the same moment it speaks about it, and keep the screen in sync as things change (e.g. counting down a timer).</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="kn">from</span> <span class="nn">ovos_workshop.skills</span> <span class="kn">import</span> <span class="n">OVOSSkill</span>
-</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="kn">from</span> <span class="nn">ovos_workshop.decorators</span> <span class="kn">import</span> <span class="n">intent_handler</span>
-</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>
-</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>
-</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="k">class</span> <span class="nc">WeatherCardSkill</span><span class="p">(</span><span class="n">OVOSSkill</span><span class="p">):</span>
-</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>    <span class="nd">@intent_handler</span><span class="p">(</span><span class="s2">&quot;weather.intent&quot;</span><span class="p">)</span>
-</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>    <span class="k">def</span> <span class="nf">handle_weather</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
-</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>        <span class="n">temperature</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_temperature</span><span class="p">()</span>  <span class="c1"># however this skill fetches it</span>
-</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>
-</span><span id="__span-9-10"><a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">gui</span><span class="p">[</span><span class="s2">&quot;temperature&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">temperature</span>
-</span><span id="__span-9-11"><a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">gui</span><span class="p">[</span><span class="s2">&quot;condition&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Sunny&quot;</span>
-</span><span id="__span-9-12"><a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">gui</span><span class="o">.</span><span class="n">show_page</span><span class="p">(</span><span class="s2">&quot;weather.qml&quot;</span><span class="p">,</span> <span class="n">override_idle</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
-</span><span id="__span-9-13"><a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a>
-</span><span id="__span-9-14"><a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">speak_dialog</span><span class="p">(</span><span class="s2">&quot;weather&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;temp&quot;</span><span class="p">:</span> <span class="n">temperature</span><span class="p">})</span>
-</span><span id="__span-9-15"><a id="__codelineno-9-15" name="__codelineno-9-15" href="#__codelineno-9-15"></a>
-</span><span id="__span-9-16"><a id="__codelineno-9-16" name="__codelineno-9-16" href="#__codelineno-9-16"></a>    <span class="k">def</span> <span class="nf">handle_temperature_update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
-</span><span id="__span-9-17"><a id="__codelineno-9-17" name="__codelineno-9-17" href="#__codelineno-9-17"></a>        <span class="c1"># e.g. called from a scheduled event every few minutes while the</span>
-</span><span id="__span-9-18"><a id="__codelineno-9-18" name="__codelineno-9-18" href="#__codelineno-9-18"></a>        <span class="c1"># weather page is showing, to refresh the number without re-speaking</span>
-</span><span id="__span-9-19"><a id="__codelineno-9-19" name="__codelineno-9-19" href="#__codelineno-9-19"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">gui</span><span class="p">[</span><span class="s2">&quot;temperature&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">message</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;temperature&quot;</span><span class="p">]</span>
-</span></code></pre></div>
-<p><code>gui/qt5/weather.qml</code> renders <code>temperature</code>/<code>condition</code> as GUI session data. See <a href="../skill-gui/">Skill GUI</a> for the full page/session-data lifecycle and <code>gui/qt6</code>/other render-backend layout conventions.</p>
-<h3 id="moving-parts_5">Moving parts<a class="headerlink" href="#moving-parts_5" title="Permanent link">&para;</a></h3>
-<ul>
-<li><code>self.gui</code> is a <code>SkillGUI</code> instance (a subclass of <code>GUIInterface</code>), set up automatically once a skill initializes. No separate import or manual construction is needed.</li>
-<li><code>self.gui["key"] = value</code> sets session data the page template reads. <code>self.gui.show_page(name, override_idle=...)</code> requests that page be displayed (<code>override_idle</code> keeps it up for N seconds even if something would otherwise return to the idle screen).</li>
-<li>Updating <code>self.gui[...]</code> again while the page is already showing (as in <code>handle_temperature_update</code>) pushes fresh data to an already-visible page without calling <code>show_page</code> again.</li>
-<li>
-<div class="admonition danger">
-<p class="admonition-title">This is the legacy GUI stack</p>
-Everything in this recipe targets the current, <strong>deprecated</strong> <code>.qml</code>-based GUI stack, which <a href="../skill-gui/">Skill GUI</a> documents as effectively unusable outside Mark 2 maintenance today. The forward-looking replacement is the <strong>Upcoming</strong> <a href="../gui-adapters/">GUI rework</a> (spec OVOS-GUI-1), which instead has a skill declare intent via a closed <code>SYSTEM_*</code> template vocabulary rather than shipping custom <code>.qml</code>. That page is the one to design new screen support against.</div>
-</li>
-</ul>
-<div class="admonition tip">
-<p class="admonition-title">Full production example</p>
-<p><a href="https://github.com/OpenVoiceOS/ovos-skill-camera"><code>ovos-skill-camera</code></a> runs a near-identical sequence: <code>show_text</code> for a countdown, then <code>show_image</code> once the photo is ready. <a href="https://github.com/OpenVoiceOS/ovos-skill-wallpapers"><code>ovos-skill-wallpapers</code></a> shows the other half of the lifecycle, calling <code>gui.release()</code> to hand screen ownership back to the homescreen when the skill is done with it.</p>
-</div>
-<hr />
-<h2 id="7-fallback-llm-delegating-unmatched-utterances-to-a-solver-plugin">7. Fallback + LLM: delegating unmatched utterances to a solver plugin<a class="headerlink" href="#7-fallback-llm-delegating-unmatched-utterances-to-a-solver-plugin" title="Permanent link">&para;</a></h2>
-<p><strong>When you'd want this:</strong> every intent-matching skill has had its turn and none of them understood the utterance. Instead of a flat "sorry, I don't understand," hand it to a language-model-backed plugin and speak whatever it comes back with.</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="kn">from</span> <span class="nn">ovos_plugin_manager.templates.solvers</span> <span class="kn">import</span> <span class="n">QuestionSolver</span>
-</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="kn">from</span> <span class="nn">ovos_workshop.skills.fallback</span> <span class="kn">import</span> <span class="n">FallbackSkill</span>
-</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>
-</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>
-</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="k">class</span> <span class="nc">LLMFallbackSkill</span><span class="p">(</span><span class="n">FallbackSkill</span><span class="p">):</span>
-</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>        <span class="c1"># a specific solver plugin id, e.g. &quot;ovos-solver-openai-persona-plugin&quot;;</span>
-</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>        <span class="c1"># find_question_solver_plugins lists everything registered under opm.solver</span>
-</span><span id="__span-10-9"><a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a>        <span class="kn">from</span> <span class="nn">ovos_plugin_manager.solvers</span> <span class="kn">import</span> <span class="n">find_question_solver_plugins</span>
-</span><span id="__span-10-10"><a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a>        <span class="n">plugin_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;solver_plugin&quot;</span><span class="p">,</span> <span class="s2">&quot;ovos-solver-openai-persona-plugin&quot;</span><span class="p">)</span>
-</span><span id="__span-10-11"><a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a>        <span class="n">plugins</span> <span class="o">=</span> <span class="n">find_question_solver_plugins</span><span class="p">()</span>
-</span><span id="__span-10-12"><a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a>        <span class="k">if</span> <span class="n">plugin_id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">plugins</span><span class="p">:</span>
-</span><span id="__span-10-13"><a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;solver plugin &#39;</span><span class="si">{</span><span class="n">plugin_id</span><span class="si">}</span><span class="s2">&#39; not installed, &quot;</span>
-</span><span id="__span-10-14"><a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a>                              <span class="s2">&quot;falling back to a plain &#39;I don&#39;t understand&#39;&quot;</span><span class="p">)</span>
-</span><span id="__span-10-15"><a id="__codelineno-10-15" name="__codelineno-10-15" href="#__codelineno-10-15"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">solver</span> <span class="o">=</span> <span class="kc">None</span>
-</span><span id="__span-10-16"><a id="__codelineno-10-16" name="__codelineno-10-16" href="#__codelineno-10-16"></a>        <span class="k">else</span><span class="p">:</span>
-</span><span id="__span-10-17"><a id="__codelineno-10-17" name="__codelineno-10-17" href="#__codelineno-10-17"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">solver</span><span class="p">:</span> <span class="n">QuestionSolver</span> <span class="o">=</span> <span class="n">plugins</span><span class="p">[</span><span class="n">plugin_id</span><span class="p">]()</span>
-</span><span id="__span-10-18"><a id="__codelineno-10-18" name="__codelineno-10-18" href="#__codelineno-10-18"></a>
-</span><span id="__span-10-19"><a id="__codelineno-10-19" name="__codelineno-10-19" href="#__codelineno-10-19"></a>        <span class="c1"># broad catch-all: let every more specific fallback/skill go first</span>
-</span><span id="__span-10-20"><a id="__codelineno-10-20" name="__codelineno-10-20" href="#__codelineno-10-20"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">register_fallback</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle_fallback</span><span class="p">,</span> <span class="mi">90</span><span class="p">)</span>
-</span><span id="__span-10-21"><a id="__codelineno-10-21" name="__codelineno-10-21" href="#__codelineno-10-21"></a>
-</span><span id="__span-10-22"><a id="__codelineno-10-22" name="__codelineno-10-22" href="#__codelineno-10-22"></a>    <span class="k">def</span> <span class="nf">handle_fallback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
-</span><span id="__span-10-23"><a id="__codelineno-10-23" name="__codelineno-10-23" href="#__codelineno-10-23"></a>        <span class="n">utterance</span> <span class="o">=</span> <span class="n">message</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;utterance&quot;</span><span class="p">]</span>
-</span><span id="__span-10-24"><a id="__codelineno-10-24" name="__codelineno-10-24" href="#__codelineno-10-24"></a>        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">solver</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="__span-10-25"><a id="__codelineno-10-25" name="__codelineno-10-25" href="#__codelineno-10-25"></a>            <span class="k">return</span> <span class="kc">False</span>
-</span><span id="__span-10-26"><a id="__codelineno-10-26" name="__codelineno-10-26" href="#__codelineno-10-26"></a>        <span class="n">answer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">get_spoken_answer</span><span class="p">(</span><span class="n">utterance</span><span class="p">,</span> <span class="n">lang</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">lang</span><span class="p">)</span>
-</span><span id="__span-10-27"><a id="__codelineno-10-27" name="__codelineno-10-27" href="#__codelineno-10-27"></a>        <span class="k">if</span> <span class="n">answer</span><span class="p">:</span>
-</span><span id="__span-10-28"><a id="__codelineno-10-28" name="__codelineno-10-28" href="#__codelineno-10-28"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">speak</span><span class="p">(</span><span class="n">answer</span><span class="p">)</span>
-</span><span id="__span-10-29"><a id="__codelineno-10-29" name="__codelineno-10-29" href="#__codelineno-10-29"></a>            <span class="k">return</span> <span class="kc">True</span>
-</span><span id="__span-10-30"><a id="__codelineno-10-30" name="__codelineno-10-30" href="#__codelineno-10-30"></a>        <span class="k">return</span> <span class="kc">False</span>
-</span></code></pre></div>
-<h3 id="moving-parts_6">Moving parts<a class="headerlink" href="#moving-parts_6" title="Permanent link">&para;</a></h3>
-<ul>
-<li>A <code>FallbackSkill</code> subclass calls <code>self.register_fallback(handler, priority)</code> in <code>initialize()</code>. <code>handler</code> must return <code>True</code> if it produced an answer (stopping the chain) or <code>False</code> to let the next-priority fallback try. Priority <code>90</code> is deliberately high (tried late) since an LLM should be the <em>last</em> resort, not the first. See <a href="../fallbacks/">Fallback Skill</a> for the recommended priority tiers.</li>
-<li><code>QuestionSolver.get_spoken_answer(query, lang=None, units=None)</code> is the common template every question-answering solver plugin implements. A plugin is just a Python entry point (<code>opm.solver</code>) you load by id, the same plugin-discovery pattern used everywhere else in OVOS.</li>
-<li>
-<div class="admonition warning">
-<p class="admonition-title">Upcoming: solver templates are being replaced</p>
-<code>ovos_plugin_manager.templates.solvers</code> (including <code>QuestionSolver</code>, used above because it is what ships and runs today) is deprecated in favor of <code>ovos_plugin_manager.templates.agents.AbstractAgentEngine</code> and the <code>opm.agents.*</code> entry point groups. New solver plugins should target the newer API. See <a href="../agent-plugins/#deprecated-solver-types">Deprecated Solver Types</a> for the full migration table and what each new agent type replaces.</div>
-</li>
-<li><code>self.speak(text)</code> (a raw string) is used here instead of <code>self.speak_dialog(...)</code> because the LLM's answer is not a template. It is already the exact sentence to say.</li>
-</ul>
-<div class="admonition tip">
-<p class="admonition-title">Full production example</p>
-<p><a href="https://github.com/OpenVoiceOS/ovos-skill-wolfie"><code>ovos-skill-wolfie</code></a>, <a href="https://github.com/OpenVoiceOS/ovos-skill-ddg"><code>ovos-skill-ddg</code></a>, and <a href="https://github.com/OpenVoiceOS/ovos-skill-wordnet"><code>ovos-skill-wordnet</code></a> are real <code>FallbackSkill</code> skills that pair <code>register_fallback</code> with <code>@common_query</code>, so they can answer both as a last-resort fallback and as a ranked candidate earlier in the pipeline. <a href="https://github.com/OpenVoiceOS/ovos-skill-fallback-unknown"><code>ovos-skill-fallback-unknown</code></a> is the canonical catch-all, registered at priority 100. Priority sets the order fallbacks are tried in: a lower number runs earlier and gets first refusal, and 100 is the terminal tier, tried only after everything else has passed.</p>
-</div>
-<hr />
-<h2 id="8-ambient-behavior-from-bus-events-react-to-listening-state-and-time-of-day">8. Ambient behavior from bus events: react to listening state and time of day<a class="headerlink" href="#8-ambient-behavior-from-bus-events-react-to-listening-state-and-time-of-day" title="Permanent link">&para;</a></h2>
-<p><strong>When you'd want this:</strong> a skill needs to do something not triggered by an utterance at all. Examples include dimming a light while the device is actively listening, or changing its greeting depending on whether it's morning or night, driven purely by bus events other services already emit.</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="kn">import</span> <span class="nn">datetime</span>
-</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>
-</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="kn">from</span> <span class="nn">ovos_bus_client.message</span> <span class="kn">import</span> <span class="n">Message</span>
-</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="kn">from</span> <span class="nn">ovos_workshop.skills</span> <span class="kn">import</span> <span class="n">OVOSSkill</span>
-</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>
-</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>
-</span><span id="__span-11-7"><a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="k">class</span> <span class="nc">AmbientMoodSkill</span><span class="p">(</span><span class="n">OVOSSkill</span><span class="p">):</span>
-</span><span id="__span-11-8"><a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a>    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="__span-11-9"><a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a>        <span class="c1"># the listener (ovos-dinkum-listener) emits these around each</span>
-</span><span id="__span-11-10"><a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a>        <span class="c1"># recording, independent of any skill or intent</span>
-</span><span id="__span-11-11"><a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">add_event</span><span class="p">(</span><span class="s2">&quot;recognizer_loop:record_begin&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">handle_listening_start</span><span class="p">)</span>
-</span><span id="__span-11-12"><a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">add_event</span><span class="p">(</span><span class="s2">&quot;recognizer_loop:record_end&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">handle_listening_end</span><span class="p">)</span>
-</span><span id="__span-11-13"><a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">add_event</span><span class="p">(</span><span class="s2">&quot;recognizer_loop:audio_output_start&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">handle_speaking_start</span><span class="p">)</span>
-</span><span id="__span-11-14"><a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">add_event</span><span class="p">(</span><span class="s2">&quot;recognizer_loop:audio_output_end&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">handle_speaking_end</span><span class="p">)</span>
-</span><span id="__span-11-15"><a id="__codelineno-11-15" name="__codelineno-11-15" href="#__codelineno-11-15"></a>
-</span><span id="__span-11-16"><a id="__codelineno-11-16" name="__codelineno-11-16" href="#__codelineno-11-16"></a>        <span class="c1"># check the time of day once now, and again every 15 minutes</span>
-</span><span id="__span-11-17"><a id="__codelineno-11-17" name="__codelineno-11-17" href="#__codelineno-11-17"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_update_time_of_day</span><span class="p">()</span>
-</span><span id="__span-11-18"><a id="__codelineno-11-18" name="__codelineno-11-18" href="#__codelineno-11-18"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">schedule_repeating_event</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_update_time_of_day</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="mi">15</span> <span class="o">*</span> <span class="mi">60</span><span class="p">,</span>
-</span><span id="__span-11-19"><a id="__codelineno-11-19" name="__codelineno-11-19" href="#__codelineno-11-19"></a>                                       <span class="n">name</span><span class="o">=</span><span class="s2">&quot;mood_time_check&quot;</span><span class="p">)</span>
-</span><span id="__span-11-20"><a id="__codelineno-11-20" name="__codelineno-11-20" href="#__codelineno-11-20"></a>
-</span><span id="__span-11-21"><a id="__codelineno-11-21" name="__codelineno-11-21" href="#__codelineno-11-21"></a>    <span class="k">def</span> <span class="nf">handle_listening_start</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
-</span><span id="__span-11-22"><a id="__codelineno-11-22" name="__codelineno-11-22" href="#__codelineno-11-22"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_set_mood</span><span class="p">(</span><span class="s2">&quot;listening&quot;</span><span class="p">)</span>
-</span><span id="__span-11-23"><a id="__codelineno-11-23" name="__codelineno-11-23" href="#__codelineno-11-23"></a>
-</span><span id="__span-11-24"><a id="__codelineno-11-24" name="__codelineno-11-24" href="#__codelineno-11-24"></a>    <span class="k">def</span> <span class="nf">handle_listening_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
-</span><span id="__span-11-25"><a id="__codelineno-11-25" name="__codelineno-11-25" href="#__codelineno-11-25"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_set_mood</span><span class="p">(</span><span class="s2">&quot;idle&quot;</span><span class="p">)</span>
-</span><span id="__span-11-26"><a id="__codelineno-11-26" name="__codelineno-11-26" href="#__codelineno-11-26"></a>
-</span><span id="__span-11-27"><a id="__codelineno-11-27" name="__codelineno-11-27" href="#__codelineno-11-27"></a>    <span class="k">def</span> <span class="nf">handle_speaking_start</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
-</span><span id="__span-11-28"><a id="__codelineno-11-28" name="__codelineno-11-28" href="#__codelineno-11-28"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_set_mood</span><span class="p">(</span><span class="s2">&quot;speaking&quot;</span><span class="p">)</span>
-</span><span id="__span-11-29"><a id="__codelineno-11-29" name="__codelineno-11-29" href="#__codelineno-11-29"></a>
-</span><span id="__span-11-30"><a id="__codelineno-11-30" name="__codelineno-11-30" href="#__codelineno-11-30"></a>    <span class="k">def</span> <span class="nf">handle_speaking_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
-</span><span id="__span-11-31"><a id="__codelineno-11-31" name="__codelineno-11-31" href="#__codelineno-11-31"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_set_mood</span><span class="p">(</span><span class="s2">&quot;idle&quot;</span><span class="p">)</span>
-</span><span id="__span-11-32"><a id="__codelineno-11-32" name="__codelineno-11-32" href="#__codelineno-11-32"></a>
-</span><span id="__span-11-33"><a id="__codelineno-11-33" name="__codelineno-11-33" href="#__codelineno-11-33"></a>    <span class="k">def</span> <span class="nf">_update_time_of_day</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-</span><span id="__span-11-34"><a id="__codelineno-11-34" name="__codelineno-11-34" href="#__codelineno-11-34"></a>        <span class="n">hour</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">hour</span>
-</span><span id="__span-11-35"><a id="__codelineno-11-35" name="__codelineno-11-35" href="#__codelineno-11-35"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">is_daytime</span> <span class="o">=</span> <span class="mi">7</span> <span class="o">&lt;=</span> <span class="n">hour</span> <span class="o">&lt;</span> <span class="mi">20</span>
-</span><span id="__span-11-36"><a id="__codelineno-11-36" name="__codelineno-11-36" href="#__codelineno-11-36"></a>
-</span><span id="__span-11-37"><a id="__codelineno-11-37" name="__codelineno-11-37" href="#__codelineno-11-37"></a>    <span class="k">def</span> <span class="nf">_set_mood</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mood</span><span class="p">):</span>
-</span><span id="__span-11-38"><a id="__codelineno-11-38" name="__codelineno-11-38" href="#__codelineno-11-38"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">bus</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">Message</span><span class="p">(</span><span class="s2">&quot;ovos.ambient_mood.changed&quot;</span><span class="p">,</span>
-</span><span id="__span-11-39"><a id="__codelineno-11-39" name="__codelineno-11-39" href="#__codelineno-11-39"></a>                               <span class="p">{</span><span class="s2">&quot;mood&quot;</span><span class="p">:</span> <span class="n">mood</span><span class="p">,</span> <span class="s2">&quot;daytime&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_daytime</span><span class="p">}))</span>
-</span></code></pre></div>
-<h3 id="moving-parts_7">Moving parts<a class="headerlink" href="#moving-parts_7" title="Permanent link">&para;</a></h3>
-<ul>
-<li><code>recognizer_loop:record_begin</code> / <code>recognizer_loop:record_end</code> bracket an active recording (wake word already triggered). <code>recognizer_loop:audio_output_start</code> / <code>_end</code> bracket the device speaking. Both pairs are emitted by the listener service regardless of which skill (if any) is involved. There is also <code>recognizer_loop:wakeword</code>, emitted the instant the wake word itself is detected, slightly before recording begins.</li>
-<li><code>self.add_event(msg_type, handler)</code> subscribes for the lifetime of the skill (auto-removed on shutdown). This is the general-purpose alternative to a decorator-based intent handler, for any bus event that isn't an utterance.</li>
-<li><code>schedule_repeating_event(handler, when, frequency, name=...)</code> with <code>when=None</code> starts the first run after one <code>frequency</code> interval. Pass a <code>datetime</code> for <code>when</code> instead if the first run needs to happen at a specific moment.</li>
-<li>This skill emits its own <code>ovos.ambient_mood.changed</code> event rather than reaching into a light/hardware plugin directly, keeping it decoupled from whatever actually consumes the mood (a PHAL plugin, another skill, a GUI). See <a href="../bus-service/">Bus Service</a> for the emit/on API and <a href="../converse-pipeline/">PIPELINE-1 correlation</a> for how bus events relate to a given utterance's session.</li>
-</ul>
-<hr />
-<h2 id="9-a-voice-game-converse-driven-game-loop">9. A voice game: converse-driven game loop<a class="headerlink" href="#9-a-voice-game-converse-driven-game-loop" title="Permanent link">&para;</a></h2>
-<p><strong>When you'd want this:</strong> the skill runs a game entirely by voice, such as a number-guessing game or a text adventure. While the game is playing, almost anything the user says is game input, not a new command, and the skill must still respond correctly to "stop" or "pause".</p>
-<p><code>ConversationalGameSkill</code> (from <code>ovos_workshop.skills.game_skill</code>) is a small set of <code>on_*</code> hooks over <code>OVOSCommonPlaybackSkill</code>. The OCP media pipeline treats a game as <code>MediaType.GAME</code>: saying "play guess the number" reaches the skill through the same "play X" matching as music or a podcast, and OCP's play/pause/resume/stop transport controls double as the game's transport.</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="kn">import</span> <span class="nn">random</span>
-</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>
-</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="kn">from</span> <span class="nn">ovos_workshop.decorators</span> <span class="kn">import</span> <span class="n">intent_handler</span>
-</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="kn">from</span> <span class="nn">ovos_workshop.skills.game_skill</span> <span class="kn">import</span> <span class="n">ConversationalGameSkill</span>
-</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>
-</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>
-</span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="k">class</span> <span class="nc">GuessNumberGameSkill</span><span class="p">(</span><span class="n">ConversationalGameSkill</span><span class="p">):</span>
-</span><span id="__span-12-8"><a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-</span><span id="__span-12-9"><a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">skill_voc_filename</span><span class="o">=</span><span class="s2">&quot;GuessNumberGameKeyword&quot;</span><span class="p">,</span>
-</span><span id="__span-12-10"><a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a>                         <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-</span><span id="__span-12-11"><a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">secret</span> <span class="o">=</span> <span class="kc">None</span>
-</span><span id="__span-12-12"><a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">guesses_left</span> <span class="o">=</span> <span class="mi">0</span>
-</span><span id="__span-12-13"><a id="__codelineno-12-13" name="__codelineno-12-13" href="#__codelineno-12-13"></a>
-</span><span id="__span-12-14"><a id="__codelineno-12-14" name="__codelineno-12-14" href="#__codelineno-12-14"></a>    <span class="k">def</span> <span class="nf">on_play_game</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="__span-12-15"><a id="__codelineno-12-15" name="__codelineno-12-15" href="#__codelineno-12-15"></a>        <span class="c1"># the framework already set self.is_playing True before this runs</span>
-</span><span id="__span-12-16"><a id="__codelineno-12-16" name="__codelineno-12-16" href="#__codelineno-12-16"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">secret</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
-</span><span id="__span-12-17"><a id="__codelineno-12-17" name="__codelineno-12-17" href="#__codelineno-12-17"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">guesses_left</span> <span class="o">=</span> <span class="mi">7</span>
-</span><span id="__span-12-18"><a id="__codelineno-12-18" name="__codelineno-12-18" href="#__codelineno-12-18"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">speak_dialog</span><span class="p">(</span><span class="s2">&quot;game_start&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;tries&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">guesses_left</span><span class="p">})</span>
-</span><span id="__span-12-19"><a id="__codelineno-12-19" name="__codelineno-12-19" href="#__codelineno-12-19"></a>
-</span><span id="__span-12-20"><a id="__codelineno-12-20" name="__codelineno-12-20" href="#__codelineno-12-20"></a>    <span class="k">def</span> <span class="nf">on_stop_game</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="__span-12-21"><a id="__codelineno-12-21" name="__codelineno-12-21" href="#__codelineno-12-21"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">speak_dialog</span><span class="p">(</span><span class="s2">&quot;game_stop&quot;</span><span class="p">)</span>
-</span><span id="__span-12-22"><a id="__codelineno-12-22" name="__codelineno-12-22" href="#__codelineno-12-22"></a>
-</span><span id="__span-12-23"><a id="__codelineno-12-23" name="__codelineno-12-23" href="#__codelineno-12-23"></a>    <span class="k">def</span> <span class="nf">on_abandon_game</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="__span-12-24"><a id="__codelineno-12-24" name="__codelineno-12-24" href="#__codelineno-12-24"></a>        <span class="c1"># called before on_stop_game if the user goes quiet mid-game</span>
-</span><span id="__span-12-25"><a id="__codelineno-12-25" name="__codelineno-12-25" href="#__codelineno-12-25"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">speak_dialog</span><span class="p">(</span><span class="s2">&quot;game_abandoned&quot;</span><span class="p">)</span>
-</span><span id="__span-12-26"><a id="__codelineno-12-26" name="__codelineno-12-26" href="#__codelineno-12-26"></a>
-</span><span id="__span-12-27"><a id="__codelineno-12-27" name="__codelineno-12-27" href="#__codelineno-12-27"></a>    <span class="k">def</span> <span class="nf">on_game_command</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">utterance</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">lang</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-</span><span id="__span-12-28"><a id="__codelineno-12-28" name="__codelineno-12-28" href="#__codelineno-12-28"></a>        <span class="c1"># every utterance that isn&#39;t claimed by an intent below lands here</span>
-</span><span id="__span-12-29"><a id="__codelineno-12-29" name="__codelineno-12-29" href="#__codelineno-12-29"></a>        <span class="k">try</span><span class="p">:</span>
-</span><span id="__span-12-30"><a id="__codelineno-12-30" name="__codelineno-12-30" href="#__codelineno-12-30"></a>            <span class="n">guess</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">utterance</span><span class="p">)</span>
-</span><span id="__span-12-31"><a id="__codelineno-12-31" name="__codelineno-12-31" href="#__codelineno-12-31"></a>        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
-</span><span id="__span-12-32"><a id="__codelineno-12-32" name="__codelineno-12-32" href="#__codelineno-12-32"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">speak_dialog</span><span class="p">(</span><span class="s2">&quot;not_a_number&quot;</span><span class="p">,</span> <span class="n">expect_response</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</span><span id="__span-12-33"><a id="__codelineno-12-33" name="__codelineno-12-33" href="#__codelineno-12-33"></a>            <span class="k">return</span>
-</span><span id="__span-12-34"><a id="__codelineno-12-34" name="__codelineno-12-34" href="#__codelineno-12-34"></a>
-</span><span id="__span-12-35"><a id="__codelineno-12-35" name="__codelineno-12-35" href="#__codelineno-12-35"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">guesses_left</span> <span class="o">-=</span> <span class="mi">1</span>
-</span><span id="__span-12-36"><a id="__codelineno-12-36" name="__codelineno-12-36" href="#__codelineno-12-36"></a>        <span class="k">if</span> <span class="n">guess</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">secret</span><span class="p">:</span>
-</span><span id="__span-12-37"><a id="__codelineno-12-37" name="__codelineno-12-37" href="#__codelineno-12-37"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">speak_dialog</span><span class="p">(</span><span class="s2">&quot;guess_correct&quot;</span><span class="p">)</span>
-</span><span id="__span-12-38"><a id="__codelineno-12-38" name="__codelineno-12-38" href="#__codelineno-12-38"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">stop_game</span><span class="p">()</span>
-</span><span id="__span-12-39"><a id="__codelineno-12-39" name="__codelineno-12-39" href="#__codelineno-12-39"></a>        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">guesses_left</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
-</span><span id="__span-12-40"><a id="__codelineno-12-40" name="__codelineno-12-40" href="#__codelineno-12-40"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">speak_dialog</span><span class="p">(</span><span class="s2">&quot;guess_out_of_tries&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;answer&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">secret</span><span class="p">})</span>
-</span><span id="__span-12-41"><a id="__codelineno-12-41" name="__codelineno-12-41" href="#__codelineno-12-41"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">stop_game</span><span class="p">()</span>
-</span><span id="__span-12-42"><a id="__codelineno-12-42" name="__codelineno-12-42" href="#__codelineno-12-42"></a>        <span class="k">elif</span> <span class="n">guess</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">secret</span><span class="p">:</span>
-</span><span id="__span-12-43"><a id="__codelineno-12-43" name="__codelineno-12-43" href="#__codelineno-12-43"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">speak_dialog</span><span class="p">(</span><span class="s2">&quot;guess_higher&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;tries&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">guesses_left</span><span class="p">},</span>
-</span><span id="__span-12-44"><a id="__codelineno-12-44" name="__codelineno-12-44" href="#__codelineno-12-44"></a>                             <span class="n">expect_response</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</span><span id="__span-12-45"><a id="__codelineno-12-45" name="__codelineno-12-45" href="#__codelineno-12-45"></a>        <span class="k">else</span><span class="p">:</span>
-</span><span id="__span-12-46"><a id="__codelineno-12-46" name="__codelineno-12-46" href="#__codelineno-12-46"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">speak_dialog</span><span class="p">(</span><span class="s2">&quot;guess_lower&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;tries&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">guesses_left</span><span class="p">},</span>
-</span><span id="__span-12-47"><a id="__codelineno-12-47" name="__codelineno-12-47" href="#__codelineno-12-47"></a>                             <span class="n">expect_response</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</span><span id="__span-12-48"><a id="__codelineno-12-48" name="__codelineno-12-48" href="#__codelineno-12-48"></a>
-</span><span id="__span-12-49"><a id="__codelineno-12-49" name="__codelineno-12-49" href="#__codelineno-12-49"></a>    <span class="nd">@intent_handler</span><span class="p">(</span><span class="s2">&quot;cheat_hint.intent&quot;</span><span class="p">)</span>
-</span><span id="__span-12-50"><a id="__codelineno-12-50" name="__codelineno-12-50" href="#__codelineno-12-50"></a>    <span class="k">def</span> <span class="nf">handle_cheat_hint</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
-</span><span id="__span-12-51"><a id="__codelineno-12-51" name="__codelineno-12-51" href="#__codelineno-12-51"></a>        <span class="c1"># this is the ONLY declared intent in the whole skill; every other</span>
-</span><span id="__span-12-52"><a id="__codelineno-12-52" name="__codelineno-12-52" href="#__codelineno-12-52"></a>        <span class="c1"># utterance while playing falls through to on_game_command above,</span>
-</span><span id="__span-12-53"><a id="__codelineno-12-53" name="__codelineno-12-53" href="#__codelineno-12-53"></a>        <span class="c1"># keeping the game&#39;s own vocabulary out of the intent parser entirely</span>
-</span><span id="__span-12-54"><a id="__codelineno-12-54" name="__codelineno-12-54" href="#__codelineno-12-54"></a>        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_playing</span><span class="p">:</span>
-</span><span id="__span-12-55"><a id="__codelineno-12-55" name="__codelineno-12-55" href="#__codelineno-12-55"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">speak_dialog</span><span class="p">(</span><span class="s2">&quot;hint_refused&quot;</span><span class="p">)</span>
-</span></code></pre></div>
-<h3 id="moving-parts_8">Moving parts<a class="headerlink" href="#moving-parts_8" title="Permanent link">&para;</a></h3>
-<ul>
-<li><code>ConversationalGameSkill</code> subclasses <code>OVOSGameSkill</code>, which subclasses <code>OVOSCommonPlaybackSkill</code>. The constructor requires <code>skill_voc_filename</code>, a <code>.voc</code> file (<code>locale/en-us/vocab/GuessNumberGameKeyword.voc</code>) listing the game's name, so OCP's search step recognizes "play guess the number" as this skill and not a music query.</li>
-<li><code>on_play_game()</code>, <code>on_stop_game()</code>, <code>on_save_game()</code>, <code>on_load_game()</code> are the abstract hooks every game must implement (the last two default to speaking a "can't save" dialog if left alone). OCP calls <code>on_play_game()</code> after already marking the skill as playing (<code>self.is_playing</code> is <code>True</code> inside it). <code>on_pause_game()</code>/<code>on_resume_game()</code> also come from the base class with a working default (an acknowledgement sound, plus an optional dialog gated by the <code>pause_dialog</code> setting); override them only if pausing needs game-specific behavior.</li>
-<li><code>on_game_command(utterance, lang)</code> is where free-form game input arrives. The base class's <code>converse()</code> calls it whenever the skill is playing (and not paused) <em>and</em> the utterance would not otherwise trigger one of this skill's own <code>@intent_handler</code>s (checked via <code>skill_will_trigger</code>). That is what "keeping intents inert during play" means in practice: declare as few <code>@intent_handler</code>s as the game truly needs (<code>cheat_hint.intent</code> above), and everything else, digits, "up", "north", whatever the game vocabulary is, reaches <code>on_game_command</code> instead of missing every intent and falling through to a fallback skill.</li>
-<li><code>self.stop_game()</code> is the base class helper a skill calls to end the game itself (a correct guess, running out of tries). It clears playback state and then calls <code>on_stop_game()</code> for you; don't call <code>on_stop_game()</code> directly.</li>
-<li>Abort/inactivity is handled above the skill entirely: if the user goes quiet for a while, the intent service deactivates the skill, which calls <code>on_abandon_game()</code> and then <code>stop_game()</code> (which in turn calls <code>on_stop_game()</code>). Explicit "stop" while playing goes through the normal OCP stop transport, which calls <code>stop_game()</code> the same way.</li>
-<li>Set <code>self.settings["auto_save"] = True</code> and implement <code>on_save_game()</code> for autosave-before-stop behavior; <code>ConversationalGameSkill</code> calls it for you on every <code>converse()</code> turn and on <code>stop()</code> when both the setting and the override are present (checked via <code>save_is_implemented</code>).</li>
-</ul>
-<div class="admonition tip">
-<p class="admonition-title">Full production example</p>
-<p><a href="https://github.com/JarbasSkills/skill-moon-game"><code>skill-moon-game</code></a> is a full <code>ConversationalGameSkill</code>: a branching narrative driven entirely through <code>on_game_command</code>, with <code>IntentLayers</code> gating which branch-specific phrases are even considered at each story beat. <code>FrotzSkill</code> (from the <a href="https://github.com/JarbasAl/pyfrotz"><code>pyfrotz</code></a> package) shows the same hooks wrapping something entirely different: every utterance in <code>on_game_command</code> is piped as a raw command to an external Z-machine interpreter process, and its text output is what gets spoken.</p>
-</div>
-<hr />
-<h2 id="10-collecting-structured-input-get_response-with-a-validator">10. Collecting structured input: <code>get_response</code> with a validator<a class="headerlink" href="#10-collecting-structured-input-get_response-with-a-validator" title="Permanent link">&para;</a></h2>
-<p><strong>When you'd want this:</strong> an intent needs one specific piece of information, such as a number in a known range, not a free-form sentence. The user should be re-prompted on a bad answer, a limited number of times, and the skill should give up gracefully rather than loop forever.</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="kn">from</span> <span class="nn">ovos_workshop.decorators</span> <span class="kn">import</span> <span class="n">intent_handler</span>
-</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="kn">from</span> <span class="nn">ovos_workshop.skills</span> <span class="kn">import</span> <span class="n">OVOSSkill</span>
-</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>
-</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>
-</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="k">class</span> <span class="nc">ThermostatSkill</span><span class="p">(</span><span class="n">OVOSSkill</span><span class="p">):</span>
-</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>    <span class="nd">@intent_handler</span><span class="p">(</span><span class="s2">&quot;set_temperature.intent&quot;</span><span class="p">)</span>
-</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>    <span class="k">def</span> <span class="nf">handle_set_temperature</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
-</span><span id="__span-13-8"><a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a>        <span class="k">def</span> <span class="nf">in_range</span><span class="p">(</span><span class="n">utterance</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-</span><span id="__span-13-9"><a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a>            <span class="k">try</span><span class="p">:</span>
-</span><span id="__span-13-10"><a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a>                <span class="k">return</span> <span class="mi">10</span> <span class="o">&lt;=</span> <span class="nb">int</span><span class="p">(</span><span class="n">utterance</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">30</span>
-</span><span id="__span-13-11"><a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a>            <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
-</span><span id="__span-13-12"><a id="__codelineno-13-12" name="__codelineno-13-12" href="#__codelineno-13-12"></a>                <span class="k">return</span> <span class="kc">False</span>
-</span><span id="__span-13-13"><a id="__codelineno-13-13" name="__codelineno-13-13" href="#__codelineno-13-13"></a>
-</span><span id="__span-13-14"><a id="__codelineno-13-14" name="__codelineno-13-14" href="#__codelineno-13-14"></a>        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_response</span><span class="p">(</span><span class="s2">&quot;ask_temperature&quot;</span><span class="p">,</span>
-</span><span id="__span-13-15"><a id="__codelineno-13-15" name="__codelineno-13-15" href="#__codelineno-13-15"></a>                                     <span class="n">validator</span><span class="o">=</span><span class="n">in_range</span><span class="p">,</span>
-</span><span id="__span-13-16"><a id="__codelineno-13-16" name="__codelineno-13-16" href="#__codelineno-13-16"></a>                                     <span class="n">on_fail</span><span class="o">=</span><span class="s2">&quot;temperature_out_of_range&quot;</span><span class="p">,</span>
-</span><span id="__span-13-17"><a id="__codelineno-13-17" name="__codelineno-13-17" href="#__codelineno-13-17"></a>                                     <span class="n">num_retries</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-</span><span id="__span-13-18"><a id="__codelineno-13-18" name="__codelineno-13-18" href="#__codelineno-13-18"></a>        <span class="k">if</span> <span class="n">response</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="__span-13-19"><a id="__codelineno-13-19" name="__codelineno-13-19" href="#__codelineno-13-19"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">speak_dialog</span><span class="p">(</span><span class="s2">&quot;temperature_not_set&quot;</span><span class="p">)</span>
-</span><span id="__span-13-20"><a id="__codelineno-13-20" name="__codelineno-13-20" href="#__codelineno-13-20"></a>            <span class="k">return</span>
-</span><span id="__span-13-21"><a id="__codelineno-13-21" name="__codelineno-13-21" href="#__codelineno-13-21"></a>
-</span><span id="__span-13-22"><a id="__codelineno-13-22" name="__codelineno-13-22" href="#__codelineno-13-22"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="p">[</span><span class="s2">&quot;target_temperature&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
-</span><span id="__span-13-23"><a id="__codelineno-13-23" name="__codelineno-13-23" href="#__codelineno-13-23"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">speak_dialog</span><span class="p">(</span><span class="s2">&quot;temperature_set&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;temp&quot;</span><span class="p">:</span> <span class="n">response</span><span class="p">})</span>
-</span></code></pre></div>
-<h3 id="moving-parts_9">Moving parts<a class="headerlink" href="#moving-parts_9" title="Permanent link">&para;</a></h3>
-<ul>
-<li><code>get_response(dialog='', data=None, validator=None, on_fail=None, num_retries=-1, message=None, wait=True)</code> speaks <code>dialog</code>, listens for a reply, and, if <code>validator</code> is given, keeps re-asking until the reply passes it or the retries run out. <code>validator</code> takes the raw utterance string and returns <code>True</code>/<code>False</code>; <code>in_range</code> above rejects anything that isn't an integer between 10 and 30.</li>
-<li><code>on_fail</code> is what gets spoken on a failed validation, before listening again. It can be a dialog name/string, or a <code>(str) -&gt; str</code> callable that builds a message from the failing utterance.</li>
-<li><code>num_retries</code> bounds the re-prompt loop. <code>2</code> above means the user gets up to three attempts total (the original ask plus two retries) before <code>get_response</code> gives up. <code>-1</code>, the default, retries indefinitely, but a silent (no-answer) timeout with <code>-1</code> still only retries once. Cap <code>num_retries</code> deliberately whenever a bad or silent answer should end the interaction instead of looping.</li>
-<li><code>get_response</code> returns the matched utterance as a <code>str</code> on success, or <code>None</code> if no valid response was ever captured, whether because retries ran out, the user said "cancel", or nobody answered. <code>handle_set_temperature</code> above checks for <code>None</code> and speaks a distinct "gave up" dialog rather than assuming <code>response</code> is always usable. See <a href="../prompts/#2-request-extra-information-with-get_response">Get User Response</a> for <code>get_response</code> alongside <code>ask_yesno</code> and <code>ask_selection</code>.</li>
-</ul>
-<div class="admonition tip">
-<p class="admonition-title">Full production example</p>
-<p><a href="https://github.com/OpenVoiceOS/ovos-skill-mark1-ctrl"><code>ovos-skill-mark1-ctrl</code></a>'s <code>handle_custom_eye_color</code> chains three validated <code>get_response</code> calls back to back, one each for red, green, and blue (0-255), each with its own <code>on_fail</code> dialog and <code>num_retries=2</code>, then falls through to <code>ask_yesno</code> to offer saving the result as the default eye color.</p>
-</div>
-<hr />
-<h2 id="11-control-an-external-device-publish-to-an-mqtt-broker">11. Control an external device: publish to an MQTT broker<a class="headerlink" href="#11-control-an-external-device-publish-to-an-mqtt-broker" title="Permanent link">&para;</a></h2>
-<p><strong>When you'd want this:</strong> a device on the network, such as a smart plug or a relay board, listens for commands on an MQTT topic. The skill publishes to that topic on a voice command. It uses the same timeout-plus-spoken-error pattern as Recipe 3, applied to a broker connection instead of an HTTP call.</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="kn">import</span> <span class="nn">paho.mqtt.client</span> <span class="k">as</span> <span class="nn">mqtt</span>
-</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="kn">from</span> <span class="nn">ovos_workshop.skills</span> <span class="kn">import</span> <span class="n">OVOSSkill</span>
-</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="kn">from</span> <span class="nn">ovos_workshop.decorators</span> <span class="kn">import</span> <span class="n">intent_handler</span>
-</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>
-</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a><span class="n">BROKER_HOST</span> <span class="o">=</span> <span class="s2">&quot;192.168.1.50&quot;</span>
-</span><span id="__span-14-6"><a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a><span class="n">BROKER_PORT</span> <span class="o">=</span> <span class="mi">1883</span>
-</span><span id="__span-14-7"><a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a><span class="n">TOPIC</span> <span class="o">=</span> <span class="s2">&quot;home/office/plug1/set&quot;</span>
-</span><span id="__span-14-8"><a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a><span class="n">CONNECT_TIMEOUT</span> <span class="o">=</span> <span class="mi">5</span>
-</span><span id="__span-14-9"><a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a>
-</span><span id="__span-14-10"><a id="__codelineno-14-10" name="__codelineno-14-10" href="#__codelineno-14-10"></a>
-</span><span id="__span-14-11"><a id="__codelineno-14-11" name="__codelineno-14-11" href="#__codelineno-14-11"></a><span class="k">class</span> <span class="nc">MqttPlugSkill</span><span class="p">(</span><span class="n">OVOSSkill</span><span class="p">):</span>
-</span><span id="__span-14-12"><a id="__codelineno-14-12" name="__codelineno-14-12" href="#__codelineno-14-12"></a>    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="__span-14-13"><a id="__codelineno-14-13" name="__codelineno-14-13" href="#__codelineno-14-13"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">client</span> <span class="o">=</span> <span class="n">mqtt</span><span class="o">.</span><span class="n">Client</span><span class="p">(</span><span class="n">mqtt</span><span class="o">.</span><span class="n">CallbackAPIVersion</span><span class="o">.</span><span class="n">VERSION2</span><span class="p">,</span>
-</span><span id="__span-14-14"><a id="__codelineno-14-14" name="__codelineno-14-14" href="#__codelineno-14-14"></a>                                  <span class="n">client_id</span><span class="o">=</span><span class="s2">&quot;ovos-mqtt-plug-skill&quot;</span><span class="p">)</span>
-</span><span id="__span-14-15"><a id="__codelineno-14-15" name="__codelineno-14-15" href="#__codelineno-14-15"></a>        <span class="k">try</span><span class="p">:</span>
-</span><span id="__span-14-16"><a id="__codelineno-14-16" name="__codelineno-14-16" href="#__codelineno-14-16"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">BROKER_HOST</span><span class="p">,</span> <span class="n">BROKER_PORT</span><span class="p">,</span> <span class="n">keepalive</span><span class="o">=</span><span class="n">CONNECT_TIMEOUT</span><span class="p">)</span>
-</span><span id="__span-14-17"><a id="__codelineno-14-17" name="__codelineno-14-17" href="#__codelineno-14-17"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">loop_start</span><span class="p">()</span>
-</span><span id="__span-14-18"><a id="__codelineno-14-18" name="__codelineno-14-18" href="#__codelineno-14-18"></a>        <span class="k">except</span> <span class="p">(</span><span class="ne">OSError</span><span class="p">,</span> <span class="ne">TimeoutError</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-</span><span id="__span-14-19"><a id="__codelineno-14-19" name="__codelineno-14-19" href="#__codelineno-14-19"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;MQTT broker unreachable at init: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</span><span id="__span-14-20"><a id="__codelineno-14-20" name="__codelineno-14-20" href="#__codelineno-14-20"></a>
-</span><span id="__span-14-21"><a id="__codelineno-14-21" name="__codelineno-14-21" href="#__codelineno-14-21"></a>    <span class="nd">@intent_handler</span><span class="p">(</span><span class="s2">&quot;turn_on_plug.intent&quot;</span><span class="p">)</span>
-</span><span id="__span-14-22"><a id="__codelineno-14-22" name="__codelineno-14-22" href="#__codelineno-14-22"></a>    <span class="k">def</span> <span class="nf">handle_turn_on</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
-</span><span id="__span-14-23"><a id="__codelineno-14-23" name="__codelineno-14-23" href="#__codelineno-14-23"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_publish</span><span class="p">(</span><span class="s2">&quot;ON&quot;</span><span class="p">,</span> <span class="s2">&quot;plug_turned_on&quot;</span><span class="p">,</span> <span class="s2">&quot;plug_unreachable&quot;</span><span class="p">)</span>
-</span><span id="__span-14-24"><a id="__codelineno-14-24" name="__codelineno-14-24" href="#__codelineno-14-24"></a>
-</span><span id="__span-14-25"><a id="__codelineno-14-25" name="__codelineno-14-25" href="#__codelineno-14-25"></a>    <span class="nd">@intent_handler</span><span class="p">(</span><span class="s2">&quot;turn_off_plug.intent&quot;</span><span class="p">)</span>
-</span><span id="__span-14-26"><a id="__codelineno-14-26" name="__codelineno-14-26" href="#__codelineno-14-26"></a>    <span class="k">def</span> <span class="nf">handle_turn_off</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
-</span><span id="__span-14-27"><a id="__codelineno-14-27" name="__codelineno-14-27" href="#__codelineno-14-27"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_publish</span><span class="p">(</span><span class="s2">&quot;OFF&quot;</span><span class="p">,</span> <span class="s2">&quot;plug_turned_off&quot;</span><span class="p">,</span> <span class="s2">&quot;plug_unreachable&quot;</span><span class="p">)</span>
-</span><span id="__span-14-28"><a id="__codelineno-14-28" name="__codelineno-14-28" href="#__codelineno-14-28"></a>
-</span><span id="__span-14-29"><a id="__codelineno-14-29" name="__codelineno-14-29" href="#__codelineno-14-29"></a>    <span class="k">def</span> <span class="nf">_publish</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">payload</span><span class="p">,</span> <span class="n">ok_dialog</span><span class="p">,</span> <span class="n">fail_dialog</span><span class="p">):</span>
-</span><span id="__span-14-30"><a id="__codelineno-14-30" name="__codelineno-14-30" href="#__codelineno-14-30"></a>        <span class="k">try</span><span class="p">:</span>
-</span><span id="__span-14-31"><a id="__codelineno-14-31" name="__codelineno-14-31" href="#__codelineno-14-31"></a>            <span class="n">info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="n">TOPIC</span><span class="p">,</span> <span class="n">payload</span><span class="p">,</span> <span class="n">qos</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-</span><span id="__span-14-32"><a id="__codelineno-14-32" name="__codelineno-14-32" href="#__codelineno-14-32"></a>            <span class="n">info</span><span class="o">.</span><span class="n">wait_for_publish</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="n">CONNECT_TIMEOUT</span><span class="p">)</span>
-</span><span id="__span-14-33"><a id="__codelineno-14-33" name="__codelineno-14-33" href="#__codelineno-14-33"></a>            <span class="k">if</span> <span class="ow">not</span> <span class="n">info</span><span class="o">.</span><span class="n">is_published</span><span class="p">():</span>
-</span><span id="__span-14-34"><a id="__codelineno-14-34" name="__codelineno-14-34" href="#__codelineno-14-34"></a>                <span class="k">raise</span> <span class="ne">TimeoutError</span><span class="p">(</span><span class="s2">&quot;publish did not confirm in time&quot;</span><span class="p">)</span>
-</span><span id="__span-14-35"><a id="__codelineno-14-35" name="__codelineno-14-35" href="#__codelineno-14-35"></a>        <span class="k">except</span> <span class="p">(</span><span class="ne">OSError</span><span class="p">,</span> <span class="ne">TimeoutError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">,</span> <span class="ne">RuntimeError</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-</span><span id="__span-14-36"><a id="__codelineno-14-36" name="__codelineno-14-36" href="#__codelineno-14-36"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;MQTT publish failed: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</span><span id="__span-14-37"><a id="__codelineno-14-37" name="__codelineno-14-37" href="#__codelineno-14-37"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">speak_dialog</span><span class="p">(</span><span class="n">fail_dialog</span><span class="p">)</span>
-</span><span id="__span-14-38"><a id="__codelineno-14-38" name="__codelineno-14-38" href="#__codelineno-14-38"></a>            <span class="k">return</span>
-</span><span id="__span-14-39"><a id="__codelineno-14-39" name="__codelineno-14-39" href="#__codelineno-14-39"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">speak_dialog</span><span class="p">(</span><span class="n">ok_dialog</span><span class="p">)</span>
-</span><span id="__span-14-40"><a id="__codelineno-14-40" name="__codelineno-14-40" href="#__codelineno-14-40"></a>
-</span><span id="__span-14-41"><a id="__codelineno-14-41" name="__codelineno-14-41" href="#__codelineno-14-41"></a>    <span class="k">def</span> <span class="nf">shutdown</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="__span-14-42"><a id="__codelineno-14-42" name="__codelineno-14-42" href="#__codelineno-14-42"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">loop_stop</span><span class="p">()</span>
-</span><span id="__span-14-43"><a id="__codelineno-14-43" name="__codelineno-14-43" href="#__codelineno-14-43"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">disconnect</span><span class="p">()</span>
-</span></code></pre></div>
-<h3 id="moving-parts_10">Moving parts<a class="headerlink" href="#moving-parts_10" title="Permanent link">&para;</a></h3>
-<ul>
-<li><code>mqtt.Client(mqtt.CallbackAPIVersion.VERSION2, client_id=...)</code> is the current, non-deprecated way to construct a client; <code>client_id</code> should be unique per device to avoid the broker dropping a duplicate session.</li>
-<li><code>connect(host, port, keepalive=...)</code> is a blocking call, so wrap it (and any use of the client) in a <code>try</code>/<code>except</code> for <code>OSError</code>/<code>TimeoutError</code> and speak a dialog instead of letting the exception surface, the same safety pattern as <a href="#3-calling-an-external-api-safely-timeouts-spoken-errors-and-a-cache">Recipe 3</a>.</li>
-<li><code>loop_start()</code> runs the client's network loop on a background thread so <code>publish()</code> calls don't block waiting on broker I/O. Call <code>loop_stop()</code> in <code>shutdown()</code> to clean it up.</li>
-<li><code>publish(topic, payload, qos=...)</code> returns an <code>MQTTMessageInfo</code>. <code>wait_for_publish(timeout=...)</code> blocks until the broker acknowledges it, or the timeout elapses. <code>is_published()</code> confirms it went through, so a network drop mid-call is caught instead of silently swallowed.</li>
-<li><code>disconnect()</code> closes the connection cleanly. Pair it with <code>loop_stop()</code> in <code>shutdown()</code> so the skill doesn't leave a background thread or an open socket behind when unloaded.</li>
-<li>If the hardware is attached to the OVOS device itself, a <a href="../phal/">PHAL plugin</a> is the intended home for device control; a skill and broker like this one suits a device reachable over the network instead.</li>
-</ul>
-<hr />
-<h2 id="12-a-skill-with-a-settings-ui-declare-edit-read-react">12. A skill with a settings UI: declare, edit, read, react<a class="headerlink" href="#12-a-skill-with-a-settings-ui-declare-edit-read-react" title="Permanent link">&para;</a></h2>
-<p><strong>When you'd want this:</strong> a user should be able to change a skill's settings from a
-browser, with no terminal and no hand-edited JSON, and the skill should pick up the
-change immediately.</p>
-<p>Three parts wire together: a <code>settingsmeta.yaml</code> field declaration, a settings-editing
-UI that reads and writes it, and the skill's own code that reads the stored value and
-reacts when it changes.</p>
-<p><code>settingsmeta.yaml</code>, next to the skill's <code>__init__.py</code>:</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="nt">skillMetadata</span><span class="p">:</span>
-</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="w">  </span><span class="nt">sections</span><span class="p">:</span>
-</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Greeter&quot;</span>
-</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="w">      </span><span class="nt">fields</span><span class="p">:</span>
-</span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;volume&quot;</span>
-</span><span id="__span-15-6"><a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a><span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;number&quot;</span>
-</span><span id="__span-15-7"><a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a><span class="w">          </span><span class="nt">label</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Reply</span><span class="nv"> </span><span class="s">volume</span><span class="nv"> </span><span class="s">(0-100)&quot;</span>
-</span><span id="__span-15-8"><a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a><span class="w">          </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">50</span>
-</span></code></pre></div>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="kn">from</span> <span class="nn">ovos_workshop.skills</span> <span class="kn">import</span> <span class="n">OVOSSkill</span>
-</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="kn">from</span> <span class="nn">ovos_workshop.decorators</span> <span class="kn">import</span> <span class="n">intent_handler</span>
-</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>
-</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a>
-</span><span id="__span-16-5"><a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a><span class="k">class</span> <span class="nc">GreeterSkill</span><span class="p">(</span><span class="n">OVOSSkill</span><span class="p">):</span>
-</span><span id="__span-16-6"><a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a>    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="__span-16-7"><a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">settings_change_callback</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_settings_changed</span>
-</span><span id="__span-16-8"><a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">on_settings_changed</span><span class="p">()</span>  <span class="c1"># apply the stored (or default) value now</span>
-</span><span id="__span-16-9"><a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a>
-</span><span id="__span-16-10"><a id="__codelineno-16-10" name="__codelineno-16-10" href="#__codelineno-16-10"></a>    <span class="k">def</span> <span class="nf">on_settings_changed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="__span-16-11"><a id="__codelineno-16-11" name="__codelineno-16-11" href="#__codelineno-16-11"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">volume</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;volume&quot;</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
-</span><span id="__span-16-12"><a id="__codelineno-16-12" name="__codelineno-16-12" href="#__codelineno-16-12"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;reply volume is now </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">volume</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</span><span id="__span-16-13"><a id="__codelineno-16-13" name="__codelineno-16-13" href="#__codelineno-16-13"></a>
-</span><span id="__span-16-14"><a id="__codelineno-16-14" name="__codelineno-16-14" href="#__codelineno-16-14"></a>    <span class="nd">@intent_handler</span><span class="p">(</span><span class="s2">&quot;greet.intent&quot;</span><span class="p">)</span>
-</span><span id="__span-16-15"><a id="__codelineno-16-15" name="__codelineno-16-15" href="#__codelineno-16-15"></a>    <span class="k">def</span> <span class="nf">handle_greet</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
-</span><span id="__span-16-16"><a id="__codelineno-16-16" name="__codelineno-16-16" href="#__codelineno-16-16"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">speak_dialog</span><span class="p">(</span><span class="s2">&quot;greeting&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;volume&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">volume</span><span class="p">})</span>
-</span></code></pre></div>
-<p>Restart the skill (or all of OVOS) so it picks up the new <code>settingsmeta.yaml</code> field.
-Then install and run the community web UI to edit the value from a browser instead of
-a text editor:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>pip<span class="w"> </span>install<span class="w"> </span>ovos-skill-config-tool
-</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>ovos-skill-config-tool
-</span></code></pre></div>
-<p>Open <code>http://&lt;device-ip&gt;:8000</code>, find the skill by name, and change "Reply volume".
-Saving writes the new value to the skill's <code>settings.json</code>. The running skill notices
-the change and calls <code>on_settings_changed()</code> without a restart.</p>
-<h3 id="moving-parts_11">Moving parts<a class="headerlink" href="#moving-parts_11" title="Permanent link">&para;</a></h3>
-<ul>
-<li><code>settingsmeta.yaml</code> only declares the field for a UI to render; it does not create or
-  validate the key by itself. See <a href="../skill-settings-meta/">Skill Settings Meta</a> for the
-  full field-type table.</li>
-<li><code>self.settings.get("volume", 50)</code> reads the stored value, falling back to <code>50</code> if the
-  key is absent (e.g. before any UI has ever saved a value). See <a href="../skill-settings/#accessing-settings">Skill
-  Settings</a>.</li>
-<li><code>self.settings_change_callback</code>, assigned in <code>initialize()</code>, is called with no
-  arguments whenever <code>settings.json</code> changes on disk (the file watcher) or a remote
-  settings backend pushes an update for this skill. See <a href="../skill-settings/#change-callback">Skill Settings: Change
-  Callback</a>.</li>
-<li><a href="https://github.com/OscillateLabsLLC/ovos-skill-config-tool"><code>ovos-skill-config-tool</code></a>
-  is the community web UI referenced above. It edits the same <code>settings.json</code> the skill
-  itself reads; it does not talk to the skill process directly. See <a href="../skill-settings/#web-based-settings-ui-community">Skill Settings:
-  Web-Based Settings UI</a> for
-  installation and default credentials.</li>
-</ul>
-<hr />
 <h2 id="learn-from-the-official-skills">Learn from the official skills<a class="headerlink" href="#learn-from-the-official-skills" title="Permanent link">&para;</a></h2>
 <p>Every pattern in this cookbook also runs in a real, installable skill. Read the source when you need to see a full manifest, locale files, and edge cases this cookbook leaves out.</p>
 <table>

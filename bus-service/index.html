@@ -14,7 +14,7 @@
         <link rel="prev" href="../maturity/">
       
       
-        <link rel="next" href="../security-model/">
+        <link rel="next" href="../bus-reconnect/">
       
       
       <link rel="icon" href="https://github.com/OpenVoiceOS/ovos_assets/blob/master/Logo/ovos-logo-512.png?raw=true">
@@ -687,6 +687,48 @@
   
   
     <li class="md-nav__item">
+      <a href="../spec-tools-lib/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ovos-spec-tools
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../spec-test-harness/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ovos-test-harness
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../maturity/" class="md-nav__link">
         
   
@@ -925,21 +967,6 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Namespace migration">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#turning-the-bridges-off" class="md-nav__link">
-    <span class="md-ellipsis">
-      Turning the bridges off
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
         <li class="md-nav__item">
@@ -994,45 +1021,75 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Bus recipes">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#connect-emit-and-wait-for-a-response" class="md-nav__link">
-    <span class="md-ellipsis">
-      Connect, emit, and wait for a response
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#from-the-command-line" class="md-nav__link">
-    <span class="md-ellipsis">
-      From the command line
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#watching-the-bus-live" class="md-nav__link">
-    <span class="md-ellipsis">
-      Watching the bus live
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
     </ul>
   
 </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bus-reconnect/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Bus Restart & Reconnect
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bus-namespace-migration/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Bus Namespace Migration
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bus-recipes/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Bus Recipes
+  </span>
+  
+
+      </a>
     </li>
   
 
@@ -1729,21 +1786,6 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Namespace migration">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#turning-the-bridges-off" class="md-nav__link">
-    <span class="md-ellipsis">
-      Turning the bridges off
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
         <li class="md-nav__item">
@@ -1797,39 +1839,6 @@
       Bus recipes
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="Bus recipes">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#connect-emit-and-wait-for-a-response" class="md-nav__link">
-    <span class="md-ellipsis">
-      Connect, emit, and wait for a response
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#from-the-command-line" class="md-nav__link">
-    <span class="md-ellipsis">
-      From the command line
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#watching-the-bus-live" class="md-nav__link">
-    <span class="md-ellipsis">
-      Watching the bus live
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -2197,92 +2206,10 @@ Tornado closes the connection when a message exceeds this size.</p>
 </table>
 <hr />
 <h2 id="namespace-migration">Namespace migration<a class="headerlink" href="#namespace-migration" title="Permanent link">&para;</a></h2>
-<p>The <a href="../architecture-specs/">Formal Specifications</a> rename many bus topics into
-the <code>ovos.*</code> namespace, for example <code>recognizer_loop:utterance</code> →
-<code>ovos.utterance.handle</code> and <code>complete_intent_failure</code> → <code>ovos.intent.unmatched</code>
-(the full list is the <a href="../bus-events/#legacy-spec-migration">legacy ↔ spec table</a>).
-A few families, such as the <code>mycroft.skill.handler.*</code> / <code>ovos.intent.handler.*</code>
-trio, are deliberately <strong>not</strong> bridged. See that page's "Not bridged" note.
-Renaming a topic across an
-ecosystem of independently-released repos cannot happen in one coordinated step.
-So <strong><code>ovos-bus-client</code> migrates automatically and incrementally</strong>. The legacy
-and the new names interoperate transparently while the ecosystem moves over.</p>
-<p>The canonical legacy to spec topic map lives in the <code>NamespaceTranslator</code> from
-<a href="../spec-tooling/"><code>ovos-spec-tools</code></a>, and each <code>MessageBusClient</code> applies it on the
-<strong>receive</strong> side, not by putting a second copy on the wire:</p>
-<pre class="mermaid"><code>sequenceDiagram
-    participant Producer
-    participant Bus as ovos-messagebus
-    participant Client as BusClient&lt;br/&gt;(any process)
-    participant LegacyHandler as legacy topic&lt;br/&gt;handler
-    participant SpecHandler as ovos.* topic&lt;br/&gt;handler
-
-    Producer-&gt;&gt;Bus: emit(recognizer_loop:utterance)
-    Bus-&gt;&gt;Client: broadcast&lt;br/&gt;recognizer_loop:utterance
-    Client-&gt;&gt;Client: on_message:&lt;br/&gt;NamespaceTranslator lookup
-    Client-&gt;&gt;LegacyHandler: dispatch&lt;br/&gt;recognizer_loop:utterance
-    Client-&gt;&gt;SpecHandler: locally re-dispatch&lt;br/&gt;ovos.utterance.handle</code></pre>
-<p><em>Diagram: a producer emits the legacy recognizer_loop:utterance topic, the bus broadcasts it unchanged, and each receiving MessageBusClient uses the NamespaceTranslator to dispatch it to both the legacy handler and, re-dispatched locally, the spec ovos.utterance.handle handler.</em></p>
-<ul>
-<li>A single logical <code>emit()</code> sends exactly <strong>one</strong> message over the websocket: the topic the
-  caller actually chose.</li>
-<li>When that message arrives back over the websocket (to every connected client, including the
-  sender), each client's <code>on_message</code> handler locally re-dispatches it under its counterpart
-  topic(s) too, using the translator to reshape the payload where the shape changed. This is a
-  listener-delivery convenience <em>inside each process</em>, not a second bus message. The broadcast
-  server never sees or re-broadcasts a counterpart frame.</li>
-<li><strong>listen</strong>: subscribing to <em>either</em> name (<code>bus.on(...)</code>) also delivers the counterpart, with
-  <strong>de-duplication</strong> so a handler that would match both fires exactly once.</li>
-</ul>
-<p>The result: a producer and a consumer can each switch from a legacy topic to its <code>ovos.*</code>
-spec name <strong>in any order, with no coordination</strong>, without every component switching at once.</p>
-<h3 id="turning-the-bridges-off">Turning the bridges off<a class="headerlink" href="#turning-the-bridges-off" title="Permanent link">&para;</a></h3>
-<p>Each direction is independently controllable (default <code>true</code>), via environment
-variable or bus configuration:</p>
-<table>
-<thead>
-<tr>
-<th>Direction</th>
-<th>Env var</th>
-<th>Config key</th>
-<th>Effect</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>modernize</td>
-<td><code>OVOS_BUS_MODERNIZE</code></td>
-<td><code>modernize</code></td>
-<td>a received <strong>legacy</strong> topic is also locally re-dispatched under its <code>ovos.*</code> counterpart</td>
-</tr>
-<tr>
-<td>emit_legacy</td>
-<td><code>OVOS_BUS_EMIT_LEGACY</code></td>
-<td><code>emit_legacy</code></td>
-<td>a received <strong><code>ovos.*</code></strong> topic is also locally re-dispatched under its legacy counterpart</td>
-</tr>
-</tbody>
-</table>
-<p>Because the bridging happens per-process on receive, turning a direction off only stops that
-process from locally delivering the counterpart to its own handlers. A deployment whose
-components all speak <code>ovos.*</code> can set <code>emit_legacy=false</code> once no local handler still needs
-the legacy delivery, and disable <code>modernize</code> once no legacy producers remain.</p>
-<div class="admonition warning">
-<p class="admonition-title">The bridge is scheduled for removal</p>
-<p><a href="https://github.com/OpenVoiceOS/ovos-bus-client/pull/272">ovos-bus-client#272</a> is an
-open kill-switch pull request that deletes the bridge entirely: after it merges,
-clients speak <code>ovos.*</code> spec topics and nothing else, and setting the <code>modernize</code> /
-<code>emit_legacy</code> flags raises <code>RuntimeError</code>. Its stated merge condition is a fleet
-already upgraded to spec topics. Migrate remote consumers to the spec names ahead of
-it. See <a href="../upcoming-changes/">Upcoming Changes</a>.</p>
-</div>
-<div class="admonition note">
-<p class="admonition-title">Bridged is not the same as conformant</p>
-<p><a href="../spec-tooling/"><code>ovos-test-harness</code></a> asserts spec behavior on the
-canonical <code>ovos.*</code> topics. A component becomes <em>spec-conformant</em> once it
-speaks <code>ovos.*</code> directly. The bridge keeps it <strong>interoperable</strong> in the
-meantime, but it does not make it conformant.</p>
-</div>
+<p><code>ovos-bus-client</code> bridges legacy and <code>ovos.*</code> spec topic names automatically, so producers and
+consumers can each switch at their own pace. See
+<a href="../bus-namespace-migration/">Bus namespace migration</a> for the full mechanism, the on/off
+switches, and the pending removal of the bridge.</p>
 <hr />
 <h2 id="high-level-api-wrappers">High-level API wrappers<a class="headerlink" href="#high-level-api-wrappers" title="Permanent link">&para;</a></h2>
 <p><code>ovos-bus-client</code> ships four wrapper classes that give plugin and skill authors a typed method
@@ -2331,59 +2258,10 @@ received a message.</p>
 <p>GUI clients connect to <code>ovos-gui</code>'s own WebSocket (<code>ws://localhost:18181/gui</code>), not directly to the messagebus.</p>
 <hr />
 <h2 id="bus-restart-reconnect-behavior">Bus restart / reconnect behavior<a class="headerlink" href="#bus-restart-reconnect-behavior" title="Permanent link">&para;</a></h2>
-<p>Restarting <code>ovos-messagebus</code> is the single most common operational disruption, because every
-other service (<code>ovos-core</code>, <code>ovos-dinkum-listener</code>, <code>ovos-audio</code>, <code>ovos-PHAL</code>) holds a
-<code>MessageBusClient</code> connection to it. What each of those clients does when that connection drops
-is defined once, in <code>ovos-bus-client</code>'s <code>MessageBusClient</code>, and applies identically to every
-service built on it.</p>
-<p><strong>Detecting the drop.</strong> A closed socket reaches the client's <code>on_error</code> handler. A clean close
-that never errors is not distinguished from one that does. Both a <code>WebSocketConnectionClosedException</code>
-and a plain <code>ConnectionRefusedError</code>/<code>ConnectionResetError</code> land there. <code>on_error</code> clears the
-"connected" flag, closes the socket, and reconnects.</p>
-<p><strong>Backoff.</strong> Reconnection starts at a 5-second delay and doubles on each further failure, capped
-at 60 seconds (<code>self.retry = min(self.retry * 2, 60)</code>), so a device left disconnected for a while
-does not overload the bus with reconnect attempts. A successful reconnect resets the delay back to
-5 seconds for next time.</p>
-<p><strong>In-flight calls during the outage.</strong> <code>emit()</code> (and therefore <code>wait_for_response()</code>, which calls
-<code>emit()</code> internally) waits for the connection to come back rather than failing fast. It waits up
-to 10 seconds, and if the client had already started running before that, it then waits with
-<strong>no further timeout</strong> until the socket reconnects.</p>
-<p><code>wait_for_message()</code> / <code>wait_for_response()</code>'s
-own reply-timeout only starts counting once the message is actually sent. So a call made while
-the bus is down can block well past the <code>timeout</code> value you passed it, for as long as the bus
-stays down. Once the client is reconnected, waits resume normally and time out as documented.</p>
-<p><strong>Messages sent during the outage are lost, not queued.</strong> The client does not buffer messages
-while disconnected. Nothing is stored and re-sent once the socket reopens. Any <code>emit()</code> that was
-allowed through only unblocks (and actually sends) after reconnection, but nothing produced by a
-process that isn't running a client at all during the gap is retried later. Downstream services
-should treat a bus restart as a full session reset for anything time-sensitive: session state
-communicated over the bus is fine (a fresh <code>ovos.session.sync</code> happens automatically once the
-socket reopens), but any request/response pair straddling the restart is simply lost from the
-requester's point of view until it emits again.</p>
-<p><strong>Malformed frames don't trigger a reconnect.</strong> A frame that fails to deserialize, or whose
-session carrier isn't a JSON object, is dropped and logged. It does not tear the connection down
-or trigger the reconnect path above. Only a genuine socket-level failure does.</p>
-<p>See <a href="../production-operations/#keep-services-running-systemd-units">Production Operations</a> for how
-this interacts with <code>systemd</code>'s own <code>Restart=</code>/<code>After=</code> ordering across the OVOS services.</p>
-<div class="admonition info">
-<p class="admonition-title">Serving the bus over TLS</p>
-<p>Set <code>websocket.ssl: true</code> and the Tornado <code>ovos-messagebus</code> serves <code>wss://</code> itself — nothing
-needs to sit in front of it. Point it at an existing certificate with <code>websocket.ssl_cert</code>
-and <code>websocket.ssl_key</code>:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>&quot;websocket&quot;: {
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>    &quot;ssl&quot;: true,
-</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>    &quot;ssl_cert&quot;: &quot;/etc/ssl/certs/ovos-bus.crt&quot;,
-</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>    &quot;ssl_key&quot;: &quot;/etc/ssl/private/ovos-bus.key&quot;
-</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>}
-</span></code></pre></div>
-<p>If <code>ssl</code> is on but no cert/key are configured, the bus generates a self-signed pair on first
-start (under <code>$XDG_DATA_HOME/OpenVoiceOS/ovos-messagebus/certs/</code>). This path needs the <code>ssl</code>
-extra (<code>pip install "ovos-messagebus[ssl]"</code>), and the bus refuses to start rather than fall
-back to plaintext if it's missing. Clients built on <code>ovos-bus-client</code> reach a <code>wss://</code> bus by
-setting the same <code>websocket.ssl: true</code>. <a href="../hivemind-agents/">HiveMind</a> is the other route to
-encrypted transport across hosts. (The alternative <code>webrockets</code> backend does not terminate TLS
-itself. Use the default Tornado backend to serve <code>wss://</code> directly.)</p>
-</div>
+<p>When <code>ovos-messagebus</code> restarts, every connected <code>MessageBusClient</code> detects the drop, backs off,
+and reconnects on its own; messages sent during the outage are lost, not queued. See
+<a href="../bus-reconnect/">Bus restart / reconnect behavior</a> for the full mechanics and for how to serve
+the bus over TLS.</p>
 <hr />
 <h2 id="alternative-implementations">Alternative Implementations<a class="headerlink" href="#alternative-implementations" title="Permanent link">&para;</a></h2>
 <p><code>ovos-messagebus</code> is the reference <strong>Tornado</strong>-based server and is all you need for a normal install (<code>pip install ovos-messagebus</code>). The Tornado backend is the default. Because the wire protocol is just JSON frames over a WebSocket, the server is interchangeable. Any process that fans messages out to all connected clients on the same route will work, and a drop-in replacement can be swapped in without touching clients. The RaspOVOS image, for example, ships a separate Rust reimplementation (<code>ovos_rust_messagebus</code>) as its default for performance. See <a href="../production-operations/">Production Operations</a>.</p>
@@ -2396,8 +2274,8 @@ itself. Use the default Tornado backend to serve <code>wss://</code> directly.)<
 <p class="admonition-title">Optional <code>webrockets</code> backend</p>
 <p><code>ovos-messagebus</code> also bundles an optional, higher-throughput <strong>webrockets</strong> backend
 (Python), installed as an extra and run in place of the Tornado server:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>pip<span class="w"> </span>install<span class="w"> </span><span class="s2">&quot;ovos-messagebus[webrockets]&quot;</span>
-</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>python<span class="w"> </span>-m<span class="w"> </span>ovos_messagebus.backends.webrockets_backend
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>pip<span class="w"> </span>install<span class="w"> </span><span class="s2">&quot;ovos-messagebus[webrockets]&quot;</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>python<span class="w"> </span>-m<span class="w"> </span>ovos_messagebus.backends.webrockets_backend
 </span></code></pre></div>
 <p>It is early/alpha and not the default: it does <strong>not</strong> terminate TLS and does not honour
 <code>websocket.max_msg_size</code> (it refuses to start when <code>websocket.ssl</code> is set), so serve
@@ -2415,68 +2293,15 @@ drop-in, until these close.</p>
 <hr />
 <h2 id="filter-debug-mode">Filter / Debug Mode<a class="headerlink" href="#filter-debug-mode" title="Permanent link">&para;</a></h2>
 <p>Set <code>websocket.filter: true</code> in <code>mycroft.conf</code> to log all message types before broadcasting. This does not affect message delivery.</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>DEBUG: &lt;msg_type&gt; source: [...] destination: [...]
-</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>       SESSION: {...}
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>DEBUG: &lt;msg_type&gt; source: [...] destination: [...]
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>       SESSION: {...}
 </span></code></pre></div>
 <p>Messages listed in <code>filter_logs</code> are excluded from the log to reduce noise (default: <code>["gui.status.request", "gui.page.upload"]</code>).</p>
 <p>When <code>filter</code> is off (the default), the bus never deserializes messages. It emits and re-broadcasts the raw frame as-is. Deserialization only happens in <code>filter</code> mode for the log line. If a frame fails to deserialize there, it is dropped (not logged, not re-broadcast).</p>
 <hr />
 <h2 id="bus-recipes">Bus recipes<a class="headerlink" href="#bus-recipes" title="Permanent link">&para;</a></h2>
-<p>A few small, runnable patterns for talking to a live bus directly, without going through a skill.</p>
-<h3 id="connect-emit-and-wait-for-a-response">Connect, emit, and wait for a response<a class="headerlink" href="#connect-emit-and-wait-for-a-response" title="Permanent link">&para;</a></h3>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="kn">from</span> <span class="nn">ovos_bus_client</span> <span class="kn">import</span> <span class="n">MessageBusClient</span><span class="p">,</span> <span class="n">Message</span>
-</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>
-</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="n">bus</span> <span class="o">=</span> <span class="n">MessageBusClient</span><span class="p">()</span>
-</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="n">bus</span><span class="o">.</span><span class="n">run_in_thread</span><span class="p">()</span>  <span class="c1"># connects on a background daemon thread</span>
-</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>
-</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="c1"># fire-and-forget</span>
-</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="n">bus</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">Message</span><span class="p">(</span><span class="s2">&quot;ovos.utterance.handle&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;utterances&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;what time is it&quot;</span><span class="p">],</span> <span class="s2">&quot;lang&quot;</span><span class="p">:</span> <span class="s2">&quot;en-US&quot;</span><span class="p">}))</span>
-</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>
-</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="c1"># request/response: send a message, then wait for a specific reply type</span>
-</span><span id="__span-8-10"><a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="n">response</span> <span class="o">=</span> <span class="n">bus</span><span class="o">.</span><span class="n">wait_for_response</span><span class="p">(</span>
-</span><span id="__span-8-11"><a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a>    <span class="n">Message</span><span class="p">(</span><span class="s2">&quot;intent.service.adapt.manifest.get&quot;</span><span class="p">),</span>
-</span><span id="__span-8-12"><a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a>    <span class="n">reply_type</span><span class="o">=</span><span class="s2">&quot;intent.service.adapt.manifest&quot;</span><span class="p">,</span>
-</span><span id="__span-8-13"><a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a>    <span class="n">timeout</span><span class="o">=</span><span class="mf">3.0</span><span class="p">,</span>
-</span><span id="__span-8-14"><a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a><span class="p">)</span>
-</span><span id="__span-8-15"><a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a><span class="k">if</span> <span class="n">response</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="__span-8-16"><a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a>    <span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>  <span class="c1"># {&quot;intents&quot;: [...]} — the registered Adapt intent manifest</span>
-</span><span id="__span-8-17"><a id="__codelineno-8-17" name="__codelineno-8-17" href="#__codelineno-8-17"></a>
-</span><span id="__span-8-18"><a id="__codelineno-8-18" name="__codelineno-8-18" href="#__codelineno-8-18"></a><span class="n">bus</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-</span></code></pre></div>
-<div class="admonition warning">
-<p class="admonition-title"><code>ovos.session.sync</code> can't be used this way</p>
-<p>A tempting-looking request/response pair is <code>Message("ovos.session.sync")</code> replying with
-<code>ovos.session.update_default</code>. But <code>MessageBusClient.emit()</code> always auto-injects a
-<code>session</code> object into <code>message.context</code> before sending if one isn't already present. That
-turns every <code>ovos.session.sync</code> this client emits into a <em>session sync</em> (carrying context),
-not the legacy <em>bare default-session request</em> that triggers an echo. So it never gets a
-reply this way. <code>intent.service.adapt.manifest.get</code> above is a plain request/response pair
-with no such caveat.</p>
-</div>
-<p><code>MessageBusClient()</code> with no arguments reads <code>host</code>/<code>port</code>/<code>route</code> from <code>mycroft.conf</code>'s
-<code>websocket</code> section (see <a href="#configuration">Configuration</a> above). <code>run_in_thread()</code> starts the
-WebSocket loop on a daemon thread so the call returns immediately. <code>wait_for_response</code> blocks the
-calling thread until a message of <code>reply_type</code> arrives or the timeout elapses, returning <code>None</code> on
-timeout.</p>
-<h3 id="from-the-command-line">From the command line<a class="headerlink" href="#from-the-command-line" title="Permanent link">&para;</a></h3>
-<p>The <a href="../cli-tools/#talking-to-a-running-ovos-ovos-bus-client"><code>ovos-bus-client</code> CLI tools</a> wrap
-the same client for quick, no-code interaction with a running assistant:</p>
-<ul>
-<li><code>ovos-say-to "what time is it"</code>: inject an utterance as if spoken.</li>
-<li><code>ovos-listen</code>: trigger listening, as if the wake word fired.</li>
-<li><code>ovos-speak "hello"</code>: make OVOS speak a phrase.</li>
-</ul>
-<h3 id="watching-the-bus-live">Watching the bus live<a class="headerlink" href="#watching-the-bus-live" title="Permanent link">&para;</a></h3>
-<p>For interactively inspecting every message flowing across the bus (useful when a recipe above
-isn't behaving as expected), run <code>ovos-busmon</code>, a browser-based web UI (FastAPI + WebSocket)
-for live bus traffic. It subscribes like any other client and streams each message to the
-browser as it is broadcast. Install it with <code>pip install ovos-busmon</code>.</p>
-<div class="admonition note">
-<p class="admonition-title">Upcoming: <code>AsyncMessageBusClient</code></p>
-<p>An in-progress change adds an async/await-native <code>AsyncMessageBusClient</code> alongside the
-threaded <code>MessageBusClient</code> used in the recipes above, for callers already running an
-asyncio event loop (e.g. FastAPI servers) that would rather avoid a background thread.</p>
-</div>
+<p>For runnable patterns — connecting and waiting for a response, the <code>ovos-bus-client</code> CLI tools,
+and watching live traffic with <code>ovos-busmon</code> — see <a href="../bus-recipes/">Bus recipes</a>.</p>
 <hr />
 <p>Further reading: <a href="https://blog.openvoiceos.org/posts/2025-10-24-protocol_interoperability">protocol interoperability between OVOS and other assistant frameworks</a>.</p>
 <hr />

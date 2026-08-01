@@ -11,7 +11,7 @@
         <link rel="canonical" href="https://tigregotico.github.io/ovos-technical-manual/accessibility/">
       
       
-        <link rel="prev" href="../skill-examples/">
+        <link rel="prev" href="../skill-examples-utilities/">
       
       
         <link rel="next" href="../coming-from-mycroft/">
@@ -687,16 +687,38 @@
   
   
   
-    <li class="md-nav__item">
-      <a href="../skill-examples/" class="md-nav__link">
+    
+    
+    
+      
+      
+    
+    
+      
         
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../skill-examples/" class="md-nav__link">
+      
   
   <span class="md-ellipsis">
     What can I say? (Skills)
   </span>
   
 
-      </a>
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
     </li>
   
 
@@ -1340,7 +1362,7 @@ terms and <a href="../troubleshooting/">Troubleshooting</a> if something isn't w
 <hr />
 <h2 id="voice-is-not-a-fallback-here">Voice is not a fallback here<a class="headerlink" href="#voice-is-not-a-fallback-here" title="Permanent link">&para;</a></h2>
 <p>Every core interaction works with sound alone, no display required. That includes waking the
-assistant, asking a question, hearing the answer, adjusting <a href="../skill-examples/#volume">volume</a>,
+assistant, asking a question, hearing the answer, adjusting <a href="../skill-examples-utilities/#volume">volume</a>,
 and asking what it can do. This isn't a design aspiration. A skill is not required to register
 any <a href="../gui-service/">GUI</a> page at all, and a skill with nothing to show on screen simply speaks
 its response instead. The current OVOS GUI stack is itself
@@ -1392,7 +1414,7 @@ config key where one exists.</p>
 <p>Voice-first interaction is itself the main accessibility feature for limited dexterity. Nothing
 in day-to-day use requires precise pointing, a keyboard, or reaching a physical control. A
 <a href="../wake-word-plugins/">wake word</a> and speech cover waking, asking, and adjusting
-<a href="../skill-examples/#volume">volume</a> without touching the device at all. Two things are worth
+<a href="../skill-examples-utilities/#volume">volume</a> without touching the device at all. Two things are worth
 tuning specifically for this:</p>
 <ul>
 <li><strong>Wake-word sensitivity.</strong> If pressing a physical button or repeating a phrase precisely is

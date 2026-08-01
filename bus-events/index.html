@@ -1620,7 +1620,7 @@ documents that event in context. This page does not introduce anything new.</p>
 <p>Many events have a legacy <code>mycroft.*</code>/bare name alongside a newer <code>ovos.*</code> name. Only
 one of the two goes on the wire, and each connected client's bus library locally
 re-dispatches it under the other name too, so a handler on either name receives it
-(see <a href="../bus-service/#namespace-migration">Bus Service: namespace migration</a>). Use the
+(see <a href="../bus-namespace-migration/#namespace-migration">Bus Service: namespace migration</a>). Use the
 spec name in new code: an open kill-switch pull request
 (<a href="https://github.com/OpenVoiceOS/ovos-bus-client/pull/272">ovos-bus-client#272</a>)
 removes the legacy bridge once the fleet has migrated. The tables below show both
@@ -1907,7 +1907,7 @@ names where applicable.</p>
 </tr>
 <tr>
 <td><code>ovos.skills.settings_changed</code></td>
-<td>Local settings file changed: see <code>settings_change_callback</code> in <a href="../skill-settings/#change-callback">Skill Settings</a> (<a href="../skill-cookbook/#2-user-configurable-behavior-settings-settingsmeta-live-reload">Skill Cookbook recipe 2</a>) for reacting to it from a skill</td>
+<td>Local settings file changed: see <code>settings_change_callback</code> in <a href="../skill-settings/#change-callback">Skill Settings</a> (<a href="../recipe-reactive-settings/">Skill Cookbook recipe 2</a>) for reacting to it from a skill</td>
 </tr>
 <tr>
 <td><code>homescreen.metadata.get</code></td>
@@ -2388,7 +2388,7 @@ startup to normalize the initial volume.</p>
 <p>OVOS is renaming its bus topics onto the <code>ovos.*</code> spec namespace. During the migration,
 <code>ovos-bus-client</code>'s receive-side bridge makes legacy and spec names interchangeable, both
 directions on by default (see
-<a href="../bus-service/#namespace-migration">Bus Service: namespace migration</a>). That bridge is
+<a href="../bus-namespace-migration/#namespace-migration">Bus Service: namespace migration</a>). That bridge is
 scheduled for removal by the open kill-switch pull request
 <a href="https://github.com/OpenVoiceOS/ovos-bus-client/pull/272">ovos-bus-client#272</a>: after it
 merges, only the spec names work. Use the table below to move any legacy name in your

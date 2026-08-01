@@ -8,9 +8,13 @@
       
       
       
-        <link rel="canonical" href="https://tigregotico.github.io/ovos-technical-manual/snippets/what-ocp-means/">
+        <link rel="canonical" href="https://tigregotico.github.io/ovos-technical-manual/bus-reconnect/">
       
       
+        <link rel="prev" href="../bus-service/">
+      
+      
+        <link rel="next" href="../bus-namespace-migration/">
       
       
       <link rel="icon" href="https://github.com/OpenVoiceOS/ovos_assets/blob/master/Logo/ovos-logo-512.png?raw=true">
@@ -18,14 +22,14 @@
     
     
       
-        <title>What ocp means - OpenVoiceOS Technical Manual</title>
+        <title>Bus Restart & Reconnect - OpenVoiceOS Technical Manual</title>
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.3cba04c6.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.3cba04c6.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
       
       
 
@@ -44,9 +48,9 @@
       
     
     
-      <link rel="stylesheet" href="../../css/extra.css">
+      <link rel="stylesheet" href="../css/extra.css">
     
-    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -71,6 +75,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#bus-restart-reconnect-behavior" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -83,7 +92,7 @@
 
 <header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../.." title="OpenVoiceOS Technical Manual" class="md-header__button md-logo" aria-label="OpenVoiceOS Technical Manual" data-md-component="logo">
+    <a href=".." title="OpenVoiceOS Technical Manual" class="md-header__button md-logo" aria-label="OpenVoiceOS Technical Manual" data-md-component="logo">
       
   <img src="https://github.com/OpenVoiceOS/ovos_assets/blob/master/Logo/ovos-logo-512.png?raw=true" alt="logo">
 
@@ -102,7 +111,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              What ocp means
+              Bus Restart & Reconnect
             
           </span>
         </div>
@@ -212,7 +221,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../.." class="md-tabs__link">
+        <a href=".." class="md-tabs__link">
           
   
   Home
@@ -230,7 +239,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../start-here/" class="md-tabs__link">
+        <a href="../start-here/" class="md-tabs__link">
           
   
   Get Started
@@ -244,11 +253,13 @@
         
   
   
+    
+  
   
     
     
-      <li class="md-tabs__item">
-        <a href="../../concepts-overview/" class="md-tabs__link">
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../concepts-overview/" class="md-tabs__link">
           
   
   Concepts
@@ -266,7 +277,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../pipelines-overview/" class="md-tabs__link">
+        <a href="../pipelines-overview/" class="md-tabs__link">
           
   
   Pipeline
@@ -284,7 +295,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../lang-support/" class="md-tabs__link">
+        <a href="../lang-support/" class="md-tabs__link">
           
   
   Language
@@ -302,7 +313,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../skills-overview/" class="md-tabs__link">
+        <a href="../skills-overview/" class="md-tabs__link">
           
   
   Skills
@@ -320,7 +331,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../plugins-index/" class="md-tabs__link">
+        <a href="../plugins-index/" class="md-tabs__link">
           
   
   Plugins
@@ -338,7 +349,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../agents-overview/" class="md-tabs__link">
+        <a href="../agents-overview/" class="md-tabs__link">
           
   
   Agents
@@ -356,7 +367,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../production-overview/" class="md-tabs__link">
+        <a href="../production-overview/" class="md-tabs__link">
           
   
   Production
@@ -374,7 +385,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../reference-overview/" class="md-tabs__link">
+        <a href="../reference-overview/" class="md-tabs__link">
           
   
   Reference
@@ -413,7 +424,7 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../.." title="OpenVoiceOS Technical Manual" class="md-nav__button md-logo" aria-label="OpenVoiceOS Technical Manual" data-md-component="logo">
+    <a href=".." title="OpenVoiceOS Technical Manual" class="md-nav__button md-logo" aria-label="OpenVoiceOS Technical Manual" data-md-component="logo">
       
   <img src="https://github.com/OpenVoiceOS/ovos_assets/blob/master/Logo/ovos-logo-512.png?raw=true" alt="logo">
 
@@ -458,7 +469,7 @@
         
   
   
-    <a href="../.." class="md-nav__link">
+    <a href=".." class="md-nav__link">
       
   
   <span class="md-ellipsis">
@@ -500,7 +511,7 @@
         
   
   
-    <a href="../../start-here/" class="md-nav__link">
+    <a href="../start-here/" class="md-nav__link">
       
   
   <span class="md-ellipsis">
@@ -523,6 +534,415 @@
       
   
   
+    
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Concepts
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Concepts
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../concepts-overview/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Concepts Overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../architecture-overview/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    High-level Overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../life-of-an-utterance/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Life of an Utterance
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../architecture-specs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Formal Specifications
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../spec-tooling/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Specification Tooling
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../spec-tools-lib/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ovos-spec-tools
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../spec-test-harness/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ovos-test-harness
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../maturity/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Maturity Scale
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bus-service/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    MessageBus Service
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Bus Restart & Reconnect
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Bus Restart & Reconnect
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#bus-restart-reconnect-behavior_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bus restart / reconnect behavior
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bus-namespace-migration/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Bus Namespace Migration
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bus-recipes/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Bus Recipes
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../security-model/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Security & Trust Model
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../plugin-manager/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Plugin Manager
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../composable-deployments/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Composable Deployments
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
   
   
     
@@ -542,11 +962,11 @@
         
   
   
-    <a href="../../concepts-overview/" class="md-nav__link">
+    <a href="../config/" class="md-nav__link">
       
   
   <span class="md-ellipsis">
-    Concepts
+    Configuration
   </span>
   
 
@@ -556,6 +976,100 @@
     </a>
   
 
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../core/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    ovos-core Internals
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../speech-service/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Sibling Services (own processes on the bus)
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
       
     </li>
   
@@ -584,7 +1098,7 @@
         
   
   
-    <a href="../../pipelines-overview/" class="md-nav__link">
+    <a href="../pipelines-overview/" class="md-nav__link">
       
   
   <span class="md-ellipsis">
@@ -626,7 +1140,7 @@
         
   
   
-    <a href="../../lang-support/" class="md-nav__link">
+    <a href="../lang-support/" class="md-nav__link">
       
   
   <span class="md-ellipsis">
@@ -668,7 +1182,7 @@
         
   
   
-    <a href="../../skills-overview/" class="md-nav__link">
+    <a href="../skills-overview/" class="md-nav__link">
       
   
   <span class="md-ellipsis">
@@ -710,7 +1224,7 @@
         
   
   
-    <a href="../../plugins-index/" class="md-nav__link">
+    <a href="../plugins-index/" class="md-nav__link">
       
   
   <span class="md-ellipsis">
@@ -752,7 +1266,7 @@
         
   
   
-    <a href="../../agents-overview/" class="md-nav__link">
+    <a href="../agents-overview/" class="md-nav__link">
       
   
   <span class="md-ellipsis">
@@ -794,7 +1308,7 @@
         
   
   
-    <a href="../../production-overview/" class="md-nav__link">
+    <a href="../production-overview/" class="md-nav__link">
       
   
   <span class="md-ellipsis">
@@ -836,7 +1350,7 @@
         
   
   
-    <a href="../../reference-overview/" class="md-nav__link">
+    <a href="../reference-overview/" class="md-nav__link">
       
   
   <span class="md-ellipsis">
@@ -872,6 +1386,25 @@
   
   
   
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#bus-restart-reconnect-behavior_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bus restart / reconnect behavior
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -889,20 +1422,70 @@
   
 
 
-  <h1>What ocp means</h1>
-
-<div class="admonition info">
-<p class="admonition-title">What OCP means here</p>
-<p>"OCP" names three different things in OVOS. Know which one a page is about:</p>
-<ul>
-<li><strong>The OCP pipeline plugin</strong>: matches utterances like "play some jazz" to a media
-  request. See <a href="ocp-pipeline.md">OCP Pipeline</a>.</li>
-<li><strong>The OCP skill base class</strong>: <code>OVOSCommonPlaybackSkill</code>; skills built on it provide
-  or embody media for the pipeline to find. See <a href="ocp-skills.md">OCP Skills</a>.</li>
-<li><strong>The legacy OCP audio plugin</strong>: <code>ovos-plugin-common-play</code>, the current default
-  playback engine running inside <code>ovos-audio</code>. See <a href="ocp-audio-plugin.md">The OCP Audio Plugin</a>.</li>
-</ul>
+<h1 id="bus-restart-reconnect-behavior">Bus restart / reconnect behavior<a class="headerlink" href="#bus-restart-reconnect-behavior" title="Permanent link">&para;</a></h1>
+<div class="admonition abstract">
+<p class="admonition-title">In a nutshell</p>
+<p>When <code>ovos-messagebus</code> restarts, every connected client detects the drop, backs off, and
+reconnects on its own. Messages sent during the outage are lost, not queued. This page
+covers the reconnect mechanics and how to serve the bus over TLS.</p>
 </div>
+<h2 id="bus-restart-reconnect-behavior_1">Bus restart / reconnect behavior<a class="headerlink" href="#bus-restart-reconnect-behavior_1" title="Permanent link">&para;</a></h2>
+<p>Restarting <code>ovos-messagebus</code> is the single most common operational disruption, because every
+other service (<code>ovos-core</code>, <code>ovos-dinkum-listener</code>, <code>ovos-audio</code>, <code>ovos-PHAL</code>) holds a
+<code>MessageBusClient</code> connection to it. What each of those clients does when that connection drops
+is defined once, in <code>ovos-bus-client</code>'s <code>MessageBusClient</code>, and applies identically to every
+service built on it.</p>
+<p><strong>Detecting the drop.</strong> A closed socket reaches the client's <code>on_error</code> handler. A clean close
+that never errors is not distinguished from one that does. Both a <code>WebSocketConnectionClosedException</code>
+and a plain <code>ConnectionRefusedError</code>/<code>ConnectionResetError</code> land there. <code>on_error</code> clears the
+"connected" flag, closes the socket, and reconnects.</p>
+<p><strong>Backoff.</strong> Reconnection starts at a 5-second delay and doubles on each further failure, capped
+at 60 seconds (<code>self.retry = min(self.retry * 2, 60)</code>), so a device left disconnected for a while
+does not overload the bus with reconnect attempts. A successful reconnect resets the delay back to
+5 seconds for next time.</p>
+<p><strong>In-flight calls during the outage.</strong> <code>emit()</code> (and therefore <code>wait_for_response()</code>, which calls
+<code>emit()</code> internally) waits for the connection to come back rather than failing fast. It waits up
+to 10 seconds, and if the client had already started running before that, it then waits with
+<strong>no further timeout</strong> until the socket reconnects.</p>
+<p><code>wait_for_message()</code> / <code>wait_for_response()</code>'s
+own reply-timeout only starts counting once the message is actually sent. So a call made while
+the bus is down can block well past the <code>timeout</code> value you passed it, for as long as the bus
+stays down. Once the client is reconnected, waits resume normally and time out as documented.</p>
+<p><strong>Messages sent during the outage are lost, not queued.</strong> The client does not buffer messages
+while disconnected. Nothing is stored and re-sent once the socket reopens. Any <code>emit()</code> that was
+allowed through only unblocks (and actually sends) after reconnection, but nothing produced by a
+process that isn't running a client at all during the gap is retried later. Downstream services
+should treat a bus restart as a full session reset for anything time-sensitive: session state
+communicated over the bus is fine (a fresh <code>ovos.session.sync</code> happens automatically once the
+socket reopens), but any request/response pair straddling the restart is simply lost from the
+requester's point of view until it emits again.</p>
+<p><strong>Malformed frames don't trigger a reconnect.</strong> A frame that fails to deserialize, or whose
+session carrier isn't a JSON object, is dropped and logged. It does not tear the connection down
+or trigger the reconnect path above. Only a genuine socket-level failure does.</p>
+<p>See <a href="../production-operations/#keep-services-running-systemd-units">Production Operations</a> for how
+this interacts with <code>systemd</code>'s own <code>Restart=</code>/<code>After=</code> ordering across the OVOS services.</p>
+<div class="admonition info">
+<p class="admonition-title">Serving the bus over TLS</p>
+<p>Set <code>websocket.ssl: true</code> and the Tornado <code>ovos-messagebus</code> serves <code>wss://</code> itself — nothing
+needs to sit in front of it. Point it at an existing certificate with <code>websocket.ssl_cert</code>
+and <code>websocket.ssl_key</code>:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>&quot;websocket&quot;: {
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>    &quot;ssl&quot;: true,
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>    &quot;ssl_cert&quot;: &quot;/etc/ssl/certs/ovos-bus.crt&quot;,
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>    &quot;ssl_key&quot;: &quot;/etc/ssl/private/ovos-bus.key&quot;
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>}
+</span></code></pre></div>
+<p>If <code>ssl</code> is on but no cert/key are configured, the bus generates a self-signed pair on first
+start (under <code>$XDG_DATA_HOME/OpenVoiceOS/ovos-messagebus/certs/</code>). This path needs the <code>ssl</code>
+extra (<code>pip install "ovos-messagebus[ssl]"</code>), and the bus refuses to start rather than fall
+back to plaintext if it's missing. Clients built on <code>ovos-bus-client</code> reach a <code>wss://</code> bus by
+setting the same <code>websocket.ssl: true</code>. <a href="../hivemind-agents/">HiveMind</a> is the other route to
+encrypted transport across hosts. (The alternative <code>webrockets</code> backend does not terminate TLS
+itself. Use the default Tornado backend to serve <code>wss://</code> directly.)</p>
+</div>
+<hr />
+<p><strong>Read next:</strong> <a href="../bus-service/">messagebus Service</a>
+<strong>Related:</strong> <a href="../production-operations/">Production Operations</a> · <a href="../hivemind-agents/">HiveMind</a></p>
 
 
 
@@ -955,10 +1538,10 @@
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.path", "navigation.prune", "navigation.top", "navigation.tracking", "navigation.instant", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate"], "search": "../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.path", "navigation.prune", "navigation.top", "navigation.tracking", "navigation.instant", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate"], "search": "../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.fe8b6f2b.min.js"></script>
+      <script src="../assets/javascripts/bundle.fe8b6f2b.min.js"></script>
       
     
   </body>

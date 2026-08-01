@@ -1632,7 +1632,7 @@ where the example stops short.</p>
 <p>Custom LEDs and buttons are the two things almost every maker adds. Instead of writing your
 own bus-message plumbing, subclass the abstract base classes in
 <a href="https://github.com/OpenVoiceOS/ovos-hardware-helpers"><code>ovos-hardware-helpers</code></a>. Wrap the
-result in a <a href="../phal/#writing-phal-plugins">PHAL plugin</a>. See that page for the entry-point
+result in a <a href="../phal-authoring/">PHAL plugin</a>. See that page for the entry-point
 and validator mechanics. This section covers the hardware interface itself.</p>
 <h3 id="leds-abstractled">LEDs: <code>AbstractLed</code><a class="headerlink" href="#leds-abstractled" title="Permanent link">&para;</a></h3>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span> <span class="nn">ovos_hardware_helpers.led</span> <span class="kn">import</span> <span class="n">AbstractLed</span>
@@ -1725,7 +1725,7 @@ as <code>(0, 168, 255)</code>.</p>
 <p>Wire an instance of any of these classes up inside a <code>PHALPlugin.__init__</code>. Poll your GPIO or
 i2c hardware on a background thread, or drive it from an interrupt callback, and call the
 matching <code>on_*</code>, <code>set_led</code>, or <code>set_fan_speed</code> methods. See
-<a href="../phal/#writing-phal-plugins">PHAL: Writing PHAL Plugins</a> for the full plugin lifecycle,
+<a href="../phal-authoring/">PHAL: Writing PHAL Plugins</a> for the full plugin lifecycle,
 validator, and entry-point registration.</p>
 <hr />
 <h2 id="resource-footprint">Resource footprint<a class="headerlink" href="#resource-footprint" title="Permanent link">&para;</a></h2>
@@ -1758,11 +1758,11 @@ top of it. Size the board for the core first, then budget headroom for the model
 <li><strong>Lightest</strong>: an energy/noise-threshold <a href="../vad-plugins/#ovos-vad-plugin-noise">VAD</a> with no
   model download, a small wake-word model such as
   <a href="../wake-word-plugins/#ovos-ww-plugin-precise-onnx"><code>ovos-ww-plugin-precise-onnx</code></a>, and cloud
-  <a href="../stt-plugins/#ovos-stt-plugin-azure">STT</a>/<a href="../tts-plugins/#ovos-tts-plugin-azure">TTS</a> such as
+  <a href="../stt-plugins-reference/#ovos-stt-plugin-azure">STT</a>/<a href="../tts-plugins/#ovos-tts-plugin-azure">TTS</a> such as
   Azure, Polly, or Edge-TTS. Inference happens on someone else's server, so the device only
   needs enough CPU for the always-on core plus audio capture and playback.</li>
 <li><strong>Middle</strong>: local, on-device inference using a small or quantized model. Examples:
-  <a href="../stt-plugins/#ovos-stt-plugin-onnx-asr"><code>ovos-stt-plugin-onnx-asr</code></a> with a small
+  <a href="../stt-plugins-reference/#ovos-stt-plugin-onnx-asr"><code>ovos-stt-plugin-onnx-asr</code></a> with a small
   <code>int8</code>-quantized model, <a href="../tts-plugins/#ovos-tts-plugin-phoonnx"><code>ovos-tts-plugin-phoonnx</code></a>,
   and <a href="../vad-plugins/#ovos-vad-plugin-silero"><code>ovos-vad-plugin-silero</code></a>'s small neural VAD model.
   <code>int8</code> weights consistently have a lower footprint than <code>fp32</code> for the same model.</li>

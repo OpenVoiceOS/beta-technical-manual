@@ -11,7 +11,7 @@
         <link rel="canonical" href="https://tigregotico.github.io/ovos-technical-manual/vad-plugins/">
       
       
-        <link rel="prev" href="../mic-plugins/">
+        <link rel="prev" href="../mic-plugin-development/">
       
       
         <link rel="next" href="../wake-word-plugins/">
@@ -873,6 +873,27 @@
                 
   
   
+  
+  
+    <li class="md-nav__item">
+      <a href="../mic-plugin-development/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Microphone Plugin Development
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
     
   
   
@@ -1078,6 +1099,27 @@
   
   
     <li class="md-nav__item">
+      <a href="../wake-word-plugin-development/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Wake Word Plugin Development
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../ww-verifier/" class="md-nav__link">
         
   
@@ -1104,6 +1146,48 @@
   
   <span class="md-ellipsis">
     STT
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../stt-plugins-reference/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    STT Plugins Reference
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../stt-plugin-development/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    STT Plugin Development
   </span>
   
 
@@ -1554,7 +1638,7 @@
 <p>Voice Activity Detection (VAD) is a critical component in the OVOS listener pipeline. It identifies segments of audio that contain human speech, so the system can ignore silence and background noise.</p>
 <div class="admonition note">
 <p class="admonition-title">Audio format contract</p>
-<p>Like STT and wake-word plugins, VAD plugins receive raw PCM from the <a href="../mic-plugins/#the-microphone-interface">microphone plugin</a>: <strong>16 kHz sample rate, 16-bit samples, mono, little-endian</strong>, delivered in <strong>4096-byte chunks</strong> by default.</p>
+<p>Like STT and wake-word plugins, VAD plugins receive raw PCM from the <a href="../mic-plugin-development/#the-microphone-interface">microphone plugin</a>: <strong>16 kHz sample rate, 16-bit samples, mono, little-endian</strong>, delivered in <strong>4096-byte chunks</strong> by default.</p>
 </div>
 <h2 id="how-it-works">How it works<a class="headerlink" href="#how-it-works" title="Permanent link">&para;</a></h2>
 <p>The VAD engine continuously monitors the microphone's audio stream. Its primary roles are:</p>

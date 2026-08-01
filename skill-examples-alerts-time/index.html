@@ -8,9 +8,13 @@
       
       
       
-        <link rel="canonical" href="https://tigregotico.github.io/ovos-technical-manual/snippets/restart-ovos/">
+        <link rel="canonical" href="https://tigregotico.github.io/ovos-technical-manual/skill-examples-alerts-time/">
       
       
+        <link rel="prev" href="../skill-examples/">
+      
+      
+        <link rel="next" href="../skill-examples-media/">
       
       
       <link rel="icon" href="https://github.com/OpenVoiceOS/ovos_assets/blob/master/Logo/ovos-logo-512.png?raw=true">
@@ -18,14 +22,14 @@
     
     
       
-        <title>Restart ovos - OpenVoiceOS Technical Manual</title>
+        <title>Alerts & Time - OpenVoiceOS Technical Manual</title>
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.3cba04c6.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.3cba04c6.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
       
       
 
@@ -44,9 +48,9 @@
       
     
     
-      <link rel="stylesheet" href="../../css/extra.css">
+      <link rel="stylesheet" href="../css/extra.css">
     
-    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -71,6 +75,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#alerts-time-skills" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -83,7 +92,7 @@
 
 <header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../.." title="OpenVoiceOS Technical Manual" class="md-header__button md-logo" aria-label="OpenVoiceOS Technical Manual" data-md-component="logo">
+    <a href=".." title="OpenVoiceOS Technical Manual" class="md-header__button md-logo" aria-label="OpenVoiceOS Technical Manual" data-md-component="logo">
       
   <img src="https://github.com/OpenVoiceOS/ovos_assets/blob/master/Logo/ovos-logo-512.png?raw=true" alt="logo">
 
@@ -102,7 +111,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Restart ovos
+              Alerts & Time
             
           </span>
         </div>
@@ -212,7 +221,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../.." class="md-tabs__link">
+        <a href=".." class="md-tabs__link">
           
   
   Home
@@ -226,11 +235,13 @@
         
   
   
+    
+  
   
     
     
-      <li class="md-tabs__item">
-        <a href="../../start-here/" class="md-tabs__link">
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../start-here/" class="md-tabs__link">
           
   
   Get Started
@@ -248,7 +259,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../concepts-overview/" class="md-tabs__link">
+        <a href="../concepts-overview/" class="md-tabs__link">
           
   
   Concepts
@@ -266,7 +277,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../pipelines-overview/" class="md-tabs__link">
+        <a href="../pipelines-overview/" class="md-tabs__link">
           
   
   Pipeline
@@ -284,7 +295,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../lang-support/" class="md-tabs__link">
+        <a href="../lang-support/" class="md-tabs__link">
           
   
   Language
@@ -302,7 +313,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../skills-overview/" class="md-tabs__link">
+        <a href="../skills-overview/" class="md-tabs__link">
           
   
   Skills
@@ -320,7 +331,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../plugins-index/" class="md-tabs__link">
+        <a href="../plugins-index/" class="md-tabs__link">
           
   
   Plugins
@@ -338,7 +349,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../agents-overview/" class="md-tabs__link">
+        <a href="../agents-overview/" class="md-tabs__link">
           
   
   Agents
@@ -356,7 +367,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../production-overview/" class="md-tabs__link">
+        <a href="../production-overview/" class="md-tabs__link">
           
   
   Production
@@ -374,7 +385,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../reference-overview/" class="md-tabs__link">
+        <a href="../reference-overview/" class="md-tabs__link">
           
   
   Reference
@@ -413,7 +424,7 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../.." title="OpenVoiceOS Technical Manual" class="md-nav__button md-logo" aria-label="OpenVoiceOS Technical Manual" data-md-component="logo">
+    <a href=".." title="OpenVoiceOS Technical Manual" class="md-nav__button md-logo" aria-label="OpenVoiceOS Technical Manual" data-md-component="logo">
       
   <img src="https://github.com/OpenVoiceOS/ovos_assets/blob/master/Logo/ovos-logo-512.png?raw=true" alt="logo">
 
@@ -458,7 +469,7 @@
         
   
   
-    <a href="../.." class="md-nav__link">
+    <a href=".." class="md-nav__link">
       
   
   <span class="md-ellipsis">
@@ -481,6 +492,114 @@
       
   
   
+    
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Get Started
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Get Started
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../start-here/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Start Here
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ovos-installer/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Install with ovos-installer
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../release-channels/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Manual & Advanced Install
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
   
   
     
@@ -500,11 +619,11 @@
         
   
   
-    <a href="../../start-here/" class="md-nav__link">
+    <a href="../install-raspovos/" class="md-nav__link">
       
   
   <span class="md-ellipsis">
-    Get Started
+    RaspOVOS image
   </span>
   
 
@@ -514,6 +633,384 @@
     </a>
   
 
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../personalize/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Make it yours
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../showcase/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Fun stuff to try
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_7" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2_7" id="__nav_2_7_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    What can I say? (Skills)
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_7_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_7">
+            <span class="md-nav__icon md-icon"></span>
+            What can I say? (Skills)
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../skill-examples/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Alerts & Time
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Alerts & Time
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#alerts-timers-reminders-alarms" class="md-nav__link">
+    <span class="md-ellipsis">
+      Alerts (Timers, Reminders &amp; Alarms)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#date-time" class="md-nav__link">
+    <span class="md-ellipsis">
+      Date &amp; Time
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#naptime-snooze-the-assistant" class="md-nav__link">
+    <span class="md-ellipsis">
+      Naptime (Snooze the Assistant)
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../skill-examples-media/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Music & Radio
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../skill-examples-fun/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Fun & Trivia
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../skill-examples-utilities/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Utilities
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../accessibility/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Accessibility
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../coming-from-mycroft/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Coming from Mycroft
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../coming-from-alexa/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Coming from Alexa
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../everyday-help/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Help & Troubleshooting
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
       
     </li>
   
@@ -542,7 +1039,7 @@
         
   
   
-    <a href="../../concepts-overview/" class="md-nav__link">
+    <a href="../concepts-overview/" class="md-nav__link">
       
   
   <span class="md-ellipsis">
@@ -584,7 +1081,7 @@
         
   
   
-    <a href="../../pipelines-overview/" class="md-nav__link">
+    <a href="../pipelines-overview/" class="md-nav__link">
       
   
   <span class="md-ellipsis">
@@ -626,7 +1123,7 @@
         
   
   
-    <a href="../../lang-support/" class="md-nav__link">
+    <a href="../lang-support/" class="md-nav__link">
       
   
   <span class="md-ellipsis">
@@ -668,7 +1165,7 @@
         
   
   
-    <a href="../../skills-overview/" class="md-nav__link">
+    <a href="../skills-overview/" class="md-nav__link">
       
   
   <span class="md-ellipsis">
@@ -710,7 +1207,7 @@
         
   
   
-    <a href="../../plugins-index/" class="md-nav__link">
+    <a href="../plugins-index/" class="md-nav__link">
       
   
   <span class="md-ellipsis">
@@ -752,7 +1249,7 @@
         
   
   
-    <a href="../../agents-overview/" class="md-nav__link">
+    <a href="../agents-overview/" class="md-nav__link">
       
   
   <span class="md-ellipsis">
@@ -794,7 +1291,7 @@
         
   
   
-    <a href="../../production-overview/" class="md-nav__link">
+    <a href="../production-overview/" class="md-nav__link">
       
   
   <span class="md-ellipsis">
@@ -836,7 +1333,7 @@
         
   
   
-    <a href="../../reference-overview/" class="md-nav__link">
+    <a href="../reference-overview/" class="md-nav__link">
       
   
   <span class="md-ellipsis">
@@ -872,6 +1369,43 @@
   
   
   
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#alerts-timers-reminders-alarms" class="md-nav__link">
+    <span class="md-ellipsis">
+      Alerts (Timers, Reminders &amp; Alarms)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#date-time" class="md-nav__link">
+    <span class="md-ellipsis">
+      Date &amp; Time
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#naptime-snooze-the-assistant" class="md-nav__link">
+    <span class="md-ellipsis">
+      Naptime (Snooze the Assistant)
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -889,31 +1423,78 @@
   
 
 
-  <h1>Restart ovos</h1>
-
-<div class="admonition tip">
-<p class="admonition-title">How to restart your assistant</p>
-<p>OVOS is not one program — it's several separate services (the listener, ovos-core,
-ovos-audio, the messagebus, and more) that need to pick up a config change together. How you
-restart them depends on how OVOS was installed:</p>
-<ul>
-<li><strong>systemd install</strong> (the <code>ovos-installer</code> or a RaspOVOS image): restart the whole stack with
-  one command —
-  <div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>systemctl<span class="w"> </span>--user<span class="w"> </span>restart<span class="w"> </span>ovos.service
-</span></code></pre></div>
-  <code>ovos.service</code> is a <code>--user</code> target unit that the other services (<code>ovos-messagebus.service</code>,
-  <code>ovos-listener.service</code>, <code>ovos-audio.service</code>, <code>ovos-skills.service</code>, <code>ovos-phal.service</code>,
-  and — if installed — <code>ovos-gui.service</code>/<code>ovos-shell.service</code>) declare as <code>PartOf=</code>, so
-  restarting it cascades to all of them. Restarting a single service instead (e.g. only the
-  listener after a wake-word change) works the same way: <code>systemctl --user restart
-  ovos-listener.service</code>.</li>
-<li><strong>Docker/container install</strong>: restart the equivalent service(s) in your compose file, e.g.
-  <div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>restart<span class="w"> </span>&lt;service-name&gt;
-</span></code></pre></div>
-  (or <code>docker compose restart</code> with no name to restart everything).</li>
-<li><strong>Manual/development run</strong>: stop the running <code>ovos-core</code> process (Ctrl-C) and start it again.</li>
-</ul>
+<h1 id="alerts-time-skills">Alerts &amp; Time Skills<a class="headerlink" href="#alerts-time-skills" title="Permanent link">&para;</a></h1>
+<div class="admonition abstract">
+<p class="admonition-title">In a nutshell</p>
+<p>These skills cover alarms, timers, reminders, the current date and time, and putting the
+assistant to sleep.</p>
 </div>
+<h2 id="alerts-timers-reminders-alarms">Alerts (Timers, Reminders &amp; Alarms)<a class="headerlink" href="#alerts-timers-reminders-alarms" title="Permanent link">&para;</a></h2>
+<p><strong>Installer default</strong></p>
+<p>A skill to manage alarms, timers, reminders, events and todos and optionally sync them with a
+CalDAV service. Handy if you want a hands-free alarm clock, kitchen timer, or todo list that
+survives a reboot and can sync with an external calendar.</p>
+<p><strong>Usage examples:</strong></p>
+<ul>
+<li>What are my reminders?</li>
+<li>Cancel all reminders.</li>
+<li>When is my next alarm?</li>
+<li>Schedule a tennis event for 2 PM on friday spanning 2 hours.</li>
+<li>
+<p>What did I miss?</p>
+</li>
+<li>
+<p>remind me to take out the trash every Thursday and Sunday at 7 PM.</p>
+</li>
+<li>Start a bread timer for 30 minutes.</li>
+<li>Did I miss anything?</li>
+<li>Set an alarm for 8 AM.</li>
+<li>Set a daily alarm for 8 AM.</li>
+</ul>
+<details class="note">
+<summary>Install</summary>
+<p><a href="https://github.com/OpenVoiceOS/ovos-skill-alerts"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2Z"/></svg></span> OpenVoiceOS/ovos-skill-alerts</a> · <code>pip install ovos-skill-alerts</code> · Maturity: Mature</p>
+</details>
+<hr />
+<h2 id="date-time">Date &amp; Time<a class="headerlink" href="#date-time" title="Permanent link">&para;</a></h2>
+<p><strong>Installer default</strong></p>
+<p>Get the current time, date, or information about specific calendar days.</p>
+<p><strong>Usage examples:</strong></p>
+<ul>
+<li>What time is it?</li>
+<li>Tell me the day of the week</li>
+<li>What day is Memorial Day 2020?</li>
+<li>What's the date?</li>
+<li>
+<p>Show me the time</p>
+</li>
+<li>
+<p>How many days until July 4<sup>th</sup></p>
+</li>
+<li>What time is it in Paris?</li>
+</ul>
+<details class="note">
+<summary>Install</summary>
+<p><a href="https://github.com/OpenVoiceOS/ovos-skill-date-time"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2Z"/></svg></span> OpenVoiceOS/ovos-skill-date-time</a> · <code>pip install ovos-skill-date-time</code> · Maturity: Mature</p>
+</details>
+<hr />
+<h2 id="naptime-snooze-the-assistant">Naptime (Snooze the Assistant)<a class="headerlink" href="#naptime-snooze-the-assistant" title="Permanent link">&para;</a></h2>
+<p><strong>Installer default</strong></p>
+<p>Put the assistant to sleep when you don't want to be disturbed. While asleep, the wake word stops
+triggering listening. Say "Wake up" (or the configured stand-up word) to bring it back.</p>
+<p><strong>Usage examples:</strong></p>
+<ul>
+<li>Nap time</li>
+<li>Wake up</li>
+<li>Go to sleep</li>
+</ul>
+<details class="note">
+<summary>Install</summary>
+<p><a href="https://github.com/OpenVoiceOS/ovos-skill-naptime"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2Z"/></svg></span> OpenVoiceOS/ovos-skill-naptime</a> · <code>pip install ovos-skill-naptime</code> · Maturity: Mature</p>
+</details>
+<hr />
+<p><strong>Read next:</strong> <a href="../skill-examples/">Skill Examples</a>
+<strong>Related:</strong> <a href="../skill-examples-utilities/">Utilities</a> · <a href="../first-skill/">Your First Skill</a> · <a href="../everyday-help/">It's not behaving</a></p>
 
 
 
@@ -966,10 +1547,10 @@ restart them depends on how OVOS was installed:</p>
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.path", "navigation.prune", "navigation.top", "navigation.tracking", "navigation.instant", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate"], "search": "../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.path", "navigation.prune", "navigation.top", "navigation.tracking", "navigation.instant", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate"], "search": "../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.fe8b6f2b.min.js"></script>
+      <script src="../assets/javascripts/bundle.fe8b6f2b.min.js"></script>
       
     
   </body>

@@ -14,7 +14,7 @@
         <link rel="prev" href="../stt-server/">
       
       
-        <link rel="next" href="../translate-server/">
+        <link rel="next" href="../tts-server-deployment/">
       
       
       <link rel="icon" href="https://github.com/OpenVoiceOS/ovos_assets/blob/master/Logo/ovos-logo-512.png?raw=true">
@@ -1166,24 +1166,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#companion-plugin" class="md-nav__link">
-    <span class="md-ellipsis">
-      Companion Plugin
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#docker-deployment" class="md-nav__link">
-    <span class="md-ellipsis">
-      Docker Deployment
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#tips-caveats" class="md-nav__link">
     <span class="md-ellipsis">
       Tips &amp; Caveats
@@ -1205,6 +1187,27 @@
   
 </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tts-server-deployment/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    TTS Server Deployment
+  </span>
+  
+
+      </a>
     </li>
   
 
@@ -1454,24 +1457,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#companion-plugin" class="md-nav__link">
-    <span class="md-ellipsis">
-      Companion Plugin
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#docker-deployment" class="md-nav__link">
-    <span class="md-ellipsis">
-      Docker Deployment
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#tips-caveats" class="md-nav__link">
     <span class="md-ellipsis">
       Tips &amp; Caveats
@@ -1686,132 +1671,11 @@ frames:</p>
 <code>isFinal: true</code>. The <code>xi-api-key</code> header (or <code>xi_api_key</code> in the BOS message) is accepted
 but ignored. A self-hosted server has no keys to check.</p>
 <hr />
-<h2 id="companion-plugin">Companion Plugin<a class="headerlink" href="#companion-plugin" title="Permanent link">&para;</a></h2>
-<p>Point your OVOS instance at this TTS server with the companion client plugin
-(repo <code>ovos-tts-server-plugin</code>, class <code>OVOSServerTTS</code>, entry point and PyPI package
-<code>ovos-tts-plugin-server</code>):</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>pip<span class="w"> </span>install<span class="w"> </span>ovos-tts-plugin-server
-</span></code></pre></div>
-<div class="admonition note">
-<p class="admonition-title">Key name: <code>host</code>, not <code>urls</code></p>
-<p>This TTS companion plugin reads the <strong><code>host</code></strong> key. The
-<a href="../stt-server/#companion-plugin">STT companion plugin</a> reads a different key,
-<strong><code>urls</code></strong> (a list). The two are not interchangeable. If you set the wrong key, the
-plugin does not error. It silently ignores the value and falls back to the
-public servers described below.</p>
-</div>
-<p><strong>Configuration</strong> <code>mycroft.conf</code>:</p>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="p">{</span>
-</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">  </span><span class="nt">&quot;tts&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">    </span><span class="nt">&quot;module&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ovos-tts-plugin-server&quot;</span><span class="p">,</span>
-</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="w">    </span><span class="nt">&quot;ovos-tts-plugin-server&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="w">        </span><span class="nt">&quot;host&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;http://localhost:9666&quot;</span><span class="p">,</span>
-</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="w">        </span><span class="nt">&quot;voice&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;xxx&quot;</span><span class="p">,</span>
-</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="w">        </span><span class="nt">&quot;v2&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="w">        </span><span class="nt">&quot;verify_ssl&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="w">        </span><span class="nt">&quot;tts_timeout&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span>
-</span><span id="__span-8-10"><a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="w">     </span><span class="p">}</span>
-</span><span id="__span-8-11"><a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a><span class="w"> </span><span class="p">}</span><span class="w"> </span>
-</span><span id="__span-8-12"><a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a><span class="p">}</span>
-</span></code></pre></div>
-<p><strong>Restart and verify</strong></p>
-<p>After editing the config, restart the client so it picks up the change, then confirm it
-is actually talking to your server:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="c1"># raspOVOS</span>
-</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>ovos-restart
-</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>
-</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="c1"># any other systemd-managed install</span>
-</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>systemctl<span class="w"> </span>--user<span class="w"> </span>restart<span class="w"> </span>ovos.service
-</span></code></pre></div>
-<p>Ask the assistant to say something and check the voice/audio logs, or watch live traffic
-with <a href="../bus-service/"><code>ovos-busmon</code></a>, to confirm the configured <code>host</code> server is the one
-receiving the request, not a public fallback.</p>
-<div class="admonition warning">
-<p class="admonition-title">No <code>host</code> configured → public servers, not local failure</p>
-<p>If you omit <code>host</code>, the plugin does <strong>not</strong> fail. It silently falls back to a built-in
-list of <strong>public</strong> OVOS TTS servers run by community members, shuffled and tried in order.
-That's fine for a quick test, but every sentence your assistant speaks is sent to a
-third-party server by default until you set <code>host</code> yourself. Always set <code>host</code> explicitly
-(as in the localhost example above) for any real deployment.</p>
-</div>
-<div class="admonition warning">
-<p class="admonition-title">Community servers are best-effort demos</p>
-<p>The public OVOS servers exist for easy onboarding and demos only. They are best-effort,
-not optimized, carry no uptime guarantees, and may vanish at any time. OVOS will be slow
-and unreliable if you rely on them. The official recommendation is to self-host — or skip
-servers entirely: fully offline plugins exist for everything.</p>
-</div>
-<p>See <a href="../tts-plugins/">TTS plugins</a> for fully offline voices if you'd rather not depend on any server.</p>
-<p>Config keys:</p>
-<table>
-<thead>
-<tr>
-<th>Key</th>
-<th>Default</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>host</code></td>
-<td>public servers</td>
-<td>Server base URL, or a list of URLs to try in order. If unset, a built-in list of public OVOS TTS servers is shuffled and used.</td>
-</tr>
-<tr>
-<td><code>v2</code></td>
-<td><code>true</code></td>
-<td>Use <code>/v2/synthesize</code> (utterance as a query param); set <code>false</code> to use the legacy <code>/synthesize/{utterance}</code> path.</td>
-</tr>
-<tr>
-<td><code>voice</code></td>
-<td>plugin default</td>
-<td>Voice name forwarded as a query param (omitted when unset or <code>"default"</code>).</td>
-</tr>
-<tr>
-<td><code>verify_ssl</code></td>
-<td><code>true</code></td>
-<td>Verify the server's TLS certificate.</td>
-</tr>
-<tr>
-<td><code>tts_timeout</code></td>
-<td><code>5</code></td>
-<td>Per-request timeout in seconds.</td>
-</tr>
-</tbody>
-</table>
-<div class="admonition note">
-<p class="admonition-title">Upcoming — universal server adapter</p>
-<p>A <code>server_type</code> option (plus first-class <code>api_key</code> support) is planned for the companion
-plugin, so a single config shape can target different self-hosted or cloud TTS server APIs
-without a dedicated plugin per vendor.</p>
-</div>
-<hr />
-<h2 id="docker-deployment">Docker Deployment<a class="headerlink" href="#docker-deployment" title="Permanent link">&para;</a></h2>
-<p><strong>Upcoming</strong>: a ready-made Docker Compose proxy setup for this server is in progress.</p>
 <div class="admonition tip">
-<p class="admonition-title">An interim path: some TTS plugins ship their own Docker image</p>
-<p>A few TTS plugin repositories (for example the eSpeak NG, S.A.M., and Mimic engines)
-already ship their own <code>Dockerfile</code> and <code>docker-compose.yml</code> that build a ready-made
-container serving that engine behind <code>ovos-tts-server</code>. Until the compose proxy above
-lands, check a plugin's own repository for a Dockerfile before building one by hand.</p>
+<p class="admonition-title">Deploying this server</p>
+<p>Pointing an OVOS instance at this server with the companion client plugin, or running
+the server itself in Docker? See <a href="../tts-server-deployment/">TTS Server Deployment</a>.</p>
 </div>
-<p><strong>Create a Dockerfile</strong></p>
-<div class="language-dockerfile highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="k">FROM</span><span class="w"> </span><span class="s">python:3.11-slim</span>
-</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="k">RUN</span><span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>ovos-tts-server
-</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="k">RUN</span><span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span><span class="o">{</span>YOUR_TTS_PLUGIN<span class="o">}</span>
-</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="k">ENTRYPOINT</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;ovos-tts-server&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;--engine&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;{YOUR_TTS_PLUGIN}&quot;</span><span class="p">]</span>
-</span></code></pre></div>
-<p><strong>Build &amp; Run</strong></p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>my-ovos-tts<span class="w"> </span>.
-</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>docker<span class="w"> </span>run<span class="w"> </span>-p<span class="w"> </span><span class="m">9666</span>:9666<span class="w"> </span>my-ovos-tts
-</span></code></pre></div>
-<p>Pre-built containers are also available via the <a href="https://github.com/OpenVoiceOS/ovos-docker-tts">ovos-docker-tts</a>
-repository.</p>
-<div class="admonition note">
-<p class="admonition-title">Upcoming — Docker Compose</p>
-<p>A default Docker Compose setup and custom-container documentation are <strong>Upcoming</strong>.</p>
-</div>
-<hr />
 <h2 id="tips-caveats">Tips &amp; Caveats<a class="headerlink" href="#tips-caveats" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
@@ -1849,7 +1713,7 @@ repository.</p>
 </ul>
 <hr />
 <p><strong>Read next:</strong> <a href="../translate-server/">Translate Server</a>
-<strong>Related:</strong> <a href="../stt-server/">STT Server</a> · <a href="../server-compat-layers/">Server Compatibility Layers</a> · <a href="../tts-plugins/">TTS Plugins</a> · <a href="../privacy-security/">Privacy &amp; Security</a></p>
+<strong>Related:</strong> <a href="../tts-server-deployment/">TTS Server Deployment</a> · <a href="../stt-server/">STT Server</a> · <a href="../server-compat-layers/">Server Compatibility Layers</a> · <a href="../tts-plugins/">TTS Plugins</a> · <a href="../privacy-security/">Privacy &amp; Security</a></p>
 
 
 

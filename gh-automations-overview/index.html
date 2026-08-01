@@ -1491,6 +1491,69 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../gh-automations-coverage-security/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Coverage & Security Workflows
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../gh-automations-lint-docs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lint & Docs Workflows
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../gh-automations-pr-comment-scripts/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    PR Comment Pattern & Scripts
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -1774,6 +1837,8 @@
 <h2 id="worked-example-wiring-build-tests-publish-alpha-publish-stable-together">Worked example: wiring build-tests + publish-alpha + publish-stable together<a class="headerlink" href="#worked-example-wiring-build-tests-publish-alpha-publish-stable-together" title="Permanent link">&para;</a></h2>
 <p>A typical repo runs <code>build-tests.yml</code> as a PR gate, <code>publish-alpha.yml</code> when a PR merges to
 <code>dev</code>, and <code>publish-stable.yml</code> when the resulting release PR merges to <code>master</code>:</p>
+<details class="example">
+<summary>Worked example: full workflow files</summary>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># .github/workflows/build_tests.yml - gate every PR into dev</span>
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Run Build Tests</span>
 </span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="nt">on</span><span class="p">:</span>
@@ -1815,6 +1880,7 @@
 </span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="w">      </span><span class="nt">publish_pypi</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 </span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="w">      </span><span class="nt">sync_dev</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 </span></code></pre></div>
+</details>
 <p>The three form a pipeline. <code>build-tests</code> must pass before a PR can merge to <code>dev</code>.
 <code>publish-alpha</code> then bumps the version, tags a pre-release, publishes it to PyPI, and opens the
 release PR to <code>master</code>.</p>
