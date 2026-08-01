@@ -22,6 +22,11 @@ runs one process. This mirrors the split described in
 [Composable Deployments](composable-deployments.md): scale, restart, or relocate any one
 service without touching the rest.
 
+`ovos-docker` builds its images with Docker Buildx Bake for `linux/amd64` and `linux/arm64`
+(the default `PLATFORMS` in its `docker-bake.hcl`), which covers a 64-bit Raspberry Pi OS
+install. Check the actual tags on Docker Hub for the image and version you plan to run before
+deploying to a Pi: not every image or channel is guaranteed to carry both architectures.
+
 ## A working compose file
 
 This is a trimmed version of the reference
@@ -141,6 +146,95 @@ container's name or hostname, the way any other split-host OVOS deployment does 
 [Composable Deployments](composable-deployments.md)). The upstream compose files do not do
 this: they rely on host networking and `localhost` throughout.
 
+## Server/satellite split
+
+For the one-brain-many-speakers pattern described in
+[Satellites](satellites.md#build-walkthrough-a-raw-shared-bus), split the compose file above
+into a server stack and a satellite stack. The server runs the messagebus and `ovos-core`
+(plus skills); each satellite runs only a listener and an audio service, with PHAL added only
+if the device needs direct hardware access. Both stacks use the same images and volume layout
+as [the reference compose file](#a-working-compose-file); only which services run where
+changes.
+
+```yaml title="docker-compose.yml — server"
+services:
+  ovos_messagebus:
+    image: docker.io/smartgic/ovos-messagebus:${VERSION}
+    network_mode: host
+    volumes:
+      - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft:ro
+      - ovos_local_state:/home/${OVOS_USER}/.local/state/mycroft
+      - ${TMP_FOLDER}:/tmp/mycroft
+
+  ovos_core:
+    image: docker.io/smartgic/ovos-core:${VERSION}
+    network_mode: host
+    volumes:
+      - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
+      - ovos_local_state:/home/${OVOS_USER}/.local/state/mycroft
+      - ${TMP_FOLDER}:/tmp/mycroft
+    depends_on:
+      - ovos_messagebus
+
+volumes:
+  ovos_local_state:
+```
+
+```yaml title="docker-compose.yml — satellite (per device)"
+services:
+  ovos_listener:
+    image: docker.io/smartgic/ovos-listener:${VERSION}
+    network_mode: host
+    devices:
+      - /dev/snd
+    volumes:
+      - ~/.config/pulse/cookie:/home/${OVOS_USER}/.config/pulse/cookie:ro
+      - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft:ro
+      - ${TMP_FOLDER}:/tmp/mycroft
+      - ${XDG_RUNTIME_DIR}/pulse:${XDG_RUNTIME_DIR}/pulse:ro
+
+  ovos_audio:
+    image: docker.io/smartgic/ovos-audio:${VERSION}
+    network_mode: host
+    devices:
+      - /dev/snd
+    volumes:
+      - ~/.config/pulse/cookie:/home/${OVOS_USER}/.config/pulse/cookie:ro
+      - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
+      - ovos_tts_cache:/home/${OVOS_USER}/.cache/mycroft
+      - ${TMP_FOLDER}:/tmp/mycroft
+      - ${XDG_RUNTIME_DIR}/pulse:${XDG_RUNTIME_DIR}/pulse:ro
+
+  # ovos_phal:
+  #   image: docker.io/smartgic/ovos-phal:${VERSION}
+  #   network_mode: host
+  #   # add only if this satellite needs direct hardware access (LEDs, buttons, power)
+
+volumes:
+  ovos_tts_cache:
+```
+
+Point each satellite's mounted `mycroft.conf` at the server, since `network_mode: host`
+puts every container on the satellite behind the satellite host's own IP, not a container
+name:
+
+```jsonc
+{
+  "websocket": {
+    "host": "192.168.1.10",
+    "port": 8181,
+    "route": "/core"
+  }
+}
+```
+
+Replace `192.168.1.10` with the server host's real LAN address. With `network_mode: host`
+this must be a real IP or hostname, never a container or service name: host networking has
+no inter-container DNS (see [Networking](#networking) above). See
+[Satellites: Satellite config](satellites.md#satellite-config) for the same setting applied
+to a bare-metal deployment, and the warnings there about the shared-session and
+localhost-default pitfalls.
+
 ## Headless: STT/TTS servers as containers
 
 `ovos-docker` also builds standalone STT and TTS server images, one per baked-in engine:
@@ -152,6 +246,16 @@ satellites that only run the bus, listener, and audio locally. See
 HTTP contract and plugin-side config keys, and
 [Production Operations: thin clients + a shared speech backend](production-operations.md#thin-clients-a-shared-speech-backend)
 for a worked compose example splitting the speech backend from the thin client.
+
+## Containerized HiveMind
+
+`ovos-docker` does not publish a HiveMind image. HiveMind has its own separate project,
+[HiveMind-Docker](https://github.com/JarbasHiveMind/hivemind-docker), with its own images
+(published under `docker.io/smartgic`, built with Docker Buildx Bake for `linux/amd64` and
+`linux/arm64`) and compose files for a HiveMind hub and its satellite/listener/chatroom
+components. See [Remote Agents with HiveMind](hivemind-agents.md) for the pip-installed,
+bare-metal path this manual documents in detail; check the HiveMind-Docker repository
+directly for current image tags and compose usage.
 
 ## Limitations
 

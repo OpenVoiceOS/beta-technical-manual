@@ -151,6 +151,15 @@ path in the grid below.
 
     [:octicons-arrow-right-24: Production Operations](production-operations.md)
 
+-   :material-source-pull: __I want to fix a bug or contribute code__
+
+    ---
+
+    Run a core repo from source, debug it, and get your fix merged.
+
+    [:octicons-arrow-right-24: Development Environment](dev-environment.md) ·
+    [Contributing](contributing.md)
+
 -   :material-raspberry-pi: __I want to build a device__
 
     ---

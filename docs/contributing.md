@@ -15,7 +15,9 @@ service you're changing, and reloading your changes while you work.
 Every OVOS repository publishes through the same shared pipeline, described in full on the
 [gh-automations](gh-automations-overview.md) page:
 
-1. **Branch**: work happens on a feature branch, not directly on `dev`. Name the branch after its conventional-commit type: `fix/<topic>`, `feat/<topic>`, or `docs/<topic>`.
+1. **Branch**: fork the repo on GitHub, clone your fork, and cut a feature branch **from
+   `dev`**, never from `master` and never directly on `dev`. Name the branch after its
+   conventional-commit type: `fix/<topic>`, `feat/<topic>`, or `docs/<topic>`.
 2. **Pull request into `dev`**: opening a PR against `dev` triggers the shared **OVOS PR
    Checks**: build/install/test, license and dependency scanning, plugin-manifest detection
    (for plugin repos), coverage, and a version-bump preview. These checks post their results
@@ -57,8 +59,9 @@ slow way to find out. Run the same kind of check locally first:
   the PR check will run.
 - **Core repositories** (`ovos-core`, `ovos-bus-client`, `ovos-utils`, and the other libraries
   under [the repository index](ecosystem-index.md)): run that repo's own `pytest` suite from a
-  checkout before opening the PR: `pip install -e .[test]` (or the extra the repo's
-  `pyproject.toml` names for tests), then `pytest`.
+  checkout before opening the PR: `uv pip install -e ".[test]"` (or the extra the repo's
+  `pyproject.toml` names for tests), then `pytest`. See
+  [Development Environment](dev-environment.md) for the full local setup.
 
 Either way, the goal is the same. Catch a failure on your own machine, where you can iterate on
 it in seconds, instead of finding out from a CI comment minutes later.

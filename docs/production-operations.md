@@ -446,13 +446,20 @@ pinning the same wake word, STT/TTS servers, or `ready_settings` across an entir
 
 For a step-by-step build of a server-plus-satellites deployment, see [Satellites](satellites.md).
 
-A common fleet topology is several low-power "thin" devices that only run the bus, listener
-and audio services, all pointed at one shared, more capable machine that does the actual
-speech-to-text and text-to-speech work over HTTP (see [STT server](stt-server.md) and
-[TTS server](tts-server.md)). A sketch, based on the real container images published by
+A common fleet topology is several low-power "thin" devices that each run a full
+`ovos-core` (with the bus, listener and audio services), all pointed at one shared, more
+capable machine that does the actual speech-to-text and text-to-speech work over HTTP (see
+[STT server](stt-server.md) and [TTS server](tts-server.md)). Only the heavy STT/TTS
+inference is centralized: each device keeps its own core, session, and skills. A sketch,
+based on the real container images published by
 [`ovos-docker`](https://github.com/OpenVoiceOS/ovos-docker). For the client-side config keys
 and a worked example on a single LAN IP, see
 [privacy-security: point a device at your own LAN servers](privacy-security.md#point-a-device-at-your-own-lan-servers).
+
+!!! note "Not the shared-brain pattern"
+    This is not the shared-brain pattern. Every device here keeps its own `ovos-core`, so
+    each room is an independent assistant that shares only speech inference. For one shared
+    brain and session, see [Satellites](satellites.md).
 
 !!! danger "These ports are unauthenticated plain HTTP"
     `8080` and `9666` below serve unauthenticated plain HTTP by default. Never expose them
@@ -566,6 +573,7 @@ each one before you open a port on a shared network.
 | [TTS server](tts-server.md) | 9666 | `0.0.0.0` | None | None (put a proxy in front for TLS) |
 | [Translate server](translate-server.md) HTTP API | 9686 | `0.0.0.0` | None | None (put a proxy in front for TLS) |
 | [Translate server](translate-server.md) MCP endpoint | 9687 | `127.0.0.1` | None | None |
+| [HiveMind](hivemind-agents.md) listener | 5678 | `0.0.0.0` | Access key + password (Noise handshake) | Optional (`ssl` + `cert_dir`/`cert_name` in server config) |
 
 !!! warning "The GUI WebSocket binds to all interfaces by default"
     Unlike the bus, the GUI WebSocket ships bound to `0.0.0.0`. It has no authentication, no

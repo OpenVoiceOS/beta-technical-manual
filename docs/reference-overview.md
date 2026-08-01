@@ -38,6 +38,7 @@ Standalone utilities: a viewer for this documentation, and a web UI for editing 
 
 For maintainers and contributors: how to get a change merged, and how the gh-automations CI workflows are structured.
 
+- [Development Environment](dev-environment.md): build, run, and debug a core repo from a source checkout.
 - [Contributing](contributing.md): how to get a change merged.
 - **gh-automations**: [Overview](gh-automations-overview.md), [Release Flow](gh-automations-release.md), [Workflows](gh-automations-workflows.md), [Release Workflows](gh-automations-release-workflows.md), [PR Check Workflows](gh-automations-pr-workflows.md), [Quality Workflows](gh-automations-quality-workflows.md).
 

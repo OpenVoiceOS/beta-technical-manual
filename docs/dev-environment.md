@@ -11,13 +11,15 @@
 
 ## Clone and install editable
 
-Clone the repo you want to fix, for example [`ovos-core`](https://github.com/OpenVoiceOS/ovos-core),
-and create an isolated virtual environment for it. `uv` is faster than plain `venv`/`pip` and
-works the same way:
+Fork the repo you want to fix on GitHub first. You need the fork to push your branch, since
+only maintainers can push to [`ovos-core`](https://github.com/OpenVoiceOS/ovos-core) itself.
+Then clone your fork and create an isolated virtual environment for it. `uv` is faster than
+plain `venv`/`pip` and works the same way:
 
 ```bash
-git clone https://github.com/OpenVoiceOS/ovos-core.git
+git clone https://github.com/<your-user>/ovos-core.git
 cd ovos-core
+git remote add upstream https://github.com/OpenVoiceOS/ovos-core.git
 uv venv .venv
 source .venv/bin/activate
 uv pip install -e .

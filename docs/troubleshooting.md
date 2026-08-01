@@ -224,6 +224,11 @@ once the bus is back.
 
 ## Prove the microphone and speaker work
 
+!!! tip "Still copy-paste territory"
+    The checks in this section are plain copy-paste commands with the expected result
+    described after each one. You do not need to read logs or understand the output.
+    The more technical material starts after this section.
+
 Do these checks before you read wake word or STT logs. They test the sound card itself, not
 OVOS, and they work on any Linux install (Raspberry Pi image or otherwise). If you're on
 raspOVOS, there is also a Pi-specific diagnostics script: see [RaspOVOS Troubleshooting →
@@ -238,8 +243,12 @@ arecord -l
 ```
 
 It lists every capture device the kernel found. Look for your microphone's card. If the list is
-empty, the OS does not see the microphone. Fix the wiring, driver, or USB connection before you
-go further.
+empty, the OS does not see the microphone. Unplug the microphone, plug it into a different USB
+port, and run `arecord -l` again. If the list stays empty, the problem is the microphone, its
+cable, or a missing driver, not OVOS. Ask for help in the
+[OVOS Matrix chat](https://matrix.to/#/!XFpdtmgyCoPDxOMPpH:matrix.org?via=matrix.org) or the
+[Open Conversational AI forum](https://community.openconversational.ai/) with the output of
+`arecord -l` and your microphone model.
 
 List playback devices the same way:
 
