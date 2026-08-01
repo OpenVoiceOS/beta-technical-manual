@@ -11,10 +11,10 @@
         <link rel="canonical" href="https://tigregotico.github.io/ovos-technical-manual/converse-pipeline/">
       
       
-        <link rel="prev" href="../knn-pipeline/">
+        <link rel="prev" href="../debugging-intent-matching/">
       
       
-        <link rel="next" href="../cq-pipeline/">
+        <link rel="next" href="../stop-pipeline/">
       
       
       <link rel="icon" href="https://github.com/OpenVoiceOS/ovos_assets/blob/master/Logo/ovos-logo-512.png?raw=true">
@@ -708,7 +708,7 @@
             
   
   <span class="md-ellipsis">
-    Pipeline Matchers
+    Flow Stages
   </span>
   
 
@@ -718,93 +718,9 @@
         <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_4_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_4_4">
             <span class="md-nav__icon md-icon"></span>
-            Pipeline Matchers
+            Flow Stages
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../adapt-pipeline/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Adapt
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../padatious-pipeline/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Padatious
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../m2v-pipeline/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Model2Vec
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../knn-pipeline/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Hierarchical KNN
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
             
               
                 
@@ -1012,74 +928,11 @@
   
   
     <li class="md-nav__item">
-      <a href="../cq-pipeline/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Common Query
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../persona-pipeline/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Persona
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../stop-pipeline/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
     Stop
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../ocp-pipeline/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    OCP
   </span>
   
 
@@ -1141,11 +994,97 @@
         
   
   
-    <a href="../padacioso/" class="md-nav__link">
+    <a href="../adapt-pipeline/" class="md-nav__link">
       
   
   <span class="md-ellipsis">
-    Alternative Parsers
+    Keyword Matchers
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../padatious-pipeline/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Utterance Matchers
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../ocp-pipeline/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Specialized Matchers
   </span>
   
 
@@ -1654,6 +1593,7 @@
 <p class="admonition-title">In a nutshell</p>
 <p>Normally each thing you say to the assistant is handled on its own. The Converse pipeline lets a skill stay "in the conversation" for a few turns, so it can ask a follow-up and understand your reply in context, much like a person who remembers what you were just talking about. For example, after a skill asks "which room?", it can keep listening so your answer "the kitchen" lands in the right place. See the <a href="../glossary/">Glossary</a> for terms, or <a href="../fallbacks/">Fallbacks</a> for what happens when nothing is actively listening.</p>
 </div>
+<p>This is a flow stage: part of every standard pipeline rather than a matcher you choose between.</p>
 <p>The rest of this page is for people deploying or customizing OVOS. If you only wanted to know what this stage does, you are done.</p>
 <details class="info">
 <summary>📐 Formal specification</summary>
@@ -2051,7 +1991,7 @@
 <hr />
 <p><em>Source code: <a href="https://github.com/OpenVoiceOS/ovos-core">OpenVoiceOS/ovos-core</a>.</em></p>
 <hr />
-<p><strong>Read next:</strong> <a href="../cq-pipeline/">Common Query Pipeline</a>
+<p><strong>Read next:</strong> <a href="../stop-pipeline/">Stop Pipeline</a>
 <strong>Related:</strong> <a href="../converse/">Converse</a> · <a href="../session/">Context &amp; Sessions</a> · <a href="../skill-classes/">Skill Classes</a> · <a href="../fallback-pipeline/">Fallback Pipeline</a></p>
 
 

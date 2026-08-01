@@ -11,10 +11,10 @@
         <link rel="canonical" href="https://tigregotico.github.io/ovos-technical-manual/palavreado/">
       
       
-        <link rel="prev" href="../nebulento/">
+        <link rel="prev" href="../adapt-pipeline/">
       
       
-        <link rel="next" href="../transformer-plugins/">
+        <link rel="next" href="../padatious-pipeline/">
       
       
       <link rel="icon" href="https://github.com/OpenVoiceOS/ovos_assets/blob/master/Logo/ovos-logo-512.png?raw=true">
@@ -22,7 +22,7 @@
     
     
       
-        <title>Palavreado (keyword) - OpenVoiceOS Technical Manual</title>
+        <title>Palavreado (extra) - OpenVoiceOS Technical Manual</title>
       
     
     
@@ -111,7 +111,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Palavreado (keyword)
+              Palavreado (extra)
             
           </span>
         </div>
@@ -703,11 +703,11 @@
         
   
   
-    <a href="../adapt-pipeline/" class="md-nav__link">
+    <a href="../converse-pipeline/" class="md-nav__link">
       
   
   <span class="md-ellipsis">
-    Pipeline Matchers
+    Flow Stages
   </span>
   
 
@@ -751,7 +751,7 @@
             
   
   <span class="md-ellipsis">
-    Alternative Parsers
+    Keyword Matchers
   </span>
   
 
@@ -761,7 +761,7 @@
         <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_5_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_4_5">
             <span class="md-nav__icon md-icon"></span>
-            Alternative Parsers
+            Keyword Matchers
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
             
@@ -772,32 +772,11 @@
   
   
     <li class="md-nav__item">
-      <a href="../padacioso/" class="md-nav__link">
+      <a href="../adapt-pipeline/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Padacioso (literal)
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../nebulento/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Nebulento (fuzzy)
+    Adapt (default)
   </span>
   
 
@@ -827,7 +806,7 @@
           
   
   <span class="md-ellipsis">
-    Palavreado (keyword)
+    Palavreado (extra)
   </span>
   
 
@@ -838,7 +817,7 @@
         
   
   <span class="md-ellipsis">
-    Palavreado (keyword)
+    Palavreado (extra)
   </span>
   
 
@@ -897,6 +876,92 @@
             
           </ul>
         </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../padatious-pipeline/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Utterance Matchers
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../ocp-pipeline/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Specialized Matchers
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
       
     </li>
   
@@ -1284,6 +1349,7 @@ specific <strong>keywords</strong> in what they said. If the right words are pre
 It is a dead-simple, drop-in replacement for <a href="../adapt-pipeline/">Adapt</a>. See the
 <a href="../glossary/">Glossary</a> for terms like <em>intent</em> and <em>entity</em>.</p>
 </div>
+<p>Not in the default pipeline. Add its stage IDs to <code>intents.pipeline</code> explicitly to use it.</p>
 <p><em>A keyword-based intent parser. The drop-in replacement for <a href="../adapt-pipeline/">Adapt</a>.</em></p>
 <p><a href="https://github.com/OpenVoiceOS/palavreado"><code>palavreado</code></a> matches utterances against named intents built from <strong>required</strong> and <strong>optional</strong> keyword slots. Each slot holds a list of vocabulary words. If the required words are present in the utterance, the intent fires. An <code>autoregex</code> variant enables <strong>keyword extraction</strong>, pulling out a value like an item name, using <a href="https://github.com/tfeldmann/simplematch">simplematch</a>-style templates.</p>
 <h2 id="install">Install<a class="headerlink" href="#install" title="Permanent link">&para;</a></h2>
@@ -1353,7 +1419,7 @@ Adapt's full rule engine. For example-based (whole-sentence) matching, use
 <a href="../padatious-pipeline/">Padatious</a> or <a href="../nebulento/">Nebulento</a> instead.</p>
 </div>
 <hr />
-<p><strong>Read next:</strong> <a href="../transformer-plugins/">Transformers Overview</a>
+<p><strong>Read next:</strong> <a href="../padatious-pipeline/">Padatious Pipeline</a>
 <strong>Related:</strong> <a href="../nebulento/">Nebulento</a> · <a href="../padacioso/">Padacioso</a> · <a href="../adapt-pipeline/">Adapt Pipeline</a></p>
 
 

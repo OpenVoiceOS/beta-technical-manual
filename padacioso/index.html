@@ -11,7 +11,7 @@
         <link rel="canonical" href="https://tigregotico.github.io/ovos-technical-manual/padacioso/">
       
       
-        <link rel="prev" href="../fallback-pipeline/">
+        <link rel="prev" href="../m2v-pipeline/">
       
       
         <link rel="next" href="../nebulento/">
@@ -22,7 +22,7 @@
     
     
       
-        <title>Padacioso (literal) - OpenVoiceOS Technical Manual</title>
+        <title>Padacioso (extra) - OpenVoiceOS Technical Manual</title>
       
     
     
@@ -111,7 +111,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Padacioso (literal)
+              Padacioso (extra)
             
           </span>
         </div>
@@ -703,11 +703,54 @@
         
   
   
+    <a href="../converse-pipeline/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Flow Stages
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
     <a href="../adapt-pipeline/" class="md-nav__link">
       
   
   <span class="md-ellipsis">
-    Pipeline Matchers
+    Keyword Matchers
   </span>
   
 
@@ -744,26 +787,68 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_5" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_6" checked>
         
           
-          <label class="md-nav__link" for="__nav_4_5" id="__nav_4_5_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_4_6" id="__nav_4_6_label" tabindex="0">
             
   
   <span class="md-ellipsis">
-    Alternative Parsers
+    Utterance Matchers
   </span>
   
 
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_5_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_4_5">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4_6">
             <span class="md-nav__icon md-icon"></span>
-            Alternative Parsers
+            Utterance Matchers
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../padatious-pipeline/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Padatious (default)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../m2v-pipeline/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Model2Vec (default)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
             
               
                 
@@ -785,7 +870,7 @@
           
   
   <span class="md-ellipsis">
-    Padacioso (literal)
+    Padacioso (extra)
   </span>
   
 
@@ -796,7 +881,7 @@
         
   
   <span class="md-ellipsis">
-    Padacioso (literal)
+    Padacioso (extra)
   </span>
   
 
@@ -855,7 +940,7 @@
         
   
   <span class="md-ellipsis">
-    Nebulento (fuzzy)
+    Nebulento (extra)
   </span>
   
 
@@ -872,11 +957,11 @@
   
   
     <li class="md-nav__item">
-      <a href="../palavreado/" class="md-nav__link">
+      <a href="../knn-pipeline/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Palavreado (keyword)
+    Hierarchical KNN (extra)
   </span>
   
 
@@ -888,6 +973,49 @@
             
           </ul>
         </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../ocp-pipeline/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Specialized Matchers
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
       
     </li>
   
@@ -1263,6 +1391,7 @@
 <p class="admonition-title">In a nutshell</p>
 <p>Padacioso is a simple tool that figures out what a user <em>meant</em>. It matches what they said against a list of example phrases you write by hand, like a phrasebook. Unlike its smarter sibling Padatious, it does no machine learning and needs no training. It checks the words literally, with some flexibility for optional words and fill-in-the-blank slots. It also pulls out useful pieces, called an "entity" (for example, the city name in "weather in Lisbon"). See the <a href="../glossary/">Glossary</a> for terms like <em>intent</em> and <em>entity</em>.</p>
 </div>
+<p>Not in the default pipeline. Add its stage IDs to <code>intents.pipeline</code> explicitly to use it.</p>
 <p><em>A lightweight, dead-simple intent parser</em></p>
 <p>Built on top of <a href="https://github.com/tfeldmann/simplematch">simplematch</a>, inspired by <a href="https://github.com/MycroftAI/padaos">Padaos</a>.</p>
 <p>Padacioso matches an utterance against example sentences using plain string templates. It needs no training and no model files. It is the pure-Python sibling of Padatious. Padatious learns from examples, but Padacioso matches them literally, with a few placeholder syntaxes. Each call to <code>calc_intent</code> returns the best match as <code>{"name", "entities", "conf"}</code>, or <code>name: None</code> when nothing matches.</p>

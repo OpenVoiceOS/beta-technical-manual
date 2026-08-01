@@ -670,6 +670,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#matcher-taxonomy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Matcher taxonomy
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#what-is-an-intent-pipeline" class="md-nav__link">
     <span class="md-ellipsis">
       What is an Intent Pipeline?
@@ -838,6 +847,48 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Pipeline Plugins Reference">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#flow-stages" class="md-nav__link">
+    <span class="md-ellipsis">
+      Flow Stages
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#keyword-matchers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Keyword Matchers
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#utterance-matchers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Utterance Matchers
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#specialized-matchers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Specialized Matchers
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -914,11 +965,11 @@
         
   
   
-    <a href="../adapt-pipeline/" class="md-nav__link">
+    <a href="../converse-pipeline/" class="md-nav__link">
       
   
   <span class="md-ellipsis">
-    Pipeline Matchers
+    Flow Stages
   </span>
   
 
@@ -957,11 +1008,97 @@
         
   
   
-    <a href="../padacioso/" class="md-nav__link">
+    <a href="../adapt-pipeline/" class="md-nav__link">
       
   
   <span class="md-ellipsis">
-    Alternative Parsers
+    Keyword Matchers
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../padatious-pipeline/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Utterance Matchers
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../ocp-pipeline/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Specialized Matchers
   </span>
   
 
@@ -1306,6 +1443,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#matcher-taxonomy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Matcher taxonomy
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#what-is-an-intent-pipeline" class="md-nav__link">
     <span class="md-ellipsis">
       What is an Intent Pipeline?
@@ -1474,6 +1620,48 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Pipeline Plugins Reference">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#flow-stages" class="md-nav__link">
+    <span class="md-ellipsis">
+      Flow Stages
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#keyword-matchers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Keyword Matchers
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#utterance-matchers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Utterance Matchers
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#specialized-matchers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Specialized Matchers
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -1512,6 +1700,49 @@
 <p>On a match the orchestrator dispatches the handler on the topic <code>&lt;skill_id&gt;:&lt;intent_name&gt;</code> (PIPELINE-1 §7) and emits the handler-lifecycle trio. If no plugin claims, it emits <code>ovos.intent.unmatched</code>.</p>
 <p>Several stages here (converse, stop, common-query, fallback) are pipeline plugins that claim via <strong>reserved <code>intent_name</code> values</strong> (<code>converse</code>, <code>response</code>, <code>stop</code>, <code>common_query</code>, <code>fallback</code>) leased in PIPELINE-1 §7.3. Skills may not register those names.</p>
 </div>
+<hr />
+<h2 id="matcher-taxonomy">Matcher taxonomy<a class="headerlink" href="#matcher-taxonomy" title="Permanent link">&para;</a></h2>
+<p>The manual groups pipeline plugins into four kinds. The first is always-on pipeline
+furniture; the other three are matchers you pick between:</p>
+<table>
+<thead>
+<tr>
+<th>Group</th>
+<th>Members</th>
+<th>What it answers</th>
+<th>In the default pipeline?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Flow Stages</td>
+<td><a href="../converse-pipeline/">Converse</a>, <a href="../stop-pipeline/">Stop</a>, <a href="../fallback-pipeline/">Fallback</a></td>
+<td>Not a matcher choice — session bookkeeping and the last-resort catch-all every deployment needs</td>
+<td>Yes, all three</td>
+</tr>
+<tr>
+<td>Keyword Matchers</td>
+<td><a href="../adapt-pipeline/">Adapt</a> (default), <a href="../palavreado/">Palavreado</a> (extra)</td>
+<td>"Which registered keywords occur in this utterance?"</td>
+<td>Adapt only</td>
+</tr>
+<tr>
+<td>Utterance Matchers</td>
+<td><a href="../padatious-pipeline/">Padatious</a> (default), <a href="../m2v-pipeline/">Model2Vec</a> (default), <a href="../padacioso/">Padacioso</a> (extra), <a href="../nebulento/">Nebulento</a> (extra), <a href="../knn-pipeline/">Hierarchical KNN</a> (extra)</td>
+<td>"Which registered example sentence does this utterance resemble?"</td>
+<td>Padatious and Model2Vec only</td>
+</tr>
+<tr>
+<td>Specialized Matchers</td>
+<td><a href="../ocp-pipeline/">OCP media</a> (default), <a href="../cq-pipeline/">Common Query</a> (extra), <a href="../persona-pipeline/">Persona</a> (extra)</td>
+<td>Domain-specific requests: media playback, open questions, persona chat</td>
+<td>OCP media only</td>
+</tr>
+</tbody>
+</table>
+<p>"Default" means the plugin's stage IDs appear in the bundled <code>intents.pipeline</code>
+list (see below). "Extra" means you install the plugin and add its stage IDs
+yourself.</p>
 <hr />
 <h2 id="what-is-an-intent-pipeline">What is an Intent Pipeline?<a class="headerlink" href="#what-is-an-intent-pipeline" title="Permanent link">&para;</a></h2>
 <p>An intent pipeline in OVOS is a sequence of processing stages that analyze user input to determine the user's intent. Each stage uses a different strategy, ranging from high-confidence pipeline plugins to fallback mechanisms.</p>
@@ -1878,60 +2109,135 @@ pipeline. They expose the same high/medium/low confidence tiers as Adapt/Padatio
 </ul>
 <hr />
 <h2 id="pipeline-plugins-reference">Pipeline Plugins Reference<a class="headerlink" href="#pipeline-plugins-reference" title="Permanent link">&para;</a></h2>
-<p>Each pipeline plugin has its own manual page with full configuration details:</p>
+<p>Each pipeline plugin has its own manual page with full configuration details, grouped
+the same way as the <a href="#matcher-taxonomy">Matcher taxonomy</a> above:</p>
+<h3 id="flow-stages">Flow Stages<a class="headerlink" href="#flow-stages" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
 <tr>
 <th>Plugin</th>
 <th>Description</th>
+<th>Default?</th>
 <th>Manual page</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>ovos-common-query-pipeline-plugin</code></td>
-<td>Answer questions by gathering answers from several skills</td>
-<td><a href="../cq-pipeline/">Common Query Pipeline</a></td>
-</tr>
-<tr>
-<td><code>ovos-m2v-pipeline</code></td>
-<td>Intent matching powered by the Model2Vec model</td>
-<td><a href="../m2v-pipeline/">M2V Pipeline</a></td>
-</tr>
-<tr>
-<td><code>ovos-padatious-pipeline-plugin</code></td>
-<td>Neural network intent-matching pipeline plugin</td>
-<td><a href="../padatious-pipeline/">Padatious Pipeline</a></td>
-</tr>
-<tr>
-<td><code>ovos-adapt-pipeline-plugin</code></td>
-<td>Adapt Intent Parser</td>
-<td><a href="../adapt-pipeline/">Adapt Pipeline</a></td>
-</tr>
-<tr>
-<td><code>ovos-ocp-pipeline-plugin</code></td>
-<td>Specialized media handling</td>
-<td><a href="../ocp-pipeline/">OCP Pipeline</a></td>
-</tr>
-<tr>
-<td><code>ovos-persona-pipeline-plugin</code></td>
-<td>Route conversation to a persona (LLM or other agent)</td>
-<td><a href="../persona-pipeline/">Persona Pipeline</a></td>
-</tr>
-<tr>
 <td><code>ovos-converse-pipeline-plugin</code></td>
 <td>Give active skills first claim on follow-up utterances</td>
+<td>Yes</td>
 <td><a href="../converse-pipeline/">Converse Pipeline</a></td>
 </tr>
 <tr>
 <td><code>ovos-stop-pipeline-plugin</code></td>
 <td>Match "stop" and interrupt commands</td>
+<td>Yes</td>
 <td><a href="../stop-pipeline/">Stop Pipeline</a></td>
 </tr>
 <tr>
 <td><code>ovos-fallback-pipeline-plugin</code></td>
 <td>Last-resort handlers when nothing matched</td>
+<td>Yes</td>
 <td><a href="../fallback-pipeline/">Fallback Pipeline</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="keyword-matchers">Keyword Matchers<a class="headerlink" href="#keyword-matchers" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Plugin</th>
+<th>Description</th>
+<th>Default?</th>
+<th>Manual page</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ovos-adapt-pipeline-plugin</code></td>
+<td>Adapt Intent Parser</td>
+<td>Yes</td>
+<td><a href="../adapt-pipeline/">Adapt Pipeline</a></td>
+</tr>
+<tr>
+<td><code>palavreado</code></td>
+<td>Dead-simple keyword matcher, an Adapt drop-in</td>
+<td>No</td>
+<td><a href="../palavreado/">Palavreado</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="utterance-matchers">Utterance Matchers<a class="headerlink" href="#utterance-matchers" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Plugin</th>
+<th>Description</th>
+<th>Default?</th>
+<th>Manual page</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ovos-padatious-pipeline-plugin</code></td>
+<td>Neural network intent-matching pipeline plugin</td>
+<td>Yes</td>
+<td><a href="../padatious-pipeline/">Padatious Pipeline</a></td>
+</tr>
+<tr>
+<td><code>ovos-m2v-pipeline</code></td>
+<td>Intent matching powered by the Model2Vec model</td>
+<td>Yes</td>
+<td><a href="../m2v-pipeline/">M2V Pipeline</a></td>
+</tr>
+<tr>
+<td><code>padacioso</code></td>
+<td>Literal template matcher, no training</td>
+<td>No</td>
+<td><a href="../padacioso/">Padacioso</a></td>
+</tr>
+<tr>
+<td><code>nebulento</code></td>
+<td>Fuzzy / typo-tolerant template matcher</td>
+<td>No</td>
+<td><a href="../nebulento/">Nebulento</a></td>
+</tr>
+<tr>
+<td><code>ovos-hierarchical-knn-pipeline</code></td>
+<td>Embedding-based two-stage k-NN matcher</td>
+<td>No</td>
+<td><a href="../knn-pipeline/">Hierarchical KNN Pipeline</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="specialized-matchers">Specialized Matchers<a class="headerlink" href="#specialized-matchers" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Plugin</th>
+<th>Description</th>
+<th>Default?</th>
+<th>Manual page</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ovos-ocp-pipeline-plugin</code></td>
+<td>Specialized media handling</td>
+<td>Yes</td>
+<td><a href="../ocp-pipeline/">OCP Pipeline</a></td>
+</tr>
+<tr>
+<td><code>ovos-common-query-pipeline-plugin</code></td>
+<td>Answer questions by gathering answers from several skills</td>
+<td>No</td>
+<td><a href="../cq-pipeline/">Common Query Pipeline</a></td>
+</tr>
+<tr>
+<td><code>ovos-persona-pipeline-plugin</code></td>
+<td>Route conversation to a persona (LLM or other agent)</td>
+<td>No</td>
+<td><a href="../persona-pipeline/">Persona Pipeline</a></td>
 </tr>
 </tbody>
 </table>
