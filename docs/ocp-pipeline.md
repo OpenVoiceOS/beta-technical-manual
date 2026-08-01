@@ -8,6 +8,8 @@
 
 --8<-- "snippets/what-ocp-means.md"
 
+Shipped in the default pipeline.
+
 The rest of this page is for people deploying or customizing OVOS. If you only wanted to know what this stage does, you are done.
 
 ??? info "📐 Formal specification"
@@ -195,5 +197,5 @@ Leave both off unless you specifically need to support pre-OCP skills.
 *Source code: [OpenVoiceOS/ovos-ocp-pipeline-plugin](https://github.com/OpenVoiceOS/ovos-ocp-pipeline-plugin).*
 
 ---
-**Read next:** [Fallback Pipeline](fallback-pipeline.md)
+**Read next:** [Common Query Pipeline](cq-pipeline.md)
 **Related:** [Media Skills (OCP)](ocp-skills.md) · [OCP Audio Plugin](ocp-audio-plugin.md) · [Stop Pipeline](stop-pipeline.md)

@@ -6,6 +6,8 @@
 !!! abstract "In a nutshell"
     A "persona" is a configurable AI character, often powered by a chatbot-style language model, that the assistant can hand your request to. This pipeline decides when to let that persona answer you instead of the usual command-matching skills, which is useful for open-ended chat or questions that no specific skill covers. You can set it to handle everything, or only step in when nothing else fits. See the [Glossary](glossary.md) for terms, or [Solver/Agent plugins](agent-plugins.md) for the components a persona uses to come up with answers.
 
+Not in the default pipeline. Add its stage IDs to `intents.pipeline` explicitly to use it.
+
 The rest of this page is for people deploying or customizing OVOS. If you only wanted to know what this stage does, you are done.
 
 ??? info "📐 Formal specification"
@@ -341,5 +343,5 @@ Responses use these dialog keys: `activated_persona`, `release_persona`, `active
 *Source code: [OpenVoiceOS/ovos-persona](https://github.com/OpenVoiceOS/ovos-persona).*
 
 ---
-**Read next:** [Stop Pipeline](stop-pipeline.md)
+**Read next:** [Transformers Overview](transformer-plugins.md)
 **Related:** [Personas & PersonaService](personas.md) · [Persona Server](persona-server.md) · [Agent / Solver Plugins](agent-plugins.md) · [Common Query Pipeline](cq-pipeline.md)

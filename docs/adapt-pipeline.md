@@ -6,6 +6,8 @@
 !!! abstract "In a nutshell"
     Adapt is one of the tools that helps the assistant figure out what you want when you speak to it. It works like a checklist: a skill says "if you hear these keywords together, this is the command for me." When you say "switch on the lamp", Adapt spots the keywords "switch on" and "lamp" and routes your request to the right skill. There is no guessing or learning involved. It simply matches the words it was told to look for. See the [Glossary](glossary.md) for terms, or [Padatious](padatious-pipeline.md) for a sister tool that learns from example sentences instead.
 
+Shipped in the default pipeline.
+
 The rest of this page is for people deploying or customizing OVOS. If you only wanted to know what this stage does, you are done.
 
 ??? info "📐 Formal specification"
@@ -138,5 +140,5 @@ Avoid using Adapt for public-facing or general-purpose assistant skills. Modern 
 *Source code: [OpenVoiceOS/ovos-adapt-pipeline-plugin](https://github.com/OpenVoiceOS/ovos-adapt-pipeline-plugin).*
 
 ---
-**Read next:** [Padatious Pipeline](padatious-pipeline.md)
+**Read next:** [Palavreado](palavreado.md)
 **Related:** [Padacioso](padacioso.md) · [Adapt Intents](intents-adapt.md) · [Model2Vec Pipeline](m2v-pipeline.md) · [Debugging Intent Matching](debugging-intent-matching.md)

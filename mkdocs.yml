@@ -135,21 +135,23 @@ nav:
       - Overview & Reference: pipelines-overview.md
       - Building Your Pipeline: building-your-pipeline.md
       - Debugging Intent Matching: debugging-intent-matching.md
-      - Pipeline Matchers:
-          - Adapt: adapt-pipeline.md
-          - Padatious: padatious-pipeline.md
-          - Model2Vec: m2v-pipeline.md
-          - Hierarchical KNN: knn-pipeline.md
+      - Flow Stages:
           - Converse: converse-pipeline.md
-          - Common Query: cq-pipeline.md
-          - Persona: persona-pipeline.md
           - Stop: stop-pipeline.md
-          - OCP: ocp-pipeline.md
           - Fallback: fallback-pipeline.md
-      - Alternative Parsers:
-          - Padacioso (literal): padacioso.md
-          - Nebulento (fuzzy): nebulento.md
-          - Palavreado (keyword): palavreado.md
+      - Keyword Matchers:
+          - Adapt (default): adapt-pipeline.md
+          - Palavreado (extra): palavreado.md
+      - Utterance Matchers:
+          - Padatious (default): padatious-pipeline.md
+          - Model2Vec (default): m2v-pipeline.md
+          - Padacioso (extra): padacioso.md
+          - Nebulento (extra): nebulento.md
+          - Hierarchical KNN (extra): knn-pipeline.md
+      - Specialized Matchers:
+          - OCP media (default): ocp-pipeline.md
+          - Common Query (extra): cq-pipeline.md
+          - Persona (extra): persona-pipeline.md
       - Transformers:
           - Overview: transformer-plugins.md
           - Utterance: utterance-transformers.md

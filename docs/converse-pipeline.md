@@ -6,6 +6,8 @@
 !!! abstract "In a nutshell"
     Normally each thing you say to the assistant is handled on its own. The Converse pipeline lets a skill stay "in the conversation" for a few turns, so it can ask a follow-up and understand your reply in context, much like a person who remembers what you were just talking about. For example, after a skill asks "which room?", it can keep listening so your answer "the kitchen" lands in the right place. See the [Glossary](glossary.md) for terms, or [Fallbacks](fallbacks.md) for what happens when nothing is actively listening.
 
+This is a flow stage: part of every standard pipeline rather than a matcher you choose between.
+
 The rest of this page is for people deploying or customizing OVOS. If you only wanted to know what this stage does, you are done.
 
 ??? info "📐 Formal specification"
@@ -308,5 +310,5 @@ Protections include:
 *Source code: [OpenVoiceOS/ovos-core](https://github.com/OpenVoiceOS/ovos-core).*
 
 ---
-**Read next:** [Common Query Pipeline](cq-pipeline.md)
+**Read next:** [Stop Pipeline](stop-pipeline.md)
 **Related:** [Converse](converse.md) · [Context & Sessions](session.md) · [Skill Classes](skill-classes.md) · [Fallback Pipeline](fallback-pipeline.md)

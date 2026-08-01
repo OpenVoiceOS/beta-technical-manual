@@ -7,6 +7,8 @@
     You still give it example sentences, but it tolerates messy input. It needs no training step and no model
     files. See the [Glossary](glossary.md) for terms like *intent* and *entity*.
 
+Not in the default pipeline. Add its stage IDs to `intents.pipeline` explicitly to use it.
+
 *A lightweight fuzzy-matching intent parser.*
 
 [`nebulento`](https://github.com/OpenVoiceOS/nebulento) finds the closest matching intent by
@@ -59,5 +61,5 @@ plugin's own docs for the full list of strategies and how to set up context gati
     [Adapt](adapt-pipeline.md) (keyword).
 
 ---
-**Read next:** [Palavreado](palavreado.md)
-**Related:** [Padatious Pipeline](padatious-pipeline.md) · [Padacioso](padacioso.md) · [Hierarchical KNN Pipeline](knn-pipeline.md)
+**Read next:** [Hierarchical KNN Pipeline](knn-pipeline.md)
+**Related:** [Padatious Pipeline](padatious-pipeline.md) · [Padacioso](padacioso.md) · [Palavreado](palavreado.md)

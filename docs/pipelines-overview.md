@@ -21,6 +21,24 @@ When the entry utterance carries no authoritative language tag, the orchestrator
 
 ---
 
+## Matcher taxonomy
+
+The manual groups pipeline plugins into four kinds. The first is always-on pipeline
+furniture; the other three are matchers you pick between:
+
+| Group | Members | What it answers | In the default pipeline? |
+|---|---|---|---|
+| Flow Stages | [Converse](converse-pipeline.md), [Stop](stop-pipeline.md), [Fallback](fallback-pipeline.md) | Not a matcher choice — session bookkeeping and the last-resort catch-all every deployment needs | Yes, all three |
+| Keyword Matchers | [Adapt](adapt-pipeline.md) (default), [Palavreado](palavreado.md) (extra) | "Which registered keywords occur in this utterance?" | Adapt only |
+| Utterance Matchers | [Padatious](padatious-pipeline.md) (default), [Model2Vec](m2v-pipeline.md) (default), [Padacioso](padacioso.md) (extra), [Nebulento](nebulento.md) (extra), [Hierarchical KNN](knn-pipeline.md) (extra) | "Which registered example sentence does this utterance resemble?" | Padatious and Model2Vec only |
+| Specialized Matchers | [OCP media](ocp-pipeline.md) (default), [Common Query](cq-pipeline.md) (extra), [Persona](persona-pipeline.md) (extra) | Domain-specific requests: media playback, open questions, persona chat | OCP media only |
+
+"Default" means the plugin's stage IDs appear in the bundled `intents.pipeline`
+list (see below). "Extra" means you install the plugin and add its stage IDs
+yourself.
+
+---
+
 ## What is an Intent Pipeline?
 
 An intent pipeline in OVOS is a sequence of processing stages that analyze user input to determine the user's intent. Each stage uses a different strategy, ranging from high-confidence pipeline plugins to fallback mechanisms.
@@ -302,19 +320,41 @@ Worked examples already in this manual:
 
 ## Pipeline Plugins Reference
 
-Each pipeline plugin has its own manual page with full configuration details:
+Each pipeline plugin has its own manual page with full configuration details, grouped
+the same way as the [Matcher taxonomy](#matcher-taxonomy) above:
 
-| Plugin | Description | Manual page |
-|--------|-------------|-------------|
-| `ovos-common-query-pipeline-plugin` | Answer questions by gathering answers from several skills | [Common Query Pipeline](cq-pipeline.md) |
-| `ovos-m2v-pipeline` | Intent matching powered by the Model2Vec model | [M2V Pipeline](m2v-pipeline.md) |
-| `ovos-padatious-pipeline-plugin` | Neural network intent-matching pipeline plugin | [Padatious Pipeline](padatious-pipeline.md) |
-| `ovos-adapt-pipeline-plugin` | Adapt Intent Parser | [Adapt Pipeline](adapt-pipeline.md) |
-| `ovos-ocp-pipeline-plugin` | Specialized media handling | [OCP Pipeline](ocp-pipeline.md) |
-| `ovos-persona-pipeline-plugin` | Route conversation to a persona (LLM or other agent) | [Persona Pipeline](persona-pipeline.md) |
-| `ovos-converse-pipeline-plugin` | Give active skills first claim on follow-up utterances | [Converse Pipeline](converse-pipeline.md) |
-| `ovos-stop-pipeline-plugin` | Match "stop" and interrupt commands | [Stop Pipeline](stop-pipeline.md) |
-| `ovos-fallback-pipeline-plugin` | Last-resort handlers when nothing matched | [Fallback Pipeline](fallback-pipeline.md) |
+### Flow Stages
+
+| Plugin | Description | Default? | Manual page |
+|--------|-------------|----------|-------------|
+| `ovos-converse-pipeline-plugin` | Give active skills first claim on follow-up utterances | Yes | [Converse Pipeline](converse-pipeline.md) |
+| `ovos-stop-pipeline-plugin` | Match "stop" and interrupt commands | Yes | [Stop Pipeline](stop-pipeline.md) |
+| `ovos-fallback-pipeline-plugin` | Last-resort handlers when nothing matched | Yes | [Fallback Pipeline](fallback-pipeline.md) |
+
+### Keyword Matchers
+
+| Plugin | Description | Default? | Manual page |
+|--------|-------------|----------|-------------|
+| `ovos-adapt-pipeline-plugin` | Adapt Intent Parser | Yes | [Adapt Pipeline](adapt-pipeline.md) |
+| `palavreado` | Dead-simple keyword matcher, an Adapt drop-in | No | [Palavreado](palavreado.md) |
+
+### Utterance Matchers
+
+| Plugin | Description | Default? | Manual page |
+|--------|-------------|----------|-------------|
+| `ovos-padatious-pipeline-plugin` | Neural network intent-matching pipeline plugin | Yes | [Padatious Pipeline](padatious-pipeline.md) |
+| `ovos-m2v-pipeline` | Intent matching powered by the Model2Vec model | Yes | [M2V Pipeline](m2v-pipeline.md) |
+| `padacioso` | Literal template matcher, no training | No | [Padacioso](padacioso.md) |
+| `nebulento` | Fuzzy / typo-tolerant template matcher | No | [Nebulento](nebulento.md) |
+| `ovos-hierarchical-knn-pipeline` | Embedding-based two-stage k-NN matcher | No | [Hierarchical KNN Pipeline](knn-pipeline.md) |
+
+### Specialized Matchers
+
+| Plugin | Description | Default? | Manual page |
+|--------|-------------|----------|-------------|
+| `ovos-ocp-pipeline-plugin` | Specialized media handling | Yes | [OCP Pipeline](ocp-pipeline.md) |
+| `ovos-common-query-pipeline-plugin` | Answer questions by gathering answers from several skills | No | [Common Query Pipeline](cq-pipeline.md) |
+| `ovos-persona-pipeline-plugin` | Route conversation to a persona (LLM or other agent) | No | [Persona Pipeline](persona-pipeline.md) |
 
 The [Common Query *skill* API](common-query.md) (how a skill answers queries) is a
 different page from the pipeline plugin above.

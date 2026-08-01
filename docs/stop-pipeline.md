@@ -6,6 +6,8 @@
 !!! abstract "In a nutshell"
     This is the part of OVOS that listens for "stop", "cancel", or the same word in your language and makes the assistant quit whatever it is doing: interrupting a spoken reply, ending a question, or halting a task a skill started. Because being able to stop is so essential to a voice assistant, OVOS treats it as a built-in, always-on feature rather than an optional add-on. It works in any language that ships the right word list. For the wider system this fits into, see the [Fallback Pipeline](fallback-pipeline.md) or the [Glossary](glossary.md).
 
+This is a flow stage: part of every standard pipeline rather than a matcher you choose between.
+
 The rest of this page is for people deploying or customizing OVOS. If you only wanted to know what this stage does, you are done.
 
 ??? info "📐 Formal specification"
@@ -184,5 +186,5 @@ The `stop` pipeline ensures that OVOS is always in control. It handles interrupt
 It is **not considered optional**. All OVOS installations should include this pipeline by default.
 
 ---
-**Read next:** [OCP Pipeline](ocp-pipeline.md)
-**Related:** [Persona Pipeline](persona-pipeline.md) · [Converse Pipeline](converse-pipeline.md) · [Fallback Pipeline](fallback-pipeline.md)
+**Read next:** [Fallback Pipeline](fallback-pipeline.md)
+**Related:** [Persona Pipeline](persona-pipeline.md) · [Converse Pipeline](converse-pipeline.md) · [OCP Pipeline](ocp-pipeline.md)

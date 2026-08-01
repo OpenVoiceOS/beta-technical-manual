@@ -6,6 +6,8 @@
     It is a dead-simple, drop-in replacement for [Adapt](adapt-pipeline.md). See the
     [Glossary](glossary.md) for terms like *intent* and *entity*.
 
+Not in the default pipeline. Add its stage IDs to `intents.pipeline` explicitly to use it.
+
 *A keyword-based intent parser. The drop-in replacement for [Adapt](adapt-pipeline.md).*
 
 [`palavreado`](https://github.com/OpenVoiceOS/palavreado) matches utterances against named intents built from **required** and **optional** keyword slots. Each slot holds a list of vocabulary words. If the required words are present in the utterance, the intent fires. An `autoregex` variant enables **keyword extraction**, pulling out a value like an item name, using [simplematch](https://github.com/tfeldmann/simplematch)-style templates.
@@ -67,5 +69,5 @@ Set `conf_high`, `conf_med`, `conf_low`, and `max_words` under `mycroft.conf`'s 
     [Padatious](padatious-pipeline.md) or [Nebulento](nebulento.md) instead.
 
 ---
-**Read next:** [Transformers Overview](transformer-plugins.md)
+**Read next:** [Padatious Pipeline](padatious-pipeline.md)
 **Related:** [Nebulento](nebulento.md) · [Padacioso](padacioso.md) · [Adapt Pipeline](adapt-pipeline.md)

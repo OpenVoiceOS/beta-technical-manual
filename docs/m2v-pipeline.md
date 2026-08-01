@@ -6,6 +6,8 @@
 !!! abstract "In a nutshell"
     This is another tool that figures out which skill should handle what you said. Instead of matching exact keywords or memorized examples, it compares the *meaning* of your words to the commands it knows. This means it can still understand you when you phrase things differently than expected. Think of it as recognizing that "turn the music down" and "lower the volume" are asking for the same thing. It is meant to work alongside the keyword-based [Adapt](adapt-pipeline.md) and example-based [Padatious](padatious-pipeline.md) tools, not replace them. See the [Glossary](glossary.md) for unfamiliar terms.
 
+Shipped in the default pipeline.
+
 The rest of this page is for people deploying or customizing OVOS. If you only wanted to know what this stage does, you are done.
 
 ??? info "📐 Formal specification"
@@ -198,5 +200,5 @@ others miss. Tune `conf_high`/`conf_medium`/`conf_low` to control how aggressive
 is.
 
 ---
-**Read next:** [Hierarchical KNN Pipeline](knn-pipeline.md)
+**Read next:** [Padacioso](padacioso.md)
 **Related:** [Padatious Pipeline](padatious-pipeline.md) · [Adapt Pipeline](adapt-pipeline.md) · [Transformers Overview](transformer-plugins.md)

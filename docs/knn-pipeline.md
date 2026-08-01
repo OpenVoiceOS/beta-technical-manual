@@ -10,6 +10,8 @@
     It's the heavyweight option you reach for when the simpler, deterministic matchers
     ([Adapt](adapt-pipeline.md), [Padatious](padatious-pipeline.md)) can't confidently decide.
 
+Not in the default pipeline. Add its stage IDs to `intents.pipeline` explicitly to use it.
+
 The rest of this page is for people deploying or customizing OVOS. If you only wanted to know what this stage does, you are done.
 
 ??? info "📐 Formal specification"
@@ -82,5 +84,5 @@ matchers are ordered. For lighter alternatives see [Padacioso](padacioso.md) (li
 [Nebulento](nebulento.md) (fuzzy), or [Palavreado](palavreado.md) (keyword).
 
 ---
-**Read next:** [Converse Pipeline](converse-pipeline.md)
+**Read next:** [OCP Pipeline](ocp-pipeline.md)
 **Related:** [Model2Vec Pipeline](m2v-pipeline.md) · [Padatious Pipeline](padatious-pipeline.md) · [Adapt Pipeline](adapt-pipeline.md)
