@@ -308,7 +308,7 @@ names in any order.
     `modernize` / `emit_legacy` flags and their environment variables now raise
     `RuntimeError` when set. Remote consumers still emitting or subscribing to legacy
     topic spellings stop working against a current core and must migrate to the spec
-    names. See [Updating from Older OVOS](updating-from-older-ovos.md#if-you-consume-the-message-bus-remotely)
+    names. See [Updating from Older OVOS](updating-from-older-ovos.md#if-you-consume-the-message-bus-remotely-hivemind-and-other-clients)
     for the full lifecycle and migration steps.
 
 On deployments pinned to a pre-removal `ovos-bus-client`, the bridge still behaves as

@@ -15,7 +15,7 @@
     to deliver both names was removed from `ovos-bus-client` in `f1a481d` (2026-08-01).
     The tables below keep both names so you can recognize legacy spellings in old code,
     but new code must use the spec name. See
-    [Updating from Older OVOS](updating-from-older-ovos.md#if-you-consume-the-message-bus-remotely).
+    [Updating from Older OVOS](updating-from-older-ovos.md#if-you-consume-the-message-bus-remotely-hivemind-and-other-clients).
 
 ## Listener / wake word
 

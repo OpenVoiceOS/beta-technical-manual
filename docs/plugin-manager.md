@@ -338,31 +338,8 @@ class MyWakeWord(HotWordEngine):
 
 ### 2. Register the entry point
 
-Using `setup.py`:
-
-```python
-from setuptools import setup, find_packages
-
-setup(
-    name="ovos-stt-plugin-my-engine",
-    version="0.1.0",
-    license="Apache-2.0",
-    packages=find_packages(),
-    install_requires=["ovos-plugin-manager>=1.0.0,<3.0.0"],
-    entry_points={
-        "opm.stt": [
-            "my-engine-stt = my_stt_plugin:MySTTPlugin"
-        ],
-        # Optional: language config exposure
-        "opm.stt.config": [
-            "my-engine-stt = my_stt_plugin:MySTTPluginConfig"
-        ],
-    },
-)
-
-```
-
-Using `pyproject.toml`:
+Use `pyproject.toml` (older plugins may still register the same groups through a legacy
+`setup.py` `entry_points` dict, but new plugins should not):
 
 ```toml
 [project.entry-points."opm.stt"]
