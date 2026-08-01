@@ -40,6 +40,12 @@ theme:
     text: Roboto
     code: Roboto Mono
 
+plugins:
+  - search
+  - redirects:
+      redirect_maps:
+        advanced-solvers.md: agent-plugins.md
+
 markdown_extensions:
   - admonition
   - abbr
