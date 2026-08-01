@@ -1,0 +1,1892 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://tigregotico.github.io/ovos-technical-manual/updating-plugins/">
+      
+      
+        <link rel="prev" href="../updating-skills/">
+      
+      
+        <link rel="next" href="../updating-deployers/">
+      
+      
+      <link rel="icon" href="https://github.com/OpenVoiceOS/ovos_assets/blob/master/Logo/ovos-logo-512.png?raw=true">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.31">
+    
+    
+      
+        <title>For Plugin Maintainers - OpenVoiceOS Technical Manual</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.3cba04c6.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../css/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="grey" data-md-color-accent="red">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#updating-plugins-from-older-ovos" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="OpenVoiceOS Technical Manual" class="md-header__button md-logo" aria-label="OpenVoiceOS Technical Manual" data-md-component="logo">
+      
+  <img src="https://github.com/OpenVoiceOS/ovos_assets/blob/master/Logo/ovos-logo-512.png?raw=true" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            OpenVoiceOS Technical Manual
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              For Plugin Maintainers
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="grey" data-md-color-accent="red"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="grey" data-md-color-accent="red"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/TigreGotico/ovos-technical-manual" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    TigreGotico/ovos-technical-manual
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href=".." class="md-tabs__link">
+          
+  
+  Home
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../start-here/" class="md-tabs__link">
+          
+  
+  Get Started
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../concepts-overview/" class="md-tabs__link">
+          
+  
+  Concepts
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../pipelines-overview/" class="md-tabs__link">
+          
+  
+  Pipeline
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../lang-support/" class="md-tabs__link">
+          
+  
+  Language
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../skills-overview/" class="md-tabs__link">
+          
+  
+  Skills
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../plugins-index/" class="md-tabs__link">
+          
+  
+  Plugins
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../agents-overview/" class="md-tabs__link">
+          
+  
+  Agents
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../production-overview/" class="md-tabs__link">
+          
+  
+  Production
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../reference-overview/" class="md-tabs__link">
+          
+  
+  Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="OpenVoiceOS Technical Manual" class="md-nav__button md-logo" aria-label="OpenVoiceOS Technical Manual" data-md-component="logo">
+      
+  <img src="https://github.com/OpenVoiceOS/ovos_assets/blob/master/Logo/ovos-logo-512.png?raw=true" alt="logo">
+
+    </a>
+    OpenVoiceOS Technical Manual
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/TigreGotico/ovos-technical-manual" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    TigreGotico/ovos-technical-manual
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href=".." class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../start-here/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Get Started
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../concepts-overview/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Concepts
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../pipelines-overview/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Pipeline
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../lang-support/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Language
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../skills-overview/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Skills
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../plugins-index/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Plugins
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../agents-overview/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Agents
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Production
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            Production
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../production-overview/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Production Overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../privacy-security/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Privacy & Security
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../production-operations/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Production Operations
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_9_4" id="__nav_9_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Updating from Older OVOS
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_9_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_9_4">
+            <span class="md-nav__icon md-icon"></span>
+            Updating from Older OVOS
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../updating-from-older-ovos/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Overview & Big-Ticket Migrations
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../updating-skills/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    For Skill Maintainers
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    For Plugin Maintainers
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    For Plugin Maintainers
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#in-a-nutshell" class="md-nav__link">
+    <span class="md-ellipsis">
+      In a nutshell
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#if-you-maintain-plugins" class="md-nav__link">
+    <span class="md-ellipsis">
+      If you maintain plugins
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="If you maintain plugins">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tts-plugin-queue-tuple-shape-ovos-audio" class="md-nav__link">
+    <span class="md-ellipsis">
+      TTS plugin queue tuple shape (ovos-audio)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#audio-backend-template-methods-became-abstract" class="md-nav__link">
+    <span class="md-ellipsis">
+      Audio-backend template methods became abstract
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stt-legacy-helper-classes-deprecated" class="md-nav__link">
+    <span class="md-ellipsis">
+      STT legacy helper classes deprecated
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dialect-matching-switched-to-tag_distance" class="md-nav__link">
+    <span class="md-ellipsis">
+      Dialect matching switched to tag_distance
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#g2p-deprecated-moved-toward-ovos-audio" class="md-nav__link">
+    <span class="md-ellipsis">
+      G2P deprecated, moved toward ovos-audio
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#embeddingsdb-gains-required-collection-methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      EmbeddingsDB gains required collection methods
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#opm-canonical-entry-point-rename" class="md-nav__link">
+    <span class="md-ellipsis">
+      opm.* canonical entry-point rename
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#solver-plugin-family-deprecated-in-favor-of-agent-engines" class="md-nav__link">
+    <span class="md-ellipsis">
+      Solver plugin family deprecated in favor of agent engines
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gui-adapter-plugin-handler-signature-gains-session_id" class="md-nav__link">
+    <span class="md-ellipsis">
+      GUI adapter plugin handler signature gains session_id
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phal-enclosure-abstraction-dropped" class="md-nav__link">
+    <span class="md-ellipsis">
+      PHAL enclosure abstraction dropped
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mediaprovider-template-collapsed-to-search" class="md-nav__link">
+    <span class="md-ellipsis">
+      MediaProvider template collapsed to search()
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../updating-deployers/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    For Device & Fleet Operators
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../updating-remote-clients/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    For Remote Bus Clients
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../upcoming-changes/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Upcoming Changes
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../stt-server/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Self-hosting Servers
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../hivemind-agents/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    HiveMind
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../home-assistant/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Home Assistant
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../reference-overview/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Reference
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#in-a-nutshell" class="md-nav__link">
+    <span class="md-ellipsis">
+      In a nutshell
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#if-you-maintain-plugins" class="md-nav__link">
+    <span class="md-ellipsis">
+      If you maintain plugins
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="If you maintain plugins">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tts-plugin-queue-tuple-shape-ovos-audio" class="md-nav__link">
+    <span class="md-ellipsis">
+      TTS plugin queue tuple shape (ovos-audio)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#audio-backend-template-methods-became-abstract" class="md-nav__link">
+    <span class="md-ellipsis">
+      Audio-backend template methods became abstract
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stt-legacy-helper-classes-deprecated" class="md-nav__link">
+    <span class="md-ellipsis">
+      STT legacy helper classes deprecated
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dialect-matching-switched-to-tag_distance" class="md-nav__link">
+    <span class="md-ellipsis">
+      Dialect matching switched to tag_distance
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#g2p-deprecated-moved-toward-ovos-audio" class="md-nav__link">
+    <span class="md-ellipsis">
+      G2P deprecated, moved toward ovos-audio
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#embeddingsdb-gains-required-collection-methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      EmbeddingsDB gains required collection methods
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#opm-canonical-entry-point-rename" class="md-nav__link">
+    <span class="md-ellipsis">
+      opm.* canonical entry-point rename
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#solver-plugin-family-deprecated-in-favor-of-agent-engines" class="md-nav__link">
+    <span class="md-ellipsis">
+      Solver plugin family deprecated in favor of agent engines
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gui-adapter-plugin-handler-signature-gains-session_id" class="md-nav__link">
+    <span class="md-ellipsis">
+      GUI adapter plugin handler signature gains session_id
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phal-enclosure-abstraction-dropped" class="md-nav__link">
+    <span class="md-ellipsis">
+      PHAL enclosure abstraction dropped
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mediaprovider-template-collapsed-to-search" class="md-nav__link">
+    <span class="md-ellipsis">
+      MediaProvider template collapsed to search()
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="updating-plugins-from-older-ovos">Updating Plugins From Older OVOS<a class="headerlink" href="#updating-plugins-from-older-ovos" title="Permanent link">&para;</a></h1>
+<h2 id="in-a-nutshell">In a nutshell<a class="headerlink" href="#in-a-nutshell" title="Permanent link">&para;</a></h2>
+<p>This page is for maintainers of STT, TTS, wake-word, audio-backend, media,
+GUI-adapter, PHAL, and solver/engine plugins moving forward from an older
+OVOS install. Entries are in date order: start at the version you are
+currently running and read forward to your target version. For the
+Big-ticket migrations (the changes with the widest blast radius, including
+the opm 2.0 wake-word signature change), see
+<a href="../updating-from-older-ovos/#big-ticket-migrations">Updating from Older OVOS</a>.</p>
+<h2 id="if-you-maintain-plugins">If you maintain plugins<a class="headerlink" href="#if-you-maintain-plugins" title="Permanent link">&para;</a></h2>
+<h3 id="tts-plugin-queue-tuple-shape-ovos-audio">TTS plugin queue tuple shape (ovos-audio)<a class="headerlink" href="#tts-plugin-queue-tuple-shape-ovos-audio" title="Permanent link">&para;</a></h3>
+<p>Direct mutation of <code>TTS.queue</code> used a 6-tuple
+<code>(_, data, visemes, ident, listen, tts_id)</code>. It now expects a 5-tuple
+<code>(data, visemes, listen, tts_id, message)</code>.</p>
+<ul>
+<li>Migration: push <code>(data, visemes, listen, tts_id, message)</code> tuples onto
+  <code>PlaybackThread</code>'s queue.</li>
+<li>Lifecycle: active before <code>931784a</code>. Deprecated but functional (logs via
+  <code>log_deprecation(..., "0.1.0")</code>) from <code>931784a</code> (2023-10-25). Dropped
+  target was <code>0.1.0</code>: exact drop commit unverified (ovos-audio <code>931784a</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/37" title="GitHub Issue: TigreGotico/ovos-technical-manual #37">#37</a>).</li>
+</ul>
+<h3 id="audio-backend-template-methods-became-abstract">Audio-backend template methods became abstract<a class="headerlink" href="#audio-backend-template-methods-became-abstract" title="Permanent link">&para;</a></h3>
+<p><code>AudioBackend</code>/<code>RemoteAudioBackend</code> templates in <code>ovos-plugin-manager</code>
+turned previously-optional methods into <code>@abstractmethod</code>, and dropped the
+dependency on the old <code>common_play</code> base class (OCP's predecessor).</p>
+<ul>
+<li>Migration: implement every required method on your <code>AudioBackend</code>
+  subclass or instantiation raises <code>TypeError: Can't instantiate abstract
+  class</code>.</li>
+<li>Lifecycle: active before <code>77c66a3</code>. Unverified deprecation window.
+  dropped <code>77c66a3</code> (2024-05-11), (ovos-plugin-manager <code>77c66a3</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/226" title="GitHub Issue: TigreGotico/ovos-technical-manual #226">#226</a>).</li>
+</ul>
+<h3 id="stt-legacy-helper-classes-deprecated">STT legacy helper classes deprecated<a class="headerlink" href="#stt-legacy-helper-classes-deprecated" title="Permanent link">&para;</a></h3>
+<p><code>StreamingSTT</code>, <code>StreamThread</code>, and related classic-mycroft-derived helper
+classes in <code>ovos_plugin_manager/templates/stt.py</code> were deprecation-warned,
+first via logging (<code>ff342fe</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/233" title="GitHub Issue: TigreGotico/ovos-technical-manual #233">#233</a>, 2024-06-03) and later as a real Python
+<code>DeprecationWarning</code> (<code>dfbac90</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/291" title="GitHub Issue: TigreGotico/ovos-technical-manual #291">#291</a>, 2025-01-04): CI suites running
+<code>-W error::DeprecationWarning</code> will fail the build on continued use.</p>
+<ul>
+<li>Migration: move off <code>StreamingSTT</code>/<code>StreamThread</code> to the current STT
+  template contract.</li>
+<li>Lifecycle: active before <code>ff342fe</code>. Deprecated but functional from
+  <code>ff342fe</code> (2024-06-03), warning strength increased in <code>dfbac90</code>
+  (2025-01-04). Drop date unverified (ovos-plugin-manager <code>ff342fe</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/233" title="GitHub Issue: TigreGotico/ovos-technical-manual #233">#233</a>).</li>
+</ul>
+<h3 id="dialect-matching-switched-to-tag_distance">Dialect matching switched to <code>tag_distance</code><a class="headerlink" href="#dialect-matching-switched-to-tag_distance" title="Permanent link">&para;</a></h3>
+<p>Ad-hoc exact-prefix dialect matching (<code>en</code> matches <code>en-us</code> via
+<code>.startswith</code>) was replaced with <code>langcodes.tag_distance</code> (threshold
+<code>&lt; 10</code>) across STT, TTS, wake-word, and tokenization plugin config
+resolution.</p>
+<ul>
+<li>Migration: no code change needed for callers of the public
+  <code>get_plugin_config</code> family. Re-verify locale resolution after upgrading
+  if you pinned plugin configs to exact locale strings, since dialect
+  fallback selection can differ.</li>
+<li>Lifecycle: behavior-only change, no removal. Landed <code>08ad348</code> (2024-10-12),
+  (ovos-plugin-manager <code>08ad348</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/267" title="GitHub Issue: TigreGotico/ovos-technical-manual #267">#267</a>). Later replaced again by
+  <code>ovos_spec_tools.lang_distance</code> in <code>35919b7</code> (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/391" title="GitHub Issue: TigreGotico/ovos-technical-manual #391">#391</a>, 2026-05-22), same
+  <code>&lt; 10</code> threshold preserved. Requires the <code>ovos-spec-tools[langcodes]</code>
+  extra or region codes silently strip (<code>en-US</code> → <code>en</code>).</li>
+</ul>
+<h3 id="g2p-deprecated-moved-toward-ovos-audio">G2P deprecated, moved toward ovos-audio<a class="headerlink" href="#g2p-deprecated-moved-toward-ovos-audio" title="Permanent link">&para;</a></h3>
+<p><code>opm.g2p</code> (Grapheme2Phoneme, used only for MK1 mouth animation) is marked
+deprecated in <code>ovos-plugin-manager</code>. The companion work moves it toward
+<code>ovos-audio</code>.</p>
+<ul>
+<li>Migration: no functional removal yet in <code>ovos-plugin-manager</code>. Expect
+  deprecation warnings on every access.</li>
+<li>Lifecycle: active before <code>c102889</code>. Deprecated but functional from
+  <code>c102889</code> (2024-10-23). Drop version unverified (ovos-plugin-manager <code>c102889</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/277" title="GitHub Issue: TigreGotico/ovos-technical-manual #277">#277</a>).</li>
+</ul>
+<h3 id="embeddingsdb-gains-required-collection-methods"><code>EmbeddingsDB</code> gains required collection methods<a class="headerlink" href="#embeddingsdb-gains-required-collection-methods" title="Permanent link">&para;</a></h3>
+<p><code>create_collection</code>, <code>get_collection</code>, <code>delete_collection</code>,
+<code>list_collections</code> became required <code>@abstractmethod</code>s on <code>EmbeddingsDB</code>.</p>
+<ul>
+<li>Migration: implement all four on your <code>EmbeddingsDB</code> subclass.
+  single-collection plugins can wrap a fixed default collection name.</li>
+<li>Lifecycle: active before <code>15beb84</code>. No deprecation window (no deprecation window, added
+  directly as abstract). Landed <code>15beb84</code> (2025-07-22), (ovos-plugin-manager <code>15beb84</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/333" title="GitHub Issue: TigreGotico/ovos-technical-manual #333">#333</a>).</li>
+</ul>
+<h3 id="opm-canonical-entry-point-rename"><code>opm.*</code> canonical entry-point rename<a class="headerlink" href="#opm-canonical-entry-point-rename" title="Permanent link">&para;</a></h3>
+<p>Every <code>PluginTypes</code>/<code>PluginConfigTypes</code> entry-point group string that had
+carried a <code># TODO rename</code> comment was flipped to the canonical <code>opm.*</code>
+form. Old groups keep working through a <code>DEPRECATED_ENTRYPOINTS</code> alias
+table (with a warning), but comparing <code>PluginTypes.STT.value</code> against the
+old literal string breaks.</p>
+<table>
+<thead>
+<tr>
+<th>Old group</th>
+<th>New canonical group</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>mycroft.plugin.stt</code></td>
+<td><code>opm.stt</code></td>
+</tr>
+<tr>
+<td><code>mycroft.plugin.tts</code></td>
+<td><code>opm.tts</code></td>
+</tr>
+<tr>
+<td><code>mycroft.plugin.wake_word</code></td>
+<td><code>opm.wake_word</code></td>
+</tr>
+<tr>
+<td><code>ovos.plugin.gui</code></td>
+<td><code>opm.gui</code></td>
+</tr>
+<tr>
+<td><code>ovos.plugin.phal</code></td>
+<td><code>opm.phal</code></td>
+</tr>
+<tr>
+<td><code>ovos.plugin.skill</code></td>
+<td><code>opm.skill</code></td>
+</tr>
+<tr>
+<td><code>ovos.plugin.microphone</code></td>
+<td><code>opm.microphone</code></td>
+</tr>
+<tr>
+<td><code>ovos.plugin.VAD</code></td>
+<td><code>opm.VAD</code></td>
+</tr>
+<tr>
+<td><code>ovos.plugin.g2p</code></td>
+<td><code>opm.g2p</code></td>
+</tr>
+<tr>
+<td><code>neon.plugin.solver</code></td>
+<td><code>opm.solver.question</code></td>
+</tr>
+<tr>
+<td><code>neon.plugin.text</code> / <code>.metadata</code> / <code>.audio</code></td>
+<td><code>opm.transformer.text</code> / <code>.metadata</code> / <code>.audio</code></td>
+</tr>
+<tr>
+<td><code>neon.plugin.lang.translate</code> / <code>.detect</code></td>
+<td><code>opm.lang.translate</code> / <code>.detect</code></td>
+</tr>
+<tr>
+<td><code>intentbox.coreference</code> / <code>.keywords</code> / <code>.segmentation</code> / <code>.tokenization</code> / <code>.postag</code></td>
+<td><code>opm.coreference</code> / <code>opm.keywords</code> / <code>opm.segmentation</code> / <code>opm.tokenization</code> / <code>opm.postag</code></td>
+</tr>
+<tr>
+<td><code>ovos.ocp.extractor</code></td>
+<td><code>opm.ocp.extractor</code></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Migration: update <code>entry_points</code> in your plugin's <code>setup.py</code>/
+  <code>pyproject.toml</code> to the new group at your convenience. Old groups still
+  work via the alias table. Code comparing enum values as raw strings
+  should compare against <code>PluginTypes.STT</code> (the enum member), not the
+  literal old string.</li>
+<li>Lifecycle: active before <code>15beb84</code>. Deprecated but functional
+  (aliased, with a warning) from <code>15beb84</code> (2025-07-22). No stated removal
+  version as of the sweep, so treat as indefinitely deprecated
+  (ovos-plugin-manager <code>15beb84</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/333" title="GitHub Issue: TigreGotico/ovos-technical-manual #333">#333</a>). A case-sensitivity bug in the
+  alias table (<code>ovos.plugin.VAD</code> mapped to lowercase <code>opm.vad</code> instead of
+  <code>opm.VAD</code>) silently broke discovery of un-migrated VAD plugins for about
+  eleven months, fixed in <code>3a7a330</code> (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/401" title="GitHub Issue: TigreGotico/ovos-technical-manual #401">#401</a>, 2026-06-16).</li>
+</ul>
+<h3 id="solver-plugin-family-deprecated-in-favor-of-agent-engines">Solver plugin family deprecated in favor of agent engines<a class="headerlink" href="#solver-plugin-family-deprecated-in-favor-of-agent-engines" title="Permanent link">&para;</a></h3>
+<p>The entire <code>templates/solvers.py</code> family (<code>QuestionSolver</code>, <code>CorpusSolver</code>,
+<code>TldrSolver</code>, <code>EvidenceSolver</code>, <code>MultipleChoiceSolver</code>, <code>EntailmentSolver</code>)
+is deprecated with a stated removal target of the next major version.</p>
+<table>
+<thead>
+<tr>
+<th>Deprecated</th>
+<th>Replacement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>QuestionSolver</code></td>
+<td><code>ChatEngine</code> / <code>RetrievalEngine</code></td>
+</tr>
+<tr>
+<td><code>CorpusSolver</code></td>
+<td><code>DocumentIndexerEngine</code> / <code>QAIndexerEngine</code></td>
+</tr>
+<tr>
+<td><code>TldrSolver</code></td>
+<td><code>SummarizerEngine</code></td>
+</tr>
+<tr>
+<td><code>EvidenceSolver</code></td>
+<td><code>ExtractiveQAEngine</code></td>
+</tr>
+<tr>
+<td><code>MultipleChoiceSolver</code></td>
+<td><code>ReRankerEngine</code></td>
+</tr>
+<tr>
+<td><code>EntailmentSolver</code></td>
+<td><code>NaturalLanguageInferenceEngine</code></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Migration: move to the matching <code>templates/agents.py</code> engine class
+  before the removal version ships.</li>
+<li>Lifecycle: active before <code>53564ce</code>. Deprecated but functional from
+  <code>53564ce</code> (2026-01-29), <code>opm.solver.*</code> entry points still discoverable.
+  removal target is the current major version plus one: not yet shipped
+  as of <code>53564ce</code> (ovos-plugin-manager, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/365" title="GitHub Issue: TigreGotico/ovos-technical-manual #365">#365</a>).
+  <code>ovos-bus-client</code>'s parallel <code>opm.py</code> (<code>neon.plugin.solver</code>-based chat
+  class) was already removed outright in <code>d526e99</code> (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/207" title="GitHub Issue: TigreGotico/ovos-technical-manual #207">#207</a>, 2026-05-18,
+  <code>2.0.0</code>): migrate to <code>ovos-messagebus-chat-plugin</code>.</li>
+</ul>
+<h3 id="gui-adapter-plugin-handler-signature-gains-session_id">GUI adapter plugin handler signature gains <code>session_id</code><a class="headerlink" href="#gui-adapter-plugin-handler-signature-gains-session_id" title="Permanent link">&para;</a></h3>
+<p>All <code>handle_show_*</code> template handlers, <code>on_namespace_activated</code>,
+<code>on_namespace_deactivated</code>, <code>on_status_event</code>, <code>on_session_update</code>, and
+<code>dispatch_template()</code> gained a new <code>session_id: str = "default"</code> parameter
+inserted <strong>before</strong> the existing <code>site_id</code> parameter.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># old</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="k">def</span> <span class="nf">handle_show_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">skill_id</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">site_id</span><span class="o">=</span><span class="s2">&quot;default&quot;</span><span class="p">):</span> <span class="o">...</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="c1"># new</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="k">def</span> <span class="nf">handle_show_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">skill_id</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">session_id</span><span class="o">=</span><span class="s2">&quot;default&quot;</span><span class="p">,</span> <span class="n">site_id</span><span class="o">=</span><span class="s2">&quot;default&quot;</span><span class="p">):</span> <span class="o">...</span>
+</span></code></pre></div>
+<ul>
+<li>Migration: switch any positional <code>site_id</code> call sites to keyword
+  arguments, or insert <code>session_id="default"</code> explicitly before the old
+  third positional argument.</li>
+<li>Lifecycle: active before <code>34a0f13</code>. No deprecation window (explicit <code>BREAKING CHANGE:</code> in
+  the commit body, no deprecation window). Dropped/landed <code>34a0f13</code>
+  (2026-03-12), (ovos-plugin-manager <code>34a0f13</code>).</li>
+</ul>
+<h3 id="phal-enclosure-abstraction-dropped">PHAL enclosure abstraction dropped<a class="headerlink" href="#phal-enclosure-abstraction-dropped" title="Permanent link">&para;</a></h3>
+<p><code>PHALPlugin</code> lost its Mark-1/Mark-2 enclosure command handling
+(<code>register_enclosure_namespace</code>, <code>on_eyes_*</code>, <code>on_mouth_*</code>, <code>on_display</code>,
+and so on) in one commit, then lost its lifecycle bus-event auto-wiring
+(record/speak/wake/sleep) in a same-day follow-up. <code>PHALPlugin</code> is now a
+bare background thread with no bus events wired by the base class at all.</p>
+<ul>
+<li>Migration: mix in <code>EnclosureProtocolListener</code> from the separate
+  <code>ovos-ui-enclosure-protocol</code> package for both the enclosure commands and
+  <code>register_core_events()</code>. The <code>EnclosureAPI</code> producer moved to
+  <code>ovos-gui-api-client</code>.</li>
+<li>Lifecycle: active before <code>eac52a4</code>. No deprecation window (no deprecation window, both
+  commits landed same day). Dropped <code>eac52a4</code> and <code>f7c613b</code>
+  (2026-06-25), (ovos-plugin-manager <code>eac52a4</code>, <code>f7c613b</code>).</li>
+</ul>
+<h3 id="mediaprovider-template-collapsed-to-search"><code>MediaProvider</code> template collapsed to <code>search()</code><a class="headerlink" href="#mediaprovider-template-collapsed-to-search" title="Permanent link">&para;</a></h3>
+<p><code>MediaProvider</code> lost <code>is_available</code>, <code>matches</code>, <code>serves</code>, <code>search_context</code>,
+<code>search_safe</code>, <code>featured_media</code>, and the <code>media</code>/<code>playback_type</code>/
+<code>genre_filter</code> ClassVars, all on the same day the <code>QueryContext</code> dataclass
+parameter was also replaced by plain <code>**context</code> kwargs.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># old</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="k">class</span> <span class="nc">MyProvider</span><span class="p">(</span><span class="n">MediaProvider</span><span class="p">):</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>    <span class="k">def</span> <span class="nf">search</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">signals</span><span class="p">,</span> <span class="n">context</span><span class="p">:</span> <span class="n">QueryContext</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Release</span><span class="p">]:</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>        <span class="k">if</span> <span class="n">context</span><span class="o">.</span><span class="n">allows_playback</span><span class="p">(</span><span class="o">...</span><span class="p">):</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>            <span class="o">...</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="c1"># new</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="k">class</span> <span class="nc">MyProvider</span><span class="p">(</span><span class="n">MediaProvider</span><span class="p">):</span>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>    <span class="k">def</span> <span class="nf">search</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">signals</span><span class="p">,</span> <span class="n">lang</span><span class="o">=</span><span class="s1">&#39;en-us&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">context</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Release</span><span class="p">]:</span>
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>        <span class="k">if</span> <span class="n">context</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;supported_playback_types&#39;</span><span class="p">):</span>
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>            <span class="o">...</span>
+</span></code></pre></div>
+<ul>
+<li>Migration: implement the single <code>search(signals, lang='en-us',
+  **context)</code> method. Read routing/availability info from <code>**context</code>
+  instead of the removed <code>QueryContext</code> helper methods.</li>
+<li>Lifecycle: active before <code>8a03351</code>. No deprecation window (fast in-place redesign of a
+  still-fresh API: <code>opm.media.provider</code> type was only introduced days
+  earlier in <code>83ade15</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/405" title="GitHub Issue: TigreGotico/ovos-technical-manual #405">#405</a>). Dropped <code>8a03351</code> and <code>1741181</code>, both
+  2026-06-25 (ovos-plugin-manager <code>8a03351</code>, <code>1741181</code>).</li>
+</ul>
+<hr />
+<p><strong>Read next:</strong> <a href="../version-compat-guide/">Version-Compatible Skills &amp; Plugins</a> · <a href="../upcoming-changes/">Upcoming Changes</a>
+<strong>Related:</strong> <a href="../updating-from-older-ovos/">Updating from Older OVOS</a> · <a href="../ovos-media/">Media Service (ovos-media)</a></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.path", "navigation.prune", "navigation.top", "navigation.tracking", "navigation.instant", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate"], "search": "../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.fe8b6f2b.min.js"></script>
+      
+    
+  </body>
+</html>

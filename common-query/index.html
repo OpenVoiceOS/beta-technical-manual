@@ -1430,11 +1430,8 @@
 <details class="info">
 <summary>📐 Formal specification</summary>
 <p>The Common Query Framework is specified by <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/common-query.md">OVOS-COMMON-QUERY-1 — Common Query Pipeline Plugin</a></strong> (a formal <a href="../architecture-specs/">architecture spec</a>). A <strong>pipeline plugin</strong> runs a timed scatter-gather contest. It broadcasts <code>ovos.common_query.ping</code>, collects <code>pong</code> claims from skills that believe they can answer, and requests full answers (<code>answer</code> + <code>conf</code>) from the claimants. It then ranks them. Only answers at or above the minimum self-reported confidence (default <strong><code>0.5</code></strong>) survive. If a winner clears the bar, the plugin speaks it (reserved <code>intent_name</code> <strong><code>common_query</code></strong>). Otherwise <code>match</code> returns <code>None</code> and the pipeline falls through to <a href="../fallbacks/">fallback</a>. This mirrors how <a href="../ocp-skills/">OCP</a> picks a media provider.</p>
+<p><strong>The winner may be re-ranked, not just highest-confidence.</strong> If a re-ranker plugin (<code>ovos-flashrank-reranker-plugin</code> by default) is installed, the pipeline ignores the skills' self-reported confidence when it picks the winner among answers that cleared the <code>0.5</code> bar. Instead it asks the re-ranker to pick the best answer for the phrase. Confidence still gates which answers are eligible. It just isn't the tie-breaker when a re-ranker is present. Without a re-ranker installed, the highest-confidence answer wins (ties are broken arbitrarily).</p>
 </details>
-<div class="admonition note">
-<p class="admonition-title">The winner may be re-ranked, not just highest-confidence</p>
-<p>If a re-ranker plugin (<code>ovos-flashrank-reranker-plugin</code> by default) is installed, the pipeline ignores the skills' self-reported confidence when it picks the winner among answers that cleared the <code>0.5</code> bar. Instead it asks the re-ranker to pick the best answer for the phrase. Confidence still gates which answers are eligible. It just isn't the tie-breaker when a re-ranker is present. Without a re-ranker installed, the highest-confidence answer wins (ties are broken arbitrarily).</p>
-</div>
 <p>The Common Query Framework handles general information questions, such as "what is X" or "when did Y". Many skills may implement handlers for the same kind of question. The Common Query Framework queries all of them and selects a single best answer to speak. This works like the <a href="../ocp-skills/">OCP</a> framework, which handles the common case of "playing" music or other media.</p>
 <p><strong>What / why (beginners):</strong> If your skill can answer free-form questions ("how old is X", "what is Y"), you do not register a <code>.intent</code> file for every phrasing. Instead, mark one method with the <code>@common_query</code> decorator. The Common Query pipeline detects question-shaped utterances and asks every common-query skill in parallel. Only the winner gets to speak. You return an answer plus a confidence score, and the framework handles the arbitration.</p>
 <h2 id="the-common_query-decorator">The <code>@common_query</code> decorator<a class="headerlink" href="#the-common_query-decorator" title="Permanent link">&para;</a></h2>
@@ -1537,6 +1534,9 @@
 <blockquote>
 <p>The framework speaks the selected answer automatically. Do <strong>not</strong> call <code>self.speak()</code> inside the common-query handler. The callback is only for side effects, such as visuals, follow-up state, or logging.</p>
 </blockquote>
+<hr />
+<p><strong>Read next:</strong> <a href="../ocp-skills/">OCP Skills</a>
+<strong>Related:</strong> <a href="../fallbacks/">Fallback Skill</a> · <a href="../cq-pipeline/">Common Query Pipeline</a> · <a href="../skill-classes/">Skill Classes</a> · <a href="../persona-pipeline/">Persona Pipeline</a></p>
 
 
 

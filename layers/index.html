@@ -1654,19 +1654,9 @@ picture, see the <a href="../glossary/">Glossary</a>.</p>
 <details class="info">
 <summary>📐 Formal specification</summary>
 <p><code>IntentLayer</code> gating is implemented through the session's <strong>intent context</strong>. Each layer is a session context token its intents require. The mechanism is specified by <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/intent-context.md">OVOS-CONTEXT-1: Intent Context</a></strong> (see <a href="../context/">Context</a> and the <a href="../architecture-specs/">spec index</a>).</p>
+<p><strong><code>IntentLayers</code> are per-session.</strong> <code>IntentLayer</code> state lives in the <strong>session</strong>, so layered skills are concurrency-safe across <a href="https://jarbashivemind.github.io/HiveMind-community-docs/">HiveMind</a> satellites. Two satellites can be in different layers at the same time. (The lower-level <code>enable_intent</code> / <code>disable_intent</code> calls in the next section still change the <strong>global</strong> intent set, so prefer layers for per-session flows.)</p>
+<p><strong>Not the same as skill permissions.</strong> Intent layers switch groups of <em>intents</em> on and off inside one already-active skill. Whether a skill is even allowed to participate in converse at all (whitelists, blacklists, <code>ConverseMode</code>) is a separate, coarser gate. See <a href="../permissions/">Permissions &amp; Activation Control</a>.</p>
 </details>
-<div class="admonition tip">
-<p class="admonition-title"><code>IntentLayers</code> are per-session</p>
-<p><code>IntentLayer</code> state lives in the <strong>session</strong>, so layered skills are concurrency-safe
-across <a href="https://jarbashivemind.github.io/HiveMind-community-docs/">HiveMind</a> satellites.
-Two satellites can be in different layers at the same time. (The lower-level
-<code>enable_intent</code> / <code>disable_intent</code> calls in the next section still change the <strong>global</strong>
-intent set, so prefer layers for per-session flows.)</p>
-</div>
-<div class="admonition note">
-<p class="admonition-title">Not the same as skill permissions</p>
-<p>Intent layers switch groups of <em>intents</em> on and off inside one already-active skill. Whether a skill is even allowed to participate in converse at all (whitelists, blacklists, <code>ConverseMode</code>) is a separate, coarser gate. See <a href="../permissions/">Permissions &amp; Activation Control</a>.</p>
-</div>
 <h2 id="managing-intents">Managing Intents<a class="headerlink" href="#managing-intents" title="Permanent link">&para;</a></h2>
 <p>Sometimes you might want to manually enable or disable an intent. In OVOSSkills you can do this explicitly to create stateful interactions:</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">class</span> <span class="nc">RotatingIntentsSkill</span><span class="p">(</span><span class="n">OVOSSkill</span><span class="p">):</span>
@@ -1886,6 +1876,9 @@ the skill id). Every intent registered under that layer is set to <em>require</e
 <p>Because layer state rides on intent context, and intent context is per-session, each
 <a href="https://jarbashivemind.github.io/HiveMind-community-docs/07_voicesat/">voice satellite</a>
 talking to a shared skill keeps its own independent set of active layers.</p>
+<hr />
+<p><strong>Read next:</strong> <a href="../permissions/">Permissions &amp; Activation Control</a>
+<strong>Related:</strong> <a href="../context/">Context</a> · <a href="../intents/">Intent Design</a> · <a href="../converse/">Converse</a> · <a href="../decorators/">Decorators</a></p>
 
 
 

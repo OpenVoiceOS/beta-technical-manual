@@ -896,16 +896,38 @@
   
   
   
-    <li class="md-nav__item">
-      <a href="../updating-from-older-ovos/" class="md-nav__link">
+    
+    
+    
+      
+      
+    
+    
+      
         
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../updating-from-older-ovos/" class="md-nav__link">
+      
   
   <span class="md-ellipsis">
     Updating from Older OVOS
   </span>
   
 
-      </a>
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
     </li>
   
 
@@ -1237,15 +1259,6 @@
   <a href="#gotchas" class="md-nav__link">
     <span class="md-ellipsis">
       Gotchas
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#cross-references" class="md-nav__link">
-    <span class="md-ellipsis">
-      Cross-References
     </span>
   </a>
   
@@ -1602,15 +1615,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#cross-references" class="md-nav__link">
-    <span class="md-ellipsis">
-      Cross-References
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -1900,16 +1904,10 @@ minimal MCP client call to <code>translate</code> looks like:</p>
 <li>The HTTP server (<code>9686</code>) and the optional MCP server (<code>9687</code>) are <strong>separate processes</strong> with different default hosts. Running one does not start the other.</li>
 </ul>
 <hr />
-<h2 id="cross-references">Cross-References<a class="headerlink" href="#cross-references" title="Permanent link">&para;</a></h2>
-<ul>
-<li><code>ovos-plugin-manager</code> — <code>load_tx_plugin()</code> (<code>opm.lang.translate</code>), <code>load_lang_detect_plugin()</code> (<code>opm.lang.detect</code>), <code>LanguageTranslator</code>, <code>LanguageDetector</code></li>
-<li><code>ovos-google-translate-plugin</code> — <code>GoogleTranslatePlugin</code> (implements <code>LanguageTranslator</code>), <code>GoogleLangDetectPlugin</code> (implements <code>LanguageDetector</code>)</li>
-<li><code>ovos-translate-server-plugin</code> — companion client plugin that points an OVOS device at this server</li>
-<li><code>ovos-translate-plugin-nllb</code> — example translation plugin (Meta NLLB model)</li>
-<li><code>ovos-lang-detector-classics-plugin</code> — example detection plugin (ensemble of classical methods)</li>
-</ul>
-<hr />
 <p><em>Source code: <a href="https://github.com/OpenVoiceOS/ovos-translate-server">OpenVoiceOS/ovos-translate-server</a>.</em></p>
+<hr />
+<p><strong>Read next:</strong> <a href="../server-compat-layers/">Server Compatibility Layers</a>
+<strong>Related:</strong> <a href="../stt-server/">STT Server</a> · <a href="../tts-server/">TTS Server</a> · <a href="../translation-plugins/">Translation Plugins</a> · <a href="../bidirectional-translation/">Bidirectional Translation</a></p>
 
 
 

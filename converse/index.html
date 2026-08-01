@@ -1630,11 +1630,9 @@
 
 
 <h1 id="converse">Converse<a class="headerlink" href="#converse" title="Permanent link">&para;</a></h1>
-<p>See also: <a href="../converse-pipeline/">Converse Pipeline</a> for how this feature is implemented as a
-pipeline plugin inside <code>ovos-core</code>.</p>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>Normally a skill answers one request and then forgets about you. "Converse" lets a skill stay in the conversation for a little while after it has spoken, so it can catch a quick follow-up like "yes", "no", "thanks", or "the red one" that only makes sense as a reply. This is the difference between a one-off answer and a short back-and-forth chat. New terms are explained in the <a href="../glossary/">Glossary</a>.</p>
+<p>Normally a skill answers one request and then forgets about you. "Converse" lets a skill stay in the conversation for a little while after it has spoken, so it can catch a quick follow-up like "yes", "no", "thanks", or "the red one" that only makes sense as a reply. This is the difference between a one-off answer and a short back-and-forth chat. See <a href="../converse-pipeline/">Converse Pipeline</a> for how this feature is implemented as a pipeline plugin inside <code>ovos-core</code>. New terms are explained in the <a href="../glossary/">Glossary</a>.</p>
 </div>
 <details class="info">
 <summary>📐 Formal specification</summary>
@@ -1866,6 +1864,9 @@ At this point, we also want to be responsive to the customer's thanks, so we cal
 <blockquote>
 <p><strong>NOTE</strong>: If these intents trigger, they are called <strong>INSTEAD</strong> of <code>converse</code>.</p>
 </blockquote>
+<hr />
+<p><strong>Read next:</strong> <a href="../session/">Session Aware Skills</a>
+<strong>Related:</strong> <a href="../permissions/">Permissions &amp; Activation Control</a> · <a href="../context/">Context</a> · <a href="../prompts/">Asking the User for Responses in OVOS Skills</a> · <a href="../fallbacks/">Fallback Skill</a></p>
 
 
 

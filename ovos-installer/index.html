@@ -831,15 +831,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#further-reading" class="md-nav__link">
-    <span class="md-ellipsis">
-      Further reading
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -1676,15 +1667,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#further-reading" class="md-nav__link">
-    <span class="md-ellipsis">
-      Further reading
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -1704,9 +1686,7 @@
 
 
 <h1 id="how-to-install-open-voice-os-with-the-ovos-installer">How to Install Open Voice OS with the <code>ovos-installer</code><a class="headerlink" href="#how-to-install-open-voice-os-with-the-ovos-installer" title="Permanent link">&para;</a></h1>
-<p>If you have a spare Raspberry Pi and want the zero-terminal experience, use
-<strong><a href="../install-raspovos/">raspOVOS</a></strong> image exists as a flash-and-boot alternative, but it is in a maintenance pause, so the installer is the recommended path on the Pi too. Keep reading here if you're on
-non-Pi hardware or installing onto an existing Raspberry Pi OS setup.</p>
+<p>This is the quick-start guide for installing Open Voice OS (OVOS) using the official <code>ovos-installer</code>. This guide covers <strong>Raspberry Pi</strong> and <strong>desktop/server</strong> Linux environments. The steps are mostly the same on a headless Raspberry Pi and on a laptop. Only the way you connect to the device differs.</p>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
 <p>This is the guided way to get OVOS onto your machine. You run a single command. Then a
@@ -1727,37 +1707,27 @@ wizard entirely. See the <a href="../glossary/">Glossary</a> for unfamiliar term
     E -- no --&gt; D</code></pre>
 <p><em>Diagram:</em> The decision starts at choosing how to install OVOS and ends at the ovos-installer, raspOVOS image, or non-interactive scenario install, branching on whether the target is a Raspberry Pi or a fleet/CI scripting scenario.</p>
 <div class="admonition note">
-<p class="admonition-title">Read this before you start: what a default install sends over the network</p>
-<p>A default OVOS install talks to public, community-run servers for speech-to-text and
-text-to-speech unless you change it. The installer also asks you to opt into two separate
-telemetry reports along the way. See <a href="../privacy-security/">Privacy &amp; Security</a> for exactly
-what that means, and the <a href="#anonymous-telemetry">telemetry section below</a> for what each
-prompt does and covers. If you're unsure about either prompt, declining is always safe.
-Nothing else about the install depends on them.</p>
+<p class="admonition-title">Before you start</p>
+<p><strong>What a default install sends over the network.</strong> A default OVOS install talks to public,
+community-run servers for speech-to-text and text-to-speech unless you change it. The
+installer also asks you to opt into two separate telemetry reports along the way. See
+<a href="../privacy-security/">Privacy &amp; Security</a> for exactly what that means, and the
+<a href="#anonymous-telemetry">telemetry section below</a> for what each prompt does and covers. If
+you're unsure about either prompt, declining is always safe. Nothing else about the install
+depends on them.</p>
+<p><strong>Looking for a no-terminal option?</strong> The <strong><a href="../install-raspovos/">raspOVOS</a></strong> image is the
+flash-and-boot alternative: no terminal, no SSH. Its images are in a maintenance pause, so
+check its status before choosing it. This installer is the recommended path on the Pi and
+everywhere else.</p>
+<p><strong>This runs over SSH in a terminal, not an app.</strong> There's no phone app or setup wizard with a
+graphical pairing flow. You type commands into a terminal, usually over SSH into a headless
+device. If you've never used SSH before, budget some extra time to get comfortable with it,
+or consider the <a href="../install-raspovos/">raspOVOS</a> image (see its status note above) which boots
+into a working assistant with no SSH step.</p>
+<p><strong>Exotic hardware.</strong> Some hardware (like ReSpeaker microphones or certain audio HATs) may
+require extra configuration. The installer aims for wide compatibility, but specialized
+setups might need some manual intervention.</p>
 </div>
-<div class="admonition tip">
-<p class="admonition-title">Looking for a no-terminal option?</p>
-<p>The <strong><a href="../install-raspovos/">raspOVOS</a></strong> image is the flash-and-boot alternative:
-no terminal, no SSH. Its images are in a maintenance pause, so check its status
-before choosing it. This installer is the recommended path on the Pi and everywhere
-else.</p>
-</div>
-<div class="admonition note">
-<p class="admonition-title">This runs over SSH in a terminal, not an app</p>
-<p>There's no phone app or setup wizard with a graphical pairing flow. You type commands into
-a terminal, usually over SSH into a headless device. If you've never used SSH before, budget
-some extra time to get comfortable with it, or consider the
-<a href="../install-raspovos/">raspOVOS</a> image (see its status note) which boots into a working
-assistant with no SSH step.</p>
-</div>
-<p>This is the quick-start guide for installing Open Voice OS (OVOS) using the official <code>ovos-installer</code>. This guide covers <strong>Raspberry Pi</strong> and <strong>desktop/server</strong> Linux environments. The steps are mostly the same on a headless Raspberry Pi and on a laptop. Only the way you connect to the device differs.</p>
-<blockquote>
-<p>⚠️ Note: Some "exotic" hardware (like ReSpeaker microphones or certain audio HATs) may require extra configuration. The installer aims for wide compatibility, but specialized setups might need some manual intervention.</p>
-<p>💡 On a Raspberry Pi, run the <code>ovos-installer</code> against an existing Raspberry Pi OS
-install (this guide, the recommended route). The <strong><a href="../install-raspovos/">raspOVOS</a></strong>
-boot-and-go image is an alternative once its maintenance pause ends. On any other
-Linux hardware, use the <code>ovos-installer</code>.</p>
-</blockquote>
 <hr />
 <h2 id="step-by-step-installation">Step-by-step Installation<a class="headerlink" href="#step-by-step-installation" title="Permanent link">&para;</a></h2>
 <h3 id="1-connect-to-your-device-if-remote">✅ 1. Connect to Your Device <em>(if remote)</em><a class="headerlink" href="#1-connect-to-your-device-if-remote" title="Permanent link">&para;</a></h3>
@@ -2209,10 +2179,9 @@ through logs. See
 <a href="../production-operations/#knowing-when-the-assistant-is-actually-ready">Production Operations</a>
 for the readiness pattern and the full unit list.</p>
 </div>
-<h2 id="further-reading">Further reading<a class="headerlink" href="#further-reading" title="Permanent link">&para;</a></h2>
-<ul>
-<li><a href="https://blog.openvoiceos.org/posts/2026-03-05-ovos-installer-macos-intel-apple-silicon">Boring installs, now on macOS (Intel + Apple Silicon)</a>, OVOS blog</li>
-</ul>
+<hr />
+<p><strong>Read next:</strong> <a href="../personalize/">Make it yours</a> · <a href="../install-raspovos/">RaspOVOS image</a>
+<strong>Related:</strong> <a href="../release-channels/">Manual &amp; Advanced Install</a> · <a href="../everyday-help/">It's not behaving</a> · <a href="../troubleshooting/">Troubleshooting &amp; Debugging</a> · <a href="https://blog.openvoiceos.org/posts/2026-03-05-ovos-installer-macos-intel-apple-silicon">Boring installs, now on macOS</a></p>
 
 
 

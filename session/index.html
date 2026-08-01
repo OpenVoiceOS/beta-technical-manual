@@ -1654,7 +1654,7 @@
 </div>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>One OVOS device can talk to several people at once: your phone, a kitchen speaker, and other connected devices may all be asking it things at the same time. A <em>session</em> is simply the information that says who is asking and in what language. If your skill remembers anything between requests, like a running game or a chat history, it needs to keep each person's information separate so two users don't get each other's answers, much like separate tables at a restaurant. This page shows how to make a skill session aware. New terms are explained in the <a href="../glossary/">Glossary</a>.</p>
+<p>One OVOS device can talk to several people at once: your phone, a kitchen speaker, and other connected devices may all be asking it things at the same time. A <em>session</em> is simply the information that says who is asking and in what language. If your skill remembers anything between requests, like a running game or a chat history, it needs to keep each person's information separate so two users don't get each other's answers, much like separate tables at a restaurant — key that state by <code>session_id</code> instead of stashing it in a single instance variable. This page shows how to make a skill session aware. New terms are explained in the <a href="../glossary/">Glossary</a>.</p>
 </div>
 <details class="info">
 <summary>Formal specification</summary>
@@ -1672,7 +1672,6 @@
     Core --&gt;|SessionManager.get message| Skill["Skill"]</code></pre>
 <p><em>Diagram:</em> The flow starts at the voice satellite or HiveMind node, passes through the messagebus and SessionManager, and ends at the skill, branching on whether the session is the device-local "default" session or a unique external session_id.</p>
 </details>
-<p><strong>What / why (beginners):</strong> a single OVOS device can be talking to many clients at once: your phone, a kitchen satellite, a HiveMind node. Each request arrives carrying a <code>Session</code> that identifies <em>who</em> is asking and <em>in what language</em>. If your skill stores any state (a chat history, a game in progress, a "current selection"), key that state by <code>session_id</code> instead of stashing it in a single instance variable. Otherwise two users would clobber each other.</p>
 <p>If you want your skills to handle simultaneous users, make them <strong>Session</strong> aware.</p>
 <p>Each remote client, usually a <a href="https://jarbashivemind.github.io/HiveMind-community-docs/07_voicesat/">voice satellite</a>, sends a <code>Session</code> with the <code>Message</code>.</p>
 <p>Your skill should keep track of any session-specific state separately, for example a chat history.</p>
@@ -1879,6 +1878,9 @@ by omission exists on that one pathway only.</p>
 </span><span id="__span-2-37"><a id="__codelineno-2-37" name="__codelineno-2-37" href="#__codelineno-2-37"></a>        <span class="k">return</span> <span class="kc">False</span>
 </span></code></pre></div>
 <p>A full example can be found in the <a href="https://github.com/OpenVoiceOS/ovos-skill-parrot">parrot skill</a></p>
+<hr />
+<p><strong>Read next:</strong> <a href="../statements/">Statements</a>
+<strong>Related:</strong> <a href="../converse/">Converse</a> · <a href="../context/">Context</a> · <a href="../config/">Configuration Management</a> · <a href="../skill-settings/">Skill Settings</a></p>
 
 
 

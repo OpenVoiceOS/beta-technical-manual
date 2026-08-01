@@ -1558,8 +1558,6 @@
 
 
 <h1 id="intent-design">Intent Design<a class="headerlink" href="#intent-design" title="Permanent link">&para;</a></h1>
-<p>See also: <a href="../intent-service/">Intent Service</a> for how OVOS routes an utterance through the
-pipeline plugins that match the intents described on this page.</p>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
 <p>People ask for the same thing in many different ways: "what's the weather?", "weather in
@@ -1567,8 +1565,9 @@ Melbourne", or just "weather" all mean roughly the same thing. An <em>intent</em
 user is actually trying to do. The part of OVOS that figures it out is a <em>pipeline
 plugin</em> (older docs call this an "intent parser" or "intent engine"; see the
 <a href="../glossary/">Glossary</a>). This page explains what an intent is and helps you choose
-between the two engines OVOS ships by default. New terms are explained in the
-<a href="../glossary/">Glossary</a>.</p>
+between the two engines OVOS ships by default. See <a href="../intent-service/">Intent Service</a>
+for how OVOS routes an utterance through the pipeline plugins described here. New terms
+are explained in the <a href="../glossary/">Glossary</a>.</p>
 </div>
 <details class="info">
 <summary>📐 Formal specification</summary>
@@ -1660,6 +1659,9 @@ including confidence thresholds and entry points:</p>
 </ul>
 <p>We will now look at each in more detail, including how to use them in a
 <a href="../skill-design-guidelines/">Skill</a>.</p>
+<hr />
+<p><strong>Read next:</strong> <a href="../intents-adapt/">Adapt Intents (Keyword Intents)</a> · <a href="../intents-padatious/">Padatious Intents (Example-Based Intents)</a>
+<strong>Related:</strong> <a href="../skill-structure/">Skill Structure</a> · <a href="../layers/">Intent Layers</a> · <a href="../permissions/">Permissions &amp; Activation Control</a> · <a href="../pipelines-overview/">OVOS Intent Pipeline</a></p>
 
 
 

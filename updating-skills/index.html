@@ -1,0 +1,1727 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://tigregotico.github.io/ovos-technical-manual/updating-skills/">
+      
+      
+        <link rel="prev" href="../updating-from-older-ovos/">
+      
+      
+        <link rel="next" href="../updating-plugins/">
+      
+      
+      <link rel="icon" href="https://github.com/OpenVoiceOS/ovos_assets/blob/master/Logo/ovos-logo-512.png?raw=true">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.31">
+    
+    
+      
+        <title>For Skill Maintainers - OpenVoiceOS Technical Manual</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.3cba04c6.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../css/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="grey" data-md-color-accent="red">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#updating-skills-from-older-ovos" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="OpenVoiceOS Technical Manual" class="md-header__button md-logo" aria-label="OpenVoiceOS Technical Manual" data-md-component="logo">
+      
+  <img src="https://github.com/OpenVoiceOS/ovos_assets/blob/master/Logo/ovos-logo-512.png?raw=true" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            OpenVoiceOS Technical Manual
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              For Skill Maintainers
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="grey" data-md-color-accent="red"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="grey" data-md-color-accent="red"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/TigreGotico/ovos-technical-manual" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    TigreGotico/ovos-technical-manual
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href=".." class="md-tabs__link">
+          
+  
+  Home
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../start-here/" class="md-tabs__link">
+          
+  
+  Get Started
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../concepts-overview/" class="md-tabs__link">
+          
+  
+  Concepts
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../pipelines-overview/" class="md-tabs__link">
+          
+  
+  Pipeline
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../lang-support/" class="md-tabs__link">
+          
+  
+  Language
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../skills-overview/" class="md-tabs__link">
+          
+  
+  Skills
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../plugins-index/" class="md-tabs__link">
+          
+  
+  Plugins
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../agents-overview/" class="md-tabs__link">
+          
+  
+  Agents
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../production-overview/" class="md-tabs__link">
+          
+  
+  Production
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../reference-overview/" class="md-tabs__link">
+          
+  
+  Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="OpenVoiceOS Technical Manual" class="md-nav__button md-logo" aria-label="OpenVoiceOS Technical Manual" data-md-component="logo">
+      
+  <img src="https://github.com/OpenVoiceOS/ovos_assets/blob/master/Logo/ovos-logo-512.png?raw=true" alt="logo">
+
+    </a>
+    OpenVoiceOS Technical Manual
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/TigreGotico/ovos-technical-manual" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    TigreGotico/ovos-technical-manual
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href=".." class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../start-here/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Get Started
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../concepts-overview/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Concepts
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../pipelines-overview/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Pipeline
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../lang-support/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Language
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../skills-overview/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Skills
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../plugins-index/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Plugins
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../agents-overview/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Agents
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Production
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            Production
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../production-overview/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Production Overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../privacy-security/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Privacy & Security
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../production-operations/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Production Operations
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_9_4" id="__nav_9_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Updating from Older OVOS
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_9_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_9_4">
+            <span class="md-nav__icon md-icon"></span>
+            Updating from Older OVOS
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../updating-from-older-ovos/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Overview & Big-Ticket Migrations
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    For Skill Maintainers
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    For Skill Maintainers
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#in-a-nutshell" class="md-nav__link">
+    <span class="md-ellipsis">
+      In a nutshell
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#if-you-maintain-skills" class="md-nav__link">
+    <span class="md-ellipsis">
+      If you maintain skills
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="If you maintain skills">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#skill-settings-file-store-rewritten" class="md-nav__link">
+    <span class="md-ellipsis">
+      Skill-settings file-store rewritten
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fallback-dispatcher-no-longer-bus-driven" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fallback dispatcher no longer bus-driven
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ovos_workshopskillsdecorators-shim-paths-removed" class="md-nav__link">
+    <span class="md-ellipsis">
+      ovos_workshop.skills.decorators.* shim paths removed
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mycroft-core-mycroftskill-compat-shim-removed" class="md-nav__link">
+    <span class="md-ellipsis">
+      mycroft-core MycroftSkill compat shim removed
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ovos_workshopdecoratorscompatbackwards_compat-removed" class="md-nav__link">
+    <span class="md-ellipsis">
+      ovos_workshop.decorators.compat.backwards_compat removed
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ovosskill_conditional_activate-removed" class="md-nav__link">
+    <span class="md-ellipsis">
+      OVOSSkill._conditional_activate() removed
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#backend-settings-sync-removed-from-ovosskill" class="md-nav__link">
+    <span class="md-ellipsis">
+      Backend settings sync removed from OVOSSkill
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#legacy-non-installable-skill-loading-removed" class="md-nav__link">
+    <span class="md-ellipsis">
+      Legacy non-installable skill loading removed
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#skill-locale-directories-renamed-to-canonical-bcp-47" class="md-nav__link">
+    <span class="md-ellipsis">
+      Skill locale directories renamed to canonical BCP-47
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_get_dialog-removed-as-a-public-symbol" class="md-nav__link">
+    <span class="md-ellipsis">
+      _get_dialog() removed as a public symbol
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../updating-plugins/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    For Plugin Maintainers
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../updating-deployers/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    For Device & Fleet Operators
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../updating-remote-clients/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    For Remote Bus Clients
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../upcoming-changes/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Upcoming Changes
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../stt-server/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Self-hosting Servers
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../hivemind-agents/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    HiveMind
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../home-assistant/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Home Assistant
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../reference-overview/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Reference
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#in-a-nutshell" class="md-nav__link">
+    <span class="md-ellipsis">
+      In a nutshell
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#if-you-maintain-skills" class="md-nav__link">
+    <span class="md-ellipsis">
+      If you maintain skills
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="If you maintain skills">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#skill-settings-file-store-rewritten" class="md-nav__link">
+    <span class="md-ellipsis">
+      Skill-settings file-store rewritten
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fallback-dispatcher-no-longer-bus-driven" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fallback dispatcher no longer bus-driven
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ovos_workshopskillsdecorators-shim-paths-removed" class="md-nav__link">
+    <span class="md-ellipsis">
+      ovos_workshop.skills.decorators.* shim paths removed
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mycroft-core-mycroftskill-compat-shim-removed" class="md-nav__link">
+    <span class="md-ellipsis">
+      mycroft-core MycroftSkill compat shim removed
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ovos_workshopdecoratorscompatbackwards_compat-removed" class="md-nav__link">
+    <span class="md-ellipsis">
+      ovos_workshop.decorators.compat.backwards_compat removed
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ovosskill_conditional_activate-removed" class="md-nav__link">
+    <span class="md-ellipsis">
+      OVOSSkill._conditional_activate() removed
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#backend-settings-sync-removed-from-ovosskill" class="md-nav__link">
+    <span class="md-ellipsis">
+      Backend settings sync removed from OVOSSkill
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#legacy-non-installable-skill-loading-removed" class="md-nav__link">
+    <span class="md-ellipsis">
+      Legacy non-installable skill loading removed
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#skill-locale-directories-renamed-to-canonical-bcp-47" class="md-nav__link">
+    <span class="md-ellipsis">
+      Skill locale directories renamed to canonical BCP-47
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_get_dialog-removed-as-a-public-symbol" class="md-nav__link">
+    <span class="md-ellipsis">
+      _get_dialog() removed as a public symbol
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="updating-skills-from-older-ovos">Updating Skills From Older OVOS<a class="headerlink" href="#updating-skills-from-older-ovos" title="Permanent link">&para;</a></h1>
+<h2 id="in-a-nutshell">In a nutshell<a class="headerlink" href="#in-a-nutshell" title="Permanent link">&para;</a></h2>
+<p>This page is for skill maintainers moving a skill forward from an older
+OVOS install. Entries are in date order: start at the version you are
+currently running and read forward to your target version. For the
+Big-ticket migrations (the changes with the widest blast radius, including
+the <code>ovos-workshop</code> 4.0.0 → 7.0.0 release train), see
+<a href="../updating-from-older-ovos/#big-ticket-migrations">Updating from Older OVOS</a>.</p>
+<h2 id="if-you-maintain-skills">If you maintain skills<a class="headerlink" href="#if-you-maintain-skills" title="Permanent link">&para;</a></h2>
+<h3 id="skill-settings-file-store-rewritten">Skill-settings file-store rewritten<a class="headerlink" href="#skill-settings-file-store-rewritten" title="Permanent link">&para;</a></h3>
+<p>Skill settings moved to <code>json_database</code>-backed XDG-default storage,
+replacing the old ad-hoc file kludge, with a one-time auto-migration.</p>
+<ul>
+<li>Migration: rely on the <code>self.settings</code> API. Do not read/write the old
+  non-XDG settings file path directly.</li>
+<li>Lifecycle: active before <code>3299173</code>. Unverified deprecation window (only
+  a one-time auto-migration is recorded, not a hard cutover date).
+  dropped <code>3299173734</code> (2022-02-02), (ovos-core <code>3299173</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/11" title="GitHub Issue: TigreGotico/ovos-technical-manual #11">#11</a>).</li>
+</ul>
+<h3 id="fallback-dispatcher-no-longer-bus-driven">Fallback dispatcher no longer bus-driven<a class="headerlink" href="#fallback-dispatcher-no-longer-bus-driven" title="Permanent link">&para;</a></h3>
+<p><code>converse</code> and fallback dispatch became event-based through dedicated
+services (<code>ConverseService</code>, the fallback pipeline) instead of being
+called directly in-process on <code>MycroftSkill</code> instances.</p>
+<ul>
+<li>Migration: implement the converse acknowledge handshake if you drive
+  converse externally (for example a custom orchestrator). Do not assume
+  <code>converse()</code> is polled for skills that never override it.</li>
+<li>Lifecycle: active before <code>4fff98e</code>. No deprecation window (architecture change, not a
+  deprecate-then-drop symbol). Landed <code>4fff98ecfc</code> (2022-02-02), (ovos-core <code>4fff98e</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/32" title="GitHub Issue: TigreGotico/ovos-technical-manual #32">#32</a>).</li>
+</ul>
+<h3 id="ovos_workshopskillsdecorators-shim-paths-removed"><code>ovos_workshop.skills.decorators.*</code> shim paths removed<a class="headerlink" href="#ovos_workshopskillsdecorators-shim-paths-removed" title="Permanent link">&para;</a></h3>
+<p>The 2022 move of decorators from <code>skills.decorators.*</code> to top-level
+<code>decorators.*</code> (<code>9ca2018</code>, 2022-06-02) had kept 4-line re-export shims at
+the old paths. Those shims were deleted with no further compat.</p>
+<ul>
+<li>Migration: <code>from ovos_workshop.skills.decorators.killable import
+  killable_intent</code> → <code>from ovos_workshop.decorators.killable import
+  killable_intent</code> (same pattern for <code>ocp</code>, <code>layers</code>, <code>converse</code>,
+  <code>fallback_handler</code>).</li>
+<li>Lifecycle: active before <code>9ca2018</code> (2022-06-02). Deprecated but
+  functional (shim re-export) <code>9ca2018</code> to pre-<code>1.0.0</code>. Dropped <code>1.0.0</code>
+  (ovos-workshop <code>2d684a1</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/235" title="GitHub Issue: TigreGotico/ovos-technical-manual #235">#235</a>).</li>
+</ul>
+<h3 id="mycroft-core-mycroftskill-compat-shim-removed">mycroft-core <code>MycroftSkill</code> compat shim removed<a class="headerlink" href="#mycroft-core-mycroftskill-compat-shim-removed" title="Permanent link">&para;</a></h3>
+<p>The metaclass hack that let <code>isinstance(skill, MycroftSkill)</code> succeed for
+both classic Mycroft skills and OVOS skills, and that auto-initialized
+classic-style skills, was removed. Skills built for mycroft-core no longer
+load.</p>
+<ul>
+<li>Migration: subclass <code>ovos_workshop.skills.ovos.OVOSSkill</code> directly.
+  Skill lifecycle is now entirely <code>SkillLoader</code>-driven: <code>bus</code>/<code>skill_id</code>
+  are passed to <code>__init__</code>, not injected via metaclass into a later
+  <code>initialize()</code> call.</li>
+<li>Lifecycle: active pre-<code>2d684a1</code>. Deprecated with warnings through the
+  <code>V0.0.x</code> era. Dropped in <code>1.0.0</code> (ovos-workshop <code>2d684a1</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/235" title="GitHub Issue: TigreGotico/ovos-technical-manual #235">#235</a>,
+  2024-10-15). The maintainers later bumped <code>VERSION_MAJOR</code> to <code>8</code> in
+  <code>7c8a1e4</code> (2025-11-09) purely to acknowledge, after the fact, that this
+  should have been versioned as a major bump: treat <code>2d684a1</code>/<code>1.0.0</code> as
+  the real boundary.</li>
+</ul>
+<h3 id="ovos_workshopdecoratorscompatbackwards_compat-removed"><code>ovos_workshop.decorators.compat.backwards_compat</code> removed<a class="headerlink" href="#ovos_workshopdecoratorscompatbackwards_compat-removed" title="Permanent link">&para;</a></h3>
+<p>The <code>backwards_compat(classic_core=, pre_008=, no_core=)</code> decorator, which
+branched behavior by detecting <code>mycroft.version.CORE_VERSION_STR</code> /
+<code>ovos_core.version</code>, was deleted along with the mycroft-skill compat shim.</p>
+<ul>
+<li>Migration: remove any use of <code>backwards_compat</code>. Branch on your own
+  feature-detection logic if you still need version-conditional behavior.</li>
+<li>Lifecycle: active pre-<code>2d684a1</code>. Unverified deprecation window. Dropped
+  <code>1.0.0</code> (ovos-workshop <code>2d684a1</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/235" title="GitHub Issue: TigreGotico/ovos-technical-manual #235">#235</a>).</li>
+</ul>
+<h3 id="ovosskill_conditional_activate-removed"><code>OVOSSkill._conditional_activate()</code> removed<a class="headerlink" href="#ovosskill_conditional_activate-removed" title="Permanent link">&para;</a></h3>
+<p>The private helper that auto-re-activated a skill after converse/intent
+handling, and the skill class's own emission of <code>ovos.utterance.handled</code>,
+are both gone: that bookkeeping moved into <code>ovos-core</code>'s fallback
+pipeline to stop duplicate events.</p>
+<ul>
+<li>Migration: remove any override or call of <code>_conditional_activate</code>. Do
+  not assume the skill class emits <code>ovos.utterance.handled</code> yourself.</li>
+<li>Lifecycle: active before <code>6649c4f</code>. Unverified deprecation window.
+  dropped <code>2.0.0</code> (ovos-workshop <code>6649c4f</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/262" title="GitHub Issue: TigreGotico/ovos-technical-manual #262">#262</a>, 2024-10-31).</li>
+</ul>
+<h3 id="backend-settings-sync-removed-from-ovosskill">Backend settings sync removed from <code>OVOSSkill</code><a class="headerlink" href="#backend-settings-sync-removed-from-ovosskill" title="Permanent link">&para;</a></h3>
+<p><code>enable_settings_manager</code> kwarg, <code>self.settings_manager</code>,
+<code>self._settings_meta</code>, and <code>SkillSettingsManager</code> (Selene/backend
+two-way settings sync, <code>settingsmeta.json</code> auto-upload) are all removed.</p>
+<ul>
+<li>Migration: remove <code>enable_settings_manager</code> from <code>super().__init__()</code>
+  calls. Use <code>self.settings</code> (local <code>JsonStorage</code>) only. There is no
+  backend settings sync in OVOS.</li>
+<li>Lifecycle: active before <code>3c026c2</code>. Unverified deprecation window.
+  dropped <code>3.0.0</code> (ovos-workshop <code>3c026c2</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/295" title="GitHub Issue: TigreGotico/ovos-technical-manual #295">#295</a>, 2024-11-19).</li>
+</ul>
+<h3 id="legacy-non-installable-skill-loading-removed">Legacy non-installable skill loading removed<a class="headerlink" href="#legacy-non-installable-skill-loading-removed" title="Permanent link">&para;</a></h3>
+<p><code>skill_launcher.py</code> dropped the remaining dead code paths for loading
+non-pip-installable, classic-mycroft-style skills.</p>
+<ul>
+<li>Migration: package skills as installable Python packages with entry
+  points. Loose-file skill loading from a bare folder is unsupported.</li>
+<li>Lifecycle: active before <code>421899f</code>. Unverified deprecation window.
+  dropped in the <code>7.0.x</code> line, <code>421899f</code> (2025-06-21), (ovos-workshop <code>421899f</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/362" title="GitHub Issue: TigreGotico/ovos-technical-manual #362">#362</a>).
+  <code>ovos-core</code>'s own equivalent removal of folder-based skill loading
+  (<code>_load_skill</code>, <code>_get_skill_directories</code>, <code>_unload_removed_skills</code>)
+  landed the same era in <code>62024dbf98</code> (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/690" title="GitHub Issue: TigreGotico/ovos-technical-manual #690">#690</a>, 2025-06-10, <code>1.3.0</code>).</li>
+</ul>
+<h3 id="skill-locale-directories-renamed-to-canonical-bcp-47">Skill locale directories renamed to canonical BCP-47<a class="headerlink" href="#skill-locale-directories-renamed-to-canonical-bcp-47" title="Permanent link">&para;</a></h3>
+<p>Bundled locale directories under <code>ovos_workshop/locale/</code> were renamed from
+lowercase/short codes (<code>en-us</code>, <code>da</code>, <code>eu</code>, <code>fa-fa</code>) to canonical BCP-47
+(<code>en-US</code>, <code>da-DK</code>, <code>eu-ES</code>, <code>fa-IR</code>) to fix duplicate zip entries in wheel
+builds.</p>
+<ul>
+<li>Migration: ship resource files under canonical BCP-47 folder names. Use
+  <code>ovos_utils.lang.get_language_dir()</code> / <code>CoreResources</code> for resolution
+  instead of manual lowercase path construction.</li>
+<li>Lifecycle: active before <code>e12559e</code>. Unverified deprecation window.
+  dropped <code>e12559e</code> (2026-04-03), pre-<code>8.0.0</code> (ovos-workshop <code>e12559e</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/392" title="GitHub Issue: TigreGotico/ovos-technical-manual #392">#392</a>).</li>
+</ul>
+<h3 id="_get_dialog-removed-as-a-public-symbol"><code>_get_dialog()</code> removed as a public symbol<a class="headerlink" href="#_get_dialog-removed-as-a-public-symbol" title="Permanent link">&para;</a></h3>
+<p>Module-level <code>_get_dialog()</code> on <code>ovos_workshop.skills.ovos</code> no longer
+exists. Locale lookups (<code>_get_dialog</code>, <code>_get_word</code>,
+<code>CommonQuerySkill.__init__</code>, <code>translated_noise_words</code>) all route through
+<code>CoreResources</code>/<code>self.resources</code> now.</p>
+<ul>
+<li>Migration: use <code>self.speak_dialog(key)</code> or
+  <code>CoreResources(lang).load_dialog_file(...)</code> instead of importing
+  <code>_get_dialog</code> directly.</li>
+<li>Lifecycle: active before <code>acbd438</code>. Unverified deprecation window.
+  dropped <code>acbd438</code> (2026-04-08), pre-<code>8.0.0</code> (ovos-workshop <code>acbd438</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/395" title="GitHub Issue: TigreGotico/ovos-technical-manual #395">#395</a>).</li>
+</ul>
+<hr />
+<p><strong>Read next:</strong> <a href="../version-compat-guide/">Version-Compatible Skills &amp; Plugins</a> · <a href="../upcoming-changes/">Upcoming Changes</a>
+<strong>Related:</strong> <a href="../updating-from-older-ovos/">Updating from Older OVOS</a> · <a href="../migrating-from-mycroft/">Migrating From Mycroft</a></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.path", "navigation.prune", "navigation.top", "navigation.tracking", "navigation.instant", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate"], "search": "../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.fe8b6f2b.min.js"></script>
+      
+    
+  </body>
+</html>

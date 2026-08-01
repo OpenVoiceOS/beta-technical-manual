@@ -1667,15 +1667,8 @@
 <details class="info">
 <summary>📐 Formal specification</summary>
 <p>Intent context is specified by <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/intent-context.md">OVOS-CONTEXT-1 — Intent Context</a></strong>, the <em>declarative</em> gating primitive over <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md">OVOS-PIPELINE-1</a></strong> (its imperative complement is the converse plugin, <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/converse.md">OVOS-CONVERSE-1</a></strong>, see <a href="../converse-pipeline/">Converse Pipeline</a>). See the <a href="../architecture-specs/">spec index</a>.</p>
-</details>
-<p>Conversational context in OpenVoiceOS (OVOS) allows voice interactions to feel more natural by remembering parts of a conversation, like the subject being discussed. This is especially useful for follow-up questions where repeating context (like a person's name) would otherwise be necessary.</p>
-<div class="admonition note">
-<p class="admonition-title">The spec model: a decaying per-session store that <em>gates</em> matching</p>
-<p>In CONTEXT-1 terms, intent context is the field <strong><code>session.intent_context</code></strong>, a flat map of <strong>entries</strong>, each <code>{value, expires_at?, turns_remaining?}</code>. Every entry <strong>decays</strong>. The orchestrator prunes dead entries before each match round and decrements <code>turns_remaining</code> after it (CONTEXT-1 §4), so a confirmation flag set with <code>turns_remaining: 1</code> lives for exactly the next utterance. An intent <strong>gates</strong> on context by declaring <strong><code>requires_context</code></strong> (match only while a key is live) and/or <strong><code>excludes_context</code></strong> (match only while a key is absent). These are normative across every intent engine (CONTEXT-1 §6/§6.1). Keys are <strong>scoped by shape</strong>: a bare key like <code>person</code> is <strong>shared</strong> (cross-skill), and a prefixed key <code>&lt;skill_id&gt;:flag</code> is <strong>private</strong> to that owner. Bare-string <code>requires_context</code> entries default to private scope, the safe default, so a foreign skill's shared <code>person</code> can never accidentally satisfy a private gate. You must write <code>{key: person, scope: shared}</code> to read across skills.</p>
-</div>
-<div class="admonition warning">
-<p class="admonition-title">Four different things called 'context': do not conflate them</p>
-<p>CONTEXT-1 §1.1 is explicit that the word <em>context</em> names four unrelated things:</p>
+<p><strong>The spec model: a decaying per-session store that <em>gates</em> matching.</strong> In CONTEXT-1 terms, intent context is the field <strong><code>session.intent_context</code></strong>, a flat map of <strong>entries</strong>, each <code>{value, expires_at?, turns_remaining?}</code>. Every entry <strong>decays</strong>. The orchestrator prunes dead entries before each match round and decrements <code>turns_remaining</code> after it (CONTEXT-1 §4), so a confirmation flag set with <code>turns_remaining: 1</code> lives for exactly the next utterance. An intent <strong>gates</strong> on context by declaring <strong><code>requires_context</code></strong> (match only while a key is live) and/or <strong><code>excludes_context</code></strong> (match only while a key is absent). These are normative across every intent engine (CONTEXT-1 §6/§6.1). Keys are <strong>scoped by shape</strong>: a bare key like <code>person</code> is <strong>shared</strong> (cross-skill), and a prefixed key <code>&lt;skill_id&gt;:flag</code> is <strong>private</strong> to that owner. Bare-string <code>requires_context</code> entries default to private scope, the safe default, so a foreign skill's shared <code>person</code> can never accidentally satisfy a private gate. You must write <code>{key: person, scope: shared}</code> to read across skills.</p>
+<p><strong>Four different things called 'context': do not conflate them.</strong> CONTEXT-1 §1.1 is explicit that the word <em>context</em> names four unrelated things:</p>
 <table>
 <thead>
 <tr>
@@ -1708,7 +1701,8 @@
 </tbody>
 </table>
 <p>This page is about the third (and the field that holds it). It is not <code>Message.context</code>, and a context entry is not a <code>Match.slot</code>. CONTEXT-1 §7's context-supplied-slot rule is the bridge: when a <code>requires_context</code> key also names a slot, its value fills that slot if the utterance did not. This is exactly the "remember which person" mechanism below.</p>
-</div>
+</details>
+<p>Conversational context makes voice interactions feel more natural. The assistant keeps track of the subject you are discussing, so you do not have to repeat it.</p>
 <p><code>requires_context</code> and <code>excludes_context</code> gate matching in both the
 <a href="../adapt-pipeline/">Adapt</a> and <a href="../padatious-pipeline/">Padatious</a> pipelines, as CONTEXT-1 §6
 requires of every intent engine. Adapt gates keyword intents. Padatious gates template intents,
@@ -1928,6 +1922,9 @@ skill id and emit bus messages that <code>ovos-core</code> handles on the active
 <p>Because context is attached to the Session, each handler receives the message that triggered it.
 The Adapt pipeline reads <code>Session.context</code> when scoring intents. This is why missing keywords
 fall back to the most recent matching context entry.</p>
+<hr />
+<p><strong>Read next:</strong> <a href="../layers/">Intent Layers</a>
+<strong>Related:</strong> <a href="../prompts/">Asking the User for Responses in OVOS Skills</a> · <a href="../session/">Session Aware Skills</a> · <a href="../intents/">Intent Design</a> · <a href="../converse/">Converse</a></p>
 
 
 

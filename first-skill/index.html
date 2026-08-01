@@ -1480,6 +1480,14 @@ here? Keep the <a href="../glossary/">Glossary</a> open.</p>
 </div>
 <p>By the end you'll have a skill that answers when you say <em>"hello"</em>. Once you've done it once,
 every other skill is just more of the same idea.</p>
+<div class="admonition note">
+<p class="admonition-title">Before you start: OVOS needs to already be installed</p>
+<p>This walkthrough assumes OVOS is already installed and its Python environment is available
+to work in. See <a href="../ovos-installer/">ovos-installer</a> or <a href="../install-raspovos/">RaspOVOS</a> if
+you haven't done that yet. The ten minutes below covers writing and installing the skill
+itself, once that environment is in place.</p>
+<p>The flow runs from creating the folder layout to a working skill, checks the "hello" reply,
+and loops back to the pip install step on failure:</p>
 <pre class="mermaid"><code>flowchart TD
     A["Step 1: create folder layout"] --&gt; B["Step 2: write skill code"]
     B --&gt; C["Step 3: write .intent file"]
@@ -1491,13 +1499,6 @@ every other skill is just more of the same idea.</p>
     H --&gt;|OVOS replies| I["Done"]
     H --&gt;|no reply| J["Check ovos-logs show -l skills"]
     J --&gt; F</code></pre>
-<p><em>Diagram:</em> The flow runs from creating the folder layout to a working skill, checks the "hello" reply, and loops back to the pip install step on failure.</p>
-<div class="admonition note">
-<p class="admonition-title">Before you start: OVOS needs to already be installed</p>
-<p>This walkthrough assumes OVOS is already installed and its Python environment is available
-to work in. See <a href="../ovos-installer/">ovos-installer</a> or <a href="../install-raspovos/">RaspOVOS</a> if
-you haven't done that yet. The ten minutes below covers writing and installing the skill
-itself, once that environment is in place.</p>
 </div>
 <h2 id="what-a-skill-is-made-of">What a skill is made of<a class="headerlink" href="#what-a-skill-is-made-of" title="Permanent link">&para;</a></h2>
 <p>A skill is a small folder with three kinds of files:</p>
@@ -1696,6 +1697,9 @@ built wheel) before OVOS can see the new file.</p>
 <li>Questions along the way? Ask in the
   <a href="https://matrix.to/#/#openvoiceos-skills:matrix.org">skills channel on OVOS Chat</a>.</li>
 </ul>
+<hr />
+<p><strong>Read next:</strong> <a href="../skill-structure/">Skill Structure</a>
+<strong>Related:</strong> <a href="../skill-cookbook/">Skill Cookbook</a> · <a href="../intents/">Intent Design</a> · <a href="../testing-your-skill/">Test Your Skill</a> · <a href="../skills-overview/">Skill Development Overview</a></p>
 
 
 

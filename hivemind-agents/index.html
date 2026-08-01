@@ -896,16 +896,38 @@
   
   
   
-    <li class="md-nav__item">
-      <a href="../updating-from-older-ovos/" class="md-nav__link">
+    
+    
+    
+      
+      
+    
+    
+      
         
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../updating-from-older-ovos/" class="md-nav__link">
+      
   
   <span class="md-ellipsis">
     Updating from Older OVOS
   </span>
   
 
-      </a>
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
     </li>
   
 
@@ -1395,10 +1417,6 @@
 
 
 <h1 id="remote-agents-with-hivemind">Remote Agents with HiveMind<a class="headerlink" href="#remote-agents-with-hivemind" title="Permanent link">&para;</a></h1>
-<div class="admonition info">
-<p class="admonition-title">No maturity badge here</p>
-<p>HiveMind is a separate project, with its own organization and <a href="https://jarbashivemind.github.io/HiveMind-community-docs/">community docs</a>. The OVOS <a href="../maturity/">Maturity Scale</a>, which rates OVOS-org repository health, does not apply to it. This page covers the OVOS-side integration only.</p>
-</div>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
 <p>OpenVoiceOS runs <strong>local-first</strong>. Sometimes you want one capable machine to do the
@@ -1408,28 +1426,20 @@ that makes this possible. It exposes an OVOS install, or a single persona, over 
 authenticated, encrypted protocol that satellites and clients connect to.</p>
 </div>
 <div class="admonition info">
-<p class="admonition-title">HiveMind lives under its own org</p>
-<p>The HiveMind packages referenced here are maintained in the <strong><a href="https://github.com/JarbasHiveMind">JarbasHiveMind</a></strong>
-GitHub organization (not <code>OpenVoiceOS</code>). The full guide is the
-<a href="https://jarbashivemind.github.io/HiveMind-community-docs/">HiveMind community docs</a>. This
-page covers how HiveMind relates to OVOS.</p>
-</div>
-<div class="admonition note">
-<p class="admonition-title">HiveMind vs. agent-interop protocols</p>
+<p class="admonition-title">A separate project, under its own org</p>
+<p>HiveMind is maintained in the <strong><a href="https://github.com/JarbasHiveMind">JarbasHiveMind</a></strong>
+GitHub organization (not <code>OpenVoiceOS</code>), with its own
+<a href="https://jarbashivemind.github.io/HiveMind-community-docs/">community docs</a>. The OVOS
+<a href="../maturity/">Maturity Scale</a>, which rates OVOS-org repository health, does not apply to
+it. This page covers only how HiveMind relates to OVOS.</p>
 <p>HiveMind is the <strong>voice-satellite transport</strong>: how a mic/speaker device or remote client
-reaches an OVOS brain. MCP and A2A (see <a href="../agent-interop/">Agent Interop</a>) are different.
-They are LLM/agent tool protocols that let AI systems call each other's tools.</p>
-</div>
-<div class="admonition tip">
-<p class="admonition-title">Building a remote client</p>
+reaches an OVOS brain. MCP and A2A (see <a href="../agent-interop/">Agent Interop</a>) are different:
+LLM/agent tool protocols that let AI systems call each other's tools.</p>
 <p>If you are writing a remote or native (non-Python) client that connects over HiveMind,
 this manual is <strong>not</strong> the place to look for the wire details. HiveMind defines its own
 protocol: the connect URL, the access-key auth handshake, the message envelope, and the
 reconnect/backoff behavior a client must implement. That protocol is documented in the
-HiveMind project's own community documentation:
-<a href="https://jarbashivemind.github.io/HiveMind-community-docs/">HiveMind community docs</a>.
-This page only covers the OVOS side, meaning how an OVOS install is exposed as a
-HiveMind agent.</p>
+<a href="https://jarbashivemind.github.io/HiveMind-community-docs/">HiveMind community docs</a>.</p>
 </div>
 <hr />
 <h2 id="the-pieces">The pieces<a class="headerlink" href="#the-pieces" title="Permanent link">&para;</a></h2>
@@ -1662,6 +1672,9 @@ authenticated</strong>. Keep it on a trusted local network. Use HiveMind for any
 <li><a href="https://blog.openvoiceos.org/posts/2025-07-25-A-real-use-case-with-OVOS-and-Hivemind">A real use case with OVOS and Hivemind</a> (OVOS blog)</li>
 <li><a href="https://blog.openvoiceos.org/posts/2026-01-14-OVOS-hivemind-industry">OVOS &amp; HiveMind in the Manufacturing Industry</a> (OVOS blog)</li>
 </ul>
+<hr />
+<p><strong>Read next:</strong> <a href="../home-assistant/">Home Assistant</a>
+<strong>Related:</strong> <a href="../privacy-security/">Privacy &amp; Security</a> · <a href="../persona-server/">Persona Server</a> · <a href="../agent-interop/">Agent Interop</a> · <a href="../production-operations/">Production Operations</a></p>
 
 
 

@@ -1152,15 +1152,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#cross-references" class="md-nav__link">
-    <span class="md-ellipsis">
-      Cross-References
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -1355,15 +1346,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#cross-references" class="md-nav__link">
-    <span class="md-ellipsis">
-      Cross-References
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -1520,22 +1502,6 @@ falls back to passing its input through unchanged, so the chain degrades gracefu
 <p>Utterance transformers work the same way but run before intent matching (cleaning or validating
 ASR output), with higher priority also running first.</p>
 <hr />
-<h2 id="cross-references">Cross-References<a class="headerlink" href="#cross-references" title="Permanent link">&para;</a></h2>
-<ul>
-<li>
-<p><a href="../core/">Utterance Transformers — ovos-core pipeline</a></p>
-</li>
-<li>
-<p><a href="../audio-service/">Dialog Transformers — audio service</a></p>
-</li>
-<li>
-<p><a href="../openai-plugin/">OpenAI Plugin</a>: OpenAI transformer configuration reference</p>
-</li>
-<li>
-<p><a href="../gguf-plugin/">GGUF Plugin</a>: local GGUF transformer configuration reference</p>
-</li>
-</ul>
-<hr />
 <div class="admonition note">
 <p class="admonition-title">Where this code actually lives</p>
 <p><code>ovos-core</code> only defines the <code>opm.transformer.text</code> / <code>opm.transformer.dialog</code> entry-point
@@ -1547,6 +1513,9 @@ repos: <a href="https://github.com/OpenVoiceOS/ovos-openai-plugin"><code>ovos-op
 <p><em>Source code: <a href="https://github.com/OpenVoiceOS/ovos-core">OpenVoiceOS/ovos-core</a> (transformer contract) ·
 <a href="https://github.com/OpenVoiceOS/ovos-openai-plugin">OpenVoiceOS/ovos-openai-plugin</a> ·
 <a href="https://github.com/OpenVoiceOS/ovos-gguf-plugin">OpenVoiceOS/ovos-gguf-plugin</a> (implementations).</em></p>
+<hr />
+<p><strong>Read next:</strong> <a href="../transformer-plugins/">Transformers Overview (Pipeline)</a>
+<strong>Related:</strong> <a href="../openai-plugin/">OpenAI-compatible</a> · <a href="../gguf-plugin/">GGUF / Local LLM</a> · <a href="../agent-plugins/">Agent Engine Types</a></p>
 
 
 

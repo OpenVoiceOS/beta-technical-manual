@@ -1774,8 +1774,6 @@
 
 
 <h1 id="adapt-intents-keyword-intents">Adapt Intents (Keyword Intents)<a class="headerlink" href="#adapt-intents-keyword-intents" title="Permanent link">&para;</a></h1>
-<p>See also: <a href="../intents/">Intent Design</a> for how the two intent styles compare, and
-<a href="../adapt-pipeline/">Adapt Pipeline</a> for how the plugin matches these intents at runtime.</p>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
 <p>Keyword intents (also called Adapt intents) match an utterance by looking for required
@@ -1783,7 +1781,9 @@ and optional keywords, not whole phrases. You define the keywords in <code>.voc<
 optionally, capture free-form entities with <code>.rx</code> regex files. Keyword intents are more
 flexible than template intents and integrate tightly with
 <a href="../context/">conversational context</a>, but a badly designed one can produce false
-matches. New terms are explained in the <a href="../glossary/">Glossary</a>.</p>
+matches. See <a href="../intents/">Intent Design</a> for how the two intent styles compare, and
+<a href="../adapt-pipeline/">Adapt Pipeline</a> for how the plugin matches these intents at runtime.
+New terms are explained in the <a href="../glossary/">Glossary</a>.</p>
 </div>
 <p>Keyword-based pipeline plugins determine user intent from a list of keywords or entities
 contained in a user's utterance.</p>
@@ -1980,6 +1980,9 @@ individual intents off with <code>disable_intent()</code>, and whitelist/blackli
 off a skill or its converse participation entirely. See <a href="../layers/">Intent Layers</a> for
 per-skill intent enable/disable state and <a href="../permissions/">Permissions &amp; Activation Control</a> for
 the coarser skill-level gates.</p>
+<hr />
+<p><strong>Read next:</strong> <a href="../intents-padatious/">Padatious Intents (Example-Based Intents)</a>
+<strong>Related:</strong> <a href="../intents/">Intent Design</a> · <a href="../layers/">Intent Layers</a> · <a href="../adapt-pipeline/">Adapt Pipeline Plugin</a> · <a href="../context/">Context</a></p>
 
 
 
