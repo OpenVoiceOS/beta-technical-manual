@@ -1,0 +1,3770 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://tigregotico.github.io/ovos-technical-manual/updating-from-older-ovos/">
+      
+      
+        <link rel="prev" href="../production-operations/">
+      
+      
+        <link rel="next" href="../stt-server/">
+      
+      
+      <link rel="icon" href="https://github.com/OpenVoiceOS/ovos_assets/blob/master/Logo/ovos-logo-512.png?raw=true">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.31">
+    
+    
+      
+        <title>Updating from Older OVOS - OpenVoiceOS Technical Manual</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.3cba04c6.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../css/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="grey" data-md-color-accent="red">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#updating-from-older-ovos" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="OpenVoiceOS Technical Manual" class="md-header__button md-logo" aria-label="OpenVoiceOS Technical Manual" data-md-component="logo">
+      
+  <img src="https://github.com/OpenVoiceOS/ovos_assets/blob/master/Logo/ovos-logo-512.png?raw=true" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            OpenVoiceOS Technical Manual
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Updating from Older OVOS
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="grey" data-md-color-accent="red"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="grey" data-md-color-accent="red"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/TigreGotico/ovos-technical-manual" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    TigreGotico/ovos-technical-manual
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href=".." class="md-tabs__link">
+          
+  
+  Home
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../ovos-installer/" class="md-tabs__link">
+          
+  
+  Get Started
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../everyday-help/" class="md-tabs__link">
+          
+  
+  Help & Troubleshooting
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../architecture-overview/" class="md-tabs__link">
+          
+  
+  Concepts
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../pipelines-overview/" class="md-tabs__link">
+          
+  
+  Intent Pipeline
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../lang-support/" class="md-tabs__link">
+          
+  
+  Language Support
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../first-skill/" class="md-tabs__link">
+          
+  
+  Skill Development
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../plugins-index/" class="md-tabs__link">
+          
+  
+  Plugin Ecosystem
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../personas/" class="md-tabs__link">
+          
+  
+  AI Agents & Personas
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../privacy-security/" class="md-tabs__link">
+          
+  
+  Production & Security
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../ecosystem-index/" class="md-tabs__link">
+          
+  
+  Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../contributing/" class="md-tabs__link">
+          
+  
+  Contributing & Project Infra
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="OpenVoiceOS Technical Manual" class="md-nav__button md-logo" aria-label="OpenVoiceOS Technical Manual" data-md-component="logo">
+      
+  <img src="https://github.com/OpenVoiceOS/ovos_assets/blob/master/Logo/ovos-logo-512.png?raw=true" alt="logo">
+
+    </a>
+    OpenVoiceOS Technical Manual
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/TigreGotico/ovos-technical-manual" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    TigreGotico/ovos-technical-manual
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href=".." class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../ovos-installer/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Get Started
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../everyday-help/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Help & Troubleshooting
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../architecture-overview/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Concepts
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../pipelines-overview/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Intent Pipeline
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../lang-support/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Language Support
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    
+  
+  
+    <a href="../first-skill/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Skill Development
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../plugins-index/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Plugin Ecosystem
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    
+  
+  
+    <a href="../personas/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    AI Agents & Personas
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Production & Security
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_10">
+            <span class="md-nav__icon md-icon"></span>
+            Production & Security
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../privacy-security/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Privacy & Security
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../production-operations/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Production Operations
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Updating from Older OVOS
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Updating from Older OVOS
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#in-a-nutshell" class="md-nav__link">
+    <span class="md-ellipsis">
+      In a nutshell
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-ovos-versions-break" class="md-nav__link">
+    <span class="md-ellipsis">
+      How OVOS versions break
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#big-ticket-migrations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Big-ticket migrations
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Big-ticket migrations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-ovos-utils-010-gutting-2024-09" class="md-nav__link">
+    <span class="md-ellipsis">
+      The ovos-utils 0.1.0 gutting (2024-09)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-ovos-workshop-2025-06-release-train-400-700" class="md-nav__link">
+    <span class="md-ellipsis">
+      The ovos-workshop 2025-06 release train (4.0.0 → 7.0.0)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#commonqueryskill-removal" class="md-nav__link">
+    <span class="md-ellipsis">
+      CommonQuerySkill removal
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ovos-config-200-pipeline-renames-and-en-us-casing" class="md-nav__link">
+    <span class="md-ellipsis">
+      ovos-config 2.0.0: pipeline renames and en-US casing
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-bus-client-legacy-topic-dual-emit-and-its-removal" class="md-nav__link">
+    <span class="md-ellipsis">
+      The bus-client legacy-topic dual-emit and its removal
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ocp-ovos-media-config-split" class="md-nav__link">
+    <span class="md-ellipsis">
+      OCP → ovos-media config split
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#wake-word-plugin-found_wake_word-signature-change-opm-20" class="md-nav__link">
+    <span class="md-ellipsis">
+      Wake-word plugin found_wake_word() signature change (opm 2.0)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#audio-transformer-chain-order-flip" class="md-nav__link">
+    <span class="md-ellipsis">
+      Audio-transformer chain-order flip
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#if-you-maintain-skills" class="md-nav__link">
+    <span class="md-ellipsis">
+      If you maintain skills
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="If you maintain skills">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mycroft-core-mycroftskill-compat-shim-removed" class="md-nav__link">
+    <span class="md-ellipsis">
+      mycroft-core MycroftSkill compat shim removed
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ovos_workshopdecoratorscompatbackwards_compat-removed" class="md-nav__link">
+    <span class="md-ellipsis">
+      ovos_workshop.decorators.compat.backwards_compat removed
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ovos_workshopskillsdecorators-shim-paths-removed" class="md-nav__link">
+    <span class="md-ellipsis">
+      ovos_workshop.skills.decorators.* shim paths removed
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ovosskill_conditional_activate-removed" class="md-nav__link">
+    <span class="md-ellipsis">
+      OVOSSkill._conditional_activate() removed
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#backend-settings-sync-removed-from-ovosskill" class="md-nav__link">
+    <span class="md-ellipsis">
+      Backend settings sync removed from OVOSSkill
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#skill-locale-directories-renamed-to-canonical-bcp-47" class="md-nav__link">
+    <span class="md-ellipsis">
+      Skill locale directories renamed to canonical BCP-47
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_get_dialog-removed-as-a-public-symbol" class="md-nav__link">
+    <span class="md-ellipsis">
+      _get_dialog() removed as a public symbol
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#legacy-non-installable-skill-loading-removed" class="md-nav__link">
+    <span class="md-ellipsis">
+      Legacy non-installable skill loading removed
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#skill-settings-file-store-rewritten" class="md-nav__link">
+    <span class="md-ellipsis">
+      Skill-settings file-store rewritten
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fallback-dispatcher-no-longer-bus-driven" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fallback dispatcher no longer bus-driven
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#if-you-maintain-plugins" class="md-nav__link">
+    <span class="md-ellipsis">
+      If you maintain plugins
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="If you maintain plugins">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tts-plugin-queue-tuple-shape-ovos-audio" class="md-nav__link">
+    <span class="md-ellipsis">
+      TTS plugin queue tuple shape (ovos-audio)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#audio-backend-template-methods-became-abstract" class="md-nav__link">
+    <span class="md-ellipsis">
+      Audio-backend template methods became abstract
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stt-legacy-helper-classes-deprecated" class="md-nav__link">
+    <span class="md-ellipsis">
+      STT legacy helper classes deprecated
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dialect-matching-switched-to-tag_distance" class="md-nav__link">
+    <span class="md-ellipsis">
+      Dialect matching switched to tag_distance
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#g2p-deprecated-moved-toward-ovos-audio" class="md-nav__link">
+    <span class="md-ellipsis">
+      G2P deprecated, moved toward ovos-audio
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#embeddingsdb-gains-required-collection-methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      EmbeddingsDB gains required collection methods
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#solver-plugin-family-deprecated-in-favor-of-agent-engines" class="md-nav__link">
+    <span class="md-ellipsis">
+      Solver plugin family deprecated in favor of agent engines
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#opm-canonical-entry-point-rename" class="md-nav__link">
+    <span class="md-ellipsis">
+      opm.* canonical entry-point rename
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phal-enclosure-abstraction-dropped" class="md-nav__link">
+    <span class="md-ellipsis">
+      PHAL enclosure abstraction dropped
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mediaprovider-template-collapsed-to-search" class="md-nav__link">
+    <span class="md-ellipsis">
+      MediaProvider template collapsed to search()
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gui-adapter-plugin-handler-signature-gains-session_id" class="md-nav__link">
+    <span class="md-ellipsis">
+      GUI adapter plugin handler signature gains session_id
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#if-you-operate-a-device-or-fleet-config-changes" class="md-nav__link">
+    <span class="md-ellipsis">
+      If you operate a device or fleet (config changes)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="If you operate a device or fleet (config changes)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mycroftconf-no-longer-probes-a-mycroft-core-install" class="md-nav__link">
+    <span class="md-ellipsis">
+      mycroft.conf no longer probes a mycroft-core install
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ovosconf-deprecated-in-favor-of-environment-variables" class="md-nav__link">
+    <span class="md-ellipsis">
+      ovos.conf deprecated in favor of environment variables
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#backendmicroservices-config-block-removed" class="md-nav__link">
+    <span class="md-ellipsis">
+      Backend/microservices config block removed
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#default-tts-fallback-and-mprislang-detect-defaults-changed" class="md-nav__link">
+    <span class="md-ellipsis">
+      Default TTS fallback and MPRIS/lang-detect defaults changed
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mimic3-no-longer-the-default-tts-fallback" class="md-nav__link">
+    <span class="md-ellipsis">
+      mimic3 no longer the default TTS fallback
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#padatious_medium-dropped-from-default-pipeline" class="md-nav__link">
+    <span class="md-ellipsis">
+      padatious_medium dropped from default pipeline
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ready-settings-block-removed" class="md-nav__link">
+    <span class="md-ellipsis">
+      ready settings block removed
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#distribution-config-layer-added-precedence-order-changed" class="md-nav__link">
+    <span class="md-ellipsis">
+      Distribution config layer added, precedence order changed
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#listener-defaults-changed-instant_listen-remove_silence-mic-backend" class="md-nav__link">
+    <span class="md-ellipsis">
+      Listener defaults changed (instant_listen, remove_silence, mic backend)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phoonnx-becomes-the-default-offline-tts-in-autoconfigure" class="md-nav__link">
+    <span class="md-ellipsis">
+      phoonnx becomes the default offline TTS in autoconfigure
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ovos_configlocale-helpers-marked-for-removal" class="md-nav__link">
+    <span class="md-ellipsis">
+      ovos_config.locale helpers marked for removal
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#native_sources-config-key-replaced-by-session-based-routing" class="md-nav__link">
+    <span class="md-ellipsis">
+      native_sources config key replaced by session-based routing
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#if-you-consume-the-message-bus-remotely-hivemind-and-other-clients" class="md-nav__link">
+    <span class="md-ellipsis">
+      If you consume the message bus remotely (HiveMind and other clients)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="If you consume the message bus remotely (HiveMind and other clients)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#hivemind-agent-protocol-and-messagebus-solver-removed-from-ovos-bus-client" class="md-nav__link">
+    <span class="md-ellipsis">
+      HiveMind agent protocol and messagebus-solver removed from ovos-bus-client
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gui-wire-protocol-moved-to-template-based-guiinterface" class="md-nav__link">
+    <span class="md-ellipsis">
+      GUI wire protocol moved to template-based GUIInterface
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#session-1-spec-adoption-changes-session-wire-semantics" class="md-nav__link">
+    <span class="md-ellipsis">
+      SESSION-1 spec adoption changes session wire semantics
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#legacy-mycroftrecognizer_loop-topic-bridge-removed" class="md-nav__link">
+    <span class="md-ellipsis">
+      Legacy mycroft.*/recognizer_loop:* topic bridge removed
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#per-service-legacy-topic-migrations-spec-bus-adoption-2026-06" class="md-nav__link">
+    <span class="md-ellipsis">
+      Per-service legacy topic migrations (spec-bus adoption, 2026-06)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mycroft-bus-client-package-retirement-package-level-not-wire-level" class="md-nav__link">
+    <span class="md-ellipsis">
+      mycroft-bus-client package retirement (package-level, not wire-level)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#coming-next" class="md-nav__link">
+    <span class="md-ellipsis">
+      Coming next
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#verification-gaps" class="md-nav__link">
+    <span class="md-ellipsis">
+      Verification gaps
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../stt-server/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Self-hosting Servers
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../hivemind-agents/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    HiveMind
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../home-assistant/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Home Assistant
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../ecosystem-index/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Reference
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../contributing/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Contributing & Project Infra
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#in-a-nutshell" class="md-nav__link">
+    <span class="md-ellipsis">
+      In a nutshell
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-ovos-versions-break" class="md-nav__link">
+    <span class="md-ellipsis">
+      How OVOS versions break
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#big-ticket-migrations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Big-ticket migrations
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Big-ticket migrations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-ovos-utils-010-gutting-2024-09" class="md-nav__link">
+    <span class="md-ellipsis">
+      The ovos-utils 0.1.0 gutting (2024-09)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-ovos-workshop-2025-06-release-train-400-700" class="md-nav__link">
+    <span class="md-ellipsis">
+      The ovos-workshop 2025-06 release train (4.0.0 → 7.0.0)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#commonqueryskill-removal" class="md-nav__link">
+    <span class="md-ellipsis">
+      CommonQuerySkill removal
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ovos-config-200-pipeline-renames-and-en-us-casing" class="md-nav__link">
+    <span class="md-ellipsis">
+      ovos-config 2.0.0: pipeline renames and en-US casing
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-bus-client-legacy-topic-dual-emit-and-its-removal" class="md-nav__link">
+    <span class="md-ellipsis">
+      The bus-client legacy-topic dual-emit and its removal
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ocp-ovos-media-config-split" class="md-nav__link">
+    <span class="md-ellipsis">
+      OCP → ovos-media config split
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#wake-word-plugin-found_wake_word-signature-change-opm-20" class="md-nav__link">
+    <span class="md-ellipsis">
+      Wake-word plugin found_wake_word() signature change (opm 2.0)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#audio-transformer-chain-order-flip" class="md-nav__link">
+    <span class="md-ellipsis">
+      Audio-transformer chain-order flip
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#if-you-maintain-skills" class="md-nav__link">
+    <span class="md-ellipsis">
+      If you maintain skills
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="If you maintain skills">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mycroft-core-mycroftskill-compat-shim-removed" class="md-nav__link">
+    <span class="md-ellipsis">
+      mycroft-core MycroftSkill compat shim removed
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ovos_workshopdecoratorscompatbackwards_compat-removed" class="md-nav__link">
+    <span class="md-ellipsis">
+      ovos_workshop.decorators.compat.backwards_compat removed
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ovos_workshopskillsdecorators-shim-paths-removed" class="md-nav__link">
+    <span class="md-ellipsis">
+      ovos_workshop.skills.decorators.* shim paths removed
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ovosskill_conditional_activate-removed" class="md-nav__link">
+    <span class="md-ellipsis">
+      OVOSSkill._conditional_activate() removed
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#backend-settings-sync-removed-from-ovosskill" class="md-nav__link">
+    <span class="md-ellipsis">
+      Backend settings sync removed from OVOSSkill
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#skill-locale-directories-renamed-to-canonical-bcp-47" class="md-nav__link">
+    <span class="md-ellipsis">
+      Skill locale directories renamed to canonical BCP-47
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_get_dialog-removed-as-a-public-symbol" class="md-nav__link">
+    <span class="md-ellipsis">
+      _get_dialog() removed as a public symbol
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#legacy-non-installable-skill-loading-removed" class="md-nav__link">
+    <span class="md-ellipsis">
+      Legacy non-installable skill loading removed
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#skill-settings-file-store-rewritten" class="md-nav__link">
+    <span class="md-ellipsis">
+      Skill-settings file-store rewritten
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fallback-dispatcher-no-longer-bus-driven" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fallback dispatcher no longer bus-driven
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#if-you-maintain-plugins" class="md-nav__link">
+    <span class="md-ellipsis">
+      If you maintain plugins
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="If you maintain plugins">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tts-plugin-queue-tuple-shape-ovos-audio" class="md-nav__link">
+    <span class="md-ellipsis">
+      TTS plugin queue tuple shape (ovos-audio)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#audio-backend-template-methods-became-abstract" class="md-nav__link">
+    <span class="md-ellipsis">
+      Audio-backend template methods became abstract
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stt-legacy-helper-classes-deprecated" class="md-nav__link">
+    <span class="md-ellipsis">
+      STT legacy helper classes deprecated
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dialect-matching-switched-to-tag_distance" class="md-nav__link">
+    <span class="md-ellipsis">
+      Dialect matching switched to tag_distance
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#g2p-deprecated-moved-toward-ovos-audio" class="md-nav__link">
+    <span class="md-ellipsis">
+      G2P deprecated, moved toward ovos-audio
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#embeddingsdb-gains-required-collection-methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      EmbeddingsDB gains required collection methods
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#solver-plugin-family-deprecated-in-favor-of-agent-engines" class="md-nav__link">
+    <span class="md-ellipsis">
+      Solver plugin family deprecated in favor of agent engines
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#opm-canonical-entry-point-rename" class="md-nav__link">
+    <span class="md-ellipsis">
+      opm.* canonical entry-point rename
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phal-enclosure-abstraction-dropped" class="md-nav__link">
+    <span class="md-ellipsis">
+      PHAL enclosure abstraction dropped
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mediaprovider-template-collapsed-to-search" class="md-nav__link">
+    <span class="md-ellipsis">
+      MediaProvider template collapsed to search()
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gui-adapter-plugin-handler-signature-gains-session_id" class="md-nav__link">
+    <span class="md-ellipsis">
+      GUI adapter plugin handler signature gains session_id
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#if-you-operate-a-device-or-fleet-config-changes" class="md-nav__link">
+    <span class="md-ellipsis">
+      If you operate a device or fleet (config changes)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="If you operate a device or fleet (config changes)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mycroftconf-no-longer-probes-a-mycroft-core-install" class="md-nav__link">
+    <span class="md-ellipsis">
+      mycroft.conf no longer probes a mycroft-core install
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ovosconf-deprecated-in-favor-of-environment-variables" class="md-nav__link">
+    <span class="md-ellipsis">
+      ovos.conf deprecated in favor of environment variables
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#backendmicroservices-config-block-removed" class="md-nav__link">
+    <span class="md-ellipsis">
+      Backend/microservices config block removed
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#default-tts-fallback-and-mprislang-detect-defaults-changed" class="md-nav__link">
+    <span class="md-ellipsis">
+      Default TTS fallback and MPRIS/lang-detect defaults changed
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mimic3-no-longer-the-default-tts-fallback" class="md-nav__link">
+    <span class="md-ellipsis">
+      mimic3 no longer the default TTS fallback
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#padatious_medium-dropped-from-default-pipeline" class="md-nav__link">
+    <span class="md-ellipsis">
+      padatious_medium dropped from default pipeline
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ready-settings-block-removed" class="md-nav__link">
+    <span class="md-ellipsis">
+      ready settings block removed
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#distribution-config-layer-added-precedence-order-changed" class="md-nav__link">
+    <span class="md-ellipsis">
+      Distribution config layer added, precedence order changed
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#listener-defaults-changed-instant_listen-remove_silence-mic-backend" class="md-nav__link">
+    <span class="md-ellipsis">
+      Listener defaults changed (instant_listen, remove_silence, mic backend)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phoonnx-becomes-the-default-offline-tts-in-autoconfigure" class="md-nav__link">
+    <span class="md-ellipsis">
+      phoonnx becomes the default offline TTS in autoconfigure
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ovos_configlocale-helpers-marked-for-removal" class="md-nav__link">
+    <span class="md-ellipsis">
+      ovos_config.locale helpers marked for removal
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#native_sources-config-key-replaced-by-session-based-routing" class="md-nav__link">
+    <span class="md-ellipsis">
+      native_sources config key replaced by session-based routing
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#if-you-consume-the-message-bus-remotely-hivemind-and-other-clients" class="md-nav__link">
+    <span class="md-ellipsis">
+      If you consume the message bus remotely (HiveMind and other clients)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="If you consume the message bus remotely (HiveMind and other clients)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#hivemind-agent-protocol-and-messagebus-solver-removed-from-ovos-bus-client" class="md-nav__link">
+    <span class="md-ellipsis">
+      HiveMind agent protocol and messagebus-solver removed from ovos-bus-client
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gui-wire-protocol-moved-to-template-based-guiinterface" class="md-nav__link">
+    <span class="md-ellipsis">
+      GUI wire protocol moved to template-based GUIInterface
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#session-1-spec-adoption-changes-session-wire-semantics" class="md-nav__link">
+    <span class="md-ellipsis">
+      SESSION-1 spec adoption changes session wire semantics
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#legacy-mycroftrecognizer_loop-topic-bridge-removed" class="md-nav__link">
+    <span class="md-ellipsis">
+      Legacy mycroft.*/recognizer_loop:* topic bridge removed
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#per-service-legacy-topic-migrations-spec-bus-adoption-2026-06" class="md-nav__link">
+    <span class="md-ellipsis">
+      Per-service legacy topic migrations (spec-bus adoption, 2026-06)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mycroft-bus-client-package-retirement-package-level-not-wire-level" class="md-nav__link">
+    <span class="md-ellipsis">
+      mycroft-bus-client package retirement (package-level, not wire-level)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#coming-next" class="md-nav__link">
+    <span class="md-ellipsis">
+      Coming next
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#verification-gaps" class="md-nav__link">
+    <span class="md-ellipsis">
+      Verification gaps
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="updating-from-older-ovos">Updating From Older OVOS<a class="headerlink" href="#updating-from-older-ovos" title="Permanent link">&para;</a></h1>
+<h2 id="in-a-nutshell">In a nutshell<a class="headerlink" href="#in-a-nutshell" title="Permanent link">&para;</a></h2>
+<p>This page is the upgrade companion for people who already run OVOS and need
+to move to a newer version. It is not for people new to OVOS
+(see <a href="../coming-from-mycroft/">Coming From Mycroft</a>) and it is not for
+porting Mycroft skill code (see <a href="../migrating-from-mycroft/">Migrating From Mycroft</a>).
+It is for a deployer or developer who has an OVOS stack from some past date
+and wants to know exactly what changed between then and now.</p>
+<p>Use it like this:</p>
+<ol>
+<li>Find your role below: skill maintainer, plugin maintainer, device or
+   fleet operator, or remote bus client (HiveMind and similar).</li>
+<li>Read that section from the top. Entries are in date order. Start at the
+   version you are currently running and read forward to your target
+   version.</li>
+<li>Each entry names the exact symbol, config key, or bus message that
+   changed, the fix, and the commit that landed it. Use the commit sha to
+   confirm the change against the source repository if you need more detail.</li>
+<li>Every entry also states the compat lifecycle: when the old behavior was
+   active, when it was deprecated but still worked, and when it was
+   dropped. If you see "unverified" in a lifecycle column, that phase was
+   not confirmed against the commit history. Check the
+   <a href="#verification-gaps">Verification gaps</a> list at the end before relying
+   on it.</li>
+</ol>
+<h2 id="how-ovos-versions-break">How OVOS versions break<a class="headerlink" href="#how-ovos-versions-break" title="Permanent link">&para;</a></h2>
+<p>OVOS is not one project with one version number. It is about a dozen
+independently released repositories (<code>ovos-core</code>, <code>ovos-workshop</code>,
+<code>ovos-utils</code>, <code>ovos-config</code>, <code>ovos-bus-client</code>, <code>ovos-plugin-manager</code>,
+<code>ovos-audio</code>, <code>ovos-media</code>, <code>ovos-messagebus</code>, the listener services, and
+more), each on its own semantic-version line. A device upgrade usually
+bumps several of these packages together, so a single "OVOS version" does
+not exist. When something breaks after an upgrade, check the changelog of
+the specific repository that owns the symbol or config key, not just
+<code>ovos-core</code>.</p>
+<p>The project follows a deprecate-then-drop pattern almost everywhere:</p>
+<ol>
+<li><strong>Active</strong>: the old behavior is the only behavior.</li>
+<li><strong>Deprecated but functional</strong>: a new replacement exists, the old path
+   still works, and calling it logs a deprecation warning (<code>log_deprecation</code>
+   or <code>@deprecated(...)</code>) or is gated behind a compatibility flag (for
+   example <code>legacy_namespace</code>, <code>modernize</code>, <code>emit_legacy</code>).</li>
+<li><strong>Dropped</strong>: the old path is deleted. Calling it raises <code>ImportError</code>,
+   <code>AttributeError</code>, <code>TypeError</code>, or the bus message is simply never sent
+   or received again.</li>
+</ol>
+<p>Each repository publishes its own changelog and tag history on GitHub
+(<code>OpenVoiceOS/&lt;repo&gt;/releases</code> and <code>CHANGELOG.md</code> where present). When an
+entry below says "nearest release," it means the dossier this page is
+built from could not tie the change to an exact tag, so the closest
+release date after the commit is given instead.</p>
+<hr />
+<h2 id="big-ticket-migrations">Big-ticket migrations<a class="headerlink" href="#big-ticket-migrations" title="Permanent link">&para;</a></h2>
+<p>These changes affect the largest number of installs and are worth their
+own walkthrough before the chronological per-audience lists below.</p>
+<h3 id="the-ovos-utils-010-gutting-2024-09">The ovos-utils 0.1.0 gutting (2024-09)<a class="headerlink" href="#the-ovos-utils-010-gutting-2024-09" title="Permanent link">&para;</a></h3>
+<p><code>ovos-utils</code> 0.1.0 deleted almost everything that had accumulated in the
+package since the Mycroft era (10,709 deleted lines, PR body: "remove ALL
+dead code"). If you have any code importing from <code>ovos_utils</code> written
+before late 2024, check it against this table.</p>
+<table>
+<thead>
+<tr>
+<th>Old symbol (<code>ovos_utils.*</code>)</th>
+<th>New home</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>messagebus.get_message_lang</code>, <code>.get_websocket</code>, <code>.get_mycroft_bus</code>, <code>.send_message</code>, <code>.wait_for_reply</code>, <code>.decode_binary_message</code></td>
+<td><code>ovos_bus_client.util.*</code></td>
+</tr>
+<tr>
+<td><code>messagebus.dig_for_message</code>, <code>.FakeMessage</code>, <code>.Message</code>, <code>.FakeBus</code></td>
+<td><code>ovos_utils.fakebus</code></td>
+</tr>
+<tr>
+<td><code>messagebus.EventContainer</code></td>
+<td><code>ovos_utils.events.EventContainer</code></td>
+</tr>
+<tr>
+<td><code>messagebus.BusService</code>, <code>.BusFeedProvider</code>, <code>.BusQuery</code>, <code>.BusFeedConsumer</code></td>
+<td>removed, no replacement</td>
+</tr>
+<tr>
+<td><code>enclosure.api.EnclosureApi</code></td>
+<td><code>ovos_bus_client.apis.enclosure.EnclosureApi</code></td>
+</tr>
+<tr>
+<td><code>enclosure.mark1.*</code> (Mark1 eyes/faceplate/animations)</td>
+<td>removed, no replacement in this repo (check <code>ovos-PHAL-plugin-mk1</code>, unverified)</td>
+</tr>
+<tr>
+<td><code>configuration.*</code> (<code>get_default_lang</code>, <code>find_user_config</code>, <code>read_mycroft_config</code>, ...)</td>
+<td><code>ovos_config.config.*</code> / <code>ovos_config.locations</code> / <code>ovos_config.locale</code></td>
+</tr>
+<tr>
+<td><code>fingerprinting.*</code> (<code>detect_platform</code>, <code>is_mycroft_core</code>, ...)</td>
+<td>removed, no direct successor</td>
+</tr>
+<tr>
+<td><code>intents.*</code> (<code>IntentQueryApi</code>, <code>IntentServiceInterface</code>)</td>
+<td><code>ovos_workshop.intents</code></td>
+</tr>
+<tr>
+<td><code>intents.converse.ConverseTracker</code></td>
+<td>removed, no replacement</td>
+</tr>
+<tr>
+<td><code>intents.layers.IntentLayers</code></td>
+<td><code>ovos_workshop.decorators.layers.IntentLayers</code></td>
+</tr>
+<tr>
+<td><code>ovos_service_api.OVOSApiService</code></td>
+<td><code>ovos_backend_client.api.BaseApi</code></td>
+</tr>
+<tr>
+<td><code>skills.blacklist_skill</code>, <code>.whitelist_skill</code></td>
+<td><code>ovos_workshop.permissions.*</code></td>
+</tr>
+<tr>
+<td><code>skills.get_skills_folder</code></td>
+<td><code>ovos_plugin_manager.skills.get_default_skill_dir</code></td>
+</tr>
+<tr>
+<td><code>skills.get_installed_skills</code></td>
+<td><code>ovos_plugin_manager.skills.get_installed_skill_ids</code></td>
+</tr>
+<tr>
+<td><code>skills.api.SkillApi</code></td>
+<td><code>ovos_workshop.skills.api.SkillApi</code></td>
+</tr>
+<tr>
+<td><code>skills.audioservice.AudioServiceInterface</code></td>
+<td>OCP (<code>OCPInterface</code>)</td>
+</tr>
+<tr>
+<td><code>skills.locations.*</code></td>
+<td><code>ovos_plugin_manager.skills</code></td>
+</tr>
+<tr>
+<td><code>skills.settings.*</code> (backend upload, folder-local settings)</td>
+<td>removed, no replacement</td>
+</tr>
+<tr>
+<td><code>sound.play_acknowledge_sound</code> and friends</td>
+<td>emit the bus message <code>mycroft.audio.play_sound</code> instead</td>
+</tr>
+<tr>
+<td><code>sound.record</code></td>
+<td>use <code>ovos-dinkum-listener</code> in recording mode</td>
+</tr>
+<tr>
+<td><code>sound.alsa.AlsaControl</code></td>
+<td><code>ovos_phal_plugin_alsa.AlsaVolumeControlPlugin</code></td>
+</tr>
+<tr>
+<td><code>gui.GUITracker</code>, <code>.GUIPlaybackStatus</code></td>
+<td>removed, no verified successor</td>
+</tr>
+</tbody>
+</table>
+<p>Migration action:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># old (pre-0.1.0)</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kn">from</span> <span class="nn">ovos_utils.messagebus</span> <span class="kn">import</span> <span class="n">get_mycroft_bus</span><span class="p">,</span> <span class="n">wait_for_reply</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kn">from</span> <span class="nn">ovos_utils.configuration</span> <span class="kn">import</span> <span class="n">read_mycroft_config</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="kn">from</span> <span class="nn">ovos_utils.skills</span> <span class="kn">import</span> <span class="n">blacklist_skill</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="c1"># new (0.1.0+)</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="kn">from</span> <span class="nn">ovos_bus_client.util</span> <span class="kn">import</span> <span class="n">get_mycroft_bus</span><span class="p">,</span> <span class="n">wait_for_reply</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="kn">from</span> <span class="nn">ovos_config.config</span> <span class="kn">import</span> <span class="n">read_mycroft_config</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="kn">from</span> <span class="nn">ovos_workshop.permissions</span> <span class="kn">import</span> <span class="n">blacklist_skill</span>
+</span></code></pre></div>
+<p>Lifecycle:</p>
+<table>
+<thead>
+<tr>
+<th>Phase</th>
+<th>Version</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Active</td>
+<td>any tag before <code>V0.1.0</code></td>
+<td>mycroft-core-derived helpers, no shims</td>
+</tr>
+<tr>
+<td>Deprecated but functional</td>
+<td><code>80a2f7c</code> (2023-12-29) through the <code>0.1.0</code> alpha stream (<code>0.1.0a1</code>..<code>0.1.0a16</code>)</td>
+<td><code>@deprecated</code>/<code>log_deprecation</code> shims naming the replacement</td>
+</tr>
+<tr>
+<td>Dropped</td>
+<td><code>V0.1.0</code> (2024-09-10, mass deletion in <code>3a77617</code>)</td>
+<td>(ovos-utils <code>3a77617</code>)</td>
+</tr>
+</tbody>
+</table>
+<p>A follow-up removed the last messagebus shim module entirely: <code>ovos_utils.messagebus</code>
+(a 1-line re-export left behind after 0.1.0) was deleted in <code>9c1fd55</code> (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/304" title="GitHub Issue: TigreGotico/ovos-technical-manual #304">#304</a>,
+2024-11-21, between <code>0.5.0</code> and <code>0.6.0</code>), along with <code>mycroft_bus_client</code>
+isinstance/constructor compatibility inside <code>ovos_utils.fakebus</code>
+(ovos-utils <code>9c1fd55</code>).</p>
+<h3 id="the-ovos-workshop-2025-06-release-train-400-700">The ovos-workshop 2025-06 release train (4.0.0 → 7.0.0)<a class="headerlink" href="#the-ovos-workshop-2025-06-release-train-400-700" title="Permanent link">&para;</a></h3>
+<p>Four major versions of <code>ovos-workshop</code> shipped on the same day
+(2025-06-07/08). Each is a separate breaking change to the <code>OVOSSkill</code>
+family. If you are jumping from a pre-2025-06 workshop version to anything
+after <code>7.0.0</code>, expect all four of these to apply at once.</p>
+<p><strong>v4.0.0: <code>FallbackSkill.can_answer</code> becomes abstract.</strong></p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># old: default True if any handler registered, no override needed</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="k">class</span> <span class="nc">MySkill</span><span class="p">(</span><span class="n">FallbackSkill</span><span class="p">):</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>    <span class="k">def</span> <span class="nf">handle_fallback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>        <span class="o">...</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="c1"># new: must implement can_answer explicitly</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="k">class</span> <span class="nc">MySkill</span><span class="p">(</span><span class="n">FallbackSkill</span><span class="p">):</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>    <span class="k">def</span> <span class="nf">can_answer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">utterances</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">lang</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>        <span class="k">return</span> <span class="kc">True</span>  <span class="c1"># or real logic</span>
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>    <span class="k">def</span> <span class="nf">handle_fallback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>        <span class="o">...</span>
+</span></code></pre></div>
+<p><code>FallbackSkill.make_intent_failure_handler(cls, bus)</code> (the old mycroft-style
+bus-driven fallback dispatcher) is removed with it (ovos-workshop <code>c066bc3</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/336" title="GitHub Issue: TigreGotico/ovos-technical-manual #336">#336</a>).</p>
+<p><strong>v5.0.0: converse moves out of <code>OVOSSkill</code> into a mixin.</strong></p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># old: converse lived directly on OVOSSkill</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="k">class</span> <span class="nc">MySkill</span><span class="p">(</span><span class="n">OVOSSkill</span><span class="p">):</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>    <span class="k">def</span> <span class="nf">converse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>        <span class="o">...</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="c1"># new: subclass the mixin too</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="kn">from</span> <span class="nn">ovos_workshop.skills.converse</span> <span class="kn">import</span> <span class="n">ConversationalSkill</span>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="k">class</span> <span class="nc">MySkill</span><span class="p">(</span><span class="n">OVOSSkill</span><span class="p">,</span> <span class="n">ConversationalSkill</span><span class="p">):</span>
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>    <span class="k">def</span> <span class="nf">can_converse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>        <span class="k">return</span> <span class="kc">True</span>
+</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>    <span class="k">def</span> <span class="nf">converse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+</span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>        <span class="o">...</span>
+</span></code></pre></div>
+<p>An <code>OVOSSkill</code> subclass that overrides <code>converse()</code> without also inheriting
+<code>ConversationalSkill</code> compiles fine but is silently never called by the
+pipeline (ovos-workshop <code>f725f5e</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/339" title="GitHub Issue: TigreGotico/ovos-technical-manual #339">#339</a>).</p>
+<p><strong>v6.0.0 / v6.0.1: <code>can_stop</code> conditional abstract method.</strong>
+<code>can_stop(self, message)</code> briefly became a hard <code>@abc.abstractmethod</code>
+(<code>10f9781</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/344" title="GitHub Issue: TigreGotico/ovos-technical-manual #344">#344</a>) then was loosened the same day to only require
+overriding if the skill also overrides <code>stop</code>/<code>stop_session</code>
+(<code>813f7b5</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/346" title="GitHub Issue: TigreGotico/ovos-technical-manual #346">#346</a>, released as <code>6.0.1</code>). If you implement <code>stop()</code> or
+<code>stop_session()</code>, also implement <code>can_stop()</code>.</p>
+<p><strong>v7.0.0: <code>can_answer</code> on <code>ConversationalSkill</code> renamed to <code>can_converse</code>.</strong>
+The v5.0.0 mixin shipped with the wrong method name for about a day. Rename
+<code>can_answer</code> → <code>can_converse</code> in any <code>ConversationalSkill</code> subclass
+(ovos-workshop <code>1fdd532</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/348" title="GitHub Issue: TigreGotico/ovos-technical-manual #348">#348</a>).</p>
+<p>Lifecycle:</p>
+<table>
+<thead>
+<tr>
+<th>Change</th>
+<th>Active</th>
+<th>Deprecated but functional</th>
+<th>Dropped</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>FallbackSkill.can_answer</code> concrete/optional</td>
+<td>before <code>4.0.0</code> (2025-06-07)</td>
+<td>unverified</td>
+<td><code>4.0.0</code></td>
+</tr>
+<tr>
+<td><code>converse()</code> on <code>OVOSSkill</code> directly</td>
+<td>before <code>5.0.0</code> (2025-06-07)</td>
+<td>unverified</td>
+<td><code>5.0.0</code></td>
+</tr>
+<tr>
+<td><code>stop_is_implemented</code> property / concrete <code>can_stop</code></td>
+<td>before <code>6.0.0</code></td>
+<td><code>6.0.1</code> (conditional requirement)</td>
+<td><code>6.0.0</code> (briefly hard), loosened in <code>6.0.1</code></td>
+</tr>
+<tr>
+<td><code>ConversationalSkill.can_answer</code></td>
+<td><code>5.0.0</code> to <code>6.0.1</code> (about one day)</td>
+<td>none</td>
+<td><code>7.0.0</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="commonqueryskill-removal">CommonQuerySkill removal<a class="headerlink" href="#commonqueryskill-removal" title="Permanent link">&para;</a></h3>
+<p><code>CommonQuerySkill</code> had been deprecation-flagged since ovos-workshop
+<code>4.0.0</code> and was deleted entirely (259 lines, including the <code>CQSMatchLevel</code>
+enum and <code>CQS_match_query_phrase</code>/<code>CQS_action</code> abstract methods) in
+<code>6382d0a</code> (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/400" title="GitHub Issue: TigreGotico/ovos-technical-manual #400">#400</a>, 2026-04-08), ahead of the <code>8.0.0</code> release. There is no
+direct successor class in <code>ovos-workshop</code>. Common-query matching now lives
+in whatever pipeline plugin currently owns it (check <code>ovos-core</code>'s
+common-query pipeline plugin). On <code>ovos-core</code> itself, the equivalent
+hardcoded common-query wiring was removed from <code>ovos_core.intent_services</code>
+in <code>62024dbf98</code> (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/690" title="GitHub Issue: TigreGotico/ovos-technical-manual #690">#690</a>, 2025-06-10, first stable release <code>1.3.0</code>) when the
+whole intent-service module became a config-driven OPM pipeline factory.</p>
+<p>Lifecycle:</p>
+<table>
+<thead>
+<tr>
+<th>Change</th>
+<th>Active</th>
+<th>Deprecated but functional</th>
+<th>Dropped</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ovos_workshop.skills.common_query_skill.CommonQuerySkill</code></td>
+<td>before <code>4.0.0</code></td>
+<td><code>4.0.0</code> to pre-<code>8.0.0</code></td>
+<td><code>6382d0a</code> (2026-04-08, pre-<code>8.0.0</code>)</td>
+</tr>
+<tr>
+<td><code>ovos-core</code> hardcoded common-query wiring</td>
+<td>before <code>62024dbf98</code></td>
+<td>unverified</td>
+<td><code>62024dbf98</code> (<code>1.3.0</code>, 2025-06-10)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="ovos-config-200-pipeline-renames-and-en-us-casing">ovos-config 2.0.0: pipeline renames and <code>en-US</code> casing<a class="headerlink" href="#ovos-config-200-pipeline-renames-and-en-us-casing" title="Permanent link">&para;</a></h3>
+<p><code>ovos-config</code> <code>2.0.0</code> (<code>e24e9ce</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/228" title="GitHub Issue: TigreGotico/ovos-technical-manual #228">#228</a>, 2025-06-16) is the single largest
+deployer-facing config break in the ecosystem. If you have a customized
+<code>core.pipeline</code> list in your <code>mycroft.conf</code>, every stage ID in it is now
+unregistered and will be silently skipped rather than erroring.</p>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1">// old core.pipeline (pre-2.0.0)</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="p">[</span><span class="s2">&quot;stop_high&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;converse&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;ocp_high&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;padatious_high&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;adapt_high&quot;</span><span class="p">,</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w"> </span><span class="s2">&quot;ocp_medium&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;fallback_high&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;stop_medium&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;adapt_medium&quot;</span><span class="p">,</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w"> </span><span class="s2">&quot;fallback_medium&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;adapt_low&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;common_qa&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;fallback_low&quot;</span><span class="p">]</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="c1">// new core.pipeline (2.0.0+)</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="p">[</span><span class="s2">&quot;ovos-stop-pipeline-plugin-high&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;ovos-converse-pipeline-plugin&quot;</span><span class="p">,</span>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="w"> </span><span class="s2">&quot;ovos-ocp-pipeline-plugin-high&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;ovos-padatious-pipeline-plugin-high&quot;</span><span class="p">,</span>
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="w"> </span><span class="s2">&quot;ovos-adapt-pipeline-plugin-high&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;ovos-ocp-pipeline-plugin-medium&quot;</span><span class="p">,</span>
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="w"> </span><span class="s2">&quot;ovos-fallback-pipeline-plugin-high&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;ovos-stop-pipeline-plugin-medium&quot;</span><span class="p">,</span>
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="w"> </span><span class="s2">&quot;ovos-adapt-pipeline-plugin-medium&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;ovos-fallback-pipeline-plugin-medium&quot;</span><span class="p">,</span>
+</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="w"> </span><span class="s2">&quot;ovos-m2v-pipeline-high&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;ovos-fallback-pipeline-plugin-low&quot;</span><span class="p">]</span>
+</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a><span class="c1">// note: adapt_low and common_qa are dropped from the default list entirely</span>
+</span><span id="__span-3-14"><a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a><span class="c1">// (now standalone opt-in plugins); add &quot;ovos-adapt-pipeline-plugin-low&quot; and</span>
+</span><span id="__span-3-15"><a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a><span class="c1">// the common-query plugin id back explicitly if you still want them.</span>
+</span></code></pre></div>
+<p>The same commit changed the default <code>"lang"</code> value in <code>mycroft.conf</code> from
+<code>"en-us"</code> to <code>"en-US"</code>. Any code doing an exact string comparison against
+the lowercase default breaks. Compare case-insensitively or update the
+literal.</p>
+<p>Also in this commit: <code>skills.directory</code> dropped from shipped defaults,
+<code>gui.idle_display_skill</code> renamed <code>skill-ovos-homescreen.openvoiceos</code> →
+<code>ovos-skill-homescreen.openvoiceos</code>, and the entire NLP-plugin config block
+(<code>tokenization</code>, <code>segmentation</code>, <code>keyword_extract</code>, <code>coref</code>, <code>postag</code>) was
+removed from <code>mycroft.conf</code> (no longer core-config-driven).</p>
+<p>Lifecycle:</p>
+<table>
+<thead>
+<tr>
+<th>Change</th>
+<th>Active</th>
+<th>Deprecated but functional</th>
+<th>Dropped</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Short pipeline stage IDs (<code>stop_high</code>, <code>converse</code>, ...)</td>
+<td>before <code>2.0.0</code> (2025-06-16)</td>
+<td>unverified</td>
+<td><code>2.0.0</code></td>
+</tr>
+<tr>
+<td><code>lang</code> default <code>"en-us"</code></td>
+<td>before <code>2.0.0</code></td>
+<td>n/a</td>
+<td><code>2.0.0</code> (now <code>"en-US"</code>)</td>
+</tr>
+<tr>
+<td><code>skills.directory</code> default key</td>
+<td>before <code>2.0.0</code></td>
+<td>unverified</td>
+<td><code>2.0.0</code></td>
+</tr>
+<tr>
+<td>NLP plugin config block</td>
+<td>before <code>2.0.0</code></td>
+<td>unverified</td>
+<td><code>2.0.0</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="the-bus-client-legacy-topic-dual-emit-and-its-removal">The bus-client legacy-topic dual-emit and its removal<a class="headerlink" href="#the-bus-client-legacy-topic-dual-emit-and-its-removal" title="Permanent link">&para;</a></h3>
+<p>This is the change every remote/HiveMind operator needs to plan for.
+<code>ovos-bus-client</code> <code>2.x</code> introduced a transitional bridge so a mixed fleet
+(core upgraded, satellites not yet upgraded) keeps working while topics
+migrate from legacy <code>mycroft.*</code>/<code>recognizer_loop:*</code> spellings to the
+<code>ovos.*</code> spec namespace:</p>
+<ol>
+<li><code>679f120</code> (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/228" title="GitHub Issue: TigreGotico/ovos-technical-manual #228">#228</a>, 2026-06-25): opt-in (default OFF) dual-emit + dedup bridge.</li>
+<li><code>e25ab12</code> (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/230" title="GitHub Issue: TigreGotico/ovos-technical-manual #230">#230</a>, 2026-06-25): split into two flags, <strong>both default ON</strong>
+   during the migration window: <code>modernize</code> (env <code>OVOS_BUS_MODERNIZE</code>,
+   config <code>websocket.modernize</code>) and <code>emit_legacy</code> (env
+   <code>OVOS_BUS_EMIT_LEGACY</code>, config <code>websocket.emit_legacy</code>).</li>
+<li><code>4a08946</code> (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/232" title="GitHub Issue: TigreGotico/ovos-technical-manual #232">#232</a>, 2026-06-25): dedup logic delegated to
+   <code>ovos_spec_tools.NamespaceTranslator</code> (shared with <code>FakeBus</code>).</li>
+<li><code>0f0a241</code> (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/258" title="GitHub Issue: TigreGotico/ovos-technical-manual #258">#258</a>, 2026-07-03): fixes a bug where the dual-emit doubled
+   every message on the raw <code>on_message</code> firehose between <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/230" title="GitHub Issue: TigreGotico/ovos-technical-manual #230">#230</a> and this fix.</li>
+<li><code>f1a481d</code> (2026-08-01): <strong>the bridge is removed entirely.</strong>
+   <code>MessageBusClient</code> speaks OVOS-MSG-1 spec topics only. The <code>emit_legacy</code>,
+   <code>modernize</code>, and <code>intent_reemit_blanket</code> constructor flags are deleted.
+   passing any of them now raises <code>RuntimeError</code>. A client or satellite
+   still emitting or expecting legacy topic spellings stops being received
+   with no fallback.</li>
+</ol>
+<p>Migration: every producer and consumer must speak <code>ovos.*</code> spec topics
+directly before upgrading past <code>f1a481d</code>. Remove any explicit
+<code>emit_legacy</code>/<code>modernize</code>/<code>intent_reemit_blanket</code> arguments from your
+<code>MessageBusClient</code> construction. The mapping tables
+(<code>ovos_spec_tools.MIGRATION_MAP</code>, <code>SPEC_TO_LEGACY</code>) remain available for
+migration tooling only, not for live bus wiring.</p>
+<p>Lifecycle:</p>
+<table>
+<thead>
+<tr>
+<th>Change</th>
+<th>Active</th>
+<th>Deprecated but functional</th>
+<th>Dropped</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Legacy-only <code>mycroft.*</code>/<code>recognizer_loop:*</code> topics, no bridge</td>
+<td>before <code>679f120</code> (2026-06-25)</td>
+<td>n/a</td>
+<td>superseded by dual-emit</td>
+</tr>
+<tr>
+<td>Dual-emit bridge (<code>modernize</code>/<code>emit_legacy</code>, both default ON)</td>
+<td><code>e25ab12</code> (2026-06-25)</td>
+<td>through <code>2.6.x</code> line</td>
+<td><code>f1a481d</code> (2026-08-01)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="ocp-ovos-media-config-split">OCP → ovos-media config split<a class="headerlink" href="#ocp-ovos-media-config-split" title="Permanent link">&para;</a></h3>
+<p>Audio-service responsibility split out of <code>ovos-audio</code> into a dedicated
+<code>ovos-media</code> daemon starting January 2024. Two config changes to track:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>// old (mycroft.conf, read by ovos-media before 89a50c0)
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>{&quot;OCP&quot;: {&quot;disable_mpris&quot;: false}}
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>// new (mycroft.conf, 89a50c0 onward)
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>{&quot;media&quot;: {&quot;enable_mpris&quot;: true}}
+</span></code></pre></div>
+<p>The config root key <code>OCP</code> was renamed to <code>media</code>: anything still under
+<code>"OCP"</code> is silently ignored by <code>ovos-media</code>. The MPRIS toggle was also
+polarity-flipped: <code>disable_mpris</code> (default off, meaning MPRIS was <strong>on</strong> by
+default) became <code>enable_mpris</code> (default <code>False</code>, meaning MPRIS is <strong>off</strong>
+by default). A deployment that never touched this key gets a behavior
+change: MPRIS integration silently turns off after upgrading past
+<code>89a50c0</code> (ovos-media <code>89a50c0</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/19" title="GitHub Issue: TigreGotico/ovos-technical-manual #19">#19</a>, 2024-03-29), unless <code>media.enable_mpris: true</code>
+is set explicitly.</p>
+<p>On the <code>ovos-audio</code> side, <code>AudioService.find_ocp()</code> stopped
+auto-discovering OCP from the generic plugin list and instead instantiates
+it directly, reading its config from the legacy <code>Audio.backends.OCP</code>
+location as a documented transitional shim (ovos-audio <code>3983816</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/80" title="GitHub Issue: TigreGotico/ovos-technical-manual #80">#80</a>,
+2024-07-18).</p>
+<p>Lifecycle:</p>
+<table>
+<thead>
+<tr>
+<th>Change</th>
+<th>Active</th>
+<th>Deprecated but functional</th>
+<th>Dropped</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Config root <code>OCP</code> (ovos-media)</td>
+<td>before <code>89a50c0</code> (2024-03-29)</td>
+<td>n/a</td>
+<td><code>89a50c0</code> (now <code>media</code>)</td>
+</tr>
+<tr>
+<td><code>disable_mpris</code> (MPRIS on by default)</td>
+<td>before <code>89a50c0</code></td>
+<td>n/a</td>
+<td><code>89a50c0</code> (now <code>enable_mpris</code>, off by default)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="wake-word-plugin-found_wake_word-signature-change-opm-20">Wake-word plugin <code>found_wake_word()</code> signature change (opm 2.0)<a class="headerlink" href="#wake-word-plugin-found_wake_word-signature-change-opm-20" title="Permanent link">&para;</a></h3>
+<p><code>ovos-plugin-manager</code> 2.0 changed the <code>HotWordEngine</code> contract: audio is
+fed separately, then detection is polled with no arguments.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1"># old (pre-opm-2.0)</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="k">class</span> <span class="nc">MyWakeWordPlugin</span><span class="p">(</span><span class="n">HotWordEngine</span><span class="p">):</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>    <span class="k">def</span> <span class="nf">found_wake_word</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">audio_data</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>        <span class="o">...</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="c1"># new (opm 2.0+)</span>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="k">class</span> <span class="nc">MyWakeWordPlugin</span><span class="p">(</span><span class="n">HotWordEngine</span><span class="p">):</span>
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chunk</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>        <span class="o">...</span>  <span class="c1"># feed audio incrementally</span>
+</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>    <span class="k">def</span> <span class="nf">found_wake_word</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>        <span class="o">...</span>  <span class="c1"># poll with no arguments</span>
+</span></code></pre></div>
+<p>Both listener services in the org landed the caller-side half of this
+change on the same underlying opm bump: <code>mycroft-classic-listener</code>
+<code>19d9961</code> (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/12" title="GitHub Issue: TigreGotico/ovos-technical-manual #12">#12</a>, 2026-01-09) and <code>ovos-simple-listener</code> <code>34e2219</code> (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/20" title="GitHub Issue: TigreGotico/ovos-technical-manual #20">#20</a>,
+2026-01-23, commit message: "opm 2.0.0 introduced breaking change"). If
+your wake-word plugin still implements the one-argument form, it will be
+called with zero arguments and raise a <code>TypeError</code> on any listener service
+updated past these commits.</p>
+<p>Lifecycle:</p>
+<table>
+<thead>
+<tr>
+<th>Change</th>
+<th>Active</th>
+<th>Deprecated but functional</th>
+<th>Dropped</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>found_wake_word(audio_data)</code> one-arg form</td>
+<td>before opm <code>2.0.0</code></td>
+<td>unverified</td>
+<td>opm <code>2.0.0</code> · caller-side landed in <code>19d9961</code> / <code>34e2219</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="audio-transformer-chain-order-flip">Audio-transformer chain-order flip<a class="headerlink" href="#audio-transformer-chain-order-flip" title="Permanent link">&para;</a></h3>
+<p><code>ovos-dinkum-listener</code>'s <code>AudioTransformersService</code> sorted plugins by
+<code>priority</code> <strong>descending</strong> (highest number ran first) with a docstring that
+said the opposite of what the OVOS-TRANSFORM-1 spec expects. <code>1fd909f</code>
+(<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/236" title="GitHub Issue: TigreGotico/ovos-technical-manual #236">#236</a>, 2026-06-28) dropped <code>reverse=True</code>: the chain now runs in
+<strong>ascending</strong> priority order (lowest number first, highest last), matching
+<code>OVOS-TRANSFORM-1 §4</code> and the ordering <code>ovos-core</code> already used for its own
+transformer chains.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1"># old: priority=1 ran LAST (reverse=True)</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="c1"># new: priority=1 runs FIRST (ascending)</span>
+</span></code></pre></div>
+<p>If you assigned <code>priority</code> values assuming the old descending order,
+invert them: old <code>priority=P</code> behaved like new <code>priority=(100-P)</code> in
+relative terms. Any deployment with more than one active
+<code>listener.audio_transformers</code> plugin where order matters can see a silent
+behavior change after upgrading past this commit (ovos-dinkum-listener <code>1fd909f</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/236" title="GitHub Issue: TigreGotico/ovos-technical-manual #236">#236</a>).</p>
+<p>Lifecycle:</p>
+<table>
+<thead>
+<tr>
+<th>Change</th>
+<th>Active</th>
+<th>Deprecated but functional</th>
+<th>Dropped</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Descending <code>priority</code> sort (<code>reverse=True</code>)</td>
+<td>before <code>1fd909f</code> (2026-06-28)</td>
+<td>n/a</td>
+<td><code>1fd909f</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="if-you-maintain-skills">If you maintain skills<a class="headerlink" href="#if-you-maintain-skills" title="Permanent link">&para;</a></h2>
+<h3 id="mycroft-core-mycroftskill-compat-shim-removed">mycroft-core <code>MycroftSkill</code> compat shim removed<a class="headerlink" href="#mycroft-core-mycroftskill-compat-shim-removed" title="Permanent link">&para;</a></h3>
+<p>The metaclass hack that let <code>isinstance(skill, MycroftSkill)</code> succeed for
+both classic Mycroft skills and OVOS skills, and that auto-initialized
+classic-style skills, was removed. Skills built for mycroft-core no longer
+load.</p>
+<ul>
+<li>Migration: subclass <code>ovos_workshop.skills.ovos.OVOSSkill</code> directly.
+  Skill lifecycle is now entirely <code>SkillLoader</code>-driven: <code>bus</code>/<code>skill_id</code>
+  are passed to <code>__init__</code>, not injected via metaclass into a later
+  <code>initialize()</code> call.</li>
+<li>Lifecycle: active pre-<code>2d684a1</code>. Deprecated with warnings through the
+  <code>V0.0.x</code> era. Dropped in <code>1.0.0</code> (ovos-workshop <code>2d684a1</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/235" title="GitHub Issue: TigreGotico/ovos-technical-manual #235">#235</a>,
+  2024-10-15). The maintainers later bumped <code>VERSION_MAJOR</code> to <code>8</code> in
+  <code>7c8a1e4</code> (2025-11-09) purely to acknowledge, after the fact, that this
+  should have been versioned as a major bump: treat <code>2d684a1</code>/<code>1.0.0</code> as
+  the real boundary.</li>
+</ul>
+<h3 id="ovos_workshopdecoratorscompatbackwards_compat-removed"><code>ovos_workshop.decorators.compat.backwards_compat</code> removed<a class="headerlink" href="#ovos_workshopdecoratorscompatbackwards_compat-removed" title="Permanent link">&para;</a></h3>
+<p>The <code>backwards_compat(classic_core=, pre_008=, no_core=)</code> decorator, which
+branched behavior by detecting <code>mycroft.version.CORE_VERSION_STR</code> /
+<code>ovos_core.version</code>, was deleted along with the mycroft-skill compat shim.</p>
+<ul>
+<li>Migration: remove any use of <code>backwards_compat</code>. Branch on your own
+  feature-detection logic if you still need version-conditional behavior.</li>
+<li>Lifecycle: active pre-<code>2d684a1</code>. Unverified deprecation window. Dropped
+  <code>1.0.0</code> (ovos-workshop <code>2d684a1</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/235" title="GitHub Issue: TigreGotico/ovos-technical-manual #235">#235</a>).</li>
+</ul>
+<h3 id="ovos_workshopskillsdecorators-shim-paths-removed"><code>ovos_workshop.skills.decorators.*</code> shim paths removed<a class="headerlink" href="#ovos_workshopskillsdecorators-shim-paths-removed" title="Permanent link">&para;</a></h3>
+<p>The 2022 move of decorators from <code>skills.decorators.*</code> to top-level
+<code>decorators.*</code> (<code>9ca2018</code>, 2022-06-02) had kept 4-line re-export shims at
+the old paths. Those shims were deleted with no further compat.</p>
+<ul>
+<li>Migration: <code>from ovos_workshop.skills.decorators.killable import
+  killable_intent</code> → <code>from ovos_workshop.decorators.killable import
+  killable_intent</code> (same pattern for <code>ocp</code>, <code>layers</code>, <code>converse</code>,
+  <code>fallback_handler</code>).</li>
+<li>Lifecycle: active before <code>9ca2018</code> (2022-06-02). Deprecated but
+  functional (shim re-export) <code>9ca2018</code> to pre-<code>1.0.0</code>. Dropped <code>1.0.0</code>
+  (ovos-workshop <code>2d684a1</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/235" title="GitHub Issue: TigreGotico/ovos-technical-manual #235">#235</a>).</li>
+</ul>
+<h3 id="ovosskill_conditional_activate-removed"><code>OVOSSkill._conditional_activate()</code> removed<a class="headerlink" href="#ovosskill_conditional_activate-removed" title="Permanent link">&para;</a></h3>
+<p>The private helper that auto-re-activated a skill after converse/intent
+handling, and the skill class's own emission of <code>ovos.utterance.handled</code>,
+are both gone: that bookkeeping moved into <code>ovos-core</code>'s fallback
+pipeline to stop duplicate events.</p>
+<ul>
+<li>Migration: remove any override or call of <code>_conditional_activate</code>. Do
+  not assume the skill class emits <code>ovos.utterance.handled</code> yourself.</li>
+<li>Lifecycle: active before <code>6649c4f</code>. Unverified deprecation window.
+  dropped <code>2.0.0</code> (ovos-workshop <code>6649c4f</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/262" title="GitHub Issue: TigreGotico/ovos-technical-manual #262">#262</a>, 2024-10-31).</li>
+</ul>
+<h3 id="backend-settings-sync-removed-from-ovosskill">Backend settings sync removed from <code>OVOSSkill</code><a class="headerlink" href="#backend-settings-sync-removed-from-ovosskill" title="Permanent link">&para;</a></h3>
+<p><code>enable_settings_manager</code> kwarg, <code>self.settings_manager</code>,
+<code>self._settings_meta</code>, and <code>SkillSettingsManager</code> (Selene/backend
+two-way settings sync, <code>settingsmeta.json</code> auto-upload) are all removed.</p>
+<ul>
+<li>Migration: remove <code>enable_settings_manager</code> from <code>super().__init__()</code>
+  calls. Use <code>self.settings</code> (local <code>JsonStorage</code>) only. There is no
+  backend settings sync in OVOS.</li>
+<li>Lifecycle: active before <code>3c026c2</code>. Unverified deprecation window.
+  dropped <code>3.0.0</code> (ovos-workshop <code>3c026c2</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/295" title="GitHub Issue: TigreGotico/ovos-technical-manual #295">#295</a>, 2024-11-19).</li>
+</ul>
+<h3 id="skill-locale-directories-renamed-to-canonical-bcp-47">Skill locale directories renamed to canonical BCP-47<a class="headerlink" href="#skill-locale-directories-renamed-to-canonical-bcp-47" title="Permanent link">&para;</a></h3>
+<p>Bundled locale directories under <code>ovos_workshop/locale/</code> were renamed from
+lowercase/short codes (<code>en-us</code>, <code>da</code>, <code>eu</code>, <code>fa-fa</code>) to canonical BCP-47
+(<code>en-US</code>, <code>da-DK</code>, <code>eu-ES</code>, <code>fa-IR</code>) to fix duplicate zip entries in wheel
+builds.</p>
+<ul>
+<li>Migration: ship resource files under canonical BCP-47 folder names. Use
+  <code>ovos_utils.lang.get_language_dir()</code> / <code>CoreResources</code> for resolution
+  instead of manual lowercase path construction.</li>
+<li>Lifecycle: active before <code>e12559e</code>. Unverified deprecation window.
+  dropped <code>e12559e</code> (2026-04-03), pre-<code>8.0.0</code> (ovos-workshop <code>e12559e</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/392" title="GitHub Issue: TigreGotico/ovos-technical-manual #392">#392</a>).</li>
+</ul>
+<h3 id="_get_dialog-removed-as-a-public-symbol"><code>_get_dialog()</code> removed as a public symbol<a class="headerlink" href="#_get_dialog-removed-as-a-public-symbol" title="Permanent link">&para;</a></h3>
+<p>Module-level <code>_get_dialog()</code> on <code>ovos_workshop.skills.ovos</code> no longer
+exists. Locale lookups (<code>_get_dialog</code>, <code>_get_word</code>,
+<code>CommonQuerySkill.__init__</code>, <code>translated_noise_words</code>) all route through
+<code>CoreResources</code>/<code>self.resources</code> now.</p>
+<ul>
+<li>Migration: use <code>self.speak_dialog(key)</code> or
+  <code>CoreResources(lang).load_dialog_file(...)</code> instead of importing
+  <code>_get_dialog</code> directly.</li>
+<li>Lifecycle: active before <code>acbd438</code>. Unverified deprecation window.
+  dropped <code>acbd438</code> (2026-04-08), pre-<code>8.0.0</code> (ovos-workshop <code>acbd438</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/395" title="GitHub Issue: TigreGotico/ovos-technical-manual #395">#395</a>).</li>
+</ul>
+<h3 id="legacy-non-installable-skill-loading-removed">Legacy non-installable skill loading removed<a class="headerlink" href="#legacy-non-installable-skill-loading-removed" title="Permanent link">&para;</a></h3>
+<p><code>skill_launcher.py</code> dropped the remaining dead code paths for loading
+non-pip-installable, classic-mycroft-style skills.</p>
+<ul>
+<li>Migration: package skills as installable Python packages with entry
+  points. Loose-file skill loading from a bare folder is unsupported.</li>
+<li>Lifecycle: active before <code>421899f</code>. Unverified deprecation window.
+  dropped in the <code>7.0.x</code> line, <code>421899f</code> (2025-06-21), (ovos-workshop <code>421899f</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/362" title="GitHub Issue: TigreGotico/ovos-technical-manual #362">#362</a>).
+  <code>ovos-core</code>'s own equivalent removal of folder-based skill loading
+  (<code>_load_skill</code>, <code>_get_skill_directories</code>, <code>_unload_removed_skills</code>)
+  landed the same era in <code>62024dbf98</code> (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/690" title="GitHub Issue: TigreGotico/ovos-technical-manual #690">#690</a>, 2025-06-10, <code>1.3.0</code>).</li>
+</ul>
+<h3 id="skill-settings-file-store-rewritten">Skill-settings file-store rewritten<a class="headerlink" href="#skill-settings-file-store-rewritten" title="Permanent link">&para;</a></h3>
+<p>Skill settings moved to <code>json_database</code>-backed XDG-default storage,
+replacing the old ad-hoc file kludge, with a one-time auto-migration.</p>
+<ul>
+<li>Migration: rely on the <code>self.settings</code> API. Do not read/write the old
+  non-XDG settings file path directly.</li>
+<li>Lifecycle: active before <code>3299173</code>. Unverified deprecation window (the
+  dossier records a one-time auto-migration, not a hard cutover date).
+  dropped <code>3299173734</code> (2022-02-02), (ovos-core <code>3299173</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/11" title="GitHub Issue: TigreGotico/ovos-technical-manual #11">#11</a>).</li>
+</ul>
+<h3 id="fallback-dispatcher-no-longer-bus-driven">Fallback dispatcher no longer bus-driven<a class="headerlink" href="#fallback-dispatcher-no-longer-bus-driven" title="Permanent link">&para;</a></h3>
+<p><code>converse</code> and fallback dispatch became event-based through dedicated
+services (<code>ConverseService</code>, the fallback pipeline) instead of being
+called directly in-process on <code>MycroftSkill</code> instances.</p>
+<ul>
+<li>Migration: implement the converse acknowledge handshake if you drive
+  converse externally (for example a custom orchestrator). Do not assume
+  <code>converse()</code> is polled for skills that never override it.</li>
+<li>Lifecycle: active before <code>4fff98e</code>. No deprecation window (architecture change, not a
+  deprecate-then-drop symbol). Landed <code>4fff98ecfc</code> (2022-02-02), (ovos-core <code>4fff98e</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/32" title="GitHub Issue: TigreGotico/ovos-technical-manual #32">#32</a>).</li>
+</ul>
+<hr />
+<h2 id="if-you-maintain-plugins">If you maintain plugins<a class="headerlink" href="#if-you-maintain-plugins" title="Permanent link">&para;</a></h2>
+<h3 id="tts-plugin-queue-tuple-shape-ovos-audio">TTS plugin queue tuple shape (ovos-audio)<a class="headerlink" href="#tts-plugin-queue-tuple-shape-ovos-audio" title="Permanent link">&para;</a></h3>
+<p>Direct mutation of <code>TTS.queue</code> used a 6-tuple
+<code>(_, data, visemes, ident, listen, tts_id)</code>. It now expects a 5-tuple
+<code>(data, visemes, listen, tts_id, message)</code>.</p>
+<ul>
+<li>Migration: push <code>(data, visemes, listen, tts_id, message)</code> tuples onto
+  <code>PlaybackThread</code>'s queue.</li>
+<li>Lifecycle: active before <code>931784a</code>. Deprecated but functional (logs via
+  <code>log_deprecation(..., "0.1.0")</code>) from <code>931784a</code> (2023-10-25). Dropped
+  target was <code>0.1.0</code>: exact drop commit unverified (ovos-audio <code>931784a</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/37" title="GitHub Issue: TigreGotico/ovos-technical-manual #37">#37</a>).</li>
+</ul>
+<h3 id="audio-backend-template-methods-became-abstract">Audio-backend template methods became abstract<a class="headerlink" href="#audio-backend-template-methods-became-abstract" title="Permanent link">&para;</a></h3>
+<p><code>AudioBackend</code>/<code>RemoteAudioBackend</code> templates in <code>ovos-plugin-manager</code>
+turned previously-optional methods into <code>@abstractmethod</code>, and dropped the
+dependency on the old <code>common_play</code> base class (OCP's predecessor).</p>
+<ul>
+<li>Migration: implement every required method on your <code>AudioBackend</code>
+  subclass or instantiation raises <code>TypeError: Can't instantiate abstract
+  class</code>.</li>
+<li>Lifecycle: active before <code>77c66a3</code>. Unverified deprecation window.
+  dropped <code>77c66a3</code> (2024-05-11), (ovos-plugin-manager <code>77c66a3</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/226" title="GitHub Issue: TigreGotico/ovos-technical-manual #226">#226</a>).</li>
+</ul>
+<h3 id="stt-legacy-helper-classes-deprecated">STT legacy helper classes deprecated<a class="headerlink" href="#stt-legacy-helper-classes-deprecated" title="Permanent link">&para;</a></h3>
+<p><code>StreamingSTT</code>, <code>StreamThread</code>, and related classic-mycroft-derived helper
+classes in <code>ovos_plugin_manager/templates/stt.py</code> were deprecation-warned,
+first via logging (<code>ff342fe</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/233" title="GitHub Issue: TigreGotico/ovos-technical-manual #233">#233</a>, 2024-06-03) and later as a real Python
+<code>DeprecationWarning</code> (<code>dfbac90</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/291" title="GitHub Issue: TigreGotico/ovos-technical-manual #291">#291</a>, 2025-01-04): CI suites running
+<code>-W error::DeprecationWarning</code> will fail the build on continued use.</p>
+<ul>
+<li>Migration: move off <code>StreamingSTT</code>/<code>StreamThread</code> to the current STT
+  template contract.</li>
+<li>Lifecycle: active before <code>ff342fe</code>. Deprecated but functional from
+  <code>ff342fe</code> (2024-06-03), warning strength increased in <code>dfbac90</code>
+  (2025-01-04). Drop date unverified (ovos-plugin-manager <code>ff342fe</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/233" title="GitHub Issue: TigreGotico/ovos-technical-manual #233">#233</a>).</li>
+</ul>
+<h3 id="dialect-matching-switched-to-tag_distance">Dialect matching switched to <code>tag_distance</code><a class="headerlink" href="#dialect-matching-switched-to-tag_distance" title="Permanent link">&para;</a></h3>
+<p>Ad-hoc exact-prefix dialect matching (<code>en</code> matches <code>en-us</code> via
+<code>.startswith</code>) was replaced with <code>langcodes.tag_distance</code> (threshold
+<code>&lt; 10</code>) across STT, TTS, wake-word, and tokenization plugin config
+resolution.</p>
+<ul>
+<li>Migration: no code change needed for callers of the public
+  <code>get_plugin_config</code> family. Re-verify locale resolution after upgrading
+  if you pinned plugin configs to exact locale strings, since dialect
+  fallback selection can differ.</li>
+<li>Lifecycle: behavior-only change, no removal. Landed <code>08ad348</code> (2024-10-12),
+  (ovos-plugin-manager <code>08ad348</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/267" title="GitHub Issue: TigreGotico/ovos-technical-manual #267">#267</a>). Later replaced again by
+  <code>ovos_spec_tools.lang_distance</code> in <code>35919b7</code> (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/391" title="GitHub Issue: TigreGotico/ovos-technical-manual #391">#391</a>, 2026-05-22), same
+  <code>&lt; 10</code> threshold preserved. Requires the <code>ovos-spec-tools[langcodes]</code>
+  extra or region codes silently strip (<code>en-US</code> → <code>en</code>).</li>
+</ul>
+<h3 id="g2p-deprecated-moved-toward-ovos-audio">G2P deprecated, moved toward ovos-audio<a class="headerlink" href="#g2p-deprecated-moved-toward-ovos-audio" title="Permanent link">&para;</a></h3>
+<p><code>opm.g2p</code> (Grapheme2Phoneme, used only for MK1 mouth animation) is marked
+deprecated in <code>ovos-plugin-manager</code>. The companion work moves it toward
+<code>ovos-audio</code>.</p>
+<ul>
+<li>Migration: no functional removal yet in <code>ovos-plugin-manager</code>. Expect
+  deprecation warnings on every access.</li>
+<li>Lifecycle: active before <code>c102889</code>. Deprecated but functional from
+  <code>c102889</code> (2024-10-23). Drop version unverified (ovos-plugin-manager <code>c102889</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/277" title="GitHub Issue: TigreGotico/ovos-technical-manual #277">#277</a>).</li>
+</ul>
+<h3 id="embeddingsdb-gains-required-collection-methods"><code>EmbeddingsDB</code> gains required collection methods<a class="headerlink" href="#embeddingsdb-gains-required-collection-methods" title="Permanent link">&para;</a></h3>
+<p><code>create_collection</code>, <code>get_collection</code>, <code>delete_collection</code>,
+<code>list_collections</code> became required <code>@abstractmethod</code>s on <code>EmbeddingsDB</code>.</p>
+<ul>
+<li>Migration: implement all four on your <code>EmbeddingsDB</code> subclass.
+  single-collection plugins can wrap a fixed default collection name.</li>
+<li>Lifecycle: active before <code>15beb84</code>. No deprecation window (no deprecation window, added
+  directly as abstract). Landed <code>15beb84</code> (2025-07-22), (ovos-plugin-manager <code>15beb84</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/333" title="GitHub Issue: TigreGotico/ovos-technical-manual #333">#333</a>).</li>
+</ul>
+<h3 id="solver-plugin-family-deprecated-in-favor-of-agent-engines">Solver plugin family deprecated in favor of agent engines<a class="headerlink" href="#solver-plugin-family-deprecated-in-favor-of-agent-engines" title="Permanent link">&para;</a></h3>
+<p>The entire <code>templates/solvers.py</code> family (<code>QuestionSolver</code>, <code>CorpusSolver</code>,
+<code>TldrSolver</code>, <code>EvidenceSolver</code>, <code>MultipleChoiceSolver</code>, <code>EntailmentSolver</code>)
+is deprecated with a stated removal target of the next major version.</p>
+<table>
+<thead>
+<tr>
+<th>Deprecated</th>
+<th>Replacement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>QuestionSolver</code></td>
+<td><code>ChatEngine</code> / <code>RetrievalEngine</code></td>
+</tr>
+<tr>
+<td><code>CorpusSolver</code></td>
+<td><code>DocumentIndexerEngine</code> / <code>QAIndexerEngine</code></td>
+</tr>
+<tr>
+<td><code>TldrSolver</code></td>
+<td><code>SummarizerEngine</code></td>
+</tr>
+<tr>
+<td><code>EvidenceSolver</code></td>
+<td><code>ExtractiveQAEngine</code></td>
+</tr>
+<tr>
+<td><code>MultipleChoiceSolver</code></td>
+<td><code>ReRankerEngine</code></td>
+</tr>
+<tr>
+<td><code>EntailmentSolver</code></td>
+<td><code>NaturalLanguageInferenceEngine</code></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Migration: move to the matching <code>templates/agents.py</code> engine class
+  before the removal version ships.</li>
+<li>Lifecycle: active before <code>53564ce</code>. Deprecated but functional from
+  <code>53564ce</code> (2026-01-29), <code>opm.solver.*</code> entry points still discoverable.
+  removal target is the current major version plus one: not yet shipped
+  as of this dossier's sweep (ovos-plugin-manager <code>53564ce</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/365" title="GitHub Issue: TigreGotico/ovos-technical-manual #365">#365</a>).
+  <code>ovos-bus-client</code>'s parallel <code>opm.py</code> (<code>neon.plugin.solver</code>-based chat
+  class) was already removed outright in <code>d526e99</code> (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/207" title="GitHub Issue: TigreGotico/ovos-technical-manual #207">#207</a>, 2026-05-18,
+  <code>2.0.0</code>): migrate to <code>ovos-messagebus-chat-plugin</code>.</li>
+</ul>
+<h3 id="opm-canonical-entry-point-rename"><code>opm.*</code> canonical entry-point rename<a class="headerlink" href="#opm-canonical-entry-point-rename" title="Permanent link">&para;</a></h3>
+<p>Every <code>PluginTypes</code>/<code>PluginConfigTypes</code> entry-point group string that had
+carried a <code># TODO rename</code> comment was flipped to the canonical <code>opm.*</code>
+form. Old groups keep working through a <code>DEPRECATED_ENTRYPOINTS</code> alias
+table (with a warning), but comparing <code>PluginTypes.STT.value</code> against the
+old literal string breaks.</p>
+<table>
+<thead>
+<tr>
+<th>Old group</th>
+<th>New canonical group</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>mycroft.plugin.stt</code></td>
+<td><code>opm.stt</code></td>
+</tr>
+<tr>
+<td><code>mycroft.plugin.tts</code></td>
+<td><code>opm.tts</code></td>
+</tr>
+<tr>
+<td><code>mycroft.plugin.wake_word</code></td>
+<td><code>opm.wake_word</code></td>
+</tr>
+<tr>
+<td><code>ovos.plugin.gui</code></td>
+<td><code>opm.gui</code></td>
+</tr>
+<tr>
+<td><code>ovos.plugin.phal</code></td>
+<td><code>opm.phal</code></td>
+</tr>
+<tr>
+<td><code>ovos.plugin.skill</code></td>
+<td><code>opm.skill</code></td>
+</tr>
+<tr>
+<td><code>ovos.plugin.microphone</code></td>
+<td><code>opm.microphone</code></td>
+</tr>
+<tr>
+<td><code>ovos.plugin.VAD</code></td>
+<td><code>opm.VAD</code></td>
+</tr>
+<tr>
+<td><code>ovos.plugin.g2p</code></td>
+<td><code>opm.g2p</code></td>
+</tr>
+<tr>
+<td><code>neon.plugin.solver</code></td>
+<td><code>opm.solver.question</code></td>
+</tr>
+<tr>
+<td><code>neon.plugin.text</code> / <code>.metadata</code> / <code>.audio</code></td>
+<td><code>opm.transformer.text</code> / <code>.metadata</code> / <code>.audio</code></td>
+</tr>
+<tr>
+<td><code>neon.plugin.lang.translate</code> / <code>.detect</code></td>
+<td><code>opm.lang.translate</code> / <code>.detect</code></td>
+</tr>
+<tr>
+<td><code>intentbox.coreference</code> / <code>.keywords</code> / <code>.segmentation</code> / <code>.tokenization</code> / <code>.postag</code></td>
+<td><code>opm.coreference</code> / <code>opm.keywords</code> / <code>opm.segmentation</code> / <code>opm.tokenization</code> / <code>opm.postag</code></td>
+</tr>
+<tr>
+<td><code>ovos.ocp.extractor</code></td>
+<td><code>opm.ocp.extractor</code></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Migration: update <code>entry_points</code> in your plugin's <code>setup.py</code>/
+  <code>pyproject.toml</code> to the new group at your convenience. Old groups still
+  work via the alias table. Code comparing enum values as raw strings
+  should compare against <code>PluginTypes.STT</code> (the enum member), not the
+  literal old string.</li>
+<li>Lifecycle: active before <code>15beb84</code>. Deprecated but functional
+  (aliased, with a warning) from <code>15beb84</code> (2025-07-22). No stated removal
+  version as of the sweep, so treat as indefinitely deprecated
+  (ovos-plugin-manager <code>15beb84</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/333" title="GitHub Issue: TigreGotico/ovos-technical-manual #333">#333</a>). A case-sensitivity bug in the
+  alias table (<code>ovos.plugin.VAD</code> mapped to lowercase <code>opm.vad</code> instead of
+  <code>opm.VAD</code>) silently broke discovery of un-migrated VAD plugins for about
+  eleven months, fixed in <code>3a7a330</code> (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/401" title="GitHub Issue: TigreGotico/ovos-technical-manual #401">#401</a>, 2026-06-16).</li>
+</ul>
+<h3 id="phal-enclosure-abstraction-dropped">PHAL enclosure abstraction dropped<a class="headerlink" href="#phal-enclosure-abstraction-dropped" title="Permanent link">&para;</a></h3>
+<p><code>PHALPlugin</code> lost its Mark-1/Mark-2 enclosure command handling
+(<code>register_enclosure_namespace</code>, <code>on_eyes_*</code>, <code>on_mouth_*</code>, <code>on_display</code>,
+and so on) in one commit, then lost its lifecycle bus-event auto-wiring
+(record/speak/wake/sleep) in a same-day follow-up. <code>PHALPlugin</code> is now a
+bare background thread with no bus events wired by the base class at all.</p>
+<ul>
+<li>Migration: mix in <code>EnclosureProtocolListener</code> from the separate
+  <code>ovos-ui-enclosure-protocol</code> package for both the enclosure commands and
+  <code>register_core_events()</code>. The <code>EnclosureAPI</code> producer moved to
+  <code>ovos-gui-api-client</code>.</li>
+<li>Lifecycle: active before <code>eac52a4</code>. No deprecation window (no deprecation window, both
+  commits landed same day). Dropped <code>eac52a4</code> and <code>f7c613b</code>
+  (2026-06-25), (ovos-plugin-manager <code>eac52a4</code>, <code>f7c613b</code>).</li>
+</ul>
+<h3 id="mediaprovider-template-collapsed-to-search"><code>MediaProvider</code> template collapsed to <code>search()</code><a class="headerlink" href="#mediaprovider-template-collapsed-to-search" title="Permanent link">&para;</a></h3>
+<p><code>MediaProvider</code> lost <code>is_available</code>, <code>matches</code>, <code>serves</code>, <code>search_context</code>,
+<code>search_safe</code>, <code>featured_media</code>, and the <code>media</code>/<code>playback_type</code>/
+<code>genre_filter</code> ClassVars, all on the same day the <code>QueryContext</code> dataclass
+parameter was also replaced by plain <code>**context</code> kwargs.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1"># old</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="k">class</span> <span class="nc">MyProvider</span><span class="p">(</span><span class="n">MediaProvider</span><span class="p">):</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>    <span class="k">def</span> <span class="nf">search</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">signals</span><span class="p">,</span> <span class="n">context</span><span class="p">:</span> <span class="n">QueryContext</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Release</span><span class="p">]:</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>        <span class="k">if</span> <span class="n">context</span><span class="o">.</span><span class="n">allows_playback</span><span class="p">(</span><span class="o">...</span><span class="p">):</span>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>            <span class="o">...</span>
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="c1"># new</span>
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="k">class</span> <span class="nc">MyProvider</span><span class="p">(</span><span class="n">MediaProvider</span><span class="p">):</span>
+</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>    <span class="k">def</span> <span class="nf">search</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">signals</span><span class="p">,</span> <span class="n">lang</span><span class="o">=</span><span class="s1">&#39;en-us&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">context</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Release</span><span class="p">]:</span>
+</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>        <span class="k">if</span> <span class="n">context</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;supported_playback_types&#39;</span><span class="p">):</span>
+</span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>            <span class="o">...</span>
+</span></code></pre></div>
+<ul>
+<li>Migration: implement the single <code>search(signals, lang='en-us',
+  **context)</code> method. Read routing/availability info from <code>**context</code>
+  instead of the removed <code>QueryContext</code> helper methods.</li>
+<li>Lifecycle: active before <code>8a03351</code>. No deprecation window (fast in-place redesign of a
+  still-fresh API: <code>opm.media.provider</code> type was only introduced days
+  earlier in <code>83ade15</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/405" title="GitHub Issue: TigreGotico/ovos-technical-manual #405">#405</a>). Dropped <code>8a03351</code> and <code>1741181</code>, both
+  2026-06-25 (ovos-plugin-manager <code>8a03351</code>, <code>1741181</code>).</li>
+</ul>
+<h3 id="gui-adapter-plugin-handler-signature-gains-session_id">GUI adapter plugin handler signature gains <code>session_id</code><a class="headerlink" href="#gui-adapter-plugin-handler-signature-gains-session_id" title="Permanent link">&para;</a></h3>
+<p>All <code>handle_show_*</code> template handlers, <code>on_namespace_activated</code>,
+<code>on_namespace_deactivated</code>, <code>on_status_event</code>, <code>on_session_update</code>, and
+<code>dispatch_template()</code> gained a new <code>session_id: str = "default"</code> parameter
+inserted <strong>before</strong> the existing <code>site_id</code> parameter.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c1"># old</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="k">def</span> <span class="nf">handle_show_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">skill_id</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">site_id</span><span class="o">=</span><span class="s2">&quot;default&quot;</span><span class="p">):</span> <span class="o">...</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="c1"># new</span>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="k">def</span> <span class="nf">handle_show_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">skill_id</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">session_id</span><span class="o">=</span><span class="s2">&quot;default&quot;</span><span class="p">,</span> <span class="n">site_id</span><span class="o">=</span><span class="s2">&quot;default&quot;</span><span class="p">):</span> <span class="o">...</span>
+</span></code></pre></div>
+<ul>
+<li>Migration: switch any positional <code>site_id</code> call sites to keyword
+  arguments, or insert <code>session_id="default"</code> explicitly before the old
+  third positional argument.</li>
+<li>Lifecycle: active before <code>34a0f13</code>. No deprecation window (explicit <code>BREAKING CHANGE:</code> in
+  the commit body, no deprecation window). Dropped/landed <code>34a0f13</code>
+  (2026-03-12), (ovos-plugin-manager <code>34a0f13</code>).</li>
+</ul>
+<hr />
+<h2 id="if-you-operate-a-device-or-fleet-config-changes">If you operate a device or fleet (config changes)<a class="headerlink" href="#if-you-operate-a-device-or-fleet-config-changes" title="Permanent link">&para;</a></h2>
+<h3 id="mycroftconf-no-longer-probes-a-mycroft-core-install"><code>mycroft.conf</code> no longer probes a mycroft-core install<a class="headerlink" href="#mycroftconf-no-longer-probes-a-mycroft-core-install" title="Permanent link">&para;</a></h3>
+<p><code>ovos_config/locations.py::find_default_config()</code> stopped checking for a
+running mycroft-core installation as a source for the DEFAULT config
+layer. Only the bundled <code>ovos_config/mycroft.conf</code> is used as DEFAULT.</p>
+<ul>
+<li>Migration: put overrides in SYSTEM/USER config layers
+  (<code>/etc/mycroft/mycroft.conf</code>, <code>~/.config/mycroft/mycroft.conf</code>) instead
+  of relying on a legacy mycroft-core file being picked up.</li>
+<li>Lifecycle: active before <code>0b16d46</code>. No deprecation window. Dropped <code>0.1.0</code> (2023-12-28),
+  (ovos-config <code>0b16d46</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/90" title="GitHub Issue: TigreGotico/ovos-technical-manual #90">#90</a>).</li>
+</ul>
+<h3 id="ovosconf-deprecated-in-favor-of-environment-variables"><code>ovos.conf</code> deprecated in favor of environment variables<a class="headerlink" href="#ovosconf-deprecated-in-favor-of-environment-variables" title="Permanent link">&para;</a></h3>
+<p>The separate <code>ovos.conf</code> INI file controlling <code>base_folder</code>/
+<code>config_filename</code>/XDG behavior is deprecated. Those values move
+exclusively to environment variables.</p>
+<ul>
+<li>Migration: replace <code>ovos.conf</code> <code>[core] base_folder=...</code> with the
+  equivalent env var override. Exact env var names were not confirmed by
+  the dossier this page is built from: see
+  <a href="#verification-gaps">Verification gaps</a>.</li>
+<li>Lifecycle: active before <code>76d9310</code>. Deprecated but functional from
+  <code>76d9310</code> (2024-08-16). Drop version unverified (ovos-config <code>76d9310</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/138" title="GitHub Issue: TigreGotico/ovos-technical-manual #138">#138</a>).</li>
+</ul>
+<h3 id="backendmicroservices-config-block-removed">Backend/microservices config block removed<a class="headerlink" href="#backendmicroservices-config-block-removed" title="Permanent link">&para;</a></h3>
+<p>The single largest config removal in <code>ovos-config</code>'s history. Removed
+entirely from <code>mycroft.conf</code> and <code>ovos_config/models.py</code>:</p>
+<ul>
+<li><code>opt_in</code> top-level telemetry key.</li>
+<li><code>skills.upload_skill_manifest</code>, <code>skills.sync2way</code>, <code>skills.autogen_meta</code>.</li>
+<li>The entire <code>server</code> section (<code>backend_type</code>, <code>url</code>, <code>version</code>, <code>update</code>,
+  <code>metrics</code>, <code>sync_skill_settings</code>).</li>
+<li>The entire <code>microservices</code> section (<code>wolfram_provider</code>,
+  <code>weather_provider</code>, <code>geolocation_provider</code>, <code>wolfram_key</code>, <code>owm_key</code>,
+  <code>email.*</code>).</li>
+<li>
+<p><code>protected_keys.remote</code> shrunk to drop the corresponding keys.</p>
+</li>
+<li>
+<p>Migration: route weather/Wolfram/geolocation provider config through
+  each plugin's own config (for example a weather PHAL plugin's own
+  <code>weather_provider</code>/API-key settings) instead of the removed centralized
+  <code>microservices</code> block. <code>opt_in</code> telemetry has no replacement key.</p>
+</li>
+<li>Lifecycle: active before <code>0a7a060</code>. Unverified deprecation window.
+  dropped <code>0a7a060</code> (2024-11-19), (ovos-config <code>0a7a060</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/183" title="GitHub Issue: TigreGotico/ovos-technical-manual #183">#183</a>). This
+  mirrors <code>ovos-core</code>'s own <code>mycroft.api</code>/<code>DeviceApi</code> deprecation toward
+  <code>ovos-backend-client</code> (<code>ee9a14cb23</code>, 2022-10-04) and the full removal of
+  the <code>mycroft</code> compat package including Selene API support
+  (<code>2a10fa9c1c</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/439" title="GitHub Issue: TigreGotico/ovos-technical-manual #439">#439</a>, 2025-03-04, first stable release <code>1.1.0</code>).</li>
+</ul>
+<h3 id="default-tts-fallback-and-mprislang-detect-defaults-changed">Default TTS fallback and MPRIS/lang-detect defaults changed<a class="headerlink" href="#default-tts-fallback-and-mprislang-detect-defaults-changed" title="Permanent link">&para;</a></h3>
+<p>Three unrelated default-value changes landed in one <code>mycroft.conf</code> update:
+<code>duck_while_listening</code> removed entirely (documented an unimplemented
+feature), the default language-detection plugin switched to a
+public-server-based one, and <code>mpris</code> under <code>Audio.backends.OCP</code> was
+disabled by default.</p>
+<ul>
+<li>Migration: set <code>mpris: true</code> under <code>Audio.backends.OCP</code> (pre-<code>ovos-media</code>
+  split. See the OCP→ovos-media entry above for the post-split location)
+  if MPRIS is wanted. Pin the old lang-detect plugin explicitly if
+  network-free detection is required.</li>
+<li>Lifecycle: active before <code>bff2d72</code>. No deprecation window. Dropped/changed <code>bff2d72</code>
+  (2024-02-26), (ovos-config <code>bff2d72</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/112" title="GitHub Issue: TigreGotico/ovos-technical-manual #112">#112</a>).</li>
+</ul>
+<h3 id="mimic3-no-longer-the-default-tts-fallback"><code>mimic3</code> no longer the default TTS fallback<a class="headerlink" href="#mimic3-no-longer-the-default-tts-fallback" title="Permanent link">&para;</a></h3>
+<p>The default <code>tts.fallback_module</code> value <code>"ovos-tts-plugin-mimic3-server"</code>
+and its settings block were removed from the shipped <code>mycroft.conf</code>.</p>
+<ul>
+<li>Migration: set <code>tts.fallback_module</code> and the settings block explicitly
+  in your own config if a fallback TTS is still wanted (mimic3 itself is
+  deprecated upstream).</li>
+<li>Lifecycle: active before <code>bc9be86</code>. No deprecation window. Dropped <code>bc9be86</code> (2023-11-05),
+  (ovos-config <code>bc9be86</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/81" title="GitHub Issue: TigreGotico/ovos-technical-manual #81">#81</a>). <code>ovos-audio</code>'s matching default change
+  (<code>tts.fallback_module</code> <code>"mimic"</code> → <code>""</code>) landed separately in <code>c47e596</code>
+  (2024-01-26).</li>
+</ul>
+<h3 id="padatious_medium-dropped-from-default-pipeline"><code>padatious_medium</code> dropped from default pipeline<a class="headerlink" href="#padatious_medium-dropped-from-default-pipeline" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Migration: add <code>padatious_medium</code> back explicitly to <code>core.pipeline</code> in
+  USER config if you want it (maintainers' note: "it is always wrong in
+  benchmarks").</li>
+<li>Lifecycle: active before <code>b08b7b8</code>. No deprecation window. Dropped <code>b08b7b8</code> (2025-02-28,
+  tag <code>1.0.2</code>), (ovos-config <code>b08b7b8</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/200" title="GitHub Issue: TigreGotico/ovos-technical-manual #200">#200</a>).</li>
+</ul>
+<h3 id="ready-settings-block-removed"><code>ready</code> settings block removed<a class="headerlink" href="#ready-settings-block-removed" title="Permanent link">&para;</a></h3>
+<p>The <code>"ready"</code> start-up gating config block (14 lines) was dropped entirely
+from shipped <code>mycroft.conf</code> defaults.</p>
+<ul>
+<li>Migration: consult <code>ovos-core</code>'s listener release notes for the
+  replacement readiness mechanism (the skill-based "finished booting"
+  signal). <code>ready_settings</code>/<code>ready</code> keys have no default anymore.</li>
+<li>Lifecycle: active before <code>94f2348</code>. No deprecation window. Dropped <code>94f2348</code> (2024-10-15),
+  (ovos-config <code>94f2348</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/166" title="GitHub Issue: TigreGotico/ovos-technical-manual #166">#166</a>). On the <code>ovos-core</code> side, the matching
+  <code>SkillManager.is_device_ready()</code>/<code>check_services_ready()</code>/
+  <code>handle_check_device_readiness()</code> methods (deprecated since <code>1.0.0</code>)
+  were removed outright in <code>62024dbf98</code> (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/690" title="GitHub Issue: TigreGotico/ovos-technical-manual #690">#690</a>, 2025-06-10, <code>1.3.0</code>).</li>
+</ul>
+<h3 id="distribution-config-layer-added-precedence-order-changed">Distribution config layer added, precedence order changed<a class="headerlink" href="#distribution-config-layer-added-precedence-order-changed" title="Permanent link">&para;</a></h3>
+<p><code>get_config_locations()</code> gained a <code>distribution=True</code> parameter and a new
+layer, <code>/usr/share/&lt;base_folder&gt;/&lt;config_filename&gt;</code>, inserted between
+DEFAULT and SYSTEM.</p>
+<ul>
+<li>Migration: config precedence is now DEFAULT &lt; DISTRIBUTION
+  (<code>/usr/share/...</code>) &lt; SYSTEM (<code>/etc/...</code>) &lt; web-cache (remote) &lt; OLD_USER
+  &lt; USER. Distro packagers should install an overwrite-safe default to the
+  DISTRIBUTION path.</li>
+<li>Lifecycle: additive, not a removal. Landed pre-<code>0.1.0</code>, (ovos-config <code>3781f01</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/128" title="GitHub Issue: TigreGotico/ovos-technical-manual #128">#128</a>).</li>
+</ul>
+<h3 id="listener-defaults-changed-instant_listen-remove_silence-mic-backend">Listener defaults changed (instant_listen, remove_silence, mic backend)<a class="headerlink" href="#listener-defaults-changed-instant_listen-remove_silence-mic-backend" title="Permanent link">&para;</a></h3>
+<p><code>listener.instant_listen</code> and <code>listener.remove_silence</code> flipped to enabled
+by default (<code>54a0844</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/133" title="GitHub Issue: TigreGotico/ovos-technical-manual #133">#133</a>, 2024-06-11). The default microphone module
+was reverted from an interim <code>sounddevice</code>-family default back to <code>alsa</code>
+once OPM plugin-fallback support made the missing-ALSA case safe
+(<code>0bbec90</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/155" title="GitHub Issue: TigreGotico/ovos-technical-manual #155">#155</a>, 2024-09-15).</p>
+<ul>
+<li>Migration: set <code>listener.instant_listen: false</code> and
+  <code>listener.remove_silence: false</code> to restore old timing/silence behavior.
+  explicitly pin a different mic backend if ALSA is unavailable on your
+  host (OPM now falls back to <code>sounddevice</code> automatically on ALSA load
+  failure).</li>
+<li>Lifecycle: default-value changes, not deprecate-then-drop. <code>54a0844</code>
+  (2024-06-11), <code>0bbec90</code> (2024-09-15).</li>
+</ul>
+<h3 id="phoonnx-becomes-the-default-offline-tts-in-autoconfigure">phoonnx becomes the default offline TTS in autoconfigure<a class="headerlink" href="#phoonnx-becomes-the-default-offline-tts-in-autoconfigure" title="Permanent link">&para;</a></h3>
+<p>Every <code>offline_male</code>/<code>offline_female</code> TTS recommendation in the
+autoconfigure "recommends" registry now resolves to
+<code>ovos-tts-plugin-phoonnx</code> instead of the prior per-language recommendation.</p>
+<ul>
+<li>Migration: pin the desired TTS plugin explicitly under <code>tts.module</code> in
+  <code>mycroft.conf</code> if the old default is still wanted. Phoonnx requires its
+  own model/voice availability per language.</li>
+<li>Lifecycle: n/a (registry default change, not a removal). Landed
+  <code>2a5bc3f</code> (2026-06-23), (ovos-config <code>2a5bc3f</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/272" title="GitHub Issue: TigreGotico/ovos-technical-manual #272">#272</a>).</li>
+</ul>
+<h3 id="ovos_configlocale-helpers-marked-for-removal"><code>ovos_config.locale</code> helpers marked for removal<a class="headerlink" href="#ovos_configlocale-helpers-marked-for-removal" title="Permanent link">&para;</a></h3>
+<p><code>get_full_lang_code</code>, <code>get_primary_lang_code</code>, <code>get_default_lang</code> in
+<code>ovos_config/locale.py</code> now emit <code>DeprecationWarning</code> and lost their
+internal caching. Signatures are unchanged so this is warning-only so far.</p>
+<ul>
+<li>Migration: switch to <code>ovos_config.Configuration()["lang"]</code> /
+  <code>Configuration().get("lang")</code> directly ahead of the eventual hard
+  removal.</li>
+<li>Lifecycle: active before <code>087a112</code>. Deprecated but functional from
+  <code>087a112</code> (2026-07-24). Drop version unverified: the decorator's target
+  version string reads a placeholder that does not match the current
+  major line (ovos-config <code>087a112</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/253" title="GitHub Issue: TigreGotico/ovos-technical-manual #253">#253</a>).</li>
+</ul>
+<h3 id="native_sources-config-key-replaced-by-session-based-routing"><code>native_sources</code> config key replaced by session-based routing<a class="headerlink" href="#native_sources-config-key-replaced-by-session-based-routing" title="Permanent link">&para;</a></h3>
+<p><code>ovos-audio</code>'s <code>native_sources</code> allowlist (gating playback-control bus
+messages by <code>message.context["source"]</code>) was replaced by
+<code>@require_default_session()</code>, gating on
+<code>message.context["session"]["session_id"] == "default"</code> instead.</p>
+<ul>
+<li>Migration: remove <code>native_sources</code> from config/constructor calls. Ensure
+  playback-control messages either omit <code>context.session</code> (defaults to
+  <code>"default"</code>) or explicitly set <code>session_id: "default"</code>.</li>
+<li>Lifecycle: active before <code>01499ee</code>. Unverified deprecation window (the
+  gating decorator was introduced in <code>c5d95a4</code>, 2024-06-06, then replaced
+  outright). Dropped <code>01499ee</code> (2025-03-06), (ovos-audio <code>01499ee</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/121" title="GitHub Issue: TigreGotico/ovos-technical-manual #121">#121</a>).
+  <code>ovos-media</code> landed the matching change with <code>require_default_session()</code>
+  plus a new <code>media.validate_source</code> (bool, default <code>True</code>) config key in
+  <code>4601792</code> (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/58" title="GitHub Issue: TigreGotico/ovos-technical-manual #58">#58</a>, 2026-06-26): set <code>media.validate_source: false</code> on a
+  central <code>ovos-media</code> instance that must act on non-default/remote
+  HiveMind sessions.</li>
+</ul>
+<hr />
+<h2 id="if-you-consume-the-message-bus-remotely-hivemind-and-other-clients">If you consume the message bus remotely (HiveMind and other clients)<a class="headerlink" href="#if-you-consume-the-message-bus-remotely-hivemind-and-other-clients" title="Permanent link">&para;</a></h2>
+<p>This section is for anyone connecting to the bus as a separate process:
+HiveMind satellites, custom dashboards, external automation, or any code
+that parses raw wire messages instead of going through a skill.</p>
+<h3 id="hivemind-agent-protocol-and-messagebus-solver-removed-from-ovos-bus-client">HiveMind agent protocol and messagebus-solver removed from ovos-bus-client<a class="headerlink" href="#hivemind-agent-protocol-and-messagebus-solver-removed-from-ovos-bus-client" title="Permanent link">&para;</a></h3>
+<p><code>ovos_bus_client/hpm.py</code> (<code>OVOSAgentProtocol</code>/<code>OVOSProtocol</code>) and
+<code>ovos_bus_client/opm.py</code> (the <code>neon.plugin.solver</code>-based chat class) were
+deleted, along with the <code>hivemind.agent.protocol</code> entry point.</p>
+<ul>
+<li>Migration: <code>from ovos_bus_client.hpm import OVOSAgentProtocol</code> → install
+  <code>hivemind-ovos-agent-plugin</code> and import from there (the entry-point
+  <em>name</em> is preserved, so HiveMind-core configs need no change, only the
+  dependency install). <code>ovos_bus_client.opm</code> (QuestionSolver-based chat) →
+  <code>ovos-messagebus-chat-plugin</code> (implements <code>ChatEngine</code>, uses
+  <code>SessionManager</code> for multi-turn state). See
+  <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/JarbasHiveMind/HiveMind-core/issues/85" title="GitHub Issue: JarbasHiveMind/HiveMind-core #85">JarbasHiveMind/HiveMind-core#85</a>.</li>
+<li>Lifecycle: active before <code>d526e99</code>. Unverified deprecation window.
+  dropped <code>2.0.0</code> (ovos-bus-client <code>d526e99</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/207" title="GitHub Issue: TigreGotico/ovos-technical-manual #207">#207</a>, 2026-05-18).</li>
+</ul>
+<h3 id="gui-wire-protocol-moved-to-template-based-guiinterface">GUI wire protocol moved to template-based <code>GUIInterface</code><a class="headerlink" href="#gui-wire-protocol-moved-to-template-based-guiinterface" title="Permanent link">&para;</a></h3>
+<p>The free-form page/<code>GUIWidgets</code> API is replaced by a template wire
+protocol: <code>gui.value.set</code> + <code>gui.page.show</code> (OVOS-GUI-1 §3-4), with a new
+<code>PageTemplates</code> enum and <code>show_text</code>/<code>show_image</code>/<code>show_face</code> helpers. The
+old page/remove primitives became private. <code>EnclosureAPI</code> is deprecated in
+favor of <code>GUIInterface</code> for visual output.</p>
+<ul>
+<li>Migration: declare a <code>PageTemplates.*</code> template and call the matching
+  <code>show_*</code> helper instead of pushing a raw QML/page path. Move visual
+  output off <code>EnclosureAPI</code> onto <code>GUIInterface</code>. Both <code>GUIInterface</code> and
+  <code>EnclosureAPI</code> are themselves deprecated in favor of
+  <code>ovos-gui-api-client</code>.</li>
+<li>Lifecycle: active before <code>0d145d3</code>. Deprecated but functional through a
+  series of <code>refactor!:</code> commits from <code>59ee94e</code> (2026-03-12) through
+  <code>0d145d3</code> (2026-06-25). Classic API becomes private at <code>0d145d3</code>
+  (ovos-bus-client <code>0d145d3</code>).</li>
+</ul>
+<h3 id="session-1-spec-adoption-changes-session-wire-semantics">SESSION-1 spec adoption changes session wire semantics<a class="headerlink" href="#session-1-spec-adoption-changes-session-wire-semantics" title="Permanent link">&para;</a></h3>
+<p><code>SessionManager</code> was rebuilt on the <code>ovos-spec-tools</code> session registry
+(<code>b54269c</code>, 2026-06-29). Three concrete wire/behavior changes to know:</p>
+<ul>
+<li><code>get()</code> no longer reserves the default session id as owner-only: it
+  folds like any other session (SESSION-1 §4).</li>
+<li>Session expiry (<code>Session.expired</code>/<code>touch_time</code>/<code>expiration_seconds</code>,
+  <code>prune_sessions</code>) is not part of SESSION-1 and is deprecation-warned.
+  Stop depending on session TTL/pruning behavior.</li>
+<li><code>SessionManager</code> now enforces one live <code>Session</code> object per id
+  (singleton, <code>7a2e39f</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/249" title="GitHub Issue: TigreGotico/ovos-technical-manual #249">#249</a>). Code holding a stale <code>Session</code> reference
+  expecting it to stay independent from the manager's canonical instance
+  will observe shared-state changes it did not make.</li>
+<li>
+<p>An empty list on a list-valued override field (<code>pipeline</code>,
+  <code>blacklisted_skills</code>, <code>blacklisted_intents</code>) is now <strong>omitted</strong> from
+  <code>serialize()</code> output instead of round-tripped as <code>[]</code> (<code>47b0e4a</code>,
+  2026-07-09). Absence means "use the deployment default." Any bus
+  consumer indexing the raw wire dict (<code>session["pipeline"]</code>) instead of
+  going through <code>Session.deserialize()</code> must treat a missing key as
+  "deployment default," not as an error.</p>
+</li>
+<li>
+<p>Migration: read sessions through <code>Session.deserialize()</code>/the <code>Session</code>
+  class, not by indexing the raw wire dict. Stop relying on
+  <code>prune_sessions</code>/session TTL expiry. Treat the default session id like
+  any other session id.</p>
+</li>
+<li>Lifecycle: active before <code>b54269c</code>. The list-omission wire change is
+  deprecated-in-spirit only (no prior wire shape to preserve, this is a
+  new spec adoption) landing directly at <code>47b0e4a</code> (2026-07-09). Session
+  expiry deprecated but functional from <code>b54269c</code> (2026-06-29), drop
+  version unverified.</li>
+</ul>
+<h3 id="legacy-mycroftrecognizer_loop-topic-bridge-removed">Legacy <code>mycroft.*</code>/<code>recognizer_loop:*</code> topic bridge removed<a class="headerlink" href="#legacy-mycroftrecognizer_loop-topic-bridge-removed" title="Permanent link">&para;</a></h3>
+<p>See <a href="#the-bus-client-legacy-topic-dual-emit-and-its-removal">The bus-client legacy-topic dual-emit and its removal</a>
+above for the full timeline. The short version for remote clients: as of
+<code>ovos-bus-client</code> <code>f1a481d</code> (2026-08-01), <code>MessageBusClient</code> speaks
+OVOS-MSG-1 (<code>ovos.*</code>) topics only, with no bridge back to legacy topic
+spellings. A HiveMind satellite still emitting or expecting legacy topics
+silently stops being received.</p>
+<h3 id="per-service-legacy-topic-migrations-spec-bus-adoption-2026-06">Per-service legacy topic migrations (spec-bus adoption, 2026-06)<a class="headerlink" href="#per-service-legacy-topic-migrations-spec-bus-adoption-2026-06" title="Permanent link">&para;</a></h3>
+<p>Every listener/core service in the org migrated its own emit/listen sites
+to <code>ovos_spec_tools.SpecMessage</code> constants around the same time, mostly
+gated behind a <code>legacy_namespace</code> config key (default <code>True</code>, so
+out-of-the-box wire behavior is initially unchanged):</p>
+<table>
+<thead>
+<tr>
+<th>Legacy topic</th>
+<th>Spec topic</th>
+<th>Landed in</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>recognizer_loop:utterance</code></td>
+<td><code>ovos.utterance.handle</code> (<code>SpecMessage.UTTERANCE</code>)</td>
+<td>ovos-core <code>1672e35ed0</code> (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/772" title="GitHub Issue: TigreGotico/ovos-technical-manual #772">#772</a>/<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/775" title="GitHub Issue: TigreGotico/ovos-technical-manual #775">#775</a>) · ovos-dinkum-listener <code>d9dc04e</code> (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/232" title="GitHub Issue: TigreGotico/ovos-technical-manual #232">#232</a>) · ovos-simple-listener <code>b8326fa</code> (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/26" title="GitHub Issue: TigreGotico/ovos-technical-manual #26">#26</a>) · mycroft-classic-listener <code>4458a3f</code> (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/23" title="GitHub Issue: TigreGotico/ovos-technical-manual #23">#23</a>, <code>1.0.0</code>)</td>
+</tr>
+<tr>
+<td><code>mycroft.awoken</code></td>
+<td><code>SpecMessage.LISTENER_AWOKEN</code></td>
+<td>ovos-dinkum-listener <code>d9dc04e</code> · mycroft-classic-listener <code>4458a3f</code></td>
+</tr>
+<tr>
+<td><code>recognizer_loop:record_begin</code> / <code>record_end</code></td>
+<td><code>SpecMessage.LISTENER_RECORD_STARTED</code> / <code>_ENDED</code></td>
+<td>ovos-dinkum-listener <code>d9dc04e</code> · mycroft-classic-listener <code>4458a3f</code></td>
+</tr>
+<tr>
+<td><code>mycroft.mic.listen</code></td>
+<td><code>SpecMessage.MIC_LISTEN</code></td>
+<td>ovos-dinkum-listener <code>d9dc04e</code> · mycroft-classic-listener <code>4458a3f</code></td>
+</tr>
+<tr>
+<td><code>recognizer_loop:audio_output_start</code> / <code>_end</code></td>
+<td><code>SpecMessage.AUDIO_OUTPUT_STARTED</code> / <code>_ENDED</code></td>
+<td>ovos-dinkum-listener <code>d9dc04e</code> · mycroft-classic-listener <code>4458a3f</code></td>
+</tr>
+<tr>
+<td><code>recognizer_loop:sleep</code></td>
+<td><code>SpecMessage.LISTENER_SLEEP</code></td>
+<td>ovos-dinkum-listener <code>d9dc04e</code> · mycroft-classic-listener <code>4458a3f</code></td>
+</tr>
+<tr>
+<td><code>mycroft.stop</code>, per-skill stop pings, <code>complete_intent_failure</code></td>
+<td><code>ovos.stop</code>, <code>ovos.stop.ping</code>, <code>ovos.intent.unmatched</code></td>
+<td>ovos-core <code>f4c00d90b2</code> (2026-06-05)</td>
+</tr>
+<tr>
+<td><code>stop.openvoiceos.stop.response</code></td>
+<td>removed, not replaced</td>
+<td>ovos-core <code>2b05201705</code> (2026-06-29): <code>StopService</code> no longer registers itself as a skill, do not count it as a participating skill in custom global-stop aggregation</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Migration: for any deployment that explicitly sets
+  <code>legacy_namespace: false</code>, subscribe to the <code>ovos.*</code> spec topics instead
+  of the legacy ones. Default deployments are unaffected until that flag's
+  default flips (not yet flipped as of this dossier's sweep). Prefer
+  <code>ovos_spec_tools.SpecMessage.*</code> constants over hardcoded topic strings
+  going forward, since their literal values are not always the same as
+  the legacy strings they replace.</li>
+<li>Lifecycle: active (legacy-only) before mid-2026. Deprecated but
+  functional (dual-emit or <code>legacy_namespace</code>-gated) from mid-2026
+  onward. Hard drop only confirmed for <code>ovos-bus-client</code>'s own bridge
+  (<code>f1a481d</code>, 2026-08-01): whether <code>legacy_namespace</code> itself has since
+  flipped its default to <code>False</code> in <code>ovos-core</code> is unverified.</li>
+</ul>
+<h3 id="mycroft-bus-client-package-retirement-package-level-not-wire-level"><code>mycroft-bus-client</code> package retirement (package-level, not wire-level)<a class="headerlink" href="#mycroft-bus-client-package-retirement-package-level-not-wire-level" title="Permanent link">&para;</a></h3>
+<p>Every repo in the org switched its dependency and imports from the
+upstream <code>mycroft-bus-client</code> package to <code>ovos-bus-client</code>. This is a
+Python import change, not a wire change: listed here because it is the
+package-level ancestor of the topic-level migration above.</p>
+<ul>
+<li>Migration: <code>pip install ovos-bus-client</code>. <code>from mycroft_bus_client
+  import Message</code> → <code>from ovos_bus_client.message import Message</code> (or
+  <code>from ovos_bus_client import MessageBusClient</code>).</li>
+<li>Lifecycle: active before 2023-04. Dropped (isinstance compat kept
+  briefly, <code>04def5d</code>) starting <code>9396c71</code> (2023-04-05, ovos-bus-client's
+  own extraction). The ecosystem-wide dependency swap landed at
+  <code>b1a9d39e16</code> (2023-04-11) in <code>ovos-core</code>, and matching one-line swaps in
+  <code>ovos-audio</code> (<code>426a48b</code>), <code>ovos-media</code> (<code>426a48b</code>), and
+  <code>ovos-messagebus</code> (<code>a1bc1c1</code>), all within the same week.</li>
+</ul>
+<hr />
+<h2 id="coming-next">Coming next<a class="headerlink" href="#coming-next" title="Permanent link">&para;</a></h2>
+<p>The following work is visible on unmerged branches only and is <strong>not
+released</strong>. It is included so you know it is coming, not because it is
+safe to build against yet.</p>
+<ul>
+<li><strong>AssistantConfig</strong> (<code>ovos-config</code>, branches <code>feat/assistant_config</code>,
+  <code>pr194</code>): introduces a new <code>runtime.conf</code> config layer for
+  OVOS-internal runtime writes, so plugins/components stop corrupting the
+  user's <code>mycroft.conf</code>. Deprecates <code>RemoteConfig</code>. Explicit back-compat
+  commits on the branch promise <code>Configuration().remote</code> and
+  <code>load_config_stack(...)</code> keep working once this lands. Do not target
+  <code>AssistantConfig</code> yet. Watch the <code>ovos-config</code> release notes.</li>
+<li><strong>OVOS-PIPELINE-1 / STOP-1 / INTENT-4 conformance</strong> (<code>ovos-core</code>,
+  active on <code>dev</code> through at least 2026-08-01): the orchestrator is
+  taking over emitting <code>ovos.intent.handler.{start,complete,error}</code> around
+  every skill dispatch, and <code>ovos.intent.matched</code> before every dispatch.
+  Still landing incrementally under <code>legacy_namespace</code> gating. Not yet in
+  a numbered stable release.</li>
+<li>Unmerged <code>ovos-workshop</code> branches <code>feat/deprecate-ocp-skills</code>,
+  <code>feat/remove-skill-homescreens</code>, <code>feat/gameskill-and-ocp-deprecation</code>:
+  OCP-skill-base-class and skill-homescreen removal has not landed as of
+  this page's sources. Do not treat as shipped.</li>
+</ul>
+<hr />
+<h2 id="verification-gaps">Verification gaps<a class="headerlink" href="#verification-gaps" title="Permanent link">&para;</a></h2>
+<p>The following lifecycle phases could not be confirmed against the commit
+history this page is built from. Treat the corresponding table cells as
+"unverified" and re-check against the named repository's release history
+before relying on them:</p>
+<ul>
+<li><strong>ovos-utils</strong>: whether <code>ovos_utils.enclosure.mark1.*</code> (Mark1 hardware
+  display code) has an actual successor in <code>ovos-PHAL-plugin-mk1</code> or a
+  similar plugin. Whether <code>ovos_utils.gui.GUITracker</code> has a real successor
+  anywhere (for example inside <code>ovos-gui</code>). The exact mycroft-core commit
+  that performed the original <code>mycroft.* → ovos_*</code> rename predates
+  <code>ovos-utils</code>'s own history and was not located. Whether
+  <code>network_utils.is_connected()</code>'s targeted <code>2.0.0</code> removal has shipped.</li>
+<li><strong>ovos-workshop</strong>: whether <code>0613836</code> ("refactor the old patches module")
+  removed a public symbol. Whether the 2024-10-15/2024-10-11 lang-code
+  casing commits (<code>5aaf424</code>, <code>6843f0f</code>) changed behavior for skills
+  relying on lowercase region codes.</li>
+<li><strong>ovos-config</strong>: exact renamed/removed symbols in the <code>08c95a7</code> Selene
+  API refactor. Exact replacement environment variable names for the
+  deprecated <code>ovos.conf</code> <code>base_folder</code>/<code>config_filename</code> settings. Exact
+  key path that STT-embedded language preferences moved to in <code>ede6243</code>.
+  Whether the <code>f0c5cb1</code> partial-path CLI parsing change can silently
+  reinterpret a previously-valid <code>-k</code> argument.</li>
+<li><strong>ovos-core</strong>: the exact commit that finally deleted the
+  <code>mycroft-speech-client</code>/<code>mycroft-messagebus</code> legacy console-script entry
+  points (confirmed gone after <code>2a10fa9c1c</code>, but the specific removal
+  commit was not pinned). Whether <code>legacy_namespace</code> has since flipped its
+  default to <code>False</code>. The precise version at which <code>ready_setting</code>
+  (<code>ee97d74aba</code>) was fully removed rather than merely deprecated.</li>
+<li><strong>ovos-plugin-manager</strong>: pre-2022 function-name renames on
+  text-transformer <code>find_*</code>/<code>load_*</code> helpers (<code>33771d3</code>): direction
+  confirmed, literal old-name-to-new-name mapping not re-derived. Whether
+  the solver-family removal (deprecated in <code>53564ce</code>, target "next major")
+  has actually shipped yet.</li>
+<li><strong>ovos-media</strong>: whether a config toggle exists to restore
+  pre-<code>1306eb7</code>/<code>e07d655</code> "OCP ignores external MPRIS players" behavior.
+  Full symbol-level API diff of the <code>d249e89</code> <code>player.py</code> rewrite beyond
+  what the <code>f1d152c</code> regression fix incidentally revealed. The exact point
+  at which <code>ovos-media</code> became production-recommended over <code>ovos-audio</code>'s
+  classic <code>AudioService</code>.</li>
+<li><strong>ovos-audio</strong>: the exact mycroft-core commit/version that <code>047a0a1</code>
+  extracted <code>ovos_audio</code> from (no shared ancestor commit exists in this
+  repo's history).</li>
+<li><strong>ovos-bus-client</strong>: no <code>mycroft.conf</code> semantics change was found to
+  originate in this repo (it does not own config parsing). No explicit
+  "MycroftSkill → OVOSSkill" commit exists in this repo either (that
+  rename lives in <code>ovos-core</code>/<code>ovos-workshop</code>).</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.path", "navigation.prune", "navigation.top", "navigation.tracking", "navigation.instant", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate"], "search": "../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.fe8b6f2b.min.js"></script>
+      
+    
+  </body>
+</html>
