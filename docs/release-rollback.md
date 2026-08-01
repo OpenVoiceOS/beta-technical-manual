@@ -15,24 +15,24 @@ environment. If only one package regressed, you don't need the sledgehammer. Pin
 just that package instead:
 
 ```bash
-pip install "ovos-stt-plugin-whisper==<old-version>"
+uv pip install "ovos-stt-plugin-whisper==<old-version>"
 ```
 
-Or, if you're using a local constraints file (see
-[Release Channels: Offline and mirrored installs](release-channels.md#offline-and-mirrored-installs)),
-append an exact pin for that one package to it:
+That pin lives only in the installed environment. The next reinstall from a constraints
+file overwrites it with whatever range the channel allows. If you use a local constraints
+file (see [Release Channels: Offline and mirrored
+installs](release-channels.md#offline-and-mirrored-installs)), record the pin there in the
+same step, so it survives:
 
-```text
-ovos-stt-plugin-whisper==<old-version>
+```bash
+echo "ovos-stt-plugin-whisper==<old-version>" >> ~/ovos-constraints.txt
+uv pip install -c ~/ovos-constraints.txt "ovos-stt-plugin-whisper==<old-version>"
 ```
-
-so the pin survives the next time you reinstall from that constraints file, instead of
-being silently overwritten by the channel's range.
 
 Either way, you need to know what the old, working version was. Get it from your frozen
-snapshot with `grep ovos-stt-plugin-whisper known-good.txt` (see [Rolling Back](#rolling-back)
-below), or, if you didn't freeze one, from `pip show ovos-stt-plugin-whisper` run *before*
-you upgraded.
+snapshot with `grep ovos-stt-plugin-whisper /etc/ovos/known-good-<date>.txt` (see [Rolling
+Back](#rolling-back) below), or, if you didn't freeze one, from `uv pip show
+ovos-stt-plugin-whisper` run *before* you upgraded.
 
 Pinning the package alone isn't enough. The process that already loaded the old, broken
 version keeps running it in memory until it restarts. Restart whichever service loads that
@@ -53,20 +53,21 @@ Constraints files bound a channel's versions, but they don't record what *you* a
 installed before an upgrade. Before upgrading anything you care about, freeze what's currently working:
 
 ```bash
-uv pip freeze > known-good.txt
+sudo install -d -o "$USER" /etc/ovos          # once per device
+uv pip freeze > /etc/ovos/known-good-$(date +%F).txt
 ```
 
-This plain `known-good.txt` in the current directory is the single-machine form of the same
-convention [Staged Upgrades and Rollback](staged-upgrades.md#staged-upgrades-and-rollback) uses
-for a fleet: a dated, absolute path like `/etc/ovos/known-good-2026-07-01.txt`. Same pattern,
-just scaled from one machine to many.
+One dated file per freeze, at one absolute path, on every device — the same convention
+[Staged Upgrades and Rollback](staged-upgrades.md#staged-upgrades-and-rollback) uses for a
+fleet. Keep it out of your home directory: a rollback is often needed exactly when the
+account, the venv, or the whole home directory is what went wrong.
 
 If an upgrade misbehaves, `pip`/`uv` won't downgrade a package on their own just because a
 newer constraints file changed. An ordinary `install` call treats an already-satisfied
 requirement as nothing to do. Force the reinstall of the exact frozen versions instead:
 
 ```bash
-uv pip install --force-reinstall -r known-good.txt
+uv pip install --force-reinstall -r /etc/ovos/known-good-<date>.txt
 ```
 
 See [Staged Upgrades and Rollback](staged-upgrades.md#staged-upgrades-and-rollback)

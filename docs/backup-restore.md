@@ -37,15 +37,31 @@ system-wide (see [Locations](locations-ref.md#environment-variable-influence)).
 
 ### Backup recipe
 
-A copy is enough. Nothing here needs a database dump or a running service to stop first,
-though restarting the service afterward picks up any config changes made in the meantime:
+A copy is enough — none of this needs a database dump. Stop the assistant first:
 
 ```bash
+systemctl --user stop ovos.service
 BACKUP_DIR=~/ovos-backup-$(date +%F)
 mkdir -p "$BACKUP_DIR"
 cp -a ~/.config/mycroft "$BACKUP_DIR/config"
 cp -a ~/.local/share/mycroft "$BACKUP_DIR/data"
+systemctl --user start ovos.service
 ```
+
+!!! warning "Do not copy these directories while the assistant is running"
+    Both writers truncate the file and then stream JSON into it: `LocalConf.store()` in
+    `ovos-config` for `mycroft.conf`, and `JsonStorage.store()` in `json_database` for
+    per-skill `settings.json`. Neither writes to a temporary file and renames it, so there
+    is a window in which the file on disk is half-written. A `cp` that lands in that window
+    copies a truncated file, and the backup then looks fine until the day you restore it.
+
+    A skill writes its settings whenever `self.settings` changes — a `settings.json` edit,
+    a settings-meta change from the web UI, or the skill's own code. That is rare, so a
+    live copy usually works, which is exactly what makes the failure hard to trace. Stop
+    the service instead.
+
+If you cannot take the downtime, copy to a snapshot of the filesystem (LVM, btrfs, ZFS)
+and back that up, rather than copying the live directories.
 
 `mycroft.conf` can contain plaintext API keys and tokens (see
 [Privacy & Security: mycroft.conf can contain plaintext secrets](privacy-security.md#mycroftconf-can-contain-plaintext-secrets)).
@@ -68,6 +84,22 @@ public repository.
 4. Restart: `systemctl --user start ovos.service`, then re-run the
    [readiness probe](production-operations.md#knowing-when-the-assistant-is-actually-ready)
    before relying on the device.
+
+### Across a fleet
+
+The recipe above is per device, and it takes each device down for the length of a copy. Run
+it the same way you roll out an upgrade: one canary first, restored and verified end to end,
+then the rest — see [Staged Upgrades and
+Rollback](staged-upgrades.md#staged-upgrades-and-rollback) for that pattern. Verify each
+device's [readiness probe](production-operations.md#knowing-when-the-assistant-is-actually-ready)
+individually. A restore that succeeded on the canary can still fail on a device whose
+hardware config differs.
+
+What each device holds that no other device does is its own `~/.config/mycroft/mycroft.conf`
+and its skills' settings. Anything fleet-wide belongs in the system config layer instead
+(`/etc/mycroft/mycroft.conf`, see [one config for many
+devices](production-operations.md#one-config-for-many-devices-the-system-config-layer)),
+which you back up once rather than 40 times.
 
 Skills themselves are not part of this backup. They are Python packages, reinstalled the same
 way they were installed originally (see [Skill Installer](skill-installer.md) or your own

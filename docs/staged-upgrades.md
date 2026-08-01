@@ -13,8 +13,9 @@ back up the config, freeze the current package set, upgrade, and verify.
 
 ```bash
 # 1. Back up config and freeze the current package set, in case you need to go back
+sudo install -d -o "$USER" /etc/ovos          # once per device
 cp ~/.config/mycroft/mycroft.conf ~/.config/mycroft/mycroft.conf.bak-$(date +%F)
-uv pip freeze > ~/ovos-known-good-$(date +%F).txt
+uv pip freeze > /etc/ovos/known-good-$(date +%F).txt
 
 # 2. Upgrade against a pinned constraints file (stays within one release channel)
 uv pip install --upgrade ovos-core[mycroft] \
@@ -25,7 +26,7 @@ systemctl --user restart ovos.service
 ```
 
 If it misbehaves, roll back the same way as in the fleet recipe:
-`uv pip install --force-reinstall -r ~/ovos-known-good-<date>.txt`, then restart the service.
+`uv pip install --force-reinstall -r /etc/ovos/known-good-<date>.txt`, then restart the service.
 See [Staged upgrades and rollback](#staged-upgrades-and-rollback) for why `--force-reinstall`
 is required on rollback, and [Rolling Back an OVOS Upgrade: Pinning or rolling back a single
 package](release-rollback.md#pinning-or-rolling-back-a-single-package) if only one package
@@ -70,6 +71,7 @@ restarting just that one package across the fleet.
 
 ```bash
 # 1. Freeze exactly what's currently installed, in case you need to go back
+sudo install -d -o "$USER" /etc/ovos          # once per device
 uv pip freeze > /etc/ovos/known-good-$(date +%F).txt
 cp ~/.config/mycroft/mycroft.conf ~/.config/mycroft/mycroft.conf.bak-$(date +%F)
 
