@@ -170,7 +170,7 @@ and the new key, preferring the new one.
 Persona files are the shipped example: solver-style handler lists used the key
 `"solvers"`. Newer configs use `"handlers"`, and `ovos-persona` accepts both so a
 persona JSON shared across a mixed fleet keeps working during migration (see
-[Building Agent Plugins](building-agent-plugins.md#solver-plugins-legacy)):
+[Building Agent Plugins](building-agent-plugins.md#migrating-a-solver-plugin-to-an-agent-engine)):
 
 ```json
 {

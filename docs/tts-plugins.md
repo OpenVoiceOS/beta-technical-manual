@@ -90,6 +90,7 @@ separately-licensed model or a paid cloud service, that is called out under "mod
 | [ovos-tts-plugin-edge-tts](#ovos-tts-plugin-edge-tts) | TTS plugin for [OVOS](https://openvoiceos.org) based on [Edge-TTS](https://github.com/rany2/edge-tts) | Apache-2.0 | Stable |
 | [ovos-tts-plugin-matxa-multispeaker-cat](#ovos-tts-plugin-matxa-multispeaker-cat) | [Matxa-TTS](https://huggingface.co/projecte-aina/matxa-tts-cat-multiaccent), the multispeaker, multidialectal neural TTS model. It works together with the vocoder model [alVoCat](https://huggingface.co/projecte-aina/alvocat-vocos-22khz) to generate speech in four Catalan dialects. Warning: archived, deprecated. | Apache-2.0 (model: see model card) | Deprecated |
 | [ovos-tts-plugin-marytts](#ovos-tts-plugin-marytts) | TTS Plugin for [MaryTTS](https://github.com/marytts/marytts) | Apache-2.0 | Stable |
+| [ovos-tts-plugin-piper](#ovos-tts-plugin-piper) | Offline neural TTS with the [Piper](https://github.com/rhasspy/piper) engine. Default TTS on the raspOVOS hybrid/offline images. | Apache-2.0 | Stable |
 | [ovos-tts-plugin-espeakNG](#ovos-tts-plugin-espeakng) | eSpeak NG offline text-to-speech (robotic, supports many languages). | GPL-3.0 | Mature |
 | [ovos-tts-plugin-beepspeak](#ovos-tts-plugin-beepspeak) | Novelty R2-D2-style beep text-to-speech. | see repo (no license file) | Stable |
 | [ovos-tts-plugin-cotovia](#ovos-tts-plugin-cotovia) | OVOS TTS plugin for [Cotovia TTS](http://gtm.uvigo.es/cotovia) | Apache-2.0 | Mature |
@@ -184,6 +185,14 @@ Maturity reflects repository health (age, activity, open issues/PRs, in-repo doc
 ```
 
 ---
+
+## ovos-tts-plugin-piper
+
+- **GitHub**: [https://github.com/OpenVoiceOS/ovos-tts-plugin-piper](https://github.com/OpenVoiceOS/ovos-tts-plugin-piper)
+
+- **Description**: Offline neural TTS using the [Piper](https://github.com/rhasspy/piper) engine (ONNX voices). This is the default TTS on the raspOVOS `hybrid` and `offline` images.
+
+- **Config**: set `"module": "ovos-tts-plugin-piper"` in the `tts` block. A `"voice"` key selects a specific Piper voice model; without it the plugin picks a voice for the configured language.
 
 ## ovos-tts-plugin-marytts
 
