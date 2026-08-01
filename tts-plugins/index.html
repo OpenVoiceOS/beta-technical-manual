@@ -1343,6 +1343,7 @@
     B --&gt; F[phonemes]
     F --&gt; G["viseme()"]
     G --&gt; H[mouth animation]</code></pre>
+<p><em>Diagram:</em> The flow starts at the input sentence and ends at either playback or mouth animation, and get_tts() branches the output into an audio file for the playback commands and a phoneme list for the viseme mouth animation.</p>
 <div class="admonition note">
 <p class="admonition-title">Audio format contract</p>
 <p>A TTS plugin is the <strong>producer</strong> end of the audio path, so it picks the format rather than
@@ -2011,6 +2012,7 @@ the full precedence rules.</p>
         B3 --&gt;|true| B4[ovos-audio plays chunks as they arrive]
         B3 --&gt;|false| B5[Write full wav_file, then play: queued path]
     end</code></pre>
+<p><em>Diagram:</em> The chunking flow starts at a long reply and ends with the first sentence playing while the rest synthesizes, and the streaming flow starts at a sentence and branches on tts.enable_streaming between chunk playback in ovos-audio and the queued full-wav path.</p>
 <p><strong>Sentence chunking ("fake streaming").</strong> Long replies are split into sentences before
 synthesis, so the first sentence plays while the rest still synthesizes. This works with
 EVERY TTS plugin because the chunking happens before the engine runs. It is opt-in today:

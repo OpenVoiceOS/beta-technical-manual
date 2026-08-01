@@ -1564,6 +1564,7 @@ stable interface without knowing about each other. See the
     BUS --- MEDIA["ovos-media&lt;br/&gt;standalone media-playback (opt-in, PoC)"]
     BUS --- GUI["ovos-gui&lt;br/&gt;GUI layer"]
     BUS --- PHAL["ovos-phal&lt;br/&gt;hardware/platform plugins"]</code></pre>
+<p><em>Diagram: the messagebus sits at the center, with ovos-core (and its SkillManager, IntentService, transformer chains, and pipeline plugins), ovos-dinkum-listener, ovos-audio, ovos-media, ovos-gui, and ovos-phal each connected to it as independent clients.</em></p>
 <p>Of the six <a href="../transformer-plugins/">transformer chains</a>, only utterance, metadata, and intent
 run inside <code>IntentService</code> above. The other three run elsewhere in the pipeline: audio
 transformers run in <code>ovos-dinkum-listener</code> before STT, and dialog and TTS transformers run in

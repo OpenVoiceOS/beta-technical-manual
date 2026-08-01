@@ -1811,6 +1811,7 @@
     C-&gt;&gt;S1: {skill_id}.converse.request (first willing skill)
     S1--&gt;&gt;C: converse() returns True
     C--&gt;&gt;O: utterance consumed, skill reactivated</code></pre>
+<p><em>Diagram: the orchestrator hits the converse stage, ConverseService pings each active skill in priority order for a pong, then sends a converse request to the first willing skill, ending with the utterance consumed and that skill reactivated.</em></p>
 <ol>
 <li>
 <p><code>converse</code> stage is hit in the pipeline</p>

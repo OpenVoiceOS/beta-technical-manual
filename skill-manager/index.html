@@ -1594,6 +1594,7 @@ are met:</p>
     A["load_plugin_skills()"] --&gt; B["find_skill_plugins()&lt;br/&gt;{skill_id: SkillClass}"]
     B --&gt; C["_get_plugin_skill_loader(skill_id, skill_class)&lt;br/&gt;build a PluginSkillLoader"]
     C --&gt; D["_load_plugin_skill(skill_id, skill_class)&lt;br/&gt;instantiate &amp; start the skill"]</code></pre>
+<p><em>Diagram: skill loading runs left to right from load_plugin_skills, through find_skill_plugins and building a PluginSkillLoader, to _load_plugin_skill instantiating and starting the skill.</em></p>
 <p>Each skill gets its own bus connection when <code>websocket.shared_connection</code> is <code>false</code> in config (see <code>_get_internal_skill_bus()</code>), providing isolation from "BusBricker" style attacks.</p>
 <h2 id="blacklisting">Blacklisting<a class="headerlink" href="#blacklisting" title="Permanent link">&para;</a></h2>
 <p>Skills listed in <code>skills.blacklisted_skills</code> in <code>mycroft.conf</code> are skipped at load time. The recommended approach is to uninstall unwanted skills rather than blacklist them.</p>

@@ -11,7 +11,7 @@
         <link rel="canonical" href="https://tigregotico.github.io/ovos-technical-manual/agentic-loop/">
       
       
-        <link rel="prev" href="../advanced-solvers/">
+        <link rel="prev" href="../building-agent-plugins/">
       
       
         <link rel="next" href="../tool-plugins/">
@@ -1422,6 +1422,7 @@ or hits <code>max_iterations</code>:</p>
     Observe --&gt; Think: result fed back into context
     Think --&gt; Answer: brain has enough to reply
     Answer --&gt; [*]</code></pre>
+<p><em>Diagram:</em> The loop starts at Think and ends at Answer, branching to a ToolCall and Observe cycle whenever the brain decides a tool is needed before it has enough to reply.</p>
 <div class="admonition tip">
 <p class="admonition-title">Which loop should I pick?</p>
 <ul>

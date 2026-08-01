@@ -1680,10 +1680,12 @@ streams. See the <strong>Two independent subsystems</strong> note at the top of 
     TXForm --&gt; Queue
     Queue --&gt; Thread[PlaybackThread]
     Thread --&gt;|ALSA/Pulse| Speakers[Speakers]</code></pre>
+<p><em>Diagram:</em> The flow starts at the message bus and ends at the speakers, and it branches so that a play_sound event skips the dialog- and TTS-transformers and joins the queue directly.</p>
 <h3 id="subsystem-2-legacy-media-audioservice-only-if-enable_old_audioservice">Subsystem 2 — legacy media audioservice (only if <code>enable_old_audioservice</code>)<a class="headerlink" href="#subsystem-2-legacy-media-audioservice-only-if-enable_old_audioservice" title="Permanent link">&para;</a></h3>
 <pre class="mermaid"><code>flowchart LR
     Bus2[MessageBus] --&gt;|mycroft.audio.service.play| AS[AudioService]
     AS --&gt; Backend["audioservice backend: OCP / mpv / vlc"]</code></pre>
+<p><em>Diagram:</em> The flow starts at the message bus and ends at the audioservice backend, and it routes the mycroft.audio.service.play event through the AudioService to one of OCP, mpv, or vlc.</p>
 <h2 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">&para;</a></h2>
 <p>Settings for the audio service are located in the <code>tts</code> and <code>Audio</code> sections of <code>mycroft.conf</code>,
 plus two <strong>top-level</strong> toggles (<code>enable_old_audioservice</code>, <code>disable_ocp</code>) that gate the

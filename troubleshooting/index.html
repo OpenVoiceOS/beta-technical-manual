@@ -1597,6 +1597,7 @@ need no extra install. Then reach for <code>ovos-busmon</code> when you want eve
     S5 -- clean --&gt; S6{"Stage 6: TTS spoke?\novos.utterance.speak"}
     S6 -- no --&gt; F6["check TTS plugin / audio sink"]
     S6 -- yes --&gt; Done["utterance handled correctly"]</code></pre>
+<p><em>Diagram:</em> The flow starts at Stage 1, checking whether the bus is reachable, and ends at "utterance handled correctly," and it branches at each of the six stages to a fix action whenever that stage's check fails.</p>
 <p>Each stage below cites the exact log line and bus message shown in this diagram, plus the
 command to check it directly.</p>
 <h2 id="where-the-logs-live">Where the logs live<a class="headerlink" href="#where-the-logs-live" title="Permanent link">&para;</a></h2>

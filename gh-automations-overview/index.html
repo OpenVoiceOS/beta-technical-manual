@@ -1808,6 +1808,7 @@ full diagram of this same pipeline.</p>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">OpenVoiceOS/gh-automations/.github/workflows/&lt;name&gt;.yml@dev</span>
 </span></code></pre></div>
 <p>The filename below is the actual file in this repo (the <code>&lt;name&gt;.yml</code>). The name of the wrapper workflow in your own repo is up to you.</p>
+<p>Each table below names the PR-comment section a workflow posts. The bot prefixes every section title with an emoji marker; the tables give the title text only.</p>
 <h3 id="release">Release<a class="headerlink" href="#release" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
@@ -1827,7 +1828,7 @@ full diagram of this same pipeline.</p>
 </tr>
 <tr>
 <td><code>release-preview.yml</code></td>
-<td>Predict the next version from PR labels/title. Post a <code>🏷️ Release Preview</code> section.</td>
+<td>Predict the next version from PR labels/title. Post a <code>Release Preview</code> section.</td>
 </tr>
 </tbody>
 </table>
@@ -1842,27 +1843,27 @@ full diagram of this same pipeline.</p>
 <tbody>
 <tr>
 <td><code>build-tests.yml</code></td>
-<td>Build/install/test matrix across Python versions. Posts <code>🔨 Build Tests</code>.</td>
+<td>Build/install/test matrix across Python versions. Posts <code>Build Tests</code>.</td>
 </tr>
 <tr>
 <td><code>coverage.yml</code></td>
-<td>Run pytest with coverage. Post <code>📊 Coverage</code>. Optionally deploy the HTML report to Pages (<code>deploy_pages: true</code>).</td>
+<td>Run pytest with coverage. Post <code>Coverage</code>. Optionally deploy the HTML report to Pages (<code>deploy_pages: true</code>).</td>
 </tr>
 <tr>
 <td><code>ovoscope.yml</code></td>
-<td>Run <a href="../ovoscope-overview/">ovoscope</a> end-to-end skill tests. Post <code>🔌 Skill Tests (ovoscope)</code>.</td>
+<td>Run <a href="../ovoscope-overview/">ovoscope</a> end-to-end skill tests. Post <code>Skill Tests (ovoscope)</code>.</td>
 </tr>
 <tr>
 <td><code>intent-case-tests.yml</code></td>
-<td>Run the file-based ovoscope intent-routing accuracy matrix (sharded by language). Post <code>🎯 Intent-Case Accuracy</code>.</td>
+<td>Run the file-based ovoscope intent-routing accuracy matrix (sharded by language). Post <code>Intent-Case Accuracy</code>.</td>
 </tr>
 <tr>
 <td><code>tts-intelligibility.yml</code></td>
-<td>Synthesise speech, transcribe it back with reference STT, and score WER/CER. Post <code>🗣️ TTS Intelligibility</code>.</td>
+<td>Synthesise speech, transcribe it back with reference STT, and score WER/CER. Post <code>TTS Intelligibility</code>.</td>
 </tr>
 <tr>
 <td><code>opm-check.yml</code></td>
-<td>OPM (OVOS Plugin Manager) plugin detection, interface validation, and import timing. Post <code>🔌 Plugin Detection</code>.</td>
+<td>OPM (OVOS Plugin Manager) plugin detection, interface validation, and import timing. Post <code>Plugin Detection</code>.</td>
 </tr>
 </tbody>
 </table>
@@ -1877,11 +1878,11 @@ full diagram of this same pipeline.</p>
 <tbody>
 <tr>
 <td><code>license-check.yml</code></td>
-<td>Scan dependencies for copyleft/incompatible licenses (universal-donor policy). Post <code>⚖️ License Check</code>.</td>
+<td>Scan dependencies for copyleft/incompatible licenses (universal-donor policy). Post <code>License Check</code>.</td>
 </tr>
 <tr>
 <td><code>pip-audit.yml</code></td>
-<td>Scan installed dependencies for CVEs, with optional SARIF upload. Post <code>🔒 Security (pip-audit)</code>.</td>
+<td>Scan installed dependencies for CVEs, with optional SARIF upload. Post <code>Security (pip-audit)</code>.</td>
 </tr>
 <tr>
 <td><code>lint.yml</code></td>
@@ -1889,15 +1890,15 @@ full diagram of this same pipeline.</p>
 </tr>
 <tr>
 <td><code>type-check.yml</code></td>
-<td>Run mypy. Post <code>🔎 Type Check</code> (informational unless <code>fail_on_errors: true</code>).</td>
+<td>Run mypy. Post <code>Type Check</code> (informational unless <code>fail_on_errors: true</code>).</td>
 </tr>
 <tr>
 <td><code>docs-check.yml</code></td>
-<td>Verify required docs files exist, with optional markdownlint. Post <code>📚 Docs</code>.</td>
+<td>Verify required docs files exist, with optional markdownlint. Post <code>Docs</code>.</td>
 </tr>
 <tr>
 <td><code>repo-health.yml</code></td>
-<td>Check required files and the version block, and greet first-time contributors. Post <code>📋 Repo Health</code>.</td>
+<td>Check required files and the version block, and greet first-time contributors. Post <code>Repo Health</code>.</td>
 </tr>
 </tbody>
 </table>
@@ -1912,7 +1913,7 @@ full diagram of this same pipeline.</p>
 <tbody>
 <tr>
 <td><code>skill-check.yml</code></td>
-<td>Locale structure, language coverage, <code>skill.json</code> validity. Post <code>🎙️ Skill</code>.</td>
+<td>Locale structure, language coverage, <code>skill.json</code> validity. Post <code>Skill</code>.</td>
 </tr>
 <tr>
 <td><code>locale-check.yml</code></td>

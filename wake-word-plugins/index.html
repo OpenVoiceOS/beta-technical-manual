@@ -1934,6 +1934,7 @@ default) auto-enables the main wake word (<code>listener.wake_word</code>) and t
     F --&gt;|yes| G["Stop word: ends free RECORDING mode"]
     F --&gt;|no| H{"active: true?"}
     H --&gt;|yes| I["Plain hotword: sound / bus event, no STT"]</code></pre>
+<p><em>Diagram:</em> The flow starts at the hotword entry in mycroft.conf and ends at one of four outcomes, and it branches in sequence through the listen, wakeup, stopword, and active checks to pick the matching hotword type.</p>
 <table>
 <thead>
 <tr>
@@ -2038,6 +2039,7 @@ audio and suppress false detections before any callback runs. Verifiers implemen
     A[Wake word engine fires] --&gt; B["HotWordVerifier.verify()"]
     B --&gt;|"False"| C[Detection suppressed]
     B --&gt;|"True, or exception raised (fail open)"| D[Detection proceeds, callback runs]</code></pre>
+<p><em>Diagram:</em> The flow starts when the wake word engine fires and ends with the detection either suppressed or proceeding to run the callback, and it branches on the HotWordVerifier.verify() result, failing open on exception.</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>&quot;listener&quot;: {
 </span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>  &quot;ww_verifiers&quot;: {
 </span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>    &quot;ovos-ww-verifier-plugin-speaker&quot;: {&quot;threshold&quot;: 0.1}

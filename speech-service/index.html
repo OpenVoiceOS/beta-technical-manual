@@ -1637,6 +1637,7 @@
     Rec --&gt;|audio| XForm["Audio-transformer chain (TRANSFORM-1 §3.1)"]
     XForm --&gt; STT[STT Plugin]
     STT --&gt;|text, emits ovos.utterance.handle| Bus[MessageBus]</code></pre>
+<p><em>Diagram:</em> The flow starts at the microphone and ends at the message bus, and it routes audio through the audio-transformer chain before the STT plugin converts it to text.</p>
 <h2 id="listening-state-machine">Listening State Machine<a class="headerlink" href="#listening-state-machine" title="Permanent link">&para;</a></h2>
 <p><code>DinkumVoiceLoop</code> is a per-chunk state machine, not a single "listen" call. It has a
 global <strong>mode</strong> (set in <code>listener.mode</code> / over the bus) and an internal <strong>state</strong> that

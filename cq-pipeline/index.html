@@ -1548,6 +1548,7 @@ a question.</p>
     S2--&gt;&gt;P: question:query.response (answer, conf)
     P-&gt;&gt;P: select best (reranker or self conf)
     P-&gt;&gt;S1: question:action.&lt;skill_id&gt;</code></pre>
+<p><em>Diagram: CommonQAService broadcasts question:query to Skill A and Skill B, collects their query.response answers (one skill can extend its search time), then selects the best answer and dispatches question:action to the winning skill.</em></p>
 <p>The matcher class is <code>CommonQAService</code> (a <code>PipelinePlugin</code>, so it exposes a single
 <code>match()</code>, hence the one <code>ovos-common-query-pipeline-plugin</code> ID, not high/medium/low tiers).</p>
 <ol>

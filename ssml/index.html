@@ -1744,19 +1744,16 @@
 
 
 <h1 id="ssmlbuilder">SSMLBuilder<a class="headerlink" href="#ssmlbuilder" title="Permanent link">&para;</a></h1>
-<div class="admonition info">
-<p class="admonition-title">Maturity: Alpha</p>
-<p>See the <a href="../maturity/">Maturity Scale</a>. SSML handling works end to end, but almost no
-TTS plugin acts on the tags, so treat every SSML effect as optional polish.</p>
-</div>
 <div class="admonition warning">
-<p class="admonition-title">Experimental — most TTS plugins do not support SSML</p>
-<p>SSML support is an <strong>experimental</strong>, engine-dependent feature, not a universal one. Most
-TTS plugins ignore or strip SSML tags entirely rather than acting on them. Currently only
-the <strong>espeakNG</strong> and <strong>Amazon Polly</strong> plugins actually interpret SSML markup. Every other
-plugin just reads the plain words underneath. Sending SSML is always harmless (unsupported
-tags are stripped), but do not build a skill that <em>depends</em> on SSML for meaning. If a
-voice effect matters, choose a TTS plugin/voice that can actually produce it instead.</p>
+<p class="admonition-title">Maturity: Alpha — most TTS plugins do not support SSML</p>
+<p>See the <a href="../maturity/">Maturity Scale</a>. SSML handling works end to end, but almost no
+TTS plugin acts on the tags, so treat every SSML effect as optional polish. SSML support
+is <strong>experimental</strong> and engine-dependent, not universal. Most TTS plugins ignore or strip
+SSML tags entirely rather than acting on them. Currently only the <strong>espeakNG</strong> and
+<strong>Amazon Polly</strong> plugins actually interpret SSML markup; every other plugin just reads
+the plain words underneath. Sending SSML is always harmless (unsupported tags are
+stripped), but do not build a skill that <em>depends</em> on SSML for meaning. If a voice
+effect matters, choose a TTS plugin/voice that can actually produce it instead.</p>
 </div>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>

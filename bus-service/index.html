@@ -1896,6 +1896,7 @@
     MB --- CORE["ovos-core"]
     MB --- AUDIO["ovos-audio"]
     MB --- GUI["ovos-gui"]</code></pre>
+<p><em>Diagram: ovos-messagebus's Tornado IOLoop drives a MessageBusEventHandler that fans out messages via client_connections, with ovos-core, ovos-audio, and ovos-gui connected as example clients.</em></p>
 <p>The clients above connect via <code>ovos-bus-client</code>.</p>
 <p>The broker itself has no logic beyond fan-out: it holds a list of open WebSocket connections and,
 for every message any one client sends, writes that same message to every other open connection.
@@ -1916,6 +1917,7 @@ connect and take part with the same permissions as any other client.</p>
     C1-&gt;&gt;Bus: emit Message
     Bus-&gt;&gt;C1: broadcast Message (fan-out, includes sender)
     Bus-&gt;&gt;C2: broadcast Message (fan-out)</code></pre>
+<p><em>Diagram: Client A opens a WebSocket connection and gets a connected reply, then emits a Message that the bus broadcasts back to Client A and out to Client B.</em></p>
 <hr />
 <h2 id="running-the-server">Running the Server<a class="headerlink" href="#running-the-server" title="Permanent link">&para;</a></h2>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>ovos-messagebus
@@ -2238,6 +2240,7 @@ and the new names interoperate transparently while the ecosystem moves over.</p>
     Client-&gt;&gt;Client: on_message: NamespaceTranslator lookup
     Client-&gt;&gt;LegacyHandler: dispatch recognizer_loop:utterance
     Client-&gt;&gt;SpecHandler: locally re-dispatch ovos.utterance.handle</code></pre>
+<p><em>Diagram: a producer emits the legacy recognizer_loop:utterance topic, the bus broadcasts it unchanged, and each receiving MessageBusClient uses the NamespaceTranslator to dispatch it to both the legacy handler and, re-dispatched locally, the spec ovos.utterance.handle handler.</em></p>
 <ul>
 <li>A single logical <code>emit()</code> sends exactly <strong>one</strong> message over the websocket: the topic the
   caller actually chose.</li>

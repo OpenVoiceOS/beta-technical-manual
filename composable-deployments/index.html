@@ -1863,6 +1863,7 @@ just needs a speech primitive over the network.</p>
     GUI &lt;-- websocket.host=A --&gt; BUS
     HIVE &lt;-- websocket.host=A --&gt; BUS
     SAT -. HiveMind protocol .-&gt; HIVE</code></pre>
+<p><em>Diagram: an example four-host topology where the listener, audio, core, skill, PHAL, GUI, and hivemind-core services on Hosts A-D all connect to one shared messagebus on Host A, while a remote hivemind-mic-satellite reaches hivemind-core over the separate HiveMind protocol.</em></p>
 <div class="admonition warning">
 <p class="admonition-title">Trust boundary: the bus and HIVE links are localhost/LAN only</p>
 <p>Every <code>&lt;-- websocket.host=A --&gt;</code> link in the diagram above (including the <code>HIVE</code> connection)

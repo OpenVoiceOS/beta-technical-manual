@@ -1596,6 +1596,7 @@ padatious, and adapt, and stops at the first one confident enough to handle the 
     MATCH --&gt;|match found| MATCHED["ovos.intent.matched (§9.2) → dispatch → handler trio (§8)"]
     MATCH --&gt;|no match| MATCH
     MATCH --&gt;|no plugin matched| UNMATCHED["ovos.intent.unmatched (§9.3,&lt;br/&gt;legacy: complete_intent_failure)"]</code></pre>
+<p><em>Diagram: an incoming ovos.utterance.handle message flows through utterance and metadata transformers, language and session resolution, and the ordered pipeline-plugin match loop, ending in either a dispatched ovos.intent.matched or, if no plugin matches, ovos.intent.unmatched.</em></p>
 <p>Reading top to bottom: an incoming utterance is first reshaped by the utterance- and
 metadata-transformer chains. Then the best language and a <code>Session</code> are resolved once, up
 front. Every pipeline plugin after that point sees the same already-prepared utterance,

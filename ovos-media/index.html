@@ -2157,6 +2157,7 @@ daemon described here, which is the target:</p>
     Media --&gt; MPRIS
     Media --&gt; Backends["Media backend plugins"]
     Media --&gt; GUI["GUI (still coupled, target: GUI adapter plugins)"]</code></pre>
+<p><em>Diagram: the intent pipeline routes to either the legacy <code>ovos-ocp-audio-plugin</code> or the standalone <code>ovos-media</code> daemon, which drives the player state machine, MPRIS, backend plugins, and the GUI.</em></p>
 <hr />
 <h2 id="ocp-pipeline-plugin">OCP Pipeline Plugin<a class="headerlink" href="#ocp-pipeline-plugin" title="Permanent link">&para;</a></h2>
 <p><strong>Package:</strong> import name <code>ocp_pipeline</code> (PyPI distribution <code>ovos-ocp-pipeline-plugin</code>)
@@ -2176,6 +2177,7 @@ It does NOT handle playback.</p>
     Skills--&gt;&gt;Pipeline: ovos.common_play.query.response
     Note over Pipeline: Sort by score,&lt;br/&gt;pick best result
     Pipeline-&gt;&gt;Player: ovos.common_play.play</code></pre>
+<p><em>Diagram: the pipeline classifies the media type, queries OCP skills, picks the best-scoring result, and hands it to the active player.</em></p>
 <ol>
 <li>
 <p><strong>Classification</strong>: determines the media type (music, podcast, radio, video, audiobook, news, etc.)

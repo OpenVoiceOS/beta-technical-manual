@@ -1515,6 +1515,7 @@ OpenVoiceOS, from the moment sound hits the microphone to the final spoken respo
     Audio-&gt;&gt;Audio: dialog transformer + TTS + tts-transformer
     Audio-&gt;&gt;Speakers: play WAV / update GUI
     Core-&gt;&gt;Bus: ovos.utterance.handled</code></pre>
+<p><em>Diagram: a sequence from the microphone capturing raw audio through wake-word detection, STT, and the pipeline match (stop, converse, OCP, padatious, adapt, fallback) in ovos-core, to a skill's intent handler, TTS playback in ovos-audio, and the final ovos.utterance.handled event.</em></p>
 <hr />
 <h2 id="1-capture-and-wake-word-detection">1. Capture and <a href="../wake-word-plugins/">Wake Word</a> Detection<a class="headerlink" href="#1-capture-and-wake-word-detection" title="Permanent link">&para;</a></h2>
 <p><strong>Service:</strong> <code>ovos-dinkum-listener</code> (or similar)

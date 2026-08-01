@@ -14,7 +14,7 @@
         <link rel="prev" href="../agent-plugins/">
       
       
-        <link rel="next" href="../advanced-solvers/">
+        <link rel="next" href="../agentic-loop/">
       
       
       <link rel="icon" href="https://github.com/OpenVoiceOS/ovos_assets/blob/master/Logo/ovos-logo-512.png?raw=true">
@@ -1111,27 +1111,6 @@
 
               
             
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../advanced-solvers/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Specialized Agent Engines
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
           </ul>
         </nav>
       
@@ -1537,7 +1516,7 @@ beyond the one base class.</p>
 <p class="admonition-title">Version requirement</p>
 <p>The <code>opm.agents.*</code> groups need <strong><code>ovos-plugin-manager &gt;= 2.3.0a1</code></strong> (cap below
 <code>&lt;3.0.0</code>). The legacy <code>QuestionSolver</code> family (<code>opm.solver.*</code>) is deprecated. See the
-migration map in <a href="../advanced-solvers/#deprecated-solver-types">Specialized Agent Engine Types</a>.</p>
+migration map in <a href="../agent-plugins/#deprecated-solver-types">Deprecated Solver Types</a>.</p>
 </div>
 <hr />
 <h2 id="which-base-class-do-i-need">Which base class do I need?<a class="headerlink" href="#which-base-class-do-i-need" title="Permanent link">&para;</a></h2>
@@ -1652,6 +1631,7 @@ retrieval at all.</p>
     W --&gt;|owns a local index it builds itself| Own{What shape is the data?}
     Own --&gt;|free-text documents| DIE["DocumentIndexerEngine: ingest_corpus(List[str])"]
     Own --&gt;|question/answer pairs| QAIE["QAIndexerEngine: ingest_corpus(Dict[question, answer])"]</code></pre>
+<p><em>Diagram:</em> The decision starts by asking whether the plugin brings its own knowledge, and ends at one of three engine choices, branching on whether the data lives externally, is free-text documents, or is question/answer pairs.</p>
 <p><strong><code>RetrievalEngine</code></strong> is the parent contract: one method,
 <code>query(query, lang, k) -&gt; List[Tuple[str, float]]</code>, which returns up to <code>k</code>
 <code>(content, score)</code> pairs. Subclass it directly when the knowledge lives somewhere the
@@ -1901,7 +1881,7 @@ else in the stack. See <a href="../personas/">Agents &amp; Personas</a> for the 
 <h2 id="migrating-a-solver-plugin-to-an-agent-engine">Migrating a solver plugin to an agent engine<a class="headerlink" href="#migrating-a-solver-plugin-to-an-agent-engine" title="Permanent link">&para;</a></h2>
 <p>The old <code>QuestionSolver</code> family (<code>opm.solver.*</code> entry points, classes in
 <code>ovos_plugin_manager.templates.solvers</code>) is deprecated. The entry-point-to-class mapping
-lives in <a href="../advanced-solvers/#deprecated-solver-types">Specialized Agent Engine Types</a>.
+lives in <a href="../agent-plugins/#deprecated-solver-types">Deprecated Solver Types</a>.
 This section covers the code changes, which are small but not mechanical.</p>
 <p><strong>1. Pick the new base class.</strong></p>
 <table>
@@ -2057,8 +2037,7 @@ release, and new plugins must not use them.</p>
 </ol>
 <h2 id="related-pages">Related pages<a class="headerlink" href="#related-pages" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="../agent-plugins/">Agent Engine Types</a>: group/base-class reference and plugin catalog</li>
-<li><a href="../advanced-solvers/">Specialized Agent Engine Types</a>: per-engine API details, config
+<li><a href="../agent-plugins/#agent-engine-types">Agent Engine Types</a>: per-engine API details, config
   examples, and the solver migration map</li>
 <li><a href="../personas/">Agents &amp; Personas</a>: how personas compose the engines you build</li>
 <li><a href="../tool-plugins/">Agent Tool Plugins</a>: the <code>ToolBox</code> walkthrough</li>

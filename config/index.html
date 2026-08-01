@@ -1915,6 +1915,7 @@ the full picture.</p>
     D --&gt; E[MycroftUserConfig&lt;br/&gt;~/.config/mycroft/mycroft.conf]
     E --&gt; F[__patch&lt;br/&gt;in-memory overlay]
     F --&gt; W[Wins: highest priority]</code></pre>
+<p><em>Diagram:</em> The merge order starts at the bundled default config and ends at the in-memory patch, which wins as the highest priority over remote, distribution, system, and user layers.</p>
 <p>The XDG user layer is actually a list of configs (one per XDG config dir, for example
 <code>/etc/xdg/mycroft/mycroft.conf</code> plus <code>~/.config/mycroft/mycroft.conf</code>), all merged
 in order. All layers are <code>LocalConf</code> dict subclasses backed by a file. Only the user

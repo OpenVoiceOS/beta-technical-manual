@@ -1339,6 +1339,7 @@ disambiguation routine to decide which language to use for intent matching.</p>
     D -- no / invalid --&gt; F[Fall back to configured default lang]
     V --&gt; M[Match intent in resolved language]
     F --&gt; M</code></pre>
+<p><em>Diagram:</em> The flow starts when the utterance message arrives and ends at matching the intent in the resolved language, branching through stt_lang, request_lang, and detected_lang before falling back to the configured default.</p>
 <p><em>"Valid"</em> means the candidate passes against <code>valid_langs</code> via <code>closest_lang</code> (see below).
 The service inspects the message's <code>context</code> dict and picks the <strong>first</strong> of these keys that
 is present <em>and</em> resolves to a valid language:</p>

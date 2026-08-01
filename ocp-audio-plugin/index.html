@@ -1380,6 +1380,18 @@ side of OCP (deciding that "play X" is a media request) see the
 <a href="../ocp-pipeline/">OCP Pipeline</a>; for the skills that supply results see
 <a href="../ocp-skills/">Media Skills</a>.</p>
 </div>
+<div class="admonition info">
+<p class="admonition-title">What OCP means here</p>
+<p>"OCP" names three different things in OVOS. Know which one a page is about:</p>
+<ul>
+<li><strong>The OCP pipeline plugin</strong>: matches utterances like "play some jazz" to a media
+  request. See <a href="../ocp-pipeline/">OCP Pipeline</a>.</li>
+<li><strong>The OCP skill base class</strong>: <code>OVOSCommonPlaybackSkill</code>; skills built on it provide
+  or embody media for the pipeline to find. See <a href="../ocp-skills/">OCP Skills</a>.</li>
+<li><strong>The legacy OCP audio plugin</strong>: <code>ovos-plugin-common-play</code>, the current default
+  playback engine running inside <code>ovos-audio</code>. See <a href="./">The OCP Audio Plugin</a>.</li>
+</ul>
+</div>
 <hr />
 <h2 id="what-it-is">What it is<a class="headerlink" href="#what-it-is" title="Permanent link">&para;</a></h2>
 <p>The <strong>OCP audio plugin</strong> is OCP packaged as a classic <a href="../audio-service/">audio service</a> backend.
@@ -1403,6 +1415,7 @@ The pieces:</p>
     C --&gt; D[Stream extractors]
     D --&gt; E[MPRIS]
     D --&gt; F[Audio backend&lt;br/&gt;mpv / vlc / simple]</code></pre>
+<p><em>Diagram:</em> The flow starts at OCP pipeline and skill search results and ends at playback, and the stream extractors branch output to either MPRIS or the mpv/vlc/simple audio backend.</p>
 <p>OCP is a <em>coordinator</em>, not an audio codec: it does the voice/queue/MPRIS logic and then hands
 the raw stream to one of the simple audio backends to make sound.</p>
 <hr />

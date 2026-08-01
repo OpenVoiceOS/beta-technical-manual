@@ -1476,6 +1476,18 @@
 <p>This page covers stream extractors: plugins that turn a URL or search request into a playable
 stream. The playback engine that plays that stream is <a href="../ocp-audio-plugin/">OCP Audio Plugin</a>.
 The playback backends it can use are <a href="../media-plugins/">Media Playback Plugins</a>.</p>
+<div class="admonition info">
+<p class="admonition-title">What OCP means here</p>
+<p>"OCP" names three different things in OVOS. Know which one a page is about:</p>
+<ul>
+<li><strong>The OCP pipeline plugin</strong>: matches utterances like "play some jazz" to a media
+  request. See <a href="../ocp-pipeline/">OCP Pipeline</a>.</li>
+<li><strong>The OCP skill base class</strong>: <code>OVOSCommonPlaybackSkill</code>; skills built on it provide
+  or embody media for the pipeline to find. See <a href="../ocp-skills/">OCP Skills</a>.</li>
+<li><strong>The legacy OCP audio plugin</strong>: <code>ovos-plugin-common-play</code>, the current default
+  playback engine running inside <code>ovos-audio</code>. See <a href="../ocp-audio-plugin/">The OCP Audio Plugin</a>.</li>
+</ul>
+</div>
 <hr />
 <h2 id="writing-an-ocp-stream-extractor-plugin">Writing an OCP Stream Extractor Plugin<a class="headerlink" href="#writing-an-ocp-stream-extractor-plugin" title="Permanent link">&para;</a></h2>
 <p>A stream extractor takes a URI a skill (or another extractor) produced and turns it into

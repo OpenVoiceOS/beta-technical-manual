@@ -1891,6 +1891,7 @@
     SK -- no match --&gt; PB["ovos-persona-pipeline-plugin-high\n(after skills)"]
     P1 -- "Fallback Only" --&gt; FB["ovos-fallback-pipeline-plugin-medium"]
     FB -- no match --&gt; PC["ovos-persona-pipeline-plugin-low\n(default_persona)"]</code></pre>
+<p><em>Diagram: an utterance's route depends on the chosen strategy — Full Control sends it straight to the persona before skills, Hybrid tries skills first and falls back to the persona on no match, and Fallback Only tries the fallback pipeline before falling back to the default persona.</em></p>
 <h3 id="1-full-control-persona-first">1. <strong>Full Control (Persona-First)</strong><a class="headerlink" href="#1-full-control-persona-first" title="Permanent link">&para;</a></h3>
 <p>In this mode, <strong>personas override</strong> all skills. The persona handles every utterance unless explicitly deactivated.</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>{

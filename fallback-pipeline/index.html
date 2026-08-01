@@ -1634,6 +1634,7 @@
     M -- willing skill --&gt; D
     L -- willing skill --&gt; D
     L -- no willing skill --&gt; N["ovos.intent.unmatched"]</code></pre>
+<p><em>Diagram: an utterance that failed all other matchers is tried against high, then medium, then low priority fallback skills, dispatching to the first willing skill, or ending as ovos.intent.unmatched if none accept it.</em></p>
 <ol>
 <li>
 <p>A fallback stage is hit in the pipeline (after all other matchers fail)</p>

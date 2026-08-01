@@ -1611,6 +1611,7 @@
     BCC --&gt; ML["Message list (system? + history + USER utterance)"]
     ML --&gt; CE[Chat engine: continue_chat]
     CE --&gt; UH[update_history: append new turns]</code></pre>
+<p><em>Diagram:</em> The flow starts at the utterance plus stored history and memory, builds a message list via build_conversation_context, and ends at update_history appending the new turns after the chat engine replies.</p>
 <p>Two rules hold for every backend in this package:</p>
 <ul>
 <li>The <strong>first</strong> message MAY be a <code>system</code> message carrying the persona's <code>system_prompt</code>.</li>

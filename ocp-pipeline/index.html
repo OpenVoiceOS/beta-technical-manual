@@ -1486,6 +1486,18 @@
 <p class="admonition-title">In a nutshell</p>
 <p>When you say "play some jazz" or "next song", the assistant first has to realise you are talking about <em>media</em> and not, say, the weather. This is the part that does that: it spots that an utterance is a playback request, figures out what kind of media you want, asks the installed music/podcast/video skills to search for it, and hands the best result off to be played. Think of it as the dispatcher that turns "play X" into actual playback. See the <a href="../pipelines-overview/">Intent Pipeline</a> overview or the <a href="../glossary/">Glossary</a> for related terms.</p>
 </div>
+<div class="admonition info">
+<p class="admonition-title">What OCP means here</p>
+<p>"OCP" names three different things in OVOS. Know which one a page is about:</p>
+<ul>
+<li><strong>The OCP pipeline plugin</strong>: matches utterances like "play some jazz" to a media
+  request. See <a href="./">OCP Pipeline</a>.</li>
+<li><strong>The OCP skill base class</strong>: <code>OVOSCommonPlaybackSkill</code>; skills built on it provide
+  or embody media for the pipeline to find. See <a href="../ocp-skills/">OCP Skills</a>.</li>
+<li><strong>The legacy OCP audio plugin</strong>: <code>ovos-plugin-common-play</code>, the current default
+  playback engine running inside <code>ovos-audio</code>. See <a href="../ocp-audio-plugin/">The OCP Audio Plugin</a>.</li>
+</ul>
+</div>
 <p>The rest of this page is for people deploying or customizing OVOS. If you only wanted to know what this stage does, you are done.</p>
 <details class="info">
 <summary>📐 Formal specification</summary>
@@ -1581,6 +1593,7 @@ intended. Place it last and only enable it on media-focused devices.</p>
     Q -- "pause/resume/next/\nprevious/stop/seek" --&gt; CTRL{"Player holding\npaused media?"}
     CTRL -- yes --&gt; ACT["Claim as control request"]
     CTRL -- no --&gt; PASS["Pass to next pipeline stage"]</code></pre>
+<p><em>Diagram: an utterance is classified as either a playback request, which acquires new media via a common_play query, or a control word, which OCP claims only if it is already holding paused media, otherwise passing it to the next pipeline stage.</em></p>
 <h2 id="how-a-media-intent-is-recognized">How a media intent is recognized<a class="headerlink" href="#how-a-media-intent-is-recognized" title="Permanent link">&para;</a></h2>
 <p>OCP combines several signals:</p>
 <ul>

@@ -1513,11 +1513,21 @@
 
 
 <h1 id="ocp-skills">OCP Skills<a class="headerlink" href="#ocp-skills" title="Permanent link">&para;</a></h1>
-<div class="admonition tip">
-<p class="admonition-title">Just want to play music or radio?</p>
-<p>Install a ready-made skill instead of writing one. See
-<a href="../skill-examples/#music-radio">What Can I Say? Music &amp; Radio</a>. This page is for
-developers writing a new OCP media skill.</p>
+<div class="admonition abstract">
+<p class="admonition-title">In a nutshell</p>
+<p>OCP (OVOS Common Playback) is the part of OVOS that handles playing media, like music, podcasts, or radio. An OCP skill doesn't listen for "play X" itself; instead it acts as a source of media. When someone asks to play something, OVOS asks every OCP skill "can you find this?", each one answers with whatever it can offer and how good a match it thinks it is, and OVOS plays the best result. It's like asking several record shops for an album and going with whoever has the closest match. New terms are explained in the <a href="../glossary/">Glossary</a>. Just want to play music or radio? Install a ready-made skill instead of writing one — see <a href="../skill-examples/#music-radio">What Can I Say? Music &amp; Radio</a>; this page is for developers writing a new OCP media skill.</p>
+</div>
+<div class="admonition info">
+<p class="admonition-title">What OCP means here</p>
+<p>"OCP" names three different things in OVOS. Know which one a page is about:</p>
+<ul>
+<li><strong>The OCP pipeline plugin</strong>: matches utterances like "play some jazz" to a media
+  request. See <a href="../ocp-pipeline/">OCP Pipeline</a>.</li>
+<li><strong>The OCP skill base class</strong>: <code>OVOSCommonPlaybackSkill</code>; skills built on it provide
+  or embody media for the pipeline to find. See <a href="./">OCP Skills</a>.</li>
+<li><strong>The legacy OCP audio plugin</strong>: <code>ovos-plugin-common-play</code>, the current default
+  playback engine running inside <code>ovos-audio</code>. See <a href="../ocp-audio-plugin/">The OCP Audio Plugin</a>.</li>
+</ul>
 </div>
 <div class="admonition warning">
 <p class="admonition-title">OCP skills are giving way to MediaProvider plugins</p>
@@ -1537,10 +1547,6 @@ an ebook reader, any experience the player can start, pause, and resume like a t
 If your skill is only a searchable catalog of external media (a station list, a
 podcast feed), plan to ship it as a MediaProvider plugin when that lands. If the
 skill is the thing being played, it stays an OCP skill.</p>
-</div>
-<div class="admonition abstract">
-<p class="admonition-title">In a nutshell</p>
-<p>OCP (OVOS Common Playback) is the part of OVOS that handles playing media, like music, podcasts, or radio. An OCP skill doesn't listen for "play X" itself; instead it acts as a source of media. When someone asks to play something, OVOS asks every OCP skill "can you find this?", each one answers with whatever it can offer and how good a match it thinks it is, and OVOS plays the best result. It's like asking several record shops for an album and going with whoever has the closest match. New terms are explained in the <a href="../glossary/">Glossary</a>.</p>
 </div>
 <details class="info">
 <summary>📐 Formal specification</summary>

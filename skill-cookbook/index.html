@@ -2322,7 +2322,7 @@ Everything in this recipe targets the current, <strong>deprecated</strong> <code
 <li>
 <div class="admonition warning">
 <p class="admonition-title">Upcoming: solver templates are being replaced</p>
-<code>ovos_plugin_manager.templates.solvers</code> (including <code>QuestionSolver</code>, used above because it is what ships and runs today) is deprecated in favor of <code>ovos_plugin_manager.templates.agents.AbstractAgentEngine</code> and the <code>opm.agents.*</code> entry point groups. New solver plugins should target the newer API. See <a href="../advanced-solvers/">Specialized Agent Engine Types</a> for the full migration table and what each new agent type replaces.</div>
+<code>ovos_plugin_manager.templates.solvers</code> (including <code>QuestionSolver</code>, used above because it is what ships and runs today) is deprecated in favor of <code>ovos_plugin_manager.templates.agents.AbstractAgentEngine</code> and the <code>opm.agents.*</code> entry point groups. New solver plugins should target the newer API. See <a href="../agent-plugins/#deprecated-solver-types">Deprecated Solver Types</a> for the full migration table and what each new agent type replaces.</div>
 </li>
 <li><code>self.speak(text)</code> (a raw string) is used here instead of <code>self.speak_dialog(...)</code> because the LLM's answer is not a template. It is already the exact sentence to say.</li>
 </ul>

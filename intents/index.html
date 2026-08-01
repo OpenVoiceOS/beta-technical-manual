@@ -1601,6 +1601,7 @@ this intent is, and to extract data elements like the weather type, the location
     Q --&gt;|No| Q2{"Public-facing, multilingual,\nor overlapping intents?"}
     Q2 --&gt;|Yes| Padatious["Padatious: template intents (.intent)"]
     Q2 --&gt;|No, single-language\nfully-controlled skill| Adapt</code></pre>
+<p><em>Diagram:</em> The decision starts by asking whether the skill needs digit matching or strict predictable matching, and ends by choosing Adapt for keyword intents or Padatious for template intents, branching further on whether the skill is public-facing and multilingual.</p>
 <p>OVOS provides two kinds of intent, matched by two default pipeline plugins. The
 <a href="https://github.com/OpenVoiceOS/architecture/blob/dev/intent-3.md">OVOS-INTENT-3</a>
 specification calls them <strong>template intents</strong> and <strong>keyword intents</strong>. Each individual
