@@ -109,7 +109,7 @@ Reminder: {text}
 - The pattern of "write intended future state to settings, replay it in `initialize()`" is the standard way any OVOS skill survives a restart. There is no separate scheduler persistence API.
 
 !!! tip "Full production example"
-    [`ovos-skill-alarm`](https://github.com/OpenVoiceOS/ovos-skill-alarm) implements exactly this pattern for real alarms and timers, including recurring (weekday) alarms via `schedule_repeating_event`.
+    [`ovos-skill-alerts`](https://github.com/OpenVoiceOS/ovos-skill-alerts) implements exactly this pattern for real alarms and timers, including recurring (weekday) alarms via `schedule_repeating_event`.
 
 ---
 
@@ -321,6 +321,9 @@ class TableBookingSkill(ConversationalSkill):
 - `self.voc_match(utterance, "yes")` checks against `locale/en-us/vocab/yes.voc`. See [Skill Design Guidelines](skill-design-guidelines.md) for vocab file conventions.
 - [Context](context.md) (`self.set_context()`) is the lighter-weight alternative when you only need to bias which of *your own* intents can match next, rather than intercepting raw utterances.
 
+!!! tip "Full production example"
+    [`ovos-skill-parrot`](https://github.com/OpenVoiceOS/ovos-skill-parrot) is a minimal `ConversationalSkill` with an explicit `can_converse`/`converse` pair, good for seeing the bare mechanism with nothing else around it. [`ovos-skill-alerts`](https://github.com/OpenVoiceOS/ovos-skill-alerts) shows the same tools used for real work, combining `converse` with `get_response` to collect an alert's details across several turns.
+
 ---
 
 ## 5. A small local media playlist: an OCP skill
@@ -383,6 +386,9 @@ lobby music
 - `self.voc_match(phrase, "office_playlist")` reuses the same vocabulary mechanism as intents to give a confident match a high score, while still falling back to a loose substring check.
 - [OCP Skills](ocp-skills.md) also documents `self.extend_timeout()` (ask OCP to wait longer for a slow search) and notes that new integrations not needing the full skill lifecycle may prefer a `MediaProvider` plugin instead. See that page's opening warning.
 
+!!! tip "Full production example"
+    [`ovos-skill-somafm`](https://github.com/OpenVoiceOS/ovos-skill-somafm) is a full modern OCP skill: `@ocp_search`, `@ocp_featured_media`, `register_ocp_keyword`, and results built as `Playlist`/`MediaEntry` objects instead of plain dicts. [`ovos-skill-news`](https://github.com/OpenVoiceOS/ovos-skill-news) applies the same pattern for `MediaType.NEWS`.
+
 ---
 
 ## 6. GUI + voice together: show a page while speaking, update it live
@@ -420,6 +426,9 @@ class WeatherCardSkill(OVOSSkill):
 - Updating `self.gui[...]` again while the page is already showing (as in `handle_temperature_update`) pushes fresh data to an already-visible page without calling `show_page` again.
 - !!! danger "This is the legacy GUI stack"
     Everything in this recipe targets the current, **deprecated** `.qml`-based GUI stack, which [Skill GUI](skill-gui.md) documents as effectively unusable outside Mark 2 maintenance today. The forward-looking replacement is the **Upcoming** [GUI rework](gui-adapters.md) (spec OVOS-GUI-1), which instead has a skill declare intent via a closed `SYSTEM_*` template vocabulary rather than shipping custom `.qml`. That page is the one to design new screen support against.
+
+!!! tip "Full production example"
+    [`ovos-skill-camera`](https://github.com/OpenVoiceOS/ovos-skill-camera) runs a near-identical sequence: `show_text` for a countdown, then `show_image` once the photo is ready. [`ovos-skill-wallpapers`](https://github.com/OpenVoiceOS/ovos-skill-wallpapers) shows the other half of the lifecycle, calling `gui.release()` to hand screen ownership back to the homescreen when the skill is done with it.
 
 ---
 
@@ -467,6 +476,9 @@ class LLMFallbackSkill(FallbackSkill):
 - !!! warning "Upcoming: solver templates are being replaced"
       `ovos_plugin_manager.templates.solvers` (including `QuestionSolver`, used above because it is what ships and runs today) is deprecated in favor of `ovos_plugin_manager.templates.agents.AbstractAgentEngine` and the `opm.agents.*` entry point groups. New solver plugins should target the newer API. See [Specialized Agent Engine Types](advanced-solvers.md) for the full migration table and what each new agent type replaces.
 - `self.speak(text)` (a raw string) is used here instead of `self.speak_dialog(...)` because the LLM's answer is not a template. It is already the exact sentence to say.
+
+!!! tip "Full production example"
+    [`ovos-skill-wolfie`](https://github.com/OpenVoiceOS/ovos-skill-wolfie), [`ovos-skill-ddg`](https://github.com/OpenVoiceOS/ovos-skill-ddg), and [`ovos-skill-wordnet`](https://github.com/OpenVoiceOS/ovos-skill-wordnet) are real `FallbackSkill` skills that pair `register_fallback` with `@common_query`, so they can answer both as a last-resort fallback and as a ranked candidate earlier in the pipeline. [`ovos-skill-fallback-unknown`](https://github.com/OpenVoiceOS/ovos-skill-fallback-unknown) is the canonical catch-all, registered at priority 100. Priority sets the order fallbacks are tried in: a lower number runs earlier and gets first refusal, and 100 is the terminal tier, tried only after everything else has passed.
 
 ---
 
@@ -522,4 +534,25 @@ class AmbientMoodSkill(OVOSSkill):
 - `self.add_event(msg_type, handler)` subscribes for the lifetime of the skill (auto-removed on shutdown). This is the general-purpose alternative to a decorator-based intent handler, for any bus event that isn't an utterance.
 - `schedule_repeating_event(handler, when, frequency, name=...)` with `when=None` starts the first run after one `frequency` interval. Pass a `datetime` for `when` instead if the first run needs to happen at a specific moment.
 - This skill emits its own `ovos.ambient_mood.changed` event rather than reaching into a light/hardware plugin directly, keeping it decoupled from whatever actually consumes the mood (a PHAL plugin, another skill, a GUI). See [Bus Service](bus-service.md) for the emit/on API and [PIPELINE-1 correlation](converse-pipeline.md) for how bus events relate to a given utterance's session.
+
+---
+
+## Learn from the official skills
+
+Every pattern in this cookbook also runs in a real, installable skill. Read the source when you need to see a full manifest, locale files, and edge cases this cookbook leaves out.
+
+| Pattern | Official skill |
+|---|---|
+| `ConversationalSkill` + scheduling + settings persistence | [`ovos-skill-alerts`](https://github.com/OpenVoiceOS/ovos-skill-alerts) |
+| Full OCP (`@ocp_search`, `@ocp_featured_media`, `Playlist`/`MediaEntry`) | [`ovos-skill-somafm`](https://github.com/OpenVoiceOS/ovos-skill-somafm) |
+| `FallbackSkill` + `@common_query` | [`ovos-skill-wolfie`](https://github.com/OpenVoiceOS/ovos-skill-wolfie), [`ovos-skill-ddg`](https://github.com/OpenVoiceOS/ovos-skill-ddg), [`ovos-skill-wordnet`](https://github.com/OpenVoiceOS/ovos-skill-wordnet) |
+| `@common_query` on a plain `OVOSSkill` | [`ovos-skill-wikipedia`](https://github.com/OpenVoiceOS/ovos-skill-wikipedia) |
+| Minimal `converse` | [`ovos-skill-parrot`](https://github.com/OpenVoiceOS/ovos-skill-parrot) |
+| Converse-driven game (`ConversationalGameSkill`) | [`ovos-skill-moon-game`](https://github.com/OpenVoiceOS/ovos-skill-moon-game) |
+| GUI sequencing (`show_text` then `show_image`) | [`ovos-skill-camera`](https://github.com/OpenVoiceOS/ovos-skill-camera) |
+| GUI ownership handoff (`gui.release()`) | [`ovos-skill-wallpapers`](https://github.com/OpenVoiceOS/ovos-skill-wallpapers) |
+| Validated `get_response` slot collection | [`ovos-skill-mark1-ctrl`](https://github.com/OpenVoiceOS/ovos-skill-mark1-ctrl) |
+| Terminal fallback (priority 100) | [`ovos-skill-fallback-unknown`](https://github.com/OpenVoiceOS/ovos-skill-fallback-unknown) |
+| Locale-correct number/date speech | [`ovos-skill-count`](https://github.com/OpenVoiceOS/ovos-skill-count), [`ovos-skill-date-time`](https://github.com/OpenVoiceOS/ovos-skill-date-time) |
+| Simplest complete skill | [`ovos-skill-hello-world`](https://github.com/OpenVoiceOS/ovos-skill-hello-world) |
 
