@@ -29,6 +29,19 @@ moments and take seconds to check. No terminal, no config file needed.
 If all four check out and something's still wrong, the sections below cover the specific
 symptom.
 
+```mermaid
+flowchart TD
+    A[Something's wrong] --> B{Basics OK?<br/>muted / volume / power / network}
+    B -- no --> Z[Fix the basic first]
+    B -- yes --> C{What's the symptom?}
+    C -- "won't listen" --> D["It's not listening to me"]
+    C -- "can't hear it" --> E["It's not talking back to me"]
+    C -- "gets it wrong" --> F["It heard me but got it wrong"]
+    C -- "don't know what to say" --> G["What can I say?"]
+    D & E & F & G --> H{Still broken?}
+    H -- yes --> I[Troubleshooting & Debugging]
+```
+
 ## "It's not listening to me"
 
 - **Say the wake word clearly, with a short pause after it.** OVOS listens for a wake word (by

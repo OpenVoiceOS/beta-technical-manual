@@ -24,10 +24,21 @@ The pieces:
 - **Entry point:** registers in the legacy `mycroft.plugin.audioservice` group under the type
   name **`ovos_common_play`**.
 - **What it does:** the full OCP player. It receives the chosen media (search results gathered
-  by the [OCP pipeline](ocp-pipeline.md) from [OCP skills](ocp-skills.md)), manages the
-  now-playing queue and player state, runs [stream extractors](ocp-plugins.md), exposes the
-  player over [MPRIS](#mpris), and drives the actual audio output through a lower-level audio
-  backend (`mpv`, `vlc`, or `simple`).
+  by the [OCP pipeline](ocp-pipeline.md) from [OCP skills](ocp-skills.md)), then:
+  1. manages the now-playing queue and player state,
+  2. runs [stream extractors](ocp-plugins.md),
+  3. exposes the player over [MPRIS](#mpris), and
+  4. drives the actual audio output through a lower-level audio backend (`mpv`, `vlc`, or
+     `simple`).
+
+```mermaid
+flowchart LR
+    A[OCP pipeline / OCP skills<br/>search results] --> B[OCP audio plugin]
+    B --> C[Queue + player state]
+    C --> D[Stream extractors]
+    D --> E[MPRIS]
+    D --> F[Audio backend<br/>mpv / vlc / simple]
+```
 
 OCP is a *coordinator*, not an audio codec: it does the voice/queue/MPRIS logic and then hands
 the raw stream to one of the simple audio backends to make sound.

@@ -207,13 +207,16 @@ local [messagebus](bus-service.md). As documented there:
     Any process that can open a WebSocket connection to the bus (default
     `127.0.0.1:8181`) has full control of the assistant. It can trigger any
     skill, read everything crossing the bus, and, through plugins that expose
-    subprocess or file access, potentially run arbitrary code. This is not
-    limited to skill-level mischief. If any [AdminPHAL](phal.md#security-model)
-    system plugin is enabled (for example `ovos-PHAL-plugin-system`), the same
-    unauthenticated bus can trigger reboot, shutdown or factory-reset with root
-    privilege. An exposed bus is a root-privileged attack surface, not just an
-    assistant-control one. Never bind the bus to `0.0.0.0` or port-forward it to
-    the internet. For remote access (satellites, phones, other rooms) use
+    subprocess or file access, potentially run arbitrary code.
+
+    This is not limited to skill-level mischief. If any
+    [AdminPHAL](phal.md#security-model) system plugin is enabled (for example
+    `ovos-PHAL-plugin-system`), the same unauthenticated bus can trigger
+    reboot, shutdown or factory-reset with root privilege. An exposed bus is
+    a root-privileged attack surface, not just an assistant-control one.
+
+    Never bind the bus to `0.0.0.0` or port-forward it to the internet. For
+    remote access (satellites, phones, other rooms) use
     [HiveMind](hivemind-agents.md) instead, which adds authentication and
     encryption on top of the same bus protocol.
 

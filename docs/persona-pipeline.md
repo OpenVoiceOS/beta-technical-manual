@@ -14,7 +14,9 @@ The rest of this page is for people deploying or customizing OVOS. If you only w
 The **`ovos-persona-pipeline-plugin`** provides a dynamic way to integrate persona-based conversational behavior into the OVOS pipeline system. It allows you to route user utterances to AI personas instead of skill matchers, depending on context and configuration.
 
 !!! note "How the spec frames it"
-    A persona is a **complete conversational agent** that, when active, claims *every* utterance reaching its pipeline stage (PERSONA-1 §2). The active persona is held in one session field, **`session.persona_id`** (PERSONA-1 §3). Absent means no-persona mode (deterministic skills only). Set means that persona's plugin catches everything that reaches it. The plugin is a self-matching pipeline plugin (PIPELINE-1 §7.0): its `Match.skill_id` equals its own `pipeline_id`. **Summon** sets `persona_id` (via `Match.updated_session`, a client, or a session sync). **Dismiss** clears it, and the stop cascade (OVOS-STOP-1) clears it too, which is how "stop" returns control to the skills. The "full control / hybrid / fallback" strategies below are just different positions for the `persona` stage (route 2, active-persona catch-all) and an optional `persona_fallback` stage (route 3) in `session.pipeline` (PERSONA-1 §10).
+    A persona is a **complete conversational agent** that, when active, claims *every* utterance reaching its pipeline stage (PERSONA-1 §2). The active persona is held in one session field, **`session.persona_id`** (PERSONA-1 §3). Absent means no-persona mode (deterministic skills only); set means that persona's plugin catches everything that reaches it. The plugin is a self-matching pipeline plugin (PIPELINE-1 §7.0): its `Match.skill_id` equals its own `pipeline_id`.
+
+    **Summon** sets `persona_id` (via `Match.updated_session`, a client, or a session sync). **Dismiss** clears it, and the stop cascade (OVOS-STOP-1) clears it too, which is how "stop" returns control to the skills. The "full control / hybrid / fallback" strategies below are just different positions for the `persona` stage (route 2, active-persona catch-all) and an optional `persona_fallback` stage (route 3) in `session.pipeline` (PERSONA-1 §10).
 
 ---
 
@@ -89,6 +91,16 @@ Insert the tier IDs you need into your `mycroft.conf` under the `intents.pipelin
 ---
 
 ## Pipeline Strategies
+
+```mermaid
+flowchart TD
+    U[Utterance] --> P1{"Strategy?"}
+    P1 -- "Full Control" --> PA["ovos-persona-pipeline-plugin-high\n(first, before skills)"]
+    P1 -- "Hybrid" --> SK["Padatious/Adapt high\n(skills first)"]
+    SK -- no match --> PB["ovos-persona-pipeline-plugin-high\n(after skills)"]
+    P1 -- "Fallback Only" --> FB["ovos-fallback-pipeline-plugin-medium"]
+    FB -- no match --> PC["ovos-persona-pipeline-plugin-low\n(default_persona)"]
+```
 
 ### 1. **Full Control (Persona-First)**
 

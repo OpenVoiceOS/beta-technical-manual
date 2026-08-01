@@ -7,7 +7,24 @@ pipeline plugin inside `ovos-core`.
     Normally a skill answers one request and then forgets about you. "Converse" lets a skill stay in the conversation for a little while after it has spoken, so it can catch a quick follow-up like "yes", "no", "thanks", or "the red one" that only makes sense as a reply. This is the difference between a one-off answer and a short back-and-forth chat. New terms are explained in the [Glossary](glossary.md).
 
 ??? info "📐 Formal specification"
-    Converse is specified by **[OVOS-CONVERSE-1 — Active Handlers & Interactive Response](https://github.com/OpenVoiceOS/architecture/blob/dev/converse.md)** (a formal [architecture spec](architecture-specs.md)). A skill that was recently active stays on the session's **converse-handler list** (`session.converse_handlers`, what this page calls the *Active Skills List*). A **converse pipeline plugin** polls each eligible handler with a `<skill_id>.converse.ping` / `.pong` round-trip. When one claims, it returns a `Match` on the reserved `intent_name` **`converse`**, which the orchestrator dispatches to `<skill_id>:converse`. The "wait for the next reply" feature (the response window) is the session field `session.response_mode`, delivered via the reserved `intent_name` **`response`**. Both `converse` and `response` are reserved names no skill may register. The list and the response window are **session-resident state** that rides every message. This is why session-aware skills behave correctly across satellites.
+    Converse is specified by **[OVOS-CONVERSE-1 — Active Handlers & Interactive Response](https://github.com/OpenVoiceOS/architecture/blob/dev/converse.md)** (a formal [architecture spec](architecture-specs.md)). A skill that was recently active stays on the session's **converse-handler list** (`session.converse_handlers`, what this page calls the *Active Skills List*). The "wait for the next reply" feature (the response window) is the session field `session.response_mode`, delivered via the reserved `intent_name` **`response`**. Both `converse` and `response` are reserved names no skill may register. The list and the response window are **session-resident state** that rides every message. This is why session-aware skills behave correctly across satellites.
+
+    ```mermaid
+    sequenceDiagram
+        participant U as User
+        participant P as Converse pipeline plugin
+        participant S as Skill (active)
+        participant O as Orchestrator
+        U->>P: new utterance
+        P->>S: <skill_id>.converse.ping
+        S-->>P: <skill_id>.converse.pong
+        alt skill claims
+            P->>O: Match(intent_name=converse)
+            O->>S: dispatch <skill_id>:converse
+        else no claim
+            P->>O: fall through to intent pipeline
+        end
+    ```
 
 !!! note "Upcoming — `stop` joins the reserved names"
     An in-progress change ([ovos-core#802](https://github.com/OpenVoiceOS/ovos-core/pull/802))

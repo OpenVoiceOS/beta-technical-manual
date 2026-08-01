@@ -32,10 +32,16 @@ Wake Word plugins let Open Voice OS detect specific words or sounds, typically t
 OVOS supports different wake word detection plugins, each with its own strengths and use cases.
 The full roster with descriptions and licenses lives in one place: the
 [WW Plugins Reference](#ww-plugins-reference) table below. The default OVOS plugin for
-`hey_mycroft` is `ovos-ww-plugin-precise-onnx`. Its fallback chain goes to
-`ovos-ww-plugin-precise-lite` (TFLite), then `ovos-ww-plugin-precise` (classic Precise), then
-`ovos-ww-plugin-vosk`, then `ovos-ww-plugin-pocketsphinx` if a plugin further up the chain is
-not installed. Vosk offers the fastest setup for an arbitrary wake phrase without model training.
+`hey_mycroft` is `ovos-ww-plugin-precise-onnx`, falling back down this chain if a plugin further
+up is not installed:
+
+1. `ovos-ww-plugin-precise-onnx` (default)
+2. `ovos-ww-plugin-precise-lite` (TFLite)
+3. `ovos-ww-plugin-precise` (classic Precise)
+4. `ovos-ww-plugin-vosk`
+5. `ovos-ww-plugin-pocketsphinx`
+
+Vosk offers the fastest setup for an arbitrary wake phrase without model training.
 
 The default `hey_mycroft` engine `ovos-ww-plugin-precise-onnx` is rated **Beta**. Its
 fallback `ovos-ww-plugin-vosk` is Stable, and `ovos-ww-plugin-precise-lite` is Deprecated.
@@ -89,6 +95,18 @@ The `hotwords` section in your `mycroft.conf` allows you to configure the wake w
 Each entry under `hotwords` is one of four types, set by a boolean key. `active: null` (the
 default) auto-enables the main wake word (`listener.wake_word`) and the stand-up word
 (`listener.stand_up_word`); every other hotword stays disabled until you set `active: true`.
+
+```mermaid
+flowchart TD
+    A[Hotword entry in mycroft.conf] --> B{"listen: true, or matches listener.wake_word?"}
+    B -->|yes| C["Listen word: starts VAD/STT recording"]
+    B -->|no| D{"wakeup: true, or matches listener.stand_up_word?"}
+    D -->|yes| E["Wakeup word: exits sleep mode"]
+    D -->|no| F{"stopword: true?"}
+    F -->|yes| G["Stop word: ends free RECORDING mode"]
+    F -->|no| H{"active: true?"}
+    H -->|yes| I["Plain hotword: sound / bus event, no STT"]
+```
 
 | Type | Config key | Effect when detected |
 |---|---|---|
@@ -146,6 +164,13 @@ After a wake word engine fires, optional *verifier* plugins can inspect the raw 
 audio and suppress false detections before any callback runs. Verifiers implement the
 `HotWordVerifier` interface (from `ovos-plugin-manager`) and are configured under
 `listener.ww_verifiers`:
+
+```mermaid
+flowchart LR
+    A[Wake word engine fires] --> B["HotWordVerifier.verify()"]
+    B -->|"False"| C[Detection suppressed]
+    B -->|"True, or exception raised (fail open)"| D[Detection proceeds, callback runs]
+```
 
 ```jsonc
 "listener": {

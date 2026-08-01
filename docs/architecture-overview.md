@@ -1,7 +1,9 @@
 # Architecture Overview
 
 !!! abstract "In a nutshell"
-    OpenVoiceOS is a voice assistant built from many small, independent parts rather than one big program. Think of it like a team where each member has one job: listening for the wake word, turning speech into text, figuring out what you asked, or answering. They all talk to each other over a shared channel. Because the parts are separate, you can run only the ones you need, replace any one with a different version, or even spread them across several devices. See the [Glossary](glossary.md) for unfamiliar terms and the [Bus Service](bus-service.md) for the shared channel they use to talk.
+    OpenVoiceOS is a voice assistant built from many small, independent parts rather than one big program. Think of it like a team where each member has one job: listening for the wake word, turning speech into text, figuring out what you asked, or answering. They all talk to each other over a shared channel.
+
+    Because the parts are separate, you can run only the ones you need, replace any one with a different version, or even spread them across several devices. See the [Glossary](glossary.md) for unfamiliar terms and the [Bus Service](bus-service.md) for the shared channel they use to talk.
 
 ??? info "📐 Formal specification"
     OVOS isn't only an implementation. The contracts between these parts are
@@ -40,24 +42,23 @@ The diagram above illustrates how a user utterance moves through the system:
 
 ## Component Map
 
-```bash
-ovos-messagebus  (WebSocket pub/sub)
-      │
-      ├── ovos-core
-      │     ├── SkillManager          – loads/unloads skill plugins
-      │     ├── IntentService         – routes utterances through the pipeline
-      │     │     ├── UtteranceTransformersService
-      │     │     ├── MetadataTransformersService
-      │     │     ├── IntentTransformersService
-      │     │     └── Pipeline plugins (Adapt, Padatious, Converse, Fallback, …)
-      │     ├── SkillsStore           – runtime pip install/uninstall
-      │     └── EventScheduler        – timed bus events
-      │
-      ├── ovos-dinkum-listener  – STT / wake-word → ovos.utterance.handle
-      ├── ovos-audio            – TTS / sound playback (+ legacy media audioservice)
-      ├── ovos-media            – standalone media-playback service (opt-in, Proof-of-concept; replaces legacy audioservice)
-      ├── ovos-gui              – GUI layer
-      └── ovos-phal             – hardware/platform plugins
+```mermaid
+flowchart TD
+    BUS(["ovos-messagebus<br/>(WebSocket pub/sub)"])
+    BUS --- CORE[ovos-core]
+    CORE --- SM["SkillManager<br/>loads/unloads skill plugins"]
+    CORE --- IS["IntentService<br/>routes utterances through the pipeline"]
+    IS --- UTS[UtteranceTransformersService]
+    IS --- MTS[MetadataTransformersService]
+    IS --- ITS[IntentTransformersService]
+    IS --- PP["Pipeline plugins<br/>Adapt, Padatious, Converse, Fallback, …"]
+    CORE --- SS["SkillsStore<br/>runtime pip install/uninstall"]
+    CORE --- ES["EventScheduler<br/>timed bus events"]
+    BUS --- LISTENER["ovos-dinkum-listener<br/>STT / wake-word → ovos.utterance.handle"]
+    BUS --- AUDIO["ovos-audio<br/>TTS / sound playback (+ legacy media audioservice)"]
+    BUS --- MEDIA["ovos-media<br/>standalone media-playback (opt-in, PoC)"]
+    BUS --- GUI["ovos-gui<br/>GUI layer"]
+    BUS --- PHAL["ovos-phal<br/>hardware/platform plugins"]
 ```
 
 Of the six [transformer chains](transformer-plugins.md), only utterance, metadata, and intent
@@ -71,7 +72,9 @@ In words: `ovos-messagebus` is the hub. `ovos-core` connects to it and contains 
 `ovos-core`.
 
 `ovos-messagebus` sits at the top because every other box connects to it as a client. It is the
-one shared channel, not a hierarchy. `ovos-core` bundles the services most people mean by "the
+one shared channel, not a hierarchy.
+
+`ovos-core` bundles the services most people mean by "the
 brain": `SkillManager` loading skill code, `IntentService` running the utterance through its
 sub-services and the pipeline plugins, and a couple of smaller helpers alongside them.
 

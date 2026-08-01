@@ -25,10 +25,32 @@ That simplification has three consequences worth naming plainly.
 
 ## The bus has no authentication
 
+```mermaid
+flowchart TD
+    subgraph Device["Device (trusted, localhost)"]
+        Bus["messagebus\n127.0.0.1:8181\nno login, no encryption"]
+        Core[ovos-core / skills]
+        Audio[ovos-audio]
+        GUI[ovos-gui]
+        Listener[ovos-dinkum-listener]
+        PHAL[ovos-PHAL]
+        AdminPHAL["AdminPHAL\n(root, opt-in)"]
+        Core <--> Bus
+        Audio <--> Bus
+        GUI <--> Bus
+        Listener <--> Bus
+        PHAL <--> Bus
+        AdminPHAL <--> Bus
+    end
+    Satellite[HiveMind satellite] -- "authenticated, encrypted" --> HMCore[hivemind-core]
+    HMCore -. "only bridge to the bus" .-> Bus
+```
+
 The [messagebus](bus-service.md) is a pure fan-out WebSocket broker. Any client that opens a
 connection to it, by default `127.0.0.1:8181`, can emit and receive every message on the bus,
-with no login and no encryption. There is no per-client identity and no permission check. A
-client that can reach the bus can trigger any skill, read everything crossing the bus, and
+with no login and no encryption. There is no per-client identity and no permission check.
+
+A client that can reach the bus can trigger any skill, read everything crossing the bus, and
 drive any plugin that exposes subprocess or file access. This is documented in full on
 [Bus Service: Security](bus-service.md#configuration) and
 [Privacy & Security: the messagebus is a trust boundary, not a security boundary](privacy-security.md#the-messagebus-is-a-trust-boundary-not-a-security-boundary).
@@ -64,10 +86,11 @@ accident.
 
 Once enabled, though, an AdminPHAL plugin receives the same unauthenticated bus client as
 every other service, with no separate credential check. A plugin like
-`ovos-PHAL-plugin-system` exposes reboot, shutdown and factory-reset over the bus. If the bus
-is reachable, anyone who can emit bus messages can trigger those actions with root privilege.
-This is a stronger consequence of the bus's lack of authentication than "skills aren't
-sandboxed": it is root-equivalent remote control, not just assistant control. See
+`ovos-PHAL-plugin-system` exposes reboot, shutdown and factory-reset over the bus.
+
+If the bus is reachable, anyone who can emit bus messages can trigger those actions with root
+privilege. This is a stronger consequence of the bus's lack of authentication than "skills
+aren't sandboxed": it is root-equivalent remote control, not just assistant control. See
 [PHAL: Security model](phal.md#security-model) for the full mechanism.
 
 ## HiveMind is the sanctioned way out

@@ -55,7 +55,9 @@ a question.
 ---
 
 !!! note "Why it never blocks fallback (and spec topic names)"
-    Common Query is a **scatter-gather contest** that runs entirely inside `match` (COMMON-QUERY-1 §2). It polls skills, collects full answers, and ranks them, only returning a `Match` if one clears the confidence threshold. Otherwise it returns `None` and the orchestrator continues to fallback. The answer is the claim decision, so this is the spec's documented exception to PIPELINE-1 §4.4's "return fast" rule (§2.1). On a win it returns a **self-addressed** Match on the reserved `intent_name` `common_query` (PIPELINE-1 §7.3), dispatched on `<pipeline_id>:common_query`, and its own trivial handler speaks the selected answer. The spec topic names differ from the current code:
+    Common Query is a **scatter-gather contest** that runs entirely inside `match` (COMMON-QUERY-1 §2). It polls skills, collects full answers, and ranks them, only returning a `Match` if one clears the confidence threshold. Otherwise it returns `None` and the orchestrator continues to fallback. The answer is the claim decision, so this is the spec's documented exception to PIPELINE-1 §4.4's "return fast" rule (§2.1).
+
+    On a win it returns a **self-addressed** Match on the reserved `intent_name` `common_query` (PIPELINE-1 §7.3), dispatched on `<pipeline_id>:common_query`, and its own trivial handler speaks the selected answer. The spec topic names differ from the current code:
 
     | OVOS-COMMON-QUERY-1 (canonical) | Current code |
     |---|---|
@@ -65,6 +67,22 @@ a question.
     | `<pipeline_id>:common_query`: reserved-name handler dispatch (the one genuine colon/dispatch topic in this family) | `question:action.<skill_id>` |
 
 ## How it works
+
+```mermaid
+sequenceDiagram
+    participant P as CommonQAService
+    participant S1 as Skill A
+    participant S2 as Skill B
+
+    P->>S1: question:query
+    P->>S2: question:query
+    S1-->>P: question:query.response (answer, conf)
+    S2-->>P: question:query.response (searching: true)
+    Note over P,S2: extension_time added
+    S2-->>P: question:query.response (answer, conf)
+    P->>P: select best (reranker or self conf)
+    P->>S1: question:action.<skill_id>
+```
 
 The matcher class is `CommonQAService` (a `PipelinePlugin`, so it exposes a single
 `match()`, hence the one `ovos-common-query-pipeline-plugin` ID, not high/medium/low tiers).

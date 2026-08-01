@@ -284,7 +284,9 @@ scheduled for deletion by the open kill-switch
 [ovos-bus-client#272](https://github.com/OpenVoiceOS/ovos-bus-client/pull/272). After
 it merges, `MessageBusClient` speaks OVOS-MSG-1 spec topics only and passing
 `emit_legacy`, `modernize`, or `intent_reemit_blanket` to the constructor raises
-`RuntimeError`. There will be no client-side shim for this: migrate remote clients and
+`RuntimeError`.
+
+There will be no client-side shim for this: migrate remote clients and
 satellites to `ovos.*` spec topics while the bridge still covers both spellings. Do
 not write new code that shims legacy topic names. See [Updating From
 Older OVOS](updating-from-older-ovos.md#the-bus-client-legacy-topic-dual-emit-and-its-removal)

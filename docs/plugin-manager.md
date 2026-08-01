@@ -4,7 +4,15 @@
     Long-lived and actively maintained. Depend on it freely. Rated by [repository health](maturity.md), not version.
 
 !!! abstract "In a nutshell"
-    A plugin is an add-on you can drop in to give OpenVoiceOS a new ability or swap how it does something. For example, a different way to turn speech into text. The Plugin Manager is the part that finds these add-ons once they're installed, and loads them when needed, so you don't have to wire anything up by hand. Think of it like the app store and launcher for OVOS's interchangeable pieces. Install one, and the system discovers it. See the [Glossary](glossary.md) for unfamiliar terms or the [Architecture Overview](architecture-overview.md) for how plugins fit into the wider system.
+    A plugin is an add-on you can drop in to give OpenVoiceOS a new ability or swap how it
+    does something. For example, a different way to turn speech into text. The Plugin
+    Manager is the part that finds these add-ons once they're installed, and loads them
+    when needed, so you don't have to wire anything up by hand.
+
+    Think of it like the app store and launcher for OVOS's interchangeable pieces. Install
+    one, and the system discovers it. See the [Glossary](glossary.md) for unfamiliar terms
+    or the [Architecture Overview](architecture-overview.md) for how plugins fit into the
+    wider system.
 
 ??? info "Formal specification"
     OPM is the *discovery and loading* mechanism. It is not itself a spec, but several plugin **roles** it loads are defined by the architecture specs and carry conformance obligations independent of OPM. In particular, **pipeline plugins** (entry point `opm.pipeline`) implement the `match(utterances, lang, message) → Match` contract and **first-match-wins** ordering of **[OVOS-PIPELINE-1](https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md)**, and the six **transformer** plugin types (`opm.transformer.*`) implement the six ordered chains of **[OVOS-TRANSFORM-1](https://github.com/OpenVoiceOS/architecture/blob/dev/transformer.md)** (priority **ascending**, lower runs earlier). See the [spec index](architecture-specs.md) for the full set of plugin-role specs.
@@ -23,6 +31,14 @@ other projects.
 Plugins are Python packages that register a class under a specific entry point group in
 `setup.py` or `pyproject.toml`. OPM uses `importlib.metadata.entry_points()` to discover
 all installed plugins of a given type at runtime. No manual registration is required.
+
+```mermaid
+flowchart LR
+    A["Entry point<br/>e.g. opm.stt"] --> B["find_*_plugins()<br/>importlib.metadata.entry_points()"]
+    B --> C["load_*_plugin(name)"]
+    C --> D["Factory<br/>e.g. OVOSSTTFactory.create()"]
+    D --> E[Configured plugin instance]
+```
 
 ```python
 from ovos_plugin_manager.stt import find_stt_plugins, load_stt_plugin

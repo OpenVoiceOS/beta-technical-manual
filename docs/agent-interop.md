@@ -5,6 +5,23 @@
 
 OVOS exposes its speech, translation, and reasoning services as agent tools via two discovery and calling protocols: **MCP** (Model Context Protocol) and **UTCP** (Universal Tool Calling Protocol). It also implements bidirectional **A2A** (Agent-to-Agent) bridging.
 
+```mermaid
+flowchart LR
+    subgraph OVOS Service Servers
+        STT[STT Server]
+        TTS[TTS Server]
+        TX[Translate Server]
+        PS[Persona Server]
+    end
+    Ext[External MCP/UTCP client<br/>e.g. Claude Desktop] -->|/mcp, /utcp| STT
+    Ext -->|/mcp, /utcp| TTS
+    Ext -->|/mcp, /utcp| TX
+    Ext -->|/mcp, /utcp, /tools/*| PS
+    PS -->|/.well-known/agent.json, tasks/send| A2AClient[External A2A client]
+    ExtA2A[External A2A server] -->|ovos-a2a-solver ChatEngine| Persona[OVOS persona]
+    ExtMCP[External MCP/UTCP server] -->|ovos-mcp-toolbox / ovos-utcp-toolbox| Loop[Agentic loop ToolBox]
+```
+
 !!! note "Not what you're looking for?"
     This page is about LLM/agent tool protocols (MCP/A2A). If you're building a voice
     satellite or a remote voice client instead, see [HiveMind Agents](hivemind-agents.md).

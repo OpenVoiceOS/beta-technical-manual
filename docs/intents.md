@@ -41,6 +41,15 @@ this intent is, and to extract data elements like the weather type, the location
 
 ## Choosing an engine
 
+```mermaid
+flowchart TD
+    Q{"Need to match digits,\nor want strict predictable matching?"}
+    Q -->|Yes| Adapt["Adapt: keyword intents (.voc)"]
+    Q -->|No| Q2{"Public-facing, multilingual,\nor overlapping intents?"}
+    Q2 -->|Yes| Padatious["Padatious: template intents (.intent)"]
+    Q2 -->|No, single-language\nfully-controlled skill| Adapt
+```
+
 OVOS provides two kinds of intent, matched by two default pipeline plugins. The
 [OVOS-INTENT-3](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-3.md)
 specification calls them **template intents** and **keyword intents**. Each individual

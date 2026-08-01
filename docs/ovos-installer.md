@@ -5,7 +5,25 @@ If you have a spare Raspberry Pi and want the zero-terminal experience, use
 non-Pi hardware or installing onto an existing Raspberry Pi OS setup.
 
 !!! abstract "In a nutshell"
-    This is the guided way to get OVOS onto your machine. You run a single command. Then a menu-driven wizard walks you through a few choices (your language, where to install, which features you want) and does the rest for you. It works the same on a Raspberry Pi or a Linux laptop. It is the recommended way to install. It needs no programming. To script a fleet instead, see the [non-interactive scenario install](#non-interactive-scenario-install), which skips the wizard entirely. See the [Glossary](glossary.md) for unfamiliar terms.
+    This is the guided way to get OVOS onto your machine. You run a single command. Then a
+    menu-driven wizard walks you through a few choices (your language, where to install,
+    which features you want) and does the rest for you.
+
+    It works the same on a Raspberry Pi or a Linux laptop, and it is the recommended way to
+    install. It needs no programming. To script a fleet instead, see the
+    [non-interactive scenario install](#non-interactive-scenario-install), which skips the
+    wizard entirely. See the [Glossary](glossary.md) for unfamiliar terms.
+
+```mermaid
+flowchart TD
+    A[Choosing how to install OVOS] --> B{Raspberry Pi?}
+    B -- yes, want flash-and-boot --> C[raspOVOS image<br/>maintenance pause: check status first]
+    B -- yes, existing Raspberry Pi OS --> D[ovos-installer]
+    B -- no, other Linux/macOS --> D
+    A --> E{Scripting a fleet or CI?}
+    E -- yes --> F[ovos-installer non-interactive<br/>scenario.yaml]
+    E -- no --> D
+```
 
 !!! note "Read this before you start: what a default install sends over the network"
     A default OVOS install talks to public, community-run servers for speech-to-text and
@@ -153,7 +171,15 @@ Navigation:
 
 ### 🌍 Language Selection
 
-The first screen lets you select your preferred language for the installer's own text, not the assistant's spoken language. See [Language Support](lang-support.md) for how the assistant's language is actually chosen. Setting the global `lang` key is enough on its own. STT, TTS, and plugins follow it automatically. `ovos-config autoconfigure` can also swap in the recommended plugins and voices for that language. Follow the on-screen instructions. Use arrow keys and space to pick.
+The first screen lets you select your preferred language for the installer's own text, not
+the assistant's spoken language. See [Language Support](lang-support.md) for how the
+assistant's language is actually chosen.
+
+Setting the global `lang` key is enough on its own. STT, TTS, and plugins follow it
+automatically. `ovos-config autoconfigure` can also swap in the recommended plugins and
+voices for that language.
+
+Follow the on-screen instructions. Use arrow keys and space to pick.
 
 ![Language selection screen listing Dutch, English, French, German, Hindi, Italian, Portuguese, and Spanish as radio-button choices, with English selected](https://gist.github.com/user-attachments/assets/61f9e089-1d54-49e9-8d4a-d5e1f6028ee2)
 
@@ -340,8 +366,9 @@ whenever you opt in. None of them is something you type in yourself _(see the
 Accepting this prompt adds an `open_data.intent_urls` entry pointing at a
 community metrics endpoint to your installed `mycroft.conf`. That makes the
 **running assistant** report anonymous intent-matching data on an ongoing
-basis. It reports every time it processes a voice command, not just during setup. If
-you want data collection to stop once installation is over, decline this
+basis. It reports every time it processes a voice command, not just during setup.
+
+If you want data collection to stop once installation is over, decline this
 prompt (declining the first, install-time prompt is not enough on its own).
 The choice always remains yours, whether made here in the installer or later
 by hand editing the `open_data` key in `mycroft.conf`.

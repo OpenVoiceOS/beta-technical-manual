@@ -9,6 +9,20 @@
 By the end you'll have a skill that answers when you say *"hello"*. Once you've done it once,
 every other skill is just more of the same idea.
 
+```mermaid
+flowchart TD
+    A["Step 1: create folder layout"] --> B["Step 2: write skill code"]
+    B --> C["Step 3: write .intent file"]
+    C --> D["Step 4: write .dialog file"]
+    D --> E["Step 5: pyproject.toml + entry point"]
+    E --> F["Step 6: pip install -e ."]
+    F --> G["Restart ovos-core"]
+    G --> H{"Say 'hello'"}
+    H -->|OVOS replies| I["Done"]
+    H -->|no reply| J["Check ovos-logs show -l skills"]
+    J --> F
+```
+
 !!! note "Before you start: OVOS needs to already be installed"
     This walkthrough assumes OVOS is already installed and its Python environment is available
     to work in. See [ovos-installer](ovos-installer.md) or [RaspOVOS](install-raspovos.md) if
@@ -159,13 +173,14 @@ Python install. "Activating" it just means that **[pip](glossary.md)** will now 
 into the one OVOS actually uses, instead of somewhere else. See the
 [Glossary](glossary.md) if these terms are new.
 
-That exact path is only an example, not
-something you can assume. Check where your particular install created its environment, for example
-the installer's summary screen
-(see [ovos-installer](ovos-installer.md#environment-summary)). Advanced: if you installed
-via [systemd](glossary.md), its unit file's `Environment=`/`ExecStart=` lines show the path.
-See [Troubleshooting](troubleshooting.md). raspOVOS, `ovos-installer`, and container installs
-each put it somewhere different.
+That exact path is only an example, not something you can assume. raspOVOS, `ovos-installer`,
+and container installs each put it somewhere different.
+
+- Check where your particular install created its environment, for example the installer's
+  summary screen (see [ovos-installer](ovos-installer.md#environment-summary)).
+- Advanced: if you installed via [systemd](glossary.md), its unit file's
+  `Environment=`/`ExecStart=` lines show the path.
+- Still stuck? See [Troubleshooting](troubleshooting.md).
 
 If you're running OVOS in
 a container instead, there's no host environment to activate. Install into the container

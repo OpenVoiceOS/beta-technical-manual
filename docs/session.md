@@ -7,7 +7,20 @@
     One OVOS device can talk to several people at once: your phone, a kitchen speaker, and other connected devices may all be asking it things at the same time. A *session* is simply the information that says who is asking and in what language. If your skill remembers anything between requests, like a running game or a chat history, it needs to keep each person's information separate so two users don't get each other's answers, much like separate tables at a restaurant. This page shows how to make a skill session aware. New terms are explained in the [Glossary](glossary.md).
 
 ??? info "Formal specification"
-    The session's wire shape and field registry are specified by **[OVOS-SESSION-1 — Session Carrier](https://github.com/OpenVoiceOS/architecture/blob/dev/session-1.md)**. Who owns and may mutate session state, and the reserved `"default"` device-local session, is specified by **[OVOS-SESSION-2 — Session Lifecycle & State Ownership](https://github.com/OpenVoiceOS/architecture/blob/dev/session-2.md)**. The decaying per-session `intent_context` that gates which intents may match across turns is specified by **[OVOS-CONTEXT-1 — Intent Context](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-context.md)**. See also the [spec index](architecture-specs.md). SESSION-1 is the field registry. Other specs *claim* fields into it (e.g. `intent_context` → CONTEXT-1, the transformer-chain lists → OVOS-TRANSFORM-1).
+    **SESSION-1 is the field registry.** Other specs *claim* fields into it (e.g. `intent_context` → CONTEXT-1, the transformer-chain lists → OVOS-TRANSFORM-1). See also the [spec index](architecture-specs.md).
+
+    - **[OVOS-SESSION-1 — Session Carrier](https://github.com/OpenVoiceOS/architecture/blob/dev/session-1.md)**: the session's wire shape and field registry.
+    - **[OVOS-SESSION-2 — Session Lifecycle & State Ownership](https://github.com/OpenVoiceOS/architecture/blob/dev/session-2.md)**: who owns and may mutate session state, and the reserved `"default"` device-local session.
+    - **[OVOS-CONTEXT-1 — Intent Context](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-context.md)**: the decaying per-session `intent_context` that gates which intents may match across turns.
+
+    ```mermaid
+    flowchart LR
+        Sat["Voice satellite / HiveMind node"] -->|Message + Session| Bus["Messagebus"]
+        Bus --> SM["SessionManager"]
+        SM -->|"default" session, device-local| Core["ovos-core orchestrator"]
+        SM -->|unique session_id, external client| Core
+        Core -->|SessionManager.get message| Skill["Skill"]
+    ```
 
 **What / why (beginners):** a single OVOS device can be talking to many clients at once: your phone, a kitchen satellite, a HiveMind node. Each request arrives carrying a `Session` that identifies *who* is asking and *in what language*. If your skill stores any state (a chat history, a game in progress, a "current selection"), key that state by `session_id` instead of stashing it in a single instance variable. Otherwise two users would clobber each other.
 

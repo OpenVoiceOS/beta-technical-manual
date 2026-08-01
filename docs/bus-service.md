@@ -19,32 +19,44 @@ The **messagebus** is the central nervous system of the OVOS platform. All servi
 
 `ovos-messagebus` is a pure fan-out WebSocket broker. Every message received from one client is broadcast verbatim to every connected client. The bus performs no filtering, routing, or transformation.
 
-```text
-┌─────────────────────────────────────────────┐
-│              ovos-messagebus                │
-│                                             │
-│  Tornado IOLoop (daemon thread)             │
-│  ┌──────────────────────────────────────┐   │
-│  │  MessageBusEventHandler             │   │
-│  │  (Tornado WebSocketHandler)         │   │
-│  │  ┌──────────────────────────────┐   │   │
-│  │  │  client_connections: list    │   │   │
-│  │  │  Fan-out broadcast           │   │   │
-│  │  └──────────────────────────────┘   │   │
-│  └──────────────────────────────────────┘   │
-└─────────────────────────────────────────────┘
-         │           │           │
-    ovos-core   ovos-audio   ovos-gui
-    (clients via ovos-bus-client)
-
+```mermaid
+flowchart TD
+    subgraph MB["ovos-messagebus"]
+        IOLOOP["Tornado IOLoop (daemon thread)"]
+        IOLOOP --- HANDLER["MessageBusEventHandler<br/>(Tornado WebSocketHandler)"]
+        HANDLER --- CONN["client_connections: list<br/>Fan-out broadcast"]
+    end
+    MB --- CORE["ovos-core"]
+    MB --- AUDIO["ovos-audio"]
+    MB --- GUI["ovos-gui"]
 ```
+
+The clients above connect via `ovos-bus-client`.
 
 The broker itself has no logic beyond fan-out: it holds a list of open WebSocket connections and,
 for every message any one client sends, writes that same message to every other open connection.
 The Tornado I/O loop shown in the box runs this on its own daemon thread, so it does not block
-whichever process embeds it. `ovos-core`, `ovos-audio`, and `ovos-gui` above are just three
+whichever process embeds it.
+
+`ovos-core`, `ovos-audio`, and `ovos-gui` above are just three
 example clients. Anything speaking the same WebSocket protocol, including your own scripts, can
 connect and take part with the same permissions as any other client.
+
+The sequence below traces one client's connect handshake and one broadcast round-trip:
+
+```mermaid
+sequenceDiagram
+    participant C1 as Client A
+    participant Bus as ovos-messagebus
+    participant C2 as Client B
+
+    C1->>Bus: open WebSocket connection
+    Bus->>C1: connected (session_id="default")
+    Bus->>Bus: append client to client_connections
+    C1->>Bus: emit Message
+    Bus->>C1: broadcast Message (fan-out, includes sender)
+    Bus->>C2: broadcast Message (fan-out)
+```
 
 ---
 
@@ -299,6 +311,21 @@ The canonical legacy to spec topic map lives in the `NamespaceTranslator` from
 [`ovos-spec-tools`](spec-tooling.md), and each `MessageBusClient` applies it on the
 **receive** side, not by putting a second copy on the wire:
 
+```mermaid
+sequenceDiagram
+    participant Producer
+    participant Bus as ovos-messagebus
+    participant Client as MessageBusClient (any process)
+    participant LegacyHandler as handler on legacy topic
+    participant SpecHandler as handler on ovos.* topic
+
+    Producer->>Bus: emit(recognizer_loop:utterance)
+    Bus->>Client: broadcast recognizer_loop:utterance
+    Client->>Client: on_message: NamespaceTranslator lookup
+    Client->>LegacyHandler: dispatch recognizer_loop:utterance
+    Client->>SpecHandler: locally re-dispatch ovos.utterance.handle
+```
+
 - A single logical `emit()` sends exactly **one** message over the websocket: the topic the
   caller actually chose.
 - When that message arrives back over the websocket (to every connected client, including the
@@ -395,7 +422,9 @@ does not overload the bus with reconnect attempts. A successful reconnect resets
 **In-flight calls during the outage.** `emit()` (and therefore `wait_for_response()`, which calls
 `emit()` internally) waits for the connection to come back rather than failing fast. It waits up
 to 10 seconds, and if the client had already started running before that, it then waits with
-**no further timeout** until the socket reconnects. `wait_for_message()` / `wait_for_response()`'s
+**no further timeout** until the socket reconnects.
+
+`wait_for_message()` / `wait_for_response()`'s
 own reply-timeout only starts counting once the message is actually sent. So a call made while
 the bus is down can block well past the `timeout` value you passed it, for as long as the bus
 stays down. Once the client is reconnected, waits resume normally and time out as documented.

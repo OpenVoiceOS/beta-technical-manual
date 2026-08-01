@@ -73,6 +73,19 @@ release date after the commit is given instead.
 These changes affect the largest number of installs and are worth their
 own walkthrough before the chronological per-audience lists below.
 
+```mermaid
+flowchart LR
+    A["2024-03\nOCP -> ovos-media\nconfig split"] --> B["2024-09\novos-utils 0.1.0\ngutting"]
+    B --> C["2025-06-07/08\novos-workshop\n4.0.0 -> 7.0.0"]
+    C --> D["2025-06-16\novos-config 2.0.0\npipeline renames"]
+    D --> E["2026-01\nopm 2.0\nwake-word signature"]
+    E --> F["2026-04-08\nCommonQuerySkill\nremoved"]
+    F --> G["2026-06-25\nbus-client dual-emit\nbridge + transformer flip"]
+```
+
+Each milestone above is its own subsection below, chronological order left to right (the
+subsections themselves are grouped by theme, not by date).
+
 ### The ovos-utils 0.1.0 gutting (2024-09)
 
 `ovos-utils` 0.1.0 deleted almost everything that had accumulated in the

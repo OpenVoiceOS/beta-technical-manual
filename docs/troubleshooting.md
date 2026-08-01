@@ -16,6 +16,28 @@ need no extra install. Then reach for `ovos-busmon` when you want everything in 
 
 ---
 
+## The debugging funnel
+
+```mermaid
+flowchart TD
+    S1{"Stage 1: bus reachable?\nbus.log"}
+    S1 -- no --> F1["start ovos-messagebus,\nthen ovos-core / ovos-dinkum-listener"]
+    S1 -- yes --> S2{"Stage 2: mic/wake word fired?\nrecognizer_loop:record_begin"}
+    S2 -- no --> F2["check mic device/gain\nor wake word plugin"]
+    S2 -- yes --> S3{"Stage 3: STT produced text?\nrecognizer_loop:utterance"}
+    S3 -- no --> F3["check STT plugin / network / API key"]
+    S3 -- yes --> S4{"Stage 4: intent matched?\novos.intent.matched"}
+    S4 -- no --> F4["vocabulary/training data\nin the target skill"]
+    S4 -- yes --> S5{"Stage 5: handler raised?\novos.intent.handler.error"}
+    S5 -- error --> F5["read the traceback\nin skills.log"]
+    S5 -- clean --> S6{"Stage 6: TTS spoke?\novos.utterance.speak"}
+    S6 -- no --> F6["check TTS plugin / audio sink"]
+    S6 -- yes --> Done["utterance handled correctly"]
+```
+
+Each stage below cites the exact log line and bus message shown in this diagram, plus the
+command to check it directly.
+
 ## Where the logs live
 
 OVOS runs several independent services (listener, intent/skills, audio, messagebus, GUI), and each
@@ -179,9 +201,11 @@ and check `bus.log` for a clean startup (no repeated `Connection Refused` lines)
 reconnect on their own with a backing-off retry (5 s → 60 s cap), so a bus restart does **not**
 require restarting every client by hand. See [Bus restart / reconnect
 behavior](bus-service.md#bus-restart-reconnect-behavior) for exactly what to expect while they
-recover. In `ovos-busmon`,
-this stage is trivially visible: if the bus was down when busmon started, its connection never came
-up (busmon does not auto-retry) and the stream stays empty. Restart busmon once the bus is back.
+recover.
+
+In `ovos-busmon`, this stage is trivially visible: if the bus was down when busmon started, its
+connection never came up (busmon does not auto-retry) and the stream stays empty. Restart busmon
+once the bus is back.
 
 !!! tip "Nothing wrong with the mic yet"
     This stage says nothing about audio hardware. It only confirms the messagebus itself accepts

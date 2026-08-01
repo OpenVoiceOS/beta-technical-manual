@@ -56,6 +56,16 @@ Developers most often reach for the wrong class here, so this deserves its own s
 The family has one parent and two children, plus a neighbor that looks similar but is not
 retrieval at all.
 
+```mermaid
+flowchart TD
+    Q[Does the plugin bring its own knowledge?] -->|no, transforms text you hand it| EQA["ExtractiveQAEngine: get_best_passage(evidence, question, lang)"]
+    Q -->|yes| W{Where does the plugin's data live?}
+    W -->|somewhere else it does not manage: web API, external DB| RE["RetrievalEngine: query(query, lang, k)"]
+    W -->|owns a local index it builds itself| Own{What shape is the data?}
+    Own -->|free-text documents| DIE["DocumentIndexerEngine: ingest_corpus(List[str])"]
+    Own -->|question/answer pairs| QAIE["QAIndexerEngine: ingest_corpus(Dict[question, answer])"]
+```
+
 **`RetrievalEngine`** is the parent contract: one method,
 `query(query, lang, k) -> List[Tuple[str, float]]`, which returns up to `k`
 `(content, score)` pairs. Subclass it directly when the knowledge lives somewhere the
@@ -76,11 +86,12 @@ question-to-question is much more accurate than matching a question against raw 
 
 **`ExtractiveQAEngine` is not retrieval.** It never searches anything. Its single method,
 `get_best_passage(evidence, question, lang)`, receives the evidence text as an argument
-and returns the span inside it that answers the question. It is the *last* step of a
-pipeline whose earlier steps (often a `RetrievalEngine`) already found the evidence.
-[ovos-wikipedia-plugin](https://github.com/OpenVoiceOS/ovos-wikipedia-plugin) shows the
-combination: retrieval fetches a Wikipedia summary, then an extractive QA engine pulls
-out the one sentence worth speaking aloud.
+and returns the span inside it that answers the question.
+
+It is the *last* step of a pipeline whose earlier steps (often a `RetrievalEngine`) already
+found the evidence. [ovos-wikipedia-plugin](https://github.com/OpenVoiceOS/ovos-wikipedia-plugin)
+shows the combination: retrieval fetches a Wikipedia summary, then an extractive QA engine
+pulls out the one sentence worth speaking aloud.
 
 A worked example. You want your assistant to answer questions from a folder of markdown
 notes:
@@ -359,13 +370,20 @@ The old `QuestionSolver` family (`opm.solver.*` entry points, classes in
 lives in [Specialized Agent Engine Types](advanced-solvers.md#deprecated-solver-types).
 This section covers the code changes, which are small but not mechanical.
 
-**1. Pick the new base class.** `QuestionSolver` and `ChatMessageSolver` both become
-`ChatEngine`. `TldrSolver` becomes `SummarizerEngine`. `EvidenceSolver` becomes
-`ExtractiveQAEngine`. `MultipleChoiceSolver` becomes `ReRankerEngine`.
-`EntailmentSolver` becomes `NaturalLanguageInferenceEngine`. One exception: if your
-`QuestionSolver` was really a knowledge lookup (Wikipedia, Wolfram Alpha, a database),
-migrate it to `RetrievalEngine` instead of `ChatEngine`. The solver API had no retrieval
-type, so lookups were forced into the Q&A shape. The new API separates them.
+**1. Pick the new base class.**
+
+| Old solver class | New base class |
+|---|---|
+| `QuestionSolver` | `ChatEngine` (or `RetrievalEngine` — see exception below) |
+| `ChatMessageSolver` | `ChatEngine` |
+| `TldrSolver` | `SummarizerEngine` |
+| `EvidenceSolver` | `ExtractiveQAEngine` |
+| `MultipleChoiceSolver` | `ReRankerEngine` |
+| `EntailmentSolver` | `NaturalLanguageInferenceEngine` |
+
+One exception: if your `QuestionSolver` was really a knowledge lookup (Wikipedia, Wolfram
+Alpha, a database), migrate it to `RetrievalEngine` instead of `ChatEngine`. The solver API
+had no retrieval type, so lookups were forced into the Q&A shape. The new API separates them.
 
 **2. Rename the methods.** For a `QuestionSolver` moving to `ChatEngine`, the core
 change is from string-in/string-out to messages-in/message-out:
@@ -390,9 +408,10 @@ the returned string in an `AgentMessage` and update the dict-style messages to
 **3. Drop the auto-translation assumptions.** This is the trap. `QuestionSolver` had
 `enable_tx` and bidirectional auto-translation: a solver could declare
 `supported_langs = ["en"]` and still receive every language, because the base class
-translated the input and output behind the scenes. **Agent engines never translate.**
-After migration your engine receives the user's language as-is. Either handle it or
-return nothing for languages you do not support.
+translated the input and output behind the scenes.
+
+**Agent engines never translate.** After migration your engine receives the user's
+language as-is. Either handle it or return nothing for languages you do not support.
 
 Translation is still the recommended strategy for engines whose backend is inherently
 monolingual (Wolfram Alpha and most web APIs only speak English). What changed is who

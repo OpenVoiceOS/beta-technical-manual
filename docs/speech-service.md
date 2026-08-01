@@ -47,12 +47,13 @@ The speech service is the "ears" of OpenVoiceOS. It continuously listens to the 
 
 ## Architecture
 
-```text
-[Microphone] --(audio)--> [VAD/Wake Word] --(trigger)--> [Recording]
-                                                            |
-                                                            +--(audio)--> [Audio-transformer chain] --> [STT Plugin] --(text)--> [MessageBus]
-                                                                          (TRANSFORM-1 §3.1)            emits ovos.utterance.handle
-
+```mermaid
+flowchart LR
+    Mic[Microphone] -->|audio| VADWW[VAD / Wake Word]
+    VADWW -->|trigger| Rec[Recording]
+    Rec -->|audio| XForm["Audio-transformer chain (TRANSFORM-1 §3.1)"]
+    XForm --> STT[STT Plugin]
+    STT -->|text, emits ovos.utterance.handle| Bus[MessageBus]
 ```
 
 ## Listening State Machine
@@ -79,7 +80,11 @@ Source: `ovos_dinkum_listener/voice_loop/voice_loop.py:36` (`ListeningState`) an
 The listener emits its activity on the OVOS [messagebus](bus-service.md). The most
 useful events for downstream services:
 
-Canonical (spec) names are shown first, with the legacy name in parentheses. The `ovos.listener.*` and `ovos.utterance.handle` names come from [OVOS-AUDIO-IN-1 §5-§6](https://github.com/OpenVoiceOS/architecture/blob/dev/audio-in.md). `ovos-dinkum-listener` emits the spec `ovos.*` topics directly for the record/awoken/utterance events (via `SpecMessage`). For those, `ovos-bus-client`'s `NamespaceTranslator` runs on every client with both directions on by default (see [Bus Service](bus-service.md#namespace-migration)). Emitting a spec topic also emits its legacy alias, and vice versa, so subscribers can use either name. The wake-word event (`recognizer_loop:wakeword`) is the exception: it has no spec counterpart in the rename map, so it travels under the legacy name only. See the [legacy ↔ spec migration table](bus-events.md#legacy-spec-migration) for the full mapping.
+Canonical (spec) names are shown first, with the legacy name in parentheses. The `ovos.listener.*` and `ovos.utterance.handle` names come from [OVOS-AUDIO-IN-1 §5-§6](https://github.com/OpenVoiceOS/architecture/blob/dev/audio-in.md). `ovos-dinkum-listener` emits the spec `ovos.*` topics directly for the record/awoken/utterance events (via `SpecMessage`).
+
+For those, `ovos-bus-client`'s `NamespaceTranslator` runs on every client with both directions on by default (see [Bus Service](bus-service.md#namespace-migration)). Emitting a spec topic also emits its legacy alias, and vice versa, so subscribers can use either name.
+
+The wake-word event (`recognizer_loop:wakeword`) is the exception: it has no spec counterpart in the rename map, so it travels under the legacy name only. See the [legacy ↔ spec migration table](bus-events.md#legacy-spec-migration) for the full mapping.
 
 | Message | Payload | Meaning |
 |---|---|---|
@@ -90,12 +95,15 @@ Canonical (spec) names are shown first, with the legacy name in parentheses. The
 | `recognizer_loop:speech.recognition.unknown` | none | STT returned nothing (silence / failure) |
 | `ovos.listener.awoken` (legacy: `mycroft.awoken`) | none | Listener woke from sleep (§6.4) |
 
-It also reacts to inbound commands: `ovos.listener.sleep` (legacy: `recognizer_loop:sleep`)
-suspends capture, `recognizer_loop:wake_up` resumes it, plus `recognizer_loop:record_stop`,
-`recognizer_loop:state.get` (read the current mode/state) and `recognizer_loop:state.set`
-(change the listening mode/state at runtime by sending `state` and/or `mode` in `message.data`.
-The handler replies with `recognizer_loop:state` just like `state.get`). The full table lives
-in the bus-message spec (`message_spec/dinkum.md`).
+It also reacts to inbound commands:
+
+- `ovos.listener.sleep` (legacy: `recognizer_loop:sleep`) suspends capture.
+- `recognizer_loop:wake_up` resumes capture.
+- `recognizer_loop:record_stop` stops the current recording.
+- `recognizer_loop:state.get` reads the current mode/state.
+- `recognizer_loop:state.set` changes the listening mode/state at runtime by sending `state` and/or `mode` in `message.data`. The handler replies with `recognizer_loop:state`, just like `state.get`.
+
+The full table lives in the bus-message spec (`message_spec/dinkum.md`).
 
 ### Base64 audio STT over the bus
 

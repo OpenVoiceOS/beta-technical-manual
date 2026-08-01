@@ -46,6 +46,16 @@ You will find several unfamiliar file extensions in this folder, but these are s
 
 The `__init__.py` file is where most of the Skill is defined using Python code.
 
+```mermaid
+stateDiagram-v2
+    [*] --> Constructed: __init__()
+    Constructed --> Initialized: initialize()
+    Initialized --> Running: intents registered
+    Running --> Running: intent_handler / stop()
+    Running --> ShuttingDown: shutdown()
+    ShuttingDown --> [*]
+```
+
 #### Importing libraries
 
 ```python

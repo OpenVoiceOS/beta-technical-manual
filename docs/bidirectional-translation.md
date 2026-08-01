@@ -31,6 +31,26 @@ The plugin consists of two main components:
     The companion `ovos-translate-server-plugin` is gaining a `server_type` option so a device can offload translation to LibreTranslate or DeepL servers, not just an OVOS translate server. This is planned and not yet released.
 
 ### Interaction Flow
+
+```mermaid
+sequenceDiagram
+    participant U as User (Spanish)
+    participant STT
+    participant UT as Utterance Transformer
+    participant Core as ovos-core
+    participant Skill as Time Skill (English)
+    participant DT as Dialog Transformer
+    participant TTS
+
+    U->>STT: "¿Qué hora es?"
+    STT->>UT: text (Spanish)
+    UT->>Core: "What time is it?" (translated to English)
+    Core->>Skill: match TimeIntent
+    Skill->>DT: "The time is 10:00 AM"
+    DT->>TTS: "Son las 10:00 AM" (translated back to Spanish)
+    TTS->>U: speaks Spanish response
+```
+
 1.  **User speaks** in Spanish: *"¿Qué hora es?"*
 2.  **STT** transcribes to text (Spanish).
 3.  **Utterance Transformer** detects Spanish, translates to English: *"What time is it?"*.

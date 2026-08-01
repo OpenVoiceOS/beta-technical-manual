@@ -120,8 +120,9 @@ journalctl --user -u ovos-skills.service -f
 !!! warning "`PIDLock` kills the previous process silently"
     Most OVOS services use `PIDLock` (from `ovos-utils`) to guard against two copies running
     under the same name. On construction, `PIDLock` kills any existing process holding that
-    name's PID file, then writes its own PID. There is no warning or confirmation prompt. If
-    you start a service by hand while a systemd-managed copy is already running under the
+    name's PID file, then writes its own PID. There is no warning or confirmation prompt.
+
+    If you start a service by hand while a systemd-managed copy is already running under the
     same name, `PIDLock` kills the systemd-managed one. The PID file is deleted on exit via
     `SIGINT`/`SIGTERM` handlers, so a process killed harder than that (`SIGKILL`, power loss)
     can leave a stale PID file behind that the next start-up will happily reuse.
@@ -247,6 +248,16 @@ does not include a log-shipping client.
 
 ## Backup and restore
 
+```mermaid
+flowchart LR
+    Backup["cp ~/.config/mycroft\n+ ~/.local/share/mycroft"] --> Store[Store backup\nsecurely]
+    Store -.-> Install[Install OVOS\non new machine]
+    Install --> Stop["systemctl --user stop\novos.service"]
+    Stop --> CopyBack[Copy config/data\nback into place]
+    CopyBack --> Restart["systemctl --user start\novos.service"]
+    Restart --> Probe[Re-run readiness probe]
+```
+
 Two kinds of state matter on an OVOS device: the packages that are installed, and everything
 under a user's config/data directories. The staged-upgrade recipe below covers packages. This
 section covers the directories.
@@ -338,6 +349,14 @@ regressed rather than the whole stack.
     [Version-Compatible Skills & Plugins](version-compat-guide.md).
 
 ## Staged upgrades and rollback
+
+```mermaid
+flowchart LR
+    Freeze["Freeze known-good packages\n(uv pip freeze)"] --> Canary[Upgrade one\ncanary device]
+    Canary --> Verify{Readiness probe +\nreal voice check pass?}
+    Verify -- yes --> Fleet[Roll the same command\nout to the rest of the fleet]
+    Verify -- no --> Rollback["--force-reinstall known-good,\nrestart ovos.service"]
+```
 
 [Release channels](release-channels.md) covers `stable`/`testing`/`alpha` constraints files.
 For a fleet, the same mechanism gives you a controlled, reversible upgrade path:
@@ -505,9 +524,11 @@ resource limit and healthcheck spelled out.
 !!! danger "`network_mode: host` shares the loopback across every container on that host"
     With `network_mode: host`, `127.0.0.1` is the **host's** loopback, not a container-private
     one. Every container and process on that host shares it. A bus bound to `127.0.0.1` is
-    reachable by any of them, not just `ovos_messagebus`. "Bound to localhost" no longer means
-    "only reachable by this one process" once host networking is in play. Treat the whole host
-    as the trust boundary, not the individual container.
+    reachable by any of them, not just `ovos_messagebus`.
+
+    "Bound to localhost" no longer means "only reachable by this one process" once host
+    networking is in play. Treat the whole host as the trust boundary, not the individual
+    container.
 
     Host networking also exposes any service that binds `0.0.0.0` straight onto the LAN, not
     just the host's own loopback. `gui_websocket.host` defaults to `127.0.0.1` (loopback only);

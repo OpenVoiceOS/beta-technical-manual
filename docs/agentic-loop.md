@@ -15,6 +15,19 @@
 
 [ovos-agentic-loop](https://github.com/OpenVoiceOS/ovos-agentic-loop) implements eight agentic reasoning patterns as standard OPM `ChatEngine` plugins. Each pattern wires a configurable inner LLM brain with one or more `ToolBox` plugins to produce multi-step reasoning over OVOS personas.
 
+The default pattern, `ovos-react-loop`, alternates thinking and acting until it has an answer
+or hits `max_iterations`:
+
+```mermaid
+stateDiagram-v2
+    [*] --> Think
+    Think --> ToolCall: brain decides a tool is needed
+    ToolCall --> Observe: ToolBox runs the call
+    Observe --> Think: result fed back into context
+    Think --> Answer: brain has enough to reply
+    Answer --> [*]
+```
+
 !!! tip "Which loop should I pick?"
     - Just need the model to use a tool and answer? Start with **`ovos-react-loop`**. It's the
       general-purpose default, and every other loop is a variation for a specific need.

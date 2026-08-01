@@ -95,18 +95,15 @@ that currently run in parallel: the legacy ["old audio service"](media-plugins.m
 (`ovos-ocp-audio-plugin` inside [`ovos-audio`](audio-service.md)) and the standalone `ovos-media`
 daemon described here, which is the target:
 
-```text
-[Current / target]
-  ovos-core intent pipeline
-    └── ocp-pipeline-plugin
-          └── Search dispatch → OCP skills → results → ovos-media
-
-  ovos-media (standalone daemon)
-    ├── Player state machine (OCPMediaPlayer)
-    ├── MPRIS
-    ├── Media backend plugins
-    └── GUI (still coupled, target: GUI adapter plugins)
-
+```mermaid
+flowchart TD
+    Core["ovos-core intent pipeline"] --> Pipeline["ocp-pipeline-plugin"]
+    Pipeline -->|"enable_old_audioservice: true (default)"| Legacy["ovos-ocp-audio-plugin (in ovos-audio)"]
+    Pipeline -->|"enable_old_audioservice: false"| Media["ovos-media (standalone daemon)"]
+    Media --> PSM["Player state machine (OCPMediaPlayer)"]
+    Media --> MPRIS
+    Media --> Backends["Media backend plugins"]
+    Media --> GUI["GUI (still coupled, target: GUI adapter plugins)"]
 ```
 
 ---
@@ -122,6 +119,19 @@ intent pipeline, handles all media query classification, and dispatches search t
 It does NOT handle playback.
 
 ### What It Does
+
+```mermaid
+sequenceDiagram
+    participant Pipeline as OCPPipelineMatcher
+    participant Skills as OCP skills
+    participant Player as active player
+
+    Note over Pipeline: Classify media type<br/>(AhocorasickNER)
+    Pipeline->>Skills: ovos.common_play.query
+    Skills-->>Pipeline: ovos.common_play.query.response
+    Note over Pipeline: Sort by score,<br/>pick best result
+    Pipeline->>Player: ovos.common_play.play
+```
 
 1. **Classification**: determines the media type (music, podcast, radio, video, audiobook, news, etc.)
    using a trained `AhocorasickNER` classifier and vocabulary files from `ocp_pipeline/locale/`.
@@ -431,8 +441,9 @@ and `video_players` do, keyed by local name with a `module` entry-point name.
 Each entry's key is a local name. `module` is the plugin's **entry-point name**
 (e.g. `ovos-media-audio-plugin-vlc`), which can differ from its pip package name
 (`ovos-media-plugin-vlc`). `preferred_*_services` are ordered fallback lists. The
-audio list is also the generic fallback when a type-specific list is empty. To
-hand playback to the legacy GUI player, add the `qt5` entry points
+audio list is also the generic fallback when a type-specific list is empty.
+
+To hand playback to the legacy GUI player, add the `qt5` entry points
 (`ovos-media-audio-plugin-qt5`, `…-video-plugin-qt5`, `…-web-plugin-qt5`). That
 backend is legacy and needs the deprecated [ovos-shell](ovos-shell.md).
 

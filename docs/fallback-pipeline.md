@@ -14,7 +14,11 @@ The rest of this page is for people deploying or customizing OVOS. If you only w
 The **Fallback Pipeline** in **OpenVoiceOS (OVOS)** manages how fallback skills are queried when no primary skill handles a user's utterance. It coordinates multiple fallback handlers, so the system still attempts to respond even when regular intent matching fails.
 
 !!! note "How the spec frames it"
-    A **fallback skill** declares no intent patterns. Instead it receives the raw utterance at query time and decides for itself whether it can respond (FALLBACK-1 §2). This is the right pattern for open-domain QA, LLM completions, and any coverage that cannot be modelled as a grammar. The plugin builds an ordered handler pool from each skill's registered `priority` and the session preference `session.fallback_handlers`. It queries pool members one at a time via `ovos.skills.fallback.ping` / `.pong`, and returns a `Match` on the **reserved `intent_name` `fallback`** (PIPELINE-1 §7.3) targeting the first willing skill, dispatched on `ovos.skills.fallback.{skill_id}.request`. If the pool is exhausted it returns `None`, and the orchestrator emits `ovos.intent.unmatched`. The high/medium/low stages below are one fallback plugin loaded at several pipeline positions, each restricted to a `priority` range (FALLBACK-1 §8.2).
+    A **fallback skill** declares no intent patterns. Instead it receives the raw utterance at query time and decides for itself whether it can respond (FALLBACK-1 §2). This is the right pattern for open-domain QA, LLM completions, and any coverage that cannot be modelled as a grammar.
+
+    The plugin builds an ordered handler pool from each skill's registered `priority` and the session preference `session.fallback_handlers`. It queries pool members one at a time via `ovos.skills.fallback.ping` / `.pong`, and returns a `Match` on the **reserved `intent_name` `fallback`** (PIPELINE-1 §7.3) targeting the first willing skill, dispatched on `ovos.skills.fallback.{skill_id}.request`. If the pool is exhausted it returns `None`, and the orchestrator emits `ovos.intent.unmatched`.
+
+    The high/medium/low stages below are one fallback plugin loaded at several pipeline positions, each restricted to a `priority` range (FALLBACK-1 §8.2).
 
 ---
 
@@ -46,6 +50,17 @@ Each matcher filters registered fallbacks with `range.start < priority ≤ range
 ---
 
 ## How It Works
+
+```mermaid
+flowchart LR
+    U["Utterance\n(all other matchers failed)"] --> H["-high\n(0 < p ≤ 5)"]
+    H -- no willing skill --> M["-medium\n(5 < p ≤ 90)"]
+    M -- no willing skill --> L["-low\n(90 < p ≤ 101)"]
+    H -- willing skill --> D["ovos.skills.fallback.{skill_id}.request"]
+    M -- willing skill --> D
+    L -- willing skill --> D
+    L -- no willing skill --> N["ovos.intent.unmatched"]
+```
 
 1. A fallback stage is hit in the pipeline (after all other matchers fail)
 

@@ -38,6 +38,16 @@ class MyMemory(AgentContextManager):  # all three methods are abstract
 
 `AgentMessage` (`role`, `content`, optional `tool_calls` / `tool_call_id` / `name`) is the canonical message type, from `ovos_plugin_manager.templates.agents`. The persona calls `build_conversation_context` before each turn and `update_history` after each exchange.
 
+```mermaid
+flowchart LR
+    U[Utterance] --> BCC[build_conversation_context]
+    H[get_history: stored session history] --> BCC
+    M[Memory plugin: summaries / retrieved snippets] --> BCC
+    BCC --> ML["Message list (system? + history + USER utterance)"]
+    ML --> CE[Chat engine: continue_chat]
+    CE --> UH[update_history: append new turns]
+```
+
 Two rules hold for every backend in this package:
 
 - The **first** message MAY be a `system` message carrying the persona's `system_prompt`.

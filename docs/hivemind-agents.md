@@ -49,6 +49,15 @@ You can swap implementations without touching the rest:
 - **Database**: where client credentials live (JSON / SQLite / Redis).
 - **Binary data handler**: how binary payloads (e.g. audio) move over the mesh.
 
+```mermaid
+flowchart LR
+    Kitchen[Kitchen satellite] -- HiveMind protocol --> Listener["hivemind_listener\n:5678"]
+    Bedroom[Bedroom satellite] -- HiveMind protocol --> Listener
+    Restroom[Restroom satellite] -- HiveMind protocol --> Listener
+    Listener --> Core["hivemind-core\n(auth + permissions)"]
+    Core --> Agent["ovos-core\n(hivemind-ovos-agent-plugin)"]
+```
+
 ![Diagram of a server running ovos-core and hivemind-core, exposing a hivemind_listener on port 5678 that three satellite clients (Kitchen, Bedroom, Restroom) connect to, each relaying its own spoken request back to the server](img/satellites.png)
 
 ---

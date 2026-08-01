@@ -212,12 +212,14 @@ A Pi 3 user should pick `lite`. A Pi 5 user who wants to stay fully offline shou
         - **Wi-Fi Credentials:** Enter your Wi-Fi network name and password.
         - **Keyboard Layout:** Configure the correct layout for your region.
 
-   **Important:** **Do NOT change the default username** (`ovos`), as it is required for the system to function properly.
+!!! warning "Keep the default username, change the password"
+    **Do NOT change the default username** (`ovos`). The system requires it to function
+    properly.
 
-   **If you skip this step**, the image boots with its stock credentials: username `ovos`,
-   password `ovos`, hostname `raspOVOS`. These are published defaults, so the device is
-   reachable over SSH by anyone on the network who knows them. Set a real password here, or
-   change it at first boot, if the device will be reachable on a network you don't fully trust.
+    **If you skip this step**, the image boots with its stock credentials: username `ovos`,
+    password `ovos`, hostname `raspOVOS`. These are published defaults, so the device is
+    reachable over SSH by anyone on the network who knows them. Set a real password here, or
+    change it at first boot, if the device will be reachable on a network you don't fully trust.
 
 ![Raspberry Pi Imager "Edit Settings" general tab: hostname, username, password, and Wi-Fi fields](https://github.com/user-attachments/assets/9509ea57-ae46-4c0b-b9e9-97935579d207)
 

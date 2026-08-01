@@ -81,7 +81,20 @@ It is only useful if you still run legacy CPS skills.
 ---
 
 !!! note "Playback vs. control, and why ordering matters"
-    OCP-1 §2 splits media commands into two classes the player must distinguish: **playback requests** ("play X", "open X") that acquire new media, and **control requests** ("pause", "resume", "next", "previous", "stop", seek) that act on whatever is *already* playing. This includes media OVOS did not start, when the MPRIS bridge (OCP-1 §6) is enabled. There is exactly **one Virtual Media Player per session** (OCP-1 §2, §5). A request names *the player*, not a backend, and the player routes. This is why a high-tier OCP stage belongs early in `session.pipeline`: as a selective pipeline plugin it claims a control utterance like "resume" or "next" only *while it holds paused media for that session*. First-match-wins (PIPELINE-1 §6.2) lets it intercept those bare words before a general intent engine does. This is exactly the conservative, state-aware claiming pattern the spec describes. Seek is **absolute** on the wire (`ovos.common_play.seek` carries a millisecond `position` within now-playing). A relative "skip forward 10 seconds" utterance is resolved to that absolute position by the matcher itself, reading the player's own state reports, so two concurrent "skip forward" requests can't compound each other's offset. The `ovos.common_play.*` bus surface in the spec is the formal counterpart of the `ovos.common_play.query` / `…status` / `…track.state` topics used below.
+    OCP-1 §2 splits media commands into two classes the player must distinguish: **playback requests** ("play X", "open X") that acquire new media, and **control requests** ("pause", "resume", "next", "previous", "stop", seek) that act on whatever is *already* playing. This includes media OVOS did not start, when the MPRIS bridge (OCP-1 §6) is enabled. There is exactly **one Virtual Media Player per session** (OCP-1 §2, §5). A request names *the player*, not a backend, and the player routes.
+
+    This is why a high-tier OCP stage belongs early in `session.pipeline`: as a selective pipeline plugin it claims a control utterance like "resume" or "next" only *while it holds paused media for that session*. First-match-wins (PIPELINE-1 §6.2) lets it intercept those bare words before a general intent engine does. This is exactly the conservative, state-aware claiming pattern the spec describes.
+
+    Seek is **absolute** on the wire (`ovos.common_play.seek` carries a millisecond `position` within now-playing). A relative "skip forward 10 seconds" utterance is resolved to that absolute position by the matcher itself, reading the player's own state reports, so two concurrent "skip forward" requests can't compound each other's offset. The `ovos.common_play.*` bus surface in the spec is the formal counterpart of the `ovos.common_play.query` / `…status` / `…track.state` topics used below.
+
+```mermaid
+flowchart TD
+    U[Utterance] --> Q{"Playback or control?"}
+    Q -- "play X / open X" --> NEW["Acquire new media\novos.common_play.query"]
+    Q -- "pause/resume/next/\nprevious/stop/seek" --> CTRL{"Player holding\npaused media?"}
+    CTRL -- yes --> ACT["Claim as control request"]
+    CTRL -- no --> PASS["Pass to next pipeline stage"]
+```
 
 ## How a media intent is recognized
 

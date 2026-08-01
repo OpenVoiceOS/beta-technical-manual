@@ -24,9 +24,26 @@ per-payload `data.lang`. Each is defined in
 
 ## The Disambiguation Logic
 
-When an `ovos.utterance.handle` message (legacy: `recognizer_loop:utterance`) arrives on the [messagebus](bus-service.md), `ovos-core` (specifically the `IntentService`) runs a disambiguation routine to decide which language to use for intent matching.
+When an `ovos.utterance.handle` message (legacy: `recognizer_loop:utterance`) arrives on the
+[messagebus](bus-service.md), `ovos-core` (specifically the `IntentService`) runs a
+disambiguation routine to decide which language to use for intent matching.
 
-The service inspects the message's `context` dict and picks the **first** of these keys that is present *and* resolves to a valid language:
+```mermaid
+flowchart TD
+    A[ovos.utterance.handle arrives] --> B{context has stt_lang?}
+    B -- yes, valid --> V[Use it]
+    B -- no / invalid --> C{context has request_lang?}
+    C -- yes, valid --> V
+    C -- no / invalid --> D{context has detected_lang?}
+    D -- yes, valid --> V
+    D -- no / invalid --> F[Fall back to configured default lang]
+    V --> M[Match intent in resolved language]
+    F --> M
+```
+
+*"Valid"* means the candidate passes against `valid_langs` via `closest_lang` (see below).
+The service inspects the message's `context` dict and picks the **first** of these keys that
+is present *and* resolves to a valid language:
 
 | Priority | Context Key | Source |
 |---|---|---|

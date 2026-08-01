@@ -62,12 +62,11 @@ Network/internet state is queried from [PHAL](phal.md) at startup via `ovos.PHAL
 
 The loading process follows this flow:
 
-```text
-load_plugin_skills()
-  → find_skill_plugins()                              # {skill_id: SkillClass}
-    → _get_plugin_skill_loader(skill_id, skill_class) # build a PluginSkillLoader
-      → _load_plugin_skill(skill_id, skill_class)     # instantiate & start the skill
-
+```mermaid
+flowchart LR
+    A["load_plugin_skills()"] --> B["find_skill_plugins()<br/>{skill_id: SkillClass}"]
+    B --> C["_get_plugin_skill_loader(skill_id, skill_class)<br/>build a PluginSkillLoader"]
+    C --> D["_load_plugin_skill(skill_id, skill_class)<br/>instantiate & start the skill"]
 ```
 
 Each skill gets its own bus connection when `websocket.shared_connection` is `false` in config (see `_get_internal_skill_bus()`), providing isolation from "BusBricker" style attacks.

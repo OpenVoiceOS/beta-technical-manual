@@ -9,6 +9,18 @@
     word, and STT stages are healthy. This page assumes the utterance already reached the intent
     pipeline.
 
+```mermaid
+flowchart TD
+    S[Symptom?] --> A["Nothing matched"]
+    S --> B["Wrong skill answered"]
+    S --> C["Slow or works only after a while"]
+    S --> D["Matched but wrong handler ran"]
+    A --> A1["#35;nothing-matched"]
+    B --> B1["#35;the-wrong-skill-answered"]
+    C --> C1["#35;matching-is-slow-or-works-only-after-a-while"]
+    D --> D1["#35;it-matched-but-the-wrong-handler-ran"]
+```
+
 ---
 
 ## Nothing matched

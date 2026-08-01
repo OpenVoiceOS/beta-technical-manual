@@ -61,8 +61,9 @@ The audio service receives `ovos.utterance.speak` messages (legacy: `speak`) fro
 [messagebus](bus-service.md). This is the natural-language response exit point of the utterance
 lifecycle (OVOS-PIPELINE-1 §9.6). The service runs the text through the **dialog-transformer
 chain**, sends it to a [TTS](tts-plugins.md) engine, runs the resulting audio through the
-**tts-transformer chain**, and plays it through its playback queue (OVOS-AUDIO-1 §3). The same
-queue also plays sound effects (`ovos.audio.queue` / `ovos.audio.play_sound`, legacy:
+**tts-transformer chain**, and plays it through its playback queue (OVOS-AUDIO-1 §3).
+
+The same queue also plays sound effects (`ovos.audio.queue` / `ovos.audio.play_sound`, legacy:
 `mycroft.audio.queue` / `mycroft.audio.play_sound`). Separately, and only when
 `enable_old_audioservice` is on, it also hosts the legacy media audioservice for music, news, and
 streams. See the **Two independent subsystems** note at the top of this page.
@@ -85,16 +86,25 @@ streams. See the **Two independent subsystems** note at the top of this page.
 
 ## Architecture
 
-```text
-Subsystem 1 - TTS / sound playback (always on):    OVOS-AUDIO-1 §3
-  [MessageBus] --(ovos.utterance.speak)--> [dialog-transformers §3.5] --> [TTS Plugin] --> [tts-transformers §3.6]
-               (legacy: speak)                                                                      |
-               --(play_sound)----------------------------------------------------+                  |
-                                                                                  v                  v
-                                                       [TTS.queue] --> [PlaybackThread] --(ALSA/Pulse)--> [Speakers]
+### Subsystem 1 — TTS / sound playback (always on, OVOS-AUDIO-1 §3)
 
-Subsystem 2 - legacy media audioservice (only if enable_old_audioservice):
-  [MessageBus] --(mycroft.audio.service.play)--> [AudioService] --> [audioservice backend: OCP / mpv / vlc]
+```mermaid
+flowchart LR
+    Bus[MessageBus] -->|"ovos.utterance.speak (legacy: speak)"| DXForm["dialog-transformers §3.5"]
+    DXForm --> TTS[TTS Plugin]
+    TTS --> TXForm["tts-transformers §3.6"]
+    Bus -->|play_sound| Queue[TTS.queue]
+    TXForm --> Queue
+    Queue --> Thread[PlaybackThread]
+    Thread -->|ALSA/Pulse| Speakers[Speakers]
+```
+
+### Subsystem 2 — legacy media audioservice (only if `enable_old_audioservice`)
+
+```mermaid
+flowchart LR
+    Bus2[MessageBus] -->|mycroft.audio.service.play| AS[AudioService]
+    AS --> Backend["audioservice backend: OCP / mpv / vlc"]
 ```
 
 ## Configuration

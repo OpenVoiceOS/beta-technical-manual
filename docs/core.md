@@ -4,7 +4,9 @@
     Long-lived and actively maintained. Depend on it freely. Rated by [repository health](maturity.md), not version.
 
 !!! abstract "In a nutshell"
-    `ovos-core` is the "brain" of your assistant. It does not listen through the microphone or talk through the speaker. Those are separate helpers. It is the part in the middle that loads your skills, takes the words you said, decides which skill should answer, and hands back the reply. Think of it as the dispatcher in a control room, routing each request to the right place without doing the talking or listening itself. Everything it does travels over the [messagebus](bus-service.md). See also the [Glossary](glossary.md).
+    `ovos-core` is the "brain" of your assistant. It does not listen through the microphone or talk through the speaker. Those are separate helpers. It is the part in the middle that loads your skills, takes the words you said, decides which skill should answer, and hands back the reply.
+
+    Think of it as the dispatcher in a control room, routing each request to the right place without doing the talking or listening itself. Everything it does travels over the [messagebus](bus-service.md). See also the [Glossary](glossary.md).
 
 ??? info "📐 Formal specification"
     `ovos-core` is the reference **orchestrator**, the logical role that runs the pipeline, routes matches to handlers, and emits the handler-lifecycle events. That role is specified by **[OVOS-PIPELINE-1: Utterance Lifecycle & Pipeline](https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md)**. The transformer chains it hosts are specified by **[OVOS-TRANSFORM-1: Transformer Plugins](https://github.com/OpenVoiceOS/architecture/blob/dev/transformer.md)**, and the intent/entity registration it ingests by **[OVOS-INTENT-4: Intent & Entity Registration](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-4.md)**. See also the [spec index](architecture-specs.md). The specs are implementation-agnostic, so any conformant orchestrator can replace `ovos-core` and run the same skills.
@@ -32,25 +34,22 @@ Every user utterance, whether captured from a microphone or received via a remot
 
 The diagram below shows the key components within `ovos-core` and how they interact with other services:
 
-```bash
-ovos-messagebus  (WebSocket pub/sub)
-      │
-      ├── ovos-core  (this service)
-      │     ├── [Skill Manager](skill-manager.md)   - loads/unloads skill plugins
-      │     ├── [Intent Service](intent-service.md) - routes utterances through the pipeline
-      │     │     ├── Utterance Transformers
-      │     │     ├── Metadata Transformers
-      │     │     ├── Intent Transformers
-      │     │     └── Pipeline plugins (Adapt, Padatious, Converse, Fallback, …)
-      │     ├── [Skill Installer](skill-installer.md) - runtime pip install/uninstall
-      │     └── Event Scheduler - timed bus events
-      │
-      ├── ovos-dinkum-listener  - STT / wake-word → ovos.utterance.handle
-      │                            (legacy: recognizer_loop:utterance)
-      ├── ovos-audio            - TTS playback
-      ├── ovos-gui              - GUI layer
-      └── ovos-phal             - hardware/platform plugins
-
+```mermaid
+flowchart TD
+    BUS(["ovos-messagebus<br/>(WebSocket pub/sub)"])
+    BUS --- CORE["ovos-core (this service)"]
+    CORE --- SM["Skill Manager<br/>loads/unloads skill plugins"]
+    CORE --- IS["Intent Service<br/>routes utterances through the pipeline"]
+    IS --- UT[Utterance Transformers]
+    IS --- MT[Metadata Transformers]
+    IS --- IT[Intent Transformers]
+    IS --- PP["Pipeline plugins<br/>Adapt, Padatious, Converse, Fallback, …"]
+    CORE --- SI["Skill Installer<br/>runtime pip install/uninstall"]
+    CORE --- EVS["Event Scheduler<br/>timed bus events"]
+    BUS --- LISTENER["ovos-dinkum-listener<br/>STT / wake-word → ovos.utterance.handle<br/>(legacy: recognizer_loop:utterance)"]
+    BUS --- AUDIO["ovos-audio<br/>TTS playback"]
+    BUS --- GUI["ovos-gui<br/>GUI layer"]
+    BUS --- PHAL["ovos-phal<br/>hardware/platform plugins"]
 ```
 
 ## Key Components

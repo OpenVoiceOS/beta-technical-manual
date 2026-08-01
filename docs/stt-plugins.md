@@ -9,7 +9,9 @@ Writing a plugin instead of choosing one? Jump to [Writing your own](#writing-yo
     STT sits inside the audio input service, specified by **[OVOS-AUDIO-IN-1: Audio Input Service](https://github.com/OpenVoiceOS/architecture/blob/dev/audio-in.md)**: capture → audio-transformer chain → STT → utterance. The transcript is emitted on `ovos.utterance.handle` ([OVOS-PIPELINE-1 §9.1](https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md)). See the [spec index](architecture-specs.md).
 
 !!! note "Audio format contract"
-    Everything upstream of an STT plugin, the [microphone plugin](mic-plugins.md#the-microphone-interface) and any audio transformers, hands over raw PCM in a fixed shape: **16 kHz sample rate, 16-bit samples, mono, little-endian**, delivered in **4096-byte chunks** by default (the `Microphone` template's `sample_rate`/`sample_width`/`sample_channels`/`chunk_size` defaults). A batch `STT.execute()` plugin gets this bundled into a `speech_recognition.AudioData` object. A `StreamingSTT` plugin receives it chunk-by-chunk, still at this same format, unless a deployment explicitly reconfigures the microphone. Neither the `STT` nor the `StreamingSTT` template resamples on the plugin's behalf. If the wrapped model expects a different native rate, converting the incoming 16 kHz PCM is the plugin's own job.
+    Everything upstream of an STT plugin, the [microphone plugin](mic-plugins.md#the-microphone-interface) and any audio transformers, hands over raw PCM in a fixed shape: **16 kHz sample rate, 16-bit samples, mono, little-endian**, delivered in **4096-byte chunks** by default (the `Microphone` template's `sample_rate`/`sample_width`/`sample_channels`/`chunk_size` defaults). A batch `STT.execute()` plugin gets this bundled into a `speech_recognition.AudioData` object. A `StreamingSTT` plugin receives it chunk-by-chunk, still at this same format, unless a deployment explicitly reconfigures the microphone.
+
+    Neither the `STT` nor the `StreamingSTT` template resamples on the plugin's behalf. If the wrapped model expects a different native rate, converting the incoming 16 kHz PCM is the plugin's own job.
 
 STT (Speech-to-Text) plugins convert spoken audio into text. They are the bridge
 between the listener and the intent pipeline.
@@ -512,6 +514,23 @@ The plugin author needs to implement the `create_streaming_thread()` method crea
 The thread this method creates should be based on the `StreamThread` class. Its abstract `handle_audio_stream(audio, language)` method also needs to be implemented. It receives a generator of audio chunks and should set `self.text` to the transcript. `finalize()` returns that stored text once the stream ends.
 
 #### Chunk semantics
+
+```mermaid
+sequenceDiagram
+    participant Mic as Mic thread
+    participant STT as StreamingSTT
+    participant Thread as StreamThread
+    Mic->>STT: stream_start(language)
+    STT->>Thread: create_streaming_thread()
+    loop each captured chunk
+        Mic->>STT: stream_data(chunk)
+        STT->>Thread: queue.put(chunk)
+        Thread->>Thread: handle_audio_stream(audio, language)
+    end
+    Mic->>STT: stream_stop()
+    STT->>Thread: queue.put(None)
+    Thread-->>STT: finalize() returns self.text
+```
 
 Audio arrives synchronously per chunk: `stream_data()` is called once per captured
 chunk on the mic thread, so it must return well under the per-chunk time budget

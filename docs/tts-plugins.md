@@ -10,6 +10,17 @@ Writing a plugin instead of choosing one? Jump to [Writing your own](#writing-yo
 
 TTS plugins are responsible for converting text into audio for playback.
 
+```mermaid
+flowchart LR
+    A[sentence] --> B["get_tts(sentence, wav_file)"]
+    B --> C["audio file (audio_ext)"]
+    C --> D["cache, keyed by sentence hash"]
+    D --> E["play_wav/ogg/mp3_cmdline"]
+    B --> F[phonemes]
+    F --> G["viseme()"]
+    G --> H[mouth animation]
+```
+
 !!! note "Audio format contract"
     A TTS plugin is the **producer** end of the audio path, so it picks the format rather than
     receiving one. `get_tts()` writes a complete, self-describing audio file to the path it is
@@ -29,9 +40,10 @@ TTS plugins are responsible for converting text into audio for playback.
     `get_tts()` returns the tuple `(audio_path, phonemes)`. `phonemes` is optional. Return
     `None` when the engine exposes none. When present it is a space-separated string of
     `phoneme:duration` pairs, which the base class's `viseme()` converts into a list of
-    `(viseme_code, duration_seconds)` tuples for mouth animation. A pair with no `:duration`
-    is given `0.2` s. Both the audio and the phonemes are cached together, keyed by sentence
-    hash.
+    `(viseme_code, duration_seconds)` tuples for mouth animation.
+
+    A pair with no `:duration` is given `0.2` s. Both the audio and the phonemes are cached
+    together, keyed by sentence hash.
 
 !!! tip "Recommended: phoonnx"
     For fully offline, on-device synthesis, `ovos-tts-plugin-phoonnx` is the recommended
@@ -451,12 +463,14 @@ class MyTTS(TTS):
 ```
 
 The base class declares `available_languages` as a `classproperty` (from `ovos_utils`), so it
-can be read straight off the class, before anything is instantiated — that is how OVOS builds a
+can be read straight off the class, before anything is instantiated. That is how OVOS builds a
 language-to-plugin map for a whole config without constructing every plugin first. It tells OVOS
 which languages the plugin supports in its current state (for example, only the languages whose
-voice files are already installed). OVOS uses it to pick a TTS plugin for the configured language
-and to filter plugin choices in a UI. A plugin that skips it still loads, but any code that
-inspects `available_languages` sees an empty set and treats the plugin as supporting no language.
+voice files are already installed).
+
+OVOS uses it to pick a TTS plugin for the configured language and to filter plugin choices in a
+UI. A plugin that skips it still loads, but any code that inspects `available_languages` sees an
+empty set and treats the plugin as supporting no language.
 
 ### Entry point
 
@@ -498,8 +512,13 @@ print(f"Audio saved to {wav_file}")
 `TTSValidator` is the class OVOS uses to check that a TTS engine is installed and usable before
 it starts speaking. `TTS.__init__` creates a default `TTSValidator(self)` when a plugin does not
 pass one in. `OVOSTTSFactory.create()` calls `tts.validator.validate()` right after building the
-plugin instance, which runs, in order: `validate_dependencies()`, `validate_instance()`,
-`validate_filename()`, `validate_lang()`, `validate_connection()`.
+plugin instance, which runs, in order:
+
+1. `validate_dependencies()`
+2. `validate_instance()`
+3. `validate_filename()`
+4. `validate_lang()`
+5. `validate_connection()`
 
 In the base class every one of those methods is a no-op. A new plugin does not need to write a
 `TTSValidator` at all. The default passes automatically. Write one only if the plugin needs a
@@ -596,6 +615,21 @@ MyTTSConfig = {
 Two different mechanisms both get audio to the user faster. They are often both called
 "streaming", so the manual names them apart:
 
+```mermaid
+flowchart LR
+    subgraph Chunking["Sentence chunking - works with every plugin"]
+        A1[Long reply] --> A2["preprocess_sentence splits into sentences"]
+        A2 --> A3["get_tts() per sentence"]
+        A3 --> A4[First sentence plays while rest still synthesizes]
+    end
+    subgraph Streaming["Real streaming - pre-alpha"]
+        B1[sentence] --> B2["stream_tts() yields audio chunks"]
+        B2 --> B3{"tts.enable_streaming?"}
+        B3 -->|true| B4[ovos-audio plays chunks as they arrive]
+        B3 -->|false| B5[Write full wav_file, then play: queued path]
+    end
+```
+
 **Sentence chunking ("fake streaming").** Long replies are split into sentences before
 synthesis, so the first sentence plays while the rest still synthesizes. This works with
 EVERY TTS plugin because the chunking happens before the engine runs. It is opt-in today:
@@ -637,7 +671,7 @@ class MyStreamingTTS(StreamingTTS):
 ```
 
 `StreamingTTS` subclasses `TTS`, so it still needs `available_languages`, and it still answers
-`get_tts(sentence, wav_file)` for callers that only want a finished file — the base class wraps
+`get_tts(sentence, wav_file)` for callers that only want a finished file. The base class wraps
 `stream_tts()` in an event loop and writes every chunk to `wav_file` before returning. The one
 method a plugin must implement is `stream_tts()`, an `async` generator that yields raw audio
 bytes as they come off the backend.

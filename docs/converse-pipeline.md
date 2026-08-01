@@ -14,7 +14,9 @@ The rest of this page is for people deploying or customizing OVOS. If you only w
 The **Converse Pipeline** in **OpenVoiceOS (OVOS)** manages active conversational contexts between the assistant and skills. It lets skills keep handling user input across multiple turns, enabling more natural, stateful conversations.
 
 !!! note "Spec model vs. current code names"
-    OVOS-CONVERSE-1 frames converse as an **ordinary pipeline plugin**. It is not a special case in the orchestrator. During `match` it inspects two session fields and returns a `Match` on a **reserved `intent_name`** (PIPELINE-1 §7.3), which the orchestrator then dispatches like any other intent: `<skill_id>:converse` for a converse claim, `<skill_id>:response` for delivery of a solicited reply. Converse depends on session state ("is a skill still active?", "is someone awaiting a reply?"), so it must be placed **before** the other pipeline plugins in `session.pipeline`. First-match-wins then lets converse intercept before a generic matcher sees the utterance. Two name mappings exist between spec and current code:
+    OVOS-CONVERSE-1 frames converse as an **ordinary pipeline plugin**. It is not a special case in the orchestrator. During `match` it inspects two session fields and returns a `Match` on a **reserved `intent_name`** (PIPELINE-1 §7.3), which the orchestrator then dispatches like any other intent: `<skill_id>:converse` for a converse claim, `<skill_id>:response` for delivery of a solicited reply.
+
+    Converse depends on session state ("is a skill still active?", "is someone awaiting a reply?"), so it must be placed **before** the other pipeline plugins in `session.pipeline`. First-match-wins then lets converse intercept before a generic matcher sees the utterance. Two name mappings exist between spec and current code:
 
     | OVOS-CONVERSE-1 (canonical) | Current `ovos-core` code |
     |---|---|
@@ -112,6 +114,23 @@ Active skills are tracked in `Session.active_skills` (`ovos_bus_client.session.S
 ---
 
 ## How It Works
+
+```mermaid
+sequenceDiagram
+    participant O as Orchestrator
+    participant C as ConverseService
+    participant S1 as Highest-priority active skill
+    participant S2 as Next active skill
+
+    O->>C: converse stage hit
+    C->>S1: <skill_id>.converse.ping
+    S1-->>C: skill.converse.pong (can_handle)
+    C->>S2: <skill_id>.converse.ping
+    S2-->>C: skill.converse.pong (can_handle)
+    C->>S1: {skill_id}.converse.request (first willing skill)
+    S1-->>C: converse() returns True
+    C-->>O: utterance consumed, skill reactivated
+```
 
 1. `converse` stage is hit in the pipeline
 

@@ -14,10 +14,11 @@
     When a handler enters response mode (it sets `session.response_mode`), the
     orchestrator suspends normal intent matching and routes the *next*
     utterance straight back to that handler as the awaited reply. This is the
-    interactive-response window. The methods below (`get_response`,
-    `ask_yesno`, `ask_selection`) are the skill-API surface over this one
-    session-resident mechanism. For the full set see the
-    **[spec index](architecture-specs.md)**.
+    interactive-response window.
+
+    The methods below (`get_response`, `ask_yesno`, `ask_selection`) are the
+    skill-API surface over this one session-resident mechanism. For the full
+    set see the **[spec index](architecture-specs.md)**.
 
 OVOS provides several built-in methods for engaging users in interactive conversations. These include asking open-ended questions, confirming yes/no responses, and offering multiple-choice selections, all handled in a natural, voice-first way.
 

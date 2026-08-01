@@ -1,7 +1,15 @@
 # Configuration Management
 
 !!! abstract "In a nutshell"
-    This page covers how you change OVOS's settings, such as your language, voice, and microphone. OVOS ships with a complete set of defaults you never touch. You write a small personal file listing only the things you want different. OVOS stacks your file on top of the defaults, so the rest stays as-is, like adding a sticky note over a printed form. The `ovos-config` command-line tool helps you view and edit those settings. For the full list of settings, see the [Configuration Reference](config-reference.md). For term definitions, see the [Glossary](glossary.md).
+    This page covers how you change OVOS's settings, such as your language, voice, and
+    microphone. OVOS ships with a complete set of defaults you never touch. You write a
+    small personal file listing only the things you want different. OVOS stacks your file
+    on top of the defaults, so the rest stays as-is, like adding a sticky note over a
+    printed form.
+
+    The `ovos-config` command-line tool helps you view and edit those settings. For the
+    full list of settings, see the [Configuration Reference](config-reference.md). For
+    term definitions, see the [Glossary](glossary.md).
 
 `ovos-config` is the configuration layer for the entire OVOS ecosystem. It provides a layered, merged `Configuration` singleton that all OVOS components read from, plus XDG-aware path helpers, a CLI tool, and meta-config support for custom distributions.
 
@@ -27,8 +35,9 @@ bundled default  →  remote cache  →  /usr/share/...  →  /etc/mycroft/...  
 The **remote cache** is an optional layer holding settings pushed from a paired backend
 (the legacy Mycroft-Home / `home.mycroft.ai` model). It sits low in the stack, so anything you
 set by hand always wins. You can turn it off entirely with the `disable_remote_config`
-system constraint. It is not the file you edit. See the [Config Layer Stack](#config-layer-stack)
-below.
+system constraint.
+
+It is not the file you edit. See the [Config Layer Stack](#config-layer-stack) below.
 
 To switch to a German voice, you only need:
 
@@ -40,10 +49,11 @@ To switch to a German voice, you only need:
 
 dropped into `~/.config/mycroft/mycroft.conf`. Dicts are deep-merged, so this leaves
 every other setting untouched. This alone is enough: STT, TTS, and every other
-language-aware plugin follow the global `lang` automatically. A per-plugin `lang`
-setting only overrides that default for one plugin (for example, to keep a second voice
-speaking another language). `ovos-config autoconfigure` (below) is a convenience
-that also swaps in the recommended plugins and voices for a language. It is
+language-aware plugin follow the global `lang` automatically.
+
+A per-plugin `lang` setting only overrides that default for one plugin (for example, to
+keep a second voice speaking another language). `ovos-config autoconfigure` (below) is a
+convenience that also swaps in the recommended plugins and voices for a language. It is
 not required just to switch languages. See [Language Support](lang-support.md) for
 the full picture.
 
@@ -61,6 +71,16 @@ MycroftSystemConfig    (/etc/mycroft/mycroft.conf — read-only to OVOS itself; 
 MycroftUserConfig      (~/.config/mycroft/mycroft.conf — XDG user config)
 __patch                (in-memory overlay applied last)
 
+```
+
+```mermaid
+flowchart LR
+    A[MycroftDefaultConfig<br/>bundled default] --> B[RemoteConf<br/>backend/paired-server cache]
+    B --> C[OvosDistributionConfig<br/>/usr/share/mycroft/mycroft.conf]
+    C --> D[MycroftSystemConfig<br/>/etc/mycroft/mycroft.conf]
+    D --> E[MycroftUserConfig<br/>~/.config/mycroft/mycroft.conf]
+    E --> F[__patch<br/>in-memory overlay]
+    F --> W[Wins: highest priority]
 ```
 
 The XDG user layer is actually a list of configs (one per XDG config dir, for example

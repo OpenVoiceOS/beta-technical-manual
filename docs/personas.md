@@ -167,6 +167,18 @@ fully local, privacy-preserving conversational agents:
 
 Entry point: `opm.pipeline = ovos-persona-pipeline-plugin`
 
+```mermaid
+flowchart LR
+    U[Utterance] --> PS[PersonaService]
+    PS -->|match_high: summon/release/list/check/ask| MI[Persona management intent?]
+    MI -->|matched| R1[Handle intent]
+    MI -->|no match, persona active| ML[match_low]
+    PS -->|match_medium: keyword fallback| MM[Summon/ask keyword match]
+    ML -->|handle_fallback + default_persona| DP[default_persona]
+    DP --> H1[handlers, in order]
+    H1 -->|first non-None response| A[Answer]
+```
+
 ### Pipeline placement
 
 ```json

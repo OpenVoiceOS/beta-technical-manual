@@ -52,20 +52,17 @@ padatious, and adapt, and stops at the first one confident enough to handle the 
 
 When an `ovos.utterance.handle` message (legacy: `recognizer_loop:utterance`) arrives on the bus, it triggers the lifecycle entry point of [OVOS-PIPELINE-1 §9.1](https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md):
 
-```text
-ovos.utterance.handle  (legacy: recognizer_loop:utterance)   §9.1
-  │
-  ├── UtteranceTransformersService.transform()   # utterance-transformer chain   TRANSFORM-1 §3.2
-  ├── MetadataTransformersService.transform()    # metadata-transformer chain    TRANSFORM-1 §3.3
-  ├── disambiguate_lang()                        # pick the best language
-  ├── _validate_session()                        # get/create Session
-  │
-  └── for each pipeline plugin (in order, first-match-wins):    §6.2
-        match(utterances, lang, message) → Match | None         §4
-          ├── match found → ovos.intent.matched (§9.2) → dispatch → handler trio (§8)
-          └── no match   → next plugin
-              (no plugin matched) → ovos.intent.unmatched (§9.3, legacy: complete_intent_failure)
-
+```mermaid
+flowchart TD
+    START(["ovos.utterance.handle<br/>(legacy: recognizer_loop:utterance) §9.1"])
+    START --> UT["UtteranceTransformersService.transform()<br/>utterance-transformer chain, TRANSFORM-1 §3.2"]
+    UT --> MT["MetadataTransformersService.transform()<br/>metadata-transformer chain, TRANSFORM-1 §3.3"]
+    MT --> LANG["disambiguate_lang()<br/>pick the best language"]
+    LANG --> SESS["_validate_session()<br/>get/create Session"]
+    SESS --> MATCH{"for each pipeline plugin, in order<br/>match(utterances, lang, message) §4, §6.2"}
+    MATCH -->|match found| MATCHED["ovos.intent.matched (§9.2) → dispatch → handler trio (§8)"]
+    MATCH -->|no match| MATCH
+    MATCH -->|no plugin matched| UNMATCHED["ovos.intent.unmatched (§9.3,<br/>legacy: complete_intent_failure)"]
 ```
 
 Reading top to bottom: an incoming utterance is first reshaped by the utterance- and
@@ -168,10 +165,14 @@ Each skill's handlers (intents, converse, events) run synchronously inside `crea
 on whichever thread delivers the message to that skill's bus subscription. There is no
 per-handler thread pool. This means that when `websocket.shared_connection` is `false` and two
 skills each own a private bus connection, they can handle messages concurrently. A single slow
-handler blocks only its own skill's subsequent messages, not other skills'. The **default** is
+handler blocks only its own skill's subsequent messages, not other skills'.
+
+The **default** is
 `websocket.shared_connection: true`, in which case every skill shares `ovos-core`'s single bus
 connection, so a slow handler on that connection can delay message delivery to other skills as
-well. See [messagebus Configuration](bus-service.md#configuration). `create_wrapper()` runs the
+well. See [messagebus Configuration](bus-service.md#configuration).
+
+`create_wrapper()` runs the
 handler inside a `try`/`except`/`finally`. An uncaught exception is caught, logged, and
 reported via the handler's `.error` message, and unless `speak_errors=False`, spoken back to
 the user as a generic "I ran into an error" style dialog. It never crashes `ovos-core` or the
