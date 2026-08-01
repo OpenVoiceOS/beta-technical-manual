@@ -1617,11 +1617,11 @@ touched the key at all still felt the change, MPRIS integration turning
 itself off after the upgrade with no explicit setting to blame.</p>
 <p>Audio-service responsibility split out of <code>ovos-audio</code> into a dedicated
 <code>ovos-media</code> daemon starting January 2024. Two config changes to track:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>// old (mycroft.conf, read by ovos-media before 89a50c0)
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>{&quot;OCP&quot;: {&quot;disable_mpris&quot;: false}}
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>// new (mycroft.conf, 89a50c0 onward)
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>{&quot;media&quot;: {&quot;enable_mpris&quot;: true}}
+<p>Old — <code>mycroft.conf</code>, read by <code>ovos-media</code> before <code>89a50c0</code>:</p>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="p">{</span><span class="nt">&quot;OCP&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;disable_mpris&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">}}</span>
+</span></code></pre></div>
+<p>New — <code>mycroft.conf</code>, <code>89a50c0</code> onward:</p>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="p">{</span><span class="nt">&quot;media&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;enable_mpris&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">}}</span>
 </span></code></pre></div>
 <p>The config root key <code>OCP</code> was renamed to <code>media</code>: anything still under
 <code>"OCP"</code> is silently ignored by <code>ovos-media</code>. The MPRIS toggle was also
