@@ -1574,10 +1574,28 @@ than a shell script needs to authenticate itself to the next shell script in a p
 trust boundary is the device as a whole, not any one process on it.</p>
 <p>That simplification has three consequences worth naming plainly.</p>
 <h2 id="the-bus-has-no-authentication">The bus has no authentication<a class="headerlink" href="#the-bus-has-no-authentication" title="Permanent link">&para;</a></h2>
+<pre class="mermaid"><code>flowchart TD
+    subgraph Device["Device (trusted, localhost)"]
+        Bus["messagebus\n127.0.0.1:8181\nno login, no encryption"]
+        Core[ovos-core / skills]
+        Audio[ovos-audio]
+        GUI[ovos-gui]
+        Listener[ovos-dinkum-listener]
+        PHAL[ovos-PHAL]
+        AdminPHAL["AdminPHAL\n(root, opt-in)"]
+        Core &lt;--&gt; Bus
+        Audio &lt;--&gt; Bus
+        GUI &lt;--&gt; Bus
+        Listener &lt;--&gt; Bus
+        PHAL &lt;--&gt; Bus
+        AdminPHAL &lt;--&gt; Bus
+    end
+    Satellite[HiveMind satellite] -- "authenticated, encrypted" --&gt; HMCore[hivemind-core]
+    HMCore -. "only bridge to the bus" .-&gt; Bus</code></pre>
 <p>The <a href="../bus-service/">messagebus</a> is a pure fan-out WebSocket broker. Any client that opens a
 connection to it, by default <code>127.0.0.1:8181</code>, can emit and receive every message on the bus,
-with no login and no encryption. There is no per-client identity and no permission check. A
-client that can reach the bus can trigger any skill, read everything crossing the bus, and
+with no login and no encryption. There is no per-client identity and no permission check.</p>
+<p>A client that can reach the bus can trigger any skill, read everything crossing the bus, and
 drive any plugin that exposes subprocess or file access. This is documented in full on
 <a href="../bus-service/#configuration">Bus Service: Security</a> and
 <a href="../privacy-security/#the-messagebus-is-a-trust-boundary-not-a-security-boundary">Privacy &amp; Security: the messagebus is a trust boundary, not a security boundary</a>.</p>
@@ -1606,10 +1624,10 @@ plugins are disabled unless explicitly turned on with <code>"enabled": true</cod
 accident.</p>
 <p>Once enabled, though, an AdminPHAL plugin receives the same unauthenticated bus client as
 every other service, with no separate credential check. A plugin like
-<code>ovos-PHAL-plugin-system</code> exposes reboot, shutdown and factory-reset over the bus. If the bus
-is reachable, anyone who can emit bus messages can trigger those actions with root privilege.
-This is a stronger consequence of the bus's lack of authentication than "skills aren't
-sandboxed": it is root-equivalent remote control, not just assistant control. See
+<code>ovos-PHAL-plugin-system</code> exposes reboot, shutdown and factory-reset over the bus.</p>
+<p>If the bus is reachable, anyone who can emit bus messages can trigger those actions with root
+privilege. This is a stronger consequence of the bus's lack of authentication than "skills
+aren't sandboxed": it is root-equivalent remote control, not just assistant control. See
 <a href="../phal/#security-model">PHAL: Security model</a> for the full mechanism.</p>
 <h2 id="hivemind-is-the-sanctioned-way-out">HiveMind is the sanctioned way out<a class="headerlink" href="#hivemind-is-the-sanctioned-way-out" title="Permanent link">&para;</a></h2>
 <p>Everything above holds because OVOS assumes the device it runs on is itself trusted, and that

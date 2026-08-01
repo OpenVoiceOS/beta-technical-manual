@@ -1484,7 +1484,8 @@
 </details>
 <div class="admonition note">
 <p class="admonition-title">Audio format contract</p>
-<p>Everything upstream of an STT plugin, the <a href="../mic-plugins/#the-microphone-interface">microphone plugin</a> and any audio transformers, hands over raw PCM in a fixed shape: <strong>16 kHz sample rate, 16-bit samples, mono, little-endian</strong>, delivered in <strong>4096-byte chunks</strong> by default (the <code>Microphone</code> template's <code>sample_rate</code>/<code>sample_width</code>/<code>sample_channels</code>/<code>chunk_size</code> defaults). A batch <code>STT.execute()</code> plugin gets this bundled into a <code>speech_recognition.AudioData</code> object. A <code>StreamingSTT</code> plugin receives it chunk-by-chunk, still at this same format, unless a deployment explicitly reconfigures the microphone. Neither the <code>STT</code> nor the <code>StreamingSTT</code> template resamples on the plugin's behalf. If the wrapped model expects a different native rate, converting the incoming 16 kHz PCM is the plugin's own job.</p>
+<p>Everything upstream of an STT plugin, the <a href="../mic-plugins/#the-microphone-interface">microphone plugin</a> and any audio transformers, hands over raw PCM in a fixed shape: <strong>16 kHz sample rate, 16-bit samples, mono, little-endian</strong>, delivered in <strong>4096-byte chunks</strong> by default (the <code>Microphone</code> template's <code>sample_rate</code>/<code>sample_width</code>/<code>sample_channels</code>/<code>chunk_size</code> defaults). A batch <code>STT.execute()</code> plugin gets this bundled into a <code>speech_recognition.AudioData</code> object. A <code>StreamingSTT</code> plugin receives it chunk-by-chunk, still at this same format, unless a deployment explicitly reconfigures the microphone.</p>
+<p>Neither the <code>STT</code> nor the <code>StreamingSTT</code> template resamples on the plugin's behalf. If the wrapped model expects a different native rate, converting the incoming 16 kHz PCM is the plugin's own job.</p>
 </div>
 <p>STT (Speech-to-Text) plugins convert spoken audio into text. They are the bridge
 between the listener and the intent pipeline.</p>
@@ -2041,6 +2042,20 @@ candidates read it. <code>execute()</code> then remains the single-best convenie
 <p>The plugin author needs to implement the <code>create_streaming_thread()</code> method creating a thread for handling data sent through <code>self.queue</code>. </p>
 <p>The thread this method creates should be based on the <code>StreamThread</code> class. Its abstract <code>handle_audio_stream(audio, language)</code> method also needs to be implemented. It receives a generator of audio chunks and should set <code>self.text</code> to the transcript. <code>finalize()</code> returns that stored text once the stream ends.</p>
 <h4 id="chunk-semantics">Chunk semantics<a class="headerlink" href="#chunk-semantics" title="Permanent link">&para;</a></h4>
+<pre class="mermaid"><code>sequenceDiagram
+    participant Mic as Mic thread
+    participant STT as StreamingSTT
+    participant Thread as StreamThread
+    Mic-&gt;&gt;STT: stream_start(language)
+    STT-&gt;&gt;Thread: create_streaming_thread()
+    loop each captured chunk
+        Mic-&gt;&gt;STT: stream_data(chunk)
+        STT-&gt;&gt;Thread: queue.put(chunk)
+        Thread-&gt;&gt;Thread: handle_audio_stream(audio, language)
+    end
+    Mic-&gt;&gt;STT: stream_stop()
+    STT-&gt;&gt;Thread: queue.put(None)
+    Thread--&gt;&gt;STT: finalize() returns self.text</code></pre>
 <p>Audio arrives synchronously per chunk: <code>stream_data()</code> is called once per captured
 chunk on the mic thread, so it must return well under the per-chunk time budget
 (the same real-time cadence constraint a wake-word plugin's <code>update(chunk)</code> runs

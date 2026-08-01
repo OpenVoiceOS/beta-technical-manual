@@ -1762,7 +1762,21 @@ pipeline plugin inside <code>ovos-core</code>.</p>
 </div>
 <details class="info">
 <summary>📐 Formal specification</summary>
-<p>Converse is specified by <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/converse.md">OVOS-CONVERSE-1 — Active Handlers &amp; Interactive Response</a></strong> (a formal <a href="../architecture-specs/">architecture spec</a>). A skill that was recently active stays on the session's <strong>converse-handler list</strong> (<code>session.converse_handlers</code>, what this page calls the <em>Active Skills List</em>). A <strong>converse pipeline plugin</strong> polls each eligible handler with a <code>&lt;skill_id&gt;.converse.ping</code> / <code>.pong</code> round-trip. When one claims, it returns a <code>Match</code> on the reserved <code>intent_name</code> <strong><code>converse</code></strong>, which the orchestrator dispatches to <code>&lt;skill_id&gt;:converse</code>. The "wait for the next reply" feature (the response window) is the session field <code>session.response_mode</code>, delivered via the reserved <code>intent_name</code> <strong><code>response</code></strong>. Both <code>converse</code> and <code>response</code> are reserved names no skill may register. The list and the response window are <strong>session-resident state</strong> that rides every message. This is why session-aware skills behave correctly across satellites.</p>
+<p>Converse is specified by <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/converse.md">OVOS-CONVERSE-1 — Active Handlers &amp; Interactive Response</a></strong> (a formal <a href="../architecture-specs/">architecture spec</a>). A skill that was recently active stays on the session's <strong>converse-handler list</strong> (<code>session.converse_handlers</code>, what this page calls the <em>Active Skills List</em>). The "wait for the next reply" feature (the response window) is the session field <code>session.response_mode</code>, delivered via the reserved <code>intent_name</code> <strong><code>response</code></strong>. Both <code>converse</code> and <code>response</code> are reserved names no skill may register. The list and the response window are <strong>session-resident state</strong> that rides every message. This is why session-aware skills behave correctly across satellites.</p>
+<pre class="mermaid"><code>sequenceDiagram
+    participant U as User
+    participant P as Converse pipeline plugin
+    participant S as Skill (active)
+    participant O as Orchestrator
+    U-&gt;&gt;P: new utterance
+    P-&gt;&gt;S: &lt;skill_id&gt;.converse.ping
+    S--&gt;&gt;P: &lt;skill_id&gt;.converse.pong
+    alt skill claims
+        P-&gt;&gt;O: Match(intent_name=converse)
+        O-&gt;&gt;S: dispatch &lt;skill_id&gt;:converse
+    else no claim
+        P-&gt;&gt;O: fall through to intent pipeline
+    end</code></pre>
 </details>
 <div class="admonition note">
 <p class="admonition-title">Upcoming — <code>stop</code> joins the reserved names</p>

@@ -1538,11 +1538,19 @@ The pieces:</p>
 <li><strong>Entry point:</strong> registers in the legacy <code>mycroft.plugin.audioservice</code> group under the type
   name <strong><code>ovos_common_play</code></strong>.</li>
 <li><strong>What it does:</strong> the full OCP player. It receives the chosen media (search results gathered
-  by the <a href="../ocp-pipeline/">OCP pipeline</a> from <a href="../ocp-skills/">OCP skills</a>), manages the
-  now-playing queue and player state, runs <a href="../ocp-plugins/">stream extractors</a>, exposes the
-  player over <a href="#mpris">MPRIS</a>, and drives the actual audio output through a lower-level audio
-  backend (<code>mpv</code>, <code>vlc</code>, or <code>simple</code>).</li>
+  by the <a href="../ocp-pipeline/">OCP pipeline</a> from <a href="../ocp-skills/">OCP skills</a>), then:</li>
+<li>manages the now-playing queue and player state,</li>
+<li>runs <a href="../ocp-plugins/">stream extractors</a>,</li>
+<li>exposes the player over <a href="#mpris">MPRIS</a>, and</li>
+<li>drives the actual audio output through a lower-level audio backend (<code>mpv</code>, <code>vlc</code>, or
+     <code>simple</code>).</li>
 </ul>
+<pre class="mermaid"><code>flowchart LR
+    A[OCP pipeline / OCP skills&lt;br/&gt;search results] --&gt; B[OCP audio plugin]
+    B --&gt; C[Queue + player state]
+    C --&gt; D[Stream extractors]
+    D --&gt; E[MPRIS]
+    D --&gt; F[Audio backend&lt;br/&gt;mpv / vlc / simple]</code></pre>
 <p>OCP is a <em>coordinator</em>, not an audio codec: it does the voice/queue/MPRIS logic and then hands
 the raw stream to one of the simple audio backends to make sound.</p>
 <hr />

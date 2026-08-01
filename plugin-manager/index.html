@@ -2003,7 +2003,14 @@
 </div>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>A plugin is an add-on you can drop in to give OpenVoiceOS a new ability or swap how it does something. For example, a different way to turn speech into text. The Plugin Manager is the part that finds these add-ons once they're installed, and loads them when needed, so you don't have to wire anything up by hand. Think of it like the app store and launcher for OVOS's interchangeable pieces. Install one, and the system discovers it. See the <a href="../glossary/">Glossary</a> for unfamiliar terms or the <a href="../architecture-overview/">Architecture Overview</a> for how plugins fit into the wider system.</p>
+<p>A plugin is an add-on you can drop in to give OpenVoiceOS a new ability or swap how it
+does something. For example, a different way to turn speech into text. The Plugin
+Manager is the part that finds these add-ons once they're installed, and loads them
+when needed, so you don't have to wire anything up by hand.</p>
+<p>Think of it like the app store and launcher for OVOS's interchangeable pieces. Install
+one, and the system discovers it. See the <a href="../glossary/">Glossary</a> for unfamiliar terms
+or the <a href="../architecture-overview/">Architecture Overview</a> for how plugins fit into the
+wider system.</p>
 </div>
 <details class="info">
 <summary>Formal specification</summary>
@@ -2019,6 +2026,11 @@ other projects.</p>
 <p>Plugins are Python packages that register a class under a specific entry point group in
 <code>setup.py</code> or <code>pyproject.toml</code>. OPM uses <code>importlib.metadata.entry_points()</code> to discover
 all installed plugins of a given type at runtime. No manual registration is required.</p>
+<pre class="mermaid"><code>flowchart LR
+    A["Entry point&lt;br/&gt;e.g. opm.stt"] --&gt; B["find_*_plugins()&lt;br/&gt;importlib.metadata.entry_points()"]
+    B --&gt; C["load_*_plugin(name)"]
+    C --&gt; D["Factory&lt;br/&gt;e.g. OVOSSTTFactory.create()"]
+    D --&gt; E[Configured plugin instance]</code></pre>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span> <span class="nn">ovos_plugin_manager.stt</span> <span class="kn">import</span> <span class="n">find_stt_plugins</span><span class="p">,</span> <span class="n">load_stt_plugin</span>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="c1"># List all installed STT plugins</span>

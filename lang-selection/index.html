@@ -1474,8 +1474,22 @@ per-payload <code>data.lang</code>. Each is defined in
 <a href="../session/#language-signals">Session Aware Skills — Language signals</a>.</p>
 <hr />
 <h2 id="the-disambiguation-logic">The Disambiguation Logic<a class="headerlink" href="#the-disambiguation-logic" title="Permanent link">&para;</a></h2>
-<p>When an <code>ovos.utterance.handle</code> message (legacy: <code>recognizer_loop:utterance</code>) arrives on the <a href="../bus-service/">messagebus</a>, <code>ovos-core</code> (specifically the <code>IntentService</code>) runs a disambiguation routine to decide which language to use for intent matching.</p>
-<p>The service inspects the message's <code>context</code> dict and picks the <strong>first</strong> of these keys that is present <em>and</em> resolves to a valid language:</p>
+<p>When an <code>ovos.utterance.handle</code> message (legacy: <code>recognizer_loop:utterance</code>) arrives on the
+<a href="../bus-service/">messagebus</a>, <code>ovos-core</code> (specifically the <code>IntentService</code>) runs a
+disambiguation routine to decide which language to use for intent matching.</p>
+<pre class="mermaid"><code>flowchart TD
+    A[ovos.utterance.handle arrives] --&gt; B{context has stt_lang?}
+    B -- yes, valid --&gt; V[Use it]
+    B -- no / invalid --&gt; C{context has request_lang?}
+    C -- yes, valid --&gt; V
+    C -- no / invalid --&gt; D{context has detected_lang?}
+    D -- yes, valid --&gt; V
+    D -- no / invalid --&gt; F[Fall back to configured default lang]
+    V --&gt; M[Match intent in resolved language]
+    F --&gt; M</code></pre>
+<p><em>"Valid"</em> means the candidate passes against <code>valid_langs</code> via <code>closest_lang</code> (see below).
+The service inspects the message's <code>context</code> dict and picks the <strong>first</strong> of these keys that
+is present <em>and</em> resolves to a valid language:</p>
 <table>
 <thead>
 <tr>

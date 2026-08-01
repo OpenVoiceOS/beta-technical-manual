@@ -1401,6 +1401,15 @@ scattered across the pipeline pages, plus the bus events to watch for each one. 
 word, and STT stages are healthy. This page assumes the utterance already reached the intent
 pipeline.</p>
 </div>
+<pre class="mermaid"><code>flowchart TD
+    S[Symptom?] --&gt; A["Nothing matched"]
+    S --&gt; B["Wrong skill answered"]
+    S --&gt; C["Slow or works only after a while"]
+    S --&gt; D["Matched but wrong handler ran"]
+    A --&gt; A1["#35;nothing-matched"]
+    B --&gt; B1["#35;the-wrong-skill-answered"]
+    C --&gt; C1["#35;matching-is-slow-or-works-only-after-a-while"]
+    D --&gt; D1["#35;it-matched-but-the-wrong-handler-ran"]</code></pre>
 <hr />
 <h2 id="nothing-matched">Nothing matched<a class="headerlink" href="#nothing-matched" title="Permanent link">&para;</a></h2>
 <p>The utterance reached <code>IntentService</code>, every pipeline stage passed on it, and the assistant said

@@ -1604,6 +1604,17 @@ here? Keep the <a href="../glossary/">Glossary</a> open.</p>
 </div>
 <p>By the end you'll have a skill that answers when you say <em>"hello"</em>. Once you've done it once,
 every other skill is just more of the same idea.</p>
+<pre class="mermaid"><code>flowchart TD
+    A["Step 1: create folder layout"] --&gt; B["Step 2: write skill code"]
+    B --&gt; C["Step 3: write .intent file"]
+    C --&gt; D["Step 4: write .dialog file"]
+    D --&gt; E["Step 5: pyproject.toml + entry point"]
+    E --&gt; F["Step 6: pip install -e ."]
+    F --&gt; G["Restart ovos-core"]
+    G --&gt; H{"Say 'hello'"}
+    H --&gt;|OVOS replies| I["Done"]
+    H --&gt;|no reply| J["Check ovos-logs show -l skills"]
+    J --&gt; F</code></pre>
 <div class="admonition note">
 <p class="admonition-title">Before you start: OVOS needs to already be installed</p>
 <p>This walkthrough assumes OVOS is already installed and its Python environment is available
@@ -1748,13 +1759,15 @@ a venv install. In plain English: a <strong><a href="../glossary/">virtual envir
 Python install. "Activating" it just means that <strong><a href="../glossary/">pip</a></strong> will now install
 into the one OVOS actually uses, instead of somewhere else. See the
 <a href="../glossary/">Glossary</a> if these terms are new.</p>
-<p>That exact path is only an example, not
-something you can assume. Check where your particular install created its environment, for example
-the installer's summary screen
-(see <a href="../ovos-installer/#environment-summary">ovos-installer</a>). Advanced: if you installed
-via <a href="../glossary/">systemd</a>, its unit file's <code>Environment=</code>/<code>ExecStart=</code> lines show the path.
-See <a href="../troubleshooting/">Troubleshooting</a>. raspOVOS, <code>ovos-installer</code>, and container installs
-each put it somewhere different.</p>
+<p>That exact path is only an example, not something you can assume. raspOVOS, <code>ovos-installer</code>,
+and container installs each put it somewhere different.</p>
+<ul>
+<li>Check where your particular install created its environment, for example the installer's
+  summary screen (see <a href="../ovos-installer/#environment-summary">ovos-installer</a>).</li>
+<li>Advanced: if you installed via <a href="../glossary/">systemd</a>, its unit file's
+  <code>Environment=</code>/<code>ExecStart=</code> lines show the path.</li>
+<li>Still stuck? See <a href="../troubleshooting/">Troubleshooting</a>.</li>
+</ul>
 <p>If you're running OVOS in
 a container instead, there's no host environment to activate. Install into the container
 directly: <code>docker compose exec &lt;service&gt; pip install -e .</code> (run from the skill folder, with

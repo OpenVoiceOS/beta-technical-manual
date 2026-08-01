@@ -1726,7 +1726,9 @@
 <p>The <strong>Fallback Pipeline</strong> in <strong>OpenVoiceOS (OVOS)</strong> manages how fallback skills are queried when no primary skill handles a user's utterance. It coordinates multiple fallback handlers, so the system still attempts to respond even when regular intent matching fails.</p>
 <div class="admonition note">
 <p class="admonition-title">How the spec frames it</p>
-<p>A <strong>fallback skill</strong> declares no intent patterns. Instead it receives the raw utterance at query time and decides for itself whether it can respond (FALLBACK-1 §2). This is the right pattern for open-domain QA, LLM completions, and any coverage that cannot be modelled as a grammar. The plugin builds an ordered handler pool from each skill's registered <code>priority</code> and the session preference <code>session.fallback_handlers</code>. It queries pool members one at a time via <code>ovos.skills.fallback.ping</code> / <code>.pong</code>, and returns a <code>Match</code> on the <strong>reserved <code>intent_name</code> <code>fallback</code></strong> (PIPELINE-1 §7.3) targeting the first willing skill, dispatched on <code>ovos.skills.fallback.{skill_id}.request</code>. If the pool is exhausted it returns <code>None</code>, and the orchestrator emits <code>ovos.intent.unmatched</code>. The high/medium/low stages below are one fallback plugin loaded at several pipeline positions, each restricted to a <code>priority</code> range (FALLBACK-1 §8.2).</p>
+<p>A <strong>fallback skill</strong> declares no intent patterns. Instead it receives the raw utterance at query time and decides for itself whether it can respond (FALLBACK-1 §2). This is the right pattern for open-domain QA, LLM completions, and any coverage that cannot be modelled as a grammar.</p>
+<p>The plugin builds an ordered handler pool from each skill's registered <code>priority</code> and the session preference <code>session.fallback_handlers</code>. It queries pool members one at a time via <code>ovos.skills.fallback.ping</code> / <code>.pong</code>, and returns a <code>Match</code> on the <strong>reserved <code>intent_name</code> <code>fallback</code></strong> (PIPELINE-1 §7.3) targeting the first willing skill, dispatched on <code>ovos.skills.fallback.{skill_id}.request</code>. If the pool is exhausted it returns <code>None</code>, and the orchestrator emits <code>ovos.intent.unmatched</code>.</p>
+<p>The high/medium/low stages below are one fallback plugin loaded at several pipeline positions, each restricted to a <code>priority</code> range (FALLBACK-1 §8.2).</p>
 </div>
 <hr />
 <h2 id="implementation">Implementation<a class="headerlink" href="#implementation" title="Permanent link">&para;</a></h2>
@@ -1772,6 +1774,14 @@
 <p>Each matcher filters registered fallbacks with <code>range.start &lt; priority ≤ range.stop</code> (exclusive start, inclusive stop). Lower priority numbers run first. A fallback that registers without a priority defaults to <code>101</code>, placing it in the low tier. Priorities can be overridden by users via config.</p>
 <hr />
 <h2 id="how-it-works">How It Works<a class="headerlink" href="#how-it-works" title="Permanent link">&para;</a></h2>
+<pre class="mermaid"><code>flowchart LR
+    U["Utterance\n(all other matchers failed)"] --&gt; H["-high\n(0 &lt; p ≤ 5)"]
+    H -- no willing skill --&gt; M["-medium\n(5 &lt; p ≤ 90)"]
+    M -- no willing skill --&gt; L["-low\n(90 &lt; p ≤ 101)"]
+    H -- willing skill --&gt; D["ovos.skills.fallback.{skill_id}.request"]
+    M -- willing skill --&gt; D
+    L -- willing skill --&gt; D
+    L -- no willing skill --&gt; N["ovos.intent.unmatched"]</code></pre>
 <ol>
 <li>
 <p>A fallback stage is hit in the pipeline (after all other matchers fail)</p>

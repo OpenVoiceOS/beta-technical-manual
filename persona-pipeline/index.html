@@ -1924,7 +1924,8 @@
 <p>The <strong><code>ovos-persona-pipeline-plugin</code></strong> provides a dynamic way to integrate persona-based conversational behavior into the OVOS pipeline system. It allows you to route user utterances to AI personas instead of skill matchers, depending on context and configuration.</p>
 <div class="admonition note">
 <p class="admonition-title">How the spec frames it</p>
-<p>A persona is a <strong>complete conversational agent</strong> that, when active, claims <em>every</em> utterance reaching its pipeline stage (PERSONA-1 §2). The active persona is held in one session field, <strong><code>session.persona_id</code></strong> (PERSONA-1 §3). Absent means no-persona mode (deterministic skills only). Set means that persona's plugin catches everything that reaches it. The plugin is a self-matching pipeline plugin (PIPELINE-1 §7.0): its <code>Match.skill_id</code> equals its own <code>pipeline_id</code>. <strong>Summon</strong> sets <code>persona_id</code> (via <code>Match.updated_session</code>, a client, or a session sync). <strong>Dismiss</strong> clears it, and the stop cascade (OVOS-STOP-1) clears it too, which is how "stop" returns control to the skills. The "full control / hybrid / fallback" strategies below are just different positions for the <code>persona</code> stage (route 2, active-persona catch-all) and an optional <code>persona_fallback</code> stage (route 3) in <code>session.pipeline</code> (PERSONA-1 §10).</p>
+<p>A persona is a <strong>complete conversational agent</strong> that, when active, claims <em>every</em> utterance reaching its pipeline stage (PERSONA-1 §2). The active persona is held in one session field, <strong><code>session.persona_id</code></strong> (PERSONA-1 §3). Absent means no-persona mode (deterministic skills only); set means that persona's plugin catches everything that reaches it. The plugin is a self-matching pipeline plugin (PIPELINE-1 §7.0): its <code>Match.skill_id</code> equals its own <code>pipeline_id</code>.</p>
+<p><strong>Summon</strong> sets <code>persona_id</code> (via <code>Match.updated_session</code>, a client, or a session sync). <strong>Dismiss</strong> clears it, and the stop cascade (OVOS-STOP-1) clears it too, which is how "stop" returns control to the skills. The "full control / hybrid / fallback" strategies below are just different positions for the <code>persona</code> stage (route 2, active-persona catch-all) and an optional <code>persona_fallback</code> stage (route 3) in <code>session.pipeline</code> (PERSONA-1 §10).</p>
 </div>
 <hr />
 <h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
@@ -2031,6 +2032,13 @@
 </blockquote>
 <hr />
 <h2 id="pipeline-strategies">Pipeline Strategies<a class="headerlink" href="#pipeline-strategies" title="Permanent link">&para;</a></h2>
+<pre class="mermaid"><code>flowchart TD
+    U[Utterance] --&gt; P1{"Strategy?"}
+    P1 -- "Full Control" --&gt; PA["ovos-persona-pipeline-plugin-high\n(first, before skills)"]
+    P1 -- "Hybrid" --&gt; SK["Padatious/Adapt high\n(skills first)"]
+    SK -- no match --&gt; PB["ovos-persona-pipeline-plugin-high\n(after skills)"]
+    P1 -- "Fallback Only" --&gt; FB["ovos-fallback-pipeline-plugin-medium"]
+    FB -- no match --&gt; PC["ovos-persona-pipeline-plugin-low\n(default_persona)"]</code></pre>
 <h3 id="1-full-control-persona-first">1. <strong>Full Control (Persona-First)</strong><a class="headerlink" href="#1-full-control-persona-first" title="Permanent link">&para;</a></h3>
 <p>In this mode, <strong>personas override</strong> all skills. The persona handles every utterance unless explicitly deactivated.</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>{

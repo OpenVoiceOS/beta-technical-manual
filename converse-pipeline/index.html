@@ -1828,7 +1828,8 @@
 <p>The <strong>Converse Pipeline</strong> in <strong>OpenVoiceOS (OVOS)</strong> manages active conversational contexts between the assistant and skills. It lets skills keep handling user input across multiple turns, enabling more natural, stateful conversations.</p>
 <div class="admonition note">
 <p class="admonition-title">Spec model vs. current code names</p>
-<p>OVOS-CONVERSE-1 frames converse as an <strong>ordinary pipeline plugin</strong>. It is not a special case in the orchestrator. During <code>match</code> it inspects two session fields and returns a <code>Match</code> on a <strong>reserved <code>intent_name</code></strong> (PIPELINE-1 §7.3), which the orchestrator then dispatches like any other intent: <code>&lt;skill_id&gt;:converse</code> for a converse claim, <code>&lt;skill_id&gt;:response</code> for delivery of a solicited reply. Converse depends on session state ("is a skill still active?", "is someone awaiting a reply?"), so it must be placed <strong>before</strong> the other pipeline plugins in <code>session.pipeline</code>. First-match-wins then lets converse intercept before a generic matcher sees the utterance. Two name mappings exist between spec and current code:</p>
+<p>OVOS-CONVERSE-1 frames converse as an <strong>ordinary pipeline plugin</strong>. It is not a special case in the orchestrator. During <code>match</code> it inspects two session fields and returns a <code>Match</code> on a <strong>reserved <code>intent_name</code></strong> (PIPELINE-1 §7.3), which the orchestrator then dispatches like any other intent: <code>&lt;skill_id&gt;:converse</code> for a converse claim, <code>&lt;skill_id&gt;:response</code> for delivery of a solicited reply.</p>
+<p>Converse depends on session state ("is a skill still active?", "is someone awaiting a reply?"), so it must be placed <strong>before</strong> the other pipeline plugins in <code>session.pipeline</code>. First-match-wins then lets converse intercept before a generic matcher sees the utterance. Two name mappings exist between spec and current code:</p>
 <table>
 <thead>
 <tr>
@@ -1944,6 +1945,20 @@
 </table>
 <hr />
 <h2 id="how-it-works">How It Works<a class="headerlink" href="#how-it-works" title="Permanent link">&para;</a></h2>
+<pre class="mermaid"><code>sequenceDiagram
+    participant O as Orchestrator
+    participant C as ConverseService
+    participant S1 as Highest-priority active skill
+    participant S2 as Next active skill
+
+    O-&gt;&gt;C: converse stage hit
+    C-&gt;&gt;S1: &lt;skill_id&gt;.converse.ping
+    S1--&gt;&gt;C: skill.converse.pong (can_handle)
+    C-&gt;&gt;S2: &lt;skill_id&gt;.converse.ping
+    S2--&gt;&gt;C: skill.converse.pong (can_handle)
+    C-&gt;&gt;S1: {skill_id}.converse.request (first willing skill)
+    S1--&gt;&gt;C: converse() returns True
+    C--&gt;&gt;O: utterance consumed, skill reactivated</code></pre>
 <ol>
 <li>
 <p><code>converse</code> stage is hit in the pipeline</p>

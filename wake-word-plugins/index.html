@@ -2012,10 +2012,16 @@ restart them depends on how OVOS was installed:</p>
 <p>OVOS supports different wake word detection plugins, each with its own strengths and use cases.
 The full roster with descriptions and licenses lives in one place: the
 <a href="#ww-plugins-reference">WW Plugins Reference</a> table below. The default OVOS plugin for
-<code>hey_mycroft</code> is <code>ovos-ww-plugin-precise-onnx</code>. Its fallback chain goes to
-<code>ovos-ww-plugin-precise-lite</code> (TFLite), then <code>ovos-ww-plugin-precise</code> (classic Precise), then
-<code>ovos-ww-plugin-vosk</code>, then <code>ovos-ww-plugin-pocketsphinx</code> if a plugin further up the chain is
-not installed. Vosk offers the fastest setup for an arbitrary wake phrase without model training.</p>
+<code>hey_mycroft</code> is <code>ovos-ww-plugin-precise-onnx</code>, falling back down this chain if a plugin further
+up is not installed:</p>
+<ol>
+<li><code>ovos-ww-plugin-precise-onnx</code> (default)</li>
+<li><code>ovos-ww-plugin-precise-lite</code> (TFLite)</li>
+<li><code>ovos-ww-plugin-precise</code> (classic Precise)</li>
+<li><code>ovos-ww-plugin-vosk</code></li>
+<li><code>ovos-ww-plugin-pocketsphinx</code></li>
+</ol>
+<p>Vosk offers the fastest setup for an arbitrary wake phrase without model training.</p>
 <p>The default <code>hey_mycroft</code> engine <code>ovos-ww-plugin-precise-onnx</code> is rated <strong>Beta</strong>. Its
 fallback <code>ovos-ww-plugin-vosk</code> is Stable, and <code>ovos-ww-plugin-precise-lite</code> is Deprecated.
 The default is chosen for accuracy. Per the <a href="../maturity/">Maturity Scale</a>, maturity is
@@ -2067,6 +2073,15 @@ actually does is below.</p>
 <p>Each entry under <code>hotwords</code> is one of four types, set by a boolean key. <code>active: null</code> (the
 default) auto-enables the main wake word (<code>listener.wake_word</code>) and the stand-up word
 (<code>listener.stand_up_word</code>); every other hotword stays disabled until you set <code>active: true</code>.</p>
+<pre class="mermaid"><code>flowchart TD
+    A[Hotword entry in mycroft.conf] --&gt; B{"listen: true, or matches listener.wake_word?"}
+    B --&gt;|yes| C["Listen word: starts VAD/STT recording"]
+    B --&gt;|no| D{"wakeup: true, or matches listener.stand_up_word?"}
+    D --&gt;|yes| E["Wakeup word: exits sleep mode"]
+    D --&gt;|no| F{"stopword: true?"}
+    F --&gt;|yes| G["Stop word: ends free RECORDING mode"]
+    F --&gt;|no| H{"active: true?"}
+    H --&gt;|yes| I["Plain hotword: sound / bus event, no STT"]</code></pre>
 <table>
 <thead>
 <tr>
@@ -2167,6 +2182,10 @@ each hotword accepts:</p>
 audio and suppress false detections before any callback runs. Verifiers implement the
 <code>HotWordVerifier</code> interface (from <code>ovos-plugin-manager</code>) and are configured under
 <code>listener.ww_verifiers</code>:</p>
+<pre class="mermaid"><code>flowchart LR
+    A[Wake word engine fires] --&gt; B["HotWordVerifier.verify()"]
+    B --&gt;|"False"| C[Detection suppressed]
+    B --&gt;|"True, or exception raised (fail open)"| D[Detection proceeds, callback runs]</code></pre>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>&quot;listener&quot;: {
 </span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>  &quot;ww_verifiers&quot;: {
 </span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>    &quot;ovos-ww-verifier-plugin-speaker&quot;: {&quot;threshold&quot;: 0.1}

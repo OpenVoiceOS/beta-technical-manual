@@ -1625,7 +1625,10 @@
 <p>When the entry utterance carries no authoritative language tag, the orchestrator resolves the language <strong>once</strong>, from session evidence. It passes that same resolved tag into every plugin's <code>match</code> call for the utterance. A plugin may refine it locally but must not silently re-derive its own answer. Otherwise different stages could match the same utterance in different languages depending on ordering.</p>
 <div class="admonition note">
 <p class="admonition-title">Spec vocabulary in one paragraph</p>
-<p>In OVOS-PIPELINE-1 terms, every stage on this page is a <strong>pipeline plugin</strong> identified by an opaque <code>pipeline_id</code>. Each one exposes exactly one operation to the <strong>orchestrator</strong>: <code>match(utterances, lang, message) → Match | None</code> (the third argument is the utterance <code>Message</code>. A plugin that needs the session reads it from <code>message.context["session"]</code>). The orchestrator iterates the plugins in the order given by <code>session.pipeline</code> and stops at the <strong>first</strong> one that returns a <code>Match</code>. <strong>First match wins.</strong> There is <em>no</em> cross-plugin confidence comparison. The per-stage <code>conf_high/medium/low</code> thresholds below are each plugin's <em>own</em> internal accept/reject gate, not a score the orchestrator ranks between plugins. On a match the orchestrator dispatches the handler on the topic <code>&lt;skill_id&gt;:&lt;intent_name&gt;</code> (PIPELINE-1 §7) and emits the handler-lifecycle trio. If no plugin claims, it emits <code>ovos.intent.unmatched</code>. Several stages here (converse, stop, common-query, fallback) are pipeline plugins that claim via <strong>reserved <code>intent_name</code> values</strong> (<code>converse</code>, <code>response</code>, <code>stop</code>, <code>common_query</code>, <code>fallback</code>) leased in PIPELINE-1 §7.3. Skills may not register those names.</p>
+<p>In OVOS-PIPELINE-1 terms, every stage on this page is a <strong>pipeline plugin</strong> identified by an opaque <code>pipeline_id</code>. Each one exposes exactly one operation to the <strong>orchestrator</strong>: <code>match(utterances, lang, message) → Match | None</code> (the third argument is the utterance <code>Message</code>. A plugin that needs the session reads it from <code>message.context["session"]</code>).</p>
+<p>The orchestrator iterates the plugins in the order given by <code>session.pipeline</code> and stops at the <strong>first</strong> one that returns a <code>Match</code>. <strong>First match wins.</strong> There is <em>no</em> cross-plugin confidence comparison. The per-stage <code>conf_high/medium/low</code> thresholds below are each plugin's <em>own</em> internal accept/reject gate, not a score the orchestrator ranks between plugins.</p>
+<p>On a match the orchestrator dispatches the handler on the topic <code>&lt;skill_id&gt;:&lt;intent_name&gt;</code> (PIPELINE-1 §7) and emits the handler-lifecycle trio. If no plugin claims, it emits <code>ovos.intent.unmatched</code>.</p>
+<p>Several stages here (converse, stop, common-query, fallback) are pipeline plugins that claim via <strong>reserved <code>intent_name</code> values</strong> (<code>converse</code>, <code>response</code>, <code>stop</code>, <code>common_query</code>, <code>fallback</code>) leased in PIPELINE-1 §7.3. Skills may not register those names.</p>
 </div>
 <hr />
 <h2 id="what-is-an-intent-pipeline">What is an Intent Pipeline?<a class="headerlink" href="#what-is-an-intent-pipeline" title="Permanent link">&para;</a></h2>
@@ -1635,25 +1638,30 @@
 <h2 id="pipeline-structure">Pipeline Structure<a class="headerlink" href="#pipeline-structure" title="Permanent link">&para;</a></h2>
 <p>When an utterance arrives, OVOS walks the pipeline in order and hands the utterance to each stage until one claims it. Stages are tried from most to least confident:</p>
 <ul>
-<li>
-<p><strong>High Confidence</strong>: Primary pipeline plugins that provide precise matches.</p>
-</li>
-<li>
-<p><strong>Medium Confidence</strong>: Secondary parsers that handle less specific queries.</p>
-</li>
-<li>
-<p><strong>Low Confidence</strong>: <a href="../fallback-pipeline/">Fallback</a> mechanisms for ambiguous or unrecognized inputs.</p>
-</li>
+<li><strong>High Confidence</strong>: Primary pipeline plugins that provide precise matches.</li>
+<li><strong>Medium Confidence</strong>: Secondary parsers that handle less specific queries.</li>
+<li><strong>Low Confidence</strong>: <a href="../fallback-pipeline/">Fallback</a> mechanisms for ambiguous or unrecognized inputs.</li>
 </ul>
-<p>The first stage that matches wins, so order matters. A high-confidence Padatious match is tried before any medium-confidence stage. A medium-confidence stage is tried before any low-confidence stage. Each component is a plugin. You can enable, disable, or reorder it in your config.</p>
+<pre class="mermaid"><code>flowchart LR
+    U[Utterance] --&gt; H["High Confidence\n(e.g. Padatious high)"]
+    H -- claims --&gt; D1[Dispatch to skill]
+    H -- no match --&gt; M["Medium Confidence"]
+    M -- claims --&gt; D1
+    M -- no match --&gt; L["Low Confidence\n(Fallback)"]
+    L -- claims --&gt; D1
+    L -- no match --&gt; UM[ovos.intent.unmatched]</code></pre>
+<p>The first stage that matches wins, so order matters. A high-confidence Padatious match is tried before any medium-confidence stage, and a medium-confidence stage is tried before any low-confidence stage. Each component is a plugin, so you can enable, disable, or reorder it in your config.</p>
 <div class="admonition note">
 <p class="admonition-title"><code>intents.pipeline</code> orders matchers: it does not gate loading</p>
 <p>The config list controls which loaded matchers are <em>tried</em> and in what order. Every
 installed pipeline plugin is still discovered and initialized at startup (some load
 models when they do); to keep a plugin from initializing at all, uninstall its package.</p>
 </div>
-<p>Ordering is <strong>the arbitration model, not a missing feature</strong> (PIPELINE-1 §6.2). An earlier plugin gets to answer before any later plugin is asked. This lets a stateful interceptor that depends on session state claim "yes" / "next" / "resume" / "stop" <em>before</em> a general pipeline plugin would match the bare words. Examples include converse with an open response window, an active persona, OCP holding paused media to <em>resume</em>, and stop. Such selective plugins are deliberately conservative. They claim only when both the utterance and the session warrant it, and return <code>None</code> otherwise, trusting their position rather than competing on a score. Heterogeneous engines share no common score space to rank across anyway.</p>
-<p><strong>Pipeline IDs vs. plugins.</strong> The IDs you list in your <code>pipeline</code> config (like <code>ovos-adapt-pipeline-plugin-high</code>) are not separate plugins. A confidence-aware plugin registers a single OPM entry point (e.g. <code>ovos-adapt-pipeline-plugin</code>), and OVOS derives the <code>-high</code>/<code>-medium</code>/<code>-low</code> matcher stages from it at runtime. Plugins that match at only one confidence level (such as <code>ovos-converse-pipeline-plugin</code> or <code>ovos-common-query-pipeline-plugin</code>) expose a single bare ID. The older short names (<code>adapt_high</code>, <code>common_qa</code>, …) are <strong>deprecated aliases</strong>. ovos-core still accepts them and rewrites them to the canonical plugin IDs via the <code>_PIPELINE_MIGRATION_MAP</code>. Existing configs keep working this way. The bundled default configuration and new configs alike should use the canonical names shown below.</p>
+<p>Ordering is <strong>the arbitration model, not a missing feature</strong> (PIPELINE-1 §6.2). An earlier plugin gets to answer before any later plugin is asked.</p>
+<p>This lets a stateful interceptor that depends on session state claim "yes" / "next" / "resume" / "stop" <em>before</em> a general pipeline plugin would match the bare words. Examples include converse with an open response window, an active persona, OCP holding paused media to <em>resume</em>, and stop.</p>
+<p>Such selective plugins are deliberately conservative. They claim only when both the utterance and the session warrant it, and return <code>None</code> otherwise, trusting their position rather than competing on a score. Heterogeneous engines share no common score space to rank across anyway.</p>
+<p><strong>Pipeline IDs vs. plugins.</strong> The IDs you list in your <code>pipeline</code> config (like <code>ovos-adapt-pipeline-plugin-high</code>) are not separate plugins. A confidence-aware plugin registers a single OPM entry point (e.g. <code>ovos-adapt-pipeline-plugin</code>), and OVOS derives the <code>-high</code>/<code>-medium</code>/<code>-low</code> matcher stages from it at runtime. Plugins that match at only one confidence level (such as <code>ovos-converse-pipeline-plugin</code> or <code>ovos-common-query-pipeline-plugin</code>) expose a single bare ID.</p>
+<p>The older short names (<code>adapt_high</code>, <code>common_qa</code>, …) are <strong>deprecated aliases</strong>. ovos-core still accepts them and rewrites them to the canonical plugin IDs via the <code>_PIPELINE_MIGRATION_MAP</code>, so existing configs keep working this way. The bundled default configuration and new configs alike should use the canonical names shown below.</p>
 <hr />
 <h2 id="available-pipeline-components">Available Pipeline Components<a class="headerlink" href="#available-pipeline-components" title="Permanent link">&para;</a></h2>
 <p>Below is a list of available pipeline components, grouped by confidence level. The <strong>Pipeline ID</strong> column shows the canonical name to put in your <code>pipeline</code> config. The <strong>Legacy alias</strong> column shows the older short name that some existing configs may still use. ovos-core rewrites it to the canonical ID at load time. New configs should use the canonical names.</p>

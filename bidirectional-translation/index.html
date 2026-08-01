@@ -1433,6 +1433,22 @@ matching), outbound translation as a <strong>dialog</strong>- or <strong>tts-tra
 <p>The companion <code>ovos-translate-server-plugin</code> is gaining a <code>server_type</code> option so a device can offload translation to LibreTranslate or DeepL servers, not just an OVOS translate server. This is planned and not yet released.</p>
 </div>
 <h3 id="interaction-flow">Interaction Flow<a class="headerlink" href="#interaction-flow" title="Permanent link">&para;</a></h3>
+<pre class="mermaid"><code>sequenceDiagram
+    participant U as User (Spanish)
+    participant STT
+    participant UT as Utterance Transformer
+    participant Core as ovos-core
+    participant Skill as Time Skill (English)
+    participant DT as Dialog Transformer
+    participant TTS
+
+    U-&gt;&gt;STT: "¿Qué hora es?"
+    STT-&gt;&gt;UT: text (Spanish)
+    UT-&gt;&gt;Core: "What time is it?" (translated to English)
+    Core-&gt;&gt;Skill: match TimeIntent
+    Skill-&gt;&gt;DT: "The time is 10:00 AM"
+    DT-&gt;&gt;TTS: "Son las 10:00 AM" (translated back to Spanish)
+    TTS-&gt;&gt;U: speaks Spanish response</code></pre>
 <ol>
 <li><strong>User speaks</strong> in Spanish: <em>"¿Qué hora es?"</em></li>
 <li><strong>STT</strong> transcribes to text (Spanish).</li>

@@ -1537,6 +1537,15 @@ response, exactly the slot the agentic brains on this page fill. For the
 full set see the <strong><a href="../architecture-specs/">spec index</a></strong>.</p>
 </details>
 <p><a href="https://github.com/OpenVoiceOS/ovos-agentic-loop">ovos-agentic-loop</a> implements eight agentic reasoning patterns as standard OPM <code>ChatEngine</code> plugins. Each pattern wires a configurable inner LLM brain with one or more <code>ToolBox</code> plugins to produce multi-step reasoning over OVOS personas.</p>
+<p>The default pattern, <code>ovos-react-loop</code>, alternates thinking and acting until it has an answer
+or hits <code>max_iterations</code>:</p>
+<pre class="mermaid"><code>stateDiagram-v2
+    [*] --&gt; Think
+    Think --&gt; ToolCall: brain decides a tool is needed
+    ToolCall --&gt; Observe: ToolBox runs the call
+    Observe --&gt; Think: result fed back into context
+    Think --&gt; Answer: brain has enough to reply
+    Answer --&gt; [*]</code></pre>
 <div class="admonition tip">
 <p class="admonition-title">Which loop should I pick?</p>
 <ul>

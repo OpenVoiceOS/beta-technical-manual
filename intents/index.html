@@ -1719,6 +1719,12 @@ the same meaning. In each case we would assume the user expects OVOS to respond 
 weather for their current location. The matching pipeline plugin's role is to determine what
 this intent is, and to extract data elements like the weather type, the location, and the date.</p>
 <h2 id="choosing-an-engine">Choosing an engine<a class="headerlink" href="#choosing-an-engine" title="Permanent link">&para;</a></h2>
+<pre class="mermaid"><code>flowchart TD
+    Q{"Need to match digits,\nor want strict predictable matching?"}
+    Q --&gt;|Yes| Adapt["Adapt: keyword intents (.voc)"]
+    Q --&gt;|No| Q2{"Public-facing, multilingual,\nor overlapping intents?"}
+    Q2 --&gt;|Yes| Padatious["Padatious: template intents (.intent)"]
+    Q2 --&gt;|No, single-language\nfully-controlled skill| Adapt</code></pre>
 <p>OVOS provides two kinds of intent, matched by two default pipeline plugins. The
 <a href="https://github.com/OpenVoiceOS/architecture/blob/dev/intent-3.md">OVOS-INTENT-3</a>
 specification calls them <strong>template intents</strong> and <strong>keyword intents</strong>. Each individual

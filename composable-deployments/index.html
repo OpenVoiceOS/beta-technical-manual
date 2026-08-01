@@ -1726,7 +1726,8 @@
 <p>OVOS ships as a "batteries-included" assistant you can install with one command. Under
 the hood, it is a set of small, independent Python packages that agree on a
 common protocol, the <a href="../bus-service/">messagebus</a>. Because of that, nothing forces you to run
-"all of OVOS" as one blob. You can start a single service on its own machine, load a single
+"all of OVOS" as one blob.</p>
+<p>You can start a single service on its own machine, load a single
 skill as its own process, or <code>pip install</code> a speech plugin into a separate Python
 project and call it directly, with no bus and no assistant around it at all. This page
 covers that second use case: OVOS the <strong>library</strong>, not OVOS the <strong>product</strong>.</p>
@@ -1735,7 +1736,8 @@ covers that second use case: OVOS the <strong>library</strong>, not OVOS the <st
 <p>Every OVOS service, including the bus, the voice pipeline, the audio player, the hardware abstraction
 layer, and the GUI, is an ordinary long-running Python process. They do not call each other's
 functions or share memory. They exchange JSON <a href="../bus-service/"><code>Message</code></a> objects over a
-WebSocket. Anything that can open that WebSocket and speak the same message types is a full
+WebSocket.</p>
+<p>Anything that can open that WebSocket and speak the same message types is a full
 participant, whether it is <code>ovos-core</code> itself, a HiveMind satellite, a shell script, or a Node.js
 prototype. This makes the two deployment styles below equally valid:</p>
 <table>
@@ -2077,7 +2079,8 @@ as an error message.</p>
 <p><code>ovos-core</code>, <code>ovos-audio</code>, and <code>ovos-dinkum-listener</code> are each written assuming they are the
 only instance of that service talking to a given bus. The bus itself is pure fan-out with no
 leader election or ownership concept. It has no way to tell two <code>ovos-core</code> processes apart
-or arbitrate between them. Running two instances of the same service against one bus does not
+or arbitrate between them.</p>
+<p>Running two instances of the same service against one bus does not
 give you redundancy or failover. It gives you duplicate handling of every message and
 double-emitted lifecycle events (for example, two <code>ovos.intent.handler.start</code>/<code>.complete</code> pairs for
 one utterance), since both instances react to the same broadcast independently.</p>
@@ -2085,7 +2088,8 @@ one utterance), since both instances react to the same broadcast independently.<
 <code>session_id</code> inside a skill does not make it safe to run two instances of a singleton
 service against the same bus. The duplication happens at the message-dispatch level, before
 any skill code runs, so every subscriber on both instances still receives and reacts to
-every message. Horizontal scaling for multiple devices or users is a distributed-deployment
+every message.</p>
+<p>Horizontal scaling for multiple devices or users is a distributed-deployment
 concern, not a duplicate-singleton one. It is done with <a href="../hivemind-agents/">HiveMind</a>
 satellites talking to a single HiveMind server, not by running two copies of <code>ovos-core</code>,
 <code>ovos-audio</code>, or <code>ovos-dinkum-listener</code> against one bus.</p>

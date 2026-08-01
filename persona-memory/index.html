@@ -1728,6 +1728,13 @@
 </span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>        <span class="o">...</span>
 </span></code></pre></div>
 <p><code>AgentMessage</code> (<code>role</code>, <code>content</code>, optional <code>tool_calls</code> / <code>tool_call_id</code> / <code>name</code>) is the canonical message type, from <code>ovos_plugin_manager.templates.agents</code>. The persona calls <code>build_conversation_context</code> before each turn and <code>update_history</code> after each exchange.</p>
+<pre class="mermaid"><code>flowchart LR
+    U[Utterance] --&gt; BCC[build_conversation_context]
+    H[get_history: stored session history] --&gt; BCC
+    M[Memory plugin: summaries / retrieved snippets] --&gt; BCC
+    BCC --&gt; ML["Message list (system? + history + USER utterance)"]
+    ML --&gt; CE[Chat engine: continue_chat]
+    CE --&gt; UH[update_history: append new turns]</code></pre>
 <p>Two rules hold for every backend in this package:</p>
 <ul>
 <li>The <strong>first</strong> message MAY be a <code>system</code> message carrying the persona's <code>system_prompt</code>.</li>

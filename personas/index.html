@@ -1867,6 +1867,15 @@ fully local, privacy-preserving conversational agents:</p>
 <p><code>PersonaService</code> (<code>ovos_persona.PersonaService</code>) is the runtime component. It registers as an
 <code>opm.pipeline</code> plugin and integrates directly with the OVOS intent pipeline.</p>
 <p>Entry point: <code>opm.pipeline = ovos-persona-pipeline-plugin</code></p>
+<pre class="mermaid"><code>flowchart LR
+    U[Utterance] --&gt; PS[PersonaService]
+    PS --&gt;|match_high: summon/release/list/check/ask| MI[Persona management intent?]
+    MI --&gt;|matched| R1[Handle intent]
+    MI --&gt;|no match, persona active| ML[match_low]
+    PS --&gt;|match_medium: keyword fallback| MM[Summon/ask keyword match]
+    ML --&gt;|handle_fallback + default_persona| DP[default_persona]
+    DP --&gt; H1[handlers, in order]
+    H1 --&gt;|first non-None response| A[Answer]</code></pre>
 <h3 id="pipeline-placement">Pipeline placement<a class="headerlink" href="#pipeline-placement" title="Permanent link">&para;</a></h3>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="p">{</span>
 </span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">  </span><span class="nt">&quot;intents&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>

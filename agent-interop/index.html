@@ -1623,6 +1623,20 @@
 <p>This page is about letting OVOS work <em>together with other AI systems</em>. OVOS can offer its abilities, like speech, translation, and reasoning, to outside AI tools. It can also call on them, using a few shared "languages" (the protocols MCP, UTCP, and A2A) so different systems can find and use each other. Think of it as agents agreeing on a common plug and socket so they can cooperate. See the <a href="../glossary/">Glossary</a> for unfamiliar terms.</p>
 </div>
 <p>OVOS exposes its speech, translation, and reasoning services as agent tools via two discovery and calling protocols: <strong>MCP</strong> (Model Context Protocol) and <strong>UTCP</strong> (Universal Tool Calling Protocol). It also implements bidirectional <strong>A2A</strong> (Agent-to-Agent) bridging.</p>
+<pre class="mermaid"><code>flowchart LR
+    subgraph OVOS Service Servers
+        STT[STT Server]
+        TTS[TTS Server]
+        TX[Translate Server]
+        PS[Persona Server]
+    end
+    Ext[External MCP/UTCP client&lt;br/&gt;e.g. Claude Desktop] --&gt;|/mcp, /utcp| STT
+    Ext --&gt;|/mcp, /utcp| TTS
+    Ext --&gt;|/mcp, /utcp| TX
+    Ext --&gt;|/mcp, /utcp, /tools/*| PS
+    PS --&gt;|/.well-known/agent.json, tasks/send| A2AClient[External A2A client]
+    ExtA2A[External A2A server] --&gt;|ovos-a2a-solver ChatEngine| Persona[OVOS persona]
+    ExtMCP[External MCP/UTCP server] --&gt;|ovos-mcp-toolbox / ovos-utcp-toolbox| Loop[Agentic loop ToolBox]</code></pre>
 <div class="admonition note">
 <p class="admonition-title">Not what you're looking for?</p>
 <p>This page is about LLM/agent tool protocols (MCP/A2A). If you're building a voice

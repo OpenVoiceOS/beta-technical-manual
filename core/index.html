@@ -1614,7 +1614,8 @@
 </div>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p><code>ovos-core</code> is the "brain" of your assistant. It does not listen through the microphone or talk through the speaker. Those are separate helpers. It is the part in the middle that loads your skills, takes the words you said, decides which skill should answer, and hands back the reply. Think of it as the dispatcher in a control room, routing each request to the right place without doing the talking or listening itself. Everything it does travels over the <a href="../bus-service/">messagebus</a>. See also the <a href="../glossary/">Glossary</a>.</p>
+<p><code>ovos-core</code> is the "brain" of your assistant. It does not listen through the microphone or talk through the speaker. Those are separate helpers. It is the part in the middle that loads your skills, takes the words you said, decides which skill should answer, and hands back the reply.</p>
+<p>Think of it as the dispatcher in a control room, routing each request to the right place without doing the talking or listening itself. Everything it does travels over the <a href="../bus-service/">messagebus</a>. See also the <a href="../glossary/">Glossary</a>.</p>
 </div>
 <details class="info">
 <summary>📐 Formal specification</summary>
@@ -1640,24 +1641,21 @@
 </ul>
 <h2 id="architecture">Architecture<a class="headerlink" href="#architecture" title="Permanent link">&para;</a></h2>
 <p>The diagram below shows the key components within <code>ovos-core</code> and how they interact with other services:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>ovos-messagebus<span class="w">  </span><span class="o">(</span>WebSocket<span class="w"> </span>pub/sub<span class="o">)</span>
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">      </span>│
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">      </span>├──<span class="w"> </span>ovos-core<span class="w">  </span><span class="o">(</span>this<span class="w"> </span>service<span class="o">)</span>
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">      </span>│<span class="w">     </span>├──<span class="w"> </span><span class="o">[</span>Skill<span class="w"> </span>Manager<span class="o">](</span>skill-manager.md<span class="o">)</span><span class="w">   </span>-<span class="w"> </span>loads/unloads<span class="w"> </span>skill<span class="w"> </span>plugins
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">      </span>│<span class="w">     </span>├──<span class="w"> </span><span class="o">[</span>Intent<span class="w"> </span>Service<span class="o">](</span>intent-service.md<span class="o">)</span><span class="w"> </span>-<span class="w"> </span>routes<span class="w"> </span>utterances<span class="w"> </span>through<span class="w"> </span>the<span class="w"> </span>pipeline
-</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">      </span>│<span class="w">     </span>│<span class="w">     </span>├──<span class="w"> </span>Utterance<span class="w"> </span>Transformers
-</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">      </span>│<span class="w">     </span>│<span class="w">     </span>├──<span class="w"> </span>Metadata<span class="w"> </span>Transformers
-</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">      </span>│<span class="w">     </span>│<span class="w">     </span>├──<span class="w"> </span>Intent<span class="w"> </span>Transformers
-</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">      </span>│<span class="w">     </span>│<span class="w">     </span>└──<span class="w"> </span>Pipeline<span class="w"> </span>plugins<span class="w"> </span><span class="o">(</span>Adapt,<span class="w"> </span>Padatious,<span class="w"> </span>Converse,<span class="w"> </span>Fallback,<span class="w"> </span>…<span class="o">)</span>
-</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="w">      </span>│<span class="w">     </span>├──<span class="w"> </span><span class="o">[</span>Skill<span class="w"> </span>Installer<span class="o">](</span>skill-installer.md<span class="o">)</span><span class="w"> </span>-<span class="w"> </span>runtime<span class="w"> </span>pip<span class="w"> </span>install/uninstall
-</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="w">      </span>│<span class="w">     </span>└──<span class="w"> </span>Event<span class="w"> </span>Scheduler<span class="w"> </span>-<span class="w"> </span>timed<span class="w"> </span>bus<span class="w"> </span>events
-</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="w">      </span>│
-</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="w">      </span>├──<span class="w"> </span>ovos-dinkum-listener<span class="w">  </span>-<span class="w"> </span>STT<span class="w"> </span>/<span class="w"> </span>wake-word<span class="w"> </span>→<span class="w"> </span>ovos.utterance.handle
-</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="w">      </span>│<span class="w">                            </span><span class="o">(</span>legacy:<span class="w"> </span>recognizer_loop:utterance<span class="o">)</span>
-</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="w">      </span>├──<span class="w"> </span>ovos-audio<span class="w">            </span>-<span class="w"> </span>TTS<span class="w"> </span>playback
-</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="w">      </span>├──<span class="w"> </span>ovos-gui<span class="w">              </span>-<span class="w"> </span>GUI<span class="w"> </span>layer
-</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="w">      </span>└──<span class="w"> </span>ovos-phal<span class="w">             </span>-<span class="w"> </span>hardware/platform<span class="w"> </span>plugins
-</span></code></pre></div>
+<pre class="mermaid"><code>flowchart TD
+    BUS(["ovos-messagebus&lt;br/&gt;(WebSocket pub/sub)"])
+    BUS --- CORE["ovos-core (this service)"]
+    CORE --- SM["Skill Manager&lt;br/&gt;loads/unloads skill plugins"]
+    CORE --- IS["Intent Service&lt;br/&gt;routes utterances through the pipeline"]
+    IS --- UT[Utterance Transformers]
+    IS --- MT[Metadata Transformers]
+    IS --- IT[Intent Transformers]
+    IS --- PP["Pipeline plugins&lt;br/&gt;Adapt, Padatious, Converse, Fallback, …"]
+    CORE --- SI["Skill Installer&lt;br/&gt;runtime pip install/uninstall"]
+    CORE --- EVS["Event Scheduler&lt;br/&gt;timed bus events"]
+    BUS --- LISTENER["ovos-dinkum-listener&lt;br/&gt;STT / wake-word → ovos.utterance.handle&lt;br/&gt;(legacy: recognizer_loop:utterance)"]
+    BUS --- AUDIO["ovos-audio&lt;br/&gt;TTS playback"]
+    BUS --- GUI["ovos-gui&lt;br/&gt;GUI layer"]
+    BUS --- PHAL["ovos-phal&lt;br/&gt;hardware/platform plugins"]</code></pre>
 <h2 id="key-components">Key Components<a class="headerlink" href="#key-components" title="Permanent link">&para;</a></h2>
 <p>For more detail on each subsystem:</p>
 <ul>

@@ -703,6 +703,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#the-debugging-funnel" class="md-nav__link">
+    <span class="md-ellipsis">
+      The debugging funnel
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#where-the-logs-live" class="md-nav__link">
     <span class="md-ellipsis">
       Where the logs live
@@ -1265,6 +1274,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#the-debugging-funnel" class="md-nav__link">
+    <span class="md-ellipsis">
+      The debugging funnel
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#where-the-logs-live" class="md-nav__link">
     <span class="md-ellipsis">
       Where the logs live
@@ -1430,6 +1448,23 @@ boxes over SSH), or <strong>watch the bus live</strong> with <code>ovos-busmon</
 device, and shows every stage in one place instead of six log files). Start with the logs. They
 need no extra install. Then reach for <code>ovos-busmon</code> when you want everything in one filterable view.</p>
 <hr />
+<h2 id="the-debugging-funnel">The debugging funnel<a class="headerlink" href="#the-debugging-funnel" title="Permanent link">&para;</a></h2>
+<pre class="mermaid"><code>flowchart TD
+    S1{"Stage 1: bus reachable?\nbus.log"}
+    S1 -- no --&gt; F1["start ovos-messagebus,\nthen ovos-core / ovos-dinkum-listener"]
+    S1 -- yes --&gt; S2{"Stage 2: mic/wake word fired?\nrecognizer_loop:record_begin"}
+    S2 -- no --&gt; F2["check mic device/gain\nor wake word plugin"]
+    S2 -- yes --&gt; S3{"Stage 3: STT produced text?\nrecognizer_loop:utterance"}
+    S3 -- no --&gt; F3["check STT plugin / network / API key"]
+    S3 -- yes --&gt; S4{"Stage 4: intent matched?\novos.intent.matched"}
+    S4 -- no --&gt; F4["vocabulary/training data\nin the target skill"]
+    S4 -- yes --&gt; S5{"Stage 5: handler raised?\novos.intent.handler.error"}
+    S5 -- error --&gt; F5["read the traceback\nin skills.log"]
+    S5 -- clean --&gt; S6{"Stage 6: TTS spoke?\novos.utterance.speak"}
+    S6 -- no --&gt; F6["check TTS plugin / audio sink"]
+    S6 -- yes --&gt; Done["utterance handled correctly"]</code></pre>
+<p>Each stage below cites the exact log line and bus message shown in this diagram, plus the
+command to check it directly.</p>
 <h2 id="where-the-logs-live">Where the logs live<a class="headerlink" href="#where-the-logs-live" title="Permanent link">&para;</a></h2>
 <p>OVOS runs several independent services (listener, intent/skills, audio, messagebus, GUI), and each
 one writes its <strong>own</strong> log file, named after the service. By default they land under the XDG state
@@ -1590,9 +1625,10 @@ and check <code>bus.log</code> for a clean startup (no repeated <code>Connection
 reconnect on their own with a backing-off retry (5 s → 60 s cap), so a bus restart does <strong>not</strong>
 require restarting every client by hand. See <a href="../bus-service/#bus-restart-reconnect-behavior">Bus restart / reconnect
 behavior</a> for exactly what to expect while they
-recover. In <code>ovos-busmon</code>,
-this stage is trivially visible: if the bus was down when busmon started, its connection never came
-up (busmon does not auto-retry) and the stream stays empty. Restart busmon once the bus is back.</p>
+recover.</p>
+<p>In <code>ovos-busmon</code>, this stage is trivially visible: if the bus was down when busmon started, its
+connection never came up (busmon does not auto-retry) and the stream stays empty. Restart busmon
+once the bus is back.</p>
 <div class="admonition tip">
 <p class="admonition-title">Nothing wrong with the mic yet</p>
 <p>This stage says nothing about audio hardware. It only confirms the messagebus itself accepts

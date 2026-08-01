@@ -1286,6 +1286,16 @@ moments and take seconds to check. No terminal, no config file needed.</p>
 </ul>
 <p>If all four check out and something's still wrong, the sections below cover the specific
 symptom.</p>
+<pre class="mermaid"><code>flowchart TD
+    A[Something's wrong] --&gt; B{Basics OK?&lt;br/&gt;muted / volume / power / network}
+    B -- no --&gt; Z[Fix the basic first]
+    B -- yes --&gt; C{What's the symptom?}
+    C -- "won't listen" --&gt; D["It's not listening to me"]
+    C -- "can't hear it" --&gt; E["It's not talking back to me"]
+    C -- "gets it wrong" --&gt; F["It heard me but got it wrong"]
+    C -- "don't know what to say" --&gt; G["What can I say?"]
+    D &amp; E &amp; F &amp; G --&gt; H{Still broken?}
+    H -- yes --&gt; I[Troubleshooting &amp; Debugging]</code></pre>
 <h2 id="its-not-listening-to-me">"It's not listening to me"<a class="headerlink" href="#its-not-listening-to-me" title="Permanent link">&para;</a></h2>
 <ul>
 <li><strong>Say the wake word clearly, with a short pause after it.</strong> OVOS listens for a wake word (by

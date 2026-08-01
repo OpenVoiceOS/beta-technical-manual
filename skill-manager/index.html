@@ -1717,17 +1717,16 @@ are met:</p>
 <p>Network/internet state is queried from <a href="../phal/">PHAL</a> at startup via <code>ovos.PHAL.internet_check</code>. It falls back to a direct HTTP check if PHAL is unavailable.</p>
 <h2 id="loading-a-skill">Loading a Skill<a class="headerlink" href="#loading-a-skill" title="Permanent link">&para;</a></h2>
 <p>The loading process follows this flow:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>load_plugin_skills()
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>  → find_skill_plugins()                              # {skill_id: SkillClass}
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>    → _get_plugin_skill_loader(skill_id, skill_class) # build a PluginSkillLoader
-</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>      → _load_plugin_skill(skill_id, skill_class)     # instantiate &amp; start the skill
-</span></code></pre></div>
+<pre class="mermaid"><code>flowchart LR
+    A["load_plugin_skills()"] --&gt; B["find_skill_plugins()&lt;br/&gt;{skill_id: SkillClass}"]
+    B --&gt; C["_get_plugin_skill_loader(skill_id, skill_class)&lt;br/&gt;build a PluginSkillLoader"]
+    C --&gt; D["_load_plugin_skill(skill_id, skill_class)&lt;br/&gt;instantiate &amp; start the skill"]</code></pre>
 <p>Each skill gets its own bus connection when <code>websocket.shared_connection</code> is <code>false</code> in config (see <code>_get_internal_skill_bus()</code>), providing isolation from "BusBricker" style attacks.</p>
 <h2 id="blacklisting">Blacklisting<a class="headerlink" href="#blacklisting" title="Permanent link">&para;</a></h2>
 <p>Skills listed in <code>skills.blacklisted_skills</code> in <code>mycroft.conf</code> are skipped at load time. The recommended approach is to uninstall unwanted skills rather than blacklist them.</p>
 <h2 id="intent-training">Intent Training<a class="headerlink" href="#intent-training" title="Permanent link">&para;</a></h2>
 <p>After new skills are loaded, the manager requests pipeline re-training:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>mycroft.skills.train  →  (pipeline plugins that need it train, e.g. padatious)
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>mycroft.skills.train  →  (pipeline plugins that need it train, e.g. padatious)
 </span></code></pre></div>
 <p>The manager emits <code>mycroft.skills.train</code> and blocks up to 60 seconds via
 <code>bus.wait_for_response(..., "mycroft.skills.trained", timeout=60)</code>. It logs an
@@ -1736,7 +1735,7 @@ deferred training step reply on <code>mycroft.skills.trained</code>. Plugins wit
 never reply, and the call times out.</p>
 <h2 id="settings-file-watcher">Settings File Watcher<a class="headerlink" href="#settings-file-watcher" title="Permanent link">&para;</a></h2>
 <p>When enabled, a <code>FileWatcher</code> monitors <code>~/.config/ovos/skills/*/settings.json</code>. Any change emits:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>ovos.skills.settings_changed  {skill_id: &quot;...&quot;}
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>ovos.skills.settings_changed  {skill_id: &quot;...&quot;}
 </span></code></pre></div>
 <h2 id="bus-events-handled">Bus Events Handled<a class="headerlink" href="#bus-events-handled" title="Permanent link">&para;</a></h2>
 <table>

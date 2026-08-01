@@ -1782,7 +1782,18 @@
 </div>
 <details class="info">
 <summary>Formal specification</summary>
-<p>The session's wire shape and field registry are specified by <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/session-1.md">OVOS-SESSION-1 — Session Carrier</a></strong>. Who owns and may mutate session state, and the reserved <code>"default"</code> device-local session, is specified by <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/session-2.md">OVOS-SESSION-2 — Session Lifecycle &amp; State Ownership</a></strong>. The decaying per-session <code>intent_context</code> that gates which intents may match across turns is specified by <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/intent-context.md">OVOS-CONTEXT-1 — Intent Context</a></strong>. See also the <a href="../architecture-specs/">spec index</a>. SESSION-1 is the field registry. Other specs <em>claim</em> fields into it (e.g. <code>intent_context</code> → CONTEXT-1, the transformer-chain lists → OVOS-TRANSFORM-1).</p>
+<p><strong>SESSION-1 is the field registry.</strong> Other specs <em>claim</em> fields into it (e.g. <code>intent_context</code> → CONTEXT-1, the transformer-chain lists → OVOS-TRANSFORM-1). See also the <a href="../architecture-specs/">spec index</a>.</p>
+<ul>
+<li><strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/session-1.md">OVOS-SESSION-1 — Session Carrier</a></strong>: the session's wire shape and field registry.</li>
+<li><strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/session-2.md">OVOS-SESSION-2 — Session Lifecycle &amp; State Ownership</a></strong>: who owns and may mutate session state, and the reserved <code>"default"</code> device-local session.</li>
+<li><strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/intent-context.md">OVOS-CONTEXT-1 — Intent Context</a></strong>: the decaying per-session <code>intent_context</code> that gates which intents may match across turns.</li>
+</ul>
+<pre class="mermaid"><code>flowchart LR
+    Sat["Voice satellite / HiveMind node"] --&gt;|Message + Session| Bus["Messagebus"]
+    Bus --&gt; SM["SessionManager"]
+    SM --&gt;|"default" session, device-local| Core["ovos-core orchestrator"]
+    SM --&gt;|unique session_id, external client| Core
+    Core --&gt;|SessionManager.get message| Skill["Skill"]</code></pre>
 </details>
 <p><strong>What / why (beginners):</strong> a single OVOS device can be talking to many clients at once: your phone, a kitchen satellite, a HiveMind node. Each request arrives carrying a <code>Session</code> that identifies <em>who</em> is asking and <em>in what language</em>. If your skill stores any state (a chat history, a game in progress, a "current selection"), key that state by <code>session_id</code> instead of stashing it in a single instance variable. Otherwise two users would clobber each other.</p>
 <p>If you want your skills to handle simultaneous users, make them <strong>Session</strong> aware.</p>

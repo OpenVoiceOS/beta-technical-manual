@@ -1985,7 +1985,14 @@
 <h1 id="configuration-management">Configuration Management<a class="headerlink" href="#configuration-management" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>This page covers how you change OVOS's settings, such as your language, voice, and microphone. OVOS ships with a complete set of defaults you never touch. You write a small personal file listing only the things you want different. OVOS stacks your file on top of the defaults, so the rest stays as-is, like adding a sticky note over a printed form. The <code>ovos-config</code> command-line tool helps you view and edit those settings. For the full list of settings, see the <a href="../config-reference/">Configuration Reference</a>. For term definitions, see the <a href="../glossary/">Glossary</a>.</p>
+<p>This page covers how you change OVOS's settings, such as your language, voice, and
+microphone. OVOS ships with a complete set of defaults you never touch. You write a
+small personal file listing only the things you want different. OVOS stacks your file
+on top of the defaults, so the rest stays as-is, like adding a sticky note over a
+printed form.</p>
+<p>The <code>ovos-config</code> command-line tool helps you view and edit those settings. For the
+full list of settings, see the <a href="../config-reference/">Configuration Reference</a>. For
+term definitions, see the <a href="../glossary/">Glossary</a>.</p>
 </div>
 <p><code>ovos-config</code> is the configuration layer for the entire OVOS ecosystem. It provides a layered, merged <code>Configuration</code> singleton that all OVOS components read from, plus XDG-aware path helpers, a CLI tool, and meta-config support for custom distributions.</p>
 <p>For a detailed list of every available configuration option, see the <strong><a href="../config-reference/">Configuration Reference</a></strong>.</p>
@@ -2003,8 +2010,8 @@ file closest to <em>you</em> wins:</p>
 <p>The <strong>remote cache</strong> is an optional layer holding settings pushed from a paired backend
 (the legacy Mycroft-Home / <code>home.mycroft.ai</code> model). It sits low in the stack, so anything you
 set by hand always wins. You can turn it off entirely with the <code>disable_remote_config</code>
-system constraint. It is not the file you edit. See the <a href="#config-layer-stack">Config Layer Stack</a>
-below.</p>
+system constraint.</p>
+<p>It is not the file you edit. See the <a href="#config-layer-stack">Config Layer Stack</a> below.</p>
 <p>To switch to a German voice, you only need:</p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="p">{</span>
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span><span class="nt">&quot;lang&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;de-DE&quot;</span>
@@ -2012,10 +2019,10 @@ below.</p>
 </span></code></pre></div>
 <p>dropped into <code>~/.config/mycroft/mycroft.conf</code>. Dicts are deep-merged, so this leaves
 every other setting untouched. This alone is enough: STT, TTS, and every other
-language-aware plugin follow the global <code>lang</code> automatically. A per-plugin <code>lang</code>
-setting only overrides that default for one plugin (for example, to keep a second voice
-speaking another language). <code>ovos-config autoconfigure</code> (below) is a convenience
-that also swaps in the recommended plugins and voices for a language. It is
+language-aware plugin follow the global <code>lang</code> automatically.</p>
+<p>A per-plugin <code>lang</code> setting only overrides that default for one plugin (for example, to
+keep a second voice speaking another language). <code>ovos-config autoconfigure</code> (below) is a
+convenience that also swaps in the recommended plugins and voices for a language. It is
 not required just to switch languages. See <a href="../lang-support/">Language Support</a> for
 the full picture.</p>
 <hr />
@@ -2028,6 +2035,13 @@ the full picture.</p>
 </span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>MycroftUserConfig      (~/.config/mycroft/mycroft.conf — XDG user config)
 </span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>__patch                (in-memory overlay applied last)
 </span></code></pre></div>
+<pre class="mermaid"><code>flowchart LR
+    A[MycroftDefaultConfig&lt;br/&gt;bundled default] --&gt; B[RemoteConf&lt;br/&gt;backend/paired-server cache]
+    B --&gt; C[OvosDistributionConfig&lt;br/&gt;/usr/share/mycroft/mycroft.conf]
+    C --&gt; D[MycroftSystemConfig&lt;br/&gt;/etc/mycroft/mycroft.conf]
+    D --&gt; E[MycroftUserConfig&lt;br/&gt;~/.config/mycroft/mycroft.conf]
+    E --&gt; F[__patch&lt;br/&gt;in-memory overlay]
+    F --&gt; W[Wins: highest priority]</code></pre>
 <p>The XDG user layer is actually a list of configs (one per XDG config dir, for example
 <code>/etc/xdg/mycroft/mycroft.conf</code> plus <code>~/.config/mycroft/mycroft.conf</code>), all merged
 in order. All layers are <code>LocalConf</code> dict subclasses backed by a file. Only the user

@@ -2435,6 +2435,15 @@ release date after the commit is given instead.</p>
 <h2 id="big-ticket-migrations">Big-ticket migrations<a class="headerlink" href="#big-ticket-migrations" title="Permanent link">&para;</a></h2>
 <p>These changes affect the largest number of installs and are worth their
 own walkthrough before the chronological per-audience lists below.</p>
+<pre class="mermaid"><code>flowchart LR
+    A["2024-03\nOCP -&gt; ovos-media\nconfig split"] --&gt; B["2024-09\novos-utils 0.1.0\ngutting"]
+    B --&gt; C["2025-06-07/08\novos-workshop\n4.0.0 -&gt; 7.0.0"]
+    C --&gt; D["2025-06-16\novos-config 2.0.0\npipeline renames"]
+    D --&gt; E["2026-01\nopm 2.0\nwake-word signature"]
+    E --&gt; F["2026-04-08\nCommonQuerySkill\nremoved"]
+    F --&gt; G["2026-06-25\nbus-client dual-emit\nbridge + transformer flip"]</code></pre>
+<p>Each milestone above is its own subsection below, chronological order left to right (the
+subsections themselves are grouped by theme, not by date).</p>
 <h3 id="the-ovos-utils-010-gutting-2024-09">The ovos-utils 0.1.0 gutting (2024-09)<a class="headerlink" href="#the-ovos-utils-010-gutting-2024-09" title="Permanent link">&para;</a></h3>
 <p><code>ovos-utils</code> 0.1.0 deleted almost everything that had accumulated in the
 package since the Mycroft era (10,709 deleted lines, PR body: "remove ALL

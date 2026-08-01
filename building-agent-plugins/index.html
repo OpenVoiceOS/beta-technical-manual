@@ -1769,6 +1769,13 @@ migration map in <a href="../advanced-solvers/#deprecated-solver-types">Speciali
 <p>Developers most often reach for the wrong class here, so this deserves its own section.
 The family has one parent and two children, plus a neighbor that looks similar but is not
 retrieval at all.</p>
+<pre class="mermaid"><code>flowchart TD
+    Q[Does the plugin bring its own knowledge?] --&gt;|no, transforms text you hand it| EQA["ExtractiveQAEngine: get_best_passage(evidence, question, lang)"]
+    Q --&gt;|yes| W{Where does the plugin's data live?}
+    W --&gt;|somewhere else it does not manage: web API, external DB| RE["RetrievalEngine: query(query, lang, k)"]
+    W --&gt;|owns a local index it builds itself| Own{What shape is the data?}
+    Own --&gt;|free-text documents| DIE["DocumentIndexerEngine: ingest_corpus(List[str])"]
+    Own --&gt;|question/answer pairs| QAIE["QAIndexerEngine: ingest_corpus(Dict[question, answer])"]</code></pre>
 <p><strong><code>RetrievalEngine</code></strong> is the parent contract: one method,
 <code>query(query, lang, k) -&gt; List[Tuple[str, float]]</code>, which returns up to <code>k</code>
 <code>(content, score)</code> pairs. Subclass it directly when the knowledge lives somewhere the
@@ -1786,11 +1793,11 @@ instead of <code>DocumentIndexerEngine</code> when your data is already question
 question-to-question is much more accurate than matching a question against raw prose.</p>
 <p><strong><code>ExtractiveQAEngine</code> is not retrieval.</strong> It never searches anything. Its single method,
 <code>get_best_passage(evidence, question, lang)</code>, receives the evidence text as an argument
-and returns the span inside it that answers the question. It is the <em>last</em> step of a
-pipeline whose earlier steps (often a <code>RetrievalEngine</code>) already found the evidence.
-<a href="https://github.com/OpenVoiceOS/ovos-wikipedia-plugin">ovos-wikipedia-plugin</a> shows the
-combination: retrieval fetches a Wikipedia summary, then an extractive QA engine pulls
-out the one sentence worth speaking aloud.</p>
+and returns the span inside it that answers the question.</p>
+<p>It is the <em>last</em> step of a pipeline whose earlier steps (often a <code>RetrievalEngine</code>) already
+found the evidence. <a href="https://github.com/OpenVoiceOS/ovos-wikipedia-plugin">ovos-wikipedia-plugin</a>
+shows the combination: retrieval fetches a Wikipedia summary, then an extractive QA engine
+pulls out the one sentence worth speaking aloud.</p>
 <p>A worked example. You want your assistant to answer questions from a folder of markdown
 notes:</p>
 <ol>
@@ -2020,13 +2027,44 @@ else in the stack. See <a href="../personas/">Agents &amp; Personas</a> for the 
 <code>ovos_plugin_manager.templates.solvers</code>) is deprecated. The entry-point-to-class mapping
 lives in <a href="../advanced-solvers/#deprecated-solver-types">Specialized Agent Engine Types</a>.
 This section covers the code changes, which are small but not mechanical.</p>
-<p><strong>1. Pick the new base class.</strong> <code>QuestionSolver</code> and <code>ChatMessageSolver</code> both become
-<code>ChatEngine</code>. <code>TldrSolver</code> becomes <code>SummarizerEngine</code>. <code>EvidenceSolver</code> becomes
-<code>ExtractiveQAEngine</code>. <code>MultipleChoiceSolver</code> becomes <code>ReRankerEngine</code>.
-<code>EntailmentSolver</code> becomes <code>NaturalLanguageInferenceEngine</code>. One exception: if your
-<code>QuestionSolver</code> was really a knowledge lookup (Wikipedia, Wolfram Alpha, a database),
-migrate it to <code>RetrievalEngine</code> instead of <code>ChatEngine</code>. The solver API had no retrieval
-type, so lookups were forced into the Q&amp;A shape. The new API separates them.</p>
+<p><strong>1. Pick the new base class.</strong></p>
+<table>
+<thead>
+<tr>
+<th>Old solver class</th>
+<th>New base class</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>QuestionSolver</code></td>
+<td><code>ChatEngine</code> (or <code>RetrievalEngine</code> — see exception below)</td>
+</tr>
+<tr>
+<td><code>ChatMessageSolver</code></td>
+<td><code>ChatEngine</code></td>
+</tr>
+<tr>
+<td><code>TldrSolver</code></td>
+<td><code>SummarizerEngine</code></td>
+</tr>
+<tr>
+<td><code>EvidenceSolver</code></td>
+<td><code>ExtractiveQAEngine</code></td>
+</tr>
+<tr>
+<td><code>MultipleChoiceSolver</code></td>
+<td><code>ReRankerEngine</code></td>
+</tr>
+<tr>
+<td><code>EntailmentSolver</code></td>
+<td><code>NaturalLanguageInferenceEngine</code></td>
+</tr>
+</tbody>
+</table>
+<p>One exception: if your <code>QuestionSolver</code> was really a knowledge lookup (Wikipedia, Wolfram
+Alpha, a database), migrate it to <code>RetrievalEngine</code> instead of <code>ChatEngine</code>. The solver API
+had no retrieval type, so lookups were forced into the Q&amp;A shape. The new API separates them.</p>
 <p><strong>2. Rename the methods.</strong> For a <code>QuestionSolver</code> moving to <code>ChatEngine</code>, the core
 change is from string-in/string-out to messages-in/message-out:</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1"># before (QuestionSolver)</span>
@@ -2046,9 +2084,9 @@ the returned string in an <code>AgentMessage</code> and update the dict-style me
 <p><strong>3. Drop the auto-translation assumptions.</strong> This is the trap. <code>QuestionSolver</code> had
 <code>enable_tx</code> and bidirectional auto-translation: a solver could declare
 <code>supported_langs = ["en"]</code> and still receive every language, because the base class
-translated the input and output behind the scenes. <strong>Agent engines never translate.</strong>
-After migration your engine receives the user's language as-is. Either handle it or
-return nothing for languages you do not support.</p>
+translated the input and output behind the scenes.</p>
+<p><strong>Agent engines never translate.</strong> After migration your engine receives the user's
+language as-is. Either handle it or return nothing for languages you do not support.</p>
 <p>Translation is still the recommended strategy for engines whose backend is inherently
 monolingual (Wolfram Alpha and most web APIs only speak English). What changed is who
 does it: the base class no longer translates for you, so the plugin re-implements it

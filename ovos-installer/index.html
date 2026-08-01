@@ -1793,8 +1793,22 @@
 non-Pi hardware or installing onto an existing Raspberry Pi OS setup.</p>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>This is the guided way to get OVOS onto your machine. You run a single command. Then a menu-driven wizard walks you through a few choices (your language, where to install, which features you want) and does the rest for you. It works the same on a Raspberry Pi or a Linux laptop. It is the recommended way to install. It needs no programming. To script a fleet instead, see the <a href="#non-interactive-scenario-install">non-interactive scenario install</a>, which skips the wizard entirely. See the <a href="../glossary/">Glossary</a> for unfamiliar terms.</p>
+<p>This is the guided way to get OVOS onto your machine. You run a single command. Then a
+menu-driven wizard walks you through a few choices (your language, where to install,
+which features you want) and does the rest for you.</p>
+<p>It works the same on a Raspberry Pi or a Linux laptop, and it is the recommended way to
+install. It needs no programming. To script a fleet instead, see the
+<a href="#non-interactive-scenario-install">non-interactive scenario install</a>, which skips the
+wizard entirely. See the <a href="../glossary/">Glossary</a> for unfamiliar terms.</p>
 </div>
+<pre class="mermaid"><code>flowchart TD
+    A[Choosing how to install OVOS] --&gt; B{Raspberry Pi?}
+    B -- yes, want flash-and-boot --&gt; C[raspOVOS image&lt;br/&gt;maintenance pause: check status first]
+    B -- yes, existing Raspberry Pi OS --&gt; D[ovos-installer]
+    B -- no, other Linux/macOS --&gt; D
+    A --&gt; E{Scripting a fleet or CI?}
+    E -- yes --&gt; F[ovos-installer non-interactive&lt;br/&gt;scenario.yaml]
+    E -- no --&gt; D</code></pre>
 <div class="admonition note">
 <p class="admonition-title">Read this before you start: what a default install sends over the network</p>
 <p>A default OVOS install talks to public, community-run servers for speech-to-text and
@@ -1912,7 +1926,13 @@ with no prompts at all. Useful for fleets or CI.</p>
 </ul>
 <hr />
 <h3 id="language-selection">🌍 Language Selection<a class="headerlink" href="#language-selection" title="Permanent link">&para;</a></h3>
-<p>The first screen lets you select your preferred language for the installer's own text, not the assistant's spoken language. See <a href="../lang-support/">Language Support</a> for how the assistant's language is actually chosen. Setting the global <code>lang</code> key is enough on its own. STT, TTS, and plugins follow it automatically. <code>ovos-config autoconfigure</code> can also swap in the recommended plugins and voices for that language. Follow the on-screen instructions. Use arrow keys and space to pick.</p>
+<p>The first screen lets you select your preferred language for the installer's own text, not
+the assistant's spoken language. See <a href="../lang-support/">Language Support</a> for how the
+assistant's language is actually chosen.</p>
+<p>Setting the global <code>lang</code> key is enough on its own. STT, TTS, and plugins follow it
+automatically. <code>ovos-config autoconfigure</code> can also swap in the recommended plugins and
+voices for that language.</p>
+<p>Follow the on-screen instructions. Use arrow keys and space to pick.</p>
 <p><img alt="Language selection screen listing Dutch, English, French, German, Hindi, Italian, Portuguese, and Spanish as radio-button choices, with English selected" src="https://gist.github.com/user-attachments/assets/61f9e089-1d54-49e9-8d4a-d5e1f6028ee2" /></p>
 <hr />
 <h3 id="environment-summary">🧠 Environment Summary<a class="headerlink" href="#environment-summary" title="Permanent link">&para;</a></h3>
@@ -2129,8 +2149,8 @@ whenever you opt in. None of them is something you type in yourself <em>(see the
 <p>Accepting this prompt adds an <code>open_data.intent_urls</code> entry pointing at a
 community metrics endpoint to your installed <code>mycroft.conf</code>. That makes the
 <strong>running assistant</strong> report anonymous intent-matching data on an ongoing
-basis. It reports every time it processes a voice command, not just during setup. If
-you want data collection to stop once installation is over, decline this
+basis. It reports every time it processes a voice command, not just during setup.</p>
+<p>If you want data collection to stop once installation is over, decline this
 prompt (declining the first, install-time prompt is not enough on its own).
 The choice always remains yours, whether made here in the installer or later
 by hand editing the <code>open_data</code> key in <code>mycroft.conf</code>.</p>

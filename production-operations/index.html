@@ -1680,8 +1680,8 @@ active login session.</p>
 <p class="admonition-title"><code>PIDLock</code> kills the previous process silently</p>
 <p>Most OVOS services use <code>PIDLock</code> (from <code>ovos-utils</code>) to guard against two copies running
 under the same name. On construction, <code>PIDLock</code> kills any existing process holding that
-name's PID file, then writes its own PID. There is no warning or confirmation prompt. If
-you start a service by hand while a systemd-managed copy is already running under the
+name's PID file, then writes its own PID. There is no warning or confirmation prompt.</p>
+<p>If you start a service by hand while a systemd-managed copy is already running under the
 same name, <code>PIDLock</code> kills the systemd-managed one. The PID file is deleted on exit via
 <code>SIGINT</code>/<code>SIGTERM</code> handlers, so a process killed harder than that (<code>SIGKILL</code>, power loss)
 can leave a stale PID file behind that the next start-up will happily reuse.</p>
@@ -1785,6 +1785,13 @@ unit's stdout to the journal (the default) and ship <code>journalctl</code> outp
 does not include a log-shipping client.</p>
 <hr />
 <h2 id="backup-and-restore">Backup and restore<a class="headerlink" href="#backup-and-restore" title="Permanent link">&para;</a></h2>
+<pre class="mermaid"><code>flowchart LR
+    Backup["cp ~/.config/mycroft\n+ ~/.local/share/mycroft"] --&gt; Store[Store backup\nsecurely]
+    Store -.-&gt; Install[Install OVOS\non new machine]
+    Install --&gt; Stop["systemctl --user stop\novos.service"]
+    Stop --&gt; CopyBack[Copy config/data\nback into place]
+    CopyBack --&gt; Restart["systemctl --user start\novos.service"]
+    Restart --&gt; Probe[Re-run readiness probe]</code></pre>
 <p>Two kinds of state matter on an OVOS device: the packages that are installed, and everything
 under a user's config/data directories. The staged-upgrade recipe below covers packages. This
 section covers the directories.</p>
@@ -1885,6 +1892,11 @@ maintain custom skills or plugins, see
 <a href="../version-compat-guide/">Version-Compatible Skills &amp; Plugins</a>.</p>
 </div>
 <h2 id="staged-upgrades-and-rollback">Staged upgrades and rollback<a class="headerlink" href="#staged-upgrades-and-rollback" title="Permanent link">&para;</a></h2>
+<pre class="mermaid"><code>flowchart LR
+    Freeze["Freeze known-good packages\n(uv pip freeze)"] --&gt; Canary[Upgrade one\ncanary device]
+    Canary --&gt; Verify{Readiness probe +\nreal voice check pass?}
+    Verify -- yes --&gt; Fleet[Roll the same command\nout to the rest of the fleet]
+    Verify -- no --&gt; Rollback["--force-reinstall known-good,\nrestart ovos.service"]</code></pre>
 <p><a href="../release-channels/">Release channels</a> covers <code>stable</code>/<code>testing</code>/<code>alpha</code> constraints files.
 For a fleet, the same mechanism gives you a controlled, reversible upgrade path:</p>
 <p>If only a single package regressed, rolling back the whole stack is unnecessary. See
@@ -2029,9 +2041,10 @@ resource limit and healthcheck spelled out.</p>
 <p class="admonition-title"><code>network_mode: host</code> shares the loopback across every container on that host</p>
 <p>With <code>network_mode: host</code>, <code>127.0.0.1</code> is the <strong>host's</strong> loopback, not a container-private
 one. Every container and process on that host shares it. A bus bound to <code>127.0.0.1</code> is
-reachable by any of them, not just <code>ovos_messagebus</code>. "Bound to localhost" no longer means
-"only reachable by this one process" once host networking is in play. Treat the whole host
-as the trust boundary, not the individual container.</p>
+reachable by any of them, not just <code>ovos_messagebus</code>.</p>
+<p>"Bound to localhost" no longer means "only reachable by this one process" once host
+networking is in play. Treat the whole host as the trust boundary, not the individual
+container.</p>
 <p>Host networking also exposes any service that binds <code>0.0.0.0</code> straight onto the LAN, not
 just the host's own loopback. <code>gui_websocket.host</code> defaults to <code>127.0.0.1</code> (loopback only);
 widening it to <code>0.0.0.0</code> (all interfaces) is the opt-in for remote display clients. Combined
