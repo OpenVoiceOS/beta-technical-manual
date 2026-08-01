@@ -15,6 +15,8 @@
 | 6 | GUI + voice together | `OVOSSkill` | `self.gui`, `show_page` |
 | 7 | Fallback to an LLM solver | `FallbackSkill` | `register_fallback`, `QuestionSolver` |
 | 8 | Ambient bus-event behavior | `OVOSSkill` | `add_event`, `recognizer_loop:*` |
+| 9 | Converse-driven game loop | `ConversationalGameSkill` | `on_play_game`, `on_game_command`, `converse` |
+| 10 | Validated slot collection | `OVOSSkill` | `get_response(validator=..., on_fail=..., num_retries=...)` |
 
 Each recipe below is a **complete skill module** (or a clearly-marked excerpt of one), followed by notes on the moving parts and links to the reference page that documents each API in full. None of these recipes invent new methods: every class, method signature, and bus event name was checked against the installed `ovos-workshop`, `ovos-bus-client`, and `ovos-utils` packages.
 
@@ -534,6 +536,126 @@ class AmbientMoodSkill(OVOSSkill):
 - `self.add_event(msg_type, handler)` subscribes for the lifetime of the skill (auto-removed on shutdown). This is the general-purpose alternative to a decorator-based intent handler, for any bus event that isn't an utterance.
 - `schedule_repeating_event(handler, when, frequency, name=...)` with `when=None` starts the first run after one `frequency` interval. Pass a `datetime` for `when` instead if the first run needs to happen at a specific moment.
 - This skill emits its own `ovos.ambient_mood.changed` event rather than reaching into a light/hardware plugin directly, keeping it decoupled from whatever actually consumes the mood (a PHAL plugin, another skill, a GUI). See [Bus Service](bus-service.md) for the emit/on API and [PIPELINE-1 correlation](converse-pipeline.md) for how bus events relate to a given utterance's session.
+
+---
+
+## 9. A voice game: converse-driven game loop
+
+**When you'd want this:** the skill runs a game entirely by voice, such as a number-guessing game or a text adventure. While the game is playing, almost anything the user says is game input, not a new command, and the skill must still respond correctly to "stop" or "pause".
+
+`ConversationalGameSkill` (from `ovos_workshop.skills.game_skill`) is a small set of `on_*` hooks over `OVOSCommonPlaybackSkill`. The OCP media pipeline treats a game as `MediaType.GAME`: saying "play guess the number" reaches the skill through the same "play X" matching as music or a podcast, and OCP's play/pause/resume/stop transport controls double as the game's transport.
+
+```python
+import random
+
+from ovos_workshop.decorators import intent_handler
+from ovos_workshop.skills.game_skill import ConversationalGameSkill
+
+
+class GuessNumberGameSkill(ConversationalGameSkill):
+    def __init__(self, *args, **kwargs):
+        super().__init__(skill_voc_filename="GuessNumberGameKeyword",
+                         *args, **kwargs)
+        self.secret = None
+        self.guesses_left = 0
+
+    def on_play_game(self):
+        # the framework already set self.is_playing True before this runs
+        self.secret = random.randint(1, 100)
+        self.guesses_left = 7
+        self.speak_dialog("game_start", {"tries": self.guesses_left})
+
+    def on_stop_game(self):
+        self.speak_dialog("game_stop")
+
+    def on_abandon_game(self):
+        # called before on_stop_game if the user goes quiet mid-game
+        self.speak_dialog("game_abandoned")
+
+    def on_game_command(self, utterance: str, lang: str):
+        # every utterance that isn't claimed by an intent below lands here
+        try:
+            guess = int(utterance)
+        except ValueError:
+            self.speak_dialog("not_a_number", expect_response=True)
+            return
+
+        self.guesses_left -= 1
+        if guess == self.secret:
+            self.speak_dialog("guess_correct")
+            self.stop_game()
+        elif self.guesses_left <= 0:
+            self.speak_dialog("guess_out_of_tries", {"answer": self.secret})
+            self.stop_game()
+        elif guess < self.secret:
+            self.speak_dialog("guess_higher", {"tries": self.guesses_left},
+                             expect_response=True)
+        else:
+            self.speak_dialog("guess_lower", {"tries": self.guesses_left},
+                             expect_response=True)
+
+    @intent_handler("cheat_hint.intent")
+    def handle_cheat_hint(self, message):
+        # this is the ONLY declared intent in the whole skill; every other
+        # utterance while playing falls through to on_game_command above,
+        # keeping the game's own vocabulary out of the intent parser entirely
+        if self.is_playing:
+            self.speak_dialog("hint_refused")
+```
+
+### Moving parts
+
+- `ConversationalGameSkill` subclasses `OVOSGameSkill`, which subclasses `OVOSCommonPlaybackSkill`. The constructor requires `skill_voc_filename`, a `.voc` file (`locale/en-us/vocab/GuessNumberGameKeyword.voc`) listing the game's name, so OCP's search step recognizes "play guess the number" as this skill and not a music query.
+- `on_play_game()`, `on_stop_game()`, `on_save_game()`, `on_load_game()` are the abstract hooks every game must implement (the last two default to speaking a "can't save" dialog if left alone). OCP calls `on_play_game()` after already marking the skill as playing (`self.is_playing` is `True` inside it). `on_pause_game()`/`on_resume_game()` also come from the base class with a working default (an acknowledgement sound, plus an optional dialog gated by the `pause_dialog` setting); override them only if pausing needs game-specific behavior.
+- `on_game_command(utterance, lang)` is where free-form game input arrives. The base class's `converse()` calls it whenever the skill is playing (and not paused) *and* the utterance would not otherwise trigger one of this skill's own `@intent_handler`s (checked via `skill_will_trigger`). That is what "keeping intents inert during play" means in practice: declare as few `@intent_handler`s as the game truly needs (`cheat_hint.intent` above), and everything else, digits, "up", "north", whatever the game vocabulary is, reaches `on_game_command` instead of missing every intent and falling through to a fallback skill.
+- `self.stop_game()` is the base class helper a skill calls to end the game itself (a correct guess, running out of tries). It clears playback state and then calls `on_stop_game()` for you; don't call `on_stop_game()` directly.
+- Abort/inactivity is handled above the skill entirely: if the user goes quiet for a while, the intent service deactivates the skill, which calls `on_abandon_game()` and then `stop_game()` (which in turn calls `on_stop_game()`). Explicit "stop" while playing goes through the normal OCP stop transport, which calls `stop_game()` the same way.
+- Set `self.settings["auto_save"] = True` and implement `on_save_game()` for autosave-before-stop behavior; `ConversationalGameSkill` calls it for you on every `converse()` turn and on `stop()` when both the setting and the override are present (checked via `save_is_implemented`).
+
+!!! tip "Full production example"
+    [`ovos-skill-moon-game`](https://github.com/OpenVoiceOS/ovos-skill-moon-game) is a full `ConversationalGameSkill`: a branching narrative driven entirely through `on_game_command`, with `IntentLayers` gating which branch-specific phrases are even considered at each story beat. `FrotzSkill` (from the `pyfrotz` package, used by [`ovos-skill-cave-adventure-game`](https://github.com/OpenVoiceOS/ovos-skill-cave-adventure-game) and [`ovos-skill-hhgg-game`](https://github.com/OpenVoiceOS/ovos-skill-hhgg-game)) shows the same hooks wrapping something entirely different: every utterance in `on_game_command` is piped as a raw command to an external Z-machine interpreter process, and its text output is what gets spoken.
+
+---
+
+## 10. Collecting structured input: `get_response` with a validator
+
+**When you'd want this:** an intent needs one specific piece of information, such as a number in a known range, not a free-form sentence. The user should be re-prompted on a bad answer, a limited number of times, and the skill should give up gracefully rather than loop forever.
+
+```python
+from ovos_workshop.decorators import intent_handler
+from ovos_workshop.skills import OVOSSkill
+
+
+class ThermostatSkill(OVOSSkill):
+    @intent_handler("set_temperature.intent")
+    def handle_set_temperature(self, message):
+        def in_range(utterance: str) -> bool:
+            try:
+                return 10 <= int(utterance) <= 30
+            except ValueError:
+                return False
+
+        response = self.get_response("ask_temperature",
+                                     validator=in_range,
+                                     on_fail="temperature_out_of_range",
+                                     num_retries=2)
+        if response is None:
+            self.speak_dialog("temperature_not_set")
+            return
+
+        self.settings["target_temperature"] = int(response)
+        self.speak_dialog("temperature_set", {"temp": response})
+```
+
+### Moving parts
+
+- `get_response(dialog='', data=None, validator=None, on_fail=None, num_retries=-1, message=None, wait=True)` speaks `dialog`, listens for a reply, and, if `validator` is given, keeps re-asking until the reply passes it or the retries run out. `validator` takes the raw utterance string and returns `True`/`False`; `in_range` above rejects anything that isn't an integer between 10 and 30.
+- `on_fail` is what gets spoken on a failed validation, before listening again. It can be a dialog name/string, or a `(str) -> str` callable that builds a message from the failing utterance.
+- `num_retries` bounds the re-prompt loop. `2` above means the user gets up to three attempts total (the original ask plus two retries) before `get_response` gives up. `-1`, the default, retries indefinitely, but a silent (no-answer) timeout with `-1` still only retries once. Cap `num_retries` deliberately whenever a bad or silent answer should end the interaction instead of looping.
+- `get_response` returns the matched utterance as a `str` on success, or `None` if no valid response was ever captured, whether because retries ran out, the user said "cancel", or nobody answered. `handle_set_temperature` above checks for `None` and speaks a distinct "gave up" dialog rather than assuming `response` is always usable. See [Get User Response](prompts.md#2-request-extra-information-with-get_response) for `get_response` alongside `ask_yesno` and `ask_selection`.
+
+!!! tip "Full production example"
+    [`ovos-skill-mark1-ctrl`](https://github.com/OpenVoiceOS/ovos-skill-mark1-ctrl)'s `handle_custom_eye_color` chains three validated `get_response` calls back to back, one each for red, green, and blue (0-255), each with its own `on_fail` dialog and `num_retries=2`, then falls through to `ask_yesno` to offer saving the result as the default eye color.
 
 ---
 
