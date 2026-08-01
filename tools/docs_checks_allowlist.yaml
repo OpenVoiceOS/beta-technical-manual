@@ -95,6 +95,32 @@ python_imports:
       venv still has a pre-#194 ovos-config installed, which only exports
       MycroftUserConfig. Remove this entry once #194 merges and the venv is
       updated.
+  - module: paho
+    reason: >
+      docs/recipe-mqtt-device-control.md's recipe uses paho-mqtt, a third-party
+      broker client the skill author installs themselves. It is a real, current
+      PyPI package (verified) and deliberately outside the minimal CI install
+      set, which carries only OVOS packages.
+
+# Modules the reader is being walked through writing. They are the *output* of
+# a tutorial page, so they cannot exist on PyPI and must never be "fixed" by
+# pointing them at a real package. Matched against the top-level module name
+# with fnmatch. Everything else in the same fence is still checked, so the
+# real base classes these examples subclass stay covered.
+placeholder_modules:
+  - pattern: "my_*"
+    reason: "generic tutorial package/module names (my_module, my_tts_package, my_transformer_package)"
+  - pattern: "ovos_*_my*"
+    reason: >
+      per-family walkthrough plugins the reader creates: ovos_stt_plugin_mymodel,
+      ovos_vad_plugin_mymodel, ovos_ww_plugin_mymodel, ovos_microphone_plugin_mydevice,
+      ovos_PHAL_plugin_mysensor, ovos_ocp_myservice_plugin.
+  - pattern: "ovos_g2p_plugin_example"
+    reason: "the example G2P plugin built in docs/g2p-plugins.md; no such package is published."
+  - pattern: "ovos_media_plugin_noop"
+    reason: "the no-op media backend written in docs/media-plugin-development.md; no such package is published."
+  - pattern: "ovos_notes_retrieval"
+    reason: "the retrieval engine built in docs/agent-plugin-walkthroughs.md; no such package is published."
 
 signatures:
   - file: docs/gui-adapters.md

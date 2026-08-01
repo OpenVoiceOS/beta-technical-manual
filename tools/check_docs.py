@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import argparse
 import ast
+import fnmatch
 import json
 import os
 import re
@@ -44,6 +45,9 @@ def load_allowlist() -> dict:
         python_imports:
           - module: my_skill
             reason: "template placeholder"
+        placeholder_modules:
+          - pattern: "my_*"
+            reason: "the package the reader is being walked through writing"
         signatures:
           - file: docs/bar.md
             reason: "..."
@@ -59,6 +63,7 @@ def load_allowlist() -> dict:
         data = _naive_yaml_parse(ALLOWLIST_PATH.read_text())
     data.setdefault("json", [])
     data.setdefault("python_imports", [])
+    data.setdefault("placeholder_modules", [])
     data.setdefault("signatures", [])
     return data
 
@@ -354,6 +359,11 @@ def check_python_imports(allowlist) -> tuple[int, int, list[str]]:
     failures: list[str] = []
     passed = 0
     allow_modules = {a.get("module") for a in allowlist.get("python_imports", [])}
+    # Walkthrough pages import from the package the reader is being told to
+    # write. Those modules do not exist and never will, but the rest of the
+    # same fence (the real base classes it subclasses) must still be checked,
+    # so skip the placeholder import rather than the whole fence.
+    placeholders = [p.get("pattern", "") for p in allowlist.get("placeholder_modules", [])]
 
     if not _venv_available():
         return 0, 0, [f"SKIPPED: venv python not found at {VENV_PY}"]
@@ -373,6 +383,8 @@ def check_python_imports(allowlist) -> tuple[int, int, list[str]]:
                 top = module.split(".")[0]
                 if top in allow_modules or module in allow_modules:
                     passed += 1
+                    continue
+                if any(fnmatch.fnmatch(top, pat) for pat in placeholders if pat):
                     continue
                 key = (module, attr)
                 if key not in cache:

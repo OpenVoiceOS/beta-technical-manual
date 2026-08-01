@@ -52,13 +52,18 @@ before late 2024, check it against this table.
 
 Migration action:
 
+Old, before `0.1.0` — none of these import paths exist any more:
+
+<!-- docs-check: skip-next -->
 ```python
-# old (pre-0.1.0)
 from ovos_utils.messagebus import get_mycroft_bus, wait_for_reply
 from ovos_utils.configuration import read_mycroft_config
 from ovos_utils.skills import blacklist_skill
+```
 
-# new (0.1.0+)
+New, `0.1.0` and later:
+
+```python
 from ovos_bus_client.util import get_mycroft_bus, wait_for_reply
 from ovos_config.config import read_mycroft_config
 from ovos_workshop.permissions import blacklist_skill
