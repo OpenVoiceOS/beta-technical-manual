@@ -1598,6 +1598,12 @@ separately-licensed model or a paid cloud service, that is called out under "mod
 <td>Stable</td>
 </tr>
 <tr>
+<td><a href="#ovos-tts-plugin-piper">ovos-tts-plugin-piper</a></td>
+<td>Offline neural TTS with the <a href="https://github.com/rhasspy/piper">Piper</a> engine. Default TTS on the raspOVOS hybrid/offline images.</td>
+<td>Apache-2.0</td>
+<td>Stable</td>
+</tr>
+<tr>
 <td><a href="#ovos-tts-plugin-espeakng">ovos-tts-plugin-espeakNG</a></td>
 <td>eSpeak NG offline text-to-speech (robotic, supports many languages).</td>
 <td>GPL-3.0</td>
@@ -1755,6 +1761,18 @@ Text-to-Speech API. Google can change or revoke access to this endpoint at any t
 </span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>  }
 </span></code></pre></div>
 <hr />
+<h2 id="ovos-tts-plugin-piper">ovos-tts-plugin-piper<a class="headerlink" href="#ovos-tts-plugin-piper" title="Permanent link">&para;</a></h2>
+<ul>
+<li>
+<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-tts-plugin-piper">https://github.com/OpenVoiceOS/ovos-tts-plugin-piper</a></p>
+</li>
+<li>
+<p><strong>Description</strong>: Offline neural TTS using the <a href="https://github.com/rhasspy/piper">Piper</a> engine (ONNX voices). This is the default TTS on the raspOVOS <code>hybrid</code> and <code>offline</code> images.</p>
+</li>
+<li>
+<p><strong>Config</strong>: set <code>"module": "ovos-tts-plugin-piper"</code> in the <code>tts</code> block. A <code>"voice"</code> key selects a specific Piper voice model; without it the plugin picks a voice for the configured language.</p>
+</li>
+</ul>
 <h2 id="ovos-tts-plugin-marytts">ovos-tts-plugin-marytts<a class="headerlink" href="#ovos-tts-plugin-marytts" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
