@@ -31,7 +31,7 @@ clause-for-clause.
 | Sentence-template expander | [OVOS-INTENT-1](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-1.md) | Expands `(a\|b)` / `[opt]` / `{slot}` / `<vocab>` into the sentences it denotes |
 | Locale resource loader | [OVOS-INTENT-2](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-2.md) | Loads a skill's `locale/` `.intent` / `.dialog` / `.voc` / `.entity` / `.blacklist` / `.prompt` files |
 | Dialog & prompt renderer | [OVOS-INTENT-2 §4](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-2.md) | Renders a spoken `.dialog` line or a `.prompt` with slot substitution |
-| Language-tag matching | [OVOS-INTENT-2 §2.2](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-2.md) | Picks the closest available BCP-47 language for a request |
+| Language-tag matching | [OVOS-INTENT-2 §2.2](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-2.md) *(non-normative)* | Picks the closest available BCP-47 language for a request |
 | Message envelope | [OVOS-MSG-1](https://github.com/OpenVoiceOS/architecture/blob/dev/msg-1.md) | The `{type, data, context}` `Message` and its `forward`/`reply`/`response` derivations |
 | `Session` / `SessionManager` | [OVOS-SESSION-1](https://github.com/OpenVoiceOS/architecture/blob/dev/session-1.md) | The registered session-carrier field set with omission-not-null (de)serialization, plus a process-wide one-object-per-`session_id` registry that folds each incoming snapshot onto the live object and re-stamps `forward`/`reply`/`response` derivations with it |
 | Context gating & decay | [OVOS-CONTEXT-1](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-context.md) | Stateless helpers over the flat `session.intent_context` map: `gate_satisfied`/`is_live`/`decrement`/`prune`/`enforce_cap` for `requires_context`/`excludes_context` gating and decay, plus `context_supplied_slots`/`context_slot_candidates` for context-sourced slot fill |
@@ -64,10 +64,22 @@ Lint a skill's locale folder against the grammar and format specs:
 ovos-spec-lint my-skill/locale
 ```
 
-`ovos-spec-lint` also takes a `--spec-version` flag for linting a skill that has not fully
-migrated yet: `--spec-version 1` (the default) treats a `.blacklist` violation as an error;
-`--spec-version 0` demotes the same violation to a warning, so a repo can adopt the
-[`.blacklist` file](resource-files.md) incrementally instead of all at once.
+`ovos-spec-lint` also takes a `--spec-version` flag, for linting a skill that targets an older
+runtime. It answers "would a runtime at spec version N ignore any of these files?". Accepted
+values are `0` to `3`, and the default is **3**.
+
+The gate only ever emits a warning, never an error, and it fires when a resource role is
+*newer* than the version you name. Each role has the version it arrived in:
+
+| Role | Requires |
+|---|---|
+| [`.blacklist`](resource-files.md) | 1 |
+| `.prompt` | 2 |
+| `<name>` | 3 |
+
+So `--spec-version 0` warns about a `.blacklist`, and any value from 1 up says nothing about
+it. Use the flag to check what an older deployment would silently drop, not to grade a
+migration.
 
 ## Session, intents, and the topic vocabulary
 

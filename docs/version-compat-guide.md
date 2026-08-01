@@ -278,13 +278,17 @@ support it claims to offer.
 Some breaks are not shimmable, and trying anyway produces code that looks safe and
 is not.
 
-**Wire behavior scheduled for removal.** The `ovos-bus-client` legacy-topic dual-emit
+**Wire behavior scheduled for removal.** The `ovos-bus-client` legacy-topic namespace
 bridge (`modernize`/`emit_legacy`, both default ON from `e25ab12`, 2026-06-25) is
 scheduled for deletion by the open kill-switch
 [ovos-bus-client#272](https://github.com/OpenVoiceOS/ovos-bus-client/pull/272). After
 it merges, `MessageBusClient` speaks OVOS-MSG-1 spec topics only and passing
 `emit_legacy`, `modernize`, or `intent_reemit_blanket` to the constructor raises
 `RuntimeError`.
+
+The bridge translates on the **receive** side, re-dispatching to local listeners. It does not
+put a second copy on the wire, so one `emit()` is still one websocket message — see [Bus
+Namespace Migration](bus-namespace-migration.md). Do not size bus traffic as if it doubled.
 
 There will be no client-side shim for this: migrate remote clients and
 satellites to `ovos.*` spec topics while the bridge still covers both spellings. Do

@@ -106,17 +106,18 @@ Each spec is a standalone document with a scope statement, the normative wire
 format, and a conformance section. The key words **MUST**, **SHOULD**, and
 **MAY** are used as in [RFC 2119](https://www.rfc-editor.org/rfc/rfc2119).
 
-Every spec header carries two separate numbers, and it matters which one you
-cite:
+Every spec header carries three fields, for example
+`**Spec ID:** OVOS-MSG-1 · **Version:** 2 · **Status:** Draft`:
 
-- **Version**: the spec's compatibility class (V0/V1/V2, see the README
-  registry below). It changes only when an edit breaks compatibility with the
-  prior class. A spec is cited by class (`OVOS-MSG-1 v1`).
-- **Revision**: a monotonic counter of normative edits *within* a class,
-  starting at `1`. A refinement, such as tightening a requirement, adding an
-  optional field, or correcting a cross-reference, bumps the revision, not the
-  version. `Revision` disambiguates which text of a given class you mean
-  (`v1 rev 3`). Non-normative edits (typos, formatting) don't bump it at all.
+- **Spec ID**: what you cite, always with a section number — `OVOS-MSG-1 §2.1.1`.
+- **Version**: the spec's compatibility class (see the README registry below). It changes only
+  when an edit breaks compatibility with the prior class.
+- **Status**: where the document stands. **Every spec is currently `Draft`.** Nothing here is
+  ratified, so a requirement can still change. That is the reason the specs and the code are
+  audited against each other continuously rather than once.
+
+The versioning policy also speaks of a revision number for editorial changes within a class.
+No spec header carries one today, so cite the spec ID and section, not a revision.
 
 - **Newcomers:** read the scope and the worked examples. Skip the conformance
   tables until you need them. Start with

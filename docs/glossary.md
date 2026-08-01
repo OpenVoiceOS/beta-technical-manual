@@ -2,13 +2,12 @@
 
 This glossary defines common terms, acronyms, and concepts used throughout the OpenVoiceOS (OVOS) ecosystem. New to OVOS? Skim this first. Most pages assume these words.
 
-??? info "Formal specification"
-    Entries marked **formal** name part of the **formal vocabulary** of the OVOS
-    architecture: concepts with a normative, implementation-agnostic
-    definition. Each links to its authoritative spec. For the full set and how
-    they fit together, see the **[spec index](architecture-specs.md)**. You can
-    safely skip these on a first read. They matter once you're checking a
-    component for spec conformance, not for everyday use.
+??? info "Entries that cite a spec"
+    An entry that links to an `OVOS-*` spec names part of the **formal vocabulary** of the
+    OVOS architecture: a concept with a normative, implementation-agnostic definition, and the
+    link goes to the spec that defines it. For the full set and how they fit together, see the
+    **[spec index](architecture-specs.md)**. You can safely skip those links on a first read.
+    They matter once you are checking a component for spec conformance, not for everyday use.
 
 ## A
 
@@ -196,7 +195,7 @@ This glossary defines common terms, acronyms, and concepts used throughout the O
 :   Fetching relevant remembered/retrieved context and giving it to an LLM *before* it answers. See [Persona Memory](persona-memory.md).
 
 **Recency-targeted stop**
-:   The stop plugin's fallback when no handler answers the stoppability poll in time: target the most recently activated `active_handlers` entry instead of escalating to a global stop. [OVOS-STOP-1 §4.1](https://github.com/OpenVoiceOS/architecture/blob/dev/stop-1.md).
+:   How the stop plugin picks a target once the stoppability poll comes back with **at least one** `can_handle: true` responder: it stops the entry with the highest `activated_at` in `session.active_handlers`. If no handler answers positively, it does the opposite of targeting — it escalates to a global stop. [OVOS-STOP-1 §4.1](https://github.com/OpenVoiceOS/architecture/blob/dev/stop-1.md).
 
 **Release Channel**
 :   A stability track, either *stable*, *testing*, or *alpha*, that controls how new the installed packages are. See [Release Channels](release-channels.md).

@@ -39,7 +39,7 @@ the only screen stack that runs today.
 
 ## ovos-media
 
-`ovos-media` is **alpha and not officially released**. `ovos-audio` remains
+`ovos-media` is **not officially released** — [Media Service](ovos-media.md) rates it proof-of-concept on the [maturity scale](maturity.md). `ovos-audio` remains
 the production audio service, and stock installs keep
 `enable_old_audioservice: true` (the default). See
 [Media Service (ovos-media)](ovos-media.md) for its maturity status. Two
@@ -66,9 +66,11 @@ playable media** (a voice game, an ebook reader) stays an OCP skill. See
 Repositories across the org are being brought into conformance with the
 [Formal Specifications](architecture-specs.md), largely OVOS-STOP-1,
 OVOS-CONTEXT-1, OVOS-TRANSFORM-1, and OVOS-PIPELINE-1. A related but separate
-effort, the legacy bus-namespace migration, already completed its removal
-phase for `ovos-bus-client`'s own namespace bridge (see
-[Updating from Older OVOS](updating-from-older-ovos.md)). The PRs below carry
+effort, the legacy bus-namespace migration, has not removed anything yet:
+`ovos-bus-client`'s namespace bridge is still live on `dev`, with `modernize` and
+`emit_legacy` both defaulting to on, and its kill-switch
+([ovos-bus-client#272](https://github.com/OpenVoiceOS/ovos-bus-client/pull/272)) is still an
+open draft. See [Bus Namespace Migration](bus-namespace-migration.md). The PRs below carry
 that migration the rest of the way: a set of coordinated kill-switches that
 drop the last hardcoded legacy topic literals from `ovos-core`, `ovos-workshop`,
 and the `ovos-utils` test double. Each is explicitly gated to merge only once
@@ -77,7 +79,7 @@ fleets no longer run legacy-namespace consumers.
 | PR | What it changes | Audience | Breaking | Version |
 |---|---|---|---|---|
 | [ovos-core#802](https://github.com/OpenVoiceOS/ovos-core/pull/802) | Reworks stop dispatch onto one spec path (requires `opm>=2.9.0a1`, supersedes #777) | skill authors, deployers of legacy skills, remote/HiveMind stop consumers | Yes | 3.0.0 |
-| [ovos-core#777](https://github.com/OpenVoiceOS/ovos-core/pull/777) | OVOS-STOP-1 bus surface bridged to legacy topics (superseded by #802) | n/a | No | 2.6.0 |
+| [ovos-core#777 (closed)](https://github.com/OpenVoiceOS/ovos-core/pull/777) | OVOS-STOP-1 bus surface bridged to legacy topics (superseded by #802) | n/a | No | 2.6.0 |
 | [ovos-core#786](https://github.com/OpenVoiceOS/ovos-core/pull/786) | Core-resident OVOS-CONTEXT-1 store, additive | skill authors declaring context, remote session-sync consumers | No | 2.6.0 |
 | [ovos-core#785](https://github.com/OpenVoiceOS/ovos-core/pull/785) | Conforms transformer chains to OVOS-TRANSFORM-1 (blocked on `opm#417`) | transformer plugin authors | No | 2.5.9 |
 | [ovos-workshop#500](https://github.com/OpenVoiceOS/ovos-workshop/pull/500) | Drops the `.intent`-topic dual-bind for canonical intent topics | skill authors on `.intent` topics, mixed-container deployers | Not marked breaking, but drops the dual bind | 9.4.0 |
