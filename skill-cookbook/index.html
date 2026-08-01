@@ -2575,7 +2575,7 @@ Everything in this recipe targets the current, <strong>deprecated</strong> <code
 </ul>
 <div class="admonition tip">
 <p class="admonition-title">Full production example</p>
-<p><a href="https://github.com/OpenVoiceOS/ovos-skill-moon-game"><code>ovos-skill-moon-game</code></a> is a full <code>ConversationalGameSkill</code>: a branching narrative driven entirely through <code>on_game_command</code>, with <code>IntentLayers</code> gating which branch-specific phrases are even considered at each story beat. <code>FrotzSkill</code> (from the <code>pyfrotz</code> package, used by <a href="https://github.com/OpenVoiceOS/ovos-skill-cave-adventure-game"><code>ovos-skill-cave-adventure-game</code></a> and <a href="https://github.com/OpenVoiceOS/ovos-skill-hhgg-game"><code>ovos-skill-hhgg-game</code></a>) shows the same hooks wrapping something entirely different: every utterance in <code>on_game_command</code> is piped as a raw command to an external Z-machine interpreter process, and its text output is what gets spoken.</p>
+<p><a href="https://github.com/JarbasSkills/skill-moon-game"><code>skill-moon-game</code></a> is a full <code>ConversationalGameSkill</code>: a branching narrative driven entirely through <code>on_game_command</code>, with <code>IntentLayers</code> gating which branch-specific phrases are even considered at each story beat. <code>FrotzSkill</code> (from the <a href="https://github.com/JarbasAl/pyfrotz"><code>pyfrotz</code></a> package) shows the same hooks wrapping something entirely different: every utterance in <code>on_game_command</code> is piped as a raw command to an external Z-machine interpreter process, and its text output is what gets spoken.</p>
 </div>
 <hr />
 <h2 id="10-collecting-structured-input-get_response-with-a-validator">10. Collecting structured input: <code>get_response</code> with a validator<a class="headerlink" href="#10-collecting-structured-input-get_response-with-a-validator" title="Permanent link">&para;</a></h2>
@@ -2648,7 +2648,7 @@ Everything in this recipe targets the current, <strong>deprecated</strong> <code
 </tr>
 <tr>
 <td>Converse-driven game (<code>ConversationalGameSkill</code>)</td>
-<td><a href="https://github.com/OpenVoiceOS/ovos-skill-moon-game"><code>ovos-skill-moon-game</code></a></td>
+<td><a href="https://github.com/JarbasSkills/skill-moon-game"><code>skill-moon-game</code></a></td>
 </tr>
 <tr>
 <td>GUI sequencing (<code>show_text</code> then <code>show_image</code>)</td>

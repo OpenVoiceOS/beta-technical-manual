@@ -2386,7 +2386,7 @@ you should actually pick for a handler, covered in <a href="../fallbacks/#order-
 <table>
 <thead>
 <tr>
-<th>Range (inclusive start, exclusive stop)</th>
+<th>Range (exclusive start, inclusive stop)</th>
 <th>Pipeline stage</th>
 </tr>
 </thead>
@@ -2405,6 +2405,8 @@ you should actually pick for a handler, covered in <a href="../fallbacks/#order-
 </tr>
 </tbody>
 </table>
+<p>A priority of exactly <code>5</code> lands in <code>fallback_high</code>, and exactly <code>90</code> lands in <code>fallback_medium</code>,
+since the stage boundary itself is included in the lower stage.</p>
 <p>Priority can be overridden in config:</p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="p">{</span><span class="nt">&quot;skills&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;fallbacks&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;fallback_priorities&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;my-skill-id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">}}}}</span>
 </span></code></pre></div>

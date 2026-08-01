@@ -1788,7 +1788,7 @@ question-to-question is much more accurate than matching a question against raw 
 <code>get_best_passage(evidence, question, lang)</code>, receives the evidence text as an argument
 and returns the span inside it that answers the question. It is the <em>last</em> step of a
 pipeline whose earlier steps (often a <code>RetrievalEngine</code>) already found the evidence.
-<a href="https://github.com/OpenVoiceOS/ovos-wikipedia-solver">ovos-wikipedia-solver</a> shows the
+<a href="https://github.com/OpenVoiceOS/ovos-wikipedia-plugin">ovos-wikipedia-plugin</a> shows the
 combination: retrieval fetches a Wikipedia summary, then an extractive QA engine pulls
 out the one sentence worth speaking aloud.</p>
 <p>A worked example. You want your assistant to answer questions from a folder of markdown

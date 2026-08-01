@@ -1656,7 +1656,7 @@ remains the way to provide media today, and stays the simpler path for setups st
 the legacy audio service.</p>
 <p>The split also changes what OCP <em>skills</em> are for. Once MediaProvider plugins own
 catalog search, an OCP skill is for the case where <strong>the skill itself is the playable
-media</strong>: a voice game (see <a href="https://github.com/OpenVoiceOS/ovos-skill-moon-game">ovos-skill-moon-game</a>),
+media</strong>: a voice game (see <a href="https://github.com/JarbasSkills/skill-moon-game">ovos-skill-moon-game</a>),
 an ebook reader, any experience the player can start, pause, and resume like a track.
 If your skill is only a searchable catalog of external media (a station list, a
 podcast feed), plan to ship it as a MediaProvider plugin when that lands. If the
@@ -1736,10 +1736,13 @@ The title and skill ID show as text. Duration shows as the elapsed-time readout.
 <p>Values are between 0 and 100</p>
 </li>
 <li>
-<p>Results below the <code>min_score</code> config threshold (<code>intents.ovos-ocp-pipeline-plugin.min_score</code>,
-    default <code>50</code>) are filtered out before OCP picks a winner across all responding skills. There
-    is no fixed confidence value that short-circuits and cancels other skills' searches early.
-    Higher scores simply make your result more likely to win the cross-skill comparison</p>
+<p>Results below the <code>min_score</code> config threshold (<code>intents.OCP.min_score</code>, shipped default
+    <code>40</code> in <code>mycroft.conf</code>) are filtered out before OCP picks a winner across all responding
+    skills. The plugin also checks <code>intents.ovos-ocp-pipeline-plugin.min_score</code> first if present,
+    but that key is absent from the default config; <code>50</code> is only the code fallback when neither
+    key is set. There is no fixed confidence value that short-circuits and cancels other skills'
+    searches early. Higher scores simply make your result more likely to win the cross-skill
+    comparison</p>
 </li>
 <li>
 <p><code>ocp_featured_media</code>: return a playlist for the OCP menu if selected from GUI (optional)</p>

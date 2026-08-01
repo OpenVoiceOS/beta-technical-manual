@@ -1735,9 +1735,9 @@ underlying plugin's capabilities before assuming parity beyond the wire format.<
 <hr />
 <h2 id="persona-server-compat-routes">Persona Server Compat Routes<a class="headerlink" href="#persona-server-compat-routes" title="Permanent link">&para;</a></h2>
 <p><code>pip install ovos-persona-server</code>. <code>create_persona_app()</code> mounts the routes below.
-It mounts a chat router at prefix <code>/v1</code> (<code>POST /v1/chat/completions</code>, OpenAI-compatible),
-an Ollama router at prefix <code>/api</code>, and a UTCP router at <code>/tools</code>. It also mounts <code>/mcp</code>
-when the <code>mcp</code> extra is installed.</p>
+It mounts a chat router at prefix <code>/openai/v1</code> (<code>POST /openai/v1/chat/completions</code>,
+OpenAI-compatible), an Ollama router at prefix <code>/ollama/api</code>, and a UTCP router at <code>/tools</code>.
+It also mounts <code>/mcp</code> when the <code>mcp</code> extra is installed.</p>
 <table>
 <thead>
 <tr>
@@ -1747,12 +1747,32 @@ when the <code>mcp</code> extra is installed.</p>
 </thead>
 <tbody>
 <tr>
-<td><code>/v1</code></td>
-<td>OpenAI-compatible chat (<code>POST /v1/chat/completions</code>)</td>
+<td><code>/openai/v1</code></td>
+<td>OpenAI-compatible chat (<code>POST /openai/v1/chat/completions</code>)</td>
 </tr>
 <tr>
-<td><code>/api</code></td>
+<td><code>/ollama/api</code></td>
 <td>Ollama</td>
+</tr>
+<tr>
+<td><code>/cohere/v1</code></td>
+<td>Cohere</td>
+</tr>
+<tr>
+<td><code>/tgi</code></td>
+<td>HuggingFace TGI</td>
+</tr>
+<tr>
+<td><code>/bedrock/model</code></td>
+<td>AWS Bedrock</td>
+</tr>
+<tr>
+<td><code>/gemini/v1beta/models</code></td>
+<td>Google Gemini</td>
+</tr>
+<tr>
+<td><code>/anthropic/v1</code></td>
+<td>Anthropic</td>
 </tr>
 <tr>
 <td><code>/tools</code></td>
@@ -1765,15 +1785,16 @@ when the <code>mcp</code> extra is installed.</p>
 </tbody>
 </table>
 <div class="admonition note">
-<p class="admonition-title">Other vendor routers exist but are not mounted</p>
-<p>The source tree also has vendor-specific router modules for Anthropic, Gemini,
-Cohere, HuggingFace TGI, and AWS Bedrock. <code>create_persona_app()</code> does not mount
-any of them yet, so their routes are not reachable in the shipped app.</p>
+<p class="admonition-title">All vendor routers are mounted</p>
+<p>The source tree's vendor-specific router modules for Anthropic, Gemini, Cohere,
+HuggingFace TGI, and AWS Bedrock are all mounted by <code>create_persona_app()</code>, each
+under its own prefix, so every one of these compat routes is reachable in the
+shipped app.</p>
 </div>
 <h3 id="openai-compatible-example">OpenAI-compatible example<a class="headerlink" href="#openai-compatible-example" title="Permanent link">&para;</a></h3>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span> <span class="nn">openai</span>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">client</span> <span class="o">=</span> <span class="n">openai</span><span class="o">.</span><span class="n">OpenAI</span><span class="p">(</span><span class="n">api_key</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;http://localhost:8337/v1&quot;</span><span class="p">)</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">client</span> <span class="o">=</span> <span class="n">openai</span><span class="o">.</span><span class="n">OpenAI</span><span class="p">(</span><span class="n">api_key</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;http://localhost:8337/openai/v1&quot;</span><span class="p">)</span>
 </span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">completions</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
 </span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
 </span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>    <span class="n">messages</span><span class="o">=</span><span class="p">[{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;tell me a joke&quot;</span><span class="p">}]</span>

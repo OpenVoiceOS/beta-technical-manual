@@ -1530,9 +1530,9 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#legacy-mycroftrecognizer_loop-topic-bridge-removed" class="md-nav__link">
+  <a href="#legacy-mycroftrecognizer_loop-topic-bridge-scheduled-for-removal" class="md-nav__link">
     <span class="md-ellipsis">
-      Legacy mycroft.*/recognizer_loop:* topic bridge removed
+      Legacy mycroft.*/recognizer_loop:* topic bridge scheduled for removal
     </span>
   </a>
   
@@ -2318,9 +2318,9 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#legacy-mycroftrecognizer_loop-topic-bridge-removed" class="md-nav__link">
+  <a href="#legacy-mycroftrecognizer_loop-topic-bridge-scheduled-for-removal" class="md-nav__link">
     <span class="md-ellipsis">
-      Legacy mycroft.*/recognizer_loop:* topic bridge removed
+      Legacy mycroft.*/recognizer_loop:* topic bridge scheduled for removal
     </span>
   </a>
   
@@ -2575,7 +2575,7 @@ before late 2024, check it against this table.</p>
 </tr>
 <tr>
 <td>Dropped</td>
-<td><code>V0.1.0</code> (2024-09-10, mass deletion in <code>3a77617</code>)</td>
+<td><code>V0.1.0</code> (2024-09-10; the mass deletion landed earlier in <code>3a77617</code>, 2023-12-29)</td>
 <td>(ovos-utils <code>3a77617</code>)</td>
 </tr>
 </tbody>
@@ -2789,19 +2789,20 @@ migrate from legacy <code>mycroft.*</code>/<code>recognizer_loop:*</code> spelli
    <code>ovos_spec_tools.NamespaceTranslator</code> (shared with <code>FakeBus</code>).</li>
 <li><code>0f0a241</code> (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/258" title="GitHub Issue: TigreGotico/ovos-technical-manual #258">#258</a>, 2026-07-03): fixes a bug where the dual-emit doubled
    every message on the raw <code>on_message</code> firehose between <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/230" title="GitHub Issue: TigreGotico/ovos-technical-manual #230">#230</a> and this fix.</li>
-<li><code>f1a481d</code> (2026-08-01): <strong>the bridge is removed entirely.</strong>
-   <code>MessageBusClient</code> speaks OVOS-MSG-1 spec topics only. The <code>emit_legacy</code>,
-   <code>modernize</code>, and <code>intent_reemit_blanket</code> constructor flags are deleted.
-   passing any of them now raises <code>RuntimeError</code>. A client or satellite
-   still emitting or expecting legacy topic spellings stops being received
-   with no fallback.</li>
+<li>Planned removal: the open kill-switch pull request
+   <a href="https://github.com/OpenVoiceOS/ovos-bus-client/pull/272">ovos-bus-client#272</a>
+   (commit <code>f1a481d</code> on its branch, not merged to <code>dev</code>) deletes the bridge
+   entirely: <code>MessageBusClient</code> then speaks OVOS-MSG-1 spec topics only, the
+   <code>emit_legacy</code>/<code>modernize</code>/<code>intent_reemit_blanket</code> flags are deleted, and
+   passing them raises <code>RuntimeError</code>. Its stated merge condition is a fleet
+   already upgraded. See <a href="../upcoming-changes/">Upcoming Changes</a>.</li>
 </ol>
-<p>Migration: every producer and consumer must speak <code>ovos.*</code> spec topics
-directly before upgrading past <code>f1a481d</code>. Remove any explicit
+<p>Migration: move every producer and consumer to <code>ovos.*</code> spec topics now,
+while the bridge still covers both spellings. Remove explicit
 <code>emit_legacy</code>/<code>modernize</code>/<code>intent_reemit_blanket</code> arguments from your
-<code>MessageBusClient</code> construction. The mapping tables
-(<code>ovos_spec_tools.MIGRATION_MAP</code>, <code>SPEC_TO_LEGACY</code>) remain available for
-migration tooling only, not for live bus wiring.</p>
+<code>MessageBusClient</code> construction so the eventual flag deletion cannot break
+you. The mapping tables (<code>ovos_spec_tools.MIGRATION_MAP</code>, <code>SPEC_TO_LEGACY</code>)
+remain available for migration tooling.</p>
 <p>Lifecycle:</p>
 <table>
 <thead>
@@ -2822,8 +2823,8 @@ migration tooling only, not for live bus wiring.</p>
 <tr>
 <td>Dual-emit bridge (<code>modernize</code>/<code>emit_legacy</code>, both default ON)</td>
 <td><code>e25ab12</code> (2026-06-25)</td>
-<td>through <code>2.6.x</code> line</td>
-<td><code>f1a481d</code> (2026-08-01)</td>
+<td>current releases (bridge on by default)</td>
+<td>pending: <a href="https://github.com/OpenVoiceOS/ovos-bus-client/pull/272">ovos-bus-client#272</a>, unmerged</td>
 </tr>
 </tbody>
 </table>
@@ -3625,8 +3626,10 @@ out-of-the-box wire behavior is initially unchanged):</p>
   the legacy strings they replace.</li>
 <li>Lifecycle: active (legacy-only) before mid-2026. Deprecated but
   functional (dual-emit or <code>legacy_namespace</code>-gated) from mid-2026
-  onward. Hard drop only confirmed for <code>ovos-bus-client</code>'s own bridge
-  (<code>f1a481d</code>, 2026-08-01). <code>legacy_namespace</code> gating in <code>ovos-core</code>
+  onward. No hard drop has shipped: <code>ovos-bus-client</code>'s bridge removal is
+  the unmerged kill-switch
+  <a href="https://github.com/OpenVoiceOS/ovos-bus-client/pull/272">PR #272</a>
+  (commit <code>f1a481d</code> on its branch). <code>legacy_namespace</code> gating in <code>ovos-core</code>
   itself (<code>f4c00d90b2</code>/<code>f9862a760e</code>, "gate bus topics by
   legacy_namespace") lives only on unmerged feature branches, not on
   <code>dev</code>: the default has not flipped because the flag has not shipped to
@@ -3666,13 +3669,15 @@ out-of-the-box wire behavior is initially unchanged):</p>
   expiry deprecated but functional from <code>b54269c</code> (2026-06-29), drop
   version unverified.</li>
 </ul>
-<h3 id="legacy-mycroftrecognizer_loop-topic-bridge-removed">Legacy <code>mycroft.*</code>/<code>recognizer_loop:*</code> topic bridge removed<a class="headerlink" href="#legacy-mycroftrecognizer_loop-topic-bridge-removed" title="Permanent link">&para;</a></h3>
+<h3 id="legacy-mycroftrecognizer_loop-topic-bridge-scheduled-for-removal">Legacy <code>mycroft.*</code>/<code>recognizer_loop:*</code> topic bridge scheduled for removal<a class="headerlink" href="#legacy-mycroftrecognizer_loop-topic-bridge-scheduled-for-removal" title="Permanent link">&para;</a></h3>
 <p>See <a href="#the-bus-client-legacy-topic-dual-emit-and-its-removal">The bus-client legacy-topic dual-emit and its removal</a>
-above for the full timeline. The short version for remote clients: as of
-<code>ovos-bus-client</code> <code>f1a481d</code> (2026-08-01), <code>MessageBusClient</code> speaks
-OVOS-MSG-1 (<code>ovos.*</code>) topics only, with no bridge back to legacy topic
-spellings. A HiveMind satellite still emitting or expecting legacy topics
-silently stops being received.</p>
+above for the full timeline. The short version for remote clients: the
+bridge is on by default in current releases, and the open kill-switch
+<a href="https://github.com/OpenVoiceOS/ovos-bus-client/pull/272">ovos-bus-client#272</a>
+deletes it once the fleet has migrated. After it merges,
+<code>MessageBusClient</code> speaks OVOS-MSG-1 (<code>ovos.*</code>) topics only, and a
+HiveMind satellite still emitting or expecting legacy topics silently
+stops being received. Migrate ahead of it.</p>
 <hr />
 <h2 id="coming-next">Coming next<a class="headerlink" href="#coming-next" title="Permanent link">&para;</a></h2>
 <p>The following work is visible on unmerged branches only and is <strong>not

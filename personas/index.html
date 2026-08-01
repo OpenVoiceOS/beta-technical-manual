@@ -1708,7 +1708,7 @@ engines:</p>
 </span></code></pre></div>
 <p><code>MessageRole</code> values: <code>SYSTEM</code>, <code>DEVELOPER</code>, <code>USER</code>, <code>ASSISTANT</code>, <code>TOOL</code>.</p>
 <p>See <a href="../agent-plugins/">Agent Plugins</a> for the full engine-type reference and configuration
-examples for Claude, OpenAI, and local GGUF models.</p>
+examples for OpenAI-compatible and local GGUF models.</p>
 <hr />
 <h2 id="personas-named-agent-identities">Personas (Named Agent Identities)<a class="headerlink" href="#personas-named-agent-identities" title="Permanent link">&para;</a></h2>
 <p>A <strong>persona</strong> is a named conversational identity defined by a JSON file (or an OPM plugin entry
@@ -1731,6 +1731,7 @@ The first non-<code>None</code> response wins.</p>
 <p><code>opm.plugin.persona</code> plugins ship a ready-made persona as a static dict (<code>chat_engine</code>,
 <code>system_prompt</code>, and optionally <code>toolboxes</code>), which <code>ovos-persona</code> loads directly instead of
 reading a hand-written JSON file:</p>
+<p>This manual only covers plugins backed by an OpenVoiceOS-org repository:</p>
 <table>
 <thead>
 <tr>
@@ -1746,49 +1747,19 @@ reading a hand-written JSON file:</p>
 <td><code>ovos-openai-plugin</code></td>
 </tr>
 <tr>
-<td><code>Claude</code></td>
-<td><code>ovos-chat-claude-plugin</code></td>
-<td><code>ovos-claude-plugin</code></td>
-</tr>
-<tr>
-<td><code>Gemini</code></td>
-<td><code>ovos-chat-gemini-plugin</code></td>
-<td><code>ovos-gemini-plugin</code></td>
-</tr>
-<tr>
-<td><code>Kilo</code></td>
-<td><code>ovos-chat-kilo-plugin</code></td>
-<td><code>ovos-kilo-plugin</code></td>
-</tr>
-<tr>
-<td><code>QwenCode</code></td>
-<td><code>ovos-chat-qwen-code-plugin</code></td>
-<td><code>ovos-qwen-code-plugin</code></td>
-</tr>
-<tr>
-<td><code>OpenCode</code></td>
-<td><code>ovos-chat-opencode-plugin</code></td>
-<td><code>ovos-opencode-plugin</code></td>
-</tr>
-<tr>
 <td><code>Wikipedia</code></td>
 <td>Wikipedia solver</td>
-<td><code>ovos-wikipedia-solver</code></td>
-</tr>
-<tr>
-<td><code>WikiGPT</code></td>
-<td><code>ovos-wikigpt</code></td>
-<td><code>ovos-wikipedia-solver</code></td>
+<td><code>ovos-wikipedia-plugin</code></td>
 </tr>
 <tr>
 <td><code>DuckDuckGo</code></td>
 <td>DDG solver</td>
-<td><code>ovos-ddg-solver-plugin</code></td>
+<td><code>ovos-ddg-plugin</code></td>
 </tr>
 <tr>
 <td><code>Wolfram Alpha</code></td>
 <td>Wolfram solver</td>
-<td><code>ovos-wolfram-alpha-solver</code></td>
+<td><code>ovos-wolfram-alpha-plugin</code></td>
 </tr>
 <tr>
 <td><code>WikiHow</code></td>

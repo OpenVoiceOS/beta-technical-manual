@@ -1000,6 +1000,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Namespace migration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#turning-the-bridges-off" class="md-nav__link">
+    <span class="md-ellipsis">
+      Turning the bridges off
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1850,6 +1865,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Namespace migration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#turning-the-bridges-off" class="md-nav__link">
+    <span class="md-ellipsis">
+      Turning the bridges off
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -2314,25 +2344,62 @@ Renaming a topic across an
 ecosystem of independently-released repos cannot happen in one coordinated step.
 So <strong><code>ovos-bus-client</code> migrates automatically and incrementally</strong>. The legacy
 and the new names interoperate transparently while the ecosystem moves over.</p>
-<p>The canonical legacy to spec topic map lives in <code>ovos_spec_tools</code>'s <code>MIGRATION_MAP</code>
-(see <a href="../spec-tooling/">Specification Tooling</a>). During the migration period,
-<code>ovos-bus-client</code> shipped a receive-side compatibility bridge (the
-<code>NamespaceTranslator</code>): each client locally re-dispatched an incoming message under
-its counterpart topic, in both directions, so producers and consumers could switch
-names in any order.</p>
-<div class="admonition danger">
-<p class="admonition-title">The compatibility bridge is gone</p>
-<p><code>ovos-bus-client</code> removed the bridge in <code>f1a481d</code> (2026-08-01, after the 2.7.x
-series). Current clients speak the <code>ovos.*</code> spec topics and nothing else. The old
-<code>modernize</code> / <code>emit_legacy</code> flags and their environment variables now raise
-<code>RuntimeError</code> when set. Remote consumers still emitting or subscribing to legacy
-topic spellings stop working against a current core and must migrate to the spec
-names. See <a href="../updating-from-older-ovos/#if-you-consume-the-message-bus-remotely-hivemind-and-other-clients">Updating from Older OVOS</a>
-for the full lifecycle and migration steps.</p>
+<p>The canonical legacy to spec topic map lives in the <code>NamespaceTranslator</code> from
+<a href="../spec-tooling/"><code>ovos-spec-tools</code></a>, and each <code>MessageBusClient</code> applies it on the
+<strong>receive</strong> side, not by putting a second copy on the wire:</p>
+<ul>
+<li>A single logical <code>emit()</code> sends exactly <strong>one</strong> message over the websocket: the topic the
+  caller actually chose.</li>
+<li>When that message arrives back over the websocket (to every connected client, including the
+  sender), each client's <code>on_message</code> handler locally re-dispatches it under its counterpart
+  topic(s) too, using the translator to reshape the payload where the shape changed. This is a
+  listener-delivery convenience <em>inside each process</em>, not a second bus message. The broadcast
+  server never sees or re-broadcasts a counterpart frame.</li>
+<li><strong>listen</strong>: subscribing to <em>either</em> name (<code>bus.on(...)</code>) also delivers the counterpart, with
+  <strong>de-duplication</strong> so a handler that would match both fires exactly once.</li>
+</ul>
+<p>The result: a producer and a consumer can each switch from a legacy topic to its <code>ovos.*</code>
+spec name <strong>in any order, with no coordination</strong>, without every component switching at once.</p>
+<h3 id="turning-the-bridges-off">Turning the bridges off<a class="headerlink" href="#turning-the-bridges-off" title="Permanent link">&para;</a></h3>
+<p>Each direction is independently controllable (default <code>true</code>), via environment
+variable or bus configuration:</p>
+<table>
+<thead>
+<tr>
+<th>Direction</th>
+<th>Env var</th>
+<th>Config key</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>modernize</td>
+<td><code>OVOS_BUS_MODERNIZE</code></td>
+<td><code>modernize</code></td>
+<td>a received <strong>legacy</strong> topic is also locally re-dispatched under its <code>ovos.*</code> counterpart</td>
+</tr>
+<tr>
+<td>emit_legacy</td>
+<td><code>OVOS_BUS_EMIT_LEGACY</code></td>
+<td><code>emit_legacy</code></td>
+<td>a received <strong><code>ovos.*</code></strong> topic is also locally re-dispatched under its legacy counterpart</td>
+</tr>
+</tbody>
+</table>
+<p>Because the bridging happens per-process on receive, turning a direction off only stops that
+process from locally delivering the counterpart to its own handlers. A deployment whose
+components all speak <code>ovos.*</code> can set <code>emit_legacy=false</code> once no local handler still needs
+the legacy delivery, and disable <code>modernize</code> once no legacy producers remain.</p>
+<div class="admonition warning">
+<p class="admonition-title">The bridge is scheduled for removal</p>
+<p><a href="https://github.com/OpenVoiceOS/ovos-bus-client/pull/272">ovos-bus-client#272</a> is an
+open kill-switch pull request that deletes the bridge entirely: after it merges,
+clients speak <code>ovos.*</code> spec topics and nothing else, and setting the <code>modernize</code> /
+<code>emit_legacy</code> flags raises <code>RuntimeError</code>. Its stated merge condition is a fleet
+already upgraded to spec topics. Migrate remote consumers to the spec names ahead of
+it. See <a href="../upcoming-changes/">Upcoming Changes</a>.</p>
 </div>
-<p>On deployments pinned to a pre-removal <code>ovos-bus-client</code>, the bridge still behaves as
-released there: both directions defaulted to on, and bridging happened per process on
-receive, never as a second wire message.</p>
 <div class="admonition note">
 <p class="admonition-title">Bridged is not the same as conformant</p>
 <p><a href="../spec-tooling/"><code>ovos-test-harness</code></a> asserts spec behavior on the

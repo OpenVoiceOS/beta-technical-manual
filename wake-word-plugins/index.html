@@ -2169,7 +2169,7 @@ audio and suppress false detections before any callback runs. Verifiers implemen
 <code>listener.ww_verifiers</code>:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>&quot;listener&quot;: {
 </span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>  &quot;ww_verifiers&quot;: {
-</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>    &quot;ovos-ww-verifier-silero&quot;: {&quot;threshold&quot;: 0.1}
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>    &quot;ovos-ww-verifier-plugin-speaker&quot;: {&quot;threshold&quot;: 0.1}
 </span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>  }
 </span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>}
 </span></code></pre></div>
@@ -2178,9 +2178,10 @@ logged and the detection is <strong>not</strong> suppressed. Only an explicit <c
 <code>HotWordVerifier.verify()</code> discards the wake. Disable a verifier without removing it from
 config with <code>"enabled": false</code>.</p>
 <div class="admonition warning">
-<p class="admonition-title">Double VAD with <code>ovos-ww-verifier-silero</code></p>
-<p>Enabling <code>ovos-ww-verifier-silero</code> together with <code>"vad_pre_wake_enabled": true</code> applies
-Silero VAD twice on the same audio. Use one or the other.</p>
+<p class="admonition-title">Double VAD if you use a Silero-based verifier</p>
+<p>If your verifier plugin runs Silero VAD internally, enabling it together with
+<code>"vad_pre_wake_enabled": true</code> applies Silero VAD twice on the same audio. Use one or
+the other.</p>
 </div>
 <h2 id="tips-and-caveats">Tips and Caveats<a class="headerlink" href="#tips-and-caveats" title="Permanent link">&para;</a></h2>
 <ul>

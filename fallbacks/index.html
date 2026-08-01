@@ -1561,8 +1561,10 @@
 <div class="admonition note">
 <p class="admonition-title">Two different facts: internal stages vs. your pick</p>
 <p>The pipeline internally splits the 0-101 priority space into three dispatch stages,
-checked in this order: <code>fallback_high</code> (priority 0 up to, but not including, 5),
-<code>fallback_medium</code> (5 up to 90), and <code>fallback_low</code> (90 up to 101). These are implemented directly
+checked in this order: <code>fallback_high</code> (priority above 0, up to and including 5),
+<code>fallback_medium</code> (above 5, up to and including 90), and <code>fallback_low</code> (above 90, up to and
+including 101). A priority of exactly <code>5</code> lands in <code>fallback_high</code>; exactly <code>90</code> lands in
+<code>fallback_medium</code>. These are implemented directly
 in <code>ovos-core</code>'s <code>FallbackService</code> (no separate pipeline plugin package involved).
 That is an implementation detail, not a recommendation. The <strong>recommended pick ranges</strong>
 below are a separate, coarser convention. They help you choose <em>where in the medium/low stages</em>

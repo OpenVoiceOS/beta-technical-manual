@@ -1639,14 +1639,14 @@ Used internally by the <a href="../cq-pipeline/">Common Query pipeline</a> and
 <div class="admonition note">
 <p class="admonition-title">Score semantics</p>
 <p><code>ReRankerEngine.rerank()</code> returns <code>(score, option)</code> pairs, but the base class does
-<strong>not</strong> fix the score's scale. It is whatever the underlying model produces. The
-shipped default, <a href="../agent-plugins/"><code>ovos-flashrank-reranker-plugin</code></a>, applies a
+<strong>not</strong> fix the score's scale. It is whatever the underlying model produces. There
+is no <code>ReRankerEngine</code> implementation shipped by an OpenVoiceOS-org repository yet.
+A community reranker plugin such as <code>ovos-flashrank-reranker-plugin</code> applies a
 sigmoid (binary cross-encoder) or softmax (multi-class) normalization internally,
-so its scores land in <strong><code>[0, 1]</code></strong> and read as a relevance/similarity value. A
-higher score is a better match, and <code>min_reranker_score</code> can be tuned as a
-plain probability-like threshold against it. A different reranker plugin backed
-by a raw-logit model would need its own calibration. Check that plugin's docs
-before reusing the same threshold.</p>
+so its scores land in <strong><code>[0, 1]</code></strong> and read as a relevance/similarity value, with
+<code>min_reranker_score</code> tunable as a plain probability-like threshold against it. A
+different reranker plugin backed by a raw-logit model would need its own
+calibration. Check that plugin's docs before reusing the same threshold.</p>
 </div>
 <h3 id="common-query-pipeline-config">Common Query pipeline config<a class="headerlink" href="#common-query-pipeline-config" title="Permanent link">&para;</a></h3>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="p">{</span>

@@ -1665,12 +1665,14 @@ documents that event in context. This page does not introduce anything new.</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Many events have a legacy <code>mycroft.*</code>/bare name alongside a newer <code>ovos.*</code> name. On
-current cores only the <code>ovos.*</code> spec name works: the compatibility bridge that used
-to deliver both names was removed from <code>ovos-bus-client</code> in <code>f1a481d</code> (2026-08-01).
-The tables below keep both names so you can recognize legacy spellings in old code,
-but new code must use the spec name. See
-<a href="../updating-from-older-ovos/#if-you-consume-the-message-bus-remotely-hivemind-and-other-clients">Updating from Older OVOS</a>.</p>
+<p>Many events have a legacy <code>mycroft.*</code>/bare name alongside a newer <code>ovos.*</code> name. Only
+one of the two goes on the wire, and each connected client's bus library locally
+re-dispatches it under the other name too, so a handler on either name receives it
+(see <a href="../bus-service/#namespace-migration">Bus Service: namespace migration</a>). Use the
+spec name in new code: an open kill-switch pull request
+(<a href="https://github.com/OpenVoiceOS/ovos-bus-client/pull/272">ovos-bus-client#272</a>)
+removes the legacy bridge once the fleet has migrated. The tables below show both
+names where applicable.</p>
 </div>
 <h2 id="listener-wake-word">Listener / wake word<a class="headerlink" href="#listener-wake-word" title="Permanent link">&para;</a></h2>
 <p>Emitted by <code>ovos-dinkum-listener</code> as the audio pipeline runs. See
@@ -2124,12 +2126,14 @@ but new code must use the spec name. See
 </tbody>
 </table>
 <h2 id="legacy-spec-migration">Legacy ↔ spec migration<a class="headerlink" href="#legacy-spec-migration" title="Permanent link">&para;</a></h2>
-<p>OVOS renamed its bus topics onto the <code>ovos.*</code> spec namespace. The migration period is
-over: the receive-side bridge that made legacy and spec names interchangeable was removed
-from <code>ovos-bus-client</code> in <code>f1a481d</code> (2026-08-01), and current clients speak spec topics
-only (see <a href="../bus-service/#namespace-migration">Bus Service: namespace migration</a>). Use the
-table below to translate any legacy name you still have in code to its spec name. Only
-deployments pinned to a pre-removal <code>ovos-bus-client</code> still accept both spellings.</p>
+<p>OVOS is renaming its bus topics onto the <code>ovos.*</code> spec namespace. During the migration,
+<code>ovos-bus-client</code>'s receive-side bridge makes legacy and spec names interchangeable, both
+directions on by default (see
+<a href="../bus-service/#namespace-migration">Bus Service: namespace migration</a>). That bridge is
+scheduled for removal by the open kill-switch pull request
+<a href="https://github.com/OpenVoiceOS/ovos-bus-client/pull/272">ovos-bus-client#272</a>: after it
+merges, only the spec names work. Use the table below to move any legacy name in your
+code to its spec name ahead of that.</p>
 <p>The pairs below are the authoritative rename map (<code>ovos_spec_tools</code>'s <code>MIGRATION_MAP</code>). Unless
 marked <strong>shape-changing</strong>, the payload is identical on both topics. Shape-changing pairs are
 reshaped best-effort by the translator and may lose fields, so prefer adopting the spec payload
