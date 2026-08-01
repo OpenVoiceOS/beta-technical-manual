@@ -970,6 +970,15 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#across-a-fleet" class="md-nav__link">
+    <span class="md-ellipsis">
+      Across a fleet
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1363,6 +1372,15 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#across-a-fleet" class="md-nav__link">
+    <span class="md-ellipsis">
+      Across a fleet
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1441,13 +1459,28 @@ under a user's config/data directories. The staged-upgrade recipe covers package
 XDG layout. Both move together if <code>OVOS_CONFIG_BASE_FOLDER</code> renames the <code>mycroft</code> subdirectory
 system-wide (see <a href="../locations-ref/#environment-variable-influence">Locations</a>).</p>
 <h3 id="backup-recipe">Backup recipe<a class="headerlink" href="#backup-recipe" title="Permanent link">&para;</a></h3>
-<p>A copy is enough. Nothing here needs a database dump or a running service to stop first,
-though restarting the service afterward picks up any config changes made in the meantime:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nv">BACKUP_DIR</span><span class="o">=</span>~/ovos-backup-<span class="k">$(</span>date<span class="w"> </span>+%F<span class="k">)</span>
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>mkdir<span class="w"> </span>-p<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$BACKUP_DIR</span><span class="s2">&quot;</span>
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>cp<span class="w"> </span>-a<span class="w"> </span>~/.config/mycroft<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$BACKUP_DIR</span><span class="s2">/config&quot;</span>
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>cp<span class="w"> </span>-a<span class="w"> </span>~/.local/share/mycroft<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$BACKUP_DIR</span><span class="s2">/data&quot;</span>
+<p>A copy is enough — none of this needs a database dump. Stop the assistant first:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>systemctl<span class="w"> </span>--user<span class="w"> </span>stop<span class="w"> </span>ovos.service
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="nv">BACKUP_DIR</span><span class="o">=</span>~/ovos-backup-<span class="k">$(</span>date<span class="w"> </span>+%F<span class="k">)</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>mkdir<span class="w"> </span>-p<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$BACKUP_DIR</span><span class="s2">&quot;</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>cp<span class="w"> </span>-a<span class="w"> </span>~/.config/mycroft<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$BACKUP_DIR</span><span class="s2">/config&quot;</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>cp<span class="w"> </span>-a<span class="w"> </span>~/.local/share/mycroft<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$BACKUP_DIR</span><span class="s2">/data&quot;</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>systemctl<span class="w"> </span>--user<span class="w"> </span>start<span class="w"> </span>ovos.service
 </span></code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title">Do not copy these directories while the assistant is running</p>
+<p>Both writers truncate the file and then stream JSON into it: <code>LocalConf.store()</code> in
+<code>ovos-config</code> for <code>mycroft.conf</code>, and <code>JsonStorage.store()</code> in <code>json_database</code> for
+per-skill <code>settings.json</code>. Neither writes to a temporary file and renames it, so there
+is a window in which the file on disk is half-written. A <code>cp</code> that lands in that window
+copies a truncated file, and the backup then looks fine until the day you restore it.</p>
+<p>A skill writes its settings whenever <code>self.settings</code> changes — a <code>settings.json</code> edit,
+a settings-meta change from the web UI, or the skill's own code. That is rare, so a
+live copy usually works, which is exactly what makes the failure hard to trace. Stop
+the service instead.</p>
+</div>
+<p>If you cannot take the downtime, copy to a snapshot of the filesystem (LVM, btrfs, ZFS)
+and back that up, rather than copying the live directories.</p>
 <p><code>mycroft.conf</code> can contain plaintext API keys and tokens (see
 <a href="../privacy-security/#mycroftconf-can-contain-plaintext-secrets">Privacy &amp; Security: mycroft.conf can contain plaintext secrets</a>).
 Store the backup with the same care you'd give the original file, and never commit it to a
@@ -1468,6 +1501,19 @@ public repository.</p>
    <a href="../production-operations/#knowing-when-the-assistant-is-actually-ready">readiness probe</a>
    before relying on the device.</li>
 </ol>
+<h3 id="across-a-fleet">Across a fleet<a class="headerlink" href="#across-a-fleet" title="Permanent link">&para;</a></h3>
+<p>The recipe above is per device, and it takes each device down for the length of a copy. Run
+it the same way you roll out an upgrade: one canary first, restored and verified end to end,
+then the rest — see <a href="../staged-upgrades/#staged-upgrades-and-rollback">Staged Upgrades and
+Rollback</a> for that pattern. Verify each
+device's <a href="../production-operations/#knowing-when-the-assistant-is-actually-ready">readiness probe</a>
+individually. A restore that succeeded on the canary can still fail on a device whose
+hardware config differs.</p>
+<p>What each device holds that no other device does is its own <code>~/.config/mycroft/mycroft.conf</code>
+and its skills' settings. Anything fleet-wide belongs in the system config layer instead
+(<code>/etc/mycroft/mycroft.conf</code>, see <a href="../production-operations/#one-config-for-many-devices-the-system-config-layer">one config for many
+devices</a>),
+which you back up once rather than 40 times.</p>
 <p>Skills themselves are not part of this backup. They are Python packages, reinstalled the same
 way they were installed originally (see <a href="../skill-installer/">Skill Installer</a> or your own
 provisioning step). Only their settings and persisted files travel with the config/data

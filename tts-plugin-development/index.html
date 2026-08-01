@@ -1677,12 +1677,14 @@ language-to-plugin map for a whole config without constructing every plugin firs
 which languages the plugin supports in its current state (for example, only the languages whose
 voice files are already installed).</p>
 <p>OVOS uses it to pick a TTS plugin for the configured language and to filter plugin choices in a
-UI. A plugin that skips it still loads, but any code that inspects <code>available_languages</code> sees an
-empty set and treats the plugin as supporting no language.</p>
+UI. Do not skip it. The base implementation has a docstring and no <code>return</code>, so it evaluates to
+<code>None</code> — not to an empty set. Any caller doing <code>lang in tts.available_languages</code> then raises
+<code>TypeError: argument of type 'NoneType' is not iterable</code>, rather than quietly treating the
+plugin as supporting no language.</p>
 <h3 id="entry-point">Entry point<a class="headerlink" href="#entry-point" title="Permanent link">&para;</a></h3>
 <p>To make the class detectable as a TTS plugin, the package needs to provide an entry point under the <code>opm.tts</code> namespace. To expose your sample configurations (the <code>MyTTSConfig</code> dict below) for UI discovery, register them under <code>opm.tts.config</code>:</p>
 <div class="language-toml highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">[project.entry-points.</span><span class="s2">&quot;opm.tts&quot;</span><span class="k">]</span>
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="n">example_tts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;my_tts:myTTS&quot;</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="n">example_tts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;my_tts:MyTTS&quot;</span>
 </span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
 </span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="k">[project.entry-points.</span><span class="s2">&quot;opm.tts.config&quot;</span><span class="k">]</span>
 </span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="s2">&quot;example_tts.config&quot;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;my_tts:MyTTSConfig&quot;</span>
@@ -1739,7 +1741,10 @@ instead of failing later on the first <code>get_tts()</code> call.</p>
 </span><span id="__span-3-14"><a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span> <span class="n">validator</span><span class="o">=</span><span class="n">MyTTSValidator</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
 </span></code></pre></div>
 <p>See <a href="../plugin-manager/#writing-a-plugin">OVOS Plugin Manager: Writing a Plugin</a> for how
-<code>get_tts_class()</code>/registration and the <code>opm.tts</code> entry point fit together at load time.</p>
+registration and the <code>opm.tts</code> entry point fit together at load time: <code>find_tts_plugins()</code>
+scans the <code>opm.tts</code> group and <code>load_tts_plugin(name)</code> returns one class from it.</p>
+<p><code>get_tts_class()</code> above is unrelated to that lookup. It is a method every <code>TTSValidator</code>
+implements, and it exists so the validator can name the class it validates.</p>
 <h3 id="config-plumbing">Config plumbing<a class="headerlink" href="#config-plumbing" title="Permanent link">&para;</a></h3>
 <p>The <code>"tts": {"module": "...", "ovos-tts-plugin-x": {...}}</code> block in <code>mycroft.conf</code> reaches the
 plugin instance through <code>OVOSTTSFactory.create()</code>:</p>

@@ -1552,8 +1552,12 @@ other two groups (all three live in <code>ovos_plugin_manager.ocp</code>).</p>
 <h2 id="publish-checklist">Publish checklist<a class="headerlink" href="#publish-checklist" title="Permanent link">&para;</a></h2>
 <ol>
 <li>The class subclasses <code>AudioPlayerBackend</code>, <code>VideoPlayerBackend</code>, or
-   <code>WebPlayerBackend</code> (or their <code>Remote*</code> variant) and implements all nine abstract
-   methods with the documented signatures and return types.</li>
+   <code>WebPlayerBackend</code> (or their <code>Remote*</code> variant) and implements all ten abstract
+   methods with the documented signatures and return types: <code>supported_uris</code>, <code>play</code>,
+   <code>stop</code>, <code>pause</code>, <code>resume</code>, <code>lower_volume</code>, <code>restore_volume</code>, <code>get_track_length</code>,
+   <code>get_track_position</code>, <code>set_track_position</code>. <code>MediaBackend</code> uses <code>ABCMeta</code>, so leaving
+   any one of them out is a <code>TypeError</code> the first time the plugin is instantiated, not a
+   runtime surprise later.</li>
 <li>The entry-point group in <code>pyproject.toml</code> matches that base class
    (<code>opm.media.audio</code> / <code>.video</code> / <code>.web</code>).</li>
 <li><code>__init__</code> accepts <code>config=None, bus=None</code> and works with an empty config and a

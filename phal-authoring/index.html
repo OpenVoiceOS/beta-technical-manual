@@ -1853,15 +1853,20 @@ entry point, and how to test the result without a running OVOS stack.</p>
   <code>ovos.PHAL.&lt;name&gt;</code>.</p>
 </li>
 <li>
-<p>Its <code>__init__</code> calls <code>self.start()</code> itself. Instantiating a plugin already runs
-  its thread. Do all setup <strong>before</strong> <code>super().__init__()</code> returns, or guard against
-  the thread already running.</p>
+<p><code>PHALPlugin</code> is a <code>Thread</code>, and its <code>__init__</code> calls <code>self.start()</code> on its last line.
+  Instantiating a plugin already runs its thread.</p>
 </li>
-<li>
-<p>It auto-registers a large set of legacy enclosure (<code>enclosure.eyes.*</code>,
+</ul>
+<p>Register your own bus handlers <strong>after</strong> <code>super().__init__()</code>, not before: <code>self.bus</code> is
+  assigned inside that call, so there is nothing to register on until it returns.</p>
+<p>The default <code>run()</code> is a no-op, so for most plugins the started thread does nothing and
+  the ordering does not bite. If you override <code>run()</code>, it can begin executing before your
+  post-<code>super()</code> setup finishes — set anything <code>run()</code> depends on before you call
+  <code>super().__init__()</code>, or have <code>run()</code> wait for it.</p>
+<ul>
+<li>It auto-registers a large set of legacy enclosure (<code>enclosure.eyes.*</code>,
   <code>enclosure.mouth.*</code>) and <code>recognizer_loop:*</code> bus handlers. Override the matching
-  <code>on_*</code> methods to react to them. Call <code>super().shutdown()</code> to unregister them.</p>
-</li>
+  <code>on_*</code> methods to react to them. Call <code>super().shutdown()</code> to unregister them.</li>
 </ul>
 <div class="admonition note">
 <p class="admonition-title">Hardware-interface ABCs live in <code>ovos-hardware-helpers</code></p>
@@ -1978,7 +1983,8 @@ where a plugin can register a dict of config metadata for installers and GUIs:</
 <h2 id="lifecycle">Lifecycle<a class="headerlink" href="#lifecycle" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
-<p>Set up bus listeners in <code>__init__</code></p>
+<p>Set up bus listeners in <code>__init__</code>, after the <code>super().__init__()</code> call that creates
+  <code>self.bus</code></p>
 </li>
 <li>
 <p>Provide a <code>shutdown()</code> method for clean teardown</p>

@@ -1348,19 +1348,20 @@ misbehaves, and pinning or rolling back just one package instead of the whole en
 <p>The <a href="#rolling-back">freeze/force-reinstall pattern</a> below rolls back your <em>entire</em>
 environment. If only one package regressed, you don't need the sledgehammer. Pin
 just that package instead:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pip<span class="w"> </span>install<span class="w"> </span><span class="s2">&quot;ovos-stt-plugin-whisper==&lt;old-version&gt;&quot;</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span><span class="s2">&quot;ovos-stt-plugin-whisper==&lt;old-version&gt;&quot;</span>
 </span></code></pre></div>
-<p>Or, if you're using a local constraints file (see
-<a href="../release-channels/#offline-and-mirrored-installs">Release Channels: Offline and mirrored installs</a>),
-append an exact pin for that one package to it:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>ovos-stt-plugin-whisper==&lt;old-version&gt;
+<p>That pin lives only in the installed environment. The next reinstall from a constraints
+file overwrites it with whatever range the channel allows. If you use a local constraints
+file (see <a href="../release-channels/#offline-and-mirrored-installs">Release Channels: Offline and mirrored
+installs</a>), record the pin there in the
+same step, so it survives:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;ovos-stt-plugin-whisper==&lt;old-version&gt;&quot;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>~/ovos-constraints.txt
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-c<span class="w"> </span>~/ovos-constraints.txt<span class="w"> </span><span class="s2">&quot;ovos-stt-plugin-whisper==&lt;old-version&gt;&quot;</span>
 </span></code></pre></div>
-<p>so the pin survives the next time you reinstall from that constraints file, instead of
-being silently overwritten by the channel's range.</p>
 <p>Either way, you need to know what the old, working version was. Get it from your frozen
-snapshot with <code>grep ovos-stt-plugin-whisper known-good.txt</code> (see <a href="#rolling-back">Rolling Back</a>
-below), or, if you didn't freeze one, from <code>pip show ovos-stt-plugin-whisper</code> run <em>before</em>
-you upgraded.</p>
+snapshot with <code>grep ovos-stt-plugin-whisper /etc/ovos/known-good-&lt;date&gt;.txt</code> (see <a href="#rolling-back">Rolling
+Back</a> below), or, if you didn't freeze one, from <code>uv pip show
+ovos-stt-plugin-whisper</code> run <em>before</em> you upgraded.</p>
 <p>Pinning the package alone isn't enough. The process that already loaded the old, broken
 version keeps running it in memory until it restarts. Restart whichever service loads that
 package (e.g. <code>systemctl --user restart ovos-dinkum-listener.service</code> for an STT plugin)
@@ -1376,16 +1377,17 @@ channel" does and doesn't promise.</p>
 <h2 id="rolling-back">Rolling Back<a class="headerlink" href="#rolling-back" title="Permanent link">&para;</a></h2>
 <p>Constraints files bound a channel's versions, but they don't record what <em>you</em> actually had
 installed before an upgrade. Before upgrading anything you care about, freeze what's currently working:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>uv<span class="w"> </span>pip<span class="w"> </span>freeze<span class="w"> </span>&gt;<span class="w"> </span>known-good.txt
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>sudo<span class="w"> </span>install<span class="w"> </span>-d<span class="w"> </span>-o<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$USER</span><span class="s2">&quot;</span><span class="w"> </span>/etc/ovos<span class="w">          </span><span class="c1"># once per device</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>uv<span class="w"> </span>pip<span class="w"> </span>freeze<span class="w"> </span>&gt;<span class="w"> </span>/etc/ovos/known-good-<span class="k">$(</span>date<span class="w"> </span>+%F<span class="k">)</span>.txt
 </span></code></pre></div>
-<p>This plain <code>known-good.txt</code> in the current directory is the single-machine form of the same
-convention <a href="../staged-upgrades/#staged-upgrades-and-rollback">Staged Upgrades and Rollback</a> uses
-for a fleet: a dated, absolute path like <code>/etc/ovos/known-good-2026-07-01.txt</code>. Same pattern,
-just scaled from one machine to many.</p>
+<p>One dated file per freeze, at one absolute path, on every device — the same convention
+<a href="../staged-upgrades/#staged-upgrades-and-rollback">Staged Upgrades and Rollback</a> uses for a
+fleet. Keep it out of your home directory: a rollback is often needed exactly when the
+account, the venv, or the whole home directory is what went wrong.</p>
 <p>If an upgrade misbehaves, <code>pip</code>/<code>uv</code> won't downgrade a package on their own just because a
 newer constraints file changed. An ordinary <code>install</code> call treats an already-satisfied
 requirement as nothing to do. Force the reinstall of the exact frozen versions instead:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>--force-reinstall<span class="w"> </span>-r<span class="w"> </span>known-good.txt
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>--force-reinstall<span class="w"> </span>-r<span class="w"> </span>/etc/ovos/known-good-&lt;date&gt;.txt
 </span></code></pre></div>
 <p>See <a href="../staged-upgrades/#staged-upgrades-and-rollback">Staged Upgrades and Rollback</a>
 for the same pattern applied across a fleet of devices rather than one machine. If the
