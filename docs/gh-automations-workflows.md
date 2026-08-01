@@ -21,6 +21,7 @@ uses: OpenVoiceOS/gh-automations/.github/workflows/<name>.yml@dev
 | `publish-stable.yml` | Removes the alpha suffix and tags a stable GitHub release on push to `master`. | [Release Workflows](gh-automations-release-workflows.md#publish-stableyml) |
 | `release-preview.yml` | Predicts the next version from PR labels/title and posts a preview to the PR comment. | [Release Workflows](gh-automations-release-workflows.md#release-previewyml) |
 | `build-tests.yml` | Runs build, install, and optional tests across a Python version matrix. | [Build Checks](gh-automations-build-checks.md#build-testsyml) |
+| `channel-compat.yml` | Runs the test suite against the versions an OVOS distro release channel pins. | [Build Checks](gh-automations-build-checks.md#channel-compatyml) |
 | `opm-check.yml` | Verifies the package is discoverable and valid as an OVOS plugin (OPM). | [Plugin, License, and Repo Checks](gh-automations-plugin-repo-checks.md#opm-checkyml) |
 | `ovoscope.yml` | Runs ovoscope end-to-end skill tests on a single Python version. | [Skill Test Workflows](gh-automations-skill-test-workflows.md#ovoscopeyml) |
 | `license-check.yml` | Checks installed dependencies against the OVOS universal donor license policy. | [Plugin, License, and Repo Checks](gh-automations-plugin-repo-checks.md#license-checkyml) |

@@ -148,6 +148,7 @@ Each table below names the PR-comment section a workflow posts. The bot prefixes
 | Workflow | Purpose |
 |---|---|
 | `build-tests.yml` | Build/install/test matrix across Python versions. Posts `Build Tests`. |
+| `channel-compat.yml` | Run the test suite at the versions an OVOS distro release channel pins, to catch what is green on `dev` but broken on the fleet. Posts `Channel Compat`. |
 | `coverage.yml` | Run pytest with coverage. Post `Coverage`. Optionally deploy the HTML report to Pages (`deploy_pages: true`). |
 | `ovoscope.yml` | Run [ovoscope](ovoscope-overview.md) end-to-end skill tests. Post `Skill Tests (ovoscope)`. |
 | `intent-case-tests.yml` | Run the file-based ovoscope intent-routing accuracy matrix (sharded by language). Post `Intent-Case Accuracy`. |
