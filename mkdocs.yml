@@ -103,7 +103,6 @@ nav:
   - Help & Troubleshooting:
       - It's not behaving: everyday-help.md
       - Troubleshooting & Debugging: troubleshooting.md
-      - Skill Dev F.A.Q.: skill-dev-faq.md
   - Concepts:
       - High-level Overview: architecture-overview.md
       - Life of an Utterance: life-of-an-utterance.md
@@ -117,12 +116,12 @@ nav:
           - Overview: config.md
           - Reference: config-reference.md
           - Locations: locations-ref.md
-      - Core Services:
-          - ovos-core:
-              - Overview: core.md
-              - Skill Manager: skill-manager.md
-              - Intent Service: intent-service.md
-              - Skill Installer: skill-installer.md
+      - ovos-core Internals:
+          - Overview: core.md
+          - Skill Manager: skill-manager.md
+          - Intent Service: intent-service.md
+          - Skill Installer: skill-installer.md
+      - Sibling Services (own processes on the bus):
           - Speech Service: speech-service.md
           - Audio Service: audio-service.md
           - Media Service (ovos-media): ovos-media.md
@@ -160,12 +159,6 @@ nav:
       - Bidirectional Translation: bidirectional-translation.md
       - Contributing Translations: ovos-localize-tutorial.md
       - Translation Plugins: translation-plugins.md
-      - Technical Parsers:
-          - Language Names: lang-parser.md
-          - Numbers: number-parser.md
-          - Dates & Time: date-parser.md
-          - Colors: color-parser.md
-          - Quebra Frases: quebra-frases.md
   - Skill Development:
       - Tutorials:
           - Your First Skill: first-skill.md
@@ -199,6 +192,7 @@ nav:
           - GUI Support (legacy): skill-gui.md
           - Runtime Requirements (deprecated): skill-runtime-requirements.md
       - Testing Your Skill: testing-your-skill.md
+      - Skill Dev F.A.Q.: skill-dev-faq.md
       - Advanced Skill Types:
           - Fallback Skills: fallbacks.md
           - Common Query Skills: common-query.md
@@ -235,7 +229,7 @@ nav:
       - Agent Engines:
           - Agent Engine Types: agent-plugins.md
           - Building Agent Plugins: building-agent-plugins.md
-          - Specialized Solvers: advanced-solvers.md
+          - Specialized Agent Engines: advanced-solvers.md
       - Agentic Loops: agentic-loop.md
       - Tools & Interoperability:
           - Agent Tool Plugins: tool-plugins.md
@@ -261,11 +255,14 @@ nav:
       - Bus Events Reference: bus-events.md
       - Command-line Tools: cli-tools.md
       - Core Libraries: core-libraries.md
+      - NLP Libraries (parsers):
+          - Language Names: lang-parser.md
+          - Numbers: number-parser.md
+          - Dates & Time: date-parser.md
+          - Colors: color-parser.md
+          - Quebra Frases: quebra-frases.md
       - Tools:
           - ovos-docs-viewer: docs-viewer.md
-          - gh-automations: gh-automations-overview.md
-          - gh-automations Release: gh-automations-release.md
-          - gh-automations Workflows: gh-automations-workflows.md
       - Hardware:
           - Hardware Integrators: hardware-integrators.md
           - i2c Sound & Audio Setup: i2c-sound.md
@@ -275,7 +272,11 @@ nav:
           - Timeline: timeline.md
           - Deprecated & Archived Repos: deprecated-repos.md
           - License: license.md
+  - Contributing & Project Infra:
       - Contributing: contributing.md
+      - gh-automations Overview: gh-automations-overview.md
+      - gh-automations Release: gh-automations-release.md
+      - gh-automations Workflows: gh-automations-workflows.md
 
 extra_css:
   - css/extra.css
