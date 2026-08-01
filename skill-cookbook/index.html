@@ -1115,6 +1115,15 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#learn-from-the-official-skills" class="md-nav__link">
+    <span class="md-ellipsis">
+      Learn from the official skills
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1816,6 +1825,15 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#learn-from-the-official-skills" class="md-nav__link">
+    <span class="md-ellipsis">
+      Learn from the official skills
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1982,7 +2000,7 @@
 </ul>
 <div class="admonition tip">
 <p class="admonition-title">Full production example</p>
-<p><a href="https://github.com/OpenVoiceOS/ovos-skill-alarm"><code>ovos-skill-alarm</code></a> implements exactly this pattern for real alarms and timers, including recurring (weekday) alarms via <code>schedule_repeating_event</code>.</p>
+<p><a href="https://github.com/OpenVoiceOS/ovos-skill-alerts"><code>ovos-skill-alerts</code></a> implements exactly this pattern for real alarms and timers, including recurring (weekday) alarms via <code>schedule_repeating_event</code>.</p>
 </div>
 <hr />
 <h2 id="2-user-configurable-behavior-settings-settingsmeta-live-reload">2. User-configurable behavior: settings + settingsmeta + live reload<a class="headerlink" href="#2-user-configurable-behavior-settings-settingsmeta-live-reload" title="Permanent link">&para;</a></h2>
@@ -2178,6 +2196,10 @@ turn 1. See <a href="../testing-your-skill/#multi-turn-tests-always-re-pull-the-
 <li><code>self.voc_match(utterance, "yes")</code> checks against <code>locale/en-us/vocab/yes.voc</code>. See <a href="../skill-design-guidelines/">Skill Design Guidelines</a> for vocab file conventions.</li>
 <li><a href="../context/">Context</a> (<code>self.set_context()</code>) is the lighter-weight alternative when you only need to bias which of <em>your own</em> intents can match next, rather than intercepting raw utterances.</li>
 </ul>
+<div class="admonition tip">
+<p class="admonition-title">Full production example</p>
+<p><a href="https://github.com/OpenVoiceOS/ovos-skill-parrot"><code>ovos-skill-parrot</code></a> is a minimal <code>ConversationalSkill</code> with an explicit <code>can_converse</code>/<code>converse</code> pair, good for seeing the bare mechanism with nothing else around it. <a href="https://github.com/OpenVoiceOS/ovos-skill-alerts"><code>ovos-skill-alerts</code></a> shows the same tools used for real work, combining <code>converse</code> with <code>get_response</code> to collect an alert's details across several turns.</p>
+</div>
 <hr />
 <h2 id="5-a-small-local-media-playlist-an-ocp-skill">5. A small local media playlist: an OCP skill<a class="headerlink" href="#5-a-small-local-media-playlist-an-ocp-skill" title="Permanent link">&para;</a></h2>
 <p><strong>When you'd want this:</strong> "play the office playlist" should hand back a short, fixed list of local audio files without any external search or streaming service.</p>
@@ -2232,6 +2254,10 @@ turn 1. See <a href="../testing-your-skill/#multi-turn-tests-always-re-pull-the-
 <li><code>self.voc_match(phrase, "office_playlist")</code> reuses the same vocabulary mechanism as intents to give a confident match a high score, while still falling back to a loose substring check.</li>
 <li><a href="../ocp-skills/">OCP Skills</a> also documents <code>self.extend_timeout()</code> (ask OCP to wait longer for a slow search) and notes that new integrations not needing the full skill lifecycle may prefer a <code>MediaProvider</code> plugin instead. See that page's opening warning.</li>
 </ul>
+<div class="admonition tip">
+<p class="admonition-title">Full production example</p>
+<p><a href="https://github.com/OpenVoiceOS/ovos-skill-somafm"><code>ovos-skill-somafm</code></a> is a full modern OCP skill: <code>@ocp_search</code>, <code>@ocp_featured_media</code>, <code>register_ocp_keyword</code>, and results built as <code>Playlist</code>/<code>MediaEntry</code> objects instead of plain dicts. <a href="https://github.com/OpenVoiceOS/ovos-skill-news"><code>ovos-skill-news</code></a> applies the same pattern for <code>MediaType.NEWS</code>.</p>
+</div>
 <hr />
 <h2 id="6-gui-voice-together-show-a-page-while-speaking-update-it-live">6. GUI + voice together: show a page while speaking, update it live<a class="headerlink" href="#6-gui-voice-together-show-a-page-while-speaking-update-it-live" title="Permanent link">&para;</a></h2>
 <p><strong>When you'd want this:</strong> a skill on a screen-equipped device (a Mark 2, say) should show a result, such as a weather card, a list, or a picture, at the same moment it speaks about it, and keep the screen in sync as things change (e.g. counting down a timer).</p>
@@ -2267,6 +2293,10 @@ turn 1. See <a href="../testing-your-skill/#multi-turn-tests-always-re-pull-the-
 Everything in this recipe targets the current, <strong>deprecated</strong> <code>.qml</code>-based GUI stack, which <a href="../skill-gui/">Skill GUI</a> documents as effectively unusable outside Mark 2 maintenance today. The forward-looking replacement is the <strong>Upcoming</strong> <a href="../gui-adapters/">GUI rework</a> (spec OVOS-GUI-1), which instead has a skill declare intent via a closed <code>SYSTEM_*</code> template vocabulary rather than shipping custom <code>.qml</code>. That page is the one to design new screen support against.</div>
 </li>
 </ul>
+<div class="admonition tip">
+<p class="admonition-title">Full production example</p>
+<p><a href="https://github.com/OpenVoiceOS/ovos-skill-camera"><code>ovos-skill-camera</code></a> runs a near-identical sequence: <code>show_text</code> for a countdown, then <code>show_image</code> once the photo is ready. <a href="https://github.com/OpenVoiceOS/ovos-skill-wallpapers"><code>ovos-skill-wallpapers</code></a> shows the other half of the lifecycle, calling <code>gui.release()</code> to hand screen ownership back to the homescreen when the skill is done with it.</p>
+</div>
 <hr />
 <h2 id="7-fallback-llm-delegating-unmatched-utterances-to-a-solver-plugin">7. Fallback + LLM: delegating unmatched utterances to a solver plugin<a class="headerlink" href="#7-fallback-llm-delegating-unmatched-utterances-to-a-solver-plugin" title="Permanent link">&para;</a></h2>
 <p><strong>When you'd want this:</strong> every intent-matching skill has had its turn and none of them understood the utterance. Instead of a flat "sorry, I don't understand," hand it to a language-model-backed plugin and speak whatever it comes back with.</p>
@@ -2312,6 +2342,10 @@ Everything in this recipe targets the current, <strong>deprecated</strong> <code
 </li>
 <li><code>self.speak(text)</code> (a raw string) is used here instead of <code>self.speak_dialog(...)</code> because the LLM's answer is not a template. It is already the exact sentence to say.</li>
 </ul>
+<div class="admonition tip">
+<p class="admonition-title">Full production example</p>
+<p><a href="https://github.com/OpenVoiceOS/ovos-skill-wolfie"><code>ovos-skill-wolfie</code></a>, <a href="https://github.com/OpenVoiceOS/ovos-skill-ddg"><code>ovos-skill-ddg</code></a>, and <a href="https://github.com/OpenVoiceOS/ovos-skill-wordnet"><code>ovos-skill-wordnet</code></a> are real <code>FallbackSkill</code> skills that pair <code>register_fallback</code> with <code>@common_query</code>, so they can answer both as a last-resort fallback and as a ranked candidate earlier in the pipeline. <a href="https://github.com/OpenVoiceOS/ovos-skill-fallback-unknown"><code>ovos-skill-fallback-unknown</code></a> is the canonical catch-all, registered at priority 100. Priority sets the order fallbacks are tried in: a lower number runs earlier and gets first refusal, and 100 is the terminal tier, tried only after everything else has passed.</p>
+</div>
 <hr />
 <h2 id="8-ambient-behavior-from-bus-events-react-to-listening-state-and-time-of-day">8. Ambient behavior from bus events: react to listening state and time of day<a class="headerlink" href="#8-ambient-behavior-from-bus-events-react-to-listening-state-and-time-of-day" title="Permanent link">&para;</a></h2>
 <p><strong>When you'd want this:</strong> a skill needs to do something not triggered by an utterance at all. Examples include dimming a light while the device is actively listening, or changing its greeting depending on whether it's morning or night, driven purely by bus events other services already emit.</p>
@@ -2362,6 +2396,67 @@ Everything in this recipe targets the current, <strong>deprecated</strong> <code
 <li><code>schedule_repeating_event(handler, when, frequency, name=...)</code> with <code>when=None</code> starts the first run after one <code>frequency</code> interval. Pass a <code>datetime</code> for <code>when</code> instead if the first run needs to happen at a specific moment.</li>
 <li>This skill emits its own <code>ovos.ambient_mood.changed</code> event rather than reaching into a light/hardware plugin directly, keeping it decoupled from whatever actually consumes the mood (a PHAL plugin, another skill, a GUI). See <a href="../bus-service/">Bus Service</a> for the emit/on API and <a href="../converse-pipeline/">PIPELINE-1 correlation</a> for how bus events relate to a given utterance's session.</li>
 </ul>
+<hr />
+<h2 id="learn-from-the-official-skills">Learn from the official skills<a class="headerlink" href="#learn-from-the-official-skills" title="Permanent link">&para;</a></h2>
+<p>Every pattern in this cookbook also runs in a real, installable skill. Read the source when you need to see a full manifest, locale files, and edge cases this cookbook leaves out.</p>
+<table>
+<thead>
+<tr>
+<th>Pattern</th>
+<th>Official skill</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ConversationalSkill</code> + scheduling + settings persistence</td>
+<td><a href="https://github.com/OpenVoiceOS/ovos-skill-alerts"><code>ovos-skill-alerts</code></a></td>
+</tr>
+<tr>
+<td>Full OCP (<code>@ocp_search</code>, <code>@ocp_featured_media</code>, <code>Playlist</code>/<code>MediaEntry</code>)</td>
+<td><a href="https://github.com/OpenVoiceOS/ovos-skill-somafm"><code>ovos-skill-somafm</code></a></td>
+</tr>
+<tr>
+<td><code>FallbackSkill</code> + <code>@common_query</code></td>
+<td><a href="https://github.com/OpenVoiceOS/ovos-skill-wolfie"><code>ovos-skill-wolfie</code></a>, <a href="https://github.com/OpenVoiceOS/ovos-skill-ddg"><code>ovos-skill-ddg</code></a>, <a href="https://github.com/OpenVoiceOS/ovos-skill-wordnet"><code>ovos-skill-wordnet</code></a></td>
+</tr>
+<tr>
+<td><code>@common_query</code> on a plain <code>OVOSSkill</code></td>
+<td><a href="https://github.com/OpenVoiceOS/ovos-skill-wikipedia"><code>ovos-skill-wikipedia</code></a></td>
+</tr>
+<tr>
+<td>Minimal <code>converse</code></td>
+<td><a href="https://github.com/OpenVoiceOS/ovos-skill-parrot"><code>ovos-skill-parrot</code></a></td>
+</tr>
+<tr>
+<td>Converse-driven game (<code>ConversationalGameSkill</code>)</td>
+<td><a href="https://github.com/OpenVoiceOS/ovos-skill-moon-game"><code>ovos-skill-moon-game</code></a></td>
+</tr>
+<tr>
+<td>GUI sequencing (<code>show_text</code> then <code>show_image</code>)</td>
+<td><a href="https://github.com/OpenVoiceOS/ovos-skill-camera"><code>ovos-skill-camera</code></a></td>
+</tr>
+<tr>
+<td>GUI ownership handoff (<code>gui.release()</code>)</td>
+<td><a href="https://github.com/OpenVoiceOS/ovos-skill-wallpapers"><code>ovos-skill-wallpapers</code></a></td>
+</tr>
+<tr>
+<td>Validated <code>get_response</code> slot collection</td>
+<td><a href="https://github.com/OpenVoiceOS/ovos-skill-mark1-ctrl"><code>ovos-skill-mark1-ctrl</code></a></td>
+</tr>
+<tr>
+<td>Terminal fallback (priority 100)</td>
+<td><a href="https://github.com/OpenVoiceOS/ovos-skill-fallback-unknown"><code>ovos-skill-fallback-unknown</code></a></td>
+</tr>
+<tr>
+<td>Locale-correct number/date speech</td>
+<td><a href="https://github.com/OpenVoiceOS/ovos-skill-count"><code>ovos-skill-count</code></a>, <a href="https://github.com/OpenVoiceOS/ovos-skill-date-time"><code>ovos-skill-date-time</code></a></td>
+</tr>
+<tr>
+<td>Simplest complete skill</td>
+<td><a href="https://github.com/OpenVoiceOS/ovos-skill-hello-world"><code>ovos-skill-hello-world</code></a></td>
+</tr>
+</tbody>
+</table>
 
 
 
