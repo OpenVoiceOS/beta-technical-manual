@@ -147,13 +147,65 @@ class MyCustomTransformer(IntentTransformer):
 
 ```
 
+A lower `priority` runs earlier in the chain; the default is 50. Pick a priority that
+puts your transformer before or after the entity extractors you depend on or feed
+(`ovos-keyword-template-matcher` runs at 1, `ovos-ahocorasick-ner-plugin` at 5).
+
+A full `pyproject.toml` for a standalone plugin package:
+
 ```toml
+[project]
+name = "ovos-intent-transformer-mycustom"
+version = "0.1.0"
+dependencies = ["ovos-plugin-manager"]
+
 [project.entry-points."opm.transformer.intent"]
 my-transformer = "my_module:MyCustomTransformer"
-
 ```
 
+An `opm.transformer.intent.config` group is also available, for a dict of config
+metadata an installer or GUI can read. It is optional; add it once the plugin has
+settings worth advertising.
+
 Like other transformer types, intent transformers get the messagebus attached (`bind(bus)`) when loaded, so `self.bus` is available inside `transform()`.
+
+### Test it without OVOS
+
+`IntentTransformer` subclasses are plain classes, so a unit test needs no bus and no
+`Configuration`:
+
+```python
+from my_module import MyCustomTransformer
+from ovos_plugin_manager.templates.pipeline import IntentHandlerMatch
+
+transformer = MyCustomTransformer()
+match = IntentHandlerMatch(match_type="my_skill:intent", match_data={},
+                           skill_id="my_skill", utterance="hello")
+result = transformer.transform(match)
+assert result.match_data["my_entity"] == "value"
+```
+
+### Verify discovery
+
+After `pip install -e .`:
+
+```python
+from ovos_plugin_manager.intent_transformers import find_intent_transformer_plugins
+
+print(find_intent_transformer_plugins())
+# {'my-transformer': <class 'my_module.MyCustomTransformer'>}
+```
+
+### Checklist before you publish
+
+1. `transform()` accepts and returns an `IntentHandlerMatch`, without changing
+   `skill_id` or `intent_name`.
+2. `__init__` hardcodes the plugin `name` and forwards it, plus `priority` and
+   `config`, to `super().__init__()`.
+3. The entry-point group in `pyproject.toml` is `opm.transformer.intent`.
+4. A unit test calls `transform()` directly, with no OVOS services running.
+5. `find_intent_transformer_plugins()` discovers the installed plugin under the
+   expected name.
 
 ---
 

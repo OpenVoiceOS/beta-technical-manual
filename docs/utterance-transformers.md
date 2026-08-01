@@ -235,9 +235,11 @@ pip install ovos-transcription-validator-plugin
 
 ---
 
-## Creating Custom Utterance Transformers
+## Writing your own Utterance Transformer
 
-To develop your own utterance transformer:
+Subclass `UtteranceTransformer` (`ovos_plugin_manager.templates.transformers`) and
+override its `transform(utterances, context=None) -> Tuple[List[str], dict]` method.
+Register the class under the `opm.transformer.text` entry-point group.
 
 **Create a Python Class**:
 
@@ -289,6 +291,7 @@ class MyCustomTransformer(UtteranceTransformer):
 
 Without that explicit `self.config.get("priority", ...)` line, a `"priority"` key in
 `mycroft.conf` is inert — the loader does not read it back into `self.priority` on its own.
+The default `priority` is 50; a lower number runs earlier in the chain.
 
 !!! note "Where `lang` fits"
     The spec box above describes the transform as receiving `utterances`, `lang`, and
@@ -297,14 +300,21 @@ Without that explicit `self.config.get("priority", ...)` line, a `"priority"` ke
     `context.get("lang")`), matching the class actually shipped in
     `ovos_plugin_manager.templates.transformers`.
 
-**Register as a Plugin**:
-In your `pyproject.toml`, register under the `opm.transformer.text` group:
+**Register as a Plugin**. A full `pyproject.toml` for a standalone plugin package:
 
 ```toml
+[project]
+name = "ovos-utterance-transformer-mycustom"
+version = "0.1.0"
+dependencies = ["ovos-plugin-manager"]
+
 [project.entry-points."opm.transformer.text"]
 my-custom-transformer = "my_module:MyCustomTransformer"
-
 ```
+
+An `opm.transformer.text.config` group is also available, for a dict of config
+metadata an installer or GUI can read. It is optional; add it once the plugin has
+settings worth advertising.
 
 **Install and Configure**:
 After installation, add your transformer to the `mycroft.conf`:
@@ -315,3 +325,37 @@ After installation, add your transformer to the `mycroft.conf`:
 }
 
 ```
+
+### Test it without OVOS
+
+`UtteranceTransformer` subclasses are plain classes, so a unit test needs no bus and
+no `Configuration`:
+
+```python
+from my_module import MyCustomTransformer
+
+transformer = MyCustomTransformer()
+utterances, context = transformer.transform(["Hello World"])
+assert utterances == ["hello world"]
+```
+
+### Verify discovery
+
+After `pip install -e .`:
+
+```python
+from ovos_plugin_manager.text_transformers import find_utterance_transformer_plugins
+
+print(find_utterance_transformer_plugins())
+# {'my-custom-transformer': <class 'my_module.MyCustomTransformer'>}
+```
+
+### Checklist before you publish
+
+1. `transform()` accepts `utterances: List[str]` and returns `(utterances, context)`.
+2. `__init__` hardcodes the plugin `name` and forwards `name`, `priority`, `config` to
+   `super().__init__()`.
+3. The entry-point group in `pyproject.toml` is `opm.transformer.text`.
+4. A unit test calls `transform()` directly, with no OVOS services running.
+5. `find_utterance_transformer_plugins()` discovers the installed plugin under the
+   expected name.

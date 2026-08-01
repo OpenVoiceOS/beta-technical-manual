@@ -1,5 +1,9 @@
 # SSMLBuilder 
 
+!!! info "Maturity: Alpha"
+    See the [Maturity Scale](maturity.md). SSML handling works end to end, but almost no
+    TTS plugin acts on the tags, so treat every SSML effect as optional polish.
+
 !!! warning "Experimental — most TTS plugins do not support SSML"
     SSML support is an **experimental**, engine-dependent feature, not a universal one. Most
     TTS plugins ignore or strip SSML tags entirely rather than acting on them. Currently only

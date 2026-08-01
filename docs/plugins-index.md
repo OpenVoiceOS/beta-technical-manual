@@ -12,6 +12,35 @@ their config, and install commands.
     maturity, offline/cloud, and licence, plus a copy-paste fully-offline stack and
     scenario-based picks. This page is the *map of types*. That page helps you *pick one*.
 
+## Which plugin type do I need?
+
+- I want to hear the assistant on speakers or a headset → [Microphone](mic-plugins.md) is the
+  input side; for the output voice see [TTS](tts-plugins.md).
+- I want it to stop listening to background noise → [VAD](vad-plugins.md).
+- I want to change the activation phrase or engine → [Wake Word](wake-word-plugins.md).
+- I want fewer false wake-ups → [Wake Word Verifiers](ww-verifier.md).
+- I want more accurate transcription → [STT](stt-plugins.md).
+- I want a different voice → [TTS](tts-plugins.md).
+- I want mouth/viseme animation on a Mark 1-style face → [G2P](g2p-plugins.md).
+- I want the assistant to detect or translate another language → [Translation & Language
+  Detection](translation-plugins.md).
+- I want to clean up or correct recognized text before intent matching → [Utterance
+  Transformers](utterance-transformers.md).
+- I want to change how utterances get routed to skills → [Pipeline matchers](pipelines-overview.md).
+- I want to hook into the text/metadata/dialog/TTS stages → [Transformers](transformer-plugins.md).
+- I want "play X" to find YouTube, a podcast, or a playlist → [OCP Stream
+  Extractors](ocp-plugins.md).
+- I want media requests recognized by intent (artist, title, station) → [OCP Media
+  Classifiers](media-plugins.md#ovos-media-classifier).
+- I want the actual audio/video to play → [Media Playback](media-plugins.md).
+- I want a custom GUI render backend → [GUI Adapters](gui-adapters.md) (unreleased).
+- I want an LLM answering when no skill matches → [Agent Engines](agent-plugins.md) and
+  [Personas](personas.md).
+- I want the assistant to remember earlier turns → [Persona Memory](persona-memory.md).
+- I want an agent to call external functions (weather, search, …) → [Agent
+  Tools](tool-plugins.md).
+- I want hardware or platform integration (LEDs, buttons, displays) → [PHAL](phal.md).
+
 ## Speech & Audio
 
 !!! tip "Recommended offline defaults"

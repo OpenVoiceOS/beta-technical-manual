@@ -563,34 +563,105 @@ class MyStreamingSTT(StreamingSTT):
         return {"en-us"}
 ```
 
-### Entry point
+### Entry point and a minimal working plugin
 
-To make the class detectable as an STT plugin, the package needs to provide an entry point under the `opm.stt` namespace.
+Project layout:
+
+```
+ovos-stt-plugin-mymodel/
+├── pyproject.toml
+└── ovos_stt_plugin_mymodel/
+    └── __init__.py
+```
+
+`ovos_stt_plugin_mymodel/__init__.py`. `available_languages` is a `classproperty` on the
+base class, so a plugin overrides it the same way, not as a plain instance `@property`:
 
 ```python
-setup([...],
-      entry_points = {'opm.stt': 'example_stt = my_stt:mySTT'}
-      )
+from ovos_utils import classproperty
+from ovos_plugin_manager.templates.stt import STT
+
+
+class MySTTPlugin(STT):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # read config settings for your plugin
+        self.lm = self.config.get("language-model")
+        self.hmm = self.config.get("acoustic-model")
+
+    def execute(self, audio, language=None):
+        # Implement STT engine logic here
+        transcript = "You said this"
+        return transcript
+
+    @classproperty
+    def available_languages(cls):
+        """Return languages supported by this STT implementation in this state.
+        This property should be overridden by the derived class to advertise
+        what languages that engine supports.
+        Returns:
+            set: supported BCP-47 language codes
+        """
+        return {"en-us", "es-es"}
+
+
+# sample valid configurations per language
+
+# "display_name" and "offline" provide metadata for UI
+
+# "priority" is used to calculate position in selection dropdown
+
+#       0 - top, 100-bottom
+
+# all other keys represent an example valid config for the plugin
+MySTTConfig = {
+    lang: [{"lang": lang,
+            "display_name": f"MySTT ({lang})",
+            "priority": 70,
+            "offline": True}]
+    for lang in ["en-us", "es-es"]
+}
 
 ```
 
-Where `example_stt` is the STT plugin name, `my_stt` is the Python module and `mySTT` is the class in the module to return.
+The package needs an entry point under the `opm.stt` group to be detectable as a plugin,
+plus the parallel `opm.stt.config` group to expose `MySTTConfig` for UI discovery. The
+entry-point name (left of `=`) is the string users put in their `mycroft.conf`:
 
-To expose your sample configurations (the `MySTTConfig` dict below) for UI discovery, register them under `opm.stt.config`:
+```toml
+[project]
+name = "ovos-stt-plugin-mymodel"
+version = "0.1.0"
+dependencies = ["ovos-plugin-manager"]
 
-```python
-entry_points = {
-    'opm.stt': 'example_stt = my_stt:mySTT',
-    'opm.stt.config': 'example_stt.config = my_stt:MySTTConfig'
-}
+[project.entry-points."opm.stt"]
+ovos-stt-plugin-mymodel = "ovos_stt_plugin_mymodel:MySTTPlugin"
+
+[project.entry-points."opm.stt.config"]
+ovos-stt-plugin-mymodel = "ovos_stt_plugin_mymodel:MySTTConfig"
+
 ```
 
 > **Backward Compatibility**: `ovos-plugin-manager` still supports legacy `mycroft.plugin.stt` entry points, but new plugins should use the `opm.*` namespace.
 
-### Standalone Usage
+### Test it without OVOS
 
-STT plugins can be used in your own projects, without a running OVOS instance, by
-importing the plugin class directly. For example, with `ovos-stt-plugin-vosk`:
+`STT` is a plain class with no messagebus connection, so a unit test needs no running
+OVOS stack:
+
+```python
+from ovos_stt_plugin_mymodel import MySTTPlugin
+
+plug = MySTTPlugin()
+assert "en-us" in plug.available_languages
+
+transcript = plug.execute(audio=None, language="en-us")
+assert isinstance(transcript, str)
+```
+
+STT plugins can equally be exercised against a real audio file, without a running OVOS
+instance, by importing the plugin class directly. For example, with
+`ovos-stt-plugin-vosk`:
 
 ```python
 from ovos_stt_plugin_vosk import VoskKaldiSTT
@@ -611,55 +682,31 @@ transcript = plug.execute(audio, lang)
 
 ```
 
-### Plugin Template
+### Verify discovery
+
+After `pip install -e .`:
 
 ```python
-from ovos_plugin_manager.templates.stt import STT
+from ovos_plugin_manager.stt import find_stt_plugins
 
-
-# base plugin class
-class MySTTPlugin(STT):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        # read config settings for your plugin
-        lm = self.config.get("language-model")
-        hmm = self.config.get("acoustic-model")
-
-    def execute(self, audio, language=None):
-        # Implement STT engine logic here
-        transcript = "You said this"
-        return transcript
-
-    @property
-    def available_languages(self):
-        """Return languages supported by this STT implementation in this state
-        This property should be overridden by the derived class to advertise
-        what languages that engine supports.
-        Returns:
-            set: supported languages
-        """
-        # Return a set of supported BCP-47 language codes
-        return {"en-us", "es-es"}
-
-
-# sample valid configurations per language
-
-# "display_name" and "offline" provide metadata for UI
-
-# "priority" is used to calculate position in selection dropdown 
-
-#       0 - top, 100-bottom
-
-# all other keys represent an example valid config for the plugin 
-MySTTConfig = {
-    lang: [{"lang": lang,
-            "display_name": f"MySTT ({lang}",
-            "priority": 70,
-            "offline": True}]
-    for lang in ["en-us", "es-es"]
-}
-
+print(find_stt_plugins())
+# {'ovos-stt-plugin-mymodel': <class '...MySTTPlugin'>}
 ```
+
+`load_stt_plugin(name)` returns the same uninstantiated class for one plugin name. You
+construct it yourself with your config dict.
+
+### Checklist before you publish
+
+1. The class subclasses `STT` (or `StreamingSTT`) and implements `execute`
+   (or `create_streaming_thread` and `StreamThread.handle_audio_stream`) plus
+   `available_languages` as a `classproperty`.
+2. The entry-point group in `pyproject.toml` is `opm.stt`, with a matching
+   `opm.stt.config` entry once the plugin has settings worth advertising in UIs.
+3. `__init__` accepts `config=None` and works with an empty config.
+4. `language=None` falls back to the plugin's configured/detected language.
+5. Unit tests exercise `execute`/`transcribe` directly, with no OVOS services running.
+6. `find_stt_plugins()` discovers the installed plugin under the expected name.
 
 ## Further reading
 

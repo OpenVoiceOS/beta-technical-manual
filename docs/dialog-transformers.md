@@ -155,9 +155,11 @@ pip install ovos-bidirectional-translation-plugin
 
 ---
 
-## Creating Custom Dialog Transformers
+## Writing your own Dialog Transformer
 
-To develop your own dialog transformer:
+Subclass `DialogTransformer` (`ovos_plugin_manager.templates.transformers`) and
+override its `transform(dialog, context=None) -> Tuple[str, dict]` method. Register
+the class under the `opm.transformer.dialog` entry-point group.
 
 **Create a Python Class**:
 
@@ -181,15 +183,24 @@ class MyCustomTransformer(DialogTransformer):
         return modified_dialog, context
 ```
 
-The base `__init__` signature is `__init__(self, name, priority=50, config=None)`. When `config` is not passed, the base class auto-loads it from `mycroft.conf` under `dialog_transformers[name]`.
+The base `__init__` signature is `__init__(self, name, priority=50, config=None)`. When `config` is not passed, the base class auto-loads it from `mycroft.conf` under `dialog_transformers[name]`. A lower `priority` runs earlier in the chain; the
+default is 50.
 
-**Register as a Plugin**:
-In your `pyproject.toml`, expose the class under the `opm.transformer.dialog` entry-point group:
+**Register as a Plugin**. A full `pyproject.toml` for a standalone plugin package:
 
 ```toml
+[project]
+name = "ovos-dialog-transformer-mycustom"
+version = "0.1.0"
+dependencies = ["ovos-plugin-manager"]
+
 [project.entry-points."opm.transformer.dialog"]
 "my-custom-transformer" = "my_module:MyCustomTransformer"
 ```
+
+An `opm.transformer.dialog.config` group is also available, for a dict of config
+metadata an installer or GUI can read. It is optional; add it once the plugin has
+settings worth advertising.
 
 **Install and Configure**:
 After installation, add your transformer to the `mycroft.conf`:
@@ -200,4 +211,38 @@ After installation, add your transformer to the `mycroft.conf`:
 }
 
 ```
+
+### Test it without OVOS
+
+`DialogTransformer` subclasses are plain classes, so a unit test needs no bus and no
+`Configuration`:
+
+```python
+from my_module import MyCustomTransformer
+
+transformer = MyCustomTransformer()
+dialog, context = transformer.transform("hello world")
+assert dialog == "HELLO WORLD"
+```
+
+### Verify discovery
+
+After `pip install -e .`:
+
+```python
+from ovos_plugin_manager.dialog_transformers import find_dialog_transformer_plugins
+
+print(find_dialog_transformer_plugins())
+# {'my-custom-transformer': <class 'my_module.MyCustomTransformer'>}
+```
+
+### Checklist before you publish
+
+1. `transform()` accepts a `dialog: str` and returns `(dialog, context)`.
+2. `__init__` hardcodes the plugin `name` and forwards `name`, `priority`, `config`
+   to `super().__init__()`.
+3. The entry-point group in `pyproject.toml` is `opm.transformer.dialog`.
+4. A unit test calls `transform()` directly, with no OVOS services running.
+5. `find_dialog_transformer_plugins()` discovers the installed plugin under the
+   expected name.
 

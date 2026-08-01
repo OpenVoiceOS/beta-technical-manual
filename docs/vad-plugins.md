@@ -99,12 +99,26 @@ used by the plugin manager to advertise network/offline behavior.
 
 ## Creating Your Own VAD Plugin
 
-### 1. Implementation Template
+To create a new VAD plugin, subclass `VADEngine` and implement its one abstract method,
+`is_silence(self, chunk) -> bool`. The base class handles everything else: `extract_speech`,
+the padding/threshold bookkeeping in `__init__`, and `runtime_requirements`.
 
-To create a new VAD plugin, you only need to implement the `is_silence` method.
+### 1. A minimal working plugin
+
+Project layout:
+
+```
+ovos-vad-plugin-mymodel/
+├── pyproject.toml
+└── ovos_vad_plugin_mymodel/
+    └── __init__.py
+```
+
+`ovos_vad_plugin_mymodel/__init__.py`:
 
 ```python
 from ovos_plugin_manager.templates.vad import VADEngine
+
 
 class MyCustomVAD(VADEngine):
     def is_silence(self, chunk) -> bool:
@@ -117,15 +131,62 @@ class MyCustomVAD(VADEngine):
 
 ### 2. Registration
 
-Register your plugin in `pyproject.toml` under the `opm.VAD` group (note the uppercase `VAD`):
+`pyproject.toml`. The entry point is what makes it a plugin. The group must be `opm.VAD`
+(note the uppercase `VAD`), and the entry-point name (left of `=`) is the string users put
+in their `mycroft.conf`:
 
 ```toml
+[project]
+name = "ovos-vad-plugin-mymodel"
+version = "0.1.0"
+dependencies = ["ovos-plugin-manager"]
+
 [project.entry-points."opm.VAD"]
-my-custom-vad = "my_package.module:MyCustomVAD"
+ovos-vad-plugin-mymodel = "ovos_vad_plugin_mymodel:MyCustomVAD"
 
 ```
 
+There is a parallel `opm.VAD.config` group for a dict of config metadata used by
+installers and GUIs. It is optional. Add it once the plugin has settings worth
+advertising.
+
 > The legacy alias `ovos.plugin.VAD` is still accepted, but new plugins should use `opm.VAD`.
+
+### 3. Test it without OVOS
+
+`VADEngine` is a plain class with no messagebus connection, so a unit test needs no
+running OVOS stack:
+
+```python
+from ovos_vad_plugin_mymodel import MyCustomVAD
+
+vad = MyCustomVAD()
+silence_chunk = b"\x00" * 640
+assert vad.is_silence(silence_chunk) is True
+```
+
+### 4. Verify discovery
+
+After `pip install -e .`:
+
+```python
+from ovos_plugin_manager.vad import find_vad_plugins
+
+print(find_vad_plugins())
+# {'ovos-vad-plugin-mymodel': <class '...MyCustomVAD'>}
+```
+
+`load_vad_plugin(name)` returns the same uninstantiated class for one plugin name. You
+construct it yourself with your config dict.
+
+### 5. Checklist before you publish
+
+1. The class subclasses `VADEngine` and implements `is_silence(chunk) -> bool`.
+2. `__init__` accepts `config=None` and `sample_rate=None` and works with an empty config
+   (or call `super().__init__(config, sample_rate)` and add nothing new).
+3. The entry-point group in `pyproject.toml` is `opm.VAD`.
+4. Unit tests exercise `is_silence` directly, with no OVOS services running.
+5. `find_vad_plugins()` discovers the installed plugin under the expected name.
 
 ## Standalone Usage
 

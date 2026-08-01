@@ -168,6 +168,63 @@ Backend players for [ovos-media](ovos-media.md). See the [Media catalog](media-p
 
 ---
 
+## Media & OCP
+
+### OCP Stream Extractors
+
+Turn a URL or search request into a playable stream for [OCP](ocp-plugins.md). See the
+[OCP catalog](ocp-plugins.md) for the full descriptions. None of the entries there state a
+maturity rating.
+
+| Plugin | Maturity | Runs | Choose this if |
+|---|---|---|---|
+| ⭐ **ovos-ocp-youtube-plugin** | not rated | online | Recommended default: resolves the most common "play X" request, YouTube/YouTube Music |
+| ovos-ocp-files-plugin | not rated | offline | Playing local files (`file://` URIs), always available, no network |
+| ovos-ocp-rss-plugin | not rated | online | Podcast/RSS feeds, always plays the newest episode |
+| ovos-ocp-bandcamp-plugin | not rated | online | Bandcamp pages |
+| ovos-ocp-news-plugin | not rated | online | A known spoken-news provider URL |
+| ovos-ocp-m3u-plugin | not rated | online | Resolving a `.m3u`/`.pls` playlist URL |
+| ovos-media-classifier | not rated | offline | Experimental: routes a request to the right `MediaProvider` by intent, not yet deployed |
+
+---
+
+## Embeddings stores
+
+Backends for `EmbeddingsDB`, the vector store an [agent engine](agent-plugins.md) uses for
+retrieval or memory. See the [Agent Plugins catalog](agent-plugins.md). None of the entries
+there state a maturity rating.
+
+| Plugin | Maturity | Runs | Choose this if |
+|---|---|---|---|
+| ⭐ **ovos-chromadb-embeddings-plugin** | not rated | offline | Recommended default: local persistent client, no separate server to run |
+| ovos-qdrant-embeddings-plugin | not rated | hybrid | Scaling to a self-hosted Qdrant server for a larger vector store |
+| ovos-gguf-embeddings-plugin | not rated | offline | Already running [ovos-gguf-plugin](gguf-plugin.md), reuse it for text embeddings too, no extra service |
+
+---
+
+## AI Agents & LLM Chat Backends
+
+The "brain" behind a [persona](personas.md): a chat engine answers when no skill handles the
+utterance. See [Agent Plugins](agent-plugins.md), [OpenAI Plugin](openai-plugin.md), [GGUF
+Plugin](gguf-plugin.md), and [Personas](personas.md) for the full catalogs and config. None of
+those pages state a maturity rating for these plugins.
+
+| Plugin | Maturity | Runs | Choose this if |
+|---|---|---|---|
+| ⭐ **ovos-gguf-plugin** | not rated | offline | Recommended default: fully local GGUF model via `llama-cpp-python`, no account, no network, private |
+| ovos-openai-plugin | not rated | online | Pointing at OpenAI or any OpenAI-compatible endpoint (cloud, Ollama, vLLM, LocalAI, `ovos-persona-server`) |
+| ovos-messagebus-chat-plugin | not rated | offline | Answering through the existing skills/intent stack instead of an LLM |
+| ovos-solver-plugin-rivescript / ovos-solver-plugin-aiml | not rated | offline | A lightweight scripted chatbot, no model weights at all |
+| ovos-wikipedia-solver | not rated | online | Factual questions answered from Wikipedia |
+| ovos-wolfram-alpha-solver | not rated | online | Computational/factual questions (math, unit conversion, …) |
+| ovos-ddg-solver-plugin | not rated | online | General web-search-style answers via DuckDuckGo |
+
+!!! note "Privacy of the demo persona"
+    `ovos-openai-plugin` ships a `Remote Llama` demo persona pointed at a public third-party
+    server. For privacy, point `api_url` at your own server, or use `ovos-gguf-plugin` instead.
+
+---
+
 ## Text & audio transformers
 
 Hook into the text / audio / dialog / TTS stages. See the [Transformers catalog](transformer-plugins.md).

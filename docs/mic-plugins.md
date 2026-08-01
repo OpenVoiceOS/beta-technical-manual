@@ -87,12 +87,27 @@ format (16 kHz, 16-bit, mono) is what the listener expects downstream.
 
 ## Creating Your Own Plugin
 
-To create a new microphone plugin, you need to implement the `Microphone` base class and register it as an entry point.
+To create a new microphone plugin, subclass the `Microphone` dataclass and implement its
+three abstract methods: `start()`, `read_chunk() -> Optional[bytes]`, and `stop()`.
 
-### 1. Implementation Template
+### 1. A minimal working plugin
+
+Project layout:
+
+```
+ovos-microphone-plugin-mydevice/
+├── pyproject.toml
+└── ovos_microphone_plugin_mydevice/
+    └── __init__.py
+```
+
+`ovos_microphone_plugin_mydevice/__init__.py`:
 
 ```python
+from typing import Optional
+
 from ovos_plugin_manager.templates.microphone import Microphone
+
 
 class MyCustomMic(Microphone):
     def __init__(self, sample_rate=16000, sample_width=2, sample_channels=1, chunk_size=4096):
@@ -103,8 +118,8 @@ class MyCustomMic(Microphone):
         # Open your audio device here
         self.device = open_my_device()
 
-    def read_chunk(self):
-        # Return raw PCM bytes
+    def read_chunk(self) -> Optional[bytes]:
+        # Return raw PCM bytes, chunk_size long
         return self.device.read(self.chunk_size)
 
     def stop(self):
@@ -116,15 +131,65 @@ class MyCustomMic(Microphone):
 
 ### 2. Registration
 
-In your `pyproject.toml`, register the plugin under the `opm.microphone` group:
+`pyproject.toml`. The entry point is what makes it a plugin. The group must be
+`opm.microphone`, and the entry-point name (left of `=`) is the string users put in their
+`mycroft.conf`:
 
 ```toml
+[project]
+name = "ovos-microphone-plugin-mydevice"
+version = "0.1.0"
+dependencies = ["ovos-plugin-manager"]
+
 [project.entry-points."opm.microphone"]
-my-custom-mic = "my_package.module:MyCustomMic"
+ovos-microphone-plugin-mydevice = "ovos_microphone_plugin_mydevice:MyCustomMic"
 
 ```
 
+There is a parallel `opm.microphone.config` group for a dict of config metadata used by
+installers and GUIs. It is optional. Add it once the plugin has settings worth
+advertising.
+
 > 💡 The legacy alias `ovos.plugin.microphone` is still accepted by `ovos-plugin-manager`, but new plugins should register under `opm.microphone`.
+
+### 3. Test it without OVOS
+
+`Microphone` is a plain dataclass with no messagebus connection, so a unit test needs no
+running OVOS stack:
+
+```python
+from ovos_microphone_plugin_mydevice import MyCustomMic
+
+mic = MyCustomMic()
+mic.start()
+try:
+    chunk = mic.read_chunk()
+    assert chunk is None or len(chunk) == mic.chunk_size
+finally:
+    mic.stop()
+```
+
+### 4. Verify discovery
+
+After `pip install -e .`:
+
+```python
+from ovos_plugin_manager.microphone import find_microphone_plugins
+
+print(find_microphone_plugins())
+# {'ovos-microphone-plugin-mydevice': <class '...MyCustomMic'>}
+```
+
+`load_microphone_plugin(name)` returns the same uninstantiated class for one plugin name.
+You construct it yourself with your config dict.
+
+### 5. Checklist before you publish
+
+1. The class subclasses `Microphone` and implements `start`, `read_chunk`, and `stop`.
+2. `read_chunk` returns raw little-endian PCM bytes of `chunk_size` length, or `None`.
+3. The entry-point group in `pyproject.toml` is `opm.microphone`.
+4. Unit tests exercise `start`/`read_chunk`/`stop` directly, with no OVOS services running.
+5. `find_microphone_plugins()` discovers the installed plugin under the expected name.
 
 ## Standalone Usage
 

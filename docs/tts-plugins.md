@@ -423,27 +423,31 @@ implement both, so the minimal example below includes `available_languages` from
 
 ```python
 from typing import Set
+from ovos_utils import classproperty
 from ovos_plugin_manager.templates.tts import TTS
 
 class MyTTS(TTS):
-    def get_tts(self, sentence, wav_file, lang=None, voice=None):
+    def get_tts(self, sentence: str, wav_file: str, lang: str = None,
+                voice: str = None):
         # Synthesize `sentence` and write the audio to `wav_file`
         [...]
         # return the output path and optional per-phoneme visemes (or None)
         return wav_file, phonemes
 
-    @property
-    def available_languages(self) -> Set[str]:
+    @classproperty
+    def available_languages(cls) -> Set[str]:
         # Languages this plugin can synthesize, as a set of language codes
         return {"en-us"}
 
 ```
 
-`available_languages` tells OVOS which languages the plugin supports in its current state (for
-example, only the languages whose voice files are already installed). OVOS uses it to pick a TTS
-plugin for the configured language and to filter plugin choices in a UI. A plugin that skips it
-still loads, but any code that inspects `available_languages` sees an empty set and treats the
-plugin as supporting no language.
+The base class declares `available_languages` as a `classproperty` (from `ovos_utils`), so it
+can be read straight off the class, before anything is instantiated — that is how OVOS builds a
+language-to-plugin map for a whole config without constructing every plugin first. It tells OVOS
+which languages the plugin supports in its current state (for example, only the languages whose
+voice files are already installed). OVOS uses it to pick a TTS plugin for the configured language
+and to filter plugin choices in a UI. A plugin that skips it still loads, but any code that
+inspects `available_languages` sees an empty set and treats the plugin as supporting no language.
 
 ### Entry point
 
@@ -479,7 +483,7 @@ plugins = find_tts_plugins()
 tts_class = plugins["ovos-tts-plugin-mimic"]
 
 # Initialize (config only — lang is passed inside the config dict)
-tts = tts_class(config={"lang": "en-us"})
+tts = tts_class(config={"lang": "en-US"})
 
 # Generate audio
 wav_file = "hello.wav"
@@ -545,6 +549,7 @@ the full precedence rules.
     `ssml_tags` and OVOS strips all SSML before synthesis.
 
 ```python
+from ovos_utils import classproperty
 from ovos_plugin_manager.templates.tts import TTS
 
 class MyTTSPlugin(TTS):
@@ -569,8 +574,8 @@ class MyTTSPlugin(TTS):
         # Return path to file and optional visemes for lip-sync
         return wav_file, None
 
-    @property
-    def available_languages(self):
+    @classproperty
+    def available_languages(cls):
         """Return languages supported by this TTS implementation."""
         return {"en-us", "es-es", "pt-pt"}
 
@@ -584,6 +589,70 @@ MyTTSConfig = {
 }
 
 ```
+
+### Reducing time to first audio
+
+Two different mechanisms both get audio to the user faster. They are often both called
+"streaming", so the manual names them apart:
+
+**Sentence chunking ("fake streaming").** Long replies are split into sentences before
+synthesis, so the first sentence plays while the rest still synthesizes. This works with
+EVERY TTS plugin because the chunking happens before the engine runs. It is opt-in today:
+set `"sentence_tokenize": true` in the plugin's config block (`TTS.preprocess_sentence`
+splits with `quebra_frases`, with a newline-split fallback). This is the mechanism to
+reach for in practice.
+
+**Real streaming.** The engine itself emits audio chunks while it synthesizes, through the
+`StreamingTTS` base class below.
+
+!!! warning "Maturity: real streaming is pre-alpha"
+    `StreamingTTS` is a proof-of-concept. Almost no TTS plugin implements it, and playback
+    of streamed chunks is gated behind `tts.enable_streaming`. Use sentence chunking unless
+    you are experimenting. See the [Maturity Scale](maturity.md).
+
+Individual plugins may also expose their own latency settings (smaller models, lower
+quality modes, caching). Check the plugin's own config table above: anything that shortens
+synthesis shortens time to first audio.
+
+### Streaming support
+
+Most engines synthesize the whole sentence before returning, which is what `get_tts()` above
+does. A small number of backends can emit audio incrementally, and the template has a second
+base class for that case: `StreamingTTS` (also in `ovos_plugin_manager.templates.tts`).
+
+```python
+from typing import AsyncIterable
+from ovos_plugin_manager.templates.tts import StreamingTTS
+
+class MyStreamingTTS(StreamingTTS):
+    async def stream_tts(self, sentence: str, **kwargs) -> AsyncIterable[bytes]:
+        """yield chunks of TTS audio as they become available"""
+        async for chunk in self._backend_stream(sentence):
+            yield chunk
+
+    @classproperty
+    def available_languages(cls):
+        return {"en-us"}
+```
+
+`StreamingTTS` subclasses `TTS`, so it still needs `available_languages`, and it still answers
+`get_tts(sentence, wav_file)` for callers that only want a finished file — the base class wraps
+`stream_tts()` in an event loop and writes every chunk to `wav_file` before returning. The one
+method a plugin must implement is `stream_tts()`, an `async` generator that yields raw audio
+bytes as they come off the backend.
+
+Two things only apply to streaming plugins:
+
+- **No phonemes.** `StreamingTTS` does not support the `(wav_file, phonemes)` return shape from
+  `get_tts()` for lip-sync; chunks are raw audio only.
+- **Streaming playback is opt-in at the deployment level**, not the plugin level. Even when a
+  plugin implements `stream_tts()`, `ovos-audio` only plays chunks as they arrive when the
+  deployment config sets `"tts": {"enable_streaming": true}`. Without that flag `_execute()`
+  falls back to the normal queued playback path (write the file, then play it), so a streaming
+  plugin still works correctly on a deployment that has not opted in.
+
+Do not implement `StreamingTTS` unless the backend genuinely streams. There is no benefit to
+wrapping a synchronous, whole-file engine in an async generator that yields one chunk.
 
 ### Package and publish
 
@@ -607,7 +676,7 @@ Usage](#standalone-usage) example does, then check the file it wrote:
 ```python
 from my_tts_package import MyTTSPlugin
 
-tts = MyTTSPlugin(config={"lang": "en-us"})
+tts = MyTTSPlugin(config={"lang": "en-US"})
 wav_file, phonemes = tts.get_tts("Hello world", "hello.wav")
 assert wav_file == "hello.wav"
 ```
@@ -619,7 +688,7 @@ import os
 from my_tts_package import MyTTSPlugin
 
 def test_get_tts_writes_wav_file(tmp_path):
-    tts = MyTTSPlugin(config={"lang": "en-us"})
+    tts = MyTTSPlugin(config={"lang": "en-US"})
     out_file = str(tmp_path / "hello.wav")
     wav_file, phonemes = tts.get_tts("Hello world", out_file)
     assert os.path.isfile(wav_file)

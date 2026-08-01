@@ -140,9 +140,11 @@ original audio unchanged so synthesis never breaks.
 
 ---
 
-## Creating Custom TTS Transformers
+## Writing your own TTS Transformer
 
-To develop your own TTS Transformer:
+Subclass `TTSTransformer` (`ovos_plugin_manager.templates.transformers`) and override
+its `transform(wav_file, context=None) -> Tuple[str, dict]` method. Register the class
+under the `opm.transformer.tts` entry-point group.
 
 **Create a Python Class**:
 
@@ -164,14 +166,24 @@ class MyCustomTTSTransformer(TTSTransformer):
 ```
 
 
-**Register as a Plugin**:
-Expose the class under the `opm.transformer.tts` entry-point group in your `pyproject.toml`:
+A lower `priority` runs earlier in the chain; the default is 50, and each
+transformer receives the previous one's output path.
+
+**Register as a Plugin**. A full `pyproject.toml` for a standalone plugin package:
 
 ```toml
+[project]
+name = "ovos-tts-transformer-mycustom"
+version = "0.1.0"
+dependencies = ["ovos-plugin-manager"]
+
 [project.entry-points."opm.transformer.tts"]
 "my-custom-tts-transformer" = "my_module:MyCustomTTSTransformer"
 ```
 
+An `opm.transformer.tts.config` group is also available, for a dict of config
+metadata an installer or GUI can read. It is optional; add it once the plugin has
+settings worth advertising.
 
 **Install and Configure**:
 After installation, add your transformer to the `mycroft.conf`:
@@ -182,6 +194,40 @@ After installation, add your transformer to the `mycroft.conf`:
 }
 
 ```
+
+### Test it without OVOS
+
+`TTSTransformer` subclasses are plain classes, so a unit test needs no bus and no
+`Configuration`:
+
+```python
+from my_module import MyCustomTTSTransformer
+
+transformer = MyCustomTTSTransformer()
+wav_path, context = transformer.transform("/tmp/speech.wav")
+assert wav_path == "/tmp/speech.wav"
+```
+
+### Verify discovery
+
+After `pip install -e .`:
+
+```python
+from ovos_plugin_manager.tts_transformers import find_tts_transformer_plugins
+
+print(find_tts_transformer_plugins())
+# {'my-custom-tts-transformer': <class 'my_module.MyCustomTTSTransformer'>}
+```
+
+### Checklist before you publish
+
+1. `transform()` accepts a `wav_file: str` and returns `(wav_file, context)`.
+2. `__init__` hardcodes the plugin `name` and forwards `name`, `priority`, `config`
+   to `super().__init__()`.
+3. The entry-point group in `pyproject.toml` is `opm.transformer.tts`.
+4. A unit test calls `transform()` directly, with no OVOS services running.
+5. `find_tts_transformer_plugins()` discovers the installed plugin under the
+   expected name.
 
 ---
 

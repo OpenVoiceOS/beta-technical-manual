@@ -161,9 +161,14 @@ For more information, visit the [GitHub repository](https://github.com/OpenVoice
 
 ---
 
-## Creating Custom Audio Transformers
+## Writing your own Audio Transformer
 
-To develop your own Audio Transformer plugin for OVOS, implement a class that extends the base `AudioTransformer` template. 
+Subclass `AudioTransformer` (`ovos_plugin_manager.templates.transformers`) and
+override `transform(audio_data) -> Tuple[bytes, dict]`, the single method the STT
+stage calls. Register the class under the `opm.transformer.audio` entry-point group.
+The base class also offers optional hooks (`on_audio`, `on_hotword`, `on_speech`,
+`on_speech_end`) that let you inspect audio earlier in the voice loop. Override only
+the ones you need.
 
 This class allows you to process raw audio chunks at various stages before the Speech-to-Text (STT) engine processes the audio.
 
@@ -229,16 +234,32 @@ class MyCustomAudioTransformer(AudioTransformer):
 
 * **Reset**: The `reset()` method clears internal audio buffers, called after STT completes.
 
+### Priority
+
+Transformers run in **ascending priority** order (lower `priority` first). The default
+is 50. Pick a low priority for early-stage cleanup (noise reduction) that later
+transformers should see, and a high priority for anything that should run last.
+
 ### Plugin Registration
 
-Expose the class under the `opm.transformer.audio` entry-point group in your `pyproject.toml`:
+A full `pyproject.toml` for a standalone plugin package:
 
 ```toml
+[project]
+name = "ovos-audio-transformer-mycustom"
+version = "0.1.0"
+dependencies = ["ovos-plugin-manager"]
+
 [project.entry-points."opm.transformer.audio"]
 "my-custom-audio-transformer" = "my_module:MyCustomAudioTransformer"
 ```
 
-The legacy alias `neon.plugin.audio` is still recognized for this group by the plugin loader, but new plugins should use `opm.transformer.audio` (the GGWave and SpeechBrain transformers above both already do).
+An `opm.transformer.audio.config` group is also available, for a dict of config
+metadata an installer or GUI can read. It is optional. Add it once the plugin has
+settings worth advertising. The legacy alias `neon.plugin.audio` is still recognized
+for the entry-point group by the plugin loader, but new plugins should use
+`opm.transformer.audio` (the GGWave and SpeechBrain transformers above both already
+do).
 
 ### Configuration Example
 
@@ -252,4 +273,38 @@ Add your transformer to `mycroft.conf`:
 }
 
 ```
+
+### Test it without OVOS
+
+`AudioTransformer` subclasses are plain classes, so a unit test needs no bus and no
+`Configuration`:
+
+```python
+from my_module import MyCustomAudioTransformer
+
+transformer = MyCustomAudioTransformer()
+audio_data, context = transformer.transform(b"\x00\x01")
+assert audio_data == b"\x00\x01"
+```
+
+### Verify discovery
+
+After `pip install -e .`:
+
+```python
+from ovos_plugin_manager.audio_transformers import find_audio_transformer_plugins
+
+print(find_audio_transformer_plugins())
+# {'my-custom-audio-transformer': <class 'my_module.MyCustomAudioTransformer'>}
+```
+
+### Checklist before you publish
+
+1. `transform()` accepts `audio_data` and returns `(audio_data, context)`.
+2. `__init__` hardcodes the plugin `name` and forwards `name`, `priority`, `config`
+   to `super().__init__()`.
+3. The entry-point group in `pyproject.toml` is `opm.transformer.audio`.
+4. A unit test calls `transform()` directly, with no OVOS services running.
+5. `find_audio_transformer_plugins()` discovers the installed plugin under the
+   expected name.
 
