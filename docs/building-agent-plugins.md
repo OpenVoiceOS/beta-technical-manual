@@ -523,10 +523,6 @@ release, and new plugins must not use them.
 5. Unit tests exercise the engine directly, with no OVOS services running.
 6. `find_*_plugins()` discovers the installed plugin under the expected name.
 
-## Related pages
-
-- [Agent Engine Types](agent-plugins.md#agent-engine-types): per-engine API details, config
-  examples, and the solver migration map
-- [Agents & Personas](personas.md): how personas compose the engines you build
-- [Agent Tool Plugins](tool-plugins.md): the `ToolBox` walkthrough
-- [Agentic Loops](agentic-loop.md): orchestrating engines and tools in a loop
+---
+**Read next:** [Agentic Loop Architectures](agentic-loop.md)
+**Related:** [Agent Engine Types](agent-plugins.md) · [Agent Tool Plugins](tool-plugins.md) · [Personas & PersonaService](personas.md)

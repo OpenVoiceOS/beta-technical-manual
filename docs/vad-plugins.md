@@ -271,6 +271,6 @@ Detailed per-plugin configuration for the same roster listed in
 
 ---
 
-## Further reading
-
-- [OVOS Just Got a Noise Filter (Pre-Wake VAD)](https://blog.openvoiceos.org/posts/2025-11-06-prewake-vad), OVOS blog
+---
+**Read next:** [Wake Word Plugins](wake-word-plugins.md)
+**Related:** [Microphone Plugins](mic-plugins.md) · [STT Plugins](stt-plugins.md) · [Choosing Plugins](choosing-plugins.md) · [OVOS Just Got a Noise Filter (Pre-Wake VAD)](https://blog.openvoiceos.org/posts/2025-11-06-prewake-vad)

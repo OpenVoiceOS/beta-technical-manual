@@ -305,22 +305,8 @@ Protections include:
 
 ---
 
-## Related Pages
-
-- [Converse](converse.md): the skill-side `converse()` API this pipeline plugin drives
-
-
-- [ovos-core](core.md): `ConverseService` implementation and bus events
-
-
-- [Fallback Pipeline](fallback-pipeline.md): what runs when converse returns nothing
-
-
-- [Skill Classes](skill-classes.md): `ConversationalSkill`, `ActiveSkill` base classes
-
-
-- [Bus Session](session.md): `Session.active_skills`, `activate_skill()`, `deactivate_skill()`
+*Source code: [OpenVoiceOS/ovos-core](https://github.com/OpenVoiceOS/ovos-core).*
 
 ---
-
-*Source code: [OpenVoiceOS/ovos-core](https://github.com/OpenVoiceOS/ovos-core).*
+**Read next:** [Common Query Pipeline](cq-pipeline.md)
+**Related:** [Converse](converse.md) · [Context & Sessions](session.md) · [Skill Classes](skill-classes.md) · [Fallback Pipeline](fallback-pipeline.md)

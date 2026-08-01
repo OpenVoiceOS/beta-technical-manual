@@ -6,13 +6,9 @@
 ??? info "📐 Formal specification"
     Intent context is specified by **[OVOS-CONTEXT-1 — Intent Context](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-context.md)**, the *declarative* gating primitive over **[OVOS-PIPELINE-1](https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md)** (its imperative complement is the converse plugin, **[OVOS-CONVERSE-1](https://github.com/OpenVoiceOS/architecture/blob/dev/converse.md)**, see [Converse Pipeline](converse-pipeline.md)). See the [spec index](architecture-specs.md).
 
-Conversational context in OpenVoiceOS (OVOS) allows voice interactions to feel more natural by remembering parts of a conversation, like the subject being discussed. This is especially useful for follow-up questions where repeating context (like a person's name) would otherwise be necessary.
+    **The spec model: a decaying per-session store that *gates* matching.** In CONTEXT-1 terms, intent context is the field **`session.intent_context`**, a flat map of **entries**, each `{value, expires_at?, turns_remaining?}`. Every entry **decays**. The orchestrator prunes dead entries before each match round and decrements `turns_remaining` after it (CONTEXT-1 §4), so a confirmation flag set with `turns_remaining: 1` lives for exactly the next utterance. An intent **gates** on context by declaring **`requires_context`** (match only while a key is live) and/or **`excludes_context`** (match only while a key is absent). These are normative across every intent engine (CONTEXT-1 §6/§6.1). Keys are **scoped by shape**: a bare key like `person` is **shared** (cross-skill), and a prefixed key `<skill_id>:flag` is **private** to that owner. Bare-string `requires_context` entries default to private scope, the safe default, so a foreign skill's shared `person` can never accidentally satisfy a private gate. You must write `{key: person, scope: shared}` to read across skills.
 
-!!! note "The spec model: a decaying per-session store that *gates* matching"
-    In CONTEXT-1 terms, intent context is the field **`session.intent_context`**, a flat map of **entries**, each `{value, expires_at?, turns_remaining?}`. Every entry **decays**. The orchestrator prunes dead entries before each match round and decrements `turns_remaining` after it (CONTEXT-1 §4), so a confirmation flag set with `turns_remaining: 1` lives for exactly the next utterance. An intent **gates** on context by declaring **`requires_context`** (match only while a key is live) and/or **`excludes_context`** (match only while a key is absent). These are normative across every intent engine (CONTEXT-1 §6/§6.1). Keys are **scoped by shape**: a bare key like `person` is **shared** (cross-skill), and a prefixed key `<skill_id>:flag` is **private** to that owner. Bare-string `requires_context` entries default to private scope, the safe default, so a foreign skill's shared `person` can never accidentally satisfy a private gate. You must write `{key: person, scope: shared}` to read across skills.
-
-!!! warning "Four different things called 'context': do not conflate them"
-    CONTEXT-1 §1.1 is explicit that the word *context* names four unrelated things:
+    **Four different things called 'context': do not conflate them.** CONTEXT-1 §1.1 is explicit that the word *context* names four unrelated things:
 
     | Name | What it is | JSON path |
     |---|---|---|
@@ -22,6 +18,8 @@ Conversational context in OpenVoiceOS (OVOS) allows voice interactions to feel m
     | `Match.slots` | the slot map produced *at match time* for one dispatch | `data.slots` |
 
     This page is about the third (and the field that holds it). It is not `Message.context`, and a context entry is not a `Match.slot`. CONTEXT-1 §7's context-supplied-slot rule is the bridge: when a `requires_context` key also names a slot, its value fills that slot if the utterance did not. This is exactly the "remember which person" mechanism below.
+
+Conversational context makes voice interactions feel more natural. The assistant keeps track of the subject you are discussing, so you do not have to repeat it.
 
 `requires_context` and `excludes_context` gate matching in both the
 [Adapt](adapt-pipeline.md) and [Padatious](padatious-pipeline.md) pipelines, as CONTEXT-1 §6
@@ -279,4 +277,8 @@ The decorators are equivalent to calling these methods:
 Because context is attached to the Session, each handler receives the message that triggered it.
 The Adapt pipeline reads `Session.context` when scoring intents. This is why missing keywords
 fall back to the most recent matching context entry.
+
+---
+**Read next:** [Intent Layers](layers.md)
+**Related:** [Asking the User for Responses in OVOS Skills](prompts.md) · [Session Aware Skills](session.md) · [Intent Design](intents.md) · [Converse](converse.md)
 

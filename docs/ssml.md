@@ -295,3 +295,7 @@ a nice-to-have, emit the SSML anyway and let non-supporting engines fall back to
 ---
 
 *Source code: [OpenVoiceOS/ovos-utils](https://github.com/OpenVoiceOS/ovos-utils).*
+
+---
+**Read next:** [Customization](customization.md)
+**Related:** [Statements](statements.md) · [TTS Plugins](tts-plugins.md) · [Resource Files](resource-files.md) · [Skill Metadata File](skill-json.md)

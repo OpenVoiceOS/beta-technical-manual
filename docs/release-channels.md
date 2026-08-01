@@ -361,10 +361,8 @@ for the same pattern applied across a fleet of devices rather than one machine.
 
 ---
 
-## See Also
+---
 
-- [OVOS Releases repo](https://github.com/OpenVoiceOS/ovos-releases)
-- [Constraints files explanation (pip docs)](https://pip.pypa.io/en/stable/user_guide/#constraints-files)
-- [Semantic Versioning](https://semver.org/)
-- [OVOS Component Repos](https://github.com/OpenVoiceOS)
+**Read next:** [Make it yours](personalize.md)
+**Related:** [OVOS Releases repo](https://github.com/OpenVoiceOS/ovos-releases) · [Constraints files explanation (pip docs)](https://pip.pypa.io/en/stable/user_guide/#constraints-files) · [Semantic Versioning](https://semver.org/) · [ovos-installer](ovos-installer.md)
 

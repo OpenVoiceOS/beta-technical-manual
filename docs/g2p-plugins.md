@@ -228,6 +228,6 @@ calls; there is nothing analogous to `StreamingTTS`. Do not add one.
    matters if something consumes its viseme output for lip-sync. Confirm that use case exists
    before investing in a new plugin; most new TTS voices need no G2P plugin at all.
 
-## Further reading
-
-- [The First Phonemizer for Barranquenho](https://blog.openvoiceos.org/posts/2025-12-14-barranquenho): OVOS blog
+---
+**Read next:** [OCP Audio Plugin](ocp-audio-plugin.md)
+**Related:** [TTS Plugins](tts-plugins.md) · [Choosing Plugins](choosing-plugins.md) · [Maturity Scale](maturity.md) · [The First Phonemizer for Barranquenho](https://blog.openvoiceos.org/posts/2025-12-14-barranquenho)

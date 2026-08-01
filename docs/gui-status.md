@@ -59,3 +59,7 @@ open, in-progress pull requests — nothing here has shipped:
 | Home screen | Deprecated, still in use on Mark 2 | The idle/resting screen skill shown when nothing else is displayed | [Home Screen](homescreen.md) |
 | Skill GUI API | Legacy API, still what skills use today | `self.gui` / `GUIInterface`, the Python API a skill uses to push data to a screen | [GUI Skills](skill-gui.md) |
 | Adapter rework (OVOS-GUI-1) | **Upcoming** — in progress, not usable | Planned replacement: skills declare `SYSTEM_*` templates, interchangeable render backends draw them | [GUI Adapter Plugins](gui-adapters.md) |
+
+---
+**Read next:** [GUI Service (legacy)](gui-service.md) · [PHAL](phal.md)
+**Related:** [GUI Adapter Plugins](gui-adapters.md) · [OVOS Shell](ovos-shell.md) · [Home Screen](homescreen.md)

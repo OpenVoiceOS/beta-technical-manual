@@ -193,9 +193,6 @@ with what `pyproject.toml` actually requires. Run the skill's tests (see [Testin
 Skill](testing-your-skill.md)) against the raised floor before releasing, not just against
 whatever happens to already be installed in your dev environment.
 
-## See Also
-
-- [PEP 508: Dependency specification](https://peps.python.org/pep-0508/)
-
-
-- [SPDX License List](https://spdx.org/licenses/)
+---
+**Read next:** [ovos-workshop Documentation](workshop-overview.md)
+**Related:** [Customization](customization.md) · [Skill Structure](skill-structure.md) · [settingsmeta.json](skill-settings-meta.md) · [Writing Version-Compatible Skills and Plugins](version-compat-guide.md)

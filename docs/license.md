@@ -52,7 +52,8 @@ The rows above with **no license file** are not a rejection of the universal don
 They are repositories that never declared one, so no license can be assumed for redistribution
 purposes. Treat "no license file" as more restrictive than any permissive license, not less.
 
-## Further reading
+See also: [Why OpenVoiceOS Uses Permissive Licenses](https://blog.openvoiceos.org/posts/2023-02-28-permissive-licenses) (OVOS blog).
 
-- [Why OpenVoiceOS Uses Permissive Licenses](https://blog.openvoiceos.org/posts/2023-02-28-permissive-licenses) (OVOS blog)
-- [Deprecated & Archived Repositories](deprecated-repos.md): current replacements for archived plugins
+---
+**Read next:** [Reference Overview](reference-overview.md)
+**Related:** [Deprecated & Archived Repositories](deprecated-repos.md) · [OVOS Repository Index](ecosystem-index.md) · [Contributing](contributing.md)

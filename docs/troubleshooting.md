@@ -513,10 +513,7 @@ sequence than with a description of the symptom alone.
 
 ---
 
-## Related Pages
+---
 
-- [The Life of an Utterance](life-of-an-utterance.md), the full journey this page's stages mirror.
-- [Command-line Tools](cli-tools.md), every CLI referenced above, with full flag references.
-- [Configuration](config.md), how `log_level` and other keys are layered and merged.
-- [ovoscope Overview](ovoscope-overview.md), full end-to-end testing reference.
-- [Bus Service](bus-service.md), what the messagebus is and how clients connect to it.
+**Read next:** [The Life of an Utterance](life-of-an-utterance.md)
+**Related:** [Command-line Tools](cli-tools.md) · [Configuration](config.md) · [ovoscope Overview](ovoscope-overview.md) · [Bus Service](bus-service.md)

@@ -387,16 +387,8 @@ class MyClientSkill(OVOSSkill):
 
 ---
 
-## Related Pages
-
-- [Skill Classes](skill-classes.md): `OVOSSkill` base class
-
-
-- [Decorators](skill-classes.md#decorators-quick-reference): `@skill_api_method` and other decorators
-
-
-- [Bus Client](core-libraries.md#ovos-bus-client): `MessageBusClient` used internally by `SkillApi`
+*Source code: [OpenVoiceOS/ovos-workshop](https://github.com/OpenVoiceOS/ovos-workshop).*
 
 ---
-
-*Source code: [OpenVoiceOS/ovos-workshop](https://github.com/OpenVoiceOS/ovos-workshop).*
+**Read next:** [Skill Classes](skill-classes.md)
+**Related:** [ovos-workshop Documentation](workshop-overview.md) · [Decorators](decorators.md) · [Skill Settings](skill-settings.md) · [Session Aware Skills](session.md)

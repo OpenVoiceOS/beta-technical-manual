@@ -132,12 +132,6 @@ Zip-archive sources (`technical`, `messages`, `hivemind`) keep their full `docs/
 | `requests` | HTTP download of documentation |
 | `ovos_utils` | XDG path resolution (`xdg_data_home`) |
 
-## Cross-References
-
-- [ovos-technical-manual](https://github.com/OpenVoiceOS/ovos-technical-manual): primary documentation source for the `technical` key
-
-
-- [message_spec](https://github.com/OpenVoiceOS/message_spec): bus message reference for the `messages` key
-
-
-- [ovos-utils](https://github.com/OpenVoiceOS/ovos-utils): XDG path helpers
+---
+**Read next:** [Hardware Integrators](hardware-integrators.md)
+**Related:** [OVOS Repository Index](ecosystem-index.md) · [Command-line Tools](cli-tools.md) · [Contributing](contributing.md)

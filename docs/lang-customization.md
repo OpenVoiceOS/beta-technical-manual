@@ -152,3 +152,7 @@ The technical parsers for numbers, dates, and spoken language names are separate
 
 These are rule-driven per language. Contribute fixes upstream to the respective repository so
 every install benefits. Local edits to an installed package do not persist across upgrades.
+
+---
+**Read next:** [Bidirectional Translation](bidirectional-translation.md)
+**Related:** [Language Selection](lang-selection.md) · [Resource Files](resource-files.md) · [Language Support Overview](lang-support.md)

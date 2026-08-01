@@ -148,10 +148,6 @@ Modality-specific fields (kept inline or in `extras`):
 - **Version-blend guard**: if a competitor's rows span more than one `plugin_version`, the board build logs a warning rather than silently averaging scores across versions.
 - **Reproducible predictions provenance**: `assemble` pins every HuggingFace predictions source to an immutable commit SHA (the dataset registry entry's `predictions_revision` when set, else `--revision`). It records the resolved mapping on each benchmark board (`predictions_revisions`) and in the top-level index. This lets a third party re-fetch the exact predictions that produced any published score.
 
-## Related Pages
-
-- [STT Plugins](stt-plugins.md)
-- [TTS Plugins](tts-plugins.md)
-- [Wake Word Plugins](wake-word-plugins.md)
-- [Wake Word Verifier](ww-verifier.md)
-- [Testing & Ovoscope](ovoscope-overview.md)
+---
+**Read next:** [Choosing Plugins](choosing-plugins.md) · [Microphone Plugins](mic-plugins.md)
+**Related:** [Maturity Scale](maturity.md) · [STT Plugins](stt-plugins.md) · [TTS Plugins](tts-plugins.md) · [Wake Word Verifier](ww-verifier.md)

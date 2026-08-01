@@ -97,3 +97,8 @@ added.
 Turning lights and other smart-home devices on and off by voice is also not built in. It needs a
 separate skill that talks to Home Assistant. See [OVOS & Home Assistant](home-assistant.md) for
 the setup and example commands.
+
+---
+
+**Read next:** [What can I say?](skill-examples.md)
+**Related:** [Make it yours](personalize.md) · [Skill Cookbook](skill-cookbook.md) · [Personas & PersonaService](personas.md) · [OVOS & Home Assistant](home-assistant.md)

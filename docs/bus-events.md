@@ -227,10 +227,6 @@ in the producer and consumer, not a topic swap:
   broadcast `ovos.stop` / `ovos.stop.ping` / `ovos.stop.pong`. The skill base class subscribes on
   both forms rather than relying on the translator.
 
-## Related pages
-
-- [Bus Service](bus-service.md): the messagebus itself, connection details, legacy/modern topic pairs
-- [Life of an Utterance](life-of-an-utterance.md): the full request/response journey these events trace
-- [Intent Service](intent-service.md), [Converse Pipeline](converse-pipeline.md), [Stop Pipeline](stop-pipeline.md), [Fallback Pipeline](fallback-pipeline.md), [Common Query Pipeline](cq-pipeline.md): per-pipeline detail
-- [Audio Service](audio-service.md), [GUI Service](gui-service.md): output-side detail
-- [OVOSSkill API](ovos-skill.md): the skill-side handlers for these events
+---
+**Read next:** [Command-line Tools](cli-tools.md)
+**Related:** [Bus Service](bus-service.md) · [Life of an Utterance](life-of-an-utterance.md) · [Intent Service](intent-service.md) · [OVOSSkill API](ovos-skill.md)

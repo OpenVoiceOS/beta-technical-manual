@@ -255,6 +255,6 @@ are absent.
     `cls(config=cfg, bus=bus)` call. See [Agent Tool Plugins](tool-plugins.md) for the
     full contract.
 
-## Further reading
-
-- [Building an Open and Interoperable Voice Ecosystem (MCP / UTCP / A2A)](https://blog.openvoiceos.org/posts/2025-10-24-protocol_interoperability): OVOS blog
+---
+**Read next:** [OpenAI-compatible](openai-plugin.md)
+**Related:** [Agent Tool Plugins](tool-plugins.md) · [GGUF / Local LLM](gguf-plugin.md)

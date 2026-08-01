@@ -193,3 +193,7 @@ Leave both off unless you specifically need to support pre-OCP skills.
 ---
 
 *Source code: [OpenVoiceOS/ovos-ocp-pipeline-plugin](https://github.com/OpenVoiceOS/ovos-ocp-pipeline-plugin).*
+
+---
+**Read next:** [Fallback Pipeline](fallback-pipeline.md)
+**Related:** [Media Skills (OCP)](ocp-skills.md) · [OCP Audio Plugin](ocp-audio-plugin.md) · [Stop Pipeline](stop-pipeline.md)

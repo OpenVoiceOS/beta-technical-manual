@@ -79,3 +79,7 @@ are the contract your plugin's entry point needs to satisfy.
 See [Skill Dev FAQ](skill-dev-faq.md) for answers to the questions that come up most, and
 [Troubleshooting](troubleshooting.md#where-to-ask-for-help) for what to include when you ask
 for help (a log excerpt or `ovos-busmon` export for the stage where things went wrong).
+
+---
+**Read next:** [gh-automations Overview](gh-automations-overview.md)
+**Related:** [Skill Dev F.A.Q.](skill-dev-faq.md) · [Your First Skill](first-skill.md) · [Plugin Ecosystem](plugins-index.md) · [Troubleshooting & Debugging](troubleshooting.md)

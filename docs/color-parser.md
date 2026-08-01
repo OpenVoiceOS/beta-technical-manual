@@ -272,23 +272,5 @@ No runtime configuration object is used. Language selection is passed explicitly
 | `MatchStrategy.TOKEN_SET_RATIO` | Pre-screening pass for fuzzy matching. |
 
 ---
-
-## Cross-references
-
-| Package | How it uses ovos-color-parser |
-|---------|-------------------------------|
-| `ovos-core` | Indirectly via skills that handle lighting commands |
-| `ovos-workshop` | [Skill](skill-design-guidelines.md) base classes delegate color parsing to this library |
-| `ovos-number-parser` | Peer library in the OVOS NLP stack, not a dependency of this package |
-| `ovos-date-parser` | Peer library in the OVOS NLP stack, not a dependency of this package |
-| `ovos-lang-parser` | Peer library in the OVOS NLP stack, not a dependency of this package |
-
-See also:
-
-- [Number Parser](number-parser.md)
-
-
-- [Date Parser](date-parser.md)
-
-
-- [Language Parser](lang-parser.md)
+**Read next:** [Quebra Frases](quebra-frases.md)
+**Related:** [Numbers](number-parser.md) · [Dates & Time](date-parser.md) · [Language Names](lang-parser.md) · [Skill Design Guidelines](skill-design-guidelines.md)

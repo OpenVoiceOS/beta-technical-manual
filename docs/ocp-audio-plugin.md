@@ -202,14 +202,8 @@ making sure the OCP intent pipeline (which both backends share) is still enabled
 
 ---
 
-## Related Pages
-
-- [OCP Pipeline](ocp-pipeline.md): how "play X" is recognized as a media request.
-- [Media Skills (OCP)](ocp-skills.md): writing skills that provide media results.
-- [OCP Stream Extractors](ocp-plugins.md): turning page URLs into playable streams.
-- [Audio Service](audio-service.md): the service this plugin loads into.
-- [ovos-media](ovos-media.md): the dedicated replacement.
+*Source code: [OpenVoiceOS/ovos-ocp-audio-plugin](https://github.com/OpenVoiceOS/ovos-ocp-audio-plugin).*
 
 ---
-
-*Source code: [OpenVoiceOS/ovos-ocp-audio-plugin](https://github.com/OpenVoiceOS/ovos-ocp-audio-plugin).*
+**Read next:** [OCP Extractors](ocp-plugins.md)
+**Related:** [Media Playback Plugins](media-plugins.md) · [OCP Pipeline](ocp-pipeline.md) · [Media Skills (OCP)](ocp-skills.md) · [ovos-media](ovos-media.md)

@@ -194,8 +194,6 @@ Use [ovos-tool-adapters](agent-interop.md) to wire any MCP or UTCP server into t
 
 ---
 
-## Related Pages
-
-- [Agent Tool Plugins](tool-plugins.md): OPM `ToolBox` interface and the PHAL bus provider
-- [Agent Interoperability](agent-interop.md): MCP, UTCP, A2A wiring
-- [Personas](personas.md): composing personas from agentic loop engines
+---
+**Read next:** [Agent Tool Plugins](tool-plugins.md)
+**Related:** [Agent Engine Types](agent-plugins.md) · [Building Agent Plugins](building-agent-plugins.md) · [Interoperability (MCP/UTCP/A2A)](agent-interop.md) · [Personas & PersonaService](personas.md)

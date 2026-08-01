@@ -1,15 +1,14 @@
 # Adapt Intents (Keyword Intents)
 
-See also: [Intent Design](intents.md) for how the two intent styles compare, and
-[Adapt Pipeline](adapt-pipeline.md) for how the plugin matches these intents at runtime.
-
 !!! abstract "In a nutshell"
     Keyword intents (also called Adapt intents) match an utterance by looking for required
     and optional keywords, not whole phrases. You define the keywords in `.voc` files and,
     optionally, capture free-form entities with `.rx` regex files. Keyword intents are more
     flexible than template intents and integrate tightly with
     [conversational context](context.md), but a badly designed one can produce false
-    matches. New terms are explained in the [Glossary](glossary.md).
+    matches. See [Intent Design](intents.md) for how the two intent styles compare, and
+    [Adapt Pipeline](adapt-pipeline.md) for how the plugin matches these intents at runtime.
+    New terms are explained in the [Glossary](glossary.md).
 
 Keyword-based pipeline plugins determine user intent from a list of keywords or entities
 contained in a user's utterance.
@@ -254,3 +253,7 @@ individual intents off with `disable_intent()`, and whitelist/blacklist controls
 off a skill or its converse participation entirely. See [Intent Layers](layers.md) for
 per-skill intent enable/disable state and [Permissions & Activation Control](permissions.md) for
 the coarser skill-level gates.
+
+---
+**Read next:** [Padatious Intents (Example-Based Intents)](intents-padatious.md)
+**Related:** [Intent Design](intents.md) · [Intent Layers](layers.md) · [Adapt Pipeline Plugin](adapt-pipeline.md) · [Context](context.md)

@@ -497,3 +497,7 @@ entry_points={
 ---
 
 *Source code: [OpenVoiceOS/ovos-config](https://github.com/OpenVoiceOS/ovos-config).*
+
+---
+**Read next:** [Configuration Reference](config-reference.md) · [Locations](locations-ref.md)
+**Related:** [Bus Service](bus-service.md) · [ovos-core Overview](core.md) · [Composable Deployments](composable-deployments.md)

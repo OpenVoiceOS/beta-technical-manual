@@ -1,16 +1,14 @@
 # Intent Design
 
-See also: [Intent Service](intent-service.md) for how OVOS routes an utterance through the
-pipeline plugins that match the intents described on this page.
-
 !!! abstract "In a nutshell"
     People ask for the same thing in many different ways: "what's the weather?", "weather in
     Melbourne", or just "weather" all mean roughly the same thing. An *intent* is what the
     user is actually trying to do. The part of OVOS that figures it out is a *pipeline
     plugin* (older docs call this an "intent parser" or "intent engine"; see the
     [Glossary](glossary.md)). This page explains what an intent is and helps you choose
-    between the two engines OVOS ships by default. New terms are explained in the
-    [Glossary](glossary.md).
+    between the two engines OVOS ships by default. See [Intent Service](intent-service.md)
+    for how OVOS routes an utterance through the pipeline plugins described here. New terms
+    are explained in the [Glossary](glossary.md).
 
 ??? info "📐 Formal specification"
     Intents are specified across the **intent stack** of the formal [architecture specs](architecture-specs.md):
@@ -82,3 +80,7 @@ including confidence thresholds and entry points:
 
 We will now look at each in more detail, including how to use them in a
 [Skill](skill-design-guidelines.md).
+
+---
+**Read next:** [Adapt Intents (Keyword Intents)](intents-adapt.md) · [Padatious Intents (Example-Based Intents)](intents-padatious.md)
+**Related:** [Skill Structure](skill-structure.md) · [Intent Layers](layers.md) · [Permissions & Activation Control](permissions.md) · [OVOS Intent Pipeline](pipelines-overview.md)

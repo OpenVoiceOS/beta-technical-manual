@@ -247,3 +247,7 @@ can launch it directly. This is useful for debugging or minimal/headless setups.
 ---
 
 *Source code: [OpenVoiceOS/ovos-config](https://github.com/OpenVoiceOS/ovos-config), [OpenVoiceOS/ovos-bus-client](https://github.com/OpenVoiceOS/ovos-bus-client), and [OpenVoiceOS/ovos-utils](https://github.com/OpenVoiceOS/ovos-utils).*
+
+---
+**Read next:** [Core Libraries](core-libraries.md)
+**Related:** [ovos-docs-viewer](docs-viewer.md) · [i2c Sound & Audio Setup](i2c-sound.md) · [Troubleshooting & Debugging](troubleshooting.md) · [Contributing](contributing.md)

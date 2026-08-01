@@ -246,19 +246,8 @@ CMAKE_ARGS="-DGGML_CUDA=on" pip install llama-cpp-python --force-reinstall
 
 ---
 
-## Cross-References
-
-- [Agent Engine Types](agent-plugins.md): base class contracts and full type reference
-
-
-- [Personas & PersonaService](personas.md): how to load and activate personas
-
-
-- [LLM Transformers](llm-transformers.md): dialog transformer pipeline
-
-
-- [OpenAI Plugin](openai-plugin.md): OpenAI-compatible API alternative
+*Source code: [OpenVoiceOS/ovos-gguf-plugin](https://github.com/OpenVoiceOS/ovos-gguf-plugin).*
 
 ---
-
-*Source code: [OpenVoiceOS/ovos-gguf-plugin](https://github.com/OpenVoiceOS/ovos-gguf-plugin).*
+**Read next:** [LLM Transformers](llm-transformers.md)
+**Related:** [OpenAI-compatible](openai-plugin.md) · [Agent Engine Types](agent-plugins.md) · [Personas & PersonaService](personas.md)

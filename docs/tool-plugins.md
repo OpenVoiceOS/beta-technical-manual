@@ -155,7 +155,6 @@ The Persona Server can bridge any installed ToolBox plugin to MCP and UTCP clien
 
 ---
 
-## Related Pages
-
-- [agentic-loop.md](agentic-loop.md) — loop architectures
-- [agent-interop.md](agent-interop.md) — MCP/UTCP/A2A integration
+---
+**Read next:** [Interoperability (MCP/UTCP/A2A)](agent-interop.md)
+**Related:** [Agentic Loop Architectures](agentic-loop.md) · [Agent Engine Types](agent-plugins.md)

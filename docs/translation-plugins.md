@@ -152,3 +152,7 @@ detect_plugins = find_lang_detect_plugins()
 detector = detect_plugins["ovos-lang-detector-fasttext-plugin"]()
 print(detector.detect("Hola, como estas?"))
 ```
+
+---
+**Read next:** [Reference Overview](reference-overview.md)
+**Related:** [Bidirectional Translation](bidirectional-translation.md) · [Contributing Translations](ovos-localize-tutorial.md) · [OpenAI-compatible LLM Backend](openai-plugin.md)

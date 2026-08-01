@@ -675,10 +675,7 @@ Mycroft.Delegate {
 
 ```
 
-## Related pages
-
-- [GUI Adapters](gui-adapters.md): the in-progress replacement architecture for this legacy Qt5 client.
-- [ovos-shell](ovos-shell.md): the shell application that hosts and manages GUI clients on a device.
-- [Screens on OVOS Today](gui-status.md): the current, honest state of GUI support across OVOS.
-- [GUI Service](gui-service.md): the bus-facing service that mediates between skills and GUI clients.
+---
+**Read next:** [Home Screen](homescreen.md)
+**Related:** [OVOS Shell](ovos-shell.md) · [GUI Protocol](gui-protocol.md) · [Screens on OVOS Today](gui-status.md) · [GUI Service](gui-service.md)
 

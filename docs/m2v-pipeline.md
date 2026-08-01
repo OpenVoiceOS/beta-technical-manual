@@ -196,3 +196,7 @@ precise parser would have nailed. The usual setup is to place
 confidence) so exact matches win first and Model2Vec catches the paraphrases the
 others miss. Tune `conf_high`/`conf_medium`/`conf_low` to control how aggressive it
 is.
+
+---
+**Read next:** [Hierarchical KNN Pipeline](knn-pipeline.md)
+**Related:** [Padatious Pipeline](padatious-pipeline.md) · [Adapt Pipeline](adapt-pipeline.md) · [Transformers Overview](transformer-plugins.md)

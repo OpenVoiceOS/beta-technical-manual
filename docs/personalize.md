@@ -106,9 +106,7 @@ global `lang` automatically. Want the *recommended* plugins/voices for that lang
 of your current ones? Run `ovos-config autoconfigure -l de-DE --offline` afterwards. Full
 picture, supported-language table, and gaps to watch for: [Language Support](lang-support.md).
 
-## Related pages
+---
 
-- [Configuration Management](config.md): how the config layers stack, and the full CLI
-- [Wake Word Plugins](wake-word-plugins.md): every available wake-word engine
-- [TTS Plugins](tts-plugins.md): every available voice engine
-- [Language Support](lang-support.md): translation coverage and per-language plugin gaps
+**Read next:** [Fun stuff to try](showcase.md)
+**Related:** [Configuration Management](config.md) · [Wake Word Plugins](wake-word-plugins.md) · [TTS Plugins](tts-plugins.md) · [Language Support](lang-support.md)

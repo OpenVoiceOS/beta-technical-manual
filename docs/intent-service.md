@@ -1,10 +1,7 @@
 # Intent Service
 
 !!! success "Maturity: Mature ⬤⬤⬤⬤⬤"
-    Long-lived, well-tested, and actively maintained. You can depend on it. Rated by [repository health](maturity.md), not version.
-
-See also: [Intent Design](intents.md) for how a skill defines the keyword and template intents
-this service matches.
+    Long-lived, well-tested, and actively maintained. You can depend on it. Rated by [repository health](maturity.md), not version. See also [Intent Design](intents.md) for how a skill defines the keyword and template intents this service matches.
 
 !!! abstract "In a nutshell"
     The Intent Service is the part of OpenVoiceOS that figures out what you actually meant.
@@ -233,3 +230,7 @@ intent context (`session.intent_context`) specified by
     `session.active_handlers` push is suppressed, since a reserved name continues or terminates
     an already-active skill's participation rather than starting a fresh one. See
     [Converse](converse.md) for how reserved names interact with converse/context handling.
+
+---
+**Read next:** [Skill Installer](skill-installer.md) · [Concepts Overview](concepts-overview.md)
+**Related:** [Pipelines Overview](pipelines-overview.md) · [Intent Design](intents.md) · [Formal Specifications](architecture-specs.md) · [Speech Service](speech-service.md)

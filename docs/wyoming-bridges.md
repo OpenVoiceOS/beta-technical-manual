@@ -410,3 +410,7 @@ without manual IP configuration.
 All three bridges use `OVOSSTTFactory` / `OVOSTTSFactory` / `OVOSWakeWordFactory` from
 `ovos-plugin-manager` for plugin discovery and instantiation. See
 [Plugin Manager](plugin-manager.md) for the plugin packaging reference.
+
+---
+**Read next:** [Plugins Index & Overview](plugins-index.md)
+**Related:** [Home Assistant](home-assistant.md) · [STT Server](stt-server.md) · [TTS Server](tts-server.md) · [STT Plugins](stt-plugins.md)

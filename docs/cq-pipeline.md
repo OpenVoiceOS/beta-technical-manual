@@ -172,3 +172,7 @@ self-reported confidences.
 ---
 
 *Source code: [OpenVoiceOS/ovos-common-query-pipeline-plugin](https://github.com/OpenVoiceOS/ovos-common-query-pipeline-plugin).*
+
+---
+**Read next:** [Persona Pipeline](persona-pipeline.md)
+**Related:** [Common Query Skills](common-query.md) · [Converse Pipeline](converse-pipeline.md) · [OCP Pipeline](ocp-pipeline.md)

@@ -184,3 +184,7 @@ class WebpageHomescreen(OVOSSkill):
         self.cancel_all_repeating_events()
 
 ```
+
+---
+**Read next:** [GUI Adapters](gui-adapters.md)
+**Related:** [Qt5 GUI](qt5-gui.md) · [OVOS Shell](ovos-shell.md) · [GUI Support (legacy, skills)](skill-gui.md)

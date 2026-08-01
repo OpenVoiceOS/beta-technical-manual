@@ -311,11 +311,6 @@ talk to is on the same machine. Treat every default as loopback-only until you h
 verified the config for a given deployment. The services start and look healthy on separate
 hosts with the defaults untouched, but they simply cannot reach each other.
 
-## See also
-
-- [Architecture Overview](architecture-overview.md) — how the services cooperate on a single host
-- [Bus Service](bus-service.md) — the protocol all of this rests on
-- [Core Libraries](core-libraries.md) — what each shared package provides
-- [Config](config.md) — how configuration files are located and merged
-- [Remote Agents with HiveMind](hivemind-agents.md) — a concrete distributed deployment built on these building blocks
-- [Install raspOVOS](install-raspovos.md) — the batteries-included counterpart
+---
+**Read next:** [Configuration Overview](config.md) · [Concepts Overview](concepts-overview.md)
+**Related:** [Bus Service](bus-service.md) · [Core Libraries](core-libraries.md) · [Remote Agents with HiveMind](hivemind-agents.md) · [Install raspOVOS](install-raspovos.md)

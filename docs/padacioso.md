@@ -67,3 +67,7 @@ These let a container activate or hide intents based on conversational state wit
 ---
 
 *Source code: [OpenVoiceOS/padacioso](https://github.com/OpenVoiceOS/padacioso).*
+
+---
+**Read next:** [Nebulento](nebulento.md)
+**Related:** [Adapt Pipeline](adapt-pipeline.md) · [Padatious Pipeline](padatious-pipeline.md) · [Palavreado](palavreado.md)

@@ -115,3 +115,7 @@ This allows switching between languages without manual reconfiguration, at the c
 ---
 
 *Source code: [OpenVoiceOS/ovos-core](https://github.com/OpenVoiceOS/ovos-core).*
+
+---
+**Read next:** [Customizing Language Resources](lang-customization.md)
+**Related:** [Language Support Overview](lang-support.md) · [Context & Sessions](session.md) · [Intent Service](intent-service.md)

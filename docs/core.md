@@ -95,3 +95,7 @@ CLI equivalents are the `--disable-*` forms: `--disable-intent-service`, `--disa
 ---
 
 *Source code: [OpenVoiceOS/ovos-core](https://github.com/OpenVoiceOS/ovos-core).*
+
+---
+**Read next:** [Skill Manager](skill-manager.md) · [Intent Service](intent-service.md)
+**Related:** [MessageBus Service](bus-service.md) · [Skill Installer](skill-installer.md) · [Formal Specifications](architecture-specs.md)

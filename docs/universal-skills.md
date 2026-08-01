@@ -205,3 +205,7 @@ class SpanishDatabaseSkill(UniversalSkill):
         self.speak("agregado a la base de datos") # will be spoken in self.lang
 
 ```
+
+---
+**Read next:** [Testing Skills with `ovoscope`](ovoscope-overview.md)
+**Related:** [OCP Skills](ocp-skills.md) · [Common Query Framework](common-query.md) · [Fallback Skill](fallbacks.md) · [Skill Classes](skill-classes.md)

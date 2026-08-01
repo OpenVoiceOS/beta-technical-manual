@@ -299,13 +299,6 @@ whole loading and initialization model changed, and it is not only a symbol loca
 still carrying a skill written against `mycroft-core`, that is a port, not a compat
 shim. Follow [Migrating From Mycroft](migrating-from-mycroft.md) instead.
 
-## Related pages
-
-- [Updating From Older OVOS](updating-from-older-ovos.md): the full breaking-change
-  reference this page's snippets are drawn from.
-- [Migrating From Mycroft](migrating-from-mycroft.md): porting a skill written before
-  the OVOS fork, not maintaining version compatibility across OVOS releases.
-- [Building Agent Plugins](building-agent-plugins.md): the persona
-  `"solvers"`/`"handlers"` dual-key pattern and the agent-engine plugin contracts.
-- [Release Channels](release-channels.md): the constraints-file pattern used in the
-  testing matrix above.
+---
+**Read next:** [Skill Design Best Practices](skill-best-practices.md)
+**Related:** [Migrating from Mycroft](migrating-from-mycroft.md) · [Skill Metadata File](skill-json.md) · [Runtime Requirements in OVOS](skill-runtime-requirements.md) · [Maturity Scale](maturity.md)

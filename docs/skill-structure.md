@@ -265,3 +265,7 @@ to say for that language.
 ---
 
 *Source code: [OpenVoiceOS/ovos-workshop](https://github.com/OpenVoiceOS/ovos-workshop).*
+
+---
+**Read next:** [Intent Design](intents.md)
+**Related:** [Your First Skill](first-skill.md) · [Skill Metadata File](skill-json.md) · [ovos-workshop Documentation](workshop-overview.md) · [Skill Classes](skill-classes.md)

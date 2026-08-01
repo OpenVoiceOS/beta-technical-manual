@@ -554,3 +554,5 @@ see that page for those.
 repository. This manual only documents plugins backed by an OpenVoiceOS-org repo.
 
 ---
+**Read next:** [Building Agent Plugins](building-agent-plugins.md)
+**Related:** [Personas & PersonaService](personas.md) · [Agent Tool Plugins](tool-plugins.md) · [OpenAI-compatible](openai-plugin.md) · [GGUF / Local LLM](gguf-plugin.md)

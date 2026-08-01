@@ -729,6 +729,6 @@ construct it yourself with your config dict.
 5. Unit tests exercise `execute`/`transcribe` directly, with no OVOS services running.
 6. `find_stt_plugins()` discovers the installed plugin under the expected name.
 
-## Further reading
-
-- [Real-Time Offline Speech Recognition on OVOS (ONNX ASR)](https://blog.openvoiceos.org/posts/2026-02-16-onnx-asr), OVOS blog
+---
+**Read next:** [TTS Plugins](tts-plugins.md)
+**Related:** [Wake Word Plugins](wake-word-plugins.md) · [STT Server](stt-server.md) · [Choosing Plugins](choosing-plugins.md) · [Real-Time Offline Speech Recognition on OVOS (ONNX ASR)](https://blog.openvoiceos.org/posts/2026-02-16-onnx-asr)

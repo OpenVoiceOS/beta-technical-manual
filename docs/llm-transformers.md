@@ -143,21 +143,6 @@ ASR output), with higher priority also running first.
 
 ---
 
-## Cross-References
-
-- [Utterance Transformers — ovos-core pipeline](core.md)
-
-
-- [Dialog Transformers — audio service](audio-service.md)
-
-
-- [OpenAI Plugin](openai-plugin.md): OpenAI transformer configuration reference
-
-
-- [GGUF Plugin](gguf-plugin.md): local GGUF transformer configuration reference
-
----
-
 !!! note "Where this code actually lives"
     `ovos-core` only defines the `opm.transformer.text` / `opm.transformer.dialog` entry-point
     contracts and calls into whatever is installed. It does not implement any transformer
@@ -168,3 +153,7 @@ ASR output), with higher priority also running first.
 *Source code: [OpenVoiceOS/ovos-core](https://github.com/OpenVoiceOS/ovos-core) (transformer contract) ·
 [OpenVoiceOS/ovos-openai-plugin](https://github.com/OpenVoiceOS/ovos-openai-plugin) ·
 [OpenVoiceOS/ovos-gguf-plugin](https://github.com/OpenVoiceOS/ovos-gguf-plugin) (implementations).*
+
+---
+**Read next:** [Transformers Overview (Pipeline)](transformer-plugins.md)
+**Related:** [OpenAI-compatible](openai-plugin.md) · [GGUF / Local LLM](gguf-plugin.md) · [Agent Engine Types](agent-plugins.md)

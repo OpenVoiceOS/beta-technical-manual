@@ -120,11 +120,6 @@ repeat the operational hardening steps. For those, including the network surface
 install, what gets written to disk, and a concrete checklist, see
 [Privacy & Security](privacy-security.md).
 
-## Related Pages
-
-- [Privacy & Security](privacy-security.md): operational hardening and the summary checklist
-- [Bus Service](bus-service.md): messagebus reference implementation and configuration
-- [PHAL](phal.md): hardware abstraction layer and the AdminPHAL security model
-- [Skill Installer](skill-installer.md): runtime skill install/uninstall over the bus
-- [Composable Deployments](composable-deployments.md): how services and satellites fit together
-- [Remote Agents with HiveMind](hivemind-agents.md): the authenticated, encrypted route beyond localhost
+---
+**Read next:** [Plugin Manager](plugin-manager.md) · [Concepts Overview](concepts-overview.md)
+**Related:** [Privacy & Security](privacy-security.md) · [PHAL](phal.md) · [Skill Installer](skill-installer.md) · [Remote Agents with HiveMind](hivemind-agents.md)

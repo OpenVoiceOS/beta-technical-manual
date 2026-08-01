@@ -3,17 +3,18 @@
 !!! abstract "In a nutshell"
     Designing for voice is different from designing a screen: people speak to your skill in many different ways, and you can't show them buttons or menus to guide them. This page shares simple methods to plan, sketch, and test a skill idea before you start coding, so the finished result feels natural to talk to instead of something you have to learn. Think of it as drawing a conversation on paper first. New terms are explained in the [Glossary](glossary.md).
 
-Applying principles of Voice User Interface Design helps you define and validate a skill's
-features before you start development. The methods below help plan, prototype, and test
-your skill during the early design stages.
-
 !!! note "Scope: voice interaction design"
+    Applying principles of Voice User Interface Design helps you define and validate a skill's
+    features before you start development. The methods below help plan, prototype, and test
+    your skill during the early design stages.
+
     This page is about **designing the conversation**: when to confirm, how much to say, how
     to phrase prompts. It is independent of any programming language. For the **code-level**
     practices that implement these ideas (which method to override, which API to call), see
     [Skill Design Best Practices](skill-best-practices.md).
 
-> **CREDITS** - Voice User Interface Design Guidelines based on the [original work of Derick Schweppe](https://derickschweppe.com/mycroft-ai-user-experience)
+    Credits: Voice User Interface Design Guidelines based on the
+    [original work of Derick Schweppe](https://derickschweppe.com/mycroft-ai-user-experience).
 
 ## Interactions
 
@@ -301,3 +302,7 @@ In the first example OVOS does not give the user any options to finish the job t
 ---
 
 *Source code: [OpenVoiceOS/ovos-workshop](https://github.com/OpenVoiceOS/ovos-workshop).*
+
+---
+**Read next:** [Skill Design Best Practices](skill-best-practices.md)
+**Related:** [Skill Structure](skill-structure.md) · [Asking the User for Responses in OVOS Skills](prompts.md) · [SSMLBuilder](ssml.md) · [Statements](statements.md)

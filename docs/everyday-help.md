@@ -102,3 +102,8 @@ If none of the above fixes it, the problem needs more digging. You still don't n
 be a programmer to follow along. [Troubleshooting & Debugging](troubleshooting.md) walks through
 the same journey (wake word to speech-to-text to understanding to skill to speaking) stage by
 stage. It shows which log file or on-screen tool proves where things went wrong.
+
+---
+
+**Read next:** [Troubleshooting & Debugging](troubleshooting.md)
+**Related:** [What can I say?](skill-examples.md) · [RaspOVOS Troubleshooting](raspovos-troubleshooting.md) · [Make it yours](personalize.md) · [Accessibility](accessibility.md)

@@ -23,7 +23,8 @@ Each skill below shows a **Maturity** rating from its repository health. See the
     git, e.g. `pip install git+https://github.com/OpenVoiceOS/ovos-skill-weather`. To build your
     own, follow [Your First Skill](first-skill.md).
 
-!!! info "Availability legend"
+    **Availability legend:**
+
     - **Installer default**: installed automatically when the `ovos-installer`'s `skills`
       feature is on (the default).
     - **Installer optional**: installed only if you also enable the installer's
@@ -626,3 +627,8 @@ where you want a voice shortcut to a maintenance script instead of SSHing in.
 
 ??? note "Install"
     [:material-github: OpenVoiceOS/ovos-skill-cmd](https://github.com/OpenVoiceOS/ovos-skill-cmd) · `pip install ovos-skill-cmd` · Maturity: Stable
+
+---
+
+**Read next:** [Skill Development Overview](skills-overview.md)
+**Related:** [Fun stuff to try](showcase.md) · [Your First Skill](first-skill.md) · [It's not behaving](everyday-help.md) · [Skill Dev F.A.Q.](skill-dev-faq.md)

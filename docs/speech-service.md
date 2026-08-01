@@ -163,3 +163,7 @@ The speech service is configured in the `listener`, `hotwords`, and `stt` sectio
     `filename` to the wake-word message. This is handy for gathering training data or
     debugging false triggers. The clips stay on the device. The listener itself does
     not upload anything.
+
+---
+**Read next:** [Audio Service](audio-service.md) · [Concepts Overview](concepts-overview.md)
+**Related:** [Wake Word Plugins](wake-word-plugins.md) · [STT Plugins](stt-plugins.md) · [Intent Service](intent-service.md) · [VAD Plugins](vad-plugins.md)

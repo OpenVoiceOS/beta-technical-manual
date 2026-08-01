@@ -142,8 +142,6 @@ deprecated media path. See the **Two independent subsystems** note above.
 
 ---
 
-## Related Pages
-
-- [Bus Events Reference](bus-events.md#tts-audio-playback): TTS/audio message types alongside the rest of the utterance lifecycle, including `recognizer_loop:utterance_start` emitted here when playback begins
-- [TTS Plugins](tts-plugins.md): the plugins this service loads
-- [Bus Service](bus-service.md): the messagebus itself
+---
+**Read next:** [Media Service (ovos-media)](ovos-media.md) · [Screens on OVOS Today](gui-status.md)
+**Related:** [Bus Events Reference](bus-events.md#tts-audio-playback) · [TTS Plugins](tts-plugins.md) · [Speech Service](speech-service.md) · [Bus Service](bus-service.md)

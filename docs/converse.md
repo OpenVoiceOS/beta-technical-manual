@@ -1,10 +1,7 @@
 # Converse
 
-See also: [Converse Pipeline](converse-pipeline.md) for how this feature is implemented as a
-pipeline plugin inside `ovos-core`.
-
 !!! abstract "In a nutshell"
-    Normally a skill answers one request and then forgets about you. "Converse" lets a skill stay in the conversation for a little while after it has spoken, so it can catch a quick follow-up like "yes", "no", "thanks", or "the red one" that only makes sense as a reply. This is the difference between a one-off answer and a short back-and-forth chat. New terms are explained in the [Glossary](glossary.md).
+    Normally a skill answers one request and then forgets about you. "Converse" lets a skill stay in the conversation for a little while after it has spoken, so it can catch a quick follow-up like "yes", "no", "thanks", or "the red one" that only makes sense as a reply. This is the difference between a one-off answer and a short back-and-forth chat. See [Converse Pipeline](converse-pipeline.md) for how this feature is implemented as a pipeline plugin inside `ovos-core`. New terms are explained in the [Glossary](glossary.md).
 
 ??? info "📐 Formal specification"
     Converse is specified by **[OVOS-CONVERSE-1 — Active Handlers & Interactive Response](https://github.com/OpenVoiceOS/architecture/blob/dev/converse.md)** (a formal [architecture spec](architecture-specs.md)). A skill that was recently active stays on the session's **converse-handler list** (`session.converse_handlers`, what this page calls the *Active Skills List*). The "wait for the next reply" feature (the response window) is the session field `session.response_mode`, delivered via the reserved `intent_name` **`response`**. Both `converse` and `response` are reserved names no skill may register. The list and the response window are **session-resident state** that rides every message. This is why session-aware skills behave correctly across satellites.
@@ -269,4 +266,8 @@ class MyGameSkill(ConversationalSkill):
 ```
 
 > **NOTE**: If these intents trigger, they are called **INSTEAD** of `converse`.
+
+---
+**Read next:** [Session Aware Skills](session.md)
+**Related:** [Permissions & Activation Control](permissions.md) · [Context](context.md) · [Asking the User for Responses in OVOS Skills](prompts.md) · [Fallback Skill](fallbacks.md)
 

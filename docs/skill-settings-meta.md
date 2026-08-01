@@ -251,3 +251,7 @@ skillMetadata:
 ---
 
 *Source code: [OpenVoiceOS/ovos-workshop](https://github.com/OpenVoiceOS/ovos-workshop).*
+
+---
+**Read next:** [Filesystem Access](skill-filesystem.md)
+**Related:** [Skill Settings](skill-settings.md) · [Skill Metadata File](skill-json.md) · [Resource Files](resource-files.md) · [Configuration Reference](config-reference.md)

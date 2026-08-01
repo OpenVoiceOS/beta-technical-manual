@@ -586,28 +586,8 @@ All decorators are importable from `ovos_workshop.decorators`:
 
 ---
 
-## Related Pages
-
-- [ovos-core](core.md): `SkillManager`, `IntentService`, skill loading
-
-
-- [Converse Pipeline](converse-pipeline.md): `ConversationalSkill` in action
-
-
-- [Fallback Pipeline](fallback-pipeline.md): `FallbackSkill` in action
-
-
-- [Skill Settings](skill-settings.md): `self.settings` persistence
-
-
-- [Skill Filesystem](skill-filesystem.md): `self.file_system`
-
-
-- [Skill API](ovos-skill.md): `@skill_api_method`, inter-skill calls
-
-
-- [Bus Session](session.md): session state available to skills
+*Source code: [OpenVoiceOS/ovos-workshop](https://github.com/OpenVoiceOS/ovos-workshop).*
 
 ---
-
-*Source code: [OpenVoiceOS/ovos-workshop](https://github.com/OpenVoiceOS/ovos-workshop).*
+**Read next:** [Decorators](decorators.md)
+**Related:** [OVOSSkill](ovos-skill.md) · [Fallback Skill](fallbacks.md) · [Common Query Framework](common-query.md) · [OCP Skills](ocp-skills.md)

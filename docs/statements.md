@@ -203,3 +203,7 @@ templates = self.resources.load_template_file("greeting")
 ---
 
 *Source code: [OpenVoiceOS/ovos-workshop](https://github.com/OpenVoiceOS/ovos-workshop).*
+
+---
+**Read next:** [SSMLBuilder](ssml.md)
+**Related:** [Session Aware Skills](session.md) · [Asking the User for Responses in OVOS Skills](prompts.md) · [Dialog Transformers](dialog-transformers.md) · [Resource Files](resource-files.md)

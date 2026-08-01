@@ -373,22 +373,8 @@ above under its matching top-level key in the same file.
 
 ---
 
-## Cross-References
-
-- [Agent Engine Types](agent-plugins.md): base class contracts and full type reference
-
-
-- [Personas & PersonaService](personas.md): how to load and activate personas
-
-
-- [LLM Transformers](llm-transformers.md): utterance and dialog transformer pipeline
-
-
-- [Persona Server](persona-server.md): expose a persona via OpenAI-compatible HTTP API
-
-
-- [GGUF Plugin](gguf-plugin.md): fully offline local alternative
+*Source code: [OpenVoiceOS/ovos-openai-plugin](https://github.com/OpenVoiceOS/ovos-openai-plugin).*
 
 ---
-
-*Source code: [OpenVoiceOS/ovos-openai-plugin](https://github.com/OpenVoiceOS/ovos-openai-plugin).*
+**Read next:** [GGUF / Local LLM](gguf-plugin.md)
+**Related:** [LLM Transformers](llm-transformers.md) · [Agent Engine Types](agent-plugins.md) · [Personas & PersonaService](personas.md) · [Persona Server](persona-server.md)

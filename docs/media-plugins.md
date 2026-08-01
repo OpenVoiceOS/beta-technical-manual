@@ -476,3 +476,5 @@ package defines, so it doubles as the reference plugin exercising both OPM disco
 external-plugin path.
 
 ---
+**Read next:** [GUI Protocol](gui-protocol.md)
+**Related:** [OCP Extractors](ocp-plugins.md) · [Media Service (ovos-media)](ovos-media.md) · [Choosing Plugins](choosing-plugins.md)

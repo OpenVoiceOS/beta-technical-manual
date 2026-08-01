@@ -112,13 +112,8 @@ includes some of the audio and diagnostic helpers exposed by the image's
 
 ---
 
-## Related Pages
-
-- [Mark 2 Hardware](mark2.md): the SJ201 board, and the installer's `VocalFusionDriver` path.
-- [Mark 1 Hardware](mark1.md): the faceplate device.
-- [raspOVOS image](install-raspovos.md): the image these tools ship on.
-- [PHAL](phal.md): the hardware-abstraction plugins for buttons, LEDs, fans, etc.
+*Source code: [OpenVoiceOS/ovos-i2csound](https://github.com/OpenVoiceOS/ovos-i2csound), [OpenVoiceOS/ovos-i2c-detection](https://github.com/OpenVoiceOS/ovos-i2c-detection), [OpenVoiceOS/raspovos-audio-setup](https://github.com/OpenVoiceOS/raspovos-audio-setup).*
 
 ---
-
-*Source code: [OpenVoiceOS/ovos-i2csound](https://github.com/OpenVoiceOS/ovos-i2csound), [OpenVoiceOS/ovos-i2c-detection](https://github.com/OpenVoiceOS/ovos-i2c-detection), [OpenVoiceOS/raspovos-audio-setup](https://github.com/OpenVoiceOS/raspovos-audio-setup).*
+**Read next:** [Mark 1 Hardware](mark1.md)
+**Related:** [Mark 2 Hardware](mark2.md) · [raspOVOS image](install-raspovos.md) · [PHAL](phal.md) · [Hardware Integrators](hardware-integrators.md)

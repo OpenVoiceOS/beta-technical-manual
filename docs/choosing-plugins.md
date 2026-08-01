@@ -262,3 +262,7 @@ Maturity here is a **repository-health** signal, not a quality score. See the
 [Maturity scale](maturity.md). For discovery/loading internals see the
 [Plugin Manager](plugin-manager.md). For head-to-head benchmark data see the
 [Plugin Arena](plugin-arena.md).
+
+---
+**Read next:** [Plugin Arena](plugin-arena.md) · [Microphone Plugins](mic-plugins.md)
+**Related:** [Plugins Index](plugins-index.md) · [Maturity Scale](maturity.md) · [Plugin Manager](plugin-manager.md)

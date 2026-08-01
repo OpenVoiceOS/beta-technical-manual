@@ -6,8 +6,7 @@
 ??? info "📐 Formal specification"
     The Common Query Framework is specified by **[OVOS-COMMON-QUERY-1 — Common Query Pipeline Plugin](https://github.com/OpenVoiceOS/architecture/blob/dev/common-query.md)** (a formal [architecture spec](architecture-specs.md)). A **pipeline plugin** runs a timed scatter-gather contest. It broadcasts `ovos.common_query.ping`, collects `pong` claims from skills that believe they can answer, and requests full answers (`answer` + `conf`) from the claimants. It then ranks them. Only answers at or above the minimum self-reported confidence (default **`0.5`**) survive. If a winner clears the bar, the plugin speaks it (reserved `intent_name` **`common_query`**). Otherwise `match` returns `None` and the pipeline falls through to [fallback](fallbacks.md). This mirrors how [OCP](ocp-skills.md) picks a media provider.
 
-!!! note "The winner may be re-ranked, not just highest-confidence"
-    If a re-ranker plugin (`ovos-flashrank-reranker-plugin` by default) is installed, the pipeline ignores the skills' self-reported confidence when it picks the winner among answers that cleared the `0.5` bar. Instead it asks the re-ranker to pick the best answer for the phrase. Confidence still gates which answers are eligible. It just isn't the tie-breaker when a re-ranker is present. Without a re-ranker installed, the highest-confidence answer wins (ties are broken arbitrarily).
+    **The winner may be re-ranked, not just highest-confidence.** If a re-ranker plugin (`ovos-flashrank-reranker-plugin` by default) is installed, the pipeline ignores the skills' self-reported confidence when it picks the winner among answers that cleared the `0.5` bar. Instead it asks the re-ranker to pick the best answer for the phrase. Confidence still gates which answers are eligible. It just isn't the tie-breaker when a re-ranker is present. Without a re-ranker installed, the highest-confidence answer wins (ties are broken arbitrarily).
 
 The Common Query Framework handles general information questions, such as "what is X" or "when did Y". Many skills may implement handlers for the same kind of question. The Common Query Framework queries all of them and selects a single best answer to speak. This works like the [OCP](ocp-skills.md) framework, which handles the common case of "playing" music or other media.
 
@@ -129,3 +128,7 @@ class PythonAgeSkill(OVOSSkill):
 ```
 
 > The framework speaks the selected answer automatically. Do **not** call `self.speak()` inside the common-query handler. The callback is only for side effects, such as visuals, follow-up state, or logging.
+
+---
+**Read next:** [OCP Skills](ocp-skills.md)
+**Related:** [Fallback Skill](fallbacks.md) · [Common Query Pipeline](cq-pipeline.md) · [Skill Classes](skill-classes.md) · [Persona Pipeline](persona-pipeline.md)

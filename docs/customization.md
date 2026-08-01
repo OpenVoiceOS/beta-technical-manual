@@ -234,16 +234,8 @@ These examples are emitted to the homescreen as `homescreen.register.examples` o
 
 ---
 
-## Related Pages
-
-- [Skill Structure](skill-structure.md): directory layout and skill packaging
-
-
-- [Intents](intents.md): Adapt and Padatious intent files
-
-
-- [Skill Classes](skill-classes.md): `OVOSSkill` properties (`resources`, `lang`, `find_resource`)
+*Source code: [OpenVoiceOS/ovos-workshop](https://github.com/OpenVoiceOS/ovos-workshop).*
 
 ---
-
-*Source code: [OpenVoiceOS/ovos-workshop](https://github.com/OpenVoiceOS/ovos-workshop).*
+**Read next:** [Skill Metadata File](skill-json.md)
+**Related:** [SSMLBuilder](ssml.md) · [Skill Settings](skill-settings.md) · [Resource Files](resource-files.md) · [Customizing Language Resources](lang-customization.md)

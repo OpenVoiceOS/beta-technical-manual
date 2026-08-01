@@ -93,3 +93,7 @@ independently. You don't normally choose their versions yourself.
 
 For the full list of OVOS repositories, including plugins, skills, and tools, see the
 [OVOS Repository Index](ecosystem-index.md).
+
+---
+**Read next:** [Language Names](lang-parser.md)
+**Related:** [OVOS Repository Index](ecosystem-index.md) · [Plugin Manager](plugin-manager.md) · [Bus Service](bus-service.md) · [Configuration](config.md)

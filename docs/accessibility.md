@@ -117,3 +117,8 @@ tuning specifically for this:
 - **No dedicated tuning exists for limited dexterity or cognitive load beyond what's described
   above.** Wake-word sensitivity and phrasing choices help, but there is no built-in "simplified
   mode" or slower confirmation flow.
+
+---
+
+**Read next:** [Make it yours](personalize.md) · [It's not behaving](everyday-help.md)
+**Related:** [Wake Word Plugins](wake-word-plugins.md) · [Command-line Tools](cli-tools.md) · [SSML](ssml.md) · [Troubleshooting & Debugging](troubleshooting.md)

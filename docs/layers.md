@@ -11,15 +11,9 @@
 ??? info "📐 Formal specification"
     `IntentLayer` gating is implemented through the session's **intent context**. Each layer is a session context token its intents require. The mechanism is specified by **[OVOS-CONTEXT-1: Intent Context](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-context.md)** (see [Context](context.md) and the [spec index](architecture-specs.md)).
 
-!!! tip "`IntentLayers` are per-session"
-    `IntentLayer` state lives in the **session**, so layered skills are concurrency-safe
-    across [HiveMind](https://jarbashivemind.github.io/HiveMind-community-docs/) satellites.
-    Two satellites can be in different layers at the same time. (The lower-level
-    `enable_intent` / `disable_intent` calls in the next section still change the **global**
-    intent set, so prefer layers for per-session flows.)
+    **`IntentLayers` are per-session.** `IntentLayer` state lives in the **session**, so layered skills are concurrency-safe across [HiveMind](https://jarbashivemind.github.io/HiveMind-community-docs/) satellites. Two satellites can be in different layers at the same time. (The lower-level `enable_intent` / `disable_intent` calls in the next section still change the **global** intent set, so prefer layers for per-session flows.)
 
-!!! note "Not the same as skill permissions"
-    Intent layers switch groups of *intents* on and off inside one already-active skill. Whether a skill is even allowed to participate in converse at all (whitelists, blacklists, `ConverseMode`) is a separate, coarser gate. See [Permissions & Activation Control](permissions.md).
+    **Not the same as skill permissions.** Intent layers switch groups of *intents* on and off inside one already-active skill. Whether a skill is even allowed to participate in converse at all (whitelists, blacklists, `ConverseMode`) is a separate, coarser gate. See [Permissions & Activation Control](permissions.md).
 
 ## Managing Intents
 
@@ -263,3 +257,7 @@ the skill id). Every intent registered under that layer is set to *require* the 
 Because layer state rides on intent context, and intent context is per-session, each
 [voice satellite](https://jarbashivemind.github.io/HiveMind-community-docs/07_voicesat/)
 talking to a shared skill keeps its own independent set of active layers.
+
+---
+**Read next:** [Permissions & Activation Control](permissions.md)
+**Related:** [Context](context.md) · [Intent Design](intents.md) · [Converse](converse.md) · [Decorators](decorators.md)

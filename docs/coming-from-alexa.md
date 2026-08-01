@@ -85,11 +85,7 @@ Some Echo habits have no equivalent. It is better to know that before you unplug
 Everything in this list is something you can build. OVOS is a toolkit, and skills are Python.
 None of it arrives working the way it does on an Echo.
 
-## Related pages
+---
 
-- [ovos-installer](ovos-installer.md): the guided install wizard
-- [RaspOVOS](install-raspovos.md): the closest thing to a ready-made device image
-- [OVOS & Home Assistant](home-assistant.md): smart-home setup
-- [Screens on OVOS Today](gui-status.md): the honest state of on-device visuals
-- [What can I say?](skill-examples.md): everything OVOS can do out of the box
-- [Privacy & Security](privacy-security.md): what a default install sends over the network
+**Read next:** [Install with ovos-installer](ovos-installer.md) · [RaspOVOS](install-raspovos.md)
+**Related:** [OVOS & Home Assistant](home-assistant.md) · [What can I say?](skill-examples.md) · [Privacy & Security](privacy-security.md) · [Screens on OVOS Today](gui-status.md)

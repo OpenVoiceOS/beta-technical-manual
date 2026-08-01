@@ -1,0 +1,149 @@
+# Updating Remote Bus Clients From Older OVOS
+
+## In a nutshell
+
+This page is for anyone connecting to the bus as a separate process:
+HiveMind satellites, custom dashboards, external automation, or any code
+that parses raw wire messages instead of going through a skill. Entries
+are in date order: start at the version you are currently running and
+read forward to your target version. For the Big-ticket migrations (the
+changes with the widest blast radius, including the bus-client dual-emit
+bridge), see
+[Updating from Older OVOS](updating-from-older-ovos.md#big-ticket-migrations).
+
+## If you consume the message bus remotely (HiveMind and other clients)
+
+### `mycroft-bus-client` package retirement (package-level, not wire-level)
+
+Every repo in the org switched its dependency and imports from the
+upstream `mycroft-bus-client` package to `ovos-bus-client`. This is a
+Python import change, not a wire change: listed here because it is the
+package-level ancestor of the topic-level migration above.
+
+- Migration: `pip install ovos-bus-client`. `from mycroft_bus_client
+  import Message` → `from ovos_bus_client.message import Message` (or
+  `from ovos_bus_client import MessageBusClient`).
+- Lifecycle: active before 2023-04. Dropped (isinstance compat kept
+  briefly, `04def5d`) starting `9396c71` (2023-04-05, ovos-bus-client's
+  own extraction). The ecosystem-wide dependency swap landed at
+  `b1a9d39e16` (2023-04-11) in `ovos-core`, and matching one-line swaps in
+  `ovos-audio` (`426a48b`), `ovos-media` (`426a48b`), and
+  `ovos-messagebus` (`a1bc1c1`), all within the same week.
+
+### GUI wire protocol moved to template-based `GUIInterface`
+
+The free-form page/`GUIWidgets` API is replaced by a template wire
+protocol: `gui.value.set` + `gui.page.show` (OVOS-GUI-1 §3-4), with a new
+`PageTemplates` enum and `show_text`/`show_image`/`show_face` helpers. The
+old page/remove primitives became private. `EnclosureAPI` is deprecated in
+favor of `GUIInterface` for visual output.
+
+- Migration: declare a `PageTemplates.*` template and call the matching
+  `show_*` helper instead of pushing a raw QML/page path. Move visual
+  output off `EnclosureAPI` onto `GUIInterface`. Both `GUIInterface` and
+  `EnclosureAPI` are themselves deprecated in favor of
+  `ovos-gui-api-client`.
+- Lifecycle: active before `0d145d3`. Deprecated but functional through a
+  series of `refactor!:` commits from `59ee94e` (2026-03-12) through
+  `0d145d3` (2026-06-25). Classic API becomes private at `0d145d3`
+  (ovos-bus-client `0d145d3`).
+
+### HiveMind agent protocol and messagebus-solver removed from ovos-bus-client
+
+`ovos_bus_client/hpm.py` (`OVOSAgentProtocol`/`OVOSProtocol`) and
+`ovos_bus_client/opm.py` (the `neon.plugin.solver`-based chat class) were
+deleted, along with the `hivemind.agent.protocol` entry point.
+
+- Migration: `from ovos_bus_client.hpm import OVOSAgentProtocol` → install
+  `hivemind-ovos-agent-plugin` and import from there (the entry-point
+  *name* is preserved, so HiveMind-core configs need no change, only the
+  dependency install). `ovos_bus_client.opm` (QuestionSolver-based chat) →
+  `ovos-messagebus-chat-plugin` (implements `ChatEngine`, uses
+  `SessionManager` for multi-turn state). See
+  JarbasHiveMind/HiveMind-core#85.
+- Lifecycle: active before `d526e99`. Unverified deprecation window.
+  dropped `2.0.0` (ovos-bus-client `d526e99`, #207, 2026-05-18).
+
+### Per-service legacy topic migrations (spec-bus adoption, 2026-06)
+
+Every listener/core service in the org migrated its own emit/listen sites
+to `ovos_spec_tools.SpecMessage` constants around the same time, mostly
+gated behind a `legacy_namespace` config key (default `True`, so
+out-of-the-box wire behavior is initially unchanged):
+
+| Legacy topic | Spec topic | Landed in |
+|---|---|---|
+| `recognizer_loop:utterance` | `ovos.utterance.handle` (`SpecMessage.UTTERANCE`) | ovos-core `1672e35ed0` (#772/#775) · ovos-dinkum-listener `d9dc04e` (#232) · ovos-simple-listener `b8326fa` (#26) · mycroft-classic-listener `4458a3f` (#23, `1.0.0`) |
+| `mycroft.awoken` | `SpecMessage.LISTENER_AWOKEN` | ovos-dinkum-listener `d9dc04e` · mycroft-classic-listener `4458a3f` |
+| `recognizer_loop:record_begin` / `record_end` | `SpecMessage.LISTENER_RECORD_STARTED` / `_ENDED` | ovos-dinkum-listener `d9dc04e` · mycroft-classic-listener `4458a3f` |
+| `mycroft.mic.listen` | `SpecMessage.MIC_LISTEN` | ovos-dinkum-listener `d9dc04e` · mycroft-classic-listener `4458a3f` |
+| `recognizer_loop:audio_output_start` / `_end` | `SpecMessage.AUDIO_OUTPUT_STARTED` / `_ENDED` | ovos-dinkum-listener `d9dc04e` · mycroft-classic-listener `4458a3f` |
+| `recognizer_loop:sleep` | `SpecMessage.LISTENER_SLEEP` | ovos-dinkum-listener `d9dc04e` · mycroft-classic-listener `4458a3f` |
+| `mycroft.stop`, per-skill stop pings, `complete_intent_failure` | `ovos.stop`, `ovos.stop.ping`, `ovos.intent.unmatched` | ovos-core `f4c00d90b2` (2026-06-05) |
+| `stop.openvoiceos.stop.response` | removed, not replaced | ovos-core `2b05201705` (2026-06-29): `StopService` no longer registers itself as a skill, do not count it as a participating skill in custom global-stop aggregation |
+
+- Migration: for any deployment that explicitly sets
+  `legacy_namespace: false`, subscribe to the `ovos.*` spec topics instead
+  of the legacy ones. Default deployments are unaffected until that flag's
+  default flips (not yet flipped as of `f4c00d90b2`/`f9862a760e`). Prefer
+  `ovos_spec_tools.SpecMessage.*` constants over hardcoded topic strings
+  going forward, since their literal values are not always the same as
+  the legacy strings they replace.
+- Lifecycle: active (legacy-only) before mid-2026. Deprecated but
+  functional (dual-emit or `legacy_namespace`-gated) from mid-2026
+  onward. No hard drop has shipped: `ovos-bus-client`'s bridge removal is
+  the unmerged kill-switch
+  [PR #272](https://github.com/OpenVoiceOS/ovos-bus-client/pull/272)
+  (commit `f1a481d` on its branch). `legacy_namespace` gating in `ovos-core`
+  itself (`f4c00d90b2`/`f9862a760e`, "gate bus topics by
+  legacy_namespace") lives only on unmerged feature branches, not on
+  `dev`: the default has not flipped because the flag has not shipped to
+  a stable release yet.
+
+### SESSION-1 spec adoption changes session wire semantics
+
+`SessionManager` was rebuilt on the `ovos-spec-tools` session registry
+(`b54269c`, 2026-06-29). Three concrete wire/behavior changes to know:
+
+- `get()` no longer reserves the default session id as owner-only: it
+  folds like any other session (SESSION-1 §4).
+- Session expiry (`Session.expired`/`touch_time`/`expiration_seconds`,
+  `prune_sessions`) is not part of SESSION-1 and is deprecation-warned.
+  Stop depending on session TTL/pruning behavior.
+- `SessionManager` now enforces one live `Session` object per id
+  (singleton, `7a2e39f`, #249). Code holding a stale `Session` reference
+  expecting it to stay independent from the manager's canonical instance
+  will observe shared-state changes it did not make.
+- An empty list on a list-valued override field (`pipeline`,
+  `blacklisted_skills`, `blacklisted_intents`) is now **omitted** from
+  `serialize()` output instead of round-tripped as `[]` (`47b0e4a`,
+  2026-07-09). Absence means "use the deployment default." Any bus
+  consumer indexing the raw wire dict (`session["pipeline"]`) instead of
+  going through `Session.deserialize()` must treat a missing key as
+  "deployment default," not as an error.
+
+- Migration: read sessions through `Session.deserialize()`/the `Session`
+  class, not by indexing the raw wire dict. Stop relying on
+  `prune_sessions`/session TTL expiry. Treat the default session id like
+  any other session id.
+- Lifecycle: active before `b54269c`. The list-omission wire change is
+  deprecated-in-spirit only (no prior wire shape to preserve, this is a
+  new spec adoption) landing directly at `47b0e4a` (2026-07-09). Session
+  expiry deprecated but functional from `b54269c` (2026-06-29), drop
+  version unverified.
+
+### Legacy `mycroft.*`/`recognizer_loop:*` topic bridge scheduled for removal
+
+See [The bus-client legacy-topic dual-emit and its removal](updating-from-older-ovos.md#the-bus-client-legacy-topic-dual-emit-and-its-removal)
+in the hub for the full timeline. The short version for remote clients: the
+bridge is on by default in current releases, and the open kill-switch
+[ovos-bus-client#272](https://github.com/OpenVoiceOS/ovos-bus-client/pull/272)
+deletes it once the fleet has migrated. After it merges,
+`MessageBusClient` speaks OVOS-MSG-1 (`ovos.*`) topics only, and a
+HiveMind satellite still emitting or expecting legacy topics silently
+stops being received. Migrate ahead of it.
+
+---
+
+**Read next:** [Version-Compatible Skills & Plugins](version-compat-guide.md) · [Upcoming Changes](upcoming-changes.md)
+**Related:** [Updating from Older OVOS](updating-from-older-ovos.md) · [Bus Service](bus-service.md)

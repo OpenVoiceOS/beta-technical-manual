@@ -241,13 +241,6 @@ launch.
 
 ---
 
-## See also
-
-- [PHAL — Platform/Hardware Abstraction Layer](phal.md) — the plugin system this page builds on
-- [i2c Sound & Audio Setup](i2c-sound.md) — Raspberry Pi HAT-specific audio bring-up
-- [Mycroft Mark 2 Hardware](mark2.md) — a worked example of a full custom-board bring-up
-- [Production Operations](production-operations.md) — fleet management once your hardware exists
-
-## Further reading
-
-- [Running HiveMind Player on ArkOS with the R36S](https://blog.openvoiceos.org/posts/2025-10-11-r36s) — OVOS blog
+---
+**Read next:** [i2c Sound & Audio Setup](i2c-sound.md)
+**Related:** [PHAL](phal.md) · [Mark 2 Hardware](mark2.md) · [Production Operations](production-operations.md) · [Mark 1 Hardware](mark1.md)

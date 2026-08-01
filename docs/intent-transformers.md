@@ -210,3 +210,7 @@ print(find_intent_transformer_plugins())
 ---
 
 *Source code: [OpenVoiceOS/ovos-core](https://github.com/OpenVoiceOS/ovos-core).*
+
+---
+**Read next:** [Dialog Transformers](dialog-transformers.md)
+**Related:** [Utterance Transformers](utterance-transformers.md) · [Adapt Pipeline](adapt-pipeline.md) · [Padatious Pipeline](padatious-pipeline.md)

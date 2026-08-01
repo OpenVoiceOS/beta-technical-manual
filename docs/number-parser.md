@@ -310,16 +310,10 @@ pronounce_fraction("3/2", "pt")   # "três meios"
 def pronounce_fraction(fraction_word: str, lang: str, scale: Optional[Scale] = None) -> str: ...
 ```
 
-## Related Projects
-
-- [ovos-date-parser](https://github.com/OpenVoiceOS/ovos-date-parser): for handling dates and times
-
-
-- [ovos-lang-parser](https://github.com/OpenVoiceOS/ovos-lang-parser): for handling language names
-
-
-- [ovos-color-parser](https://github.com/OpenVoiceOS/ovos-color-parser): for handling colors
-
 ## License
 
 This project is licensed under the Apache License 2.0.
+
+---
+**Read next:** [Dates & Time](date-parser.md)
+**Related:** [Language Names](lang-parser.md) · [Colors](color-parser.md) · [Quebra Frases](quebra-frases.md)

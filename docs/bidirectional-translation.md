@@ -129,3 +129,7 @@ The `DialogTranslator` listens on the [messagebus](bus-service.md). A skill or c
 *   **Alpha Status**: This plugin is in **alpha** and adds latency, since each turn may incur two translation round-trips (utterance in, dialog out).
 *   **First-utterance only:** when STT emits multiple candidate utterances, only the first is translated. The rest pass through untranslated.
 *   **Where to install:** in a split deployment (e.g. ovos-docker), the **utterance** transformer must run where intents are processed (`ovos-core`). The **dialog** transformer must run where speech is produced (`ovos-audio`). The translation and detection plugins must be installed in both places.
+
+---
+**Read next:** [Contributing Translations](ovos-localize-tutorial.md)
+**Related:** [Translation Plugins](translation-plugins.md) · [Customizing Language Resources](lang-customization.md) · [Dialog Transformers](dialog-transformers.md)

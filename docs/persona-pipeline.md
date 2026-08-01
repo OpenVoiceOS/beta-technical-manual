@@ -338,16 +338,8 @@ Responses use these dialog keys: `activated_persona`, `release_persona`, `active
 
 ---
 
-## Related Pages
-
-- [Agent / Solver Plugins](agent-plugins.md): the handler plugins a persona delegates to
-- [Fallback Pipeline](fallback-pipeline.md): the low-tier fallback persona routing complements
-
-
-- [Life of an Utterance](life-of-an-utterance.md): where the persona stages sit in the pipeline
-
----
-
----
-
 *Source code: [OpenVoiceOS/ovos-persona](https://github.com/OpenVoiceOS/ovos-persona).*
+
+---
+**Read next:** [Stop Pipeline](stop-pipeline.md)
+**Related:** [Personas & PersonaService](personas.md) · [Persona Server](persona-server.md) · [Agent / Solver Plugins](agent-plugins.md) · [Common Query Pipeline](cq-pipeline.md)

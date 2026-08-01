@@ -295,3 +295,7 @@ There is no secrets manager or encryption layer.
 Found an actual vulnerability rather than a documentation gap? Use the affected
 repository's Security tab → **Report a vulnerability** on
 [github.com/OpenVoiceOS](https://github.com/OpenVoiceOS) to report it privately.
+
+---
+**Read next:** [STT Server](stt-server.md)
+**Related:** [Production Operations](production-operations.md) · [Server Compatibility Layers](server-compat-layers.md) · [HiveMind](hivemind-agents.md) · [MessageBus Service](bus-service.md)

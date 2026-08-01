@@ -310,16 +310,6 @@ OVOS-side skill or session continuity.
 
 ---
 
-## Related pages
-
-- [Agent Plugins](agent-plugins.md): full engine-type (`opm.agents.*`) reference with config examples.
-- [OpenAI Plugin](openai-plugin.md): OpenAI-compatible engine implementations and translation plugins.
-- [GGUF Plugin](gguf-plugin.md): fully offline local GGUF engine implementations.
-- [Persona Memory](persona-memory.md): the `opm.agents.memory` backends, in depth.
-- [HiveMind Agents](hivemind-agents.md): remote satellite-to-persona connections.
-- [Persona Pipeline](persona-pipeline.md): detailed pipeline matching logic.
-- [Persona Server](persona-server.md): expose a persona via an OpenAI-compatible HTTP API.
-
-## Further reading
-
-- [When Your Voice Assistant Becomes a Persona: The Power and Peril of LLMs](https://blog.openvoiceos.org/posts/2025-05-06-when-your-voice-assistant-becomes-a-persona), OVOS blog
+---
+**Read next:** [Agent Engine Types](agent-plugins.md)
+**Related:** [Persona Memory](persona-memory.md) · [Persona Server](persona-server.md) · [Choosing Plugins](choosing-plugins.md#ai-agents-llm-chat-backends) · [Persona Pipeline](persona-pipeline.md)

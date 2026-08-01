@@ -678,3 +678,7 @@ Every pattern in this cookbook also runs in a real, installable skill. Read the 
 | Locale-correct number/date speech | [`ovos-skill-count`](https://github.com/OpenVoiceOS/ovos-skill-count), [`ovos-skill-date-time`](https://github.com/OpenVoiceOS/ovos-skill-date-time) |
 | Simplest complete skill | [`ovos-skill-hello-world`](https://github.com/OpenVoiceOS/ovos-skill-hello-world) |
 
+---
+**Read next:** [Skill Structure](skill-structure.md) · [Intent Design](intents.md)
+**Related:** [Your First Skill](first-skill.md) · [Skill Design Best Practices](skill-best-practices.md) · [OCP Skills](ocp-skills.md) · [Common Query Framework](common-query.md)
+

@@ -155,3 +155,7 @@ the executable conformance suite
 ([`ovos-test-harness`](https://github.com/OpenVoiceOS/ovos-test-harness)), and the
 [bus-client namespace migration](bus-service.md#namespace-migration) that lets the
 ecosystem adopt the new `ovos.*` topics without a flag day.
+
+---
+**Read next:** [Specification Tooling](spec-tooling.md) · [Maturity Scale](maturity.md)
+**Related:** [High-level Overview](architecture-overview.md) · [MessageBus Service](bus-service.md) · [Intent Service](intent-service.md) · [Plugin Manager](plugin-manager.md)

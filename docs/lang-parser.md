@@ -187,22 +187,8 @@ alternation string that gets expanded. This allows synonyms (e.g. German lists b
 
 ---
 
-## Cross-references
-
-| Package | Relationship |
-|---------|-------------|
-| `ovos-bus-client` | Uses `ovos-lang-parser` for language normalization in message contexts |
-| `ovos-core` | Language selection commands handled via skills that call this library |
-| `ovos-workshop` | Skill helpers for language-switching may use this library |
-| `ovos-number-parser` | Peer library in the OVOS NLP stack; not a dependency |
-| `ovos-date-parser` | Peer library in the OVOS NLP stack; not a dependency |
-| `ovos-color-parser` | Peer library in the OVOS NLP stack; not a dependency |
-
-See also:
-- [Number Parser](number-parser.md)
-- [Date Parser](date-parser.md)
-- [Color Parser](color-parser.md)
+*Source code: [OpenVoiceOS/ovos-lang-parser](https://github.com/OpenVoiceOS/ovos-lang-parser).*
 
 ---
-
-*Source code: [OpenVoiceOS/ovos-lang-parser](https://github.com/OpenVoiceOS/ovos-lang-parser).*
+**Read next:** [Numbers](number-parser.md)
+**Related:** [Dates & Time](date-parser.md) · [Colors](color-parser.md) · [Quebra Frases](quebra-frases.md) · [Language Selection (internals)](lang-selection.md)

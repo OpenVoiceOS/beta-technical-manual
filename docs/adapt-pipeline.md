@@ -136,3 +136,7 @@ Avoid using Adapt for public-facing or general-purpose assistant skills. Modern 
 ---
 
 *Source code: [OpenVoiceOS/ovos-adapt-pipeline-plugin](https://github.com/OpenVoiceOS/ovos-adapt-pipeline-plugin).*
+
+---
+**Read next:** [Padatious Pipeline](padatious-pipeline.md)
+**Related:** [Padacioso](padacioso.md) · [Adapt Intents](intents-adapt.md) · [Model2Vec Pipeline](m2v-pipeline.md) · [Debugging Intent Matching](debugging-intent-matching.md)

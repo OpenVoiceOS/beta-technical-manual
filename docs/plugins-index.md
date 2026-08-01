@@ -114,3 +114,7 @@ entry-point group and template base class:
 For the full machine-readable list of plugin types and template base classes, see the
 **[Plugin Manager → Plugin Types](plugin-manager.md#plugin-types)** table. To create your own
 plugin, each catalog page above includes a template and entry-point example.
+
+---
+**Read next:** [Choosing Plugins](choosing-plugins.md)
+**Related:** [Plugin Arena](plugin-arena.md) · [Plugin Manager](plugin-manager.md) · [Maturity Scale](maturity.md) · [Glossary](glossary.md)

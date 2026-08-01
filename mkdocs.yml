@@ -251,7 +251,12 @@ nav:
       - Production Overview: production-overview.md
       - Privacy & Security: privacy-security.md
       - Production Operations: production-operations.md
-      - Updating from Older OVOS: updating-from-older-ovos.md
+      - Updating from Older OVOS:
+          - Overview & Big-Ticket Migrations: updating-from-older-ovos.md
+          - For Skill Maintainers: updating-skills.md
+          - For Plugin Maintainers: updating-plugins.md
+          - For Device & Fleet Operators: updating-deployers.md
+          - For Remote Bus Clients: updating-remote-clients.md
       - Upcoming Changes: upcoming-changes.md
       - Self-hosting Servers:
           - STT Server: stt-server.md

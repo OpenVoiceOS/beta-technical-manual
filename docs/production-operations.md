@@ -610,3 +610,7 @@ monitoring agent's CLI, an email, a webhook. The same pattern works as a plain `
 (`*/5 * * * * /usr/local/bin/ovos-ready-probe || /usr/local/bin/notify-monitoring-agent ...`) on a
 system without `systemd --user` timers. This is something you build, not something OVOS ships.
 But it is the whole shape of a working readiness alert: schedule the probe, act on its exit code.
+
+---
+**Read next:** [Privacy & Security](privacy-security.md)
+**Related:** [STT Server](stt-server.md) · [Updating from Older OVOS](updating-from-older-ovos.md) · [HiveMind](hivemind-agents.md) · [Release Channels](release-channels.md)

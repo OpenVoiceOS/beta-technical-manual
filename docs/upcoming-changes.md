@@ -393,10 +393,6 @@ headline efforts above.
   Audience: skill API consumers and plugin authors calling into skill public
   APIs. Expected 9.4.0 (unreleased).
 
-## Related pages
-
-- [Updating from Older OVOS](updating-from-older-ovos.md)
-- [Version Compatibility Guide](version-compat-guide.md)
-- [Screens on OVOS Today](gui-status.md)
-- [Media Service (ovos-media)](ovos-media.md)
-- [Formal Specifications](architecture-specs.md)
+---
+**Read next:** [Server Compatibility Layers](server-compat-layers.md)
+**Related:** [Updating from Older OVOS](updating-from-older-ovos.md) · [Version Compatibility Guide](version-compat-guide.md) · [Screens on OVOS Today](gui-status.md) · [Formal Specifications](architecture-specs.md)

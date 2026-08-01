@@ -57,3 +57,7 @@ plugin's own docs for the full list of strategies and how to set up context gati
     and your intent set is small enough that fuzzy comparison stays fast. For large intent sets
     or strict matching, prefer [Padatious](padatious-pipeline.md) (neural) or
     [Adapt](adapt-pipeline.md) (keyword).
+
+---
+**Read next:** [Palavreado](palavreado.md)
+**Related:** [Padatious Pipeline](padatious-pipeline.md) · [Padacioso](padacioso.md) · [Hierarchical KNN Pipeline](knn-pipeline.md)

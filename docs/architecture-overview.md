@@ -127,3 +127,7 @@ This allows OVOS to run on everything from a high-end server to a Raspberry Pi Z
 ---
 
 *Source code: [OpenVoiceOS/ovos-core](https://github.com/OpenVoiceOS/ovos-core).*
+
+---
+**Read next:** [Life of an Utterance](life-of-an-utterance.md) · [MessageBus Service](bus-service.md)
+**Related:** [Formal Specifications](architecture-specs.md) · [Plugin Manager](plugin-manager.md) · [ovos-core Overview](core.md) · [Composable Deployments](composable-deployments.md)

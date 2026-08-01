@@ -9,27 +9,28 @@
 By the end you'll have a skill that answers when you say *"hello"*. Once you've done it once,
 every other skill is just more of the same idea.
 
-```mermaid
-flowchart TD
-    A["Step 1: create folder layout"] --> B["Step 2: write skill code"]
-    B --> C["Step 3: write .intent file"]
-    C --> D["Step 4: write .dialog file"]
-    D --> E["Step 5: pyproject.toml + entry point"]
-    E --> F["Step 6: pip install -e ."]
-    F --> G["Restart ovos-core"]
-    G --> H{"Say 'hello'"}
-    H -->|OVOS replies| I["Done"]
-    H -->|no reply| J["Check ovos-logs show -l skills"]
-    J --> F
-```
-
-*Diagram:* The flow runs from creating the folder layout to a working skill, checks the "hello" reply, and loops back to the pip install step on failure.
-
 !!! note "Before you start: OVOS needs to already be installed"
     This walkthrough assumes OVOS is already installed and its Python environment is available
     to work in. See [ovos-installer](ovos-installer.md) or [RaspOVOS](install-raspovos.md) if
     you haven't done that yet. The ten minutes below covers writing and installing the skill
     itself, once that environment is in place.
+
+    The flow runs from creating the folder layout to a working skill, checks the "hello" reply,
+    and loops back to the pip install step on failure:
+
+    ```mermaid
+    flowchart TD
+        A["Step 1: create folder layout"] --> B["Step 2: write skill code"]
+        B --> C["Step 3: write .intent file"]
+        C --> D["Step 4: write .dialog file"]
+        D --> E["Step 5: pyproject.toml + entry point"]
+        E --> F["Step 6: pip install -e ."]
+        F --> G["Restart ovos-core"]
+        G --> H{"Say 'hello'"}
+        H -->|OVOS replies| I["Done"]
+        H -->|no reply| J["Check ovos-logs show -l skills"]
+        J --> F
+    ```
 
 ## What a skill is made of
 
@@ -239,3 +240,7 @@ built wheel) before OVOS can see the new file.
 - Browse real skills for ideas in [Skill Examples](skill-examples.md).
 - Questions along the way? Ask in the
   [skills channel on OVOS Chat](https://matrix.to/#/#openvoiceos-skills:matrix.org).
+
+---
+**Read next:** [Skill Structure](skill-structure.md)
+**Related:** [Skill Cookbook](skill-cookbook.md) · [Intent Design](intents.md) · [Test Your Skill](testing-your-skill.md) · [Skill Development Overview](skills-overview.md)

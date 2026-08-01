@@ -151,15 +151,6 @@ See [Bus Events Reference](bus-events.md#intent-matching-context) and
 
 ---
 
-## Related Pages
-
-- [Troubleshooting & Debugging](troubleshooting.md): the full stage-by-stage guide this page
-  assumes, covering mic, wake word, and STT before the intent pipeline
-- [Pipelines Overview](pipelines-overview.md): the stage reference and confidence-tier model
-- [Building Your Pipeline](building-your-pipeline.md): worked pipeline configs and ordering
-  rules of thumb
-- [Adapt Pipeline](adapt-pipeline.md), [Padatious Pipeline](padatious-pipeline.md),
-  [Model2Vec Pipeline](m2v-pipeline.md): the matchers most of these gotchas live in
-- [Common Query Pipeline](cq-pipeline.md), [Hierarchical KNN Pipeline](knn-pipeline.md): the
-  slower, network- or classifier-backed stages
-- [Bus Events Reference](bus-events.md): every event named above, in one table
+---
+**Read next:** [Adapt Pipeline](adapt-pipeline.md) · [Padatious Pipeline](padatious-pipeline.md)
+**Related:** [Troubleshooting & Debugging](troubleshooting.md) · [Building Your Pipeline](building-your-pipeline.md) · [Pipelines Overview](pipelines-overview.md) · [Bus Events Reference](bus-events.md)

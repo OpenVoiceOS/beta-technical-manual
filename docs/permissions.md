@@ -148,19 +148,8 @@ These functions directly modify `mycroft.conf` and take effect on the next skill
 
 ---
 
-## Related Pages
-
-- [Converse Pipeline](converse-pipeline.md): `ConverseService`, active skills list, converse protocol
-
-
-- [Fallback Pipeline](fallback-pipeline.md): `FallbackService`, priority ranges, fallback protocol
-
-
-- [Skill Classes](skill-classes.md): `ConversationalSkill`, `FallbackSkill` base classes
-
-
-- [ovos-core](core.md): skill manager configuration and pipeline stages
+*Source code: [OpenVoiceOS/ovos-workshop](https://github.com/OpenVoiceOS/ovos-workshop).*
 
 ---
-
-*Source code: [OpenVoiceOS/ovos-workshop](https://github.com/OpenVoiceOS/ovos-workshop).*
+**Read next:** [Converse](converse.md)
+**Related:** [Intent Layers](layers.md) · [Security & Trust Model](security-model.md) · [Decorators](decorators.md) · [Session Aware Skills](session.md)

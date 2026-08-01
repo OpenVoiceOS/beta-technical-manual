@@ -232,3 +232,7 @@ VERSION_ALPHA = 4   # 0 = stable
 |---|---|
 | [ovos-releases](https://github.com/OpenVoiceOS/ovos-releases) | Holds `constraints-alpha/testing/stable.txt`, updated after stable releases. The channel-compatibility check and `downstream-check.yml` read these files. |
 | [raspOVOS](https://github.com/OpenVoiceOS/raspOVOS) | Uses a `constraints-*.txt` URL as the `CONSTRAINTS` env var during image builds. |
+
+---
+**Read next:** [Workflow Reference](gh-automations-workflows.md)
+**Related:** [Release Flow](gh-automations-release.md) · [PR Workflows](gh-automations-pr-workflows.md) · [Quality Workflows](gh-automations-quality-workflows.md) · [Release Workflows](gh-automations-release-workflows.md)

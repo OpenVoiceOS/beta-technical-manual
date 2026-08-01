@@ -190,14 +190,10 @@ the ancestor of today's Mark 2 audio packaging.
 
 ---
 
-## Related Resources
-
-- **[ovos-installer](ovos-installer.md)**: the supported way to provision a Mark 2.
-- **[ovos-shell](ovos-shell.md)**: the graphical shell the Mark 2 displays.
-- **[PHAL](phal.md)**: how hardware-abstraction plugins work and load.
-- **[OCP Audio Plugin](ocp-audio-plugin.md)**: the legacy media-playback path the installer enables.
-- **[Mark 1 Hardware](mark1.md)**: the faceplate-based predecessor.
-
 ---
 
 *Source code: [OpenVoiceOS/ovos-installer](https://github.com/OpenVoiceOS/ovos-installer) (`ovos_hardware_mark2` role) and [OpenVoiceOS/VocalFusionDriver](https://github.com/OpenVoiceOS/VocalFusionDriver).*
+
+---
+**Read next:** [Contributing](contributing.md)
+**Related:** [Mark 1 Hardware](mark1.md) · [i2c Sound & Audio Setup](i2c-sound.md) · [PHAL](phal.md) · [OCP Audio Plugin](ocp-audio-plugin.md)

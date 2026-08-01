@@ -1122,3 +1122,7 @@ on, and assets used across projects.
 **[wallpaper_changer](https://github.com/OpenVoiceOS/wallpaper_changer)**
 :   A Python library that changes the desktop wallpaper programmatically across several Linux desktop environments. Used as a library by [ovos-skill-wallpapers](https://github.com/OpenVoiceOS/ovos-skill-wallpapers) to apply the wallpaper it fetches.
 
+---
+**Read next:** [Bus Events Reference](bus-events.md)
+**Related:** [Core Libraries](core-libraries.md) · [Deprecated & Archived Repositories](deprecated-repos.md) · [Command-line Tools](cli-tools.md) · [Plugin Ecosystem](plugins-index.md)
+

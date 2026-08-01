@@ -321,12 +321,8 @@ Register the class under the `opm.agents.memory` entry-point group in your packa
 
 ---
 
-## Related Pages
-
-- [Personas](personas.md)
-- [Agent Tool Plugins](tool-plugins.md)
-- [Agent Interoperability](agent-interop.md)
+*Source code: [OpenVoiceOS/ovos-memory-plugins](https://github.com/OpenVoiceOS/ovos-memory-plugins).*
 
 ---
-
-*Source code: [OpenVoiceOS/ovos-memory-plugins](https://github.com/OpenVoiceOS/ovos-memory-plugins).*
+**Read next:** [Persona Server](persona-server.md)
+**Related:** [Personas & PersonaService](personas.md) · [Agent Engine Types](agent-plugins.md) · [Agent Tool Plugins](tool-plugins.md) · [Agent Interoperability](agent-interop.md)

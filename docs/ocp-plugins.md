@@ -255,4 +255,6 @@ is itself `"{sei}//..."` for another extractor, `StreamHandler` calls that one n
   plugins on this page do that.
 
 ---
+**Read next:** [Media Playback Plugins](media-plugins.md)
+**Related:** [OCP Audio Plugin](ocp-audio-plugin.md) · [OCP Pipeline](ocp-pipeline.md) · [Media Skills (OCP)](ocp-skills.md)
 

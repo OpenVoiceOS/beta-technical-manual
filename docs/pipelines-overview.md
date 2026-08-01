@@ -309,3 +309,7 @@ Each pipeline plugin has its own manual page with full configuration details:
 | `ovos-padatious-pipeline-plugin` | Neural network intent-matching pipeline plugin | [Padatious Pipeline](padatious-pipeline.md) |
 | `ovos-adapt-pipeline-plugin` | Adapt Intent Parser | [Adapt Pipeline](adapt-pipeline.md) |
 | `ovos-ocp-pipeline-plugin` | Specialized media handling | [OCP Pipeline](ocp-pipeline.md) |
+
+---
+**Read next:** [Building Your Pipeline](building-your-pipeline.md)
+**Related:** [Adapt Pipeline](adapt-pipeline.md) · [Padatious Pipeline](padatious-pipeline.md) · [Transformers Overview](transformer-plugins.md) · [Debugging Intent Matching](debugging-intent-matching.md)

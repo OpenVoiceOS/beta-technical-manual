@@ -219,3 +219,8 @@ Ask in the **[skills channel on OVOS Chat](https://matrix.to/#/#openvoiceos-skil
 post a longer question on the **[Open Conversational AI forum](https://community.openconversational.ai/)**.
 Include a log excerpt or `ovos-busmon` export for the stage where the trail goes cold. See
 [Troubleshooting](troubleshooting.md#where-to-ask-for-help).
+
+---
+
+**Read next:** [Skill Development Overview](skills-overview.md) · [Testing Your Skill](testing-your-skill.md)
+**Related:** [Your First Skill](first-skill.md) · [Troubleshooting & Debugging](troubleshooting.md) · [Skill Cookbook](skill-cookbook.md) · [Testing Reference (ovoscope)](ovoscope-overview.md)

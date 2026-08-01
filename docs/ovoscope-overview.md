@@ -137,3 +137,7 @@ manual's [gh-automations](gh-automations-overview.md) page for the OVOS CI conve
 ---
 
 *Source code & full reference: [OpenVoiceOS/ovoscope](https://github.com/OpenVoiceOS/ovoscope). See its [`docs/`](https://github.com/OpenVoiceOS/ovoscope/tree/dev/docs).*
+
+---
+**Read next:** [Skill Development Overview](skills-overview.md)
+**Related:** [Test Your Skill](testing-your-skill.md) · [Fallback Skill](fallbacks.md) · [Common Query Framework](common-query.md) · [Developer FAQ](skill-dev-faq.md)

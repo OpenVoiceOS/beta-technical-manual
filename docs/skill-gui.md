@@ -223,3 +223,7 @@ def handle_foo_event(self, message):
 
 For OCP media players and idle/home screens see the
 [GUI Service Reference](gui-service.md).
+
+---
+**Read next:** [Runtime Requirements in OVOS](skill-runtime-requirements.md)
+**Related:** [Resource Files](resource-files.md) · [Screens on OVOS Today](gui-status.md) · [GUI Service (ovos-gui)](gui-service.md) · [GUI Adapter Plugins](gui-adapters.md)

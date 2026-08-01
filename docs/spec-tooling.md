@@ -158,3 +158,7 @@ modernised, is documented under
 
 `ovos-spec-tools` owns the **vocabulary** of the mapping: `SpecMessage` and `MIGRATION_MAP`. The
 runtime bridge itself, the dual-emit and receive-side de-duplication, lives in `ovos-bus-client`.
+
+---
+**Read next:** [Maturity Scale](maturity.md) · [Concepts Overview](concepts-overview.md)
+**Related:** [Formal Specifications](architecture-specs.md) · [MessageBus Service](bus-service.md) · [Intent Service](intent-service.md) · [Core Libraries](core-libraries.md)

@@ -741,3 +741,6 @@ skill as a voice frontend.
 
 ---
 
+**Read next:** [Concepts Overview](concepts-overview.md) · [Hardware Integrators](hardware-integrators.md)
+**Related:** [Security & Trust Model](security-model.md) · [MessageBus Service](bus-service.md) · [Mark 2](mark2.md)
+

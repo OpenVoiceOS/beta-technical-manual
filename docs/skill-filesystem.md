@@ -201,16 +201,8 @@ if not fs.exists("config.json"):
 
 ---
 
-## Related Pages
-
-- [Skill Classes](skill-classes.md): `OVOSSkill` properties including `file_system` and `root_dir`
-
-
-- [Skill Settings](skill-settings.md): `self.settings` for configuration storage
-
-
-- [Configuration](config.md): XDG path helpers used internally
+*Source code: [OpenVoiceOS/ovos-workshop](https://github.com/OpenVoiceOS/ovos-workshop).*
 
 ---
-
-*Source code: [OpenVoiceOS/ovos-workshop](https://github.com/OpenVoiceOS/ovos-workshop).*
+**Read next:** [Resource Files](resource-files.md)
+**Related:** [settingsmeta.json](skill-settings-meta.md) · [Skill Settings](skill-settings.md) · [Locations](locations-ref.md) · [Skill Metadata File](skill-json.md)

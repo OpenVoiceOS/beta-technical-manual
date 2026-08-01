@@ -590,14 +590,8 @@ browser as it is broadcast. Install it with `pip install ovos-busmon`.
 
 ---
 
-## Related Pages
-
-- [Bus Events Reference](bus-events.md): a consolidated table of message types by domain
-- [Bus Client](core-libraries.md#ovos-bus-client): `MessageBusClient`, `Message`, `Session` Python API
-- [Bus Session](session.md): `Session`, `SessionManager`, `IntentContextManager`
-- [ovos-core](core.md): Intent service, skill manager
-
-
-- [Configuration](config.md): `mycroft.conf` configuration
-
 Further reading: [protocol interoperability between OVOS and other assistant frameworks](https://blog.openvoiceos.org/posts/2025-10-24-protocol_interoperability).
+
+---
+**Read next:** [Security & Trust Model](security-model.md) · [Concepts Overview](concepts-overview.md)
+**Related:** [Bus Events Reference](bus-events.md) · [Bus Session](session.md) · [ovos-core Overview](core.md) · [Configuration Overview](config.md)

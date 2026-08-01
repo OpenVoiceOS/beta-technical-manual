@@ -653,4 +653,6 @@ End-to-end TTS intelligibility scoring. Synthesises speech with the TTS plugin u
 <!-- END GENERATED -->
 
 ---
+**Read next:** [Quality Workflows](gh-automations-quality-workflows.md)
+**Related:** [Workflow Reference](gh-automations-workflows.md) · [Release Workflows](gh-automations-release-workflows.md) · [Release Flow](gh-automations-release.md)
 

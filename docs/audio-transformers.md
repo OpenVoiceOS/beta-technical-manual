@@ -308,3 +308,7 @@ print(find_audio_transformer_plugins())
 5. `find_audio_transformer_plugins()` discovers the installed plugin under the
    expected name.
 
+---
+**Read next:** [TTS Transformers](tts-transformers.md)
+**Related:** [Dialog Transformers](dialog-transformers.md) · [TTS Plugins](tts-plugins.md) · [STT Plugins](stt-plugins.md)
+

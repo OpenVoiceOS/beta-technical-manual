@@ -190,3 +190,7 @@ The lifecycle closes with exactly one `ovos.utterance.handled` event (OVOS-PIPEL
 - [Pipelines Overview](pipelines-overview.md): the full default pipeline order and how to customize it.
 - [Formal Specifications](architecture-specs.md): the OVOS-PIPELINE-1, OVOS-TRANSFORM-1, and companion specs cited throughout this page.
 - [Voice-first](https://blog.openvoiceos.org/posts/2026-01-25-voice-first) — why the assistant's design centers this same utterance journey.
+
+---
+**Read next:** [MessageBus Service](bus-service.md) · [Security & Trust Model](security-model.md)
+**Related:** [Speech Service](speech-service.md) · [Intent Service](intent-service.md) · [Audio Service](audio-service.md) · [Pipelines Overview](pipelines-overview.md)

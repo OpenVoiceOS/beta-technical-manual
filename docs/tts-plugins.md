@@ -739,7 +739,6 @@ environment or container `ovos-core`/`ovos-audio` run in, then set `"tts": {"mod
 "<your-plugin-entry-point-name>"}` in `mycroft.conf` and restart OVOS, as described in [Change
 your voice](#change-your-voice) above.
 
-## Further reading
-
-- [Introducing phoonnx: OVOS's next-gen TTS engine](https://blog.openvoiceos.org/posts/2025-10-06-phoonnx), OVOS blog
-- [Making Synthetic Voices From Scratch](https://blog.openvoiceos.org/posts/2025-06-26-making-synthetic-voices-from-scratch), OVOS blog
+---
+**Read next:** [G2P Plugins](g2p-plugins.md)
+**Related:** [STT Plugins](stt-plugins.md) · [TTS Server](tts-server.md) · [TTS Transformers](tts-transformers.md) · [Introducing phoonnx: OVOS's next-gen TTS engine](https://blog.openvoiceos.org/posts/2025-10-06-phoonnx)

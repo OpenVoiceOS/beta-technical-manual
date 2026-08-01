@@ -324,3 +324,7 @@ With `skills.use_deferred_loading: true`, requires both GUI and internet to load
 ---
 
 *Source code: [OpenVoiceOS/ovos-utils](https://github.com/OpenVoiceOS/ovos-utils).*
+
+---
+**Read next:** [Test Your Skill](testing-your-skill.md)
+**Related:** [GUI Skills (GUIInterface)](skill-gui.md) · [Writing Version-Compatible Skills and Plugins](version-compat-guide.md) · [Skill Metadata File](skill-json.md) · [OVOS Plugin Manager (OPM)](plugin-manager.md)

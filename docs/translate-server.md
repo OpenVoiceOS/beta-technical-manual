@@ -285,14 +285,8 @@ docker run -p 9686:9686 my-translate-server
 
 ---
 
-## Cross-References
-
-- `ovos-plugin-manager` — `load_tx_plugin()` (`opm.lang.translate`), `load_lang_detect_plugin()` (`opm.lang.detect`), `LanguageTranslator`, `LanguageDetector`
-- `ovos-google-translate-plugin` — `GoogleTranslatePlugin` (implements `LanguageTranslator`), `GoogleLangDetectPlugin` (implements `LanguageDetector`)
-- `ovos-translate-server-plugin` — companion client plugin that points an OVOS device at this server
-- `ovos-translate-plugin-nllb` — example translation plugin (Meta NLLB model)
-- `ovos-lang-detector-classics-plugin` — example detection plugin (ensemble of classical methods)
+*Source code: [OpenVoiceOS/ovos-translate-server](https://github.com/OpenVoiceOS/ovos-translate-server).*
 
 ---
-
-*Source code: [OpenVoiceOS/ovos-translate-server](https://github.com/OpenVoiceOS/ovos-translate-server).*
+**Read next:** [Server Compatibility Layers](server-compat-layers.md)
+**Related:** [STT Server](stt-server.md) · [TTS Server](tts-server.md) · [Translation Plugins](translation-plugins.md) · [Bidirectional Translation](bidirectional-translation.md)

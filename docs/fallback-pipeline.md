@@ -190,19 +190,8 @@ As with converse, a badly designed or malicious skill can hijack the fallback sk
 
 ---
 
-## Related Pages
-
-- [Fallback Skill](fallbacks.md): the skill-side `FallbackSkill` API this pipeline plugin drives
-
-
-- [ovos-core](core.md): `FallbackService` implementation and bus events
-
-
-- [Converse Pipeline](converse-pipeline.md): what runs before fallback
-
-
-- [Skill Classes](skill-classes.md): `FallbackSkill` base class
+*Source code: [OpenVoiceOS/ovos-core](https://github.com/OpenVoiceOS/ovos-core).*
 
 ---
-
-*Source code: [OpenVoiceOS/ovos-core](https://github.com/OpenVoiceOS/ovos-core).*
+**Read next:** [Padacioso](padacioso.md)
+**Related:** [Fallback Skill](fallbacks.md) · [OCP Pipeline](ocp-pipeline.md) · [Adapt Pipeline](adapt-pipeline.md) · [Converse Pipeline](converse-pipeline.md)

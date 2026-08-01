@@ -214,12 +214,8 @@ name(s) from the persona's solver config.
 
 ---
 
-## Related Links
-
-- [OVOS Personas](personas.md)
-- [OpenAI Python SDK](https://github.com/openai/openai-python)
-- [Home Assistant Ollama Integration](https://www.home-assistant.io/integrations/ollama/)
+*Source code: [OpenVoiceOS/ovos-persona-server](https://github.com/OpenVoiceOS/ovos-persona-server).*
 
 ---
-
-*Source code: [OpenVoiceOS/ovos-persona-server](https://github.com/OpenVoiceOS/ovos-persona-server).*
+**Read next:** [Agent Engine Types](agent-plugins.md)
+**Related:** [Personas & PersonaService](personas.md) · [Persona Memory](persona-memory.md) · [Remote Agents with HiveMind](hivemind-agents.md)

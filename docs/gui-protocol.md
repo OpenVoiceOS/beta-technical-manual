@@ -3,12 +3,10 @@
 !!! abstract "In a nutshell"
     This is a developer reference for the **legacy** (old, deprecated) way OVOS put things on a screen. It documents the set of behind-the-scenes messages that a skill, the screen service, and the on-device display use to stay in sync about what to show. Think of it as the agreed "language" two parts of the system speak so the right page and data appear. There is no generally usable OVOS screen today. This is kept mainly for **Mark 2** devices and reference, and a ground-up replacement is being built (see [GUI Adapter Plugins](gui-adapters.md)). For terms, see the [Glossary](glossary.md).
 
-!!! tip "Building a remote client?"
-    Skip this legacy protocol. See [Screens on OVOS Today](gui-status.md) for the current approach.
-
 !!! danger "The OVOS GUI is deprecated: see [Screens on OVOS Today](gui-status.md) for the full picture"
     This page documents the legacy protocol. There is no generally usable OVOS GUI,
-    and a replacement is **Upcoming**.
+    and a replacement is **Upcoming**. Building a remote client? Skip this legacy protocol
+    and see [Screens on OVOS Today](gui-status.md) for the current approach.
 
 ??? info "Formal specification"
     The **forward** model for the display subsystem is **[OVOS-GUI-1: GUI Display Subsystem](https://github.com/OpenVoiceOS/architecture/blob/dev/gui-1.md)** (a formal [architecture spec](architecture-specs.md)). It replaces the legacy protocol on this page with a clean separation: an application declares *what* to show by naming a template from a **closed `SYSTEM_*` vocabulary** and pushing flat session-data. Interchangeable **render backends (adapters)** decide *how* to draw it, fanned out to every installed adapter. The wire messages stay `gui.value.set` / `gui.page.show` / `gui.clear.namespace`, but a `gui.page.show` whose first page is **not** a `SYSTEM_*` template is rejected (no more arbitrary QML). A GUI message is routed **solely by its `session_id`**. This page documents the legacy Qt-WebSocket protocol that the OVOS-GUI-1 adapter model supersedes. Where they differ, the spec is the canonical target (see the "Upcoming" note at the foot of this page and [GUI Adapter Plugins](gui-adapters.md)).
@@ -535,3 +533,7 @@ User swipes / taps on Qt:
     None of this is implemented in `ovos-gui` yet. See
     [GUI Adapter Plugins](gui-adapters.md) for what the adapter plugins being built ahead of
     this rework have already settled on.
+
+---
+**Read next:** [OVOS Shell](ovos-shell.md)
+**Related:** [GUI Service (legacy)](gui-service.md) · [Screens on OVOS Today](gui-status.md) · [GUI Adapters](gui-adapters.md)

@@ -121,3 +121,7 @@ class MeaningFallback(FallbackSkill):
 ---
 
 *Source code: [OpenVoiceOS/ovos-workshop](https://github.com/OpenVoiceOS/ovos-workshop).*
+
+---
+**Read next:** [Common Query Framework](common-query.md)
+**Related:** [Test Your Skill](testing-your-skill.md) · [Converse](converse.md) · [Fallback Pipeline](fallback-pipeline.md) · [Skill Classes](skill-classes.md)

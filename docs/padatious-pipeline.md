@@ -192,3 +192,7 @@ Avoid Padatious for complex conversational use cases, skills with overlapping in
 !!! note "Upcoming"
     A dedicated `DomainPadatiousPipeline` OPM entry point (a first-class plugin ID for the per-domain training mode, instead of the `domain_engine` config flag on the flat plugin) is **Upcoming**.
 
+---
+**Read next:** [Model2Vec Pipeline](m2v-pipeline.md)
+**Related:** [Nebulento](nebulento.md) · [Padatious Intents](intents-padatious.md) · [Adapt Pipeline](adapt-pipeline.md) · [Debugging Intent Matching](debugging-intent-matching.md)
+

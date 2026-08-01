@@ -65,3 +65,7 @@ Set `conf_high`, `conf_med`, `conf_low`, and `max_words` under `mycroft.conf`'s 
     Use it as a lighter, simpler stand-in for Adapt when you want keyword matching without
     Adapt's full rule engine. For example-based (whole-sentence) matching, use
     [Padatious](padatious-pipeline.md) or [Nebulento](nebulento.md) instead.
+
+---
+**Read next:** [Transformers Overview](transformer-plugins.md)
+**Related:** [Nebulento](nebulento.md) · [Padacioso](padacioso.md) · [Adapt Pipeline](adapt-pipeline.md)

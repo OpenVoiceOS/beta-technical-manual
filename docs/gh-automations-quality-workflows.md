@@ -802,3 +802,7 @@ environment: GITHUB_TOKEN   (required)
 ---
 
 *Source code: [OpenVoiceOS/gh-automations](https://github.com/OpenVoiceOS/gh-automations).*
+
+---
+**Read next:** [Release Flow](gh-automations-release.md)
+**Related:** [Workflow Reference](gh-automations-workflows.md) · [PR Check Workflows](gh-automations-pr-workflows.md) · [Release Workflows](gh-automations-release-workflows.md)

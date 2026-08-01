@@ -405,3 +405,7 @@ Explore public benchmark tools for evaluating model performance:
 - [Cloning Voices for Endangered Languages: Asturian & Aragonese](https://blog.openvoiceos.org/posts/2025-12-09-ast): OVOS blog
 - [Reflections on Our Collaboration: an Open Arabic Voice](https://blog.openvoiceos.org/posts/2025-10-01-arabic_tts_collaboration): OVOS blog
 - [Introducing the First Phonemizer for Barranquenho](https://blog.openvoiceos.org/posts/2025-12-14-barranquenho): OVOS blog
+
+---
+**Read next:** [Language Selection (internals)](lang-selection.md)
+**Related:** [Customizing Language Resources](lang-customization.md) · [Translation Plugins](translation-plugins.md) · [Contributing Translations](ovos-localize-tutorial.md) · [Transformers Overview](transformer-plugins.md)

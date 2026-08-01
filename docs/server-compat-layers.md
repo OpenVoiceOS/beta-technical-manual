@@ -133,14 +133,8 @@ print(response.choices[0].message.content)
 
 ---
 
-## Related Pages
-
-- [STT Server](stt-server.md)
-- [TTS Server](tts-server.md)
-- [Translate Server](translate-server.md)
-- [Persona Server](persona-server.md)
-- [Agent Interoperability](agent-interop.md): MCP/UTCP endpoints on these same servers
+*Source code: [ovos-stt-http-server](https://github.com/OpenVoiceOS/ovos-stt-http-server), [ovos-tts-server](https://github.com/OpenVoiceOS/ovos-tts-server), [ovos-translate-server](https://github.com/OpenVoiceOS/ovos-translate-server), [ovos-persona-server](https://github.com/OpenVoiceOS/ovos-persona-server).*
 
 ---
-
-*Source code: [ovos-stt-http-server](https://github.com/OpenVoiceOS/ovos-stt-http-server), [ovos-tts-server](https://github.com/OpenVoiceOS/ovos-tts-server), [ovos-translate-server](https://github.com/OpenVoiceOS/ovos-translate-server), [ovos-persona-server](https://github.com/OpenVoiceOS/ovos-persona-server).*
+**Read next:** [HiveMind](hivemind-agents.md)
+**Related:** [STT Server](stt-server.md) · [TTS Server](tts-server.md) · [Translate Server](translate-server.md) · [Persona Server](persona-server.md)

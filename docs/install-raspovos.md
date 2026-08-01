@@ -413,3 +413,8 @@ Your device is up and listening. Two places to go next:
 ---
 
 *Source code: [OpenVoiceOS/raspOVOS](https://github.com/OpenVoiceOS/raspOVOS).*
+
+---
+
+**Read next:** [What can I say?](skill-examples.md) · [Fun stuff to try](showcase.md)
+**Related:** [ovos-installer](ovos-installer.md) · [RaspOVOS Troubleshooting](raspovos-troubleshooting.md) · [Make it yours](personalize.md) · [Coming from Mycroft](coming-from-mycroft.md)

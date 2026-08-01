@@ -136,3 +136,7 @@ translation plugins, see the **[Language Support overview](lang-support.md)**.
 - **Email:** support@openvoiceos.org
 
 Every translation makes OVOS usable for more people around the world.
+
+---
+**Read next:** [Translation Plugins](translation-plugins.md)
+**Related:** [Bidirectional Translation](bidirectional-translation.md) · [Customizing Language Resources](lang-customization.md) · [Contributing](contributing.md)

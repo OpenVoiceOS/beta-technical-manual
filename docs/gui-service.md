@@ -1,11 +1,7 @@
 # GUI Service (ovos-gui)
 
-!!! note "Maturity: Beta ⬤⬤⬤◯◯"
-    The `ovos-gui` repository is active, but the GUI **stack this page documents is legacy** and being superseded. See [Screens on OVOS Today](gui-status.md) for what to use now. The badge rates [repository health](maturity.md), not the stack's status. Read the deprecation notice below.
-
-!!! danger "The OVOS GUI is deprecated: see [Screens on OVOS Today](gui-status.md) for the full picture"
-    This page documents the legacy stack. There is no generally usable OVOS GUI,
-    and a replacement is **Upcoming**.
+!!! danger "Maturity: Beta ⬤⬤⬤◯◯ — but the stack is deprecated"
+    The `ovos-gui` repository is active, but the GUI **stack this page documents is legacy** and being superseded. There is no generally usable OVOS GUI, and a replacement is **Upcoming**. See [Screens on OVOS Today](gui-status.md) for the full picture and what to use now. The badge rates [repository health](maturity.md), not the stack's status.
 
 !!! abstract "In a nutshell"
     `ovos-gui` is the part of OpenVoiceOS that decides what shows up on a screen: text, images, a music player, or an idle home screen. Skills never draw to the display themselves. They send a request to this service, which keeps track of what each skill wants shown and passes it on to whatever screen is connected. Think of it as a stage manager that decides which scene is in front of the audience at any moment. To learn more, see the [Home Screen](homescreen.md) and the [Glossary](glossary.md).
@@ -233,3 +229,7 @@ The GUI WebSocket server is configured under `gui_websocket` in `mycroft.conf`:
 See [GUI Protocol](gui-protocol.md) for the full Qt WebSocket wire protocol. See
 [OVOS Shell](ovos-shell.md) for the production Qt5/[Kirigami](qt5-gui.md) shell
 application, and [Home Screen](homescreen.md) for idle-screen skills.
+
+---
+**Read next:** [PHAL](phal.md) · [Concepts Overview](concepts-overview.md)
+**Related:** [Screens on OVOS Today](gui-status.md) · [GUI Adapter Plugins](gui-adapters.md) · [GUI Protocol](gui-protocol.md) · [Skill GUI Support](skill-gui.md)

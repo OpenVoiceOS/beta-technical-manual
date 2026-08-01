@@ -114,3 +114,7 @@ ovos.skills.settings_changed  {skill_id: "..."}
 | `mycroft.network.disconnected` | `handle_network_disconnected` |
 | `mycroft.internet.disconnected` | `handle_internet_disconnected` |
 | `mycroft.gui.unavailable` | `handle_gui_disconnected` |
+
+---
+**Read next:** [Intent Service](intent-service.md) · [Skill Installer](skill-installer.md)
+**Related:** [ovos-core Overview](core.md) · [Anatomy of a Skill](skill-structure.md) · [Runtime Requirements](skill-runtime-requirements.md)

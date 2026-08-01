@@ -591,3 +591,7 @@ satellites:
 
 STT, TTS, and WakeWord plugin types retain backward compatibility with Mycroft-Core via
 legacy entry point aliases (`mycroft.plugin.*`).
+
+---
+**Read next:** [Composable Deployments](composable-deployments.md) · [Concepts Overview](concepts-overview.md)
+**Related:** [Choosing Plugins](choosing-plugins.md) · [Plugin Arena](plugin-arena.md) · [Formal Specifications](architecture-specs.md) · [Transformers Overview](transformer-plugins.md)

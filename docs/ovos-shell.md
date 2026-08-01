@@ -1,12 +1,11 @@
 # OVOS Shell
 
-!!! warning "Maturity — Deprecated ⚠️"
-    This component's repository is archived and no longer maintained. See the [Maturity Scale](maturity.md) and this page's own notes for what replaces it.
-
 !!! abstract "In a nutshell"
     `ovos-shell` is the old on-screen interface for OVOS. It is the full-screen app that draws the assistant's face, status, settings panel, and skill screens on devices with a display (like the Mark 2). It is the *legacy* GUI: deprecated, effectively broken today, and being replaced by a ground-up rework. This page is kept mainly for reference and for maintaining existing Mark 2 devices. See the [Glossary](glossary.md) for unfamiliar terms.
 
-!!! danger "The OVOS GUI is deprecated — see [Screens on OVOS Today](gui-status.md) for the full picture"
+!!! danger "Deprecated — see [Screens on OVOS Today](gui-status.md) for the full picture"
+    This component's repository is archived and no longer maintained. See the
+    [Maturity Scale](maturity.md) and this page's own notes for what replaces it.
     `ovos-shell` is part of the legacy stack. There is no generally usable OVOS GUI,
     and a replacement is **Upcoming**.
 
@@ -295,3 +294,7 @@ This repository targets **Qt5** and links against `mycroft-gui-qt5`. Do not intr
 Qt6-only API into this repository. A `mycroft-gui-qt6` client is developed as its own
 project (see the [GUI Adapter Plugins](gui-adapters.md) rework) rather than as a fork of
 `ovos-shell` itself.
+
+---
+**Read next:** [Qt5 GUI](qt5-gui.md)
+**Related:** [GUI Protocol](gui-protocol.md) · [Home Screen](homescreen.md)

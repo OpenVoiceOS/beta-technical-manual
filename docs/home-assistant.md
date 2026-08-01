@@ -94,10 +94,6 @@ See [What can I say? — Smart Home](skill-examples.md#smart-home) for the skill
 
 ---
 
-## Related pages
-
-- [ovos-installer](ovos-installer.md#feature-selection) — the `homeassistant` install-time feature
-- [Wyoming Bridges](wyoming-bridges.md) — OVOS engines exposed to Home Assistant/Rhasspy
-- [What can I say?](skill-examples.md) — the full skill catalog, including Smart Home
-- [Deprecated & Removed Repositories](deprecated-repos.md) — retired integrations, including the
-  old PHAL plugin
+---
+**Read next:** [Wyoming Bridges](wyoming-bridges.md)
+**Related:** [HiveMind](hivemind-agents.md) · [STT Server](stt-server.md) · [TTS Server](tts-server.md) · [Production Operations](production-operations.md)

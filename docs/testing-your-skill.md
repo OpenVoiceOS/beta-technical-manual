@@ -326,13 +326,6 @@ jobs:
     See [GH-Automations Workflows](gh-automations-workflows.md) for the full set of shared CI
     building blocks and what each input configures.
 
-## Where to go next
-
-- The full `End2EndTest` API covers multi-turn conversations, asserting exact message sequences,
-  session state, GUI pages, and every other harness `ovoscope` ships. See
-  [Testing Skills with ovoscope](ovoscope-overview.md).
-- Give the skill something to extract from what the user said. See [Intent Design](intents.md).
-- **Make it sound good and behave well.** See [Skill Best Practices](skill-best-practices.md)
-  and [Design Guidelines](skill-design-guidelines.md).
-- **Publish it** so others can install it. See [Sharing your skill](skill-json.md#sharing-your-skill).
-- Back to the beginning: see [Your First Skill](first-skill.md).
+---
+**Read next:** [Testing Skills with `ovoscope`](ovoscope-overview.md)
+**Related:** [Skill Structure](skill-structure.md) · [Developer FAQ](skill-dev-faq.md) · [Fallback Skill](fallbacks.md) · [Skill Development Overview](skills-overview.md)

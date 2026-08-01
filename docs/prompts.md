@@ -225,3 +225,7 @@ Returns the selected list element, or `None` if nothing matched. User responses 
 
 - Use `ask_yesno()` for quick binary decisions, but gracefully handle unexpected answers.
 
+---
+**Read next:** [Context](context.md)
+**Related:** [Intent Design](intents.md) · [Converse](converse.md) · [Session Aware Skills](session.md) · [Statements](statements.md)
+

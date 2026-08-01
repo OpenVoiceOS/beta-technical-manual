@@ -181,3 +181,7 @@ my-skill-id = "my_skill.skill:MySkill"
 ---
 
 *Source code: [OpenVoiceOS/ovos-workshop](https://github.com/OpenVoiceOS/ovos-workshop).*
+
+---
+**Read next:** [OVOSSkill](ovos-skill.md)
+**Related:** [Skill Metadata File](skill-json.md) · [Skill Classes](skill-classes.md) · [Decorators](decorators.md) · [Skill Structure](skill-structure.md)

@@ -331,3 +331,7 @@ repository.
 
 
 - **OVOS Plugin Manager**: https://github.com/OpenVoiceOS/ovos-plugin-manager
+
+---
+**Read next:** [Translate Server](translate-server.md)
+**Related:** [STT Server](stt-server.md) · [Server Compatibility Layers](server-compat-layers.md) · [TTS Plugins](tts-plugins.md) · [Privacy & Security](privacy-security.md)

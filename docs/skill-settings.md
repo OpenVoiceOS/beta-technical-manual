@@ -211,16 +211,8 @@ export OVOS_CONFIG_PASSWORD=mypassword
 
 ---
 
-## Related Pages
-
-- [Skill Classes](skill-classes.md): `OVOSSkill` base class
-
-
-- [Skill Settings Meta](skill-settings-meta.md): the legacy `settingsmeta.json` settings-UI schema (optional, usually absent, only used by community config tools)
-
-
-- [ovos-core](core.md): settings file watcher and `ovos.skills.settings_changed` event
+*Source code: [OpenVoiceOS/ovos-workshop](https://github.com/OpenVoiceOS/ovos-workshop).*
 
 ---
-
-*Source code: [OpenVoiceOS/ovos-workshop](https://github.com/OpenVoiceOS/ovos-workshop).*
+**Read next:** [settingsmeta.json](skill-settings-meta.md)
+**Related:** [Decorators](decorators.md) · [Filesystem Access](skill-filesystem.md) · [Configuration Management](config.md) · [Session Aware Skills](session.md)

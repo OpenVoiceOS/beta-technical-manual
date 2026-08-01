@@ -232,12 +232,6 @@ print(relative_time)  # "twenty four hours"
     [OpenVoiceOS/ovos-date-parser](https://github.com/OpenVoiceOS/ovos-date-parser)
     and is not part of the released API yet.
 
-## Related Projects
-
-- [ovos-number-parser](https://github.com/OpenVoiceOS/ovos-number-parser): for handling numbers
-
-
-- [ovos-lang-parser](https://github.com/OpenVoiceOS/ovos-lang-parser): for handling language names
-
-
-- [ovos-color-parser](https://github.com/OpenVoiceOS/ovos-color-parser): for handling colors
+---
+**Read next:** [Colors](color-parser.md)
+**Related:** [Numbers](number-parser.md) · [Language Names](lang-parser.md) · [Quebra Frases](quebra-frases.md)

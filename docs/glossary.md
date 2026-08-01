@@ -296,4 +296,9 @@ current name in new writing:
 | Solver | [Agent Engine](agent-plugins.md) |
 | Intent engine / intent parser | [Pipeline plugin](pipelines-overview.md) |
 | Hotword / wakeword (as a standalone term) | [Wake Word](wake-word-plugins.md). Note: this stays as written inside real identifiers, such as the `wakeword` config keys and the `recognizer_loop:wakeword` bus message. |
+
+---
+
+**Read next:** [Start Here](start-here.md)
+**Related:** [Concepts Overview](concepts-overview.md) · [Formal Specifications](architecture-specs.md) · [Project Timeline & History](timeline.md)
 </content>

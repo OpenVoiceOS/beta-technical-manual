@@ -225,17 +225,6 @@ For a persona-first deployment where the chatbot should override skills entirely
 
 ---
 
-## Related Pages
-
-- [Intent Pipeline Overview](pipelines-overview.md): the full stage reference and the bundled
-  default pipeline
-- [Adapt Pipeline](adapt-pipeline.md), [Padatious Pipeline](padatious-pipeline.md),
-  [Model2Vec Pipeline](m2v-pipeline.md), [Hierarchical KNN Pipeline](knn-pipeline.md): the
-  deterministic and semantic matchers
-- [Converse Pipeline](converse-pipeline.md), [Stop Pipeline](stop-pipeline.md): the
-  session-aware interceptors
-- [OCP Pipeline](ocp-pipeline.md), [Common Query Pipeline](cq-pipeline.md),
-  [Persona Pipeline](persona-pipeline.md): the specialized matchers
-- [Fallback Pipeline](fallback-pipeline.md): the catch-all stages tried last
-- [Debugging Intent Matching](debugging-intent-matching.md): what to check when a pipeline you
-  built does not behave as expected
+---
+**Read next:** [Debugging Intent Matching](debugging-intent-matching.md)
+**Related:** [Pipelines Overview](pipelines-overview.md) · [Adapt Pipeline](adapt-pipeline.md) · [Padatious Pipeline](padatious-pipeline.md) · [OCP Pipeline](ocp-pipeline.md)

@@ -45,3 +45,7 @@ The [PR Checks Comment Pattern](gh-automations-quality-workflows.md#pr-checks-co
 ---
 
 *Source code: [OpenVoiceOS/gh-automations](https://github.com/OpenVoiceOS/gh-automations).*
+
+---
+**Read next:** [PR Check Workflows](gh-automations-pr-workflows.md) · [Quality Workflows](gh-automations-quality-workflows.md)
+**Related:** [gh-automations Overview](gh-automations-overview.md) · [Release Workflows](gh-automations-release-workflows.md) · [Release Flow](gh-automations-release.md) · [Contributing](contributing.md)

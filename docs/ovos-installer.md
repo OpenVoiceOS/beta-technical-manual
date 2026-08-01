@@ -1,8 +1,6 @@
 # How to Install Open Voice OS with the `ovos-installer`
 
-If you have a spare Raspberry Pi and want the zero-terminal experience, use
-**[raspOVOS](install-raspovos.md)** image exists as a flash-and-boot alternative, but it is in a maintenance pause, so the installer is the recommended path on the Pi too. Keep reading here if you're on
-non-Pi hardware or installing onto an existing Raspberry Pi OS setup.
+This is the quick-start guide for installing Open Voice OS (OVOS) using the official `ovos-installer`. This guide covers **Raspberry Pi** and **desktop/server** Linux environments. The steps are mostly the same on a headless Raspberry Pi and on a laptop. Only the way you connect to the device differs.
 
 !!! abstract "In a nutshell"
     This is the guided way to get OVOS onto your machine. You run a single command. Then a
@@ -27,35 +25,29 @@ flowchart TD
 
 *Diagram:* The decision starts at choosing how to install OVOS and ends at the ovos-installer, raspOVOS image, or non-interactive scenario install, branching on whether the target is a Raspberry Pi or a fleet/CI scripting scenario.
 
-!!! note "Read this before you start: what a default install sends over the network"
-    A default OVOS install talks to public, community-run servers for speech-to-text and
-    text-to-speech unless you change it. The installer also asks you to opt into two separate
-    telemetry reports along the way. See [Privacy & Security](privacy-security.md) for exactly
-    what that means, and the [telemetry section below](#anonymous-telemetry) for what each
-    prompt does and covers. If you're unsure about either prompt, declining is always safe.
-    Nothing else about the install depends on them.
+!!! note "Before you start"
+    **What a default install sends over the network.** A default OVOS install talks to public,
+    community-run servers for speech-to-text and text-to-speech unless you change it. The
+    installer also asks you to opt into two separate telemetry reports along the way. See
+    [Privacy & Security](privacy-security.md) for exactly what that means, and the
+    [telemetry section below](#anonymous-telemetry) for what each prompt does and covers. If
+    you're unsure about either prompt, declining is always safe. Nothing else about the install
+    depends on them.
 
-!!! tip "Looking for a no-terminal option?"
-    The **[raspOVOS](install-raspovos.md)** image is the flash-and-boot alternative:
-    no terminal, no SSH. Its images are in a maintenance pause, so check its status
-    before choosing it. This installer is the recommended path on the Pi and everywhere
-    else.
+    **Looking for a no-terminal option?** The **[raspOVOS](install-raspovos.md)** image is the
+    flash-and-boot alternative: no terminal, no SSH. Its images are in a maintenance pause, so
+    check its status before choosing it. This installer is the recommended path on the Pi and
+    everywhere else.
 
-!!! note "This runs over SSH in a terminal, not an app"
-    There's no phone app or setup wizard with a graphical pairing flow. You type commands into
-    a terminal, usually over SSH into a headless device. If you've never used SSH before, budget
-    some extra time to get comfortable with it, or consider the
-    [raspOVOS](install-raspovos.md) image (see its status note) which boots into a working
-    assistant with no SSH step.
+    **This runs over SSH in a terminal, not an app.** There's no phone app or setup wizard with a
+    graphical pairing flow. You type commands into a terminal, usually over SSH into a headless
+    device. If you've never used SSH before, budget some extra time to get comfortable with it,
+    or consider the [raspOVOS](install-raspovos.md) image (see its status note above) which boots
+    into a working assistant with no SSH step.
 
-This is the quick-start guide for installing Open Voice OS (OVOS) using the official `ovos-installer`. This guide covers **Raspberry Pi** and **desktop/server** Linux environments. The steps are mostly the same on a headless Raspberry Pi and on a laptop. Only the way you connect to the device differs.
-
-> ⚠️ Note: Some "exotic" hardware (like ReSpeaker microphones or certain audio HATs) may require extra configuration. The installer aims for wide compatibility, but specialized setups might need some manual intervention.
-
-> 💡 On a Raspberry Pi, run the `ovos-installer` against an existing Raspberry Pi OS
-> install (this guide, the recommended route). The **[raspOVOS](install-raspovos.md)**
-> boot-and-go image is an alternative once its maintenance pause ends. On any other
-> Linux hardware, use the `ovos-installer`.
+    **Exotic hardware.** Some hardware (like ReSpeaker microphones or certain audio HATs) may
+    require extra configuration. The installer aims for wide compatibility, but specialized
+    setups might need some manual intervention.
 
 ---
 
@@ -505,6 +497,7 @@ OVOS is a community-driven project, maintained by volunteers. Feedback, bug repo
     [Production Operations](production-operations.md#knowing-when-the-assistant-is-actually-ready)
     for the readiness pattern and the full unit list.
 
-## Further reading
+---
 
-- [Boring installs, now on macOS (Intel + Apple Silicon)](https://blog.openvoiceos.org/posts/2026-03-05-ovos-installer-macos-intel-apple-silicon), OVOS blog
+**Read next:** [Make it yours](personalize.md) · [RaspOVOS image](install-raspovos.md)
+**Related:** [Manual & Advanced Install](release-channels.md) · [It's not behaving](everyday-help.md) · [Troubleshooting & Debugging](troubleshooting.md) · [Boring installs, now on macOS](https://blog.openvoiceos.org/posts/2026-03-05-ovos-installer-macos-intel-apple-silicon)

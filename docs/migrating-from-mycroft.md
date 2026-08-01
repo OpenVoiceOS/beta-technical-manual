@@ -117,3 +117,7 @@ What changed, line by line:
 - [Decorators](decorators.md): every decorator available today, including the note on
   `@intent_file_handler`.
 - [Glossary](glossary.md): unfamiliar terms, including [`home.mycroft.ai`](glossary.md).
+
+---
+**Read next:** [Skill Structure](skill-structure.md) · [Writing Version-Compatible Skills and Plugins](version-compat-guide.md)
+**Related:** [Skill Design Best Practices](skill-best-practices.md) · [Voice User Interface Design Guidelines](skill-design-guidelines.md) · [Intent Design](intents.md) · [Coming from Mycroft](coming-from-mycroft.md)

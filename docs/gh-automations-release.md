@@ -194,3 +194,7 @@ For this to work, your wrapper's job condition must allow dispatch. `bump_versio
 if: github.event.pull_request.merged == true || github.event_name == 'workflow_dispatch'
 
 ```
+
+---
+**Read next:** [Reference Overview](reference-overview.md)
+**Related:** [gh-automations Overview](gh-automations-overview.md) · [Workflow Reference](gh-automations-workflows.md) · [Contributing](contributing.md)

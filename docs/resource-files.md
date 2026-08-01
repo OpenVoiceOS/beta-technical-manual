@@ -172,3 +172,7 @@ These examples are emitted to the homescreen as `homescreen.register.examples` o
 ---
 
 *Source code: [OpenVoiceOS/ovos-workshop](https://github.com/OpenVoiceOS/ovos-workshop).*
+
+---
+**Read next:** [GUI Skills (GUIInterface)](skill-gui.md)
+**Related:** [Filesystem Access](skill-filesystem.md) · [SSMLBuilder](ssml.md) · [Customization](customization.md) · [Customizing Language Resources](lang-customization.md)

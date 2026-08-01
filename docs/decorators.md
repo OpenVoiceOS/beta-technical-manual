@@ -582,3 +582,7 @@ def handle_confirm(self, message):
 ---
 
 *Source code: [OpenVoiceOS/ovos-workshop](https://github.com/OpenVoiceOS/ovos-workshop).*
+
+---
+**Read next:** [Skill Settings](skill-settings.md)
+**Related:** [Skill Classes](skill-classes.md) · [OVOSSkill](ovos-skill.md) · [Intent Design](intents.md) · [Permissions & Activation Control](permissions.md)

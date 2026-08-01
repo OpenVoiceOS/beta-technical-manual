@@ -50,3 +50,7 @@ a guarantee.
     **Beta**-rated (or even Alpha-rated) plugin as a dependency. Check each plugin's own
     maturity badge in the manual before relying on it. Do not assume "stable
     channel" means "every component is production-grade."
+
+---
+**Read next:** [Plugin Manager](plugin-manager.md) · [Concepts Overview](concepts-overview.md)
+**Related:** [Formal Specifications](architecture-specs.md) · [Manual & Advanced Install](release-channels.md) · [High-level Overview](architecture-overview.md)

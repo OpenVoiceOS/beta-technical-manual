@@ -1,7 +1,19 @@
 # ovos-media
 
 !!! warning "Maturity — Proof-of-concept ⬤◯◯◯◯"
-    The `ovos-media` daemon is **unfinished**. It is a work in progress that is opt-in and not the default playback stack (see the Upcoming note below). For exploration only. The OCP-in-`ovos-audio` path remains the way to play media today. Rated by [repository health](maturity.md), not version.
+    The `ovos-media` daemon is **unfinished**. It is the **upcoming** media-playback service for OVOS, still being refactored, and **not enabled by default**. Today, stock installs play media through the **legacy audio backend**, the [`ovos-ocp-audio-plugin`](media-plugins.md#ovos-ocp-audio-plugin) ("old audio service") inside [`ovos-audio`](audio-service.md), which is **deprecated but still shipped**. Switching to `ovos-media` is opt-in and some parts are still coupled (Qt5 GUI, player-as-skill). Treat this page as the *target architecture*, for exploration only. Rated by [repository health](maturity.md), not version.
+
+    OVOS has **two media-playback backends** sharing the same [OCP](ocp-pipeline.md) search framework (pipeline + skills + extractors):
+
+    | | Legacy (current default) | ovos-media (upcoming) |
+    |---|---|---|
+    | **Package** | `ovos-ocp-audio-plugin` in [`ovos-audio`](audio-service.md) | `ovos-media` (standalone daemon) |
+    | **Status** | deprecated, still shipped & on by default | opt-in refactor, not default |
+    | **Playback** | one bundled audio backend | per-request audio/video/web [media plugins](media-plugins.md) (`opm.media.*`) |
+    | **Extras** | none | MPRIS, per-session state, multiple players |
+    | **Config** | `enable_old_audioservice: true` (default) | `enable_old_audioservice: false` + run `ovos-media` |
+
+    The OCP **pipeline** and **stream extractors** are unaffected by which backend you use. Only the *playback* layer differs. (OCP **skills** are a separate, longer-term change.)
 
 !!! abstract "In a nutshell"
     `ovos-media` is the planned future replacement for how OVOS plays music, podcasts and videos. Today, stock installs still use the older audio backend. `ovos-media` is an opt-in, work-in-progress rewrite meant to handle audio, video and web playback more cleanly and to support several players at once. If you are not deliberately trying it out, you are not using it yet. This page describes where things are heading. See the [OCP Pipeline](ocp-pipeline.md) for how playback requests are recognized, or the [Glossary](glossary.md) for terms.
@@ -18,30 +30,6 @@
     speaker is a backend concern. `ovos-media` is the implementation moving
     toward that contract. For the full set see the
     **[spec index](architecture-specs.md)**.
-
-!!! warning "Upcoming — a refactor that is not the default yet"
-    `ovos-media` is the **upcoming** media-playback service for OVOS, still being refactored.
-    It is **not enabled by default**. Today, stock installs play media through the **legacy
-    audio backend**, the [`ovos-ocp-audio-plugin`](media-plugins.md#ovos-ocp-audio-plugin)
-    ("old audio service") inside [`ovos-audio`](audio-service.md), which is **deprecated but
-    still shipped**. Switching to `ovos-media` is opt-in (see below) and some parts are still
-    coupled (Qt5 GUI, player-as-skill). Treat this page as the *target architecture*.
-
-!!! info "Which media system am I running? (legacy vs. ovos-media)"
-    OVOS has **two media-playback backends** that share the same [OCP](ocp-pipeline.md)
-    search framework (pipeline + skills + extractors):
-
-    | | Legacy (current default) | ovos-media (upcoming) |
-    |---|---|---|
-    | **Package** | `ovos-ocp-audio-plugin` in [`ovos-audio`](audio-service.md) | `ovos-media` (standalone daemon) |
-    | **Status** | deprecated, still shipped & on by default | opt-in refactor, not default |
-    | **Playback** | one bundled audio backend | per-request audio/video/web [media plugins](media-plugins.md) (`opm.media.*`) |
-    | **Extras** | none | MPRIS, per-session state, multiple players |
-    | **Config** | `enable_old_audioservice: true` (default) | `enable_old_audioservice: false` + run `ovos-media` |
-
-    The OCP **pipeline** and **stream extractors** are unaffected by which backend you use.
-    Only the *playback* layer differs. (OCP **skills** are a separate, longer-term change.
-    See the next note.)
 
 !!! info "Upcoming — MediaProvider plugins replace OCP skills"
     Media catalogs are moving **out of skills and into plugins**. A new **MediaProvider** plugin
@@ -563,3 +551,7 @@ Some skills provide `@ocp_featured_media()`. These are accessible from the OCP s
 ### File Browser Integration
 
 Selected files and folders will be played in OCP. Folders are treated as playlists.
+
+---
+**Read next:** [Screens on OVOS Today](gui-status.md) · [Concepts Overview](concepts-overview.md)
+**Related:** [Audio Service](audio-service.md) · [OCP Pipeline](ocp-pipeline.md) · [Media Playback Plugins](media-plugins.md) · [OCP Extractors](ocp-plugins.md)

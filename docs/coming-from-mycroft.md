@@ -33,8 +33,7 @@ to port them, read [Migrating from Mycroft](migrating-from-mycroft.md) instead.
 - **Skill installation changed.** There is no Mycroft Marketplace. Skills install like
   Python packages. See [Skill Installer](skill-installer.md).
 
-## Where to go next
+---
 
-- [Install with ovos-installer](ovos-installer.md) or the [RaspOVOS image](install-raspovos.md)
-- [Make it yours](personalize.md), then [Fun stuff to try](showcase.md)
-- Something not working? Start at [It's not behaving](everyday-help.md)
+**Read next:** [Install with ovos-installer](ovos-installer.md) · [Make it yours](personalize.md)
+**Related:** [RaspOVOS image](install-raspovos.md) · [Fun stuff to try](showcase.md) · [It's not behaving](everyday-help.md) · [Migrating from Mycroft](migrating-from-mycroft.md)

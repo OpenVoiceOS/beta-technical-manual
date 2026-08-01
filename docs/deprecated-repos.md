@@ -164,3 +164,7 @@ There are roughly **84** archived repositories (the exact count drifts as more g
 | [template-package-repo](https://github.com/OpenVoiceOS/template-package-repo) | Starter template repo for scaffolding a new plugin package | Removed: use [gh-automations](https://github.com/OpenVoiceOS/gh-automations) shared workflows |
 | [tskill-ocp-cps](https://github.com/OpenVoiceOS/tskill-ocp-cps) | Internal test skill exercising the OCP common-play-service contract | Removed: internal test skill |
 | [tskill-osm_parsing](https://github.com/OpenVoiceOS/tskill-osm_parsing) | Repository to test OSM parser testing | Removed: internal test skill |
+
+---
+**Read next:** [License](license.md)
+**Related:** [OVOS Repository Index](ecosystem-index.md) · [Contributing](contributing.md) · [gh-automations Overview](gh-automations-overview.md)

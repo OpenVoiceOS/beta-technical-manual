@@ -200,3 +200,7 @@ print(quebra_frases.get_exclusive_chunks(samples, squash=False))
 ---
 
 *Source code: [OpenVoiceOS/quebra_frases](https://github.com/OpenVoiceOS/quebra_frases).*
+
+---
+**Read next:** [ovos-docs-viewer](docs-viewer.md)
+**Related:** [Language Names](lang-parser.md) · [Numbers](number-parser.md) · [Dates & Time](date-parser.md) · [Colors](color-parser.md)

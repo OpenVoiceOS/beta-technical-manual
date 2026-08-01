@@ -182,3 +182,7 @@ The service reads its config from `mycroft.conf` under `skills.stop`. The only k
 The `stop` pipeline ensures that OVOS is always in control. It handles interrupting a skill, canceling a conversation, or shutting down all interactions, with a language-aware foundation built into `StopService`.
 
 It is **not considered optional**. All OVOS installations should include this pipeline by default.
+
+---
+**Read next:** [OCP Pipeline](ocp-pipeline.md)
+**Related:** [Persona Pipeline](persona-pipeline.md) · [Converse Pipeline](converse-pipeline.md) · [Fallback Pipeline](fallback-pipeline.md)

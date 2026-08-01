@@ -123,3 +123,7 @@ If an installation fails, an error message is emitted. Possible errors include:
 | `PIP_ERROR` | The underlying pip/uv process returned a non-zero exit code. |
 | `BAD_URL` | A provided URL failed validation. |
 | `NO_PKGS` | The package list was empty. |
+
+---
+**Read next:** [Speech Service](speech-service.md) · [Concepts Overview](concepts-overview.md)
+**Related:** [Skill Manager](skill-manager.md) · [Security & Trust Model](security-model.md) · [Skills Overview](skills-overview.md)

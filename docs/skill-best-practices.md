@@ -3,11 +3,11 @@
 !!! abstract "In a nutshell"
     A "skill" is an add-on that teaches OVOS to do something, like answering a question or setting a timer. This guide collects hard-won advice on making a skill that feels natural and reliable to talk to. It is written for skill makers. See [Skill Examples](skill-examples.md) and the [Glossary](glossary.md).
 
-A high-quality OVOS skill needs more than working code. It needs a user experience that is
-intuitive and respects the user's intent. This guide outlines the best practices for developing
-skills that feel "native" to the OVOS ecosystem.
-
 !!! note "Scope: code-level practices"
+    A high-quality OVOS skill needs more than working code. It needs a user experience that is
+    intuitive and respects the user's intent. This guide outlines the best practices for
+    developing skills that feel "native" to the OVOS ecosystem.
+
     This page is about **how to write the code** of a skill: which API to call, which method to implement, how to structure error handling. For guidance on **how to design the voice interaction itself** (when to ask for confirmation, how to phrase prompts, how much to say), see [Skill Design Guidelines](skill-design-guidelines.md).
 
 ---
@@ -155,3 +155,7 @@ def handle_weather_intent(self, message):
 ---
 
 *Source code: [OpenVoiceOS/ovos-workshop](https://github.com/OpenVoiceOS/ovos-workshop).*
+
+---
+**Read next:** [Skill Structure](skill-structure.md)
+**Related:** [Voice User Interface Design Guidelines](skill-design-guidelines.md) · [Test Your Skill](testing-your-skill.md) · [Permissions & Activation Control](permissions.md) · [Writing Version-Compatible Skills and Plugins](version-compat-guide.md)

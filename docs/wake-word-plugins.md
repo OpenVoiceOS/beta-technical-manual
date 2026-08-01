@@ -487,6 +487,6 @@ Maturity reflects repository health (age, activity, open issues/PRs, in-repo doc
 
 ---
 
-## Further reading
-
-- [Precise Wake Word Engine Goes ONNX!](https://blog.openvoiceos.org/posts/2025-11-03-precise-onnx), OVOS blog
+---
+**Read next:** [STT Plugins](stt-plugins.md)
+**Related:** [Wake Word Verifiers](ww-verifier.md) · [VAD Plugins](vad-plugins.md) · [Choosing Plugins](choosing-plugins.md) · [Precise Wake Word Engine Goes ONNX!](https://blog.openvoiceos.org/posts/2025-11-03-precise-onnx)

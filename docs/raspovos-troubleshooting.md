@@ -663,3 +663,6 @@ In this case the listen sound will be sent to STT and might negatively affect th
 > will drop the listen sound audio from the STT audio buffer. You will need to wait for the listen sound to finish before speaking your command in this case
 
 ---
+
+**Read next:** [Troubleshooting & Debugging](troubleshooting.md) · [It's not behaving](everyday-help.md)
+**Related:** [RaspOVOS](install-raspovos.md) · [Make it yours](personalize.md) · [Command-line Tools](cli-tools.md) · [Pipelines Overview](pipelines-overview.md)

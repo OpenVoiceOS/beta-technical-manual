@@ -80,3 +80,7 @@ Settings live under `intents.ovos_hierarchical_knn_pipeline` in `mycroft.conf`:
 See [Pipelines Overview](pipelines-overview.md) for how to place it in your pipeline and how
 matchers are ordered. For lighter alternatives see [Padacioso](padacioso.md) (literal),
 [Nebulento](nebulento.md) (fuzzy), or [Palavreado](palavreado.md) (keyword).
+
+---
+**Read next:** [Converse Pipeline](converse-pipeline.md)
+**Related:** [Model2Vec Pipeline](m2v-pipeline.md) · [Padatious Pipeline](padatious-pipeline.md) · [Adapt Pipeline](adapt-pipeline.md)

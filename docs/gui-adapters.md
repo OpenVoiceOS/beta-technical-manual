@@ -248,3 +248,7 @@ ovos-gui router, fanned out to every installed opm.gui_adapter plugin
 ```
 
 Both displays update simultaneously and independently.
+
+---
+**Read next:** [Agents Overview](agents-overview.md)
+**Related:** [GUI Protocol](gui-protocol.md) · [Home Screen](homescreen.md) · [Plugin Manager](plugin-manager.md)

@@ -1,15 +1,13 @@
 # Padatious Intents (Example-Based Intents)
 
-See also: [Intent Design](intents.md) for how the two intent styles compare, and
-[Padatious Pipeline](padatious-pipeline.md) for how the plugin matches these intents at
-runtime.
-
 !!! abstract "In a nutshell"
     Example-based intents (also called Padatious or template intents) match a whole phrase
     against a set of sample sentences you provide in `.intent` files. They are generally more
     accurate than keyword intents, and entities inside `{curly braces}` are extracted for you
     automatically. The trade-off is that you must cover the breadth of ways a user might
-    phrase a request. New terms are explained in the [Glossary](glossary.md).
+    phrase a request. See [Intent Design](intents.md) for how the two intent styles compare,
+    and [Padatious Pipeline](padatious-pipeline.md) for how the plugin matches these intents
+    at runtime. New terms are explained in the [Glossary](glossary.md).
 
 Example-based parsers have several key benefits over other intent parsing technologies.
 
@@ -311,3 +309,7 @@ individual intents off with `disable_intent()`, and whitelist/blacklist controls
 off a skill or its converse participation entirely. See [Intent Layers](layers.md) for
 per-skill intent enable/disable state and [Permissions & Activation Control](permissions.md) for
 the coarser skill-level gates.
+
+---
+**Read next:** [Context](context.md) · [Intent Layers](layers.md)
+**Related:** [Intent Design](intents.md) · [Adapt Intents (Keyword Intents)](intents-adapt.md) · [Padatious Pipeline](padatious-pipeline.md) · [Test Your Skill](testing-your-skill.md)
