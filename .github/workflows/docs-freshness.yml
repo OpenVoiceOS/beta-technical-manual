@@ -1,10 +1,13 @@
 name: Docs Freshness
 
-# Keeps the generated reference pages (docs/gh-automations-workflows.md,
-# docs/config-reference.md, docs/cli-tools.md) in sync with their sources of
-# truth. Re-runs tools/gen_reference.py and, if anything drifted, opens (or
-# updates) a pull request with the regenerated content — it never pushes to
-# master/dev directly.
+# Keeps the generated reference sections in sync with their sources of truth:
+# the gh-automations reusable workflows, the mycroft.conf that ovos-config
+# ships, and the --help output of the installed CLI commands. Those sections
+# are spread over docs/config-all-keys.md, docs/cli-tools.md and the
+# per-family docs/gh-automations-*.md pages, so the job diffs all of docs/
+# rather than a fixed file list. Re-runs tools/gen_reference.py and, if
+# anything drifted, opens (or updates) a pull request with the regenerated
+# content — it never pushes to master/dev directly.
 
 on:
   workflow_dispatch:
@@ -48,7 +51,7 @@ jobs:
       - name: Check for drift
         id: diff
         run: |
-          if git diff --quiet -- docs/gh-automations-workflows.md docs/config-reference.md docs/cli-tools.md; then
+          if git diff --quiet -- docs/; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
           else
             echo "changed=true" >> "$GITHUB_OUTPUT"
@@ -64,7 +67,8 @@ jobs:
             Automated run of `tools/gen_reference.py` found the generated
             sections of the reference pages out of sync with their sources
             (gh-automations reusable workflows, the bundled mycroft.conf, and
-            installed CLI `--help` output).
+            installed CLI `--help` output). Only content between
+            `<!-- BEGIN/END GENERATED -->` markers is rewritten.
 
             Review the diff before merging — generated tables should read
             correctly, and no hand-written prose outside the
@@ -72,6 +76,4 @@ jobs:
           branch: docs-freshness/regenerate
           delete-branch: true
           add-paths: |
-            docs/gh-automations-workflows.md
-            docs/config-reference.md
-            docs/cli-tools.md
+            docs/

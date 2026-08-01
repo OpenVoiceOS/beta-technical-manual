@@ -183,9 +183,6 @@ def gen_workflows(repo_path: str | None) -> None:
         if wc:
             workflow_calls[name] = wc
 
-    page = DOCS / "gh-automations-workflows.md"
-    text = page.read_text()
-
     def _sub(m: re.Match) -> str:
         name = m.group("name")
         wc = workflow_calls.get(name)
@@ -195,12 +192,27 @@ def gen_workflows(repo_path: str | None) -> None:
         body = render_workflow_tables(wc, extra_secrets)
         return m.group(1) + wrap(f"workflow-io:{name}", body) + "\n"
 
-    new_text, n = WORKFLOW_SECTION_RE.subn(_sub, text)
-    page.write_text(new_text)
-    documented = {m.group("name") for m in WORKFLOW_SECTION_RE.finditer(text)}
+    # The workflow reference is split across several pages, one per workflow
+    # family, so find the sections wherever they live rather than assuming a
+    # single page.
+    n = 0
+    documented: set[str] = set()
+    touched: list[str] = []
+    for page in sorted(DOCS.glob("*.md")):
+        text = page.read_text()
+        page_documented = {m.group("name") for m in WORKFLOW_SECTION_RE.finditer(text)}
+        if not page_documented:
+            continue
+        documented |= page_documented
+        new_text, count = WORKFLOW_SECTION_RE.subn(_sub, text)
+        n += count
+        if new_text != text:
+            page.write_text(new_text)
+            touched.append(str(page.relative_to(REPO_ROOT)))
+
     missing = documented - set(workflow_calls)
     extra = set(workflow_calls) - documented
-    print(f"[workflows] regenerated {n} workflow section(s) in {page.relative_to(REPO_ROOT)}")
+    print(f"[workflows] regenerated {n} workflow section(s); changed: {touched or 'none'}")
     if missing:
         print(f"[workflows] WARNING: documented but not found in source: {sorted(missing)}")
     if extra:
