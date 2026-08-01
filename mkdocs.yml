@@ -98,7 +98,7 @@ nav:
       - Fun stuff to try: showcase.md
       - What can I say? (Skills): skill-examples.md
       - Accessibility: accessibility.md
-      - Coming from Mycroft: migrating-from-mycroft.md
+      - Coming from Mycroft: coming-from-mycroft.md
       - Coming from Alexa: coming-from-alexa.md
   - Help & Troubleshooting:
       - It's not behaving: everyday-help.md
@@ -171,6 +171,7 @@ nav:
           - Your First Skill: first-skill.md
           - Skill Cookbook: skill-cookbook.md
       - Guides:
+          - Migrating from Mycroft: migrating-from-mycroft.md
           - Design Guidelines: skill-design-guidelines.md
           - Best Practices: skill-best-practices.md
           - Anatomy of a Skill: skill-structure.md

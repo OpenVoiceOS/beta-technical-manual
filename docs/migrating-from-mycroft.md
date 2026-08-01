@@ -9,6 +9,10 @@
     `mycroft-core` knowledge (a skill, a config file, a habit) who wants to know exactly what
     changed and why. New to the words here? See the [Glossary](glossary.md).
 
+This page is for skill authors and integrators. If you just used a Mycroft device and
+want to know what daily use looks like on OVOS, read
+[Coming from Mycroft](coming-from-mycroft.md) instead.
+
 ## The short version
 
 OVOS is a **backendless**, community-maintained continuation of the ideas behind Mycroft AI.
