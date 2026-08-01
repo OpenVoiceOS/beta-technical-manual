@@ -1568,11 +1568,35 @@ the opm 2.0 wake-word signature change), see
 <code>(data, visemes, listen, tts_id, message)</code>.</p>
 <ul>
 <li>Migration: push <code>(data, visemes, listen, tts_id, message)</code> tuples onto
-  <code>PlaybackThread</code>'s queue.</li>
-<li>Lifecycle: active before <code>931784a</code>. Deprecated but functional (logs via
-  <code>log_deprecation(..., "0.1.0")</code>) from <code>931784a</code> (2023-10-25). Dropped
-  target was <code>0.1.0</code>: exact drop commit unverified (ovos-audio <code>931784a</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/37" title="GitHub Issue: TigreGotico/ovos-technical-manual #37">#37</a>).</li>
+  <code>PlaybackThread</code>'s queue.
+Lifecycle:</li>
 </ul>
+<table>
+<thead>
+<tr>
+<th>Phase</th>
+<th>Version</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Active</td>
+<td>before <code>931784a</code></td>
+<td></td>
+</tr>
+<tr>
+<td>Deprecated but functional</td>
+<td>from <code>931784a</code> (2023-10-25)</td>
+<td>logs via <code>log_deprecation(..., "0.1.0")</code></td>
+</tr>
+<tr>
+<td>Dropped</td>
+<td>target was <code>0.1.0</code>, exact drop commit unverified</td>
+<td>(ovos-audio <code>931784a</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/37" title="GitHub Issue: TigreGotico/ovos-technical-manual #37">#37</a>)</td>
+</tr>
+</tbody>
+</table>
 <h3 id="audio-backend-template-methods-became-abstract">Audio-backend template methods became abstract<a class="headerlink" href="#audio-backend-template-methods-became-abstract" title="Permanent link">&para;</a></h3>
 <p><code>AudioBackend</code>/<code>RemoteAudioBackend</code> templates in <code>ovos-plugin-manager</code>
 turned previously-optional methods into <code>@abstractmethod</code>, and dropped the
@@ -1580,10 +1604,35 @@ dependency on the old <code>common_play</code> base class (OCP's predecessor).</
 <ul>
 <li>Migration: implement every required method on your <code>AudioBackend</code>
   subclass or instantiation raises <code>TypeError: Can't instantiate abstract
-  class</code>.</li>
-<li>Lifecycle: active before <code>77c66a3</code>. Unverified deprecation window.
-  dropped <code>77c66a3</code> (2024-05-11), (ovos-plugin-manager <code>77c66a3</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/226" title="GitHub Issue: TigreGotico/ovos-technical-manual #226">#226</a>).</li>
+  class</code>.
+Lifecycle:</li>
 </ul>
+<table>
+<thead>
+<tr>
+<th>Phase</th>
+<th>Version</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Active</td>
+<td>before <code>77c66a3</code></td>
+<td></td>
+</tr>
+<tr>
+<td>Deprecated but functional</td>
+<td>unverified</td>
+<td></td>
+</tr>
+<tr>
+<td>Dropped</td>
+<td><code>77c66a3</code> (2024-05-11)</td>
+<td>(ovos-plugin-manager <code>77c66a3</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/226" title="GitHub Issue: TigreGotico/ovos-technical-manual #226">#226</a>)</td>
+</tr>
+</tbody>
+</table>
 <h3 id="stt-legacy-helper-classes-deprecated">STT legacy helper classes deprecated<a class="headerlink" href="#stt-legacy-helper-classes-deprecated" title="Permanent link">&para;</a></h3>
 <p><code>StreamingSTT</code>, <code>StreamThread</code>, and related classic-mycroft-derived helper
 classes in <code>ovos_plugin_manager/templates/stt.py</code> were deprecation-warned,
@@ -1592,11 +1641,35 @@ first via logging (<code>ff342fe</code>, <a class="magiclink magiclink-github ma
 <code>-W error::DeprecationWarning</code> will fail the build on continued use.</p>
 <ul>
 <li>Migration: move off <code>StreamingSTT</code>/<code>StreamThread</code> to the current STT
-  template contract.</li>
-<li>Lifecycle: active before <code>ff342fe</code>. Deprecated but functional from
-  <code>ff342fe</code> (2024-06-03), warning strength increased in <code>dfbac90</code>
-  (2025-01-04). Drop date unverified (ovos-plugin-manager <code>ff342fe</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/233" title="GitHub Issue: TigreGotico/ovos-technical-manual #233">#233</a>).</li>
+  template contract.
+Lifecycle:</li>
 </ul>
+<table>
+<thead>
+<tr>
+<th>Phase</th>
+<th>Version</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Active</td>
+<td>before <code>ff342fe</code></td>
+<td></td>
+</tr>
+<tr>
+<td>Deprecated but functional</td>
+<td>from <code>ff342fe</code> (2024-06-03)</td>
+<td>warning strength increased in <code>dfbac90</code> (2025-01-04)</td>
+</tr>
+<tr>
+<td>Dropped</td>
+<td>drop date unverified</td>
+<td>(ovos-plugin-manager <code>ff342fe</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/233" title="GitHub Issue: TigreGotico/ovos-technical-manual #233">#233</a>)</td>
+</tr>
+</tbody>
+</table>
 <h3 id="dialect-matching-switched-to-tag_distance">Dialect matching switched to <code>tag_distance</code><a class="headerlink" href="#dialect-matching-switched-to-tag_distance" title="Permanent link">&para;</a></h3>
 <p>Ad-hoc exact-prefix dialect matching (<code>en</code> matches <code>en-us</code> via
 <code>.startswith</code>) was replaced with <code>langcodes.tag_distance</code> (threshold
@@ -1606,32 +1679,108 @@ resolution.</p>
 <li>Migration: no code change needed for callers of the public
   <code>get_plugin_config</code> family. Re-verify locale resolution after upgrading
   if you pinned plugin configs to exact locale strings, since dialect
-  fallback selection can differ.</li>
-<li>Lifecycle: behavior-only change, no removal. Landed <code>08ad348</code> (2024-10-12),
-  (ovos-plugin-manager <code>08ad348</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/267" title="GitHub Issue: TigreGotico/ovos-technical-manual #267">#267</a>). Later replaced again by
-  <code>ovos_spec_tools.lang_distance</code> in <code>35919b7</code> (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/391" title="GitHub Issue: TigreGotico/ovos-technical-manual #391">#391</a>, 2026-05-22), same
-  <code>&lt; 10</code> threshold preserved. Requires the <code>ovos-spec-tools[langcodes]</code>
-  extra or region codes silently strip (<code>en-US</code> → <code>en</code>).</li>
+  fallback selection can differ.
+Lifecycle:</li>
 </ul>
+<table>
+<thead>
+<tr>
+<th>Phase</th>
+<th>Version</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Active</td>
+<td>behavior-only change, no removal</td>
+<td></td>
+</tr>
+<tr>
+<td>Deprecated but functional</td>
+<td>n/a</td>
+<td></td>
+</tr>
+<tr>
+<td>Dropped</td>
+<td>landed <code>08ad348</code> (2024-10-12)</td>
+<td>(ovos-plugin-manager <code>08ad348</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/267" title="GitHub Issue: TigreGotico/ovos-technical-manual #267">#267</a>)</td>
+</tr>
+</tbody>
+</table>
+<p>Later replaced again by <code>ovos_spec_tools.lang_distance</code> in <code>35919b7</code>
+(<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/391" title="GitHub Issue: TigreGotico/ovos-technical-manual #391">#391</a>, 2026-05-22), same <code>&lt; 10</code> threshold preserved. Requires the
+<code>ovos-spec-tools[langcodes]</code> extra or region codes silently strip
+(<code>en-US</code> → <code>en</code>).</p>
 <h3 id="g2p-deprecated-moved-toward-ovos-audio">G2P deprecated, moved toward ovos-audio<a class="headerlink" href="#g2p-deprecated-moved-toward-ovos-audio" title="Permanent link">&para;</a></h3>
 <p><code>opm.g2p</code> (Grapheme2Phoneme, used only for MK1 mouth animation) is marked
 deprecated in <code>ovos-plugin-manager</code>. The companion work moves it toward
 <code>ovos-audio</code>.</p>
 <ul>
 <li>Migration: no functional removal yet in <code>ovos-plugin-manager</code>. Expect
-  deprecation warnings on every access.</li>
-<li>Lifecycle: active before <code>c102889</code>. Deprecated but functional from
-  <code>c102889</code> (2024-10-23). Drop version unverified (ovos-plugin-manager <code>c102889</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/277" title="GitHub Issue: TigreGotico/ovos-technical-manual #277">#277</a>).</li>
+  deprecation warnings on every access.
+Lifecycle:</li>
 </ul>
+<table>
+<thead>
+<tr>
+<th>Phase</th>
+<th>Version</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Active</td>
+<td>before <code>c102889</code></td>
+<td></td>
+</tr>
+<tr>
+<td>Deprecated but functional</td>
+<td>from <code>c102889</code> (2024-10-23)</td>
+<td></td>
+</tr>
+<tr>
+<td>Dropped</td>
+<td>drop version unverified</td>
+<td>(ovos-plugin-manager <code>c102889</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/277" title="GitHub Issue: TigreGotico/ovos-technical-manual #277">#277</a>)</td>
+</tr>
+</tbody>
+</table>
 <h3 id="embeddingsdb-gains-required-collection-methods"><code>EmbeddingsDB</code> gains required collection methods<a class="headerlink" href="#embeddingsdb-gains-required-collection-methods" title="Permanent link">&para;</a></h3>
 <p><code>create_collection</code>, <code>get_collection</code>, <code>delete_collection</code>,
 <code>list_collections</code> became required <code>@abstractmethod</code>s on <code>EmbeddingsDB</code>.</p>
 <ul>
 <li>Migration: implement all four on your <code>EmbeddingsDB</code> subclass.
-  single-collection plugins can wrap a fixed default collection name.</li>
-<li>Lifecycle: active before <code>15beb84</code>. No deprecation window (no deprecation window, added
-  directly as abstract). Landed <code>15beb84</code> (2025-07-22), (ovos-plugin-manager <code>15beb84</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/333" title="GitHub Issue: TigreGotico/ovos-technical-manual #333">#333</a>).</li>
+  single-collection plugins can wrap a fixed default collection name.
+Lifecycle:</li>
 </ul>
+<table>
+<thead>
+<tr>
+<th>Phase</th>
+<th>Version</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Active</td>
+<td>before <code>15beb84</code></td>
+<td></td>
+</tr>
+<tr>
+<td>Deprecated but functional</td>
+<td>none</td>
+<td>added directly as abstract</td>
+</tr>
+<tr>
+<td>Dropped</td>
+<td>landed <code>15beb84</code> (2025-07-22)</td>
+<td>(ovos-plugin-manager <code>15beb84</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/333" title="GitHub Issue: TigreGotico/ovos-technical-manual #333">#333</a>)</td>
+</tr>
+</tbody>
+</table>
 <h3 id="opm-canonical-entry-point-rename"><code>opm.*</code> canonical entry-point rename<a class="headerlink" href="#opm-canonical-entry-point-rename" title="Permanent link">&para;</a></h3>
 <p>Every <code>PluginTypes</code>/<code>PluginConfigTypes</code> entry-point group string that had
 carried a <code># TODO rename</code> comment was flipped to the canonical <code>opm.*</code>
@@ -1709,15 +1858,39 @@ old literal string breaks.</p>
   <code>pyproject.toml</code> to the new group at your convenience. Old groups still
   work via the alias table. Code comparing enum values as raw strings
   should compare against <code>PluginTypes.STT</code> (the enum member), not the
-  literal old string.</li>
-<li>Lifecycle: active before <code>15beb84</code>. Deprecated but functional
-  (aliased, with a warning) from <code>15beb84</code> (2025-07-22). No stated removal
-  version as of the sweep, so treat as indefinitely deprecated
-  (ovos-plugin-manager <code>15beb84</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/333" title="GitHub Issue: TigreGotico/ovos-technical-manual #333">#333</a>). A case-sensitivity bug in the
-  alias table (<code>ovos.plugin.VAD</code> mapped to lowercase <code>opm.vad</code> instead of
-  <code>opm.VAD</code>) silently broke discovery of un-migrated VAD plugins for about
-  eleven months, fixed in <code>3a7a330</code> (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/401" title="GitHub Issue: TigreGotico/ovos-technical-manual #401">#401</a>, 2026-06-16).</li>
+  literal old string.
+Lifecycle:</li>
 </ul>
+<table>
+<thead>
+<tr>
+<th>Phase</th>
+<th>Version</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Active</td>
+<td>before <code>15beb84</code></td>
+<td></td>
+</tr>
+<tr>
+<td>Deprecated but functional</td>
+<td>from <code>15beb84</code> (2025-07-22)</td>
+<td>aliased, with a warning</td>
+</tr>
+<tr>
+<td>Dropped</td>
+<td>no stated removal version as of the sweep</td>
+<td>treat as indefinitely deprecated (ovos-plugin-manager <code>15beb84</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/333" title="GitHub Issue: TigreGotico/ovos-technical-manual #333">#333</a>)</td>
+</tr>
+</tbody>
+</table>
+<p>A case-sensitivity bug in the alias table (<code>ovos.plugin.VAD</code> mapped to
+lowercase <code>opm.vad</code> instead of <code>opm.VAD</code>) silently broke discovery of
+un-migrated VAD plugins for about eleven months, fixed in <code>3a7a330</code>
+(<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/401" title="GitHub Issue: TigreGotico/ovos-technical-manual #401">#401</a>, 2026-06-16).</p>
 <h3 id="solver-plugin-family-deprecated-in-favor-of-agent-engines">Solver plugin family deprecated in favor of agent engines<a class="headerlink" href="#solver-plugin-family-deprecated-in-favor-of-agent-engines" title="Permanent link">&para;</a></h3>
 <p>The entire <code>templates/solvers.py</code> family (<code>QuestionSolver</code>, <code>CorpusSolver</code>,
 <code>TldrSolver</code>, <code>EvidenceSolver</code>, <code>MultipleChoiceSolver</code>, <code>EntailmentSolver</code>)
@@ -1758,15 +1931,38 @@ is deprecated with a stated removal target of the next major version.</p>
 </table>
 <ul>
 <li>Migration: move to the matching <code>templates/agents.py</code> engine class
-  before the removal version ships.</li>
-<li>Lifecycle: active before <code>53564ce</code>. Deprecated but functional from
-  <code>53564ce</code> (2026-01-29), <code>opm.solver.*</code> entry points still discoverable.
-  removal target is the current major version plus one: not yet shipped
-  as of <code>53564ce</code> (ovos-plugin-manager, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/365" title="GitHub Issue: TigreGotico/ovos-technical-manual #365">#365</a>).
-  <code>ovos-bus-client</code>'s parallel <code>opm.py</code> (<code>neon.plugin.solver</code>-based chat
-  class) was already removed outright in <code>d526e99</code> (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/207" title="GitHub Issue: TigreGotico/ovos-technical-manual #207">#207</a>, 2026-05-18,
-  <code>2.0.0</code>): migrate to <code>ovos-messagebus-chat-plugin</code>.</li>
+  before the removal version ships.
+Lifecycle:</li>
 </ul>
+<table>
+<thead>
+<tr>
+<th>Phase</th>
+<th>Version</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Active</td>
+<td>before <code>53564ce</code></td>
+<td></td>
+</tr>
+<tr>
+<td>Deprecated but functional</td>
+<td>from <code>53564ce</code> (2026-01-29)</td>
+<td><code>opm.solver.*</code> entry points still discoverable</td>
+</tr>
+<tr>
+<td>Dropped</td>
+<td>removal target is the current major version plus one, not yet shipped as of <code>53564ce</code></td>
+<td>(ovos-plugin-manager, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/365" title="GitHub Issue: TigreGotico/ovos-technical-manual #365">#365</a>)</td>
+</tr>
+</tbody>
+</table>
+<p><code>ovos-bus-client</code>'s parallel <code>opm.py</code> (<code>neon.plugin.solver</code>-based chat
+class) was already removed outright in <code>d526e99</code> (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/207" title="GitHub Issue: TigreGotico/ovos-technical-manual #207">#207</a>, 2026-05-18,
+<code>2.0.0</code>): migrate to <code>ovos-messagebus-chat-plugin</code>.</p>
 <h3 id="gui-adapter-plugin-handler-signature-gains-session_id">GUI adapter plugin handler signature gains <code>session_id</code><a class="headerlink" href="#gui-adapter-plugin-handler-signature-gains-session_id" title="Permanent link">&para;</a></h3>
 <p>All <code>handle_show_*</code> template handlers, <code>on_namespace_activated</code>,
 <code>on_namespace_deactivated</code>, <code>on_status_event</code>, <code>on_session_update</code>, and
@@ -1781,11 +1977,35 @@ inserted <strong>before</strong> the existing <code>site_id</code> parameter.</p
 <ul>
 <li>Migration: switch any positional <code>site_id</code> call sites to keyword
   arguments, or insert <code>session_id="default"</code> explicitly before the old
-  third positional argument.</li>
-<li>Lifecycle: active before <code>34a0f13</code>. No deprecation window (explicit <code>BREAKING CHANGE:</code> in
-  the commit body, no deprecation window). Dropped/landed <code>34a0f13</code>
-  (2026-03-12), (ovos-plugin-manager <code>34a0f13</code>).</li>
+  third positional argument.
+Lifecycle:</li>
 </ul>
+<table>
+<thead>
+<tr>
+<th>Phase</th>
+<th>Version</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Active</td>
+<td>before <code>34a0f13</code></td>
+<td></td>
+</tr>
+<tr>
+<td>Deprecated but functional</td>
+<td>none</td>
+<td>explicit <code>BREAKING CHANGE:</code> in the commit body</td>
+</tr>
+<tr>
+<td>Dropped</td>
+<td>landed <code>34a0f13</code> (2026-03-12)</td>
+<td>(ovos-plugin-manager <code>34a0f13</code>)</td>
+</tr>
+</tbody>
+</table>
 <h3 id="phal-enclosure-abstraction-dropped">PHAL enclosure abstraction dropped<a class="headerlink" href="#phal-enclosure-abstraction-dropped" title="Permanent link">&para;</a></h3>
 <p><code>PHALPlugin</code> lost its Mark-1/Mark-2 enclosure command handling
 (<code>register_enclosure_namespace</code>, <code>on_eyes_*</code>, <code>on_mouth_*</code>, <code>on_display</code>,
@@ -1796,11 +2016,35 @@ bare background thread with no bus events wired by the base class at all.</p>
 <li>Migration: mix in <code>EnclosureProtocolListener</code> from the separate
   <code>ovos-ui-enclosure-protocol</code> package for both the enclosure commands and
   <code>register_core_events()</code>. The <code>EnclosureAPI</code> producer moved to
-  <code>ovos-gui-api-client</code>.</li>
-<li>Lifecycle: active before <code>eac52a4</code>. No deprecation window (no deprecation window, both
-  commits landed same day). Dropped <code>eac52a4</code> and <code>f7c613b</code>
-  (2026-06-25), (ovos-plugin-manager <code>eac52a4</code>, <code>f7c613b</code>).</li>
+  <code>ovos-gui-api-client</code>.
+Lifecycle:</li>
 </ul>
+<table>
+<thead>
+<tr>
+<th>Phase</th>
+<th>Version</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Active</td>
+<td>before <code>eac52a4</code></td>
+<td></td>
+</tr>
+<tr>
+<td>Deprecated but functional</td>
+<td>none</td>
+<td>both commits landed same day</td>
+</tr>
+<tr>
+<td>Dropped</td>
+<td><code>eac52a4</code> and <code>f7c613b</code> (2026-06-25)</td>
+<td>(ovos-plugin-manager <code>eac52a4</code>, <code>f7c613b</code>)</td>
+</tr>
+</tbody>
+</table>
 <h3 id="mediaprovider-template-collapsed-to-search"><code>MediaProvider</code> template collapsed to <code>search()</code><a class="headerlink" href="#mediaprovider-template-collapsed-to-search" title="Permanent link">&para;</a></h3>
 <p><code>MediaProvider</code> lost <code>is_available</code>, <code>matches</code>, <code>serves</code>, <code>search_context</code>,
 <code>search_safe</code>, <code>featured_media</code>, and the <code>media</code>/<code>playback_type</code>/
@@ -1821,12 +2065,35 @@ parameter was also replaced by plain <code>**context</code> kwargs.</p>
 <ul>
 <li>Migration: implement the single <code>search(signals, lang='en-us',
   **context)</code> method. Read routing/availability info from <code>**context</code>
-  instead of the removed <code>QueryContext</code> helper methods.</li>
-<li>Lifecycle: active before <code>8a03351</code>. No deprecation window (fast in-place redesign of a
-  still-fresh API: <code>opm.media.provider</code> type was only introduced days
-  earlier in <code>83ade15</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/405" title="GitHub Issue: TigreGotico/ovos-technical-manual #405">#405</a>). Dropped <code>8a03351</code> and <code>1741181</code>, both
-  2026-06-25 (ovos-plugin-manager <code>8a03351</code>, <code>1741181</code>).</li>
+  instead of the removed <code>QueryContext</code> helper methods.
+Lifecycle:</li>
 </ul>
+<table>
+<thead>
+<tr>
+<th>Phase</th>
+<th>Version</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Active</td>
+<td>before <code>8a03351</code></td>
+<td></td>
+</tr>
+<tr>
+<td>Deprecated but functional</td>
+<td>none</td>
+<td>fast in-place redesign of a still-fresh API: <code>opm.media.provider</code> type was only introduced days earlier in <code>83ade15</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/405" title="GitHub Issue: TigreGotico/ovos-technical-manual #405">#405</a></td>
+</tr>
+<tr>
+<td>Dropped</td>
+<td><code>8a03351</code> and <code>1741181</code>, both 2026-06-25</td>
+<td>(ovos-plugin-manager <code>8a03351</code>, <code>1741181</code>)</td>
+</tr>
+</tbody>
+</table>
 <hr />
 <p><strong>Read next:</strong> <a href="../version-compat-guide/">Version-Compatible Skills &amp; Plugins</a> · <a href="../upcoming-changes/">Upcoming Changes</a>
 <strong>Related:</strong> <a href="../updating-from-older-ovos/">Updating from Older OVOS</a> · <a href="../ovos-media/">Media Service (ovos-media)</a></p>

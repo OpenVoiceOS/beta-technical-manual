@@ -1413,11 +1413,17 @@ is normative.</p>
 <p>The technical parsers for numbers, dates, and spoken language names are separate libraries, not skill resources:</p>
 <ul>
 <li><strong>Language names</strong>: <code>ovos-lang-parser</code> maps BCP-47 codes to spoken names.</li>
-<li><strong>Numbers</strong>: <code>ovos-number-parser</code> (e.g. if "22<sup>nd</sup>" doesn't parse in your language).</li>
-<li><strong>Dates</strong>: <code>ovos-date-parser</code>.</li>
+<li><strong>Numbers</strong>: <a href="https://github.com/OpenVoiceOS/ovos-number-parser"><code>ovos-number-parser</code></a> (e.g. if "22<sup>nd</sup>" doesn't parse in your language).</li>
+<li><strong>Dates</strong>: <a href="https://github.com/OpenVoiceOS/ovos-date-parser"><code>ovos-date-parser</code></a>.</li>
 </ul>
 <p>These are rule-driven per language. Contribute fixes upstream to the respective repository so
-every install benefits. Local edits to an installed package do not persist across upgrades.</p>
+every install benefits. Local edits to an installed package do not persist across upgrades.
+Each language gets its own module, named <code>numbers_&lt;code&gt;.py</code> in <code>ovos-number-parser</code>
+(for example <code>numbers_pt.py</code>) and <code>dates_&lt;code&gt;.py</code> in <code>ovos-date-parser</code>
+(for example <code>dates_pt.py</code>); adding one is how you give a new language cardinal/ordinal
+pronunciation, number extraction, or date/time parsing instead of falling back to the generic
+implementation. See <a href="../lang-support/#adding-a-new-language">Adding a New Language</a> for the
+full path from a missing language to a released one.</p>
 <hr />
 <p><strong>Read next:</strong> <a href="../bidirectional-translation/">Bidirectional Translation</a>
 <strong>Related:</strong> <a href="../lang-selection/">Language Selection</a> · <a href="../resource-files/">Resource Files</a> · <a href="../lang-support/">Language Support Overview</a></p>

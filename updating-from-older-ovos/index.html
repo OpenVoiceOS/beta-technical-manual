@@ -1662,8 +1662,8 @@ the CommonQuerySkill removal, and the bus-client dual-emit bridge, in that order
 subsections themselves are grouped by theme, not by date).</p>
 <h3 id="the-ovos-utils-010-gutting-2024-09">The ovos-utils 0.1.0 gutting (2024-09)<a class="headerlink" href="#the-ovos-utils-010-gutting-2024-09" title="Permanent link">&para;</a></h3>
 <p>A decade of accumulated helpers, inherited all the way back from the
-Mycroft era, disappeared in a single release: <code>ovos-utils</code> 0.1.0 cut
-10,709 lines under the stated goal of removing "ALL dead code." From the
+Mycroft era, disappeared in a single release: <code>ovos-utils</code> 0.1.0 cut the
+bulk of the package under the stated goal of removing "ALL dead code." From the
 outside this meant imports breaking across the ecosystem the moment a
 project bumped past the alpha stream, with no single traceback pointing at
 the cause since the deleted symbols were scattered across messagebus,
@@ -1916,7 +1916,7 @@ The v5.0.0 mixin shipped with the wrong method name for about a day. Rename
 </table>
 <h3 id="commonqueryskill-removal">CommonQuerySkill removal<a class="headerlink" href="#commonqueryskill-removal" title="Permanent link">&para;</a></h3>
 <p><code>CommonQuerySkill</code> sat deprecation-flagged for the better part of two
-years before it was finally cut, 259 lines gone in one commit with no
+years before it was finally cut in one commit, with no
 direct successor class left in <code>ovos-workshop</code>. The removal only
 completed a migration that had already happened underneath it: the
 matching hardcoded common-query wiring inside <code>ovos-core</code> itself had been
@@ -2275,43 +2275,48 @@ safe to build against yet.</p>
 <p><code>ovos-core</code> is a fork of <code>mycroft-core</code> and carries that project's full
 history (6119 commits on <code>origin/dev</code>, back to the initial commit). The
 items below were pinned against that combined history and against the
-named sibling repositories directly. The one former policy question is
-settled by the project's current status:</p>
-<ul>
-<li><strong>ovos-media</strong>: it has never become production-recommended. <code>ovos-media</code>
-  is alpha and not officially released.
-  <code>ovos-audio</code> remains the production audio service, and stock installs
-  keep <code>enable_old_audioservice: true</code> (the default). See
-  <a href="../ovos-media/">Media Service (ovos-media)</a> for its maturity status.</li>
-</ul>
-<p>The following items were previously listed here as gaps. They are now
-resolved and pinned in the tables above:</p>
-<ul>
-<li><strong>mycroft.* → ovos_* rename</strong>: <code>ovos-core</code> <code>5f36bc31b5</code> ("refactor/
-  ovos-core!! (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/313" title="GitHub Issue: TigreGotico/ovos-technical-manual #313">#313</a>)", 2023-05-02) is where core logic began moving out of
-  <code>mycroft/</code> into the new <code>ovos_core</code> package. The <code>mycroft/</code> compatibility
-  package itself was fully deleted in <code>2a10fa9c1c</code> ("remove mycroft (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/439" title="GitHub Issue: TigreGotico/ovos-technical-manual #439">#439</a>)",
-  2025-03-04).</li>
-<li><strong>ovos-utils GUITracker/GUIPlaybackStatus</strong>: removed without replacement.
-  <code>ovos-utils</code> <code>3a77617</code> ("0.1.0 alpha 3 (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/204" title="GitHub Issue: TigreGotico/ovos-technical-manual #204">#204</a>)", 2023-12-29) deletes both
-  <code>GUITracker</code> and <code>GUIPlaybackStatus</code> from <code>ovos_utils/gui.py</code>. No
-  successor symbol exists anywhere in <code>ovos-core</code> or <code>ovos-gui</code> history.</li>
-<li><strong>ovos-config <code>ede6243</code> lang key</strong>: the <code>autoconfigure</code> command writes
-  the standardized language tag to the top-level <code>lang</code> config key
-  (<code>config["lang"] = stdlang</code>), not nested under <code>stt</code>.</li>
-<li><strong>ovos-media <code>d249e89</code> symbol diff</strong>: <code>OCPMediaPlayer</code> stopped subclassing
-  <code>OVOSAbstractApplication</code> and became a plain class; <code>bind()</code> was removed;
-  <code>_update_gui</code>, <code>_merged_queue</code>, <code>_queue_index</code>, <code>_resolve_preferred_service</code>,
-  <code>handle_record_end</code>, <code>handle_utterance_handled</code>, and <code>handle_mycroft_stop</code>
-  were added; <code>handle_player_state_update</code> was removed in favor of the new
-  handlers. The commit also adds a large adversarial unit-test suite
-  (queue navigation, duck/uncork, player-state transitions).</li>
-<li><strong>ovos-audio extraction point</strong>: <code>ovos-audio</code> <code>047a0a1</code> ("Feat/audio from
-  core (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/1" title="GitHub Issue: TigreGotico/ovos-technical-manual #1">#1</a>)", 2023-03-03) is the extraction commit. <code>ovos-core</code> <code>7f0c0ab22a</code>
-  ("refactor/ovos_audio (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/304" title="GitHub Issue: TigreGotico/ovos-technical-manual #304">#304</a>)", 2023-04-28) is the corresponding commit on
-  the <code>ovos-core</code> side: it guts <code>mycroft/audio/*</code> down to thin re-exports of
-  the new <code>ovos_audio</code> package.</li>
-</ul>
+named sibling repositories directly.</p>
+<table>
+<thead>
+<tr>
+<th>Gap</th>
+<th>Status</th>
+<th>Where the answer lives</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ovos-media production-readiness policy</td>
+<td>pinned</td>
+<td><code>ovos-media</code> is alpha and not officially released. <code>ovos-audio</code> remains the production audio service, and stock installs keep <code>enable_old_audioservice: true</code> (the default). See <a href="../ovos-media/">Media Service (ovos-media)</a> for its maturity status.</td>
+</tr>
+<tr>
+<td>mycroft.* → ovos_* rename</td>
+<td>pinned</td>
+<td><code>ovos-core</code> <code>5f36bc31b5</code> ("refactor/ovos-core!! (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/313" title="GitHub Issue: TigreGotico/ovos-technical-manual #313">#313</a>)", 2023-05-02) is where core logic began moving out of <code>mycroft/</code> into the new <code>ovos_core</code> package. The <code>mycroft/</code> compatibility package itself was fully deleted in <code>2a10fa9c1c</code> ("remove mycroft (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/439" title="GitHub Issue: TigreGotico/ovos-technical-manual #439">#439</a>)", 2025-03-04).</td>
+</tr>
+<tr>
+<td>ovos-utils GUITracker/GUIPlaybackStatus</td>
+<td>pinned</td>
+<td>Removed without replacement. <code>ovos-utils</code> <code>3a77617</code> ("0.1.0 alpha 3 (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/204" title="GitHub Issue: TigreGotico/ovos-technical-manual #204">#204</a>)", 2023-12-29) deletes both <code>GUITracker</code> and <code>GUIPlaybackStatus</code> from <code>ovos_utils/gui.py</code>. No successor symbol exists anywhere in <code>ovos-core</code> or <code>ovos-gui</code> history.</td>
+</tr>
+<tr>
+<td>ovos-config <code>ede6243</code> lang key</td>
+<td>pinned</td>
+<td>The <code>autoconfigure</code> command writes the standardized language tag to the top-level <code>lang</code> config key (<code>config["lang"] = stdlang</code>), not nested under <code>stt</code>.</td>
+</tr>
+<tr>
+<td>ovos-media <code>d249e89</code> symbol diff</td>
+<td>pinned</td>
+<td><code>OCPMediaPlayer</code> stopped subclassing <code>OVOSAbstractApplication</code> and became a plain class; <code>bind()</code> was removed; <code>_update_gui</code>, <code>_merged_queue</code>, <code>_queue_index</code>, <code>_resolve_preferred_service</code>, <code>handle_record_end</code>, <code>handle_utterance_handled</code>, and <code>handle_mycroft_stop</code> were added; <code>handle_player_state_update</code> was removed in favor of the new handlers. The commit also adds a large adversarial unit-test suite (queue navigation, duck/uncork, player-state transitions).</td>
+</tr>
+<tr>
+<td>ovos-audio extraction point</td>
+<td>pinned</td>
+<td><code>ovos-audio</code> <code>047a0a1</code> ("Feat/audio from core (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/1" title="GitHub Issue: TigreGotico/ovos-technical-manual #1">#1</a>)", 2023-03-03) is the extraction commit. <code>ovos-core</code> <code>7f0c0ab22a</code> ("refactor/ovos_audio (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/304" title="GitHub Issue: TigreGotico/ovos-technical-manual #304">#304</a>)", 2023-04-28) is the corresponding commit on the <code>ovos-core</code> side: it guts <code>mycroft/audio/*</code> down to thin re-exports of the new <code>ovos_audio</code> package.</td>
+</tr>
+</tbody>
+</table>
 <hr />
 <p><strong>Read next:</strong> <a href="../updating-skills/">For Skill Maintainers</a> · <a href="../updating-deployers/">For Device &amp; Fleet Operators</a>
 <strong>Related:</strong> <a href="../upcoming-changes/">Upcoming Changes</a> · <a href="../version-compat-guide/">Version-Compatible Skills &amp; Plugins</a> · <a href="../production-operations/">Production Operations</a></p>

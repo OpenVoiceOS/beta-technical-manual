@@ -1946,7 +1946,7 @@ that understands complex affirmations and denials, even double negations.</p>
 </span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>    <span class="k">def</span> <span class="nf">handle_request_icecream</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
 </span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">speak_dialog</span><span class="p">(</span><span class="s1">&#39;welcome&#39;</span><span class="p">)</span>
 </span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>        <span class="n">selection</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ask_selection</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">flavors</span><span class="p">,</span> <span class="s1">&#39;what.flavor&#39;</span><span class="p">)</span>
-</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">speak_dialog</span><span class="p">(</span><span class="s1">&#39;coming.right_up&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;flavor&#39;</span><span class="p">:</span> <span class="n">selection</span><span class="p">})</span>
+</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">speak_dialog</span><span class="p">(</span><span class="s1">&#39;coming_right_up&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;flavor&#39;</span><span class="p">:</span> <span class="n">selection</span><span class="p">})</span>
 </span></code></pre></div>
 <p><strong>Optional arguments:</strong></p>
 <ul>
@@ -1989,7 +1989,7 @@ that understands complex affirmations and denials, even double negations.</p>
 </li>
 </ul>
 <hr />
-<p><strong>Read next:</strong> <a href="../context/">Context</a>
+<p><strong>Read next:</strong> <a href="../converse/">Continuous Conversation</a>
 <strong>Related:</strong> <a href="../intents/">Intent Design</a> · <a href="../converse/">Converse</a> · <a href="../session/">Session Aware Skills</a> · <a href="../statements/">Statements</a></p>
 
 

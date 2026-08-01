@@ -1138,6 +1138,15 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#if-your-language-is-not-listed" class="md-nav__link">
+    <span class="md-ellipsis">
+      If your language is not listed
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1481,6 +1490,15 @@
   <a href="#languages-supported" class="md-nav__link">
     <span class="md-ellipsis">
       Languages Supported
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#if-your-language-is-not-listed" class="md-nav__link">
+    <span class="md-ellipsis">
+      If your language is not listed
     </span>
   </a>
   
@@ -2109,6 +2127,13 @@ time expressions.</p>
 </tr>
 </tbody>
 </table>
+<h3 id="if-your-language-is-not-listed">If your language is not listed<a class="headerlink" href="#if-your-language-is-not-listed" title="Permanent link">&para;</a></h3>
+<p><code>extract_datetime</code> falls back to the <a href="https://dateparser.readthedocs.io/en/latest/">dateparser</a>
+library for a language with no dedicated implementation, so it still returns a result rather
+than raising. The <code>nice_*</code> formatters (<code>nice_time</code>, <code>nice_date</code>, <code>nice_relative_time</code>, ...) fall
+back to a generic, English-style implementation when no language-specific one exists. See the
+<a href="https://github.com/OpenVoiceOS/ovos-date-parser#languages-supported">Languages Supported</a>
+section of the repo README for the current full list.</p>
 <h2 id="usage">Usage<a class="headerlink" href="#usage" title="Permanent link">&para;</a></h2>
 <h3 id="date-and-time-extraction">Date and Time Extraction<a class="headerlink" href="#date-and-time-extraction" title="Permanent link">&para;</a></h3>
 <p>Extract specific dates and times from a phrase. This function identifies date-related terms in natural language and

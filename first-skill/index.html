@@ -1499,6 +1499,9 @@ and loops back to the pip install step on failure:</p>
     H --&gt;|OVOS replies| I["Done"]
     H --&gt;|no reply| J["Check ovos-logs show -l skills"]
     J --&gt; F</code></pre>
+<p><em>Diagram:</em> The flow runs from creating the folder layout through the pip install step to
+restarting ovos-core, then checks whether saying "hello" gets a reply, looping back to
+the pip install step on failure.</p>
 </div>
 <h2 id="what-a-skill-is-made-of">What a skill is made of<a class="headerlink" href="#what-a-skill-is-made-of" title="Permanent link">&para;</a></h2>
 <p>A skill is a small folder with three kinds of files:</p>

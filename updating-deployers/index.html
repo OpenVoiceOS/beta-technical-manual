@@ -1588,21 +1588,72 @@ DEFAULT and SYSTEM.</p>
 <li>Migration: config precedence is now DEFAULT &lt; DISTRIBUTION
   (<code>/usr/share/...</code>) &lt; SYSTEM (<code>/etc/...</code>) &lt; web-cache (remote) &lt; OLD_USER
   &lt; USER. Distro packagers should install an overwrite-safe default to the
-  DISTRIBUTION path.</li>
-<li>Lifecycle: additive, not a removal. Landed pre-<code>0.1.0</code>, (ovos-config <code>3781f01</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/128" title="GitHub Issue: TigreGotico/ovos-technical-manual #128">#128</a>).</li>
+  DISTRIBUTION path.
+Lifecycle:</li>
 </ul>
+<table>
+<thead>
+<tr>
+<th>Phase</th>
+<th>Version</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Active</td>
+<td>additive, not a removal</td>
+<td></td>
+</tr>
+<tr>
+<td>Deprecated but functional</td>
+<td>n/a</td>
+<td></td>
+</tr>
+<tr>
+<td>Dropped</td>
+<td>landed pre-<code>0.1.0</code></td>
+<td>(ovos-config <code>3781f01</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/128" title="GitHub Issue: TigreGotico/ovos-technical-manual #128">#128</a>)</td>
+</tr>
+</tbody>
+</table>
 <h3 id="mimic3-no-longer-the-default-tts-fallback"><code>mimic3</code> no longer the default TTS fallback<a class="headerlink" href="#mimic3-no-longer-the-default-tts-fallback" title="Permanent link">&para;</a></h3>
 <p>The default <code>tts.fallback_module</code> value <code>"ovos-tts-plugin-mimic3-server"</code>
 and its settings block were removed from the shipped <code>mycroft.conf</code>.</p>
 <ul>
 <li>Migration: set <code>tts.fallback_module</code> and the settings block explicitly
   in your own config if a fallback TTS is still wanted (mimic3 itself is
-  deprecated upstream).</li>
-<li>Lifecycle: active before <code>bc9be86</code>. No deprecation window. Dropped <code>bc9be86</code> (2023-11-05),
-  (ovos-config <code>bc9be86</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/81" title="GitHub Issue: TigreGotico/ovos-technical-manual #81">#81</a>). <code>ovos-audio</code>'s matching default change
-  (<code>tts.fallback_module</code> <code>"mimic"</code> → <code>""</code>) landed separately in <code>c47e596</code>
-  (2024-01-26).</li>
+  deprecated upstream).
+Lifecycle:</li>
 </ul>
+<table>
+<thead>
+<tr>
+<th>Phase</th>
+<th>Version</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Active</td>
+<td>before <code>bc9be86</code></td>
+<td></td>
+</tr>
+<tr>
+<td>Deprecated but functional</td>
+<td>none</td>
+<td></td>
+</tr>
+<tr>
+<td>Dropped</td>
+<td><code>bc9be86</code> (2023-11-05)</td>
+<td>(ovos-config <code>bc9be86</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/81" title="GitHub Issue: TigreGotico/ovos-technical-manual #81">#81</a>)</td>
+</tr>
+</tbody>
+</table>
+<p><code>ovos-audio</code>'s matching default change (<code>tts.fallback_module</code> <code>"mimic"</code> →
+<code>""</code>) landed separately in <code>c47e596</code> (2024-01-26).</p>
 <h3 id="mycroftconf-no-longer-probes-a-mycroft-core-install"><code>mycroft.conf</code> no longer probes a mycroft-core install<a class="headerlink" href="#mycroftconf-no-longer-probes-a-mycroft-core-install" title="Permanent link">&para;</a></h3>
 <p><code>ovos_config/locations.py::find_default_config()</code> stopped checking for a
 running mycroft-core installation as a source for the DEFAULT config
@@ -1610,10 +1661,35 @@ layer. Only the bundled <code>ovos_config/mycroft.conf</code> is used as DEFAULT
 <ul>
 <li>Migration: put overrides in SYSTEM/USER config layers
   (<code>/etc/mycroft/mycroft.conf</code>, <code>~/.config/mycroft/mycroft.conf</code>) instead
-  of relying on a legacy mycroft-core file being picked up.</li>
-<li>Lifecycle: active before <code>0b16d46</code>. No deprecation window. Dropped <code>0.1.0</code> (2023-12-28),
-  (ovos-config <code>0b16d46</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/90" title="GitHub Issue: TigreGotico/ovos-technical-manual #90">#90</a>).</li>
+  of relying on a legacy mycroft-core file being picked up.
+Lifecycle:</li>
 </ul>
+<table>
+<thead>
+<tr>
+<th>Phase</th>
+<th>Version</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Active</td>
+<td>before <code>0b16d46</code></td>
+<td></td>
+</tr>
+<tr>
+<td>Deprecated but functional</td>
+<td>none</td>
+<td></td>
+</tr>
+<tr>
+<td>Dropped</td>
+<td><code>0.1.0</code> (2023-12-28)</td>
+<td>(ovos-config <code>0b16d46</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/90" title="GitHub Issue: TigreGotico/ovos-technical-manual #90">#90</a>)</td>
+</tr>
+</tbody>
+</table>
 <h3 id="default-tts-fallback-and-mprislang-detect-defaults-changed">Default TTS fallback and MPRIS/lang-detect defaults changed<a class="headerlink" href="#default-tts-fallback-and-mprislang-detect-defaults-changed" title="Permanent link">&para;</a></h3>
 <p>Three unrelated default-value changes landed in one <code>mycroft.conf</code> update:
 <code>duck_while_listening</code> removed entirely (documented an unimplemented
@@ -1624,10 +1700,35 @@ disabled by default.</p>
 <li>Migration: set <code>mpris: true</code> under <code>Audio.backends.OCP</code> (pre-<code>ovos-media</code>
   split. See the OCP→ovos-media entry in the hub's Big-ticket migrations)
   if MPRIS is wanted. Pin the old lang-detect plugin explicitly if
-  network-free detection is required.</li>
-<li>Lifecycle: active before <code>bff2d72</code>. No deprecation window. Dropped/changed <code>bff2d72</code>
-  (2024-02-26), (ovos-config <code>bff2d72</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/112" title="GitHub Issue: TigreGotico/ovos-technical-manual #112">#112</a>).</li>
+  network-free detection is required.
+Lifecycle:</li>
 </ul>
+<table>
+<thead>
+<tr>
+<th>Phase</th>
+<th>Version</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Active</td>
+<td>before <code>bff2d72</code></td>
+<td></td>
+</tr>
+<tr>
+<td>Deprecated but functional</td>
+<td>none</td>
+<td></td>
+</tr>
+<tr>
+<td>Dropped</td>
+<td><code>bff2d72</code> (2024-02-26), dropped/changed</td>
+<td>(ovos-config <code>bff2d72</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/112" title="GitHub Issue: TigreGotico/ovos-technical-manual #112">#112</a>)</td>
+</tr>
+</tbody>
+</table>
 <h3 id="native_sources-config-key-replaced-by-session-based-routing"><code>native_sources</code> config key replaced by session-based routing<a class="headerlink" href="#native_sources-config-key-replaced-by-session-based-routing" title="Permanent link">&para;</a></h3>
 <p><code>ovos-audio</code>'s <code>native_sources</code> allowlist (gating playback-control bus
 messages by <code>message.context["source"]</code>) was replaced by
@@ -1636,16 +1737,40 @@ messages by <code>message.context["source"]</code>) was replaced by
 <ul>
 <li>Migration: remove <code>native_sources</code> from config/constructor calls. Ensure
   playback-control messages either omit <code>context.session</code> (defaults to
-  <code>"default"</code>) or explicitly set <code>session_id: "default"</code>.</li>
-<li>Lifecycle: active before <code>01499ee</code>. Unverified deprecation window (the
-  gating decorator was introduced in <code>c5d95a4</code>, 2024-06-06, then replaced
-  outright). Dropped <code>01499ee</code> (2025-03-06), (ovos-audio <code>01499ee</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/121" title="GitHub Issue: TigreGotico/ovos-technical-manual #121">#121</a>).
-  <code>ovos-media</code> landed the matching change with <code>require_default_session()</code>
-  plus a new <code>media.validate_source</code> (bool, default <code>True</code>) config key in
-  <code>4601792</code> (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/58" title="GitHub Issue: TigreGotico/ovos-technical-manual #58">#58</a>, 2026-06-26): set <code>media.validate_source: false</code> on a
-  central <code>ovos-media</code> instance that must act on non-default/remote
-  HiveMind sessions.</li>
+  <code>"default"</code>) or explicitly set <code>session_id: "default"</code>.
+Lifecycle:</li>
 </ul>
+<table>
+<thead>
+<tr>
+<th>Phase</th>
+<th>Version</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Active</td>
+<td>before <code>01499ee</code></td>
+<td></td>
+</tr>
+<tr>
+<td>Deprecated but functional</td>
+<td>unverified</td>
+<td>the gating decorator was introduced in <code>c5d95a4</code>, 2024-06-06, then replaced outright</td>
+</tr>
+<tr>
+<td>Dropped</td>
+<td><code>01499ee</code> (2025-03-06)</td>
+<td>(ovos-audio <code>01499ee</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/121" title="GitHub Issue: TigreGotico/ovos-technical-manual #121">#121</a>)</td>
+</tr>
+</tbody>
+</table>
+<p><code>ovos-media</code> landed the matching change with <code>require_default_session()</code>
+plus a new <code>media.validate_source</code> (bool, default <code>True</code>) config key in
+<code>4601792</code> (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/58" title="GitHub Issue: TigreGotico/ovos-technical-manual #58">#58</a>, 2026-06-26): set <code>media.validate_source: false</code> on a
+central <code>ovos-media</code> instance that must act on non-default/remote
+HiveMind sessions.</p>
 <h3 id="listener-defaults-changed-instant_listen-remove_silence-mic-backend">Listener defaults changed (instant_listen, remove_silence, mic backend)<a class="headerlink" href="#listener-defaults-changed-instant_listen-remove_silence-mic-backend" title="Permanent link">&para;</a></h3>
 <p><code>listener.instant_listen</code> and <code>listener.remove_silence</code> flipped to enabled
 by default (<code>54a0844</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/133" title="GitHub Issue: TigreGotico/ovos-technical-manual #133">#133</a>, 2024-06-11). The default microphone module
@@ -1657,10 +1782,35 @@ once OPM plugin-fallback support made the missing-ALSA case safe
   <code>listener.remove_silence: false</code> to restore old timing/silence behavior.
   explicitly pin a different mic backend if ALSA is unavailable on your
   host (OPM now falls back to <code>sounddevice</code> automatically on ALSA load
-  failure).</li>
-<li>Lifecycle: default-value changes, not deprecate-then-drop. <code>54a0844</code>
-  (2024-06-11), <code>0bbec90</code> (2024-09-15).</li>
+  failure).
+Lifecycle:</li>
 </ul>
+<table>
+<thead>
+<tr>
+<th>Phase</th>
+<th>Version</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Active</td>
+<td>default-value changes, not deprecate-then-drop</td>
+<td></td>
+</tr>
+<tr>
+<td>Deprecated but functional</td>
+<td>n/a</td>
+<td></td>
+</tr>
+<tr>
+<td>Dropped</td>
+<td><code>54a0844</code> (2024-06-11), <code>0bbec90</code> (2024-09-15)</td>
+<td></td>
+</tr>
+</tbody>
+</table>
 <h3 id="ovosconf-deprecated-in-favor-of-environment-variables"><code>ovos.conf</code> deprecated in favor of environment variables<a class="headerlink" href="#ovosconf-deprecated-in-favor-of-environment-variables" title="Permanent link">&para;</a></h3>
 <p>The separate <code>ovos.conf</code> INI file controlling <code>base_folder</code>/
 <code>config_filename</code>/XDG behavior is deprecated. Those values move
@@ -1670,23 +1820,74 @@ exclusively to environment variables.</p>
   <code>config_filename=...</code> / <code>default_config_path=...</code> with the env vars
   <code>OVOS_CONFIG_BASE_FOLDER</code>, <code>OVOS_CONFIG_FILENAME</code>, and
   <code>OVOS_DEFAULT_CONFIG</code> (all introduced in the same commit that
-  deprecated <code>ovos.conf</code>, <code>76d9310</code>, <code>ovos_config/meta.py</code>).</li>
-<li>Lifecycle: active before <code>76d9310</code>. Deprecated but functional from
-  <code>76d9310</code> (2024-08-16). Drop version unverified (ovos-config <code>76d9310</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/138" title="GitHub Issue: TigreGotico/ovos-technical-manual #138">#138</a>).</li>
+  deprecated <code>ovos.conf</code>, <code>76d9310</code>, <code>ovos_config/meta.py</code>).
+Lifecycle:</li>
 </ul>
+<table>
+<thead>
+<tr>
+<th>Phase</th>
+<th>Version</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Active</td>
+<td>before <code>76d9310</code></td>
+<td></td>
+</tr>
+<tr>
+<td>Deprecated but functional</td>
+<td>from <code>76d9310</code> (2024-08-16)</td>
+<td></td>
+</tr>
+<tr>
+<td>Dropped</td>
+<td>drop version unverified</td>
+<td>(ovos-config <code>76d9310</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/138" title="GitHub Issue: TigreGotico/ovos-technical-manual #138">#138</a>)</td>
+</tr>
+</tbody>
+</table>
 <h3 id="ready-settings-block-removed"><code>ready</code> settings block removed<a class="headerlink" href="#ready-settings-block-removed" title="Permanent link">&para;</a></h3>
 <p>The <code>"ready"</code> start-up gating config block (14 lines) was dropped entirely
 from shipped <code>mycroft.conf</code> defaults.</p>
 <ul>
 <li>Migration: consult <code>ovos-core</code>'s listener release notes for the
   replacement readiness mechanism (the skill-based "finished booting"
-  signal). <code>ready_settings</code>/<code>ready</code> keys have no default anymore.</li>
-<li>Lifecycle: active before <code>94f2348</code>. No deprecation window. Dropped <code>94f2348</code> (2024-10-15),
-  (ovos-config <code>94f2348</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/166" title="GitHub Issue: TigreGotico/ovos-technical-manual #166">#166</a>). On the <code>ovos-core</code> side, the matching
-  <code>SkillManager.is_device_ready()</code>/<code>check_services_ready()</code>/
-  <code>handle_check_device_readiness()</code> methods (deprecated since <code>1.0.0</code>)
-  were removed outright in <code>62024dbf98</code> (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/690" title="GitHub Issue: TigreGotico/ovos-technical-manual #690">#690</a>, 2025-06-10, <code>1.3.0</code>).</li>
+  signal). <code>ready_settings</code>/<code>ready</code> keys have no default anymore.
+Lifecycle:</li>
 </ul>
+<table>
+<thead>
+<tr>
+<th>Phase</th>
+<th>Version</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Active</td>
+<td>before <code>94f2348</code></td>
+<td></td>
+</tr>
+<tr>
+<td>Deprecated but functional</td>
+<td>none</td>
+<td></td>
+</tr>
+<tr>
+<td>Dropped</td>
+<td><code>94f2348</code> (2024-10-15)</td>
+<td>(ovos-config <code>94f2348</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/166" title="GitHub Issue: TigreGotico/ovos-technical-manual #166">#166</a>)</td>
+</tr>
+</tbody>
+</table>
+<p>On the <code>ovos-core</code> side, the matching <code>SkillManager.is_device_ready()</code>/
+<code>check_services_ready()</code>/<code>handle_check_device_readiness()</code> methods
+(deprecated since <code>1.0.0</code>) were removed outright in <code>62024dbf98</code> (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/690" title="GitHub Issue: TigreGotico/ovos-technical-manual #690">#690</a>,
+2025-06-10, <code>1.3.0</code>).</p>
 <h3 id="backendmicroservices-config-block-removed">Backend/microservices config block removed<a class="headerlink" href="#backendmicroservices-config-block-removed" title="Permanent link">&para;</a></h3>
 <p>The single largest config removal in <code>ovos-config</code>'s history. Removed
 entirely from <code>mycroft.conf</code> and <code>ovos_config/models.py</code>:</p>
@@ -1705,23 +1906,73 @@ entirely from <code>mycroft.conf</code> and <code>ovos_config/models.py</code>:<
 <p>Migration: route weather/Wolfram/geolocation provider config through
   each plugin's own config (for example a weather PHAL plugin's own
   <code>weather_provider</code>/API-key settings) instead of the removed centralized
-  <code>microservices</code> block. <code>opt_in</code> telemetry has no replacement key.</p>
+  <code>microservices</code> block. <code>opt_in</code> telemetry has no replacement key.
+Lifecycle:</p>
 </li>
-<li>Lifecycle: active before <code>0a7a060</code>. Unverified deprecation window.
-  dropped <code>0a7a060</code> (2024-11-19), (ovos-config <code>0a7a060</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/183" title="GitHub Issue: TigreGotico/ovos-technical-manual #183">#183</a>). This
-  mirrors <code>ovos-core</code>'s own <code>mycroft.api</code>/<code>DeviceApi</code> deprecation toward
-  <code>ovos-backend-client</code> (<code>ee9a14cb23</code>, 2022-10-04) and the full removal of
-  the <code>mycroft</code> compat package including Selene API support
-  (<code>2a10fa9c1c</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/439" title="GitHub Issue: TigreGotico/ovos-technical-manual #439">#439</a>, 2025-03-04, first stable release <code>1.1.0</code>).</li>
 </ul>
+<table>
+<thead>
+<tr>
+<th>Phase</th>
+<th>Version</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Active</td>
+<td>before <code>0a7a060</code></td>
+<td></td>
+</tr>
+<tr>
+<td>Deprecated but functional</td>
+<td>unverified</td>
+<td></td>
+</tr>
+<tr>
+<td>Dropped</td>
+<td><code>0a7a060</code> (2024-11-19)</td>
+<td>(ovos-config <code>0a7a060</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/183" title="GitHub Issue: TigreGotico/ovos-technical-manual #183">#183</a>)</td>
+</tr>
+</tbody>
+</table>
+<p>This mirrors <code>ovos-core</code>'s own <code>mycroft.api</code>/<code>DeviceApi</code> deprecation
+toward <code>ovos-backend-client</code> (<code>ee9a14cb23</code>, 2022-10-04) and the full
+removal of the <code>mycroft</code> compat package including Selene API support
+(<code>2a10fa9c1c</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/439" title="GitHub Issue: TigreGotico/ovos-technical-manual #439">#439</a>, 2025-03-04, first stable release <code>1.1.0</code>).</p>
 <h3 id="padatious_medium-dropped-from-default-pipeline"><code>padatious_medium</code> dropped from default pipeline<a class="headerlink" href="#padatious_medium-dropped-from-default-pipeline" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Migration: add <code>padatious_medium</code> back explicitly to <code>core.pipeline</code> in
   USER config if you want it (maintainers' note: "it is always wrong in
-  benchmarks").</li>
-<li>Lifecycle: active before <code>b08b7b8</code>. No deprecation window. Dropped <code>b08b7b8</code> (2025-02-28,
-  tag <code>1.0.2</code>), (ovos-config <code>b08b7b8</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/200" title="GitHub Issue: TigreGotico/ovos-technical-manual #200">#200</a>).</li>
+  benchmarks").
+Lifecycle:</li>
 </ul>
+<table>
+<thead>
+<tr>
+<th>Phase</th>
+<th>Version</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Active</td>
+<td>before <code>b08b7b8</code></td>
+<td></td>
+</tr>
+<tr>
+<td>Deprecated but functional</td>
+<td>none</td>
+<td></td>
+</tr>
+<tr>
+<td>Dropped</td>
+<td><code>b08b7b8</code> (2025-02-28, tag <code>1.0.2</code>)</td>
+<td>(ovos-config <code>b08b7b8</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/200" title="GitHub Issue: TigreGotico/ovos-technical-manual #200">#200</a>)</td>
+</tr>
+</tbody>
+</table>
 <h3 id="phoonnx-becomes-the-default-offline-tts-in-autoconfigure">phoonnx becomes the default offline TTS in autoconfigure<a class="headerlink" href="#phoonnx-becomes-the-default-offline-tts-in-autoconfigure" title="Permanent link">&para;</a></h3>
 <p>Every <code>offline_male</code>/<code>offline_female</code> TTS recommendation in the
 autoconfigure "recommends" registry now resolves to
@@ -1729,10 +1980,35 @@ autoconfigure "recommends" registry now resolves to
 <ul>
 <li>Migration: pin the desired TTS plugin explicitly under <code>tts.module</code> in
   <code>mycroft.conf</code> if the old default is still wanted. Phoonnx requires its
-  own model/voice availability per language.</li>
-<li>Lifecycle: n/a (registry default change, not a removal). Landed
-  <code>2a5bc3f</code> (2026-06-23), (ovos-config <code>2a5bc3f</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/272" title="GitHub Issue: TigreGotico/ovos-technical-manual #272">#272</a>).</li>
+  own model/voice availability per language.
+Lifecycle:</li>
 </ul>
+<table>
+<thead>
+<tr>
+<th>Phase</th>
+<th>Version</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Active</td>
+<td>n/a</td>
+<td>registry default change, not a removal</td>
+</tr>
+<tr>
+<td>Deprecated but functional</td>
+<td>n/a</td>
+<td></td>
+</tr>
+<tr>
+<td>Dropped</td>
+<td>landed <code>2a5bc3f</code> (2026-06-23)</td>
+<td>(ovos-config <code>2a5bc3f</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/272" title="GitHub Issue: TigreGotico/ovos-technical-manual #272">#272</a>)</td>
+</tr>
+</tbody>
+</table>
 <h3 id="ovos_configlocale-helpers-marked-for-removal"><code>ovos_config.locale</code> helpers marked for removal<a class="headerlink" href="#ovos_configlocale-helpers-marked-for-removal" title="Permanent link">&para;</a></h3>
 <p><code>get_full_lang_code</code>, <code>get_primary_lang_code</code>, <code>get_default_lang</code> in
 <code>ovos_config/locale.py</code> now emit <code>DeprecationWarning</code> and lost their
@@ -1740,12 +2016,35 @@ internal caching. Signatures are unchanged so this is warning-only so far.</p>
 <ul>
 <li>Migration: switch to <code>ovos_config.Configuration()["lang"]</code> /
   <code>Configuration().get("lang")</code> directly ahead of the eventual hard
-  removal.</li>
-<li>Lifecycle: active before <code>087a112</code>. Deprecated but functional from
-  <code>087a112</code> (2026-07-24). Drop version unverified: the decorator's target
-  version string reads a placeholder that does not match the current
-  major line (ovos-config <code>087a112</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/253" title="GitHub Issue: TigreGotico/ovos-technical-manual #253">#253</a>).</li>
+  removal.
+Lifecycle:</li>
 </ul>
+<table>
+<thead>
+<tr>
+<th>Phase</th>
+<th>Version</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Active</td>
+<td>before <code>087a112</code></td>
+<td></td>
+</tr>
+<tr>
+<td>Deprecated but functional</td>
+<td>from <code>087a112</code> (2026-07-24)</td>
+<td></td>
+</tr>
+<tr>
+<td>Dropped</td>
+<td>drop version unverified</td>
+<td>the decorator's target version string reads a placeholder that does not match the current major line (ovos-config <code>087a112</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/253" title="GitHub Issue: TigreGotico/ovos-technical-manual #253">#253</a>)</td>
+</tr>
+</tbody>
+</table>
 <hr />
 <p><strong>Read next:</strong> <a href="../version-compat-guide/">Version-Compatible Skills &amp; Plugins</a> · <a href="../upcoming-changes/">Upcoming Changes</a>
 <strong>Related:</strong> <a href="../updating-from-older-ovos/">Updating from Older OVOS</a> · <a href="../production-operations/">Production Operations</a></p>

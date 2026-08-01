@@ -1105,6 +1105,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Supported Languages">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#if-your-language-is-not-listed" class="md-nav__link">
+    <span class="md-ellipsis">
+      If your language is not listed
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1504,6 +1519,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Supported Languages">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#if-your-language-is-not-listed" class="md-nav__link">
+    <span class="md-ellipsis">
+      If your language is not listed
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1837,6 +1867,13 @@
 <p>If a language is not implemented for <code>pronounce_number</code> or <code>pronounce_ordinal</code> then <a href="https://github.com/rhasspy/unicode-rbnf">unicode-rbnf</a> will be used as a fallback.</p>
 <p>This table is a curated subset. <code>pronounce_number</code> and <code>extract_number</code> dispatch cover ~41 languages in total (including <code>an</code>, <code>ar</code>, <code>ast</code>, <code>bg</code>, <code>el</code>, <code>et</code>, <code>fi</code>, <code>fy</code>, <code>he</code>, <code>hr</code>, <code>id</code>, <code>ms</code>, <code>nb</code>, <code>nn</code>, <code>no</code>, <code>oc</code>, <code>ro</code>, <code>sk</code>, and <code>tr</code>). See <a href="https://github.com/OpenVoiceOS/ovos-number-parser/blob/dev/docs/languages.md"><code>docs/languages.md</code></a> in the repo for the full per-language matrix.</p>
 </blockquote>
+<h3 id="if-your-language-is-not-listed">If your language is not listed<a class="headerlink" href="#if-your-language-is-not-listed" title="Permanent link">&para;</a></h3>
+<p><code>pronounce_number</code> and <code>pronounce_ordinal</code> fall back to <a href="https://github.com/rhasspy/unicode-rbnf">unicode-rbnf</a>
+for a language with no hand-written module, so those two functions usually still work.
+<code>extract_number</code> and <code>is_fractional</code> have no fallback: an unsupported language raises
+<code>NotImplementedError</code>. <code>numbers_to_digits</code> never raises; an unsupported language is left
+unchanged. See the <a href="https://github.com/OpenVoiceOS/ovos-number-parser#supported-languages">Supported languages</a>
+section of the repo README for the current full list.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Several Romance languages (<code>ast</code>, <code>an</code>, <code>oc</code>, <code>fr</code>, <code>it</code>, <code>ca</code>, <code>es</code>, <code>gl</code>, <code>pt</code>, <code>mwl</code>, <code>ro</code>) share a common <code>RomanceNumberExtractor</code>/<code>NumberVocabulary</code> engine internally, so their extraction logic stays consistent across languages that inflect numbers similarly.</p>

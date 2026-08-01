@@ -1336,26 +1336,13 @@
 
 
 <h1 id="maturity-scale">Maturity Scale<a class="headerlink" href="#maturity-scale" title="Permanent link">&para;</a></h1>
+<div class="admonition abstract">
+<p class="admonition-title">In a nutshell</p>
 <p>Many pages in this manual carry a <strong>maturity</strong> badge. It tells you how much weight a
-component can bear in a real deployment. A component can be a rock-solid dependency, a
-usable-but-moving target, or an early experiment that may change under you.</p>
-<div class="admonition info">
-<p class="admonition-title">How maturity is judged</p>
-<p>A component's rating comes from the <strong>health of its source repository</strong>, not its version
-number. OVOS packages are versioned continuously from conventional commits. A <code>0.x</code>
-version says little about how well-proven the code is. A foundational library can sit at
-<code>0.8</code> with hundreds of releases, while a brand-new experiment can ship a <code>1.0</code>. Instead, the
-rating weighs signals that track maturity: how long the repository has existed,
-how actively it is maintained (recent commit activity), the volume of open issues and pull
-requests it fields, and whether it carries real in-repo documentation and tests.</p>
-</div>
-<div class="admonition warning">
-<p class="admonition-title">Maturity is not a recommendation</p>
-<p>A badge rates how <em>reliable and maintained</em> a component is. It does not rate whether it is
-the right choice for your use case. A component can be <strong>Mature</strong> (rock-solid and well-proven)
-and still be the wrong tool for a given job. A page may recommend against broad use of
-something whose code is perfectly stable. Always read the page's own recommendation alongside
-the badge.</p>
+component can bear in a real deployment: a rock-solid dependency, a usable-but-moving
+target, or an early experiment that may change under you. The rating comes from the
+health of the component's source repository, not its version number. See the levels
+below, then read <a href="#how-maturity-is-judged">How maturity is judged</a> for the detail.</p>
 </div>
 <h2 id="the-levels">The levels<a class="headerlink" href="#the-levels" title="Permanent link">&para;</a></h2>
 <table>
@@ -1399,6 +1386,24 @@ the badge.</p>
 </tr>
 </tbody>
 </table>
+<div class="admonition info">
+<p class="admonition-title">How maturity is judged</p>
+<p>A component's rating comes from the <strong>health of its source repository</strong>, not its version
+number. OVOS packages are versioned continuously from conventional commits. A <code>0.x</code>
+version says little about how well-proven the code is. A foundational library can sit at
+<code>0.8</code> with hundreds of releases, while a brand-new experiment can ship a <code>1.0</code>. Instead, the
+rating weighs signals that track maturity: how long the repository has existed,
+how actively it is maintained (recent commit activity), the volume of open issues and pull
+requests it fields, and whether it carries real in-repo documentation and tests.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Maturity is not a recommendation</p>
+<p>A badge rates how <em>reliable and maintained</em> a component is. It does not rate whether it is
+the right choice for your use case. A component can be <strong>Mature</strong> (rock-solid and well-proven)
+and still be the wrong tool for a given job. A page may recommend against broad use of
+something whose code is perfectly stable. Always read the page's own recommendation alongside
+the badge.</p>
+</div>
 <h2 id="why-its-not-the-version-number">Why it's not the version number<a class="headerlink" href="#why-its-not-the-version-number" title="Permanent link">&para;</a></h2>
 <p>A version like <code>1.2.0</code> is set by the release pipeline from commit conventions. A single <code>feat:</code>
 commit can move a <code>0.x</code> library to the next minor, and a <code>chore!:</code> moves it to a new major. That

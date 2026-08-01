@@ -1585,7 +1585,40 @@ OpenVoiceOS, from the moment sound hits the microphone to the final spoken respo
 </li>
 </ol>
 <p>(Other matchers such as <a href="../m2v-pipeline/">Model2Vec</a> and, if installed, <a href="../cq-pipeline/">Common Query</a> for general-knowledge questions, slot into this order too — see <a href="../pipelines-overview/">Pipelines</a> for the full default and how to customize it.)</p>
-<p>Each <code>match</code> call is invoked directly inside a <code>try/except</code>. If a matcher <strong>raises</strong>, the orchestrator logs it and moves on to the next matcher as a no-match. There is <strong>no per-match timeout</strong>. A matcher that merely <em>hangs</em> (never returns, never raises) blocks the pipeline. Because <code>ovos-core</code> runs on a single shared bus connection by default (<code>websocket.shared_connection: true</code>), that same thread is the one servicing the bus. A hung matcher stalls the whole service until it returns. Keep matchers fast. (The only timeout in this path is the <strong>handler</strong> timeout, default 5 minutes, <code>intents.handler_timeout</code>. It bounds the <em>skill handler</em> invoked after a match, not the match calls themselves.) One result of the single shared connection: a matcher that does its own bus round-trip inside <code>match()</code> (e.g. a stop plugin gathering <code>stop.pong</code> replies) is self-blocking. The thread waiting for the replies is the same thread that would deliver them. So such gather windows (e.g. the stop pipeline's ~0.5 s pong wait) are best-effort. They typically time out rather than complete a live, serviced round trip. Only <code>websocket.shared_connection: false</code> gives skills their own connections and threads, and even then the orchestrator and pipeline plugins stay on the one shared bus.</p>
+<p>Each <code>match</code> call is invoked directly inside a <code>try/except</code>. If a matcher <strong>raises</strong>, the orchestrator logs it and moves on to the next matcher as a no-match. A matcher that merely <em>hangs</em> (never returns, never raises) is a different story: keep matchers fast.</p>
+<div class="admonition warning">
+<p class="admonition-title">Operational limits</p>
+<table>
+<thead>
+<tr>
+<th>Limit</th>
+<th>Detail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Default pipeline order</td>
+<td>See <a href="../pipelines-overview/">Pipelines Overview</a> for the full default and how to customize it</td>
+</tr>
+<tr>
+<td>Per-match timeout</td>
+<td><strong>None.</strong> A hung matcher blocks the pipeline until it returns</td>
+</tr>
+<tr>
+<td>Handler timeout</td>
+<td>5 minutes by default (<code>intents.handler_timeout</code>). Bounds the <em>skill handler</em> invoked after a match, not the match calls themselves</td>
+</tr>
+<tr>
+<td><code>websocket.shared_connection: true</code> (default)</td>
+<td><code>ovos-core</code> runs on a single shared bus connection, and that same thread services the bus. A hung matcher stalls the whole service</td>
+</tr>
+<tr>
+<td>Self-blocking <code>match()</code> calls</td>
+<td>A matcher that does its own bus round-trip inside <code>match()</code> (e.g. a stop plugin gathering <code>stop.pong</code> replies) waits on the same thread that would deliver the replies. Such gather windows (e.g. the stop pipeline's ~0.5 s pong wait) are best-effort and typically time out rather than complete a live, serviced round trip. Only <code>websocket.shared_connection: false</code> gives skills their own connections and threads, and even then the orchestrator and pipeline plugins stay on the one shared bus</td>
+</tr>
+</tbody>
+</table>
+</div>
 <hr />
 <h2 id="5-skill-execution">5. <a href="../skill-design-guidelines/">Skill</a> Execution<a class="headerlink" href="#5-skill-execution" title="Permanent link">&para;</a></h2>
 <p><strong>Service:</strong> A specific Skill (running in <code>ovos-core</code>)

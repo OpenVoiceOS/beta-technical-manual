@@ -1846,6 +1846,20 @@ just needs a speech primitive over the network.</p>
     HIVE &lt;-- websocket.host=A --&gt; BUS
     SAT -. HiveMind protocol .-&gt; HIVE</code></pre>
 <p><em>Diagram: an example four-host topology where the listener, audio, core, skill, PHAL, GUI, and hivemind-core services on Hosts A-D all connect to one shared messagebus on Host A, while a remote hivemind-mic-satellite reaches hivemind-core over the separate HiveMind protocol.</em></p>
+<div class="admonition danger">
+<p class="admonition-title">Two instances of one service on one bus is not failover</p>
+<p><code>ovos-core</code>, <code>ovos-audio</code>, and <code>ovos-dinkum-listener</code> are each written assuming they are
+the only instance of that service talking to a given bus. The bus is pure fan-out with no
+leader election or ownership concept, so it cannot tell two <code>ovos-core</code> processes apart.
+Running two instances of the same service against one bus does not give you redundancy.
+It gives you duplicate handling of every message and double-emitted lifecycle events. See
+<a href="#services-are-implicit-singletons-per-bus">Services are implicit singletons per bus</a>
+below. Scale horizontally with <a href="../hivemind-agents/">HiveMind</a> satellites instead.</p>
+<p>Version skew across a split deployment is a related risk: there is no central version
+negotiation, so mismatched major versions of <code>ovos-bus-client</code>, <code>ovos-core</code>, <code>ovos-audio</code>,
+and <code>ovos-dinkum-listener</code> can produce message shapes one side doesn't expect. See
+<a href="#version-skew-is-a-real-risk">Version skew is a real risk</a> below.</p>
+</div>
 <div class="admonition warning">
 <p class="admonition-title">Trust boundary: the bus and HIVE links are localhost/LAN only</p>
 <p>Every <code>&lt;-- websocket.host=A --&gt;</code> link in the diagram above (including the <code>HIVE</code> connection)
@@ -1921,10 +1935,11 @@ process's configuration. A <code>websocket.host</code> mismatch, or a listener t
 module <code>ovos-core</code> expects it to have already run, will silently misbehave rather than error
 loudly.</p>
 <h3 id="version-skew-is-a-real-risk">Version skew is a real risk<a class="headerlink" href="#version-skew-is-a-real-risk" title="Permanent link">&para;</a></h3>
-<p>Every process talks over the same bus protocol independently. There is no central version
-negotiation. Mismatched major versions across <code>ovos-bus-client</code>, <code>ovos-core</code>, <code>ovos-audio</code>, and
-<code>ovos-dinkum-listener</code> can produce message shapes one side doesn't expect. Keep versions aligned
-across a deployment, and check each package's changelog before upgrading only one service.</p>
+<p>See the <a href="#example-topology">danger box above</a> for the short version. Every process talks over
+the same bus protocol independently. There is no central version negotiation. Mismatched major
+versions across <code>ovos-bus-client</code>, <code>ovos-core</code>, <code>ovos-audio</code>, and <code>ovos-dinkum-listener</code> can
+produce message shapes one side doesn't expect. Keep versions aligned across a deployment, and
+check each package's changelog before upgrading only one service.</p>
 <h3 id="latency-and-network-reality">Latency and network reality<a class="headerlink" href="#latency-and-network-reality" title="Permanent link">&para;</a></h3>
 <p>A single-host install exchanges messages over loopback, effectively free. Splitting services
 across hosts puts real network latency and reliability on the critical path of every utterance.
@@ -1932,10 +1947,10 @@ Wake word detection, STT, intent matching, and TTS all round-trip through the bu
 lossy link between the listener and the bus is felt as sluggish or dropped voice interactions, not
 as an error message.</p>
 <h3 id="services-are-implicit-singletons-per-bus">Services are implicit singletons per bus<a class="headerlink" href="#services-are-implicit-singletons-per-bus" title="Permanent link">&para;</a></h3>
-<p><code>ovos-core</code>, <code>ovos-audio</code>, and <code>ovos-dinkum-listener</code> are each written assuming they are the
-only instance of that service talking to a given bus. The bus itself is pure fan-out with no
-leader election or ownership concept. It has no way to tell two <code>ovos-core</code> processes apart
-or arbitrate between them.</p>
+<p>See the <a href="#example-topology">danger box above</a> for the short version. <code>ovos-core</code>, <code>ovos-audio</code>,
+and <code>ovos-dinkum-listener</code> are each written assuming they are the only instance of that service
+talking to a given bus. The bus itself is pure fan-out with no leader election or ownership
+concept. It has no way to tell two <code>ovos-core</code> processes apart or arbitrate between them.</p>
 <p>Running two instances of the same service against one bus does not
 give you redundancy or failover. It gives you duplicate handling of every message and
 double-emitted lifecycle events (for example, two <code>ovos.intent.handler.start</code>/<code>.complete</code> pairs for

@@ -1529,9 +1529,9 @@ single voice-assistant program. A voice assistant is a <em>product</em> that ans
 questions. A voice OS is a <em>platform</em>: it defines the boundary between what you
 say and what runs, arbitrates which application handles each utterance, and
 carries conversation state across turns. The orchestrator's
-<code>match(utterances, lang, message) → Match</code> contract is, in effect, the
-system-call ABI that lets third-party skills and plugins build against a
-stable interface without knowing about each other. See the
+<code>match(utterances, lang, message) → Match</code> contract is the stable integration
+surface that lets third-party skills and plugins build against OVOS without
+knowing about each other. See the
 <a href="../architecture-specs/">Formal Specifications</a>.</p>
 <h2 id="high-level-flow">High-Level Flow<a class="headerlink" href="#high-level-flow" title="Permanent link">&para;</a></h2>
 <p><img alt="Diagram: an utterance flowing from microphone input through wake word, STT, the intent pipeline, skill execution, TTS, and audio/GUI output" src="../img/Full%20flow.jpeg" /></p>
@@ -1565,22 +1565,45 @@ stable interface without knowing about each other. See the
     BUS --- GUI["ovos-gui&lt;br/&gt;GUI layer"]
     BUS --- PHAL["ovos-phal&lt;br/&gt;hardware/platform plugins"]</code></pre>
 <p><em>Diagram: the messagebus sits at the center, with ovos-core (and its SkillManager, IntentService, transformer chains, and pipeline plugins), ovos-dinkum-listener, ovos-audio, ovos-media, ovos-gui, and ovos-phal each connected to it as independent clients.</em></p>
-<p>Of the six <a href="../transformer-plugins/">transformer chains</a>, only utterance, metadata, and intent
-run inside <code>IntentService</code> above. The other three run elsewhere in the pipeline: audio
-transformers run in <code>ovos-dinkum-listener</code> before STT, and dialog and TTS transformers run in
-<code>ovos-audio</code> (or <code>ovos-media</code>, where installed) when a response is rendered.</p>
-<p>In words: <code>ovos-messagebus</code> is the hub. <code>ovos-core</code> connects to it and contains the
-<code>SkillManager</code> and <code>IntentService</code>. <code>ovos-dinkum-listener</code>, <code>ovos-audio</code>, <code>ovos-media</code>,
-<code>ovos-gui</code>, and <code>ovos-PHAL</code> are siblings that each connect to the bus independently, alongside
-<code>ovos-core</code>.</p>
-<p><code>ovos-messagebus</code> sits at the top because every other box connects to it as a client. It is the
-one shared channel, not a hierarchy.</p>
-<p><code>ovos-core</code> bundles the services most people mean by "the
-brain": <code>SkillManager</code> loading skill code, <code>IntentService</code> running the utterance through its
-sub-services and the pipeline plugins, and a couple of smaller helpers alongside them.</p>
-<p>The remaining five boxes, the listener, audio, media, GUI, and PHAL services, are separate
-processes. They could in principle run on separate machines, each responsible for one stage of
-the <a href="../life-of-an-utterance/">utterance lifecycle</a>.</p>
+<p><code>ovos-messagebus</code> is the hub; every other box is a client connected to it, not a node in a
+hierarchy. The five services besides <code>ovos-core</code>, the listener, audio, media, GUI, and PHAL, are
+separate processes and could in principle run on separate machines, each responsible for one
+stage of the <a href="../life-of-an-utterance/">utterance lifecycle</a>.</p>
+<p>The <a href="../transformer-plugins/">six transformer chains</a> don't all run in the same place:</p>
+<table>
+<thead>
+<tr>
+<th>Chain</th>
+<th>Runs in</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Utterance</td>
+<td><code>ovos-core</code> (<code>IntentService</code>)</td>
+</tr>
+<tr>
+<td>Metadata</td>
+<td><code>ovos-core</code> (<code>IntentService</code>)</td>
+</tr>
+<tr>
+<td>Intent</td>
+<td><code>ovos-core</code> (<code>IntentService</code>)</td>
+</tr>
+<tr>
+<td>Audio</td>
+<td><code>ovos-dinkum-listener</code>, before STT</td>
+</tr>
+<tr>
+<td>Dialog</td>
+<td><code>ovos-audio</code> (or <code>ovos-media</code>, where installed)</td>
+</tr>
+<tr>
+<td>TTS</td>
+<td><code>ovos-audio</code> (or <code>ovos-media</code>, where installed)</td>
+</tr>
+</tbody>
+</table>
 <h2 id="key-services">Key Services<a class="headerlink" href="#key-services" title="Permanent link">&para;</a></h2>
 <h3 id="messagebus">messagebus<a class="headerlink" href="#messagebus" title="Permanent link">&para;</a></h3>
 <p>The backbone of OVOS. All components communicate via this WebSocket-based bus. It ensures loose coupling and enables remote control and multi-device setups.</p>

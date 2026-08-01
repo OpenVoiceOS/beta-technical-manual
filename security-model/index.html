@@ -1478,13 +1478,17 @@ elevated privilege: I²C, SPI, GPIO, system power management, thermal control. A
 plugins are disabled unless explicitly turned on with <code>"enabled": true</code> in
 <code>PHAL.admin</code> config, which stops an installed-but-unconfigured admin plugin from running by
 accident.</p>
-<p>Once enabled, though, an AdminPHAL plugin receives the same unauthenticated bus client as
-every other service, with no separate credential check. A plugin like
-<code>ovos-PHAL-plugin-system</code> exposes reboot, shutdown and factory-reset over the bus.</p>
-<p>If the bus is reachable, anyone who can emit bus messages can trigger those actions with root
-privilege. This is a stronger consequence of the bus's lack of authentication than "skills
-aren't sandboxed": it is root-equivalent remote control, not just assistant control. See
-<a href="../phal/#security-model">PHAL: Security model</a> for the full mechanism.</p>
+<div class="admonition warning">
+<p class="admonition-title">Opt-in, but once enabled, bus access is root access</p>
+<p>AdminPHAL is opt-in (<code>"enabled": true</code>), but once enabled, an AdminPHAL plugin receives
+the same unauthenticated bus client as every other service, with no separate credential
+check. A plugin like <code>ovos-PHAL-plugin-system</code> exposes reboot, shutdown and factory-reset
+over the bus. If the bus is reachable, anyone who can emit bus messages can trigger those
+actions with root privilege. This is a stronger consequence of the bus's lack of
+authentication than "skills aren't sandboxed": it is root-equivalent remote control, not
+just assistant control.</p>
+</div>
+<p>See <a href="../phal/#security-model">PHAL: Security model</a> for the full mechanism.</p>
 <h2 id="hivemind-is-the-sanctioned-way-out">HiveMind is the sanctioned way out<a class="headerlink" href="#hivemind-is-the-sanctioned-way-out" title="Permanent link">&para;</a></h2>
 <p>Everything above holds because OVOS assumes the device it runs on is itself trusted, and that
 nothing untrusted can reach the bus. That assumption breaks the moment you want to reach the

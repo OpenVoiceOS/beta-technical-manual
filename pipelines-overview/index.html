@@ -1860,7 +1860,7 @@ pipeline. They expose the same high/medium/low confidence tiers as Adapt/Padatio
 <tr>
 <td><code>ovos-common-query-pipeline-plugin</code></td>
 <td>Answer questions by gathering answers from several skills</td>
-<td><a href="../common-query/">Common Query</a></td>
+<td><a href="../cq-pipeline/">Common Query Pipeline</a></td>
 </tr>
 <tr>
 <td><code>ovos-m2v-pipeline</code></td>
@@ -1882,8 +1882,35 @@ pipeline. They expose the same high/medium/low confidence tiers as Adapt/Padatio
 <td>Specialized media handling</td>
 <td><a href="../ocp-pipeline/">OCP Pipeline</a></td>
 </tr>
+<tr>
+<td><code>ovos-persona-pipeline-plugin</code></td>
+<td>Route conversation to a persona (LLM or other agent)</td>
+<td><a href="../persona-pipeline/">Persona Pipeline</a></td>
+</tr>
+<tr>
+<td><code>ovos-converse-pipeline-plugin</code></td>
+<td>Give active skills first claim on follow-up utterances</td>
+<td><a href="../converse-pipeline/">Converse Pipeline</a></td>
+</tr>
+<tr>
+<td><code>ovos-stop-pipeline-plugin</code></td>
+<td>Match "stop" and interrupt commands</td>
+<td><a href="../stop-pipeline/">Stop Pipeline</a></td>
+</tr>
+<tr>
+<td><code>ovos-fallback-pipeline-plugin</code></td>
+<td>Last-resort handlers when nothing matched</td>
+<td><a href="../fallback-pipeline/">Fallback Pipeline</a></td>
+</tr>
 </tbody>
 </table>
+<p>The <a href="../common-query/">Common Query <em>skill</em> API</a> (how a skill answers queries) is a
+different page from the pipeline plugin above.</p>
+<p>Utterances and replies also pass through ordered transformer chains before and after
+matching: <a href="../transformer-plugins/">overview</a>, with one page per chain type:
+<a href="../utterance-transformers/">utterance</a>, <a href="../intent-transformers/">intent</a>,
+<a href="../dialog-transformers/">dialog</a>, <a href="../audio-transformers/">audio</a>, and
+<a href="../tts-transformers/">TTS</a> transformers.</p>
 <hr />
 <p><strong>Read next:</strong> <a href="../building-your-pipeline/">Building Your Pipeline</a>
 <strong>Related:</strong> <a href="../adapt-pipeline/">Adapt Pipeline</a> · <a href="../padatious-pipeline/">Padatious Pipeline</a> · <a href="../transformer-plugins/">Transformers Overview</a> · <a href="../debugging-intent-matching/">Debugging Intent Matching</a></p>

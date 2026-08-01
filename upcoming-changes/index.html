@@ -1462,62 +1462,77 @@ WebSocket/QML renderer. See <a href="../gui-status/">Screens on OVOS Today</a> f
 picture. Until this work lands, the current GUI stack (<code>ovos-gui</code> +
 <code>ovos-shell</code> + <code>mycroft-gui-qt5</code>) stays <strong>deprecated but shipped</strong>, since it is
 the only screen stack that runs today.</p>
-<ul>
-<li><a href="https://github.com/OpenVoiceOS/ovos-gui/pull/112">ovos-gui#112</a>: feat: land
-  GUI adapter/template rework (session_id-only). Converts <code>ovos-gui</code> into a
-  pure state/dispatch hub with no built-in renderer: every installed
-  <code>opm.gui_adapter</code> plugin gets the <code>SYSTEM_*</code> template events, and a device
-  with none installed runs headless instead of crashing. Drops <code>site_id</code>
-  routing in favor of <code>session_id</code>-only addressing, and changes the
-  adapter-plugin hook signatures. <strong>Breaking.</strong> Audience: deployers/integrators
-  (an <code>opm.gui_adapter</code> plugin becomes required for any screen output),
-  GUI-adapter plugin authors, skill authors relying on <code>site_id</code> routing.
-  Expected 2.0.0 (unreleased). Blocked on <code>ovos-plugin-manager#377</code> and
-  <code>ovos-legacy-mycroft-gui-plugin@dev</code> publishing to PyPI first.</li>
-<li><a href="https://github.com/OpenVoiceOS/ovos-gui/pull/117">ovos-gui#117</a>: feat:
-  OVOS-GUI-1 service conformance. Adds the <code>SYSTEM_</code> template-name gate, accepts
-  both legacy CamelCase and GUI-1 frame names, and partitions display state per
-  session, all without touching the legacy render path. Not breaking, additive
-  on top of <code>dev</code>. Audience: skill authors emitting GUI pages, GUI-adapter
-  authors, multi-session deployers. Expected 1.5.0 (unreleased).</li>
-<li><a href="https://github.com/OpenVoiceOS/ovos-plugin-manager/pull/377">ovos-plugin-manager#377</a>: feat: AbstractGUIPlugin. The adapter base class <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-gui/issues/112" title="GitHub Issue: TigreGotico/ovos-gui #112">ovos-gui#112</a> needs: an
-  extensible GUI-adapter framework covering text, image, video, audio, weather,
-  map, and interactive display types. Not breaking, a new abstraction. Audience:
-  GUI-adapter plugin authors, OVOS-GUI integrators. Expected 2.12.0 (unreleased).
-  This is the unreleased branch <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-gui/issues/112" title="GitHub Issue: TigreGotico/ovos-gui #112">ovos-gui#112</a> is blocked on.</li>
-<li><a href="https://github.com/OpenVoiceOS/ovos-plugin-manager/pull/406">ovos-plugin-manager#406</a>: refactor!: drop the enclosure abstraction from PHALPlugin. Removes the
-  legacy Mark-1 <code>enclosure.*</code> protocol wiring from <code>PHALPlugin</code>. The listener
-  side moves to <code>ovos-ui-enclosure-protocol</code>, the producer side to
-  <code>ovos-gui-api-client</code>. <strong>Breaking</strong> for any PHAL plugin subclass using the
-  removed handlers. Audience: PHAL/enclosure hardware plugin authors, GUI/
-  enclosure integration maintainers. Expected 3.0.0 (unreleased). Part of the
-  same enclosure-to-GUI migration as the rest of this section.</li>
-<li><a href="https://github.com/OpenVoiceOS/ovos-bus-client/pull/238">ovos-bus-client#238</a>: fix: emit GUI-1-conformant wire shapes from GUIInterface. <code>gui.value.set</code>
-  and <code>gui.page.show</code> stop emitting null-valued keys, and local image paths get
-  base64-encoded into a data URI instead of a bare filesystem path. Not
-  breaking, narrows the wire shape toward the spec. Audience: GUI render-backend
-  implementers and other consumers of the GUI wire protocol. Expected 2.7.3
-  (unreleased).</li>
-<li><a href="https://github.com/OpenVoiceOS/ovos-bus-client/pull/197">ovos-bus-client#197</a>: refactor!: deprecate EnclosureAPI, refactor GUIInterface with a
-  <code>PageTemplates</code> enum. Marks <code>EnclosureAPI</code> for deprecation (visual output
-  moves to platform plugins), removes a <code>GUIInterface</code> init parameter, and
-  replaces string-based GUI page-template references with <code>PageTemplates</code>
-  constants. <strong>Breaking</strong> for direct <code>GUIInterface</code> instantiators. Audience:
-  consumers of <code>EnclosureAPI</code> and <code>GUIInterface</code>. Expected 3.0.0 (unreleased).</li>
-<li><a href="https://github.com/OpenVoiceOS/ovos-workshop/pull/420">ovos-workshop#420</a>: feat!: bind <code>OVOSSkill.gui</code> to <code>ovos-gui-api-client</code>. Points skill GUI access
-  at the standalone <code>ovos-gui-api-client</code> package. <code>SkillGUI.__init__</code> drops the
-  <code>ui_directories</code> argument, since skills no longer ship QML. <strong>Breaking</strong> for
-  skill authors constructing <code>SkillGUI</code>/<code>GUIInterface</code> directly. Audience: skill
-  authors. Expected 10.0.0 (unreleased).</li>
-<li><a href="https://github.com/OpenVoiceOS/ovos-workshop/pull/421">ovos-workshop#421</a>: feat!: remove the skill-side home/resting-screen API. Deletes
-  <code>resting_screen_handler</code>, <code>homescreen_app</code>, <code>IdleDisplaySkill</code>, and
-  <code>register_resting_screen</code>/<code>register_homescreen_app</code>, since OVOS-GUI-1 §6.9
-  treats the resting display as a render-backend concern, not a skill concern.
-  <strong>Breaking</strong> for any skill using these decorators/methods. Audience: skill
-  authors. Named downstream impact on <code>ovos-ocp-audio-plugin</code>,
-  <code>ovos-skill-iss-location</code>, <code>ovos-pydantic-models</code>, <code>ovos-skill-homescreen</code>.
-  Expected 10.0.0 (unreleased).</li>
-</ul>
+<table>
+<thead>
+<tr>
+<th>PR</th>
+<th>What it changes</th>
+<th>Audience</th>
+<th>Breaking</th>
+<th>Version</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/OpenVoiceOS/ovos-gui/pull/112">ovos-gui#112</a></td>
+<td>State/dispatch hub, no built-in renderer, routes by <code>session_id</code> (blocked on <code>opm#377</code>)</td>
+<td>deployers, GUI-adapter authors, <code>site_id</code> skill authors</td>
+<td>Yes</td>
+<td>2.0.0</td>
+</tr>
+<tr>
+<td><a href="https://github.com/OpenVoiceOS/ovos-gui/pull/117">ovos-gui#117</a></td>
+<td>Adds <code>SYSTEM_</code> template-name gate, partitions display state per session</td>
+<td>skill authors emitting GUI pages, GUI-adapter authors</td>
+<td>No</td>
+<td>1.5.0</td>
+</tr>
+<tr>
+<td><a href="https://github.com/OpenVoiceOS/ovos-plugin-manager/pull/377">opm#377</a></td>
+<td>Adds <code>AbstractGUIPlugin</code> framework (text, image, video, audio, weather, map, interactive)</td>
+<td>GUI-adapter plugin authors, OVOS-GUI integrators</td>
+<td>No</td>
+<td>2.12.0</td>
+</tr>
+<tr>
+<td><a href="https://github.com/OpenVoiceOS/ovos-plugin-manager/pull/406">opm#406</a></td>
+<td>Drops legacy Mark-1 <code>enclosure.*</code> wiring from <code>PHALPlugin</code></td>
+<td>PHAL/enclosure plugin authors, GUI integration maintainers</td>
+<td>Yes</td>
+<td>3.0.0</td>
+</tr>
+<tr>
+<td><a href="https://github.com/OpenVoiceOS/ovos-bus-client/pull/238">ovos-bus-client#238</a></td>
+<td>Stops emitting null GUI keys, base64-encodes local image paths</td>
+<td>GUI render-backend implementers, GUI wire-protocol consumers</td>
+<td>No</td>
+<td>2.7.3</td>
+</tr>
+<tr>
+<td><a href="https://github.com/OpenVoiceOS/ovos-bus-client/pull/197">ovos-bus-client#197</a></td>
+<td>Deprecates <code>EnclosureAPI</code>, adds <code>PageTemplates</code> constants</td>
+<td>consumers of <code>EnclosureAPI</code> and <code>GUIInterface</code></td>
+<td>Yes</td>
+<td>3.0.0</td>
+</tr>
+<tr>
+<td><a href="https://github.com/OpenVoiceOS/ovos-workshop/pull/420">ovos-workshop#420</a></td>
+<td>Binds <code>OVOSSkill.gui</code> to <code>ovos-gui-api-client</code>, drops <code>ui_directories</code></td>
+<td>skill authors</td>
+<td>Yes</td>
+<td>10.0.0</td>
+</tr>
+<tr>
+<td><a href="https://github.com/OpenVoiceOS/ovos-workshop/pull/421">ovos-workshop#421</a></td>
+<td>Deletes the skill-side resting-screen API</td>
+<td>skill authors, plus downstream skills listed below</td>
+<td>Yes</td>
+<td>10.0.0</td>
+</tr>
+</tbody>
+</table>
+<p><code>ovos-workshop#421</code> also touches <code>ovos-ocp-audio-plugin</code>, <code>ovos-skill-iss-location</code>,
+<code>ovos-pydantic-models</code>, and <code>ovos-skill-homescreen</code>.</p>
 <h2 id="ovos-media">ovos-media<a class="headerlink" href="#ovos-media" title="Permanent link">&para;</a></h2>
 <p><code>ovos-media</code> is <strong>alpha and not officially released</strong>. <code>ovos-audio</code> remains
 the production audio service, and stock installs keep
@@ -1533,27 +1548,40 @@ queries" (a station list, a podcast feed) is expected to become a
 MediaProvider plugin over time, while a skill where <strong>the skill itself is the
 playable media</strong> (a voice game, an ebook reader) stays an OCP skill. See
 <a href="../ocp-skills/">OCP Skills</a> for the full split.</p>
-<ul>
-<li><a href="https://github.com/OpenVoiceOS/ovos-workshop/pull/423">ovos-workshop#423</a>: feat: deprecate <code>OVOSCommonPlaybackSkill</code> in favor of MediaProvider plugins.
-  Adds a deprecation notice to <code>OVOSCommonPlaybackSkill.__init__</code> steering
-  authors toward <code>opm.media.provider</code>. Not breaking: existing OCP skills keep
-  working, and hard removal is a future major version. Audience: OCP skill
-  authors. Expected 9.4.0 (unreleased).</li>
-<li><a href="https://github.com/OpenVoiceOS/ovos-workshop/pull/428">ovos-workshop#428</a>: feat: session-aware game-skill + OCP playback. Makes
-  <code>OVOSCommonPlaybackSkill</code> playback state per-session, so state events route
-  back to the originating session instead of colliding across simultaneous
-  sessions. This is the piece that keeps a game-as-OCP-skill correct under
-  HiveMind/remote deployments. Not breaking. Audience: OCP/game-skill authors,
-  HiveMind/remote deployers. Expected 9.4.0 (unreleased). Stacked on
-  <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-workshop/issues/427" title="GitHub Issue: TigreGotico/ovos-workshop #427">ovos-workshop#427</a>, must merge first.</li>
-<li><a href="https://github.com/OpenVoiceOS/ovos-audio/pull/115">ovos-audio#115</a>: refactor!: drop OCP. Removes OCP (OVOS Common Playback) integration from
-  <code>ovos-audio</code> entirely, leaving only the legacy audio system: drops the
-  <code>disable_ocp</code> constructor parameter and the <code>ovos_plugin_common_play[extractors]</code>
-  dependency. <strong>Breaking</strong> for anything relying on OCP inside <code>ovos-audio</code>.
-  Audience: skill authors and deployers relying on OCP integration inside
-  <code>ovos-audio</code>, plugin authors depending on the removed constructor parameter.
-  Expected 3.0.0 (unreleased).</li>
-</ul>
+<table>
+<thead>
+<tr>
+<th>PR</th>
+<th>What it changes</th>
+<th>Audience</th>
+<th>Breaking</th>
+<th>Version</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/OpenVoiceOS/ovos-workshop/pull/423">ovos-workshop#423</a></td>
+<td>Deprecates <code>OVOSCommonPlaybackSkill</code> toward <code>opm.media.provider</code></td>
+<td>OCP skill authors</td>
+<td>No</td>
+<td>9.4.0</td>
+</tr>
+<tr>
+<td><a href="https://github.com/OpenVoiceOS/ovos-workshop/pull/428">ovos-workshop#428</a></td>
+<td>Makes OCP playback state per-session (stacked on <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/427" title="GitHub Issue: TigreGotico/ovos-technical-manual #427">#427</a>)</td>
+<td>OCP/game-skill authors, HiveMind/remote deployers</td>
+<td>No</td>
+<td>9.4.0</td>
+</tr>
+<tr>
+<td><a href="https://github.com/OpenVoiceOS/ovos-audio/pull/115">ovos-audio#115</a></td>
+<td>Drops OCP integration and <code>disable_ocp</code> from <code>ovos-audio</code></td>
+<td>skill authors/deployers using OCP in <code>ovos-audio</code></td>
+<td>Yes</td>
+<td>3.0.0</td>
+</tr>
+</tbody>
+</table>
 <h2 id="official-spec-adoption">Official spec adoption<a class="headerlink" href="#official-spec-adoption" title="Permanent link">&para;</a></h2>
 <p>Repositories across the org are being brought into conformance with the
 <a href="../architecture-specs/">Formal Specifications</a>, largely OVOS-STOP-1,
@@ -1565,269 +1593,390 @@ that migration the rest of the way: a set of coordinated kill-switches that
 drop the last hardcoded legacy topic literals from <code>ovos-core</code>, <code>ovos-workshop</code>,
 and the <code>ovos-utils</code> test double. Each is explicitly gated to merge only once
 fleets no longer run legacy-namespace consumers.</p>
-<ul>
-<li><a href="https://github.com/OpenVoiceOS/ovos-core/pull/802">ovos-core#802</a>: feat!:
-  OVOS-STOP-1 reserved-intent_name dispatch + separable legacy bridge.
-  Reworks the stop pipeline as a single spec path: targeted stop dispatches
-  <code>&lt;skill_id&gt;:stop</code>, global stop dispatches <code>&lt;pipeline_id&gt;:global_stop</code> and a
-  single <code>ovos.stop</code> broadcast. Legacy stop back-compat moves into a
-  separately deletable module. <strong>Breaking</strong>: the dispatch topic shape for
-  targeted stop changes. Audience: skill authors handling stop intents,
-  deployers running legacy skills, remote/HiveMind bus consumers of stop
-  topics. Expected 3.0.0 (unreleased). Requires
-  <code>ovos-plugin-manager&gt;=2.9.0a1</code>. Supersedes <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-core/issues/777" title="GitHub Issue: TigreGotico/ovos-core #777">ovos-core#777</a> below.</li>
-<li><a href="https://github.com/OpenVoiceOS/ovos-core/pull/777">ovos-core#777</a>: feat:
-  OVOS-STOP-1 conformance in stop_service. Adopts the OVOS-STOP-1 spec bus
-  surface (<code>ovos.stop</code>, <code>ovos.stop.pong</code>, <code>ovos.stop.ping</code>) bridged to legacy
-  topics via <code>ovos-spec-tools</code>. Not breaking. <strong>Superseded by <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-core/issues/802" title="GitHub Issue: TigreGotico/ovos-core #802">ovos-core#802</a></strong>,
-  which extends and completes this work. Treat <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/777" title="GitHub Issue: TigreGotico/ovos-technical-manual #777">#777</a> as likely to be closed in
-  favor of <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/802" title="GitHub Issue: TigreGotico/ovos-technical-manual #802">#802</a> rather than merged separately. Expected 2.6.0 (unreleased).</li>
-<li><a href="https://github.com/OpenVoiceOS/ovos-core/pull/786">ovos-core#786</a>: feat:
-  OVOS-CONTEXT-1 orchestrator-resident intent context. Implements the
-  core-resident half of OVOS-CONTEXT-1: a flat, decaying
-  <code>session.intent_context</code> store with private/shared scope resolution and
-  <code>requires_context</code>/<code>excludes_context</code> gating. Not breaking, additive. The
-  legacy frame-based context manager stays for back-compat. Audience: skill
-  authors declaring context requirements, remote/HiveMind session-sync
-  consumers. Expected 2.6.0 (unreleased).</li>
-<li><a href="https://github.com/OpenVoiceOS/ovos-core/pull/785">ovos-core#785</a>: fix:
-  conform transformer chains to OVOS-TRANSFORM-1. Adds <code>cancel_reason</code>/
-  <code>cancel_by</code> to <code>ovos.utterance.cancelled</code>, and moves the bulk of
-  transform-chain conformance logic upstream into <code>ovos-plugin-manager</code>'s
-  shared <code>TransformersService</code> bases. Not breaking. Audience: utterance/
-  metadata/intent transformer plugin authors. Expected 2.5.9 (unreleased).
-  Depends on <code>ovos-plugin-manager#417</code> landing first, and bumps the
-  <code>ovos-plugin-manager</code> floor to <code>&gt;=2.10.3a1</code>.</li>
-<li><a href="https://github.com/OpenVoiceOS/ovos-workshop/pull/500">ovos-workshop#500</a>: refactor: register canonical intent topics, compat moves to
-  ovos-spec-tools. <code>register_intent_file</code> now derives its topic from
-  <code>canonical_intent_topic()</code> instead of the raw <code>.intent</code> filename, dropping
-  the previous dual-bind on both spellings. Not marked breaking, but removes a
-  runtime behavior (the dual bind). Audience: skill authors subscribed
-  directly to the <code>.intent</code>-suffixed dispatch topic, deployers running mixed
-  old/new skill containers. Expected 9.4.0 (unreleased).</li>
-<li><a href="https://github.com/OpenVoiceOS/ovos-workshop/pull/414">ovos-workshop#414</a>: refactor: route <code>OVOSSkill</code> resource loading through <code>ovos-spec-tools</code>
-  (back-compat). Routes resource access through
-  <code>ovos_spec_tools.LocaleResources</code> internally. Every legacy resource-loading
-  call (<code>self.resources</code>, <code>self.find_resource</code>, etc.) keeps working via a
-  compatibility mixin that emits one <code>DeprecationWarning</code> per call. Not
-  breaking. Audience: skill authors using the legacy resource-loading API.
-  Expected 9.3.3 (unreleased).</li>
-<li><a href="https://github.com/OpenVoiceOS/ovos-persona/pull/192">ovos-persona#192</a>: fix: emit PIPELINE-1 §8 done-signal for persona dispatches. Registers
-  persona's <code>persona:*</code> intent handlers with <code>handler_info</code>, so the PIPELINE-1
-  §9.5 <code>ovos.utterance.handled</code> end-marker fires promptly after a
-  persona-handled utterance instead of only after a 5-minute dispatcher
-  timeout. Not breaking, restores expected framework behavior. Audience:
-  skill/pipeline authors and deployers on <code>ovos-core&gt;=2.3.0a1</code>. Expected 0.9.1
-  (unreleased).</li>
-<li><a href="https://github.com/OpenVoiceOS/ovos-bus-client/pull/271">ovos-bus-client#271</a>: feat: legacy intent-topic bridge, wire twin on emit, modernize on
-  receive. Adds a two-rule bridge covering version-skew on the
-  <code>.intent</code>-suffixed dispatch topic between old and new workshop/core
-  versions. Not breaking, additive. Audience: deployers running mixed-version
-  fleets. Expected 2.8.0 (unreleased). This is the compat layer <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/272" title="GitHub Issue: TigreGotico/ovos-technical-manual #272">#272</a> below
-  later removes.</li>
-<li><a href="https://github.com/OpenVoiceOS/ovos-utils/pull/411">ovos-utils#411</a>: feat: <code>FakeBus</code> mirrors the <code>.intent</code>-suffixed twin for aliased intents.
-  Gives <code>FakeBus</code>/<code>AsyncFakeBus</code> the same bridge <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-bus-client/issues/271" title="GitHub Issue: TigreGotico/ovos-bus-client #271">ovos-bus-client#271</a> added to
-  the real client, so test harnesses built on <code>FakeBus</code> don't hide the compat
-  path. Not breaking, additive test-double parity fix. Audience: test-harness
-  authors (ovoscope, skill test suites). Expected 0.14.0 (unreleased).</li>
-<li><a href="https://github.com/OpenVoiceOS/ovos-bus-client/pull/272">ovos-bus-client#272</a>: feat!: drop legacy wire compat (kill-switch). Removes the namespace
-  bridge, the handler mirror-guard, and the intent-topic twin from
-  <code>MessageBusClient</code> entirely. A client constructed with a removed compat
-  flag raises <code>RuntimeError</code> instead of silently no-op-ing. <strong>Breaking.</strong>
-  Audience: deployers/operators with legacy-namespace consumers still on the
-  fleet, any code constructing <code>MessageBusClient</code> with the removed compat
-  flags. Expected 3.0.0 (unreleased). Must merge together with <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-core/issues/837" title="GitHub Issue: TigreGotico/ovos-core #837">ovos-core#837</a>,
-  <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-workshop/issues/501" title="GitHub Issue: TigreGotico/ovos-workshop #501">ovos-workshop#501</a>, and <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-utils/issues/412" title="GitHub Issue: TigreGotico/ovos-utils #412">ovos-utils#412</a>. Depends on <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/271" title="GitHub Issue: TigreGotico/ovos-technical-manual #271">#271</a>. Explicitly
-  "do not merge until then."</li>
-<li><a href="https://github.com/OpenVoiceOS/ovos-core/pull/837">ovos-core#837</a>: feat!:
-  drop legacy wire compat (kill-switch). Removes the last legacy-topic
-  literals <code>ovos-core</code> still writes on the wire, replacing them with
-  <code>SpecMessage</code> constants. <strong>Breaking.</strong> Audience: deployers with un-migrated
-  legacy-bus consumers, skill/plugin authors listening on the legacy
-  spellings. Expected 3.0.0 (unreleased). Must merge together with the other
-  three kill-switch PRs in this list.</li>
-<li><a href="https://github.com/OpenVoiceOS/ovos-workshop/pull/501">ovos-workshop#501</a>: feat!: drop legacy wire compat (kill-switch). Rewrites every remaining
-  legacy-topic literal <code>ovos-workshop</code> still emits/listens on to the
-  <code>SpecMessage</code>-based canonical form. <strong>Breaking.</strong> Audience: deployers with
-  un-migrated legacy-bus consumers, skill authors subscribing to legacy topic
-  names directly. Expected 10.0.0 (unreleased). Depends on <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/500" title="GitHub Issue: TigreGotico/ovos-technical-manual #500">#500</a> above. Must
-  merge together with the other three kill-switch PRs in this list.</li>
-<li><a href="https://github.com/OpenVoiceOS/ovos-utils/pull/412">ovos-utils#412</a>: feat!: drop legacy wire compat (kill-switch). The <code>FakeBus</code>/<code>AsyncFakeBus</code>
-  test-double half of the same drop: removes the namespace bridge and the
-  intent-topic twin from the test double. <strong>Breaking.</strong> Audience: test-harness
-  authors (ovoscope, skill test suites, satellite fakes) using <code>FakeBus</code> with
-  the legacy-compat flags. Expected 1.0.0 (unreleased): this would also be
-  the package's first stable 1.0 release. Depends on <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/411" title="GitHub Issue: TigreGotico/ovos-technical-manual #411">#411</a>. Must merge
-  together with the other three kill-switch PRs in this list.</li>
-</ul>
+<table>
+<thead>
+<tr>
+<th>PR</th>
+<th>What it changes</th>
+<th>Audience</th>
+<th>Breaking</th>
+<th>Version</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/OpenVoiceOS/ovos-core/pull/802">ovos-core#802</a></td>
+<td>Reworks stop dispatch onto one spec path (requires <code>opm&gt;=2.9.0a1</code>, supersedes <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/777" title="GitHub Issue: TigreGotico/ovos-technical-manual #777">#777</a>)</td>
+<td>skill authors, deployers of legacy skills, remote/HiveMind stop consumers</td>
+<td>Yes</td>
+<td>3.0.0</td>
+</tr>
+<tr>
+<td><a href="https://github.com/OpenVoiceOS/ovos-core/pull/777">ovos-core#777</a></td>
+<td>OVOS-STOP-1 bus surface bridged to legacy topics (superseded by <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/802" title="GitHub Issue: TigreGotico/ovos-technical-manual #802">#802</a>)</td>
+<td>n/a</td>
+<td>No</td>
+<td>2.6.0</td>
+</tr>
+<tr>
+<td><a href="https://github.com/OpenVoiceOS/ovos-core/pull/786">ovos-core#786</a></td>
+<td>Core-resident OVOS-CONTEXT-1 store, additive</td>
+<td>skill authors declaring context, remote session-sync consumers</td>
+<td>No</td>
+<td>2.6.0</td>
+</tr>
+<tr>
+<td><a href="https://github.com/OpenVoiceOS/ovos-core/pull/785">ovos-core#785</a></td>
+<td>Conforms transformer chains to OVOS-TRANSFORM-1 (blocked on <code>opm#417</code>)</td>
+<td>transformer plugin authors</td>
+<td>No</td>
+<td>2.5.9</td>
+</tr>
+<tr>
+<td><a href="https://github.com/OpenVoiceOS/ovos-workshop/pull/500">ovos-workshop#500</a></td>
+<td>Drops the <code>.intent</code>-topic dual-bind for canonical intent topics</td>
+<td>skill authors on <code>.intent</code> topics, mixed-container deployers</td>
+<td>Not marked breaking, but drops the dual bind</td>
+<td>9.4.0</td>
+</tr>
+<tr>
+<td><a href="https://github.com/OpenVoiceOS/ovos-workshop/pull/414">ovos-workshop#414</a></td>
+<td>Routes resource loading through <code>ovos-spec-tools</code>, back-compat mixin</td>
+<td>skill authors on the legacy resource API</td>
+<td>No</td>
+<td>9.3.3</td>
+</tr>
+<tr>
+<td><a href="https://github.com/OpenVoiceOS/ovos-persona/pull/192">ovos-persona#192</a></td>
+<td>Fixes persona's PIPELINE-1 done-signal timing</td>
+<td>skill/pipeline authors on <code>ovos-core&gt;=2.3.0a1</code></td>
+<td>No</td>
+<td>0.9.1</td>
+</tr>
+<tr>
+<td><a href="https://github.com/OpenVoiceOS/ovos-bus-client/pull/271">ovos-bus-client#271</a></td>
+<td>Adds a version-skew bridge for <code>.intent</code> topics (removed later by <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/272" title="GitHub Issue: TigreGotico/ovos-technical-manual #272">#272</a>)</td>
+<td>deployers running mixed-version fleets</td>
+<td>No</td>
+<td>2.8.0</td>
+</tr>
+<tr>
+<td><a href="https://github.com/OpenVoiceOS/ovos-utils/pull/411">ovos-utils#411</a></td>
+<td>Mirrors the <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/271" title="GitHub Issue: TigreGotico/ovos-technical-manual #271">#271</a> bridge in <code>FakeBus</code>/<code>AsyncFakeBus</code></td>
+<td>test-harness authors (ovoscope, skill test suites)</td>
+<td>No</td>
+<td>0.14.0</td>
+</tr>
+<tr>
+<td><a href="https://github.com/OpenVoiceOS/ovos-bus-client/pull/272">ovos-bus-client#272</a></td>
+<td>Kill-switch: drops the namespace bridge from <code>MessageBusClient</code> (blocked on <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/271" title="GitHub Issue: TigreGotico/ovos-technical-manual #271">#271</a>)</td>
+<td>deployers with legacy-namespace consumers</td>
+<td>Yes</td>
+<td>3.0.0</td>
+</tr>
+<tr>
+<td><a href="https://github.com/OpenVoiceOS/ovos-core/pull/837">ovos-core#837</a></td>
+<td>Kill-switch: drops the last legacy-topic literals from <code>ovos-core</code></td>
+<td>deployers/plugin authors on legacy topic spellings</td>
+<td>Yes</td>
+<td>3.0.0</td>
+</tr>
+<tr>
+<td><a href="https://github.com/OpenVoiceOS/ovos-workshop/pull/501">ovos-workshop#501</a></td>
+<td>Kill-switch: drops legacy-topic literals from <code>ovos-workshop</code> (blocked on <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/500" title="GitHub Issue: TigreGotico/ovos-technical-manual #500">#500</a>)</td>
+<td>deployers/skill authors on legacy topic spellings</td>
+<td>Yes</td>
+<td>10.0.0</td>
+</tr>
+<tr>
+<td><a href="https://github.com/OpenVoiceOS/ovos-utils/pull/412">ovos-utils#412</a></td>
+<td>Kill-switch: drops the bridge from <code>FakeBus</code> (blocked on <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/411" title="GitHub Issue: TigreGotico/ovos-technical-manual #411">#411</a>)</td>
+<td>test-harness authors on legacy-compat flags</td>
+<td>Yes</td>
+<td>1.0.0</td>
+</tr>
+</tbody>
+</table>
+<p>The four kill-switch PRs above (<code>ovos-bus-client#272</code>, <code>ovos-core#837</code>,
+<code>ovos-workshop#501</code>, <code>ovos-utils#412</code>) must merge together. <code>ovos-bus-client#272</code>
+is explicit: "do not merge until then." <code>ovos-utils#412</code> would also be that
+package's first stable 1.0 release.</p>
 <h2 id="other-changes-by-repository">Other changes by repository<a class="headerlink" href="#other-changes-by-repository" title="Permanent link">&para;</a></h2>
 <p>Entries here are open PRs that change behavior but don't fit the three
 headline efforts above.</p>
 <h3 id="ovos-audio">ovos-audio<a class="headerlink" href="#ovos-audio" title="Permanent link">&para;</a></h3>
-<ul>
-<li><a href="https://github.com/OpenVoiceOS/ovos-audio/pull/146">#146</a>: Add duration to
-  <code>utterance_start</code> message. Adds automatic audio-duration calculation to the
-  recognizer event emitted when utterance recognition begins. Degrades
-  gracefully if lookup fails. Not breaking. Audience: skill authors and remote
-  bus consumers listening for <code>utterance_start</code>, plus downstream analytics/
-  timing tooling. Expected 2.2.0 (unreleased).</li>
-<li><a href="https://github.com/OpenVoiceOS/ovos-audio/pull/179">#179</a>: refactor: drop
-  redundant legacy dual bus subscriptions. Removes manual legacy
-  <code>self.bus.on(...)</code> subscriptions for six AUDIO-1 topic pairs, relying on the
-  <code>ovos-bus-client</code> namespace bridge to mirror legacy emits for local
-  listeners. Not conventional-commit-marked as breaking, but carries
-  breaking risk for deployments running an older <code>ovos-bus-client</code> without
-  that bridge. Audience: deployers on an older bus-client, remote bus
-  consumers relying on the six legacy AUDIO-1 topics. Expected 2.1.2
-  (unreleased).</li>
-</ul>
+<table>
+<thead>
+<tr>
+<th>PR</th>
+<th>What it changes</th>
+<th>Audience</th>
+<th>Breaking</th>
+<th>Version</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/OpenVoiceOS/ovos-audio/pull/146">#146</a></td>
+<td>Adds duration to the <code>utterance_start</code> recognizer event</td>
+<td>skill authors, remote bus consumers, analytics tooling</td>
+<td>No</td>
+<td>2.2.0</td>
+</tr>
+<tr>
+<td><a href="https://github.com/OpenVoiceOS/ovos-audio/pull/179">#179</a></td>
+<td>Drops six legacy AUDIO-1 bus subscriptions, relies on the bus-client bridge</td>
+<td>deployers on an older bus-client, legacy AUDIO-1 consumers</td>
+<td>Not conventional-commit-marked, but risky without the bridge</td>
+<td>2.1.2</td>
+</tr>
+</tbody>
+</table>
 <h3 id="ovos-bus-client">ovos-bus-client<a class="headerlink" href="#ovos-bus-client" title="Permanent link">&para;</a></h3>
-<ul>
-<li><a href="https://github.com/OpenVoiceOS/ovos-bus-client/pull/222">#222</a>: fix: emit
-  <code>mycroft.scheduler.update_event</code> so <code>update_scheduled_event</code> reaches the
-  scheduler. <code>EventsAPI</code> was emitting a topic the scheduler never listened on
-  (<code>schedule</code> vs <code>scheduler</code>), so <code>update_scheduled_event()</code> was silently a
-  no-op. Not breaking, a straightforward bug fix. Audience: any code calling
-  <code>EventsAPI.update_scheduled_event()</code>. Expected 2.7.3 (unreleased).</li>
-<li><a href="https://github.com/OpenVoiceOS/ovos-bus-client/pull/200">#200</a>: feat:
-  <code>AsyncMessageBusClient</code> (async/await native client). Adds an async-native
-  client mirroring the sync client's API surface, installed via an optional
-  <code>ovos-bus-client[async]</code> dependency group. Not breaking, no impact on
-  existing sync-client users. Audience: bus-client consumers and plugin
-  authors wanting native async I/O. Expected 2.8.0 (unreleased).</li>
-</ul>
+<table>
+<thead>
+<tr>
+<th>PR</th>
+<th>What it changes</th>
+<th>Audience</th>
+<th>Breaking</th>
+<th>Version</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/OpenVoiceOS/ovos-bus-client/pull/222">#222</a></td>
+<td>Fixes <code>EventsAPI</code> to emit the right scheduler topic</td>
+<td>callers of <code>EventsAPI.update_scheduled_event()</code></td>
+<td>No</td>
+<td>2.7.3</td>
+</tr>
+<tr>
+<td><a href="https://github.com/OpenVoiceOS/ovos-bus-client/pull/200">#200</a></td>
+<td>Adds <code>AsyncMessageBusClient</code>, an async-native client</td>
+<td>bus-client consumers, plugin authors wanting async I/O</td>
+<td>No</td>
+<td>2.8.0</td>
+</tr>
+</tbody>
+</table>
 <h3 id="ovos-config">ovos-config<a class="headerlink" href="#ovos-config" title="Permanent link">&para;</a></h3>
-<ul>
-<li><a href="https://github.com/OpenVoiceOS/ovos-config/pull/194">#194</a>: feat:
-  <code>assistant_config</code>. Adds a new <code>AssistantConfig</code> layer for runtime changes
-  OVOS itself makes to config, so plugin/component writes can no longer
-  corrupt or silently overwrite the user's own config file. Deprecates
-  <code>RemoteConf</code> and the <code>backend-client</code>/<code>personal-server</code>-era remote config
-  stack. This is <strong>deprecation-only</strong>: every deprecated surface
-  (<code>RemoteConf</code>, <code>Configuration.remote</code>, <code>read_mycroft_config</code>, and others)
-  keeps working and emits a <code>DeprecationWarning</code> naming the future major
-  version it will be removed in, so nothing breaks yet. Audience: skill/
-  plugin authors that write to config at runtime, deployers, downstream
-  tooling reading <code>Configuration().remote</code>. Expected 2.4.0 (unreleased).</li>
-<li><a href="https://github.com/OpenVoiceOS/ovos-config/pull/282">#282</a>: feat:
-  recommends for more languages (onnx-asr STT + phoonnx TTS). Adds offline
-  STT/TTS recommends for 49 new languages. No existing entries are removed.
-  Not breaking, purely additive. Audience: deployers/end users running
-  <code>autoconfigure --offline</code> in a new language, downstream langpack
-  maintainers. Expected 2.4.0 (unreleased).</li>
-<li><a href="https://github.com/OpenVoiceOS/ovos-config/pull/274">#274</a>: feat: GPU STT
-  tier on onnx-asr (<code>use_cuda</code>) + best per-lang models. Moves the <code>--gpu</code> STT
-  recommends tier onto <code>ovos-stt-plugin-onnx-asr</code> with <code>use_cuda</code>, replacing
-  the previous fasterwhisper/HiTZ mix. Not breaking. Audience: deployers
-  running the <code>--gpu</code> autoconfigure tier. Expected 2.4.0 (unreleased).</li>
-<li><a href="https://github.com/OpenVoiceOS/ovos-config/pull/278">#278</a>: feat: document
-  <code>ww_urls</code> and <code>stt_urls</code> open_data endpoints. Extends the <code>open_data</code> block
-  in the shipped <code>mycroft.conf</code> template with keys for the opt-in wake-word/
-  STT sample-upload feature. Not breaking, opt-in and not enabled by default.
-  Audience: deployers who opt in to <code>open_data</code> sample collection,
-  <code>ovos-dinkum-listener</code> users. Expected 2.4.0 (unreleased).</li>
-<li><a href="https://github.com/OpenVoiceOS/ovos-config/pull/267">#267</a>: Update STT
-  model to large-v3-turbo. Fixes an incorrect fasterwhisper model id in the
-  GPU-tier <code>en-us</code> recommend. Not breaking. Audience: deployers using the
-  GPU-tier <code>en-us</code> fasterwhisper STT recommend. Expected 2.3.7 (unreleased).</li>
-<li><a href="https://github.com/OpenVoiceOS/ovos-config/pull/82">#82</a>: add
-  <code>audio_service_ducking</code> default config. Turns on audio ducking (lowering
-  background volume during TTS/system sounds) by default in the shipped
-  <code>mycroft.conf</code>, matching a feature already merged into <code>ovos-audio</code>. Not
-  breaking, but changes default runtime audio behavior wherever the legacy
-  audio service is in use. Audience: end users/deployers of the legacy
-  <code>ovos-audio</code> service. Expected 2.3.7 (unreleased).</li>
-</ul>
+<table>
+<thead>
+<tr>
+<th>PR</th>
+<th>What it changes</th>
+<th>Audience</th>
+<th>Breaking</th>
+<th>Version</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/OpenVoiceOS/ovos-config/pull/194">#194</a></td>
+<td>Adds <code>AssistantConfig</code> runtime-write layer, deprecates <code>RemoteConf</code></td>
+<td>skill/plugin authors writing config, deployers</td>
+<td>No</td>
+<td>2.4.0</td>
+</tr>
+<tr>
+<td><a href="https://github.com/OpenVoiceOS/ovos-config/pull/282">#282</a></td>
+<td>Adds offline STT/TTS recommends for 49 languages</td>
+<td>deployers running <code>autoconfigure --offline</code>, langpack maintainers</td>
+<td>No</td>
+<td>2.4.0</td>
+</tr>
+<tr>
+<td><a href="https://github.com/OpenVoiceOS/ovos-config/pull/274">#274</a></td>
+<td>Moves the <code>--gpu</code> STT tier onto <code>onnx-asr</code> with <code>use_cuda</code></td>
+<td>deployers running the <code>--gpu</code> autoconfigure tier</td>
+<td>No</td>
+<td>2.4.0</td>
+</tr>
+<tr>
+<td><a href="https://github.com/OpenVoiceOS/ovos-config/pull/278">#278</a></td>
+<td>Documents <code>ww_urls</code>/<code>stt_urls</code> <code>open_data</code> config keys</td>
+<td>deployers opting into <code>open_data</code>, listener users</td>
+<td>No</td>
+<td>2.4.0</td>
+</tr>
+<tr>
+<td><a href="https://github.com/OpenVoiceOS/ovos-config/pull/267">#267</a></td>
+<td>Fixes a wrong fasterwhisper model id in the GPU-tier recommend</td>
+<td>deployers on the GPU-tier <code>en-us</code> recommend</td>
+<td>No</td>
+<td>2.3.7</td>
+</tr>
+<tr>
+<td><a href="https://github.com/OpenVoiceOS/ovos-config/pull/82">#82</a></td>
+<td>Turns on audio ducking by default</td>
+<td>end users/deployers of the legacy <code>ovos-audio</code> service</td>
+<td>Not breaking, but changes default audio behavior</td>
+<td>2.3.7</td>
+</tr>
+</tbody>
+</table>
 <h3 id="ovos-core">ovos-core<a class="headerlink" href="#ovos-core" title="Permanent link">&para;</a></h3>
-<ul>
-<li><a href="https://github.com/OpenVoiceOS/ovos-core/pull/832">#832</a>: feat: blacklist
-  pipeline plugins at load time and per session. Adds
-  <code>intents.blacklisted_pipelines</code>, checked before a pipeline plugin is loaded
-  so its module is never imported, avoiding import cost for pipelines a
-  deployment never uses. Also implements per-session runtime policy
-  enforcement per OVOS-PIPELINE-1 §5.2/§5.5. Not breaking. Audience:
-  deployers/operators tuning boot cost and per-session policy. Expected 2.6.0
-  (unreleased).</li>
-<li><a href="https://github.com/OpenVoiceOS/ovos-core/pull/689">#689</a>: feat: send
-  pipeline + core version in intent metrics. Adds pipeline id and core version
-  fields to the intent-metrics payload (scope of exact field shape unclear
-  from the PR body). Not breaking. Audience: consumers of the intent-metrics
-  telemetry event. Expected 2.6.0 (unreleased).</li>
-</ul>
+<table>
+<thead>
+<tr>
+<th>PR</th>
+<th>What it changes</th>
+<th>Audience</th>
+<th>Breaking</th>
+<th>Version</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/OpenVoiceOS/ovos-core/pull/832">#832</a></td>
+<td>Adds pipeline blacklisting at load time and per session</td>
+<td>deployers tuning boot cost and per-session policy</td>
+<td>No</td>
+<td>2.6.0</td>
+</tr>
+<tr>
+<td><a href="https://github.com/OpenVoiceOS/ovos-core/pull/689">#689</a></td>
+<td>Adds pipeline id and core version to intent metrics</td>
+<td>consumers of the intent-metrics telemetry event</td>
+<td>No</td>
+<td>2.6.0</td>
+</tr>
+</tbody>
+</table>
 <h3 id="ovos-dinkum-listener">ovos-dinkum-listener<a class="headerlink" href="#ovos-dinkum-listener" title="Permanent link">&para;</a></h3>
-<ul>
-<li><a href="https://github.com/OpenVoiceOS/ovos-dinkum-listener/pull/243">#243</a>: feat: opt-in <code>open_data</code> upload of wake word and STT samples. Adds a module
-  that POSTs wake-word and STT audio samples to an <code>ovos-opendata-server</code>
-  instance, but only fires if <code>open_data.ww_urls</code>/<code>stt_urls</code> are explicitly
-  set in config. Not breaking, off by default, errors are swallowed on a
-  daemon thread. Audience: deployers who opt in to data-sharing. Expected
-  0.8.3 (unreleased). Pairs with <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-config/issues/278" title="GitHub Issue: TigreGotico/ovos-config #278">ovos-config#278</a> above.</li>
-<li><a href="https://github.com/OpenVoiceOS/ovos-dinkum-listener/pull/215">#215</a>: Add
-  audio duration to utterance message. Adds a <code>duration</code> field to the
-  <code>recognizer_loop:utterance</code> bus message payload when computable. Not
-  breaking, purely additive. Audience: skill/plugin authors consuming that
-  message payload, remote bus consumers logging utterance metadata. Expected
-  0.8.3 (unreleased).</li>
-</ul>
+<table>
+<thead>
+<tr>
+<th>PR</th>
+<th>What it changes</th>
+<th>Audience</th>
+<th>Breaking</th>
+<th>Version</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/OpenVoiceOS/ovos-dinkum-listener/pull/243">#243</a></td>
+<td>Adds opt-in upload of wake-word/STT samples (pairs with <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-config/issues/278" title="GitHub Issue: TigreGotico/ovos-config #278">ovos-config#278</a>)</td>
+<td>deployers who opt in to data-sharing</td>
+<td>No</td>
+<td>0.8.3</td>
+</tr>
+<tr>
+<td><a href="https://github.com/OpenVoiceOS/ovos-dinkum-listener/pull/215">#215</a></td>
+<td>Adds a <code>duration</code> field to the utterance bus message</td>
+<td>skill/plugin authors, remote bus consumers</td>
+<td>No</td>
+<td>0.8.3</td>
+</tr>
+</tbody>
+</table>
 <h3 id="ovos-gui">ovos-gui<a class="headerlink" href="#ovos-gui" title="Permanent link">&para;</a></h3>
-<ul>
-<li><a href="https://github.com/OpenVoiceOS/ovos-gui/pull/73">#73</a>: Add support for
-  the PyHTMX GUI client. Adds recognition of a new "py-htmx" GUI framework
-  alongside QML/React handling. Not breaking. Audience: developers of
-  PyHTMX-based GUI clients. Expected 1.5.0 (unreleased). <strong>Likely stale</strong>:
-  opened December 2024 with no activity since February 2026, predates and does
-  not account for the <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-gui/issues/112" title="GitHub Issue: TigreGotico/ovos-gui #112">ovos-gui#112</a>/<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/117" title="GitHub Issue: TigreGotico/ovos-technical-manual #117">#117</a> adapter rework.</li>
-<li><a href="https://github.com/OpenVoiceOS/ovos-gui/pull/26">#26</a>: Initial React GUI
-  support. Adds file-extension mapping and bus event forwarding for an
-  external React GUI client. Not breaking. Audience: developers of a
-  React-based GUI client. Expected 1.5.0 (unreleased). <strong>Likely superseded</strong>:
-  opened August 2023, no activity since April 2024, predates the OVOS-GUI-1
-  adapter rework and unlikely to land in its current form.</li>
-</ul>
+<table>
+<thead>
+<tr>
+<th>PR</th>
+<th>What it changes</th>
+<th>Audience</th>
+<th>Breaking</th>
+<th>Version</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/OpenVoiceOS/ovos-gui/pull/73">#73</a></td>
+<td>Adds PyHTMX GUI client support (likely stale, predates the adapter rework)</td>
+<td>developers of PyHTMX-based GUI clients</td>
+<td>No</td>
+<td>1.5.0</td>
+</tr>
+<tr>
+<td><a href="https://github.com/OpenVoiceOS/ovos-gui/pull/26">#26</a></td>
+<td>Adds initial React GUI support (likely superseded, inactive since 2024)</td>
+<td>developers of a React-based GUI client</td>
+<td>No</td>
+<td>1.5.0</td>
+</tr>
+</tbody>
+</table>
 <h3 id="ovos-persona-server">ovos-persona-server<a class="headerlink" href="#ovos-persona-server" title="Permanent link">&para;</a></h3>
-<ul>
-<li><a href="https://github.com/OpenVoiceOS/ovos-persona-server/pull/60">#60</a>: fix:
-  loader never passes <code>toolbox_id</code>, plugins own their id. Fixes
-  <code>_load_toolboxes()</code> so it never passes <code>toolbox_id</code> itself. Each <code>ToolBox</code>
-  plugin must now forward it from its own constructor. Framed as a fix, but
-  <strong>breaking</strong> for <code>ToolBox</code> plugin authors, since it changes the public
-  constructor contract. Audience: OPM <code>ToolBox</code> plugin authors. Expected
-  0.13.4 or 0.14.0 (unreleased) (scope unclear from PR: depends on whether the
-  org treats this as patch or minor).</li>
-<li><a href="https://github.com/OpenVoiceOS/ovos-persona-server/pull/38">#38</a>: feat:
-  Docker Compose OpenAI-proxy persona config and custom-container docs. Adds a
-  ready-made <code>docker compose up</code> setup for an OpenAI-compatible chat endpoint.
-  Not breaking, purely additive. Audience: deployers wanting a containerized
-  OpenAI-compatible endpoint. Expected 0.14.0 (unreleased).</li>
-</ul>
+<table>
+<thead>
+<tr>
+<th>PR</th>
+<th>What it changes</th>
+<th>Audience</th>
+<th>Breaking</th>
+<th>Version</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/OpenVoiceOS/ovos-persona-server/pull/60">#60</a></td>
+<td>Fixes the <code>toolbox_id</code> loader, plugins own their id now</td>
+<td>OPM <code>ToolBox</code> plugin authors</td>
+<td>Framed as a fix, but breaks the constructor contract</td>
+<td>0.13.4 or 0.14.0</td>
+</tr>
+<tr>
+<td><a href="https://github.com/OpenVoiceOS/ovos-persona-server/pull/38">#38</a></td>
+<td>Adds an OpenAI-proxy Docker Compose config and docs</td>
+<td>deployers wanting a containerized OpenAI-compatible endpoint</td>
+<td>No</td>
+<td>0.14.0</td>
+</tr>
+</tbody>
+</table>
 <h3 id="ovos-plugin-manager">ovos-plugin-manager<a class="headerlink" href="#ovos-plugin-manager" title="Permanent link">&para;</a></h3>
-<ul>
-<li><a href="https://github.com/OpenVoiceOS/ovos-plugin-manager/pull/385">#385</a>: feat:
-  add triples semantic pipeline with entity linking and reasoning support.
-  Extends the existing triples-extraction pipeline into a full semantic
-  pipeline with new plugin types (<code>ENTITY_LINKER</code>, <code>TRIPLES_STORE</code>,
-  <code>TRIPLES_REASONER</code>) and template classes. Also fixes a real bug where
-  triples-extractor plugin discovery queried the wrong plugin type. Not
-  breaking. Audience: plugin authors building semantic/knowledge-graph
-  plugins. Expected 2.12.0 (unreleased).</li>
-<li><a href="https://github.com/OpenVoiceOS/ovos-plugin-manager/pull/295">#295</a>: fix:
-  modernize importlib. Removes the compatibility layer for older Python
-  versions' <code>importlib</code>, switching plugin discovery to <code>importlib.metadata</code>
-  directly. Also deprecates <code>normalize_lang()</code> in favor of
-  <code>standardize_lang_tag()</code>. Not breaking, no public symbol removed. Audience:
-  plugin authors, deployers on older Python versions relying on the compat
-  shim. Expected 2.11.2 (unreleased).</li>
-</ul>
+<table>
+<thead>
+<tr>
+<th>PR</th>
+<th>What it changes</th>
+<th>Audience</th>
+<th>Breaking</th>
+<th>Version</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/OpenVoiceOS/ovos-plugin-manager/pull/385">#385</a></td>
+<td>Adds a triples semantic pipeline, fixes a discovery bug</td>
+<td>plugin authors building semantic/knowledge-graph plugins</td>
+<td>No</td>
+<td>2.12.0</td>
+</tr>
+<tr>
+<td><a href="https://github.com/OpenVoiceOS/ovos-plugin-manager/pull/295">#295</a></td>
+<td>Modernizes <code>importlib</code>, deprecates <code>normalize_lang()</code></td>
+<td>plugin authors, deployers on older Python</td>
+<td>No, no public symbol removed</td>
+<td>2.11.2</td>
+</tr>
+</tbody>
+</table>
 <h3 id="ovos-workshop">ovos-workshop<a class="headerlink" href="#ovos-workshop" title="Permanent link">&para;</a></h3>
-<ul>
-<li><a href="https://github.com/OpenVoiceOS/ovos-workshop/pull/372">#372</a>: Implement
-  updated Skill API. Adds Pydantic request/return model support to the Skill
-  API and standard exception handling that reports errors back to the caller.
-  The PR body states it is backward compatible except that a handler
-  exception now returns a structured error response instead of silence.
-  Audience: skill API consumers and plugin authors calling into skill public
-  APIs. Expected 9.4.0 (unreleased).</li>
-</ul>
+<table>
+<thead>
+<tr>
+<th>PR</th>
+<th>What it changes</th>
+<th>Audience</th>
+<th>Breaking</th>
+<th>Version</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/OpenVoiceOS/ovos-workshop/pull/372">#372</a></td>
+<td>Adds Pydantic models and structured errors to the Skill API</td>
+<td>skill API consumers, plugin authors calling skill APIs</td>
+<td>Backward compatible except structured errors replace silence</td>
+<td>9.4.0</td>
+</tr>
+</tbody>
+</table>
 <hr />
 <p><strong>Read next:</strong> <a href="../server-compat-layers/">Server Compatibility Layers</a>
 <strong>Related:</strong> <a href="../updating-from-older-ovos/">Updating from Older OVOS</a> · <a href="../version-compat-guide/">Version Compatibility Guide</a> · <a href="../gui-status/">Screens on OVOS Today</a> · <a href="../architecture-specs/">Formal Specifications</a></p>

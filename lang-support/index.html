@@ -1539,21 +1539,38 @@ swaps in better defaults. It is not required just to switch languages.</p>
 interactions, may not work as expected.</p>
 <hr />
 <h2 id="adding-a-new-language">Adding a New Language<a class="headerlink" href="#adding-a-new-language" title="Permanent link">&para;</a></h2>
-<p>Adding support for a new language in OVOS is a multi-step process requiring:</p>
-<ul>
+<p>Adding a new language to OVOS touches four separate repositories. Work through them in this
+order:</p>
+<ol>
 <li>
-<p>Translations of assistant dialog and intent files</p>
+<p><strong>Translate dialog and intent files.</strong> Use <a href="https://openvoiceos.github.io/ovos-localize/">OVOS Localize</a>
+   to add and translate the skill-side <code>.dialog</code>/<code>.intent</code>/<code>.voc</code> files for the language. See
+   <a href="../ovos-localize-tutorial/">Contributing Translations</a> for the step-by-step guide.
+   <strong>Deliverable:</strong> a translated set of skill resource files, submitted through OVOS Localize.</p>
 </li>
 <li>
-<p>A compatible STT plugin with reliable speech recognition</p>
+<p><strong>Add number and date parsing.</strong> Open a pull request against
+   <a href="https://github.com/OpenVoiceOS/ovos-number-parser">ovos-number-parser</a> and
+   <a href="https://github.com/OpenVoiceOS/ovos-date-parser">ovos-date-parser</a>. Each language gets its
+   own module, following the existing naming convention: <code>numbers_&lt;code&gt;.py</code> in
+   <code>ovos-number-parser</code> (for example <code>numbers_pt.py</code>, <code>numbers_de.py</code>) and <code>dates_&lt;code&gt;.py</code> in
+   <code>ovos-date-parser</code> (for example <code>dates_pt.py</code>, <code>dates_de.py</code>). <strong>Deliverable:</strong> a
+   <code>numbers_&lt;code&gt;.py</code> and/or <code>dates_&lt;code&gt;.py</code> module, wired into that repo's dispatch table.</p>
 </li>
 <li>
-<p>A natural-sounding TTS voice</p>
+<p><strong>Add STT/TTS coverage.</strong> Configure a working STT and TTS plugin for the language (see
+   <a href="../stt-plugins/">STT Plugins</a> and <a href="../tts-plugins/">TTS Plugins</a>), then open a pull request
+   against <a href="https://github.com/OpenVoiceOS/ovos-config">ovos-config</a> adding a <code>*.conf</code> file
+   under <code>ovos_config/recommends/</code> (for example <code>recommends/offline_female/&lt;lang&gt;.conf</code>) so
+   <code>autoconfigure</code> can pick it up automatically for every install. <strong>Deliverable:</strong> a
+   <code>recommends/**/&lt;lang&gt;.conf</code> file bundled with <code>ovos-config</code>.</p>
 </li>
 <li>
-<p>Validation using real-world user data</p>
+<p><strong>Validate with real usage.</strong> Once STT/TTS plugins exist for the language, get it benchmarked
+   and human-rated on the <a href="../plugin-arena/">Plugin Arena</a>, and test real speech end-to-end.
+   <strong>Deliverable:</strong> the language's plugins entered into the arena's STT/TTS/wake-word leagues.</p>
 </li>
-</ul>
+</ol>
 <p>We welcome and encourage community participation to improve language support. Every contribution helps make OVOS more accessible to speakers around the world.</p>
 <hr />
 <h2 id="technical-language-handling">Technical Language Handling<a class="headerlink" href="#technical-language-handling" title="Permanent link">&para;</a></h2>
@@ -1855,6 +1872,11 @@ in your installed <code>ovos-config</code> for the current list before relying o
 until a voice with that gender is confirmed. Pass the matching <code>--male</code>/<code>--female</code> flag
 per language; every other language listed here has both genders bundled.</p>
 </div>
+<p>A language that does not appear in this table has no bundled STT/TTS recommendation yet,
+not a deliberate exclusion; it just means nobody has added a <code>recommends/*.conf</code> file for it
+so far. Japanese is a widely requested example: <code>ovos-config</code> ships no <code>ja-jp</code> (or any other
+<code>ja-*</code>) recommends file as of this writing, so <code>autoconfigure -l ja-jp</code> has nothing to select
+and Japanese support must be configured by hand until a recommendation is contributed.</p>
 <h3 id="per-language-status-matrix">Per-language status matrix<a class="headerlink" href="#per-language-status-matrix" title="Permanent link">&para;</a></h3>
 <p>STT/TTS columns summarize the auto-configuration table above (yes = a bundled offline
 recommendation exists for at least one voice/gender, partial = only online/partial, no = no bundled
@@ -1988,6 +2010,11 @@ recommendation</strong> at all. <code>ovos-config autoconfigure -l pt-br --offli
 entirely. Use an online STT plugin, or configure a multilingual offline model (such as
 Whisper) by hand until a dedicated recommendation is added.</p>
 </div>
+<p>A language absent from this matrix, like both tables above, has no bundled recommendation or
+verified STT/TTS/parser coverage yet. Japanese is again a case in point: it has neither a
+<code>recommends/</code> entry in <code>ovos-config</code> nor a <code>numbers_ja.py</code>/<code>dates_ja.py</code> module in
+<code>ovos-number-parser</code>/<code>ovos-date-parser</code> today. That is an honest gap to fill, not a sign
+Japanese was overlooked or excluded on purpose.</p>
 <hr />
 <h2 id="how-to-improve-language-support">How to Improve Language Support<a class="headerlink" href="#how-to-improve-language-support" title="Permanent link">&para;</a></h2>
 <h3 id="1-contribute-translations">1. <strong>Contribute Translations</strong><a class="headerlink" href="#1-contribute-translations" title="Permanent link">&para;</a></h3>

@@ -1498,13 +1498,14 @@ or hits <code>max_iterations</code>:</p>
 </span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">  </span><span class="nt">&quot;ovos-react-loop&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 </span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">    </span><span class="nt">&quot;brain&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ovos-chat-openai-plugin&quot;</span><span class="p">,</span>
 </span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">    </span><span class="nt">&quot;ovos-chat-openai-plugin&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">      </span><span class="nt">&quot;api_url&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;http://localhost:11434/v1/chat/completions&quot;</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">      </span><span class="nt">&quot;api_url&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;http://localhost:11434/v1&quot;</span>
 </span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="w">    </span><span class="p">},</span>
 </span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="w">    </span><span class="nt">&quot;toolboxes&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;ovos-math-tools&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;ovos-web-search-tools&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;ovos-clock-tools&quot;</span><span class="p">],</span>
 </span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="w">    </span><span class="nt">&quot;max_iterations&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span>
 </span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="w">  </span><span class="p">}</span>
 </span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="p">}</span>
 </span></code></pre></div>
+<p><code>api_url</code> is the <code>/v1</code> base of the endpoint; the plugin appends <code>/chat/completions</code> itself, so do not include that suffix.</p>
 <table>
 <thead>
 <tr>
@@ -1527,6 +1528,7 @@ or hits <code>max_iterations</code>:</p>
 </tr>
 </tbody>
 </table>
+<p>The <code>brain</code>'s own plugin config (here <code>ovos-chat-openai-plugin</code>) is nested <em>inside</em> the loop's own block (<code>ovos-react-loop</code>), not at the persona root: the loop engine loads it with <code>config.get(brain_id, {})</code> read from its own config, so the brain is a sub-plugin resolved in the loop's namespace rather than the persona's.</p>
 <h3 id="per-loop-limits">Per-loop limits<a class="headerlink" href="#per-loop-limits" title="Permanent link">&para;</a></h3>
 <p>Beyond the shared <code>max_iterations</code>, several loops read their own budget keys from
 the engine config (each defaults if unset):</p>

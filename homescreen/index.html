@@ -1423,6 +1423,7 @@ computes whatever data it wants to show on its own.</p>
     Skill-&gt;&gt;GUI: gui.show_page (idle page + session data)
     GUI-&gt;&gt;Shell: forward page + data over the GUI protocol
     Shell-&gt;&gt;Shell: render idle/resting page (clock, weather, widgets)</code></pre>
+<p><em>Diagram: the homescreen skill registers with the HomescreenManager in ovos-gui, which shows the resting screen when no other page is active and returns to it when a skill releases the display.</em></p>
 <h2 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">&para;</a></h2>
 <p>Select a homescreen skill in <code>mycroft.conf</code> (or via <a href="../ovos-shell/">ovos-shell</a>):</p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="p">{</span>

@@ -1555,9 +1555,9 @@
 why. It follows the same journey as <a href="../life-of-an-utterance/">The Life of an Utterance</a>: mic,
 wake word, speech-to-text, intent matching, skill, text-to-speech. At each stop it shows where
 the evidence lives (which log file, which bus message), what a healthy result looks like, and
-the exact command to check it yourself. No programming background is required to follow along.
-Deeper technical detail is layered in as the page goes. New to the words here? See the
-<a href="../glossary/">Glossary</a>.</p>
+the exact command to check it yourself. The first stages need only copy-paste: no programming
+background is required there. Later stages read log files and run command-line tools, so they
+ask more of you as the page goes. New to the words here? See the <a href="../glossary/">Glossary</a>.</p>
 </div>
 <p>Every stage below can be checked two ways: <strong>tail a log file</strong> (works everywhere, including headless
 boxes over SSH), or <strong>watch the bus live</strong> with <code>ovos-busmon</code> (works anywhere a browser can reach the
@@ -1582,6 +1582,12 @@ need no extra install. Then reach for <code>ovos-busmon</code> when you want eve
 <p><em>Diagram:</em> The flow starts at Stage 1, checking whether the bus is reachable, and ends at "utterance handled correctly," and it branches at each of the six stages to a fix action whenever that stage's check fails.</p>
 <p>Each stage below cites the exact log line and bus message shown in this diagram, plus the
 command to check it directly.</p>
+<div class="admonition note">
+<p class="admonition-title">This is where it turns technical</p>
+<p>From here on, the page reads log files and runs command-line tools. If that is more than
+you want to deal with, try <a href="../everyday-help/">everyday-help.md</a> instead — it covers common
+problems with no terminal needed.</p>
+</div>
 <h2 id="where-the-logs-live">Where the logs live<a class="headerlink" href="#where-the-logs-live" title="Permanent link">&para;</a></h2>
 <p>OVOS runs several independent services (listener, intent/skills, audio, messagebus, GUI), and each
 one writes its <strong>own</strong> log file, named after the service. By default they land under the XDG state
