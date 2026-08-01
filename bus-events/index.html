@@ -1066,6 +1066,33 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#ocp-media-playback" class="md-nav__link">
+    <span class="md-ellipsis">
+      OCP / media playback
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phal-hardware-abstraction" class="md-nav__link">
+    <span class="md-ellipsis">
+      PHAL (hardware abstraction)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#volume-mute" class="md-nav__link">
+    <span class="md-ellipsis">
+      Volume / mute
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#session-skill-management" class="md-nav__link">
     <span class="md-ellipsis">
       Session &amp; skill management
@@ -1500,6 +1527,33 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#ocp-media-playback" class="md-nav__link">
+    <span class="md-ellipsis">
+      OCP / media playback
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phal-hardware-abstraction" class="md-nav__link">
+    <span class="md-ellipsis">
+      PHAL (hardware abstraction)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#volume-mute" class="md-nav__link">
+    <span class="md-ellipsis">
+      Volume / mute
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#session-skill-management" class="md-nav__link">
     <span class="md-ellipsis">
       Session &amp; skill management
@@ -1849,7 +1903,7 @@ names where applicable.</p>
 </tr>
 <tr>
 <td><code>mycroft.skills.settings.changed</code></td>
-<td>Remote settings update</td>
+<td>Remote settings update: see <a href="../skill-settings/#change-callback">Skill Settings</a> for the full change-notification flow</td>
 </tr>
 <tr>
 <td><code>ovos.skills.settings_changed</code></td>
@@ -1977,6 +2031,313 @@ names where applicable.</p>
 <tr>
 <td><code>gui.clear.namespace</code></td>
 <td>Remove a skill's namespace from the active GUI stack</td>
+</tr>
+</tbody>
+</table>
+<h2 id="ocp-media-playback">OCP / media playback<a class="headerlink" href="#ocp-media-playback" title="Permanent link">&para;</a></h2>
+<p>Handled by <code>ovos-media</code>'s <code>MediaService</code>/<code>OCPPlayer</code> and the <code>ovos-ocp-pipeline-plugin</code>
+intent pipeline. All topics live under the <code>ovos.common_play.*</code> namespace, there is no
+legacy alias for this surface.</p>
+<table>
+<thead>
+<tr>
+<th>Event</th>
+<th>Direction</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ovos.common_play.search</code></td>
+<td>in</td>
+<td>Pipeline plugin asks OCP to search for playable media</td>
+</tr>
+<tr>
+<td><code>ovos.common_play.play_search</code></td>
+<td>in</td>
+<td>Skill dispatch label for a matched "play X" intent</td>
+</tr>
+<tr>
+<td><code>ovos.common_play.play</code></td>
+<td>in</td>
+<td>Start playback of a track or playlist</td>
+</tr>
+<tr>
+<td><code>ovos.common_play.pause</code></td>
+<td>in</td>
+<td>Pause playback</td>
+</tr>
+<tr>
+<td><code>ovos.common_play.play_pause</code></td>
+<td>in</td>
+<td>Toggle play/pause</td>
+</tr>
+<tr>
+<td><code>ovos.common_play.resume</code></td>
+<td>in</td>
+<td>Resume paused playback</td>
+</tr>
+<tr>
+<td><code>ovos.common_play.stop</code></td>
+<td>in</td>
+<td>Stop playback</td>
+</tr>
+<tr>
+<td><code>ovos.common_play.next</code> / <code>.previous</code></td>
+<td>in</td>
+<td>Skip to next/previous track</td>
+</tr>
+<tr>
+<td><code>ovos.common_play.seek</code></td>
+<td>in</td>
+<td>Seek within the current track</td>
+</tr>
+<tr>
+<td><code>ovos.common_play.get_track_length</code> / <code>.get_track_position</code> / <code>.set_track_position</code></td>
+<td>in</td>
+<td>Query or set playback position</td>
+</tr>
+<tr>
+<td><code>ovos.common_play.track_info</code></td>
+<td>in</td>
+<td>Query metadata for the current track</td>
+</tr>
+<tr>
+<td><code>ovos.common_play.playlist.set</code> / <code>.clear</code> / <code>.queue</code></td>
+<td>in</td>
+<td>Manage the active playlist</td>
+</tr>
+<tr>
+<td><code>ovos.common_play.shuffle.toggle</code> / <code>.set</code> / <code>.unset</code></td>
+<td>in</td>
+<td>Manage shuffle mode</td>
+</tr>
+<tr>
+<td><code>ovos.common_play.repeat.toggle</code> / <code>.set</code> / <code>.unset</code></td>
+<td>in</td>
+<td>Manage repeat mode</td>
+</tr>
+<tr>
+<td><code>ovos.common_play.duck</code> / <code>.unduck</code> / <code>.cork</code> / <code>.uncork</code></td>
+<td>in</td>
+<td>Manage playback ducking around TTS/other audio</td>
+</tr>
+<tr>
+<td><code>ovos.common_play.status</code></td>
+<td>in</td>
+<td>Request a player state sync (also emitted by OCP itself on launch)</td>
+</tr>
+<tr>
+<td><code>ovos.common_play.status.response</code></td>
+<td>out</td>
+<td>Reply to <code>.status</code>, carries current player state</td>
+</tr>
+<tr>
+<td><code>ovos.common_play.track.state</code></td>
+<td>out</td>
+<td><code>{"state": TrackState}</code> playback state changed (loading, playing audio/video, paused, ended)</td>
+</tr>
+<tr>
+<td><code>ovos.common_play.media.state</code></td>
+<td>out</td>
+<td>Low-level backend media state changed</td>
+</tr>
+<tr>
+<td><code>ovos.common_play.home</code></td>
+<td>in</td>
+<td>Request the OCP home/media browser view</td>
+</tr>
+<tr>
+<td><code>ovos.common_play.ping</code> / <code>.pong</code></td>
+<td>in/out</td>
+<td>OCP service discovery handshake</td>
+</tr>
+<tr>
+<td><code>ovos.common_play.search.start</code> / <code>.search.end</code></td>
+<td>out</td>
+<td>Marks the start/end of a search request</td>
+</tr>
+<tr>
+<td><code>ovos.common_play.announce</code></td>
+<td>in</td>
+<td>A skill registers itself as an OCP media provider</td>
+</tr>
+<tr>
+<td><code>ovos.common_play.register_keyword</code> / <code>.deregister_keyword</code></td>
+<td>in</td>
+<td>A skill registers/removes its media-type keywords for the pipeline plugin</td>
+</tr>
+<tr>
+<td><code>ovos.common_play.skills.detach</code></td>
+<td>in</td>
+<td>Remove a skill from the OCP provider list</td>
+</tr>
+<tr>
+<td><code>ovos.common_play.SEI.get</code> / <code>.SEI.get.response</code></td>
+<td>out/in</td>
+<td>Query a client's available stream extractor plugins</td>
+</tr>
+<tr>
+<td><code>ovos.common_play.like</code> / <code>.unlike</code></td>
+<td>in</td>
+<td>Mark/unmark the current track as liked</td>
+</tr>
+<tr>
+<td><code>ovos.common_play.liked_tracks.play</code></td>
+<td>out</td>
+<td>Play the liked-tracks playlist</td>
+</tr>
+</tbody>
+</table>
+<h2 id="phal-hardware-abstraction">PHAL (hardware abstraction)<a class="headerlink" href="#phal-hardware-abstraction" title="Permanent link">&para;</a></h2>
+<p>Handled by the PHAL service (<code>ovos-PHAL</code>) and its plugins. See <a href="../phal/">PHAL</a>.</p>
+<table>
+<thead>
+<tr>
+<th>Event</th>
+<th>Direction</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>system.reboot</code></td>
+<td>in</td>
+<td>Request a device reboot, handled by <code>ovos-PHAL-plugin-system</code></td>
+</tr>
+<tr>
+<td><code>system.reboot.start</code></td>
+<td>out</td>
+<td>Reboot is starting</td>
+</tr>
+<tr>
+<td><code>system.shutdown</code></td>
+<td>in</td>
+<td>Request a device shutdown</td>
+</tr>
+<tr>
+<td><code>system.shutdown.start</code></td>
+<td>out</td>
+<td>Shutdown is starting</td>
+</tr>
+<tr>
+<td><code>system.factory.reset</code></td>
+<td>in</td>
+<td>Request a factory reset</td>
+</tr>
+<tr>
+<td><code>system.factory.reset.register</code></td>
+<td>in</td>
+<td>A plugin registers itself as a factory-reset participant</td>
+</tr>
+<tr>
+<td><code>system.factory.reset.ping</code></td>
+<td>out</td>
+<td>Ask registered plugins to run their factory-reset step</td>
+</tr>
+<tr>
+<td><code>system.configure.language</code></td>
+<td>in</td>
+<td>Request a device-wide language change</td>
+</tr>
+<tr>
+<td><code>system.configure.language.complete</code></td>
+<td>out</td>
+<td>Language change finished</td>
+</tr>
+<tr>
+<td><code>system.mycroft.service.restart</code></td>
+<td>in</td>
+<td>Request <code>ovos-core</code> be restarted</td>
+</tr>
+<tr>
+<td><code>system.mycroft.service.restart.start</code></td>
+<td>out</td>
+<td><code>ovos-core</code> restart is starting</td>
+</tr>
+<tr>
+<td><code>system.ssh.enable</code> / <code>.disable</code></td>
+<td>in</td>
+<td>Enable/disable the SSH server</td>
+</tr>
+<tr>
+<td><code>system.ssh.enabled</code> / <code>.disabled</code></td>
+<td>out</td>
+<td>SSH server state changed</td>
+</tr>
+<tr>
+<td><code>system.ssh.status</code></td>
+<td>in</td>
+<td>Query SSH server state</td>
+</tr>
+<tr>
+<td><code>system.clock.synced</code></td>
+<td>in</td>
+<td>System clock finished syncing over NTP</td>
+</tr>
+</tbody>
+</table>
+<p>Every <code>PHALPlugin</code> subclass also listens on the same core listener/audio topics documented
+above (<code>recognizer_loop:record_begin</code>, <code>recognizer_loop:audio_output_start</code>,
+<code>mycroft.awoken</code>, <code>speak</code>, and the <code>enclosure.*</code> display/eyes/mouth topics), so a PHAL
+plugin can react to the utterance lifecycle without going through a skill.</p>
+<h2 id="volume-mute">Volume / mute<a class="headerlink" href="#volume-mute" title="Permanent link">&para;</a></h2>
+<p>Handled by <code>ovos-PHAL-plugin-alsa</code> and <code>ovos-PHAL-plugin-pulseaudio</code> (whichever is loaded
+for the platform's audio stack). <code>ovos-audio</code> also emits <code>mycroft.volume.*</code> on its own
+startup to normalize the initial volume.</p>
+<table>
+<thead>
+<tr>
+<th>Event</th>
+<th>Direction</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>mycroft.volume.get</code></td>
+<td>in/out</td>
+<td>Query current volume; the same topic carries the reply as a response message with <code>{"percent"}</code></td>
+</tr>
+<tr>
+<td><code>mycroft.volume.set</code></td>
+<td>in</td>
+<td>Set volume to <code>{"percent"}</code></td>
+</tr>
+<tr>
+<td><code>mycroft.volume.set.gui</code></td>
+<td>in</td>
+<td>Set volume from a GUI slider</td>
+</tr>
+<tr>
+<td><code>mycroft.volume.increase</code></td>
+<td>in</td>
+<td>Raise volume by a step</td>
+</tr>
+<tr>
+<td><code>mycroft.volume.decrease</code></td>
+<td>in</td>
+<td>Lower volume by a step</td>
+</tr>
+<tr>
+<td><code>mycroft.volume.mute</code></td>
+<td>in</td>
+<td>Mute audio output</td>
+</tr>
+<tr>
+<td><code>mycroft.volume.unmute</code></td>
+<td>in</td>
+<td>Unmute audio output</td>
+</tr>
+<tr>
+<td><code>mycroft.volume.mute.toggle</code></td>
+<td>in</td>
+<td>Toggle mute state</td>
+</tr>
+<tr>
+<td><code>mycroft.volume.get.sliding.panel</code></td>
+<td>in</td>
+<td>Query volume for the GUI sliding panel</td>
 </tr>
 </tbody>
 </table>

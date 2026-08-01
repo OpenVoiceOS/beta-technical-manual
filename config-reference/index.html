@@ -1027,6 +1027,60 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#8-gui" class="md-nav__link">
+    <span class="md-ellipsis">
+      8. GUI
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-phal-hardware-abstraction-layer" class="md-nav__link">
+    <span class="md-ellipsis">
+      9. PHAL (Hardware Abstraction Layer)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-ocp-media" class="md-nav__link">
+    <span class="md-ellipsis">
+      10. OCP / Media
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-skills" class="md-nav__link">
+    <span class="md-ellipsis">
+      11. Skills
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-session" class="md-nav__link">
+    <span class="md-ellipsis">
+      12. Session
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-personas-agents" class="md-nav__link">
+    <span class="md-ellipsis">
+      13. Personas / Agents
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#all-keys-generated" class="md-nav__link">
     <span class="md-ellipsis">
       All Keys (Generated)
@@ -1613,6 +1667,60 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#8-gui" class="md-nav__link">
+    <span class="md-ellipsis">
+      8. GUI
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-phal-hardware-abstraction-layer" class="md-nav__link">
+    <span class="md-ellipsis">
+      9. PHAL (Hardware Abstraction Layer)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-ocp-media" class="md-nav__link">
+    <span class="md-ellipsis">
+      10. OCP / Media
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-skills" class="md-nav__link">
+    <span class="md-ellipsis">
+      11. Skills
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-session" class="md-nav__link">
+    <span class="md-ellipsis">
+      12. Session
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-personas-agents" class="md-nav__link">
+    <span class="md-ellipsis">
+      13. Personas / Agents
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#all-keys-generated" class="md-nav__link">
     <span class="md-ellipsis">
       All Keys (Generated)
@@ -1922,6 +2030,273 @@ It's a different config subtree from the same-named <code>listener.VAD</code> se
 </tr>
 </tbody>
 </table>
+<hr />
+<h2 id="8-gui">8. GUI<a class="headerlink" href="#8-gui" title="Permanent link">&para;</a></h2>
+<p>The <code>gui</code> key controls the on-screen interface. The <code>gui_websocket</code> key controls the separate socket that GUI clients connect to.</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>gui.idle_display_skill</code></td>
+<td><code>"ovos-skill-homescreen.openvoiceos"</code></td>
+<td>Skill ID of the homescreen shown when no skill is active.</td>
+</tr>
+<tr>
+<td><code>gui.extension</code></td>
+<td><code>"generic"</code></td>
+<td>GUI platform extension. Enclosures can set a different one for their own screen.</td>
+</tr>
+<tr>
+<td><code>gui.generic.homescreen_supported</code></td>
+<td><code>true</code></td>
+<td>Whether the <code>generic</code> extension shows a homescreen.</td>
+</tr>
+<tr>
+<td><code>gui.disable_gui</code></td>
+<td><code>false</code></td>
+<td>On a headless device, set to <code>true</code> to stop all GUI bus messages.</td>
+</tr>
+<tr>
+<td><code>gui_websocket.host</code></td>
+<td><code>"0.0.0.0"</code></td>
+<td>Host the GUI websocket binds to. It listens on all interfaces by default, not just localhost. Restrict it to <code>127.0.0.1</code> if no client needs network access. See <a href="../bus-service/">Bus Service</a> for network-exposure guidance.</td>
+</tr>
+<tr>
+<td><code>gui_websocket.base_port</code></td>
+<td><code>18181</code></td>
+<td>Base port for the GUI websocket. Each connected GUI client gets its own port from this point up.</td>
+</tr>
+<tr>
+<td><code>gui_websocket.route</code></td>
+<td><code>"/gui"</code></td>
+<td>URL route for the GUI websocket.</td>
+</tr>
+<tr>
+<td><code>gui_websocket.ssl</code></td>
+<td><code>false</code></td>
+<td>Enable TLS on the GUI websocket.</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition warning">
+<p class="admonition-title"><code>gui_websocket.host</code> binds to all interfaces by default</p>
+<p>Unlike the core <code>websocket</code> key, <code>gui_websocket.host</code> ships as <code>"0.0.0.0"</code>, not
+<code>"127.0.0.1"</code>. Any device on the network can reach it unless you narrow it or
+firewall the port.</p>
+</div>
+<p>Source: <code>mycroft.conf</code> lines 356–361 (<code>gui_websocket</code>) and lines 609–627 (<code>gui</code>) in <a href="https://github.com/OpenVoiceOS/ovos-config">OpenVoiceOS/ovos-config</a>.</p>
+<hr />
+<h2 id="9-phal-hardware-abstraction-layer">9. PHAL (Hardware Abstraction Layer)<a class="headerlink" href="#9-phal-hardware-abstraction-layer" title="Permanent link">&para;</a></h2>
+<p>PHAL plugins read their settings from the top-level <code>PHAL</code> key, and PHAL admin plugins from <code>PHAL.admin</code>. Neither key has a default block in the shipped <code>mycroft.conf</code>: with no <code>PHAL</code> key present, every PHAL plugin loads with an empty config and its own internal defaults.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>&quot;PHAL&quot;: {
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>  &quot;some-phal-plugin-id&quot;: {
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>    &quot;enabled&quot;: true
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>  },
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>  &quot;admin&quot;: {
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>    &quot;some-admin-plugin-id&quot;: {
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>      &quot;enabled&quot;: true
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>    }
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>  }
+</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>}
+</span></code></pre></div>
+<p>A PHAL plugin is disabled by setting <code>"enabled": false</code> under its plugin ID. Admin plugins run with elevated privileges and are read from a nested <code>admin</code> block, not the top level.</p>
+<p>Source: <code>Configuration().get("PHAL")</code> in <code>ovos_PHAL/service.py</code> line 59 and the <code>PHAL.admin</code> docstring in <code>ovos_PHAL/admin.py</code> lines 32–46, <a href="https://github.com/OpenVoiceOS/ovos-PHAL">OpenVoiceOS/ovos-PHAL</a>. No <code>PHAL</code> block appears in the shipped <code>mycroft.conf</code>.</p>
+<hr />
+<h2 id="10-ocp-media">10. OCP / Media<a class="headerlink" href="#10-ocp-media" title="Permanent link">&para;</a></h2>
+<p><code>intents.OCP</code> tunes the OCP intent pipeline plugin. <code>Audio</code> selects the legacy audio service backend, which OCP still uses for actual playback.</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>intents.OCP.legacy</code></td>
+<td><code>false</code></td>
+<td>Force the old audio-service bus API instead of OCP.</td>
+</tr>
+<tr>
+<td><code>intents.OCP.min_score</code></td>
+<td><code>40</code></td>
+<td>Minimum confidence score, 0-100, for OCP to accept an utterance as a media request.</td>
+</tr>
+<tr>
+<td><code>intents.OCP.filter_media</code></td>
+<td><code>true</code></td>
+<td>Filter out results OCP judges not to be playable media.</td>
+</tr>
+<tr>
+<td><code>intents.OCP.filter_SEI</code></td>
+<td><code>true</code></td>
+<td>Filter results by Search Engine Index compatibility.</td>
+</tr>
+<tr>
+<td><code>intents.OCP.playback_mode</code></td>
+<td><code>0</code></td>
+<td>Playback mode passed to the audio backend.</td>
+</tr>
+<tr>
+<td><code>intents.OCP.search_fallback</code></td>
+<td><code>true</code></td>
+<td>Fall back to a general media search when no skill claims the request.</td>
+</tr>
+</tbody>
+</table>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>&quot;Audio&quot;: {
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>  &quot;native_sources&quot;: [&quot;debug_cli&quot;, &quot;audio&quot;, &quot;mycroft-gui&quot;],
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>  &quot;default-backend&quot;: &quot;mpv&quot;,
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>  &quot;backends&quot;: {
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>    &quot;OCP&quot;: {
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>      &quot;type&quot;: &quot;ovos_common_play&quot;,
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>      &quot;preferred_audio_services&quot;: [&quot;mpv&quot;, &quot;vlc&quot;, &quot;simple&quot;],
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>      &quot;active&quot;: true
+</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>    }
+</span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a>  }
+</span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a>}
+</span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Audio.default-backend</code></td>
+<td><code>"mpv"</code></td>
+<td>Audio backend used for playback.</td>
+</tr>
+<tr>
+<td><code>Audio.backends.OCP.type</code></td>
+<td><code>"ovos_common_play"</code></td>
+<td>Backend type for the OCP entry. Do not set this to the string <code>"OCP"</code>; that name is only valid as the key under <code>backends</code>.</td>
+</tr>
+<tr>
+<td><code>Audio.backends.OCP.preferred_audio_services</code></td>
+<td><code>["mpv", "vlc", "simple"]</code></td>
+<td>Order in which OCP tries local media players.</td>
+</tr>
+<tr>
+<td><code>Audio.backends.OCP.active</code></td>
+<td><code>true</code></td>
+<td>Whether the OCP backend is available for selection.</td>
+</tr>
+</tbody>
+</table>
+<p>Source: <code>mycroft.conf</code> lines 188–203 (<code>intents.OCP</code>) and lines 705–726 (<code>Audio</code>) in <a href="https://github.com/OpenVoiceOS/ovos-config">OpenVoiceOS/ovos-config</a>.</p>
+<hr />
+<h2 id="11-skills">11. Skills<a class="headerlink" href="#11-skills" title="Permanent link">&para;</a></h2>
+<p>All of these live under the top-level <code>skills</code> key.</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>skills.blacklisted_skills</code></td>
+<td><code>["skill-ovos-stop.openvoiceos"]</code></td>
+<td>Skill IDs that never load, even if installed. The stop skill is blacklisted because stop handling is now built into core.</td>
+</tr>
+<tr>
+<td><code>skills.fallbacks.fallback_mode</code></td>
+<td><code>"accept_all"</code></td>
+<td>Which skills may act as a fallback handler: <code>accept_all</code>, <code>whitelist</code>, or <code>blacklist</code>.</td>
+</tr>
+<tr>
+<td><code>skills.fallbacks.fallback_whitelist</code></td>
+<td><code>[]</code></td>
+<td>Skill IDs allowed as fallback handlers when <code>fallback_mode</code> is <code>whitelist</code>.</td>
+</tr>
+<tr>
+<td><code>skills.fallbacks.fallback_blacklist</code></td>
+<td><code>[]</code></td>
+<td>Skill IDs excluded from fallback handling when <code>fallback_mode</code> is <code>blacklist</code>.</td>
+</tr>
+<tr>
+<td><code>skills.fallbacks.fallback_priorities</code></td>
+<td><code>{}</code></td>
+<td>Per-skill-ID override of a skill's own default fallback priority.</td>
+</tr>
+<tr>
+<td><code>skills.converse.timeout</code></td>
+<td><code>300</code></td>
+<td>Seconds a skill stays active for converse before it is deactivated, if the user does not interact with it.</td>
+</tr>
+<tr>
+<td><code>skills.converse.converse_mode</code></td>
+<td><code>"accept_all"</code></td>
+<td>Which skills may take part in converse: <code>accept_all</code>, <code>whitelist</code>, or <code>blacklist</code>.</td>
+</tr>
+<tr>
+<td><code>skills.converse.converse_whitelist</code></td>
+<td><code>[]</code></td>
+<td>Skill IDs allowed to converse when <code>converse_mode</code> is <code>whitelist</code>.</td>
+</tr>
+<tr>
+<td><code>skills.converse.converse_blacklist</code></td>
+<td><code>[]</code></td>
+<td>Skill IDs excluded from converse when <code>converse_mode</code> is <code>blacklist</code>.</td>
+</tr>
+<tr>
+<td><code>skills.converse.converse_activation</code></td>
+<td><code>"accept_all"</code></td>
+<td>How a skill may activate itself: <code>accept_all</code>, <code>priority</code>, <code>whitelist</code>, or <code>blacklist</code>.</td>
+</tr>
+<tr>
+<td><code>skills.converse.max_activations</code></td>
+<td><code>-1</code></td>
+<td>Times per minute a skill may self-activate. <code>-1</code> means no limit; <code>0</code> disables self-activation.</td>
+</tr>
+<tr>
+<td><code>skills.converse.cross_activation</code></td>
+<td><code>true</code></td>
+<td>If <code>true</code>, any skill may activate any other skill, not only itself.</td>
+</tr>
+<tr>
+<td><code>skills.converse.cross_deactivation</code></td>
+<td><code>true</code></td>
+<td>If <code>true</code>, any skill may deactivate any other skill, not only itself.</td>
+</tr>
+</tbody>
+</table>
+<p>Source: <code>mycroft.conf</code> lines 235–304 (<code>skills</code>) in <a href="https://github.com/OpenVoiceOS/ovos-config">OpenVoiceOS/ovos-config</a>.</p>
+<hr />
+<h2 id="12-session">12. Session<a class="headerlink" href="#12-session" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>session.ttl</code></td>
+<td><code>-1</code></td>
+<td>Time to live, in seconds, for a remote session. <code>-1</code> means sessions do not expire.</td>
+</tr>
+</tbody>
+</table>
+<p>Source: <code>mycroft.conf</code> lines 643–646 (<code>session</code>) in <a href="https://github.com/OpenVoiceOS/ovos-config">OpenVoiceOS/ovos-config</a>.</p>
+<hr />
+<h2 id="13-personas-agents">13. Personas / Agents<a class="headerlink" href="#13-personas-agents" title="Permanent link">&para;</a></h2>
+<p>The shipped <code>mycroft.conf</code> has no <code>persona</code> key and no default persona values. Persona and LLM-agent settings are read from the persona service's own config file, not from <code>mycroft.conf</code>. See <a href="../personas/">Personas</a> for that service's settings and file location.</p>
 <hr />
 <h2 id="all-keys-generated">All Keys (Generated)<a class="headerlink" href="#all-keys-generated" title="Permanent link">&para;</a></h2>
 <div class="admonition note">
@@ -2367,8 +2742,8 @@ each one does and where it's actually stored.</p>
 </tr>
 <tr>
 <td><code>gui_websocket.host</code></td>
-<td><code>"127.0.0.1"</code></td>
-<td>Bound to localhost by default. Widening it to <code>0.0.0.0</code> exposes the socket to the network. See <a href="../bus-service/">Bus Service</a> for network-exposure guidance.</td>
+<td><code>"0.0.0.0"</code></td>
+<td>Listens on all interfaces by default. Set it to <code>127.0.0.1</code> unless a remote display needs network access. See <a href="../bus-service/">Bus Service</a> for network-exposure guidance.</td>
 </tr>
 <tr>
 <td><code>gui_websocket.base_port</code></td>

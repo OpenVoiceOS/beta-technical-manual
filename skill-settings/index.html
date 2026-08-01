@@ -1662,6 +1662,35 @@
 <p>"Settings" are a skill's saved preferences, such as a username, an API key, or a chosen option. They stick around even after a restart. This page shows how a skill reads and writes those values, and how it reacts when a user changes them. For an optional (legacy) settings form used by community config tools, see <a href="../skill-settings-meta/">Skill Settings Meta</a>. For term definitions, see the <a href="../glossary/">Glossary</a>.</p>
 </div>
 <p>Settings provide per-skill persistent key-value storage backed by a JSON file. They let users configure skill behavior: changing defaults, providing API keys, or adjusting integration preferences.</p>
+<div class="admonition tip">
+<p class="admonition-title">Which file does what</p>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Holds</th>
+<th>Covered on</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>settings.json</code></td>
+<td>The runtime values a user actually set.</td>
+<td>This page.</td>
+</tr>
+<tr>
+<td><code>settingsmeta.json</code>/<code>.yaml</code></td>
+<td>The UI declaration: which fields a settings UI should show.</td>
+<td><a href="../skill-settings-meta/">Skill Settings Meta</a></td>
+</tr>
+<tr>
+<td><code>skill.json</code></td>
+<td>Packaging metadata for distribution (id, author, requirements).</td>
+<td><a href="../skill-json/">Skill Packaging: skill.json</a></td>
+</tr>
+</tbody>
+</table>
+</div>
 <hr />
 <h2 id="quick-start">Quick start<a class="headerlink" href="#quick-start" title="Permanent link">&para;</a></h2>
 <p>Building on the <code>MyFirstSkill</code> from <a href="../first-skill/">Your First Skill</a>, here is the smallest useful

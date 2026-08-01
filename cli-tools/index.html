@@ -1012,6 +1012,33 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#watching-the-bus-ovos-busmon" class="md-nav__link">
+    <span class="md-ellipsis">
+      Watching the bus: ovos-busmon
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuring-skill-settings-from-a-browser-ovos-skill-config-tool" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configuring skill settings from a browser: ovos-skill-config-tool
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#testing-skills-offline-ovoscope" class="md-nav__link">
+    <span class="md-ellipsis">
+      Testing skills offline: ovoscope
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#running-the-services-by-hand" class="md-nav__link">
     <span class="md-ellipsis">
       Running the services by hand
@@ -1344,6 +1371,33 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#watching-the-bus-ovos-busmon" class="md-nav__link">
+    <span class="md-ellipsis">
+      Watching the bus: ovos-busmon
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuring-skill-settings-from-a-browser-ovos-skill-config-tool" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configuring skill settings from a browser: ovos-skill-config-tool
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#testing-skills-offline-ovoscope" class="md-nav__link">
+    <span class="md-ellipsis">
+      Testing skills offline: ovoscope
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#running-the-services-by-hand" class="md-nav__link">
     <span class="md-ellipsis">
       Running the services by hand
@@ -1499,6 +1553,82 @@ OVOS over the <a href="../bus-service/">messagebus</a>. They help with testing, 
 </tbody>
 </table>
 <p>See the full generated <a href="#command-help-output-generated"><code>ovos-logs --help</code> output</a> below.</p>
+<hr />
+<h2 id="watching-the-bus-ovos-busmon">Watching the bus: <code>ovos-busmon</code><a class="headerlink" href="#watching-the-bus-ovos-busmon" title="Permanent link">&para;</a></h2>
+<p>Shipped by <strong><a href="https://github.com/OpenVoiceOS/ovos-busmon"><code>ovos-busmon</code></a></strong>. A small web app that
+connects to the <a href="../bus-service/">messagebus</a> and streams every message live to a browser tab, in
+one filterable, searchable timeline.</p>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ovos-busmon</code></td>
+<td>Start the web UI (default <code>http://127.0.0.1:8005</code>), connecting outward to a messagebus at <code>localhost:8181</code>.</td>
+</tr>
+</tbody>
+</table>
+<p>See <a href="../troubleshooting/#watch-the-bus-while-you-speak-ovos-busmon">Watch the bus while you speak: <code>ovos-busmon</code></a>
+for installation, configuration variables, security notes, and a walkthrough.</p>
+<hr />
+<h2 id="configuring-skill-settings-from-a-browser-ovos-skill-config-tool">Configuring skill settings from a browser: <code>ovos-skill-config-tool</code><a class="headerlink" href="#configuring-skill-settings-from-a-browser-ovos-skill-config-tool" title="Permanent link">&para;</a></h2>
+<p>A community-built web UI, <strong><a href="https://github.com/OscillateLabsLLC/ovos-skill-config-tool">OVOS Skill Config Tool</a></strong>,
+for editing installed skills' settings without hand-editing <code>settings.json</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ovos-skill-config-tool</code></td>
+<td>Start the web UI (default <code>http://0.0.0.0:8000</code>).</td>
+</tr>
+</tbody>
+</table>
+<p>See <a href="../skill-settings/#web-based-settings-ui-community">Skill Settings → Web-Based Settings UI</a>
+for installation and credential configuration.</p>
+<hr />
+<h2 id="testing-skills-offline-ovoscope">Testing skills offline: <code>ovoscope</code><a class="headerlink" href="#testing-skills-offline-ovoscope" title="Permanent link">&para;</a></h2>
+<p>Shipped by <strong><a href="https://github.com/TigreGotico/ovoscope"><code>ovoscope</code></a></strong>. Runs an in-process, mocked
+assistant that loads real skills and the real intent-matching engines without audio hardware, so a
+bug can be captured once and replayed instead of re-triggered on real hardware.</p>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ovoscope record</code></td>
+<td>Capture a fixture, optionally <code>--live</code> from a running OVOS instance.</td>
+</tr>
+<tr>
+<td><code>ovoscope run &lt;fixture&gt;</code></td>
+<td>Replay a fixture and exit non-zero on failure.</td>
+</tr>
+<tr>
+<td><code>ovoscope diff &lt;a&gt; &lt;b&gt;</code></td>
+<td>Compare two fixture files.</td>
+</tr>
+</tbody>
+</table>
+<p>See the <a href="../ovoscope-overview/">ovoscope guide</a> for the full workflow, including <code>End2EndTest</code> for
+writing an assertion once a fixture is captured.</p>
+<hr />
+<div class="admonition note">
+<p class="admonition-title">HiveMind CLI tools</p>
+<p>HiveMind ships its own CLI tools (<code>hivemind-core</code>, <code>hivemind-client</code>), covered in
+<a href="../hivemind-agents/">HiveMind Agents</a>.</p>
+</div>
 <hr />
 <h2 id="running-the-services-by-hand">Running the services by hand<a class="headerlink" href="#running-the-services-by-hand" title="Permanent link">&para;</a></h2>
 <p>Each core OVOS service is normally started by your service manager (systemd, the

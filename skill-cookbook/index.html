@@ -1111,6 +1111,30 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#12-a-skill-with-a-settings-ui-declare-edit-read-react" class="md-nav__link">
+    <span class="md-ellipsis">
+      12. A skill with a settings UI: declare, edit, read, react
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="12. A skill with a settings UI: declare, edit, read, react">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#moving-parts_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      Moving parts
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#learn-from-the-official-skills" class="md-nav__link">
     <span class="md-ellipsis">
       Learn from the official skills
@@ -1846,6 +1870,30 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#12-a-skill-with-a-settings-ui-declare-edit-read-react" class="md-nav__link">
+    <span class="md-ellipsis">
+      12. A skill with a settings UI: declare, edit, read, react
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="12. A skill with a settings UI: declare, edit, read, react">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#moving-parts_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      Moving parts
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#learn-from-the-official-skills" class="md-nav__link">
     <span class="md-ellipsis">
       Learn from the official skills
@@ -1953,6 +2001,12 @@
 <td>Control an external device (MQTT)</td>
 <td><code>OVOSSkill</code></td>
 <td><code>paho.mqtt.client.Client</code>, <code>connect</code>, <code>publish</code>, <code>disconnect</code></td>
+</tr>
+<tr>
+<td>12</td>
+<td>A skill with a settings UI</td>
+<td><code>OVOSSkill</code></td>
+<td><code>settingsmeta.yaml</code>, <code>ovos-skill-config-tool</code>, <code>settings_change_callback</code></td>
 </tr>
 </tbody>
 </table>
@@ -2600,6 +2654,68 @@ Everything in this recipe targets the current, <strong>deprecated</strong> <code
 <li><code>publish(topic, payload, qos=...)</code> returns an <code>MQTTMessageInfo</code>. <code>wait_for_publish(timeout=...)</code> blocks until the broker acknowledges it, or the timeout elapses. <code>is_published()</code> confirms it went through, so a network drop mid-call is caught instead of silently swallowed.</li>
 <li><code>disconnect()</code> closes the connection cleanly. Pair it with <code>loop_stop()</code> in <code>shutdown()</code> so the skill doesn't leave a background thread or an open socket behind when unloaded.</li>
 <li>If the hardware is attached to the OVOS device itself, a <a href="../phal/">PHAL plugin</a> is the intended home for device control; a skill and broker like this one suits a device reachable over the network instead.</li>
+</ul>
+<hr />
+<h2 id="12-a-skill-with-a-settings-ui-declare-edit-read-react">12. A skill with a settings UI: declare, edit, read, react<a class="headerlink" href="#12-a-skill-with-a-settings-ui-declare-edit-read-react" title="Permanent link">&para;</a></h2>
+<p><strong>When you'd want this:</strong> a user should be able to change a skill's settings from a
+browser, with no terminal and no hand-edited JSON, and the skill should pick up the
+change immediately.</p>
+<p>Three parts wire together: a <code>settingsmeta.yaml</code> field declaration, a settings-editing
+UI that reads and writes it, and the skill's own code that reads the stored value and
+reacts when it changes.</p>
+<p><code>settingsmeta.yaml</code>, next to the skill's <code>__init__.py</code>:</p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="nt">skillMetadata</span><span class="p">:</span>
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="w">  </span><span class="nt">sections</span><span class="p">:</span>
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Greeter&quot;</span>
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="w">      </span><span class="nt">fields</span><span class="p">:</span>
+</span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;volume&quot;</span>
+</span><span id="__span-15-6"><a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a><span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;number&quot;</span>
+</span><span id="__span-15-7"><a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a><span class="w">          </span><span class="nt">label</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Reply</span><span class="nv"> </span><span class="s">volume</span><span class="nv"> </span><span class="s">(0-100)&quot;</span>
+</span><span id="__span-15-8"><a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a><span class="w">          </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">50</span>
+</span></code></pre></div>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="kn">from</span> <span class="nn">ovos_workshop.skills</span> <span class="kn">import</span> <span class="n">OVOSSkill</span>
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="kn">from</span> <span class="nn">ovos_workshop.decorators</span> <span class="kn">import</span> <span class="n">intent_handler</span>
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>
+</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a>
+</span><span id="__span-16-5"><a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a><span class="k">class</span> <span class="nc">GreeterSkill</span><span class="p">(</span><span class="n">OVOSSkill</span><span class="p">):</span>
+</span><span id="__span-16-6"><a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a>    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="__span-16-7"><a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">settings_change_callback</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_settings_changed</span>
+</span><span id="__span-16-8"><a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">on_settings_changed</span><span class="p">()</span>  <span class="c1"># apply the stored (or default) value now</span>
+</span><span id="__span-16-9"><a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a>
+</span><span id="__span-16-10"><a id="__codelineno-16-10" name="__codelineno-16-10" href="#__codelineno-16-10"></a>    <span class="k">def</span> <span class="nf">on_settings_changed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="__span-16-11"><a id="__codelineno-16-11" name="__codelineno-16-11" href="#__codelineno-16-11"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">volume</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;volume&quot;</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+</span><span id="__span-16-12"><a id="__codelineno-16-12" name="__codelineno-16-12" href="#__codelineno-16-12"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;reply volume is now </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">volume</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="__span-16-13"><a id="__codelineno-16-13" name="__codelineno-16-13" href="#__codelineno-16-13"></a>
+</span><span id="__span-16-14"><a id="__codelineno-16-14" name="__codelineno-16-14" href="#__codelineno-16-14"></a>    <span class="nd">@intent_handler</span><span class="p">(</span><span class="s2">&quot;greet.intent&quot;</span><span class="p">)</span>
+</span><span id="__span-16-15"><a id="__codelineno-16-15" name="__codelineno-16-15" href="#__codelineno-16-15"></a>    <span class="k">def</span> <span class="nf">handle_greet</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+</span><span id="__span-16-16"><a id="__codelineno-16-16" name="__codelineno-16-16" href="#__codelineno-16-16"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">speak_dialog</span><span class="p">(</span><span class="s2">&quot;greeting&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;volume&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">volume</span><span class="p">})</span>
+</span></code></pre></div>
+<p>Restart the skill (or all of OVOS) so it picks up the new <code>settingsmeta.yaml</code> field.
+Then install and run the community web UI to edit the value from a browser instead of
+a text editor:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>pip<span class="w"> </span>install<span class="w"> </span>ovos-skill-config-tool
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>ovos-skill-config-tool
+</span></code></pre></div>
+<p>Open <code>http://&lt;device-ip&gt;:8000</code>, find the skill by name, and change "Reply volume".
+Saving writes the new value to the skill's <code>settings.json</code>. The running skill notices
+the change and calls <code>on_settings_changed()</code> without a restart.</p>
+<h3 id="moving-parts_11">Moving parts<a class="headerlink" href="#moving-parts_11" title="Permanent link">&para;</a></h3>
+<ul>
+<li><code>settingsmeta.yaml</code> only declares the field for a UI to render; it does not create or
+  validate the key by itself. See <a href="../skill-settings-meta/">Skill Settings Meta</a> for the
+  full field-type table.</li>
+<li><code>self.settings.get("volume", 50)</code> reads the stored value, falling back to <code>50</code> if the
+  key is absent (e.g. before any UI has ever saved a value). See <a href="../skill-settings/#accessing-settings">Skill
+  Settings</a>.</li>
+<li><code>self.settings_change_callback</code>, assigned in <code>initialize()</code>, is called with no
+  arguments whenever <code>settings.json</code> changes on disk (the file watcher) or a remote
+  settings backend pushes an update for this skill. See <a href="../skill-settings/#change-callback">Skill Settings: Change
+  Callback</a>.</li>
+<li><a href="https://github.com/OscillateLabsLLC/ovos-skill-config-tool"><code>ovos-skill-config-tool</code></a>
+  is the community web UI referenced above. It edits the same <code>settings.json</code> the skill
+  itself reads; it does not talk to the skill process directly. See <a href="../skill-settings/#web-based-settings-ui-community">Skill Settings:
+  Web-Based Settings UI</a> for
+  installation and default credentials.</li>
 </ul>
 <hr />
 <h2 id="learn-from-the-official-skills">Learn from the official skills<a class="headerlink" href="#learn-from-the-official-skills" title="Permanent link">&para;</a></h2>

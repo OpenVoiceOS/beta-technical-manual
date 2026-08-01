@@ -1037,6 +1037,48 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#stage-7-media-and-playback" class="md-nav__link">
+    <span class="md-ellipsis">
+      Stage 7: Media and playback
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Stage 7: Media and playback">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a-search-found-nothing" class="md-nav__link">
+    <span class="md-ellipsis">
+      (a) Search found nothing
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b-a-result-was-found-but-the-stream-never-starts" class="md-nav__link">
+    <span class="md-ellipsis">
+      (b) A result was found but the stream never starts
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#audio-plays-on-the-wrong-output-or-not-at-all" class="md-nav__link">
+    <span class="md-ellipsis">
+      &copy; Audio plays on the wrong output, or not at all
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#turning-up-log-detail" class="md-nav__link">
     <span class="md-ellipsis">
       Turning up log detail
@@ -1606,6 +1648,48 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#stage-7-media-and-playback" class="md-nav__link">
+    <span class="md-ellipsis">
+      Stage 7: Media and playback
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Stage 7: Media and playback">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a-search-found-nothing" class="md-nav__link">
+    <span class="md-ellipsis">
+      (a) Search found nothing
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b-a-result-was-found-but-the-stream-never-starts" class="md-nav__link">
+    <span class="md-ellipsis">
+      (b) A result was found but the stream never starts
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#audio-plays-on-the-wrong-output-or-not-at-all" class="md-nav__link">
+    <span class="md-ellipsis">
+      &copy; Audio plays on the wrong output, or not at all
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#turning-up-log-detail" class="md-nav__link">
     <span class="md-ellipsis">
       Turning up log detail
@@ -1680,8 +1764,10 @@ need no extra install. Then reach for <code>ovos-busmon</code> when you want eve
     S5 -- error --&gt; F5["read the traceback\nin skills.log"]
     S5 -- clean --&gt; S6{"Stage 6: TTS spoke?\novos.utterance.speak"}
     S6 -- no --&gt; F6["check TTS plugin / audio sink"]
-    S6 -- yes --&gt; Done["utterance handled correctly"]</code></pre>
-<p><em>Diagram:</em> The flow starts at Stage 1, checking whether the bus is reachable, and ends at "utterance handled correctly," and it branches at each of the six stages to a fix action whenever that stage's check fails.</p>
+    S6 -- yes --&gt; S7{"Stage 7: media played?\novos.common_play.query / .status"}
+    S7 -- no --&gt; F7["check OCP skills / stream extractor / audio sink"]
+    S7 -- yes --&gt; Done["utterance handled correctly"]</code></pre>
+<p><em>Diagram:</em> The flow starts at Stage 1, checking whether the bus is reachable, and ends at "utterance handled correctly," and it branches at each of the seven stages to a fix action whenever that stage's check fails. Stage 7 only applies to media/playback requests ("play some jazz"); a plain spoken answer ends at Stage 6.</p>
 <p>Each stage below cites the exact log line and bus message shown in this diagram, plus the
 command to check it directly.</p>
 <div class="admonition note">
@@ -2123,6 +2209,60 @@ If this command produces sound but a real skill interaction doesn't, the problem
 1-5), not in audio output.</p>
 <p>In <code>ovos-busmon</code>, filter by <code>ovos.utterance.speak</code>. Present with no sound points at the audio sink.
 Absent, with everything upstream present, points at a silent or failed skill handler (Stage 5).</p>
+<hr />
+<h2 id="stage-7-media-and-playback">Stage 7: Media and playback<a class="headerlink" href="#stage-7-media-and-playback" title="Permanent link">&para;</a></h2>
+<p><strong>Log:</strong> <code>audio.log</code> (service <code>ovos-audio</code>, or <code>ovos-media</code> if enabled). <strong>Bus filter:</strong>
+<code>ovos.common_play.query</code> / <code>ovos.common_play.query.response</code>, <code>ovos.common_play.status</code></p>
+<p>This stage only applies to media requests ("play some jazz", "next song"), not plain spoken
+answers. It starts once <a href="#stage-4-which-pipeline-stage-matched-or-didnt">Stage 4</a> has already
+matched the utterance to the <a href="../ocp-pipeline/">OCP pipeline</a> (<code>ovos-ocp-pipeline-plugin-high</code> /
+<code>-medium</code> / <code>-low</code>). If OCP never claims the utterance at all, that is a Stage 4 problem, not a
+Stage 7 one: check the pipeline miss log described there first.</p>
+<h3 id="a-search-found-nothing">(a) Search found nothing<a class="headerlink" href="#a-search-found-nothing" title="Permanent link">&para;</a></h3>
+<p>Once OCP classifies the utterance as a playback request, it emits <code>ovos.common_play.query</code> and
+collects <code>ovos.common_play.query.response</code> results from every installed <a href="../ocp-skills/">OCP-enabled media
+skill</a>. If no skill answers, or every answer is empty, OVOS reports it found
+nothing to play.</p>
+<p>Checks:</p>
+<ul>
+<li>Is an OCP-enabled media skill actually installed and loaded? Skills act purely as catalogs
+  here, so with none installed there is nothing to search. See <a href="../ocp-skills/">Media Skills
+  (OCP)</a>.</li>
+<li>Watch the query round-trip live in <a href="#watch-the-bus-while-you-speak-ovos-busmon"><code>ovos-busmon</code></a>:
+  filter by <code>ovos.common_play.query*</code> to confirm the query went out and see which skills (if any)
+  answered, and with what results.</li>
+<li>Reproduce it without speaking: <code>ovos-say-to "play some jazz"</code> (see <a href="#stage-3-did-stt-produce-text">Stage 3</a>),
+  then check <code>skills.log</code> for the matching skill's search handler.</li>
+</ul>
+<h3 id="b-a-result-was-found-but-the-stream-never-starts">(b) A result was found but the stream never starts<a class="headerlink" href="#b-a-result-was-found-but-the-stream-never-starts" title="Permanent link">&para;</a></h3>
+<p>A search result is only a candidate URI. Before OCP can play it, a <a href="../ocp-plugins/">stream
+extractor</a> has to resolve that URI to the real, directly-playable stream (this is
+what the <code>ovos-ocp-*-plugin</code> packages, e.g. <code>ovos-ocp-youtube-plugin</code> or
+<code>ovos-ocp-bandcamp-plugin</code>, do). If the matching extractor is missing, misconfigured, or the
+remote service it scrapes changes shape, extraction fails and playback never begins even though a
+result was found.</p>
+<p>Check <code>audio.log</code> (the <a href="../audio-service/">audio service</a>, which hosts the OCP audio plugin by
+default, or <code>ovos-media</code>'s own log if that daemon is enabled instead) for an extractor exception
+around the time of the request. See <a href="../ocp-plugins/">OCP Plugins Reference</a> for which extractor
+handles which source, and confirm the right one is installed for the kind of link the skill
+returned.</p>
+<h3 id="audio-plays-on-the-wrong-output-or-not-at-all">&copy; Audio plays on the wrong output, or not at all<a class="headerlink" href="#audio-plays-on-the-wrong-output-or-not-at-all" title="Permanent link">&para;</a></h3>
+<p>If a stream extracted fine but nothing (or the wrong device) makes sound, this is the same class
+of problem as Stage 6's audio sink failure, not a media-specific bug:</p>
+<ul>
+<li>Run the hardware and mixer checks in <a href="#prove-the-microphone-and-speaker-work">Prove the microphone and speaker
+  work</a> (<code>aplay -l</code>, <code>alsamixer</code>, <code>wpctl status</code> /
+  <code>pactl list short sinks</code>) to confirm the speaker is present, unmuted, and set as the default
+  sink.</li>
+<li>Check the OCP backend's audio configuration: the <code>preferred_audio_services</code> order it uses to
+  pick a lower-level backend (<code>mpv</code>, <code>vlc</code>, <code>simple</code>), described in <a href="../ocp-audio-plugin/#configuration">OCP Audio
+  Plugin</a>. A missing or misconfigured backend in that list can
+  leave OCP with nothing to hand the stream to.</li>
+</ul>
+<p>In <code>ovos-busmon</code>, filter by <code>ovos.common_play.status</code> to see the player's own state (playing,
+paused, stopped) regardless of whether sound is actually audible, useful for telling apart "OCP
+thinks it's playing" (an audio sink problem) from "OCP never started playing" (extractor or
+search problem, (a)/(b) above).</p>
 <hr />
 <h2 id="turning-up-log-detail">Turning up log detail<a class="headerlink" href="#turning-up-log-detail" title="Permanent link">&para;</a></h2>
 <p>By default every service logs at <code>INFO</code>. To see the <code>DEBUG</code> lines quoted throughout this page

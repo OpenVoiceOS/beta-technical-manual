@@ -1337,6 +1337,9 @@ configuration in the browser (port 9210), and <code>ovos-skill-config-tool</code
 individual skill settings (port 8000). Open <code>http://&lt;device-ip&gt;:9210</code> from any
 computer on your network. On other installs you can add them with pip. See
 <a href="../install-raspovos/">RaspOVOS</a> for details.</p>
+<p>To change one skill's own settings, not the global config, use the <a href="../skill-settings/#web-based-settings-ui-community">Web-Based
+Settings UI</a> instead. No
+terminal needed.</p>
 </div>
 <p>Before restarting, double-check the file still parses. A stray missing comma or bracket will
 stop it from loading. Because <code>mycroft.conf</code> allows <code>//</code> comments, plain <code>json.tool</code> will
@@ -1413,6 +1416,13 @@ walks through picking a voice that stays clear at a reduced rate.</p>
 global <code>lang</code> automatically. Want the <em>recommended</em> plugins/voices for that language instead
 of your current ones? Run <code>ovos-config autoconfigure -l de-DE --offline</code> afterwards. Full
 picture, supported-language table, and gaps to watch for: <a href="../lang-support/">Language Support</a>.</p>
+<div class="admonition tip">
+<p class="admonition-title">Switching language</p>
+<p><code>lang</code> sets the primary language. To also understand a second language without
+replacing the primary one, add it to <code>secondary_langs</code>. See <a href="../lang-selection/">Language
+Selection</a> for how OVOS picks a language per utterance from
+these two keys.</p>
+</div>
 <hr />
 <p><strong>Read next:</strong> <a href="../showcase/">Fun stuff to try</a>
 <strong>Related:</strong> <a href="../config/">Configuration Management</a> · <a href="../wake-word-plugins/">Wake Word Plugins</a> · <a href="../tts-plugins/">TTS Plugins</a> · <a href="../lang-support/">Language Support</a></p>
