@@ -79,20 +79,33 @@ The first non-`None` response wins.
 
 ### Available Personas
 
-`opm.plugin.persona` plugins ship a ready-made persona as a static dict (`chat_engine`,
-`system_prompt`, and optionally `toolboxes`), which `ovos-persona` loads directly instead of
-reading a hand-written JSON file:
+`opm.plugin.persona` plugins ship a ready-made persona as a static dict, which `ovos-persona`
+loads directly instead of reading a hand-written JSON file. The dict is the same shape as the
+JSON file: a `name`, a `solvers` list naming the plugins to try in order, and one config block
+per named plugin.
+
+```python
+LLAMA_DEMO = {
+    "name": "Remote LLama",
+    "solvers": ["ovos-chat-openai-plugin"],
+    "ovos-chat-openai-plugin": {
+        "api_url": "https://llama.smartgic.io/v1",
+        "key": "sk-xxxx",
+        "model": "llama3.1:8b"
+    }
+}
+```
+
+`Persona.__init__` reads `handlers`, falling back to `solvers`, and raises `ValueError` if it
+finds neither. There is no `chat_engine` key and no `system_prompt` key at this level — a
+persona that names one is not loadable.
 
 This manual only covers plugins backed by an OpenVoiceOS-org repository:
 
 | Persona ID | Backend | Package |
 |---|---|---|
-| `OpenAI` | `ovos-chat-openai-plugin` | `ovos-openai-plugin` |
-| `Wikipedia` | Wikipedia solver | `ovos-wikipedia-plugin` |
-| `DuckDuckGo` | DDG solver | `ovos-ddg-plugin` |
-| `Wolfram Alpha` | Wolfram solver | `ovos-wolfram-alpha-plugin` |
+| `Remote Llama` | `ovos-chat-openai-plugin` | `ovos-openai-plugin` |
 | `WikiHow` | WikiHow solver | `ovos-skill-wikihow` |
-| `Wordnet` | WordNet solver | `ovos-skill-wordnet` |
 
 ### Persona with session memory
 

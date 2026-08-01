@@ -58,13 +58,37 @@ class MathToolBox(ToolBox):
         ]
 ```
 
-A `ToolBox` plugin defines `__init__(self, config=None, bus=None)` and passes its own
-identity up to the base class: `super().__init__(toolbox_id="<entry-point-name>",
-config=config, bus=bus)`. The `config`/`bus` shape matches every other OPM plugin type.
-Loaders always construct a toolbox with exactly `cls(config=cfg, bus=bus)` and never pass
-`toolbox_id` themselves. An adapter that fronts several external servers with one class
-(the MCP and UTCP adapters, for example) simply exposes `toolbox_id` in its own signature
-and forwards it, so each instance keeps a distinct bus topic.
+The base class signature is `ToolBox.__init__(self, toolbox_id, config=None, bus=None)` —
+`toolbox_id` is required and positional. A plugin normally hides it, taking
+`__init__(self, config=None, bus=None)` and passing its own identity up, as above, so that
+callers do not have to know the name.
+
+!!! warning "Loaders do not agree on how to construct a toolbox — accept all three arguments"
+    The three loaders in the org each call this differently, and none of them matches the
+    others:
+
+    | Loader | Call |
+    |---|---|
+    | `ovos-persona-server` | `cls(toolbox_id=name)` |
+    | `ovos-PHAL-plugin-tools` | `cls(config=..., bus=self.bus)` |
+    | `ovos-agentic-loop` | `cls(config=..., bus=bus)` |
+
+    The toolboxes shipped today (DuckDuckGo, Wikipedia, Wolfram Alpha, Wordnet) take
+    `__init__(self, config=None)` and nothing else, so they raise `TypeError` under every one
+    of those calls. Each loader catches it and logs a warning, so the toolbox is silently
+    absent rather than failing loudly.
+
+    Until that settles, take all three and give each a default:
+
+    ```python
+    def __init__(self, toolbox_id="my-toolbox", config=None, bus=None):
+        super().__init__(toolbox_id=toolbox_id, config=config, bus=bus)
+    ```
+
+    A toolbox written this way loads under all three loaders. It also gets the per-instance id
+    that an adapter fronting several external servers (the MCP and UTCP adapters) needs to keep
+    one bus topic per instance — those two set `toolbox_id` as a class attribute instead, so
+    they cannot currently run as more than one instance.
 
 `ToolBox.__init__` calls `discover_tools()` immediately to populate `self.tools`, and `bind(bus)`
 registers the messagebus handlers described below. The full authoring guide with more
@@ -235,17 +259,17 @@ bus via `ovos.persona.tools.{toolbox_id}.call`.
 
 | Plugin ID | Tools | Package | API key |
 |---|---|---|---|
-| `ovos-wikipedia-tools` | `search_wikipedia`, `get_wikipedia_sections`, `get_wikipedia_page` | `ovos-wikipedia-plugin` | None, public Wikipedia REST API |
+| `ovos-wikipedia-tool` | `search_wikipedia`, `get_wikipedia_sections`, `get_wikipedia_page` | `ovos-wikipedia-plugin` | None, public Wikipedia REST API |
 | `ovos-ddg-tools` | `search_duckduckgo`, `get_duckduckgo_infobox` | `ovos-ddg-plugin` | None, DuckDuckGo Instant Answer API |
 | `ovos-wolfram-alpha-tools` | `compute`, `compute_full` | `ovos-wolfram-alpha-plugin` | Optional, free key at developer.wolframalpha.com; a demo key ships in the plugin |
-| `ovos-weather-tools` | `get_current_weather`, `get_daily_forecast`, `get_hourly_forecast` | `ovos-skill-weather` | None, Open-Meteo public API |
-| `ovos-datetime-tools` | `get_current_datetime`, `convert_timezone`, `get_timezone_for_location` | `ovos-skill-date-time` | None, stdlib + pytz |
-| `ovos-ip-tools` | `get_local_ip_addresses`, `get_public_ip` | `ovos-skill-ip` | None |
-| `ovos-iss-tools` | `get_iss_position`, `get_iss_crew` | `ovos-skill-iss-location` | Optional, geonames.org user for reverse geocoding |
-| `ovos-speedtest-tools` | `run_speedtest` | `ovos-skill-speedtest` | None, Speedtest.net |
-| `ovos-wallpapers-tools` | `search_wallpapers` | `ovos-skill-wallpapers` | None, wallhaven.cc public API |
-| `ovos-wikihow-tools` | `search_wikihow`, `get_wikihow_steps` | `ovos-skill-wikihow` | None, pywikihow scraper |
-| `ovos-wordnet-tools` | `lookup_word`, `define_word` | `ovos-skill-wordnet` | None, local NLTK corpus |
+| `ovos-wordnet-tool` | `lookup_word`, `define_word` | `ovos-wordnet-plugin` | None, local NLTK corpus |
+
+Note the two singular `-tool` IDs. They are the entry-point names the plugins actually
+register, not typos.
+
+Skills are a natural place for more of these — weather, date and time, the ISS tracker — but
+none of those skills registers an `opm.agents.toolbox` entry point yet. Only the four above
+exist in the OVOS org.
 
 The [agentic loop](agentic-loop.md) bundles its own toolboxes (`ovos-filesystem-tools`,
 `ovos-shell-tools`, `ovos-web-search-tools`, `ovos-clock-tools`, `ovos-skill-md-toolbox`).

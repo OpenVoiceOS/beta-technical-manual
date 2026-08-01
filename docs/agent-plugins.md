@@ -126,7 +126,7 @@ answer = engine.get_best_passage(evidence, "How tall is the Eiffel Tower?")
 
 ```
 
-Available implementations: `GGUFExtractiveQAEngine` ([GGUF plugin](gguf-plugin.md)).
+No implementation ships in the OVOS org today. The base class and entry-point group exist so a plugin can provide one — see [Building Agent Plugins](building-agent-plugins.md).
 
 ---
 
@@ -142,14 +142,13 @@ summary = engine.summarize(long_article_text)
 
 ```
 
-Implementations: `OpenAISummarizer`, `GGUFSummarizerEngine`.
+Implementations: `OpenAISummarizer`, and `GGUFSummarizer` from the [GGUF plugin](gguf-plugin.md) (entry point `ovos-summarizer-gguf-plugin`).
 
 ---
 
 ### Chat Summarizer: `opm.agents.summarizer.chat`
 
-Converts a structured `List[AgentMessage]` chat history into a concise narrative summary. Used
-internally by memory plugins (`GGUFContextManager`) to compress history
+Converts a structured `List[AgentMessage]` chat history into a concise narrative summary. A memory plugin can use one to compress history
 when it exceeds `max_history` turns, keeping the context window manageable.
 
 ```python
@@ -163,7 +162,7 @@ summary_text = engine.summarize(messages)
 
 ```
 
-Implementations: `GGUFChatSummarizerEngine`.
+No implementation ships in the OVOS org today. The base class and entry-point group exist so a plugin can provide one — see [Building Agent Plugins](building-agent-plugins.md).
 
 ---
 
@@ -180,7 +179,7 @@ print(engine.predict_entailment("It is sunny.", "You need an umbrella."))       
 
 ```
 
-Implementations: `GGUFNLIEngine`.
+No implementation ships in the OVOS org today. The base class and entry-point group exist so a plugin can provide one — see [Building Agent Plugins](building-agent-plugins.md).
 
 ---
 
@@ -198,7 +197,7 @@ print(engine.yes_or_no("Ready?", "what do you mean?"))                        # 
 
 Use this in skills when `ask_yesno()` receives uncertain phrasing like "I guess" or "maybe".
 
-Implementations: `GGUFYesNoEngine`.
+No implementation ships in the OVOS org today. The base class and entry-point group exist so a plugin can provide one — see [Building Agent Plugins](building-agent-plugins.md).
 
 ---
 
@@ -249,7 +248,7 @@ have `resolve()` apply previously registered context and learn new mappings from
 `context_ttl` (config key, default `120` s) controls how long a tracked context entry remains
 valid before it is pruned.
 
-Implementations: `GGUFCoreferenceEngine`.
+No implementation ships in the OVOS org today. The base class and entry-point group exist so a plugin can provide one — see [Building Agent Plugins](building-agent-plugins.md).
 
 ---
 
@@ -258,9 +257,9 @@ Implementations: `GGUFCoreferenceEngine`.
 **Base class:** `AgentContextManager`
 
 Manages per-session conversation history. The default implementation (`BasicShortTermMemory`
-from `ovos-persona`) stores history in RAM with `max_history` truncation. LLM-powered
-implementations (`GGUFContextManager`) also compress old history into a SYSTEM summary message
-when the history exceeds a configurable threshold.
+from `ovos-persona`) stores history in RAM with `max_history` truncation. An LLM-powered
+implementation can also compress old history into a SYSTEM summary message when the history
+exceeds a configurable threshold; the config below is the shape such a plugin reads.
 
 ```python
 from ovos_plugin_manager.templates.agents import AgentContextManager, AgentMessage
@@ -271,7 +270,7 @@ manager.update_history([user_msg, assistant_msg], session_id)
 
 ```
 
-Compression config (`GGUFContextManager`):
+Compression config:
 
 ```json
 {

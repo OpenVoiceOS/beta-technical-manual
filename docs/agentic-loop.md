@@ -82,7 +82,9 @@ Each is registered under `opm.agents.chat` via a thin `factory.py` subclass
 
 ## Configuration
 
-All loop engines accept the same config envelope:
+Loop engines share a config envelope, but the step budget is per loop: `max_iterations` is
+read by the ReAct and Reflexion loops only. Each of the others has its own budget key, listed
+with that loop below.
 
 ```json
 {
@@ -105,7 +107,7 @@ All loop engines accept the same config envelope:
 |-----|-------------|
 | `brain` | OPM entry point of the inner `ChatEngine` |
 | `toolboxes` | List of OPM `ToolBox` entry points to load |
-| `max_iterations` | Maximum reasoning steps before forced conclusion |
+| `max_iterations` | Maximum reasoning steps before forced conclusion. **ReAct and Reflexion only** — the other loops ignore it and read their own budget key |
 
 The `brain`'s own plugin config (here `ovos-chat-openai-plugin`) is nested *inside* the loop's own block (`ovos-react-loop`), not at the persona root: the loop engine loads it with `config.get(brain_id, {})` read from its own config, so the brain is a sub-plugin resolved in the loop's namespace rather than the persona's.
 

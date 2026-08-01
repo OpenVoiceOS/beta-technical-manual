@@ -46,15 +46,18 @@ flowchart TD
 
 ```bash
 pip install "ovos-stt-http-server[mcp]"
-ovos-stt-server --engine ovos-stt-plugin-whisper --port 9666 --mcp
+ovos-stt-server --engine ovos-stt-plugin-whisper --port 9666
 ```
 
 | Endpoint | Method | Description |
 |----------|--------|-------------|
 | `/utcp` | GET | UTCP manifest (always on, no extra package required) |
-| `/mcp` | Streamable HTTP | MCP server (requires `[mcp]` extra and `--mcp` flag) |
+| `/mcp` | Streamable HTTP | MCP server (mounted automatically when the `[mcp]` extra is installed) |
 
-UTCP tools exposed: `stt_status`, `stt_transcribe_v1`, `stt_transcribe_v2`.
+There is no `--mcp` flag — passing one aborts the process on an unrecognized argument. The
+server mounts `/mcp` when the extra's imports succeed, and skips it when they do not.
+
+UTCP tools exposed: `stt`, `lang_detect`, `status`.
 
 Claude Desktop config:
 
@@ -143,10 +146,14 @@ builds the A2A app, with an agent card at `/.well-known/agent.json` and support 
 blocking (`tasks/send`) and streaming (`tasks/sendSubscribe`) modes when the persona
 solver supports streaming.
 
-!!! note "A2A support exists in source but the CLI does not expose it yet"
-    The `ovos-persona-server` argparse only accepts `--persona`, `--host`, and `--port`.
-    There is no `--a2a-base-url` flag or other CLI option to start the A2A app.
-    `create_a2a_application()` is currently called only from the test suite.
+Start it with `--a2a-base-url`, which both enables the `/a2a` endpoint and sets the public
+base URL that goes into the agent card:
+
+```bash
+ovos-persona-server --persona my.json --a2a-base-url http://myhost:8337/a2a
+```
+
+The flag needs `a2a-sdk` installed. See [Persona Server](persona-server.md).
 
 ### OVOS as A2A Consumer
 

@@ -319,6 +319,11 @@ A memory backend is an `AgentContextManager`. There are two starting points:
 
 Register the class under the `opm.agents.memory` entry-point group in your package's `pyproject.toml`, then select it from a persona with `memory_module`.
 
+The active persona is carried on the session as `Session.persona_id` (OVOS-PERSONA-1 §3), the
+same field [Persona Pipeline](persona-pipeline.md) documents. There is no `active_persona`
+field and no `ovos.persona.set` message: the persona is switched through the pipeline's
+`persona:summon` / `persona:release` matches, or over the bus with `ovos.persona.query`.
+
 ---
 
 *Source code: [OpenVoiceOS/ovos-memory-plugins](https://github.com/OpenVoiceOS/ovos-memory-plugins).*
