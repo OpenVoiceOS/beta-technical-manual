@@ -1654,6 +1654,13 @@ entry-point group is defined in <code>ovos-plugin-manager</code>, and the design
 That in-process loading is not wired up in <code>ovos-media</code> yet, so writing an OCP skill
 remains the way to provide media today, and stays the simpler path for setups still on
 the legacy audio service.</p>
+<p>The split also changes what OCP <em>skills</em> are for. Once MediaProvider plugins own
+catalog search, an OCP skill is for the case where <strong>the skill itself is the playable
+media</strong>: a voice game (see <a href="https://github.com/OpenVoiceOS/ovos-skill-moon-game">ovos-skill-moon-game</a>),
+an ebook reader, any experience the player can start, pause, and resume like a track.
+If your skill is only a searchable catalog of external media (a station list, a
+podcast feed), plan to ship it as a MediaProvider plugin when that lands. If the
+skill is the thing being played, it stays an OCP skill.</p>
 </div>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>

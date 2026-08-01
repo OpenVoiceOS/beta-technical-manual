@@ -1736,8 +1736,10 @@ people who want fine-grained control (custom/headless setups). A few terms used 
 <h3 id="1-the-ovos-installer-recommended">1. <a href="../ovos-installer/">The <code>ovos-installer</code></a> (Recommended)<a class="headerlink" href="#1-the-ovos-installer-recommended" title="Permanent link">&para;</a></h3>
 <p>The easiest way for most users. A guided TUI (Text User Interface) script that handles dependencies, environment setup, and service configuration for you.</p>
 <h3 id="2-raspovos-pre-built-raspberry-pi-image">2. <a href="../install-raspovos/">raspOVOS</a>: pre-built Raspberry Pi image<a class="headerlink" href="#2-raspovos-pre-built-raspberry-pi-image" title="Permanent link">&para;</a></h3>
-<p>The flagship, actively maintained pre-built image for the Raspberry Pi. Flash it and
-boot straight into a working assistant. No manual install steps are required.</p>
+<p>A pre-built flash-and-boot image for the Raspberry Pi. The images are in a maintenance
+pause and a refreshed release is on the roadmap, so check the
+<a href="https://github.com/OpenVoiceOS/raspOVOS">raspOVOS repository</a> status before choosing
+this path. The installer above is the recommended route on the Pi.</p>
 <h3 id="3-manual-installation-advanced">3. Manual Installation (Advanced)<a class="headerlink" href="#3-manual-installation-advanced" title="Permanent link">&para;</a></h3>
 <p>Install individual components via <code>pip</code> or <code>uv</code>. Best for developers or custom integration (e.g., headless nodes, Docker containers).</p>
 <hr />
@@ -1810,11 +1812,12 @@ harden it.</p>
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Stable pins an older snapshot than Testing</p>
-<p>Formal codename releases have not landed yet. <code>constraints-stable.txt</code> still pins the
-versions from the last stable release (ovos-core <code>1.3.1</code> at that time), an older,
-unmaintained snapshot. <code>constraints-testing.txt</code> tracks newer versions (ovos-core <code>2.1.1</code>
-at the time of writing). Until the next codename release ships, use <strong>Testing</strong> as the
-recommended channel for most distros and users. This matches upstream guidance in
+<p>Formal codename releases have not landed yet. <code>constraints-stable.txt</code> pins the versions
+from the last stable release (ovos-core <code>1.3.1</code>), an older, unmaintained snapshot.
+<code>constraints-testing.txt</code> tracks newer versions. Check
+<a href="https://github.com/OpenVoiceOS/ovos-releases">the constraints files themselves</a> for the
+exact pins. Until the next codename release ships, use <strong>Testing</strong> as the recommended
+channel for most distros and users. This matches upstream guidance in
 <a href="https://github.com/OpenVoiceOS/ovos-releases">ovos-releases</a>.</p>
 </div>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>ovos-core<span class="o">[</span>mycroft<span class="o">]</span><span class="w"> </span>-c<span class="w"> </span>https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-stable.txt
@@ -1874,7 +1877,7 @@ turn these into supervised systemd services instead of foreground processes.</p>
 <li><a href="https://github.com/OpenVoiceOS/ovos-core"><code>ovos-core</code></a>: skill handling</li>
 <li><a href="https://github.com/OpenVoiceOS/ovos-audio"><code>ovos-audio</code></a>: text-to-speech (<a href="../tts-plugins/">TTS</a>), audio playback</li>
 <li><a href="https://github.com/OpenVoiceOS/ovos-dinkum-listener"><code>ovos-dinkum-listener</code></a>: wake word, voice activation</li>
-<li><a href="https://github.com/OpenVoiceOS/ovos-gui"><code>ovos-gui</code></a>: GUI integration (warning: the legacy <a href="../gui-service/">GUI</a> is deprecated and not usable right now. A replacement is in progress, so you can omit this on most setups)</li>
+<li><a href="https://github.com/OpenVoiceOS/ovos-gui"><code>ovos-gui</code></a>: GUI integration (warning: the legacy <a href="../gui-service/">GUI</a> is deprecated and not usable. A replacement is in progress, so you can omit this on most setups)</li>
 <li><a href="https://github.com/OpenVoiceOS/ovos-PHAL"><code>ovos-PHAL</code></a>: hardware abstraction layer</li>
 </ul>
 <p>Media playback (music, podcasts, video) is a separate concern from the components above.

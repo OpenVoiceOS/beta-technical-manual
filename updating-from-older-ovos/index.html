@@ -2402,8 +2402,8 @@ the specific repository that owns the symbol or config key, not just
 </ol>
 <p>Each repository publishes its own changelog and tag history on GitHub
 (<code>OpenVoiceOS/&lt;repo&gt;/releases</code> and <code>CHANGELOG.md</code> where present). When an
-entry below says "nearest release," it means the dossier this page is
-built from could not tie the change to an exact tag, so the closest
+entry below says "nearest release," it means the change could not be
+tied to an exact tag, so the closest
 release date after the commit is given instead.</p>
 <hr />
 <h2 id="big-ticket-migrations">Big-ticket migrations<a class="headerlink" href="#big-ticket-migrations" title="Permanent link">&para;</a></h2>
@@ -2932,8 +2932,8 @@ replacing the old ad-hoc file kludge, with a one-time auto-migration.</p>
 <ul>
 <li>Migration: rely on the <code>self.settings</code> API. Do not read/write the old
   non-XDG settings file path directly.</li>
-<li>Lifecycle: active before <code>3299173</code>. Unverified deprecation window (the
-  dossier records a one-time auto-migration, not a hard cutover date).
+<li>Lifecycle: active before <code>3299173</code>. Unverified deprecation window (only
+  a one-time auto-migration is recorded, not a hard cutover date).
   dropped <code>3299173734</code> (2022-02-02), (ovos-core <code>3299173</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/11" title="GitHub Issue: TigreGotico/ovos-technical-manual #11">#11</a>).</li>
 </ul>
 <h3 id="fallback-dispatcher-no-longer-bus-driven">Fallback dispatcher no longer bus-driven<a class="headerlink" href="#fallback-dispatcher-no-longer-bus-driven" title="Permanent link">&para;</a></h3>
@@ -3247,7 +3247,7 @@ is deprecated with a stated removal target of the next major version.</p>
 <li>Lifecycle: active before <code>53564ce</code>. Deprecated but functional from
   <code>53564ce</code> (2026-01-29), <code>opm.solver.*</code> entry points still discoverable.
   removal target is the current major version plus one: not yet shipped
-  as of this dossier's sweep (ovos-plugin-manager <code>53564ce</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/365" title="GitHub Issue: TigreGotico/ovos-technical-manual #365">#365</a>).
+  as of <code>53564ce</code> (ovos-plugin-manager, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/365" title="GitHub Issue: TigreGotico/ovos-technical-manual #365">#365</a>).
   <code>ovos-bus-client</code>'s parallel <code>opm.py</code> (<code>neon.plugin.solver</code>-based chat
   class) was already removed outright in <code>d526e99</code> (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/207" title="GitHub Issue: TigreGotico/ovos-technical-manual #207">#207</a>, 2026-05-18,
   <code>2.0.0</code>): migrate to <code>ovos-messagebus-chat-plugin</code>.</li>
@@ -3593,7 +3593,7 @@ out-of-the-box wire behavior is initially unchanged):</p>
 <li>Migration: for any deployment that explicitly sets
   <code>legacy_namespace: false</code>, subscribe to the <code>ovos.*</code> spec topics instead
   of the legacy ones. Default deployments are unaffected until that flag's
-  default flips (not yet flipped as of this dossier's sweep). Prefer
+  default flips (not yet flipped as of <code>f4c00d90b2</code>/<code>f9862a760e</code>). Prefer
   <code>ovos_spec_tools.SpecMessage.*</code> constants over hardcoded topic strings
   going forward, since their literal values are not always the same as
   the legacy strings they replace.</li>
@@ -3602,9 +3602,9 @@ out-of-the-box wire behavior is initially unchanged):</p>
   onward. Hard drop only confirmed for <code>ovos-bus-client</code>'s own bridge
   (<code>f1a481d</code>, 2026-08-01). <code>legacy_namespace</code> gating in <code>ovos-core</code>
   itself (<code>f4c00d90b2</code>/<code>f9862a760e</code>, "gate bus topics by
-  legacy_namespace") lives only on unmerged feature branches as of this
-  sweep, not on <code>dev</code>: the default has not flipped because the flag has
-  not shipped to a stable release yet.</li>
+  legacy_namespace") lives only on unmerged feature branches, not on
+  <code>dev</code>: the default has not flipped because the flag has not shipped to
+  a stable release yet.</li>
 </ul>
 <h3 id="session-1-spec-adoption-changes-session-wire-semantics">SESSION-1 spec adoption changes session wire semantics<a class="headerlink" href="#session-1-spec-adoption-changes-session-wire-semantics" title="Permanent link">&para;</a></h3>
 <p><code>SessionManager</code> was rebuilt on the <code>ovos-spec-tools</code> session registry
@@ -3679,8 +3679,8 @@ items below were pinned against that combined history and against the
 named sibling repositories directly. The one former policy question is
 settled by the project's current status:</p>
 <ul>
-<li><strong>ovos-media</strong>: it has never become production-recommended. As of this
-  page's last update, <code>ovos-media</code> is alpha and not officially released.
+<li><strong>ovos-media</strong>: it has never become production-recommended. <code>ovos-media</code>
+  is alpha and not officially released.
   <code>ovos-audio</code> remains the production audio service, and stock installs
   keep <code>enable_old_audioservice: true</code> (the default). See
   <a href="../ovos-media/">Media Service (ovos-media)</a> for its maturity status.</li>
