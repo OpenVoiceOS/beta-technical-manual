@@ -1627,8 +1627,8 @@ You can swap implementations without touching the rest:</p>
 <code>agent_protocol</code> in <code>server.json</code>).</p>
 <p><strong>3. Give a client its identity, then connect.</strong> On the <em>client</em> device, save the access key
 issued in step 1. This step makes everything else work:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>pip<span class="w"> </span>install<span class="w"> </span>hivemind-websocket-client
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>hivemind-client<span class="w"> </span>set-identity<span class="w">    </span><span class="c1"># stores the access key / host for this node</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>pip<span class="w"> </span>install<span class="w"> </span>hivemind-bus-client<span class="w">   </span><span class="c1"># repo name is hivemind-websocket-client</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>hivemind-client<span class="w"> </span>set-identity<span class="w">      </span><span class="c1"># stores the access key / host for this node</span>
 </span></code></pre></div>
 <p>After <code>set-identity</code>, clients (and the <a href="#using-hivemind-as-a-solver">solver</a> below) can connect
 without being handed connection details each time.</p>
@@ -1676,7 +1676,7 @@ key holding its config.</p>
 <p>For a step-by-step build of a server-plus-satellites deployment, see <a href="../satellites/">Satellites</a>.</p>
 <p>A server is only useful once something connects to it. On the client side:</p>
 <ul>
-<li><strong><a href="https://github.com/JarbasHiveMind/hivemind-websocket-client"><code>hivemind-websocket-client</code></a></strong>: the client library and the <code>hivemind-client</code> CLI (<code>set-identity</code>, send utterances, and more).</li>
+<li><strong><a href="https://github.com/JarbasHiveMind/hivemind-websocket-client"><code>hivemind-websocket-client</code></a></strong>: the client library and the <code>hivemind-client</code> CLI (<code>set-identity</code>, send utterances, and more). Installs as <code>hivemind-bus-client</code> — the repository and the distribution have different names.</li>
 <li><strong><a href="https://github.com/JarbasHiveMind/hivemind-mic-satellite"><code>hivemind-mic-satellite</code></a></strong>: a thin device that only does wake word and microphone capture. STT and TTS run server-side.</li>
 <li><strong><a href="https://github.com/JarbasHiveMind/hivemind-listener"><code>hivemind-listener</code></a></strong>: the server-side audio entry point that performs STT/TTS for audio satellites, with binary audio moving over the mesh.</li>
 </ul>
