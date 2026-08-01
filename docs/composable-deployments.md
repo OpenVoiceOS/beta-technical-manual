@@ -55,6 +55,8 @@ package makes the script available on `PATH`. Running it starts that one process
 
 ### Pointing services at a shared bus
 
+For a step-by-step build of a server-plus-satellites deployment, see [Satellites](satellites.md).
+
 Every process reads the `websocket` block from its own [configuration](config.md) to find the bus:
 
 ```jsonc
@@ -166,11 +168,9 @@ these packages and their upstream docs.
 ## Containers: one service per box
 
 [`ovos-docker`](https://github.com/OpenVoiceOS/ovos-docker) mirrors the same split at the
-container level. It ships one Dockerfile/image per service (`messagebus`, `core`, `listener`,
-`audio`, `phal`, `phal-admin`, `gui`, `gui-websocket`, `skills`), plus compose files that wire them
-together over a shared network. Because each image only installs the one service's package, they
-can be scheduled independently: scaled, restarted, or placed on different hosts, as long as
-`websocket.host` in each container's configuration resolves to the bus container.
+container level: one image per service, wired together with compose files. See
+[Running OVOS in Containers](docker-deployment.md) for the compose layout, audio device
+passthrough, and the networking rules those containers run under.
 
 The same idea shows up as standalone servers for individual speech components, packaged as their
 own containers/services rather than as OVOS services at all:
@@ -308,6 +308,8 @@ give you redundancy or failover. It gives you duplicate handling of every messag
 double-emitted lifecycle events (for example, two `ovos.intent.handler.start`/`.complete` pairs for
 one utterance), since both instances react to the same broadcast independently.
 
+For a step-by-step build, see [Satellites](satellites.md).
+
 There is no supported skill-level or bus-level workaround for this. Filtering handlers by
 `session_id` inside a skill does not make it safe to run two instances of a singleton
 service against the same bus. The duplication happens at the message-dispatch level, before
@@ -325,6 +327,8 @@ satellites talking to a single HiveMind server, not by running two copies of `ov
 talk to is on the same machine. Treat every default as loopback-only until you have explicitly
 verified the config for a given deployment. The services start and look healthy on separate
 hosts with the defaults untouched, but they simply cannot reach each other.
+
+For a step-by-step build, see [Satellites](satellites.md).
 
 ---
 **Read next:** [Configuration Overview](config.md) · [Concepts Overview](concepts-overview.md)

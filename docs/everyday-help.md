@@ -54,6 +54,10 @@ flowchart TD
   *"unmute microphone"* or use the physical mute switch or button, if your device has one.
 - **Move closer, or reduce background noise.** Wake-word detection is a local audio match. A TV,
   music, or a fan next to the microphone can make it too loud for the wake word to be heard.
+- **If it never hears you at all, check the microphone itself works.** See
+  [Prove the microphone and speaker work](troubleshooting.md#prove-the-microphone-and-speaker-work).
+  These are copy-paste terminal commands, not settings screens, but you don't need to understand
+  them. Just run each one and see if you get sound back.
 - **The wake word keeps missing or keeps false-triggering.** This is a sensitivity setting, not a
   hardware fault. See [Wake Word Plugins](wake-word-plugins.md#wake-word-configuration) for how to
   adjust `sensitivity` and `trigger_level` in `mycroft.conf`, and pick a less noise-prone wake word

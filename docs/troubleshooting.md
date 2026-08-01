@@ -220,10 +220,86 @@ once the bus is back.
 
 ---
 
+## Prove the microphone and speaker work
+
+Do these checks before you read wake-word or STT logs. They test the sound card itself, not
+OVOS, and they work on any Linux install (Raspberry Pi image or otherwise). If you're on
+raspOVOS, there is also a Pi-specific diagnostics script: see [RaspOVOS Troubleshooting →
+Audio Issues](raspovos-troubleshooting.md#audio-issues).
+
+### Does the OS see your microphone and speaker?
+
+Run this command:
+
+```bash
+arecord -l
+```
+
+It lists every capture device the kernel found. Look for your microphone's card. If the list is
+empty, the OS does not see the microphone. Fix the wiring, driver, or USB connection before you
+go further.
+
+List playback devices the same way:
+
+```bash
+aplay -l
+```
+
+If your speaker is missing from this list, OVOS cannot play audio, no matter how you configure
+the software.
+
+### Record and play back a test file
+
+Run this command:
+
+```bash
+arecord -d 5 test.wav && aplay test.wav
+```
+
+It records 5 seconds of audio, then plays the recording back. Speak during the recording. If
+you hear your own voice, the mic and speaker both work at the hardware level. If you hear
+silence or noise only, the problem is the microphone, its gain, or its wiring, not OVOS.
+
+### Check capture level and mute
+
+Run this command:
+
+```bash
+alsamixer
+```
+
+Press `F4` to switch to the capture view. Check the capture level is not near zero and not
+muted. An `MM` mark means muted; press `m` to toggle it. Press `Esc` to exit.
+
+You can also read and set levels without the interactive UI:
+
+```bash
+amixer
+```
+
+### PulseAudio or PipeWire?
+
+Most current Linux systems route audio through PipeWire. Some still use PulseAudio. Either one
+sits between the raw ALSA device and OVOS, and either can mute or misroute a device that ALSA
+itself sees fine.
+
+- **PipeWire:** run `wpctl status` to list sinks (speakers) and sources (microphones). The
+  default device is marked with `*`. Inspect one device with `wpctl inspect $ID`.
+- **PulseAudio:** run `pactl list short sources` for microphones, and `pactl list short sinks`
+  for speakers.
+
+If a device works at the ALSA level (the `arecord`/`aplay` checks above) but OVOS still can't
+use it, check here that it is not muted or set to the wrong default.
+
+---
+
 ## Stage 2: Did the mic/wake word fire?
 
 **Log:** `voice.log` (service `ovos-dinkum-listener`). **Bus filter:** `recognizer_loop:record_begin`
 / `record_end`, `ovos.listener.record.started` / `ovos.listener.record.ended`
+
+Before reading `voice.log`, confirm the hardware itself works: see [Prove the microphone and
+speaker work](#prove-the-microphone-and-speaker-work) above.
 
 A healthy wake-word trigger and recording cycle looks like this in `voice.log`:
 
@@ -239,7 +315,7 @@ Common failure signatures:
 
 | Symptom in `voice.log` | Likely cause |
 |---|---|
-| No `Record begin` line at all when you speak | Wake word plugin isn't hearing you: check the mic device/gain, or the [wake word](wake-word-plugins.md) model/sensitivity. |
+| No `Record begin` line at all when you speak | Wake word plugin isn't hearing you: check the [mic device/gain](#prove-the-microphone-and-speaker-work), or the [wake word](wake-word-plugins.md) model/sensitivity. |
 | `Record begin` fires but never followed by `Record end` | VAD never detects silence: check the [VAD plugin](vad-plugins.md) config. |
 | Repeated wake-word triggers with no speech after | False positives: the wake word threshold may be too low. |
 
@@ -521,4 +597,4 @@ sequence than with a description of the symptom alone.
 ---
 
 **Read next:** [The Life of an Utterance](life-of-an-utterance.md)
-**Related:** [Command-line Tools](cli-tools.md) · [Configuration](config.md) · [ovoscope Overview](ovoscope-overview.md) · [Bus Service](bus-service.md)
+**Related:** [Command-line Tools](cli-tools.md) · [Configuration](config.md) · [ovoscope Overview](ovoscope-overview.md) · [Bus Service](bus-service.md) · [RaspOVOS Troubleshooting](raspovos-troubleshooting.md)

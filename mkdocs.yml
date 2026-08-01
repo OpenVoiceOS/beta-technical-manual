@@ -253,6 +253,8 @@ nav:
       - Production Overview: production-overview.md
       - Privacy & Security: privacy-security.md
       - Production Operations: production-operations.md
+      - Satellites (one brain, many speakers): satellites.md
+      - Running OVOS in Containers: docker-deployment.md
       - Updating from Older OVOS:
           - Overview & Big-Ticket Migrations: updating-from-older-ovos.md
           - For Skill Maintainers: updating-skills.md
@@ -289,6 +291,7 @@ nav:
           - Mark 1: mark1.md
           - Mark 2: mark2.md
       - Contributing & Project Infra:
+          - Development Environment: dev-environment.md
           - Contributing: contributing.md
           - gh-automations Overview: gh-automations-overview.md
           - gh-automations Release: gh-automations-release.md

@@ -6,6 +6,10 @@
     laptop into a released package, where the code lives, how "does this actually follow the
     spec" gets checked, and where to ask if you get stuck.
 
+Fixing a bug in a core repo itself, rather than a skill or plugin? See
+[Development Environment](dev-environment.md) for cloning, an editable install, running the
+service you're changing, and reloading your changes while you work.
+
 ## How a change reaches a release
 
 Every OVOS repository publishes through the same shared pipeline, described in full on the

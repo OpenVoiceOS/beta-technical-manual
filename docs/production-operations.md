@@ -444,6 +444,8 @@ pinning the same wake word, STT/TTS servers, or `ready_settings` across an entir
 
 ## Thin clients + a shared speech backend
 
+For a step-by-step build of a server-plus-satellites deployment, see [Satellites](satellites.md).
+
 A common fleet topology is several low-power "thin" devices that only run the bus, listener
 and audio services, all pointed at one shared, more capable machine that does the actual
 speech-to-text and text-to-speech work over HTTP (see [STT server](stt-server.md) and

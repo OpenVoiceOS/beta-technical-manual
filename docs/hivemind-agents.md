@@ -153,6 +153,8 @@ key holding its config.
 
 ## Satellites & clients
 
+For a step-by-step build of a server-plus-satellites deployment, see [Satellites](satellites.md).
+
 A server is only useful once something connects to it. On the client side:
 
 - **[`hivemind-websocket-client`](https://github.com/JarbasHiveMind/hivemind-websocket-client)**: the client library and the `hivemind-client` CLI (`set-identity`, send utterances, and more).

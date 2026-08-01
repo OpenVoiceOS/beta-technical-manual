@@ -391,6 +391,11 @@ choosing a wake word that works well in various environments:
 
 ## Audio Issues
 
+> Generic sound-card checks live in [Troubleshooting → Prove the microphone and speaker
+> work](troubleshooting.md#prove-the-microphone-and-speaker-work): `arecord -l`/`aplay -l`,
+> the record/playback test, `alsamixer`/`amixer` levels, and PulseAudio vs PipeWire notes. Run
+> those first on any raspOVOS box too. The checks below are raspOVOS-specific.
+
 - **Run Diagnostics script:**
     - raspOVOS includes a helper script `ovos-audio-diagnostics` that will print basic info about your sound system
 
@@ -416,48 +421,6 @@ CARD NAME: snd_rpi_proto
 
 ```
 
-- **Check Input Devices:**
-    - Run `arecord -l` to list all detected audio capture devices (microphones).
-
-```text
-**** List of CAPTURE Hardware Devices ****
-card 2: sndrpiproto [snd_rpi_proto], device 0: WM8731 HiFi wm8731-hifi-0 [WM8731 HiFi wm8731-hifi-0]
-Subdevices: 0/1
-Subdevice #0: subdevice #0
-card 3: Device [USB Audio Device], device 0: USB Audio [USB Audio]
-Subdevices: 1/1
-Subdevice #0: subdevice #0
-
-```
-
-- **Check Output Devices:**
-    - Run `aplay -l` to list all detected audio playback devices (speakers). Verify your card is being detected
-      correctly
-  
-
-```text
-**** List of PLAYBACK Hardware Devices ****
-card 0: Headphones [bcm2835 Headphones], device 0: bcm2835 Headphones [bcm2835 Headphones]
-Subdevices: 7/8
-Subdevice #0: subdevice #0
-Subdevice #1: subdevice #1
-Subdevice #2: subdevice #2
-Subdevice #3: subdevice #3
-Subdevice #4: subdevice #4
-Subdevice #5: subdevice #5
-Subdevice #6: subdevice #6
-Subdevice #7: subdevice #7
-card 1: vc4hdmi [vc4-hdmi], device 0: MAI PCM i2s-hifi-0 [MAI PCM i2s-hifi-0]
-Subdevices: 1/1
-Subdevice #0: subdevice #0
-card 2: sndrpiproto [snd_rpi_proto], device 0: WM8731 HiFi wm8731-hifi-0 [WM8731 HiFi wm8731-hifi-0]
-Subdevices: 1/1
-Subdevice #0: subdevice #0
-
-```
-
-- **Verify Volume and Mute status:**
-    - Run `alsamixer` and verify that volume isn't too low or audio muted.
 - **Check audio setup logs:**
 - During boot the audio setup generates a log file, saved to the `/tmp` directory:
     - `/tmp/autosoundcard.log` (for soundcard autoconfiguration)
@@ -584,10 +547,6 @@ Fri 17 Jan 11:42:48 WET 2025 - ALSA default card set to: 3
        ...
 
     ```
-
-- **Test Audio:**
-    - Record a short test file with `arecord -f test.wav`.
-    - Play it back with `aplay test.wav`.
 
 ### Re-triggering auto-detection without a reboot
 

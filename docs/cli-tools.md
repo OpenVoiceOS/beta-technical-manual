@@ -67,7 +67,9 @@ See the full generated [`ovos-logs --help` output](#command-help-output-generate
 
 Each core OVOS service is normally started by your service manager (systemd, the
 [ovos-installer](ovos-installer.md), or Docker). Every one also has a console script, so you
-can launch it directly. This is useful for debugging or minimal/headless setups.
+can launch it directly. This is useful for debugging or minimal/headless setups. For running a
+service from an editable checkout of its own repo while fixing a bug in it, see
+[Development Environment](dev-environment.md).
 
 | Command | Service | Package |
 |---|---|---|
