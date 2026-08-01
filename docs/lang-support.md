@@ -67,6 +67,14 @@ interactions, may not work as expected.
 Adding a new language to OVOS touches four separate repositories. Work through them in this
 order:
 
+!!! tip "Step 1 needs no Python — the rest do"
+    Step 1 is translation: text files, through a web UI, no code and no git. Steps 2 to 4 are
+    developer work, and they are written for a developer.
+
+    You do not have to do all four. Translating the files in step 1 and opening an issue that
+    links your work is a complete contribution on its own. A developer can pick up the parser
+    and plugin steps from there.
+
 1. **Translate dialog and intent files.** Use [OVOS Localize](https://openvoiceos.github.io/ovos-localize/)
    to add and translate the skill-side `.dialog`/`.intent`/`.voc` files for the language. See
    [Contributing Translations](ovos-localize-tutorial.md) for the step-by-step guide.

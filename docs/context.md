@@ -42,9 +42,12 @@ The private/shared scoping rules are identical on both sides: a bare key gates p
 against the registering `skill_id`, and reading a shared key needs the explicit
 `{"key": "person", "scope": "shared"}` form.
 
-Context lives on the per-conversation [Session](session.md) (`Session.context`, an
-`IntentContextManager` from `ovos_bus_client.session`). It is **session-scoped**,
-not a single global store, so concurrent users and devices keep separate context.
+Context lives on the per-conversation [Session](session.md), in `Session.intent_context`. It
+is **session-scoped**, not a single global store, so concurrent users and devices keep
+separate context.
+
+`Session.context` still resolves, but it is a read-only projection over `intent_context` kept
+for older code, and touching it warns. Write to `intent_context`.
 
 ---
 

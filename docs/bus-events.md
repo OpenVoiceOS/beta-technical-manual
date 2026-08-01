@@ -116,8 +116,8 @@ Handled by every `OVOSSkill` instance. See [OVOSSkill API](ovos-skill.md#system-
 | Event | Meaning |
 |---|---|
 | `ovos.stop` (legacy: `mycroft.stop`) | Global stop broadcast: every skill subscribes and ceases activity for the inbound session (see below). Only this pair is translator-bridged |
-| `<skill_id>:stop` (legacy: `{skill_id}.stop`) | Skill-directed stop dispatch. **Dual-subscribed, not translator-bridged**: the skill base class listens on both forms itself (the per-skill `{skill_id}.*` shape can't be a static map key) |
-| `ovos.stop.ping` (legacy: `{skill_id}.stop.ping`) | Check whether this skill can stop. Also **dual-subscribed, not translator-bridged** (see the [Not bridged](#not-bridged-adopt-the-spec-directly) note) |
+| `{skill_id}.stop` | Skill-directed stop dispatch. Per-skill topics are **not** translator-bridged, because the `{skill_id}.*` shape cannot be a static map key, and the base class subscribes to this form only |
+| `{skill_id}.stop.ping` | Check whether this skill can stop. Same as above: this exact form, not bridged, no spec-namespaced alias |
 | `mycroft.skill.enable_intent` / `mycroft.skill.disable_intent` | Enable/disable one of the skill's intents |
 | `mycroft.skill.set_cross_context` / `mycroft.skill.remove_cross_context` | Manage cross-skill context |
 | `mycroft.skills.settings.changed` | Remote settings update: see [Skill Settings](skill-settings.md#change-callback) for the full change-notification flow |
@@ -128,13 +128,18 @@ Handled by every `OVOSSkill` instance. See [OVOSSkill API](ovos-skill.md#system-
 ### Stop pipeline
 
 `ovos.stop` and the per-skill stop handshake above are driven by the dedicated
-[Stop Pipeline](stop-pipeline.md#bus-events) plugin, not by a generic intent match:
+[Stop Pipeline](stop-pipeline.md#bus-events) plugin, not by a generic intent match.
+
+Only the two broadcast topics carry spec names here: `ovos.stop` (legacy `mycroft.stop`) and
+`ovos.stop.pong` (legacy `skill.stop.pong`) are the entries the migration map holds. The
+per-skill and match-type topics below have no `ovos.*` alias — subscribe to the exact names
+shown, and do not translate them by analogy:
 
 | Event | Direction | Meaning |
 |---|---|---|
-| `<pipeline_id>:global_stop` (legacy: `stop:global`) | in | Global-stop dispatch: its handler emits the `ovos.stop` broadcast (and `ovos.utterance.handled`) |
-| `<skill_id>:stop` (legacy: `stop:skill` → `{skill_id}.stop`) | out | Targeted stop dispatch to one skill |
-| `ovos.stop.ping` (legacy: `{skill_id}.stop.ping`) | out | Asks the active handlers whether they can stop |
+| `stop:global` | in | Global-stop dispatch: its handler emits the `ovos.stop` broadcast (and `ovos.utterance.handled`) |
+| `{skill_id}.stop` | out | Targeted stop dispatch to one skill, produced by a `stop:skill` match |
+| `{skill_id}.stop.ping` | out | Asks one skill whether it can stop |
 | `ovos.stop.pong` (legacy: `skill.stop.pong`) | in | Handler's `can_handle` reply |
 | `ovos.stop` (legacy: `mycroft.stop`) | out | Universal stop broadcast |
 
@@ -315,10 +320,16 @@ in the producer and consumer, not a topic swap:
   do not map 1:1 onto the single `ovos.intent.register.keyword` / `.register.template` /
   `ovos.entity.register` message (INTENT-4 §5), which inlines the vocab descriptors. This requires
   producers and consumers to adopt INTENT-4, not a rename.
-- **Per-skill stop.** The legacy `{skill_id}.stop` / `{skill_id}.stop.ping` handshake uses
-  runtime-assembled per-skill topics, which cannot be static map keys. STOP-1 replaces them with the
-  broadcast `ovos.stop` / `ovos.stop.ping` / `ovos.stop.pong`. The skill base class subscribes on
-  both forms rather than relying on the translator.
+- **Per-skill stop.** The `{skill_id}.stop` / `{skill_id}.stop.ping` handshake uses
+  runtime-assembled per-skill topics, which cannot be static map keys. STOP-1 defines the
+  broadcast forms `ovos.stop` / `ovos.stop.ping` / `ovos.stop.pong` to replace them, and the
+  migration map carries the two that have a legacy counterpart (`mycroft.stop` → `ovos.stop`,
+  `skill.stop.pong` → `ovos.stop.pong`).
+
+    Today the skill base class subscribes to the per-skill forms only — `{skill_id}.stop` and
+    `{skill_id}.stop.ping`, plus the bridged `mycroft.stop`. It does **not** subscribe to
+    `ovos.stop.ping`. A skill that adopts the broadcast ping alone stops answering the stop
+    handshake, so keep the per-skill subscriptions until the base class moves.
 
 ---
 **Read next:** [Command-line Tools](cli-tools.md)

@@ -140,17 +140,21 @@ When a pipeline plugin returns a match:
 
 5. Wrap the dispatch in the **handler-lifecycle trio**. The orchestrator emits `ovos.intent.handler.start`, then exactly one of `ovos.intent.handler.complete` / `ovos.intent.handler.error` (§8). The skill's intent handler runs between them.
 
-    !!! note "The trio is orchestrator-owned"
-        The handler, whether skill or plugin-bundled, emits nothing that the trio itself
-        tracks. Third-party handler code carries no obligation here (PIPELINE-1 §8). It is
-        free to emit its own messages (e.g. a skill calling `self.speak()` emits
-        `ovos.utterance.speak`). Those are simply not part of the trio's bookkeeping. The
-        wrapper around the invocation emits `start` before the call and exactly one of
-        `complete` (normal return) or `error` (exception) after it, each `forward`-derived
-        from the dispatch message so `context` and `session` are preserved. The payload is
-        `{skill_id, intent_name}`, plus `exception` on the `error` leg. A handler bounded by a
-        deployment-defined timeout that overruns produces an `error` leg carrying a timeout
-        `exception`. The dispatch is never re-emitted.
+    !!! note "The trio is orchestrator-owned, but the handler has to signal done"
+        The orchestrator emits `start` before the dispatch and exactly one of `complete`
+        (normal return) or `error` (exception) after it, each `forward`-derived from the
+        dispatch message so `context` and `session` are preserved. The payload is
+        `{skill_id, intent_name}`, plus `exception` on the `error` leg. The dispatch is never
+        re-emitted. A handler's own messages (a skill calling `self.speak()` emits
+        `ovos.utterance.speak`) are not part of the trio's bookkeeping.
+
+        What closes the trio, though, is the **framework done-signal**
+        `mycroft.skill.handler.complete` / `.error`. Dispatch is a bus emit, not a function
+        call, so there is no return for the orchestrator to observe. `OVOSSkill` emits the
+        done-signal for you. A handler that is not an `OVOSSkill` — a plugin-bundled handler,
+        a bridge, a satellite — must emit it itself. If it does not, the dispatch stays
+        in-flight until the backstop timer fires (`DEFAULT_HANDLER_TIMEOUT`, five minutes;
+        `intents.handler_timeout`) and every one of its turns ends as a timeout `error`.
 
 ## Threading and Failure Model
 

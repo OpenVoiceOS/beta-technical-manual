@@ -85,11 +85,14 @@ After new skills are loaded, the manager requests pipeline re-training:
 mycroft.skills.train  →  (pipeline plugins that need it train, e.g. padatious)
 ```
 
-The manager emits `mycroft.skills.train` and blocks up to 60 seconds via
-`bus.wait_for_response(..., "mycroft.skills.trained", timeout=60)`. It logs an
-error if training times out or reports an error. Pipeline plugins with a
-deferred training step reply on `mycroft.skills.trained`. Plugins without one
-never reply, and the call times out.
+The manager emits `mycroft.skills.train` and moves on. It is fire-and-forget: no reply
+topic is part of the spec, and the manager waits for nothing.
+
+Do not implement a `mycroft.skills.trained` reply. Nothing listens for one. An earlier
+version blocked on `wait_for_response(..., "mycroft.skills.trained", timeout=60)`, which
+stalled boot for a full minute on every install without a deferred-training engine, since
+no such engine was there to answer. A single responder could not speak for every loaded
+pipeline anyway.
 
 ## Settings File Watcher
 
@@ -108,12 +111,16 @@ ovos.skills.settings_changed  {skill_id: "..."}
 | `skillmanager.activate` | `activate_skill` |
 | `skillmanager.deactivate` | `deactivate_skill` |
 | `skillmanager.keep` | `deactivate_except` |
-| `mycroft.network.connected` | `handle_network_connected` |
-| `mycroft.internet.connected` | `handle_internet_connected` |
-| `mycroft.gui.available` | `handle_gui_connected` |
-| `mycroft.network.disconnected` | `handle_network_disconnected` |
-| `mycroft.internet.disconnected` | `handle_internet_disconnected` |
-| `mycroft.gui.unavailable` | `handle_gui_disconnected` |
+| `mycroft.network.connected` | `handle_network_connected` \* |
+| `mycroft.internet.connected` | `handle_internet_connected` \* |
+| `mycroft.gui.available` | `handle_gui_connected` \* |
+| `mycroft.network.disconnected` | `handle_network_disconnected` \* |
+| `mycroft.internet.disconnected` | `handle_internet_disconnected` \* |
+| `mycroft.gui.unavailable` | `handle_gui_disconnected` \* |
+
+\* The six connectivity events are subscribed **only** when deferred loading is on, which it
+is not by default. On a stock install nothing is listening on them, so emitting one changes
+nothing. The four `skillmanager.*` events above are always subscribed.
 
 ---
 **Read next:** [Intent Service](intent-service.md) · [Skill Installer](skill-installer.md)

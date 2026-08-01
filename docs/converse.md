@@ -20,10 +20,10 @@
         participant O as Orchestrator
         U->>P: new utterance
         P->>S: <skill_id>.converse.ping
-        S-->>P: <skill_id>.converse.pong
+        S-->>P: skill.converse.pong
         alt skill claims
             P->>O: Match(intent_name=converse)
-            O->>S: dispatch <skill_id>:converse
+            O->>S: dispatch match_type=converse:skill
         else no claim
             P->>O: fall through to intent pipeline
         end
@@ -31,11 +31,12 @@
 
     *Diagram:* The sequence starts with a new user utterance and ends with the orchestrator dispatching to the skill if it claims the turn, or falling through to the intent pipeline if not.
 
-!!! note "Upcoming — `stop` joins the reserved names"
-    An in-progress change ([ovos-core#802](https://github.com/OpenVoiceOS/ovos-core/pull/802))
-    formalizes `stop` as a third reserved `intent_name`, alongside `converse` and `response`,
-    with a separable legacy-compatibility bridge for existing consumers. See
-    [Intent Service](intent-service.md) for the pipeline-plugin side of this change.
+!!! note "`stop` is a reserved name too"
+    `stop` is a reserved `intent_name` alongside `converse` and `response`
+    ([ovos-core#802](https://github.com/OpenVoiceOS/ovos-core/pull/802), STOP-1 §4). A match
+    produced by the stop pipeline plugin suppresses the `session.active_handlers` push, the
+    same way a converse match does. See [Intent Service](intent-service.md) for the
+    pipeline-plugin side.
 
 **What / why (beginners):** `converse()` lets a skill keep listening after it has just spoken, without registering a new intent for every possible follow-up. Once your skill runs, it goes onto the **Active Skills List** for a few minutes. While it is there, every new utterance is offered to its `converse()` method before normal intent parsing. This is how you handle "yes / no / thanks / the red one" replies that only make sense right after your skill acted.
 
@@ -107,16 +108,22 @@ In this example:
 ## Active Skill List
 
 A Skill is considered active if it has been called in the last 5 minutes. This window is the
-`converse.response_timeout` config value (default `300` seconds) and can be changed in
+`skills.converse.timeout` config value (default `300` seconds) and can be changed in
 `mycroft.conf`:
 
 ```jsonc
 {
-  "converse": {
-    "response_timeout": 300
+  "skills": {
+    "converse": {
+      "timeout": 300
+    }
   }
 }
 ```
+
+Note the nesting. `ConverseService` reads its config from `Configuration()["skills"]["converse"]`,
+so a `converse` block at the top level of `mycroft.conf` is never read. Per-skill overrides go
+in the sibling `skill_timeouts` mapping.
 
 Skills are called in order of when they were last active. For example, if a user speaks the following commands:
 

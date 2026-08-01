@@ -60,8 +60,8 @@ Configure in `mycroft.conf`:
     `ologs | grep converse` (see [RaspOVOS Troubleshooting](raspovos-troubleshooting.md#how-to-debug-intent-matching), "How to
     debug intent matching")
     while talking to the device, and the non-whitelisted skill's `skill_id` simply never
-    shows up as a candidate. No `mycroft.skill.converse.request`/response pair for it appears
-    at all, and its `converse()` method is never invoked. If a skill you expect to converse is
+    shows up as a candidate. No `{skill_id}.converse.request` / `skill.converse.response`
+    pair for it appears at all, and its `converse()` method is never invoked. If a skill you expect to converse is
     silent, check `converse_mode` and `converse_whitelist` in your config before assuming the
     skill itself is broken.
 
