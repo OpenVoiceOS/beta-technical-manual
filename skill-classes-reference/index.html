@@ -1,0 +1,2169 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://tigregotico.github.io/ovos-technical-manual/skill-classes-reference/">
+      
+      
+        <link rel="prev" href="../skill-classes/">
+      
+      
+        <link rel="next" href="../decorators/">
+      
+      
+      <link rel="icon" href="https://github.com/OpenVoiceOS/ovos_assets/blob/master/Logo/ovos-logo-512.png?raw=true">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.31">
+    
+    
+      
+        <title>Skill Classes Reference - OpenVoiceOS Technical Manual</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.3cba04c6.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../css/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="grey" data-md-color-accent="red">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#skill-classes-reference" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="OpenVoiceOS Technical Manual" class="md-header__button md-logo" aria-label="OpenVoiceOS Technical Manual" data-md-component="logo">
+      
+  <img src="https://github.com/OpenVoiceOS/ovos_assets/blob/master/Logo/ovos-logo-512.png?raw=true" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            OpenVoiceOS Technical Manual
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Skill Classes Reference
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="grey" data-md-color-accent="red"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="grey" data-md-color-accent="red"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/TigreGotico/ovos-technical-manual" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    TigreGotico/ovos-technical-manual
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href=".." class="md-tabs__link">
+          
+  
+  Home
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../start-here/" class="md-tabs__link">
+          
+  
+  Get Started
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../concepts-overview/" class="md-tabs__link">
+          
+  
+  Concepts
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../pipelines-overview/" class="md-tabs__link">
+          
+  
+  Pipeline
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../lang-support/" class="md-tabs__link">
+          
+  
+  Language
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../skills-overview/" class="md-tabs__link">
+          
+  
+  Skills
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../plugins-index/" class="md-tabs__link">
+          
+  
+  Plugins
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../agents-overview/" class="md-tabs__link">
+          
+  
+  Agents
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../production-overview/" class="md-tabs__link">
+          
+  
+  Production
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../reference-overview/" class="md-tabs__link">
+          
+  
+  Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="OpenVoiceOS Technical Manual" class="md-nav__button md-logo" aria-label="OpenVoiceOS Technical Manual" data-md-component="logo">
+      
+  <img src="https://github.com/OpenVoiceOS/ovos_assets/blob/master/Logo/ovos-logo-512.png?raw=true" alt="logo">
+
+    </a>
+    OpenVoiceOS Technical Manual
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/TigreGotico/ovos-technical-manual" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    TigreGotico/ovos-technical-manual
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href=".." class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../start-here/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Get Started
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../concepts-overview/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Concepts
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../pipelines-overview/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Pipeline
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../lang-support/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Language
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Skills
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Skills
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../skills-overview/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Skill Development Overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../first-skill/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Tutorials
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../migrating-from-mycroft/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Guides
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../intents/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Logic & Intents
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_6_5" id="__nav_6_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Skill APIs
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6_5">
+            <span class="md-nav__icon md-icon"></span>
+            Skill APIs
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../workshop-overview/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ovos-workshop Overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ovos-skill/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    OVOSSkill API
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../skill-api/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Skill API (Inter-Skill RPC)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../skill-classes/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Skill Base Classes
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Skill Classes Reference
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Skill Classes Reference
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#conversationalskill" class="md-nav__link">
+    <span class="md-ellipsis">
+      ConversationalSkill
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#activeskill" class="md-nav__link">
+    <span class="md-ellipsis">
+      ActiveSkill
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fallbackskill" class="md-nav__link">
+    <span class="md-ellipsis">
+      FallbackSkill
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#commonquery-common_query-on-ovosskill" class="md-nav__link">
+    <span class="md-ellipsis">
+      CommonQuery: @common_query on OVOSSkill
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ovoscommonplaybackskill" class="md-nav__link">
+    <span class="md-ellipsis">
+      OVOSCommonPlaybackSkill
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ovosgameskill" class="md-nav__link">
+    <span class="md-ellipsis">
+      OVOSGameSkill
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conversationalgameskill" class="md-nav__link">
+    <span class="md-ellipsis">
+      ConversationalGameSkill
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#universalskill" class="md-nav__link">
+    <span class="md-ellipsis">
+      UniversalSkill
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#universalfallback" class="md-nav__link">
+    <span class="md-ellipsis">
+      UniversalFallback
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ovosabstractapplication" class="md-nav__link">
+    <span class="md-ellipsis">
+      OVOSAbstractApplication
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#skill-launcher" class="md-nav__link">
+    <span class="md-ellipsis">
+      Skill Launcher
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#decorators-quick-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      Decorators Quick Reference
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../decorators/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Decorators
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../decorators-advanced/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Advanced Decorators
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../skill-settings/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Skill Settings
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../skill-settings-meta/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Meta Settings
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../skill-filesystem/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Filesystem
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../resource-files/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Resource Files
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../skill-gui/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    GUI Support (legacy)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../skill-runtime-requirements/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Runtime Requirements (deprecated)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../testing-your-skill/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Testing Your Skill
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../skill-dev-faq/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Skill Dev F.A.Q.
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../fallbacks/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Advanced Skill Types
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ovoscope-overview/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Testing Reference (ovoscope)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../plugins-index/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Plugins
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../agents-overview/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Agents
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../production-overview/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Production
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../reference-overview/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Reference
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#conversationalskill" class="md-nav__link">
+    <span class="md-ellipsis">
+      ConversationalSkill
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#activeskill" class="md-nav__link">
+    <span class="md-ellipsis">
+      ActiveSkill
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fallbackskill" class="md-nav__link">
+    <span class="md-ellipsis">
+      FallbackSkill
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#commonquery-common_query-on-ovosskill" class="md-nav__link">
+    <span class="md-ellipsis">
+      CommonQuery: @common_query on OVOSSkill
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ovoscommonplaybackskill" class="md-nav__link">
+    <span class="md-ellipsis">
+      OVOSCommonPlaybackSkill
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ovosgameskill" class="md-nav__link">
+    <span class="md-ellipsis">
+      OVOSGameSkill
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conversationalgameskill" class="md-nav__link">
+    <span class="md-ellipsis">
+      ConversationalGameSkill
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#universalskill" class="md-nav__link">
+    <span class="md-ellipsis">
+      UniversalSkill
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#universalfallback" class="md-nav__link">
+    <span class="md-ellipsis">
+      UniversalFallback
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ovosabstractapplication" class="md-nav__link">
+    <span class="md-ellipsis">
+      OVOSAbstractApplication
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#skill-launcher" class="md-nav__link">
+    <span class="md-ellipsis">
+      Skill Launcher
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#decorators-quick-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      Decorators Quick Reference
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="skill-classes-reference">Skill Classes Reference<a class="headerlink" href="#skill-classes-reference" title="Permanent link">&para;</a></h1>
+<div class="admonition abstract">
+<p class="admonition-title">In a nutshell</p>
+<p>This page is the per-class reference for every specialized skill base class in
+<code>ovos-workshop</code> beyond the universal <code>OVOSSkill</code>: converse-aware skills, fallback
+skills, media/game skills, auto-translating skills, and standalone applications,
+plus the skill launcher and the decorator quick reference. For <code>OVOSSkill</code> itself
+and guidance on which class to pick, see <a href="../skill-classes/">Skill Classes</a>.</p>
+</div>
+<p><code>ovos-workshop</code> provides all base classes needed to write skills for OpenVoiceOS. Every skill ultimately inherits from <code>OVOSSkill</code>.</p>
+<p><strong>Package:</strong> <code>ovos-workshop</code> | <strong>Entry point group:</strong> <code>opm.skill</code></p>
+<hr />
+<h2 id="conversationalskill">ConversationalSkill<a class="headerlink" href="#conversationalskill" title="Permanent link">&para;</a></h2>
+<p><strong>Module:</strong> <code>ovos_workshop.skills.converse.ConversationalSkill</code></p>
+<p>Extends <code>OVOSSkill</code> with explicit converse support: <code>activate()</code>, <code>deactivate()</code>, and <code>@conversational_intent</code> decorated handlers. The skill registers itself in the active-skills list after handling an intent.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span> <span class="nn">ovos_workshop.skills.converse</span> <span class="kn">import</span> <span class="n">ConversationalSkill</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="k">class</span> <span class="nc">MySkill</span><span class="p">(</span><span class="n">ConversationalSkill</span><span class="p">):</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>    <span class="k">def</span> <span class="nf">converse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>        <span class="n">utterance</span> <span class="o">=</span> <span class="n">message</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;utterances&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>        <span class="k">if</span> <span class="s2">&quot;help&quot;</span> <span class="ow">in</span> <span class="n">utterance</span><span class="p">:</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">speak</span><span class="p">(</span><span class="s2">&quot;Here to help!&quot;</span><span class="p">)</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>            <span class="k">return</span> <span class="kc">True</span>   <span class="c1"># consumed</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>        <span class="k">return</span> <span class="kc">False</span>      <span class="c1"># pass to next handler</span>
+</span></code></pre></div>
+<p>Additional bus events registered:</p>
+<ul>
+<li>
+<p><code>{skill_id}.converse.ping</code>: capability advertisement</p>
+</li>
+<li>
+<p><code>{skill_id}.converse.request</code>: converse request from pipeline</p>
+</li>
+<li>
+<p><code>{skill_id}.activate</code> / <code>{skill_id}.deactivate</code></p>
+</li>
+</ul>
+<hr />
+<h2 id="activeskill">ActiveSkill<a class="headerlink" href="#activeskill" title="Permanent link">&para;</a></h2>
+<p><strong>Module:</strong> <code>ovos_workshop.skills.active.ActiveSkill</code></p>
+<p>Extends <code>ConversationalSkill</code>. Always present in the converse active-skills list. The skill never deactivates unless explicitly told to. Useful for always-on assistants or global command handlers.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">from</span> <span class="nn">ovos_workshop.skills.active</span> <span class="kn">import</span> <span class="n">ActiveSkill</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="k">class</span> <span class="nc">AlwaysListeningSkill</span><span class="p">(</span><span class="n">ActiveSkill</span><span class="p">):</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>    <span class="k">def</span> <span class="nf">converse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>        <span class="n">utterance</span> <span class="o">=</span> <span class="n">message</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;utterances&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>        <span class="c1"># handle every utterance</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>        <span class="k">return</span> <span class="kc">False</span>  <span class="c1"># let other skills also process</span>
+</span></code></pre></div>
+<hr />
+<h2 id="fallbackskill">FallbackSkill<a class="headerlink" href="#fallbackskill" title="Permanent link">&para;</a></h2>
+<p><strong>Module:</strong> <code>ovos_workshop.skills.fallback.FallbackSkill</code></p>
+<p>Handles utterances that matched no intent. Must implement <code>can_answer()</code> and provide at least one <code>@fallback_handler</code>.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">from</span> <span class="nn">ovos_workshop.skills.fallback</span> <span class="kn">import</span> <span class="n">FallbackSkill</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="kn">from</span> <span class="nn">ovos_workshop.decorators</span> <span class="kn">import</span> <span class="n">fallback_handler</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="k">class</span> <span class="nc">MyFallback</span><span class="p">(</span><span class="n">FallbackSkill</span><span class="p">):</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>    <span class="k">def</span> <span class="nf">can_answer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="n">Message</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>        <span class="c1"># utterances are read from the message internally</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>        <span class="k">return</span> <span class="kc">True</span>   <span class="c1"># always willing to try</span>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>    <span class="nd">@fallback_handler</span><span class="p">(</span><span class="n">priority</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>    <span class="k">def</span> <span class="nf">handle_fallback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">speak</span><span class="p">(</span><span class="s2">&quot;I don&#39;t know, but I tried.&quot;</span><span class="p">)</span>
+</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>        <span class="k">return</span> <span class="kc">True</span>   <span class="c1"># consumed: stop checking other fallbacks</span>
+</span></code></pre></div>
+<p>Priority determines which internal pipeline stage checks the fallback first (lower runs
+earlier). These are the dispatch stage boundaries, verified in <code>FallbackService</code>
+(<code>ovos_core/intent_services/fallback_service.py</code>). This is a separate fact from <em>which</em> priority
+you should actually pick for a handler, covered in <a href="../fallbacks/#order-of-precedence">Fallback Skill</a>:</p>
+<table>
+<thead>
+<tr>
+<th>Range (exclusive start, inclusive stop)</th>
+<th>Pipeline stage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0–5</td>
+<td><code>fallback_high</code></td>
+</tr>
+<tr>
+<td>5–90</td>
+<td><code>fallback_medium</code></td>
+</tr>
+<tr>
+<td>90–101</td>
+<td><code>fallback_low</code></td>
+</tr>
+</tbody>
+</table>
+<p>A priority of exactly <code>5</code> lands in <code>fallback_high</code>, and exactly <code>90</code> lands in <code>fallback_medium</code>,
+since the stage boundary itself is included in the lower stage.</p>
+<p>Priority can be overridden in config:</p>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="p">{</span><span class="nt">&quot;skills&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;fallbacks&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;fallback_priorities&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;my-skill-id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">}}}}</span>
+</span></code></pre></div>
+<hr />
+<h2 id="commonquery-common_query-on-ovosskill">CommonQuery: <code>@common_query</code> on <code>OVOSSkill</code><a class="headerlink" href="#commonquery-common_query-on-ovosskill" title="Permanent link">&para;</a></h2>
+<p>There is no dedicated <code>CommonQuerySkill</code> base class. Decorate a method on a
+regular <code>OVOSSkill</code> with <code>@common_query()</code> to join the <code>question:query</code> /
+<code>ovos-common-query-pipeline-plugin</code> pipeline. The handler answers a natural language question and returns
+a confidence score. The pipeline collects responses from all skills and speaks
+the highest-confidence answer.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kn">from</span> <span class="nn">ovos_workshop.skills.ovos</span> <span class="kn">import</span> <span class="n">OVOSSkill</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="kn">from</span> <span class="nn">ovos_workshop.decorators</span> <span class="kn">import</span> <span class="n">common_query</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="k">class</span> <span class="nc">MyQuerySkill</span><span class="p">(</span><span class="n">OVOSSkill</span><span class="p">):</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>    <span class="nd">@common_query</span><span class="p">()</span>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>    <span class="k">def</span> <span class="nf">handle_query</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">phrase</span><span class="p">,</span> <span class="n">lang</span><span class="p">):</span>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>        <span class="k">if</span> <span class="s2">&quot;capital of france&quot;</span> <span class="ow">in</span> <span class="n">phrase</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>            <span class="k">return</span> <span class="s2">&quot;Paris&quot;</span><span class="p">,</span> <span class="mf">0.9</span>   <span class="c1"># (answer, confidence)</span>
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>        <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="mi">0</span>
+</span></code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Under the hood</p>
+<p>On startup <code>OVOSSkill</code> scans for a method tagged by <code>@common_query</code>
+(in <code>ovos_workshop/skills/ovos.py</code>) and wires up the CommonQuery ping/answer bus handlers
+automatically. Only one such handler per skill is supported.</p>
+</div>
+<hr />
+<h2 id="ovoscommonplaybackskill">OVOSCommonPlaybackSkill<a class="headerlink" href="#ovoscommonplaybackskill" title="Permanent link">&para;</a></h2>
+<p><strong>Module:</strong> <code>ovos_workshop.skills.common_play.OVOSCommonPlaybackSkill</code></p>
+<p>Integrates with OCP (OpenVoiceOS <a href="../ocp-pipeline/">Common Play</a>) for media playback. Uses <code>@ocp_search</code>, <code>@ocp_play</code>, and related decorators to respond to play requests and appear in the OCP media browser.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kn">from</span> <span class="nn">ovos_workshop.skills.common_play</span> <span class="kn">import</span> <span class="n">OVOSCommonPlaybackSkill</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="kn">from</span> <span class="nn">ovos_workshop.decorators.ocp</span> <span class="kn">import</span> <span class="n">ocp_search</span><span class="p">,</span> <span class="n">ocp_featured_media</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="kn">from</span> <span class="nn">ovos_utils.ocp</span> <span class="kn">import</span> <span class="n">MediaType</span><span class="p">,</span> <span class="n">PlaybackType</span><span class="p">,</span> <span class="n">MediaEntry</span><span class="p">,</span> <span class="n">Playlist</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="k">class</span> <span class="nc">MyMusicSkill</span><span class="p">(</span><span class="n">OVOSCommonPlaybackSkill</span><span class="p">):</span>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>    <span class="nd">@ocp_search</span><span class="p">()</span>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>    <span class="k">def</span> <span class="nf">search_music</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">phrase</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">media_type</span><span class="p">:</span> <span class="n">MediaType</span><span class="p">):</span>
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>        <span class="k">if</span> <span class="n">media_type</span> <span class="o">==</span> <span class="n">MediaType</span><span class="o">.</span><span class="n">MUSIC</span><span class="p">:</span>
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>            <span class="k">yield</span> <span class="n">MediaEntry</span><span class="p">(</span>
+</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>                <span class="n">title</span><span class="o">=</span><span class="s2">&quot;My Song&quot;</span><span class="p">,</span>
+</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>                <span class="n">uri</span><span class="o">=</span><span class="s2">&quot;https://example.com/song.mp3&quot;</span><span class="p">,</span>
+</span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>                <span class="n">playback</span><span class="o">=</span><span class="n">PlaybackType</span><span class="o">.</span><span class="n">AUDIO</span><span class="p">,</span>
+</span><span id="__span-5-13"><a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>                <span class="n">media_type</span><span class="o">=</span><span class="n">MediaType</span><span class="o">.</span><span class="n">MUSIC</span><span class="p">,</span>
+</span><span id="__span-5-14"><a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a>                <span class="n">match_confidence</span><span class="o">=</span><span class="mi">80</span><span class="p">,</span>
+</span><span id="__span-5-15"><a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a>            <span class="p">)</span>
+</span><span id="__span-5-16"><a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a>
+</span><span id="__span-5-17"><a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a>    <span class="nd">@ocp_featured_media</span><span class="p">()</span>
+</span><span id="__span-5-18"><a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a>    <span class="k">def</span> <span class="nf">featured</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Playlist</span><span class="p">:</span>
+</span><span id="__span-5-19"><a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a>        <span class="n">pl</span> <span class="o">=</span> <span class="n">Playlist</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;My Playlist&quot;</span><span class="p">,</span> <span class="n">playback</span><span class="o">=</span><span class="n">PlaybackType</span><span class="o">.</span><span class="n">AUDIO</span><span class="p">,</span>
+</span><span id="__span-5-20"><a id="__codelineno-5-20" name="__codelineno-5-20" href="#__codelineno-5-20"></a>                      <span class="n">media_type</span><span class="o">=</span><span class="n">MediaType</span><span class="o">.</span><span class="n">MUSIC</span><span class="p">,</span> <span class="n">match_confidence</span><span class="o">=</span><span class="mi">90</span><span class="p">)</span>
+</span><span id="__span-5-21"><a id="__codelineno-5-21" name="__codelineno-5-21" href="#__codelineno-5-21"></a>        <span class="n">pl</span><span class="o">.</span><span class="n">add_entry</span><span class="p">(</span><span class="n">MediaEntry</span><span class="p">(</span><span class="n">uri</span><span class="o">=</span><span class="s2">&quot;https://example.com/song.mp3&quot;</span><span class="p">,</span>
+</span><span id="__span-5-22"><a id="__codelineno-5-22" name="__codelineno-5-22" href="#__codelineno-5-22"></a>                                <span class="n">title</span><span class="o">=</span><span class="s2">&quot;My Song&quot;</span><span class="p">,</span>
+</span><span id="__span-5-23"><a id="__codelineno-5-23" name="__codelineno-5-23" href="#__codelineno-5-23"></a>                                <span class="n">playback</span><span class="o">=</span><span class="n">PlaybackType</span><span class="o">.</span><span class="n">AUDIO</span><span class="p">,</span>
+</span><span id="__span-5-24"><a id="__codelineno-5-24" name="__codelineno-5-24" href="#__codelineno-5-24"></a>                                <span class="n">media_type</span><span class="o">=</span><span class="n">MediaType</span><span class="o">.</span><span class="n">MUSIC</span><span class="p">,</span>
+</span><span id="__span-5-25"><a id="__codelineno-5-25" name="__codelineno-5-25" href="#__codelineno-5-25"></a>                                <span class="n">match_confidence</span><span class="o">=</span><span class="mi">90</span><span class="p">))</span>
+</span><span id="__span-5-26"><a id="__codelineno-5-26" name="__codelineno-5-26" href="#__codelineno-5-26"></a>        <span class="k">return</span> <span class="n">pl</span>
+</span></code></pre></div>
+<hr />
+<h2 id="ovosgameskill">OVOSGameSkill<a class="headerlink" href="#ovosgameskill" title="Permanent link">&para;</a></h2>
+<p><strong>Module:</strong> <code>ovos_workshop.skills.game_skill.OVOSGameSkill</code>
+<strong>Source:</strong> <code>ovos_workshop/skills/game_skill.py</code></p>
+<p>Extends <code>OVOSCommonPlaybackSkill</code>. Structured base for OCP-integrated voice games. Subclasses must implement all six abstract methods: <code>on_play_game</code>, <code>on_pause_game</code>, <code>on_resume_game</code>, <code>on_stop_game</code>, <code>on_save_game</code>, <code>on_load_game</code>.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kn">from</span> <span class="nn">ovos_workshop.skills.game_skill</span> <span class="kn">import</span> <span class="n">OVOSGameSkill</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="k">class</span> <span class="nc">TriviaGameSkill</span><span class="p">(</span><span class="n">OVOSGameSkill</span><span class="p">):</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">skill_voc_filename</span><span class="o">=</span><span class="s2">&quot;trivia_game&quot;</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>    <span class="k">def</span> <span class="nf">on_play_game</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">speak</span><span class="p">(</span><span class="s2">&quot;Starting trivia!&quot;</span><span class="p">)</span>
+</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>
+</span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a>    <span class="k">def</span> <span class="nf">on_pause_game</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_paused</span><span class="o">.</span><span class="n">set</span><span class="p">()</span>
+</span><span id="__span-6-12"><a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a>
+</span><span id="__span-6-13"><a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a>    <span class="k">def</span> <span class="nf">on_resume_game</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="__span-6-14"><a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_paused</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+</span><span id="__span-6-15"><a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a>
+</span><span id="__span-6-16"><a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a>    <span class="k">def</span> <span class="nf">on_stop_game</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="__span-6-17"><a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">speak</span><span class="p">(</span><span class="s2">&quot;Game over.&quot;</span><span class="p">)</span>
+</span><span id="__span-6-18"><a id="__codelineno-6-18" name="__codelineno-6-18" href="#__codelineno-6-18"></a>
+</span><span id="__span-6-19"><a id="__codelineno-6-19" name="__codelineno-6-19" href="#__codelineno-6-19"></a>    <span class="k">def</span> <span class="nf">on_save_game</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="__span-6-20"><a id="__codelineno-6-20" name="__codelineno-6-20" href="#__codelineno-6-20"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">speak</span><span class="p">(</span><span class="s2">&quot;Save is not supported.&quot;</span><span class="p">)</span>
+</span><span id="__span-6-21"><a id="__codelineno-6-21" name="__codelineno-6-21" href="#__codelineno-6-21"></a>
+</span><span id="__span-6-22"><a id="__codelineno-6-22" name="__codelineno-6-22" href="#__codelineno-6-22"></a>    <span class="k">def</span> <span class="nf">on_load_game</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="__span-6-23"><a id="__codelineno-6-23" name="__codelineno-6-23" href="#__codelineno-6-23"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">speak</span><span class="p">(</span><span class="s2">&quot;Load is not supported.&quot;</span><span class="p">)</span>
+</span></code></pre></div>
+<hr />
+<h2 id="conversationalgameskill">ConversationalGameSkill<a class="headerlink" href="#conversationalgameskill" title="Permanent link">&para;</a></h2>
+<p><strong>Module:</strong> <code>ovos_workshop.skills.game_skill.ConversationalGameSkill</code>
+<strong>Source:</strong> <code>ovos_workshop/skills/game_skill.py</code></p>
+<p>Extends <code>OVOSGameSkill</code>. Adds a <strong>converse loop</strong>: every utterance that does not match a registered intent is piped to <code>on_game_command()</code> while the game is playing. Also adds auto-save support, default pause/resume dialogs, and <code>on_abandon_game()</code>.</p>
+<p>Remaining abstract methods (you must implement these): <code>on_play_game</code>, <code>on_stop_game</code>,
+<code>on_game_command</code>. <code>on_save_game</code> and <code>on_load_game</code> get a default implementation that just
+speaks a "can't save/load" dialog. Override them if your game supports saving. <code>on_pause_game</code>,
+<code>on_resume_game</code>, and <code>on_abandon_game</code> also get working default implementations (pause/resume
+dialogs gated by the <code>pause_dialog</code> setting, and a no-op abandon hook) that you can leave alone or
+override.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kn">from</span> <span class="nn">ovos_workshop.skills.game_skill</span> <span class="kn">import</span> <span class="n">ConversationalGameSkill</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="k">class</span> <span class="nc">AdventureSkill</span><span class="p">(</span><span class="n">ConversationalGameSkill</span><span class="p">):</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">skill_voc_filename</span><span class="o">=</span><span class="s2">&quot;adventure_game&quot;</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>    <span class="k">def</span> <span class="nf">on_play_game</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">speak</span><span class="p">(</span><span class="s2">&quot;You enter a dark room. What do you do?&quot;</span><span class="p">)</span>
+</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>
+</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>    <span class="k">def</span> <span class="nf">on_stop_game</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">speak</span><span class="p">(</span><span class="s2">&quot;Adventure ends.&quot;</span><span class="p">)</span>
+</span><span id="__span-7-12"><a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a>
+</span><span id="__span-7-13"><a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a>    <span class="k">def</span> <span class="nf">on_game_command</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">utterance</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">lang</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+</span><span id="__span-7-14"><a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a>        <span class="k">if</span> <span class="s2">&quot;north&quot;</span> <span class="ow">in</span> <span class="n">utterance</span><span class="p">:</span>
+</span><span id="__span-7-15"><a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">speak</span><span class="p">(</span><span class="s2">&quot;You walk north.&quot;</span><span class="p">)</span>
+</span><span id="__span-7-16"><a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a>        <span class="k">else</span><span class="p">:</span>
+</span><span id="__span-7-17"><a id="__codelineno-7-17" name="__codelineno-7-17" href="#__codelineno-7-17"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">speak</span><span class="p">(</span><span class="s2">&quot;I don&#39;t understand that command.&quot;</span><span class="p">)</span>
+</span></code></pre></div>
+<hr />
+<h2 id="universalskill">UniversalSkill<a class="headerlink" href="#universalskill" title="Permanent link">&para;</a></h2>
+<p><strong>Module:</strong> <code>ovos_workshop.skills.auto_translatable.UniversalSkill</code>
+<strong>Source:</strong> <code>ovos_workshop/skills/auto_translatable.py</code></p>
+<p>Extends <code>OVOSSkill</code>. Automatically translates incoming utterances to <code>self.internal_language</code> before the intent handler runs, and translates <code>self.speak()</code> output back to the user's language. Requires a translator plugin to be configured.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="kn">from</span> <span class="nn">ovos_workshop.skills.auto_translatable</span> <span class="kn">import</span> <span class="n">UniversalSkill</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="kn">from</span> <span class="nn">ovos_workshop.decorators</span> <span class="kn">import</span> <span class="n">intent_handler</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="k">class</span> <span class="nc">MySkill</span><span class="p">(</span><span class="n">UniversalSkill</span><span class="p">):</span>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>        <span class="c1"># All handlers receive utterances in English regardless of user&#39;s language.</span>
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">internal_language</span><span class="o">=</span><span class="s2">&quot;en-US&quot;</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>
+</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a>    <span class="nd">@intent_handler</span><span class="p">(</span><span class="s2">&quot;ask_weather.intent&quot;</span><span class="p">)</span>
+</span><span id="__span-8-10"><a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a>    <span class="k">def</span> <span class="nf">handle_weather</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+</span><span id="__span-8-11"><a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a>        <span class="c1"># Utterance is already in en-US here.</span>
+</span><span id="__span-8-12"><a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">speak</span><span class="p">(</span><span class="s2">&quot;The weather is sunny.&quot;</span><span class="p">)</span>  <span class="c1"># auto-translated back to user&#39;s lang</span>
+</span></code></pre></div>
+<hr />
+<h2 id="universalfallback">UniversalFallback<a class="headerlink" href="#universalfallback" title="Permanent link">&para;</a></h2>
+<p><strong>Module:</strong> <code>ovos_workshop.skills.auto_translatable.UniversalFallback</code>
+<strong>Source:</strong> <code>ovos_workshop/skills/auto_translatable.py</code></p>
+<p>Combines <code>UniversalSkill</code> and <code>FallbackSkill</code>. <a href="../fallback-pipeline/">Fallback</a> handlers receive utterances in <code>self.internal_language</code>. <code>self.speak()</code> translates output back to the user's language.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="kn">from</span> <span class="nn">ovos_workshop.skills.auto_translatable</span> <span class="kn">import</span> <span class="n">UniversalFallback</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="kn">from</span> <span class="nn">ovos_workshop.decorators</span> <span class="kn">import</span> <span class="n">fallback_handler</span>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="k">class</span> <span class="nc">MyUniversalFallback</span><span class="p">(</span><span class="n">UniversalFallback</span><span class="p">):</span>
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">internal_language</span><span class="o">=</span><span class="s2">&quot;en-US&quot;</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>
+</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>    <span class="nd">@fallback_handler</span><span class="p">(</span><span class="n">priority</span><span class="o">=</span><span class="mi">75</span><span class="p">)</span>
+</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>    <span class="k">def</span> <span class="nf">handle_unknown</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+</span><span id="__span-9-10"><a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a>        <span class="n">utterance</span> <span class="o">=</span> <span class="n">message</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;utterances&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+</span><span id="__span-9-11"><a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">speak</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;I heard: </span><span class="si">{</span><span class="n">utterance</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="__span-9-12"><a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a>        <span class="k">return</span> <span class="kc">True</span>
+</span></code></pre></div>
+<hr />
+<h2 id="ovosabstractapplication">OVOSAbstractApplication<a class="headerlink" href="#ovosabstractapplication" title="Permanent link">&para;</a></h2>
+<p><strong>Module:</strong> <code>ovos_workshop.app.OVOSAbstractApplication</code>
+<strong>Source:</strong> <code>ovos_workshop/app.py</code></p>
+<p>Like <code>OVOSSkill</code> but designed to run <strong>without</strong> an intent service. Suitable for standalone GUI apps, <a href="../hivemind-agents/">HiveMind</a>-attached services, or any program that needs <a href="../tts-plugins/">TTS</a>/messagebus/settings but does not register intents with <code>ovos-core</code>. Creates its own bus connection if none is provided. Settings stored under <code>apps/&lt;id&gt;/</code> instead of <code>skills/&lt;id&gt;/</code>.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="kn">from</span> <span class="nn">ovos_workshop.app</span> <span class="kn">import</span> <span class="n">OVOSAbstractApplication</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="k">class</span> <span class="nc">MyApp</span><span class="p">(</span><span class="n">OVOSAbstractApplication</span><span class="p">):</span>
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">skill_id</span><span class="o">=</span><span class="s2">&quot;my-app.author&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>
+</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">speak</span><span class="p">(</span><span class="s2">&quot;App is ready.&quot;</span><span class="p">)</span>
+</span><span id="__span-10-9"><a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a>
+</span><span id="__span-10-10"><a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a><span class="n">app</span> <span class="o">=</span> <span class="n">MyApp</span><span class="p">()</span>  <span class="c1"># Creates its own bus connection automatically.</span>
+</span></code></pre></div>
+<hr />
+<h2 id="skill-launcher">Skill Launcher<a class="headerlink" href="#skill-launcher" title="Permanent link">&para;</a></h2>
+<p><strong>Module:</strong> <code>ovos_workshop.skill_launcher.PluginSkillLoader</code></p>
+<p><code>PluginSkillLoader</code> is used by <code>SkillManager</code> to load plugin-based skills:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="kn">from</span> <span class="nn">ovos_workshop.skill_launcher</span> <span class="kn">import</span> <span class="n">PluginSkillLoader</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="n">loader</span> <span class="o">=</span> <span class="n">PluginSkillLoader</span><span class="p">(</span><span class="n">bus</span><span class="p">,</span> <span class="n">skill_id</span><span class="p">)</span>
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="n">loader</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">MySkillClass</span><span class="p">)</span>   <span class="c1"># instantiates and calls _startup</span>
+</span></code></pre></div>
+<p>Skills can also be run as standalone processes:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>ovos-skill-launcher<span class="w"> </span>my_skill_package_name
+</span></code></pre></div>
+<p>This is the recommended approach for running skills in Docker containers.</p>
+<hr />
+<h2 id="decorators-quick-reference">Decorators Quick Reference<a class="headerlink" href="#decorators-quick-reference" title="Permanent link">&para;</a></h2>
+<p>All decorators are importable from <code>ovos_workshop.decorators</code>:</p>
+<table>
+<thead>
+<tr>
+<th>Decorator</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>@intent_handler("file.intent")</code></td>
+<td>Register <a href="../padatious-pipeline/">Padatious</a> or <a href="../adapt-pipeline/">Adapt</a> intent handler</td>
+</tr>
+<tr>
+<td><code>@conversational_intent("file.intent")</code></td>
+<td>Register converse-only Padatious handler</td>
+</tr>
+<tr>
+<td><code>@fallback_handler(priority=50)</code></td>
+<td>Register fallback handler with priority</td>
+</tr>
+<tr>
+<td><code>@common_query()</code></td>
+<td>Register CommonQuery handler (return answer, confidence)</td>
+</tr>
+<tr>
+<td><code>@converse_handler</code></td>
+<td>Alias method as the skill's <code>converse</code> handler</td>
+</tr>
+<tr>
+<td><code>@adds_context("Context")</code></td>
+<td>Add context entity after method runs</td>
+</tr>
+<tr>
+<td><code>@removes_context("Context")</code></td>
+<td>Remove context entity after method runs</td>
+</tr>
+<tr>
+<td><code>@skill_api_method</code></td>
+<td>Expose method over the bus for inter-skill calls</td>
+</tr>
+<tr>
+<td><code>@killable_intent()</code></td>
+<td>Intent that can be interrupted mid-execution</td>
+</tr>
+<tr>
+<td><code>@homescreen_app(icon, name)</code></td>
+<td>Register as homescreen app launcher</td>
+</tr>
+<tr>
+<td><code>@ocp_search()</code></td>
+<td>Search for playable content</td>
+</tr>
+<tr>
+<td><code>@ocp_featured_media()</code></td>
+<td>Provide featured media for OCP GUI</td>
+</tr>
+<tr>
+<td><code>@layer_intent(intent, layer_name)</code></td>
+<td>Intent belonging to a named layer</td>
+</tr>
+<tr>
+<td><code>@enables_layer("layer")</code></td>
+<td>Activate a named intent layer after method</td>
+</tr>
+<tr>
+<td><code>@disables_layer("layer")</code></td>
+<td>Deactivate a named intent layer after method</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><em>Source code: <a href="https://github.com/OpenVoiceOS/ovos-workshop">OpenVoiceOS/ovos-workshop</a>.</em></p>
+<hr />
+<p><strong>Read next:</strong> <a href="../skill-classes/">Skill Classes</a> · <a href="../decorators/">Decorators</a>
+<strong>Related:</strong> <a href="../ovos-skill/">OVOSSkill</a> · <a href="../fallbacks/">Fallback Skill</a> · <a href="../common-query/">Common Query Framework</a> · <a href="../ocp-skills/">OCP Skills</a></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.path", "navigation.prune", "navigation.top", "navigation.tracking", "navigation.instant", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate"], "search": "../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.fe8b6f2b.min.js"></script>
+      
+    
+  </body>
+</html>

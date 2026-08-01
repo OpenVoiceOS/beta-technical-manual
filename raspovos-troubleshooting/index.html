@@ -11,7 +11,7 @@
         <link rel="canonical" href="https://tigregotico.github.io/ovos-technical-manual/raspovos-troubleshooting/">
       
       
-        <link rel="prev" href="../install-raspovos/">
+        <link rel="prev" href="../raspovos-commands-reference/">
       
       
         <link rel="next" href="../personalize/">
@@ -705,6 +705,27 @@
                 
   
   
+  
+  
+    <li class="md-nav__item">
+      <a href="../raspovos-commands-reference/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    RaspOVOS Command Reference
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
     
   
   
@@ -754,6 +775,79 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#undervoltage-detected-warning" class="md-nav__link">
+    <span class="md-ellipsis">
+      Undervoltage Detected Warning
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#system-boot-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      System Boot Issues
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ovos-fails-to-speak-i-am-ready" class="md-nav__link">
+    <span class="md-ellipsis">
+      OVOS Fails to Speak "I am Ready"
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-debug-intent-matching" class="md-nav__link">
+    <span class="md-ellipsis">
+      How to debug intent matching
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-check-installed-skills" class="md-nav__link">
+    <span class="md-ellipsis">
+      How to check installed skills
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-check-available-intents" class="md-nav__link">
+    <span class="md-ellipsis">
+      How to check available intents
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-remove-all-skills" class="md-nav__link">
+    <span class="md-ellipsis">
+      How to remove all skills
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#wake-word-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      Wake-word Issues
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Wake-word Issues">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#custom-models" class="md-nav__link">
     <span class="md-ellipsis">
       Custom Models
@@ -761,8 +855,8 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#alternative-wake-word-plugin-vosk" class="md-nav__link">
     <span class="md-ellipsis">
       Alternative Wake-word Plugin: Vosk
@@ -770,8 +864,8 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#tips-for-choosing-a-good-wake-word" class="md-nav__link">
     <span class="md-ellipsis">
       Tips for Choosing a Good Wake Word
@@ -779,8 +873,47 @@
   </a>
   
 </li>
+        
+      </ul>
+    </nav>
+  
+</li>
       
         <li class="md-nav__item">
+  <a href="#audio-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      Audio Issues
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Audio Issues">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#re-triggering-auto-detection-without-a-reboot" class="md-nav__link">
+    <span class="md-ellipsis">
+      Re-triggering auto-detection without a reboot
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stt-tips-and-tricks" class="md-nav__link">
+    <span class="md-ellipsis">
+      STT tips and tricks
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="STT tips and tricks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#saving-transcriptions" class="md-nav__link">
     <span class="md-ellipsis">
       Saving Transcriptions
@@ -788,8 +921,8 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#wrong-transcriptions" class="md-nav__link">
     <span class="md-ellipsis">
       Wrong Transcriptions
@@ -797,8 +930,8 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#silence-removal" class="md-nav__link">
     <span class="md-ellipsis">
       Silence Removal
@@ -806,13 +939,18 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#listen-sound" class="md-nav__link">
     <span class="md-ellipsis">
       Listen Sound
     </span>
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1394,6 +1532,79 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#undervoltage-detected-warning" class="md-nav__link">
+    <span class="md-ellipsis">
+      Undervoltage Detected Warning
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#system-boot-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      System Boot Issues
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ovos-fails-to-speak-i-am-ready" class="md-nav__link">
+    <span class="md-ellipsis">
+      OVOS Fails to Speak "I am Ready"
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-debug-intent-matching" class="md-nav__link">
+    <span class="md-ellipsis">
+      How to debug intent matching
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-check-installed-skills" class="md-nav__link">
+    <span class="md-ellipsis">
+      How to check installed skills
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-check-available-intents" class="md-nav__link">
+    <span class="md-ellipsis">
+      How to check available intents
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-remove-all-skills" class="md-nav__link">
+    <span class="md-ellipsis">
+      How to remove all skills
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#wake-word-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      Wake-word Issues
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Wake-word Issues">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#custom-models" class="md-nav__link">
     <span class="md-ellipsis">
       Custom Models
@@ -1401,8 +1612,8 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#alternative-wake-word-plugin-vosk" class="md-nav__link">
     <span class="md-ellipsis">
       Alternative Wake-word Plugin: Vosk
@@ -1410,8 +1621,8 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#tips-for-choosing-a-good-wake-word" class="md-nav__link">
     <span class="md-ellipsis">
       Tips for Choosing a Good Wake Word
@@ -1419,8 +1630,47 @@
   </a>
   
 </li>
+        
+      </ul>
+    </nav>
+  
+</li>
       
         <li class="md-nav__item">
+  <a href="#audio-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      Audio Issues
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Audio Issues">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#re-triggering-auto-detection-without-a-reboot" class="md-nav__link">
+    <span class="md-ellipsis">
+      Re-triggering auto-detection without a reboot
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stt-tips-and-tricks" class="md-nav__link">
+    <span class="md-ellipsis">
+      STT tips and tricks
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="STT tips and tricks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#saving-transcriptions" class="md-nav__link">
     <span class="md-ellipsis">
       Saving Transcriptions
@@ -1428,8 +1678,8 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#wrong-transcriptions" class="md-nav__link">
     <span class="md-ellipsis">
       Wrong Transcriptions
@@ -1437,8 +1687,8 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#silence-removal" class="md-nav__link">
     <span class="md-ellipsis">
       Silence Removal
@@ -1446,13 +1696,18 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#listen-sound" class="md-nav__link">
     <span class="md-ellipsis">
       Listen Sound
     </span>
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1486,17 +1741,14 @@
 <p>Not sure where to start? <a href="../everyday-help/">Everyday Help</a> covers the most common day-to-day
 problems in plain language before you dig into the technical steps below.</p>
 <hr />
-<details class="question">
-<summary>Undervoltage Detected Warning</summary>
+<h2 id="undervoltage-detected-warning">Undervoltage Detected Warning<a class="headerlink" href="#undervoltage-detected-warning" title="Permanent link">&para;</a></h2>
 <p>If you see an <strong>undervoltage detected</strong> warning:</p>
 <ul>
 <li>Check your power adapter and cable.</li>
 <li>Ensure the adapter can supply enough current (e.g., 5A for Raspberry Pi 5).</li>
 <li>Replace long or thin cables with shorter, thicker ones for better power delivery.</li>
 </ul>
-</details>
-<details class="question">
-<summary>System Boot Issues</summary>
+<h2 id="system-boot-issues">System Boot Issues<a class="headerlink" href="#system-boot-issues" title="Permanent link">&para;</a></h2>
 <p>If the device does not complete its boot sequence:</p>
 <ol>
 <li>
@@ -1513,96 +1765,93 @@ problems in plain language before you dig into the technical steps below.</p>
 <p>Re-flash the image if necessary, ensuring all configuration options are set correctly.</p>
 </li>
 </ol>
+<h2 id="ovos-fails-to-speak-i-am-ready">OVOS Fails to Speak "I am Ready"<a class="headerlink" href="#ovos-fails-to-speak-i-am-ready" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Confirm the device has a working Internet connection. Otherwise OVOS won't consider itself ready</li>
+<li>The "I am Ready" announcement is spoken by the <code>ovos-skill-boot-finished</code> skill: if that skill is not installed or failed to load, the device can be fully working yet stay silent at boot. Check it appears in the loaded-skills list (see <a href="#how-to-check-installed-skills">How to check installed skills</a> below, where <code>skill-ovos-boot-finished.openvoiceos</code> should be present).</li>
+<li>For what "ready" actually means and how to probe it on headless or fleet deployments, see <a href="../production-operations/#knowing-when-the-assistant-is-actually-ready">Knowing when the assistant is actually ready</a>.</li>
+</ul>
+<h2 id="how-to-debug-intent-matching">How to debug intent matching<a class="headerlink" href="#how-to-debug-intent-matching" title="Permanent link">&para;</a></h2>
+<p>To easily debug intent parsing, open a terminal and run <code>ologs | grep intent</code>. This shows you live logs related only to intent parsing.</p>
+<details class="example">
+<summary>Fix</summary>
+<div class="admonition note">
+<p class="admonition-title"><code>ologs</code> is a raspOVOS shortcut</p>
+<p><code>ologs</code> is a raspOVOS-only shell alias (<code>tail -f</code> over the log files, see <a href="../raspovos-commands-reference/#helpful-commands">raspOVOS commands</a>). It is <strong>not</strong> the portable <a href="../cli-tools/#reading-the-logs-ovos-logs"><code>ovos-logs</code></a> CLI. On a non-raspOVOS install use <code>ovos-logs</code> (or <code>tail -f</code> on the <a href="../troubleshooting/">log files</a>) instead.</p>
+</div>
+<p>then in another terminal send commands with <code>ovos-say-to "sentence to test"</code>  (or use your voice)</p>
+<p>The <code>Session pipeline</code> line in the log below shows the <a href="../pipelines-overview/#available-pipeline-components">default pipeline order</a>:</p>
+<p><code>ovos-stop-pipeline-plugin-high</code>, <code>ovos-converse-pipeline-plugin</code>, <code>ovos-ocp-pipeline-plugin-high</code>,
+<code>ovos-padatious-pipeline-plugin-high</code>, <code>ovos-adapt-pipeline-plugin-high</code>, <code>ovos-m2v-pipeline-high</code>,
+<code>ovos-ocp-pipeline-plugin-medium</code>, <code>ovos-fallback-pipeline-plugin-high</code>,
+<code>ovos-stop-pipeline-plugin-medium</code>, <code>ovos-adapt-pipeline-plugin-medium</code>,
+<code>ovos-fallback-pipeline-plugin-medium</code>, <code>ovos-fallback-pipeline-plugin-low</code></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="o">(</span>ovos<span class="o">)</span><span class="w"> </span>ovos@raspOVOS:~<span class="w"> </span>$<span class="w"> </span>ologs<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>intent
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="m">2025</span>-01-23<span class="w"> </span><span class="m">16</span>:29:54.299<span class="w"> </span>-<span class="w"> </span>skills<span class="w"> </span>-<span class="w"> </span>ovos_core.intent_services:handle_utterance:416<span class="w"> </span>-<span class="w"> </span>INFO<span class="w"> </span>-<span class="w"> </span>common_qa<span class="w"> </span>match:<span class="w"> </span>IntentHandlerMatch<span class="o">(</span><span class="nv">match_type</span><span class="o">=</span><span class="s1">&#39;question:action.skill-ovos-wikipedia.openvoiceos&#39;</span>,<span class="w"> </span><span class="nv">match_data</span><span class="o">={</span><span class="s1">&#39;phrase&#39;</span>:<span class="w"> </span><span class="s1">&#39;Who is Ada Lovelace&#39;</span>,<span class="w"> </span><span class="s1">&#39;skill_id&#39;</span>:<span class="w"> </span><span class="s1">&#39;skill-ovos-wikipedia.openvoiceos&#39;</span>,<span class="w"> </span><span class="s1">&#39;answer&#39;</span>:<span class="w"> </span><span class="s2">&quot;Ada Lovelace was a mathematician known for her work on Charles Babbage&#39;s Analytical Engine.&quot;</span>,<span class="w"> </span><span class="s1">&#39;callback_data&#39;</span>:<span class="w"> </span><span class="o">{</span><span class="s1">&#39;answer&#39;</span>:<span class="w"> </span><span class="s2">&quot;Ada Lovelace was a mathematician known for her work on Charles Babbage&#39;s Analytical Engine.&quot;</span><span class="o">}</span>,<span class="w"> </span><span class="s1">&#39;conf&#39;</span>:<span class="w"> </span><span class="m">0</span>.6<span class="o">}</span>,<span class="w"> </span><span class="nv">skill_id</span><span class="o">=</span><span class="s1">&#39;skill-ovos-wikipedia.openvoiceos&#39;</span>,<span class="w"> </span><span class="nv">utterance</span><span class="o">=</span><span class="s1">&#39;Who is Ada Lovelace&#39;</span>,<span class="w"> </span><span class="nv">updated_session</span><span class="o">=</span>None<span class="o">)</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="m">2025</span>-01-23<span class="w"> </span><span class="m">16</span>:29:54.300<span class="w"> </span>-<span class="w"> </span>skills<span class="w"> </span>-<span class="w"> </span>ovos_core.intent_services:handle_utterance:436<span class="w"> </span>-<span class="w"> </span>DEBUG<span class="w"> </span>-<span class="w"> </span>intent<span class="w"> </span>matching<span class="w"> </span>took:<span class="w"> </span><span class="m">1</span>.5732948780059814
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="m">2025</span>-01-23<span class="w"> </span><span class="m">16</span>:34:07.672<span class="w"> </span>-<span class="w"> </span>skills<span class="w"> </span>-<span class="w"> </span>ovos_core.intent_services:handle_utterance:399<span class="w"> </span>-<span class="w"> </span>INFO<span class="w"> </span>-<span class="w"> </span>Parsing<span class="w"> </span>utterance:<span class="w"> </span><span class="o">[</span><span class="s1">&#39;what time is it&#39;</span><span class="o">]</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="m">2025</span>-01-23<span class="w"> </span><span class="m">16</span>:34:07.675<span class="w"> </span>-<span class="w"> </span>skills<span class="w"> </span>-<span class="w"> </span>ovos_core.intent_services:get_pipeline:234<span class="w"> </span>-<span class="w"> </span>DEBUG<span class="w"> </span>-<span class="w"> </span>Session<span class="w"> </span>pipeline:<span class="w"> </span><span class="o">[</span><span class="s1">&#39;stop_high&#39;</span>,<span class="w"> </span><span class="s1">&#39;converse&#39;</span>,<span class="w"> </span><span class="s1">&#39;ocp_high&#39;</span>,<span class="w"> </span><span class="s1">&#39;padatious_high&#39;</span>,<span class="w"> </span><span class="s1">&#39;adapt_high&#39;</span>,<span class="w"> </span><span class="s1">&#39;ocp_medium&#39;</span>,<span class="w"> </span><span class="s1">&#39;fallback_high&#39;</span>,<span class="w"> </span><span class="s1">&#39;stop_medium&#39;</span>,<span class="w"> </span><span class="s1">&#39;adapt_medium&#39;</span>,<span class="w"> </span><span class="s1">&#39;adapt_low&#39;</span>,<span class="w"> </span><span class="s1">&#39;common_qa&#39;</span>,<span class="w"> </span><span class="s1">&#39;fallback_medium&#39;</span>,<span class="w"> </span><span class="s1">&#39;fallback_low&#39;</span><span class="o">]</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="m">2025</span>-01-23<span class="w"> </span><span class="m">16</span>:34:07.678<span class="w"> </span>-<span class="w"> </span>skills<span class="w"> </span>-<span class="w"> </span>ovos_core.intent_services:handle_utterance:430<span class="w"> </span>-<span class="w"> </span>DEBUG<span class="w"> </span>-<span class="w"> </span>no<span class="w"> </span>match<span class="w"> </span>from<span class="w"> </span>&lt;bound<span class="w"> </span>method<span class="w"> </span>StopService.match_high<span class="w"> </span>of<span class="w"> </span>&lt;ovos_core.intent_services.stop_service.StopService<span class="w"> </span>object<span class="w"> </span>at<span class="w"> </span>0x7fff2b036310&gt;&gt;
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="m">2025</span>-01-23<span class="w"> </span><span class="m">16</span>:34:07.686<span class="w"> </span>-<span class="w"> </span>skills<span class="w"> </span>-<span class="w"> </span>ovos_core.intent_services:handle_utterance:430<span class="w"> </span>-<span class="w"> </span>DEBUG<span class="w"> </span>-<span class="w"> </span>no<span class="w"> </span>match<span class="w"> </span>from<span class="w"> </span>&lt;bound<span class="w"> </span>method<span class="w"> </span>ConverseService.match<span class="w"> </span>of<span class="w"> </span>&lt;ovos_core.intent_services.converse_service.ConverseService<span class="w"> </span>object<span class="w"> </span>at<span class="w"> </span>0x7fff7159ae50&gt;&gt;
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="m">2025</span>-01-23<span class="w"> </span><span class="m">16</span>:34:07.691<span class="w"> </span>-<span class="w"> </span>skills<span class="w"> </span>-<span class="w"> </span>ovos_core.intent_services:handle_utterance:430<span class="w"> </span>-<span class="w"> </span>DEBUG<span class="w"> </span>-<span class="w"> </span>no<span class="w"> </span>match<span class="w"> </span>from<span class="w"> </span>&lt;bound<span class="w"> </span>method<span class="w"> </span>OCPPipelineMatcher.match_high<span class="w"> </span>of<span class="w"> </span>&lt;ocp_pipeline.opm.OCPPipelineMatcher<span class="w"> </span>object<span class="w"> </span>at<span class="w"> </span>0x7fff26ac3910&gt;&gt;
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="m">2025</span>-01-23<span class="w"> </span><span class="m">16</span>:34:07.696<span class="w"> </span>-<span class="w"> </span>skills<span class="w"> </span>-<span class="w"> </span>ovos_core.intent_services:handle_utterance:416<span class="w"> </span>-<span class="w"> </span>INFO<span class="w"> </span>-<span class="w"> </span>padatious_high<span class="w"> </span>match:<span class="w"> </span>IntentHandlerMatch<span class="o">(</span><span class="nv">match_type</span><span class="o">=</span><span class="s1">&#39;skill-ovos-date-time.openvoiceos:what.time.is.it.intent&#39;</span>,<span class="w"> </span><span class="nv">match_data</span><span class="o">={}</span>,<span class="w"> </span><span class="nv">skill_id</span><span class="o">=</span><span class="s1">&#39;skill-ovos-date-time.openvoiceos&#39;</span>,<span class="w"> </span><span class="nv">utterance</span><span class="o">=</span><span class="s1">&#39;what time is it&#39;</span>,<span class="w"> </span><span class="nv">updated_session</span><span class="o">=</span>None<span class="o">)</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="m">2025</span>-01-23<span class="w"> </span><span class="m">16</span>:34:07.698<span class="w"> </span>-<span class="w"> </span>skills<span class="w"> </span>-<span class="w"> </span>ovos_core.intent_services:handle_utterance:436<span class="w"> </span>-<span class="w"> </span>DEBUG<span class="w"> </span>-<span class="w"> </span>intent<span class="w"> </span>matching<span class="w"> </span>took:<span class="w"> </span><span class="m">0</span>.022924184799194336
+</span></code></pre></div>
 </details>
-<p>??? question 'OVOS Fails to Speak "I am Ready"' {: #ovos-fails-to-speak-i-am-ready }</p>
-<div class="language-text highlight"><pre><span></span><code>- Confirm the device has a working Internet connection. Otherwise OVOS won&#39;t consider itself ready
-- The &quot;I am Ready&quot; announcement is spoken by the `ovos-skill-boot-finished` skill: if that skill is not installed or failed to load, the device can be fully working yet stay silent at boot. Check it appears in the loaded-skills list (see &quot;How to check installed skills&quot; below, where `skill-ovos-boot-finished.openvoiceos` should be present).
-- For what &quot;ready&quot; actually means and how to probe it on headless or fleet deployments, see [Knowing when the assistant is actually ready](production-operations.md#knowing-when-the-assistant-is-actually-ready).
-</code></pre></div>
-<p>??? question "How to debug intent matching" {: #how-to-debug-intent-matching }</p>
-<div class="language-text highlight"><pre><span></span><code>To easily debug intent parsing, open a terminal and run `ologs | grep intent`. This shows you live logs related only to intent parsing
-
-!!! note &quot;`ologs` is a raspOVOS shortcut&quot;
-    `ologs` is a raspOVOS-only shell alias (`tail -f` over the log files, see [raspOVOS commands](install-raspovos.md#helpful-commands)). It is **not** the portable [`ovos-logs`](cli-tools.md#reading-the-logs-ovos-logs) CLI. On a non-raspOVOS install use `ovos-logs` (or `tail -f` on the [log files](troubleshooting.md)) instead.
-
-then in another terminal send commands with `ovos-say-to &quot;sentence to test&quot;`  (or use your voice)
-
-The `Session pipeline` line in the log below shows the [default pipeline order](pipelines-overview.md#available-pipeline-components):
-
-`ovos-stop-pipeline-plugin-high`, `ovos-converse-pipeline-plugin`, `ovos-ocp-pipeline-plugin-high`,
-`ovos-padatious-pipeline-plugin-high`, `ovos-adapt-pipeline-plugin-high`, `ovos-m2v-pipeline-high`,
-`ovos-ocp-pipeline-plugin-medium`, `ovos-fallback-pipeline-plugin-high`,
-`ovos-stop-pipeline-plugin-medium`, `ovos-adapt-pipeline-plugin-medium`,
-`ovos-fallback-pipeline-plugin-medium`, `ovos-fallback-pipeline-plugin-low`
-
-```bash
-(ovos) ovos@raspOVOS:~ $ ologs | grep intent
-2025-01-23 16:29:54.299 - skills - ovos_core.intent_services:handle_utterance:416 - INFO - common_qa match: IntentHandlerMatch(match_type=&#39;question:action.skill-ovos-wikipedia.openvoiceos&#39;, match_data={&#39;phrase&#39;: &#39;Who is Ada Lovelace&#39;, &#39;skill_id&#39;: &#39;skill-ovos-wikipedia.openvoiceos&#39;, &#39;answer&#39;: &quot;Ada Lovelace was a mathematician known for her work on Charles Babbage&#39;s Analytical Engine.&quot;, &#39;callback_data&#39;: {&#39;answer&#39;: &quot;Ada Lovelace was a mathematician known for her work on Charles Babbage&#39;s Analytical Engine.&quot;}, &#39;conf&#39;: 0.6}, skill_id=&#39;skill-ovos-wikipedia.openvoiceos&#39;, utterance=&#39;Who is Ada Lovelace&#39;, updated_session=None)
-2025-01-23 16:29:54.300 - skills - ovos_core.intent_services:handle_utterance:436 - DEBUG - intent matching took: 1.5732948780059814
-2025-01-23 16:34:07.672 - skills - ovos_core.intent_services:handle_utterance:399 - INFO - Parsing utterance: [&#39;what time is it&#39;]
-2025-01-23 16:34:07.675 - skills - ovos_core.intent_services:get_pipeline:234 - DEBUG - Session pipeline: [&#39;stop_high&#39;, &#39;converse&#39;, &#39;ocp_high&#39;, &#39;padatious_high&#39;, &#39;adapt_high&#39;, &#39;ocp_medium&#39;, &#39;fallback_high&#39;, &#39;stop_medium&#39;, &#39;adapt_medium&#39;, &#39;adapt_low&#39;, &#39;common_qa&#39;, &#39;fallback_medium&#39;, &#39;fallback_low&#39;]
-2025-01-23 16:34:07.678 - skills - ovos_core.intent_services:handle_utterance:430 - DEBUG - no match from &lt;bound method StopService.match_high of &lt;ovos_core.intent_services.stop_service.StopService object at 0x7fff2b036310&gt;&gt;
-2025-01-23 16:34:07.686 - skills - ovos_core.intent_services:handle_utterance:430 - DEBUG - no match from &lt;bound method ConverseService.match of &lt;ovos_core.intent_services.converse_service.ConverseService object at 0x7fff7159ae50&gt;&gt;
-2025-01-23 16:34:07.691 - skills - ovos_core.intent_services:handle_utterance:430 - DEBUG - no match from &lt;bound method OCPPipelineMatcher.match_high of &lt;ocp_pipeline.opm.OCPPipelineMatcher object at 0x7fff26ac3910&gt;&gt;
-2025-01-23 16:34:07.696 - skills - ovos_core.intent_services:handle_utterance:416 - INFO - padatious_high match: IntentHandlerMatch(match_type=&#39;skill-ovos-date-time.openvoiceos:what.time.is.it.intent&#39;, match_data={}, skill_id=&#39;skill-ovos-date-time.openvoiceos&#39;, utterance=&#39;what time is it&#39;, updated_session=None)
-2025-01-23 16:34:07.698 - skills - ovos_core.intent_services:handle_utterance:436 - DEBUG - intent matching took: 0.022924184799194336
-
-```
-</code></pre></div>
-<p>??? question "How to check installed skills" {: #how-to-check-installed-skills }</p>
-<div class="language-text highlight"><pre><span></span><code>use the `ls-skills` command
-
-```bash
-(ovos) ovos@raspOVOS:~ $ ls-skills
-[INFO] Listing installed skills for OpenVoiceOS...
-[WARNING] Scanning for installed skills. This may take a few moments, depending on the number of installed skills...
-
-The following skills are installed:
-
-[&#39;skill-ovos-weather.openvoiceos&#39;,
- &#39;ovos-skill-dictation.openvoiceos&#39;,
- &#39;skill-ovos-parrot.openvoiceos&#39;,
- &#39;ovos-skill-speedtest.openvoiceos&#39;,
- &#39;ovos-skill-ip.openvoiceos&#39;,
- &#39;skill-ovos-spelling.openvoiceos&#39;,
- &#39;ovos-skill-iss-location.openvoiceos&#39;,
- &#39;skill-ovos-audio-recording.openvoiceos&#39;,
- &#39;skill-ovos-wordnet.openvoiceos&#39;,
- &#39;ovos-skill-days-in-history.openvoiceos&#39;,
- &#39;ovos-skill-confucius-quotes.openvoiceos&#39;,
- &#39;skill-ovos-fallback-chatgpt.openvoiceos&#39;,
- &#39;ovos-skill-alerts.openvoiceos&#39;,
- &#39;skill-ovos-local-media.openvoiceos&#39;,
- &#39;skill-ovos-volume.openvoiceos&#39;,
- &#39;ovos-skill-wikihow.openvoiceos&#39;,
- &#39;ovos-skill-personal.OpenVoiceOS&#39;,
- &#39;ovos-skill-number-facts.openvoiceos&#39;,
- &#39;skill-ovos-hello-world.openvoiceos&#39;,
- &#39;ovos-skill-moviemaster.openvoiceos&#39;,
- &#39;skill-ovos-date-time.openvoiceos&#39;,
- &#39;skill-ovos-fallback-unknown.openvoiceos&#39;,
- &#39;ovos-skill-pyradios.openvoiceos&#39;,
- &#39;skill-ovos-icanhazdadjokes.openvoiceos&#39;,
- &#39;ovos-skill-cmd.openvoiceos&#39;,
- &#39;ovos-skill-spotify.openvoiceos&#39;,
- &#39;skill-ovos-randomness.openvoiceos&#39;,
- &#39;skill-ovos-naptime.openvoiceos&#39;,
- &#39;skill-ovos-wikipedia.openvoiceos&#39;,
- &#39;skill-ovos-boot-finished.openvoiceos&#39;,
- &#39;ovos-skill-camera.openvoiceos&#39;,
- &#39;skill-ovos-ddg.openvoiceos&#39;,
- &#39;ovos-skill-laugh.openvoiceos&#39;,
- &#39;skill-ovos-somafm.openvoiceos&#39;,
- &#39;skill-ovos-news.openvoiceos&#39;,
- &#39;skill-ovos-wolfie.openvoiceos&#39;,
- &#39;ovos-skill-example-quotes.openvoiceos&#39;]
-[SUCCESS] Skill listing completed.
-
-```
-</code></pre></div>
-<details class="question">
-<summary>How to check available intents</summary>
-<p>Skills can optionally provide metadata, if they do instructions will be available under <code>ovos-commands</code></p>
+<h2 id="how-to-check-installed-skills">How to check installed skills<a class="headerlink" href="#how-to-check-installed-skills" title="Permanent link">&para;</a></h2>
+<p>Use the <code>ls-skills</code> command to list every installed skill.</p>
+<details class="example">
+<summary>Fix</summary>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="o">(</span>ovos<span class="o">)</span><span class="w"> </span>ovos@raspOVOS:~<span class="w"> </span>$<span class="w"> </span>ls-skills
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span>Listing<span class="w"> </span>installed<span class="w"> </span>skills<span class="w"> </span><span class="k">for</span><span class="w"> </span>OpenVoiceOS...
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="o">[</span>WARNING<span class="o">]</span><span class="w"> </span>Scanning<span class="w"> </span><span class="k">for</span><span class="w"> </span>installed<span class="w"> </span>skills.<span class="w"> </span>This<span class="w"> </span>may<span class="w"> </span>take<span class="w"> </span>a<span class="w"> </span>few<span class="w"> </span>moments,<span class="w"> </span>depending<span class="w"> </span>on<span class="w"> </span>the<span class="w"> </span>number<span class="w"> </span>of<span class="w"> </span>installed<span class="w"> </span>skills...
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>The<span class="w"> </span>following<span class="w"> </span>skills<span class="w"> </span>are<span class="w"> </span>installed:
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="o">[</span><span class="s1">&#39;skill-ovos-weather.openvoiceos&#39;</span>,
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="w"> </span><span class="s1">&#39;ovos-skill-dictation.openvoiceos&#39;</span>,
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="w"> </span><span class="s1">&#39;skill-ovos-parrot.openvoiceos&#39;</span>,
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="w"> </span><span class="s1">&#39;ovos-skill-speedtest.openvoiceos&#39;</span>,
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="w"> </span><span class="s1">&#39;ovos-skill-ip.openvoiceos&#39;</span>,
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="w"> </span><span class="s1">&#39;skill-ovos-spelling.openvoiceos&#39;</span>,
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="w"> </span><span class="s1">&#39;ovos-skill-iss-location.openvoiceos&#39;</span>,
+</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="w"> </span><span class="s1">&#39;skill-ovos-audio-recording.openvoiceos&#39;</span>,
+</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="w"> </span><span class="s1">&#39;skill-ovos-wordnet.openvoiceos&#39;</span>,
+</span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="w"> </span><span class="s1">&#39;ovos-skill-days-in-history.openvoiceos&#39;</span>,
+</span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="w"> </span><span class="s1">&#39;ovos-skill-confucius-quotes.openvoiceos&#39;</span>,
+</span><span id="__span-1-18"><a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a><span class="w"> </span><span class="s1">&#39;skill-ovos-fallback-chatgpt.openvoiceos&#39;</span>,
+</span><span id="__span-1-19"><a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="w"> </span><span class="s1">&#39;ovos-skill-alerts.openvoiceos&#39;</span>,
+</span><span id="__span-1-20"><a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a><span class="w"> </span><span class="s1">&#39;skill-ovos-local-media.openvoiceos&#39;</span>,
+</span><span id="__span-1-21"><a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a><span class="w"> </span><span class="s1">&#39;skill-ovos-volume.openvoiceos&#39;</span>,
+</span><span id="__span-1-22"><a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a><span class="w"> </span><span class="s1">&#39;ovos-skill-wikihow.openvoiceos&#39;</span>,
+</span><span id="__span-1-23"><a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a><span class="w"> </span><span class="s1">&#39;ovos-skill-personal.OpenVoiceOS&#39;</span>,
+</span><span id="__span-1-24"><a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a><span class="w"> </span><span class="s1">&#39;ovos-skill-number-facts.openvoiceos&#39;</span>,
+</span><span id="__span-1-25"><a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a><span class="w"> </span><span class="s1">&#39;skill-ovos-hello-world.openvoiceos&#39;</span>,
+</span><span id="__span-1-26"><a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a><span class="w"> </span><span class="s1">&#39;ovos-skill-moviemaster.openvoiceos&#39;</span>,
+</span><span id="__span-1-27"><a id="__codelineno-1-27" name="__codelineno-1-27" href="#__codelineno-1-27"></a><span class="w"> </span><span class="s1">&#39;skill-ovos-date-time.openvoiceos&#39;</span>,
+</span><span id="__span-1-28"><a id="__codelineno-1-28" name="__codelineno-1-28" href="#__codelineno-1-28"></a><span class="w"> </span><span class="s1">&#39;skill-ovos-fallback-unknown.openvoiceos&#39;</span>,
+</span><span id="__span-1-29"><a id="__codelineno-1-29" name="__codelineno-1-29" href="#__codelineno-1-29"></a><span class="w"> </span><span class="s1">&#39;ovos-skill-pyradios.openvoiceos&#39;</span>,
+</span><span id="__span-1-30"><a id="__codelineno-1-30" name="__codelineno-1-30" href="#__codelineno-1-30"></a><span class="w"> </span><span class="s1">&#39;skill-ovos-icanhazdadjokes.openvoiceos&#39;</span>,
+</span><span id="__span-1-31"><a id="__codelineno-1-31" name="__codelineno-1-31" href="#__codelineno-1-31"></a><span class="w"> </span><span class="s1">&#39;ovos-skill-cmd.openvoiceos&#39;</span>,
+</span><span id="__span-1-32"><a id="__codelineno-1-32" name="__codelineno-1-32" href="#__codelineno-1-32"></a><span class="w"> </span><span class="s1">&#39;ovos-skill-spotify.openvoiceos&#39;</span>,
+</span><span id="__span-1-33"><a id="__codelineno-1-33" name="__codelineno-1-33" href="#__codelineno-1-33"></a><span class="w"> </span><span class="s1">&#39;skill-ovos-randomness.openvoiceos&#39;</span>,
+</span><span id="__span-1-34"><a id="__codelineno-1-34" name="__codelineno-1-34" href="#__codelineno-1-34"></a><span class="w"> </span><span class="s1">&#39;skill-ovos-naptime.openvoiceos&#39;</span>,
+</span><span id="__span-1-35"><a id="__codelineno-1-35" name="__codelineno-1-35" href="#__codelineno-1-35"></a><span class="w"> </span><span class="s1">&#39;skill-ovos-wikipedia.openvoiceos&#39;</span>,
+</span><span id="__span-1-36"><a id="__codelineno-1-36" name="__codelineno-1-36" href="#__codelineno-1-36"></a><span class="w"> </span><span class="s1">&#39;skill-ovos-boot-finished.openvoiceos&#39;</span>,
+</span><span id="__span-1-37"><a id="__codelineno-1-37" name="__codelineno-1-37" href="#__codelineno-1-37"></a><span class="w"> </span><span class="s1">&#39;ovos-skill-camera.openvoiceos&#39;</span>,
+</span><span id="__span-1-38"><a id="__codelineno-1-38" name="__codelineno-1-38" href="#__codelineno-1-38"></a><span class="w"> </span><span class="s1">&#39;skill-ovos-ddg.openvoiceos&#39;</span>,
+</span><span id="__span-1-39"><a id="__codelineno-1-39" name="__codelineno-1-39" href="#__codelineno-1-39"></a><span class="w"> </span><span class="s1">&#39;ovos-skill-laugh.openvoiceos&#39;</span>,
+</span><span id="__span-1-40"><a id="__codelineno-1-40" name="__codelineno-1-40" href="#__codelineno-1-40"></a><span class="w"> </span><span class="s1">&#39;skill-ovos-somafm.openvoiceos&#39;</span>,
+</span><span id="__span-1-41"><a id="__codelineno-1-41" name="__codelineno-1-41" href="#__codelineno-1-41"></a><span class="w"> </span><span class="s1">&#39;skill-ovos-news.openvoiceos&#39;</span>,
+</span><span id="__span-1-42"><a id="__codelineno-1-42" name="__codelineno-1-42" href="#__codelineno-1-42"></a><span class="w"> </span><span class="s1">&#39;skill-ovos-wolfie.openvoiceos&#39;</span>,
+</span><span id="__span-1-43"><a id="__codelineno-1-43" name="__codelineno-1-43" href="#__codelineno-1-43"></a><span class="w"> </span><span class="s1">&#39;ovos-skill-example-quotes.openvoiceos&#39;</span><span class="o">]</span>
+</span><span id="__span-1-44"><a id="__codelineno-1-44" name="__codelineno-1-44" href="#__codelineno-1-44"></a><span class="o">[</span>SUCCESS<span class="o">]</span><span class="w"> </span>Skill<span class="w"> </span>listing<span class="w"> </span>completed.
+</span></code></pre></div>
+</details>
+<h2 id="how-to-check-available-intents">How to check available intents<a class="headerlink" href="#how-to-check-available-intents" title="Permanent link">&para;</a></h2>
+<p>Skills can optionally provide metadata, if they do instructions will be available under <code>ovos-commands</code>.</p>
+<details class="example">
+<summary>Fix</summary>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="o">(</span>ovos<span class="o">)</span><span class="w"> </span>ovos@raspOVOS:~<span class="w"> </span>$<span class="w"> </span>ovos-commands<span class="w"> </span>
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="c1">##########################</span>
 </span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>OpenVoiceOS<span class="w"> </span>-<span class="w"> </span>Skills<span class="w"> </span><span class="nb">help</span>
@@ -1659,8 +1908,7 @@ The following skills are installed:
 </span><span id="__span-2-54"><a id="__codelineno-2-54" name="__codelineno-2-54" href="#__codelineno-2-54"></a><span class="w">    </span>-<span class="w"> </span>Tell<span class="w"> </span>me<span class="w"> </span>a<span class="w"> </span>quote
 </span></code></pre></div>
 </details>
-<details class="question">
-<summary>How to remove all skills</summary>
+<h2 id="how-to-remove-all-skills">How to remove all skills<a class="headerlink" href="#how-to-remove-all-skills" title="Permanent link">&para;</a></h2>
 <p>If you want to revert OVOS to a blank state you can use <code>ovos-reset-brain</code> to remove ALL skills</p>
 <details class="example">
 <summary>Full <code>ovos-reset-brain</code> transcript</summary>
@@ -1752,9 +2000,10 @@ The following skills are installed:
 </span><span id="__span-3-86"><a id="__codelineno-3-86" name="__codelineno-3-86" href="#__codelineno-3-86"></a><span class="o">[</span>WARNING<span class="o">]</span><span class="w"> </span>Note:<span class="w"> </span>This<span class="w"> </span>operation<span class="w"> </span>only<span class="w"> </span>deletes<span class="w"> </span>the<span class="w"> </span>skills.<span class="w"> </span>Configuration<span class="w"> </span>files<span class="w"> </span>and<span class="w"> </span>pipeline<span class="w"> </span>plugins<span class="w"> </span><span class="o">(</span>which<span class="w"> </span>still<span class="w"> </span>influence<span class="w"> </span>intent<span class="w"> </span>matching<span class="o">)</span><span class="w"> </span>are<span class="w"> </span>NOT<span class="w"> </span>affected<span class="w"> </span>by<span class="w"> </span>this<span class="w"> </span>action.
 </span></code></pre></div>
 </details>
-</details>
-<details class="question">
-<summary>Wake-word Issues</summary>
+<h2 id="wake-word-issues">Wake-word Issues<a class="headerlink" href="#wake-word-issues" title="Permanent link">&para;</a></h2>
+<p>Wake-word detection can misfire or fail to trigger depending on your microphone, the wake word you chose, or the plugin in use.</p>
+<details class="example">
+<summary>Fix</summary>
 <p>Wake-word detection in raspOVOS offers several options, each with its advantages and limitations. Understanding these
 can help resolve potential issues and improve performance.</p>
 <p>By default, raspOVOS uses the <code>precise-lite</code> model with the wake word "hey mycroft." This model was trained by MycroftAI
@@ -1860,171 +2109,176 @@ choosing a wake word that works well in various environments:</p>
 </li>
 </ul>
 </details>
-<p>??? question "Audio Issues" {: #audio-issues }</p>
-<div class="language-text highlight"><pre><span></span><code>&gt; Generic sound-card checks live in [Troubleshooting → Prove the microphone and speaker
-&gt; work](troubleshooting.md#prove-the-microphone-and-speaker-work): `arecord -l`/`aplay -l`,
-&gt; the record/playback test, `alsamixer`/`amixer` levels, and PulseAudio vs PipeWire notes. Run
-&gt; those first on any raspOVOS box too. The checks below are raspOVOS-specific.
-
-- **Run Diagnostics script:**
-    - raspOVOS includes a helper script `ovos-audio-diagnostics` that will print basic info about your sound system
-
-```bash
-(ovos) ovos@raspOVOS:~ $ ovos-audio-diagnostics
-=========================== 
-raspOVOS Audio Diagnostics
-===========================
-
-# Detected sound server:
-pipewire
-
-# Available audio outputs:
-36 - Built-in Audio Stereo [vol: 0.40]
-45 - Built-in Audio Stereo [vol: 0.85]
-46 - Built-in Audio Digital Stereo (HDMI) [vol: 0.40]
-
-# Default audio output:
-ID: 36
-NAME: WM8731 HiFi wm8731-hifi-0
-CARD NUMBER: 2
-CARD NAME: snd_rpi_proto
-
-```
-
-- **Check audio setup logs:**
-- During boot the audio setup generates a log file, saved to the `/tmp` directory:
-    - `/tmp/autosoundcard.log` (for soundcard autoconfiguration)
-
-```text
-==&gt; /tmp/autosoundcard.log &lt;==
-Fri 17 Jan 11:42:46 WET 2025 - **** List of PLAYBACK Hardware Devices ****
-card 0: Headphones [bcm2835 Headphones], device 0: bcm2835 Headphones [bcm2835 Headphones]
-Subdevices: 8/8
-Subdevice #0: subdevice #0
-Subdevice #1: subdevice #1
-Subdevice #2: subdevice #2
-Subdevice #3: subdevice #3
-Subdevice #4: subdevice #4
-Subdevice #5: subdevice #5
-Subdevice #6: subdevice #6
-Subdevice #7: subdevice #7
-card 1: Device [USB Audio Device], device 0: USB Audio [USB Audio]
-Subdevices: 1/1
-Subdevice #0: subdevice #0
-card 2: vc4hdmi [vc4-hdmi], device 0: MAI PCM i2s-hifi-0 [MAI PCM i2s-hifi-0]
-Subdevices: 1/1
-Subdevice #0: subdevice #0
-card 3: sndrpiproto [snd_rpi_proto], device 0: WM8731 HiFi wm8731-hifi-0 [WM8731 HiFi wm8731-hifi-0]
-Subdevices: 0/1
-Subdevice #0: subdevice #0
-Fri 17 Jan 11:42:48 WET 2025 - Mark 1 soundcard detected by ovos-i2csound.
-Fri 17 Jan 11:42:48 WET 2025 - Detected CARD_NUMBER for Mark 1 soundcard: 3
-Fri 17 Jan 11:42:48 WET 2025 - Configuring ALSA default card
-Fri 17 Jan 11:42:48 WET 2025 - Running as user, modifying ~/.asoundrc
-Fri 17 Jan 11:42:48 WET 2025 - ALSA default card set to: 3
-
-```
-
-- **Confirm available audio sinks:**
-    - Run `wpctl status` to check the available outputs as seen by `pipewire`.
-    - The default sinks will be marked with `*`
-- You can inspect a sink by its number with `wpctl inspect $SINK_ID`
-
-??? example &quot;Full `wpctl status` / `wpctl inspect` transcript&quot;
-    ```bash
-    (ovos) ovos@raspOVOS:~ $ wpctl status
-    PipeWire &#39;pipewire-0&#39; [1.2.4, ovos@raspOVOS, cookie:3349583741]
-    └─ Clients:
-
-       33. WirePlumber                         [1.2.4, ovos@raspOVOS, pid:695]
-
-       34. WirePlumber [export]                [1.2.4, ovos@raspOVOS, pid:695]
-
-       47. PipeWire ALSA [librespot]           [1.2.4, ovos@raspOVOS, pid:702]
-
-       67. PipeWire ALSA [python3.11]          [1.2.4, ovos@raspOVOS, pid:691]
-
-       75. PipeWire ALSA [python3.11]          [1.2.4, ovos@raspOVOS, pid:699]
-
-       83. PipeWire ALSA [python3.11]          [1.2.4, ovos@raspOVOS, pid:700]
-
-       84. wpctl                               [1.2.4, ovos@raspOVOS, pid:1710]
-
-    Audio
-    ├─ Devices:
-    │      42. Built-in Audio                      [alsa]
-    │      43. Built-in Audio                      [alsa]
-    │      44. Built-in Audio                      [alsa]
-    │  
-    ├─ Sinks:
-    │  *   36. Built-in Audio Stereo               [vol: 0.40]
-    │      45. Built-in Audio Stereo               [vol: 0.85]
-    │      46. Built-in Audio Digital Stereo (HDMI) [vol: 0.40]
-    │  
-    ├─ Sink endpoints:
-    │  
-    ├─ Sources:
-    │  *   37. Built-in Audio Stereo               [vol: 1.00]
-    │  
-    ├─ Source endpoints:
-    │  
-    └─ Streams:
-
-       48. PipeWire ALSA [librespot]                                   
-
-            63. output_FL       &gt; WM8731 HiFi wm8731-hifi-0:playback_FL [active]
-
-            64. output_FR       &gt; WM8731 HiFi wm8731-hifi-0:playback_FR [active]
-
-       68. PipeWire ALSA [python3.11]                                  
-
-            69. input_FL        &lt; WM8731 HiFi wm8731-hifi-0:capture_FL  [active]
-
-            70. monitor_FL     
-
-            71. input_FR        &lt; WM8731 HiFi wm8731-hifi-0:capture_FR  [active]
-
-            72. monitor_FR              
-
-    (ovos) ovos@raspOVOS:~ $ wpctl inspect 36
-    id 36, type PipeWire:Interface:Node
-       alsa.card = &quot;2&quot;
-       alsa.card_name = &quot;snd_rpi_proto&quot;
-       alsa.class = &quot;generic&quot;
-       alsa.device = &quot;0&quot;
-       alsa.driver_name = &quot;snd_soc_rpi_proto&quot;
-       alsa.id = &quot;sndrpiproto&quot;
-       alsa.long_card_name = &quot;snd_rpi_proto&quot;
-       alsa.name = &quot;WM8731 HiFi wm8731-hifi-0&quot;
-       alsa.resolution_bits = &quot;16&quot;
-       alsa.subclass = &quot;generic-mix&quot;
-       alsa.subdevice = &quot;0&quot;
-       alsa.subdevice_name = &quot;subdevice #0&quot;
-       ...
-
-    ```
-
-### Re-triggering auto-detection without a reboot
-
-If the wrong output device got picked, or a HAT wasn&#39;t detected, you don&#39;t need to reboot to
-re-run detection. Two separate systemd services do it:
-
-- `sudo systemctl restart autoconfigure_soundcard.service`: re-picks the default output.
-- `sudo systemctl restart i2csound.service`: re-detects an i2c sound HAT (Respeaker, Mark 2&#39;s
-  SJ201, etc.).
-
-These are the same services the boot-time helper scripts run automatically. Restarting them by
-hand re-runs the same detection logic without a full reboot.
-
-raspOVOS also ships a handful of non-interactive `/usr/libexec` helper scripts, invoked by
-systemd rather than typed at a prompt: `ovos-i2csound` and `soundcard-autoconfigure` (the
-scripts behind the two services above), `usb-autovolume`, the `ovos-systemd-*` service
-launchers, and `ovos-reboot-signal`/`ovos-shutdown-signal` (bus signal emitters for reboot and
-shutdown). You won&#39;t normally run these directly, but their names are worth knowing when reading
-`ologs` output during audio troubleshooting.
-</code></pre></div>
-<details class="question">
-<summary>STT tips and tricks</summary>
+<h2 id="audio-issues">Audio Issues<a class="headerlink" href="#audio-issues" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>Generic sound-card checks live in <a href="../troubleshooting/#prove-the-microphone-and-speaker-work">Troubleshooting → Prove the microphone and speaker
+work</a>: <code>arecord -l</code>/<code>aplay -l</code>,
+the record/playback test, <code>alsamixer</code>/<code>amixer</code> levels, and PulseAudio vs PipeWire notes. Run
+those first on any raspOVOS box too. The checks below are raspOVOS-specific.</p>
+</blockquote>
+<details class="example">
+<summary>Fix</summary>
+<ul>
+<li><strong>Run Diagnostics script:</strong><ul>
+<li>raspOVOS includes a helper script <code>ovos-audio-diagnostics</code> that will print basic info about your sound system</li>
+</ul>
+</li>
+</ul>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="o">(</span>ovos<span class="o">)</span><span class="w"> </span>ovos@raspOVOS:~<span class="w"> </span>$<span class="w"> </span>ovos-audio-diagnostics
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="o">===========================</span><span class="w"> </span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>raspOVOS<span class="w"> </span>Audio<span class="w"> </span><span class="nv">Diagnostics</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="o">===========================</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="c1"># Detected sound server:</span>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>pipewire
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="c1"># Available audio outputs:</span>
+</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="m">36</span><span class="w"> </span>-<span class="w"> </span>Built-in<span class="w"> </span>Audio<span class="w"> </span>Stereo<span class="w"> </span><span class="o">[</span>vol:<span class="w"> </span><span class="m">0</span>.40<span class="o">]</span>
+</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="m">45</span><span class="w"> </span>-<span class="w"> </span>Built-in<span class="w"> </span>Audio<span class="w"> </span>Stereo<span class="w"> </span><span class="o">[</span>vol:<span class="w"> </span><span class="m">0</span>.85<span class="o">]</span>
+</span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="m">46</span><span class="w"> </span>-<span class="w"> </span>Built-in<span class="w"> </span>Audio<span class="w"> </span>Digital<span class="w"> </span>Stereo<span class="w"> </span><span class="o">(</span>HDMI<span class="o">)</span><span class="w"> </span><span class="o">[</span>vol:<span class="w"> </span><span class="m">0</span>.40<span class="o">]</span>
+</span><span id="__span-5-13"><a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>
+</span><span id="__span-5-14"><a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a><span class="c1"># Default audio output:</span>
+</span><span id="__span-5-15"><a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a>ID:<span class="w"> </span><span class="m">36</span>
+</span><span id="__span-5-16"><a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a>NAME:<span class="w"> </span>WM8731<span class="w"> </span>HiFi<span class="w"> </span>wm8731-hifi-0
+</span><span id="__span-5-17"><a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a>CARD<span class="w"> </span>NUMBER:<span class="w"> </span><span class="m">2</span>
+</span><span id="__span-5-18"><a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a>CARD<span class="w"> </span>NAME:<span class="w"> </span>snd_rpi_proto
+</span></code></pre></div>
+<ul>
+<li><strong>Check audio setup logs:</strong></li>
+<li>During boot the audio setup generates a log file, saved to the <code>/tmp</code> directory:<ul>
+<li><code>/tmp/autosoundcard.log</code> (for soundcard autoconfiguration)</li>
+</ul>
+</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>==&gt; /tmp/autosoundcard.log &lt;==
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>Fri 17 Jan 11:42:46 WET 2025 - **** List of PLAYBACK Hardware Devices ****
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>card 0: Headphones [bcm2835 Headphones], device 0: bcm2835 Headphones [bcm2835 Headphones]
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>Subdevices: 8/8
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>Subdevice #0: subdevice #0
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>Subdevice #1: subdevice #1
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>Subdevice #2: subdevice #2
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>Subdevice #3: subdevice #3
+</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>Subdevice #4: subdevice #4
+</span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a>Subdevice #5: subdevice #5
+</span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a>Subdevice #6: subdevice #6
+</span><span id="__span-6-12"><a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a>Subdevice #7: subdevice #7
+</span><span id="__span-6-13"><a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a>card 1: Device [USB Audio Device], device 0: USB Audio [USB Audio]
+</span><span id="__span-6-14"><a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a>Subdevices: 1/1
+</span><span id="__span-6-15"><a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a>Subdevice #0: subdevice #0
+</span><span id="__span-6-16"><a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a>card 2: vc4hdmi [vc4-hdmi], device 0: MAI PCM i2s-hifi-0 [MAI PCM i2s-hifi-0]
+</span><span id="__span-6-17"><a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a>Subdevices: 1/1
+</span><span id="__span-6-18"><a id="__codelineno-6-18" name="__codelineno-6-18" href="#__codelineno-6-18"></a>Subdevice #0: subdevice #0
+</span><span id="__span-6-19"><a id="__codelineno-6-19" name="__codelineno-6-19" href="#__codelineno-6-19"></a>card 3: sndrpiproto [snd_rpi_proto], device 0: WM8731 HiFi wm8731-hifi-0 [WM8731 HiFi wm8731-hifi-0]
+</span><span id="__span-6-20"><a id="__codelineno-6-20" name="__codelineno-6-20" href="#__codelineno-6-20"></a>Subdevices: 0/1
+</span><span id="__span-6-21"><a id="__codelineno-6-21" name="__codelineno-6-21" href="#__codelineno-6-21"></a>Subdevice #0: subdevice #0
+</span><span id="__span-6-22"><a id="__codelineno-6-22" name="__codelineno-6-22" href="#__codelineno-6-22"></a>Fri 17 Jan 11:42:48 WET 2025 - Mark 1 soundcard detected by ovos-i2csound.
+</span><span id="__span-6-23"><a id="__codelineno-6-23" name="__codelineno-6-23" href="#__codelineno-6-23"></a>Fri 17 Jan 11:42:48 WET 2025 - Detected CARD_NUMBER for Mark 1 soundcard: 3
+</span><span id="__span-6-24"><a id="__codelineno-6-24" name="__codelineno-6-24" href="#__codelineno-6-24"></a>Fri 17 Jan 11:42:48 WET 2025 - Configuring ALSA default card
+</span><span id="__span-6-25"><a id="__codelineno-6-25" name="__codelineno-6-25" href="#__codelineno-6-25"></a>Fri 17 Jan 11:42:48 WET 2025 - Running as user, modifying ~/.asoundrc
+</span><span id="__span-6-26"><a id="__codelineno-6-26" name="__codelineno-6-26" href="#__codelineno-6-26"></a>Fri 17 Jan 11:42:48 WET 2025 - ALSA default card set to: 3
+</span></code></pre></div>
+<ul>
+<li><strong>Confirm available audio sinks:</strong><ul>
+<li>Run <code>wpctl status</code> to check the available outputs as seen by <code>pipewire</code>.</li>
+<li>The default sinks will be marked with <code>*</code></li>
+</ul>
+</li>
+<li>You can inspect a sink by its number with <code>wpctl inspect $SINK_ID</code></li>
+</ul>
+<details class="example">
+<summary>Full <code>wpctl status</code> / <code>wpctl inspect</code> transcript</summary>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="o">(</span>ovos<span class="o">)</span><span class="w"> </span>ovos@raspOVOS:~<span class="w"> </span>$<span class="w"> </span>wpctl<span class="w"> </span>status
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>PipeWire<span class="w"> </span><span class="s1">&#39;pipewire-0&#39;</span><span class="w"> </span><span class="o">[</span><span class="m">1</span>.2.4,<span class="w"> </span>ovos@raspOVOS,<span class="w"> </span>cookie:3349583741<span class="o">]</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>└─<span class="w"> </span>Clients:
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="w">   </span><span class="m">33</span>.<span class="w"> </span>WirePlumber<span class="w">                         </span><span class="o">[</span><span class="m">1</span>.2.4,<span class="w"> </span>ovos@raspOVOS,<span class="w"> </span>pid:695<span class="o">]</span>
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="w">   </span><span class="m">34</span>.<span class="w"> </span>WirePlumber<span class="w"> </span><span class="o">[</span>export<span class="o">]</span><span class="w">                </span><span class="o">[</span><span class="m">1</span>.2.4,<span class="w"> </span>ovos@raspOVOS,<span class="w"> </span>pid:695<span class="o">]</span>
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>
+</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="w">   </span><span class="m">47</span>.<span class="w"> </span>PipeWire<span class="w"> </span>ALSA<span class="w"> </span><span class="o">[</span>librespot<span class="o">]</span><span class="w">           </span><span class="o">[</span><span class="m">1</span>.2.4,<span class="w"> </span>ovos@raspOVOS,<span class="w"> </span>pid:702<span class="o">]</span>
+</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>
+</span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="w">   </span><span class="m">67</span>.<span class="w"> </span>PipeWire<span class="w"> </span>ALSA<span class="w"> </span><span class="o">[</span>python3.11<span class="o">]</span><span class="w">          </span><span class="o">[</span><span class="m">1</span>.2.4,<span class="w"> </span>ovos@raspOVOS,<span class="w"> </span>pid:691<span class="o">]</span>
+</span><span id="__span-7-12"><a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a>
+</span><span id="__span-7-13"><a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a><span class="w">   </span><span class="m">75</span>.<span class="w"> </span>PipeWire<span class="w"> </span>ALSA<span class="w"> </span><span class="o">[</span>python3.11<span class="o">]</span><span class="w">          </span><span class="o">[</span><span class="m">1</span>.2.4,<span class="w"> </span>ovos@raspOVOS,<span class="w"> </span>pid:699<span class="o">]</span>
+</span><span id="__span-7-14"><a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a>
+</span><span id="__span-7-15"><a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a><span class="w">   </span><span class="m">83</span>.<span class="w"> </span>PipeWire<span class="w"> </span>ALSA<span class="w"> </span><span class="o">[</span>python3.11<span class="o">]</span><span class="w">          </span><span class="o">[</span><span class="m">1</span>.2.4,<span class="w"> </span>ovos@raspOVOS,<span class="w"> </span>pid:700<span class="o">]</span>
+</span><span id="__span-7-16"><a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a>
+</span><span id="__span-7-17"><a id="__codelineno-7-17" name="__codelineno-7-17" href="#__codelineno-7-17"></a><span class="w">   </span><span class="m">84</span>.<span class="w"> </span>wpctl<span class="w">                               </span><span class="o">[</span><span class="m">1</span>.2.4,<span class="w"> </span>ovos@raspOVOS,<span class="w"> </span>pid:1710<span class="o">]</span>
+</span><span id="__span-7-18"><a id="__codelineno-7-18" name="__codelineno-7-18" href="#__codelineno-7-18"></a>
+</span><span id="__span-7-19"><a id="__codelineno-7-19" name="__codelineno-7-19" href="#__codelineno-7-19"></a>Audio
+</span><span id="__span-7-20"><a id="__codelineno-7-20" name="__codelineno-7-20" href="#__codelineno-7-20"></a>├─<span class="w"> </span>Devices:
+</span><span id="__span-7-21"><a id="__codelineno-7-21" name="__codelineno-7-21" href="#__codelineno-7-21"></a>│<span class="w">      </span><span class="m">42</span>.<span class="w"> </span>Built-in<span class="w"> </span>Audio<span class="w">                      </span><span class="o">[</span>alsa<span class="o">]</span>
+</span><span id="__span-7-22"><a id="__codelineno-7-22" name="__codelineno-7-22" href="#__codelineno-7-22"></a>│<span class="w">      </span><span class="m">43</span>.<span class="w"> </span>Built-in<span class="w"> </span>Audio<span class="w">                      </span><span class="o">[</span>alsa<span class="o">]</span>
+</span><span id="__span-7-23"><a id="__codelineno-7-23" name="__codelineno-7-23" href="#__codelineno-7-23"></a>│<span class="w">      </span><span class="m">44</span>.<span class="w"> </span>Built-in<span class="w"> </span>Audio<span class="w">                      </span><span class="o">[</span>alsa<span class="o">]</span>
+</span><span id="__span-7-24"><a id="__codelineno-7-24" name="__codelineno-7-24" href="#__codelineno-7-24"></a>│<span class="w">  </span>
+</span><span id="__span-7-25"><a id="__codelineno-7-25" name="__codelineno-7-25" href="#__codelineno-7-25"></a>├─<span class="w"> </span>Sinks:
+</span><span id="__span-7-26"><a id="__codelineno-7-26" name="__codelineno-7-26" href="#__codelineno-7-26"></a>│<span class="w">  </span>*<span class="w">   </span><span class="m">36</span>.<span class="w"> </span>Built-in<span class="w"> </span>Audio<span class="w"> </span>Stereo<span class="w">               </span><span class="o">[</span>vol:<span class="w"> </span><span class="m">0</span>.40<span class="o">]</span>
+</span><span id="__span-7-27"><a id="__codelineno-7-27" name="__codelineno-7-27" href="#__codelineno-7-27"></a>│<span class="w">      </span><span class="m">45</span>.<span class="w"> </span>Built-in<span class="w"> </span>Audio<span class="w"> </span>Stereo<span class="w">               </span><span class="o">[</span>vol:<span class="w"> </span><span class="m">0</span>.85<span class="o">]</span>
+</span><span id="__span-7-28"><a id="__codelineno-7-28" name="__codelineno-7-28" href="#__codelineno-7-28"></a>│<span class="w">      </span><span class="m">46</span>.<span class="w"> </span>Built-in<span class="w"> </span>Audio<span class="w"> </span>Digital<span class="w"> </span>Stereo<span class="w"> </span><span class="o">(</span>HDMI<span class="o">)</span><span class="w"> </span><span class="o">[</span>vol:<span class="w"> </span><span class="m">0</span>.40<span class="o">]</span>
+</span><span id="__span-7-29"><a id="__codelineno-7-29" name="__codelineno-7-29" href="#__codelineno-7-29"></a>│<span class="w">  </span>
+</span><span id="__span-7-30"><a id="__codelineno-7-30" name="__codelineno-7-30" href="#__codelineno-7-30"></a>├─<span class="w"> </span>Sink<span class="w"> </span>endpoints:
+</span><span id="__span-7-31"><a id="__codelineno-7-31" name="__codelineno-7-31" href="#__codelineno-7-31"></a>│<span class="w">  </span>
+</span><span id="__span-7-32"><a id="__codelineno-7-32" name="__codelineno-7-32" href="#__codelineno-7-32"></a>├─<span class="w"> </span>Sources:
+</span><span id="__span-7-33"><a id="__codelineno-7-33" name="__codelineno-7-33" href="#__codelineno-7-33"></a>│<span class="w">  </span>*<span class="w">   </span><span class="m">37</span>.<span class="w"> </span>Built-in<span class="w"> </span>Audio<span class="w"> </span>Stereo<span class="w">               </span><span class="o">[</span>vol:<span class="w"> </span><span class="m">1</span>.00<span class="o">]</span>
+</span><span id="__span-7-34"><a id="__codelineno-7-34" name="__codelineno-7-34" href="#__codelineno-7-34"></a>│<span class="w">  </span>
+</span><span id="__span-7-35"><a id="__codelineno-7-35" name="__codelineno-7-35" href="#__codelineno-7-35"></a>├─<span class="w"> </span>Source<span class="w"> </span>endpoints:
+</span><span id="__span-7-36"><a id="__codelineno-7-36" name="__codelineno-7-36" href="#__codelineno-7-36"></a>│<span class="w">  </span>
+</span><span id="__span-7-37"><a id="__codelineno-7-37" name="__codelineno-7-37" href="#__codelineno-7-37"></a>└─<span class="w"> </span>Streams:
+</span><span id="__span-7-38"><a id="__codelineno-7-38" name="__codelineno-7-38" href="#__codelineno-7-38"></a>
+</span><span id="__span-7-39"><a id="__codelineno-7-39" name="__codelineno-7-39" href="#__codelineno-7-39"></a><span class="w">   </span><span class="m">48</span>.<span class="w"> </span>PipeWire<span class="w"> </span>ALSA<span class="w"> </span><span class="o">[</span>librespot<span class="o">]</span><span class="w">                                   </span>
+</span><span id="__span-7-40"><a id="__codelineno-7-40" name="__codelineno-7-40" href="#__codelineno-7-40"></a>
+</span><span id="__span-7-41"><a id="__codelineno-7-41" name="__codelineno-7-41" href="#__codelineno-7-41"></a><span class="w">        </span><span class="m">63</span>.<span class="w"> </span>output_FL<span class="w">       </span>&gt;<span class="w"> </span>WM8731<span class="w"> </span>HiFi<span class="w"> </span>wm8731-hifi-0:playback_FL<span class="w"> </span><span class="o">[</span>active<span class="o">]</span>
+</span><span id="__span-7-42"><a id="__codelineno-7-42" name="__codelineno-7-42" href="#__codelineno-7-42"></a>
+</span><span id="__span-7-43"><a id="__codelineno-7-43" name="__codelineno-7-43" href="#__codelineno-7-43"></a><span class="w">        </span><span class="m">64</span>.<span class="w"> </span>output_FR<span class="w">       </span>&gt;<span class="w"> </span>WM8731<span class="w"> </span>HiFi<span class="w"> </span>wm8731-hifi-0:playback_FR<span class="w"> </span><span class="o">[</span>active<span class="o">]</span>
+</span><span id="__span-7-44"><a id="__codelineno-7-44" name="__codelineno-7-44" href="#__codelineno-7-44"></a>
+</span><span id="__span-7-45"><a id="__codelineno-7-45" name="__codelineno-7-45" href="#__codelineno-7-45"></a><span class="w">   </span><span class="m">68</span>.<span class="w"> </span>PipeWire<span class="w"> </span>ALSA<span class="w"> </span><span class="o">[</span>python3.11<span class="o">]</span><span class="w">                                  </span>
+</span><span id="__span-7-46"><a id="__codelineno-7-46" name="__codelineno-7-46" href="#__codelineno-7-46"></a>
+</span><span id="__span-7-47"><a id="__codelineno-7-47" name="__codelineno-7-47" href="#__codelineno-7-47"></a><span class="w">        </span><span class="m">69</span>.<span class="w"> </span>input_FL<span class="w">        </span>&lt;<span class="w"> </span>WM8731<span class="w"> </span>HiFi<span class="w"> </span>wm8731-hifi-0:capture_FL<span class="w">  </span><span class="o">[</span>active<span class="o">]</span>
+</span><span id="__span-7-48"><a id="__codelineno-7-48" name="__codelineno-7-48" href="#__codelineno-7-48"></a>
+</span><span id="__span-7-49"><a id="__codelineno-7-49" name="__codelineno-7-49" href="#__codelineno-7-49"></a><span class="w">        </span><span class="m">70</span>.<span class="w"> </span>monitor_FL<span class="w">     </span>
+</span><span id="__span-7-50"><a id="__codelineno-7-50" name="__codelineno-7-50" href="#__codelineno-7-50"></a>
+</span><span id="__span-7-51"><a id="__codelineno-7-51" name="__codelineno-7-51" href="#__codelineno-7-51"></a><span class="w">        </span><span class="m">71</span>.<span class="w"> </span>input_FR<span class="w">        </span>&lt;<span class="w"> </span>WM8731<span class="w"> </span>HiFi<span class="w"> </span>wm8731-hifi-0:capture_FR<span class="w">  </span><span class="o">[</span>active<span class="o">]</span>
+</span><span id="__span-7-52"><a id="__codelineno-7-52" name="__codelineno-7-52" href="#__codelineno-7-52"></a>
+</span><span id="__span-7-53"><a id="__codelineno-7-53" name="__codelineno-7-53" href="#__codelineno-7-53"></a><span class="w">        </span><span class="m">72</span>.<span class="w"> </span>monitor_FR<span class="w">              </span>
+</span><span id="__span-7-54"><a id="__codelineno-7-54" name="__codelineno-7-54" href="#__codelineno-7-54"></a>
+</span><span id="__span-7-55"><a id="__codelineno-7-55" name="__codelineno-7-55" href="#__codelineno-7-55"></a><span class="o">(</span>ovos<span class="o">)</span><span class="w"> </span>ovos@raspOVOS:~<span class="w"> </span>$<span class="w"> </span>wpctl<span class="w"> </span>inspect<span class="w"> </span><span class="m">36</span>
+</span><span id="__span-7-56"><a id="__codelineno-7-56" name="__codelineno-7-56" href="#__codelineno-7-56"></a>id<span class="w"> </span><span class="m">36</span>,<span class="w"> </span><span class="nb">type</span><span class="w"> </span>PipeWire:Interface:Node
+</span><span id="__span-7-57"><a id="__codelineno-7-57" name="__codelineno-7-57" href="#__codelineno-7-57"></a><span class="w">   </span>alsa.card<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;2&quot;</span>
+</span><span id="__span-7-58"><a id="__codelineno-7-58" name="__codelineno-7-58" href="#__codelineno-7-58"></a><span class="w">   </span>alsa.card_name<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;snd_rpi_proto&quot;</span>
+</span><span id="__span-7-59"><a id="__codelineno-7-59" name="__codelineno-7-59" href="#__codelineno-7-59"></a><span class="w">   </span>alsa.class<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;generic&quot;</span>
+</span><span id="__span-7-60"><a id="__codelineno-7-60" name="__codelineno-7-60" href="#__codelineno-7-60"></a><span class="w">   </span>alsa.device<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;0&quot;</span>
+</span><span id="__span-7-61"><a id="__codelineno-7-61" name="__codelineno-7-61" href="#__codelineno-7-61"></a><span class="w">   </span>alsa.driver_name<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;snd_soc_rpi_proto&quot;</span>
+</span><span id="__span-7-62"><a id="__codelineno-7-62" name="__codelineno-7-62" href="#__codelineno-7-62"></a><span class="w">   </span>alsa.id<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;sndrpiproto&quot;</span>
+</span><span id="__span-7-63"><a id="__codelineno-7-63" name="__codelineno-7-63" href="#__codelineno-7-63"></a><span class="w">   </span>alsa.long_card_name<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;snd_rpi_proto&quot;</span>
+</span><span id="__span-7-64"><a id="__codelineno-7-64" name="__codelineno-7-64" href="#__codelineno-7-64"></a><span class="w">   </span>alsa.name<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;WM8731 HiFi wm8731-hifi-0&quot;</span>
+</span><span id="__span-7-65"><a id="__codelineno-7-65" name="__codelineno-7-65" href="#__codelineno-7-65"></a><span class="w">   </span>alsa.resolution_bits<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;16&quot;</span>
+</span><span id="__span-7-66"><a id="__codelineno-7-66" name="__codelineno-7-66" href="#__codelineno-7-66"></a><span class="w">   </span>alsa.subclass<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;generic-mix&quot;</span>
+</span><span id="__span-7-67"><a id="__codelineno-7-67" name="__codelineno-7-67" href="#__codelineno-7-67"></a><span class="w">   </span>alsa.subdevice<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;0&quot;</span>
+</span><span id="__span-7-68"><a id="__codelineno-7-68" name="__codelineno-7-68" href="#__codelineno-7-68"></a><span class="w">   </span>alsa.subdevice_name<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;subdevice #0&quot;</span>
+</span><span id="__span-7-69"><a id="__codelineno-7-69" name="__codelineno-7-69" href="#__codelineno-7-69"></a><span class="w">   </span>...
+</span></code></pre></div>
+</details>
+<h3 id="re-triggering-auto-detection-without-a-reboot">Re-triggering auto-detection without a reboot<a class="headerlink" href="#re-triggering-auto-detection-without-a-reboot" title="Permanent link">&para;</a></h3>
+<p>If the wrong output device got picked, or a HAT wasn't detected, you don't need to reboot to
+re-run detection. Two separate systemd services do it:</p>
+<ul>
+<li><code>sudo systemctl restart autoconfigure_soundcard.service</code>: re-picks the default output.</li>
+<li><code>sudo systemctl restart i2csound.service</code>: re-detects an i2c sound HAT (Respeaker, Mark 2's
+  SJ201, etc.).</li>
+</ul>
+<p>These are the same services the boot-time helper scripts run automatically. Restarting them by
+hand re-runs the same detection logic without a full reboot.</p>
+<p>raspOVOS also ships a handful of non-interactive <code>/usr/libexec</code> helper scripts, invoked by
+systemd rather than typed at a prompt: <code>ovos-i2csound</code> and <code>soundcard-autoconfigure</code> (the
+scripts behind the two services above), <code>usb-autovolume</code>, the <code>ovos-systemd-*</code> service
+launchers, and <code>ovos-reboot-signal</code>/<code>ovos-shutdown-signal</code> (bus signal emitters for reboot and
+shutdown). You won't normally run these directly, but their names are worth knowing when reading
+<code>ologs</code> output during audio troubleshooting.</p>
+</details>
+<h2 id="stt-tips-and-tricks">STT tips and tricks<a class="headerlink" href="#stt-tips-and-tricks" title="Permanent link">&para;</a></h2>
+<p>Wrong or garbled transcriptions usually trace back to the audio itself, a plugin mismatch, or the listen sound leaking into the recording.</p>
+<details class="example">
+<summary>Fix</summary>
 <h3 id="saving-transcriptions">Saving Transcriptions<a class="headerlink" href="#saving-transcriptions" title="Permanent link">&para;</a></h3>
 <p>You can enable saving of recordings to file, this should be your first step to diagnose problems, is the audio
 intelligible? is it being cropped? too noisy? low volume?</p>

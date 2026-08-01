@@ -14,7 +14,7 @@
         <link rel="prev" href="../privacy-security/">
       
       
-        <link rel="next" href="../production-hardening/">
+        <link rel="next" href="../backup-restore/">
       
       
       <link rel="icon" href="https://github.com/OpenVoiceOS/ovos_assets/blob/master/Logo/ovos-logo-512.png?raw=true">
@@ -970,45 +970,12 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Backup and restore">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#backup-recipe" class="md-nav__link">
-    <span class="md-ellipsis">
-      Backup recipe
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#restore-onto-a-fresh-install" class="md-nav__link">
-    <span class="md-ellipsis">
-      Restore onto a fresh install
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
         <li class="md-nav__item">
-  <a href="#updating-a-single-device" class="md-nav__link">
+  <a href="#updating-a-device-or-a-fleet" class="md-nav__link">
     <span class="md-ellipsis">
-      Updating a single device
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#staged-upgrades-and-rollback" class="md-nav__link">
-    <span class="md-ellipsis">
-      Staged upgrades and rollback
+      Updating a device or a fleet
     </span>
   </a>
   
@@ -1042,26 +1009,11 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#observability-what-exists-and-what-doesnt" class="md-nav__link">
+  <a href="#observability" class="md-nav__link">
     <span class="md-ellipsis">
-      Observability: what exists and what doesn't
+      Observability
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="Observability: what exists and what doesn't">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#building-fleet-wide-alerting-yourself" class="md-nav__link">
-    <span class="md-ellipsis">
-      Building fleet-wide alerting yourself
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -1069,6 +1021,69 @@
   
 </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../backup-restore/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Backup and Restore
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../staged-upgrades/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Staged Upgrades and Rollback
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../observability/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Observability
+  </span>
+  
+
+      </a>
     </li>
   
 
@@ -1432,45 +1447,12 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Backup and restore">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#backup-recipe" class="md-nav__link">
-    <span class="md-ellipsis">
-      Backup recipe
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#restore-onto-a-fresh-install" class="md-nav__link">
-    <span class="md-ellipsis">
-      Restore onto a fresh install
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
         <li class="md-nav__item">
-  <a href="#updating-a-single-device" class="md-nav__link">
+  <a href="#updating-a-device-or-a-fleet" class="md-nav__link">
     <span class="md-ellipsis">
-      Updating a single device
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#staged-upgrades-and-rollback" class="md-nav__link">
-    <span class="md-ellipsis">
-      Staged upgrades and rollback
+      Updating a device or a fleet
     </span>
   </a>
   
@@ -1504,26 +1486,11 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#observability-what-exists-and-what-doesnt" class="md-nav__link">
+  <a href="#observability" class="md-nav__link">
     <span class="md-ellipsis">
-      Observability: what exists and what doesn't
+      Observability
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="Observability: what exists and what doesn't">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#building-fleet-wide-alerting-yourself" class="md-nav__link">
-    <span class="md-ellipsis">
-      Building fleet-wide alerting yourself
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -1761,105 +1728,16 @@ unit's stdout to the journal (the default) and ship <code>journalctl</code> outp
 does not include a log-shipping client.</p>
 <hr />
 <h2 id="backup-and-restore">Backup and restore<a class="headerlink" href="#backup-and-restore" title="Permanent link">&para;</a></h2>
-<pre class="mermaid"><code>flowchart TD
-    Backup["cp ~/.config/mycroft&lt;br/&gt;+ ~/.local/share/mycroft"] --&gt; Store[Store backup&lt;br/&gt;securely]
-    Store -.-&gt; Install[Install OVOS&lt;br/&gt;on new machine]
-    Install --&gt; Stop["systemctl --user stop&lt;br/&gt;ovos.service"]
-    Stop --&gt; CopyBack[Copy config/data&lt;br/&gt;back into place]
-    CopyBack --&gt; Restart["systemctl --user start&lt;br/&gt;ovos.service"]
-    Restart --&gt; Probe[Re-run readiness probe]</code></pre>
-<p><em>Diagram:</em> The flow starts at backing up the config and data directories and ends at re-running the readiness probe, and the stored backup branches off to a new machine before the service is stopped, restored, and restarted.</p>
 <p>Two kinds of state matter on an OVOS device: the packages that are installed, and everything
-under a user's config/data directories. The staged-upgrade recipe below covers packages. This
-section covers the directories.</p>
-<table>
-<thead>
-<tr>
-<th>What</th>
-<th>Path</th>
-<th>Source</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>User config (<code>mycroft.conf</code>), may hold plaintext secrets</td>
-<td><code>~/.config/mycroft/mycroft.conf</code></td>
-<td><a href="../locations-ref/#path-constants">Locations</a></td>
-</tr>
-<tr>
-<td>System config (fleet-wide layer, if you use one)</td>
-<td><code>/etc/mycroft/mycroft.conf</code></td>
-<td><a href="../locations-ref/#path-constants">Locations</a>, <a href="#one-config-for-many-devices-the-system-config-layer">one config for many devices</a></td>
-</tr>
-<tr>
-<td>Per-skill settings</td>
-<td><code>~/.config/mycroft/skills/&lt;skill_id&gt;/settings.json</code></td>
-<td><a href="../skill-settings/#storage-location">Skill Settings: Storage Location</a></td>
-</tr>
-<tr>
-<td>Per-skill persistent files</td>
-<td><code>~/.local/share/mycroft/filesystem/skills/&lt;skill_id&gt;/</code></td>
-<td><a href="../skill-filesystem/#storage-path">Filesystem Access: Storage Path</a></td>
-</tr>
-</tbody>
-</table>
-<p><code>~/.config/mycroft</code> and <code>~/.local/share/mycroft</code> are the effective defaults under the standard
-XDG layout. Both move together if <code>OVOS_CONFIG_BASE_FOLDER</code> renames the <code>mycroft</code> subdirectory
-system-wide (see <a href="../locations-ref/#environment-variable-influence">Locations</a>).</p>
-<h3 id="backup-recipe">Backup recipe<a class="headerlink" href="#backup-recipe" title="Permanent link">&para;</a></h3>
-<p>A copy is enough. Nothing here needs a database dump or a running service to stop first,
-though restarting the service afterward picks up any config changes made in the meantime:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="nv">BACKUP_DIR</span><span class="o">=</span>~/ovos-backup-<span class="k">$(</span>date<span class="w"> </span>+%F<span class="k">)</span>
-</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>mkdir<span class="w"> </span>-p<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$BACKUP_DIR</span><span class="s2">&quot;</span>
-</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>cp<span class="w"> </span>-a<span class="w"> </span>~/.config/mycroft<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$BACKUP_DIR</span><span class="s2">/config&quot;</span>
-</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>cp<span class="w"> </span>-a<span class="w"> </span>~/.local/share/mycroft<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$BACKUP_DIR</span><span class="s2">/data&quot;</span>
-</span></code></pre></div>
-<p><code>mycroft.conf</code> can contain plaintext API keys and tokens (see
-<a href="../privacy-security/#mycroftconf-can-contain-plaintext-secrets">Privacy &amp; Security: mycroft.conf can contain plaintext secrets</a>).
-Store the backup with the same care you'd give the original file, and never commit it to a
-public repository.</p>
-<h3 id="restore-onto-a-fresh-install">Restore onto a fresh install<a class="headerlink" href="#restore-onto-a-fresh-install" title="Permanent link">&para;</a></h3>
-<ol>
-<li><a href="../ovos-installer/">Install OVOS</a> normally on the new machine, and confirm the stock
-   assistant works before restoring anything, so a restore problem is not confused with an
-   install problem.</li>
-<li>Stop the services: <code>systemctl --user stop ovos.service</code>.</li>
-<li>Copy the backed-up directories back into place, overwriting the freshly-installed defaults:</li>
-</ol>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>cp<span class="w"> </span>-a<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$BACKUP_DIR</span><span class="s2">/config/.&quot;</span><span class="w"> </span>~/.config/mycroft/
-</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>cp<span class="w"> </span>-a<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$BACKUP_DIR</span><span class="s2">/data/.&quot;</span><span class="w"> </span>~/.local/share/mycroft/
-</span></code></pre></div>
-<ol>
-<li>Restart: <code>systemctl --user start ovos.service</code>, then re-run the readiness probe above
-   before relying on the device.</li>
-</ol>
-<p>Skills themselves are not part of this backup. They are Python packages, reinstalled the same
-way they were installed originally (see <a href="../skill-installer/">Skill Installer</a> or your own
-provisioning step). Only their settings and persisted files travel with the config/data
-backup above.</p>
+under a user's config/data directories. The full backup recipe, the restore-onto-fresh-install
+steps, and the exact config/data paths have moved to their own page:
+<strong><a href="../backup-restore/">Backup and Restore</a></strong>.</p>
 <hr />
-<h2 id="updating-a-single-device">Updating a single device<a class="headerlink" href="#updating-a-single-device" title="Permanent link">&para;</a></h2>
-<p>The <a href="#staged-upgrades-and-rollback">staged-upgrade recipe</a> below is written for a fleet, but
-the same steps apply to a single, standalone device with the fleet-specific parts dropped:
-back up the config, freeze the current package set, upgrade, and verify.</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="c1"># 1. Back up config and freeze the current package set, in case you need to go back</span>
-</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>cp<span class="w"> </span>~/.config/mycroft/mycroft.conf<span class="w"> </span>~/.config/mycroft/mycroft.conf.bak-<span class="k">$(</span>date<span class="w"> </span>+%F<span class="k">)</span>
-</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>uv<span class="w"> </span>pip<span class="w"> </span>freeze<span class="w"> </span>&gt;<span class="w"> </span>~/ovos-known-good-<span class="k">$(</span>date<span class="w"> </span>+%F<span class="k">)</span>.txt
-</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>
-</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="c1"># 2. Upgrade against a pinned constraints file (stays within one release channel)</span>
-</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>--upgrade<span class="w"> </span>ovos-core<span class="o">[</span>mycroft<span class="o">]</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-11-7"><a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="w">    </span>-c<span class="w"> </span>https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-stable.txt
-</span><span id="__span-11-8"><a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a>
-</span><span id="__span-11-9"><a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a><span class="c1"># 3. Restart and re-run the readiness probe above before declaring success</span>
-</span><span id="__span-11-10"><a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a>systemctl<span class="w"> </span>--user<span class="w"> </span>restart<span class="w"> </span>ovos.service
-</span></code></pre></div>
-<p>If it misbehaves, roll back the same way as in the fleet recipe:
-<code>uv pip install --force-reinstall -r ~/ovos-known-good-&lt;date&gt;.txt</code>, then restart the service.
-See <a href="#staged-upgrades-and-rollback">Staged upgrades and rollback</a> for why <code>--force-reinstall</code>
-is required on rollback, and <a href="../release-rollback/#pinning-or-rolling-back-a-single-package">Rolling Back an OVOS Upgrade: Pinning or rolling back a single
-package</a> if only one package
-regressed rather than the whole stack.</p>
-<hr />
+<h2 id="updating-a-device-or-a-fleet">Updating a device or a fleet<a class="headerlink" href="#updating-a-device-or-a-fleet" title="Permanent link">&para;</a></h2>
+<p>Upgrading safely means freezing the current package set before you touch anything, so you can
+roll back with <code>--force-reinstall</code> if the upgrade misbehaves. The single-device recipe, the
+fleet canary pattern, and how to detect a partially-failed rollback have moved to their own
+page: <strong><a href="../staged-upgrades/">Staged Upgrades and Rollback</a></strong>.</p>
 <div class="admonition warning">
 <p class="admonition-title">Check the breaking-change reference before any version jump</p>
 <p>An upgrade that crosses release eras can hit renamed config keys, changed skill
@@ -1869,70 +1747,12 @@ APIs, and removed bus topics. Before upgrading, go straight to
 your current era. If you maintain custom skills or plugins, see
 <a href="../version-compat-guide/">Version-Compatible Skills &amp; Plugins</a>.</p>
 </div>
-<h2 id="staged-upgrades-and-rollback">Staged upgrades and rollback<a class="headerlink" href="#staged-upgrades-and-rollback" title="Permanent link">&para;</a></h2>
-<pre class="mermaid"><code>flowchart LR
-    Freeze["Freeze known-good&lt;br/&gt;packages&lt;br/&gt;(uv pip freeze)"] --&gt; Canary[Upgrade one&lt;br/&gt;canary device]
-    Canary --&gt; Verify{Readiness probe +&lt;br/&gt;real voice check pass?}
-    Verify -- yes --&gt; Fleet[Roll same command&lt;br/&gt;out to fleet]
-    Verify -- no --&gt; Rollback["--force-reinstall&lt;br/&gt;known-good,&lt;br/&gt;restart ovos.service"]</code></pre>
-<p><em>Diagram:</em> The flow starts at freezing known-good packages and ends at either the fleet rollout or a rollback, and it branches on whether the canary device passes its readiness probe and real voice check.</p>
-<p><a href="../release-channels/">Release channels</a> covers <code>stable</code>/<code>testing</code>/<code>alpha</code> constraints files.
-For a fleet, the same mechanism gives you a controlled, reversible upgrade path:</p>
-<p>If only a single package regressed, rolling back the whole stack is unnecessary. See
-<a href="../release-rollback/#pinning-or-rolling-back-a-single-package">Rolling Back an OVOS Upgrade: Pinning or rolling back a single
-package</a> for pinning and
-restarting just that one package across the fleet.</p>
-<div class="admonition tip">
-<p class="admonition-title">Back up your configuration too</p>
-<p>Package freezing protects the code. It does not protect your settings. Before an
-upgrade, also copy <code>~/.config/mycroft/mycroft.conf</code> somewhere safe. It can contain
-plaintext tokens and API keys (see <a href="../privacy-security/#mycroftconf-can-contain-plaintext-secrets">privacy-security</a>),
-so store the backup with the same care you'd give the original file.</p>
-</div>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="c1"># 1. Freeze exactly what&#39;s currently installed, in case you need to go back</span>
-</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>uv<span class="w"> </span>pip<span class="w"> </span>freeze<span class="w"> </span>&gt;<span class="w"> </span>/etc/ovos/known-good-<span class="k">$(</span>date<span class="w"> </span>+%F<span class="k">)</span>.txt
-</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>cp<span class="w"> </span>~/.config/mycroft/mycroft.conf<span class="w"> </span>~/.config/mycroft/mycroft.conf.bak-<span class="k">$(</span>date<span class="w"> </span>+%F<span class="k">)</span>
-</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>
-</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="c1"># 2. Upgrade against a pinned constraints file (stays within one release channel)</span>
-</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>--upgrade<span class="w"> </span>ovos-core<span class="o">[</span>mycroft<span class="o">]</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="w">    </span>-c<span class="w"> </span>https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-stable.txt
-</span><span id="__span-12-8"><a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a>
-</span><span id="__span-12-9"><a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a><span class="c1"># 3. Restart and re-run the readiness probe above before declaring success</span>
-</span><span id="__span-12-10"><a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a>systemctl<span class="w"> </span>--user<span class="w"> </span>restart<span class="w"> </span>ovos.service
-</span></code></pre></div>
-<p>If the upgrade misbehaves, roll back to the frozen set:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>--force-reinstall<span class="w"> </span>-r<span class="w"> </span>/etc/ovos/known-good-2026-07-01.txt<span class="w">  </span><span class="c1"># use the actual date from the freeze file you created in step 1</span>
-</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>systemctl<span class="w"> </span>--user<span class="w"> </span>restart<span class="w"> </span>ovos.service
-</span></code></pre></div>
-<p><code>--force-reinstall</code> is needed on rollback because a plain <code>pip install</code> treats "already
-satisfies requirement" as nothing to do. It will not downgrade a package back to an older
-pinned version on its own.</p>
-<div class="admonition tip">
-<p class="admonition-title">Stage it on one device first</p>
-<p>Constraints files are a moving target upstream. Roll an upgrade out to one canary device,
-confirm the readiness probe and a couple of real voice interactions succeed, then repeat
-the same <code>uv pip install -c ...</code> command across the rest of the fleet.</p>
-</div>
-<div class="admonition warning">
-<p class="admonition-title">Detecting a partially-failed rollback</p>
-<p><code>--force-reinstall</code> can itself be interrupted (network drop, disk full, <code>Ctrl-C</code>) partway
-through reinstalling the packages listed in the frozen file, leaving some packages back at
-the old pinned version and others still on the newer one. Compare the current environment
-against the frozen file to check:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>diff<span class="w"> </span>&lt;<span class="o">(</span>uv<span class="w"> </span>pip<span class="w"> </span>freeze<span class="w"> </span><span class="p">|</span><span class="w"> </span>sort<span class="o">)</span><span class="w"> </span>&lt;<span class="o">(</span>sort<span class="w"> </span>/etc/ovos/known-good-2026-07-01.txt<span class="o">)</span>
-</span></code></pre></div>
-<p>Any line in the diff is a package whose installed version does not match the known-good
-snapshot. Re-run the <code>--force-reinstall</code> rollback command to finish the job before
-restarting the service. <code>uv pip check</code> is also worth running after either an upgrade or a
-rollback: it reports any dependency resolution left inconsistent (declared requirements no
-longer satisfied by what's installed), which a partial rollback commonly causes.</p>
-</div>
 <hr />
 <h2 id="one-config-for-many-devices-the-system-config-layer">One config for many devices: the system config layer<a class="headerlink" href="#one-config-for-many-devices-the-system-config-layer" title="Permanent link">&para;</a></h2>
 <p>OVOS reads configuration from several layered files, <a href="../config/">merged in order</a> so that a
 more specific file overrides a more general one. The layer meant for fleet-wide, admin-managed
 settings is the <strong>system config</strong>, at a fixed path:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>/etc/mycroft/mycroft.conf
+<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>/etc/mycroft/mycroft.conf
 </span></code></pre></div>
 <p>This file sits below each user's own <code>~/.config/mycroft/mycroft.conf</code>, so per-device
 overrides still win, but anything you don't override there comes from the system file. This
@@ -1951,60 +1771,15 @@ for the compose files, the config keys, and the container networking caveats.</p
 leaves localhost, and the HiveMind alternative to opening the bus directly: see
 <a href="../production-hardening/">Production Hardening</a>.</p>
 <hr />
-<h2 id="observability-what-exists-and-what-doesnt">Observability: what exists and what doesn't<a class="headerlink" href="#observability-what-exists-and-what-doesnt" title="Permanent link">&para;</a></h2>
-<div class="admonition warning">
-<p class="admonition-title">There is no built-in metrics endpoint</p>
-<p>OVOS does not expose a Prometheus-style <code>/metrics</code> endpoint or any built-in dashboard. The
-closest thing is usage-metric uploads, and those are <strong>explicitly opt-in</strong>: disabled by
-default, with nothing sent anywhere unless you deliberately configure an endpoint (see the
-commented-out <code>opendataConfig</code>-style keys in the default <code>mycroft.conf</code>, and
-<a href="../ecosystem-index/"><code>ovos-opendata-server</code></a> if you want to run your own collector). That
-is a telemetry pipeline you opt into, not an operational metrics/monitoring system.</p>
-</div>
-<p>For day-to-day, per-device debugging, use:</p>
-<ul>
-<li><strong><code>ovos-busmon</code></strong>: a browser-based web UI (FastAPI + WebSocket) that streams the live message traffic on a device's bus in
-  real time. The fastest way to see whether wake word → STT → intent → TTS is actually firing.</li>
-<li><strong><code>ovos-logs</code></strong> (above) for historical logs.</li>
-<li>The <a href="#knowing-when-the-assistant-is-actually-ready">readiness probe</a> as a synthetic check you
-  can run from outside the device (cron, a monitoring agent, a CI job) on a schedule.</li>
-</ul>
-<p>There is no supported way to scrape per-request latency or error rates across a fleet today.
-If you need that, you will need to build it on top of the bus messages yourself.</p>
-<h3 id="building-fleet-wide-alerting-yourself">Building fleet-wide alerting yourself<a class="headerlink" href="#building-fleet-wide-alerting-yourself" title="Permanent link">&para;</a></h3>
-<p>Since there is no push-based metrics endpoint, fleet alerting has to be built the other way
-around. Something outside each device polls its
-<a href="#knowing-when-the-assistant-is-actually-ready">readiness probe</a> on a schedule and reports a
-non-zero exit to whatever already pages you. A <code>systemd</code> timer wrapping the probe script from
-above is enough to get started:</p>
-<div class="language-ini highlight"><span class="filename">~/.config/systemd/user/ovos-alert.service</span><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="k">[Unit]</span>
-</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="na">Description</span><span class="o">=</span><span class="s">Check OVOS readiness and alert on failure</span>
-</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>
-</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="k">[Service]</span>
-</span><span id="__span-16-5"><a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a><span class="na">Type</span><span class="o">=</span><span class="s">oneshot</span>
-</span><span id="__span-16-6"><a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a><span class="na">ExecStart</span><span class="o">=</span><span class="s">/bin/sh -c &#39;/usr/local/bin/ovos-ready-probe || /usr/local/bin/notify-monitoring-agent &quot;ovos not ready&quot;&#39;</span>
-</span></code></pre></div>
-<div class="language-ini highlight"><span class="filename">~/.config/systemd/user/ovos-alert.timer</span><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="k">[Unit]</span>
-</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="na">Description</span><span class="o">=</span><span class="s">Run the OVOS readiness check every 5 minutes</span>
-</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>
-</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a><span class="k">[Timer]</span>
-</span><span id="__span-17-5"><a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a><span class="na">OnBootSec</span><span class="o">=</span><span class="s">5min</span>
-</span><span id="__span-17-6"><a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a><span class="na">OnUnitActiveSec</span><span class="o">=</span><span class="s">5min</span>
-</span><span id="__span-17-7"><a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a>
-</span><span id="__span-17-8"><a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a><span class="k">[Install]</span>
-</span><span id="__span-17-9"><a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a><span class="na">WantedBy</span><span class="o">=</span><span class="s">timers.target</span>
-</span></code></pre></div>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>systemctl<span class="w"> </span>--user<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>--now<span class="w"> </span>ovos-alert.timer
-</span></code></pre></div>
-<p><code>notify-monitoring-agent</code> above is a stand-in for whatever already collects failures on your
-fleet: a <code>curl</code> to a Healthchecks.io/Cronitor-style dead-man's-switch URL, a call into your
-monitoring agent's CLI, an email, a webhook. The same pattern works as a plain <code>cron</code> entry
-(<code>*/5 * * * * /usr/local/bin/ovos-ready-probe || /usr/local/bin/notify-monitoring-agent ...</code>) on a
-system without <code>systemd --user</code> timers. This is something you build, not something OVOS ships.
-But it is the whole shape of a working readiness alert: schedule the probe, act on its exit code.</p>
+<h2 id="observability">Observability<a class="headerlink" href="#observability" title="Permanent link">&para;</a></h2>
+<p>OVOS has no built-in metrics endpoint or dashboard. Day-to-day debugging leans on <code>ovos-busmon</code>
+(a live bus monitor) and the logs described above. Fleet-wide alerting is something you build
+yourself on top of the readiness probe. The full picture, including a ready-to-adapt
+<code>systemd</code> timer for polling the readiness probe, has moved to its own page:
+<strong><a href="../observability/">Observability</a></strong>.</p>
 <hr />
 <p><strong>Read next:</strong> <a href="../privacy-security/">Privacy &amp; Security</a>
-<strong>Related:</strong> <a href="../stt-server/">STT Server</a> · <a href="../updating-from-older-ovos/">Updating from Older OVOS</a> · <a href="../hivemind-agents/">HiveMind</a> · <a href="../release-channels/">Release Channels</a></p>
+<strong>Related:</strong> <a href="../backup-restore/">Backup and Restore</a> · <a href="../staged-upgrades/">Staged Upgrades and Rollback</a> · <a href="../observability/">Observability</a> · <a href="../stt-server/">STT Server</a> · <a href="../updating-from-older-ovos/">Updating from Older OVOS</a> · <a href="../hivemind-agents/">HiveMind</a> · <a href="../release-channels/">Release Channels</a></p>
 
 
 

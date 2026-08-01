@@ -1448,9 +1448,13 @@ decorators, language helpers, sound playback, and many small utilities. It also 
 lets tools validate and introspect message types instead of passing around raw dicts.</p>
 <ul>
 <li>Source: <a href="https://github.com/OpenVoiceOS/ovos-pydantic-models">OpenVoiceOS/ovos-pydantic-models</a></li>
-<li>API docs: <a href="https://github.com/OpenVoiceOS/ovos-pydantic-models/tree/dev/docs"><code>/docs</code></a></li>
+<li>Protocol reference: <a href="https://openvoiceos.github.io/ovos-pydantic-models/">MessageBus Protocol Reference</a>, a
+  browsable catalog of every modelled message, grouped by subsystem</li>
 <li>License: Apache-2.0</li>
 </ul>
+<p>The models are generated semi-automatically from source, so the published catalog can lag or
+diverge from the code. Treat it as a map of the message space, not as the contract. The
+<a href="../architecture-specs/">formal specifications</a> remain the authority on required behavior.</p>
 <h2 id="ovos-plugin-manager-opm"><code>ovos-plugin-manager</code> (OPM)<a class="headerlink" href="#ovos-plugin-manager-opm" title="Permanent link">&para;</a></h2>
 <p>Discovers, loads, and configures every kind of OVOS plugin via entry-point groups. Covered in the
 manual at <a href="../plugin-manager/">Plugin Manager</a>.</p>

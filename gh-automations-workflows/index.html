@@ -1348,6 +1348,90 @@
   
   
     <li class="md-nav__item">
+      <a href="../gh-automations-build-checks/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Build Checks
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../gh-automations-plugin-repo-checks/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Plugin, License & Repo Checks
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../gh-automations-repo-skill-checks/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Skill & Locale Checks
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../gh-automations-skill-test-workflows/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Skill Test Workflows
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../gh-automations-quality-workflows/" class="md-nav__link">
         
   
@@ -1539,7 +1623,7 @@
 <h1 id="reusable-workflow-reference">Reusable Workflow Reference<a class="headerlink" href="#reusable-workflow-reference" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>This page is the index to the detailed reference for every shared automation recipe ("workflow") that OVOS projects can plug in. The full specs live on three pages, split by lifecycle stage: <a href="../gh-automations-release-workflows/">release</a> (publish, version bump), <a href="../gh-automations-pr-workflows/">PR</a> (build, test, and check gates run on pull requests), and <a href="../gh-automations-quality-workflows/">quality</a> (lint, coverage, security scans, notifications). This index is aimed at maintainers wiring up a project's testing and release machinery; if you just want the big picture of what these automations are for, start with the <a href="../gh-automations-overview/">gh-automations overview</a>. See also the <a href="../glossary/">Glossary</a>.</p>
+<p>This page is the index to the detailed reference for every shared automation recipe ("workflow") that OVOS projects can plug in. The full specs are split by lifecycle stage: <a href="../gh-automations-release-workflows/">release</a> (publish, version bump), <a href="../gh-automations-pr-workflows/">PR</a> (build, test, and check gates run on pull requests, itself an index to several topic pages), and <a href="../gh-automations-quality-workflows/">quality</a> (lint, coverage, security scans, notifications). This index is aimed at maintainers wiring up a project's testing and release machinery; if you just want the big picture of what these automations are for, start with the <a href="../gh-automations-overview/">gh-automations overview</a>. See also the <a href="../glossary/">Glossary</a>.</p>
 </div>
 <p>All reusable workflows are in <code>.github/workflows/</code> and are called via:</p>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">OpenVoiceOS/gh-automations/.github/workflows/&lt;name&gt;.yml@dev</span>
@@ -1575,57 +1659,57 @@
 <tr>
 <td><code>build-tests.yml</code></td>
 <td>Runs build, install, and optional tests across a Python version matrix.</td>
-<td><a href="../gh-automations-pr-workflows/#build-testsyml">PR Workflows</a></td>
+<td><a href="../gh-automations-build-checks/#build-testsyml">Build Checks</a></td>
 </tr>
 <tr>
 <td><code>opm-check.yml</code></td>
 <td>Verifies the package is discoverable and valid as an OVOS plugin (OPM).</td>
-<td><a href="../gh-automations-pr-workflows/#opm-checkyml">PR Workflows</a></td>
+<td><a href="../gh-automations-plugin-repo-checks/#opm-checkyml">Plugin, License, and Repo Checks</a></td>
 </tr>
 <tr>
 <td><code>ovoscope.yml</code></td>
 <td>Runs ovoscope end-to-end skill tests on a single Python version.</td>
-<td><a href="../gh-automations-pr-workflows/#ovoscopeyml">PR Workflows</a></td>
+<td><a href="../gh-automations-skill-test-workflows/#ovoscopeyml">Skill Test Workflows</a></td>
 </tr>
 <tr>
 <td><code>license-check.yml</code></td>
 <td>Checks installed dependencies against the OVOS universal donor license policy.</td>
-<td><a href="../gh-automations-pr-workflows/#license-checkyml">PR Workflows</a></td>
+<td><a href="../gh-automations-plugin-repo-checks/#license-checkyml">Plugin, License, and Repo Checks</a></td>
 </tr>
 <tr>
 <td><code>repo-health.yml</code></td>
 <td>Checks for required repo files and greets first-time contributors.</td>
-<td><a href="../gh-automations-pr-workflows/#repo-healthyml">PR Workflows</a></td>
+<td><a href="../gh-automations-plugin-repo-checks/#repo-healthyml">Plugin, License, and Repo Checks</a></td>
 </tr>
 <tr>
 <td><code>skill-check.yml</code></td>
 <td>Analyses an OVOS skill repo for locale structure and <code>skill.json</code> validity.</td>
-<td><a href="../gh-automations-pr-workflows/#skill-checkyml">PR Workflows</a></td>
+<td><a href="../gh-automations-repo-skill-checks/#skill-checkyml">Skill and Locale Checks</a></td>
 </tr>
 <tr>
 <td><code>python-support.yml</code> <em>(deprecated)</em></td>
 <td>Legacy install matrix across Python versions and install modes.</td>
-<td><a href="../gh-automations-pr-workflows/#python-supportyml-deprecated">PR Workflows</a></td>
+<td><a href="../gh-automations-build-checks/#python-supportyml-deprecated">Build Checks</a></td>
 </tr>
 <tr>
 <td><code>locale-check.yml</code></td>
 <td>Verifies locale folders are correctly included in the package build.</td>
-<td><a href="../gh-automations-pr-workflows/#locale-checkyml">PR Workflows</a></td>
+<td><a href="../gh-automations-repo-skill-checks/#locale-checkyml">Skill and Locale Checks</a></td>
 </tr>
 <tr>
 <td><code>spec-lint.yml</code></td>
 <td>Runs <code>ovos-spec-lint</code> against a skill's locale folder for OVOS-INTENT-&frac12; conformance.</td>
-<td><a href="../gh-automations-pr-workflows/#spec-lintyml">PR Workflows</a></td>
+<td><a href="../gh-automations-repo-skill-checks/#spec-lintyml">Skill and Locale Checks</a></td>
 </tr>
 <tr>
 <td><code>intent-case-tests.yml</code></td>
 <td>Runs the file-based ovoscope intent-routing accuracy matrix, sharded by language.</td>
-<td><a href="../gh-automations-pr-workflows/#intent-case-testsyml">PR Workflows</a></td>
+<td><a href="../gh-automations-skill-test-workflows/#intent-case-testsyml">Skill Test Workflows</a></td>
 </tr>
 <tr>
 <td><code>tts-intelligibility.yml</code></td>
 <td>Scores TTS output intelligibility via a synthesize-then-transcribe round trip.</td>
-<td><a href="../gh-automations-pr-workflows/#tts-intelligibilityyml">PR Workflows</a></td>
+<td><a href="../gh-automations-skill-test-workflows/#tts-intelligibilityyml">Skill Test Workflows</a></td>
 </tr>
 <tr>
 <td><code>coverage.yml</code></td>

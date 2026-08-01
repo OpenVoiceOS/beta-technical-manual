@@ -14,7 +14,7 @@
         <link rel="prev" href="../release-rollback/">
       
       
-        <link rel="next" href="../raspovos-troubleshooting/">
+        <link rel="next" href="../raspovos-commands-reference/">
       
       
       <link rel="icon" href="https://github.com/OpenVoiceOS/ovos_assets/blob/master/Logo/ovos-logo-512.png?raw=true">
@@ -904,30 +904,6 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Step 6: Using OVOS Commands">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#helpful-commands" class="md-nav__link">
-    <span class="md-ellipsis">
-      Helpful Commands
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#check-logs-in-real-time" class="md-nav__link">
-    <span class="md-ellipsis">
-      Check Logs in Real-Time
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
         <li class="md-nav__item">
@@ -943,6 +919,27 @@
   
 </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../raspovos-commands-reference/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    RaspOVOS Command Reference
+  </span>
+  
+
+      </a>
     </li>
   
 
@@ -1709,30 +1706,6 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Step 6: Using OVOS Commands">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#helpful-commands" class="md-nav__link">
-    <span class="md-ellipsis">
-      Helpful Commands
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#check-logs-in-real-time" class="md-nav__link">
-    <span class="md-ellipsis">
-      Check Logs in Real-Time
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
         <li class="md-nav__item">
@@ -1828,9 +1801,9 @@ tier (see <a href="../stt-plugins/">STT Plugins</a>, <a href="../tts-plugins/">T
   public one.</p>
 <ul>
 <li><strong>Pi 4:</strong> a comfortable middle ground for local, on-device models. The <code>hybrid</code> and <code>offline</code>
-  raspOVOS images actually ship <a href="../tts-plugins/#ovos-tts-plugin-piper"><code>ovos-tts-plugin-piper</code></a>
+  raspOVOS images actually ship <a href="../tts-plugins-reference/#ovos-tts-plugin-piper"><code>ovos-tts-plugin-piper</code></a>
   as the default TTS for this tier, and this is what the config below uses. An optional swap is
-  <a href="../tts-plugins/#ovos-tts-plugin-phoonnx"><code>ovos-tts-plugin-phoonnx</code></a>, which is not what ships by
+  <a href="../tts-plugins-reference/#ovos-tts-plugin-phoonnx"><code>ovos-tts-plugin-phoonnx</code></a>, which is not what ships by
   default but is a valid alternative if you install it yourself.</li>
 </ul>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>// ~/.config/mycroft/mycroft.conf — Pi 4-class tier: local ONNX STT, shipped Piper TTS
@@ -1863,7 +1836,7 @@ tier (see <a href="../stt-plugins/">STT Plugins</a>, <a href="../tts-plugins/">T
   <code>offline</code> raspOVOS image actually ships
   <a href="../stt-plugins-reference/#ovos-stt-plugin-citrinet"><code>ovos-stt-plugin-citrinet</code></a> as the default STT (with
   <code>ovos-stt-plugin-fasterwhisper</code> shipped only for a few languages), and
-  <a href="../tts-plugins/#ovos-tts-plugin-piper"><code>ovos-tts-plugin-piper</code></a> as the default TTS. The config
+  <a href="../tts-plugins-reference/#ovos-tts-plugin-piper"><code>ovos-tts-plugin-piper</code></a> as the default TTS. The config
   below uses those shipped defaults. Optional swaps, not what ships by default, are
   <code>ovos-stt-plugin-fasterwhisper</code> (a larger, more accurate Whisper-class model, if your language
   isn't one of the ones it already ships for) and <code>ovos-tts-plugin-phoonnx</code>.</li>
@@ -2090,82 +2063,17 @@ no on-screen confirmation. Treat it as a fallback, not the primary path.</p>
   announce it out loud. If Wi-Fi isn't configured yet or the network is unreachable,
   the device stays silent instead. Check <code>ovos-status</code> and the <code>ologs</code> output (see
   below) to confirm the services actually started, even without a spoken confirmation.
-  See <a href="../raspovos-troubleshooting/">raspOVOS Troubleshooting</a>, "OVOS Fails to Speak
+  See <a href="../raspovos-troubleshooting/#ovos-fails-to-speak-i-am-ready">raspOVOS Troubleshooting</a>, "OVOS Fails to Speak
   'I am Ready'", if it never speaks up once online.</li>
 </ul>
 <hr />
 <h2 id="step-6-using-ovos-commands">Step 6: Using OVOS Commands<a class="headerlink" href="#step-6-using-ovos-commands" title="Permanent link">&para;</a></h2>
-<h3 id="helpful-commands">Helpful Commands<a class="headerlink" href="#helpful-commands" title="Permanent link">&para;</a></h3>
 <p>When you log in, raspOVOS prints a welcome banner listing its built-in helper commands. These
 are <strong>raspOVOS-specific shell helpers</strong> (aliases and small scripts baked into the image). They
 are part of the raspOVOS image, not a standard <code>pip install</code> of OVOS. Run <code>ovos-help</code> at any
-time to reprint the full list.</p>
-<p><strong>Web interfaces:</strong></p>
-<ul>
-<li><code>ovos-yaml-editor</code>: web editor for OVOS configuration (port 9210).</li>
-<li><code>ovos-skill-config-tool</code>: web editor for individual skill settings (port 8000).</li>
-</ul>
-<p><strong>Talking to OVOS:</strong></p>
-<ul>
-<li><code>ovos-config</code>: manage your local OVOS configuration files.</li>
-<li><code>ovos-listen</code>: activate the microphone to listen for a command.</li>
-<li><code>ovos-speak &lt;phrase&gt;</code>: have OVOS speak a phrase to the user.</li>
-<li><code>ovos-say-to &lt;phrase&gt;</code>: send an utterance to OVOS as if you had spoken it.</li>
-<li><code>ovos-simple-cli</code>: chat with your device from the terminal.</li>
-<li><code>ovos-docs-viewer</code>: open the documentation viewer (also <code>ovos-manual</code>, <code>ovos-skills-info</code>).</li>
-</ul>
-<p><strong>Managing packages:</strong></p>
-<ul>
-<li><code>ovos-install</code>: install OVOS packages with the correct version constraints.</li>
-<li><code>ovos-update</code>: routine, in-place update of all OVOS and skill packages, scoped to the release
-  channel recorded in <code>/opt/ovos/tag</code>. It does not change the base image. Moving to a new
-  raspOVOS release (a major image update) instead means reflashing a new image and restoring
-  your <code>.config/mycroft</code> and <code>.local/share/mycroft</code> from a backup — see the repo's
-  <a href="https://github.com/OpenVoiceOS/raspOVOS/blob/dev/docs/how-to/update.md">update how-to</a> for the
-  backup/restore commands.</li>
-<li><code>ovos-force-reinstall</code>: force a full reinstall of all OVOS packages (last-resort repair).</li>
-<li><code>ovos-freeze</code>: export installed OVOS packages to <code>requirements.txt</code>.</li>
-<li><code>ovos-outdated</code>: list outdated OVOS/skill packages.</li>
-<li><code>ovos-reset-brain</code>: reset the "OVOS brain" to a blank state by uninstalling all skills.</li>
-</ul>
-<p><strong>Inspecting plugins:</strong></p>
-<ul>
-<li><code>ls-skills</code>: list the <code>skill_id</code> of every installed skill.</li>
-<li><code>ls-stt</code> / <code>ls-tts</code> / <code>ls-ww</code> / <code>ls-tx</code>: list installed <a href="../stt-plugins/">STT</a> / <a href="../tts-plugins/">TTS</a> / wake word / <a href="../translation-plugins/">translation</a> plugins.</li>
-</ul>
-<p><strong>Sound/audio:</strong></p>
-<ul>
-<li><code>ovos-audio-diagnostics</code>: print the active sound server, sinks, and default output device.</li>
-<li><code>ovos-audio-setup</code>: interactive audio configuration menu (handy after wiring up a HAT).</li>
-</ul>
-<p><strong>Logs and status:</strong></p>
-<ul>
-<li><code>ologs</code>: view all logs in real time.</li>
-<li><code>ovos-logs [COMMAND] --help</code>: a small tool to help navigate the logs.</li>
-<li><code>ovos-status</code>: list OVOS-related systemd services.</li>
-<li><code>ovos-restart</code>: restart all OVOS-related systemd services.</li>
-<li><code>ovos-server-status</code>: check the live status of the public OVOS servers.</li>
-</ul>
-<p><strong>Misc:</strong></p>
-<ul>
-<li><code>ovos-commands</code>: usage examples for the installed skills.</li>
-<li><code>ovos-support</code>: compile logs into a support package to share when asking for help.</li>
-<li><code>ovos-help</code>: reprint this command list.</li>
-<li><code>ovos-logo</code>: print the raspOVOS logo.</li>
-</ul>
-<div class="admonition note">
-<p class="admonition-title">Audio HAT setup on raspOVOS uses <code>ovos-i2csound</code></p>
-<p>On raspOVOS, an i2c sound HAT (such as a Respeaker or the Mark 2's SJ201) is detected and
-configured at boot by the <strong><code>ovos-i2csound</code></strong> service shipped in the image, which writes the
-detected board to <code>/etc/OpenVoiceOS/i2c_platform</code>. This is specific to the raspOVOS image.
-The <a href="../ovos-installer/">ovos-installer</a> does <strong>not</strong> use it (see
-<a href="../mark2/">Mark 2 Hardware</a> for the installer's kernel-driver approach).</p>
-</div>
-<h3 id="check-logs-in-real-time">Check Logs in Real-Time<a class="headerlink" href="#check-logs-in-real-time" title="Permanent link">&para;</a></h3>
-<ul>
-<li>Use the <code>ologs</code> command to monitor logs live on your screen.</li>
-<li>If you're unsure whether the system has finished booting, check logs using this command.</li>
-</ul>
+time to reprint the full list, and see the <a href="../raspovos-commands-reference/">RaspOVOS Commands Reference</a>
+for the complete list — including web interfaces, package management, plugin inspection, and log
+commands like <code>ologs</code> for checking logs in real time.</p>
 <hr />
 <p>With your Raspberry Pi set up, you can start exploring the features of OpenVoiceOS.</p>
 <hr />

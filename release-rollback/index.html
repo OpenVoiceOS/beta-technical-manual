@@ -1379,7 +1379,7 @@ installed before an upgrade. Before upgrading anything you care about, freeze wh
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>uv<span class="w"> </span>pip<span class="w"> </span>freeze<span class="w"> </span>&gt;<span class="w"> </span>known-good.txt
 </span></code></pre></div>
 <p>This plain <code>known-good.txt</code> in the current directory is the single-machine form of the same
-convention <a href="../production-operations/#staged-upgrades-and-rollback">Production Operations</a> uses
+convention <a href="../staged-upgrades/#staged-upgrades-and-rollback">Staged Upgrades and Rollback</a> uses
 for a fleet: a dated, absolute path like <code>/etc/ovos/known-good-2026-07-01.txt</code>. Same pattern,
 just scaled from one machine to many.</p>
 <p>If an upgrade misbehaves, <code>pip</code>/<code>uv</code> won't downgrade a package on their own just because a
@@ -1387,16 +1387,16 @@ newer constraints file changed. An ordinary <code>install</code> call treats an 
 requirement as nothing to do. Force the reinstall of the exact frozen versions instead:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>--force-reinstall<span class="w"> </span>-r<span class="w"> </span>known-good.txt
 </span></code></pre></div>
-<p>See <a href="../production-operations/#staged-upgrades-and-rollback">Production Operations: staged upgrades and rollback</a>
+<p>See <a href="../staged-upgrades/#staged-upgrades-and-rollback">Staged Upgrades and Rollback</a>
 for the same pattern applied across a fleet of devices rather than one machine. If the
 rollback needs more than package versions, for example your device's <code>mycroft.conf</code> or a
-skill's <code>settings.json</code> was also damaged, see the <a href="../production-operations/#backup-recipe">backup and restore
+skill's <code>settings.json</code> was also damaged, see the <a href="../backup-restore/#backup-recipe">backup and restore
 recipe</a> instead.</p>
 <div class="admonition tip">
 <p class="admonition-title">Moving to a newer OS image</p>
 <p>Flashing a fresh OS image (a new raspOVOS release, a new Raspberry Pi OS build) wipes
 the disk. Back up <code>mycroft.conf</code> and each skill's <code>settings.json</code> first, following the
-<a href="../production-operations/#backup-recipe">backup and restore recipe</a>, then restore them
+<a href="../backup-restore/#backup-recipe">backup and restore recipe</a>, then restore them
 onto the new image the same way.</p>
 </div>
 <hr />

@@ -1493,7 +1493,7 @@ plugin to use instead of writing one? Go to <a href="../transformer-plugins/">Tr
 <p class="admonition-title">No config-discovery entry point for transformers</p>
 <p>TTS and STT plugins can register a second entry point (<code>opm.tts.config</code>, <code>opm.stt.config</code>)
 that exposes sample configurations for UI discovery. See
-<a href="../tts-plugins/#entry-point">TTS Plugins: Entry point</a>. <code>ovos-plugin-manager</code>'s
+<a href="../tts-plugin-development/#entry-point">TTS Plugins: Entry point</a>. <code>ovos-plugin-manager</code>'s
 <code>PluginConfigTypes</code> enum has no matching entry for any transformer type (audio, utterance,
 metadata, intent, dialog, or tts transformers). A transformer plugin only registers under
 its <code>opm.transformer.*</code> group. There is no equivalent <code>opm.transformer.text.config</code> group to
@@ -1516,7 +1516,7 @@ advertise its settings.</p>
 <p><strong>Publish to PyPI.</strong> The Plugin Arena's benchmark sweep installs competitors from PyPI, so a
    transformer plugin needs a PyPI release before it can be entered. See
    <a href="../plugin-arena/#getting-your-plugin-ranked">Plugin Arena: Getting Your Plugin Ranked</a> and
-   <a href="../tts-plugins/#package-and-publish">TTS Plugins: Package and publish</a> for the shared steps.</p>
+   <a href="../tts-plugin-development/#package-and-publish">TTS Plugins: Package and publish</a> for the shared steps.</p>
 </li>
 </ol>
 <h2 id="test-your-plugin-locally">Test your plugin locally<a class="headerlink" href="#test-your-plugin-locally" title="Permanent link">&para;</a></h2>

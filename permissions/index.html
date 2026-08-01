@@ -1707,7 +1707,7 @@ only stop it from being offered a turn. See
 <p class="admonition-title">What you should see in the log when a whitelist blocks converse</p>
 <p><code>ConverseService</code> returns <code>False</code> from this check silently. There is no dedicated log
 line announcing "skill X blocked by whitelist". The observable symptom instead: run
-<code>ologs | grep converse</code> (see <a href="../raspovos-troubleshooting/">RaspOVOS Troubleshooting</a>, "How to
+<code>ologs | grep converse</code> (see <a href="../raspovos-troubleshooting/#how-to-debug-intent-matching">RaspOVOS Troubleshooting</a>, "How to
 debug intent matching")
 while talking to the device, and the non-whitelisted skill's <code>skill_id</code> simply never
 shows up as a candidate. No <code>mycroft.skill.converse.request</code>/response pair for it appears

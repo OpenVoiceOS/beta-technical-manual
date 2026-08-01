@@ -17,6 +17,14 @@
          <lastmod>2026-08-01</lastmod>
     </url>
     <url>
+         <loc>https://tigregotico.github.io/ovos-technical-manual/agent-plugin-walkthroughs/</loc>
+         <lastmod>2026-08-01</lastmod>
+    </url>
+    <url>
+         <loc>https://tigregotico.github.io/ovos-technical-manual/agent-plugins-reference/</loc>
+         <lastmod>2026-08-01</lastmod>
+    </url>
+    <url>
          <loc>https://tigregotico.github.io/ovos-technical-manual/agent-plugins/</loc>
          <lastmod>2026-08-01</lastmod>
     </url>
@@ -42,6 +50,10 @@
     </url>
     <url>
          <loc>https://tigregotico.github.io/ovos-technical-manual/audio-transformers/</loc>
+         <lastmod>2026-08-01</lastmod>
+    </url>
+    <url>
+         <loc>https://tigregotico.github.io/ovos-technical-manual/backup-restore/</loc>
          <lastmod>2026-08-01</lastmod>
     </url>
     <url>
@@ -110,6 +122,10 @@
     </url>
     <url>
          <loc>https://tigregotico.github.io/ovos-technical-manual/config-all-keys/</loc>
+         <lastmod>2026-08-01</lastmod>
+    </url>
+    <url>
+         <loc>https://tigregotico.github.io/ovos-technical-manual/config-internals/</loc>
          <lastmod>2026-08-01</lastmod>
     </url>
     <url>
@@ -217,6 +233,10 @@
          <lastmod>2026-08-01</lastmod>
     </url>
     <url>
+         <loc>https://tigregotico.github.io/ovos-technical-manual/gh-automations-build-checks/</loc>
+         <lastmod>2026-08-01</lastmod>
+    </url>
+    <url>
          <loc>https://tigregotico.github.io/ovos-technical-manual/gh-automations-coverage-security/</loc>
          <lastmod>2026-08-01</lastmod>
     </url>
@@ -226,6 +246,10 @@
     </url>
     <url>
          <loc>https://tigregotico.github.io/ovos-technical-manual/gh-automations-overview/</loc>
+         <lastmod>2026-08-01</lastmod>
+    </url>
+    <url>
+         <loc>https://tigregotico.github.io/ovos-technical-manual/gh-automations-plugin-repo-checks/</loc>
          <lastmod>2026-08-01</lastmod>
     </url>
     <url>
@@ -246,6 +270,14 @@
     </url>
     <url>
          <loc>https://tigregotico.github.io/ovos-technical-manual/gh-automations-release/</loc>
+         <lastmod>2026-08-01</lastmod>
+    </url>
+    <url>
+         <loc>https://tigregotico.github.io/ovos-technical-manual/gh-automations-repo-skill-checks/</loc>
+         <lastmod>2026-08-01</lastmod>
+    </url>
+    <url>
+         <loc>https://tigregotico.github.io/ovos-technical-manual/gh-automations-skill-test-workflows/</loc>
          <lastmod>2026-08-01</lastmod>
     </url>
     <url>
@@ -437,6 +469,10 @@
          <lastmod>2026-08-01</lastmod>
     </url>
     <url>
+         <loc>https://tigregotico.github.io/ovos-technical-manual/observability/</loc>
+         <lastmod>2026-08-01</lastmod>
+    </url>
+    <url>
          <loc>https://tigregotico.github.io/ovos-technical-manual/ocp-audio-plugin/</loc>
          <lastmod>2026-08-01</lastmod>
     </url>
@@ -478,6 +514,10 @@
     </url>
     <url>
          <loc>https://tigregotico.github.io/ovos-technical-manual/ovos-media-mpris/</loc>
+         <lastmod>2026-08-01</lastmod>
+    </url>
+    <url>
+         <loc>https://tigregotico.github.io/ovos-technical-manual/ovos-media-pipeline/</loc>
          <lastmod>2026-08-01</lastmod>
     </url>
     <url>
@@ -557,6 +597,10 @@
          <lastmod>2026-08-01</lastmod>
     </url>
     <url>
+         <loc>https://tigregotico.github.io/ovos-technical-manual/plugin-types-reference/</loc>
+         <lastmod>2026-08-01</lastmod>
+    </url>
+    <url>
          <loc>https://tigregotico.github.io/ovos-technical-manual/plugins-index/</loc>
          <lastmod>2026-08-01</lastmod>
     </url>
@@ -590,6 +634,10 @@
     </url>
     <url>
          <loc>https://tigregotico.github.io/ovos-technical-manual/quebra-frases/</loc>
+         <lastmod>2026-08-01</lastmod>
+    </url>
+    <url>
+         <loc>https://tigregotico.github.io/ovos-technical-manual/raspovos-commands-reference/</loc>
          <lastmod>2026-08-01</lastmod>
     </url>
     <url>
@@ -689,6 +737,10 @@
          <lastmod>2026-08-01</lastmod>
     </url>
     <url>
+         <loc>https://tigregotico.github.io/ovos-technical-manual/skill-classes-reference/</loc>
+         <lastmod>2026-08-01</lastmod>
+    </url>
+    <url>
          <loc>https://tigregotico.github.io/ovos-technical-manual/skill-classes/</loc>
          <lastmod>2026-08-01</lastmod>
     </url>
@@ -785,6 +837,10 @@
          <lastmod>2026-08-01</lastmod>
     </url>
     <url>
+         <loc>https://tigregotico.github.io/ovos-technical-manual/staged-upgrades/</loc>
+         <lastmod>2026-08-01</lastmod>
+    </url>
+    <url>
          <loc>https://tigregotico.github.io/ovos-technical-manual/start-here/</loc>
          <lastmod>2026-08-01</lastmod>
     </url>
@@ -850,6 +906,14 @@
     </url>
     <url>
          <loc>https://tigregotico.github.io/ovos-technical-manual/troubleshooting/</loc>
+         <lastmod>2026-08-01</lastmod>
+    </url>
+    <url>
+         <loc>https://tigregotico.github.io/ovos-technical-manual/tts-plugin-development/</loc>
+         <lastmod>2026-08-01</lastmod>
+    </url>
+    <url>
+         <loc>https://tigregotico.github.io/ovos-technical-manual/tts-plugins-reference/</loc>
          <lastmod>2026-08-01</lastmod>
     </url>
     <url>
@@ -926,6 +990,10 @@
     </url>
     <url>
          <loc>https://tigregotico.github.io/ovos-technical-manual/wyoming-bridges/</loc>
+         <lastmod>2026-08-01</lastmod>
+    </url>
+    <url>
+         <loc>https://tigregotico.github.io/ovos-technical-manual/wyoming-wakeword-bridge/</loc>
          <lastmod>2026-08-01</lastmod>
     </url>
 </urlset>

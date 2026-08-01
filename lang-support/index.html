@@ -1690,7 +1690,7 @@ for every covered language, running a per-language ONNX model picked from the
 <a href="https://huggingface.co/collections/OpenVoiceOS/stt-asr-onnx">OpenVoiceOS STT ONNX</a> collection.
 On CPU it prefers <code>int8</code>-quantized weights where the model ships them, for a smaller
 footprint and faster load.</p>
-<p>TTS uses <a href="../tts-plugins/#ovos-tts-plugin-phoonnx"><code>ovos-tts-plugin-phoonnx</code></a>
+<p>TTS uses <a href="../tts-plugins-reference/#ovos-tts-plugin-phoonnx"><code>ovos-tts-plugin-phoonnx</code></a>
 for every language, auto-selecting a default voice. The table below shows the exact
 per-language model and voice picked for each.</p>
 <p>Passing <code>--gpu</code> selects the GPU tier instead: the same model family at full <code>fp32</code> precision
@@ -1747,7 +1747,7 @@ table (which offline STT model and TTS voice each language code gets from
 <code>autoconfigure</code>) and the per-language status matrix (STT, TTS, number parser, date
 parser, side by side for the original, longest-supported languages).</p>
 <p>Briefly: offline STT comes from <a href="../stt-plugins-reference/#ovos-stt-plugin-onnx-asr"><code>ovos-stt-plugin-onnx-asr</code></a>
-and offline TTS from <a href="../tts-plugins/#ovos-tts-plugin-phoonnx"><code>ovos-tts-plugin-phoonnx</code></a>
+and offline TTS from <a href="../tts-plugins-reference/#ovos-tts-plugin-phoonnx"><code>ovos-tts-plugin-phoonnx</code></a>
 wherever a recommendation is bundled. Several regional variants, including <strong>EN-GB</strong>,
 <strong>PT-BR</strong>, <strong>AR-SA</strong>, and three of the four Catalan variants, ship a TTS voice but no
 bundled offline STT recommendation yet. A language absent from both tables, such as

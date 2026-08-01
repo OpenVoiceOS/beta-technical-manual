@@ -1758,12 +1758,12 @@ top of it. Size the board for the core first, then budget headroom for the model
 <li><strong>Lightest</strong>: an energy/noise-threshold <a href="../vad-plugins/#ovos-vad-plugin-noise">VAD</a> with no
   model download, a small wake-word model such as
   <a href="../wake-word-plugins/#ovos-ww-plugin-precise-onnx"><code>ovos-ww-plugin-precise-onnx</code></a>, and cloud
-  <a href="../stt-plugins-reference/#ovos-stt-plugin-azure">STT</a>/<a href="../tts-plugins/#ovos-tts-plugin-azure">TTS</a> such as
+  <a href="../stt-plugins-reference/#ovos-stt-plugin-azure">STT</a>/<a href="../tts-plugins-reference/#ovos-tts-plugin-azure">TTS</a> such as
   Azure, Polly, or Edge-TTS. Inference happens on someone else's server, so the device only
   needs enough CPU for the always-on core plus audio capture and playback.</li>
 <li><strong>Middle</strong>: local, on-device inference using a small or quantized model. Examples:
   <a href="../stt-plugins-reference/#ovos-stt-plugin-onnx-asr"><code>ovos-stt-plugin-onnx-asr</code></a> with a small
-  <code>int8</code>-quantized model, <a href="../tts-plugins/#ovos-tts-plugin-phoonnx"><code>ovos-tts-plugin-phoonnx</code></a>,
+  <code>int8</code>-quantized model, <a href="../tts-plugins-reference/#ovos-tts-plugin-phoonnx"><code>ovos-tts-plugin-phoonnx</code></a>,
   and <a href="../vad-plugins/#ovos-vad-plugin-silero"><code>ovos-vad-plugin-silero</code></a>'s small neural VAD model.
   <code>int8</code> weights consistently have a lower footprint than <code>fp32</code> for the same model.</li>
 <li><strong>Heaviest</strong>: local Whisper-class or other large general-purpose models. See the <code>large</code>
@@ -1782,7 +1782,7 @@ protocol. Updating an OVOS device means running <code>pip</code>/<code>uv</code>
 <a href="../release-channels/#choosing-a-release-channel">release channel's constraints file</a>. This
 is the same command whether you run it by hand over SSH or push it out with your own
 device-management tooling, such as Ansible, a custom MDM agent, or a cron job. See
-<a href="../production-operations/#staged-upgrades-and-rollback">Production Operations: staged upgrades</a>
+<a href="../staged-upgrades/#staged-upgrades-and-rollback">Staged Upgrades and Rollback</a>
 for the update-and-rollback pattern. If your product needs image-level OTA that swaps the
 whole OS image, not just Python packages, bring your own solution, such as Mender,
 SWUpdate, or RAUC. OVOS has no opinion on that layer.</p>

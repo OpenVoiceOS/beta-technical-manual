@@ -1615,6 +1615,17 @@ documented elsewhere in the manual into one place, grouped by which stage of the
 through six different pages to find one event name. Each row links back to the page that
 documents that event in context. This page does not introduce anything new.</p>
 </div>
+<div class="admonition tip">
+<p class="admonition-title">Looking for a message this page does not list?</p>
+<p>This page is curated. It covers the events the manual explains in context, not every event
+that exists. For the exhaustive machine-generated catalog, browse the
+<a href="https://openvoiceos.github.io/ovos-pydantic-models/">MessageBus Protocol Reference</a>, built
+from <a href="../core-libraries/#ovos-pydantic-models"><code>ovos-pydantic-models</code></a>. It is searchable and
+grouped by subsystem, and it includes deprecated subsystems that this page leaves out.</p>
+<p>Its models are generated semi-automatically from source, so entries can be incomplete or out
+of date. Check the behavior against the code or the
+<a href="../architecture-specs/">formal specifications</a> before you depend on it.</p>
+</div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Many events have a legacy <code>mycroft.*</code>/bare name alongside a newer <code>ovos.*</code> name. Only
