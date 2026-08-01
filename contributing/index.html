@@ -1596,7 +1596,9 @@ service you're changing, and reloading your changes while you work.</p>
 <p>Every OVOS repository publishes through the same shared pipeline, described in full on the
 <a href="../gh-automations-overview/">gh-automations</a> page:</p>
 <ol>
-<li><strong>Branch</strong>: work happens on a feature branch, not directly on <code>dev</code>. Name the branch after its conventional-commit type: <code>fix/&lt;topic&gt;</code>, <code>feat/&lt;topic&gt;</code>, or <code>docs/&lt;topic&gt;</code>.</li>
+<li><strong>Branch</strong>: fork the repo on GitHub, clone your fork, and cut a feature branch <strong>from
+   <code>dev</code></strong>, never from <code>master</code> and never directly on <code>dev</code>. Name the branch after its
+   conventional-commit type: <code>fix/&lt;topic&gt;</code>, <code>feat/&lt;topic&gt;</code>, or <code>docs/&lt;topic&gt;</code>.</li>
 <li><strong>Pull request into <code>dev</code></strong>: opening a PR against <code>dev</code> triggers the shared <strong>OVOS PR
    Checks</strong>: build/install/test, license and dependency scanning, plugin-manifest detection
    (for plugin repos), coverage, and a version-bump preview. These checks post their results
@@ -1632,8 +1634,9 @@ slow way to find out. Run the same kind of check locally first:</p>
   the PR check will run.</li>
 <li><strong>Core repositories</strong> (<code>ovos-core</code>, <code>ovos-bus-client</code>, <code>ovos-utils</code>, and the other libraries
   under <a href="../ecosystem-index/">the repository index</a>): run that repo's own <code>pytest</code> suite from a
-  checkout before opening the PR: <code>pip install -e .[test]</code> (or the extra the repo's
-  <code>pyproject.toml</code> names for tests), then <code>pytest</code>.</li>
+  checkout before opening the PR: <code>uv pip install -e ".[test]"</code> (or the extra the repo's
+  <code>pyproject.toml</code> names for tests), then <code>pytest</code>. See
+  <a href="../dev-environment/">Development Environment</a> for the full local setup.</li>
 </ul>
 <p>Either way, the goal is the same. Catch a failure on your own machine, where you can iterate on
 it in seconds, instead of finding out from a CI comment minutes later.</p>

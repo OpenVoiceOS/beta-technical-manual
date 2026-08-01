@@ -1951,13 +1951,21 @@ pinning the same wake word, STT/TTS servers, or <code>ready_settings</code> acro
 <hr />
 <h2 id="thin-clients-a-shared-speech-backend">Thin clients + a shared speech backend<a class="headerlink" href="#thin-clients-a-shared-speech-backend" title="Permanent link">&para;</a></h2>
 <p>For a step-by-step build of a server-plus-satellites deployment, see <a href="../satellites/">Satellites</a>.</p>
-<p>A common fleet topology is several low-power "thin" devices that only run the bus, listener
-and audio services, all pointed at one shared, more capable machine that does the actual
-speech-to-text and text-to-speech work over HTTP (see <a href="../stt-server/">STT server</a> and
-<a href="../tts-server/">TTS server</a>). A sketch, based on the real container images published by
+<p>A common fleet topology is several low-power "thin" devices that each run a full
+<code>ovos-core</code> (with the bus, listener and audio services), all pointed at one shared, more
+capable machine that does the actual speech-to-text and text-to-speech work over HTTP (see
+<a href="../stt-server/">STT server</a> and <a href="../tts-server/">TTS server</a>). Only the heavy STT/TTS
+inference is centralized: each device keeps its own core, session, and skills. A sketch,
+based on the real container images published by
 <a href="https://github.com/OpenVoiceOS/ovos-docker"><code>ovos-docker</code></a>. For the client-side config keys
 and a worked example on a single LAN IP, see
 <a href="../privacy-security/#point-a-device-at-your-own-lan-servers">privacy-security: point a device at your own LAN servers</a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Not the shared-brain pattern</p>
+<p>This is not the shared-brain pattern. Every device here keeps its own <code>ovos-core</code>, so
+each room is an independent assistant that shares only speech inference. For one shared
+brain and session, see <a href="../satellites/">Satellites</a>.</p>
+</div>
 <div class="admonition danger">
 <p class="admonition-title">These ports are unauthenticated plain HTTP</p>
 <p><code>8080</code> and <code>9666</code> below serve unauthenticated plain HTTP by default. Never expose them
@@ -2109,6 +2117,13 @@ each one before you open a port on a shared network.</p>
 <td><code>127.0.0.1</code></td>
 <td>None</td>
 <td>None</td>
+</tr>
+<tr>
+<td><a href="../hivemind-agents/">HiveMind</a> listener</td>
+<td>5678</td>
+<td><code>0.0.0.0</code></td>
+<td>Access key + password (Noise handshake)</td>
+<td>Optional (<code>ssl</code> + <code>cert_dir</code>/<code>cert_name</code> in server config)</td>
 </tr>
 </tbody>
 </table>

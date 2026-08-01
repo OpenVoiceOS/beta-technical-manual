@@ -1000,9 +1000,27 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#serversatellite-split" class="md-nav__link">
+    <span class="md-ellipsis">
+      Server/satellite split
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#headless-stttts-servers-as-containers" class="md-nav__link">
     <span class="md-ellipsis">
       Headless: STT/TTS servers as containers
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#containerized-hivemind" class="md-nav__link">
+    <span class="md-ellipsis">
+      Containerized HiveMind
     </span>
   </a>
   
@@ -1309,9 +1327,27 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#serversatellite-split" class="md-nav__link">
+    <span class="md-ellipsis">
+      Server/satellite split
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#headless-stttts-servers-as-containers" class="md-nav__link">
     <span class="md-ellipsis">
       Headless: STT/TTS servers as containers
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#containerized-hivemind" class="md-nav__link">
+    <span class="md-ellipsis">
+      Containerized HiveMind
     </span>
   </a>
   
@@ -1366,6 +1402,10 @@ pattern for STT/TTS.</p>
 runs one process. This mirrors the split described in
 <a href="../composable-deployments/">Composable Deployments</a>: scale, restart, or relocate any one
 service without touching the rest.</p>
+<p><code>ovos-docker</code> builds its images with Docker Buildx Bake for <code>linux/amd64</code> and <code>linux/arm64</code>
+(the default <code>PLATFORMS</code> in its <code>docker-bake.hcl</code>), which covers a 64-bit Raspberry Pi OS
+install. Check the actual tags on Docker Hub for the image and version you plan to run before
+deploying to a Pi: not every image or channel is guaranteed to carry both architectures.</p>
 <h2 id="a-working-compose-file">A working compose file<a class="headerlink" href="#a-working-compose-file" title="Permanent link">&para;</a></h2>
 <p>This is a trimmed version of the reference
 <a href="https://github.com/OpenVoiceOS/ovos-docker/blob/dev/compose/docker-compose.yml"><code>compose/docker-compose.yml</code></a>.
@@ -1471,6 +1511,85 @@ network), point <code>websocket.host</code> in each container's <code>mycroft.co
 container's name or hostname, the way any other split-host OVOS deployment does (see
 <a href="../composable-deployments/">Composable Deployments</a>). The upstream compose files do not do
 this: they rely on host networking and <code>localhost</code> throughout.</p>
+<h2 id="serversatellite-split">Server/satellite split<a class="headerlink" href="#serversatellite-split" title="Permanent link">&para;</a></h2>
+<p>For the one-brain-many-speakers pattern described in
+<a href="../satellites/#build-walkthrough-a-raw-shared-bus">Satellites</a>, split the compose file above
+into a server stack and a satellite stack. The server runs the messagebus and <code>ovos-core</code>
+(plus skills); each satellite runs only a listener and an audio service, with PHAL added only
+if the device needs direct hardware access. Both stacks use the same images and volume layout
+as <a href="#a-working-compose-file">the reference compose file</a>; only which services run where
+changes.</p>
+<div class="language-yaml highlight"><span class="filename">docker-compose.yml — server</span><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nt">services</span><span class="p">:</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">  </span><span class="nt">ovos_messagebus</span><span class="p">:</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">docker.io/smartgic/ovos-messagebus:${VERSION}</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">    </span><span class="nt">network_mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">host</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">    </span><span class="nt">volumes</span><span class="p">:</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft:ro</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ovos_local_state:/home/${OVOS_USER}/.local/state/mycroft</span>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${TMP_FOLDER}:/tmp/mycroft</span>
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="w">  </span><span class="nt">ovos_core</span><span class="p">:</span>
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">docker.io/smartgic/ovos-core:${VERSION}</span>
+</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="w">    </span><span class="nt">network_mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">host</span>
+</span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="w">    </span><span class="nt">volumes</span><span class="p">:</span>
+</span><span id="__span-2-14"><a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft</span>
+</span><span id="__span-2-15"><a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ovos_local_state:/home/${OVOS_USER}/.local/state/mycroft</span>
+</span><span id="__span-2-16"><a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${TMP_FOLDER}:/tmp/mycroft</span>
+</span><span id="__span-2-17"><a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a><span class="w">    </span><span class="nt">depends_on</span><span class="p">:</span>
+</span><span id="__span-2-18"><a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ovos_messagebus</span>
+</span><span id="__span-2-19"><a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a>
+</span><span id="__span-2-20"><a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a><span class="nt">volumes</span><span class="p">:</span>
+</span><span id="__span-2-21"><a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a><span class="w">  </span><span class="nt">ovos_local_state</span><span class="p">:</span>
+</span></code></pre></div>
+<div class="language-yaml highlight"><span class="filename">docker-compose.yml — satellite (per device)</span><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nt">services</span><span class="p">:</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">  </span><span class="nt">ovos_listener</span><span class="p">:</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">docker.io/smartgic/ovos-listener:${VERSION}</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">    </span><span class="nt">network_mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">host</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">    </span><span class="nt">devices</span><span class="p">:</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/dev/snd</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="w">    </span><span class="nt">volumes</span><span class="p">:</span>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">~/.config/pulse/cookie:/home/${OVOS_USER}/.config/pulse/cookie:ro</span>
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft:ro</span>
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${TMP_FOLDER}:/tmp/mycroft</span>
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${XDG_RUNTIME_DIR}/pulse:${XDG_RUNTIME_DIR}/pulse:ro</span>
+</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>
+</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a><span class="w">  </span><span class="nt">ovos_audio</span><span class="p">:</span>
+</span><span id="__span-3-14"><a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a><span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">docker.io/smartgic/ovos-audio:${VERSION}</span>
+</span><span id="__span-3-15"><a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a><span class="w">    </span><span class="nt">network_mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">host</span>
+</span><span id="__span-3-16"><a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a><span class="w">    </span><span class="nt">devices</span><span class="p">:</span>
+</span><span id="__span-3-17"><a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/dev/snd</span>
+</span><span id="__span-3-18"><a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a><span class="w">    </span><span class="nt">volumes</span><span class="p">:</span>
+</span><span id="__span-3-19"><a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">~/.config/pulse/cookie:/home/${OVOS_USER}/.config/pulse/cookie:ro</span>
+</span><span id="__span-3-20"><a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft</span>
+</span><span id="__span-3-21"><a id="__codelineno-3-21" name="__codelineno-3-21" href="#__codelineno-3-21"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ovos_tts_cache:/home/${OVOS_USER}/.cache/mycroft</span>
+</span><span id="__span-3-22"><a id="__codelineno-3-22" name="__codelineno-3-22" href="#__codelineno-3-22"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${TMP_FOLDER}:/tmp/mycroft</span>
+</span><span id="__span-3-23"><a id="__codelineno-3-23" name="__codelineno-3-23" href="#__codelineno-3-23"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${XDG_RUNTIME_DIR}/pulse:${XDG_RUNTIME_DIR}/pulse:ro</span>
+</span><span id="__span-3-24"><a id="__codelineno-3-24" name="__codelineno-3-24" href="#__codelineno-3-24"></a>
+</span><span id="__span-3-25"><a id="__codelineno-3-25" name="__codelineno-3-25" href="#__codelineno-3-25"></a><span class="w">  </span><span class="c1"># ovos_phal:</span>
+</span><span id="__span-3-26"><a id="__codelineno-3-26" name="__codelineno-3-26" href="#__codelineno-3-26"></a><span class="w">  </span><span class="c1">#   image: docker.io/smartgic/ovos-phal:${VERSION}</span>
+</span><span id="__span-3-27"><a id="__codelineno-3-27" name="__codelineno-3-27" href="#__codelineno-3-27"></a><span class="w">  </span><span class="c1">#   network_mode: host</span>
+</span><span id="__span-3-28"><a id="__codelineno-3-28" name="__codelineno-3-28" href="#__codelineno-3-28"></a><span class="w">  </span><span class="c1">#   # add only if this satellite needs direct hardware access (LEDs, buttons, power)</span>
+</span><span id="__span-3-29"><a id="__codelineno-3-29" name="__codelineno-3-29" href="#__codelineno-3-29"></a>
+</span><span id="__span-3-30"><a id="__codelineno-3-30" name="__codelineno-3-30" href="#__codelineno-3-30"></a><span class="nt">volumes</span><span class="p">:</span>
+</span><span id="__span-3-31"><a id="__codelineno-3-31" name="__codelineno-3-31" href="#__codelineno-3-31"></a><span class="w">  </span><span class="nt">ovos_tts_cache</span><span class="p">:</span>
+</span></code></pre></div>
+<p>Point each satellite's mounted <code>mycroft.conf</code> at the server, since <code>network_mode: host</code>
+puts every container on the satellite behind the satellite host's own IP, not a container
+name:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>{
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>  &quot;websocket&quot;: {
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>    &quot;host&quot;: &quot;192.168.1.10&quot;,
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>    &quot;port&quot;: 8181,
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>    &quot;route&quot;: &quot;/core&quot;
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>  }
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>}
+</span></code></pre></div>
+<p>Replace <code>192.168.1.10</code> with the server host's real LAN address. With <code>network_mode: host</code>
+this must be a real IP or hostname, never a container or service name: host networking has
+no inter-container DNS (see <a href="#networking">Networking</a> above). See
+<a href="../satellites/#satellite-config">Satellites: Satellite config</a> for the same setting applied
+to a bare-metal deployment, and the warnings there about the shared-session and
+localhost-default pitfalls.</p>
 <h2 id="headless-stttts-servers-as-containers">Headless: STT/TTS servers as containers<a class="headerlink" href="#headless-stttts-servers-as-containers" title="Permanent link">&para;</a></h2>
 <p><code>ovos-docker</code> also builds standalone STT and TTS server images, one per baked-in engine:
 <code>ovos-stt-server-onnx-asr</code>, <code>ovos-stt-server-onnx-asr-cuda</code>, <code>ovos-tts-server-piper</code>,
@@ -1481,6 +1600,14 @@ satellites that only run the bus, listener, and audio locally. See
 HTTP contract and plugin-side config keys, and
 <a href="../production-operations/#thin-clients-a-shared-speech-backend">Production Operations: thin clients + a shared speech backend</a>
 for a worked compose example splitting the speech backend from the thin client.</p>
+<h2 id="containerized-hivemind">Containerized HiveMind<a class="headerlink" href="#containerized-hivemind" title="Permanent link">&para;</a></h2>
+<p><code>ovos-docker</code> does not publish a HiveMind image. HiveMind has its own separate project,
+<a href="https://github.com/JarbasHiveMind/hivemind-docker">HiveMind-Docker</a>, with its own images
+(published under <code>docker.io/smartgic</code>, built with Docker Buildx Bake for <code>linux/amd64</code> and
+<code>linux/arm64</code>) and compose files for a HiveMind hub and its satellite/listener/chatroom
+components. See <a href="../hivemind-agents/">Remote Agents with HiveMind</a> for the pip-installed,
+bare-metal path this manual documents in detail; check the HiveMind-Docker repository
+directly for current image tags and compose usage.</p>
 <h2 id="limitations">Limitations<a class="headerlink" href="#limitations" title="Permanent link">&para;</a></h2>
 <ul>
 <li><strong>Wake word and mic latency.</strong> The listener still runs continuous audio capture and wake

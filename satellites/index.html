@@ -1432,6 +1432,9 @@ listener and an audio service, and both connect back to the server's messagebus.
 </table>
 <p>Keep the raw shared bus on a trusted LAN only. Never forward its port to the internet.
 Use HiveMind for anything off your own network, or when you need to tell satellites apart.</p>
+<p>Both paths on this page share one <code>ovos-core</code> brain across every satellite. If you instead
+want each device to run its own independent <code>ovos-core</code> and only share the heavy STT/TTS
+inference, see <a href="../production-operations/#thin-clients-a-shared-speech-backend">Production Operations: thin clients + a shared speech backend</a>.</p>
 <hr />
 <h2 id="build-walkthrough-a-raw-shared-bus">Build walkthrough A: raw shared bus<a class="headerlink" href="#build-walkthrough-a-raw-shared-bus" title="Permanent link">&para;</a></h2>
 <p>Run this only on a network you fully trust. Every service that joins this bus gets full
@@ -1478,6 +1481,9 @@ control of the assistant, with no login check.</p>
 <p>Replace <code>192.168.1.10</code> with the server's real address. Set this in every satellite's
 <code>mycroft.conf</code>, and in the server's own file if any service other than the bus itself
 also needs to find it.</p>
+<p>Running this over containers instead of bare metal? See
+<a href="../docker-deployment/#serversatellite-split">Running OVOS in Containers: Server/satellite split</a>
+for matching server and satellite <code>docker-compose.yml</code> files.</p>
 <div class="admonition warning">
 <p class="admonition-title">One shared session, not one per satellite</p>
 <p><code>ovos-core</code>, <code>ovos-audio</code>, and <code>ovos-dinkum-listener</code> each assume they are the only
@@ -1509,6 +1515,14 @@ separate project with its own protocol and docs.</p>
 <li>For a mic-only satellite that leaves STT/TTS to the server, use
    <code>hivemind-mic-satellite</code> instead of running a full listener/audio pair locally.</li>
 </ol>
+<p>By default <code>hivemind-core listen</code> binds <code>0.0.0.0</code> on port <code>5678</code> (the websocket protocol
+plugin), so it is reachable on the LAN as soon as it starts. There is no <code>listen</code> flag to
+change host or port. Edit the server config instead (<code>network_protocol</code> -&gt;
+<code>hivemind-websocket-plugin</code> -&gt; <code>host</code>/<code>port</code>).
+<code>hivemind-client set-identity</code> writes the access key, password, and server address to a
+JSON identity file at <code>~/.config/hivemind/_identity.json</code> (XDG config dir, <code>hivemind</code>
+subfolder). Point <code>--host</code>/<code>--port</code> at the server when running <code>set-identity</code> on the
+satellite.</p>
 <p>Full steps, permission model, and satellite/client packages: see
 <a href="../hivemind-agents/">Remote Agents with HiveMind</a>. Wire-level protocol details live in the
 upstream <a href="https://jarbashivemind.github.io/HiveMind-community-docs/">HiveMind community docs</a>,
@@ -1517,8 +1531,8 @@ not in this manual.</p>
 <h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h2>
 <p><strong>Satellite can't connect to the server.</strong></p>
 <ul>
-<li>Check the server's firewall allows inbound traffic on port <code>8181</code> (raw bus) or the
-  HiveMind listener port from the satellite's address.</li>
+<li>Check the server's firewall allows inbound traffic on port <code>8181</code> (raw bus) or port
+  <code>5678</code> (HiveMind listener, default bind <code>0.0.0.0</code>) from the satellite's address.</li>
 <li>Confirm <code>websocket.host</code> on the satellite points at the server's real LAN address, not
   <code>127.0.0.1</code>.</li>
 <li>For HiveMind, run <code>hivemind-client test-identity</code> on the satellite. A hang or error
