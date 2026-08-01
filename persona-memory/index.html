@@ -2150,6 +2150,10 @@ embeddings + <code>EmbeddingsDB</code> pair works (e.g. point <code>embeddings_d
 <li><strong>Anything else</strong> (a summary, a fact store, a custom rule): subclass <code>AgentContextManager</code> and implement the three contract methods directly. Add a <code>search()</code> method to also be fusable as a composite retriever.</li>
 </ul>
 <p>Register the class under the <code>opm.agents.memory</code> entry-point group in your package's <code>pyproject.toml</code>, then select it from a persona with <code>memory_module</code>.</p>
+<p>The active persona is carried on the session as <code>Session.persona_id</code> (OVOS-PERSONA-1 §3), the
+same field <a href="../persona-pipeline/">Persona Pipeline</a> documents. There is no <code>active_persona</code>
+field and no <code>ovos.persona.set</code> message: the persona is switched through the pipeline's
+<code>persona:summon</code> / <code>persona:release</code> matches, or over the bus with <code>ovos.persona.query</code>.</p>
 <hr />
 <p><em>Source code: <a href="https://github.com/OpenVoiceOS/ovos-memory-plugins">OpenVoiceOS/ovos-memory-plugins</a>.</em></p>
 <hr />
