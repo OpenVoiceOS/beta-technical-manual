@@ -1144,6 +1144,15 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#the-user-resources-directory" class="md-nav__link">
+    <span class="md-ellipsis">
+      The user resources directory
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#customizing-dialogs" class="md-nav__link">
     <span class="md-ellipsis">
       Customizing Dialogs
@@ -1634,6 +1643,15 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#the-user-resources-directory" class="md-nav__link">
+    <span class="md-ellipsis">
+      The user resources directory
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#customizing-dialogs" class="md-nav__link">
     <span class="md-ellipsis">
       Customizing Dialogs
@@ -1754,28 +1772,40 @@
 <blockquote>
 <p><strong>RECAP</strong>: the skill contains a <code>locale</code> folder with subfolders for each lang, for example <code>en-us</code>. Learn more in the <a href="../skill-structure/">skill structure docs</a>.</p>
 </blockquote>
+<h3 id="the-user-resources-directory">The user resources directory<a class="headerlink" href="#the-user-resources-directory" title="Permanent link">&para;</a></h3>
+<p>Both procedures below write into the same place: a per-skill override directory under your
+XDG data directory.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>$XDG_DATA_HOME/mycroft/resources/&lt;skill-id&gt;/
+</span></code></pre></div>
+<p><code>XDG_DATA_HOME</code> is usually <code>~/.local/share</code> on Linux, so for the skill ID
+<code>skill-ovos-date-time.openvoiceos</code> the directory is
+<code>~/.local/share/mycroft/resources/skill-ovos-date-time.openvoiceos/</code>.</p>
+<p>Inside it, mirror the skill's own directory layout. Create the directory with <code>mkdir -p</code> if it
+does not exist. You do not need to fork a skill to change what it says or what languages it
+speaks.</p>
+<hr />
 <h3 id="customizing-dialogs">Customizing Dialogs<a class="headerlink" href="#customizing-dialogs" title="Permanent link">&para;</a></h3>
-<p>Users can personalize the behavior of skills by customizing dialogs to better suit their preferences.</p>
-<p>To give a unique twist and personality to your assistant, you don't need to fork existing skills just to change dialogs.</p>
-<p>Here's a step-by-step guide on how to replace the dialog of an existing skill:</p>
-<p><strong>Identify the <a href="../skill-design-guidelines/">Skill</a> and Resource to Replace</strong>:</p>
-<ul>
+<p>Replace one dialog file of an installed <a href="../skill-design-guidelines/">skill</a> with your own
+wording. This example replaces <code>time.current.dialog</code> in <code>skill-ovos-date-time.openvoiceos</code>.</p>
+<ol>
+<li>Find the skill ID and the dialog file you want to replace. The file lives in the skill's
+   <code>locale/en-us/dialog</code> directory.</li>
+<li>Write a replacement file with the same name, <code>time.current.dialog</code>. Change, add, or remove
+   lines as you like.</li>
 <li>
-<p>Determine the ID of the skill whose dialog you want to replace. In this example, let's assume the skill ID is <code>skill-ovos-date-time.openvoiceos</code>.</p>
+<p>Copy it into the matching path under the user resources directory:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>mkdir<span class="w"> </span>-p<span class="w"> </span>~/.local/share/mycroft/resources/skill-ovos-date-time.openvoiceos/locale/en-us/dialog
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>cp<span class="w"> </span>time.current.dialog<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">  </span>~/.local/share/mycroft/resources/skill-ovos-date-time.openvoiceos/locale/en-us/dialog/
+</span></code></pre></div>
 </li>
 <li>
-<p>Identify the specific dialog file you want to replace. For this example, let's say you want to replace the <code>time.current.dialog</code> file located in the <code>locale/en-us/dialog</code> directory of the skill.</p>
+<p>Restart OpenVoiceOS so the skill reloads its resources, then ask for the current time.</p>
 </li>
-</ul>
-<p><strong>Create the Replacement Dialog File</strong>:</p>
-<ul>
-<li>
-<p>Create a new dialog file with the same name (<code>time.current.dialog</code>) as the original file.</p>
-</li>
-<li>
-<p>Customize the content of the dialog file according to your preferences. You can modify the existing dialogues, add new ones, or remove any that you don't want to use.</p>
-</li>
-</ul>
+</ol>
+<p><strong>You should hear</strong> your own wording instead of the skill's built-in text. If you still hear the
+original, check that the path, the file name, the <code>.dialog</code> extension, and the language folder
+casing all match exactly.</p>
 <div class="admonition warning">
 <p class="admonition-title">Your file REPLACES the original, it does not merge with it</p>
 <p>The user-specific file is used instead of the skill's own <code>time.current.dialog</code>, line for
@@ -1784,97 +1814,32 @@ upstream and new lines are added to its <code>time.current.dialog</code>, your o
 shadowing the whole file, and you will not see those new lines until you copy them into
 your override yourself.</p>
 </div>
-<p><strong>Locate the User-Specific Resource Directory</strong>:</p>
-<ul>
-<li>
-<p>Use the provided skill ID (<code>skill-ovos-date-time.openvoiceos</code>) to locate the user-specific resource directory.</p>
-</li>
-<li>
-<p>The user-specific resource directory is located within the XDG data directory. It follows the path <code>XDG_DATA_HOME/mycroft/resources/skill-ovos-date-time.openvoiceos</code> (where <code>XDG_DATA_HOME</code> is the user's data directory, usually <code>~/.local/share</code> on Linux).</p>
-</li>
-<li>
-<p>If it does not exist, create it. You can do this with file manager tools or command-line utilities such as <code>mkdir</code> on Unix-like systems.</p>
-</li>
-</ul>
-<p><strong>Copy the Replacement Dialog File to the User-Specific Directory</strong>:</p>
-<ul>
-<li>
-<p>Copy or move the replacement dialog file (<code>time.current.dialog</code>) to the appropriate directory within the user-specific resource directory.</p>
-</li>
-<li>
-<p>Place the file in the <code>locale/en-us/dialog</code> directory within the user-specific resource directory. This mirrors the directory structure of the original skill.</p>
-</li>
-<li>
-<p>In this example the final path of the file would be <code>~/.local/share/mycroft/resources/skill-ovos-date-time.openvoiceos/locale/en-us/dialog/time.current.dialog</code> </p>
-</li>
-</ul>
-<p><strong>Verify the Replacement</strong>:</p>
-<ul>
-<li>
-<p>Test the skill to ensure that the modified dialogues are being used instead of the original ones.</p>
-</li>
-<li>
-<p><strong>You should see</strong>: triggering the skill's "current time" behavior speaks your custom
-     dialog text, not the skill's built-in one. If you still hear the original wording, double
-     check the path and file name match exactly (including the <code>.dialog</code> extension and lang
-     folder casing) and restart OpenVoiceOS so the skill reloads its resources.</p>
-</li>
-</ul>
-<p>Customizing dialogs gives users flexibility to tailor the behavior of skills to their specific needs and preferences.</p>
+<hr />
 <h3 id="local-language-support">Local Language support<a class="headerlink" href="#local-language-support" title="Permanent link">&para;</a></h3>
-<p>Adding support for additional languages to existing skills lets users interact with OVOS in their preferred language.</p>
-<p>While developing a skill, or waiting for one to support your language, you might want to add it locally.</p>
-<p>Users can add language support for a skill by creating a new language folder in the user resources directory and copying the necessary files over:</p>
-<p><strong>Identify the Skill and Language to Add</strong>:</p>
-<ul>
+<p>Add a language to a skill that does not ship one yet, without waiting for an upstream release.
+This example adds Spanish (<code>es-es</code>) to the same skill.</p>
+<ol>
+<li>Find the skill ID and the language code you want to add.</li>
 <li>
-<p>Determine the ID of the skill for which you want to add language support. Let's continue using the skill ID <code>skill-ovos-date-time.openvoiceos</code>.</p>
+<p>Create the language folder under the user resources directory:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>mkdir<span class="w"> </span>-p<span class="w"> </span>~/.local/share/mycroft/resources/skill-ovos-date-time.openvoiceos/locale/es-es
+</span></code></pre></div>
 </li>
 <li>
-<p>Identify the language you want to add support for. For this example, let's say you want to add support for Spanish (language code: <code>es-es</code>).</p>
+<p>Copy the resource files from an existing language folder, such as <code>en-us</code>, into it. This
+   covers dialogs, vocabularies, and regex files, depending on what the skill uses. Keep the
+   same subdirectory structure.</p>
 </li>
-</ul>
-<p><strong>Create the New Language Folder</strong>:</p>
-<ul>
-<li>
-<p>Create a new directory with the name of the language code (<code>es-es</code> for Spanish) within the <code>locale</code> directory of the skill.</p>
-</li>
-<li>
-<p>This can be done using file manager tools or command-line utilities such as <code>mkdir</code> on Unix-like systems.</p>
-</li>
-<li>
-<p>Using the previous example, we would create <code>~/.local/share/mycroft/resources/skill-ovos-date-time.openvoiceos/locale/es-es/</code></p>
-</li>
-</ul>
-<p><strong>Copy the Required Files to the New Language Folder</strong>:</p>
-<ul>
-<li>
-<p>Copy all the necessary resource files from an existing language folder (for example, <code>en-us</code>) to the newly created language folder (<code>es-es</code>).</p>
-</li>
-<li>
-<p>This includes files such as dialogs, vocabularies, and regex patterns, depending on the resources used by the skill.</p>
-</li>
-<li>
-<p>Ensure that all files are placed in the corresponding directories within the new language folder to maintain the directory structure of the original skill.</p>
-</li>
-</ul>
-<p><strong>Verify the Language Addition</strong>:</p>
-<ul>
-<li>
-<p>Once the files are copied over, verify that the new language is supported by the skill.</p>
-</li>
-<li>
-<p>Restart OpenVoiceOS to allow the skill to recognize the added language resources.</p>
-</li>
-<li>
-<p>Test the skill using the added language to ensure that it functions correctly and uses the appropriate language-specific resources.</p>
-</li>
-</ul>
-<p>By following these steps, users can add support for additional languages to existing skills by creating new language folders and copying the required resource files.</p>
-<blockquote>
-<p><strong>NEXT STEPS</strong>: consider sending a pull request to the skill to add language support directly.</p>
-</blockquote>
-<p>This lets users extend the language capabilities of skills beyond the languages provided by default.</p>
+<li>Translate the copied files.</li>
+<li>Restart OpenVoiceOS, then test the skill in the new language.</li>
+</ol>
+<p>If a resource is missing from your new language folder, the skill falls back to its own
+language handling. The Language Fallback section below covers the order it uses.</p>
+<div class="admonition tip">
+<p class="admonition-title">Send it upstream</p>
+<p>A local language folder only helps you. Opening a pull request against the skill adds the
+language for everyone, and means you stop re-applying it after each update.</p>
+</div>
 <hr />
 <h2 id="developer-resource-file-reference">Developer: Resource File Reference<a class="headerlink" href="#developer-resource-file-reference" title="Permanent link">&para;</a></h2>
 <p>The end-user steps above drop files into the same <code>locale/&lt;lang-code&gt;/</code> layout described
@@ -1882,20 +1847,20 @@ below. This section is the developer-facing reference for that layout: which res
 exist, how they are looked up, and how to load them from code.</p>
 <p>Skills load localized resources from a structured directory layout. Resources are loaded automatically at startup for every language in <code>native_langs</code> (<code>core_lang</code> + <code>secondary_langs</code>).</p>
 <h3 id="recommended-layout">Recommended Layout<a class="headerlink" href="#recommended-layout" title="Permanent link">&para;</a></h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>my-skill/
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>├── locale/
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>│   ├── en-US/
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>│   │   ├── my.dialog        # spoken responses
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>│   │   ├── my.intent        # padatious intent examples
-</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>│   │   ├── my.voc           # adapt vocabulary keywords
-</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>│   │   ├── my.entity        # adapt entity examples
-</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>│   │   ├── my.rx            # regex patterns for adapt
-</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>│   │   └── skill.json       # skill metadata (examples for homescreen)
-</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>│   └── es-ES/
-</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>│       ├── my.dialog
-</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>│       └── my.intent
-</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>└── gui/
-</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>    └── my_page.qml
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>my-skill/
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>├── locale/
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>│   ├── en-US/
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>│   │   ├── my.dialog        # spoken responses
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>│   │   ├── my.intent        # padatious intent examples
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>│   │   ├── my.voc           # adapt vocabulary keywords
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>│   │   ├── my.entity        # adapt entity examples
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>│   │   ├── my.rx            # regex patterns for adapt
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>│   │   └── skill.json       # skill metadata (examples for homescreen)
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>│   └── es-ES/
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>│       ├── my.dialog
+</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>│       └── my.intent
+</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>└── gui/
+</span><span id="__span-3-14"><a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a>    └── my_page.qml
 </span></code></pre></div>
 <p>Legacy skills may use separate <code>dialog/</code>, <code>vocab/</code>, <code>regex/</code> subdirectories. These are still supported.</p>
 <h3 id="resource-types">Resource Types<a class="headerlink" href="#resource-types" title="Permanent link">&para;</a></h3>
@@ -1952,41 +1917,41 @@ exist, how they are looked up, and how to load them from code.</p>
 </table>
 <h3 id="dialog-files">Dialog Files<a class="headerlink" href="#dialog-files" title="Permanent link">&para;</a></h3>
 <p>Each line in a <code>.dialog</code> file is a possible response. One line is chosen randomly when <code>speak_dialog</code> is called:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a># my.dialog
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>Hello there!
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>Hi! How are you?
-</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>Greetings, {name}!
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a># my.dialog
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>Hello there!
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>Hi! How are you?
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>Greetings, {name}!
 </span></code></pre></div>
 <p>Mustache template variables are filled from the <code>data</code> dict:</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="bp">self</span><span class="o">.</span><span class="n">speak_dialog</span><span class="p">(</span><span class="s2">&quot;my&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Alice&quot;</span><span class="p">})</span>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="bp">self</span><span class="o">.</span><span class="n">speak_dialog</span><span class="p">(</span><span class="s2">&quot;my&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Alice&quot;</span><span class="p">})</span>
 </span></code></pre></div>
 <h3 id="language-fallback">Language <a href="../fallback-pipeline/">Fallback</a><a class="headerlink" href="#language-fallback" title="Permanent link">&para;</a></h3>
 <p>When a resource is not found for the exact <code>lang</code>, the skill falls back to dialects of the same language. For example, if <code>en-AU</code> is requested but only <code>en-US</code> resources exist, <code>en-US</code> is used.</p>
 <h3 id="loading-resources-manually">Loading Resources Manually<a class="headerlink" href="#loading-resources-manually" title="Permanent link">&para;</a></h3>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># Get SkillResources for current lang</span>
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="n">resources</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">resources</span>                         <span class="c1"># current self.lang</span>
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="n">resources</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_lang</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">res_dir</span><span class="p">,</span> <span class="s2">&quot;es-ES&quot;</span><span class="p">)</span>  <span class="c1"># specific lang</span>
-</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>
-</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="c1"># Find a specific file</span>
-</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="n">path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_resource</span><span class="p">(</span><span class="s2">&quot;my.dialog&quot;</span><span class="p">,</span> <span class="s2">&quot;dialog&quot;</span><span class="p">)</span>
-</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="n">path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_resource</span><span class="p">(</span><span class="s2">&quot;hello.mp3&quot;</span><span class="p">,</span> <span class="s2">&quot;snd&quot;</span><span class="p">)</span>
-</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>
-</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="c1"># Render a dialog (returns string, does not speak)</span>
-</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="n">text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">resources</span><span class="o">.</span><span class="n">render_dialog</span><span class="p">(</span><span class="s2">&quot;my.dialog&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;key&quot;</span><span class="p">:</span> <span class="s2">&quot;value&quot;</span><span class="p">})</span>
-</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>
-</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="c1"># Check if a vocab word matches</span>
-</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a><span class="n">matches</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">voc_match</span><span class="p">(</span><span class="s2">&quot;hello there&quot;</span><span class="p">,</span> <span class="s2">&quot;hello&quot;</span><span class="p">)</span>  <span class="c1"># True</span>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1"># Get SkillResources for current lang</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="n">resources</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">resources</span>                         <span class="c1"># current self.lang</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="n">resources</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_lang</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">res_dir</span><span class="p">,</span> <span class="s2">&quot;es-ES&quot;</span><span class="p">)</span>  <span class="c1"># specific lang</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="c1"># Find a specific file</span>
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="n">path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_resource</span><span class="p">(</span><span class="s2">&quot;my.dialog&quot;</span><span class="p">,</span> <span class="s2">&quot;dialog&quot;</span><span class="p">)</span>
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="n">path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_resource</span><span class="p">(</span><span class="s2">&quot;hello.mp3&quot;</span><span class="p">,</span> <span class="s2">&quot;snd&quot;</span><span class="p">)</span>
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>
+</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="c1"># Render a dialog (returns string, does not speak)</span>
+</span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="n">text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">resources</span><span class="o">.</span><span class="n">render_dialog</span><span class="p">(</span><span class="s2">&quot;my.dialog&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;key&quot;</span><span class="p">:</span> <span class="s2">&quot;value&quot;</span><span class="p">})</span>
+</span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a>
+</span><span id="__span-6-12"><a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a><span class="c1"># Check if a vocab word matches</span>
+</span><span id="__span-6-13"><a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a><span class="n">matches</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">voc_match</span><span class="p">(</span><span class="s2">&quot;hello there&quot;</span><span class="p">,</span> <span class="s2">&quot;hello&quot;</span><span class="p">)</span>  <span class="c1"># True</span>
 </span></code></pre></div>
 <h3 id="skilljson-metadata"><code>skill.json</code> Metadata<a class="headerlink" href="#skilljson-metadata" title="Permanent link">&para;</a></h3>
 <p>Optional file for homescreen integration. Placed at <code>locale/&lt;lang&gt;/skill.json</code>:</p>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="p">{</span>
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;My Skill&quot;</span><span class="p">,</span>
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">  </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Does something useful&quot;</span><span class="p">,</span>
-</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">  </span><span class="nt">&quot;examples&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">    </span><span class="s2">&quot;what is the weather&quot;</span><span class="p">,</span>
-</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">    </span><span class="s2">&quot;tell me the weather in Paris&quot;</span>
-</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="w">  </span><span class="p">]</span>
-</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="p">}</span>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="p">{</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;My Skill&quot;</span><span class="p">,</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">  </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Does something useful&quot;</span><span class="p">,</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">  </span><span class="nt">&quot;examples&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="w">    </span><span class="s2">&quot;what is the weather&quot;</span><span class="p">,</span>
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="w">    </span><span class="s2">&quot;tell me the weather in Paris&quot;</span>
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="w">  </span><span class="p">]</span>
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="p">}</span>
 </span></code></pre></div>
 <p>These examples are emitted to the homescreen as <code>homescreen.register.examples</code> on skill startup.</p>
 <hr />
