@@ -28,6 +28,10 @@ Use it like this:
    [Verification gaps](#verification-gaps) list at the end before relying
    on it.
 
+!!! tip "What is coming, not what shipped"
+    This page covers released changes only. Open pull requests and the expected next
+    breaking changes live on [Upcoming Changes](upcoming-changes.md).
+
 !!! tip "Supporting several versions from one codebase"
     This page tells you what changed. If you maintain a skill or plugin that must run on
     both sides of a break, see [Version-Compatible Skills & Plugins](version-compat-guide.md)
