@@ -11,7 +11,7 @@
 
 ## Advanced skill displays using QML
 
-**Display Lottie Animations**:
+### Display Lottie Animations
 
 You can use the `LottieAnimation` item just like any other `QtQuick` element, such as an `Image` and place it in your scene any way you please.
 
@@ -34,7 +34,7 @@ Mycroft.Delegate {
 
 ```
 
-**Display Sliding Images**
+### Display Sliding Images
 
 Contains an image that scrolls slowly so it can be shown completely.
 
@@ -53,7 +53,7 @@ Mycroft.Delegate {
 
 ```
 
-**Display Paginated Text**
+### Display Paginated Text
 
 Takes a long text and breaks it down into pages that can be horizontally swiped
 
@@ -71,7 +71,7 @@ Mycroft.Delegate {
 
 ```
 
-**Display A Vertical ListView With Information Cards**
+### Display A Vertical ListView With Information Cards
 
 Kirigami CardsListView is a ListView that can have AbstractCard as its delegate. It automatically assigns the proper spacing and margins around the cards, following the design guidelines.
 
@@ -165,7 +165,7 @@ Mycroft.Delegate{
 
 ```
 
-**Using Proportional Delegate For Simple Display Skills & Auto Layout**
+### Using Proportional Delegate For Simple Display Skills & Auto Layout
 
 **ProportionalDelegate** is a delegate which has proportional padding and a columnlayout as mainItem. The delegate supports a `proportionalGridUnit`, based on its size. Contents should scale proportionally to the delegate size, either directly or by using the `proportionalGridUnit`.
 
@@ -198,7 +198,7 @@ Mycroft.ProportionalDelegate {
 
 ```
 
-**Using Slideshow Component To Show Cards Slideshow**
+### Using Slideshow Component To Show Cards Slideshow
 
 The Slideshow component lets you insert a slideshow with your custom delegate in any skill display. It can be tuned to autoplay and loop, and can also be scrolled or flicked manually by the user.
 
@@ -245,11 +245,11 @@ Mycroft.Delegate {
 
 ```
 
-#### Event Handling
+## Event handling
 
 Mycroft GUI API provides an Event Handling Protocol between the skill and QML display. It lets skill authors forward events in either direction to an event consumer. Skill authors can create any number of custom events. Event names that start with "system." are available to all skills, like previous/next/pick.
 
-**Simple Event Trigger Example From QML Display To Skill**
+### Simple Event Trigger Example From QML Display To Skill
 
 **Python Skill Example**
 
@@ -284,7 +284,7 @@ Mycroft.Delegate {
 
 ```
 
-**Simple Event Trigger Example From Skill To QML Display**
+### Simple Event Trigger Example From Skill To QML Display
 
 **Python Skill Example**
 
@@ -326,7 +326,7 @@ Mycroft.Delegate {
 
 The resting face API lets skill authors extend their skills to supply their own custom IDLE screens, displayed when there is no activity on the screen.
 
-**Simple Idle Screen Example**
+### Simple Idle Screen Example
 
 **Python Skill Example**
 

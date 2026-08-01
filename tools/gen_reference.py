@@ -302,13 +302,29 @@ def gen_config() -> None:
         overrides = yaml.safe_load(overrides_path.read_text()) or {}
 
     flat = _flatten(data)
-    lines = ["| Key | Default | Description |", "|---|---|---|"]
-    for key, value in flat:
-        desc = overrides.get(key) or comment_map.get(key, "")
-        lines.append(f"| `{key}` | {_fmt_json_value(value)} | {_md_escape(desc)} |")
-    body = "\n".join(lines)
 
-    page = DOCS / "config-reference.md"
+    # Group by top-level namespace and give each group a real heading. One flat
+    # table of every key is unnavigable: the reader cannot jump to a section and
+    # the page contributes nothing to the table of contents.
+    groups: dict[str, list] = {}
+    for key, value in flat:
+        ns = key.split(".", 1)[0] if "." in key else "(top level)"
+        groups.setdefault(ns, []).append((key, value))
+
+    lines = []
+    for ns, items in groups.items():
+        heading = "(top level)" if ns == "(top level)" else f"`{ns}`"
+        lines.append(f"### {heading}")
+        lines.append("")
+        lines.append("| Key | Default | Description |")
+        lines.append("|---|---|---|")
+        for key, value in items:
+            desc = overrides.get(key) or comment_map.get(key, "")
+            lines.append(f"| `{key}` | {_fmt_json_value(value)} | {_md_escape(desc)} |")
+        lines.append("")
+    body = "\n".join(lines).rstrip()
+
+    page = DOCS / "config-all-keys.md"
     text = page.read_text()
     new_text, found = replace_marked_section(text, "mycroft-conf-keys", body)
     if not found:
@@ -412,7 +428,7 @@ def main() -> None:
     p_wf = sub.add_parser("workflows", help="regenerate gh-automations-workflows.md")
     p_wf.add_argument("--repo-path", default=None, help="local gh-automations clone (default: ~/AgentWorkspaces/ovos/gh-automations)")
 
-    sub.add_parser("config", help="regenerate config-reference.md")
+    sub.add_parser("config", help="regenerate config-all-keys.md")
 
     p_cli = sub.add_parser("cli", help="regenerate cli-tools.md")
     p_cli.add_argument("--venv-bin", default=None, help="venv bin/ dir to look up commands (default: ~/.venvs/ovos/bin)")

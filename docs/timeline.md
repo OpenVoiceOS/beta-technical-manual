@@ -26,13 +26,21 @@
 
 ## Events timeline
 
+### 2015
+
 - Aug 2015 - [MycroftAI kickstarter](https://www.kickstarter.com/projects/aiforeveryone/mycroft-an-open-source-artificial-intelligence-for) launch
+
+### 2016
+
 - Feb 2016 - MycroftAI [Mimic](https://github.com/MycroftAI/mimic1) [TTS](tts-plugins.md) released
 - May 2016 - [mycroft-core](https://github.com/MycroftAI/mycroft-core) repositories made public under GPL
 - Jun 2016 - @Aix releases [MycroftAI gnome shell](https://extensions.gnome.org/extension/1197/mycroft-assistant/) extension
 - Jun 2016 - @Aix becomes a contributor on the desktop-integration team
 - Aug 2016 - Steve Penrod becomes MycroftAI CTO
 - ??? 2016 - NeonGecko begins working with Mycroft AI
+
+### 2017
+
 - Jan 2017 - @Aix release [MycrofAI plasmoid](https://invent.kde.org/utilities/mycroft-plasmoid) for KDE Plasma desktop
 - Mar 2017 - @Aix incubates Mycroft plasmoid project under KDE
 - Apr 2017 - @JarbasAI forks `mycroft-core` as `jarbas-core`
@@ -45,12 +53,18 @@
 - Nov 2017 - @Aix becomes a `mycroft-core` contributor
 - Dec 2017 - `jarbas-core` abandoned
 - ??? 2017 - Neon AI forks `mycroft-core` as `neon-core` to remove dependency on MycroftAI servers and work on other features
+
+### 2018
+
 - Jan 2018 - initial release of [personal-backend](https://github.com/OpenVoiceOS/ovos-personal-backend/tree/a457b03adc771783ec8714dfdabccdacb2482188), reverse engineered MycroftAI backend by @JarbasAI, licensed as Apache 2.0
 - Jan 2018 - MycroftAI [mark 2 kickstarter](https://www.kickstarter.com/projects/aiforeveryone/mycroft-mark-ii-the-open-voice-assistant) launch
 - Jul 2018 - personal-backend added to MycroftAI Roadmap
 - Aug 2018 - MycroftAI Mimic2 TTS based on tacotron released
 - Sep 2018 - [Mycroft-GUI](https://github.com/MycroftAI/mycroft-gui) was created by collaboration between MycroftAI, Blue Systems based on KDE frameworks, maintained by @Aix
 - Oct 2018 - @j1nx creates ["MycroftOS"](https://community.openconversational.ai/t/openvoiceos-a-bare-minimal-production-type-of-os-based-on-buildroot/4708), the first version of what will eventually become the OpenVoiceOS smart speaker
+
+### 2019
+
 - Jan 2019 - @JarbasAI [personal-backend](https://github.com/MycroftAI/personal-backend/tree/31ee96a8189d96f8102276bf4b9073811ee9a9b2) implementation adopted by MycroftAI
 - Mar 2019 - MycroftAI mark 2 completely redesigned and based on different hardware
 - Apr 2019 - Steve Penrod and @JarbasAI create [lingua-franca](https://github.com/MycroftAI/lingua-franca/tree/130c77026e22d9afb1d4d3a383a743483ea007d8) under MycroftAI with @JarbasAI as maintainer
@@ -62,6 +76,9 @@
 - Dec 2019 - @Chance joins `lingua-franca` as a maintainer
 - Dec 2019 - Chatterbox released (closed source) / kickstarter campaign fullfilled
 - Dec 2019 - MycroftAI starts to work on Kivy based UI
+
+### 2020
+
 - ??? 2020 - MycroftAI starts neglecting community contributions
 - Mar 2020 - MycroftAI abandons [personal-backend](https://github.com/MycroftAI/personal-backend)
 - Mar 2020 - Michael Lewis becomes MycroftAI CEO
@@ -83,6 +100,9 @@
 - Dec 2020 - [ovos-ww-plugin-precise](https://github.com/OpenVoiceOS/ovos-ww-plugin-precise) released
 - Dec 2020 - [ovos-stt-plugin-vosk](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk) released
 - Dec 2020 - [ovos-stt-plugin-chromium](https://github.com/OpenVoiceOS/ovos-stt-plugin-chromium) released
+
+### 2021
+
 - Jan 2021 - [ovos-plugin-manager](https://github.com/OpenVoiceOS/ovos-plugin-manager) released
 - Jan 2021 - [personal-backend](https://github.com/OpenVoiceOS/ovos-personal-backend) adopted by OpenVoiceOS, original repo unarchived and ownership transferred
 - Jan 2021 - [Mycroft embedded shell](https://github.com/notmart/mycroft-embedded-shell) adopted by OpenVoiceOS and renamed to [ovos-shell](https://github.com/OpenVoiceOS/ovos-shell)
@@ -95,7 +115,7 @@
 - ??? 202? - `mycroft-lib` renamed to [HolmesIV](https://github.com/HelloChatterbox/HolmesIV) to avoid trademark issues
 - Apr 2021 - [ovos-workshop](https://github.com/OpenVoiceOS/ovos-workshop) released, bringing OVOS features to individual skills
 - May 2021 - chatterbox forks `lingua-franca` as `lingua-nostra`
-- May 2021 . OpenVoiceOS deprecates `mycroft-lib` and adopts `HolmesIV`
+- May 2021 - OpenVoiceOS deprecates `mycroft-lib` and adopts `HolmesIV`
 - Jun 2021 - [ovos-tts-plugin-espeakNG](https://github.com/OpenVoiceOS/ovos-tts-plugin-espeakNG) released
 - Jun 2021 - [ovos-tts-plugin-mimic](https://github.com/OpenVoiceOS/ovos-tts-plugin-mimic) released
 - Jun 2021 - [ovos-tts-plugin-mimic2](https://github.com/OpenVoiceOS/ovos-tts-plugin-mimic2) released
@@ -137,6 +157,9 @@
 - Dec 2021 - [skill-ovos-weather](https://github.com/OpenVoiceOS/skill-ovos-weather) forked from Mycroft
 - Dec 2021 - [skill-ovos-common-query](https://github.com/OpenVoiceOS/skill-ovos-common-query) forked from Mycroft
 - Dec 2021 - [skill-ovos-application-launcher](https://github.com/OpenVoiceOS/skill-ovos-application-launcher) released
+
+### 2022
+
 - Jan 2022 - OpenVoiceOS forks [lingua-franca](https://github.com/OpenVoiceOS/ovos-lingua-franca)
 - ??? 2022 - OpenVoiceOS starts development in the open via [matrix chat](https://matrix.to/#/!XFpdtmgyCoPDxOMPpH:matrix.org?via=matrix.org)
 - Feb 2022 - [OCP](https://github.com/OpenVoiceOS/ovos-ocp-audio-plugin) released as an audio plugin (mycroft compatible)
@@ -172,7 +195,7 @@
 - Aug 2022 - `ovos-core` version **0.0.4** released
 - Aug 2022 - Introduction of **continuous_listening** and **hybrid_listening** support, allowing for more natural and flexible voice interactions.
 - Sep 2022 - MycroftAI [Mimic3](https://github.com/MycroftAI/mimic3) TTS released, AGPL licensed
-- Sep 2022 . MycroftAI Mark 2 starts shipping
+- Sep 2022 - MycroftAI Mark 2 starts shipping
 - Sep 2022 - [skill-ovos-news](https://github.com/OpenVoiceOS/skill-ovos-news) transferred from @JarbasAl to OVOS
 - Oct 2022 - [ovos-backend-manager](https://github.com/OpenVoiceOS/ovos-backend-manager) UI  released
 - Oct 2022 - [ovos-stt-plugin-whispercpp](https://github.com/OpenVoiceOS/ovos-stt-plugin-whispercpp) released
@@ -194,6 +217,9 @@
 - Dec 2022 - [Home Assistant PHAL](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-homeassistant) plugin initial release by @AIX , exposes HA devices to the messagebus
 - Dec 2022 - [skill-ovos-youtube-music](https://github.com/OpenVoiceOS/skill-ovos-youtube-music) transferred from @JarbasAl to OVOS
 - Dec 2022 - [skill-ovos-bandcamp](https://github.com/OpenVoiceOS/skill-ovos-bandcamp) transferred from @JarbasAl to OVOS
+
+### 2023
+
 - Jan 2023 - `ovos-core` version **0.0.6** released
 - Jan 2023 - negative user feedback from the community for Mark 2, lots of bugs and missing features
 - Jan 2023 - "fallback" wake-word support added to `ovos-plugin-manager`
@@ -279,6 +305,9 @@
 - Dec 2023 - [skill-ovos-wallpapers](https://github.com/OpenVoiceOS/skill-ovos-wallpapers) transferred to OVOS
 - Dec 2023 - [ovos-i2csound](https://github.com/OpenVoiceOS/ovos-i2csound) released by community member @builderjer
 - ??? 202? - [ovos-tts-plugin-mimic2](https://github.com/OpenVoiceOS/ovos-tts-plugin-mimic2) deprecated
+
+### 2024
+
 - Jan 2024 - [skill-ovos-boot-finished](https://github.com/OpenVoiceOS/skill-ovos-boot-finished) forked from Neon
 - Jan 2024 - [skill-ovos-audio-recording](https://github.com/OpenVoiceOS/skill-ovos-audio-recording) forked from Neon
 - Jan 2024 - [ovos-utterance-plugin-cancel](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel) forked from Neon, deprecates dismissal skill
@@ -302,11 +331,17 @@
 - Sep 2024 - `ovos-core` version **0.1.0** released, hitting the first major feature milestone after adopting Semantic Versioning.
 - Oct 2024 - `ovos-core` version **0.2.0** released, introducing refined pipeline routing.
 - Oct 2024 - **Pipeline Stability Milestone**: Core pipeline plugins (`adapt`, `padatious`, `ocp`) reached version **1.0.0**, marking the stability of the modular intent pipeline architecture.
+
+### 2025
+
 - Mar 2025 - `ovos-core` reaches the **1.x** line (`1.1.0`), with the modular pipeline architecture stabilized.
 - Jun 2025 - Introduction of [ovoscope](https://github.com/OpenVoiceOS/ovoscope), the formal end-to-end testing framework for OVOS skills and core components.
 - Jun 2025 - `ovos-utils` version **0.8.0** released, standardizing cross-platform utilities.
 - Oct 2025 - `ovos-core` reaches the **2.x** line (`2.1.0`), a major release formalizing the multi-intent-pipeline architecture.
 - Nov 2025 - `ovos-workshop` version **8.0.0** released, a **major breaking release** that decoupled GUI and resource management into mixins.
+
+### 2026
+
 - Jan 2026 - `ovos-plugin-manager` version **2.2.0** released.
 - Mar 2026 - [ovos-pydantic-models](https://github.com/OpenVoiceOS/ovos-pydantic-models) introduced to standardize ecosystem-wide data structures.
 - Mar 2026 - `ovos-bus-client` version **1.5.0** released.

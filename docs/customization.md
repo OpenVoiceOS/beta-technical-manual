@@ -12,27 +12,47 @@ These files define how a skill interacts with the user and responds to queries.
 > **RECAP**: the skill contains a `locale` folder with subfolders for each lang, for example `en-us`. Learn more in the [skill structure docs](skill-structure.md).
 
 
+### The user resources directory
+
+Both procedures below write into the same place: a per-skill override directory under your
+XDG data directory.
+
+```
+$XDG_DATA_HOME/mycroft/resources/<skill-id>/
+```
+
+`XDG_DATA_HOME` is usually `~/.local/share` on Linux, so for the skill ID
+`skill-ovos-date-time.openvoiceos` the directory is
+`~/.local/share/mycroft/resources/skill-ovos-date-time.openvoiceos/`.
+
+Inside it, mirror the skill's own directory layout. Create the directory with `mkdir -p` if it
+does not exist. You do not need to fork a skill to change what it says or what languages it
+speaks.
+
+---
+
 ### Customizing Dialogs
 
-Users can personalize the behavior of skills by customizing dialogs to better suit their preferences.
+Replace one dialog file of an installed [skill](skill-design-guidelines.md) with your own
+wording. This example replaces `time.current.dialog` in `skill-ovos-date-time.openvoiceos`.
 
-To give a unique twist and personality to your assistant, you don't need to fork existing skills just to change dialogs.
+1. Find the skill ID and the dialog file you want to replace. The file lives in the skill's
+   `locale/en-us/dialog` directory.
+2. Write a replacement file with the same name, `time.current.dialog`. Change, add, or remove
+   lines as you like.
+3. Copy it into the matching path under the user resources directory:
 
-Here's a step-by-step guide on how to replace the dialog of an existing skill:
+    ```bash
+    mkdir -p ~/.local/share/mycroft/resources/skill-ovos-date-time.openvoiceos/locale/en-us/dialog
+    cp time.current.dialog \
+      ~/.local/share/mycroft/resources/skill-ovos-date-time.openvoiceos/locale/en-us/dialog/
+    ```
 
-**Identify the [Skill](skill-design-guidelines.md) and Resource to Replace**:
+4. Restart OpenVoiceOS so the skill reloads its resources, then ask for the current time.
 
-   - Determine the ID of the skill whose dialog you want to replace. In this example, let's assume the skill ID is `skill-ovos-date-time.openvoiceos`.
-
-
-   - Identify the specific dialog file you want to replace. For this example, let's say you want to replace the `time.current.dialog` file located in the `locale/en-us/dialog` directory of the skill.
-
-**Create the Replacement Dialog File**:
-
-   - Create a new dialog file with the same name (`time.current.dialog`) as the original file.
-
-
-   - Customize the content of the dialog file according to your preferences. You can modify the existing dialogues, add new ones, or remove any that you don't want to use.
+**You should hear** your own wording instead of the skill's built-in text. If you still hear the
+original, check that the path, the file name, the `.dialog` extension, and the language folder
+casing all match exactly.
 
 !!! warning "Your file REPLACES the original, it does not merge with it"
     The user-specific file is used instead of the skill's own `time.current.dialog`, line for
@@ -41,89 +61,32 @@ Here's a step-by-step guide on how to replace the dialog of an existing skill:
     shadowing the whole file, and you will not see those new lines until you copy them into
     your override yourself.
 
-**Locate the User-Specific Resource Directory**:
-
-   - Use the provided skill ID (`skill-ovos-date-time.openvoiceos`) to locate the user-specific resource directory.
-
-
-   - The user-specific resource directory is located within the XDG data directory. It follows the path `XDG_DATA_HOME/mycroft/resources/skill-ovos-date-time.openvoiceos` (where `XDG_DATA_HOME` is the user's data directory, usually `~/.local/share` on Linux).
-
-
-   - If it does not exist, create it. You can do this with file manager tools or command-line utilities such as `mkdir` on Unix-like systems.
-
-**Copy the Replacement Dialog File to the User-Specific Directory**:
-
-   - Copy or move the replacement dialog file (`time.current.dialog`) to the appropriate directory within the user-specific resource directory.
-
-
-   - Place the file in the `locale/en-us/dialog` directory within the user-specific resource directory. This mirrors the directory structure of the original skill.
-
-
-   - In this example the final path of the file would be `~/.local/share/mycroft/resources/skill-ovos-date-time.openvoiceos/locale/en-us/dialog/time.current.dialog` 
-
-**Verify the Replacement**:
-
-   - Test the skill to ensure that the modified dialogues are being used instead of the original ones.
-
-   - **You should see**: triggering the skill's "current time" behavior speaks your custom
-     dialog text, not the skill's built-in one. If you still hear the original wording, double
-     check the path and file name match exactly (including the `.dialog` extension and lang
-     folder casing) and restart OpenVoiceOS so the skill reloads its resources.
-
-
-Customizing dialogs gives users flexibility to tailor the behavior of skills to their specific needs and preferences.
-
+---
 
 ### Local Language support
 
-Adding support for additional languages to existing skills lets users interact with OVOS in their preferred language.
+Add a language to a skill that does not ship one yet, without waiting for an upstream release.
+This example adds Spanish (`es-es`) to the same skill.
 
-While developing a skill, or waiting for one to support your language, you might want to add it locally.
+1. Find the skill ID and the language code you want to add.
+2. Create the language folder under the user resources directory:
 
-Users can add language support for a skill by creating a new language folder in the user resources directory and copying the necessary files over:
+    ```bash
+    mkdir -p ~/.local/share/mycroft/resources/skill-ovos-date-time.openvoiceos/locale/es-es
+    ```
 
-**Identify the Skill and Language to Add**:
+3. Copy the resource files from an existing language folder, such as `en-us`, into it. This
+   covers dialogs, vocabularies, and regex files, depending on what the skill uses. Keep the
+   same subdirectory structure.
+4. Translate the copied files.
+5. Restart OpenVoiceOS, then test the skill in the new language.
 
-   - Determine the ID of the skill for which you want to add language support. Let's continue using the skill ID `skill-ovos-date-time.openvoiceos`.
+If a resource is missing from your new language folder, the skill falls back to its own
+language handling. The Language Fallback section below covers the order it uses.
 
-
-   - Identify the language you want to add support for. For this example, let's say you want to add support for Spanish (language code: `es-es`).
-
-**Create the New Language Folder**:
-
-   - Create a new directory with the name of the language code (`es-es` for Spanish) within the `locale` directory of the skill.
-
-
-   - This can be done using file manager tools or command-line utilities such as `mkdir` on Unix-like systems.
-
-
-   - Using the previous example, we would create `~/.local/share/mycroft/resources/skill-ovos-date-time.openvoiceos/locale/es-es/`
-
-**Copy the Required Files to the New Language Folder**:
-
-   - Copy all the necessary resource files from an existing language folder (for example, `en-us`) to the newly created language folder (`es-es`).
-
-
-   - This includes files such as dialogs, vocabularies, and regex patterns, depending on the resources used by the skill.
-
-
-   - Ensure that all files are placed in the corresponding directories within the new language folder to maintain the directory structure of the original skill.
-
-**Verify the Language Addition**:
-
-   - Once the files are copied over, verify that the new language is supported by the skill.
-
-
-   - Restart OpenVoiceOS to allow the skill to recognize the added language resources.
-
-
-   - Test the skill using the added language to ensure that it functions correctly and uses the appropriate language-specific resources.
-
-By following these steps, users can add support for additional languages to existing skills by creating new language folders and copying the required resource files.
-
-> **NEXT STEPS**: consider sending a pull request to the skill to add language support directly.
-
-This lets users extend the language capabilities of skills beyond the languages provided by default.
+!!! tip "Send it upstream"
+    A local language folder only helps you. Opening a pull request against the skill adds the
+    language for everyone, and means you stop re-applying it after each update.
 
 ---
 
