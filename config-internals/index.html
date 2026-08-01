@@ -1794,7 +1794,7 @@ are driven by the bus handlers below rather than called directly.</p>
 <tr>
 <td><code>configuration.updated</code></td>
 <td><code>Configuration.updated</code></td>
-<td>Reload all config layers</td>
+<td>Reload the default, system, remote and XDG layers</td>
 </tr>
 <tr>
 <td><code>configuration.patch</code></td>
@@ -1823,7 +1823,17 @@ are driven by the bus handlers below rather than called directly.</p>
 </tr>
 </tbody>
 </table>
-<p><code>Configuration.set_config_watcher()</code> uses <code>ovos-utils</code>' <code>FileWatcher</code> (watchdog) to monitor config files on disk. It reloads automatically when they change.</p>
+<p><code>configuration.updated</code> does not reload the distribution layer. <code>reload()</code> covers default,
+system, remote and the XDG configs only. A script that edits
+<code>/usr/share/mycroft/mycroft.conf</code> and then emits this event sees no change. The file watcher
+still picks the edit up on its own.</p>
+<p><code>Configuration.set_config_watcher()</code> uses <code>ovos-utils</code>' <code>FileWatcher</code> (watchdog) to monitor
+config files on disk, and reloads when a watched file changes.</p>
+<p>The watch list is built once, from the files that exist at that moment
+(<code>[p for p in paths if isfile(p)]</code>), and is never rebuilt. A config file created <strong>after</strong> the
+service started is therefore not watched at all. On a fresh install with no
+<code>~/.config/mycroft/mycroft.conf</code>, creating one later needs a restart before live reload
+applies to it.</p>
 <hr />
 <h2 id="config-models">Config Models<a class="headerlink" href="#config-models" title="Permanent link">&para;</a></h2>
 <p>Each layer is a <code>LocalConf</code> instance, a file-backed <code>dict</code> subclass.</p>
@@ -1932,8 +1942,11 @@ compatibility.</p>
 </span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="n">Configuration</span><span class="o">.</span><span class="n">system</span>        <span class="c1"># MycroftSystemConfig</span>
 </span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="n">Configuration</span><span class="o">.</span><span class="n">xdg_configs</span>   <span class="c1"># list[LocalConf] — the user/XDG layer(s)</span>
 </span></code></pre></div>
-<p>There is no <code>.user</code> attribute. The editable user config is the last entry in
-<code>Configuration.xdg_configs</code>. To write the user file directly, use <code>MycroftUserConfig()</code>
+<p>There is no <code>.user</code> attribute. The editable user config is the <strong>first</strong> entry in
+<code>Configuration.xdg_configs</code>. The list runs from <code>$XDG_CONFIG_HOME</code> outwards and the merge runs
+left to right, so the last entry wins. On most systems that last entry is
+<code>/etc/xdg/mycroft/mycroft.conf</code>, not the user's own file. See <a href="../config/#config-layer-stack">Config Layer
+Stack</a>. To write the user file directly, use <code>MycroftUserConfig()</code>
 (see Config Models above). Or call <code>update_mycroft_config()</code> to merge a change and emit the
 <code>configuration.patch</code> bus notification in one step.</p>
 <hr />

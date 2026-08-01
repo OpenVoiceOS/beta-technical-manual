@@ -1743,8 +1743,9 @@ configuration. See the <a href="../glossary/">Glossary</a>.</p>
 </tbody>
 </table>
 <p>In addition to <code>USER_CONFIG</code>, every XDG config dir is scanned, so a system-wide
-<code>/etc/xdg/mycroft/mycroft.conf</code> is also merged at the user layer (below your <code>~/.config</code>
-file). File formats are JSON (<code>.json</code> or <code>.conf</code>, with C-style <code>//</code> comments supported) or
+<code>/etc/xdg/mycroft/mycroft.conf</code> is also merged at the user layer — <strong>above</strong> your
+<code>~/.config</code> file, not below it. It is last in the merge, so it wins. See <a href="../config/#config-layer-stack">Configuration:
+Config Layer Stack</a>. File formats are JSON (<code>.json</code> or <code>.conf</code>, with C-style <code>//</code> comments supported) or
 YAML (<code>.yml</code> or <code>.yaml</code>).</p>
 <hr />
 <h2 id="xdg-path-helpers">XDG Path Helpers<a class="headerlink" href="#xdg-path-helpers" title="Permanent link">&para;</a></h2>
@@ -1788,10 +1789,21 @@ not exist on disk, it falls back to the legacy pre-XDG location <code>~/.mycroft
 </span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>
 </span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="c1"># returns list of all config paths in stack order</span>
 </span></code></pre></div>
-<p>Returns an ordered list of all config file paths that <code>Configuration</code> will load, from lowest to highest priority. Useful for debugging which files are in use.</p>
+<p>Returns a list of well-known config paths. Treat it as a rough guide, not as the load list:</p>
+<ul>
+<li><code>~/.mycroft/mycroft.conf</code> is in the list but is never loaded. Only <code>find_user_config()</code>
+  looks at it.</li>
+<li><code>/etc/xdg/mycroft/mycroft.conf</code> is <strong>not</strong> in the list, but it is loaded, and it wins over
+  the user config.</li>
+<li>The order differs from the merge: here the remote layer sits third, while
+  <code>load_all_configs()</code> merges it second, just above the bundled default.</li>
+<li>The path environment variables below are ignored — the function rebuilds
+  <code>/usr/share/&lt;base&gt;/&lt;file&gt;</code> and <code>/etc/&lt;base&gt;/&lt;file&gt;</code> literally.</li>
+</ul>
+<p>To see what is actually in play, print <code>get_xdg_config_locations()</code> together with the layer
+paths on <code>Configuration</code>.</p>
 <hr />
 <h2 id="environment-variable-influence">Environment Variable Influence<a class="headerlink" href="#environment-variable-influence" title="Permanent link">&para;</a></h2>
-<p>The paths above are all affected by:</p>
 <table>
 <thead>
 <tr>
@@ -1808,8 +1820,28 @@ not exist on disk, it falls back to the legacy pre-XDG location <code>~/.mycroft
 <td><code>OVOS_CONFIG_FILENAME</code></td>
 <td>Replaces <code>"mycroft.conf"</code> as the config filename</td>
 </tr>
+<tr>
+<td><code>OVOS_DEFAULT_CONFIG</code></td>
+<td>Absolute path to the bundled default config</td>
+</tr>
+<tr>
+<td><code>OVOS_DISTRIBUTION_CONFIG</code></td>
+<td>Absolute path to the distribution config</td>
+</tr>
+<tr>
+<td><code>MYCROFT_SYSTEM_CONFIG</code></td>
+<td>Absolute path to the system config</td>
+</tr>
+<tr>
+<td><code>MYCROFT_WEB_CACHE</code></td>
+<td>Absolute path to the remote-config cache</td>
+</tr>
 </tbody>
 </table>
+<p>The four absolute-path variables replace a whole path, so they are not affected by
+<code>OVOS_CONFIG_BASE_FOLDER</code> or <code>OVOS_CONFIG_FILENAME</code>. The bundled default config does not use
+the base folder at all: it resolves from <code>OVOS_DEFAULT_CONFIG</code> or the installed package
+directory.</p>
 <p>See <a href="../config/">Configuration Management</a> for the full env var API.</p>
 <hr />
 <p><em>Source code: <a href="https://github.com/OpenVoiceOS/ovos-config">OpenVoiceOS/ovos-config</a>.</em></p>
