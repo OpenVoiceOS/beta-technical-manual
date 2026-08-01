@@ -154,7 +154,7 @@ dependencies = ["ovos-plugin-manager>=0.5.0,<1.0.0"]
 ovos-g2p-plugin-example = "ovos_g2p_plugin_example:MyG2P"
 
 [project.entry-points."opm.g2p.config"]
-ovos-g2p-plugin-example.config = "ovos_g2p_plugin_example:MyG2PConfig"
+ovos-g2p-plugin-example.config = "ovos_g2p_plugin_example:MY_G2P_CONFIGS"
 ```
 
 `opm.g2p.config` is the parallel config-metadata group, same convention as every other OPM

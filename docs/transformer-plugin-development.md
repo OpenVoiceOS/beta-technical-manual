@@ -7,11 +7,36 @@
 
 ## Creating a Plugin
 
-1.  **Inherit** from the appropriate base class.
+1.  **Inherit** from the base class for your transformer type. All six live in
+    `ovos_plugin_manager.templates.transformers`:
+
+    | Base class | Stage | Entry-point group |
+    |---|---|---|
+    | `UtteranceTransformer` | text, before intent matching | `opm.transformer.text` |
+    | `MetadataTransformer` | message context, before intent matching | `opm.transformer.metadata` |
+    | `IntentTransformer` | after a match, before the handler runs | `opm.transformer.intent` |
+    | `DialogTransformer` | spoken text, before TTS | `opm.transformer.dialog` |
+    | `TTSTransformer` | synthesized audio, after TTS | `opm.transformer.tts` |
+    | `AudioTransformer` | captured audio, before STT | `opm.transformer.audio` |
+
+    Every one of them takes `__init__(self, name, priority=50, config=None)`, and **`name` is
+    a required positional argument**. Pass your plugin's name as the default, because that
+    name is also the key the base class reads your settings under in `mycroft.conf`:
+
+    ```python
+    from ovos_plugin_manager.templates.transformers import UtteranceTransformer
 
 
-2.  **Implement** the `transform` method (or specific audio hooks).
+    class MyCustomTransformer(UtteranceTransformer):
+        def __init__(self, name="my-custom-transformer", priority=50, config=None):
+            super().__init__(name, priority, config)
 
+        def transform(self, utterances, context=None):
+            return [u.lower() for u in utterances], {}
+    ```
+
+2.  **Implement** the `transform` method (or specific audio hooks). It returns a tuple of
+    `(utterances, context)` — return `{}` for the context if you add none.
 
 3.  **Register** the entry point in your `pyproject.toml`, using the group for your transformer type (here, an utterance transformer):
 
@@ -21,14 +46,21 @@ my-transformer = "my_package.module:MyTransformer"
 
 ```
 
-!!! note "No config-discovery entry point for transformers"
-    TTS and STT plugins can register a second entry point (`opm.tts.config`, `opm.stt.config`)
-    that exposes sample configurations for UI discovery. See
-    [TTS Plugins: Entry point](tts-plugin-development.md#entry-point). `ovos-plugin-manager`'s
-    `PluginConfigTypes` enum has no matching entry for any transformer type (audio, utterance,
-    metadata, intent, dialog, or tts transformers). A transformer plugin only registers under
-    its `opm.transformer.*` group. There is no equivalent `opm.transformer.text.config` group to
-    advertise its settings.
+!!! note "The optional config-discovery entry point"
+    Like TTS and STT plugins, a transformer can register a second entry point that exposes
+    sample configurations for UI discovery. `PluginConfigTypes` defines one for every
+    transformer type: append `.config` to the group, so `opm.transformer.text.config`,
+    `opm.transformer.audio.config`, and so on.
+
+    ```toml
+    [project.entry-points."opm.transformer.text.config"]
+    my-transformer.config = "my_package.module:MY_CONFIGS"
+    ```
+
+    The entry-point **name** needs the `.config` suffix too, and the target must be a plain
+    dict — see [Plugin Manager: Expose language
+    configurations](plugin-manager.md#4-expose-language-configurations-optional). This is
+    optional; add it once the plugin has settings worth advertising.
 
 ---
 
@@ -58,6 +90,10 @@ transformer = MyCustomTransformer()
 utterances, context = transformer.transform(["HELLO WORLD"])
 assert utterances == ["hello world"]
 ```
+
+The constructor above works only because the example gives `name` a default. Without one,
+`MyCustomTransformer()` raises `TypeError: __init__() missing 1 required positional
+argument: 'name'` — the base class does not supply it.
 
 Turn that into a pytest test that checks both return values:
 

@@ -114,6 +114,7 @@ A complete minimal streaming plugin:
 ```python
 from queue import Queue
 from threading import Thread
+from ovos_utils import classproperty
 from ovos_plugin_manager.templates.stt import StreamingSTT, StreamThread
 
 
@@ -140,8 +141,8 @@ class MyStreamingSTT(StreamingSTT):
     def create_streaming_thread(self):
         return MyStreamThread(self.queue, self.lang, self.engine)
 
-    @property
-    def available_languages(self):
+    @classproperty
+    def available_languages(cls):
         return {"en-us"}
 ```
 
@@ -220,7 +221,7 @@ dependencies = ["ovos-plugin-manager"]
 ovos-stt-plugin-mymodel = "ovos_stt_plugin_mymodel:MySTTPlugin"
 
 [project.entry-points."opm.stt.config"]
-ovos-stt-plugin-mymodel = "ovos_stt_plugin_mymodel:MySTTConfig"
+ovos-stt-plugin-mymodel.config = "ovos_stt_plugin_mymodel:MySTTConfig"
 
 ```
 

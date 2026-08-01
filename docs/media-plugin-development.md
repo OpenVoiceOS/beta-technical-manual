@@ -202,8 +202,12 @@ other two groups (all three live in `ovos_plugin_manager.ocp`).
 ## Publish checklist
 
 1. The class subclasses `AudioPlayerBackend`, `VideoPlayerBackend`, or
-   `WebPlayerBackend` (or their `Remote*` variant) and implements all nine abstract
-   methods with the documented signatures and return types.
+   `WebPlayerBackend` (or their `Remote*` variant) and implements all ten abstract
+   methods with the documented signatures and return types: `supported_uris`, `play`,
+   `stop`, `pause`, `resume`, `lower_volume`, `restore_volume`, `get_track_length`,
+   `get_track_position`, `set_track_position`. `MediaBackend` uses `ABCMeta`, so leaving
+   any one of them out is a `TypeError` the first time the plugin is instantiated, not a
+   runtime surprise later.
 2. The entry-point group in `pyproject.toml` matches that base class
    (`opm.media.audio` / `.video` / `.web`).
 3. `__init__` accepts `config=None, bus=None` and works with an empty config and a

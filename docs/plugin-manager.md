@@ -88,14 +88,17 @@ its entry point group, and its template base class now lives on its own page:
 ```python
 
 # my_stt_plugin/__init__.py
+from ovos_utils import classproperty
 from ovos_plugin_manager.templates.stt import STT
 from typing import Optional, Set
 
 class MySTTPlugin(STT):
     """My custom speech-to-text engine."""
 
-    @property
-    def available_languages(self) -> Set[str]:
+    # classproperty, not @property: OPM reads this off the class, before any
+    # instance exists. See the note below.
+    @classproperty
+    def available_languages(cls) -> Set[str]:
         return {"en-US", "en-GB", "de-DE"}
 
     def execute(self, audio, language: Optional[str] = None) -> str:
@@ -108,6 +111,7 @@ class MySTTPlugin(STT):
 ```python
 
 # my_tts_plugin/__init__.py
+from ovos_utils import classproperty
 from ovos_plugin_manager.templates.tts import TTS, TTSValidator
 from typing import Set
 
@@ -117,8 +121,8 @@ class MyTTSPlugin(TTS):
     def __init__(self, config=None):
         super().__init__(config, audio_ext="wav")
 
-    @property
-    def available_languages(self) -> Set[str]:
+    @classproperty
+    def available_languages(cls) -> Set[str]:
         return {"en-US"}
 
     def get_tts(self, sentence: str, wav_file: str, lang=None, voice=None):
@@ -165,9 +169,19 @@ Use `pyproject.toml` (older plugins may still register the same groups through a
 my-engine-stt = "my_stt_plugin:MySTTPlugin"
 
 [project.entry-points."opm.stt.config"]
-my-engine-stt = "my_stt_plugin:MySTTPluginConfig"
+my-engine-stt.config = "my_stt_plugin:MY_STT_CONFIGS"
 
 ```
+
+!!! warning "`available_languages` is a `classproperty`"
+    On both the `STT` and `TTS` base classes, `available_languages` is declared with
+    `ovos_utils.classproperty`, because OVOS reads it off the class before instantiating
+    the plugin — `get_plugin_supported_languages()` and `STT.detect_language()` both do.
+
+    Override it with a plain `@property` and the class-level read returns the `property`
+    object itself, not your set. The validator above shows the symptom:
+    `self.tts.lang in MyTTSPlugin.available_languages` raises
+    `TypeError: argument of type 'property' is not iterable`.
 
 ### 3. Install and verify
 
@@ -183,24 +197,34 @@ print('my-engine-stt' in find_stt_plugins())  # True
 
 ### 4. Expose language configurations (optional)
 
-Plugins that support multiple voices/models should expose a `.config` entry point returning
-`{lang: [list_of_config_dicts]}`:
+Plugins that support multiple voices/models should expose a `.config` entry point pointing at
+a plain `{lang: [list_of_config_dicts]}` dict:
 
 ```python
-class MyTTSPluginConfig:
-    @staticmethod
-    def get_configs():
-        return {
-            "en-US": [
-                {"lang": "en-US", "gender": "female", "priority": 50, "offline": True},
-                {"lang": "en-US", "gender": "male",   "priority": 50, "offline": True},
-            ],
-            "de-DE": [
-                {"lang": "de-DE", "gender": "female", "priority": 60, "offline": False},
-            ],
-        }
+MY_STT_CONFIGS = {
+    "en-US": [
+        {"lang": "en-US", "gender": "female", "priority": 50, "offline": True},
+        {"lang": "en-US", "gender": "male",   "priority": 50, "offline": True},
+    ],
+    "de-DE": [
+        {"lang": "de-DE", "gender": "female", "priority": 60, "offline": False},
+    ],
+}
 
 ```
+
+!!! warning "Two things the config entry point is strict about"
+    **The entry-point name needs the `.config` suffix.** `load_plugin_configs()` looks up
+    `<plugin-name> + ".config"`, so an entry named `my-engine-stt` inside the
+    `opm.stt.config` group is never found. The group alone is not enough.
+
+    **The target must be the dict itself, not a class or a function that returns one.**
+    `load_plugin_configs()` returns whatever the entry point loads, and every caller then
+    treats it as a dict — `get_valid_plugin_configs()` iterates `.items()` on it. A class
+    object survives loading and fails later, in code far from your plugin.
+
+    Both mistakes fail silently: language and voice discovery just returns nothing, with no
+    error to trace back.
 
 | Config key | Type | Description |
 |---|---|---|

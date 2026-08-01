@@ -136,6 +136,9 @@ A pipeline plugin is a matcher exposing `match(utterances, lang, message) → Ma
 
 ### Agent Plugins
 
+Every base class below is in `ovos_plugin_manager.templates.agents`, except `ToolBox`, which
+the table marks.
+
 | Plugin type | Entry point group | Template base class |
 |---|---|---|
 | Chat | `opm.agents.chat` | `ChatEngine` |
@@ -151,7 +154,7 @@ A pipeline plugin is a matcher exposing `match(utterances, lang, message) → Ma
 | Reranker | `opm.agents.reranker` | `ReRankerEngine` |
 | Coreference | `opm.agents.coref` | `CoreferenceEngine` |
 | Yes/No | `opm.agents.yesno` | `YesNoEngine` |
-| Toolbox | `opm.agents.toolbox` | `ToolBox` |
+| Toolbox | `opm.agents.toolbox` | `ToolBox` (in `ovos_plugin_manager.templates.agent_tools`) |
 | Memory | `opm.agents.memory` | `AgentContextManager` |
 | Option Matcher | `opm.agents.option_matcher` | `OptionMatcherEngine` |
 

@@ -124,7 +124,7 @@ dependencies = ["ovos-plugin-manager"]
 ovos-ww-plugin-mymodel = "ovos_ww_plugin_mymodel:MyWWPlugin"
 
 [project.entry-points."opm.wake_word.config"]
-ovos-ww-plugin-mymodel = "ovos_ww_plugin_mymodel:MyWWConfig"
+ovos-ww-plugin-mymodel.config = "ovos_ww_plugin_mymodel:MyWWConfig"
 
 ```
 

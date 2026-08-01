@@ -40,8 +40,10 @@ which languages the plugin supports in its current state (for example, only the 
 voice files are already installed).
 
 OVOS uses it to pick a TTS plugin for the configured language and to filter plugin choices in a
-UI. A plugin that skips it still loads, but any code that inspects `available_languages` sees an
-empty set and treats the plugin as supporting no language.
+UI. Do not skip it. The base implementation has a docstring and no `return`, so it evaluates to
+`None` — not to an empty set. Any caller doing `lang in tts.available_languages` then raises
+`TypeError: argument of type 'NoneType' is not iterable`, rather than quietly treating the
+plugin as supporting no language.
 
 ### Entry point
 
@@ -49,7 +51,7 @@ To make the class detectable as a TTS plugin, the package needs to provide an en
 
 ```toml
 [project.entry-points."opm.tts"]
-example_tts = "my_tts:myTTS"
+example_tts = "my_tts:MyTTS"
 
 [project.entry-points."opm.tts.config"]
 "example_tts.config" = "my_tts:MyTTSConfig"
@@ -115,7 +117,11 @@ class MyTTSPlugin(TTS):
 ```
 
 See [OVOS Plugin Manager: Writing a Plugin](plugin-manager.md#writing-a-plugin) for how
-`get_tts_class()`/registration and the `opm.tts` entry point fit together at load time.
+registration and the `opm.tts` entry point fit together at load time: `find_tts_plugins()`
+scans the `opm.tts` group and `load_tts_plugin(name)` returns one class from it.
+
+`get_tts_class()` above is unrelated to that lookup. It is a method every `TTSValidator`
+implements, and it exists so the validator can name the class it validates.
 
 ### Config plumbing
 

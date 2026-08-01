@@ -32,9 +32,16 @@ The base class (`PHALPlugin`) is a `threading.Thread`. Key points:
   `ovos.PHAL.<name>`.
 
 
-- Its `__init__` calls `self.start()` itself. Instantiating a plugin already runs
-  its thread. Do all setup **before** `super().__init__()` returns, or guard against
-  the thread already running.
+- `PHALPlugin` is a `Thread`, and its `__init__` calls `self.start()` on its last line.
+  Instantiating a plugin already runs its thread.
+
+  Register your own bus handlers **after** `super().__init__()`, not before: `self.bus` is
+  assigned inside that call, so there is nothing to register on until it returns.
+
+  The default `run()` is a no-op, so for most plugins the started thread does nothing and
+  the ordering does not bite. If you override `run()`, it can begin executing before your
+  post-`super()` setup finishes — set anything `run()` depends on before you call
+  `super().__init__()`, or have `run()` wait for it.
 
 
 - It auto-registers a large set of legacy enclosure (`enclosure.eyes.*`,
@@ -190,7 +197,8 @@ class MyPlugin(PHALPlugin):
 
 ## Lifecycle
 
-- Set up bus listeners in `__init__`
+- Set up bus listeners in `__init__`, after the `super().__init__()` call that creates
+  `self.bus`
 
 
 - Provide a `shutdown()` method for clean teardown
