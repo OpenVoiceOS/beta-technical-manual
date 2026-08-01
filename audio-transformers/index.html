@@ -1101,13 +1101,13 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#creating-custom-audio-transformers" class="md-nav__link">
+  <a href="#writing-your-own-audio-transformer" class="md-nav__link">
     <span class="md-ellipsis">
-      Creating Custom Audio Transformers
+      Writing your own Audio Transformer
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Creating Custom Audio Transformers">
+    <nav class="md-nav" aria-label="Writing your own Audio Transformer">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1129,6 +1129,15 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#priority" class="md-nav__link">
+    <span class="md-ellipsis">
+      Priority
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#plugin-registration" class="md-nav__link">
     <span class="md-ellipsis">
       Plugin Registration
@@ -1141,6 +1150,33 @@
   <a href="#configuration-example" class="md-nav__link">
     <span class="md-ellipsis">
       Configuration Example
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#test-it-without-ovos" class="md-nav__link">
+    <span class="md-ellipsis">
+      Test it without OVOS
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#verify-discovery" class="md-nav__link">
+    <span class="md-ellipsis">
+      Verify discovery
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#checklist-before-you-publish" class="md-nav__link">
+    <span class="md-ellipsis">
+      Checklist before you publish
     </span>
   </a>
   
@@ -1587,13 +1623,13 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#creating-custom-audio-transformers" class="md-nav__link">
+  <a href="#writing-your-own-audio-transformer" class="md-nav__link">
     <span class="md-ellipsis">
-      Creating Custom Audio Transformers
+      Writing your own Audio Transformer
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Creating Custom Audio Transformers">
+    <nav class="md-nav" aria-label="Writing your own Audio Transformer">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1615,6 +1651,15 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#priority" class="md-nav__link">
+    <span class="md-ellipsis">
+      Priority
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#plugin-registration" class="md-nav__link">
     <span class="md-ellipsis">
       Plugin Registration
@@ -1627,6 +1672,33 @@
   <a href="#configuration-example" class="md-nav__link">
     <span class="md-ellipsis">
       Configuration Example
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#test-it-without-ovos" class="md-nav__link">
+    <span class="md-ellipsis">
+      Test it without OVOS
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#verify-discovery" class="md-nav__link">
+    <span class="md-ellipsis">
+      Verify discovery
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#checklist-before-you-publish" class="md-nav__link">
+    <span class="md-ellipsis">
+      Checklist before you publish
     </span>
   </a>
   
@@ -1800,8 +1872,13 @@ content of the voice itself sits outside that range.</p>
 </span></code></pre></div>
 <p>For more information, visit the <a href="https://github.com/OpenVoiceOS/ovos-audio-transformer-plugin-bandpass">GitHub repository</a>.</p>
 <hr />
-<h2 id="creating-custom-audio-transformers">Creating Custom Audio Transformers<a class="headerlink" href="#creating-custom-audio-transformers" title="Permanent link">&para;</a></h2>
-<p>To develop your own Audio Transformer plugin for OVOS, implement a class that extends the base <code>AudioTransformer</code> template. </p>
+<h2 id="writing-your-own-audio-transformer">Writing your own Audio Transformer<a class="headerlink" href="#writing-your-own-audio-transformer" title="Permanent link">&para;</a></h2>
+<p>Subclass <code>AudioTransformer</code> (<code>ovos_plugin_manager.templates.transformers</code>) and
+override <code>transform(audio_data) -&gt; Tuple[bytes, dict]</code>, the single method the STT
+stage calls. Register the class under the <code>opm.transformer.audio</code> entry-point group.
+The base class also offers optional hooks (<code>on_audio</code>, <code>on_hotword</code>, <code>on_speech</code>,
+<code>on_speech_end</code>) that let you inspect audio earlier in the voice loop. Override only
+the ones you need.</p>
 <p>This class allows you to process raw audio chunks at various stages before the Speech-to-Text (STT) engine processes the audio.</p>
 <h3 id="base-class-overview">Base Class Overview<a class="headerlink" href="#base-class-overview" title="Permanent link">&para;</a></h3>
 <p>Your custom transformer should subclass:</p>
@@ -1864,12 +1941,26 @@ content of the voice itself sits outside that range.</p>
 <p><strong>Reset</strong>: The <code>reset()</code> method clears internal audio buffers, called after STT completes.</p>
 </li>
 </ul>
+<h3 id="priority">Priority<a class="headerlink" href="#priority" title="Permanent link">&para;</a></h3>
+<p>Transformers run in <strong>ascending priority</strong> order (lower <code>priority</code> first). The default
+is 50. Pick a low priority for early-stage cleanup (noise reduction) that later
+transformers should see, and a high priority for anything that should run last.</p>
 <h3 id="plugin-registration">Plugin Registration<a class="headerlink" href="#plugin-registration" title="Permanent link">&para;</a></h3>
-<p>Expose the class under the <code>opm.transformer.audio</code> entry-point group in your <code>pyproject.toml</code>:</p>
-<div class="language-toml highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="k">[project.entry-points.</span><span class="s2">&quot;opm.transformer.audio&quot;</span><span class="k">]</span>
-</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="s2">&quot;my-custom-audio-transformer&quot;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;my_module:MyCustomAudioTransformer&quot;</span>
+<p>A full <code>pyproject.toml</code> for a standalone plugin package:</p>
+<div class="language-toml highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="k">[project]</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;ovos-audio-transformer-mycustom&quot;</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="n">version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;0.1.0&quot;</span>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="n">dependencies</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;ovos-plugin-manager&quot;</span><span class="p">]</span>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="k">[project.entry-points.</span><span class="s2">&quot;opm.transformer.audio&quot;</span><span class="k">]</span>
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="s2">&quot;my-custom-audio-transformer&quot;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;my_module:MyCustomAudioTransformer&quot;</span>
 </span></code></pre></div>
-<p>The legacy alias <code>neon.plugin.audio</code> is still recognized for this group by the plugin loader, but new plugins should use <code>opm.transformer.audio</code> (the GGWave and SpeechBrain transformers above both already do).</p>
+<p>An <code>opm.transformer.audio.config</code> group is also available, for a dict of config
+metadata an installer or GUI can read. It is optional. Add it once the plugin has
+settings worth advertising. The legacy alias <code>neon.plugin.audio</code> is still recognized
+for the entry-point group by the plugin loader, but new plugins should use
+<code>opm.transformer.audio</code> (the GGWave and SpeechBrain transformers above both already
+do).</p>
 <h3 id="configuration-example">Configuration Example<a class="headerlink" href="#configuration-example" title="Permanent link">&para;</a></h3>
 <p>Add your transformer to <code>mycroft.conf</code>:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>&quot;audio_transformers&quot;: {
@@ -1878,6 +1969,32 @@ content of the voice itself sits outside that range.</p>
 </span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>  }
 </span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>}
 </span></code></pre></div>
+<h3 id="test-it-without-ovos">Test it without OVOS<a class="headerlink" href="#test-it-without-ovos" title="Permanent link">&para;</a></h3>
+<p><code>AudioTransformer</code> subclasses are plain classes, so a unit test needs no bus and no
+<code>Configuration</code>:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="kn">from</span> <span class="nn">my_module</span> <span class="kn">import</span> <span class="n">MyCustomAudioTransformer</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="n">transformer</span> <span class="o">=</span> <span class="n">MyCustomAudioTransformer</span><span class="p">()</span>
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="n">audio_data</span><span class="p">,</span> <span class="n">context</span> <span class="o">=</span> <span class="n">transformer</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x00\x01</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="k">assert</span> <span class="n">audio_data</span> <span class="o">==</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x00\x01</span><span class="s2">&quot;</span>
+</span></code></pre></div>
+<h3 id="verify-discovery">Verify discovery<a class="headerlink" href="#verify-discovery" title="Permanent link">&para;</a></h3>
+<p>After <code>pip install -e .</code>:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="kn">from</span> <span class="nn">ovos_plugin_manager.audio_transformers</span> <span class="kn">import</span> <span class="n">find_audio_transformer_plugins</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="nb">print</span><span class="p">(</span><span class="n">find_audio_transformer_plugins</span><span class="p">())</span>
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="c1"># {&#39;my-custom-audio-transformer&#39;: &lt;class &#39;my_module.MyCustomAudioTransformer&#39;&gt;}</span>
+</span></code></pre></div>
+<h3 id="checklist-before-you-publish">Checklist before you publish<a class="headerlink" href="#checklist-before-you-publish" title="Permanent link">&para;</a></h3>
+<ol>
+<li><code>transform()</code> accepts <code>audio_data</code> and returns <code>(audio_data, context)</code>.</li>
+<li><code>__init__</code> hardcodes the plugin <code>name</code> and forwards <code>name</code>, <code>priority</code>, <code>config</code>
+   to <code>super().__init__()</code>.</li>
+<li>The entry-point group in <code>pyproject.toml</code> is <code>opm.transformer.audio</code>.</li>
+<li>A unit test calls <code>transform()</code> directly, with no OVOS services running.</li>
+<li><code>find_audio_transformer_plugins()</code> discovers the installed plugin under the
+   expected name.</li>
+</ol>
 
 
 

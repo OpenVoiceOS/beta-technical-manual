@@ -1084,9 +1084,9 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#1-implementation-template" class="md-nav__link">
+  <a href="#1-a-minimal-working-plugin" class="md-nav__link">
     <span class="md-ellipsis">
-      1. Implementation Template
+      1. A minimal working plugin
     </span>
   </a>
   
@@ -1096,6 +1096,33 @@
   <a href="#2-registration" class="md-nav__link">
     <span class="md-ellipsis">
       2. Registration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-test-it-without-ovos" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Test it without OVOS
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-verify-discovery" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Verify discovery
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-checklist-before-you-publish" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Checklist before you publish
     </span>
   </a>
   
@@ -1591,9 +1618,9 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#1-implementation-template" class="md-nav__link">
+  <a href="#1-a-minimal-working-plugin" class="md-nav__link">
     <span class="md-ellipsis">
-      1. Implementation Template
+      1. A minimal working plugin
     </span>
   </a>
   
@@ -1603,6 +1630,33 @@
   <a href="#2-registration" class="md-nav__link">
     <span class="md-ellipsis">
       2. Registration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-test-it-without-ovos" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Test it without OVOS
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-verify-discovery" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Verify discovery
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-checklist-before-you-publish" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Checklist before you publish
     </span>
   </a>
   
@@ -1746,38 +1800,85 @@ leading/trailing silence from a buffer, and a <code>runtime_requirements</code> 
 (the deprecated <a href="../skill-runtime-requirements/"><code>RuntimeRequirements</code></a> mechanism)
 used by the plugin manager to advertise network/offline behavior.</p>
 <h2 id="creating-your-own-vad-plugin">Creating Your Own VAD Plugin<a class="headerlink" href="#creating-your-own-vad-plugin" title="Permanent link">&para;</a></h2>
-<h3 id="1-implementation-template">1. Implementation Template<a class="headerlink" href="#1-implementation-template" title="Permanent link">&para;</a></h3>
-<p>To create a new VAD plugin, you only need to implement the <code>is_silence</code> method.</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">from</span> <span class="nn">ovos_plugin_manager.templates.vad</span> <span class="kn">import</span> <span class="n">VADEngine</span>
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="k">class</span> <span class="nc">MyCustomVAD</span><span class="p">(</span><span class="n">VADEngine</span><span class="p">):</span>
-</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>    <span class="k">def</span> <span class="nf">is_silence</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chunk</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>        <span class="c1"># Implement your VAD logic here</span>
-</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>        <span class="c1"># Return True for silence, False for speech</span>
-</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>        <span class="n">is_speech</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">my_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span>
-</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>        <span class="k">return</span> <span class="ow">not</span> <span class="n">is_speech</span>
+<p>To create a new VAD plugin, subclass <code>VADEngine</code> and implement its one abstract method,
+<code>is_silence(self, chunk) -&gt; bool</code>. The base class handles everything else: <code>extract_speech</code>,
+the padding/threshold bookkeeping in <code>__init__</code>, and <code>runtime_requirements</code>.</p>
+<h3 id="1-a-minimal-working-plugin">1. A minimal working plugin<a class="headerlink" href="#1-a-minimal-working-plugin" title="Permanent link">&para;</a></h3>
+<p>Project layout:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>ovos-vad-plugin-mymodel/
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>├── pyproject.toml
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>└── ovos_vad_plugin_mymodel/
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>    └── __init__.py
+</span></code></pre></div>
+<p><code>ovos_vad_plugin_mymodel/__init__.py</code>:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kn">from</span> <span class="nn">ovos_plugin_manager.templates.vad</span> <span class="kn">import</span> <span class="n">VADEngine</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="k">class</span> <span class="nc">MyCustomVAD</span><span class="p">(</span><span class="n">VADEngine</span><span class="p">):</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>    <span class="k">def</span> <span class="nf">is_silence</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chunk</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>        <span class="c1"># Implement your VAD logic here</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>        <span class="c1"># Return True for silence, False for speech</span>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>        <span class="n">is_speech</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">my_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span>
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>        <span class="k">return</span> <span class="ow">not</span> <span class="n">is_speech</span>
 </span></code></pre></div>
 <h3 id="2-registration">2. Registration<a class="headerlink" href="#2-registration" title="Permanent link">&para;</a></h3>
-<p>Register your plugin in <code>pyproject.toml</code> under the <code>opm.VAD</code> group (note the uppercase <code>VAD</code>):</p>
-<div class="language-toml highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">[project.entry-points.</span><span class="s2">&quot;opm.VAD&quot;</span><span class="k">]</span>
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="n">my-custom-vad</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;my_package.module:MyCustomVAD&quot;</span>
+<p><code>pyproject.toml</code>. The entry point is what makes it a plugin. The group must be <code>opm.VAD</code>
+(note the uppercase <code>VAD</code>), and the entry-point name (left of <code>=</code>) is the string users put
+in their <code>mycroft.conf</code>:</p>
+<div class="language-toml highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="k">[project]</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;ovos-vad-plugin-mymodel&quot;</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="n">version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;0.1.0&quot;</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="n">dependencies</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;ovos-plugin-manager&quot;</span><span class="p">]</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="k">[project.entry-points.</span><span class="s2">&quot;opm.VAD&quot;</span><span class="k">]</span>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="n">ovos-vad-plugin-mymodel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;ovos_vad_plugin_mymodel:MyCustomVAD&quot;</span>
 </span></code></pre></div>
+<p>There is a parallel <code>opm.VAD.config</code> group for a dict of config metadata used by
+installers and GUIs. It is optional. Add it once the plugin has settings worth
+advertising.</p>
 <blockquote>
 <p>The legacy alias <code>ovos.plugin.VAD</code> is still accepted, but new plugins should use <code>opm.VAD</code>.</p>
 </blockquote>
+<h3 id="3-test-it-without-ovos">3. Test it without OVOS<a class="headerlink" href="#3-test-it-without-ovos" title="Permanent link">&para;</a></h3>
+<p><code>VADEngine</code> is a plain class with no messagebus connection, so a unit test needs no
+running OVOS stack:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kn">from</span> <span class="nn">ovos_vad_plugin_mymodel</span> <span class="kn">import</span> <span class="n">MyCustomVAD</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="n">vad</span> <span class="o">=</span> <span class="n">MyCustomVAD</span><span class="p">()</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="n">silence_chunk</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x00</span><span class="s2">&quot;</span> <span class="o">*</span> <span class="mi">640</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="k">assert</span> <span class="n">vad</span><span class="o">.</span><span class="n">is_silence</span><span class="p">(</span><span class="n">silence_chunk</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span>
+</span></code></pre></div>
+<h3 id="4-verify-discovery">4. Verify discovery<a class="headerlink" href="#4-verify-discovery" title="Permanent link">&para;</a></h3>
+<p>After <code>pip install -e .</code>:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kn">from</span> <span class="nn">ovos_plugin_manager.vad</span> <span class="kn">import</span> <span class="n">find_vad_plugins</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="nb">print</span><span class="p">(</span><span class="n">find_vad_plugins</span><span class="p">())</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="c1"># {&#39;ovos-vad-plugin-mymodel&#39;: &lt;class &#39;...MyCustomVAD&#39;&gt;}</span>
+</span></code></pre></div>
+<p><code>load_vad_plugin(name)</code> returns the same uninstantiated class for one plugin name. You
+construct it yourself with your config dict.</p>
+<h3 id="5-checklist-before-you-publish">5. Checklist before you publish<a class="headerlink" href="#5-checklist-before-you-publish" title="Permanent link">&para;</a></h3>
+<ol>
+<li>The class subclasses <code>VADEngine</code> and implements <code>is_silence(chunk) -&gt; bool</code>.</li>
+<li><code>__init__</code> accepts <code>config=None</code> and <code>sample_rate=None</code> and works with an empty config
+   (or call <code>super().__init__(config, sample_rate)</code> and add nothing new).</li>
+<li>The entry-point group in <code>pyproject.toml</code> is <code>opm.VAD</code>.</li>
+<li>Unit tests exercise <code>is_silence</code> directly, with no OVOS services running.</li>
+<li><code>find_vad_plugins()</code> discovers the installed plugin under the expected name.</li>
+</ol>
 <h2 id="standalone-usage">Standalone Usage<a class="headerlink" href="#standalone-usage" title="Permanent link">&para;</a></h2>
 <p>You can use the VAD engine in your own scripts:</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kn">from</span> <span class="nn">ovos_plugin_manager.vad</span> <span class="kn">import</span> <span class="n">find_vad_plugins</span>
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="c1"># Load the plugin</span>
-</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="n">plugins</span> <span class="o">=</span> <span class="n">find_vad_plugins</span><span class="p">()</span>
-</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="n">vad_class</span> <span class="o">=</span> <span class="n">plugins</span><span class="p">[</span><span class="s2">&quot;ovos-vad-plugin-webrtcvad&quot;</span><span class="p">]</span>
-</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="n">vad</span> <span class="o">=</span> <span class="n">vad_class</span><span class="p">()</span>
-</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>
-</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="c1"># Process an audio chunk</span>
-</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="n">is_silence</span> <span class="o">=</span> <span class="n">vad</span><span class="o">.</span><span class="n">is_silence</span><span class="p">(</span><span class="n">audio_chunk</span><span class="p">)</span>
-</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="k">if</span> <span class="ow">not</span> <span class="n">is_silence</span><span class="p">:</span>
-</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Speech detected!&quot;</span><span class="p">)</span>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kn">from</span> <span class="nn">ovos_plugin_manager.vad</span> <span class="kn">import</span> <span class="n">find_vad_plugins</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="c1"># Load the plugin</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="n">plugins</span> <span class="o">=</span> <span class="n">find_vad_plugins</span><span class="p">()</span>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="n">vad_class</span> <span class="o">=</span> <span class="n">plugins</span><span class="p">[</span><span class="s2">&quot;ovos-vad-plugin-webrtcvad&quot;</span><span class="p">]</span>
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="n">vad</span> <span class="o">=</span> <span class="n">vad_class</span><span class="p">()</span>
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="c1"># Process an audio chunk</span>
+</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="n">is_silence</span> <span class="o">=</span> <span class="n">vad</span><span class="o">.</span><span class="n">is_silence</span><span class="p">(</span><span class="n">audio_chunk</span><span class="p">)</span>
+</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="k">if</span> <span class="ow">not</span> <span class="n">is_silence</span><span class="p">:</span>
+</span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Speech detected!&quot;</span><span class="p">)</span>
 </span></code></pre></div>
 <h1 id="vad-plugins-reference">VAD Plugins Reference<a class="headerlink" href="#vad-plugins-reference" title="Permanent link">&para;</a></h1>
 <p>Detailed per-plugin configuration for the same roster listed in
@@ -1814,19 +1915,19 @@ used by the plugin manager to advertise network/offline behavior.</p>
 </li>
 </ul>
 <h3 id="default-configuration">Default Configuration<a class="headerlink" href="#default-configuration" title="Permanent link">&para;</a></h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>{
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>    &quot;listener&quot;: {
-</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>        &quot;VAD&quot;: {
-</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>            &quot;module&quot;: &quot;ovos-vad-plugin-silero&quot;,
-</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>            &quot;ovos-vad-plugin-silero&quot;: {
-</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>                // speech-probability cutoff; below this a chunk is treated as silence
-</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>                &quot;threshold&quot;: 0.2,
-</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>                // optional: override the bundled model with a custom ONNX file
-</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>                &quot;model&quot;: &quot;/optional/path/to/model.onnx&quot;
-</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>            }
-</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>        }
-</span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>    }
-</span><span id="__span-5-13"><a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>}
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>{
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>    &quot;listener&quot;: {
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>        &quot;VAD&quot;: {
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>            &quot;module&quot;: &quot;ovos-vad-plugin-silero&quot;,
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>            &quot;ovos-vad-plugin-silero&quot;: {
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>                // speech-probability cutoff; below this a chunk is treated as silence
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>                &quot;threshold&quot;: 0.2,
+</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>                // optional: override the bundled model with a custom ONNX file
+</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a>                &quot;model&quot;: &quot;/optional/path/to/model.onnx&quot;
+</span><span id="__span-8-10"><a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a>            }
+</span><span id="__span-8-11"><a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a>        }
+</span><span id="__span-8-12"><a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a>    }
+</span><span id="__span-8-13"><a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a>}
 </span></code></pre></div>
 <table>
 <thead>

@@ -1180,18 +1180,54 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#1-implementation-template" class="md-nav__link">
+  <a href="#abstract-methods" class="md-nav__link">
     <span class="md-ellipsis">
-      1. Implementation Template
+      Abstract methods
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#2-registration" class="md-nav__link">
+  <a href="#1-minimal-complete-example" class="md-nav__link">
     <span class="md-ellipsis">
-      2. Registration
+      1. Minimal complete example
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-test-it-without-ovos" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Test it without OVOS
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-verify-discovery" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Verify discovery
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#streaming" class="md-nav__link">
+    <span class="md-ellipsis">
+      Streaming
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#package-and-publish" class="md-nav__link">
+    <span class="md-ellipsis">
+      Package and publish
     </span>
   </a>
   
@@ -1199,15 +1235,6 @@
         
       </ul>
     </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#standalone-usage" class="md-nav__link">
-    <span class="md-ellipsis">
-      Standalone Usage
-    </span>
-  </a>
   
 </li>
       
@@ -1582,18 +1609,54 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#1-implementation-template" class="md-nav__link">
+  <a href="#abstract-methods" class="md-nav__link">
     <span class="md-ellipsis">
-      1. Implementation Template
+      Abstract methods
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#2-registration" class="md-nav__link">
+  <a href="#1-minimal-complete-example" class="md-nav__link">
     <span class="md-ellipsis">
-      2. Registration
+      1. Minimal complete example
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-test-it-without-ovos" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Test it without OVOS
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-verify-discovery" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Verify discovery
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#streaming" class="md-nav__link">
+    <span class="md-ellipsis">
+      Streaming
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#package-and-publish" class="md-nav__link">
+    <span class="md-ellipsis">
+      Package and publish
     </span>
   </a>
   
@@ -1601,15 +1664,6 @@
         
       </ul>
     </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#standalone-usage" class="md-nav__link">
-    <span class="md-ellipsis">
-      Standalone Usage
-    </span>
-  </a>
   
 </li>
       
@@ -1691,56 +1745,181 @@ engine itself.</p>
 </div>
 <hr />
 <h2 id="technical-explanation">Technical Explanation<a class="headerlink" href="#technical-explanation" title="Permanent link">&para;</a></h2>
-<p>All G2P plugins inherit from the <code>Grapheme2PhonemePlugin</code> base class.</p>
+<p>All G2P plugins inherit from the <code>Grapheme2PhonemePlugin</code> base class in
+<code>ovos_plugin_manager.templates.g2p</code>.</p>
 <h3 id="the-g2p-interface">The G2P Interface<a class="headerlink" href="#the-g2p-interface" title="Permanent link">&para;</a></h3>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">class</span> <span class="nc">Grapheme2PhonemePlugin</span><span class="p">:</span>
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>    <span class="k">def</span> <span class="nf">get_arpa</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">word</span><span class="p">,</span> <span class="n">lang</span><span class="p">,</span> <span class="n">ignore_oov</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Return phonemes in Arpabet format.&quot;&quot;&quot;</span>
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>
-</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>    <span class="k">def</span> <span class="nf">get_ipa</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">word</span><span class="p">,</span> <span class="n">lang</span><span class="p">,</span> <span class="n">ignore_oov</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Return phonemes in IPA format.&quot;&quot;&quot;</span>
-</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
-</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>
-</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>    <span class="k">def</span> <span class="nf">utterance2visemes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">utterance</span><span class="p">,</span> <span class="n">lang</span><span class="p">,</span> <span class="n">default_dur</span><span class="o">=</span><span class="mf">0.4</span><span class="p">):</span>
-</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Return visemes for lip-sync animation.&quot;&quot;&quot;</span>
-</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>        <span class="o">...</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">config</span> <span class="ow">or</span> <span class="p">{}</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>    <span class="k">def</span> <span class="nf">get_arpa</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">word</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">lang</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">ignore_oov</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Return phonemes in Arpabet format.&quot;&quot;&quot;</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>        <span class="c1"># default implementation: converts get_ipa() output via arpabet2ipa,</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>        <span class="c1"># if get_ipa() is implemented. Raises OutOfVocabulary otherwise</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>        <span class="c1"># (or returns None when ignore_oov=True).</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>        <span class="o">...</span>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>    <span class="k">def</span> <span class="nf">get_ipa</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">word</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">lang</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">ignore_oov</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Return phonemes in IPA format.&quot;&quot;&quot;</span>
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>        <span class="c1"># default implementation: converts get_arpa() output via ipa2arpabet,</span>
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>        <span class="c1"># if get_arpa() is implemented. Raises OutOfVocabulary otherwise</span>
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>        <span class="c1"># (or returns None when ignore_oov=True).</span>
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>        <span class="o">...</span>
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>
+</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>    <span class="nd">@classproperty</span>
+</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>    <span class="k">def</span> <span class="nf">available_languages</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Return languages supported by this G2P implementation in this state.&quot;&quot;&quot;</span>
+</span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
 </span></code></pre></div>
-<p>A plugin implements whichever of <code>get_arpa</code> / <code>get_ipa</code> it can, at least one of the two.
-Both raise <code>NotImplementedError</code> by default, and the derived <code>utterance2*</code> helpers need at
-least one working conversion to produce anything. The base class derives <code>utterance2arpa</code>,
-<code>utterance2ipa</code>, and <code>utterance2visemes</code> from those. It also exposes an <code>available_languages</code>
-classmethod for discovery.</p>
+<p>Neither <code>get_arpa</code> nor <code>get_ipa</code> is a plain abstract method: each has a default body that
+converts the <em>other</em> one's output (Arpabet ↔ IPA, via <code>ovos_utils.lang.phonemes</code>). A plugin
+implements whichever of the two its engine produces natively, and gets the other one for free
+through that conversion. Implement neither and both raise <code>OutOfVocabulary</code> for every word. The
+only member the base class marks with <code>@abc.abstractmethod</code> is <code>available_languages</code>, a
+<code>classproperty</code> (from <code>ovos_utils</code>) — every plugin must override it.</p>
+<p><code>OutOfVocabulary</code> (a <code>ValueError</code> subclass, also in <code>ovos_plugin_manager.templates.g2p</code>) is the
+exception both methods raise for a word the engine cannot phonemize, unless the caller passes
+<code>ignore_oov=True</code>, in which case they return <code>None</code> instead. The <code>utterance2arpa</code>,
+<code>utterance2ipa</code>, and <code>utterance2visemes</code> helpers split an utterance on whitespace, call
+<code>get_arpa</code>/<code>get_ipa</code> per word, and join the results with a <code>"."</code> separator between words. They
+propagate <code>OutOfVocabulary</code> the same way, unless <code>ignore_oov=True</code>.</p>
+<p><code>PhonemeAlphabet</code> (a <code>str</code> enum with members <code>ARPA</code> and <code>IPA</code>, same module) is a small
+convenience type some plugins use to declare which alphabet they emit — it is not required by
+the base class, which never inspects it.</p>
+<p>Like every OVOS plugin base class, <code>Grapheme2PhonemePlugin</code> also exposes <code>runtime_requirements</code>,
+a <code>classproperty</code> returning a <code>RuntimeRequirements</code> instance (from <code>ovos_utils.process_utils</code>).
+The default declares no network or internet dependency at all. Override it if the plugin needs a
+model download or a remote call — see the docstring in the source for the three worked examples
+(fully offline, online-with-cache, always-online).</p>
 <h2 id="creating-your-own-plugin">Creating Your Own Plugin<a class="headerlink" href="#creating-your-own-plugin" title="Permanent link">&para;</a></h2>
-<h3 id="1-implementation-template">1. Implementation Template<a class="headerlink" href="#1-implementation-template" title="Permanent link">&para;</a></h3>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">from</span> <span class="nn">ovos_plugin_manager.templates.g2p</span> <span class="kn">import</span> <span class="n">Grapheme2PhonemePlugin</span>
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="k">class</span> <span class="nc">MyG2P</span><span class="p">(</span><span class="n">Grapheme2PhonemePlugin</span><span class="p">):</span>
-</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>    <span class="k">def</span> <span class="nf">get_arpa</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">word</span><span class="p">,</span> <span class="n">lang</span><span class="p">,</span> <span class="n">ignore_oov</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>        <span class="c1"># Implement your G2P logic here</span>
-</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>        <span class="k">return</span> <span class="p">[</span><span class="s2">&quot;HH&quot;</span><span class="p">,</span> <span class="s2">&quot;EH&quot;</span><span class="p">,</span> <span class="s2">&quot;L&quot;</span><span class="p">,</span> <span class="s2">&quot;OW&quot;</span><span class="p">]</span>
-</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>
-</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>    <span class="nd">@property</span>
-</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>    <span class="k">def</span> <span class="nf">available_languages</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;en-us&quot;</span><span class="p">}</span>
+<h3 id="abstract-methods">Abstract methods<a class="headerlink" href="#abstract-methods" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Signature</th>
+<th>Required?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>available_languages</code></td>
+<td><code>classproperty</code> → <code>Set[str]</code></td>
+<td>Yes, the only true abstract method</td>
+</tr>
+<tr>
+<td><code>get_arpa</code></td>
+<td><code>(self, word: str, lang: str, ignore_oov: bool = False)</code></td>
+<td>One of <code>get_arpa</code>/<code>get_ipa</code>, or neither works</td>
+</tr>
+<tr>
+<td><code>get_ipa</code></td>
+<td><code>(self, word: str, lang: str, ignore_oov: bool = False)</code></td>
+<td>One of <code>get_arpa</code>/<code>get_ipa</code>, or neither works</td>
+</tr>
+</tbody>
+</table>
+<h3 id="1-minimal-complete-example">1. Minimal complete example<a class="headerlink" href="#1-minimal-complete-example" title="Permanent link">&para;</a></h3>
+<p><strong>Project layout:</strong></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>ovos-g2p-plugin-example/
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>├── pyproject.toml
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>└── ovos_g2p_plugin_example/
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>    └── __init__.py
 </span></code></pre></div>
-<h3 id="2-registration">2. Registration<a class="headerlink" href="#2-registration" title="Permanent link">&para;</a></h3>
-<p>Register your plugin in <code>pyproject.toml</code>:</p>
-<div class="language-toml highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">[project.entry-points.</span><span class="s2">&quot;opm.g2p&quot;</span><span class="k">]</span>
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="n">my-g2p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;my_package.module:MyG2P&quot;</span>
+<p><strong><code>ovos_g2p_plugin_example/__init__.py</code>:</strong></p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Set</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="kn">from</span> <span class="nn">ovos_utils</span> <span class="kn">import</span> <span class="n">classproperty</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="kn">from</span> <span class="nn">ovos_plugin_manager.templates.g2p</span> <span class="kn">import</span> <span class="n">Grapheme2PhonemePlugin</span><span class="p">,</span> <span class="n">OutOfVocabulary</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="c1"># a toy lexicon, replace with a real G2P model or rule set</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="n">_LEXICON</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;hello&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;HH&quot;</span><span class="p">,</span> <span class="s2">&quot;EH&quot;</span><span class="p">,</span> <span class="s2">&quot;L&quot;</span><span class="p">,</span> <span class="s2">&quot;OW&quot;</span><span class="p">]}</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="k">class</span> <span class="nc">MyG2P</span><span class="p">(</span><span class="n">Grapheme2PhonemePlugin</span><span class="p">):</span>
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>    <span class="k">def</span> <span class="nf">get_arpa</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">word</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">lang</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">ignore_oov</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>        <span class="n">phones</span> <span class="o">=</span> <span class="n">_LEXICON</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">word</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span>
+</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>        <span class="k">if</span> <span class="n">phones</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>            <span class="k">if</span> <span class="n">ignore_oov</span><span class="p">:</span>
+</span><span id="__span-2-14"><a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>                <span class="k">return</span> <span class="kc">None</span>
+</span><span id="__span-2-15"><a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a>            <span class="k">raise</span> <span class="n">OutOfVocabulary</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;unknown word: </span><span class="si">{</span><span class="n">word</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="__span-2-16"><a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a>        <span class="k">return</span> <span class="n">phones</span>
+</span><span id="__span-2-17"><a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a>
+</span><span id="__span-2-18"><a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a>    <span class="nd">@classproperty</span>
+</span><span id="__span-2-19"><a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a>    <span class="k">def</span> <span class="nf">available_languages</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+</span><span id="__span-2-20"><a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a>        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;en-us&quot;</span><span class="p">}</span>
 </span></code></pre></div>
-<h2 id="standalone-usage">Standalone Usage<a class="headerlink" href="#standalone-usage" title="Permanent link">&para;</a></h2>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kn">from</span> <span class="nn">ovos_plugin_manager.g2p</span> <span class="kn">import</span> <span class="n">find_g2p_plugins</span>
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="c1"># Find and load the plugin</span>
-</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="n">plugins</span> <span class="o">=</span> <span class="n">find_g2p_plugins</span><span class="p">()</span>
-</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="n">g2p_class</span> <span class="o">=</span> <span class="n">plugins</span><span class="p">[</span><span class="s2">&quot;ovos-g2p-plugin-mimic&quot;</span><span class="p">]</span>
-</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="n">g2p</span> <span class="o">=</span> <span class="n">g2p_class</span><span class="p">()</span>
-</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>
-</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="c1"># Convert word to phonemes</span>
-</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="n">phonemes</span> <span class="o">=</span> <span class="n">g2p</span><span class="o">.</span><span class="n">get_arpa</span><span class="p">(</span><span class="s2">&quot;hello&quot;</span><span class="p">,</span> <span class="n">lang</span><span class="o">=</span><span class="s2">&quot;en-us&quot;</span><span class="p">)</span>
-</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Phonemes: </span><span class="si">{</span><span class="n">phonemes</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<p><strong><code>pyproject.toml</code></strong>. The entry-point group is <code>opm.g2p</code>; the entry-point name (left of <code>=</code>) is
+the string users put in their config:</p>
+<div class="language-toml highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">[project]</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;ovos-g2p-plugin-example&quot;</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="n">version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;0.1.0&quot;</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="n">dependencies</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;ovos-plugin-manager&gt;=0.5.0,&lt;1.0.0&quot;</span><span class="p">]</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="k">[project.entry-points.</span><span class="s2">&quot;opm.g2p&quot;</span><span class="k">]</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="n">ovos-g2p-plugin-example</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;ovos_g2p_plugin_example:MyG2P&quot;</span>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="k">[project.entry-points.</span><span class="s2">&quot;opm.g2p.config&quot;</span><span class="k">]</span>
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="n">ovos-g2p-plugin-example</span><span class="p">.</span><span class="n">config</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;ovos_g2p_plugin_example:MyG2PConfig&quot;</span>
 </span></code></pre></div>
+<p><code>opm.g2p.config</code> is the parallel config-metadata group, same convention as every other OPM
+plugin family: optional, and only worth adding once the plugin has settings worth advertising to
+installers and GUIs.</p>
+<blockquote>
+<p><strong>Backward compatibility</strong>: <code>ovos-plugin-manager</code> still loads legacy <code>ovos.plugin.g2p</code> entry
+points, but new plugins should register under <code>opm.g2p</code>.</p>
+</blockquote>
+<h3 id="2-test-it-without-ovos">2. Test it without OVOS<a class="headerlink" href="#2-test-it-without-ovos" title="Permanent link">&para;</a></h3>
+<p><code>Grapheme2PhonemePlugin</code> is a plain class with no messagebus connection, so a unit test needs
+nothing but the package itself:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kn">from</span> <span class="nn">ovos_g2p_plugin_example</span> <span class="kn">import</span> <span class="n">MyG2P</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="k">def</span> <span class="nf">test_get_arpa_known_word</span><span class="p">():</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>    <span class="n">g2p</span> <span class="o">=</span> <span class="n">MyG2P</span><span class="p">()</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>    <span class="k">assert</span> <span class="n">g2p</span><span class="o">.</span><span class="n">get_arpa</span><span class="p">(</span><span class="s2">&quot;hello&quot;</span><span class="p">,</span> <span class="n">lang</span><span class="o">=</span><span class="s2">&quot;en-us&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="p">[</span><span class="s2">&quot;HH&quot;</span><span class="p">,</span> <span class="s2">&quot;EH&quot;</span><span class="p">,</span> <span class="s2">&quot;L&quot;</span><span class="p">,</span> <span class="s2">&quot;OW&quot;</span><span class="p">]</span>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="k">def</span> <span class="nf">test_get_arpa_oov_raises</span><span class="p">():</span>
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>    <span class="kn">from</span> <span class="nn">ovos_plugin_manager.templates.g2p</span> <span class="kn">import</span> <span class="n">OutOfVocabulary</span>
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>    <span class="n">g2p</span> <span class="o">=</span> <span class="n">MyG2P</span><span class="p">()</span>
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>    <span class="kn">import</span> <span class="nn">pytest</span>
+</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>    <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="n">OutOfVocabulary</span><span class="p">):</span>
+</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>        <span class="n">g2p</span><span class="o">.</span><span class="n">get_arpa</span><span class="p">(</span><span class="s2">&quot;zzznotaword&quot;</span><span class="p">,</span> <span class="n">lang</span><span class="o">=</span><span class="s2">&quot;en-us&quot;</span><span class="p">)</span>
+</span></code></pre></div>
+<h3 id="3-verify-discovery">3. Verify discovery<a class="headerlink" href="#3-verify-discovery" title="Permanent link">&para;</a></h3>
+<p>After <code>pip install -e .</code>:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kn">from</span> <span class="nn">ovos_plugin_manager.g2p</span> <span class="kn">import</span> <span class="n">find_g2p_plugins</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="n">plugins</span> <span class="o">=</span> <span class="n">find_g2p_plugins</span><span class="p">()</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="nb">print</span><span class="p">(</span><span class="n">plugins</span><span class="p">)</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="c1"># {&#39;ovos-g2p-plugin-example&#39;: &lt;class &#39;ovos_g2p_plugin_example.MyG2P&#39;&gt;}</span>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="n">g2p_class</span> <span class="o">=</span> <span class="n">plugins</span><span class="p">[</span><span class="s2">&quot;ovos-g2p-plugin-example&quot;</span><span class="p">]</span>
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="n">g2p</span> <span class="o">=</span> <span class="n">g2p_class</span><span class="p">()</span>
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="n">phonemes</span> <span class="o">=</span> <span class="n">g2p</span><span class="o">.</span><span class="n">get_arpa</span><span class="p">(</span><span class="s2">&quot;hello&quot;</span><span class="p">,</span> <span class="n">lang</span><span class="o">=</span><span class="s2">&quot;en-us&quot;</span><span class="p">)</span>
+</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Phonemes: </span><span class="si">{</span><span class="n">phonemes</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span></code></pre></div>
+<p><code>ovos_plugin_manager.g2p</code> also has <code>load_g2p_plugin(name)</code> (returns the uninstantiated class)
+and config-inspection helpers (<code>get_g2p_configs</code>, <code>get_g2p_lang_configs</code>,
+<code>get_g2p_supported_langs</code>) that read whatever a plugin registered under <code>opm.g2p.config</code>.</p>
+<p>There is no <code>G2PValidator</code> in the template, unlike TTS: <code>OVOSG2PFactory</code> instantiates the class
+directly with no separate validation pass, so a plugin that needs a startup check (a missing
+model file, an unreachable service) should raise from <code>__init__</code> or fail loudly the first time
+<code>get_arpa</code>/<code>get_ipa</code> is called.</p>
+<h3 id="streaming">Streaming<a class="headerlink" href="#streaming" title="Permanent link">&para;</a></h3>
+<p>The G2P template has no streaming variant. <code>get_arpa</code>/<code>get_ipa</code> are synchronous, word-at-a-time
+calls; there is nothing analogous to <code>StreamingTTS</code>. Do not add one.</p>
+<h3 id="package-and-publish">Package and publish<a class="headerlink" href="#package-and-publish" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>Pin the dependency version.</strong> Put a floor and a ceiling on <code>ovos-plugin-manager</code> in
+   <code>pyproject.toml</code>, for example <code>ovos-plugin-manager&gt;=0.5.0,&lt;1.0.0</code>.</li>
+<li><strong>Install for local development.</strong> Run <code>pip install -e .</code> from the plugin's own repository, then
+   confirm <code>find_g2p_plugins()</code> sees it, as in <a href="#3-verify-discovery">Verify discovery</a> above.</li>
+<li><strong>Publish to PyPI.</strong> OVOS deployments install plugins from PyPI, not from a git checkout, so a
+   plugin needs a PyPI release before it can be installed by <code>pip install &lt;plugin-name&gt;</code> on a
+   real deployment.</li>
+<li><strong>Remember this is Beta, Mark 1-era territory.</strong> As the top of this page explains, G2P only
+   matters if something consumes its viseme output for lip-sync. Confirm that use case exists
+   before investing in a new plugin; most new TTS voices need no G2P plugin at all.</li>
+</ol>
 <h2 id="further-reading">Further reading<a class="headerlink" href="#further-reading" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="https://blog.openvoiceos.org/posts/2025-12-14-barranquenho">The First Phonemizer for Barranquenho</a>: OVOS blog</li>

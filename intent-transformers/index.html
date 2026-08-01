@@ -1089,6 +1089,39 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Writing Your Own Intent Transformer">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#test-it-without-ovos" class="md-nav__link">
+    <span class="md-ellipsis">
+      Test it without OVOS
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#verify-discovery" class="md-nav__link">
+    <span class="md-ellipsis">
+      Verify discovery
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#checklist-before-you-publish" class="md-nav__link">
+    <span class="md-ellipsis">
+      Checklist before you publish
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -1599,6 +1632,39 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Writing Your Own Intent Transformer">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#test-it-without-ovos" class="md-nav__link">
+    <span class="md-ellipsis">
+      Test it without OVOS
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#verify-discovery" class="md-nav__link">
+    <span class="md-ellipsis">
+      Verify discovery
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#checklist-before-you-publish" class="md-nav__link">
+    <span class="md-ellipsis">
+      Checklist before you publish
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -1749,10 +1815,52 @@ is the key <code>intent_transformers</code> must use.</p>
 </span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>        <span class="n">intent</span><span class="o">.</span><span class="n">match_data</span><span class="p">[</span><span class="s2">&quot;my_entity&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;value&quot;</span>
 </span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>        <span class="k">return</span> <span class="n">intent</span>
 </span></code></pre></div>
-<div class="language-toml highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="k">[project.entry-points.</span><span class="s2">&quot;opm.transformer.intent&quot;</span><span class="k">]</span>
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="n">my-transformer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;my_module:MyCustomTransformer&quot;</span>
+<p>A lower <code>priority</code> runs earlier in the chain; the default is 50. Pick a priority that
+puts your transformer before or after the entity extractors you depend on or feed
+(<code>ovos-keyword-template-matcher</code> runs at 1, <code>ovos-ahocorasick-ner-plugin</code> at 5).</p>
+<p>A full <code>pyproject.toml</code> for a standalone plugin package:</p>
+<div class="language-toml highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="k">[project]</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;ovos-intent-transformer-mycustom&quot;</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="n">version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;0.1.0&quot;</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="n">dependencies</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;ovos-plugin-manager&quot;</span><span class="p">]</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="k">[project.entry-points.</span><span class="s2">&quot;opm.transformer.intent&quot;</span><span class="k">]</span>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="n">my-transformer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;my_module:MyCustomTransformer&quot;</span>
 </span></code></pre></div>
+<p>An <code>opm.transformer.intent.config</code> group is also available, for a dict of config
+metadata an installer or GUI can read. It is optional; add it once the plugin has
+settings worth advertising.</p>
 <p>Like other transformer types, intent transformers get the messagebus attached (<code>bind(bus)</code>) when loaded, so <code>self.bus</code> is available inside <code>transform()</code>.</p>
+<h3 id="test-it-without-ovos">Test it without OVOS<a class="headerlink" href="#test-it-without-ovos" title="Permanent link">&para;</a></h3>
+<p><code>IntentTransformer</code> subclasses are plain classes, so a unit test needs no bus and no
+<code>Configuration</code>:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kn">from</span> <span class="nn">my_module</span> <span class="kn">import</span> <span class="n">MyCustomTransformer</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="kn">from</span> <span class="nn">ovos_plugin_manager.templates.pipeline</span> <span class="kn">import</span> <span class="n">IntentHandlerMatch</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="n">transformer</span> <span class="o">=</span> <span class="n">MyCustomTransformer</span><span class="p">()</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="n">match</span> <span class="o">=</span> <span class="n">IntentHandlerMatch</span><span class="p">(</span><span class="n">match_type</span><span class="o">=</span><span class="s2">&quot;my_skill:intent&quot;</span><span class="p">,</span> <span class="n">match_data</span><span class="o">=</span><span class="p">{},</span>
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>                           <span class="n">skill_id</span><span class="o">=</span><span class="s2">&quot;my_skill&quot;</span><span class="p">,</span> <span class="n">utterance</span><span class="o">=</span><span class="s2">&quot;hello&quot;</span><span class="p">)</span>
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="n">result</span> <span class="o">=</span> <span class="n">transformer</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">match</span><span class="p">)</span>
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="k">assert</span> <span class="n">result</span><span class="o">.</span><span class="n">match_data</span><span class="p">[</span><span class="s2">&quot;my_entity&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;value&quot;</span>
+</span></code></pre></div>
+<h3 id="verify-discovery">Verify discovery<a class="headerlink" href="#verify-discovery" title="Permanent link">&para;</a></h3>
+<p>After <code>pip install -e .</code>:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kn">from</span> <span class="nn">ovos_plugin_manager.intent_transformers</span> <span class="kn">import</span> <span class="n">find_intent_transformer_plugins</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="nb">print</span><span class="p">(</span><span class="n">find_intent_transformer_plugins</span><span class="p">())</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="c1"># {&#39;my-transformer&#39;: &lt;class &#39;my_module.MyCustomTransformer&#39;&gt;}</span>
+</span></code></pre></div>
+<h3 id="checklist-before-you-publish">Checklist before you publish<a class="headerlink" href="#checklist-before-you-publish" title="Permanent link">&para;</a></h3>
+<ol>
+<li><code>transform()</code> accepts and returns an <code>IntentHandlerMatch</code>, without changing
+   <code>skill_id</code> or <code>intent_name</code>.</li>
+<li><code>__init__</code> hardcodes the plugin <code>name</code> and forwards it, plus <code>priority</code> and
+   <code>config</code>, to <code>super().__init__()</code>.</li>
+<li>The entry-point group in <code>pyproject.toml</code> is <code>opm.transformer.intent</code>.</li>
+<li>A unit test calls <code>transform()</code> directly, with no OVOS services running.</li>
+<li><code>find_intent_transformer_plugins()</code> discovers the installed plugin under the
+   expected name.</li>
+</ol>
 <hr />
 <p><em>Source code: <a href="https://github.com/OpenVoiceOS/ovos-core">OpenVoiceOS/ovos-core</a>.</em></p>
 

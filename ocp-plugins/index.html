@@ -1066,6 +1066,66 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#writing-an-ocp-stream-extractor-plugin" class="md-nav__link">
+    <span class="md-ellipsis">
+      Writing an OCP Stream Extractor Plugin
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Writing an OCP Stream Extractor Plugin">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#abstract-methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      Abstract methods
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#minimal-complete-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      Minimal complete example
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#unit-testing-without-ovos" class="md-nav__link">
+    <span class="md-ellipsis">
+      Unit-testing without OVOS
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#verify-discovery" class="md-nav__link">
+    <span class="md-ellipsis">
+      Verify discovery
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#publish-checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      Publish checklist
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#ovos-ocp-files-plugin" class="md-nav__link">
     <span class="md-ellipsis">
       ovos-ocp-files-plugin
@@ -1416,6 +1476,66 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#writing-an-ocp-stream-extractor-plugin" class="md-nav__link">
+    <span class="md-ellipsis">
+      Writing an OCP Stream Extractor Plugin
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Writing an OCP Stream Extractor Plugin">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#abstract-methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      Abstract methods
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#minimal-complete-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      Minimal complete example
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#unit-testing-without-ovos" class="md-nav__link">
+    <span class="md-ellipsis">
+      Unit-testing without OVOS
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#verify-discovery" class="md-nav__link">
+    <span class="md-ellipsis">
+      Verify discovery
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#publish-checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      Publish checklist
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#ovos-ocp-files-plugin" class="md-nav__link">
     <span class="md-ellipsis">
       ovos-ocp-files-plugin
@@ -1504,6 +1624,124 @@
 <p>This page covers stream extractors: plugins that turn a URL or search request into a playable
 stream. The playback engine that plays that stream is <a href="../ocp-audio-plugin/">OCP Audio Plugin</a>.
 The playback backends it can use are <a href="../media-plugins/">Media Playback Plugins</a>.</p>
+<hr />
+<h2 id="writing-an-ocp-stream-extractor-plugin">Writing an OCP Stream Extractor Plugin<a class="headerlink" href="#writing-an-ocp-stream-extractor-plugin" title="Permanent link">&para;</a></h2>
+<p>A stream extractor takes a URI a skill (or another extractor) produced and turns it into
+the real, directly-playable URI OCP hands to a media backend. Subclass
+<code>ovos_plugin_manager.templates.ocp.OCPStreamExtractor</code> and register it under the
+<code>opm.ocp.extractor</code> entry-point group (<code>.config</code> group: <code>opm.ocp.extractor.config</code>).</p>
+<h3 id="abstract-methods">Abstract methods<a class="headerlink" href="#abstract-methods" title="Permanent link">&para;</a></h3>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kn">from</span> <span class="nn">ovos_utils</span> <span class="kn">import</span> <span class="n">classproperty</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="kn">from</span> <span class="nn">ovos_plugin_manager.templates.ocp</span> <span class="kn">import</span> <span class="n">OCPStreamExtractor</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="k">class</span> <span class="nc">MyExtractor</span><span class="p">(</span><span class="n">OCPStreamExtractor</span><span class="p">):</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ocp_settings</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">ocp_settings</span><span class="p">)</span>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>    <span class="nd">@classproperty</span>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>    <span class="k">def</span> <span class="nf">supported_seis</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Stream Extractor Ids (SEIs) this plugin handles.</span>
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="sd">        A result URI of the form &quot;{sei}//{uri}&quot; is routed to this extractor</span>
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="sd">        regardless of what the rest of the URI looks like.</span>
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>        <span class="k">return</span> <span class="p">[</span><span class="s2">&quot;myservice&quot;</span><span class="p">]</span>
+</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>
+</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>    <span class="k">def</span> <span class="nf">extract_stream</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uri</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">video</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+</span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Resolve uri to the real, playable stream URI.</span>
+</span><span id="__span-0-23"><a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>
+</span><span id="__span-0-24"><a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a><span class="sd">        Called with the full raw uri, &quot;{sei}//{id}&quot; prefix included when routed</span>
+</span><span id="__span-0-25"><a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a><span class="sd">        via supported_seis. Return None if uri cannot be resolved.</span>
+</span><span id="__span-0-26"><a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a><span class="sd">        &quot;&quot;&quot;</span>
+</span></code></pre></div>
+<p><code>validate_uri(uri)</code> is implemented by the base class: it returns <code>True</code> when <code>uri</code>
+starts with <code>"{sei}//"</code> for one of <code>supported_seis</code>. Override it too if your plugin
+should also claim <em>bare</em> URLs it recognizes without the <code>sei//</code> prefix (the pattern
+<a href="#ovos-ocp-bandcamp-plugin">ovos-ocp-bandcamp-plugin</a> uses for any URL containing
+<code>bandcamp.</code>) — <code>StreamHandler</code> falls back to calling <code>validate_uri</code> on every extractor
+for URIs no SEI claimed.</p>
+<p>Override <code>runtime_requirements</code> (a <code>classproperty</code> returning a <code>RuntimeRequirements</code>
+from <code>ovos_utils.process_utils</code>) if the plugin needs network/internet before it can even
+load, or has an offline fallback. The default declares <code>requires_internet=True,
+requires_network=True</code> with no fallback — appropriate for an extractor that scrapes a
+web page or calls an API, wrong for one that only reads local files.</p>
+<h3 id="minimal-complete-example">Minimal complete example<a class="headerlink" href="#minimal-complete-example" title="Permanent link">&para;</a></h3>
+<p><strong>Project layout:</strong></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>ovos-ocp-myservice-plugin/
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>├── pyproject.toml
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>└── ovos_ocp_myservice_plugin/
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>    └── __init__.py
+</span></code></pre></div>
+<p><strong><code>ovos_ocp_myservice_plugin/__init__.py</code>:</strong></p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="kn">import</span> <span class="nn">requests</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="kn">from</span> <span class="nn">ovos_utils</span> <span class="kn">import</span> <span class="n">classproperty</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="kn">from</span> <span class="nn">ovos_plugin_manager.templates.ocp</span> <span class="kn">import</span> <span class="n">OCPStreamExtractor</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="k">class</span> <span class="nc">MyServiceExtractor</span><span class="p">(</span><span class="n">OCPStreamExtractor</span><span class="p">):</span>
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>    <span class="nd">@classproperty</span>
+</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>    <span class="k">def</span> <span class="nf">supported_seis</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+</span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>        <span class="k">return</span> <span class="p">[</span><span class="s2">&quot;myservice&quot;</span><span class="p">]</span>
+</span><span id="__span-2-14"><a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>
+</span><span id="__span-2-15"><a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a>    <span class="k">def</span> <span class="nf">extract_stream</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uri</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">video</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+</span><span id="__span-2-16"><a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a>        <span class="c1"># uri arrives as &quot;myservice//&lt;id&gt;&quot;; strip the sei prefix ourselves</span>
+</span><span id="__span-2-17"><a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a>        <span class="n">track_id</span> <span class="o">=</span> <span class="n">uri</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;//&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</span><span id="__span-2-18"><a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a>        <span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;https://api.myservice.example/track/</span><span class="si">{</span><span class="n">track_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="__span-2-19"><a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a>        <span class="k">if</span> <span class="n">resp</span><span class="o">.</span><span class="n">ok</span><span class="p">:</span>
+</span><span id="__span-2-20"><a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a>            <span class="k">return</span> <span class="n">resp</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;stream_url&quot;</span><span class="p">]</span>
+</span><span id="__span-2-21"><a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a>        <span class="k">return</span> <span class="kc">None</span>
+</span></code></pre></div>
+<p><strong><code>pyproject.toml</code></strong>:</p>
+<div class="language-toml highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">[project]</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;ovos-ocp-myservice-plugin&quot;</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="n">version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;0.1.0&quot;</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="n">dependencies</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;ovos-plugin-manager&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;requests&quot;</span><span class="p">]</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="k">[project.entry-points.</span><span class="s2">&quot;opm.ocp.extractor&quot;</span><span class="k">]</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="n">ovos-ocp-myservice-plugin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;ovos_ocp_myservice_plugin:MyServiceExtractor&quot;</span>
+</span></code></pre></div>
+<h3 id="unit-testing-without-ovos">Unit-testing without OVOS<a class="headerlink" href="#unit-testing-without-ovos" title="Permanent link">&para;</a></h3>
+<p>The base class takes no bus and no OVOS services, so a unit test is a direct call:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kn">from</span> <span class="nn">ovos_ocp_myservice_plugin</span> <span class="kn">import</span> <span class="n">MyServiceExtractor</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="n">extractor</span> <span class="o">=</span> <span class="n">MyServiceExtractor</span><span class="p">()</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="k">assert</span> <span class="n">extractor</span><span class="o">.</span><span class="n">validate_uri</span><span class="p">(</span><span class="s2">&quot;myservice//abc123&quot;</span><span class="p">)</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="k">assert</span> <span class="ow">not</span> <span class="n">extractor</span><span class="o">.</span><span class="n">validate_uri</span><span class="p">(</span><span class="s2">&quot;https://open.spotify.com/track/xyz&quot;</span><span class="p">)</span>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="n">stream</span> <span class="o">=</span> <span class="n">extractor</span><span class="o">.</span><span class="n">extract_stream</span><span class="p">(</span><span class="s2">&quot;myservice//abc123&quot;</span><span class="p">)</span>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="k">assert</span> <span class="n">stream</span> <span class="ow">and</span> <span class="n">stream</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;http&quot;</span><span class="p">)</span>
+</span></code></pre></div>
+<h3 id="verify-discovery">Verify discovery<a class="headerlink" href="#verify-discovery" title="Permanent link">&para;</a></h3>
+<p>After <code>pip install -e .</code>:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kn">from</span> <span class="nn">ovos_plugin_manager.ocp</span> <span class="kn">import</span> <span class="n">find_ocp_plugins</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="nb">print</span><span class="p">(</span><span class="n">find_ocp_plugins</span><span class="p">())</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="c1"># {&#39;ovos-ocp-myservice-plugin&#39;: &lt;class &#39;ovos_ocp_myservice_plugin.MyServiceExtractor&#39;&gt;}</span>
+</span></code></pre></div>
+<p>At runtime, <code>StreamHandler</code> (<code>ovos_plugin_manager.ocp.StreamHandler</code>) instantiates every
+discovered extractor and dispatches <code>extract_stream</code> by matching <code>supported_seis</code> first,
+falling back to <code>validate_uri</code> for bare URLs. Extractions can chain: if the resolved URI
+is itself <code>"{sei}//..."</code> for another extractor, <code>StreamHandler</code> calls that one next.</p>
+<h3 id="publish-checklist">Publish checklist<a class="headerlink" href="#publish-checklist" title="Permanent link">&para;</a></h3>
+<ol>
+<li>The class subclasses <code>OCPStreamExtractor</code> and implements <code>extract_stream(uri, video)</code>
+   with that exact signature, returning <code>None</code> (not raising) when it cannot resolve.</li>
+<li><code>supported_seis</code> returns a stable, unique SEI list; the entry-point group is
+   <code>opm.ocp.extractor</code>.</li>
+<li><code>extract_stream</code> handles both the <code>"{sei}//&lt;id&gt;"</code> form and, if <code>validate_uri</code> is
+   overridden, the bare-URL form it claims.</li>
+<li><code>runtime_requirements</code> reflects reality (network needed to resolve a URL, offline
+   fallback available or not).</li>
+<li>Unit tests call <code>extract_stream</code> directly, with no OVOS services running.</li>
+<li><code>find_ocp_plugins()</code> discovers the installed plugin under the expected name.</li>
+</ol>
+<hr />
 <table>
 <thead>
 <tr>

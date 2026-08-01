@@ -1035,6 +1035,48 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#media-ocp" class="md-nav__link">
+    <span class="md-ellipsis">
+      Media &amp; OCP
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Media & OCP">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ocp-stream-extractors" class="md-nav__link">
+    <span class="md-ellipsis">
+      OCP Stream Extractors
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#embeddings-stores" class="md-nav__link">
+    <span class="md-ellipsis">
+      Embeddings stores
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ai-agents-llm-chat-backends" class="md-nav__link">
+    <span class="md-ellipsis">
+      AI Agents &amp; LLM Chat Backends
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#text-audio-transformers" class="md-nav__link">
     <span class="md-ellipsis">
       Text &amp; audio transformers
@@ -1535,6 +1577,48 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#media-ocp" class="md-nav__link">
+    <span class="md-ellipsis">
+      Media &amp; OCP
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Media & OCP">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ocp-stream-extractors" class="md-nav__link">
+    <span class="md-ellipsis">
+      OCP Stream Extractors
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#embeddings-stores" class="md-nav__link">
+    <span class="md-ellipsis">
+      Embeddings stores
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ai-agents-llm-chat-backends" class="md-nav__link">
+    <span class="md-ellipsis">
+      AI Agents &amp; LLM Chat Backends
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#text-audio-transformers" class="md-nav__link">
     <span class="md-ellipsis">
       Text &amp; audio transformers
@@ -1975,6 +2059,166 @@ mouth/face, you don't need a G2P plugin at all.</strong> See the <a href="../g2p
 </tr>
 </tbody>
 </table>
+<hr />
+<h2 id="media-ocp">Media &amp; OCP<a class="headerlink" href="#media-ocp" title="Permanent link">&para;</a></h2>
+<h3 id="ocp-stream-extractors">OCP Stream Extractors<a class="headerlink" href="#ocp-stream-extractors" title="Permanent link">&para;</a></h3>
+<p>Turn a URL or search request into a playable stream for <a href="../ocp-plugins/">OCP</a>. See the
+<a href="../ocp-plugins/">OCP catalog</a> for the full descriptions. None of the entries there state a
+maturity rating.</p>
+<table>
+<thead>
+<tr>
+<th>Plugin</th>
+<th>Maturity</th>
+<th>Runs</th>
+<th>Choose this if</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>⭐ <strong>ovos-ocp-youtube-plugin</strong></td>
+<td>not rated</td>
+<td>online</td>
+<td>Recommended default: resolves the most common "play X" request, YouTube/YouTube Music</td>
+</tr>
+<tr>
+<td>ovos-ocp-files-plugin</td>
+<td>not rated</td>
+<td>offline</td>
+<td>Playing local files (<code>file://</code> URIs), always available, no network</td>
+</tr>
+<tr>
+<td>ovos-ocp-rss-plugin</td>
+<td>not rated</td>
+<td>online</td>
+<td>Podcast/RSS feeds, always plays the newest episode</td>
+</tr>
+<tr>
+<td>ovos-ocp-bandcamp-plugin</td>
+<td>not rated</td>
+<td>online</td>
+<td>Bandcamp pages</td>
+</tr>
+<tr>
+<td>ovos-ocp-news-plugin</td>
+<td>not rated</td>
+<td>online</td>
+<td>A known spoken-news provider URL</td>
+</tr>
+<tr>
+<td>ovos-ocp-m3u-plugin</td>
+<td>not rated</td>
+<td>online</td>
+<td>Resolving a <code>.m3u</code>/<code>.pls</code> playlist URL</td>
+</tr>
+<tr>
+<td>ovos-media-classifier</td>
+<td>not rated</td>
+<td>offline</td>
+<td>Experimental: routes a request to the right <code>MediaProvider</code> by intent, not yet deployed</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="embeddings-stores">Embeddings stores<a class="headerlink" href="#embeddings-stores" title="Permanent link">&para;</a></h2>
+<p>Backends for <code>EmbeddingsDB</code>, the vector store an <a href="../agent-plugins/">agent engine</a> uses for
+retrieval or memory. See the <a href="../agent-plugins/">Agent Plugins catalog</a>. None of the entries
+there state a maturity rating.</p>
+<table>
+<thead>
+<tr>
+<th>Plugin</th>
+<th>Maturity</th>
+<th>Runs</th>
+<th>Choose this if</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>⭐ <strong>ovos-chromadb-embeddings-plugin</strong></td>
+<td>not rated</td>
+<td>offline</td>
+<td>Recommended default: local persistent client, no separate server to run</td>
+</tr>
+<tr>
+<td>ovos-qdrant-embeddings-plugin</td>
+<td>not rated</td>
+<td>hybrid</td>
+<td>Scaling to a self-hosted Qdrant server for a larger vector store</td>
+</tr>
+<tr>
+<td>ovos-gguf-embeddings-plugin</td>
+<td>not rated</td>
+<td>offline</td>
+<td>Already running <a href="../gguf-plugin/">ovos-gguf-plugin</a>, reuse it for text embeddings too, no extra service</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="ai-agents-llm-chat-backends">AI Agents &amp; LLM Chat Backends<a class="headerlink" href="#ai-agents-llm-chat-backends" title="Permanent link">&para;</a></h2>
+<p>The "brain" behind a <a href="../personas/">persona</a>: a chat engine answers when no skill handles the
+utterance. See <a href="../agent-plugins/">Agent Plugins</a>, <a href="../openai-plugin/">OpenAI Plugin</a>, <a href="../gguf-plugin/">GGUF
+Plugin</a>, and <a href="../personas/">Personas</a> for the full catalogs and config. None of
+those pages state a maturity rating for these plugins.</p>
+<table>
+<thead>
+<tr>
+<th>Plugin</th>
+<th>Maturity</th>
+<th>Runs</th>
+<th>Choose this if</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>⭐ <strong>ovos-gguf-plugin</strong></td>
+<td>not rated</td>
+<td>offline</td>
+<td>Recommended default: fully local GGUF model via <code>llama-cpp-python</code>, no account, no network, private</td>
+</tr>
+<tr>
+<td>ovos-openai-plugin</td>
+<td>not rated</td>
+<td>online</td>
+<td>Pointing at OpenAI or any OpenAI-compatible endpoint (cloud, Ollama, vLLM, LocalAI, <code>ovos-persona-server</code>)</td>
+</tr>
+<tr>
+<td>ovos-messagebus-chat-plugin</td>
+<td>not rated</td>
+<td>offline</td>
+<td>Answering through the existing skills/intent stack instead of an LLM</td>
+</tr>
+<tr>
+<td>ovos-solver-plugin-rivescript / ovos-solver-plugin-aiml</td>
+<td>not rated</td>
+<td>offline</td>
+<td>A lightweight scripted chatbot, no model weights at all</td>
+</tr>
+<tr>
+<td>ovos-wikipedia-solver</td>
+<td>not rated</td>
+<td>online</td>
+<td>Factual questions answered from Wikipedia</td>
+</tr>
+<tr>
+<td>ovos-wolfram-alpha-solver</td>
+<td>not rated</td>
+<td>online</td>
+<td>Computational/factual questions (math, unit conversion, …)</td>
+</tr>
+<tr>
+<td>ovos-ddg-solver-plugin</td>
+<td>not rated</td>
+<td>online</td>
+<td>General web-search-style answers via DuckDuckGo</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Privacy of the demo persona</p>
+<p><code>ovos-openai-plugin</code> ships a <code>Remote Llama</code> demo persona pointed at a public third-party
+server. For privacy, point <code>api_url</code> at your own server, or use <code>ovos-gguf-plugin</code> instead.</p>
+</div>
 <hr />
 <h2 id="text-audio-transformers">Text &amp; audio transformers<a class="headerlink" href="#text-audio-transformers" title="Permanent link">&para;</a></h2>
 <p>Hook into the text / audio / dialog / TTS stages. See the <a href="../transformer-plugins/">Transformers catalog</a>.</p>
