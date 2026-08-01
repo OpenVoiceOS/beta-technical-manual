@@ -10,6 +10,10 @@
     the time you read this, treat this page as stale for that entry and check
     the linked PR directly.
 
+Swept: 2026-08-01. Before relying on an entry, open its PR link: if the
+PR is merged or closed, the entry has already graduated to
+[Updating from Older OVOS](updating-from-older-ovos.md) or been dropped.
+
 ## The new GUI
 
 [OVOS-GUI-1](architecture-specs.md) is a ground-up rework of how OVOS renders a

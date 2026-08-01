@@ -28,6 +28,8 @@ stateDiagram-v2
     Answer --> [*]
 ```
 
+*Diagram:* The loop starts at Think and ends at Answer, branching to a ToolCall and Observe cycle whenever the brain decides a tool is needed before it has enough to reply.
+
 !!! tip "Which loop should I pick?"
     - Just need the model to use a tool and answer? Start with **`ovos-react-loop`**. It's the
       general-purpose default, and every other loop is a variation for a specific need.

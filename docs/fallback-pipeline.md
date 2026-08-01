@@ -62,6 +62,8 @@ flowchart LR
     L -- no willing skill --> N["ovos.intent.unmatched"]
 ```
 
+*Diagram: an utterance that failed all other matchers is tried against high, then medium, then low priority fallback skills, dispatching to the first willing skill, or ending as ovos.intent.unmatched if none accept it.*
+
 1. A fallback stage is hit in the pipeline (after all other matchers fail)
 
 

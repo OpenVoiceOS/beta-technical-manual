@@ -21,6 +21,8 @@ flowchart TD
     D --> D1["#35;it-matched-but-the-wrong-handler-ran"]
 ```
 
+*Diagram: from the symptom question, four branches lead to the matching sections on this page: nothing matched, wrong skill answered, slow or works only after a while, and matched but wrong handler ran.*
+
 ---
 
 ## Nothing matched

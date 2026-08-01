@@ -25,6 +25,8 @@ flowchart TD
     E -- no --> D
 ```
 
+*Diagram:* The decision starts at choosing how to install OVOS and ends at the ovos-installer, raspOVOS image, or non-interactive scenario install, branching on whether the target is a Raspberry Pi or a fleet/CI scripting scenario.
+
 !!! note "Read this before you start: what a default install sends over the network"
     A default OVOS install talks to public, community-run servers for speech-to-text and
     text-to-speech unless you change it. The installer also asks you to opt into two separate

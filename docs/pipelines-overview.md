@@ -48,6 +48,8 @@ flowchart LR
     L -- no match --> UM[ovos.intent.unmatched]
 ```
 
+*Diagram: an utterance is tried against High Confidence, then Medium Confidence, then Low Confidence (fallback) stages in order, dispatching to the skill as soon as one claims it, or ending as ovos.intent.unmatched if none do.*
+
 The first stage that matches wins, so order matters. A high-confidence Padatious match is tried before any medium-confidence stage, and a medium-confidence stage is tried before any low-confidence stage. Each component is a plugin, so you can enable, disable, or reorder it in your config.
 
 !!! note "`intents.pipeline` orders matchers: it does not gate loading"

@@ -108,6 +108,8 @@ flowchart TD
     H -->|yes| I["Plain hotword: sound / bus event, no STT"]
 ```
 
+*Diagram:* The flow starts at the hotword entry in mycroft.conf and ends at one of four outcomes, and it branches in sequence through the listen, wakeup, stopword, and active checks to pick the matching hotword type.
+
 | Type | Config key | Effect when detected |
 |---|---|---|
 | Listen word | `listen: true`, or matches `listener.wake_word` | Starts the VAD/STT recording pipeline |
@@ -171,6 +173,8 @@ flowchart LR
     B -->|"False"| C[Detection suppressed]
     B -->|"True, or exception raised (fail open)"| D[Detection proceeds, callback runs]
 ```
+
+*Diagram:* The flow starts when the wake word engine fires and ends with the detection either suppressed or proceeding to run the callback, and it branches on the HotWordVerifier.verify() result, failing open on exception.
 
 ```jsonc
 "listener": {

@@ -98,9 +98,14 @@ The legacy unprefixed paths `/v1/...` and `/api/...` (OpenAI and Ollama respecti
 mounted as deprecated aliases of `/openai/v1/...` and `/ollama/api/...`. Responses on these
 legacy paths carry `Deprecation` and `Link` headers pointing at the canonical path.
 
-There is no authentication. Put the server behind a reverse proxy if it is exposed. Every vendor router accepts the usual auth header for that vendor (`Authorization`, `x-api-key`, or a `?key=` query param) but silently ignores it — an invalid or missing key does not get rejected with a 401, it is simply not checked.
+There is no authentication. Put the server behind a reverse proxy if it is exposed.
 
-Every router also accepts a `model` field in the request body but ignores its value: the loaded persona's own `name` is always the model identifier returned in the response, regardless of what the client asked for. The Bedrock router also picks its request/response shape from the `model_id` prefix (`anthropic.claude`, `meta.llama`, `amazon.titan`, `cohere.command`), so the same server endpoint speaks a different wire format depending on that string.
+Every vendor router accepts the usual auth header for that vendor, but silently ignores it: an invalid or missing key does not get rejected with a 401, it is simply not checked. Every router also accepts a `model` field in the request body but ignores its value: the loaded persona's own `name` is always the model identifier returned in the response, regardless of what the client asked for.
+
+| Vendor | Auth header accepted (and ignored) | `model` field quirk | What to do |
+|---|---|---|---|
+| OpenAI, Ollama, Anthropic, Gemini, Cohere, HuggingFace TGI | `Authorization`, `x-api-key`, or `?key=` query param | Ignored; response always reports the persona's own `name` | Send any value, or omit it; it has no effect |
+| AWS Bedrock | `Authorization`, `x-api-key`, or `?key=` query param | Ignored for identity; the `model_id` prefix (`anthropic.claude`, `meta.llama`, `amazon.titan`, `cohere.command`) also selects the request/response wire shape, so the endpoint speaks a different format depending on that string | Set `model_id` to match the wire format your client expects, even though the persona still answers |
 
 ### Memory, RAG & embeddings
 
@@ -125,7 +130,11 @@ configured via environment variables:
 | `FILE_STORAGE_PATH` | `~/.cache/ovos-persona-server/files` | Where uploaded files are stored |
 | `FILE_STORAGE_STRATEGY` | `disk` | `disk`, `database`, or `both` |
 
-All three embeddings endpoints (`/openai/v1/embeddings`, `/ollama/api/embed(dings)`, `/cohere/v1/embed`) share one detection mechanism: the server looks through the persona's loaded handlers for the first one that implements `get_embeddings()`. If none do, every embeddings endpoint returns `501` with `{"detail": "No embeddings solver configured for this persona."}`.
+| Endpoint | Vendor | Detection | If no handler supports it |
+|---|---|---|---|
+| `/openai/v1/embeddings` | OpenAI | Server scans the persona's loaded handlers for the first one that implements `get_embeddings()` | Returns `501` with `{"detail": "No embeddings solver configured for this persona."}` |
+| `/ollama/api/embed`, `/ollama/api/embeddings` | Ollama | Same detection mechanism, shared with the other two endpoints | Same `501` response |
+| `/cohere/v1/embed` | Cohere | Same detection mechanism, shared with the other two endpoints | Same `501` response |
 
 ---
 

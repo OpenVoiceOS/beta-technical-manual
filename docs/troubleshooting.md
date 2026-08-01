@@ -35,6 +35,8 @@ flowchart TD
     S6 -- yes --> Done["utterance handled correctly"]
 ```
 
+*Diagram:* The flow starts at Stage 1, checking whether the bus is reachable, and ends at "utterance handled correctly," and it branches at each of the six stages to a fix action whenever that stage's check fails.
+
 Each stage below cites the exact log line and bus message shown in this diagram, plus the
 command to check it directly.
 

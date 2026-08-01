@@ -31,6 +31,8 @@ flowchart TD
     MB --- GUI["ovos-gui"]
 ```
 
+*Diagram: ovos-messagebus's Tornado IOLoop drives a MessageBusEventHandler that fans out messages via client_connections, with ovos-core, ovos-audio, and ovos-gui connected as example clients.*
+
 The clients above connect via `ovos-bus-client`.
 
 The broker itself has no logic beyond fan-out: it holds a list of open WebSocket connections and,
@@ -57,6 +59,8 @@ sequenceDiagram
     Bus->>C1: broadcast Message (fan-out, includes sender)
     Bus->>C2: broadcast Message (fan-out)
 ```
+
+*Diagram: Client A opens a WebSocket connection and gets a connected reply, then emits a Message that the bus broadcasts back to Client A and out to Client B.*
 
 ---
 
@@ -325,6 +329,8 @@ sequenceDiagram
     Client->>LegacyHandler: dispatch recognizer_loop:utterance
     Client->>SpecHandler: locally re-dispatch ovos.utterance.handle
 ```
+
+*Diagram: a producer emits the legacy recognizer_loop:utterance topic, the bus broadcasts it unchanged, and each receiving MessageBusClient uses the NamespaceTranslator to dispatch it to both the legacy handler and, re-dispatched locally, the spec ovos.utterance.handle handler.*
 
 - A single logical `emit()` sends exactly **one** message over the websocket: the topic the
   caller actually chose.

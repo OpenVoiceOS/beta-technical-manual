@@ -61,6 +61,8 @@ flowchart TD
     BUS --- PHAL["ovos-phal<br/>hardware/platform plugins"]
 ```
 
+*Diagram: the messagebus sits at the center, with ovos-core (and its SkillManager, IntentService, transformer chains, and pipeline plugins), ovos-dinkum-listener, ovos-audio, ovos-media, ovos-gui, and ovos-phal each connected to it as independent clients.*
+
 Of the six [transformer chains](transformer-plugins.md), only utterance, metadata, and intent
 run inside `IntentService` above. The other three run elsewhere in the pipeline: audio
 transformers run in `ovos-dinkum-listener` before STT, and dialog and TTS transformers run in

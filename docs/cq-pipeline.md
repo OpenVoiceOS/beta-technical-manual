@@ -84,6 +84,8 @@ sequenceDiagram
     P->>S1: question:action.<skill_id>
 ```
 
+*Diagram: CommonQAService broadcasts question:query to Skill A and Skill B, collects their query.response answers (one skill can extend its search time), then selects the best answer and dispatches question:action to the winning skill.*
+
 The matcher class is `CommonQAService` (a `PipelinePlugin`, so it exposes a single
 `match()`, hence the one `ovos-common-query-pipeline-plugin` ID, not high/medium/low tiers).
 

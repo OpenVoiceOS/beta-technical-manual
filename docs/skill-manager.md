@@ -69,6 +69,8 @@ flowchart LR
     C --> D["_load_plugin_skill(skill_id, skill_class)<br/>instantiate & start the skill"]
 ```
 
+*Diagram: skill loading runs left to right from load_plugin_skills, through find_skill_plugins and building a PluginSkillLoader, to _load_plugin_skill instantiating and starting the skill.*
+
 Each skill gets its own bus connection when `websocket.shared_connection` is `false` in config (see `_get_internal_skill_bus()`), providing isolation from "BusBricker" style attacks.
 
 ## Blacklisting

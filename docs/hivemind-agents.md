@@ -58,6 +58,8 @@ flowchart LR
     Core --> Agent["ovos-core\n(hivemind-ovos-agent-plugin)"]
 ```
 
+*Diagram:* The flow starts at the kitchen, bedroom, and restroom satellites and ends at ovos-core, and all three satellites branch into the shared hivemind_listener before converging through hivemind-core.
+
 ![Diagram of a server running ovos-core and hivemind-core, exposing a hivemind_listener on port 5678 that three satellite clients (Kitchen, Bedroom, Restroom) connect to, each relaying its own spoken request back to the server](img/satellites.png)
 
 ---

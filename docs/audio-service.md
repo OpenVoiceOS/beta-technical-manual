@@ -99,6 +99,8 @@ flowchart LR
     Thread -->|ALSA/Pulse| Speakers[Speakers]
 ```
 
+*Diagram:* The flow starts at the message bus and ends at the speakers, and it branches so that a play_sound event skips the dialog- and TTS-transformers and joins the queue directly.
+
 ### Subsystem 2 — legacy media audioservice (only if `enable_old_audioservice`)
 
 ```mermaid
@@ -106,6 +108,8 @@ flowchart LR
     Bus2[MessageBus] -->|mycroft.audio.service.play| AS[AudioService]
     AS --> Backend["audioservice backend: OCP / mpv / vlc"]
 ```
+
+*Diagram:* The flow starts at the message bus and ends at the audioservice backend, and it routes the mycroft.audio.service.play event through the AudioService to one of OCP, mpv, or vlc.
 
 ## Configuration
 

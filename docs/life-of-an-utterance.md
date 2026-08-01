@@ -56,6 +56,8 @@ sequenceDiagram
     Core->>Bus: ovos.utterance.handled
 ```
 
+*Diagram: a sequence from the microphone capturing raw audio through wake-word detection, STT, and the pipeline match (stop, converse, OCP, padatious, adapt, fallback) in ovos-core, to a skill's intent handler, TTS playback in ovos-audio, and the final ovos.utterance.handled event.*
+
 ---
 
 ## 1. Capture and [Wake Word](wake-word-plugins.md) Detection

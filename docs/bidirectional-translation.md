@@ -51,6 +51,8 @@ sequenceDiagram
     TTS->>U: speaks Spanish response
 ```
 
+*Diagram:* The sequence starts with the Spanish-speaking user and ends with TTS speaking the Spanish response, branching through translation to English for the skill match and back to Spanish for the reply.
+
 1.  **User speaks** in Spanish: *"¿Qué hora es?"*
 2.  **STT** transcribes to text (Spanish).
 3.  **Utterance Transformer** detects Spanish, translates to English: *"What time is it?"*.

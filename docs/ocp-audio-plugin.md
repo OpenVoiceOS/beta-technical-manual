@@ -12,6 +12,8 @@
     [OCP Pipeline](ocp-pipeline.md); for the skills that supply results see
     [Media Skills](ocp-skills.md).
 
+--8<-- "snippets/what-ocp-means.md"
+
 ---
 
 ## What it is
@@ -39,6 +41,8 @@ flowchart LR
     D --> E[MPRIS]
     D --> F[Audio backend<br/>mpv / vlc / simple]
 ```
+
+*Diagram:* The flow starts at OCP pipeline and skill search results and ends at playback, and the stream extractors branch output to either MPRIS or the mpv/vlc/simple audio backend.
 
 OCP is a *coordinator*, not an audio codec: it does the voice/queue/MPRIS logic and then hands
 the raw stream to one of the simple audio backends to make sound.

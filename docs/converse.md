@@ -26,6 +26,8 @@ pipeline plugin inside `ovos-core`.
         end
     ```
 
+    *Diagram:* The sequence starts with a new user utterance and ends with the orchestrator dispatching to the skill if it claims the turn, or falling through to the intent pipeline if not.
+
 !!! note "Upcoming — `stop` joins the reserved names"
     An in-progress change ([ovos-core#802](https://github.com/OpenVoiceOS/ovos-core/pull/802))
     formalizes `stop` as a third reserved `intent_name`, alongside `converse` and `response`,

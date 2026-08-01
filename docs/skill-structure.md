@@ -56,6 +56,8 @@ stateDiagram-v2
     ShuttingDown --> [*]
 ```
 
+*Diagram:* The skill lifecycle starts at construction, moves through initialization to running, and ends after shutdown.
+
 #### Importing libraries
 
 ```python

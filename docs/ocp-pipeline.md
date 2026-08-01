@@ -6,6 +6,8 @@
 !!! abstract "In a nutshell"
     When you say "play some jazz" or "next song", the assistant first has to realise you are talking about *media* and not, say, the weather. This is the part that does that: it spots that an utterance is a playback request, figures out what kind of media you want, asks the installed music/podcast/video skills to search for it, and hands the best result off to be played. Think of it as the dispatcher that turns "play X" into actual playback. See the [Intent Pipeline](pipelines-overview.md) overview or the [Glossary](glossary.md) for related terms.
 
+--8<-- "snippets/what-ocp-means.md"
+
 The rest of this page is for people deploying or customizing OVOS. If you only wanted to know what this stage does, you are done.
 
 ??? info "📐 Formal specification"
@@ -95,6 +97,8 @@ flowchart TD
     CTRL -- yes --> ACT["Claim as control request"]
     CTRL -- no --> PASS["Pass to next pipeline stage"]
 ```
+
+*Diagram: an utterance is classified as either a playback request, which acquires new media via a common_play query, or a control word, which OCP claims only if it is already holding paused media, otherwise passing it to the next pipeline stage.*
 
 ## How a media intent is recognized
 

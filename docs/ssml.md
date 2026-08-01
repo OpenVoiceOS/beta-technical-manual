@@ -1,16 +1,14 @@
 # SSMLBuilder 
 
-!!! info "Maturity: Alpha"
+!!! warning "Maturity: Alpha — most TTS plugins do not support SSML"
     See the [Maturity Scale](maturity.md). SSML handling works end to end, but almost no
-    TTS plugin acts on the tags, so treat every SSML effect as optional polish.
-
-!!! warning "Experimental — most TTS plugins do not support SSML"
-    SSML support is an **experimental**, engine-dependent feature, not a universal one. Most
-    TTS plugins ignore or strip SSML tags entirely rather than acting on them. Currently only
-    the **espeakNG** and **Amazon Polly** plugins actually interpret SSML markup. Every other
-    plugin just reads the plain words underneath. Sending SSML is always harmless (unsupported
-    tags are stripped), but do not build a skill that *depends* on SSML for meaning. If a
-    voice effect matters, choose a TTS plugin/voice that can actually produce it instead.
+    TTS plugin acts on the tags, so treat every SSML effect as optional polish. SSML support
+    is **experimental** and engine-dependent, not universal. Most TTS plugins ignore or strip
+    SSML tags entirely rather than acting on them. Currently only the **espeakNG** and
+    **Amazon Polly** plugins actually interpret SSML markup; every other plugin just reads
+    the plain words underneath. Sending SSML is always harmless (unsupported tags are
+    stripped), but do not build a skill that *depends* on SSML for meaning. If a voice
+    effect matters, choose a TTS plugin/voice that can actually produce it instead.
 
 !!! abstract "In a nutshell"
     Normally the assistant just reads text aloud in a flat voice. SSML is a way to add stage directions to that text: pause here, say this word louder, slow down, whisper, change the pitch. This makes speech sound more natural and expressive. The `SSMLBuilder` helper on this page lets you add those directions without memorizing the markup by hand. **Most TTS voices do not actually support SSML.** That is harmless: OVOS just strips the directions and reads the plain words, so it is always safe to send. For spoken replies in general, see [Statements](statements.md). For term definitions, see the [Glossary](glossary.md).

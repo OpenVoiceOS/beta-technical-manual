@@ -532,6 +532,8 @@ sequenceDiagram
     Thread-->>STT: finalize() returns self.text
 ```
 
+*Diagram:* The sequence starts with the mic thread calling stream_start and ends with the stream thread returning finalize() text, and it loops over each captured audio chunk between those two points.
+
 Audio arrives synchronously per chunk: `stream_data()` is called once per captured
 chunk on the mic thread, so it must return well under the per-chunk time budget
 (the same real-time cadence constraint a wake-word plugin's `update(chunk)` runs

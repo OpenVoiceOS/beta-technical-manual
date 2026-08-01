@@ -22,6 +22,8 @@ flowchart LR
     ExtMCP[External MCP/UTCP server] -->|ovos-mcp-toolbox / ovos-utcp-toolbox| Loop[Agentic loop ToolBox]
 ```
 
+*Diagram:* The flow starts at an external MCP/UTCP client or server and ends at OVOS's service servers or agentic loop ToolBox, branching between the persona server's A2A client link and the OVOS-persona A2A solver path.
+
 !!! note "Not what you're looking for?"
     This page is about LLM/agent tool protocols (MCP/A2A). If you're building a voice
     satellite or a remote voice client instead, see [HiveMind Agents](hivemind-agents.md).

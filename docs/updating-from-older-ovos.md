@@ -83,10 +83,25 @@ flowchart LR
     F --> G["2026-06-25\nbus-client dual-emit\nbridge + transformer flip"]
 ```
 
+*Diagram: the OCP-to-ovos-media split, the ovos-utils gutting, the ovos-workshop
+release train, the ovos-config pipeline renames, the wake-word signature change,
+the CommonQuerySkill removal, and the bus-client dual-emit bridge, in that order.*
+
 Each milestone above is its own subsection below, chronological order left to right (the
 subsections themselves are grouped by theme, not by date).
 
 ### The ovos-utils 0.1.0 gutting (2024-09)
+
+A decade of accumulated helpers, inherited all the way back from the
+Mycroft era, disappeared in a single release: `ovos-utils` 0.1.0 cut
+10,709 lines under the stated goal of removing "ALL dead code." From the
+outside this meant imports breaking across the ecosystem the moment a
+project bumped past the alpha stream, with no single traceback pointing at
+the cause since the deleted symbols were scattered across messagebus,
+configuration, intents, skills, and sound helpers alike. A cycle of
+`@deprecated`/`log_deprecation` shims had named each symbol's new home
+before the cut landed, and a couple of straggler shims survived the mass
+deletion only to be swept away later.
 
 `ovos-utils` 0.1.0 deleted almost everything that had accumulated in the
 package since the Mycroft era (10,709 deleted lines, PR body: "remove ALL
@@ -148,6 +163,16 @@ isinstance/constructor compatibility inside `ovos_utils.fakebus`
 (ovos-utils `9c1fd55`).
 
 ### The ovos-workshop 2025-06 release train (4.0.0 → 7.0.0)
+
+`ovos-workshop` went through four major-version breaks on the `OVOSSkill`
+family in the space of about a day, each one landing on top of the last
+before the previous change had even settled. A skill author jumping the
+gap felt it as a moving target: `can_answer` went abstract, converse moved
+into a mixin, `can_stop` briefly went hard-abstract then was loosened
+hours later, and the mixin's own method name turned out to be wrong for
+about a day before being renamed. Anyone upgrading past a pre-2025-06
+workshop version in one hop needs to treat all four changes as landing at
+once, not as separable steps.
 
 Four major versions of `ovos-workshop` shipped on the same day
 (2025-06-07/08). Each is a separate breaking change to the `OVOSSkill`
@@ -218,6 +243,16 @@ Lifecycle:
 
 ### CommonQuerySkill removal
 
+`CommonQuerySkill` sat deprecation-flagged for the better part of two
+years before it was finally cut, 259 lines gone in one commit with no
+direct successor class left in `ovos-workshop`. The removal only
+completed a migration that had already happened underneath it: the
+matching hardcoded common-query wiring inside `ovos-core` itself had been
+pulled out earlier, when the whole intent-service module turned into a
+config-driven OPM pipeline factory, so by the time the skill class was
+deleted, common-query matching already lived in whichever pipeline plugin
+happened to own it.
+
 `CommonQuerySkill` had been deprecation-flagged since ovos-workshop
 `4.0.0` and was deleted entirely (259 lines, including the `CQSMatchLevel`
 enum and `CQS_match_query_phrase`/`CQS_action` abstract methods) in
@@ -237,6 +272,16 @@ Lifecycle:
 | `ovos-core` hardcoded common-query wiring | before `62024dbf98` | unverified | `62024dbf98` (`1.3.0`, 2025-06-10) |
 
 ### ovos-config 2.0.0: pipeline renames and `en-US` casing
+
+This is the single largest deployer-facing config break the ecosystem
+shipped: every short pipeline stage ID a deployer might have hand-listed
+in `core.pipeline` was replaced by a plugin-id form in one commit, and the
+old spellings were not rejected, just silently ignored. A customized
+pipeline written against the old IDs did not error after upgrading; it
+just quietly stopped registering some of its stages, with `adapt_low` and
+`common_qa` dropped from the default list entirely. The same commit also
+flipped the default `lang` casing from `"en-us"` to `"en-US"`, breaking
+any code doing an exact string comparison against the old default.
 
 `ovos-config` `2.0.0` (`e24e9ce`, #228, 2025-06-16) is the single largest
 deployer-facing config break in the ecosystem. If you have a customized
@@ -283,6 +328,18 @@ Lifecycle:
 
 ### The bus-client legacy-topic dual-emit and its removal
 
+This is the change every remote/HiveMind operator needs to plan for, and
+it is still mid-flight: the project built a transitional bridge so a
+fleet with some satellites upgraded and some not could keep working while
+topics migrated from legacy `mycroft.*`/`recognizer_loop:*` spellings to
+the `ovos.*` spec namespace, then spent several follow-up commits fixing
+bugs in that bridge itself, including one that doubled every message on
+the raw firehose for about a week. The bridge is on by default in current
+releases; its planned removal sits on an unmerged pull request gated on
+the fleet already being upgraded, so operators are meant to move onto
+`ovos.*` topics now, while both spellings still work, rather than wait for
+the kill switch to force the issue.
+
 This is the change every remote/HiveMind operator needs to plan for.
 `ovos-bus-client` `2.x` introduced a transitional bridge so a mixed fleet
 (core upgraded, satellites not yet upgraded) keeps working while topics
@@ -322,6 +379,15 @@ Lifecycle:
 
 ### OCP → ovos-media config split
 
+Splitting audio-service responsibility out of `ovos-audio` into a
+dedicated `ovos-media` daemon meant its config moved with it, and the
+config root key changed name in the process: anything a deployer still
+had under the old `"OCP"` key was silently ignored by the new service
+rather than flagged as invalid. The MPRIS toggle was renamed and its
+polarity flipped in the same commit, so a deployment that had never
+touched the key at all still felt the change, MPRIS integration turning
+itself off after the upgrade with no explicit setting to blame.
+
 Audio-service responsibility split out of `ovos-audio` into a dedicated
 `ovos-media` daemon starting January 2024. Two config changes to track:
 
@@ -357,6 +423,13 @@ Lifecycle:
 
 ### Wake-word plugin `found_wake_word()` signature change (opm 2.0)
 
+opm 2.0 pulled apart what had been a single call into two steps: audio is
+fed to the plugin separately now, and detection is polled with no
+arguments at all. A wake-word plugin written for the one-argument form
+still loads and still gets called after the caller-side change lands in a
+listener service, but the call itself throws, since `found_wake_word()`
+now runs with zero arguments where it used to expect the audio chunk.
+
 `ovos-plugin-manager` 2.0 changed the `HotWordEngine` contract: audio is
 fed separately, then detection is polled with no arguments.
 
@@ -389,6 +462,15 @@ Lifecycle:
 | `found_wake_word(audio_data)` one-arg form | before opm `2.0.0` | unverified | opm `2.0.0` · caller-side landed in `19d9961` / `34e2219` |
 
 ### Audio-transformer chain-order flip
+
+The transformer chain had been running in the opposite order from what
+its own docstring claimed for some time: plugins sorted by `priority`
+descending, highest number first, while the OVOS-TRANSFORM-1 spec and
+`ovos-core`'s own transformer chains expected ascending order. Fixing it
+meant a deployment with more than one active audio transformer plugin
+could see its processing order silently invert after the upgrade, with no
+error to signal the change, only a chain now running its stages in the
+reverse sequence from before.
 
 `ovos-dinkum-listener`'s `AudioTransformersService` sorted plugins by
 `priority` **descending** (highest number ran first) with a docstring that

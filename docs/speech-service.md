@@ -56,6 +56,8 @@ flowchart LR
     STT -->|text, emits ovos.utterance.handle| Bus[MessageBus]
 ```
 
+*Diagram:* The flow starts at the microphone and ends at the message bus, and it routes audio through the audio-transformer chain before the STT plugin converts it to text.
+
 ## Listening State Machine
 
 `DinkumVoiceLoop` is a per-chunk state machine, not a single "listen" call. It has a

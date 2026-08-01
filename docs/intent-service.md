@@ -65,6 +65,8 @@ flowchart TD
     MATCH -->|no plugin matched| UNMATCHED["ovos.intent.unmatched (§9.3,<br/>legacy: complete_intent_failure)"]
 ```
 
+*Diagram: an incoming ovos.utterance.handle message flows through utterance and metadata transformers, language and session resolution, and the ordered pipeline-plugin match loop, ending in either a dispatched ovos.intent.matched or, if no plugin matches, ovos.intent.unmatched.*
+
 Reading top to bottom: an incoming utterance is first reshaped by the utterance- and
 metadata-transformer chains. Then the best language and a `Session` are resolved once, up
 front. Every pipeline plugin after that point sees the same already-prepared utterance,

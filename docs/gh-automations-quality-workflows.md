@@ -13,23 +13,26 @@ uses: OpenVoiceOS/gh-automations/.github/workflows/<name>.yml@dev
 
 > **Ref:** Always use `@dev`.
 
-**Workflows on this page:**
+**Workflows on this page, coverage and security:**
 
 - [`coverage.yml`](#coverageyml)
 - [`coverage-pages.yml` (deprecated)](#coverage-pagesyml-deprecated)
 - [`pip-audit.yml`](#pip-audityml)
 - [`downstream-check.yml`](#downstream-checkyml)
+
+**Workflows on this page, lint, types, docs, and notifications:**
+
 - [`lint.yml`](#lintyml)
 - [`type-check.yml`](#type-checkyml)
 - [`docs-check.yml`](#docs-checkyml)
 - [`notify-matrix.yml`](#notify-matrixyml)
 
-This page also carries the [PR Checks Comment Pattern](#pr-checks-comment-pattern) and [Scripts Reference](#scripts-reference) sections, which describe machinery shared by workflows across all three pages.
+This page also carries the [PR Checks Comment Pattern](#pr-checks-comment-pattern) and [Scripts Reference](#scripts-reference) sections, which describe machinery shared by workflows across all three pages. The bot prefixes every PR-comment section title with an emoji tag. This page names those titles in backticks without the emoji, except in the one raw example under [PR Checks Comment Pattern](#pr-checks-comment-pattern).
 
 ---
 ## `coverage.yml`
 
-Runs `pytest --cov`, generates a coverage report, and posts it to the job summary. Uploads the XML as an artifact, and (on pull requests) posts a `📊 Coverage` section in the shared OVOS PR Checks comment. Set `deploy_pages: true` to also push the HTML report to a `gh-pages` branch. This **replaces** the deprecated [`coverage-pages.yml`](#coverage-pagesyml-deprecated).
+Runs `pytest --cov`, generates a coverage report, and posts it to the job summary. Uploads the XML as an artifact, and (on pull requests) posts a `Coverage` section in the shared OVOS PR Checks comment. Set `deploy_pages: true` to also push the HTML report to a `gh-pages` branch. This **replaces** the deprecated [`coverage-pages.yml`](#coverage-pagesyml-deprecated).
 
 **Source:** `.github/workflows/coverage.yml`
 
@@ -42,19 +45,53 @@ Runs `pytest --cov`, generates a coverage report, and posts it to the job summar
 | `uv_prerelease` | string | `allow` | uv prerelease resolution mode (allow \| if-necessary \| explicit \| disallow). Defaults to "allow": the OVOS ecosystem ships pre-1.0 alphas and relies on prerelease floor-pins resolving the way pip did. |
 | `runner` | string | `ubuntu-latest` |  |
 | `python_version` | string | `3.11` |  |
+
+| Input | Type | Default | Description |
+|-------|------|---------|-------------|
 | `system_deps` | string | `""` | Extra apt packages to install before testing (space-separated) |
+
+| Input | Type | Default | Description |
+|-------|------|---------|-------------|
 | `test_extras` | string | `dev` | Name of the pyproject.toml extras key that declares the package's test dependencies (e.g. 'dev' or 'test'). Tried first via 'pip install -e .[<test_extras>]'. Override per repo if the package uses a different convention. |
+
+| Input | Type | Default | Description |
+|-------|------|---------|-------------|
 | `test_extras_fallback` | string | `test` | Extras key tried if `test_extras` is not declared. Default 'test'. Set to empty to skip the fallback. |
+
+| Input | Type | Default | Description |
+|-------|------|---------|-------------|
 | `install_extras` | string | `""` | Extra pip install arguments run before tests. Example: '.[dev]' or '-r requirements/test.txt'. If empty, the package itself is installed via 'pip install -e .[dev]' (falling back to bare install). |
+
+| Input | Type | Default | Description |
+|-------|------|---------|-------------|
 | `pre_install_pip` | string | `""` | Optional space-separated pip requirement specs to install BEFORE the package install step. Use this to override transitive deps with git URLs (e.g. for testing against an unreleased version of a sibling package). |
 | `test_path` | string | `test/` | Path passed to pytest (file, directory, or glob) |
+
+| Input | Type | Default | Description |
+|-------|------|---------|-------------|
 | `coverage_source` | string | `.` | Value of --cov= passed to pytest. Set to your package directory (e.g. 'ovos_core') to measure only your own code rather than the full repo. |
+
+| Input | Type | Default | Description |
+|-------|------|---------|-------------|
 | `deploy_pages` | boolean | `false` | Push the HTML coverage report to the gh-pages branch for GitHub Pages serving. Replaces the separate coverage-pages.yml workflow. |
 | `gh_pages_branch` | string | `gh-pages` | Branch to push the HTML coverage report to (when deploy_pages: true). |
+
+| Input | Type | Default | Description |
+|-------|------|---------|-------------|
 | `min_coverage` | number | `0` | Minimum total coverage percentage (0 = disabled). The job fails if coverage falls below this threshold. |
+
+| Input | Type | Default | Description |
+|-------|------|---------|-------------|
 | `pr_comment` | boolean | `true` | Post a section in the shared 'OVOS PR Checks' comment on the PR. Only runs when a pull_request event triggers the workflow. Shows total coverage, threshold status, and files below 80% coverage. |
+
+| Input | Type | Default | Description |
+|-------|------|---------|-------------|
 | `artifact_name` | string | `coverage-report` | Name of the uploaded coverage artifact |
+
+| Input | Type | Default | Description |
+|-------|------|---------|-------------|
 | `artifact_retention_days` | number | `14` | Days to retain the coverage XML artifact |
+
 <!-- END GENERATED -->
 
 ### Jobs
@@ -65,10 +102,16 @@ Runs `pytest --cov`, generates a coverage report, and posts it to the job summar
 | Setup Python + Install Dependencies | Installs `pytest`, `pytest-cov`, `coverage[toml]`, `ovoscope`, and the package itself |
 | Run Tests with Coverage | `pytest --cov --cov-report=xml --cov-report=json --cov-report=html --cov-report=term-missing`. `continue-on-error: true` so the PR comment posts even when tests fail. |
 | Extract Coverage Percentage | Reads `coverage.json` for `totals.percent_covered` |
+
+| Job step | Description |
+|----------|-------------|
 | Write Job Summary | Coverage table written to `$GITHUB_STEP_SUMMARY` |
 | Format coverage section | Generates the PR comment content from `coverage.json` |
 | Post coverage section to PR comment | Calls `scripts/update_pr_comment.py` to find-or-create-and-update the OVOS PR Checks comment |
 | Upload Coverage XML Artifact | Uploads `coverage.xml` as a workflow artifact |
+
+| Job step | Description |
+|----------|-------------|
 | Enforce Minimum Coverage Threshold | Fails if `min_coverage > 0` and total is below threshold |
 | Fail job if tests failed | Re-raises test failure after the PR comment has been posted |
 
@@ -121,11 +164,24 @@ Runs `pytest --cov` and deploys the HTML coverage report to GitHub Pages.
 | `uv_prerelease` | string | `allow` | uv prerelease resolution mode (allow \| if-necessary \| explicit \| disallow). Defaults to "allow": the OVOS ecosystem ships pre-1.0 alphas and relies on prerelease floor-pins resolving the way pip did. |
 | `runner` | string | `ubuntu-latest` |  |
 | `python_version` | string | `3.11` |  |
+
+| Input | Type | Default | Description |
+|-------|------|---------|-------------|
 | `system_deps` | string | `""` | Extra apt packages to install before testing (space-separated) |
+
+| Input | Type | Default | Description |
+|-------|------|---------|-------------|
 | `install_extras` | string | `""` | Extra pip install arguments run before tests. Example: '.[dev]' or '-r requirements/test.txt'. If empty, the package itself is installed via 'pip install -e .[dev]' (falling back to bare install). |
+
+| Input | Type | Default | Description |
+|-------|------|---------|-------------|
 | `test_path` | string | `test/` | Path passed to pytest (file, directory, or glob) |
 | `coverage_source` | string | `.` | Value of --cov= passed to pytest. Set to your package directory (e.g. 'ovos_core') to measure only your own code rather than the full repo. |
+
+| Input | Type | Default | Description |
+|-------|------|---------|-------------|
 | `gh_pages_branch` | string | `gh-pages` | Branch to push the HTML coverage report to. |
+
 <!-- END GENERATED -->
 
 ### Jobs
@@ -183,12 +239,22 @@ Scans installed dependencies for known CVEs using [`pypa/gh-action-pip-audit`](h
 | `uv_prerelease` | string | `allow` | uv prerelease resolution mode (allow \| if-necessary \| explicit \| disallow). Defaults to "allow": the OVOS ecosystem ships pre-1.0 alphas and relies on prerelease floor-pins resolving the way pip did. |
 | `runner` | string | `ubuntu-latest` |  |
 | `python_version` | string | `3.14` | Python version to use for the audit |
+
+| Input | Type | Default | Description |
+|-------|------|---------|-------------|
 | `install_extras` | string | `""` | pip extras to install, e.g. '[extras]' |
 | `system_deps` | string | `""` | Extra apt packages beyond python3-dev |
+
+| Input | Type | Default | Description |
+|-------|------|---------|-------------|
 | `ignore_vulns` | string | `GHSA-r9hx-vwmv-q579` | Newline-separated list of GHSA vulnerability IDs to ignore. Default ignores GHSA-r9hx-vwmv-q579 (setuptools path traversal, dev-only, not exploitable in OVOS runtime context). |
 | `warn_only` | boolean | `false` | When true, report vulnerabilities in the PR comment but do NOT fail the job. Useful for repos that want visibility without blocking merges. |
+
+| Input | Type | Default | Description |
+|-------|------|---------|-------------|
 | `pr_comment` | boolean | `true` | Post a section in the shared 'OVOS PR Checks' comment on the PR. Only runs when a pull_request event triggers the workflow. |
 | `upload_sarif` | boolean | `true` | Upload a SARIF report to GitHub's Security tab (Code scanning alerts). Requires the repo to have GitHub Advanced Security enabled, or be public. |
+
 <!-- END GENERATED -->
 
 ### Typical usage
@@ -225,12 +291,19 @@ Reports which packages in the ovos-releases alpha constraints depend on a given 
 | `uv_prerelease` | string | `allow` | uv prerelease resolution mode (allow \| if-necessary \| explicit \| disallow). Defaults to "allow": the OVOS ecosystem ships pre-1.0 alphas and relies on prerelease floor-pins resolving the way pip did. |
 | `package_name` | string | _(required)_ | PyPI package name to track dependents of |
 | `runner` | string | `ubuntu-latest` |  |
+
+| Input | Type | Default | Description |
+|-------|------|---------|-------------|
 | `python_version` | string | `3.11` |  |
 | `constraints_url` | string | `https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-alpha.txt` | URL of the ovos-releases constraints file to install against |
 | `system_deps` | string | `""` | Extra apt packages to install (space-separated) in addition to the standard OVOS build deps |
 | `output_file` | string | `downstream_report.txt` | Local filename for the generated report (also used as artifact name) |
+
+| Input | Type | Default | Description |
+|-------|------|---------|-------------|
 | `pr_comment` | boolean | `true` | Post the report as a section in the OVOS PR Checks comment (only on pull_request events) |
 | `commit_branch` | string | `dev` | Deprecated, ignored. Report is now uploaded as an artifact instead of committed. |
+
 <!-- END GENERATED -->
 
 ### Typical usage
@@ -271,17 +344,27 @@ Runs `ruff` and/or `pre-commit` and posts results to the OVOS PR Checks comment.
 | `uv_prerelease` | string | `allow` | uv prerelease resolution mode (allow \| if-necessary \| explicit \| disallow). Defaults to "allow": the OVOS ecosystem ships pre-1.0 alphas and relies on prerelease floor-pins resolving the way pip did. |
 | `runner` | string | `ubuntu-latest` |  |
 | `python_version` | string | `3.11` |  |
+
+| Input | Type | Default | Description |
+|-------|------|---------|-------------|
 | `ruff` | boolean | `true` | Run ruff check |
-| `ruff_args` | string | `. --exclude _gh_automations` | Arguments passed to ruff check (e.g. '. --select E,F'). Default excludes _gh_automations/, which is where other reusable workflows in this repo check themselves out as a sibling for PR comment scripts. Without this exclude, consumers see ruff errors from this repo's own scripts in their skill PRs. |
+
+| Input | Type | Default | Description |
+|-------|------|---------|-------------|
+| `ruff_args` | string | `. --exclude _gh_automations` | Arguments passed to ruff check, for example `. --select E,F`. Default excludes _gh_automations/, which is where other reusable workflows in this repo check themselves out as a sibling for PR comment scripts. Without this exclude, consumers see ruff errors from this repo's own scripts in their skill PRs. |
+
+| Input | Type | Default | Description |
+|-------|------|---------|-------------|
 | `pre_commit` | boolean | `false` | Run pre-commit run --all-files (requires .pre-commit-config.yaml) |
 | `pr_comment` | boolean | `true` | Post a section in the OVOS PR Checks comment on pull_request events |
+
 <!-- END GENERATED -->
 
 ---
 
 ## `type-check.yml`
 
-Runs `mypy` and posts a `🔎 Type Check` section. Informational only, never blocks merges unless `fail_on_errors: true`.
+Runs `mypy` and posts a `Type Check` section. Informational only, never blocks merges unless `fail_on_errors: true`.
 
 **Source:** `.github/workflows/type-check.yml`
 
@@ -294,20 +377,33 @@ Runs `mypy` and posts a `🔎 Type Check` section. Informational only, never blo
 | `uv_prerelease` | string | `allow` | uv prerelease resolution mode (allow \| if-necessary \| explicit \| disallow). Defaults to "allow": the OVOS ecosystem ships pre-1.0 alphas and relies on prerelease floor-pins resolving the way pip did. |
 | `runner` | string | `ubuntu-latest` |  |
 | `python_version` | string | `3.11` |  |
+
+| Input | Type | Default | Description |
+|-------|------|---------|-------------|
 | `mypy_args` | string | `.` | Arguments passed to mypy (e.g. 'my_package' or '. --ignore-missing-imports'). Default checks the entire repository. |
+
+| Input | Type | Default | Description |
+|-------|------|---------|-------------|
 | `test_extras` | string | `dev` | Name of the pyproject.toml extras key that declares the package's test/typing dependencies. Tried first via 'pip install -e .[<key>]'. |
 | `test_extras_fallback` | string | `test` | Extras key tried if `test_extras` is not declared. Empty to skip. |
+
+| Input | Type | Default | Description |
+|-------|------|---------|-------------|
 | `install_extras` | string | `""` | Extra pip install arguments appended after the package install (e.g. '-r requirements/typing.txt') |
 | `system_deps` | string | `""` | Extra apt packages to install before type-checking (space-separated) |
+
+| Input | Type | Default | Description |
+|-------|------|---------|-------------|
 | `fail_on_errors` | boolean | `false` | When true, the job fails if mypy reports any errors. Default is false, so type check is informational. |
-| `pr_comment` | boolean | `true` | Post a 🔎 Type Check section in the shared OVOS PR Checks comment. Only runs when a pull_request event triggers the workflow. |
+| `pr_comment` | boolean | `true` | Post a Type Check section in the shared OVOS PR Checks comment. Only runs when a pull_request event triggers the workflow. |
+
 <!-- END GENERATED -->
 
 ---
 
 ## `docs-check.yml`
 
-Verifies required documentation files exist and optionally lints Markdown. Posts a `📚 Docs` section. Informational only, never blocks merges unless `fail_on_missing: true`.
+Verifies required documentation files exist and optionally lints Markdown. Posts a `Docs` section. Informational only, never blocks merges unless `fail_on_missing: true`.
 
 **Source:** `.github/workflows/docs-check.yml`
 
@@ -319,10 +415,20 @@ Verifies required documentation files exist and optionally lints Markdown. Posts
 |-------|------|---------|-------------|
 | `runner` | string | `ubuntu-latest` |  |
 | `required_files` | string | `README.md` | Comma-separated list of files that must exist at the repo root. Checked with a simple exists() test, no content validation. |
+
+| Input | Type | Default | Description |
+|-------|------|---------|-------------|
 | `markdownlint` | boolean | `false` | Run markdownlint-cli2 on *.md files. Requires Node.js (available on ubuntu-latest runners). Results are reported in the PR comment but never block merges regardless of fail_on_missing. |
+
+| Input | Type | Default | Description |
+|-------|------|---------|-------------|
 | `markdownlint_config` | string | `""` | Path to a markdownlint config file (e.g. '.markdownlint.json'). If empty, markdownlint-cli2 uses its built-in defaults. |
+
+| Input | Type | Default | Description |
+|-------|------|---------|-------------|
 | `fail_on_missing` | boolean | `false` | When true, the job fails if any required file is absent. Default is false, so docs check is informational. |
-| `pr_comment` | boolean | `true` | Post a 📚 Docs section in the shared OVOS PR Checks comment. Only runs when a pull_request event triggers the workflow. |
+| `pr_comment` | boolean | `true` | Post a Docs section in the shared OVOS PR Checks comment. Only runs when a pull_request event triggers the workflow. |
+
 <!-- END GENERATED -->
 
 ---
@@ -349,6 +455,7 @@ Sends a message to the OVOS Matrix channel via a raw `curl -X PUT` to the Matrix
 | Secret | Required | Description |
 |--------|----------|-------------|
 | `MATRIX_TOKEN` | no | (used via `secrets: inherit`, not formally declared as a workflow_call secret) |
+
 <!-- END GENERATED -->
 
 ### Typical usage
@@ -367,27 +474,30 @@ Sends a message to the OVOS Matrix channel via a raw `curl -X PUT` to the Matrix
 ---
 ## PR Checks Comment Pattern
 
-The following workflows post their results as named sections in a **single shared PR comment** rather than separate bot comments:
+The following workflows post their results as named sections in a **single shared PR comment** rather than separate bot comments. The bot prefixes every section title with an emoji tag. The tables below give the title text and name that tag in words.
 
-| Workflow | Section title |
-|----------|---------------|
-| `repo-health.yml` | `📋 Repo Health` (+ `👋 Welcome` for first-time contributors) |
-| `release-preview.yml` | `🏷️ Release Preview` |
-| `pip-audit.yml` | `🔒 Security (pip-audit)` |
-| `license-check.yml` | `⚖️ License Check` |
-| `build-tests.yml` | `🔨 Build Tests` |
-| `opm-check.yml` | `🔌 Plugin Detection` |
-| `ovoscope.yml` | `🔌 Skill Tests (ovoscope)` |
-| `intent-case-tests.yml` | `🎯 Intent-Case Accuracy` |
-| `tts-intelligibility.yml` | `🗣️ TTS Intelligibility` |
-| `coverage.yml` | `📊 Coverage` |
-| `skill-check.yml` | `🎙️ Skill` |
-| `type-check.yml` | `🔎 Type Check` |
-| `docs-check.yml` | `📚 Docs` |
-| `lint.yml` | lint results |
-| `python-support.yml` *(deprecated)* | `🐍 Python Support` |
+| Workflow | Section title | Tag emoji |
+|----------|---------------|-----------|
+| `repo-health.yml` | `Repo Health` (+ `Welcome` for first-time contributors) | clipboard (+ waving hand) |
+| `release-preview.yml` | `Release Preview` | label |
+| `pip-audit.yml` | `Security (pip-audit)` | lock |
+| `license-check.yml` | `License Check` | balance scale |
+| `build-tests.yml` | `Build Tests` | hammer |
+| `opm-check.yml` | `Plugin Detection` | plug |
 
-The comment is identified by the HTML marker `<!-- ovos-pr-checks -->` in its body. Each workflow manages its own section:
+| Workflow | Section title | Tag emoji |
+|----------|---------------|-----------|
+| `ovoscope.yml` | `Skill Tests (ovoscope)` | plug |
+| `intent-case-tests.yml` | `Intent-Case Accuracy` | target |
+| `tts-intelligibility.yml` | `TTS Intelligibility` | speaking head |
+| `coverage.yml` | `Coverage` | bar chart |
+| `skill-check.yml` | `Skill` | microphone |
+| `type-check.yml` | `Type Check` | magnifying glass |
+| `docs-check.yml` | `Docs` | books |
+| `lint.yml` | lint results | none |
+| `python-support.yml` *(deprecated)* | `Python Support` | snake |
+
+The HTML marker `<!-- ovos-pr-checks -->` identifies the comment in its body. Each workflow manages its own section:
 
 ```text
 <!-- ovos-pr-checks -->
@@ -531,6 +641,9 @@ Bump rules:
 | `major` | `MAJOR += 1`, `MINOR = 0`, `BUILD = 0`, `ALPHA = 1` |
 | `minor` | `MINOR += 1`, `BUILD = 0`, `ALPHA = 1` |
 | `build` | `BUILD += 1`, `ALPHA = 1` |
+
+| Part | Effect |
+|------|--------|
 | `alpha` | `ALPHA += 1`. If currently stable (`ALPHA == 0`), `BUILD += 1` first |
 
 ### `scripts/remove_alpha.py`

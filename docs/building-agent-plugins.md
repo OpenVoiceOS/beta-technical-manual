@@ -15,7 +15,7 @@ beyond the one base class.
 !!! note "Version requirement"
     The `opm.agents.*` groups need **`ovos-plugin-manager >= 2.3.0a1`** (cap below
     `<3.0.0`). The legacy `QuestionSolver` family (`opm.solver.*`) is deprecated. See the
-    migration map in [Specialized Agent Engine Types](advanced-solvers.md#deprecated-solver-types).
+    migration map in [Deprecated Solver Types](agent-plugins.md#deprecated-solver-types).
 
 ---
 
@@ -65,6 +65,8 @@ flowchart TD
     Own -->|free-text documents| DIE["DocumentIndexerEngine: ingest_corpus(List[str])"]
     Own -->|question/answer pairs| QAIE["QAIndexerEngine: ingest_corpus(Dict[question, answer])"]
 ```
+
+*Diagram:* The decision starts by asking whether the plugin brings its own knowledge, and ends at one of three engine choices, branching on whether the data lives externally, is free-text documents, or is question/answer pairs.
 
 **`RetrievalEngine`** is the parent contract: one method,
 `query(query, lang, k) -> List[Tuple[str, float]]`, which returns up to `k`
@@ -367,7 +369,7 @@ else in the stack. See [Agents & Personas](personas.md) for the persona JSON for
 
 The old `QuestionSolver` family (`opm.solver.*` entry points, classes in
 `ovos_plugin_manager.templates.solvers`) is deprecated. The entry-point-to-class mapping
-lives in [Specialized Agent Engine Types](advanced-solvers.md#deprecated-solver-types).
+lives in [Deprecated Solver Types](agent-plugins.md#deprecated-solver-types).
 This section covers the code changes, which are small but not mechanical.
 
 **1. Pick the new base class.**
@@ -523,8 +525,7 @@ release, and new plugins must not use them.
 
 ## Related pages
 
-- [Agent Engine Types](agent-plugins.md): group/base-class reference and plugin catalog
-- [Specialized Agent Engine Types](advanced-solvers.md): per-engine API details, config
+- [Agent Engine Types](agent-plugins.md#agent-engine-types): per-engine API details, config
   examples, and the solver migration map
 - [Agents & Personas](personas.md): how personas compose the engines you build
 - [Agent Tool Plugins](tool-plugins.md): the `ToolBox` walkthrough

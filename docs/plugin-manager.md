@@ -40,6 +40,8 @@ flowchart LR
     D --> E[Configured plugin instance]
 ```
 
+*Diagram:* The flow starts at the entry point declaration and ends at a configured plugin instance, passing through plugin discovery, loading, and the factory that builds it.
+
 ```python
 from ovos_plugin_manager.stt import find_stt_plugins, load_stt_plugin
 

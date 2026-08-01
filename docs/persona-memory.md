@@ -48,6 +48,8 @@ flowchart LR
     CE --> UH[update_history: append new turns]
 ```
 
+*Diagram:* The flow starts at the utterance plus stored history and memory, builds a message list via build_conversation_context, and ends at update_history appending the new turns after the chat engine replies.
+
 Two rules hold for every backend in this package:
 
 - The **first** message MAY be a `system` message carrying the persona's `system_prompt`.

@@ -258,6 +258,8 @@ flowchart LR
     Restart --> Probe[Re-run readiness probe]
 ```
 
+*Diagram:* The flow starts at backing up the config and data directories and ends at re-running the readiness probe, and the stored backup branches off to a new machine before the service is stopped, restored, and restarted.
+
 Two kinds of state matter on an OVOS device: the packages that are installed, and everything
 under a user's config/data directories. The staged-upgrade recipe below covers packages. This
 section covers the directories.
@@ -357,6 +359,8 @@ flowchart LR
     Verify -- yes --> Fleet[Roll the same command\nout to the rest of the fleet]
     Verify -- no --> Rollback["--force-reinstall known-good,\nrestart ovos.service"]
 ```
+
+*Diagram:* The flow starts at freezing known-good packages and ends at either the fleet rollout or a rollback, and it branches on whether the canary device passes its readiness probe and real voice check.
 
 [Release channels](release-channels.md) covers `stable`/`testing`/`alpha` constraints files.
 For a fleet, the same mechanism gives you a controlled, reversible upgrade path:

@@ -106,6 +106,8 @@ flowchart TD
     Media --> GUI["GUI (still coupled, target: GUI adapter plugins)"]
 ```
 
+*Diagram: the intent pipeline routes to either the legacy `ovos-ocp-audio-plugin` or the standalone `ovos-media` daemon, which drives the player state machine, MPRIS, backend plugins, and the GUI.*
+
 ---
 
 ## OCP Pipeline Plugin
@@ -132,6 +134,8 @@ sequenceDiagram
     Note over Pipeline: Sort by score,<br/>pick best result
     Pipeline->>Player: ovos.common_play.play
 ```
+
+*Diagram: the pipeline classifies the media type, queries OCP skills, picks the best-scoring result, and hands it to the active player.*
 
 1. **Classification**: determines the media type (music, podcast, radio, video, audiobook, news, etc.)
    using a trained `AhocorasickNER` classifier and vocabulary files from `ocp_pipeline/locale/`.

@@ -41,6 +41,8 @@ flowchart TD
     F --> M
 ```
 
+*Diagram:* The flow starts when the utterance message arrives and ends at matching the intent in the resolved language, branching through stt_lang, request_lang, and detected_lang before falling back to the configured default.
+
 *"Valid"* means the candidate passes against `valid_langs` via `closest_lang` (see below).
 The service inspects the message's `context` dict and picks the **first** of these keys that
 is present *and* resolves to a valid language:

@@ -132,6 +132,8 @@ sequenceDiagram
     C-->>O: utterance consumed, skill reactivated
 ```
 
+*Diagram: the orchestrator hits the converse stage, ConverseService pings each active skill in priority order for a pong, then sends a converse request to the first willing skill, ending with the utterance consumed and that skill reactivated.*
+
 1. `converse` stage is hit in the pipeline
 
 

@@ -219,6 +219,8 @@ graph LR
     SAT -. HiveMind protocol .-> HIVE
 ```
 
+*Diagram: an example four-host topology where the listener, audio, core, skill, PHAL, GUI, and hivemind-core services on Hosts A-D all connect to one shared messagebus on Host A, while a remote hivemind-mic-satellite reaches hivemind-core over the separate HiveMind protocol.*
+
 !!! warning "Trust boundary: the bus and HIVE links are localhost/LAN only"
     Every `<-- websocket.host=A -->` link in the diagram above (including the `HIVE` connection)
     is a direct connection to the raw messagebus and must stay on a trusted localhost/LAN network.

@@ -239,7 +239,6 @@ nav:
       - Agent Engines:
           - Agent Engine Types: agent-plugins.md
           - Building Agent Plugins: building-agent-plugins.md
-          - Specialized Agent Engines: advanced-solvers.md
       - Agentic Loops: agentic-loop.md
       - Tools & Interoperability:
           - Agent Tool Plugins: tool-plugins.md

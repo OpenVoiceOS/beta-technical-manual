@@ -52,6 +52,8 @@ flowchart TD
     BUS --- PHAL["ovos-phal<br/>hardware/platform plugins"]
 ```
 
+*Diagram: the messagebus connects ovos-core, with its Skill Manager, Intent Service (transformers and pipeline plugins), Skill Installer, and Event Scheduler, to the sibling services ovos-dinkum-listener, ovos-audio, ovos-gui, and ovos-phal.*
+
 ## Key Components
 
 For more detail on each subsystem:

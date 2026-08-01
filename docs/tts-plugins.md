@@ -21,6 +21,8 @@ flowchart LR
     G --> H[mouth animation]
 ```
 
+*Diagram:* The flow starts at the input sentence and ends at either playback or mouth animation, and get_tts() branches the output into an audio file for the playback commands and a phoneme list for the viseme mouth animation.
+
 !!! note "Audio format contract"
     A TTS plugin is the **producer** end of the audio path, so it picks the format rather than
     receiving one. `get_tts()` writes a complete, self-describing audio file to the path it is
@@ -629,6 +631,8 @@ flowchart LR
         B3 -->|false| B5[Write full wav_file, then play: queued path]
     end
 ```
+
+*Diagram:* The chunking flow starts at a long reply and ends with the first sentence playing while the rest synthesizes, and the streaming flow starts at a sentence and branches on tts.enable_streaming between chunk playback in ovos-audio and the queued full-wav path.
 
 **Sentence chunking ("fake streaming").** Long replies are split into sentences before
 synthesis, so the first sentence plays while the rest still synthesizes. This works with

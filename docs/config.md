@@ -83,6 +83,8 @@ flowchart LR
     F --> W[Wins: highest priority]
 ```
 
+*Diagram:* The merge order starts at the bundled default config and ends at the in-memory patch, which wins as the highest priority over remote, distribution, system, and user layers.
+
 The XDG user layer is actually a list of configs (one per XDG config dir, for example
 `/etc/xdg/mycroft/mycroft.conf` plus `~/.config/mycroft/mycroft.conf`), all merged
 in order. All layers are `LocalConf` dict subclasses backed by a file. Only the user

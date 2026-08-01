@@ -23,6 +23,8 @@ flowchart TD
     J --> F
 ```
 
+*Diagram:* The flow runs from creating the folder layout to a working skill, checks the "hello" reply, and loops back to the pip install step on failure.
+
 !!! note "Before you start: OVOS needs to already be installed"
     This walkthrough assumes OVOS is already installed and its Python environment is available
     to work in. See [ovos-installer](ovos-installer.md) or [RaspOVOS](install-raspovos.md) if

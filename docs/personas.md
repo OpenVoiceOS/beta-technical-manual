@@ -179,6 +179,8 @@ flowchart LR
     H1 -->|first non-None response| A[Answer]
 ```
 
+*Diagram:* The flow starts at the utterance and ends at the answer, branching between a matched persona-management intent, a keyword-matched summon/ask, and a fallback through default_persona's handlers.
+
 ### Pipeline placement
 
 ```json

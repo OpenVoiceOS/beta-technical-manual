@@ -50,6 +50,8 @@ flowchart TD
     Q2 -->|No, single-language\nfully-controlled skill| Adapt
 ```
 
+*Diagram:* The decision starts by asking whether the skill needs digit matching or strict predictable matching, and ends by choosing Adapt for keyword intents or Padatious for template intents, branching further on whether the skill is public-facing and multilingual.
+
 OVOS provides two kinds of intent, matched by two default pipeline plugins. The
 [OVOS-INTENT-3](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-3.md)
 specification calls them **template intents** and **keyword intents**. Each individual

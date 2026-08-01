@@ -42,6 +42,8 @@ flowchart TD
     H -- yes --> I[Troubleshooting & Debugging]
 ```
 
+*Diagram:* The flow starts at "something's wrong" and ends at Troubleshooting & Debugging if still broken, branching on the basics check and then on which symptom applies.
+
 ## "It's not listening to me"
 
 - **Say the wake word clearly, with a short pause after it.** OVOS listens for a wake word (by

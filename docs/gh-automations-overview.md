@@ -129,41 +129,43 @@ uses: OpenVoiceOS/gh-automations/.github/workflows/<name>.yml@dev
 
 The filename below is the actual file in this repo (the `<name>.yml`). The name of the wrapper workflow in your own repo is up to you.
 
+Each table below names the PR-comment section a workflow posts. The bot prefixes every section title with an emoji marker; the tables give the title text only.
+
 ### Release
 
 | Workflow | Purpose |
 |---|---|
 | `publish-alpha.yml` | On PR merge to `dev`: bump version, optionally update changelog / tag pre-release / publish alpha to PyPI / notify Matrix, and open a release PR to `master`. PyPI publish and Matrix notify are jobs **inside** this workflow, gated by `publish_pypi` / `notify_matrix`. |
 | `publish-stable.yml` | On push to `master`: remove the alpha suffix, tag the stable release, optionally publish to PyPI, notify Matrix, and sync `master` → `dev`. |
-| `release-preview.yml` | Predict the next version from PR labels/title. Post a `🏷️ Release Preview` section. |
+| `release-preview.yml` | Predict the next version from PR labels/title. Post a `Release Preview` section. |
 
 ### Build & test
 
 | Workflow | Purpose |
 |---|---|
-| `build-tests.yml` | Build/install/test matrix across Python versions. Posts `🔨 Build Tests`. |
-| `coverage.yml` | Run pytest with coverage. Post `📊 Coverage`. Optionally deploy the HTML report to Pages (`deploy_pages: true`). |
-| `ovoscope.yml` | Run [ovoscope](ovoscope-overview.md) end-to-end skill tests. Post `🔌 Skill Tests (ovoscope)`. |
-| `intent-case-tests.yml` | Run the file-based ovoscope intent-routing accuracy matrix (sharded by language). Post `🎯 Intent-Case Accuracy`. |
-| `tts-intelligibility.yml` | Synthesise speech, transcribe it back with reference STT, and score WER/CER. Post `🗣️ TTS Intelligibility`. |
-| `opm-check.yml` | OPM (OVOS Plugin Manager) plugin detection, interface validation, and import timing. Post `🔌 Plugin Detection`. |
+| `build-tests.yml` | Build/install/test matrix across Python versions. Posts `Build Tests`. |
+| `coverage.yml` | Run pytest with coverage. Post `Coverage`. Optionally deploy the HTML report to Pages (`deploy_pages: true`). |
+| `ovoscope.yml` | Run [ovoscope](ovoscope-overview.md) end-to-end skill tests. Post `Skill Tests (ovoscope)`. |
+| `intent-case-tests.yml` | Run the file-based ovoscope intent-routing accuracy matrix (sharded by language). Post `Intent-Case Accuracy`. |
+| `tts-intelligibility.yml` | Synthesise speech, transcribe it back with reference STT, and score WER/CER. Post `TTS Intelligibility`. |
+| `opm-check.yml` | OPM (OVOS Plugin Manager) plugin detection, interface validation, and import timing. Post `Plugin Detection`. |
 
 ### Quality & policy
 
 | Workflow | Purpose |
 |---|---|
-| `license-check.yml` | Scan dependencies for copyleft/incompatible licenses (universal-donor policy). Post `⚖️ License Check`. |
-| `pip-audit.yml` | Scan installed dependencies for CVEs, with optional SARIF upload. Post `🔒 Security (pip-audit)`. |
+| `license-check.yml` | Scan dependencies for copyleft/incompatible licenses (universal-donor policy). Post `License Check`. |
+| `pip-audit.yml` | Scan installed dependencies for CVEs, with optional SARIF upload. Post `Security (pip-audit)`. |
 | `lint.yml` | Run ruff and/or pre-commit. Post lint results. |
-| `type-check.yml` | Run mypy. Post `🔎 Type Check` (informational unless `fail_on_errors: true`). |
-| `docs-check.yml` | Verify required docs files exist, with optional markdownlint. Post `📚 Docs`. |
-| `repo-health.yml` | Check required files and the version block, and greet first-time contributors. Post `📋 Repo Health`. |
+| `type-check.yml` | Run mypy. Post `Type Check` (informational unless `fail_on_errors: true`). |
+| `docs-check.yml` | Verify required docs files exist, with optional markdownlint. Post `Docs`. |
+| `repo-health.yml` | Check required files and the version block, and greet first-time contributors. Post `Repo Health`. |
 
 ### Skills
 
 | Workflow | Purpose |
 |---|---|
-| `skill-check.yml` | Locale structure, language coverage, `skill.json` validity. Post `🎙️ Skill`. |
+| `skill-check.yml` | Locale structure, language coverage, `skill.json` validity. Post `Skill`. |
 | `locale-check.yml` | Verify locale folders are correctly included in the package build. |
 | `spec-lint.yml` | Run `ovos-spec-lint` against a skill's locale folder (OVOS-INTENT-1 / OVOS-INTENT-2). |
 

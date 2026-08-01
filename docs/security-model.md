@@ -46,6 +46,8 @@ flowchart TD
     HMCore -. "only bridge to the bus" .-> Bus
 ```
 
+*Diagram:* The flow starts at a HiveMind satellite and ends at the device messagebus, and hivemind-core branches as the only authenticated, encrypted bridge into the trusted device components.
+
 The [messagebus](bus-service.md) is a pure fan-out WebSocket broker. Any client that opens a
 connection to it, by default `127.0.0.1:8181`, can emit and receive every message on the bus,
 with no login and no encryption. There is no per-client identity and no permission check.

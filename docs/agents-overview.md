@@ -6,7 +6,7 @@ This tab is for anyone adding conversational AI or LLM-backed behavior to OVOS, 
 
 1. [Personas & PersonaService](personas.md): the entry concept, a persona is a configured AI agent OVOS can talk to.
 2. [Agent Engine Types](agent-plugins.md): the different kinds of engine a persona can run on.
-3. [Choosing an engine](advanced-solvers.md): specialized agent engines beyond the basics.
+3. [Choosing an engine](agent-plugins.md#agent-engine-types): specialized agent engines beyond the basics.
 4. [Building Agent Plugins](building-agent-plugins.md): write your own engine when the built-in ones don't fit.
 
 ## Personas

@@ -22,6 +22,8 @@
         Core -->|SessionManager.get message| Skill["Skill"]
     ```
 
+    *Diagram:* The flow starts at the voice satellite or HiveMind node, passes through the messagebus and SessionManager, and ends at the skill, branching on whether the session is the device-local "default" session or a unique external session_id.
+
 **What / why (beginners):** a single OVOS device can be talking to many clients at once: your phone, a kitchen satellite, a HiveMind node. Each request arrives carrying a `Session` that identifies *who* is asking and *in what language*. If your skill stores any state (a chat history, a game in progress, a "current selection"), key that state by `session_id` instead of stashing it in a single instance variable. Otherwise two users would clobber each other.
 
 If you want your skills to handle simultaneous users, make them **Session** aware.

@@ -209,7 +209,7 @@ reply = engine.continue_chat([AgentMessage(role=MessageRole.USER, content="summa
 is the same method every `ChatEngine` implements, regardless of backend, so swapping providers
 doesn't touch your skill's logic.
 
-→ full story: [Agent Plugins](agent-plugins.md), [Specialized Agent Engine Types](advanced-solvers.md), [Personas](personas.md)
+→ full story: [Agent Plugins](agent-plugins.md), [Agent Engine Types](agent-plugins.md#agent-engine-types), [Personas](personas.md)
 
 ---
 

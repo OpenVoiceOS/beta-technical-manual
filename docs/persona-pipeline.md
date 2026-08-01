@@ -102,6 +102,8 @@ flowchart TD
     FB -- no match --> PC["ovos-persona-pipeline-plugin-low\n(default_persona)"]
 ```
 
+*Diagram: an utterance's route depends on the chosen strategy — Full Control sends it straight to the persona before skills, Hybrid tries skills first and falls back to the persona on no match, and Fallback Only tries the fallback pipeline before falling back to the default persona.*
+
 ### 1. **Full Control (Persona-First)**
 
 In this mode, **personas override** all skills. The persona handles every utterance unless explicitly deactivated.

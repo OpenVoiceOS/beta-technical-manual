@@ -7,6 +7,8 @@ This page covers stream extractors: plugins that turn a URL or search request in
 stream. The playback engine that plays that stream is [OCP Audio Plugin](ocp-audio-plugin.md).
 The playback backends it can use are [Media Playback Plugins](media-plugins.md).
 
+--8<-- "snippets/what-ocp-means.md"
+
 ---
 
 ## Writing an OCP Stream Extractor Plugin
