@@ -392,9 +392,39 @@ the returned string in an `AgentMessage` and update the dict-style messages to
 `supported_langs = ["en"]` and still receive every language, because the base class
 translated the input and output behind the scenes. **Agent engines never translate.**
 After migration your engine receives the user's language as-is. Either handle it or
-return nothing for languages you do not support. If the old plugin leaned on `enable_tx`,
-that behavior now belongs to explicit translation plugins in the pipeline, not to your
-engine.
+return nothing for languages you do not support.
+
+Translation is still the recommended strategy for engines whose backend is inherently
+monolingual (Wolfram Alpha and most web APIs only speak English). What changed is who
+does it: the base class no longer translates for you, so the plugin re-implements it
+explicitly. Use the translation plugin system instead of hardcoding one translator.
+`OVOSLangTranslationFactory.create()` (in `ovos_plugin_manager.language`) returns the
+`LanguageTranslator` the user configured in the central `"language"` section of
+`mycroft.conf`, so every plugin honors one shared translation config:
+
+```python
+from ovos_plugin_manager.language import OVOSLangTranslationFactory
+
+class WolframEngine(RetrievalEngine):
+    def __init__(self, config=None):
+        super().__init__(config)
+        self.translator = OVOSLangTranslationFactory.create()
+
+    def query(self, query, lang=None, k=3):
+        lang = lang or self.lang
+        if lang != "en":
+            query = self.translator.translate(query, target="en", source=lang)
+        answer = self._ask_wolfram(query)
+        if lang != "en":
+            answer = self.translator.translate(answer, target=lang, source="en")
+        return [(answer, 1.0)]
+```
+
+One warning about local translation models: several OVOS components can each load
+translation plugins, and each `create()` call builds its own instance. With a heavy
+local model such as NLLB, that means the same weights in memory once per component.
+On such setups configure a remote translation plugin (a translate server) so the model
+loads once, in one process, and everything else calls it over HTTP.
 
 **4. Drop solver-specific plumbing.** There is no `priority` attribute, no internal
 cache, and no `spoken_answer` convenience wrapper. Persona config order replaces
