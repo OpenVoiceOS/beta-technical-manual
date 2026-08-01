@@ -26,6 +26,11 @@ Use it like this:
    [Verification gaps](#verification-gaps) list at the end before relying
    on it.
 
+!!! tip "Supporting several versions from one codebase"
+    This page tells you what changed. If you maintain a skill or plugin that must run on
+    both sides of a break, see [Version-Compatible Skills & Plugins](version-compat-guide.md)
+    for the sanctioned shim patterns.
+
 ## How OVOS versions break
 
 OVOS is not one project with one version number. It is about a dozen

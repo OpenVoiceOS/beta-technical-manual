@@ -168,6 +168,7 @@ nav:
           - Skill Cookbook: skill-cookbook.md
       - Guides:
           - Migrating from Mycroft: migrating-from-mycroft.md
+          - Version-Compatible Skills & Plugins: version-compat-guide.md
           - Design Guidelines: skill-design-guidelines.md
           - Best Practices: skill-best-practices.md
           - Anatomy of a Skill: skill-structure.md
