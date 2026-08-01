@@ -1,0 +1,2018 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://tigregotico.github.io/ovos-technical-manual/upcoming-changes/">
+      
+      
+        <link rel="prev" href="../updating-from-older-ovos/">
+      
+      
+        <link rel="next" href="../stt-server/">
+      
+      
+      <link rel="icon" href="https://github.com/OpenVoiceOS/ovos_assets/blob/master/Logo/ovos-logo-512.png?raw=true">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.31">
+    
+    
+      
+        <title>Upcoming Changes - OpenVoiceOS Technical Manual</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.3cba04c6.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../css/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="grey" data-md-color-accent="red">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#upcoming-changes" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="OpenVoiceOS Technical Manual" class="md-header__button md-logo" aria-label="OpenVoiceOS Technical Manual" data-md-component="logo">
+      
+  <img src="https://github.com/OpenVoiceOS/ovos_assets/blob/master/Logo/ovos-logo-512.png?raw=true" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            OpenVoiceOS Technical Manual
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Upcoming Changes
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="grey" data-md-color-accent="red"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="grey" data-md-color-accent="red"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/TigreGotico/ovos-technical-manual" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    TigreGotico/ovos-technical-manual
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href=".." class="md-tabs__link">
+          
+  
+  Home
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../ovos-installer/" class="md-tabs__link">
+          
+  
+  Get Started
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../everyday-help/" class="md-tabs__link">
+          
+  
+  Help & Troubleshooting
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../architecture-overview/" class="md-tabs__link">
+          
+  
+  Concepts
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../pipelines-overview/" class="md-tabs__link">
+          
+  
+  Intent Pipeline
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../lang-support/" class="md-tabs__link">
+          
+  
+  Language Support
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../first-skill/" class="md-tabs__link">
+          
+  
+  Skill Development
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../plugins-index/" class="md-tabs__link">
+          
+  
+  Plugin Ecosystem
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../personas/" class="md-tabs__link">
+          
+  
+  AI Agents & Personas
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../privacy-security/" class="md-tabs__link">
+          
+  
+  Production & Security
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../ecosystem-index/" class="md-tabs__link">
+          
+  
+  Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../contributing/" class="md-tabs__link">
+          
+  
+  Contributing & Project Infra
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="OpenVoiceOS Technical Manual" class="md-nav__button md-logo" aria-label="OpenVoiceOS Technical Manual" data-md-component="logo">
+      
+  <img src="https://github.com/OpenVoiceOS/ovos_assets/blob/master/Logo/ovos-logo-512.png?raw=true" alt="logo">
+
+    </a>
+    OpenVoiceOS Technical Manual
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/TigreGotico/ovos-technical-manual" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    TigreGotico/ovos-technical-manual
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href=".." class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../ovos-installer/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Get Started
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../everyday-help/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Help & Troubleshooting
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../architecture-overview/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Concepts
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../pipelines-overview/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Intent Pipeline
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../lang-support/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Language Support
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    
+  
+  
+    <a href="../first-skill/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Skill Development
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../plugins-index/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Plugin Ecosystem
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    
+  
+  
+    <a href="../personas/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    AI Agents & Personas
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Production & Security
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_10">
+            <span class="md-nav__icon md-icon"></span>
+            Production & Security
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../privacy-security/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Privacy & Security
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../production-operations/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Production Operations
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../updating-from-older-ovos/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Updating from Older OVOS
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Upcoming Changes
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Upcoming Changes
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-new-gui" class="md-nav__link">
+    <span class="md-ellipsis">
+      The new GUI
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ovos-media" class="md-nav__link">
+    <span class="md-ellipsis">
+      ovos-media
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#official-spec-adoption" class="md-nav__link">
+    <span class="md-ellipsis">
+      Official spec adoption
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#other-changes-by-repository" class="md-nav__link">
+    <span class="md-ellipsis">
+      Other changes by repository
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Other changes by repository">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ovos-audio" class="md-nav__link">
+    <span class="md-ellipsis">
+      ovos-audio
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ovos-bus-client" class="md-nav__link">
+    <span class="md-ellipsis">
+      ovos-bus-client
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ovos-config" class="md-nav__link">
+    <span class="md-ellipsis">
+      ovos-config
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ovos-core" class="md-nav__link">
+    <span class="md-ellipsis">
+      ovos-core
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ovos-dinkum-listener" class="md-nav__link">
+    <span class="md-ellipsis">
+      ovos-dinkum-listener
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ovos-gui" class="md-nav__link">
+    <span class="md-ellipsis">
+      ovos-gui
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ovos-persona-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      ovos-persona-server
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ovos-plugin-manager" class="md-nav__link">
+    <span class="md-ellipsis">
+      ovos-plugin-manager
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ovos-workshop" class="md-nav__link">
+    <span class="md-ellipsis">
+      ovos-workshop
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-pages" class="md-nav__link">
+    <span class="md-ellipsis">
+      Related pages
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../stt-server/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Self-hosting Servers
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../hivemind-agents/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    HiveMind
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../home-assistant/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Home Assistant
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../ecosystem-index/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Reference
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../contributing/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Contributing & Project Infra
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-new-gui" class="md-nav__link">
+    <span class="md-ellipsis">
+      The new GUI
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ovos-media" class="md-nav__link">
+    <span class="md-ellipsis">
+      ovos-media
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#official-spec-adoption" class="md-nav__link">
+    <span class="md-ellipsis">
+      Official spec adoption
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#other-changes-by-repository" class="md-nav__link">
+    <span class="md-ellipsis">
+      Other changes by repository
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Other changes by repository">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ovos-audio" class="md-nav__link">
+    <span class="md-ellipsis">
+      ovos-audio
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ovos-bus-client" class="md-nav__link">
+    <span class="md-ellipsis">
+      ovos-bus-client
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ovos-config" class="md-nav__link">
+    <span class="md-ellipsis">
+      ovos-config
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ovos-core" class="md-nav__link">
+    <span class="md-ellipsis">
+      ovos-core
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ovos-dinkum-listener" class="md-nav__link">
+    <span class="md-ellipsis">
+      ovos-dinkum-listener
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ovos-gui" class="md-nav__link">
+    <span class="md-ellipsis">
+      ovos-gui
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ovos-persona-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      ovos-persona-server
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ovos-plugin-manager" class="md-nav__link">
+    <span class="md-ellipsis">
+      ovos-plugin-manager
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ovos-workshop" class="md-nav__link">
+    <span class="md-ellipsis">
+      ovos-workshop
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-pages" class="md-nav__link">
+    <span class="md-ellipsis">
+      Related pages
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="upcoming-changes">Upcoming Changes<a class="headerlink" href="#upcoming-changes" title="Permanent link">&para;</a></h1>
+<div class="admonition abstract">
+<p class="admonition-title">In a nutshell</p>
+<p>This page tracks open pull requests across the OVOS repositories that will
+change behavior once merged. Everything on this page is <strong>unreleased and
+subject to change</strong>: PR scope, target version, and even whether a PR lands
+at all can shift before release. Once a PR merges or closes, its content
+graduates to <a href="../updating-from-older-ovos/">Updating from Older OVOS</a>, which
+tracks shipped history. If a PR number below is already merged or closed by
+the time you read this, treat this page as stale for that entry and check
+the linked PR directly.</p>
+</div>
+<h2 id="the-new-gui">The new GUI<a class="headerlink" href="#the-new-gui" title="Permanent link">&para;</a></h2>
+<p><a href="../architecture-specs/">OVOS-GUI-1</a> is a ground-up rework of how OVOS renders a
+screen: interchangeable render-backend plugins instead of one built-in
+WebSocket/QML renderer. See <a href="../gui-status/">Screens on OVOS Today</a> for the full
+picture. Until this work lands, the current GUI stack (<code>ovos-gui</code> +
+<code>ovos-shell</code> + <code>mycroft-gui-qt5</code>) stays <strong>deprecated but shipped</strong>, since it is
+the only screen stack that runs today.</p>
+<ul>
+<li><a href="https://github.com/OpenVoiceOS/ovos-gui/pull/112">ovos-gui#112</a>: feat: land
+  GUI adapter/template rework (session_id-only). Converts <code>ovos-gui</code> into a
+  pure state/dispatch hub with no built-in renderer: every installed
+  <code>opm.gui_adapter</code> plugin gets the <code>SYSTEM_*</code> template events, and a device
+  with none installed runs headless instead of crashing. Drops <code>site_id</code>
+  routing in favor of <code>session_id</code>-only addressing, and changes the
+  adapter-plugin hook signatures. <strong>Breaking.</strong> Audience: deployers/integrators
+  (an <code>opm.gui_adapter</code> plugin becomes required for any screen output),
+  GUI-adapter plugin authors, skill authors relying on <code>site_id</code> routing.
+  Expected 2.0.0 (unreleased). Blocked on <code>ovos-plugin-manager#377</code> and
+  <code>ovos-legacy-mycroft-gui-plugin@dev</code> publishing to PyPI first.</li>
+<li><a href="https://github.com/OpenVoiceOS/ovos-gui/pull/117">ovos-gui#117</a>: feat:
+  OVOS-GUI-1 service conformance. Adds the <code>SYSTEM_</code> template-name gate, accepts
+  both legacy CamelCase and GUI-1 frame names, and partitions display state per
+  session, all without touching the legacy render path. Not breaking, additive
+  on top of <code>dev</code>. Audience: skill authors emitting GUI pages, GUI-adapter
+  authors, multi-session deployers. Expected 1.5.0 (unreleased).</li>
+<li><a href="https://github.com/OpenVoiceOS/ovos-plugin-manager/pull/377">ovos-plugin-manager#377</a>: feat: AbstractGUIPlugin. The adapter base class <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-gui/issues/112" title="GitHub Issue: TigreGotico/ovos-gui #112">ovos-gui#112</a> needs: an
+  extensible GUI-adapter framework covering text, image, video, audio, weather,
+  map, and interactive display types. Not breaking, a new abstraction. Audience:
+  GUI-adapter plugin authors, OVOS-GUI integrators. Expected 2.12.0 (unreleased).
+  This is the unreleased branch <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-gui/issues/112" title="GitHub Issue: TigreGotico/ovos-gui #112">ovos-gui#112</a> is blocked on.</li>
+<li><a href="https://github.com/OpenVoiceOS/ovos-plugin-manager/pull/406">ovos-plugin-manager#406</a>: refactor!: drop the enclosure abstraction from PHALPlugin. Removes the
+  legacy Mark-1 <code>enclosure.*</code> protocol wiring from <code>PHALPlugin</code>. The listener
+  side moves to <code>ovos-ui-enclosure-protocol</code>, the producer side to
+  <code>ovos-gui-api-client</code>. <strong>Breaking</strong> for any PHAL plugin subclass using the
+  removed handlers. Audience: PHAL/enclosure hardware plugin authors, GUI/
+  enclosure integration maintainers. Expected 3.0.0 (unreleased). Part of the
+  same enclosure-to-GUI migration as the rest of this section.</li>
+<li><a href="https://github.com/OpenVoiceOS/ovos-bus-client/pull/238">ovos-bus-client#238</a>: fix: emit GUI-1-conformant wire shapes from GUIInterface. <code>gui.value.set</code>
+  and <code>gui.page.show</code> stop emitting null-valued keys, and local image paths get
+  base64-encoded into a data URI instead of a bare filesystem path. Not
+  breaking, narrows the wire shape toward the spec. Audience: GUI render-backend
+  implementers and other consumers of the GUI wire protocol. Expected 2.7.3
+  (unreleased).</li>
+<li><a href="https://github.com/OpenVoiceOS/ovos-bus-client/pull/197">ovos-bus-client#197</a>: refactor!: deprecate EnclosureAPI, refactor GUIInterface with a
+  <code>PageTemplates</code> enum. Marks <code>EnclosureAPI</code> for deprecation (visual output
+  moves to platform plugins), removes a <code>GUIInterface</code> init parameter, and
+  replaces string-based GUI page-template references with <code>PageTemplates</code>
+  constants. <strong>Breaking</strong> for direct <code>GUIInterface</code> instantiators. Audience:
+  consumers of <code>EnclosureAPI</code> and <code>GUIInterface</code>. Expected 3.0.0 (unreleased).</li>
+<li><a href="https://github.com/OpenVoiceOS/ovos-workshop/pull/420">ovos-workshop#420</a>: feat!: bind <code>OVOSSkill.gui</code> to <code>ovos-gui-api-client</code>. Points skill GUI access
+  at the standalone <code>ovos-gui-api-client</code> package. <code>SkillGUI.__init__</code> drops the
+  <code>ui_directories</code> argument, since skills no longer ship QML. <strong>Breaking</strong> for
+  skill authors constructing <code>SkillGUI</code>/<code>GUIInterface</code> directly. Audience: skill
+  authors. Expected 10.0.0 (unreleased).</li>
+<li><a href="https://github.com/OpenVoiceOS/ovos-workshop/pull/421">ovos-workshop#421</a>: feat!: remove the skill-side home/resting-screen API. Deletes
+  <code>resting_screen_handler</code>, <code>homescreen_app</code>, <code>IdleDisplaySkill</code>, and
+  <code>register_resting_screen</code>/<code>register_homescreen_app</code>, since OVOS-GUI-1 §6.9
+  treats the resting display as a render-backend concern, not a skill concern.
+  <strong>Breaking</strong> for any skill using these decorators/methods. Audience: skill
+  authors. Named downstream impact on <code>ovos-ocp-audio-plugin</code>,
+  <code>ovos-skill-iss-location</code>, <code>ovos-pydantic-models</code>, <code>ovos-skill-homescreen</code>.
+  Expected 10.0.0 (unreleased).</li>
+</ul>
+<h2 id="ovos-media">ovos-media<a class="headerlink" href="#ovos-media" title="Permanent link">&para;</a></h2>
+<p><code>ovos-media</code> is <strong>alpha and not officially released</strong>. <code>ovos-audio</code> remains
+the production audio service, and stock installs keep
+<code>enable_old_audioservice: true</code> (the default). See
+<a href="../ovos-media/">Media Service (ovos-media)</a> for its maturity status. Two
+things are changing on top of that baseline: the legacy audio service is
+starting to shed its OCP integration, and the intended role of an OCP skill is
+shifting.</p>
+<p>MediaProvider plugins (<code>opm.media.provider</code>) are meant to own catalog search
+once <code>ovos-media</code> loads them in-process. OCP skills stay fully supported, but
+their intended role narrows: a skill whose job is "answer catalog search
+queries" (a station list, a podcast feed) is expected to become a
+MediaProvider plugin over time, while a skill where <strong>the skill itself is the
+playable media</strong> (a voice game, an ebook reader) stays an OCP skill. See
+<a href="../ocp-skills/">OCP Skills</a> for the full split.</p>
+<ul>
+<li><a href="https://github.com/OpenVoiceOS/ovos-workshop/pull/423">ovos-workshop#423</a>: feat: deprecate <code>OVOSCommonPlaybackSkill</code> in favor of MediaProvider plugins.
+  Adds a deprecation notice to <code>OVOSCommonPlaybackSkill.__init__</code> steering
+  authors toward <code>opm.media.provider</code>. Not breaking: existing OCP skills keep
+  working, and hard removal is a future major version. Audience: OCP skill
+  authors. Expected 9.4.0 (unreleased).</li>
+<li><a href="https://github.com/OpenVoiceOS/ovos-workshop/pull/428">ovos-workshop#428</a>: feat: session-aware game-skill + OCP playback. Makes
+  <code>OVOSCommonPlaybackSkill</code> playback state per-session, so state events route
+  back to the originating session instead of colliding across simultaneous
+  sessions. This is the piece that keeps a game-as-OCP-skill correct under
+  HiveMind/remote deployments. Not breaking. Audience: OCP/game-skill authors,
+  HiveMind/remote deployers. Expected 9.4.0 (unreleased). Stacked on
+  <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-workshop/issues/427" title="GitHub Issue: TigreGotico/ovos-workshop #427">ovos-workshop#427</a>, must merge first.</li>
+<li><a href="https://github.com/OpenVoiceOS/ovos-audio/pull/115">ovos-audio#115</a>: refactor!: drop OCP. Removes OCP (OVOS Common Playback) integration from
+  <code>ovos-audio</code> entirely, leaving only the legacy audio system: drops the
+  <code>disable_ocp</code> constructor parameter and the <code>ovos_plugin_common_play[extractors]</code>
+  dependency. <strong>Breaking</strong> for anything relying on OCP inside <code>ovos-audio</code>.
+  Audience: skill authors and deployers relying on OCP integration inside
+  <code>ovos-audio</code>, plugin authors depending on the removed constructor parameter.
+  Expected 3.0.0 (unreleased).</li>
+</ul>
+<h2 id="official-spec-adoption">Official spec adoption<a class="headerlink" href="#official-spec-adoption" title="Permanent link">&para;</a></h2>
+<p>Repositories across the org are being brought into conformance with the
+<a href="../architecture-specs/">Formal Specifications</a>, largely OVOS-STOP-1,
+OVOS-CONTEXT-1, OVOS-TRANSFORM-1, and OVOS-PIPELINE-1. A related but separate
+effort, the legacy bus-namespace migration, already completed its removal
+phase for <code>ovos-bus-client</code>'s own namespace bridge (see
+<a href="../updating-from-older-ovos/">Updating from Older OVOS</a>). The PRs below carry
+that migration the rest of the way: a set of coordinated kill-switches that
+drop the last hardcoded legacy topic literals from <code>ovos-core</code>, <code>ovos-workshop</code>,
+and the <code>ovos-utils</code> test double. Each is explicitly gated to merge only once
+fleets no longer run legacy-namespace consumers.</p>
+<ul>
+<li><a href="https://github.com/OpenVoiceOS/ovos-core/pull/802">ovos-core#802</a>: feat!:
+  OVOS-STOP-1 reserved-intent_name dispatch + separable legacy bridge.
+  Reworks the stop pipeline as a single spec path: targeted stop dispatches
+  <code>&lt;skill_id&gt;:stop</code>, global stop dispatches <code>&lt;pipeline_id&gt;:global_stop</code> and a
+  single <code>ovos.stop</code> broadcast. Legacy stop back-compat moves into a
+  separately deletable module. <strong>Breaking</strong>: the dispatch topic shape for
+  targeted stop changes. Audience: skill authors handling stop intents,
+  deployers running legacy skills, remote/HiveMind bus consumers of stop
+  topics. Expected 3.0.0 (unreleased). Requires
+  <code>ovos-plugin-manager&gt;=2.9.0a1</code>. Supersedes <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-core/issues/777" title="GitHub Issue: TigreGotico/ovos-core #777">ovos-core#777</a> below.</li>
+<li><a href="https://github.com/OpenVoiceOS/ovos-core/pull/777">ovos-core#777</a>: feat:
+  OVOS-STOP-1 conformance in stop_service. Adopts the OVOS-STOP-1 spec bus
+  surface (<code>ovos.stop</code>, <code>ovos.stop.pong</code>, <code>ovos.stop.ping</code>) bridged to legacy
+  topics via <code>ovos-spec-tools</code>. Not breaking. <strong>Superseded by <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-core/issues/802" title="GitHub Issue: TigreGotico/ovos-core #802">ovos-core#802</a></strong>,
+  which extends and completes this work. Treat <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/777" title="GitHub Issue: TigreGotico/ovos-technical-manual #777">#777</a> as likely to be closed in
+  favor of <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/802" title="GitHub Issue: TigreGotico/ovos-technical-manual #802">#802</a> rather than merged separately. Expected 2.6.0 (unreleased).</li>
+<li><a href="https://github.com/OpenVoiceOS/ovos-core/pull/786">ovos-core#786</a>: feat:
+  OVOS-CONTEXT-1 orchestrator-resident intent context. Implements the
+  core-resident half of OVOS-CONTEXT-1: a flat, decaying
+  <code>session.intent_context</code> store with private/shared scope resolution and
+  <code>requires_context</code>/<code>excludes_context</code> gating. Not breaking, additive. The
+  legacy frame-based context manager stays for back-compat. Audience: skill
+  authors declaring context requirements, remote/HiveMind session-sync
+  consumers. Expected 2.6.0 (unreleased).</li>
+<li><a href="https://github.com/OpenVoiceOS/ovos-core/pull/785">ovos-core#785</a>: fix:
+  conform transformer chains to OVOS-TRANSFORM-1. Adds <code>cancel_reason</code>/
+  <code>cancel_by</code> to <code>ovos.utterance.cancelled</code>, and moves the bulk of
+  transform-chain conformance logic upstream into <code>ovos-plugin-manager</code>'s
+  shared <code>TransformersService</code> bases. Not breaking. Audience: utterance/
+  metadata/intent transformer plugin authors. Expected 2.5.9 (unreleased).
+  Depends on <code>ovos-plugin-manager#417</code> landing first, and bumps the
+  <code>ovos-plugin-manager</code> floor to <code>&gt;=2.10.3a1</code>.</li>
+<li><a href="https://github.com/OpenVoiceOS/ovos-workshop/pull/500">ovos-workshop#500</a>: refactor: register canonical intent topics, compat moves to
+  ovos-spec-tools. <code>register_intent_file</code> now derives its topic from
+  <code>canonical_intent_topic()</code> instead of the raw <code>.intent</code> filename, dropping
+  the previous dual-bind on both spellings. Not marked breaking, but removes a
+  runtime behavior (the dual bind). Audience: skill authors subscribed
+  directly to the <code>.intent</code>-suffixed dispatch topic, deployers running mixed
+  old/new skill containers. Expected 9.4.0 (unreleased).</li>
+<li><a href="https://github.com/OpenVoiceOS/ovos-workshop/pull/414">ovos-workshop#414</a>: refactor: route <code>OVOSSkill</code> resource loading through <code>ovos-spec-tools</code>
+  (back-compat). Routes resource access through
+  <code>ovos_spec_tools.LocaleResources</code> internally. Every legacy resource-loading
+  call (<code>self.resources</code>, <code>self.find_resource</code>, etc.) keeps working via a
+  compatibility mixin that emits one <code>DeprecationWarning</code> per call. Not
+  breaking. Audience: skill authors using the legacy resource-loading API.
+  Expected 9.3.3 (unreleased).</li>
+<li><a href="https://github.com/OpenVoiceOS/ovos-persona/pull/192">ovos-persona#192</a>: fix: emit PIPELINE-1 §8 done-signal for persona dispatches. Registers
+  persona's <code>persona:*</code> intent handlers with <code>handler_info</code>, so the PIPELINE-1
+  §9.5 <code>ovos.utterance.handled</code> end-marker fires promptly after a
+  persona-handled utterance instead of only after a 5-minute dispatcher
+  timeout. Not breaking, restores expected framework behavior. Audience:
+  skill/pipeline authors and deployers on <code>ovos-core&gt;=2.3.0a1</code>. Expected 0.9.1
+  (unreleased).</li>
+<li><a href="https://github.com/OpenVoiceOS/ovos-bus-client/pull/271">ovos-bus-client#271</a>: feat: legacy intent-topic bridge, wire twin on emit, modernize on
+  receive. Adds a two-rule bridge covering version-skew on the
+  <code>.intent</code>-suffixed dispatch topic between old and new workshop/core
+  versions. Not breaking, additive. Audience: deployers running mixed-version
+  fleets. Expected 2.8.0 (unreleased). This is the compat layer <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/272" title="GitHub Issue: TigreGotico/ovos-technical-manual #272">#272</a> below
+  later removes.</li>
+<li><a href="https://github.com/OpenVoiceOS/ovos-utils/pull/411">ovos-utils#411</a>: feat: <code>FakeBus</code> mirrors the <code>.intent</code>-suffixed twin for aliased intents.
+  Gives <code>FakeBus</code>/<code>AsyncFakeBus</code> the same bridge <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-bus-client/issues/271" title="GitHub Issue: TigreGotico/ovos-bus-client #271">ovos-bus-client#271</a> added to
+  the real client, so test harnesses built on <code>FakeBus</code> don't hide the compat
+  path. Not breaking, additive test-double parity fix. Audience: test-harness
+  authors (ovoscope, skill test suites). Expected 0.14.0 (unreleased).</li>
+<li><a href="https://github.com/OpenVoiceOS/ovos-bus-client/pull/272">ovos-bus-client#272</a>: feat!: drop legacy wire compat (kill-switch). Removes the namespace
+  bridge, the handler mirror-guard, and the intent-topic twin from
+  <code>MessageBusClient</code> entirely. A client constructed with a removed compat
+  flag raises <code>RuntimeError</code> instead of silently no-op-ing. <strong>Breaking.</strong>
+  Audience: deployers/operators with legacy-namespace consumers still on the
+  fleet, any code constructing <code>MessageBusClient</code> with the removed compat
+  flags. Expected 3.0.0 (unreleased). Must merge together with <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-core/issues/837" title="GitHub Issue: TigreGotico/ovos-core #837">ovos-core#837</a>,
+  <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-workshop/issues/501" title="GitHub Issue: TigreGotico/ovos-workshop #501">ovos-workshop#501</a>, and <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-utils/issues/412" title="GitHub Issue: TigreGotico/ovos-utils #412">ovos-utils#412</a>. Depends on <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/271" title="GitHub Issue: TigreGotico/ovos-technical-manual #271">#271</a>. Explicitly
+  "do not merge until then."</li>
+<li><a href="https://github.com/OpenVoiceOS/ovos-core/pull/837">ovos-core#837</a>: feat!:
+  drop legacy wire compat (kill-switch). Removes the last legacy-topic
+  literals <code>ovos-core</code> still writes on the wire, replacing them with
+  <code>SpecMessage</code> constants. <strong>Breaking.</strong> Audience: deployers with un-migrated
+  legacy-bus consumers, skill/plugin authors listening on the legacy
+  spellings. Expected 3.0.0 (unreleased). Must merge together with the other
+  three kill-switch PRs in this list.</li>
+<li><a href="https://github.com/OpenVoiceOS/ovos-workshop/pull/501">ovos-workshop#501</a>: feat!: drop legacy wire compat (kill-switch). Rewrites every remaining
+  legacy-topic literal <code>ovos-workshop</code> still emits/listens on to the
+  <code>SpecMessage</code>-based canonical form. <strong>Breaking.</strong> Audience: deployers with
+  un-migrated legacy-bus consumers, skill authors subscribing to legacy topic
+  names directly. Expected 10.0.0 (unreleased). Depends on <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/500" title="GitHub Issue: TigreGotico/ovos-technical-manual #500">#500</a> above. Must
+  merge together with the other three kill-switch PRs in this list.</li>
+<li><a href="https://github.com/OpenVoiceOS/ovos-utils/pull/412">ovos-utils#412</a>: feat!: drop legacy wire compat (kill-switch). The <code>FakeBus</code>/<code>AsyncFakeBus</code>
+  test-double half of the same drop: removes the namespace bridge and the
+  intent-topic twin from the test double. <strong>Breaking.</strong> Audience: test-harness
+  authors (ovoscope, skill test suites, satellite fakes) using <code>FakeBus</code> with
+  the legacy-compat flags. Expected 1.0.0 (unreleased): this would also be
+  the package's first stable 1.0 release. Depends on <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/411" title="GitHub Issue: TigreGotico/ovos-technical-manual #411">#411</a>. Must merge
+  together with the other three kill-switch PRs in this list.</li>
+</ul>
+<h2 id="other-changes-by-repository">Other changes by repository<a class="headerlink" href="#other-changes-by-repository" title="Permanent link">&para;</a></h2>
+<p>Entries here are open PRs that change behavior but don't fit the three
+headline efforts above.</p>
+<h3 id="ovos-audio">ovos-audio<a class="headerlink" href="#ovos-audio" title="Permanent link">&para;</a></h3>
+<ul>
+<li><a href="https://github.com/OpenVoiceOS/ovos-audio/pull/146">#146</a>: Add duration to
+  <code>utterance_start</code> message. Adds automatic audio-duration calculation to the
+  recognizer event emitted when utterance recognition begins. Degrades
+  gracefully if lookup fails. Not breaking. Audience: skill authors and remote
+  bus consumers listening for <code>utterance_start</code>, plus downstream analytics/
+  timing tooling. Expected 2.2.0 (unreleased).</li>
+<li><a href="https://github.com/OpenVoiceOS/ovos-audio/pull/179">#179</a>: refactor: drop
+  redundant legacy dual bus subscriptions. Removes manual legacy
+  <code>self.bus.on(...)</code> subscriptions for six AUDIO-1 topic pairs, relying on the
+  <code>ovos-bus-client</code> namespace bridge to mirror legacy emits for local
+  listeners. Not conventional-commit-marked as breaking, but carries
+  breaking risk for deployments running an older <code>ovos-bus-client</code> without
+  that bridge. Audience: deployers on an older bus-client, remote bus
+  consumers relying on the six legacy AUDIO-1 topics. Expected 2.1.2
+  (unreleased).</li>
+</ul>
+<h3 id="ovos-bus-client">ovos-bus-client<a class="headerlink" href="#ovos-bus-client" title="Permanent link">&para;</a></h3>
+<ul>
+<li><a href="https://github.com/OpenVoiceOS/ovos-bus-client/pull/222">#222</a>: fix: emit
+  <code>mycroft.scheduler.update_event</code> so <code>update_scheduled_event</code> reaches the
+  scheduler. <code>EventsAPI</code> was emitting a topic the scheduler never listened on
+  (<code>schedule</code> vs <code>scheduler</code>), so <code>update_scheduled_event()</code> was silently a
+  no-op. Not breaking, a straightforward bug fix. Audience: any code calling
+  <code>EventsAPI.update_scheduled_event()</code>. Expected 2.7.3 (unreleased).</li>
+<li><a href="https://github.com/OpenVoiceOS/ovos-bus-client/pull/200">#200</a>: feat:
+  <code>AsyncMessageBusClient</code> (async/await native client). Adds an async-native
+  client mirroring the sync client's API surface, installed via an optional
+  <code>ovos-bus-client[async]</code> dependency group. Not breaking, no impact on
+  existing sync-client users. Audience: bus-client consumers and plugin
+  authors wanting native async I/O. Expected 2.8.0 (unreleased).</li>
+</ul>
+<h3 id="ovos-config">ovos-config<a class="headerlink" href="#ovos-config" title="Permanent link">&para;</a></h3>
+<ul>
+<li><a href="https://github.com/OpenVoiceOS/ovos-config/pull/194">#194</a>: feat:
+  <code>assistant_config</code>. Adds a new <code>AssistantConfig</code> layer for runtime changes
+  OVOS itself makes to config, so plugin/component writes can no longer
+  corrupt or silently overwrite the user's own config file. Deprecates
+  <code>RemoteConf</code> and the <code>backend-client</code>/<code>personal-server</code>-era remote config
+  stack. This is <strong>deprecation-only</strong>: every deprecated surface
+  (<code>RemoteConf</code>, <code>Configuration.remote</code>, <code>read_mycroft_config</code>, and others)
+  keeps working and emits a <code>DeprecationWarning</code> naming the future major
+  version it will be removed in, so nothing breaks yet. Audience: skill/
+  plugin authors that write to config at runtime, deployers, downstream
+  tooling reading <code>Configuration().remote</code>. Expected 2.4.0 (unreleased).</li>
+<li><a href="https://github.com/OpenVoiceOS/ovos-config/pull/282">#282</a>: feat:
+  recommends for more languages (onnx-asr STT + phoonnx TTS). Adds offline
+  STT/TTS recommends for 49 new languages. No existing entries are removed.
+  Not breaking, purely additive. Audience: deployers/end users running
+  <code>autoconfigure --offline</code> in a new language, downstream langpack
+  maintainers. Expected 2.4.0 (unreleased).</li>
+<li><a href="https://github.com/OpenVoiceOS/ovos-config/pull/274">#274</a>: feat: GPU STT
+  tier on onnx-asr (<code>use_cuda</code>) + best per-lang models. Moves the <code>--gpu</code> STT
+  recommends tier onto <code>ovos-stt-plugin-onnx-asr</code> with <code>use_cuda</code>, replacing
+  the previous fasterwhisper/HiTZ mix. Not breaking. Audience: deployers
+  running the <code>--gpu</code> autoconfigure tier. Expected 2.4.0 (unreleased).</li>
+<li><a href="https://github.com/OpenVoiceOS/ovos-config/pull/278">#278</a>: feat: document
+  <code>ww_urls</code> and <code>stt_urls</code> open_data endpoints. Extends the <code>open_data</code> block
+  in the shipped <code>mycroft.conf</code> template with keys for the opt-in wake-word/
+  STT sample-upload feature. Not breaking, opt-in and not enabled by default.
+  Audience: deployers who opt in to <code>open_data</code> sample collection,
+  <code>ovos-dinkum-listener</code> users. Expected 2.4.0 (unreleased).</li>
+<li><a href="https://github.com/OpenVoiceOS/ovos-config/pull/267">#267</a>: Update STT
+  model to large-v3-turbo. Fixes an incorrect fasterwhisper model id in the
+  GPU-tier <code>en-us</code> recommend. Not breaking. Audience: deployers using the
+  GPU-tier <code>en-us</code> fasterwhisper STT recommend. Expected 2.3.7 (unreleased).</li>
+<li><a href="https://github.com/OpenVoiceOS/ovos-config/pull/82">#82</a>: add
+  <code>audio_service_ducking</code> default config. Turns on audio ducking (lowering
+  background volume during TTS/system sounds) by default in the shipped
+  <code>mycroft.conf</code>, matching a feature already merged into <code>ovos-audio</code>. Not
+  breaking, but changes default runtime audio behavior wherever the legacy
+  audio service is in use. Audience: end users/deployers of the legacy
+  <code>ovos-audio</code> service. Expected 2.3.7 (unreleased).</li>
+</ul>
+<h3 id="ovos-core">ovos-core<a class="headerlink" href="#ovos-core" title="Permanent link">&para;</a></h3>
+<ul>
+<li><a href="https://github.com/OpenVoiceOS/ovos-core/pull/832">#832</a>: feat: blacklist
+  pipeline plugins at load time and per session. Adds
+  <code>intents.blacklisted_pipelines</code>, checked before a pipeline plugin is loaded
+  so its module is never imported, avoiding import cost for pipelines a
+  deployment never uses. Also implements per-session runtime policy
+  enforcement per OVOS-PIPELINE-1 §5.2/§5.5. Not breaking. Audience:
+  deployers/operators tuning boot cost and per-session policy. Expected 2.6.0
+  (unreleased).</li>
+<li><a href="https://github.com/OpenVoiceOS/ovos-core/pull/689">#689</a>: feat: send
+  pipeline + core version in intent metrics. Adds pipeline id and core version
+  fields to the intent-metrics payload (scope of exact field shape unclear
+  from the PR body). Not breaking. Audience: consumers of the intent-metrics
+  telemetry event. Expected 2.6.0 (unreleased).</li>
+</ul>
+<h3 id="ovos-dinkum-listener">ovos-dinkum-listener<a class="headerlink" href="#ovos-dinkum-listener" title="Permanent link">&para;</a></h3>
+<ul>
+<li><a href="https://github.com/OpenVoiceOS/ovos-dinkum-listener/pull/243">#243</a>: feat: opt-in <code>open_data</code> upload of wake word and STT samples. Adds a module
+  that POSTs wake-word and STT audio samples to an <code>ovos-opendata-server</code>
+  instance, but only fires if <code>open_data.ww_urls</code>/<code>stt_urls</code> are explicitly
+  set in config. Not breaking, off by default, errors are swallowed on a
+  daemon thread. Audience: deployers who opt in to data-sharing. Expected
+  0.8.3 (unreleased). Pairs with <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-config/issues/278" title="GitHub Issue: TigreGotico/ovos-config #278">ovos-config#278</a> above.</li>
+<li><a href="https://github.com/OpenVoiceOS/ovos-dinkum-listener/pull/215">#215</a>: Add
+  audio duration to utterance message. Adds a <code>duration</code> field to the
+  <code>recognizer_loop:utterance</code> bus message payload when computable. Not
+  breaking, purely additive. Audience: skill/plugin authors consuming that
+  message payload, remote bus consumers logging utterance metadata. Expected
+  0.8.3 (unreleased).</li>
+</ul>
+<h3 id="ovos-gui">ovos-gui<a class="headerlink" href="#ovos-gui" title="Permanent link">&para;</a></h3>
+<ul>
+<li><a href="https://github.com/OpenVoiceOS/ovos-gui/pull/73">#73</a>: Add support for
+  the PyHTMX GUI client. Adds recognition of a new "py-htmx" GUI framework
+  alongside QML/React handling. Not breaking. Audience: developers of
+  PyHTMX-based GUI clients. Expected 1.5.0 (unreleased). <strong>Likely stale</strong>:
+  opened December 2024 with no activity since February 2026, predates and does
+  not account for the <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-gui/issues/112" title="GitHub Issue: TigreGotico/ovos-gui #112">ovos-gui#112</a>/<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/117" title="GitHub Issue: TigreGotico/ovos-technical-manual #117">#117</a> adapter rework.</li>
+<li><a href="https://github.com/OpenVoiceOS/ovos-gui/pull/26">#26</a>: Initial React GUI
+  support. Adds file-extension mapping and bus event forwarding for an
+  external React GUI client. Not breaking. Audience: developers of a
+  React-based GUI client. Expected 1.5.0 (unreleased). <strong>Likely superseded</strong>:
+  opened August 2023, no activity since April 2024, predates the OVOS-GUI-1
+  adapter rework and unlikely to land in its current form.</li>
+</ul>
+<h3 id="ovos-persona-server">ovos-persona-server<a class="headerlink" href="#ovos-persona-server" title="Permanent link">&para;</a></h3>
+<ul>
+<li><a href="https://github.com/OpenVoiceOS/ovos-persona-server/pull/60">#60</a>: fix:
+  loader never passes <code>toolbox_id</code>, plugins own their id. Fixes
+  <code>_load_toolboxes()</code> so it never passes <code>toolbox_id</code> itself. Each <code>ToolBox</code>
+  plugin must now forward it from its own constructor. Framed as a fix, but
+  <strong>breaking</strong> for <code>ToolBox</code> plugin authors, since it changes the public
+  constructor contract. Audience: OPM <code>ToolBox</code> plugin authors. Expected
+  0.13.4 or 0.14.0 (unreleased) (scope unclear from PR: depends on whether the
+  org treats this as patch or minor).</li>
+<li><a href="https://github.com/OpenVoiceOS/ovos-persona-server/pull/38">#38</a>: feat:
+  Docker Compose OpenAI-proxy persona config and custom-container docs. Adds a
+  ready-made <code>docker compose up</code> setup for an OpenAI-compatible chat endpoint.
+  Not breaking, purely additive. Audience: deployers wanting a containerized
+  OpenAI-compatible endpoint. Expected 0.14.0 (unreleased).</li>
+</ul>
+<h3 id="ovos-plugin-manager">ovos-plugin-manager<a class="headerlink" href="#ovos-plugin-manager" title="Permanent link">&para;</a></h3>
+<ul>
+<li><a href="https://github.com/OpenVoiceOS/ovos-plugin-manager/pull/385">#385</a>: feat:
+  add triples semantic pipeline with entity linking and reasoning support.
+  Extends the existing triples-extraction pipeline into a full semantic
+  pipeline with new plugin types (<code>ENTITY_LINKER</code>, <code>TRIPLES_STORE</code>,
+  <code>TRIPLES_REASONER</code>) and template classes. Also fixes a real bug where
+  triples-extractor plugin discovery queried the wrong plugin type. Not
+  breaking. Audience: plugin authors building semantic/knowledge-graph
+  plugins. Expected 2.12.0 (unreleased).</li>
+<li><a href="https://github.com/OpenVoiceOS/ovos-plugin-manager/pull/295">#295</a>: fix:
+  modernize importlib. Removes the compatibility layer for older Python
+  versions' <code>importlib</code>, switching plugin discovery to <code>importlib.metadata</code>
+  directly. Also deprecates <code>normalize_lang()</code> in favor of
+  <code>standardize_lang_tag()</code>. Not breaking, no public symbol removed. Audience:
+  plugin authors, deployers on older Python versions relying on the compat
+  shim. Expected 2.11.2 (unreleased).</li>
+</ul>
+<h3 id="ovos-workshop">ovos-workshop<a class="headerlink" href="#ovos-workshop" title="Permanent link">&para;</a></h3>
+<ul>
+<li><a href="https://github.com/OpenVoiceOS/ovos-workshop/pull/372">#372</a>: Implement
+  updated Skill API. Adds Pydantic request/return model support to the Skill
+  API and standard exception handling that reports errors back to the caller.
+  The PR body states it is backward compatible except that a handler
+  exception now returns a structured error response instead of silence.
+  Audience: skill API consumers and plugin authors calling into skill public
+  APIs. Expected 9.4.0 (unreleased).</li>
+</ul>
+<h2 id="related-pages">Related pages<a class="headerlink" href="#related-pages" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="../updating-from-older-ovos/">Updating from Older OVOS</a></li>
+<li><a href="../version-compat-guide/">Version Compatibility Guide</a></li>
+<li><a href="../gui-status/">Screens on OVOS Today</a></li>
+<li><a href="../ovos-media/">Media Service (ovos-media)</a></li>
+<li><a href="../architecture-specs/">Formal Specifications</a></li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.path", "navigation.prune", "navigation.top", "navigation.tracking", "navigation.instant", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate"], "search": "../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.fe8b6f2b.min.js"></script>
+      
+    
+  </body>
+</html>
