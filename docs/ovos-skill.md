@@ -82,18 +82,9 @@ finishes or a 30-second default timeout elapses, or `wait=<seconds>` for a custo
 
 ## Getting User Input
 
-```python
-response = self.get_response("What is your name?")
-
-# Yes/No question
-answer = self.ask_yesno("Do you want to continue?")   # returns "yes" / "no" / None
-
-# Selection from list
-choice = self.ask_selection(["A", "B", "C"], "Pick one")
-
-```
-
-`get_response` suspends the converse channel for this skill until the user responds or a timeout is hit. Raise `AbortQuestion` to cancel gracefully.
+`get_response`, `ask_yesno`, and `ask_selection` ask the user a question and capture the
+reply. See [Asking the User for Responses](prompts.md) for the full reference, including
+the `validator`, `on_fail`, and `num_retries` options.
 
 ## Intent Registration
 

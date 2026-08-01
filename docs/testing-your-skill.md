@@ -1,11 +1,13 @@
 # Test Your Skill
 
 !!! abstract "In a nutshell"
-    This page picks up right after [Your First Skill](first-skill.md): the `ovos-skill-my-first`
-    skill you just wrote. Here you'll add an automated test for it. It sends the skill the
-    utterance "hello" and checks it replies correctly, without needing a microphone, speakers, or
-    a running assistant. By the end you'll have a test you can run locally and in CI on every
-    change.
+    This page continues [Your First Skill](first-skill.md), and picks up right after it: the
+    `ovos-skill-my-first` skill you just wrote. Here you'll add an automated test for it. It
+    sends the skill the utterance "hello" and checks it replies correctly, without needing a
+    microphone, speakers, or a running assistant. By the end you'll have a test you can run
+    locally and in CI on every change. Did you land here without doing that tutorial first? See
+    [Testing Skills with ovoscope](ovoscope-overview.md) for the broader `ovoscope` reference,
+    not tied to this one example skill.
 
 ## Why test a skill end-to-end?
 

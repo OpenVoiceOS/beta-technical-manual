@@ -27,24 +27,14 @@ runtime.
 Agent engines are the building blocks. Each engine type solves one well-defined sub-problem. They
 are discovered and loaded by `ovos-plugin-manager` at runtime using Python entry points.
 
+See [Agent Plugins](agent-plugins.md) for the full `opm.agents.*` entry-point table. The
+engine types used on this page are:
+
 | Entry point group | Base class | Purpose |
 |---|---|---|
 | `opm.agents.chat` | `ChatEngine` | Multi-turn conversational LLM |
-| `opm.agents.chat.multimodal` | `MultimodalChatEngine` | Chat + vision/audio/files (base64) |
-| `opm.agents.multimodal_adapter` | `MultimodalAdapter` | Describe non-text content as text |
-| `opm.agents.summarizer` | `SummarizerEngine` | Condense long text to a few sentences |
-| `opm.agents.summarizer.chat` | `ChatSummarizerEngine` | Compress structured chat history |
-| `opm.agents.reranker` | `ReRankerEngine` | Score and rank candidate answers |
-| `opm.agents.option_matcher` | `OptionMatcherEngine` | Match an utterance to a fixed option set |
-| `opm.agents.extractive_qa` | `ExtractiveQAEngine` | Extract the best passage from evidence |
-| `opm.agents.nli` | `NaturalLanguageInferenceEngine` | Entailment prediction (premise → hypothesis) |
-| `opm.agents.yesno` | `YesNoEngine` | Classify ambiguous responses as yes / no / unknown |
-| `opm.agents.coref` | `CoreferenceEngine` | Pronoun / coreference resolution |
 | `opm.agents.memory` | `AgentContextManager` | Per-session conversation history management |
-| `opm.agents.retrieval` | `RetrievalEngine` | Retrieval-augmented generation |
-| `opm.agents.retrieval.documents` | `DocumentIndexerEngine` | Index + retrieve over a document corpus |
-| `opm.agents.retrieval.qa` | `QAIndexerEngine` | Index + retrieve over a Q/A corpus |
-| `opm.agents.toolbox` | — | Tool/function-calling registry |
+| `opm.agents.toolbox` | none | Tool/function-calling registry |
 
 Each group has a parallel `*.config` group for plugin config metadata. All base classes live in
 `ovos_plugin_manager.templates.agents`. The `AgentMessage` dataclass carries messages between
@@ -139,7 +129,7 @@ fully local, privacy-preserving conversational agents:
 ```json
 {
   "name": "OldSchoolBot",
-  "solvers": [
+  "handlers": [
     "ovos-wikipedia-plugin",
     "ovos-ddg-plugin",
     "ovos-wolfram-alpha-plugin",

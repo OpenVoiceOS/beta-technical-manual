@@ -6,6 +6,8 @@
 !!! abstract "In a nutshell"
     A "persona" is a configurable AI character, often powered by a chatbot-style language model, that the assistant can hand your request to. This pipeline decides when to let that persona answer you instead of the usual command-matching skills, which is useful for open-ended chat or questions that no specific skill covers. You can set it to handle everything, or only step in when nothing else fits. See the [Glossary](glossary.md) for terms, or [Solver/Agent plugins](agent-plugins.md) for the components a persona uses to come up with answers.
 
+The rest of this page is for people deploying or customizing OVOS. If you only wanted to know what this stage does, you are done.
+
 ??? info "📐 Formal specification"
     The persona plugin is specified by **[OVOS-PERSONA-1 — Persona Pipeline Plugin](https://github.com/OpenVoiceOS/architecture/blob/dev/persona.md)**, built on **[OVOS-PIPELINE-1](https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md)**. See the [spec index](architecture-specs.md).
 
@@ -130,7 +132,7 @@ Only unmatched or low-confidence utterances are routed to the persona.
 }
 ```
 
-??? example "A complete, copy-pasteable `mycroft.conf` for Hybrid Mode"
+!!! example "A complete, copy-pasteable `mycroft.conf` for Hybrid Mode"
     This resolves every stage. Nothing is left as "...remaining stages as needed", so you can drop it in as-is and adjust from there.
 
     ```jsonc

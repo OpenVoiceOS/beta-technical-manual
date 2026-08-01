@@ -225,6 +225,10 @@ dependencies = [
 
 ```
 
+This broad glob is deliberate: `locale/**/*` picks up every dialog/vocab/intent file
+regardless of how you nest them under a language folder, and `ui/**/*` bundles GUI (QML/HTML)
+assets alongside the code.
+
 #### `skill.json`
 
 This is an optional, per-language file. It lives alongside your dialog and intent

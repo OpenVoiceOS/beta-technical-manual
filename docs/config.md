@@ -101,19 +101,9 @@ Because `Configuration` is a singleton, all instances share the same merged view
 
 ## File Locations
 
-All paths respect the `OVOS_CONFIG_BASE_FOLDER` environment variable (default: `"mycroft"`).
-
-| Constant | Default Path | Description |
-|---|---|---|
-| `DEFAULT_CONFIG` | `<package>/mycroft.conf` | Bundled default config (read-only) |
-| `DISTRIBUTION_CONFIG` | `/usr/share/mycroft/mycroft.conf` | Distribution-level override (env: `OVOS_DISTRIBUTION_CONFIG`) |
-| `SYSTEM_CONFIG` | `/etc/mycroft/mycroft.conf` | System-level config (env: `MYCROFT_SYSTEM_CONFIG`) |
-| `USER_CONFIG` | `~/.config/mycroft/mycroft.conf` | XDG user config (primary editable) |
-
-In addition to `USER_CONFIG`, every XDG config dir is scanned, so a system-wide
-`/etc/xdg/mycroft/mycroft.conf` is also merged at the user layer (below your
-`~/.config` file). File formats are JSON (`.json` or `.conf`, with C-style `//`
-comments supported) or YAML (`.yml` or `.yaml`).
+Config files stack from a bundled default up through distribution, system, and XDG user
+layers, all under the `OVOS_CONFIG_BASE_FOLDER` environment variable (default: `"mycroft"`).
+See [Locations](locations-ref.md) for the full path-constant table and file-format details.
 
 !!! warning "Secrets and permissions"
     Anything you add here, such as an LLM API key, a Home Assistant token, or a custom
@@ -352,20 +342,9 @@ Distributions can change the default XDG base folder or config filename by setti
 
 ## XDG Path Helpers
 
-**Module:** `ovos_config.locations`
-
-```python
-from ovos_config.locations import (
-    get_xdg_config_save_path,   # e.g. ~/.config/mycroft/
-    get_xdg_data_save_path,     # e.g. ~/.local/share/mycroft/
-    get_xdg_cache_save_path,    # e.g. ~/.cache/mycroft/
-    find_user_config,           # finds user config, with XDG→legacy fallback
-    get_config_locations,       # ordered list of all active config paths
-)
-
-```
-
-`get_config_locations()` returns the full list of active config file paths. It's useful for debugging which files are in use.
+**Module:** `ovos_config.locations`. Helper functions such as `get_xdg_config_save_path()`
+and `find_user_config()` compute the paths above. See [Locations](locations-ref.md) for the
+full reference and usage examples.
 
 ---
 

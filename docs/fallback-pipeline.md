@@ -6,6 +6,8 @@
 !!! abstract "In a nutshell"
     When you say something and none of your assistant's regular skills know how to respond, the fallback pipeline is the safety net. It tries one last set of "catch-all" skills so the assistant still says something instead of going silent. Think of it as the help desk that gets your question only after everyone else has passed on it. It asks these backup skills in a set order until one of them handles the request. See the [Converse Pipeline](converse-pipeline.md) for what runs before this, or the [Glossary](glossary.md) for terms.
 
+The rest of this page is for people deploying or customizing OVOS. If you only wanted to know what this stage does, you are done.
+
 ??? info "📐 Formal specification"
     The fallback plugin is specified by **[OVOS-FALLBACK-1 — Fallback Pipeline Plugin](https://github.com/OpenVoiceOS/architecture/blob/dev/fallback.md)**, built on **[OVOS-PIPELINE-1](https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md)**. See the [spec index](architecture-specs.md).
 

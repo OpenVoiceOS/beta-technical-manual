@@ -147,6 +147,9 @@ The entry-point key (`my-first.youruser`) becomes your skill's **`skill_id`**
 (`<skill-name>.<author>`). The value points at your skill class. The `opm.skill` group is
 how the [Plugin Manager](plugin-manager.md) discovers installed skills.
 
+For the full packaging reference (including GUI assets in package-data), see
+[Anatomy of a Skill](skill-structure.md).
+
 ## Step 6 — Install it and talk to it
 
 First, activate the same Python environment OVOS runs in, so the skill installs into the
@@ -212,7 +215,8 @@ built wheel) before OVOS can see the new file.
 - **Have a back-and-forth** ("what's your name?" then a reply). See [Continuous Conversation](converse.md).
 - **Save settings or files**. See [Skill Settings](skill-settings.md) and [Filesystem](skill-filesystem.md).
 - **Make it sound good and behave well**. See [Skill Best Practices](skill-best-practices.md).
-- **Test it automatically**. See [Skill Testing](ovoscope-overview.md).
+- **Test it automatically**. See [Test Your Skill](testing-your-skill.md), which continues this
+  exact example. For the broader `ovoscope` reference, see [Testing Skills with ovoscope](ovoscope-overview.md).
 - **Publish it** so others can install it. See [Sharing your skill](skill-json.md#sharing-your-skill).
 - **See how an utterance actually travels through OVOS**. See [Life of an Utterance](life-of-an-utterance.md).
 - Browse real skills for ideas in [Skill Examples](skill-examples.md).

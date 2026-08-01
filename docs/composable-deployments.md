@@ -227,6 +227,8 @@ graph LR
     HiveMind's own authenticated protocol, not the raw bus. This is what makes it safe
     to run a satellite from a network you don't otherwise trust.
 
+    See [Privacy & Security](privacy-security.md) for the full trust model.
+
 ## Caveats
 
 Splitting services this way is fully supported, but it moves responsibilities that a single-host

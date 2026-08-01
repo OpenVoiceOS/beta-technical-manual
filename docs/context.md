@@ -1,4 +1,4 @@
-# Follow up questions
+# Context
 
 !!! abstract "In a nutshell"
     Normally each thing you say to your assistant is treated on its own, with no memory of the last sentence. Conversational context is the short-term memory that lets you ask a follow-up like "where's *he* from?" right after "how tall is John Cleese?" The assistant remembers you were talking about Cleese and fills in the blank. Skill authors mark which details to remember. That memory is kept separate for each ongoing conversation, so different people or devices don't get mixed up. See [Skill design guidelines](skill-design-guidelines.md) or the [Glossary](glossary.md).
@@ -50,7 +50,9 @@ not a single global store, so concurrent users and devices keep separate context
 
 ---
 
-## Keyword Contexts
+## Follow-up questions
+
+### Keyword Contexts
 
 > How tall is John Cleese?
 

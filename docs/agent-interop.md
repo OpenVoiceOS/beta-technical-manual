@@ -171,7 +171,7 @@ Add to a persona JSON:
 ```json
 {
   "name": "researcher",
-  "solvers": ["ovos-react-loop"],
+  "handlers": ["ovos-react-loop"],
   "ovos-react-loop": {
     "brain": "ovos-chat-openai-plugin",
     "toolboxes": ["ovos-mcp-toolbox"],
@@ -185,7 +185,7 @@ Add to a persona JSON:
 }
 ```
 
-> `ovos-persona` selects its engine via `solvers` (or the legacy alias `handlers`). The agentic loop names its inner LLM with `brain` and loads adapters via `toolboxes`. Neither `ovos-persona` nor `ovos-tool-adapters` reads the `chat_module` key seen in some READMEs.
+> `ovos-persona` selects its engine via `handlers` (see [Personas](personas.md) for the legacy `solvers` alias). The agentic loop names its inner LLM with `brain` and loads adapters via `toolboxes`. Neither `ovos-persona` nor `ovos-tool-adapters` reads the `chat_module` key seen in some READMEs.
 
 ### MCP transports (`ovos-mcp-toolbox`)
 

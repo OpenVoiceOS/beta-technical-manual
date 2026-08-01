@@ -12,6 +12,11 @@
     are already comfortable with [installing OVOS](ovos-installer.md) and the
     [release channels](release-channels.md) page.
 
+!!! tip "Is this page for you?"
+    One assistant on your desk needs almost none of this. Read
+    [Privacy & Security](privacy-security.md) instead. Several devices, a shared backend, or
+    an assistant you don't sit next to: keep reading here.
+
 ---
 
 ## Keep services running: systemd units
@@ -228,6 +233,91 @@ For centralized log shipping (many devices to one place), point a standard log-f
 agent (Vector, Fluent Bit, Promtail, `rsyslog`) at the log directory, or redirect the systemd
 unit's stdout to the journal (the default) and ship `journalctl` output instead. OVOS itself
 does not include a log-shipping client.
+
+---
+
+## Backup and restore
+
+Two kinds of state matter on an OVOS device: the packages that are installed, and everything
+under a user's config/data directories. The staged-upgrade recipe below covers packages. This
+section covers the directories.
+
+| What | Path | Source |
+|---|---|---|
+| User config (`mycroft.conf`), may hold plaintext secrets | `~/.config/mycroft/mycroft.conf` | [Locations](locations-ref.md#path-constants) |
+| System config (fleet-wide layer, if you use one) | `/etc/mycroft/mycroft.conf` | [Locations](locations-ref.md#path-constants), [one config for many devices](#one-config-for-many-devices-the-system-config-layer) |
+| Per-skill settings | `~/.config/mycroft/skills/<skill_id>/settings.json` | [Skill Settings: Storage Location](skill-settings.md#storage-location) |
+| Per-skill persistent files | `~/.local/share/mycroft/filesystem/skills/<skill_id>/` | [Filesystem Access: Storage Path](skill-filesystem.md#storage-path) |
+
+`~/.config/mycroft` and `~/.local/share/mycroft` are the effective defaults under the standard
+XDG layout. Both move together if `OVOS_CONFIG_BASE_FOLDER` renames the `mycroft` subdirectory
+system-wide (see [Locations](locations-ref.md#environment-variable-influence)).
+
+### Backup recipe
+
+A copy is enough. Nothing here needs a database dump or a running service to stop first,
+though restarting the service afterward picks up any config changes made in the meantime:
+
+```bash
+BACKUP_DIR=~/ovos-backup-$(date +%F)
+mkdir -p "$BACKUP_DIR"
+cp -a ~/.config/mycroft "$BACKUP_DIR/config"
+cp -a ~/.local/share/mycroft "$BACKUP_DIR/data"
+```
+
+`mycroft.conf` can contain plaintext API keys and tokens (see
+[Privacy & Security: mycroft.conf can contain plaintext secrets](privacy-security.md#mycroftconf-can-contain-plaintext-secrets)).
+Store the backup with the same care you'd give the original file, and never commit it to a
+public repository.
+
+### Restore onto a fresh install
+
+1. [Install OVOS](ovos-installer.md) normally on the new machine, and confirm the stock
+   assistant works before restoring anything, so a restore problem is not confused with an
+   install problem.
+2. Stop the services: `systemctl --user stop ovos.service`.
+3. Copy the backed-up directories back into place, overwriting the freshly-installed defaults:
+
+   ```bash
+   cp -a "$BACKUP_DIR/config/." ~/.config/mycroft/
+   cp -a "$BACKUP_DIR/data/." ~/.local/share/mycroft/
+   ```
+
+4. Restart: `systemctl --user start ovos.service`, then re-run the readiness probe above
+   before relying on the device.
+
+Skills themselves are not part of this backup. They are Python packages, reinstalled the same
+way they were installed originally (see [Skill Installer](skill-installer.md) or your own
+provisioning step). Only their settings and persisted files travel with the config/data
+backup above.
+
+---
+
+## Updating a single device
+
+The [staged-upgrade recipe](#staged-upgrades-and-rollback) below is written for a fleet, but
+the same steps apply to a single, standalone device with the fleet-specific parts dropped:
+back up the config, freeze the current package set, upgrade, and verify.
+
+```bash
+# 1. Back up config and freeze the current package set, in case you need to go back
+cp ~/.config/mycroft/mycroft.conf ~/.config/mycroft/mycroft.conf.bak-$(date +%F)
+uv pip freeze > ~/ovos-known-good-$(date +%F).txt
+
+# 2. Upgrade against a pinned constraints file (stays within one release channel)
+uv pip install --upgrade ovos-core[mycroft] \
+    -c https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-stable.txt
+
+# 3. Restart and re-run the readiness probe above before declaring success
+systemctl --user restart ovos.service
+```
+
+If it misbehaves, roll back the same way as in the fleet recipe:
+`uv pip install --force-reinstall -r ~/ovos-known-good-<date>.txt`, then restart the service.
+See [Staged upgrades and rollback](#staged-upgrades-and-rollback) for why `--force-reinstall`
+is required on rollback, and [Release Channels: Pinning or rolling back a single
+package](release-channels.md#pinning-or-rolling-back-a-single-package) if only one package
+regressed rather than the whole stack.
 
 ---
 

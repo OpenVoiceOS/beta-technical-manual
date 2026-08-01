@@ -110,6 +110,7 @@ nav:
       - Specification Tooling: spec-tooling.md
       - Maturity Scale: maturity.md
       - MessageBus Service: bus-service.md
+      - Security & Trust Model: security-model.md
       - Plugin Manager: plugin-manager.md
       - Composable Deployments: composable-deployments.md
       - Configuration:
@@ -130,6 +131,8 @@ nav:
           - PHAL (Hardware Abstraction): phal.md
   - Intent Pipeline:
       - Overview & Reference: pipelines-overview.md
+      - Building Your Pipeline: building-your-pipeline.md
+      - Debugging Intent Matching: debugging-intent-matching.md
       - Pipeline Matchers:
           - Adapt: adapt-pipeline.md
           - Padatious: padatious-pipeline.md
@@ -170,6 +173,8 @@ nav:
           - Anatomy of a Skill: skill-structure.md
       - Logic & Intents:
           - Intent Design: intents.md
+          - Adapt Intents: intents-adapt.md
+          - Padatious Intents: intents-padatious.md
           - Asking the User: prompts.md
           - Context: context.md
           - Intent Layers: layers.md
@@ -277,6 +282,9 @@ nav:
       - gh-automations Overview: gh-automations-overview.md
       - gh-automations Release: gh-automations-release.md
       - gh-automations Workflows: gh-automations-workflows.md
+      - Release Workflows: gh-automations-release-workflows.md
+      - PR Check Workflows: gh-automations-pr-workflows.md
+      - Quality Workflows: gh-automations-quality-workflows.md
 
 extra_css:
   - css/extra.css

@@ -148,6 +148,51 @@ Once your skill works, publishing it is the same as publishing any Python packag
     A complete, accurate `skill.json` is what makes the difference between a bare repository link
     and a nicely presented store entry. See the [Field Reference](#field-reference) above.
 
+## Maintaining a published skill
+
+Once a skill is out and installed by other people, changing it is a compatibility question
+as much as a code change.
+
+### Bumping the version
+
+A skill's version lives in `pyproject.toml` (`version = "0.0.1"` in the [first-skill
+tutorial](first-skill.md#step-5-make-it-installable)), the same as any other Python package.
+The manual does not document an OVOS-specific version scheme for skills, so follow the
+general rule: [semver](https://semver.org). A backward-compatible fix or addition bumps the
+patch or minor number. A change that breaks how the skill is used, its settings, or its
+intents bumps the major number.
+
+### New release vs. new `skill_id`
+
+`skill_id` is derived from the `opm.skill` entry-point key, in `<skill-name>.<author>` form
+(see [Packaging: the `opm.skill` Entry Point](#packaging-the-opmskill-entry-point) and
+[first-skill: Step 5](first-skill.md#step-5-make-it-installable)). Because installers, the
+skill store, and `SkillManager` all key off `skill_id`, treat it the same way you would treat
+a package name:
+
+- A change to intents, dialog, settings, or behavior that stays compatible, or one that
+  intentionally breaks compatibility, is still **the same skill**: release a new version
+  under the same `skill_id`.
+- Renaming the skill in a way that changes the entry-point key is a **breaking rename**. It
+  produces a new `skill_id`, which installers and `SkillManager` treat as an entirely
+  different skill: old installs won't pick it up automatically, and anyone depending on the
+  old `skill_id` (other skills, automation, documentation) needs to switch over. Only do this
+  deliberately, and update `skill.json`'s `skill_id` field and the entry-point key together
+  so they stay in sync.
+
+### Keeping `pip_spec` floors current
+
+`dependencies` in `pyproject.toml` (for example `ovos-workshop>=0.0.1` in the [first-skill
+tutorial](first-skill.md#step-5-make-it-installable)) pin a floor, not an exact version. If a
+release relies on behavior only present from a newer `ovos-workshop` (or another dependency)
+than what's currently declared, raise that floor in the same release. An outdated floor lets
+an installer set up a combination the skill was never tested against, which shows up later as
+a hard-to-diagnose bug report rather than a clean install failure. The same applies to the
+`pip_spec` field in `skill.json` itself if it carries a version constraint: keep it aligned
+with what `pyproject.toml` actually requires. Run the skill's tests (see [Testing Your
+Skill](testing-your-skill.md)) against the raised floor before releasing, not just against
+whatever happens to already be installed in your dev environment.
+
 ## See Also
 
 - [PEP 508: Dependency specification](https://peps.python.org/pep-0508/)

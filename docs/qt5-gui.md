@@ -7,13 +7,11 @@
     The Qt5/QML client described here is part of the legacy stack. There is no generally
     usable OVOS GUI right now, and a replacement is **Upcoming**.
 
-!!! danger "Qt5 is deprecated upstream and will not be updated"
     The [Qt5 gui-client](https://github.com/OpenVoiceOS/mycroft-gui-qt5) is the **only client
     that currently runs**, but **Qt5 itself has been deprecated upstream for a long time** and
     this client **will not be updated**. It is kept solely so existing (e.g. Mark 2) devices
     keep a screen.
 
-!!! warning "Both successors are unreleased work-in-progress"
     Two replacement GUI clients are being built, **both unreleased / WIP**. Neither is usable yet:
 
     - **Qt6/Kirigami**: [mycroft-gui-qt6](https://github.com/OpenVoiceOS/mycroft-gui-qt6)

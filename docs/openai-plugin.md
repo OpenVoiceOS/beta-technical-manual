@@ -15,7 +15,7 @@ Install: `pip install ovos-openai-plugin`
     The old `ovos-solver-openai-plugin` entry point and the `OpenAIChatCompletionsSolver` /
     `OpenAICompletionsSolver` classes no longer exist. Personas that referenced them must
     switch to the `ovos-chat-openai-plugin` agent engine (still listed under a persona's
-    `solvers` / `handlers` key, which `ovos-persona` accepts).
+    `handlers` key).
 
 ---
 
@@ -167,9 +167,6 @@ This lets you keep API keys on a single server and offload LLM computation:
 
 ```
 
-A persona's chat engine can equally be listed under the `solvers` key. `ovos-persona`
-accepts either `handlers` or `solvers` and dispatches the same way.
-
 Activate by voice: `"Chat with My Local LLM"`.
 
 ---
@@ -200,7 +197,7 @@ memory plugins live in `ovos-memory-plugins` instead.
 ```json
 {
   "name": "kb-assistant",
-  "solvers": ["ovos-chat-openai-plugin"],
+  "handlers": ["ovos-chat-openai-plugin"],
   "memory_module": "ovos-openai-rag-memory-plugin",
   "ovos-openai-rag-memory-plugin": {
     "api_url": "http://localhost:8337/openai/v1",

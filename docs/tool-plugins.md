@@ -118,23 +118,14 @@ result = bus.wait_for_response(Message("ovos.tools.invoke",
 
 ## ovos-agentic-loop Toolboxes
 
-[ovos-agentic-loop](agentic-loop.md) bundles six ready-to-use toolboxes:
-
-| Entry point | Key tools |
-|---|---|
-| `ovos-math-tools` | `evaluate_expression`, `unit_convert`, `statistics_summary`, `solve_equation` |
-| `ovos-filesystem-tools` | `read_file`, `write_file`, `list_directory`, `search_in_files`, `find_files` |
-| `ovos-shell-tools` | `run_command` (disabled by default) |
-| `ovos-web-search-tools` | `web_search` |
-| `ovos-clock-tools` | `get_current_datetime` |
-| `ovos-skill-md-toolbox` | One tool per installed `SKILL.md` |
+The built-in toolboxes are listed on [Agentic Loops](agentic-loop.md#built-in-toolboxes).
 
 Wire them into a persona:
 
 ```json
 {
   "name": "researcher",
-  "solvers": ["ovos-react-loop"],
+  "handlers": ["ovos-react-loop"],
   "ovos-react-loop": {
     "brain": "ovos-chat-openai-plugin",
     "toolboxes": ["ovos-math-tools", "ovos-web-search-tools"]

@@ -158,55 +158,14 @@ You can customize the intent pipeline through configuration files. You can enabl
 
 ---
 
-# Pipeline Plugins Reference
+## Pipeline Plugins Reference
 
-| Plugin | Description |
-|--------|-------------|
-| [ovos-common-query-pipeline-plugin](#ovos-common-query-pipeline-plugin) | Answer questions by gathering answers from several skills |
-| [ovos-m2v-pipeline](#ovos-m2v-pipeline) | Intent matching powered by the Model2Vec model |
-| [ovos-padatious-pipeline-plugin](#ovos-padatious-pipeline-plugin) | Neural network intent-matching pipeline plugin |
-| [ovos-adapt-pipeline-plugin](#ovos-adapt-pipeline-plugin) | Adapt Intent Parser |
-| [ovos-ocp-pipeline-plugin](#ovos-ocp-pipeline-plugin) | Specialized media handling |
+Each pipeline plugin has its own manual page with full configuration details:
 
-## ovos-common-query-pipeline-plugin
-
-- **GitHub**: [https://github.com/OpenVoiceOS/ovos-common-query-pipeline-plugin](https://github.com/OpenVoiceOS/ovos-common-query-pipeline-plugin)
-
-
-- **Description**: The OVOS Common Query Framework is designed to answer questions by gathering answers from several skills and selecting the best one.
-
----
-
-## ovos-m2v-pipeline
-
-- **GitHub**: [https://github.com/OpenVoiceOS/ovos-m2v-pipeline](https://github.com/OpenVoiceOS/ovos-m2v-pipeline)
-
-
-- **Description**: An intent matching pipeline powered by the Model2Vec model for intent classification.
-
----
-
-## ovos-padatious-pipeline-plugin
-
-- **GitHub**: [https://github.com/OpenVoiceOS/ovos-padatious-pipeline-plugin](https://github.com/OpenVoiceOS/ovos-padatious-pipeline-plugin)
-
-
-- **Description**: An efficient and agile neural network intent-matching pipeline plugin.
-
----
-
-## ovos-adapt-pipeline-plugin
-
-- **GitHub**: [https://github.com/OpenVoiceOS/ovos-adapt-pipeline-plugin](https://github.com/OpenVoiceOS/ovos-adapt-pipeline-plugin)
-
-
-- **Description**: Adapt Intent Parser.
-
----
-
-## ovos-ocp-pipeline-plugin
-
-- **GitHub**: [https://github.com/OpenVoiceOS/ovos-ocp-pipeline-plugin](https://github.com/OpenVoiceOS/ovos-ocp-pipeline-plugin)
-
-
-- **Description**: OVOS plugin for specialized media handling.
+| Plugin | Description | Manual page |
+|--------|-------------|-------------|
+| `ovos-common-query-pipeline-plugin` | Answer questions by gathering answers from several skills | [Common Query](common-query.md) |
+| `ovos-m2v-pipeline` | Intent matching powered by the Model2Vec model | [M2V Pipeline](m2v-pipeline.md) |
+| `ovos-padatious-pipeline-plugin` | Neural network intent-matching pipeline plugin | [Padatious Pipeline](padatious-pipeline.md) |
+| `ovos-adapt-pipeline-plugin` | Adapt Intent Parser | [Adapt Pipeline](adapt-pipeline.md) |
+| `ovos-ocp-pipeline-plugin` | Specialized media handling | [OCP Pipeline](ocp-pipeline.md) |

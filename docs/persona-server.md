@@ -9,7 +9,7 @@ third-party tools. The running server mounts **OpenAI-** and **Ollama-compatible
 endpoints, a UTCP tool surface, and vendor-compatible routers for **Anthropic**, **Gemini**,
 **Cohere**, **AWS Bedrock**, and **HuggingFace TGI** (plus MCP, if installed).
 
-It is a FastAPI app served by `uvicorn`. The server loads a persona from a JSON file at startup. The persona's `solvers` do the actual work (anything from a local rule-based bot to a remote LLM).
+It is a FastAPI app served by `uvicorn`. The server loads a persona from a JSON file at startup. The persona's `handlers` do the actual work (anything from a local rule-based bot to a remote LLM).
 
 ---
 
@@ -49,12 +49,12 @@ The console script is `ovos-persona-server` (module `ovos_persona_server.__main_
 
 ## The Persona File
 
-A persona is a JSON object whose `solvers` list names the plugins that answer queries. Per-solver config is keyed by the plugin name. Example pointing at an OpenAI-compatible LLM:
+A persona is a JSON object whose `handlers` list names the plugins that answer queries. Per-plugin config is keyed by the plugin name. Example pointing at an OpenAI-compatible LLM:
 
 ```json
 {
   "name": "kb-assistant",
-  "solvers": ["ovos-solver-openai-plugin"],
+  "handlers": ["ovos-solver-openai-plugin"],
   "ovos-solver-openai-plugin": {
     "api_url": "https://llama.smartgic.io/v1",
     "model": "llama3.1:8b",
@@ -150,8 +150,8 @@ print(resp.choices[0].message.content)
 
     If instead you get a connection error, double-check the server is actually running on that
     host/port (`ovos-persona-server --persona ... --port 8337`) and that the URL includes the
-    `/openai/v1` prefix. An empty or error-shaped `content` usually means the persona's `solvers`
-    failed to answer. Check the server logs and the solver's own config (API key, model name).
+    `/openai/v1` prefix. An empty or error-shaped `content` usually means the persona's `handlers`
+    failed to answer. Check the server logs and the handler's own config (API key, model name).
 
 ---
 
@@ -172,7 +172,7 @@ name(s) from the persona's solver config.
   `/v1` and `/api` aliases still work but are deprecated. Tool calling is only supported with
   `stream=false`.
 
-- Make sure your persona file's `solvers` and their config are complete. A missing plugin or model means the persona cannot answer.
+- Make sure your persona file's `handlers` and their config are complete. A missing plugin or model means the persona cannot answer.
 
 - Capabilities (chat history, tool use, embeddings) depend entirely on the chosen solver plugins, so behavior varies by persona.
 

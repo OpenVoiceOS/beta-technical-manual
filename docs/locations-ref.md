@@ -24,6 +24,11 @@ All paths respect the `OVOS_CONFIG_BASE_FOLDER` environment variable (default: `
 | `USER_CONFIG` | `~/.config/mycroft/mycroft.conf` | XDG user config (primary editable) |
 | `WEB_CONFIG_CACHE` | `~/.config/mycroft/web_cache.json` | Cache of the optional remote/backend config layer (env: `MYCROFT_WEB_CACHE`) |
 
+In addition to `USER_CONFIG`, every XDG config dir is scanned, so a system-wide
+`/etc/xdg/mycroft/mycroft.conf` is also merged at the user layer (below your `~/.config`
+file). File formats are JSON (`.json` or `.conf`, with C-style `//` comments supported) or
+YAML (`.yml` or `.yaml`).
+
 ---
 
 ## XDG Path Helpers

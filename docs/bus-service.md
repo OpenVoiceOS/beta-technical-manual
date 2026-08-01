@@ -113,6 +113,8 @@ part of the shipped `mycroft.conf` `websocket` section.
       `127.0.0.1`. Widening `gui_websocket.host` to `0.0.0.0` for a remote display exposes that
       unauthenticated socket to the whole network.
 
+    See [Privacy & Security](privacy-security.md) for the full trust model.
+
 ---
 
 ## Implementation: `MessageBusEventHandler`

@@ -72,7 +72,7 @@ All loop engines accept the same config envelope:
 ```json
 {
   "name": "MyAgent",
-  "solvers": ["ovos-react-loop"],
+  "handlers": ["ovos-react-loop"],
   "ovos-react-loop": {
     "brain": "ovos-chat-openai-plugin",
     "ovos-chat-openai-plugin": {

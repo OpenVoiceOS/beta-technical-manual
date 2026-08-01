@@ -55,7 +55,7 @@ __version__ = f"{VERSION_MAJOR}.{VERSION_MINOR}.{VERSION_BUILD}" + (f"a{VERSION_
 
 Priority is major > minor > build > alpha. If the current version is already stable (alpha = 0), an unlabelled bump first increments `BUILD`: `1.2.3` → `1.2.4a1`.
 
-> Labels are typically applied automatically from conventional-commit PR titles by a *separate* labeller workflow in your repo (e.g. one using `bcoe/conventional-release-labels`). That labeller is **not** part of gh-automations — `publish-alpha.yml` only consumes whatever labels are present at merge time. The [`release-preview.yml`](gh-automations-workflows.md#release-previewyml) workflow, by contrast, falls back to parsing the PR title prefix when no label is set.
+> Labels are typically applied automatically from conventional-commit PR titles by a *separate* labeller workflow in your repo (e.g. one using `bcoe/conventional-release-labels`). That labeller is **not** part of gh-automations — `publish-alpha.yml` only consumes whatever labels are present at merge time. The [`release-preview.yml`](gh-automations-release-workflows.md#release-previewyml) workflow, by contrast, falls back to parsing the PR title prefix when no label is set.
 
 ---
 

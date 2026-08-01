@@ -3,6 +3,19 @@
 !!! abstract "In a nutshell"
     The rest of this manual documents individual building blocks (settings, scheduling, playback, a GUI) one at a time. This page instead shows them **combined**, the way a real skill uses them: a complete, working file for each common job a skill needs to do. If you already know what `schedule_event` or `@ocp_search` does and just want to see it used correctly next to everything else it needs, start here.
 
+## Recipe index
+
+| # | Recipe | Base class | Key APIs |
+|---|--------|-----------|----------|
+| 1 | Reminder with restart persistence | `OVOSSkill` | `schedule_event`, `settings` |
+| 2 | Configurable + reactive settings | `OVOSSkill` | `settings_change_callback`, `settingsmeta.yaml` |
+| 3 | Safe external API call | `OVOSSkill` | `runtime_requirements`, `file_system` |
+| 4 | Multi-turn conversation | `ConversationalSkill` | `get_response`, `converse`, `activate` |
+| 5 | Local media playlist | `OVOSCommonPlaybackSkill` | `@ocp_search`, `MediaType`/`PlaybackType` |
+| 6 | GUI + voice together | `OVOSSkill` | `self.gui`, `show_page` |
+| 7 | Fallback to an LLM solver | `FallbackSkill` | `register_fallback`, `QuestionSolver` |
+| 8 | Ambient bus-event behavior | `OVOSSkill` | `add_event`, `recognizer_loop:*` |
+
 Each recipe below is a **complete skill module** (or a clearly-marked excerpt of one), followed by notes on the moving parts and links to the reference page that documents each API in full. None of these recipes invent new methods: every class, method signature, and bus event name was checked against the installed `ovos-workshop`, `ovos-bus-client`, and `ovos-utils` packages.
 
 !!! note "Scaffolding not shown"
@@ -510,17 +523,3 @@ class AmbientMoodSkill(OVOSSkill):
 - `schedule_repeating_event(handler, when, frequency, name=...)` with `when=None` starts the first run after one `frequency` interval. Pass a `datetime` for `when` instead if the first run needs to happen at a specific moment.
 - This skill emits its own `ovos.ambient_mood.changed` event rather than reaching into a light/hardware plugin directly, keeping it decoupled from whatever actually consumes the mood (a PHAL plugin, another skill, a GUI). See [Bus Service](bus-service.md) for the emit/on API and [PIPELINE-1 correlation](converse-pipeline.md) for how bus events relate to a given utterance's session.
 
----
-
-## Recipe index
-
-| # | Recipe | Base class | Key APIs |
-|---|--------|-----------|----------|
-| 1 | Reminder with restart persistence | `OVOSSkill` | `schedule_event`, `settings` |
-| 2 | Configurable + reactive settings | `OVOSSkill` | `settings_change_callback`, `settingsmeta.yaml` |
-| 3 | Safe external API call | `OVOSSkill` | `runtime_requirements`, `file_system` |
-| 4 | Multi-turn conversation | `ConversationalSkill` | `get_response`, `converse`, `activate` |
-| 5 | Local media playlist | `OVOSCommonPlaybackSkill` | `@ocp_search`, `MediaType`/`PlaybackType` |
-| 6 | GUI + voice together | `OVOSSkill` | `self.gui`, `show_page` |
-| 7 | Fallback to an LLM solver | `FallbackSkill` | `register_fallback`, `QuestionSolver` |
-| 8 | Ambient bus-event behavior | `OVOSSkill` | `add_event`, `recognizer_loop:*` |

@@ -3,6 +3,8 @@
 !!! abstract "In a nutshell"
     TTS stands for *Text-to-Speech*: this is the part that gives your assistant its voice, turning written replies into spoken audio you can hear. It is the opposite of dictation. Instead of listening to you, it talks back. Different TTS plugins offer different voices and qualities, and some run on your own device while others use a cloud service. See the [Glossary](glossary.md) for related terms.
 
+Writing a plugin instead of choosing one? Jump to [Writing your own](#writing-your-own-tts-plugin).
+
 ??? info "Formal specification"
     TTS sits inside the audio output service, specified by **[OVOS-AUDIO-1: Audio Output Service](https://github.com/OpenVoiceOS/architecture/blob/dev/audio-out.md)**: an `ovos.utterance.speak` response runs through the dialog-transformer chain → TTS → tts-transformer chain → playback queue. See the [spec index](architecture-specs.md).
 
@@ -74,176 +76,6 @@ TTS plugins are responsible for converting text into audio for playback.
     Don't want to hand-pick a plugin and voice yourself? `ovos-config autoconfigure -l <lang> ...`
     picks a recommended offline/online voice for your language automatically. See
     [Language Support](lang-support.md#auto-configuration).
-
-## TTS
-
-All OVOS TTS plugins need to define a class based on the TTS base class from `ovos_plugin_manager`.
-The base class marks two members abstract: `get_tts()` and `available_languages`. A plugin must
-implement both, so the minimal example below includes `available_languages` from the start.
-
-```python
-from typing import Set
-from ovos_plugin_manager.templates.tts import TTS
-
-class MyTTS(TTS):
-    def get_tts(self, sentence, wav_file, lang=None, voice=None):
-        # Synthesize `sentence` and write the audio to `wav_file`
-        [...]
-        # return the output path and optional per-phoneme visemes (or None)
-        return wav_file, phonemes
-
-    @property
-    def available_languages(self) -> Set[str]:
-        # Languages this plugin can synthesize, as a set of language codes
-        return {"en-us"}
-
-```
-
-`available_languages` tells OVOS which languages the plugin supports in its current state (for
-example, only the languages whose voice files are already installed). OVOS uses it to pick a TTS
-plugin for the configured language and to filter plugin choices in a UI. A plugin that skips it
-still loads, but any code that inspects `available_languages` sees an empty set and treats the
-plugin as supporting no language.
-
-## Entry point
-
-To make the class detectable as a TTS plugin, the package needs to provide an entry point under the `opm.tts` namespace.
-
-```python
-setup([...],
-      entry_points = {'opm.tts': 'example_tts = my_tts:myTTS'}
-      )
-
-```
-
-To expose your sample configurations (the `MyTTSConfig` dict below) for UI discovery, register them under `opm.tts.config`:
-
-```python
-entry_points = {
-    'opm.tts': 'example_tts = my_tts:myTTS',
-    'opm.tts.config': 'example_tts.config = my_tts:MyTTSConfig'
-}
-```
-
-> **Backward Compatibility**: `ovos-plugin-manager` still supports legacy `mycroft.plugin.tts` entry points, but new plugins should use the `opm.*` namespace.
-
-## Standalone Usage
-
-You can use TTS plugins independently of the full OVOS stack:
-
-```python
-from ovos_plugin_manager.tts import find_tts_plugins
-
-# Find and load the plugin
-plugins = find_tts_plugins()
-tts_class = plugins["ovos-tts-plugin-mimic"]
-
-# Initialize (config only — lang is passed inside the config dict)
-tts = tts_class(config={"lang": "en-us"})
-
-# Generate audio
-wav_file = "hello.wav"
-tts.get_tts("Hello world", wav_file)
-print(f"Audio saved to {wav_file}")
-
-```
-
-## TTSValidator
-
-`TTSValidator` is the class OVOS uses to check that a TTS engine is installed and usable before
-it starts speaking. `TTS.__init__` creates a default `TTSValidator(self)` when a plugin does not
-pass one in. `OVOSTTSFactory.create()` calls `tts.validator.validate()` right after building the
-plugin instance, which runs, in order: `validate_dependencies()`, `validate_instance()`,
-`validate_filename()`, `validate_lang()`, `validate_connection()`.
-
-In the base class every one of those methods is a no-op. A new plugin does not need to write a
-`TTSValidator` at all. The default passes automatically. Write one only if the plugin needs a
-real startup check, for example confirming a binary is on `PATH` or that a cloud endpoint
-answers, and raise inside the relevant `validate_*` method to fail fast with a clear error
-instead of failing later on the first `get_tts()` call.
-
-```python
-from ovos_plugin_manager.templates.tts import TTS, TTSValidator
-
-class MyTTSValidator(TTSValidator):
-    def validate_dependencies(self):
-        # Raise if a required binary or library is missing
-        pass
-
-    def validate_connection(self):
-        # Raise if the backend (local process or remote server) is unreachable
-        pass
-
-class MyTTSPlugin(TTS):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs, validator=MyTTSValidator(self))
-```
-
-See [OVOS Plugin Manager: Writing a Plugin](plugin-manager.md#writing-a-plugin) for how
-`get_tts_class()`/registration and the `opm.tts` entry point fit together at load time.
-
-## Config plumbing
-
-The `"tts": {"module": "...", "ovos-tts-plugin-x": {...}}` block in `mycroft.conf` reaches the
-plugin instance through `OVOSTTSFactory.create()`:
-
-1. `get_tts_config(config)` calls `get_plugin_config(config, "tts", module)`.
-2. `get_plugin_config` reads `config["tts"]["ovos-tts-plugin-x"]` (the module-specific block) and
-   fills in any top-level `tts` keys, such as `lang`, that the module block does not already set.
-3. `OVOSTTSFactory.create()` passes the merged dict to the plugin class as `clazz(config=tts_config)`.
-4. `TTS.__init__` stores it as `self.config`.
-
-So a setting only reaches the plugin if it lives under `tts.<module-name>` (or as a shared
-top-level key under `tts`), and the plugin reads it back with `self.config.get("my_setting")`.
-See [OVOS Plugin Manager: Configuration Priority](plugin-manager.md#configuration-priority) for
-the full precedence rules.
-
-## Plugin Template
-
-!!! note
-    SSML: experimental, engine-dependent. See [SSML](ssml.md). Most plugins declare no
-    `ssml_tags` and OVOS strips all SSML before synthesis.
-
-```python
-from ovos_plugin_manager.templates.tts import TTS
-
-class MyTTSPlugin(TTS):
-    def __init__(self, *args, **kwargs):
-        # Output format, and the SSML tags this engine GENUINELY handles.
-        # Most engines support none — leave ssml_tags empty/omitted (the
-        # default) and OVOS strips all SSML before get_tts() runs. Only list
-        # a tag here if your engine actually understands it; listed tags are
-        # passed through to get_tts() (optionally rewritten via modify_tag()).
-        # Full SSML tag set an engine COULD support, for reference:
-        #   ["speak", "s", "w", "voice", "prosody", "say-as", "break", "sub", "phoneme"]
-        super().__init__(*args, **kwargs, audio_ext="wav")
-        
-        # Read plugin-specific settings from config
-        self.voice = self.config.get("voice", "default")
-
-    def get_tts(self, sentence, wav_file, lang=None, voice=None):
-        """Generate audio data and save to wav_file."""
-        # Implement your synthesis logic here
-        # self.my_engine.synthesize(sentence, output_path=wav_file)
-        
-        # Return path to file and optional visemes for lip-sync
-        return wav_file, None
-
-    @property
-    def available_languages(self):
-        """Return languages supported by this TTS implementation."""
-        return {"en-us", "es-es", "pt-pt"}
-
-# Sample valid configurations for plugin discovery
-MyTTSConfig = {
-    lang: [{"lang": lang,
-            "display_name": f"MyTTS ({lang})",
-            "priority": 50,
-            "offline": True}]
-    for lang in ["en-us", "es-es", "pt-pt"]
-}
-
-```
 
 # TTS Plugins Reference
 
@@ -581,7 +413,179 @@ table above.
 
 ---
 
-## Package and publish
+## Writing your own TTS plugin
+
+### TTS
+
+All OVOS TTS plugins need to define a class based on the TTS base class from `ovos_plugin_manager`.
+The base class marks two members abstract: `get_tts()` and `available_languages`. A plugin must
+implement both, so the minimal example below includes `available_languages` from the start.
+
+```python
+from typing import Set
+from ovos_plugin_manager.templates.tts import TTS
+
+class MyTTS(TTS):
+    def get_tts(self, sentence, wav_file, lang=None, voice=None):
+        # Synthesize `sentence` and write the audio to `wav_file`
+        [...]
+        # return the output path and optional per-phoneme visemes (or None)
+        return wav_file, phonemes
+
+    @property
+    def available_languages(self) -> Set[str]:
+        # Languages this plugin can synthesize, as a set of language codes
+        return {"en-us"}
+
+```
+
+`available_languages` tells OVOS which languages the plugin supports in its current state (for
+example, only the languages whose voice files are already installed). OVOS uses it to pick a TTS
+plugin for the configured language and to filter plugin choices in a UI. A plugin that skips it
+still loads, but any code that inspects `available_languages` sees an empty set and treats the
+plugin as supporting no language.
+
+### Entry point
+
+To make the class detectable as a TTS plugin, the package needs to provide an entry point under the `opm.tts` namespace.
+
+```python
+setup([...],
+      entry_points = {'opm.tts': 'example_tts = my_tts:myTTS'}
+      )
+
+```
+
+To expose your sample configurations (the `MyTTSConfig` dict below) for UI discovery, register them under `opm.tts.config`:
+
+```python
+entry_points = {
+    'opm.tts': 'example_tts = my_tts:myTTS',
+    'opm.tts.config': 'example_tts.config = my_tts:MyTTSConfig'
+}
+```
+
+> **Backward Compatibility**: `ovos-plugin-manager` still supports legacy `mycroft.plugin.tts` entry points, but new plugins should use the `opm.*` namespace.
+
+### Standalone Usage
+
+You can use TTS plugins independently of the full OVOS stack:
+
+```python
+from ovos_plugin_manager.tts import find_tts_plugins
+
+# Find and load the plugin
+plugins = find_tts_plugins()
+tts_class = plugins["ovos-tts-plugin-mimic"]
+
+# Initialize (config only — lang is passed inside the config dict)
+tts = tts_class(config={"lang": "en-us"})
+
+# Generate audio
+wav_file = "hello.wav"
+tts.get_tts("Hello world", wav_file)
+print(f"Audio saved to {wav_file}")
+
+```
+
+### TTSValidator
+
+`TTSValidator` is the class OVOS uses to check that a TTS engine is installed and usable before
+it starts speaking. `TTS.__init__` creates a default `TTSValidator(self)` when a plugin does not
+pass one in. `OVOSTTSFactory.create()` calls `tts.validator.validate()` right after building the
+plugin instance, which runs, in order: `validate_dependencies()`, `validate_instance()`,
+`validate_filename()`, `validate_lang()`, `validate_connection()`.
+
+In the base class every one of those methods is a no-op. A new plugin does not need to write a
+`TTSValidator` at all. The default passes automatically. Write one only if the plugin needs a
+real startup check, for example confirming a binary is on `PATH` or that a cloud endpoint
+answers, and raise inside the relevant `validate_*` method to fail fast with a clear error
+instead of failing later on the first `get_tts()` call.
+
+```python
+from ovos_plugin_manager.templates.tts import TTS, TTSValidator
+
+class MyTTSValidator(TTSValidator):
+    def validate_dependencies(self):
+        # Raise if a required binary or library is missing
+        pass
+
+    def validate_connection(self):
+        # Raise if the backend (local process or remote server) is unreachable
+        pass
+
+class MyTTSPlugin(TTS):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs, validator=MyTTSValidator(self))
+```
+
+See [OVOS Plugin Manager: Writing a Plugin](plugin-manager.md#writing-a-plugin) for how
+`get_tts_class()`/registration and the `opm.tts` entry point fit together at load time.
+
+### Config plumbing
+
+The `"tts": {"module": "...", "ovos-tts-plugin-x": {...}}` block in `mycroft.conf` reaches the
+plugin instance through `OVOSTTSFactory.create()`:
+
+1. `get_tts_config(config)` calls `get_plugin_config(config, "tts", module)`.
+2. `get_plugin_config` reads `config["tts"]["ovos-tts-plugin-x"]` (the module-specific block) and
+   fills in any top-level `tts` keys, such as `lang`, that the module block does not already set.
+3. `OVOSTTSFactory.create()` passes the merged dict to the plugin class as `clazz(config=tts_config)`.
+4. `TTS.__init__` stores it as `self.config`.
+
+So a setting only reaches the plugin if it lives under `tts.<module-name>` (or as a shared
+top-level key under `tts`), and the plugin reads it back with `self.config.get("my_setting")`.
+See [OVOS Plugin Manager: Configuration Priority](plugin-manager.md#configuration-priority) for
+the full precedence rules.
+
+### Plugin Template
+
+!!! note
+    SSML: experimental, engine-dependent. See [SSML](ssml.md). Most plugins declare no
+    `ssml_tags` and OVOS strips all SSML before synthesis.
+
+```python
+from ovos_plugin_manager.templates.tts import TTS
+
+class MyTTSPlugin(TTS):
+    def __init__(self, *args, **kwargs):
+        # Output format, and the SSML tags this engine GENUINELY handles.
+        # Most engines support none — leave ssml_tags empty/omitted (the
+        # default) and OVOS strips all SSML before get_tts() runs. Only list
+        # a tag here if your engine actually understands it; listed tags are
+        # passed through to get_tts() (optionally rewritten via modify_tag()).
+        # Full SSML tag set an engine COULD support, for reference:
+        #   ["speak", "s", "w", "voice", "prosody", "say-as", "break", "sub", "phoneme"]
+        super().__init__(*args, **kwargs, audio_ext="wav")
+        
+        # Read plugin-specific settings from config
+        self.voice = self.config.get("voice", "default")
+
+    def get_tts(self, sentence, wav_file, lang=None, voice=None):
+        """Generate audio data and save to wav_file."""
+        # Implement your synthesis logic here
+        # self.my_engine.synthesize(sentence, output_path=wav_file)
+        
+        # Return path to file and optional visemes for lip-sync
+        return wav_file, None
+
+    @property
+    def available_languages(self):
+        """Return languages supported by this TTS implementation."""
+        return {"en-us", "es-es", "pt-pt"}
+
+# Sample valid configurations for plugin discovery
+MyTTSConfig = {
+    lang: [{"lang": lang,
+            "display_name": f"MyTTS ({lang})",
+            "priority": 50,
+            "offline": True}]
+    for lang in ["en-us", "es-es", "pt-pt"]
+}
+
+```
+
+### Package and publish
 
 1. **Pin the dependency version.** Put a floor and a ceiling on `ovos-plugin-manager` in
    `pyproject.toml`, for example `ovos-plugin-manager>=0.5.0,<1.0.0`. A floor alone lets a future
@@ -595,7 +599,7 @@ table above.
    use it. See [Plugin Arena: Getting Your Plugin Ranked](plugin-arena.md#getting-your-plugin-ranked)
    for what a published plugin needs to be picked up by the sweep.
 
-## Test your plugin locally
+### Test your plugin locally
 
 Instantiate the class directly and call `get_tts()` on it, the same way the [Standalone
 Usage](#standalone-usage) example does, then check the file it wrote:

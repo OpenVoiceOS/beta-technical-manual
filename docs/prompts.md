@@ -83,6 +83,9 @@ class IceCreamSkill(OVOSSkill):
 `get_response()` returns the matched utterance as a `str`, or `None` if no valid response
 was captured. The first argument is the dialog to speak.
 
+`get_response()` suspends the converse channel for this skill until the user responds or a
+timeout is hit. Raise `AbortQuestion` to cancel gracefully.
+
 ---
 
 ### 3. Yes/No Questions with `ask_yesno()`

@@ -6,7 +6,8 @@
     wake word, speech-to-text, intent matching, skill, text-to-speech. At each stop it shows where
     the evidence lives (which log file, which bus message), what a healthy result looks like, and
     the exact command to check it yourself. No programming background is required to follow along.
-    Deeper technical detail is layered in as the page goes.
+    Deeper technical detail is layered in as the page goes. New to the words here? See the
+    [Glossary](glossary.md).
 
 Every stage below can be checked two ways: **tail a log file** (works everywhere, including headless
 boxes over SSH), or **watch the bus live** with `ovos-busmon` (works anywhere a browser can reach the

@@ -3,6 +3,10 @@
 !!! abstract "In a nutshell"
     OCP (the OpenVoiceOS Common Play system) is the part of OVOS that plays media: music, podcasts, news, radio and the like. Each plugin on this page teaches it to handle one kind of source, such as YouTube links, Bandcamp pages, RSS feeds, or local files. So if you ask to play something, the right plugin knows how to find the actual audio stream and start it. See the [Glossary](glossary.md) for unfamiliar terms.
 
+This page covers stream extractors: plugins that turn a URL or search request into a playable
+stream. The playback engine that plays that stream is [OCP Audio Plugin](ocp-audio-plugin.md).
+The playback backends it can use are [Media Playback Plugins](media-plugins.md).
+
 | Plugin | Description |
 |--------|-------------|
 | [ovos-ocp-files-plugin](#ovos-ocp-files-plugin) | Lets OCP play local files (`file://` URIs) and reads their audio tags/metadata so the player can show a title and artist |
