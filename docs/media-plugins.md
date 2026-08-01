@@ -26,13 +26,13 @@ both families. See the table below for what each currently supports.
 
 | Package | Player | Ships for | License | Maturity |
 |---|---|---|---|---|
-| [ovos-media-plugin-spotify](#ovos-media-plugin-spotify) | Spotify Connect | ✅ both (old audio service + ovos-media) | Apache-2.0 | Stable |
-| [ovos-media-plugin-chromecast](#ovos-media-plugin-chromecast) | Chromecast (audio + video) | ✅ both | Apache-2.0 | Stable |
-| [ovos-media-plugin-vlc](#ovos-media-plugin-vlc) | headless VLC (audio + video) | ✅ both | Apache-2.0 | Beta |
-| [ovos-media-plugin-mplayer](#ovos-media-plugin-mplayer) | MPlayer (audio + video) | ✅ both | Apache-2.0 | Stable |
-| [ovos-audio-plugin-mpv](#ovos-audio-plugin-mpv) | MPV (audio + video) | ✅ both | Apache-2.0 | Stable |
-| [ovos-media-plugin-ffplay](#ovos-media-plugin-ffplay) | ffplay (audio) | ✅ both | Apache-2.0 | Stable |
-| [ovos-media-plugin-cli](#ovos-media-plugin-cli) | generic CLI-command player (audio) | ✅ both | Apache-2.0 | Alpha |
+| [ovos-media-plugin-spotify](#ovos-media-plugin-spotify) | Spotify Connect | yes: both (old audio service + ovos-media) | Apache-2.0 | Stable |
+| [ovos-media-plugin-chromecast](#ovos-media-plugin-chromecast) | Chromecast (audio + video) | yes: both | Apache-2.0 | Stable |
+| [ovos-media-plugin-vlc](#ovos-media-plugin-vlc) | headless VLC (audio + video) | yes: both | Apache-2.0 | Beta |
+| [ovos-media-plugin-mplayer](#ovos-media-plugin-mplayer) | MPlayer (audio + video) | yes: both | Apache-2.0 | Stable |
+| [ovos-audio-plugin-mpv](#ovos-audio-plugin-mpv) | MPV (audio + video) | yes: both | Apache-2.0 | Stable |
+| [ovos-media-plugin-ffplay](#ovos-media-plugin-ffplay) | ffplay (audio) | yes: both | Apache-2.0 | Stable |
+| [ovos-media-plugin-cli](#ovos-media-plugin-cli) | generic CLI-command player (audio) | yes: both | Apache-2.0 | Alpha |
 | [ovos-plugin-vlc](#ovos-plugin-vlc) | VLC | old audio service only (legacy). Use ovos-media-plugin-vlc for ovos-media | Apache-2.0 | Stable |
 
 Maturity reflects repository health (age, activity, open issues/PRs, in-repo docs), not version. See the [Maturity Scale](maturity.md).
@@ -103,7 +103,7 @@ Then select it in your audio/media backend config. See [Media playback: legacy v
 - **GitHub**: [ovos-ocp-audio-plugin](https://github.com/OpenVoiceOS/ovos-ocp-audio-plugin)
 
 
-- **Description**: The legacy **"old audio service"** OCP backend. It crams OCP search orchestration, the player state machine, MPRIS and the GUI into a single `ovos-audio` `AudioBackend`. ⚠️ **Deprecated but still shipped and enabled by default** (`enable_old_audioservice: true`). It is superseded by the standalone [ovos-media](ovos-media.md) daemon. See the dedicated **[OCP Audio Plugin](ocp-audio-plugin.md)** page for the full background, configuration, and migration path.
+- **Description**: The legacy **"old audio service"** OCP backend. It combines OCP search orchestration, the player state machine, MPRIS and the GUI into a single `ovos-audio` `AudioBackend`. Warning: deprecated but still shipped and enabled by default (`enable_old_audioservice: true`). The standalone [ovos-media](ovos-media.md) daemon supersedes it. See the dedicated **[OCP Audio Plugin](ocp-audio-plugin.md)** page for the full background, configuration, and migration path.
 
 ---
 

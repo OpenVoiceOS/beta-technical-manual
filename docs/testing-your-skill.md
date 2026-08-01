@@ -18,7 +18,7 @@ real utterance, and checking what comes back out. This is the same journey a spo
 minus the microphone. `ovoscope` is the tool the OVOS project itself uses for this. Every skill
 accepted into the ecosystem is expected to ship at least one.
 
-## Step 1 — Install ovoscope
+## Step 1: Install ovoscope
 
 Activate the same environment you installed the skill into in [Your First Skill](first-skill.md),
 the venv or container you ran `pip install -e .` in. `ovoscope` needs to be importable
@@ -39,7 +39,7 @@ contributor needs:
 test = ["ovoscope", "ovos-padatious-pipeline-plugin"]
 ```
 
-## Step 2 — Write the first `End2EndTest`
+## Step 2: Write the first `End2EndTest`
 
 !!! note "Prerequisite: the Padatious pipeline plugin"
     This test drives `session.pipeline = ["ovos-padatious-pipeline-plugin"]`, so that plugin
@@ -93,7 +93,7 @@ def test_hello_matches_and_speaks():
 `skill_ids` restricts which skill(s) `ovoscope` loads for the test, so you're only ever testing
 your own skill, not every skill installed on the machine.
 
-## Step 3 — Run it
+## Step 3: Run it
 
 ```bash
 PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 pytest test/test_hello.py -v
@@ -115,7 +115,7 @@ test/test_hello.py::test_hello_matches_and_speaks PASSED                [100%]
     others you have), not just the one your test needs. On a machine with only the pipeline
     plugins your skill actually depends on, startup is much faster.
 
-## Step 4 — Test the failure path
+## Step 4: Test the failure path
 
 A test that only ever sends utterances your skill *should* match doesn't tell you much. Add a
 second test that sends something unrelated and checks the skill stays silent. This is what
@@ -163,7 +163,7 @@ test/test_hello_nomatch.py::test_unrelated_utterance_is_not_handled PASSED [100%
     leaking a raw traceback to the user. `ovos-skill-my-first` has no such path. It can't fail, so
     there is nothing further to add here for this particular skill.
 
-## Step 5 — Fixtures and the `ovoscope` CLI
+## Step 5: Fixtures and the `ovoscope` CLI
 
 `ovoscope` also ships a standalone CLI (`ovoscope --help`) for working with fixtures: recorded
 bus-message sequences you can replay without writing a pytest file:
@@ -227,7 +227,7 @@ ovoscope validate test/fixtures/hello.json
 ovoscope run test/fixtures/hello.json -v
 ```
 
-!!! warning "A recorded fixture can be non-deterministic — watch for timestamps"
+!!! warning "A recorded fixture can be non-deterministic: watch for timestamps"
     Replaying the fixture above with `ovoscope run` reliably reports a mismatch. This is not
     because anything is actually broken. It happens because the session's `active_handlers`
     records a Unix timestamp (*when the skill activated*) at capture time, and that timestamp is
@@ -273,7 +273,7 @@ live = SessionManager.sessions[my_session.session_id]
 bus.emit(make_utterance_message("yes", session=live))
 ```
 
-## Step 6 — Wire it into CI
+## Step 6: Wire it into CI
 
 Add a workflow that runs the test suite on every pull request:
 

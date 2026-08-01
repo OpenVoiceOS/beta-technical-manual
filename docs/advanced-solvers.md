@@ -4,15 +4,15 @@
     Beyond plain chatting, OVOS offers a toolbox of small, specialized AI helpers. Each is good at one narrow job, like ranking which answer is most relevant, summarizing text, or detecting a language. Because each is a separate, swappable piece, you can mix and match them to build more capable assistants. See [Agent Plugins](agent-plugins.md) for the broader idea and the [Glossary](glossary.md) for unfamiliar terms.
 
 OVOS provides a full suite of specialized agent engine types beyond simple chat. Each type solves
-a specific NLP sub-problem and registers under its own OPM entry point group, making it
-independently discoverable, configurable, and composable.
+a specific NLP sub-problem and registers under its own OPM entry point group. This makes it
+discoverable, configurable, and usable together with other engine types on its own.
 
 All base classes live in `ovos_plugin_manager.templates.agents`. The deprecated solver API
 (`opm.solver.*`) is covered at the bottom. Migrate to `opm.agents.*` for all new plugins.
 
 ---
 
-## ReRanker — `opm.agents.reranker`
+## ReRanker: `opm.agents.reranker`
 
 **Base class:** `ReRankerEngine`
 
@@ -61,7 +61,7 @@ The `reranker` key names any installed `opm.agents.reranker` plugin. See
 
 ---
 
-## Extractive QA — `opm.agents.extractive_qa`
+## Extractive QA: `opm.agents.extractive_qa`
 
 **Base class:** `ExtractiveQAEngine`
 
@@ -84,11 +84,11 @@ Available implementations: `GGUFExtractiveQAEngine` ([GGUF plugin](gguf-plugin.m
 
 ---
 
-## Summarizer — `opm.agents.summarizer`
+## Summarizer: `opm.agents.summarizer`
 
 **Base class:** `SummarizerEngine`
 
-Condenses a plain-text document into 1–3 sentences. Used by solvers and skills before passing
+Condenses a plain-text document into one to three sentences. Used by solvers and skills before passing
 text to [TTS](tts-plugins.md) to avoid overwhelming the user with long responses.
 
 ```python
@@ -100,7 +100,7 @@ Implementations: `OpenAISummarizer`, `GGUFSummarizerEngine`.
 
 ---
 
-## Chat Summarizer — `opm.agents.summarizer.chat`
+## Chat Summarizer: `opm.agents.summarizer.chat`
 
 Converts a structured `List[AgentMessage]` chat history into a concise narrative summary. Used
 internally by memory plugins (`GGUFContextManager`) to compress history
@@ -121,7 +121,7 @@ Implementations: `GGUFChatSummarizerEngine`.
 
 ---
 
-## NLI — `opm.agents.nli`
+## NLI: `opm.agents.nli`
 
 **Base class:** `NaturalLanguageInferenceEngine`
 
@@ -138,7 +138,7 @@ Implementations: `GGUFNLIEngine`.
 
 ---
 
-## Yes/No Classifier — `opm.agents.yesno`
+## Yes/No Classifier: `opm.agents.yesno`
 
 Classifies a user's ambiguous confirmation as `True` (yes), `False` (no), or `None` (unclear).
 Returns `None` on API error.
@@ -156,17 +156,19 @@ Implementations: `GGUFYesNoEngine`.
 
 ---
 
-## Option Matcher — `opm.agents.option_matcher`
+## Option Matcher: `opm.agents.option_matcher`
 
 **Base class:** `OptionMatcherEngine`
 
 Resolves a free-form user reply to one entry in a fixed list of options. This is the engine behind a
-skill's `ask_selection()`. The reference implementation,
+skill's `ask_selection()`.
+
+The reference implementation,
 [`ovos-option-matcher-fuzzy-plugin`](https://github.com/OpenVoiceOS/ovos-option-matcher-fuzzy-plugin)
-(`FuzzyOptionMatcherPlugin`), resolves in order: fuzzy match via ovos-utils `match_one` (difflib `SequenceMatcher` ratio) when the score
+(`FuzzyOptionMatcherPlugin`), resolves in this order: fuzzy match via ovos-utils `match_one` (difflib `SequenceMatcher` ratio) when the score
 reaches `min_conf` (config key, default `0.65`), then locale-aware "last option" vocab, then
-ordinal/cardinal vocab (longest match wins), then a numeric fallback via `ovos-number-parser`,
-returning `None` if nothing matches.
+ordinal/cardinal vocab (longest match wins), then a numeric fallback via `ovos-number-parser`.
+It returns `None` if nothing matches.
 
 `OVOSSkill.ask_selection()` loads the engine via `skills.ask_selection_plugin` (checked in the
 skill's `settings.json` first, then `mycroft.conf`), defaulting to
@@ -174,7 +176,7 @@ skill's `settings.json` first, then `mycroft.conf`), defaulting to
 
 ---
 
-## Coreference Resolution — `opm.agents.coref`
+## Coreference Resolution: `opm.agents.coref`
 
 **Base class:** `CoreferenceEngine`
 
@@ -205,7 +207,7 @@ Implementations: `GGUFCoreferenceEngine`.
 
 ---
 
-## Memory / Context Manager — `opm.agents.memory`
+## Memory / Context Manager: `opm.agents.memory`
 
 **Base class:** `AgentContextManager`
 
@@ -241,7 +243,7 @@ needs no API key and is always available when `ovos-persona` is installed.
 
 ---
 
-## Multimodal Chat — `opm.agents.chat.multimodal`
+## Multimodal Chat: `opm.agents.chat.multimodal`
 
 Extends `ChatEngine` with image input. Images are passed as base64-encoded strings in
 `MultimodalAgentMessage.image_content`. Data-URI headers are stripped automatically.
@@ -271,12 +273,12 @@ release. Migrate existing plugins to the corresponding `opm.agents.*` types.
 
 | Deprecated entry point | Replacement | Why |
 |---|---|---|
-| `opm.solver.question` (`QuestionSolver`) | `opm.agents.chat` (`ChatEngine`) | Single-turn Q&A folds into the general chat contract; no need for a separate type. |
-| `opm.solver.chat` (`ChatMessageSolver`) | `opm.agents.chat` (`ChatEngine`) | Same engine type as above — the two deprecated solvers converge on one replacement. |
-| `opm.solver.summarization` (`TldrSolver`) | `opm.agents.summarizer` (`SummarizerEngine`) | Renamed for clarity; behavior is otherwise equivalent. |
+| `opm.solver.question` (`QuestionSolver`) | `opm.agents.chat` (`ChatEngine`) | Single-turn Q&A folds into the general chat contract. No separate type is needed. |
+| `opm.solver.chat` (`ChatMessageSolver`) | `opm.agents.chat` (`ChatEngine`) | Same engine type as above. The two deprecated solvers converge on one replacement. |
+| `opm.solver.summarization` (`TldrSolver`) | `opm.agents.summarizer` (`SummarizerEngine`) | Renamed for clarity. Behavior is otherwise equivalent. |
 | `opm.solver.reading_comprehension` (`EvidenceSolver`) | `opm.agents.extractive_qa` (`ExtractiveQAEngine`) | Renamed to match the standard NLP task name (extractive QA over evidence). |
-| `opm.solver.multiple_choice` (`MultipleChoiceSolver`) | `opm.agents.reranker` (`ReRankerEngine`) | Choosing among options is really scoring/ranking candidates, so it moved under the reranker contract. |
-| `opm.solver.entailment` (`EntailmentSolver`) | `opm.agents.nli` (`NaturalLanguageInferenceEngine`) | Renamed to the standard NLI task name; entailment is one of NLI's three labels. |
+| `opm.solver.multiple_choice` (`MultipleChoiceSolver`) | `opm.agents.reranker` (`ReRankerEngine`) | Choosing among options is really scoring and ranking candidates, so it moved under the reranker contract. |
+| `opm.solver.entailment` (`EntailmentSolver`) | `opm.agents.nli` (`NaturalLanguageInferenceEngine`) | Renamed to the standard NLI task name. Entailment is one of NLI's three labels. |
 | `opm.coreference` | `opm.agents.coref` | Moved under the unified `opm.agents.*` namespace alongside the other engine types. |
 
 The deprecated classes remain in `ovos_plugin_manager.templates.solvers` and are still loaded

@@ -3,7 +3,7 @@
 !!! abstract "In a nutshell"
     STT stands for *Speech-to-Text*: this is the part that listens to your spoken words and writes them down as text the assistant can read. It is the same idea as the dictation feature on a phone. Different STT plugins offer different trade-offs in speed, accuracy, and whether they run on your own device or in the cloud, so you can pick the one that suits you. See the [Glossary](glossary.md) for related terms.
 
-??? info "📐 Formal specification"
+??? info "Formal specification"
     STT sits inside the audio input service, specified by **[OVOS-AUDIO-IN-1: Audio Input Service](https://github.com/OpenVoiceOS/architecture/blob/dev/audio-in.md)**: capture → audio-transformer chain → STT → utterance. The transcript is emitted on `ovos.utterance.handle` ([OVOS-PIPELINE-1 §9.1](https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md)). See the [spec index](architecture-specs.md).
 
 !!! note "Audio format contract"
@@ -19,9 +19,9 @@ between the listener and the intent pipeline.
     STT (e.g. `ovos-stt-plugin-azure`) is a fair choice when the local device doesn't have
     the compute budget for on-device recognition.
 
-    `ovos-stt-plugin-onnx-asr` is rated **Beta** while several alternatives are Stable;
-    it is recommended here for its offline quality and footprint, and per the
-    [Maturity Scale](maturity.md) maturity is not the same as a recommendation.
+    `ovos-stt-plugin-onnx-asr` is rated **Beta** while several alternatives are Stable.
+    It is recommended here for its offline quality and footprint. Per the
+    [Maturity Scale](maturity.md), maturity is not the same as a recommendation.
 
     **Footprint:** as noted in the [plugin's own entry](#ovos-stt-plugin-onnx-asr), most models
     in the [OpenVoiceOS/stt-asr-onnx](https://huggingface.co/collections/OpenVoiceOS/stt-asr-onnx)
@@ -60,7 +60,7 @@ Each STT plugin class needs to define the `execute()` method taking two argument
 * `audio` \([AudioData](https://github.com/Uberi/speech_recognition/blob/master/reference/library-reference.rst#audiodataframe_data-bytes-sample_rate-int-sample_width-int---audiodata) object\) - the audio data to be transcribed.  
 
 
-* `language` \(str\) - _optional_ - the BCP-47 language code; when omitted the plugin uses its
+* `language` \(str\) - _optional_ - the BCP-47 language code. When omitted, the plugin uses its
   configured or detected language
 
 The bare minimum STT class will look something like
@@ -76,15 +76,15 @@ class MySTT(STT):
 
 ```
 
-### N-best hypotheses — `transcribe()`
+### N-best hypotheses: `transcribe()`
 
 `execute()` returns a single best string. The richer method is `transcribe(audio, lang=None)`,
-which returns a **list of `(transcript, confidence)` tuples**, confidence a float in `0.0`–`1.0`.
+which returns a **list of `(transcript, confidence)` tuples**, confidence a float from `0.0` to `1.0`.
 The template implements it for you as `[(self.execute(audio, lang), 1.0)]`, so a plugin that
 only knows its single best answer needs to implement nothing extra.
 
-If the wrapped engine can produce several hypotheses with scores, **override `transcribe()`**
-— it is the preferred entry point, and consumers that rescore or disambiguate between
+If the wrapped engine can produce several hypotheses with scores, **override `transcribe()`**.
+It is the preferred entry point, and consumers that rescore or disambiguate between
 candidates read it. `execute()` then remains the single-best convenience wrapper.
 
 ```python
@@ -101,7 +101,7 @@ class MySTT(STT):
 ### Language detection
 
 An STT plugin can be paired with an audio language detector. The audio service calls
-`bind(detector)` to hand the plugin an `AudioLanguageDetector`; the plugin then exposes:
+`bind(detector)` to hand the plugin an `AudioLanguageDetector`. The plugin then exposes:
 
 * `detect_language(audio, valid_langs=None)` → `(lang, confidence)`. It delegates to the bound
   detector, defaulting `valid_langs` to the plugin's own `available_languages`. With no detector
@@ -118,7 +118,7 @@ A more advanced STT class for streaming data to the STT. This will receive chunk
 
 The plugin author needs to implement the `create_streaming_thread()` method creating a thread for handling data sent through `self.queue`. 
 
-The thread this method creates should be based on the `StreamThread` class. Its abstract `handle_audio_stream(audio, language)` method also needs to be implemented. It receives a generator of audio chunks and should set `self.text` to the transcript; `finalize()` returns that stored text once the stream ends.
+The thread this method creates should be based on the `StreamThread` class. Its abstract `handle_audio_stream(audio, language)` method also needs to be implemented. It receives a generator of audio chunks and should set `self.text` to the transcript. `finalize()` returns that stored text once the stream ends.
 
 ### Chunk semantics
 
@@ -194,7 +194,7 @@ entry_points = {
 }
 ```
 
-> 💡 **Backward Compatibility**: `ovos-plugin-manager` still supports legacy `mycroft.plugin.stt` entry points, but new plugins should use the `opm.*` namespace.
+> **Backward Compatibility**: `ovos-plugin-manager` still supports legacy `mycroft.plugin.stt` entry points, but new plugins should use the `opm.*` namespace.
 
 ## Standalone Usage
 
@@ -272,7 +272,7 @@ MySTTConfig = {
 
 # STT plugins Reference
 
-Code license is the SPDX license of the plugin's own repository; where the plugin wraps a
+Code license is the SPDX license of the plugin's own repository. Where the plugin wraps a
 separately-licensed model, that is called out under "model".
 
 | Plugin | Description | License | Maturity |
@@ -280,19 +280,19 @@ separately-licensed model, that is called out under "model".
 | [ovos-stt-plugin-wav2vec](#ovos-stt-plugin-wav2vec) | OVOS plugin for [Wav2Vec2](https://ai.meta.com/blog/wav2vec-20-learning-the-structure-of-speech-from-raw-audio/) | Apache-2.0 (model: see model card) | Stable |
 | [ovos-stt-plugin-azure](#ovos-stt-plugin-azure) | Microsoft Azure cloud speech-to-text. | Apache-2.0 (cloud service, separate Microsoft terms) | Stable |
 | [ovos-stt-plugin-chromium](#ovos-stt-plugin-chromium) | Speech-to-text using the Google Chrome browser speech API. | Apache-2.0 (cloud service, unofficial Google endpoint, separate Google terms) | Stable |
-| [ovos-stt-plugin-mms](#ovos-stt-plugin-mms) | OVOS plugin for [The Massively Multilingual Speech (MMS) project](https://huggingface.co/docs/transformers/main/en/model_doc/mms) ⚠️ **Archived** — MMS models also run under [ovos-stt-plugin-wav2vec2](https://github.com/OpenVoiceOS/ovos-stt-plugin-wav2vec2). | Apache-2.0 (model: see model card) | Deprecated |
+| [ovos-stt-plugin-mms](#ovos-stt-plugin-mms) | OVOS plugin for [The Massively Multilingual Speech (MMS) project](https://huggingface.co/docs/transformers/main/en/model_doc/mms). Warning: archived. MMS models also run under [ovos-stt-plugin-wav2vec2](https://github.com/OpenVoiceOS/ovos-stt-plugin-wav2vec2). | Apache-2.0 (model: see model card) | Deprecated |
 | [ovos-stt-server-plugin](#ovos-stt-server-plugin) | OpenVoiceOS companion plugin for [OpenVoiceOS STT Server](https://github.com/OpenVoiceOS/ovos-stt-http-server) | Apache-2.0 | Stable |
 | [ovos-stt-http-server](#ovos-stt-http-server) | Turn any OVOS STT plugin into a micro service! | Apache-2.0 | Stable |
-| [ovos-stt-plugin-whisper](#ovos-stt-plugin-whisper) | OpenVoiceOS STT plugin for [Whisper](https://github.com/guillaumekln/faster-whisper), using transformers library | Apache-2.0 (code default model: `base`; configure a larger model such as [openai/whisper-large-v3](https://huggingface.co/openai/whisper-large-v3) for higher accuracy) | Beta |
+| [ovos-stt-plugin-whisper](#ovos-stt-plugin-whisper) | OpenVoiceOS STT plugin for [Whisper](https://github.com/guillaumekln/faster-whisper), using transformers library | Apache-2.0 (code default model: `base`. Configure a larger model such as [openai/whisper-large-v3](https://huggingface.co/openai/whisper-large-v3) for higher accuracy) | Beta |
 | [ovos-stt-plugin-whispercpp](#ovos-stt-plugin-whispercpp) | OpenVoiceOS STT plugin for [whispercpp](https://github.com/ggerganov/whisper.cpp) | Apache-2.0 (model: see model card) | Stable |
 | [ovos-stt-plugin-fasterwhisper](#ovos-stt-plugin-fasterwhisper) | OpenVoiceOS STT plugin for [Faster Whisper](https://github.com/guillaumekln/faster-whisper) | Apache-2.0 (code default model: `large-v3-turbo`) | Stable |
 | [ovos-stt-plugin-nemo](#ovos-stt-plugin-nemo) | OpenVoiceOS STT plugin for [Nemo](https://docs.nvidia.com/nemo-framework/user-guide/latest/nemotoolkit/asr/models.html), GPU is **strongly recommended** | Apache-2.0 (model: see model card) | Stable |
 | [ovos-stt-plugin-whisper-lm](#ovos-stt-plugin-whisper-lm) | OpenVoiceOS STT plugin for [Whisper-LM-transformers](https://github.com/hitz-zentroa/whisper-lm-transformers), KenLM and Large language model integration with Whisper ASR models implemented in Hugging Face library. | Apache-2.0 (model: see model card) | Stable |
 | [ovos-stt-plugin-citrinet](#ovos-stt-plugin-citrinet) | OpenVoiceOS STT plugin | Apache-2.0 (model: see model card) | Stable |
-| [ovos-stt-plugin-nos](#ovos-stt-plugin-nos) | Galician STT using Proxecto Nós wav2vec2 models. ⚠️ Archived — superseded by [ovos-stt-plugin-wav2vec2](https://github.com/OpenVoiceOS/ovos-stt-plugin-wav2vec2). | Apache-2.0 (model: see model card) | Deprecated |
-| [ovos-stt-plugin-HiTZ](#ovos-stt-plugin-hitz) | OpenVoiceOS STT plugin for **Basque** models trained by [HiTZ](https://huggingface.co/HiTZ) ⚠️ **Archived/deprecated.** | see repo (no license file) | Deprecated |
+| [ovos-stt-plugin-nos](#ovos-stt-plugin-nos) | Galician STT using Proxecto Nós wav2vec2 models. Warning: archived, superseded by [ovos-stt-plugin-wav2vec2](https://github.com/OpenVoiceOS/ovos-stt-plugin-wav2vec2). | Apache-2.0 (model: see model card) | Deprecated |
+| [ovos-stt-plugin-HiTZ](#ovos-stt-plugin-hitz) | OpenVoiceOS STT plugin for **Basque** models trained by [HiTZ](https://huggingface.co/HiTZ). Warning: archived, deprecated. | see repo (no license file) | Deprecated |
 | [ovos-stt-plugin-vosk](#ovos-stt-plugin-vosk) | Mycroft STT plugin for [Vosk](https://alphacephei.com/vosk/) | Apache-2.0 (model: see model card) | Stable |
-| [ovos-stt-plugin-onnx-asr](#ovos-stt-plugin-onnx-asr) | Runs [onnx-asr](https://github.com/istupakov/onnx-asr) models (NeMo Parakeet/Canary, Whisper, wav2vec2, …) fully offline via ONNX Runtime — a strong default for on-device, offline recognition. | Apache-2.0 (model: see model card) | Beta |
+| [ovos-stt-plugin-onnx-asr](#ovos-stt-plugin-onnx-asr) | Runs [onnx-asr](https://github.com/istupakov/onnx-asr) models (NeMo Parakeet/Canary, Whisper, wav2vec2, …) fully offline via ONNX Runtime, a strong default for on-device, offline recognition. | Apache-2.0 (model: see model card) | Beta |
 
 Maturity reflects repository health (age, activity, open issues/PRs, in-repo docs), not version. See the [Maturity Scale](maturity.md).
 
@@ -305,9 +305,9 @@ Maturity reflects repository health (age, activity, open issues/PRs, in-repo doc
 
 ## ovos-stt-plugin-wav2vec
 
-- **GitHub**: [https://github.com/OpenVoiceOS/ovos-stt-plugin-wav2vec](https://github.com/OpenVoiceOS/ovos-stt-plugin-wav2vec) (aliased by
+- **GitHub**: [OpenVoiceOS/ovos-stt-plugin-wav2vec](https://github.com/OpenVoiceOS/ovos-stt-plugin-wav2vec) (aliased by
   [ovos-stt-plugin-wav2vec2](https://github.com/OpenVoiceOS/ovos-stt-plugin-wav2vec2). A
-  separate GitHub repo that installs the same package and module id, `ovos-stt-plugin-wav2vec`;
+  separate GitHub repo that installs the same package and module id, `ovos-stt-plugin-wav2vec`.
   the repo name differs but the entry point does not, so both resolve to the same plugin)
 
 
@@ -328,14 +328,14 @@ Maturity reflects repository health (age, activity, open issues/PRs, in-repo doc
 There is no single hardcoded default model: the plugin picks a model from an internal
 per-language table (keyed by BCP-47 language code) unless `model` is set explicitly, and
 raises an error if the configured `lang` has no entry and no `model` is given. The
-`proxectonos/Nos_ASR-...` model above is only the entry for Galician (`gl`); other
+`proxectonos/Nos_ASR-...` model above is only the entry for Galician (`gl`). Other
 languages resolve to different pretrained models.
 
 ---
 
 ## ovos-stt-plugin-azure
 
-- **GitHub**: [https://github.com/OpenVoiceOS/ovos-stt-plugin-azure](https://github.com/OpenVoiceOS/ovos-stt-plugin-azure)
+- **GitHub**: [OpenVoiceOS/ovos-stt-plugin-azure](https://github.com/OpenVoiceOS/ovos-stt-plugin-azure)
 
 
 - **Description**: Microsoft Azure cloud speech-to-text.
@@ -344,7 +344,7 @@ languages resolve to different pretrained models.
 
 ## ovos-stt-plugin-chromium
 
-- **GitHub**: [https://github.com/OpenVoiceOS/ovos-stt-plugin-chromium](https://github.com/OpenVoiceOS/ovos-stt-plugin-chromium)
+- **GitHub**: [OpenVoiceOS/ovos-stt-plugin-chromium](https://github.com/OpenVoiceOS/ovos-stt-plugin-chromium)
 
 
 - **Description**: Speech-to-text using the Google Chrome browser speech API.
@@ -358,7 +358,7 @@ languages resolve to different pretrained models.
 
 ## ovos-stt-plugin-mms
 
-- **GitHub**: [https://github.com/OpenVoiceOS/ovos-stt-plugin-mms](https://github.com/OpenVoiceOS/ovos-stt-plugin-mms)
+- **GitHub**: [OpenVoiceOS/ovos-stt-plugin-mms](https://github.com/OpenVoiceOS/ovos-stt-plugin-mms)
 
 
 - **Description**: OVOS plugin for [The Massively Multilingual Speech (MMS) project](https://huggingface.co/docs/transformers/main/en/model_doc/mms)
@@ -379,7 +379,7 @@ languages resolve to different pretrained models.
 
 ## ovos-stt-server-plugin
 
-- **GitHub**: [https://github.com/OpenVoiceOS/ovos-stt-server-plugin](https://github.com/OpenVoiceOS/ovos-stt-server-plugin)
+- **GitHub**: [OpenVoiceOS/ovos-stt-server-plugin](https://github.com/OpenVoiceOS/ovos-stt-server-plugin)
 
 
 - **Description**: OpenVoiceOS companion plugin for [OpenVoiceOS STT Server](https://github.com/OpenVoiceOS/ovos-stt-http-server)
@@ -412,7 +412,7 @@ offline engine from the table above.
 
 ## ovos-stt-http-server
 
-- **GitHub**: [https://github.com/OpenVoiceOS/ovos-stt-http-server](https://github.com/OpenVoiceOS/ovos-stt-http-server)
+- **GitHub**: [OpenVoiceOS/ovos-stt-http-server](https://github.com/OpenVoiceOS/ovos-stt-http-server)
 
 
 - **Description**: Turn any OVOS STT plugin into a micro service!
@@ -421,7 +421,7 @@ offline engine from the table above.
 
 ## ovos-stt-plugin-whisper
 
-- **GitHub**: [https://github.com/OpenVoiceOS/ovos-stt-plugin-whisper](https://github.com/OpenVoiceOS/ovos-stt-plugin-whisper)
+- **GitHub**: [OpenVoiceOS/ovos-stt-plugin-whisper](https://github.com/OpenVoiceOS/ovos-stt-plugin-whisper)
 
 
 - **Description**: OpenVoiceOS STT plugin for [Whisper](https://github.com/guillaumekln/faster-whisper), using transformers library
@@ -443,7 +443,7 @@ offline engine from the table above.
 
 ## ovos-stt-plugin-whispercpp
 
-- **GitHub**: [https://github.com/OpenVoiceOS/ovos-stt-plugin-whispercpp](https://github.com/OpenVoiceOS/ovos-stt-plugin-whispercpp)
+- **GitHub**: [OpenVoiceOS/ovos-stt-plugin-whispercpp](https://github.com/OpenVoiceOS/ovos-stt-plugin-whispercpp)
 
 
 - **Description**: OpenVoiceOS STT plugin for [whispercpp](https://github.com/ggerganov/whisper.cpp)
@@ -465,7 +465,7 @@ offline engine from the table above.
 
 ## ovos-stt-plugin-fasterwhisper
 
-- **GitHub**: [https://github.com/OpenVoiceOS/ovos-stt-plugin-fasterwhisper](https://github.com/OpenVoiceOS/ovos-stt-plugin-fasterwhisper)
+- **GitHub**: [OpenVoiceOS/ovos-stt-plugin-fasterwhisper](https://github.com/OpenVoiceOS/ovos-stt-plugin-fasterwhisper)
 
 
 - **Description**: OpenVoiceOS STT plugin for [Faster Whisper](https://github.com/guillaumekln/faster-whisper)
@@ -492,12 +492,12 @@ CTranslate2 also supports `int8` / `int8_float16` compute types for lower-RAM CP
 
 ## ovos-stt-plugin-nemo
 
-- **GitHub**: [https://github.com/OpenVoiceOS/ovos-stt-plugin-nemo](https://github.com/OpenVoiceOS/ovos-stt-plugin-nemo)
+- **GitHub**: [OpenVoiceOS/ovos-stt-plugin-nemo](https://github.com/OpenVoiceOS/ovos-stt-plugin-nemo)
 
 
 - **Description**: OpenVoiceOS STT plugin for [Nemo](https://docs.nvidia.com/nemo-framework/user-guide/latest/nemotoolkit/asr/models.html), GPU is **strongly recommended**
 
-CPU is the shipped default (`use_cuda: false`); set `use_cuda: true` for acceptable throughput on supported GPUs. The GPU recommendation is about speed, not a required default.
+CPU is the shipped default (`use_cuda: false`). Set `use_cuda: true` for acceptable throughput on supported GPUs. The GPU recommendation is about speed, not a required default.
 
 ### Default Configuration
 
@@ -516,7 +516,7 @@ CPU is the shipped default (`use_cuda: false`); set `use_cuda: true` for accepta
 
 ## ovos-stt-plugin-whisper-lm
 
-- **GitHub**: [https://github.com/OpenVoiceOS/ovos-stt-plugin-whisper-lm](https://github.com/OpenVoiceOS/ovos-stt-plugin-whisper-lm)
+- **GitHub**: [OpenVoiceOS/ovos-stt-plugin-whisper-lm](https://github.com/OpenVoiceOS/ovos-stt-plugin-whisper-lm)
 
 
 - **Description**: OpenVoiceOS STT plugin for [Whisper-LM-transformers](https://github.com/hitz-zentroa/whisper-lm-transformers), KenLM and Large language model integration with Whisper ASR models implemented in Hugging Face library.
@@ -542,7 +542,7 @@ CPU is the shipped default (`use_cuda: false`); set `use_cuda: true` for accepta
 
 ## ovos-stt-plugin-citrinet
 
-- **GitHub**: [https://github.com/OpenVoiceOS/ovos-stt-plugin-citrinet](https://github.com/OpenVoiceOS/ovos-stt-plugin-citrinet)
+- **GitHub**: [OpenVoiceOS/ovos-stt-plugin-citrinet](https://github.com/OpenVoiceOS/ovos-stt-plugin-citrinet)
 
 
 - **Description**: OpenVoiceOS STT plugin
@@ -563,10 +563,10 @@ CPU is the shipped default (`use_cuda: false`); set `use_cuda: true` for accepta
 
 ## ovos-stt-plugin-nos
 
-- **GitHub**: [https://github.com/OpenVoiceOS/ovos-stt-plugin-nos](https://github.com/OpenVoiceOS/ovos-stt-plugin-nos)
+- **GitHub**: [OpenVoiceOS/ovos-stt-plugin-nos](https://github.com/OpenVoiceOS/ovos-stt-plugin-nos)
 
 
-- **Description**: Galician STT using [Proxecto Nós](https://github.com/proxectonos) wav2vec2 models. ⚠️ **Archived**. Superseded by [ovos-stt-plugin-wav2vec2](https://github.com/OpenVoiceOS/ovos-stt-plugin-wav2vec2).
+- **Description**: Galician STT using [Proxecto Nós](https://github.com/proxectonos) wav2vec2 models. Warning: archived. Superseded by [ovos-stt-plugin-wav2vec2](https://github.com/OpenVoiceOS/ovos-stt-plugin-wav2vec2).
 
 ### Default Configuration
 
@@ -581,7 +581,7 @@ CPU is the shipped default (`use_cuda: false`); set `use_cuda: true` for accepta
 
 ## ovos-stt-plugin-HiTZ
 
-- **GitHub**: [https://github.com/OpenVoiceOS/ovos-stt-plugin-HiTZ](https://github.com/OpenVoiceOS/ovos-stt-plugin-HiTZ)
+- **GitHub**: [OpenVoiceOS/ovos-stt-plugin-HiTZ](https://github.com/OpenVoiceOS/ovos-stt-plugin-HiTZ)
 
 
 - **Description**: OpenVoiceOS STT plugin for **Basque** models trained by [HiTZ](https://huggingface.co/HiTZ)
@@ -602,7 +602,7 @@ CPU is the shipped default (`use_cuda: false`); set `use_cuda: true` for accepta
 
 ## ovos-stt-plugin-vosk
 
-- **GitHub**: [https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk)
+- **GitHub**: [OpenVoiceOS/ovos-stt-plugin-vosk](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk)
 
 
 - **Description**: Mycroft STT plugin for [Vosk](https://alphacephei.com/vosk/)
@@ -624,7 +624,7 @@ CPU is the shipped default (`use_cuda: false`); set `use_cuda: true` for accepta
 
 ## ovos-stt-plugin-onnx-asr
 
-- **GitHub**: [https://github.com/OpenVoiceOS/ovos-stt-plugin-onnx-asr](https://github.com/OpenVoiceOS/ovos-stt-plugin-onnx-asr)
+- **GitHub**: [OpenVoiceOS/ovos-stt-plugin-onnx-asr](https://github.com/OpenVoiceOS/ovos-stt-plugin-onnx-asr)
 
 
 - **Description**: Runs [onnx-asr](https://github.com/istupakov/onnx-asr) models via ONNX Runtime with no PyTorch/transformers dependency. Inference is fully offline. Models are downloaded from Hugging Face on first load, so it runs offline **after the model has been fetched once** (there is currently no plugin-level option to pin a purely-local model directory). Supports NeMo Parakeet and Canary, Whisper, and wav2vec2 model families.
@@ -648,7 +648,7 @@ If `model` is omitted, the plugin loads its **built-in default `nemo-canary-1b-v
 | `model` | `nemo-canary-1b-v2` | Built-in alias or any Hugging Face ONNX ASR repo id |
 | `quantization` | unset | Set `"int8"` to load int8 weights where a model ships them (smaller/faster) |
 | `use_cuda` | `false` | Select the CUDA execution provider (with a CPU fallback) |
-| `providers` | unset | Explicit list of onnxruntime execution providers; takes precedence over `use_cuda` |
+| `providers` | unset | Explicit list of onnxruntime execution providers, takes precedence over `use_cuda` |
 
 !!! note "Language handling is model-family-gated"
     The configured/utterance language is only passed to the ASR call for **Whisper** and **Canary** (NeMo Conformer AED) families. Other families (Parakeet, GigaAM, Vosk, wav2vec2, T-one) ignore `lang`. For those, pick a language-specific model instead of relying on a `lang` setting to steer a multilingual one.

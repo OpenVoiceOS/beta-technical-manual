@@ -1,13 +1,13 @@
 # Common Query Pipeline
 
-!!! info "Maturity — Stable ⬤⬤⬤⬤◯"
+!!! info "Maturity: Stable ⬤⬤⬤⬤◯"
     Established and production-ready, actively maintained. Rated by [repository health](maturity.md), not version.
 
 !!! abstract "In a nutshell"
     When you ask a general-knowledge question like "who wrote Hamlet?", the Common Query pipeline asks all your installed knowledge skills (Wikipedia, Wolfram Alpha, and so on) the same question at once, gathers their answers, and reads back the best one. Think of it as a quiz host who puts the question to every contestant and then announces the strongest reply. It never makes up answers itself. Every answer comes from a skill, so if you have no knowledge skills installed, it simply stays quiet. See the [Intent Pipeline overview](pipelines-overview.md) or the [Glossary](glossary.md).
 
-??? info "📐 Formal specification"
-    Common Query is specified by **[OVOS-COMMON-QUERY-1 — Common Query Pipeline Plugin](https://github.com/OpenVoiceOS/architecture/blob/dev/common-query.md)**, built on **[OVOS-PIPELINE-1](https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md)**. See the [spec index](architecture-specs.md).
+??? info "Formal specification"
+    Common Query is specified by **[OVOS-COMMON-QUERY-1: Common Query Pipeline Plugin](https://github.com/OpenVoiceOS/architecture/blob/dev/common-query.md)**, built on **[OVOS-PIPELINE-1](https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md)**. See the [spec index](architecture-specs.md).
 
 The **Common Query Pipeline Plugin** answers general-knowledge questions. When an
 utterance looks like a question ("Who wrote Hamlet?", "How tall is Everest?"), it
@@ -15,9 +15,10 @@ broadcasts the question to every installed **CommonQuery skill**, collects their
 answers, and picks the best one.
 
 It does **not** generate text or do retrieval-augmented generation. Every answer
-comes from a skill. It is also not a chit-chat handler. Think of it as a referee
-that asks all your knowledge skills the same question and returns the strongest
-reply.
+comes from a skill. It is also not a chit-chat handler.
+
+Think of it as a referee that asks all your knowledge skills the same question
+and returns the strongest reply.
 
 ---
 
@@ -56,10 +57,10 @@ a question.
 
     | OVOS-COMMON-QUERY-1 (canonical) | Current code |
     |---|---|
-    | `ovos.common_query.ping` / `.pong` — wants-to-answer poll | discovery handshake (same names) |
-    | `<skill_id>.common_query.request` — full-answer request to a claiming skill (dotted, non-dispatch) | `question:query` broadcast |
-    | `<skill_id>.common_query.response` — a skill's answer + `conf` | `question:query.response` |
-    | `<pipeline_id>:common_query` — reserved-name handler dispatch (the one genuine colon/dispatch topic in this family) | `question:action.<skill_id>` |
+    | `ovos.common_query.ping` / `.pong`: wants-to-answer poll | discovery handshake (same names) |
+    | `<skill_id>.common_query.request`: full-answer request to a claiming skill (dotted, non-dispatch) | `question:query` broadcast |
+    | `<skill_id>.common_query.response`: a skill's answer plus `conf` | `question:query.response` |
+    | `<pipeline_id>:common_query`: reserved-name handler dispatch (the one genuine colon/dispatch topic in this family) | `question:action.<skill_id>` |
 
 ## How it works
 
@@ -70,15 +71,19 @@ The matcher class is `CommonQAService` (a `PipelinePlugin`, so it exposes a sing
    "question word" (`QuestionWord` vocab), and rejects utterances that match
    `Play`, `Weather`, `Alerts`, or a misc blacklist. Non-questions are skipped, so
    the query never goes out.
+
 2. **Broadcast**: emits `question:query` with the phrase. CommonQuery skills are
    discovered on startup via an `ovos.common_query.ping` / `ovos.common_query.pong`
    handshake.
+
 3. **Collect**: skills reply on `question:query.response`, each with an answer and
    a self-reported confidence. A skill can ask for more time by replying with
    `searching: true`, which extends the timeout.
+
 4. **Select**: the pipeline chooses the best answer. If a reranker plugin is configured and
    loaded, it scores the candidate answers. Otherwise the skills' own confidences
    order them.
+
 5. **Deliver**: returns an `IntentHandlerMatch`. The match type is
    `question:action.<skill_id>` (or plain `question:action` for skills still using
    the deprecated CommonQuery base class), so the selected skill is told to speak

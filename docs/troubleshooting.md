@@ -38,7 +38,7 @@ directory. On a typical Linux install that is:
     some component is logging under the generic default rather than its own service log.
 
 The directory can be overridden per-service via the `logs.path` config key (or `logging.<service>.
-logs.path` for a per-service override); see [Turning up log detail](#turning-up-log-detail) below.
+logs.path` for a per-service override). See [Turning up log detail](#turning-up-log-detail) below.
 Each service also logs to `stdout`, so if it runs under systemd or Docker, `journalctl` /
 `docker logs` shows the same lines.
 
@@ -55,7 +55,7 @@ reference.
 
 ---
 
-## Watch the bus while you speak — `ovos-busmon`
+## Watch the bus while you speak: `ovos-busmon`
 
 All the stages in this guide talk to each other over the [messagebus](bus-service.md): the listener
 emits an utterance message, the intent service emits a match, the skill emits a `speak`, and so on.
@@ -125,7 +125,7 @@ where you run it):
 | `BUFFER_SIZE` | `2000` | How many messages the ring buffer keeps. |
 
 A Docker route is also available (`docker compose up --build` from the repo), using the image
-`jarbasai/ovos-busmon:latest`; its bundled compose file binds the container to `127.0.0.1:8005` only
+`jarbasai/ovos-busmon:latest`. Its bundled compose file binds the container to `127.0.0.1:8005` only
 and sets `OVOS_BUS_HOST=host.docker.internal` so it can reach a bus running on the host.
 
 !!! warning "Local debugging only: never expose this to the internet"
@@ -143,18 +143,18 @@ and sets `OVOS_BUS_HOST=host.docker.internal` so it can reach a bus running on t
 2. Open `http://127.0.0.1:8005` in a browser and log in with the configured credentials.
 3. Speak (or trigger) an utterance on the OVOS device.
 4. Filter by `recognizer_loop:*`. The first hit is the raw utterance leaving the listener
-   (Stage 2 below); if nothing appears here, the problem is upstream of the bus entirely (Stage 1).
+   (Stage 2 below). If nothing appears here, the problem is upstream of the bus entirely (Stage 1).
 5. Filter by `ovos.intent.matched` and `ovos.utterance.handled`. These tell you which pipeline
    stage claimed the utterance and confirm the lifecycle actually closed (Stage 4/5 below).
 6. Filter by `ovos.utterance.speak`. Its absence, with everything else present, points at a silent
-   skill handler; its presence with no audio points at the TTS/playback stage (Stage 6).
+   skill handler. Its presence with no audio points at the TTS/playback stage (Stage 6).
 
 Each stage further down cites the exact message type to filter on, so this same walkthrough can be
 repeated stage-by-stage instead of glancing at the whole stream at once.
 
 ---
 
-## Stage 1 — Is the service even running, and is the bus reachable?
+## Stage 1: Is the service even running, and is the bus reachable?
 
 **Log:** `bus.log`. **Bus visual:** any message appearing at all in `ovos-busmon`
 
@@ -188,7 +188,7 @@ up (busmon does not auto-retry) and the stream stays empty. Restart busmon once 
 
 ---
 
-## Stage 2 — Did the mic/wake word fire?
+## Stage 2: Did the mic/wake word fire?
 
 **Log:** `voice.log` (service `ovos-dinkum-listener`). **Bus filter:** `recognizer_loop:record_begin`
 / `record_end`, `ovos.listener.record.started` / `ovos.listener.record.ended`
@@ -207,9 +207,9 @@ Common failure signatures:
 
 | Symptom in `voice.log` | Likely cause |
 |---|---|
-| No `Record begin` line at all when you speak | Wake word plugin isn't hearing you — check the mic device/gain, or the [wake word](wake-word-plugins.md) model/sensitivity. |
-| `Record begin` fires but never followed by `Record end` | VAD never detects silence — check the [VAD plugin](vad-plugins.md) config. |
-| Repeated wake-word triggers with no speech after | False positives — the wake word threshold may be too low. |
+| No `Record begin` line at all when you speak | Wake word plugin isn't hearing you: check the mic device/gain, or the [wake word](wake-word-plugins.md) model/sensitivity. |
+| `Record begin` fires but never followed by `Record end` | VAD never detects silence: check the [VAD plugin](vad-plugins.md) config. |
+| Repeated wake-word triggers with no speech after | False positives: the wake word threshold may be too low. |
 
 To hear the recorded audio yourself, turn on the listener's own recording keys in
 [configuration](config.md) (user config, under `"listener"`):
@@ -225,7 +225,7 @@ To hear the recorded audio yourself, turn on the listener's own recording keys i
 ```
 
 `save_utterances` writes every STT-bound recording as a `.wav` file under
-`<save_path>/utterances/`; `record_wake_words` does the same for wake-word triggers under
+`<save_path>/utterances/`. `record_wake_words` does the same for wake-word triggers under
 `<save_path>/wake_words/`. Set them with:
 
 ```bash
@@ -238,12 +238,12 @@ until you delete them. Nothing prunes the directory. Turn both keys back off and
 [Privacy & Security](privacy-security.md#what-is-written-to-disk) for what the listener writes
 to disk by default.
 
-`ovos-listen` can also be used to force a listening cycle without saying the wake word at all —
+`ovos-listen` can also force a listening cycle without saying the wake word at all. This is
 useful for isolating STT problems (Stage 3) from wake-word problems.
 
 ---
 
-## Stage 3 — Did STT produce text?
+## Stage 3: Did STT produce text?
 
 **Log:** `voice.log`. **Bus filter:** `recognizer_loop:utterance` (spec name `ovos.utterance.handle`)
 
@@ -258,9 +258,9 @@ Common failure signatures:
 
 | Symptom | Likely cause |
 |---|---|
-| `ERROR - Empty transcription, either recorded silence or STT failed!` | The STT engine returned nothing — check the STT plugin is installed/configured and (for online engines) that the network/API key is working. |
-| `INFO - Ignoring low confidence STT transcriptions: [...]` | A confidence filter dropped the candidate — check `min_stt_confidence` in the listener config. |
-| Transcription text is garbled/wrong words | STT engine or language mismatch, not a bug in the pipeline — try a different STT plugin or model size. |
+| `ERROR - Empty transcription, either recorded silence or STT failed!` | The STT engine returned nothing: check the STT plugin is installed/configured and (for online engines) that the network/API key is working. |
+| `INFO - Ignoring low confidence STT transcriptions: [...]` | A confidence filter dropped the candidate: check `min_stt_confidence` in the listener config. |
+| Transcription text is garbled/wrong words | STT engine or language mismatch, not a bug in the pipeline: try a different STT plugin or model size. |
 
 To skip the microphone and STT entirely and test everything **downstream** of this point, inject the
 text directly onto the bus as if STT had already produced it:
@@ -279,7 +279,7 @@ the utterance land there with the right text confirms STT worked, regardless of 
 
 ---
 
-## Stage 4 — Which pipeline stage matched (or didn't)?
+## Stage 4: Which pipeline stage matched (or didn't)?
 
 **Log:** `skills.log` (or `intents.log` if the intent service runs standalone). **Bus filter:**
 `ovos.intent.matched`, `ovos.utterance.handled`
@@ -319,7 +319,7 @@ ovos-say-to "some phrase that does nothing" && ovos-logs show -l skills
 ```
 
 Every request ends with exactly one `ovos.utterance.handled` event, whether an intent matched or
-not. Its absence means the intent service itself crashed or hung; its presence with no matched
+not. Its absence means the intent service itself crashed or hung. Its presence with no matched
 intent means every pipeline plugin genuinely rejected the utterance (usually a vocabulary/training
 data problem in the target skill, not a bug). See [Intent Layers](layers.md) and the
 [Pipelines Overview](pipelines-overview.md) for how to add or reorder matchers.
@@ -331,7 +331,7 @@ the full JSON payload of the match.
 
 ---
 
-## Stage 5 — Did the skill handler raise?
+## Stage 5: Did the skill handler raise?
 
 **Log:** `skills.log`. **Bus filter:** `ovos.intent.handler.error` (legacy `mycroft.skill.handler.
 error`). Part of the handler-lifecycle trio `...handler.start` → `...complete` / `...error`
@@ -350,16 +350,16 @@ failed rather than silently returning nothing. Common failure signatures to grep
 
 | Symptom | Likely cause |
 |---|---|
-| A traceback right after `final intent match` | The skill's own handler code raised — read the traceback, it names the exact file/line. |
-| `Failed to update settings.json` | Non-fatal — a settings write failed after a successful handler run; doesn't explain a silent utterance. |
-| No traceback, no `speak`, handler simply never runs | The bus dispatch itself failed to reach the skill process — check the skill actually loaded (see [Skill Manager](skill-manager.md)) and its `skill_id` matches the matched intent. |
+| A traceback right after `final intent match` | The skill's own handler code raised: read the traceback, it names the exact file/line. |
+| `Failed to update settings.json` | Non-fatal. A settings write failed after a successful handler run. It doesn't explain a silent utterance. |
+| No traceback, no `speak`, handler simply never runs | The bus dispatch itself failed to reach the skill process: check the skill actually loaded (see [Skill Manager](skill-manager.md)) and its `skill_id` matches the matched intent. |
 
 In `ovos-busmon`, filter by `*handler.error` to catch any handler-lifecycle error message across
 every skill in one view, or filter by the specific skill's ID to isolate its traffic.
 
 ---
 
-## Stage 6 — Did TTS speak?
+## Stage 6: Did TTS speak?
 
 **Log:** `audio.log` (service `ovos-audio`). **Bus filter:** `ovos.utterance.speak` (legacy
 `speak`), `ovos.utterance.handled`
@@ -376,9 +376,9 @@ Common failure signatures:
 | Symptom in `audio.log` | Likely cause |
 |---|---|
 | `EXCEPTION - TTS synth failed! ...` | The [TTS plugin](tts-plugins.md) itself errored (model missing, API failure for an online engine, bad voice config). |
-| `ERROR - No fallback TTS available and main TTS failed!` | Both the primary and fallback TTS engines failed — check both are configured, or that the fallback exists at all. |
-| No `Speak:` line at all, despite the skill having matched | The `ovos.utterance.speak` message never reached `ovos-audio` — check `ovos-audio` is actually running (Stage 1) and not crashed. |
-| `Speak:` line present but no sound | Not a bug in the pipeline — check the audio sink: ALSA/PulseAudio device selection, system volume, or that the WAV file was actually written and playable. |
+| `ERROR - No fallback TTS available and main TTS failed!` | Both the primary and fallback TTS engines failed: check both are configured, or that the fallback exists at all. |
+| No `Speak:` line at all, despite the skill having matched | The `ovos.utterance.speak` message never reached `ovos-audio`: check `ovos-audio` is actually running (Stage 1) and not crashed. |
+| `Speak:` line present but no sound | Not a bug in the pipeline: check the audio sink: ALSA/PulseAudio device selection, system volume, or that the WAV file was actually written and playable. |
 
 To test synthesis in isolation, without going through STT or intent matching at all:
 
@@ -391,8 +391,8 @@ tts-transformer → playback path described in [The Life of an Utterance](life-o
 If this command produces sound but a real skill interaction doesn't, the problem is upstream (Stages
 1-5), not in audio output.
 
-In `ovos-busmon`, filter by `ovos.utterance.speak`: present with no sound points at the audio sink;
-absent (with everything upstream present) points at a silent or failed skill handler (Stage 5).
+In `ovos-busmon`, filter by `ovos.utterance.speak`. Present with no sound points at the audio sink.
+Absent, with everything upstream present, points at a silent or failed skill handler (Stage 5).
 
 ---
 

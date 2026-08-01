@@ -45,12 +45,12 @@ Model loading happens in `GGUFChatEngine`, which the other engines delegate to.
 |---|---|---|---|
 | `model` | `str` | required | Hugging Face repo id (`"owner/repo-name-GGUF"`) or absolute path to a `.gguf` file. |
 | `remote_filename` | `str` | `*Q4_K_M.gguf` | Glob selecting the GGUF file from a Hub repo (ignored for local-file `model`). |
-| `n_gpu_layers` | `int` | `0` | Layers offloaded to GPU. `0` = CPU only; `-1` = all layers on GPU. |
+| `n_gpu_layers` | `int` | `0` | Layers offloaded to GPU. `0` means CPU only. `-1` means all layers on GPU. |
 | `chat_format` | `str` | `null` | `llama-cpp-python` chat template name (auto-detected if unset). |
 | `max_tokens` | `int` | `null` | Maximum tokens in the completion (`null` = model/llama.cpp default). |
 | `verbose` | `bool` | `true` | Pass-through to `llama_cpp.Llama`. |
 | `system_prompt` | `str` | `null` | Default system prompt. |
-| `allow_system_prompts` | `bool` | `false` | When `true`, caller system messages are merged with the configured prompt; when `false`, stripped. |
+| `allow_system_prompts` | `bool` | `false` | When `true`, caller system messages are merged with the configured prompt. When `false`, they are stripped. |
 
 A `model` value that is an existing file path is loaded with `Llama(model_path=...)`. Otherwise
 it is treated as a Hub repo id and loaded with `Llama.from_pretrained(repo_id=..., filename=...)`.
@@ -63,7 +63,6 @@ it is treated as a Hub repo id and loaded with `Llama.from_pretrained(repo_id=..
   "remote_filename": "*q4.gguf",
   "n_gpu_layers": 0
 }
-
 ```
 
 !!! note "First run downloads the model"
@@ -82,7 +81,6 @@ it is treated as a Hub repo id and loaded with `Llama.from_pretrained(repo_id=..
   "model": "/home/user/models/llama-3.1-8b.gguf",
   "n_gpu_layers": 20
 }
-
 ```
 
 ---
@@ -105,7 +103,6 @@ Multi-turn conversational LLM using a local GGUF model. Implements `continue_cha
     "system_prompt": "You are a helpful assistant."
   }
 }
-
 ```
 
 ### Offline persona example
@@ -121,7 +118,6 @@ Multi-turn conversational LLM using a local GGUF model. Implements `continue_cha
     "system_prompt": "You are a concise, helpful voice assistant."
   }
 }
-
 ```
 
 Activate by voice: `"Chat with Local Phi-3"`.
@@ -135,7 +131,9 @@ Activate by voice: `"Chat with Local Phi-3"`.
 **OPM plugin name:** `ovos-summarizer-gguf-plugin`
 
 Condenses a document into a short summary using a local GGUF model. Delegates generation to a
-`GGUFChatEngine`. The system prompt and user prompt default to the plugin's localized
+`GGUFChatEngine`.
+
+The system prompt and user prompt default to the plugin's localized
 `.prompt` files. Override with `system_prompt` and `prompt_template` (a template with a
 `{content}` placeholder).
 
@@ -151,7 +149,6 @@ Condenses a document into a short summary using a local GGUF model. Delegates ge
     "max_tokens": 256
   }
 }
-
 ```
 
 ---
@@ -177,7 +174,6 @@ Translate text between languages or detect a text's language using a local GGUF 
     }
   }
 }
-
 ```
 
 ---
@@ -190,8 +186,9 @@ Translate text between languages or detect a text's language using a local GGUF 
 
 Runs after skill response generation, before [TTS](tts-plugins.md) synthesis. Rewrites skill
 responses with a local GGUF model. It only runs when a `rewrite_prompt` is configured (via
-config or `context["prompt"]`). Otherwise it falls back to the original dialog. Default priority:
-`10`. The system prompt defaults to the localized `dialog_transform_system` prompt.
+config or `context["prompt"]`). Otherwise it falls back to the original dialog.
+
+Default priority: `10`. The system prompt defaults to the localized `dialog_transform_system` prompt.
 
 ```json
 {
@@ -203,7 +200,6 @@ config or `context["prompt"]`). Otherwise it falls back to the original dialog. 
     }
   }
 }
-
 ```
 
 ---
@@ -212,9 +208,9 @@ config or `context["prompt"]`). Otherwise it falls back to the original dialog. 
 
 | Use case | Recommended model size | Example |
 |---|---|---|
-| Real-time voice (low latency) | 1B–3B parameters | `Phi-3-mini` Q4_K_M |
-| General purpose | 7B–8B parameters | `Llama-3.1-8B` Q4_K_M |
-| Memory-constrained devices | 1B–1.5B parameters | `Qwen2.5-1.5B` Q4_K_M |
+| Real-time voice (low latency) | 1B to 3B parameters | `Phi-3-mini` Q4_K_M |
+| General purpose | 7B to 8B parameters | `Llama-3.1-8B` Q4_K_M |
+| Memory-constrained devices | 1B to 1.5B parameters | `Qwen2.5-1.5B` Q4_K_M |
 
 Quantization level guide:
 
@@ -237,7 +233,6 @@ Set `n_gpu_layers` to offload transformer layers to a CUDA or Metal GPU:
   "model": "/path/to/llama-3.1-8b.gguf",
   "n_gpu_layers": -1
 }
-
 ```
 
 `-1` offloads all layers (full GPU inference). Values > 0 offload that many layers (partial
@@ -247,7 +242,6 @@ Requires `llama-cpp-python` to be compiled with CUDA or Metal support:
 
 ```bash
 CMAKE_ARGS="-DGGML_CUDA=on" pip install llama-cpp-python --force-reinstall
-
 ```
 
 ---

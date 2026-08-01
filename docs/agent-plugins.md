@@ -35,7 +35,7 @@ parallel `*.config` group for config metadata). The discovery helpers live in
 | `opm.agents.retrieval` | `RetrievalEngine` | Retrieval-augmented generation |
 | `opm.agents.retrieval.documents` | `DocumentIndexerEngine` | Index + retrieve over a document corpus |
 | `opm.agents.retrieval.qa` | `QAIndexerEngine` | Index + retrieve over a Q/A corpus |
-| `opm.agents.toolbox` | — | Tool / function-calling registry |
+| `opm.agents.toolbox` | none | Tool / function-calling registry |
 
 To write your own engine, see [Building Agent Plugins](building-agent-plugins.md) for
 the base-class decision guide, method contracts, packaging walkthroughs, and the solver
@@ -56,20 +56,20 @@ examples, see [Agents & Personas](personas.md) and [Advanced Solvers](advanced-s
 | [ovos-solver-plugin-aiml](#ovos-solver-plugin-aiml) | A rule-based chatbot answer engine for OVOS, using AIML pattern matching. |
 | [ovos-persona](#ovos-persona) | The **`PersonaPipeline`** brings multi-persona management to OpenVoiceOS (OVOS), enabling interactive conversations with virtual assistants. With personas, you can customize how queries are handled by assigning specific solvers to each persona. |
 | [ovos-openai-plugin](#ovos-openai-plugin) | Uses the [OpenAI Completions API](https://platform.openai.com/docs/api-reference/completions/create) to provide a chat engine, a dialog-rewriting transformer, and a summarizer, all pointed at any OpenAI-compatible endpoint. |
-| [ovos-messagebus-chat-plugin](#ovos-messagebus-chat-plugin) | `OVOSMessagebusChatAgent` — a `ChatEngine` (`opm.agents.chat`, entry point `ovos-messagebus`) that proxies each turn through a connected OVOS messagebus pipeline. |
+| [ovos-messagebus-chat-plugin](#ovos-messagebus-chat-plugin) | `OVOSMessagebusChatAgent`: a `ChatEngine` (`opm.agents.chat`, entry point `ovos-messagebus`) that proxies each turn through a connected OVOS messagebus pipeline. |
 | [ovos-wikipedia-solver](#ovos-wikipedia-solver) | Answers factual questions by querying Wikipedia. |
 | [ovos-chromadb-embeddings-plugin](#ovos-chromadb-embeddings-plugin) | The `ChromaEmbeddingsDB` plugin integrates with the [ChromaDB](https://www.trychroma.com/) database to store, retrieve, and query embeddings. This plugin extends the abstract `EmbeddingsDB` class, using ChromaDB's capabilities. |
 | [ovos-wolfram-alpha-solver](#ovos-wolfram-alpha-solver) | Answers computational and factual questions via the Wolfram Alpha API. |
 | [ovos-ddg-solver-plugin](#ovos-ddg-solver-plugin) | Answers questions using DuckDuckGo instant-answer results. |
 | [ovos-solver-YesNo-plugin](#ovos-solver-yesno-plugin) | A simple tool to indicate whether a user answered "yes" or "no" to a yes/no prompt. |
 | [ovos-solver-failure-plugin](#ovos-solver-failure-plugin) | Extreme fallback, just complains it does not have a brain |
-| [ovos-gguf-plugin](#ovos-gguf-plugin) | Unified GGUF wrapper — chat, summarization, dialog rewriting, translation, language detection, and text embeddings, all backed by quantized GGUF models via `llama-cpp-python`. |
+| [ovos-gguf-plugin](#ovos-gguf-plugin) | Unified GGUF wrapper for chat, summarization, dialog rewriting, translation, language detection, and text embeddings, all backed by quantized GGUF models via `llama-cpp-python`. |
 | [ovos-persona-server](#ovos-persona-server) | Standalone server that exposes an OVOS persona over an HTTP API. |
 | [ovos-solver-plugin-rivescript](#ovos-solver-plugin-rivescript) | A rule-based chatbot answer engine for OVOS, using RiveScript pattern matching. |
 
 ## ovos-qdrant-embeddings-plugin
 
-- **GitHub**: [https://github.com/OpenVoiceOS/ovos-qdrant-embeddings-plugin](https://github.com/OpenVoiceOS/ovos-qdrant-embeddings-plugin)
+- **GitHub**: [OpenVoiceOS/ovos-qdrant-embeddings-plugin](https://github.com/OpenVoiceOS/ovos-qdrant-embeddings-plugin)
 
 
 - **Description**: The `QdrantEmbeddingsDB` plugin integrates with the [qdrant](https://qdrant.tech/) database to store, retrieve, and query embeddings. This plugin extends the abstract `EmbeddingsDB` class, using qdrant's capabilities.
@@ -80,9 +80,9 @@ examples, see [Agents & Personas](personas.md) and [Advanced Solvers](advanced-s
 
 | Key | Default | Notes |
 |---|---|---|
-| `vector_size` | — | **Required.** Dimension of the stored embedding vectors. |
+| `vector_size` | none | **Required.** Dimension of the stored embedding vectors. |
 | `distance_metric` | `cosine` | One of `cosine`, `euclidean`, `dot`. |
-| `host` | — | When set, connects to a remote Qdrant server (otherwise a persistent local client is used). |
+| `host` | none | When set, connects to a remote Qdrant server (otherwise a persistent local client is used). |
 | `port` | `6333` | HTTP port for the remote client. |
 | `grpc_port` | `6334` | gRPC port for the remote client. |
 
@@ -90,7 +90,7 @@ examples, see [Agents & Personas](personas.md) and [Advanced Solvers](advanced-s
 
 ## ovos-solver-plugin-aiml
 
-- **GitHub**: [https://github.com/OpenVoiceOS/ovos-solver-plugin-aiml](https://github.com/OpenVoiceOS/ovos-solver-plugin-aiml)
+- **GitHub**: [OpenVoiceOS/ovos-solver-plugin-aiml](https://github.com/OpenVoiceOS/ovos-solver-plugin-aiml)
 
 
 - **Description**: A rule-based chatbot answer engine for OVOS, using AIML pattern matching.
@@ -101,7 +101,7 @@ examples, see [Agents & Personas](personas.md) and [Advanced Solvers](advanced-s
 
 ## ovos-persona
 
-- **GitHub**: [https://github.com/OpenVoiceOS/ovos-persona](https://github.com/OpenVoiceOS/ovos-persona)
+- **GitHub**: [OpenVoiceOS/ovos-persona](https://github.com/OpenVoiceOS/ovos-persona)
 
 
 - **Description**: The **`PersonaPipeline`** brings multi-persona management to OpenVoiceOS (OVOS), enabling interactive conversations with virtual assistants. With personas, you can customize how queries are handled by assigning specific solvers to each persona.
@@ -110,7 +110,7 @@ examples, see [Agents & Personas](personas.md) and [Advanced Solvers](advanced-s
 
 ## ovos-openai-plugin
 
-- **GitHub**: [https://github.com/OpenVoiceOS/ovos-openai-plugin](https://github.com/OpenVoiceOS/ovos-openai-plugin)
+- **GitHub**: [OpenVoiceOS/ovos-openai-plugin](https://github.com/OpenVoiceOS/ovos-openai-plugin)
 
 
 - **Description**: An OpenAI-compatible engine family (chat, dialog-rewriting, and summarization) usable with any OpenAI-compatible endpoint. See [OpenAI Plugin](openai-plugin.md) for the full entry-point table, config keys, and examples.
@@ -119,7 +119,7 @@ examples, see [Agents & Personas](personas.md) and [Advanced Solvers](advanced-s
 
 ## ovos-messagebus-chat-plugin
 
-- **GitHub**: [https://github.com/OpenVoiceOS/ovos-messagebus-chat-plugin](https://github.com/OpenVoiceOS/ovos-messagebus-chat-plugin)
+- **GitHub**: [OpenVoiceOS/ovos-messagebus-chat-plugin](https://github.com/OpenVoiceOS/ovos-messagebus-chat-plugin)
 
 - **Entry point**: `ovos-messagebus` → `OVOSMessagebusChatAgent` (group `opm.agents.chat`).
 
@@ -129,7 +129,7 @@ examples, see [Agents & Personas](personas.md) and [Advanced Solvers](advanced-s
 
 ## ovos-wikipedia-solver
 
-- **GitHub**: [https://github.com/OpenVoiceOS/ovos-wikipedia-solver](https://github.com/OpenVoiceOS/ovos-wikipedia-solver)
+- **GitHub**: [OpenVoiceOS/ovos-wikipedia-solver](https://github.com/OpenVoiceOS/ovos-wikipedia-solver)
 
 
 - **Description**: Answers factual questions by querying Wikipedia.
@@ -140,7 +140,7 @@ examples, see [Agents & Personas](personas.md) and [Advanced Solvers](advanced-s
 
 ## ovos-chromadb-embeddings-plugin
 
-- **GitHub**: [https://github.com/OpenVoiceOS/ovos-chromadb-embeddings-plugin](https://github.com/OpenVoiceOS/ovos-chromadb-embeddings-plugin)
+- **GitHub**: [OpenVoiceOS/ovos-chromadb-embeddings-plugin](https://github.com/OpenVoiceOS/ovos-chromadb-embeddings-plugin)
 
 
 - **Description**: The `ChromaEmbeddingsDB` plugin integrates with the [ChromaDB](https://www.trychroma.com/) database to store, retrieve, and query embeddings. This plugin extends the abstract `EmbeddingsDB` class, using ChromaDB's capabilities.
@@ -152,7 +152,7 @@ examples, see [Agents & Personas](personas.md) and [Advanced Solvers](advanced-s
 | Key | Default | Notes |
 |---|---|---|
 | `path` | `./chromadb_storage` | Storage path for the persistent local client. |
-| `host` | — | When set, connects to a remote ChromaDB HTTP server instead of the local persistent client. |
+| `host` | none | When set, connects to a remote ChromaDB HTTP server instead of the local persistent client. |
 | `port` | `8000` | Port for the remote HTTP client. |
 
 Per-collection metadata defaults `hnsw:space` to `cosine` when not specified.
@@ -161,20 +161,20 @@ Per-collection metadata defaults `hnsw:space` to `cosine` when not specified.
 
 ## ovos-wolfram-alpha-solver
 
-- **GitHub**: [https://github.com/OpenVoiceOS/ovos-wolfram-alpha-solver](https://github.com/OpenVoiceOS/ovos-wolfram-alpha-solver)
+- **GitHub**: [OpenVoiceOS/ovos-wolfram-alpha-solver](https://github.com/OpenVoiceOS/ovos-wolfram-alpha-solver)
 
 
 - **Description**: Answers computational and factual questions via the Wolfram Alpha API.
 
 - **Config**: `"appid"`: your own Wolfram Alpha AppID. Without one, queries go to Wolfram's
   servers on a shared demo key. Either way this solver is a call to a third-party cloud
-  service; it has no offline mode.
+  service. It has no offline mode.
 
 ---
 
 ## ovos-ddg-solver-plugin
 
-- **GitHub**: [https://github.com/OpenVoiceOS/ovos-ddg-solver-plugin](https://github.com/OpenVoiceOS/ovos-ddg-solver-plugin)
+- **GitHub**: [OpenVoiceOS/ovos-ddg-solver-plugin](https://github.com/OpenVoiceOS/ovos-ddg-solver-plugin)
 
 
 - **Description**: Answers questions using DuckDuckGo instant-answer results.
@@ -185,7 +185,7 @@ Per-collection metadata defaults `hnsw:space` to `cosine` when not specified.
 
 ## ovos-solver-YesNo-plugin
 
-- **GitHub**: [https://github.com/OpenVoiceOS/ovos-solver-YesNo-plugin](https://github.com/OpenVoiceOS/ovos-solver-YesNo-plugin)
+- **GitHub**: [OpenVoiceOS/ovos-solver-YesNo-plugin](https://github.com/OpenVoiceOS/ovos-solver-YesNo-plugin)
 
 
 - **Description**: A simple tool to indicate whether a user answered "yes" or "no" to a yes/no prompt.
@@ -196,7 +196,7 @@ Per-collection metadata defaults `hnsw:space` to `cosine` when not specified.
 
 ## ovos-solver-failure-plugin
 
-- **GitHub**: [https://github.com/OpenVoiceOS/ovos-solver-failure-plugin](https://github.com/OpenVoiceOS/ovos-solver-failure-plugin)
+- **GitHub**: [OpenVoiceOS/ovos-solver-failure-plugin](https://github.com/OpenVoiceOS/ovos-solver-failure-plugin)
 
 
 - **Description**: Extreme fallback, just complains it does not have a brain
@@ -207,7 +207,7 @@ Per-collection metadata defaults `hnsw:space` to `cosine` when not specified.
 
 ## ovos-gguf-plugin
 
-- **GitHub**: [https://github.com/OpenVoiceOS/ovos-gguf-plugin](https://github.com/OpenVoiceOS/ovos-gguf-plugin)
+- **GitHub**: [OpenVoiceOS/ovos-gguf-plugin](https://github.com/OpenVoiceOS/ovos-gguf-plugin)
 
 
 - **Description**: A unified GGUF wrapper providing chat, summarization, dialog rewriting, translation, language detection, and text-embedding engines, all backed by quantized GGUF models loaded through `llama-cpp-python`. See [GGUF Plugin](gguf-plugin.md) for the full entry-point table.
@@ -216,7 +216,7 @@ Per-collection metadata defaults `hnsw:space` to `cosine` when not specified.
 
 ## ovos-persona-server
 
-- **GitHub**: [https://github.com/OpenVoiceOS/ovos-persona-server](https://github.com/OpenVoiceOS/ovos-persona-server)
+- **GitHub**: [OpenVoiceOS/ovos-persona-server](https://github.com/OpenVoiceOS/ovos-persona-server)
 
 
 - **Description**: Standalone server that exposes an OVOS persona over an HTTP API (e.g. `ovos-persona-server --persona rivescript_bot.json`).
@@ -225,7 +225,7 @@ Per-collection metadata defaults `hnsw:space` to `cosine` when not specified.
 
 ## ovos-solver-plugin-rivescript
 
-- **GitHub**: [https://github.com/OpenVoiceOS/ovos-solver-plugin-rivescript](https://github.com/OpenVoiceOS/ovos-solver-plugin-rivescript)
+- **GitHub**: [OpenVoiceOS/ovos-solver-plugin-rivescript](https://github.com/OpenVoiceOS/ovos-solver-plugin-rivescript)
 
 
 - **Description**: A rule-based chatbot answer engine for OVOS, using RiveScript pattern matching.

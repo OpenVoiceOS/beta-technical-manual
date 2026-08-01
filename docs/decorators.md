@@ -94,7 +94,7 @@ def handle_help_in_converse(self, message): ...
 
 `fallback_handler`: `ovos_workshop/decorators/__init__.py`
 
-Register a method as a fallback handler with a given priority (0–100, lower = higher priority).
+Register a method as a fallback handler with a given priority (0-100, lower = higher priority).
 
 ```python
 from ovos_workshop.decorators import fallback_handler

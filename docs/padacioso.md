@@ -33,7 +33,6 @@ container.add_intent('search', [
 container.add_entity('engine', ['abc', 'xyz'])
 container.calc_intent('find cats using xyz')
 # {'name': 'search', 'entities': {'query': 'cats', 'engine': 'xyz'}, 'conf': 0.96}
-
 # wildcards — * matches anything; the name is the registered intent name
 container.add_intent('say', ["say *"])
 container.calc_intent('say something, whatever')

@@ -2,7 +2,7 @@
 # gh-automations
 
 !!! abstract "In a nutshell"
-    `gh-automations` is a shared toolbox of ready-made automation recipes that every OVOS code project can borrow, instead of each one writing its own. These recipes handle the repetitive chores around publishing software — running tests, checking licences, bumping version numbers, and pushing releases out. Because the recipe lives in one place, fixing or improving it once updates every project that uses it. This is a developer/maintainer reference; see the [Workflow Reference](gh-automations-workflows.md) for the full list, or the [Glossary](glossary.md).
+    `gh-automations` is a shared toolbox of ready-made automation recipes that every OVOS code project can borrow, instead of each one writing its own. These recipes handle the repetitive chores around publishing software: running tests, checking licences, bumping version numbers, and pushing releases out. The recipe lives in one place, so fixing or improving it once updates every project that uses it. This is a developer/maintainer reference. See the [Workflow Reference](gh-automations-workflows.md) for the full list, or the [Glossary](glossary.md).
 
 `gh-automations` (hosted at [OpenVoiceOS/gh-automations](https://github.com/OpenVoiceOS/gh-automations)) is the shared GitHub Actions automation library for OpenVoiceOS repositories.
 
@@ -12,7 +12,7 @@ Instead of every OVOS repo copy-pasting its own CI/CD YAML, this repo holds a se
 
 The workflows cover two jobs:
 
-- **Release automation**: bump the version on PR merge to `dev`, publish an alpha to PyPI, open a release PR to `master`, then on merge declare the version stable and tag it. See [Release Flow](gh-automations-release.md).
+- **Release automation**: bump the version on PR merge to `dev`, publish an alpha to PyPI, and open a release PR to `master`. On merge, declare the version stable and tag it. See [Release Flow](gh-automations-release.md).
 - **PR checks**: build/install/test, plugin detection, license/CVE scanning, coverage, linting, version preview, and more. Most of these post their result as a section in a single shared **OVOS PR Checks** comment on the PR.
 
 ### How to wire one into your repo
@@ -40,7 +40,7 @@ jobs:
 
 ### Scripts checkout
 
-Several reusable workflows check this repo out again at runtime to reach `scripts/` (the PR-comment helper, version utilities, etc.), pinned to `ref: dev`. You do not write this yourself — it lives inside the reusable workflow:
+Several reusable workflows check this repo out again at runtime to reach `scripts/` (the PR-comment helper, version utilities, etc.), pinned to `ref: dev`. You do not write this yourself: it lives inside the reusable workflow.
 
 ```yaml
 
@@ -60,7 +60,7 @@ A typical repo runs `build-tests.yml` as a PR gate, `publish-alpha.yml` when a P
 `dev`, and `publish-stable.yml` when the resulting release PR merges to `master`:
 
 ```yaml
-# .github/workflows/build_tests.yml — gate every PR into dev
+# .github/workflows/build_tests.yml - gate every PR into dev
 name: Run Build Tests
 on:
   pull_request:
@@ -75,7 +75,7 @@ jobs:
 ```
 
 ```yaml
-# .github/workflows/publish_alpha.yml — bump + publish an alpha on merge to dev
+# .github/workflows/publish_alpha.yml - bump + publish an alpha on merge to dev
 name: Publish Alpha Build
 on:
   pull_request:
@@ -92,7 +92,7 @@ jobs:
 ```
 
 ```yaml
-# .github/workflows/publish_stable.yml — declare stable + publish on push to master
+# .github/workflows/publish_stable.yml - declare stable + publish on push to master
 name: Publish Stable Build
 on:
   push:
@@ -108,8 +108,10 @@ jobs:
 
 The three form a pipeline. `build-tests` must pass before a PR can merge to `dev`.
 `publish-alpha` then bumps the version, tags a pre-release, publishes it to PyPI, and opens the
-release PR to `master`. Merging that PR triggers `publish-stable`, which drops the alpha suffix,
-tags the stable release, publishes it, and (with `sync_dev: true`) pushes `master` back into
+release PR to `master`.
+
+Merging that PR triggers `publish-stable`, which drops the alpha suffix,
+tags the stable release, and publishes it. With `sync_dev: true`, it also pushes `master` back into
 `dev` so both branches stay aligned. `secrets: inherit` is required on every call so
 `PYPI_TOKEN` reaches the reusable workflow. See [Release Flow](gh-automations-release.md) for the
 full diagram of this same pipeline.
@@ -133,35 +135,35 @@ The filename below is the actual file in this repo (the `<name>.yml`). The name 
 |---|---|
 | `publish-alpha.yml` | On PR merge to `dev`: bump version, optionally update changelog / tag pre-release / publish alpha to PyPI / notify Matrix, and open a release PR to `master`. PyPI publish and Matrix notify are jobs **inside** this workflow, gated by `publish_pypi` / `notify_matrix`. |
 | `publish-stable.yml` | On push to `master`: remove the alpha suffix, tag the stable release, optionally publish to PyPI, notify Matrix, and sync `master` → `dev`. |
-| `release-preview.yml` | Predict the next version from PR labels/title; post a `🏷️ Release Preview` section. |
+| `release-preview.yml` | Predict the next version from PR labels/title. Post a `🏷️ Release Preview` section. |
 
 ### Build & test
 
 | Workflow | Purpose |
 |---|---|
 | `build-tests.yml` | Build/install/test matrix across Python versions. Posts `🔨 Build Tests`. |
-| `coverage.yml` | Run pytest with coverage; post `📊 Coverage`; optionally deploy the HTML report to Pages (`deploy_pages: true`). |
-| `ovoscope.yml` | Run [ovoscope](ovoscope-overview.md) end-to-end skill tests; post `🔌 Skill Tests (ovoscope)`. |
-| `intent-case-tests.yml` | Run the file-based ovoscope intent-routing accuracy matrix (sharded by language); post `🎯 Intent-Case Accuracy`. |
-| `tts-intelligibility.yml` | Synthesise speech, transcribe it back with reference STT, score WER/CER; post `🗣️ TTS Intelligibility`. |
-| `opm-check.yml` | OPM (OVOS Plugin Manager) plugin detection, interface validation, import timing; post `🔌 Plugin Detection`. |
+| `coverage.yml` | Run pytest with coverage. Post `📊 Coverage`. Optionally deploy the HTML report to Pages (`deploy_pages: true`). |
+| `ovoscope.yml` | Run [ovoscope](ovoscope-overview.md) end-to-end skill tests. Post `🔌 Skill Tests (ovoscope)`. |
+| `intent-case-tests.yml` | Run the file-based ovoscope intent-routing accuracy matrix (sharded by language). Post `🎯 Intent-Case Accuracy`. |
+| `tts-intelligibility.yml` | Synthesise speech, transcribe it back with reference STT, and score WER/CER. Post `🗣️ TTS Intelligibility`. |
+| `opm-check.yml` | OPM (OVOS Plugin Manager) plugin detection, interface validation, and import timing. Post `🔌 Plugin Detection`. |
 
 ### Quality & policy
 
 | Workflow | Purpose |
 |---|---|
-| `license-check.yml` | Scan dependencies for copyleft/incompatible licenses (universal-donor policy); post `⚖️ License Check`. |
-| `pip-audit.yml` | Scan installed dependencies for CVEs; optional SARIF upload; post `🔒 Security (pip-audit)`. |
-| `lint.yml` | Run ruff and/or pre-commit; post lint results. |
-| `type-check.yml` | Run mypy; post `🔎 Type Check` (informational unless `fail_on_errors: true`). |
-| `docs-check.yml` | Verify required docs files exist; optional markdownlint; post `📚 Docs`. |
-| `repo-health.yml` | Check required files / version block, greet first-time contributors; post `📋 Repo Health`. |
+| `license-check.yml` | Scan dependencies for copyleft/incompatible licenses (universal-donor policy). Post `⚖️ License Check`. |
+| `pip-audit.yml` | Scan installed dependencies for CVEs, with optional SARIF upload. Post `🔒 Security (pip-audit)`. |
+| `lint.yml` | Run ruff and/or pre-commit. Post lint results. |
+| `type-check.yml` | Run mypy. Post `🔎 Type Check` (informational unless `fail_on_errors: true`). |
+| `docs-check.yml` | Verify required docs files exist, with optional markdownlint. Post `📚 Docs`. |
+| `repo-health.yml` | Check required files and the version block, and greet first-time contributors. Post `📋 Repo Health`. |
 
 ### Skills
 
 | Workflow | Purpose |
 |---|---|
-| `skill-check.yml` | Locale structure, language coverage, `skill.json` validity; post `🎙️ Skill`. |
+| `skill-check.yml` | Locale structure, language coverage, `skill.json` validity. Post `🎙️ Skill`. |
 | `locale-check.yml` | Verify locale folders are correctly included in the package build. |
 | `spec-lint.yml` | Run `ovos-spec-lint` against a skill's locale folder (OVOS-INTENT-1 / OVOS-INTENT-2). |
 
@@ -185,11 +187,11 @@ Full input/output/job reference: [Workflow Reference](gh-automations-workflows.m
 
 ## Python Scripts
 
-Located in `scripts/`. Checked out by the reusable workflows at run time — not installed as a package.
+Located in `scripts/`. Checked out by the reusable workflows at run time, not installed as a package.
 
 | Script | Key function | Purpose |
 |---|---|---|
-| `_version_utils.py` | `read_version` / `format_version` / `write_version_block` | Parse, format, and rewrite the `version.py` block; shared by all version scripts |
+| `_version_utils.py` | `read_version` / `format_version` / `write_version_block` | Parse, format, and rewrite the `version.py` block. Shared by all version scripts |
 | `update_version.py` | `update_version(part, version_file)` | Bump `VERSION_MAJOR/MINOR/BUILD/ALPHA` in `version.py` |
 | `remove_alpha.py` | `update_alpha(version_file)` | Set `VERSION_ALPHA = 0` (declare stable) |
 | `get_version.py` | `get_version(version_file)` | Read and print current version string |
@@ -226,5 +228,5 @@ VERSION_ALPHA = 4   # 0 = stable
 
 | Repo | Role |
 |---|---|
-| [ovos-releases](https://github.com/OpenVoiceOS/ovos-releases) | Holds `constraints-alpha/testing/stable.txt`; updated after stable releases. The channel-compatibility check and `downstream-check.yml` read these files. |
+| [ovos-releases](https://github.com/OpenVoiceOS/ovos-releases) | Holds `constraints-alpha/testing/stable.txt`, updated after stable releases. The channel-compatibility check and `downstream-check.yml` read these files. |
 | [raspOVOS](https://github.com/OpenVoiceOS/raspOVOS) | Uses a `constraints-*.txt` URL as the `CONSTRAINTS` env var during image builds. |

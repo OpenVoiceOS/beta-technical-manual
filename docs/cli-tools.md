@@ -14,7 +14,7 @@ version-correct options.
 
 ---
 
-## Configuration — `ovos-config`
+## Configuration: `ovos-config`
 
 Shipped by **[`ovos-config`](config.md)**. Inspect and edit the layered
 [configuration](config.md) without hand-editing JSON.
@@ -22,9 +22,9 @@ Shipped by **[`ovos-config`](config.md)**. Inspect and edit the layered
 | Command | What it does |
 |---|---|
 | `ovos-config show` | Print the merged configuration as a table. |
-| `ovos-config get -k <key>` | Read the value(s) at a key or key path (e.g. `-k /tts/module`); a loose key name lists every match. |
-| `ovos-config set -k <key> -v <value>` | Write a value into the user configuration; omit `-v` to be prompted (useful when the key is ambiguous). |
-| `ovos-config autoconfigure -l <lang>` | Pick sensible default STT/TTS plugins for a language. `--lang`/`-l` is required; select `--online`/`-on`, `--offline`/`-off`, or `--hybrid`/`-hy` (offline TTS + online STT — the default when none is given), and optionally `--male`/`-m` or `--female`/`-f` for the TTS voice (TTS is left unconfigured if neither is passed). |
+| `ovos-config get -k <key>` | Read the value(s) at a key or key path (e.g. `-k /tts/module`). A loose key name lists every match. |
+| `ovos-config set -k <key> -v <value>` | Write a value into the user configuration. Omit `-v` to be prompted (useful when the key is ambiguous). |
+| `ovos-config autoconfigure -l <lang>` | Pick sensible default STT/TTS plugins for a language. `--lang`/`-l` is required. Select `--online`/`-on`, `--offline`/`-off`, or `--hybrid`/`-hy` (offline TTS + online STT: the default when none is given). Optionally add `--male`/`-m` or `--female`/`-f` for the TTS voice. TTS is left unconfigured if neither is passed. |
 | `ovos-config telemetry --enable` / `--disable` | Opt in or out of anonymous intent telemetry. |
 
 `ovos-config autoconfigure --help` is the recommended first stop after an install to set
@@ -33,10 +33,10 @@ language-appropriate defaults. See the full generated
 
 ---
 
-## Talking to a running OVOS — `ovos-bus-client`
+## Talking to a running OVOS: `ovos-bus-client`
 
 Shipped by **[`ovos-bus-client`](core-libraries.md#ovos-bus-client)**. These emit messages to a *running*
-OVOS over the [messagebus](bus-service.md) — handy for testing, scripting, and debugging.
+OVOS over the [messagebus](bus-service.md). They help with testing, scripting, and debugging.
 
 | Command | What it does |
 |---|---|
@@ -47,7 +47,7 @@ OVOS over the [messagebus](bus-service.md) — handy for testing, scripting, and
 
 ---
 
-## Reading the logs — `ovos-logs`
+## Reading the logs: `ovos-logs`
 
 Shipped by **[`ovos-utils`](core-libraries.md#ovos-utils)**. A helper for slicing and filtering the OVOS
 [log files](core-libraries.md#ovos-utils) without wrestling with `grep`/`tail`.
@@ -55,7 +55,7 @@ Shipped by **[`ovos-utils`](core-libraries.md#ovos-utils)**. A helper for slicin
 | Command | What it does |
 |---|---|
 | `ovos-logs slice` | Extract a time-bounded slice across the logs (`--start` / `--until`). |
-| `ovos-logs list` | List messages filtered by level — `--error`, `--warning`, `--exception`, `--debug` — and time. |
+| `ovos-logs list` | List messages filtered by level (`--error`, `--warning`, `--exception`, `--debug`) and time. |
 | `ovos-logs show -l <log>` | Print one named log (e.g. `skills`, `bus`, `audio`). |
 | `ovos-logs reduce` | Truncate the logs to a given `--size` or `--date` to reclaim space. |
 
@@ -66,15 +66,15 @@ See the full generated [`ovos-logs --help` output](#command-help-output-generate
 ## Running the services by hand
 
 Each core OVOS service is normally started by your service manager (systemd, the
-[ovos-installer](ovos-installer.md), or Docker), but every one also has a console script so you
-can launch it directly — useful for debugging or minimal/headless setups.
+[ovos-installer](ovos-installer.md), or Docker). Every one also has a console script, so you
+can launch it directly. This is useful for debugging or minimal/headless setups.
 
 | Command | Service | Package |
 |---|---|---|
 | `ovos-core` | The skills service ([ovos-core](core.md)) | `ovos-core` |
 | `ovos-messagebus` | The [messagebus](bus-service.md) server | `ovos-messagebus` |
 | `ovos-dinkum-listener` | The [speech/listener service](speech-service.md) | `ovos-dinkum-listener` |
-| `ovos-audio` | The [audio service](audio-service.md) — TTS & sound playback (and the legacy media audioservice) | `ovos-audio` |
+| `ovos-audio` | The [audio service](audio-service.md): TTS and sound playback (and the legacy media audioservice) | `ovos-audio` |
 | `ovos-gui-service` | The [GUI service](gui-service.md) | `ovos-gui` |
 | `ovos-gui-debug-tui` | A terminal viewer for GUI state, for debugging | `ovos-gui` |
 | `ovos-intent-service` | The [intent service](intent-service.md), run standalone | `ovos-core` |
@@ -96,7 +96,7 @@ can launch it directly — useful for debugging or minimal/headless setups.
 ## Command Help Output (Generated)
 
 <!-- BEGIN GENERATED: cli-help-output -->
-<!-- This section is auto-generated by tools/gen_reference.py from the upstream source of truth. Do not hand-edit; re-run the script instead. -->
+<!-- This section is auto-generated by tools/gen_reference.py from the upstream source of truth. Do not hand-edit. Re-run the script instead. -->
 ??? example "`ovos-config --help`"
 
     ```text

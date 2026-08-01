@@ -53,7 +53,6 @@ Wyoming client                    wyoming-ovos-stt                 OVOS plugin l
                            │    .handle_audio_end()       │  (OVOSSTTFactory)
  Describe    ─────────────►    → write Info event         │
                            └─────────────────────────────┘
-
 ```
 
 **`STTAPIEventHandler`** (`wyoming_ovos_stt/handler.py`)
@@ -66,7 +65,7 @@ One instance per client connection. Accumulates incoming audio chunks (converted
 |---|---|
 | `AudioChunk` | Convert to 16 kHz/16-bit/mono, append to `self.audio` |
 | `AudioStop` | Call `STT.execute()`, send `Transcript`, reset accumulator |
-| `Transcribe` | Acknowledge (no-op; signals start of a new request) |
+| `Transcribe` | Acknowledge (no-op). Signals start of a new request |
 | `Describe` | Send `Info` advertising the loaded plugin as an ASR model |
 
 Plugin loading happens once at startup. The plugin instance is shared across all connections.
@@ -76,16 +75,15 @@ Plugin loading happens once at startup. The plugin instance is shared across all
 ```bash
 pip install wyoming-ovos-stt
 wyoming-ovos-stt --plugin-name <ovos-stt-plugin-name> --uri tcp://0.0.0.0:7891
-
 ```
 
 | Argument | Required | Default | Description |
 |---|---|---|---|
-| `--plugin-name` | Yes | — | OVOS STT plugin module name (e.g. `ovos-stt-plugin-whisper`) |
-| `--uri` | Yes | — | `tcp://HOST:PORT` or `unix:///path/to/socket` |
+| `--plugin-name` | Yes | (none) | OVOS STT plugin module name (e.g. `ovos-stt-plugin-whisper`) |
+| `--uri` | Yes | (none) | `tcp://HOST:PORT` or `unix:///path/to/socket` |
 | `--debug` | No | `False` | Enable DEBUG log level |
 | `--log-format` | No | `BASIC_FORMAT` | Format string for log messages |
-| `--version` | No | — | Print version and exit |
+| `--version` | No | (none) | Print version and exit |
 
 Examples:
 
@@ -100,7 +98,6 @@ wyoming-ovos-stt --uri unix:///run/wyoming-stt.sock --plugin-name ovos-stt-plugi
 # Proxy to a server plugin — set "urls" to YOUR OWN stt-server (see stt-server.md);
 # leaving "urls" unset falls back to public community servers
 wyoming-ovos-stt --uri tcp://0.0.0.0:7891 --plugin-name ovos-stt-plugin-server
-
 ```
 
 ### Configuration
@@ -120,7 +117,6 @@ Language is taken from `cfg["lang"]` if present, otherwise from `mycroft.conf["l
     }
   }
 }
-
 ```
 
 !!! warning "`ovos-stt-plugin-server` without `urls` uses public servers"
@@ -140,7 +136,6 @@ Server → Transcript (text="hello world")
 
 Client → Describe
 Server → Info(asr=[AsrProgram(name=plugin_name, models=[AsrModel(...)])])
-
 ```
 
 Audio must be 16 kHz / 16-bit / mono PCM. The bridge converts incoming audio automatically.
@@ -166,7 +161,6 @@ Wyoming client                    wyoming-ovos-tts                  OVOS plugin 
  AudioChunk* ◄─────────────                               │
  AudioStop   ◄─────────────                               │
                            └──────────────────────────────┘
-
 ```
 
 **`OVOSTTSEventHandler`**
@@ -185,12 +179,11 @@ a path to a WAV file. The WAV is split into chunks of 1024 samples and streamed 
 ```bash
 pip install wyoming-ovos-tts
 wyoming-ovos-tts --plugin-name <ovos-tts-plugin-name> --uri tcp://0.0.0.0:7892
-
 ```
 
 | Argument | Required | Default | Description |
 |---|---|---|---|
-| `--plugin-name` | Yes | — | OVOS TTS plugin module name (e.g. `ovos-tts-plugin-piper`) |
+| `--plugin-name` | Yes | (none) | OVOS TTS plugin module name (e.g. `ovos-tts-plugin-piper`) |
 | `--uri` | No | `stdio://` | `tcp://HOST:PORT` or `unix:///path/to/socket` |
 | `--debug` | No | `False` | Enable DEBUG log level |
 
@@ -207,7 +200,6 @@ wyoming-ovos-tts --uri unix:///run/wyoming-tts.sock --plugin-name ovos-tts-plugi
 # Proxy to a server plugin — set "host" to YOUR OWN tts-server (see tts-server.md);
 # leaving "host" unset falls back to public community servers
 wyoming-ovos-tts --uri tcp://0.0.0.0:7892 --plugin-name ovos-tts-plugin-server
-
 ```
 
 ### Configuration
@@ -226,7 +218,6 @@ Plugin configuration is read from `mycroft.conf["tts"][<plugin-name>]`.
     }
   }
 }
-
 ```
 
 !!! warning "`ovos-tts-plugin-server` without `host` uses public servers"
@@ -247,7 +238,6 @@ Server → AudioStart(rate=22050, width=2, channels=1)
 
 Client → Describe
 Server → Info(tts=[TtsProgram(name=plugin_name, voices=[TtsVoice(...)])])
-
 ```
 
 ---
@@ -277,7 +267,6 @@ Wyoming client                   wyoming-ovos-wakeword              OVOS plugin 
  AudioStop   ─────────────►   (if no detection)             │
  NotDetected ◄─────────────   send NotDetected              │
                            └────────────────────────────────┘
-
 ```
 
 **`OVOSWakeWordEventHandler`**
@@ -305,7 +294,6 @@ Clients select which to activate with the `Detect` event.
 ```bash
 pip install wyoming-ovos-wakeword
 wyoming-ovos-wakeword --uri tcp://0.0.0.0:7893
-
 ```
 
 | Argument | Required | Default | Description |
@@ -327,7 +315,6 @@ wyoming-ovos-wakeword --uri tcp://0.0.0.0:7893 --zeroconf
 
 # With custom zeroconf service name
 wyoming-ovos-wakeword --uri tcp://0.0.0.0:7893 --zeroconf my-ovos-wakeword
-
 ```
 
 > Zeroconf requires a `tcp://` URI.
@@ -370,7 +357,6 @@ Configuration is read entirely from `mycroft.conf`:
     }
   }
 }
-
 ```
 
 All configured hotwords are advertised via `Describe`/`Info` and are selectable by name.
@@ -389,7 +375,6 @@ Client → AudioStart(rate=16000, width=2, channels=1)
 Server → Detection(name="hey_mycroft")   ← if detected
 
        | NotDetected                      ← if not detected
-
 ```
 
 ### Zeroconf / mDNS Discovery

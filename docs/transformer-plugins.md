@@ -8,8 +8,8 @@
     it. They don't take over any step. They just polish what passes between steps. See the
     [Glossary](glossary.md) for related terms.
 
-??? info "📐 Formal specification"
-    The transformer subsystem is specified by **[OVOS-TRANSFORM-1: Transformer Plugins](https://github.com/OpenVoiceOS/architecture/blob/dev/transformer.md)** (one of the formal [architecture specs](architecture-specs.md)). It defines **six ordered chains**, `audio`, `utterance`, `metadata`, `intent`, `dialog`, `tts`, that run at fixed points in the utterance lifecycle. It also defines the per-type input/output contract for each, the per-session ordering and denylist overrides, and the utterance-cancellation signal. A transformer is identified by its `(type, transformer_id)` pair. Where this manual or the current code diverges from the spec, the spec is canonical.
+??? info "Formal specification"
+    The transformer subsystem is specified by **[OVOS-TRANSFORM-1: Transformer Plugins](https://github.com/OpenVoiceOS/architecture/blob/dev/transformer.md)** (one of the formal [architecture specs](architecture-specs.md)). It defines **six ordered chains**: `audio`, `utterance`, `metadata`, `intent`, `dialog`, `tts`. These run at fixed points in the utterance lifecycle. It also defines the per-type input/output contract for each, the per-session ordering and denylist overrides, and the utterance-cancellation signal. A transformer is identified by its `(type, transformer_id)` pair. Where this manual or the current code diverges from the spec, the spec is canonical.
 
     **Ordering.** OVOS-TRANSFORM-1 §4 orders each chain by **ascending** `priority`. A lower number runs **earlier**, and the default is `50`. The current OVOS code follows this: a plugin with `priority=1` runs first, and later plugins see and may override its output. A legacy descending order is still available as an explicit opt-in (`sort_ascending=False`, marked deprecated in `ovos_plugin_manager/transformer_services.py`) for deployments that depend on the old behavior.
 
@@ -17,7 +17,7 @@ Transformer plugins let you intercept and modify data as it flows through the tr
 
 A transformer never *replaces* a stage. It sits between two stages and reshapes what passes through. Several plugins of the same type can be active at once. They run in sequence, lowest `priority` first, so each one builds on the output of the previous.
 
-!!! note "Synchronous contract — keep transformers fast"
+!!! note "Synchronous contract: keep transformers fast"
     `transform()` (and `on_audio()`/`on_speech()`) are plain synchronous methods. The chain
     runner calls each one inline, in order, on the thread that owns the chain. A slow
     transformer blocks the owning service for its full duration. There is no background
@@ -147,9 +147,10 @@ print(f"Transformed: {transformed}")
 
 The discovery helpers (`find_*_transformer_plugins`, `load_*_transformer_plugin`) live in
 `ovos_plugin_manager.text_transformers`, `.intent_transformers`, `.metadata_transformers`,
-`.audio_transformers`, and `.dialog_transformers`. The dialog module also exposes the
-`find_tts_transformer_plugins` / `load_tts_transformer_plugin` helpers. There is no
-separate `tts_transformers` module.
+`.audio_transformers`, and `.dialog_transformers`.
+
+The dialog module also exposes the `find_tts_transformer_plugins` / `load_tts_transformer_plugin`
+helpers. There is no separate `tts_transformers` module.
 
 ## Creating a Plugin
 
@@ -170,7 +171,7 @@ my-transformer = "my_package.module:MyTransformer"
 !!! note "No config-discovery entry point for transformers"
     TTS and STT plugins can register a second entry point (`opm.tts.config`, `opm.stt.config`)
     that exposes sample configurations for UI discovery. See
-    [TTS Plugins — Entry point](tts-plugins.md#entry-point). `ovos-plugin-manager`'s
+    [TTS Plugins: Entry point](tts-plugins.md#entry-point). `ovos-plugin-manager`'s
     `PluginConfigTypes` enum has no matching entry for any transformer type (audio, utterance,
     metadata, intent, dialog, or tts transformers). A transformer plugin only registers under
     its `opm.transformer.*` group; there is no equivalent `opm.transformer.text.config` group to
@@ -181,13 +182,15 @@ my-transformer = "my_package.module:MyTransformer"
 1. **Pin the dependency version.** Put a floor and a ceiling on `ovos-plugin-manager` in
    `pyproject.toml`, for example `ovos-plugin-manager>=0.5.0,<1.0.0`, so a future breaking
    release does not silently pull in.
+
 2. **Install for local development.** Run `pip install -e .` from the plugin's own repository.
-   See [OVOS Plugin Manager — Install and verify](plugin-manager.md#3-install-and-verify) for the
+   See [OVOS Plugin Manager: Install and verify](plugin-manager.md#3-install-and-verify) for the
    check that confirms the plugin is discoverable.
+
 3. **Publish to PyPI.** The Plugin Arena's benchmark sweep installs competitors from PyPI, so a
    transformer plugin needs a PyPI release before it can be entered. See
-   [Plugin Arena — Getting Your Plugin Ranked](plugin-arena.md#getting-your-plugin-ranked) and
-   [TTS Plugins — Package and publish](tts-plugins.md#package-and-publish) for the shared steps.
+   [Plugin Arena: Getting Your Plugin Ranked](plugin-arena.md#getting-your-plugin-ranked) and
+   [TTS Plugins: Package and publish](tts-plugins.md#package-and-publish) for the shared steps.
 
 ## Test your plugin locally
 
@@ -227,8 +230,8 @@ restart OVOS.
 | [ovos-audio-transformer-plugin-speechbrain-langdetect](#ovos-audio-transformer-plugin-speechbrain-langdetect) | spoken language detector for ovos | Stable |
 | [ovos-utterance-corrections-plugin](#ovos-utterance-corrections-plugin) | This plugin provides tools to correct or adjust speech-to-text (STT) outputs for better intent matching or improved user experience. | Stable |
 | [ovos-utterance-normalizer](#ovos-utterance-normalizer) | normalizes utterances before intent parsing | Stable |
-| [ovos-utterance-plugin-cancel](#ovos-utterance-plugin-cancel) | plugin to look at the tail end of the transcribed phrase, ignoring the utterance if it ends with "nevermind that" or "cancel it" or "ignore that". | Stable |
-| [ovos-audio-transformer-plugin-ggwave](#ovos-audio-transformer-plugin-ggwave) | plugin for https://github.com/ggerganov/ggwave | Mature |
+| [ovos-utterance-plugin-cancel](#ovos-utterance-plugin-cancel) | looks at the end of the transcribed phrase and ignores it if it ends with "nevermind that", "cancel it", or "ignore that". | Stable |
+| [ovos-audio-transformer-plugin-ggwave](#ovos-audio-transformer-plugin-ggwave) | plugin for [ggwave](https://github.com/ggerganov/ggwave) | Mature |
 | [ovos-tts-transformer-sox-plugin](#ovos-tts-transformer-sox-plugin) | A Text-to-Speech (TTS) transformer that uses SoX (Sound eXchange) for audio processing. The transformer applies various effects to the generated audio before playback. | Beta |
 | [ovos_tts_transformer_FlashSR](#ovos_tts_transformer_flashsr) | ONNX-based audio super-resolution that upsamples synthesized TTS audio before playback (not yet on PyPI). | Proof-of-concept |
 | [ovos_tts_transformer_NovaSR](#ovos_tts_transformer_novasr) | torch-based audio super-resolution upsampler for synthesized TTS audio (not yet on PyPI). | Proof-of-concept |
@@ -237,7 +240,7 @@ Maturity reflects repository health (age, activity, open issues/PRs, in-repo doc
 
 ## ovos-dialog-normalizer-plugin
 
-- **GitHub**: [https://github.com/OpenVoiceOS/ovos-dialog-normalizer-plugin](https://github.com/OpenVoiceOS/ovos-dialog-normalizer-plugin)
+- **GitHub**: [OpenVoiceOS/ovos-dialog-normalizer-plugin](https://github.com/OpenVoiceOS/ovos-dialog-normalizer-plugin)
 
 
 - **Description**: a dialog transformer plugins for OVOS
@@ -246,7 +249,7 @@ Maturity reflects repository health (age, activity, open issues/PRs, in-repo doc
 
 ## ovos-bidirectional-translation-plugin
 
-- **GitHub**: [https://github.com/OpenVoiceOS/ovos-bidirectional-translation-plugin](https://github.com/OpenVoiceOS/ovos-bidirectional-translation-plugin)
+- **GitHub**: [OpenVoiceOS/ovos-bidirectional-translation-plugin](https://github.com/OpenVoiceOS/ovos-bidirectional-translation-plugin)
 
 
 - **Description**: This package includes a UtteranceTransformer plugin and a DialogTransformer plugin, they work together to allow OVOS to speak in ANY language
@@ -255,7 +258,7 @@ Maturity reflects repository health (age, activity, open issues/PRs, in-repo doc
 
 ## ovos-audio-transformer-plugin-speechbrain-langdetect
 
-- **GitHub**: [https://github.com/OpenVoiceOS/ovos-audio-transformer-plugin-speechbrain-langdetect](https://github.com/OpenVoiceOS/ovos-audio-transformer-plugin-speechbrain-langdetect)
+- **GitHub**: [OpenVoiceOS/ovos-audio-transformer-plugin-speechbrain-langdetect](https://github.com/OpenVoiceOS/ovos-audio-transformer-plugin-speechbrain-langdetect)
 
 
 - **Description**: spoken language detector for ovos
@@ -264,7 +267,7 @@ Maturity reflects repository health (age, activity, open issues/PRs, in-repo doc
 
 ## ovos-utterance-corrections-plugin
 
-- **GitHub**: [https://github.com/OpenVoiceOS/ovos-utterance-corrections-plugin](https://github.com/OpenVoiceOS/ovos-utterance-corrections-plugin)
+- **GitHub**: [OpenVoiceOS/ovos-utterance-corrections-plugin](https://github.com/OpenVoiceOS/ovos-utterance-corrections-plugin)
 
 
 - **Description**: This plugin provides tools to correct or adjust speech-to-text (STT) outputs for better intent matching or improved user experience.
@@ -273,7 +276,7 @@ Maturity reflects repository health (age, activity, open issues/PRs, in-repo doc
 
 ## ovos-utterance-normalizer
 
-- **GitHub**: [https://github.com/OpenVoiceOS/ovos-utterance-normalizer](https://github.com/OpenVoiceOS/ovos-utterance-normalizer)
+- **GitHub**: [OpenVoiceOS/ovos-utterance-normalizer](https://github.com/OpenVoiceOS/ovos-utterance-normalizer)
 
 
 - **Description**: normalizes utterances before intent parsing
@@ -282,25 +285,25 @@ Maturity reflects repository health (age, activity, open issues/PRs, in-repo doc
 
 ## ovos-utterance-plugin-cancel
 
-- **GitHub**: [https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel)
+- **GitHub**: [OpenVoiceOS/ovos-utterance-plugin-cancel](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel)
 
 
-- **Description**: plugin to look at the tail end of the transcribed phrase, ignoring the utterance if it ends with "nevermind that" or "cancel it" or "ignore that".
+- **Description**: looks at the end of the transcribed phrase and ignores it if it ends with "nevermind that", "cancel it", or "ignore that".
 
 ---
 
 ## ovos-audio-transformer-plugin-ggwave
 
-- **GitHub**: [https://github.com/OpenVoiceOS/ovos-audio-transformer-plugin-ggwave](https://github.com/OpenVoiceOS/ovos-audio-transformer-plugin-ggwave)
+- **GitHub**: [OpenVoiceOS/ovos-audio-transformer-plugin-ggwave](https://github.com/OpenVoiceOS/ovos-audio-transformer-plugin-ggwave)
 
 
-- **Description**: plugin for https://github.com/ggerganov/ggwave
+- **Description**: plugin for [ggwave](https://github.com/ggerganov/ggwave)
 
 ---
 
 ## ovos-tts-transformer-sox-plugin
 
-- **GitHub**: [https://github.com/OpenVoiceOS/ovos-tts-transformer-sox-plugin](https://github.com/OpenVoiceOS/ovos-tts-transformer-sox-plugin)
+- **GitHub**: [OpenVoiceOS/ovos-tts-transformer-sox-plugin](https://github.com/OpenVoiceOS/ovos-tts-transformer-sox-plugin)
 
 
 - **Description**: A Text-to-Speech (TTS) transformer that uses SoX (Sound eXchange) for audio processing. The transformer applies various effects to the generated audio before playback.
@@ -309,7 +312,7 @@ Maturity reflects repository health (age, activity, open issues/PRs, in-repo doc
 
 ## ovos_tts_transformer_FlashSR
 
-- **GitHub**: [https://github.com/OpenVoiceOS/ovos_tts_transformer_FlashSR](https://github.com/OpenVoiceOS/ovos_tts_transformer_FlashSR)
+- **GitHub**: [OpenVoiceOS/ovos_tts_transformer_FlashSR](https://github.com/OpenVoiceOS/ovos_tts_transformer_FlashSR)
 
 
 - **Description**: ONNX-based audio super-resolution TTS transformer (`FlashSRTTSTransformer`). It upsamples synthesized audio before playback, downloading its model from the Hugging Face Hub. Entry point `ovos-tts-transformer-FlashSR` under `opm.transformer.tts`. **Upcoming**: not yet published to PyPI.
@@ -318,7 +321,7 @@ Maturity reflects repository health (age, activity, open issues/PRs, in-repo doc
 
 ## ovos_tts_transformer_NovaSR
 
-- **GitHub**: [https://github.com/OpenVoiceOS/ovos_tts_transformer_NovaSR](https://github.com/OpenVoiceOS/ovos_tts_transformer_NovaSR)
+- **GitHub**: [OpenVoiceOS/ovos_tts_transformer_NovaSR](https://github.com/OpenVoiceOS/ovos_tts_transformer_NovaSR)
 
 
 - **Description**: torch-based super-resolution upsampler TTS transformer (`NovaSRTTSTransformer`). Entry point `ovos-tts-transformer-NovaSR` under `opm.transformer.tts`. **Upcoming**: not yet published to PyPI.

@@ -1,13 +1,13 @@
 # Audio Service
 
-!!! info "Maturity — Stable ⬤⬤⬤⬤◯"
+!!! info "Maturity: Stable ⬤⬤⬤⬤◯"
     Established and production-ready, actively maintained. Rated by [repository health](maturity.md), not version.
 
 !!! abstract "In a nutshell"
     `ovos-audio` is the part of OVOS that actually makes sound come out of the speakers. When a skill wants to say something, this service turns that text into speech (using a [TTS](tts-plugins.md) plugin) and plays it, while making sure only one thing talks at a time and turning down background music so you can hear the reply. Think of it as the assistant's mouth and its audio mixer rolled into one. See [TTS Plugins](tts-plugins.md) or the [Glossary](glossary.md) for related terms.
 
 ??? info "📐 Formal specification"
-    The audio **output** service (dialog-transformer chain, TTS synthesis, tts-transformer chain, playback queue, plus remote-client rendering) is specified by **[OVOS-AUDIO-1 — Audio Output Service](https://github.com/OpenVoiceOS/architecture/blob/dev/audio-out.md)**. The dialog and tts transformer chains it hosts are specified by **[OVOS-TRANSFORM-1 — Transformer Plugins](https://github.com/OpenVoiceOS/architecture/blob/dev/transformer.md)** (§3.5 dialog, §3.6 tts). See also the [spec index](architecture-specs.md). Spec topic names are canonical below, with the legacy name noted once. The *media* audioservice, subsystem 2 below, is a separate, deprecated concern and is not covered by OVOS-AUDIO-1.
+    The audio **output** service (dialog-transformer chain, TTS synthesis, tts-transformer chain, playback queue, plus remote-client rendering) is specified by **[OVOS-AUDIO-1: Audio Output Service](https://github.com/OpenVoiceOS/architecture/blob/dev/audio-out.md)**. The dialog and tts transformer chains it hosts are specified by **[OVOS-TRANSFORM-1: Transformer Plugins](https://github.com/OpenVoiceOS/architecture/blob/dev/transformer.md)** (§3.5 dialog, §3.6 tts). See also the [spec index](architecture-specs.md). Spec topic names are canonical below, with the legacy name noted once. The *media* audioservice, subsystem 2 below, is a separate, deprecated concern and is not covered by OVOS-AUDIO-1.
 
 `ovos-audio` is the component responsible for [TTS](tts-plugins.md) synthesis and audio playback. It ensures that only one thing is speaking at a time and manages audio focus between different media sources.
 
@@ -86,14 +86,14 @@ streams. See the **Two independent subsystems** note at the top of this page.
 ## Architecture
 
 ```text
-Subsystem 1 — TTS / sound playback (always on):    OVOS-AUDIO-1 §3
+Subsystem 1 - TTS / sound playback (always on):    OVOS-AUDIO-1 §3
   [MessageBus] --(ovos.utterance.speak)--> [dialog-transformers §3.5] --> [TTS Plugin] --> [tts-transformers §3.6]
                (legacy: speak)                                                                      |
                --(play_sound)----------------------------------------------------+                  |
                                                                                   v                  v
                                                        [TTS.queue] --> [PlaybackThread] --(ALSA/Pulse)--> [Speakers]
 
-Subsystem 2 — legacy media audioservice (only if enable_old_audioservice):
+Subsystem 2 - legacy media audioservice (only if enable_old_audioservice):
   [MessageBus] --(mycroft.audio.service.play)--> [AudioService] --> [audioservice backend: OCP / mpv / vlc]
 ```
 

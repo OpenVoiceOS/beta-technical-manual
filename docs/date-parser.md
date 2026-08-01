@@ -48,104 +48,104 @@ pip install ovos-date-parser
 `ovos-date-parser` supports a wide array of languages, each with its own set of methods for handling natural language
 time expressions.
 
-- ✅ - supported
+- yes - supported
 
 
-- ❌ - not supported
+- no - not supported
 
 
-- 🚧 - imperfect placeholder, usually a language agnostic implementation or external library
+- WIP - imperfect placeholder, usually a language agnostic implementation or external library
 
 **Parse**
 
 | Language | `extract_duration` | `extract_datetime` |
 |----------|--------------------|--------------------|
-| an       | ✅                  | ✅                  |
-| ar       | ✅                  | ✅                  |
-| ast      | ✅                  | ✅                  |
-| az       | ✅                  | ✅                  |
-| bg       | ✅                  | ✅                  |
-| ca       | ✅                  | ✅                  |
-| cs       | ✅                  | ✅                  |
-| da       | ✅                  | ✅                  |
-| de       | ✅                  | ✅                  |
-| el       | ❌                  | ✅                  |
-| en       | ✅                  | ✅                  |
-| es       | ✅                  | ✅                  |
-| et       | ✅                  | ✅                  |
-| eu       | ✅                  | ✅                  |
-| fa       | ✅                  | ✅                  |
-| fi       | ✅                  | ✅                  |
-| fr       | ✅                  | ✅                  |
-| fy       | ✅                  | ✅                  |
-| gl       | ✅                  | ✅                  |
-| he       | ❌                  | ✅                  |
-| hr       | ✅                  | ✅                  |
-| hu       | ✅                  | ✅                  |
-| id       | ❌                  | ✅                  |
-| it       | ✅                  | ✅                  |
-| kab      | ✅                  | ✅                  |
-| ms       | ❌                  | ✅                  |
-| nb/no    | ✅                  | ✅                  |
-| nl       | ✅                  | ✅                  |
-| nn       | ✅                  | ✅                  |
-| oc       | ✅                  | ✅                  |
-| pl       | ✅                  | ✅                  |
-| pt       | ✅                  | ✅                  |
-| ro       | ✅                  | ✅                  |
-| ru       | ✅                  | ✅                  |
-| sk       | ✅                  | ✅                  |
-| sl       | ✅                  | ✅                  |
-| sv       | ✅                  | ✅                  |
-| tr       | ❌                  | ✅                  |
-| uk       | ✅                  | ✅                  |
+| an       | yes                  | yes                  |
+| ar       | yes                  | yes                  |
+| ast      | yes                  | yes                  |
+| az       | yes                  | yes                  |
+| bg       | yes                  | yes                  |
+| ca       | yes                  | yes                  |
+| cs       | yes                  | yes                  |
+| da       | yes                  | yes                  |
+| de       | yes                  | yes                  |
+| el       | no                  | yes                  |
+| en       | yes                  | yes                  |
+| es       | yes                  | yes                  |
+| et       | yes                  | yes                  |
+| eu       | yes                  | yes                  |
+| fa       | yes                  | yes                  |
+| fi       | yes                  | yes                  |
+| fr       | yes                  | yes                  |
+| fy       | yes                  | yes                  |
+| gl       | yes                  | yes                  |
+| he       | no                  | yes                  |
+| hr       | yes                  | yes                  |
+| hu       | yes                  | yes                  |
+| id       | no                  | yes                  |
+| it       | yes                  | yes                  |
+| kab      | yes                  | yes                  |
+| ms       | no                  | yes                  |
+| nb/no    | yes                  | yes                  |
+| nl       | yes                  | yes                  |
+| nn       | yes                  | yes                  |
+| oc       | yes                  | yes                  |
+| pl       | yes                  | yes                  |
+| pt       | yes                  | yes                  |
+| ro       | yes                  | yes                  |
+| ru       | yes                  | yes                  |
+| sk       | yes                  | yes                  |
+| sl       | yes                  | yes                  |
+| sv       | yes                  | yes                  |
+| tr       | no                  | yes                  |
+| uk       | yes                  | yes                  |
 
 
-> 💡 If a language is not implemented for `extract_datetime`, [dateparser](https://dateparser.readthedocs.io/en/latest/) is used as a fallback. Most `extract_duration` languages are driven by a shared lexicon engine (`DURATION_LEXICONS` in `ovos_date_parser/duration.py`), so new languages are added declaratively. `ar`, `ast`, `kab`, `fa`, and `sv` have standalone extractors instead.
+> If a language is not implemented for `extract_datetime`, [dateparser](https://dateparser.readthedocs.io/en/latest/) is used as a fallback. Most `extract_duration` languages are driven by a shared lexicon engine (`DURATION_LEXICONS` in `ovos_date_parser/duration.py`), so new languages are added declaratively. `ar`, `ast`, `kab`, `fa`, and `sv` have standalone extractors instead.
 
 **Format**
 
 | Language | `nice_date`<br>`nice_date_time`<br>`nice_day` <br>`nice_weekday` <br>`nice_month` <br>`nice_year` <br>`get_date_strings` | `nice_time` | `nice_relative_time` | `nice_duration` |
 |----------|--------------------------------------------------------------------------------------------------------------------------|-------------|----------------------|-----------------|
-| an       | ✅                                                                                                                        | ✅           | 🚧                   | ✅               |
-| ar       | ✅                                                                                                                        | ✅           | 🚧                   | ✅               |
-| ast      | ✅                                                                                                                        | ✅           | 🚧                   | ✅               |
-| az       | ✅                                                                                                                        | ✅           | 🚧                   | ✅               |
-| bg       | ✅                                                                                                                        | ✅           | 🚧                   | ✅               |
-| ca       | ✅                                                                                                                        | ✅           | 🚧                   | ✅               |
-| cs       | ✅                                                                                                                        | ✅           | 🚧                   | ✅               |
-| da       | ✅                                                                                                                        | ✅           | 🚧                   | ✅               |
-| de       | ✅                                                                                                                        | ✅           | 🚧                   | ✅               |
-| el       | ✅                                                                                                                        | ✅           | 🚧                   | ✅               |
-| en       | ✅                                                                                                                        | ✅           | 🚧                   | ✅               |
-| es       | ✅                                                                                                                        | ✅           | 🚧                   | ✅               |
-| et       | ✅                                                                                                                        | ✅           | 🚧                   | ✅               |
-| eu       | ✅                                                                                                                        | ✅           | ✅                    | ✅               |
-| fa       | ✅                                                                                                                        | ✅           | 🚧                   | ✅               |
-| fi       | ✅                                                                                                                        | ✅           | 🚧                   | ✅               |
-| fr       | ✅                                                                                                                        | ✅           | 🚧                   | ✅               |
-| fy       | ✅                                                                                                                        | ✅           | 🚧                   | ✅               |
-| gl       | ✅                                                                                                                        | ✅           | 🚧                   | ✅               |
-| he       | ✅                                                                                                                        | ✅           | 🚧                   | ✅               |
-| hr       | ✅                                                                                                                        | ✅           | 🚧                   | ✅               |
-| hu       | ✅                                                                                                                        | ✅           | 🚧                   | ✅               |
-| id       | ✅                                                                                                                        | ✅           | 🚧                   | ✅               |
-| it       | ✅                                                                                                                        | ✅           | 🚧                   | ✅               |
-| kab      | ✅                                                                                                                        | ✅           | 🚧                   | ✅               |
-| ms       | ✅                                                                                                                        | ✅           | 🚧                   | ✅               |
-| nb/no    | ✅                                                                                                                        | ✅           | 🚧                   | ✅               |
-| nl       | ✅                                                                                                                        | ✅           | 🚧                   | ✅               |
-| nn       | ✅                                                                                                                        | ✅           | 🚧                   | ✅               |
-| oc       | ✅                                                                                                                        | ✅           | 🚧                   | ✅               |
-| pl       | ✅                                                                                                                        | ✅           | 🚧                   | ✅               |
-| pt       | ✅                                                                                                                        | ✅           | 🚧                   | ✅               |
-| ro       | ✅                                                                                                                        | ✅           | 🚧                   | ✅               |
-| ru       | ✅                                                                                                                        | ✅           | 🚧                   | ✅               |
-| sk       | ✅                                                                                                                        | ✅           | 🚧                   | ✅               |
-| sl       | ✅                                                                                                                        | ✅           | 🚧                   | ✅               |
-| sv       | ✅                                                                                                                        | ✅           | 🚧                   | ✅               |
-| tr       | ✅                                                                                                                        | ✅           | 🚧                   | ✅               |
-| uk       | ✅                                                                                                                        | ✅           | 🚧                   | ✅               |
+| an       | yes                                                                                                                        | yes           | WIP                   | yes               |
+| ar       | yes                                                                                                                        | yes           | WIP                   | yes               |
+| ast      | yes                                                                                                                        | yes           | WIP                   | yes               |
+| az       | yes                                                                                                                        | yes           | WIP                   | yes               |
+| bg       | yes                                                                                                                        | yes           | WIP                   | yes               |
+| ca       | yes                                                                                                                        | yes           | WIP                   | yes               |
+| cs       | yes                                                                                                                        | yes           | WIP                   | yes               |
+| da       | yes                                                                                                                        | yes           | WIP                   | yes               |
+| de       | yes                                                                                                                        | yes           | WIP                   | yes               |
+| el       | yes                                                                                                                        | yes           | WIP                   | yes               |
+| en       | yes                                                                                                                        | yes           | WIP                   | yes               |
+| es       | yes                                                                                                                        | yes           | WIP                   | yes               |
+| et       | yes                                                                                                                        | yes           | WIP                   | yes               |
+| eu       | yes                                                                                                                        | yes           | yes                    | yes               |
+| fa       | yes                                                                                                                        | yes           | WIP                   | yes               |
+| fi       | yes                                                                                                                        | yes           | WIP                   | yes               |
+| fr       | yes                                                                                                                        | yes           | WIP                   | yes               |
+| fy       | yes                                                                                                                        | yes           | WIP                   | yes               |
+| gl       | yes                                                                                                                        | yes           | WIP                   | yes               |
+| he       | yes                                                                                                                        | yes           | WIP                   | yes               |
+| hr       | yes                                                                                                                        | yes           | WIP                   | yes               |
+| hu       | yes                                                                                                                        | yes           | WIP                   | yes               |
+| id       | yes                                                                                                                        | yes           | WIP                   | yes               |
+| it       | yes                                                                                                                        | yes           | WIP                   | yes               |
+| kab      | yes                                                                                                                        | yes           | WIP                   | yes               |
+| ms       | yes                                                                                                                        | yes           | WIP                   | yes               |
+| nb/no    | yes                                                                                                                        | yes           | WIP                   | yes               |
+| nl       | yes                                                                                                                        | yes           | WIP                   | yes               |
+| nn       | yes                                                                                                                        | yes           | WIP                   | yes               |
+| oc       | yes                                                                                                                        | yes           | WIP                   | yes               |
+| pl       | yes                                                                                                                        | yes           | WIP                   | yes               |
+| pt       | yes                                                                                                                        | yes           | WIP                   | yes               |
+| ro       | yes                                                                                                                        | yes           | WIP                   | yes               |
+| ru       | yes                                                                                                                        | yes           | WIP                   | yes               |
+| sk       | yes                                                                                                                        | yes           | WIP                   | yes               |
+| sl       | yes                                                                                                                        | yes           | WIP                   | yes               |
+| sv       | yes                                                                                                                        | yes           | WIP                   | yes               |
+| tr       | yes                                                                                                                        | yes           | WIP                   | yes               |
+| uk       | yes                                                                                                                        | yes           | WIP                   | yes               |
 
 ## Usage
 
@@ -182,9 +182,9 @@ print(remainder)  # "It will take about"
 !!! note
     The remainder keeps whatever surrounds the extracted duration phrase verbatim, but a connective word ("and" in English, "y" in Spanish) or comma left stranded between two consumed number groups is stripped along with them. A connector that still joins unconsumed text on either side is left alone: `extract_duration("two hours and rest and relax", lang="en")` returns remainder `"and rest and relax"`.
 
-`extract_duration` also accepts two keyword-only arguments, but only for languages on the shared lexicon engine (the ✅ `extract_duration` rows above except the standalone `ar`, `ast`, `kab`, `fa`, `sv` extractors). Passing them for any other language raises `NotImplementedError`:
+`extract_duration` also accepts two keyword-only arguments, but only for languages on the shared lexicon engine (the yes `extract_duration` rows above except the standalone `ar`, `ast`, `kab`, `fa`, `sv` extractors). Passing them for any other language raises `NotImplementedError`:
 
-- **`resolution`** (`DurationResolution`, default `TIMEDELTA`): controls the return type. `TIMEDELTA` returns a `timedelta`, `RELATIVEDELTA` returns a calendar-accurate `dateutil.relativedelta` (so "2 months" stays 2 months rather than a fixed number of days), or a single-unit total such as `TOTAL_SECONDS`/`TOTAL_MINUTES` is returned as a `float`.
+- **`resolution`** (`DurationResolution`, default `TIMEDELTA`): controls the return type. `TIMEDELTA` returns a `timedelta`. `RELATIVEDELTA` returns a calendar-accurate `dateutil.relativedelta` (so "2 months" stays 2 months rather than a fixed number of days). A single-unit total such as `TOTAL_SECONDS`/`TOTAL_MINUTES` is returned as a `float`.
 - **`replace_token`** (`str`, default `""`): the string each consumed duration phrase is replaced with in the remainder, marking where it was found instead of stripping it out.
 
 ```python

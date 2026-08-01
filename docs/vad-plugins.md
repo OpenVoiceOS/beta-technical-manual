@@ -52,7 +52,7 @@ You can configure the VAD plugin in your `mycroft.conf`. The example below uses
 
 | Plugin | Description | Maturity |
 |--------|-------------|----------|
-| [ovos-vad-plugin-webrtcvad](https://github.com/OpenVoiceOS/ovos-vad-plugin-webrtcvad) | Based on Google's WebRTC VAD (`webrtcvad-wheels`). Lightweight, CPU-only, widely used. `vad_mode` (0–3) sets how aggressively it filters out non-speech: `0` is the least aggressive (most permissive, more likely to classify borderline audio as speech), `3` is the most aggressive at filtering out non-speech and is the plugin's default. | Stable |
+| [ovos-vad-plugin-webrtcvad](https://github.com/OpenVoiceOS/ovos-vad-plugin-webrtcvad) | Based on Google's WebRTC VAD (`webrtcvad-wheels`). Lightweight, CPU-only, widely used. `vad_mode` (0 to 3) sets how aggressively it filters out non-speech. `0` is the least aggressive: most permissive, more likely to classify borderline audio as speech. `3` is the most aggressive at filtering out non-speech and is the plugin's default. | Stable |
 | [ovos-vad-plugin-silero](https://github.com/OpenVoiceOS/ovos-vad-plugin-silero) | Uses the Silero deep-learning model for high-accuracy VAD, particularly in noisy environments. | Stable |
 | [ovos-vad-plugin-noise](https://github.com/OpenVoiceOS/ovos-vad-plugin-noise) | Simple energy/noise-threshold VAD with no model download. | Stable |
 
@@ -125,7 +125,7 @@ my-custom-vad = "my_package.module:MyCustomVAD"
 
 ```
 
-> 💡 The legacy alias `ovos.plugin.VAD` is still accepted, but new plugins should use `opm.VAD`.
+> The legacy alias `ovos.plugin.VAD` is still accepted, but new plugins should use `opm.VAD`.
 
 ## Standalone Usage
 
@@ -153,7 +153,7 @@ Detailed per-plugin configuration for the same roster listed in
 
 ## ovos-vad-plugin-webrtcvad
 
-- **GitHub**: [https://github.com/OpenVoiceOS/ovos-vad-plugin-webrtcvad](https://github.com/OpenVoiceOS/ovos-vad-plugin-webrtcvad)
+- **GitHub**: [OpenVoiceOS/ovos-vad-plugin-webrtcvad](https://github.com/OpenVoiceOS/ovos-vad-plugin-webrtcvad)
 
 
 - **Description**: Voice activity detection using webrtcvad.
@@ -162,7 +162,7 @@ Detailed per-plugin configuration for the same roster listed in
 
 ## ovos-vad-plugin-noise
 
-- **GitHub**: [https://github.com/OpenVoiceOS/ovos-vad-plugin-noise](https://github.com/OpenVoiceOS/ovos-vad-plugin-noise)
+- **GitHub**: [OpenVoiceOS/ovos-vad-plugin-noise](https://github.com/OpenVoiceOS/ovos-vad-plugin-noise)
 
 
 - **Description**: simple VAD plugin extracted from the old [ovos-listener](https://github.com/OpenVoiceOS/ovos-listener/blob/dev/ovos_listener/silence.py)
@@ -171,7 +171,7 @@ Detailed per-plugin configuration for the same roster listed in
 
 ## ovos-vad-plugin-silero
 
-- **GitHub**: [https://github.com/OpenVoiceOS/ovos-vad-plugin-silero](https://github.com/OpenVoiceOS/ovos-vad-plugin-silero)
+- **GitHub**: [OpenVoiceOS/ovos-vad-plugin-silero](https://github.com/OpenVoiceOS/ovos-vad-plugin-silero)
 
 
 - **Description**: Silero Voice Activity Detection (VAD) plugin. The Silero ONNX
@@ -199,8 +199,8 @@ Detailed per-plugin configuration for the same roster listed in
 
 | Config key | Default | Effect |
 |---|---|---|
-| `threshold` | `0.2` | Speech-probability cutoff; chunks scoring below it are classified as silence |
-| `model` | bundled `silero_vad.onnx` | Path to a custom ONNX model; defaults to the model shipped in the package |
+| `threshold` | `0.2` | Speech-probability cutoff. Chunks scoring below it are classified as silence |
+| `model` | bundled `silero_vad.onnx` | Path to a custom ONNX model. Defaults to the model shipped in the package |
 
 !!! tip "Same package also provides a pre-wake VAD verifier"
     `ovos-vad-plugin-silero` registers a second entry point, `ovos-ww-verifier-silero`

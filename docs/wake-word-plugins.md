@@ -82,7 +82,7 @@ The `hotwords` section in your `mycroft.conf` allows you to configure the wake w
 
 ```
 
-> 💡 see the full docs for the [listener service](speech-service.md)
+> See the full docs for the [listener service](speech-service.md)
 
 
 ## Tips and Caveats
@@ -92,7 +92,7 @@ The `hotwords` section in your `mycroft.conf` allows you to configure the wake w
 
 - **Precision and Sensitivity**: Adjust the `sensitivity` and `trigger_level` settings carefully. Too high a sensitivity can lead to false positives, while too low may miss detection.
 
-### `sensitivity` vs `trigger_level` — the technical breakdown
+### `sensitivity` vs `trigger_level`: the technical breakdown
 
 These two settings work together in the model-based Precise plugins (`ovos-ww-plugin-precise-lite`, `ovos-ww-plugin-precise-onnx`):
 
@@ -115,7 +115,7 @@ When developing a custom wake word plugin, the following methods are essential:
 
 - **`stop()`**: An optional method to shut down the plugin, like unloading data or halting external processes.
 
-> ⚠️ `found_wake_word()` takes no audio argument. The legacy `frame_data` parameter has been removed. Plugins now handle real time audio via the `update` method.
+> Warning: `found_wake_word()` takes no audio argument. The legacy `frame_data` parameter has been removed. Plugins now handle real time audio via the `update` method.
 
 ### Registering Your Plugin
 
@@ -126,7 +126,7 @@ setup([...], entry_points={'opm.wake_word': 'example_ww = my_ww:MyWakeWordEngine
 
 ```
 
-> 💡 **Backward Compatibility**: `ovos-plugin-manager` still supports legacy `mycroft.plugin.wake_word` entry points, but new plugins should use the `opm.*` namespace.
+> **Backward Compatibility**: `ovos-plugin-manager` still supports legacy `mycroft.plugin.wake_word` entry points, but new plugins should use the `opm.*` namespace.
 
 ### Example Plugin
 
@@ -168,19 +168,19 @@ separately-licensed model, that is called out under "model".
 
 | Plugin | Description | License | Maturity |
 |--------|-------------|---------|----------|
-| [ovos-ww-plugin-precise-lite](#ovos-ww-plugin-precise-lite) | First fallback below the default: a trained Precise wake-word model exported to TFLite. ⚠️ **Archived** — kept working as installed; `ovos-ww-plugin-precise-onnx` is the maintained successor. | Apache-2.0 | Deprecated |
+| [ovos-ww-plugin-precise-lite](#ovos-ww-plugin-precise-lite) | First fallback below the default: a trained Precise wake-word model exported to TFLite. Warning: archived, kept working as installed. `ovos-ww-plugin-precise-onnx` is the maintained successor. | Apache-2.0 | Deprecated |
 | [ovos-ww-plugin-openWakeWord](#ovos-ww-plugin-openwakeword) | Wake-word detection using the open-source openWakeWord neural models. | Apache-2.0 (model: see model card) | Stable |
 | [ovos-ww-plugin-vosk](#ovos-ww-plugin-vosk) | Mycroft wake word plugin for [Vosk](https://alphacephei.com/vosk/) | Apache-2.0 (model: see model card) | Stable |
 | [ovos-ww-plugin-precise-onnx](#ovos-ww-plugin-precise-onnx) | Default plugin for `hey_mycroft`: a Precise wake-word model exported to ONNX. | Apache-2.0 | Beta |
-| [ovos-ww-plugin-wakewordlab](https://github.com/OpenVoiceOS/ovos-ww-plugin-wakewordlab) | Compact (~240 KB) neural wake-word models with a Silero VAD pre-filter (`.wkw`/`.onnx`). **Not yet on PyPI** — install from source. | Apache-2.0 | Alpha |
-| [ovos-ww-plugin-wakeforge](https://github.com/OpenVoiceOS/ovos-ww-plugin-wakeforge) | Runs custom wake-word models trained with [wakeforge](https://github.com/TigreGotico/wakeforge) — train a detector from a single phrase, export a two-file model. **Not yet on PyPI** — install from source. | Apache-2.0 | Alpha |
-| [ovos-ww-plugin-server](https://github.com/OpenVoiceOS/ovos-ww-plugin-server) | Remote wake-word detection: streams audio to an [ovos-ww-server](https://github.com/OpenVoiceOS/ovos-ww-server) instance (offload detection from a thin satellite). **Not yet on PyPI** — install from source. | Apache-2.0 | Alpha |
+| [ovos-ww-plugin-wakewordlab](https://github.com/OpenVoiceOS/ovos-ww-plugin-wakewordlab) | Compact (~240 KB) neural wake-word models with a Silero VAD pre-filter (`.wkw`/`.onnx`). **Not yet on PyPI**, install from source. | Apache-2.0 | Alpha |
+| [ovos-ww-plugin-wakeforge](https://github.com/OpenVoiceOS/ovos-ww-plugin-wakeforge) | Runs custom wake-word models trained with [wakeforge](https://github.com/TigreGotico/wakeforge): train a detector from a single phrase, export a two-file model. **Not yet on PyPI**, install from source. | Apache-2.0 | Alpha |
+| [ovos-ww-plugin-server](https://github.com/OpenVoiceOS/ovos-ww-plugin-server) | Remote wake-word detection: streams audio to an [ovos-ww-server](https://github.com/OpenVoiceOS/ovos-ww-server) instance (offload detection from a thin satellite). **Not yet on PyPI**, install from source. | Apache-2.0 | Alpha |
 
 Maturity reflects repository health (age, activity, open issues/PRs, in-repo docs), not version. See the [Maturity Scale](maturity.md).
 
 ## ovos-ww-plugin-precise-lite
 
-- **GitHub**: [https://github.com/OpenVoiceOS/ovos-ww-plugin-precise-lite](https://github.com/OpenVoiceOS/ovos-ww-plugin-precise-lite) ⚠️ **Archived**
+- **GitHub**: [OpenVoiceOS/ovos-ww-plugin-precise-lite](https://github.com/OpenVoiceOS/ovos-ww-plugin-precise-lite). Warning: archived.
 
 
 - **Description**: Trained Precise wake-word model exported to TFLite. The bundled default `mycroft.conf` ships it as `hey_mycroft_tflite`, the first fallback below the ONNX default.
@@ -204,7 +204,7 @@ Maturity reflects repository health (age, activity, open issues/PRs, in-repo doc
 
 ## ovos-ww-plugin-openWakeWord
 
-- **GitHub**: [https://github.com/OpenVoiceOS/ovos-ww-plugin-openWakeWord](https://github.com/OpenVoiceOS/ovos-ww-plugin-openWakeWord)
+- **GitHub**: [OpenVoiceOS/ovos-ww-plugin-openWakeWord](https://github.com/OpenVoiceOS/ovos-ww-plugin-openWakeWord)
 
 
 - **Description**: Wake-word detection using the open-source openWakeWord neural models.
@@ -213,7 +213,7 @@ Maturity reflects repository health (age, activity, open issues/PRs, in-repo doc
 
 ## ovos-ww-plugin-vosk
 
-- **GitHub**: [https://github.com/OpenVoiceOS/ovos-ww-plugin-vosk](https://github.com/OpenVoiceOS/ovos-ww-plugin-vosk)
+- **GitHub**: [OpenVoiceOS/ovos-ww-plugin-vosk](https://github.com/OpenVoiceOS/ovos-ww-plugin-vosk)
 
 
 - **Description**: Mycroft wake word plugin for [Vosk](https://alphacephei.com/vosk/)
@@ -237,7 +237,7 @@ Maturity reflects repository health (age, activity, open issues/PRs, in-repo doc
 
 ## ovos-ww-plugin-precise-onnx
 
-- **GitHub**: [https://github.com/OpenVoiceOS/ovos-ww-plugin-precise-onnx](https://github.com/OpenVoiceOS/ovos-ww-plugin-precise-onnx)
+- **GitHub**: [OpenVoiceOS/ovos-ww-plugin-precise-onnx](https://github.com/OpenVoiceOS/ovos-ww-plugin-precise-onnx)
 
 
 - **Description**: Runs Precise wake word models exported to ONNX. It is the plugin the bundled default `mycroft.conf` ships for `hey_mycroft`.

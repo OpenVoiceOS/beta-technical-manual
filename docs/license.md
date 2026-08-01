@@ -7,16 +7,9 @@
     exceptions. Each exception is either a dependency forcing a stricter license on one
     specific plugin, or a plugin repository that never shipped a `LICENSE` file at all.
 
-Under the universal donor policy, OVOS code should be usable anywhere by anyone, with no
-conditions attached. OVOS is predominantly Apache 2.0 or BSD licensed. The exceptions are a
-small minority of plugins, and every one of them is listed in the table below, either because
-a dependency forces a stricter license, or because the plugin's own repository never shipped
-a `LICENSE` file at all.
+Under the universal donor policy, OVOS code should be usable anywhere by anyone, with no conditions attached. OVOS is predominantly Apache 2.0 or BSD licensed. The exceptions are a small minority of plugins, and every one of them is listed in the table below. Each exception exists either because a dependency forces a stricter license, or because the plugin's own repository never shipped a `LICENSE` file at all.
 
-Individual plugins or skills may carry their own license when they wrap a dependency that
-requires it. For example, a TTS plugin that wraps an AGPL-licensed engine cannot itself be
-relicensed under a more permissive term. Core components are kept fully free. Any code whose
-license cannot be controlled lives in an optional plugin instead, flagged as such.
+Individual plugins or skills may carry their own license when they wrap a dependency that requires it. For example, a TTS plugin that wraps an AGPL-licensed engine cannot itself be relicensed under a more permissive term. Core components are kept fully free. Any code whose license cannot be controlled lives in an optional plugin instead, flagged as such.
 
 This also means avoiding LGPL code, for the reasons explained in
 [this discussion of the GPL classpath exception](https://softwareengineering.stackexchange.com/questions/119436/what-does-gpl-with-classpath-exception-mean-in-practice/326325#326325).
@@ -42,19 +35,18 @@ own project.
 
 ## Notable licensing exceptions
 
-The repositories below do not follow the universal donor policy; check their licenses are
-compatible with your use case before depending on them.
+The repositories below do not follow the universal donor policy. Check their licenses are compatible with your use case before depending on them.
 
 | Repository | License | Reason |
 |---|---|---|
-| `ovos-core[lgpl]` extra | Apache-2.0 code, LGPL dependency | The extra pulls in [fann2](https://pypi.org/project/fann2/), the Python binding for [libfann](https://github.com/libfann/fann), both LGPL-2.1-or-later. [ovos-padatious](https://github.com/OpenVoiceOS/ovos-padatious) itself is Apache-2.0 — the LGPL obligation comes from fann2/libfann. If LGPL is unacceptable for your product, omit the extra and use [padacioso](https://github.com/OpenVoiceOS/padacioso) instead |
-| [ovos-tts-plugin-mimic3](https://github.com/OpenVoiceOS/ovos-tts-plugin-mimic3) | AGPL | depends on [mimic3](https://github.com/MycroftAI/mimic3) ([AGPL-3.0](https://github.com/MycroftAI/mimic3/blob/master/LICENSE)). This plugin is **archived**; see [Deprecated & Archived Repositories](deprecated-repos.md) for the current replacement |
+| `ovos-core[lgpl]` extra | Apache-2.0 code, LGPL dependency | The extra pulls in [fann2](https://pypi.org/project/fann2/), the Python binding for [libfann](https://github.com/libfann/fann). Both are LGPL-2.1-or-later. [ovos-padatious](https://github.com/OpenVoiceOS/ovos-padatious) itself is Apache-2.0: the LGPL obligation comes from fann2/libfann. If LGPL is unacceptable for your product, omit the extra and use [padacioso](https://github.com/OpenVoiceOS/padacioso) instead |
+| [ovos-tts-plugin-mimic3](https://github.com/OpenVoiceOS/ovos-tts-plugin-mimic3) | AGPL | depends on [mimic3](https://github.com/MycroftAI/mimic3) ([AGPL-3.0](https://github.com/MycroftAI/mimic3/blob/master/LICENSE)). This plugin is **archived**. See [Deprecated & Archived Repositories](deprecated-repos.md) for the current replacement |
 | [ovos-tts-plugin-espeakNG](https://github.com/OpenVoiceOS/ovos-tts-plugin-espeakNG) | GPL | depends on [espeak-ng](https://github.com/espeak-ng/espeak-ng) ([GPL-3.0](https://github.com/espeak-ng/espeak-ng/blob/master/COPYING)) |
-| [ovos-tts-plugin-SAM](https://github.com/OpenVoiceOS/ovos-tts-plugin-SAM) | see repo (no license file) | the package self-declares Apache-2.0 in its `pyproject.toml`, but the repository ships no `LICENSE` file, and the underlying S.A.M. engine is reverse-engineered abandonware with no clear upstream license |
-| ovos-tts-plugin-phoonnx (built into [phoonnx](https://github.com/TigreGotico/phoonnx)) | no license file | the `phoonnx` repository ships no `LICENSE` file; see the [TTS plugin table](tts-plugins.md#tts-plugins-reference) for the corresponding model-card caveat |
-| [ovos-tts-plugin-beepspeak](https://github.com/OpenVoiceOS/ovos-tts-plugin-beepspeak) | no license file | novelty R2-D2-style TTS plugin; the repository ships no `LICENSE` file |
-| [ovos-tts-plugin-lux](https://github.com/OpenVoiceOS/ovos-tts-plugin-lux) | see repo (no license file) | zipvoice-based voice-cloning TTS plugin; the package self-declares Apache-2.0 in its `setup.py` (with the OSI Apache classifier), but the repository ships no standalone `LICENSE` file |
-| [ovos-stt-plugin-HiTZ](https://github.com/OpenVoiceOS/ovos-stt-plugin-HiTZ) | no license file | archived/deprecated Basque STT plugin; the repository ships no `LICENSE` file |
+| [ovos-tts-plugin-SAM](https://github.com/OpenVoiceOS/ovos-tts-plugin-SAM) | see repo (no license file) | the package self-declares Apache-2.0 in its `pyproject.toml`. The repository ships no `LICENSE` file. The underlying S.A.M. engine is reverse-engineered abandonware with no clear upstream license |
+| ovos-tts-plugin-phoonnx (built into [phoonnx](https://github.com/TigreGotico/phoonnx)) | no license file | the `phoonnx` repository ships no `LICENSE` file. See the [TTS plugin table](tts-plugins.md#tts-plugins-reference) for the corresponding model-card caveat |
+| [ovos-tts-plugin-beepspeak](https://github.com/OpenVoiceOS/ovos-tts-plugin-beepspeak) | no license file | novelty R2-D2-style TTS plugin. The repository ships no `LICENSE` file |
+| [ovos-tts-plugin-lux](https://github.com/OpenVoiceOS/ovos-tts-plugin-lux) | see repo (no license file) | zipvoice-based voice-cloning TTS plugin. The package self-declares Apache-2.0 in its `setup.py` (with the OSI Apache classifier), but the repository ships no standalone `LICENSE` file |
+| [ovos-stt-plugin-HiTZ](https://github.com/OpenVoiceOS/ovos-stt-plugin-HiTZ) | no license file | archived/deprecated Basque STT plugin. The repository ships no `LICENSE` file |
 
 The rows above with **no license file** are not a rejection of the universal donor policy.
 They are repositories that never declared one, so no license can be assumed for redistribution

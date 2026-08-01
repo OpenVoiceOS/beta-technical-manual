@@ -40,43 +40,43 @@ Every function takes an explicit `lang` (a BCP-47 code such as `"en"` or `"pt-br
 
 ## Supported Languages
 
-- ✅ - supported
+- yes - supported
 
 
 
 
-- 🚧 - imperfect placeholder, usually a language agnostic implementation or external library
+- WIP - imperfect placeholder, usually a language agnostic implementation or external library
 
 
 | Language Code           | Pronounce Number | Pronounce Ordinal | Extract Number | numbers_to_digits |
 |-------------------------|------------------|-------------------|----------------|-------------------|
-| `en` (English)          | ✅               | 🚧                | ✅             | 🚧                |
-| `kab` (Kabyle)          | ✅               | ✅                | ✅             | 🚧                |
-| `az` (Azerbaijani)      | ✅               | 🚧                | ✅             | 🚧                |
-| `ca` (Catalan)          | ✅                | ✅                 | ✅              | 🚧                 |
-| `gl` (Galician)         | ✅                | ✅                | ✅              |  ✅                  |
-| `cs` (Czech)            | ✅                | ✅                 | ✅              | 🚧                 |
-| `da` (Danish)           | ✅                | ✅                 | ✅              | 🚧                 |
-| `de` (German)           | ✅                | ✅                 | ✅              | ✅                 |
-| `es` (Spanish)          | ✅                | 🚧                 | ✅              | 🚧                 |
-| `eu` (Euskara / Basque) | ✅                | ✅                 | ✅              | 🚧                 |
-| `fa` (Farsi / Persian)  | ✅                | ✅                 | ✅              | 🚧                 |
-| `fr` (French)           | ✅                | 🚧                 | ✅              | 🚧                 |
-| `hu` (Hungarian)        | ✅                | ✅                 | ✅              | 🚧                 |
-| `it` (Italian)          | ✅                | 🚧                | ✅              | 🚧                 |
-| `mwl` (Mirandese)       | ✅                | ✅                 | ✅              | ✅                 |
-| `nl` (Dutch)            | ✅                | ✅                 | ✅              | 🚧                 |
-| `pl` (Polish)           | ✅                | ✅                 | ✅              | 🚧                 |
-| `pt` (Portuguese)       | ✅                | ✅                 | ✅              | ✅                 |
-| `ru` (Russian)          | ✅                | 🚧                 | ✅              | ✅                 |
-| `sv` (Swedish)          | ✅                | ✅                 | ✅              | 🚧                 |
-| `sl` (Slovenian)        | ✅                | ✅                 | ✅              | 🚧                 |
-| `uk` (Ukrainian)        | ✅                | ✅                 | ✅              | ✅                 |
+| `en` (English)          | yes               | WIP                | yes             | WIP                |
+| `kab` (Kabyle)          | yes               | yes                | yes             | WIP                |
+| `az` (Azerbaijani)      | yes               | WIP                | yes             | WIP                |
+| `ca` (Catalan)          | yes                | yes                 | yes              | WIP                 |
+| `gl` (Galician)         | yes                | yes                | yes              |  yes                  |
+| `cs` (Czech)            | yes                | yes                 | yes              | WIP                 |
+| `da` (Danish)           | yes                | yes                 | yes              | WIP                 |
+| `de` (German)           | yes                | yes                 | yes              | yes                 |
+| `es` (Spanish)          | yes                | WIP                 | yes              | WIP                 |
+| `eu` (Euskara / Basque) | yes                | yes                 | yes              | WIP                 |
+| `fa` (Farsi / Persian)  | yes                | yes                 | yes              | WIP                 |
+| `fr` (French)           | yes                | WIP                 | yes              | WIP                 |
+| `hu` (Hungarian)        | yes                | yes                 | yes              | WIP                 |
+| `it` (Italian)          | yes                | WIP                | yes              | WIP                 |
+| `mwl` (Mirandese)       | yes                | yes                 | yes              | yes                 |
+| `nl` (Dutch)            | yes                | yes                 | yes              | WIP                 |
+| `pl` (Polish)           | yes                | yes                 | yes              | WIP                 |
+| `pt` (Portuguese)       | yes                | yes                 | yes              | yes                 |
+| `ru` (Russian)          | yes                | WIP                 | yes              | yes                 |
+| `sv` (Swedish)          | yes                | yes                 | yes              | WIP                 |
+| `sl` (Slovenian)        | yes                | yes                 | yes              | WIP                 |
+| `uk` (Ukrainian)        | yes                | yes                 | yes              | yes                 |
 
 
-> 💡 If a language is not implemented for `pronounce_number` or `pronounce_ordinal` then [unicode-rbnf](https://github.com/rhasspy/unicode-rbnf) will be used as a fallback.
+> If a language is not implemented for `pronounce_number` or `pronounce_ordinal` then [unicode-rbnf](https://github.com/rhasspy/unicode-rbnf) will be used as a fallback.
 
-> 📋 This table is a curated subset. `pronounce_number` and `extract_number` dispatch cover ~41 languages in total (including `an`, `ar`, `ast`, `bg`, `el`, `et`, `fi`, `fy`, `he`, `hr`, `id`, `ms`, `nb`, `nn`, `no`, `oc`, `ro`, `sk`, and `tr`). See [`docs/languages.md`](https://github.com/OpenVoiceOS/ovos-number-parser/blob/dev/docs/languages.md) in the repo for the full per-language matrix.
+> This table is a curated subset. `pronounce_number` and `extract_number` dispatch cover ~41 languages in total (including `an`, `ar`, `ast`, `bg`, `el`, `et`, `fi`, `fy`, `he`, `hr`, `id`, `ms`, `nb`, `nn`, `no`, `oc`, `ro`, `sk`, and `tr`). See [`docs/languages.md`](https://github.com/OpenVoiceOS/ovos-number-parser/blob/dev/docs/languages.md) in the repo for the full per-language matrix.
 
 !!! note
     Several Romance languages (`ast`, `an`, `oc`, `fr`, `it`, `ca`, `es`, `gl`, `pt`, `mwl`, `ro`) share a common `RomanceNumberExtractor`/`NumberVocabulary` engine internally, so their extraction logic stays consistent across languages that inflect numbers similarly.

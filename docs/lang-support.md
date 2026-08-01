@@ -13,7 +13,9 @@
 OpenVoiceOS (OVOS) aims to support multiple languages across its components, including intent
 recognition, speech-to-text ([STT](stt-plugins.md)), text-to-speech ([TTS](tts-plugins.md)),
 and skill dialogs. However, full language support requires more than translation of interface
-text. This document outlines the current state of language support, known limitations, and
+text.
+
+This document outlines the current state of language support, known limitations, and
 how contributors can help improve multilingual performance in OVOS.
 
 **Want it working now?** Jump to [Auto-Configuration](#auto-configuration).
@@ -44,16 +46,16 @@ Related pages:
 
 The OVOS installer lets users select a preferred language, but **selecting a language does not guarantee full support across all subsystems**. True multilingual support requires dedicated:
 
-- ✅ Translations (intents, dialogs, settings, etc.)
+- Translations (intents, dialogs, settings, etc.)
 
 
-- ✅ STT ([Speech-to-Text](stt-plugins.md)) plugins trained on the target language
+- STT ([Speech-to-Text](stt-plugins.md)) plugins trained on the target language
 
 
-- ✅ TTS ([Text-to-Speech](tts-plugins.md)) plugins capable of generating speech in the selected language
+- TTS ([Text-to-Speech](tts-plugins.md)) plugins capable of generating speech in the selected language
 
 
-- ✅ Language-specific intent adaptation and fallback logic
+- Language-specific intent adaptation and fallback logic
 
 Without these, many core features, such as voice commands, speech output, and skill
 interactions, may not work as expected.
@@ -123,17 +125,17 @@ repositories. It replaces the retired third-party *GitLocalize* service. This in
 
 - Configuration metadata
 
-### 📊 Translation Progress
+### Translation Progress
 
 OVOS Localize scans skill data and exports a language × skill coverage matrix to
 [`data/coverage.json`](https://openvoiceos.github.io/ovos-localize/data/coverage.json),
 refreshed alongside the translation app. This is the current source of translation progress.
 
-> ⚠️ The older [lang-support-tracker](https://github.com/OpenVoiceOS/lang-support-tracker)
+> Warning: the older [lang-support-tracker](https://github.com/OpenVoiceOS/lang-support-tracker)
 > is a **frozen GitLocalize-era snapshot** (superseded by OVOS Localize). Its percentages
 > are no longer updated and should not be treated as current.
 
-> ❗ If your language is missing from [OVOS Localize](https://openvoiceos.github.io/ovos-localize/), [open an issue](https://github.com/OpenVoiceOS/lang-support-tracker/issues) to request it. Currently, languages must be added manually.
+> Note: if your language is missing from [OVOS Localize](https://openvoiceos.github.io/ovos-localize/), [open an issue](https://github.com/OpenVoiceOS/lang-support-tracker/issues) to request it. Currently, languages must be added manually.
 
 See **[Contribute Translations with OVOS Localize](ovos-localize-tutorial.md)** for the step-by-step translator guide.
 
@@ -198,7 +200,9 @@ The bundled offline STT recommendation is [`ovos-stt-plugin-onnx-asr`](stt-plugi
 for every covered language, running a per-language ONNX model picked from the
 [OpenVoiceOS STT ONNX](https://huggingface.co/collections/OpenVoiceOS/stt-asr-onnx) collection.
 On CPU it prefers `int8`-quantized weights where the model ships them, for a smaller
-footprint and faster load. TTS uses [`ovos-tts-plugin-phoonnx`](tts-plugins.md#ovos-tts-plugin-phoonnx)
+footprint and faster load.
+
+TTS uses [`ovos-tts-plugin-phoonnx`](tts-plugins.md#ovos-tts-plugin-phoonnx)
 for every language, auto-selecting a default voice. The table below shows the exact
 per-language model and voice picked for each.
 
@@ -235,7 +239,9 @@ Offline STT is [`ovos-stt-plugin-onnx-asr`](stt-plugins.md#ovos-stt-plugin-onnx-
 it's listed. Where the table shows an offline TTS entry, it is always
 [`ovos-tts-plugin-phoonnx`](tts-plugins.md#ovos-tts-plugin-phoonnx), pinned to a specific male
 and/or female voice. `int8` next to a model means a quantized CPU build is available and used
-by default. `--gpu` switches to the full-precision model with `use_cuda: true`. For the most
+by default.
+
+`--gpu` switches to the full-precision model with `use_cuda: true`. For the most
 widely-spoken languages (English, French, German, Italian, Dutch) it swaps in a larger model
 entirely (`nemo-canary-1b-v2`) instead of just requantizing.
 
@@ -255,76 +261,78 @@ recommendation on either side. Configure an online STT plugin, or a multilingual
 Many low-resource languages have no fine-tuned Conformer or Parakeet model yet. Their
 recommendation falls back to the best general-purpose model available: a Whisper-small
 finetune (Fon, Haitian Creole, Kposo, Malagasy, Lomwe, Shona, Sesotho, Tigre, Setswana,
-Umbundu, Vai) or a wav2vec2 finetune (Irish). These move to a dedicated model as one becomes
+Umbundu, Vai) or a wav2vec2 finetune (Irish).
+
+These move to a dedicated model as one becomes
 available.
 
 | Language | Offline STT model | Offline TTS |
 |----------|--------------------|:---:|
-| **AR-SA** | — | ✅ |
-| **AS-IN** | `OpenVoiceOS/ai4bharat-indicconformer-as-onnx` | ✅ |
+| **AR-SA** | — | yes |
+| **AS-IN** | `OpenVoiceOS/ai4bharat-indicconformer-as-onnx` | yes |
 | **BE-BY** | `OpenVoiceOS/nvidia-be-conformer-transducer-large-onnx` (int8) | — |
-| **BN-IN** | `OpenVoiceOS/ai4bharat-indicconformer-bn-onnx` (int8) | ✅ |
+| **BN-IN** | `OpenVoiceOS/ai4bharat-indicconformer-bn-onnx` (int8) | yes |
 | **BRX-IN** | `OpenVoiceOS/ai4bharat-indicconformer-brx-onnx` (int8) | — |
-| **CA-BA** | — | ✅ |
-| **CA-ES** | `OpenVoiceOS/stt-ca-es-conformer-transducer-large-onnx` | ✅ |
-| **CA-NW** | — | ✅ |
-| **CA-VA** | — | ✅ |
-| **DA-DK** | `OpenVoiceOS/nvidia-parakeet-rnnt-110m-da-dk-onnx` (int8) | ✅ |
-| **DE-DE** | `nemo-parakeet-tdt-0.6b-v3` (int8) | ✅ |
+| **CA-BA** | — | yes |
+| **CA-ES** | `OpenVoiceOS/stt-ca-es-conformer-transducer-large-onnx` | yes |
+| **CA-NW** | — | yes |
+| **CA-VA** | — | yes |
+| **DA-DK** | `OpenVoiceOS/nvidia-parakeet-rnnt-110m-da-dk-onnx` (int8) | yes |
+| **DE-DE** | `nemo-parakeet-tdt-0.6b-v3` (int8) | yes |
 | **DOI-IN** | `OpenVoiceOS/ai4bharat-indicconformer-doi-onnx` (int8) | — |
-| **EN-GB** | — | ✅ |
-| **EN-US** | `nemo-parakeet-tdt-0.6b-v3` (int8) | ✅ |
+| **EN-GB** | — | yes |
+| **EN-US** | `nemo-parakeet-tdt-0.6b-v3` (int8) | yes |
 | **EO** | `OpenVoiceOS/nvidia-eo-conformer-transducer-large-onnx` (int8) | — |
-| **ES-ES** | `OpenVoiceOS/parakeet-rnnt-1.1b-cv17-es-ep18-1270h-onnx` | ✅ |
+| **ES-ES** | `OpenVoiceOS/parakeet-rnnt-1.1b-cv17-es-ep18-1270h-onnx` | yes |
 | **ET-EE** | `OpenVoiceOS/yuriyvnv-parakeet-tdt-0.6b-et-onnx` (int8) | — |
-| **EU-ES** | `OpenVoiceOS/stt-eu-conformer-transducer-large-onnx` | ✅ |
-| **FA-IR** | `OpenVoiceOS/nvidia-fa-fastconformer-hybrid-large-onnx` (int8) | ✅ |
-| **FON-BJ** | `OpenVoiceOS/misterkissi-whisper-small-fongbe-onnx` | ✅ |
-| **FR-FR** | `nemo-parakeet-tdt-0.6b-v3` (int8) | ✅ |
+| **EU-ES** | `OpenVoiceOS/stt-eu-conformer-transducer-large-onnx` | yes |
+| **FA-IR** | `OpenVoiceOS/nvidia-fa-fastconformer-hybrid-large-onnx` (int8) | yes |
+| **FON-BJ** | `OpenVoiceOS/misterkissi-whisper-small-fongbe-onnx` | yes |
+| **FR-FR** | `nemo-parakeet-tdt-0.6b-v3` (int8) | yes |
 | **GA-IE** | `OpenVoiceOS/misterkissi-w2v2-lg-xls-r-300m-ga-onnx` | — |
-| **GL-ES** | `onnx-community/whisper-large-v3-turbo` (int8) | ✅ |
-| **GU-IN** | `OpenVoiceOS/ai4bharat-indicconformer-gu-onnx` (int8) | ✅ |
-| **HI-IN** | `OpenVoiceOS/ai4bharat-indicconformer-hi-onnx` (int8) | ✅ |
+| **GL-ES** | `onnx-community/whisper-large-v3-turbo` (int8) | yes |
+| **GU-IN** | `OpenVoiceOS/ai4bharat-indicconformer-gu-onnx` (int8) | yes |
+| **HI-IN** | `OpenVoiceOS/ai4bharat-indicconformer-hi-onnx` (int8) | yes |
 | **HR-HR** | `OpenVoiceOS/nvidia-hr-conformer-transducer-large-onnx` (int8) | — |
-| **HT-HT** | `OpenVoiceOS/misterkissi-whisper-small-haitian-creole-onnx` | ✅ |
-| **IT-IT** | `nemo-parakeet-tdt-0.6b-v3` (int8) | ✅ |
-| **JA-JP** | `OpenVoiceOS/nvidia-parakeet-tdt_ctc-0.6b-ja-onnx` (int8) | ✅ |
-| **KAB-DZ** | `OpenVoiceOS/nvidia-kab-conformer-transducer-large-onnx` (int8) | ✅ |
-| **KN-IN** | `OpenVoiceOS/ai4bharat-indicconformer-kn-onnx` (int8) | ✅ |
+| **HT-HT** | `OpenVoiceOS/misterkissi-whisper-small-haitian-creole-onnx` | yes |
+| **IT-IT** | `nemo-parakeet-tdt-0.6b-v3` (int8) | yes |
+| **JA-JP** | `OpenVoiceOS/nvidia-parakeet-tdt_ctc-0.6b-ja-onnx` (int8) | yes |
+| **KAB-DZ** | `OpenVoiceOS/nvidia-kab-conformer-transducer-large-onnx` (int8) | yes |
+| **KN-IN** | `OpenVoiceOS/ai4bharat-indicconformer-kn-onnx` (int8) | yes |
 | **KOK-IN** | `OpenVoiceOS/ai4bharat-indicconformer-kok-onnx` (int8) | — |
 | **KPO-TG** | `OpenVoiceOS/misterkissi-whisper-small-kposo-onnx` | — |
 | **KS-IN** | `OpenVoiceOS/ai4bharat-indicconformer-ks-onnx` (int8) | — |
-| **MAI-IN** | `OpenVoiceOS/ai4bharat-indicconformer-mai-onnx` (int8) | ✅ |
-| **MG-MG** | `OpenVoiceOS/misterkissi-whisper-small-malagasy-onnx` | ✅ |
-| **ML-IN** | `OpenVoiceOS/ai4bharat-indicconformer-ml-onnx` (int8) | ✅ |
+| **MAI-IN** | `OpenVoiceOS/ai4bharat-indicconformer-mai-onnx` (int8) | yes |
+| **MG-MG** | `OpenVoiceOS/misterkissi-whisper-small-malagasy-onnx` | yes |
+| **ML-IN** | `OpenVoiceOS/ai4bharat-indicconformer-ml-onnx` (int8) | yes |
 | **MNI-IN** | `OpenVoiceOS/ai4bharat-indicconformer-mni-onnx` (int8) | — |
-| **MR-IN** | `OpenVoiceOS/ai4bharat-indicconformer-mr-onnx` (int8) | ✅ |
+| **MR-IN** | `OpenVoiceOS/ai4bharat-indicconformer-mr-onnx` (int8) | yes |
 | **NE-NP** | `OpenVoiceOS/ai4bharat-indicconformer-ne-onnx` (int8) | — |
-| **NGL-MZ** | `OpenVoiceOS/misterkissi-whisper-small-lomwe-onnx` | ✅ |
-| **NL-NL** | `nemo-parakeet-tdt-0.6b-v3` (int8) | ✅ |
+| **NGL-MZ** | `OpenVoiceOS/misterkissi-whisper-small-lomwe-onnx` | yes |
+| **NL-NL** | `nemo-parakeet-tdt-0.6b-v3` (int8) | yes |
 | **OR-IN** | `OpenVoiceOS/ai4bharat-indicconformer-or-onnx` (int8) | — |
-| **PA-IN** | `OpenVoiceOS/ai4bharat-indicconformer-pa-onnx` (int8) | ✅ |
-| **PL-PL** | `OpenVoiceOS/yuriyvnv-parakeet-tdt-0.6b-pl-onnx` | ✅ |
-| **PT-BR** | — | ✅ |
-| **PT-PT** | `OpenVoiceOS/whisper-medium-pt-onnx` | ✅ |
-| **RU-RU** | `OpenVoiceOS/nvidia-ru-conformer-transducer-large-onnx` (int8) | ✅ |
-| **RW-RW** | `OpenVoiceOS/nvidia-rw-conformer-transducer-large-onnx` (int8) | ✅ |
+| **PA-IN** | `OpenVoiceOS/ai4bharat-indicconformer-pa-onnx` (int8) | yes |
+| **PL-PL** | `OpenVoiceOS/yuriyvnv-parakeet-tdt-0.6b-pl-onnx` | yes |
+| **PT-BR** | — | yes |
+| **PT-PT** | `OpenVoiceOS/whisper-medium-pt-onnx` | yes |
+| **RU-RU** | `OpenVoiceOS/nvidia-ru-conformer-transducer-large-onnx` (int8) | yes |
+| **RW-RW** | `OpenVoiceOS/nvidia-rw-conformer-transducer-large-onnx` (int8) | yes |
 | **SA-IN** | `OpenVoiceOS/ai4bharat-indicconformer-sa-onnx` (int8) | — |
 | **SAT-IN** | `OpenVoiceOS/ai4bharat-indicconformer-sat-onnx` (int8) | — |
 | **SD-IN** | `OpenVoiceOS/ai4bharat-indicconformer-sd-onnx` (int8) | — |
-| **SL-SI** | `OpenVoiceOS/yuriyvnv-parakeet-tdt-0.6b-sl-onnx` (int8) | ✅ |
-| **SN-ZW** | `OpenVoiceOS/misterkissi-whisper-small-shona-onnx` | ✅ |
+| **SL-SI** | `OpenVoiceOS/yuriyvnv-parakeet-tdt-0.6b-sl-onnx` (int8) | yes |
+| **SN-ZW** | `OpenVoiceOS/misterkissi-whisper-small-shona-onnx` | yes |
 | **ST-ZA** | `OpenVoiceOS/misterkissi-whisper-small-sesotho-onnx` | — |
-| **TA-IN** | `OpenVoiceOS/ai4bharat-indicconformer-ta-onnx` (int8) | ✅ |
-| **TE-IN** | `OpenVoiceOS/ai4bharat-indicconformer-te-onnx` (int8) | ✅ |
+| **TA-IN** | `OpenVoiceOS/ai4bharat-indicconformer-ta-onnx` (int8) | yes |
+| **TE-IN** | `OpenVoiceOS/ai4bharat-indicconformer-te-onnx` (int8) | yes |
 | **TIG-ER** | `OpenVoiceOS/misterkissi-whisper-small-tigre-onnx` | — |
-| **TL-PH** | `OpenVoiceOS/stt-tl-fastconformer-hybrid-large-onnx` | ✅ |
+| **TL-PH** | `OpenVoiceOS/stt-tl-fastconformer-hybrid-large-onnx` | yes |
 | **TN-ZA** | `OpenVoiceOS/misterkissi-whisper-small-setswana-onnx` | — |
 | **UMB-AO** | `OpenVoiceOS/misterkissi-whisper-small-umbundu-onnx` | — |
-| **UR-PK** | `OpenVoiceOS/ai4bharat-indicconformer-ur-onnx` (int8) | ✅ |
+| **UR-PK** | `OpenVoiceOS/ai4bharat-indicconformer-ur-onnx` (int8) | yes |
 | **UZ-UZ** | `OpenVoiceOS/asr-uz-fastconformer-large-onnx` | — |
 | **VAI-LR** | `OpenVoiceOS/misterkissi-whisper-small-vai-onnx` | — |
-| **VI-VN** | `OpenVoiceOS/nvidia-parakeet-ctc-0.6b-vietnamese-onnx` (int8) | ✅ |
+| **VI-VN** | `OpenVoiceOS/nvidia-parakeet-ctc-0.6b-vietnamese-onnx` (int8) | yes |
 
 !!! note
     Where the STT column shows "—", the bundled recommendations don't cover offline speech
@@ -339,31 +347,35 @@ available.
 
 ### Per-language status matrix
 
-STT/TTS columns summarize the auto-configuration table above (✅ = a bundled offline
-recommendation exists for at least one voice/gender, ⚠️ = only online/partial, ❌ = no bundled
-offline recommendation). Number and date parsing come from the language modules actually
-shipped in the installed `ovos-number-parser` / `ovos-date-parser`. A ✅ here means a
+STT/TTS columns summarize the auto-configuration table above (yes = a bundled offline
+recommendation exists for at least one voice/gender, partial = only online/partial, no = no bundled
+offline recommendation).
+
+Number and date parsing come from the language modules actually
+shipped in the installed `ovos-number-parser` / `ovos-date-parser`. A yes here means a
 dedicated language module exists (`numbers_<code>.py` / `dates_<code>.py`), not that every
-phrasing is covered. This matrix tracks the original, longest-supported languages. See the
+phrasing is covered.
+
+This matrix tracks the original, longest-supported languages. See the
 [Supported Languages](#supported-languages) table above for the full, larger set of
 languages with a bundled offline STT and/or TTS recommendation.
 
 | Language | Offline STT | Offline TTS | Number parser | Date parser |
 |----------|:---:|:---:|:---:|:---:|
-| en-US | ✅ | ✅ | ✅ | ✅ |
-| en-GB | ❌ | ✅ | ✅ | ✅ |
-| en-AU | ❌ | ❌ | ✅ | ✅ |
-| de-DE | ✅ | ✅ | ✅ | ✅ |
-| fr-FR | ✅ | ✅ | ✅ | ✅ |
-| es-ES | ✅ | ✅ | ✅ | ✅ |
-| it-IT | ✅ | ✅ | ✅ | ✅ |
-| nl-NL | ✅ | ✅ | ✅ | ✅ |
-| pt-PT | ✅ | ✅ | ✅ | ✅ |
-| pt-BR | ❌ | ✅ | ✅ | ✅ |
-| ca-ES | ✅ | ✅ | ✅ | ✅ |
-| gl-ES | ✅ | ✅ | ✅ | ✅ |
-| eu-ES | ✅ | ✅ | ✅ | ✅ |
-| da-DK | ✅ | ⚠️ (male only) | ✅ | ✅ |
+| en-US | yes | yes | yes | yes |
+| en-GB | no | yes | yes | yes |
+| en-AU | no | no | yes | yes |
+| de-DE | yes | yes | yes | yes |
+| fr-FR | yes | yes | yes | yes |
+| es-ES | yes | yes | yes | yes |
+| it-IT | yes | yes | yes | yes |
+| nl-NL | yes | yes | yes | yes |
+| pt-PT | yes | yes | yes | yes |
+| pt-BR | no | yes | yes | yes |
+| ca-ES | yes | yes | yes | yes |
+| gl-ES | yes | yes | yes | yes |
+| eu-ES | yes | yes | yes | yes |
+| da-DK | yes | partial (male only) | yes | yes |
 
 Both the number and date parsers already cover far more languages than this original matrix,
 including several with no offline STT/TTS recommendation at all (e.g. Arabic, Hebrew, Turkish,
@@ -418,7 +430,7 @@ You can help by **enabling open data collection** in your OVOS instance by point
 
 ```
 
-> 💡 You can self-host the reporting server: [ovos-opendata-server on GitHub](https://github.com/OpenVoiceOS/ovos-opendata-server)
+> Note: you can self-host the reporting server: [ovos-opendata-server on GitHub](https://github.com/OpenVoiceOS/ovos-opendata-server)
 
 ---
 
@@ -445,6 +457,6 @@ Explore public benchmark tools for evaluating model performance:
 
 ## Further reading
 
-- [Cloning Voices for Endangered Languages: Asturian & Aragonese](https://blog.openvoiceos.org/posts/2025-12-09-ast) — OVOS blog
-- [Reflections on Our Collaboration: an Open Arabic Voice](https://blog.openvoiceos.org/posts/2025-10-01-arabic_tts_collaboration) — OVOS blog
-- [Introducing the First Phonemizer for Barranquenho](https://blog.openvoiceos.org/posts/2025-12-14-barranquenho) — OVOS blog
+- [Cloning Voices for Endangered Languages: Asturian & Aragonese](https://blog.openvoiceos.org/posts/2025-12-09-ast): OVOS blog
+- [Reflections on Our Collaboration: an Open Arabic Voice](https://blog.openvoiceos.org/posts/2025-10-01-arabic_tts_collaboration): OVOS blog
+- [Introducing the First Phonemizer for Barranquenho](https://blog.openvoiceos.org/posts/2025-12-14-barranquenho): OVOS blog

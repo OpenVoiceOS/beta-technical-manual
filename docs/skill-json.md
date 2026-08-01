@@ -27,7 +27,7 @@ The `skill.json` file is an optional way to describe your Open Voice OS (OVOS) s
 
 3. If your skill supports multiple languages, include a separate `skill.json` in each corresponding `locale` subfolder.
 
-> ⚠️ **Avoid using old `skill.json` formats** found in some legacy skills where the file exists at the root level. These are deprecated.
+> **Warning:** Avoid using old `skill.json` formats found in some legacy skills where the file exists at the root level. These are deprecated.
 
 ---
 
@@ -59,36 +59,31 @@ The `skill.json` file is an optional way to describe your Open Voice OS (OVOS) s
   ],
   "tags": ["productivity", "entertainment", "aliens"]
 }
-
 ```
 
 ---
 
 ## Field Reference
 
-None of these fields are enforced by `ovos-workshop` at runtime. Only
-`examples` is actually read (it is registered with the homescreen so it can
-show sample phrases for the skill). Everything else is a convention followed
-by skill-store and CI tooling. Ecosystem lint tooling (the `check_skill.py`
-compliance check used in CI) treats `skill_id`, `name`, `description`,
-`examples`, and `tags` as the fields it expects to be present. Treat the rest
-as recommended, not mandatory.
+None of these fields are enforced by `ovos-workshop` at runtime. Only `examples` is actually read (it is registered with the homescreen so it can show sample phrases for the skill). Everything else is a convention followed by skill-store and CI tooling.
+
+Ecosystem lint tooling (the `check_skill.py` compliance check used in CI) treats `skill_id`, `name`, `description`, `examples`, and `tags` as the fields it expects to be present. Treat the rest as recommended, not mandatory.
 
 | Field            | Type     | Recommended | Description |
 |------------------|----------|----------|-------------|
-| `skill_id`       | string   | ✅ Yes    | Unique ID, typically `repo.author` style (lowercase). |
-| `source`         | string   | ❌ Optional | Git URL to install from source. |
-| `package_name`   | string   | ❌ Optional | Python package name (e.g., for PyPI installs). |
-| `pip_spec`       | string   | ❌ Optional | [PEP 508](https://peps.python.org/pep-0508/) install spec. |
-| `license`        | string   | ❌ Optional | License ID (see [SPDX list](https://spdx.org/licenses/)). |
-| `author`         | string   | ❌ Optional | Display name of the skill author. |
-| `extra_plugins`  | object   | ❌ Optional | Dependencies to be installed in other OVOS services (not this skill). |
-| `icon`           | string   | ❌ Optional | URL to a skill icon (SVG recommended). |
-| `images`         | list     | ❌ Optional | Screenshots or promotional images. |
-| `name`           | string   | ✅ Yes    | User-facing skill name (some skills use `title` instead or as well). |
-| `description`    | string   | ✅ Yes    | Short, one-line summary of the skill. |
-| `examples`       | list     | ✅ Yes    | Example utterances your skill handles — the only field `ovos-workshop` actually reads, to register with the homescreen. |
-| `tags`           | list     | ✅ Yes    | Keywords for searchability. |
+| `skill_id`       | string   | Yes    | Unique ID, typically `repo.author` style (lowercase). |
+| `source`         | string   | Optional | Git URL to install from source. |
+| `package_name`   | string   | Optional | Python package name (e.g., for PyPI installs). |
+| `pip_spec`       | string   | Optional | [PEP 508](https://peps.python.org/pep-0508/) install spec. |
+| `license`        | string   | Optional | License ID (see [SPDX list](https://spdx.org/licenses/)). |
+| `author`         | string   | Optional | Display name of the skill author. |
+| `extra_plugins`  | object   | Optional | Dependencies to be installed in other OVOS services (not this skill). |
+| `icon`           | string   | Optional | URL to a skill icon (SVG recommended). |
+| `images`         | list     | Optional | Screenshots or promotional images. |
+| `name`           | string   | Yes    | User-facing skill name (some skills use `title` instead or as well). |
+| `description`    | string   | Yes    | Short, one-line summary of the skill. |
+| `examples`       | list     | Yes    | Example utterances your skill handles: the only field `ovos-workshop` actually reads, to register with the homescreen. |
+| `tags`           | list     | Yes    | Keywords for searchability. |
 
 !!! note
     In practice, real-world `skill.json` files vary quite a bit. Some use
@@ -145,17 +140,9 @@ The entry-point name is the `skill_id` and the value points at the skill class. 
 
 Once your skill works, publishing it is the same as publishing any Python package:
 
-1. **Push it to a GitHub repository** under your own account (or the `OpenVoiceOS` org if you're
-   contributing an official skill). The `source` field in `skill.json` should point at it.
-2. **Optionally publish it to PyPI** so it can be installed with a plain `pip install`, and set
-   `package_name` in `skill.json` to that PyPI name. Skills without a PyPI release are still
-   installable directly from git via `pip_spec` (see the [PEP 508](https://peps.python.org/pep-0508/)
-   spec syntax used there).
-3. **List it on the [OVOS Skill store](https://store.openvoiceos.org)**. See
-   [OVOS-skills-store](https://github.com/OpenVoiceOS/OVOS-skills-store) for how skills get added.
-   The store reads the `skill.json` fields above (`name`, `description`, `examples`, `tags`,
-   `icon`, `images`) to build the listing card, and `source`/`pip_spec`/`package_name` to know how
-   to install it.
+1. **Push it to a GitHub repository** under your own account (or the `OpenVoiceOS` org if you're contributing an official skill). The `source` field in `skill.json` should point at it.
+2. **Optionally publish it to PyPI** so it can be installed with a plain `pip install`, and set `package_name` in `skill.json` to that PyPI name. Skills without a PyPI release are still installable directly from git via `pip_spec` (see the [PEP 508](https://peps.python.org/pep-0508/) spec syntax used there).
+3. **List it on the [OVOS Skill store](https://store.openvoiceos.org)**. See [OVOS-skills-store](https://github.com/OpenVoiceOS/OVOS-skills-store) for how skills get added. The store reads the `skill.json` fields above (`name`, `description`, `examples`, `tags`, `icon`, `images`) to build the listing card, and `source`/`pip_spec`/`package_name` to know how to install it.
 
 !!! tip
     A complete, accurate `skill.json` is what makes the difference between a bare repository link
@@ -163,7 +150,7 @@ Once your skill works, publishing it is the same as publishing any Python packag
 
 ## See Also
 
-- [PEP 508 – Dependency specification](https://peps.python.org/pep-0508/)
+- [PEP 508: Dependency specification](https://peps.python.org/pep-0508/)
 
 
 - [SPDX License List](https://spdx.org/licenses/)

@@ -87,7 +87,7 @@ id, default `"default"`). All default to no-ops, so partial implementations are 
 
 | Method | Template | Key data keys |
 |---|---|---|
-| `handle_show_idle` | `SYSTEM_idle` | — |
+| `handle_show_idle` | `SYSTEM_idle` | none |
 | `handle_show_loading` | `SYSTEM_loading` | `label` |
 | `handle_show_status` | `SYSTEM_status` | `label`, `success` |
 | `handle_show_error` | `SYSTEM_error` | `label`, `detail` |
@@ -102,7 +102,7 @@ id, default `"default"`). All default to no-ops, so partial implementations are 
 | `handle_show_audio_player` | `SYSTEM_audio_player` | `title`, `artist`, `album`, `image`, `playing`, `position`, `duration` |
 | `handle_show_video_player` | `SYSTEM_video_player` | `uri`, `title`, `playing` |
 | `handle_show_media_player` | `SYSTEM_media_player` | media fields |
-| `handle_show_clock` | `SYSTEM_clock` | — |
+| `handle_show_clock` | `SYSTEM_clock` | none |
 | `handle_show_timer` | `SYSTEM_timer` | `end_time`, `label`, `count_up` |
 | `handle_show_weather` | `SYSTEM_weather` | `current_temp`, `min_temp`, `max_temp`, `condition`, `icon`, `location` |
 | `handle_show_map` | `SYSTEM_map` | `latitude`, `longitude`, `zoom`, `label` |
@@ -157,7 +157,7 @@ def any_client_connected(self) -> bool:
 
 | Repo | PyPI package | Entry-point name | Class | Description |
 |---|---|---|---|---|
-| `ovos-legacy-mycroft-gui-plugin` | `ovos-legacy-mycroft-gui-plugin` | `ovos-legacy-mycroft-gui` | `LegacyMycoftGuiPlugin` | Tornado WebSocket → Qt / mycroft-gui clients; also runs `HomescreenManager` |
+| `ovos-legacy-mycroft-gui-plugin` | `ovos-legacy-mycroft-gui-plugin` | `ovos-legacy-mycroft-gui` | `LegacyMycoftGuiPlugin` | Tornado WebSocket to Qt / mycroft-gui clients, also runs `HomescreenManager` |
 | `ovos-gui-plugin-ag-ui` | `ovos-gui-plugin-ag-ui` | `ovos-gui-plugin-ag-ui` | `AgUiGuiPlugin` | ag-ui protocol adapter: renders GUI state/template events as ag-ui SSE events for ag-ui / CopilotKit frontends |
 
 !!! note "`pyhtmx-gui-client` is a client, not an adapter"

@@ -25,21 +25,21 @@ Emitted by `ovos-dinkum-listener` as the audio pipeline runs. See
 |---|---|---|
 | `ovos.listener.record.started` (legacy: `recognizer_loop:record_begin`) | none | Command recording started |
 | `ovos.listener.record.ended` (legacy: `recognizer_loop:record_end`) | none | Command recording ended |
-| `ovos.listener.wakeword` (legacy: `recognizer_loop:wakeword`) | `{"wake_word", "lang"}` | Wake word detected; capture is opening. `lang` is optional and only present when the deployment binds wake words to languages |
+| `ovos.listener.wakeword` (legacy: `recognizer_loop:wakeword`) | `{"wake_word", "lang"}` | Wake word detected, capture is opening. `lang` is optional and only present when the deployment binds wake words to languages |
 | `recognizer_loop:speech.recognition.unknown` | none | STT returned nothing (silence / failure) |
-| `ovos.listener.sleep` | none | Request the listener enter sleep mode and suspend capture — device-scoped, see [Speech Service](speech-service.md) |
+| `ovos.listener.sleep` | none | Request the listener enter sleep mode and suspend capture: device-scoped, see [Speech Service](speech-service.md) |
 | `ovos.listener.awoken` (legacy: `mycroft.awoken`) | none | Listener woke from sleep |
 
 ## STT / utterance entry point
 
 | Event | Data | Meaning |
 |---|---|---|
-| `ovos.utterance.handle` (legacy: `recognizer_loop:utterance`) | `{"utterances": [str], "lang"}` | Transcribed command enters the pipeline — see [Life of an Utterance](life-of-an-utterance.md) and [Intent Service](intent-service.md#bus-events-handled) |
-| `ovos.utterance.handled` | — | Universal utterance-lifecycle end-marker; see [Bus Service](bus-service.md#core-intent-pipeline) |
+| `ovos.utterance.handle` (legacy: `recognizer_loop:utterance`) | `{"utterances": [str], "lang"}` | Transcribed command enters the pipeline: see [Life of an Utterance](life-of-an-utterance.md) and [Intent Service](intent-service.md#bus-events-handled) |
+| `ovos.utterance.handled` | none | Universal utterance-lifecycle end-marker. See [Bus Service](bus-service.md#core-intent-pipeline) |
 
 ## Intent matching & context
 
-Handled by `ovos-core`'s `IntentService`; see [Intent Service](intent-service.md#bus-events-handled).
+Handled by `ovos-core`'s `IntentService`. See [Intent Service](intent-service.md#bus-events-handled).
 
 | Event | Handler | Meaning |
 |---|---|---|
@@ -48,7 +48,7 @@ Handled by `ovos-core`'s `IntentService`; see [Intent Service](intent-service.md
 | `intent.service.intent.get` | `handle_get_intent` | Query the best-matching intent without dispatching it |
 | `intent.service.skills.deactivate` | `_handle_deactivate` | Remove a skill from active/converse consideration |
 | `intent.service.pipelines.reload` | `handle_reload_pipelines` | Reload the configured pipeline plugin stack |
-| `ovos.intent.unmatched` (legacy: `complete_intent_failure`) | — | No pipeline stage claimed the utterance — including the [fallback](fallback-pipeline.md) stages, which run *inside* the match loop; this is the terminal "nothing handled it" marker, not a hand-off |
+| `ovos.intent.unmatched` (legacy: `complete_intent_failure`) | none | No pipeline stage claimed the utterance, including the [fallback](fallback-pipeline.md) stages, which run *inside* the match loop. This is the terminal "nothing handled it" marker, not a hand-off |
 
 `IntentService` also **emits** these on a successful match, in order (see [Intent Service](intent-service.md#intent-match-emission)):
 
@@ -57,7 +57,7 @@ Handled by `ovos-core`'s `IntentService`; see [Intent Service](intent-service.md
 | `{skill_id}.activate` | Mark the matched skill active in the session |
 | `ovos.intent.matched` | A pipeline plugin claimed the utterance (notification) |
 | `<skill_id>:<intent_name>` | The dispatch message that invokes the winning skill's intent handler |
-| `ovos.intent.handler.start` → `ovos.intent.handler.complete` / `ovos.intent.handler.error` | The orchestrator-owned handler-lifecycle trio around the invocation (§8; **not** translator-bridged — see [Legacy ↔ spec migration](#legacy-spec-migration)). The skill framework separately emits the legacy `mycroft.skill.handler.start` / `.complete` as a private done-signal (there is no legacy `.error` — the explicit error leg is spec-side only) |
+| `ovos.intent.handler.start` → `ovos.intent.handler.complete` / `ovos.intent.handler.error` | The orchestrator-owned handler-lifecycle trio around the invocation (§8, **not** translator-bridged, see [Legacy ↔ spec migration](#legacy-spec-migration)). The skill framework separately emits the legacy `mycroft.skill.handler.start` / `.complete` as a private done-signal. There is no legacy `.error`: the explicit error leg is spec-side only |
 
 ### Converse
 
@@ -70,7 +70,7 @@ See [Converse Pipeline](converse-pipeline.md#bus-events-handled) for the full pi
 | `intent.service.active_skills.get` | `handle_get_active_skills` | Query the current converse-eligible list |
 | `skill.converse.get_response.enable` / `.disable` | `handle_get_response_enable` / `handle_get_response_disable` | Toggle the `get_response` window for a skill |
 | `converse:skill` | `handle_converse` | Dispatch an utterance to an active skill's `converse` |
-| `{skill_id}.converse.get_response` | — | Feed the user's reply back into a pending `get_response` (see [OVOSSkill API](ovos-skill.md#system-bus-events-handled-per-skill)) |
+| `{skill_id}.converse.get_response` | none | Feed the user's reply back into a pending `get_response` (see [OVOSSkill API](ovos-skill.md#system-bus-events-handled-per-skill)) |
 
 ### Common Query
 
@@ -97,19 +97,19 @@ See [Fallback Pipeline](fallback-pipeline.md#bus-events-handled).
 
 ## Skill lifecycle
 
-Handled by every `OVOSSkill` instance; see [OVOSSkill API](ovos-skill.md#system-bus-events-handled-per-skill).
+Handled by every `OVOSSkill` instance. See [OVOSSkill API](ovos-skill.md#system-bus-events-handled-per-skill).
 
 | Event | Meaning |
 |---|---|
-| `ovos.stop` (legacy: `mycroft.stop`) | Global stop broadcast — every skill subscribes and ceases activity for the inbound session (see below). Only this pair is translator-bridged |
-| `<skill_id>:stop` (legacy: `{skill_id}.stop`) | Skill-directed stop dispatch. **Dual-subscribed, not translator-bridged** — the skill base class listens on both forms itself (the per-skill `{skill_id}.*` shape can't be a static map key) |
+| `ovos.stop` (legacy: `mycroft.stop`) | Global stop broadcast: every skill subscribes and ceases activity for the inbound session (see below). Only this pair is translator-bridged |
+| `<skill_id>:stop` (legacy: `{skill_id}.stop`) | Skill-directed stop dispatch. **Dual-subscribed, not translator-bridged**: the skill base class listens on both forms itself (the per-skill `{skill_id}.*` shape can't be a static map key) |
 | `ovos.stop.ping` (legacy: `{skill_id}.stop.ping`) | Check whether this skill can stop. Also **dual-subscribed, not translator-bridged** (see the [Not bridged](#not-bridged-adopt-the-spec-directly) note) |
 | `mycroft.skill.enable_intent` / `mycroft.skill.disable_intent` | Enable/disable one of the skill's intents |
 | `mycroft.skill.set_cross_context` / `mycroft.skill.remove_cross_context` | Manage cross-skill context |
 | `mycroft.skills.settings.changed` | Remote settings update |
-| `ovos.skills.settings_changed` | Local settings file changed — see `settings_change_callback` in [Skill Settings](skill-settings.md#change-callback) ([Skill Cookbook recipe 2](skill-cookbook.md#2-user-configurable-behavior-settings-settingsmeta-live-reload)) for reacting to it from a skill |
+| `ovos.skills.settings_changed` | Local settings file changed: see `settings_change_callback` in [Skill Settings](skill-settings.md#change-callback) ([Skill Cookbook recipe 2](skill-cookbook.md#2-user-configurable-behavior-settings-settingsmeta-live-reload)) for reacting to it from a skill |
 | `homescreen.metadata.get` | Homescreen requesting metadata |
-| `{skill_id}.public_api` | Skill API introspection (see [Skill API — Inter-Skill RPC](ovos-skill.md#skill-api-inter-skill-rpc)) |
+| `{skill_id}.public_api` | Skill API introspection (see [Skill API: Inter-Skill RPC](ovos-skill.md#skill-api-inter-skill-rpc)) |
 
 ### Stop pipeline
 
@@ -118,7 +118,7 @@ Handled by every `OVOSSkill` instance; see [OVOSSkill API](ovos-skill.md#system-
 
 | Event | Direction | Meaning |
 |---|---|---|
-| `<pipeline_id>:global_stop` (legacy: `stop:global`) | in | Global-stop dispatch — its handler emits the `ovos.stop` broadcast (and `ovos.utterance.handled`) |
+| `<pipeline_id>:global_stop` (legacy: `stop:global`) | in | Global-stop dispatch: its handler emits the `ovos.stop` broadcast (and `ovos.utterance.handled`) |
 | `<skill_id>:stop` (legacy: `stop:skill` → `{skill_id}.stop`) | out | Targeted stop dispatch to one skill |
 | `ovos.stop.ping` (legacy: `{skill_id}.stop.ping`) | out | Asks the active handlers whether they can stop |
 | `ovos.stop.pong` (legacy: `skill.stop.pong`) | in | Handler's `can_handle` reply |
@@ -126,11 +126,11 @@ Handled by every `OVOSSkill` instance; see [OVOSSkill API](ovos-skill.md#system-
 
 ## TTS / audio playback
 
-Handled by `ovos-audio`; see [Audio Service](audio-service.md).
+Handled by `ovos-audio`. See [Audio Service](audio-service.md).
 
 | Event | Meaning |
 |---|---|
-| `ovos.utterance.speak` (legacy: `speak`) | Natural-language response to synthesize and play — the exit point of the utterance lifecycle |
+| `ovos.utterance.speak` (legacy: `speak`) | Natural-language response to synthesize and play: the exit point of the utterance lifecycle |
 | `mycroft.audio.queue` | Queue a sound effect / audio file for playback (see [`play_audio`](ovos-skill.md#playing-audio-files)) |
 | `mycroft.audio.play_sound` | Play a sound effect / audio file instantly |
 | `mycroft.audio.speech.stop` | Interrupt in-progress TTS speech (emitted by the [`@intent_handler(..., stop_tts=True)`](decorators.md) decorator, among others) |
@@ -141,7 +141,7 @@ Handled by `ovos-audio`; see [Audio Service](audio-service.md).
 
 ## GUI forwarding
 
-Handled by `ovos-gui`; see [GUI Service](gui-service.md).
+Handled by `ovos-gui`. See [GUI Service](gui-service.md).
 
 | Event | Meaning |
 |---|---|
@@ -169,7 +169,7 @@ See [Bus Service: common message types](bus-service.md#key-message-categories).
 OVOS is renaming its bus topics onto the `ovos.*` spec namespace. You do not have to migrate
 all at once: `ovos-bus-client`'s `NamespaceTranslator` runs on every client with both directions
 on by default, so a message emitted on either the legacy or the spec topic is re-emitted on the
-other (see [Bus Service — namespace migration](bus-service.md#namespace-migration)). A direct bus
+other (see [Bus Service: namespace migration](bus-service.md#namespace-migration)). A direct bus
 consumer can therefore subscribe on either name today and switch to the spec name at its own pace.
 
 The pairs below are the authoritative rename map (`ovos_spec_tools`'s `MIGRATION_MAP`). Unless
@@ -198,9 +198,9 @@ directly.
 | `skill.stop.pong` | `ovos.stop.pong` | stoppability reply (STOP-1 §4.2) |
 | `complete_intent_failure` | `ovos.intent.unmatched` | no intent claimed the utterance (PIPELINE-1 §9.3) |
 | `detach_skill` | `ovos.skill.deregister` | remove a skill's intents `{skill_id}` |
-| `detach_intent` | `ovos.intent.deregister` | **shape-changing** — remove one intent (INTENT-4 §8.2) |
-| `mycroft.skill.enable_intent` | `ovos.intent.enable` | **shape-changing** — enable an intent (INTENT-4 §8.5) |
-| `mycroft.skill.disable_intent` | `ovos.intent.disable` | **shape-changing** — disable an intent (INTENT-4 §8.5) |
+| `detach_intent` | `ovos.intent.deregister` | **shape-changing**: remove one intent (INTENT-4 §8.2) |
+| `mycroft.skill.enable_intent` | `ovos.intent.enable` | **shape-changing**: enable an intent (INTENT-4 §8.5) |
+| `mycroft.skill.disable_intent` | `ovos.intent.disable` | **shape-changing**: disable an intent (INTENT-4 §8.5) |
 
 ### Not bridged: adopt the spec directly
 

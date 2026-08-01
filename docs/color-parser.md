@@ -29,11 +29,11 @@ A secondary use case is scientific. The library supports the full electromagneti
 
 | Module | Responsibility |
 |--------|---------------|
-| `ovos_color_parser/__init__.py` | Convenience re-exports of the most common model classes and matching functions (a subset — see the API reference for what each submodule exposes) |
+| `ovos_color_parser/__init__.py` | Convenience re-exports of the most common model classes and matching functions (a subset: see the API reference for what each submodule exposes) |
 | `ovos_color_parser/models.py` | Dataclasses for all color spaces plus pre-built spectral palettes and language vocabulary objects |
 | `ovos_color_parser/matching.py` | Color name lookup, adjective adjustment, `ColorMatcher` class, utility functions |
 | `ovos_color_parser/core/` | Internal building blocks: `distance.py` (in-house CIEDE2000 implementation), `space.py` (color-space math) |
-| `ovos_color_parser/match/automaton.py` | `SubstringMatcher` — an in-house substring-matching automaton used for color-name lookup (no external Aho-Corasick dependency) |
+| `ovos_color_parser/match/automaton.py` | `SubstringMatcher`: an in-house substring-matching automaton used for color-name lookup (no external Aho-Corasick dependency) |
 | `ovos_color_parser/vocab/` | Vocabulary loading helpers for the per-language resource files |
 | `ovos_color_parser/res/<lang>/` | Per-language JSON word-lists (`*.json`) and object-color mappings (`object_colors.json`) and adjective descriptors (`color_descriptors.json`) |
 
@@ -53,10 +53,9 @@ sRGBAColor  ──as_hls──►  HLSColor  ──as_hsv──►  HSVColor
      │◄──────as_rgb─────────│◄──────as_rgb──────────│
      │                                               │
      └──as_spectral_color──► SpectralColor ◄─────────┘
-
 ```
 
-The `HueRange` dataclass bridges the hue angle (0–360°) to the physical wavelength domain using `ISCCNBSSpectralColorTerms` as the default mapping table.
+The `HueRange` dataclass bridges the hue angle (0-360°) to the physical wavelength domain using `ISCCNBSSpectralColorTerms` as the default mapping table.
 
 ### Matching pipeline (`matching.py`)
 
@@ -87,13 +86,13 @@ Only the pre-built spectral/language palette **constants** below (e.g. `Malacara
 
 | Class | Key fields | Notable properties / methods |
 |-------|-----------|------------------------------|
-| `sRGBAColor` | `r`, `g`, `b` (0–255 int), `a` (0–255, default 255), `name`, `description` | `.as_hls`, `.as_hsv`, `.as_spectral_color`, `.hex_str`, `from_hex_str(hex_str)` |
-| `HLSColor` | `h` (0–360 int), `l` (0–1 float), `s` (0–1 float), `name`, `description` | `.as_rgb`, `.as_hsv`, `.as_spectral_color`, `.hex_str`, `from_hex_str(hex_str)` |
-| `HSVColor` | `h` (0–360 int), `s` (0–1 float), `v` (0–1 float), `name`, `description` | `.as_rgb`, `.as_hls`, `.as_spectral_color`, `.hex_str`, `from_hex_str(hex_str)` |
+| `sRGBAColor` | `r`, `g`, `b` (0-255 int), `a` (0-255, default 255), `name`, `description` | `.as_hls`, `.as_hsv`, `.as_spectral_color`, `.hex_str`, `from_hex_str(hex_str)` |
+| `HLSColor` | `h` (0-360 int), `l` (0-1 float), `s` (0-1 float), `name`, `description` | `.as_rgb`, `.as_hsv`, `.as_spectral_color`, `.hex_str`, `from_hex_str(hex_str)` |
+| `HSVColor` | `h` (0-360 int), `s` (0-1 float), `v` (0-1 float), `name`, `description` | `.as_rgb`, `.as_hls`, `.as_spectral_color`, `.hex_str`, `from_hex_str(hex_str)` |
 | `SpectralColor` | `wavelen_nm_min`, `wavelen_nm_max`, `hex_approximation`, `hue_approximation`, `name` | `.wavelen` (midpoint), `.as_rgb`, `.as_hls`, `.as_hsv`, `from_rgb()`, `from_hsv()`, `from_hls()`, `from_hex_str()` |
 | `HueRange` | `min_hue_approximation`, `max_hue_approximation`, `name`, `hex_approximation` | `.hue` (midpoint), `.as_spectral_color` |
 | `ColorTerm` | `name`, `hue: HueRange`, `hex_approximation` | `.as_rgb` |
-| `LanguageColorVocabulary` | `terms: List[ColorTerm]` | — |
+| `LanguageColorVocabulary` | `terms: List[ColorTerm]` | none |
 | `sRGBAColorPalette` | `colors: List[sRGBAColor]` | `.as_hsv`, `.as_hls` |
 | `HSVColorPalette` | `colors: List[HSVColor]` | `.as_rgb`, `.as_hls` |
 | `HLSColorPalette` | `colors: List[HLSColor]` | `.as_rgb`, `.as_hsv` |
@@ -110,8 +109,8 @@ Type aliases exported from `models.py`:
 
 | Name | Type | Description |
 |------|------|-------------|
-| `NewtonSpectralColorTerms` | `SpectralColorPalette` | Newton's 7-color spectrum (380–690 nm) |
-| `ISCCNBSSpectralColorTerms` | `SpectralColorPalette` | ISCC-NBS 8-term spectrum (380–730 nm); default for hue↔wavelength conversion |
+| `NewtonSpectralColorTerms` | `SpectralColorPalette` | Newton's 7-color spectrum (380-690 nm) |
+| `ISCCNBSSpectralColorTerms` | `SpectralColorPalette` | ISCC-NBS 8-term spectrum (380-730 nm). Default for hue-to-wavelength conversion |
 | `MalacaraSpectralColorTerms` | `SpectralColorPalette` | Malacara 7-term spectrum |
 | `CRCHandbookSpectralColorTerms` | `SpectralColorPalette` | CRC Handbook 6-term spectrum |
 | `IRSpectralColors` | `SpectralColorPalette` | Infrared / Microwave / Radio spectrum |
@@ -125,10 +124,10 @@ Type aliases exported from `models.py`:
 | Function | Signature | Returns | Description |
 |----------|-----------|---------|-------------|
 | `color_from_description` | `(description: str, lang: str = "en", strategy: MatchStrategy = DAMERAU_LEVENSHTEIN_SIMILARITY, cast_to_palette: bool = False, fuzzy: bool = True) -> Optional[sRGBAColor]` | `sRGBAColor` or `None` | Main entry point. Resolves a natural-language description to an RGB color. Returns `None` if no color candidates are found. When `cast_to_palette=True`, snaps the result to the nearest matched candidate instead of returning an averaged value. |
-| `color_distance` | `(color_a: Color, color_b: Color) -> float` | `float` | CIEDE2000 perceptual distance between two colors in sRGB-255 space. Lower is more similar. Computed by the in-house `srgb8_distance`/`delta_e_cie2000` implementation in `ovos_color_parser/core/distance.py` — no `colorspacious` dependency. |
+| `color_distance` | `(color_a: Color, color_b: Color) -> float` | `float` | CIEDE2000 perceptual distance between two colors in sRGB-255 space. Lower is more similar. Computed by the in-house `srgb8_distance`/`delta_e_cie2000` implementation in `ovos_color_parser/core/distance.py`, with no `colorspacious` dependency. |
 | `closest_color` | `(color: Color, color_opts: List[Color]) -> Color` | `Color` | Returns the element of `color_opts` with the smallest `color_distance` to `color`. |
 | `average_colors` | `(colors: List[Color], weights: Optional[List[float]] = None) -> HLSColor` | `HLSColor` | Weighted average of a list of colors. Hue is averaged using circular mean (atan2) to avoid wrap-around errors. Returns an `HLSColor`. |
-| `convert_K_to_RGB` | `(colour_temperature: int) -> sRGBAColor` | `sRGBAColor` | Converts a color temperature in Kelvin (1 000–40 000 K) to an sRGB color. Algorithm by Tanner Helland. Raises `ValueError` for temperatures outside the 1 000–40 000 K range, so callers should guard input. |
+| `convert_K_to_RGB` | `(colour_temperature: int) -> sRGBAColor` | `sRGBAColor` | Converts a color temperature in Kelvin (1 000-40 000 K) to an sRGB color. Algorithm by Tanner Helland. Raises `ValueError` for temperatures outside the 1 000-40 000 K range, so callers should guard input. |
 | `get_contrasting_black_or_white` | `(hex_code: str) -> sRGBAColor` | `sRGBAColor` | Returns black or white, whichever provides the best contrast against the input hex color, using the YIQ luma formula. |
 | `palette_from_description` | `(description: str, lang: str = "en", strategy: MatchStrategy = ...) -> sRGBAColorPalette` | `sRGBAColorPalette` | Returns all candidate colors matched from a description (fuzzy, no adjective adjustment). Useful for UI palette suggestions. |
 | `lookup_name` | `(color: Color, lang: str = "en", namespace: Optional[str] = None, nearest: bool = False) -> str` | `str` | Reverse-lookup: given a color object, find its name in the language word list. `nearest=True` falls back to the closest known name instead of requiring an exact hex match. Raises `ValueError` if the hex code has no named entry and `nearest=False`. |
@@ -143,7 +142,7 @@ Thread-safe class that owns the `SubstringMatcher` automata. It can be used stat
 | Method | Signature | Description |
 |--------|-----------|-------------|
 | `__init__` | `(lang: str = "en", color_palettes: Optional[Iterable[Dict[str, str]]] = None, object_colors: Optional[Dict[str, str]] = None)` | Construct an instance bound to `lang`. Pass `color_palettes`/`object_colors` to inject custom vocabularies (defaults load the bundled JSON word lists for `lang`). |
-| `match_colors` | `(description: str, strategy: MatchStrategy = DAMERAU_LEVENSHTEIN_SIMILARITY, fuzzy: bool = False) -> List[Tuple[HLSColor, float]]` | Instance method: match `description` against this instance's color vocabulary. Exact-first; the fuzzy scan runs only when `fuzzy=True` and exact spotting finds nothing. |
+| `match_colors` | `(description: str, strategy: MatchStrategy = DAMERAU_LEVENSHTEIN_SIMILARITY, fuzzy: bool = False) -> List[Tuple[HLSColor, float]]` | Instance method: match `description` against this instance's color vocabulary. Tries an exact match first. The fuzzy scan runs only when `fuzzy=True` and exact spotting finds nothing. |
 | `match_objects` | `(description: str, strategy: MatchStrategy = DAMERAU_LEVENSHTEIN_SIMILARITY) -> List[Tuple[HLSColor, float]]` | Instance method: match `description` against this instance's object-color vocabulary. |
 | `load_color_automaton` | `(cls, lang: str) -> SubstringMatcher` | Build (or return cached) substring-matching automaton from all non-descriptor JSON word lists for `lang`. |
 | `load_object_automaton` | `(cls, lang: str) -> SubstringMatcher` | Build (or return cached) automaton from `object_colors.json` for `lang`. |
@@ -163,7 +162,6 @@ from ovos_color_parser import color_from_description
 color = color_from_description("bright vibrant green")
 print(color.hex_str)        # e.g. "#4CBF31"
 print(color.r, color.g, color.b)
-
 ```
 
 ### Average vs. snapped result
@@ -178,7 +176,6 @@ print(averaged.hex_str)   # "#B84D54"
 # Snapped to the nearest exact palette entry
 snapped = color_from_description("Red", cast_to_palette=True)
 print(snapped.hex_str)    # "#B9484E"  ("Dusty Red")
-
 ```
 
 ### Perceptual distance
@@ -189,7 +186,6 @@ from ovos_color_parser import color_distance, color_from_description
 a = color_from_description("green")
 b = color_from_description("purple")
 print(color_distance(a, b))   # ~62.64
-
 ```
 
 ### Closest color from a custom palette
@@ -205,7 +201,6 @@ palette = sRGBAColorPalette(colors=[
 
 result = closest_color(sRGBAColor(r=0, g=200, b=200), palette.colors)
 print(result.name)   # "Turquoise"
-
 ```
 
 ### Color temperature to RGB
@@ -218,7 +213,6 @@ print(warm_white.hex_str)   # "#FFA657" (approximate warm incandescent)
 
 daylight = convert_K_to_RGB(6500)
 print(daylight.hex_str)     # "#FFFEFA" (approximate daylight)
-
 ```
 
 ### Contrasting text color
@@ -229,7 +223,6 @@ from ovos_color_parser import get_contrasting_black_or_white
 # For a dark background, returns white for readable text
 contrast = get_contrasting_black_or_white("#1A1A2E")
 print(contrast.hex_str)   # "#FFFFFF"
-
 ```
 
 ### Color space conversions
@@ -245,7 +238,6 @@ spectral = rgb.as_spectral_color
 print(hls.h, hls.l, hls.s)     # 0 0.5 1
 print(hsv.h, hsv.s, hsv.v)     # 0 1.0 1.0
 print(spectral.wavelen)        # 610 (approximate wavelength in nm)
-
 ```
 
 `as_spectral_color` maps a hue to the nearest defined band in
@@ -262,7 +254,7 @@ Each language directory may contain:
 
 | File | Purpose |
 |------|---------|
-| `*.json` (except the two below) | Map of `"#RRGGBB"` → `"color name"` — one or more files per language |
+| `*.json` (except the two below) | Map of `"#RRGGBB"` → `"color name"`. One or more files per language. |
 | `object_colors.json` | Map of `"#RRGGBB"` → `"object name"` (e.g. sky, grass, ocean) |
 | `color_descriptors.json` | Adjective lists keyed by `very_high_saturation`, `high_saturation`, `low_saturation`, `very_low_saturation`, `very_high_brightness`, `high_brightness`, `low_brightness`, `very_low_brightness`, `very_high_opacity`, `high_opacity`, `low_opacity`, `very_low_opacity`, `very_high_temperature`, `high_temperature`, `low_temperature`, `very_low_temperature` |
 
@@ -287,9 +279,9 @@ No runtime configuration object is used. Language selection is passed explicitly
 |---------|-------------------------------|
 | `ovos-core` | Indirectly via skills that handle lighting commands |
 | `ovos-workshop` | [Skill](skill-design-guidelines.md) base classes delegate color parsing to this library |
-| `ovos-number-parser` | Peer library in the OVOS NLP stack; not a dependency of this package |
-| `ovos-date-parser` | Peer library in the OVOS NLP stack; not a dependency of this package |
-| `ovos-lang-parser` | Peer library in the OVOS NLP stack; not a dependency of this package |
+| `ovos-number-parser` | Peer library in the OVOS NLP stack, not a dependency of this package |
+| `ovos-date-parser` | Peer library in the OVOS NLP stack, not a dependency of this package |
+| `ovos-lang-parser` | Peer library in the OVOS NLP stack, not a dependency of this package |
 
 See also:
 

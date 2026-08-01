@@ -4,7 +4,7 @@
     A "skill" is an add-on that teaches your assistant to do one thing: tell the weather, set an
     alarm, play the radio, answer trivia. This page is a browsable catalog of ready-made skills you
     can add to OVOS, grouped by what they're for, each with real example phrases and how to install
-    it. Some come pre-loaded depending on how you set OVOS up; others you add yourself. See
+    it. Some come pre-loaded depending on how you set OVOS up, others you add yourself. See
     [Your First Skill](first-skill.md) if you want to build your own, or the
     [Glossary](glossary.md) for terms.
 
@@ -18,24 +18,24 @@ Each skill below shows a **Maturity** rating from its repository health. See the
     one yourself, install its package (the repo link and install command are in the
     collapsed "Install" block under each skill below) and restart `ovos-core`. It scans for
     installed skills automatically. On RaspOVOS, prefer `ovos-install <package>`, RaspOVOS's own
-    helper, which installs with the correct version constraints; on any other setup, `pip install
+    helper, which installs with the correct version constraints. On any other setup, `pip install
     <package>` works the same way. If a skill isn't published to PyPI, install straight from
     git, e.g. `pip install git+https://github.com/OpenVoiceOS/ovos-skill-weather`. To build your
     own, follow [Your First Skill](first-skill.md).
 
 !!! info "Availability legend"
-    - 🟢 **Installer default**: installed automatically when the `ovos-installer`'s `skills`
+    - **Installer default**: installed automatically when the `ovos-installer`'s `skills`
       feature is on (the default).
-    - 🟡 **Installer optional**: installed only if you also enable the installer's
+    - **Installer optional**: installed only if you also enable the installer's
       `extra-skills` feature.
-    - ⚪ **Manual install only**: not offered by the installer at all. Add it yourself with
+    - **Manual install only**: not offered by the installer at all. Add it yourself with
       `ovos-install` (on RaspOVOS) or `pip install` (otherwise).
 
 ---
 
 ## Alerts (Timers, Reminders & Alarms)
 
-🟢 **Installer default**
+**Installer default**
 
 A skill to manage alarms, timers, reminders, events and todos and optionally sync them with a
 CalDAV service. Handy if you want a hands-free alarm clock, kitchen timer, or todo list that
@@ -48,6 +48,7 @@ survives a reboot and can sync with an external calendar.
 - When is my next alarm?
 - Schedule a tennis event for 2 PM on friday spanning 2 hours.
 - What did I miss?
+
 - remind me to take out the trash every Thursday and Sunday at 7 PM.
 - Start a bread timer for 30 minutes.
 - Did I miss anything?
@@ -61,7 +62,7 @@ survives a reboot and can sync with an external calendar.
 
 ## Date & Time
 
-🟢 **Installer default**
+**Installer default**
 
 Get the current time, date, or information about specific calendar days.
 
@@ -72,6 +73,7 @@ Get the current time, date, or information about specific calendar days.
 - What day is Memorial Day 2020?
 - What's the date?
 - Show me the time
+
 - How many days until July 4th
 - What time is it in Paris?
 
@@ -82,7 +84,7 @@ Get the current time, date, or information about specific calendar days.
 
 ## Naptime (Snooze the Assistant)
 
-🟢 **Installer default**
+**Installer default**
 
 Put the assistant to sleep when you don't want to be disturbed. While asleep, the wake word stops
 triggering listening. Say "Wake up" (or the configured stand-up word) to bring it back.
@@ -100,7 +102,7 @@ triggering listening. Say "Wake up" (or the configured stand-up word) to bring i
 
 ## Weather
 
-🟢 **Installer default**
+**Installer default**
 
 Get weather conditions, forecasts, expected precipitation and more! You can also ask for other
 cities around the world. Current conditions and weather forecasts come from OpenMeteo.
@@ -112,6 +114,7 @@ cities around the world. Current conditions and weather forecasts come from Open
 - What's the high temperature tomorrow
 - Is it going to snow in Baltimore?
 - what is the weather like?
+
 - How windy is it?
 - What is the weather this weekend?
 - What is the weather in Houston?
@@ -130,7 +133,7 @@ itself. It is a separate skill that talks to [Home Assistant](https://www.home-a
 See [OVOS & Home Assistant](home-assistant.md) for the full setup story in both directions
 (OVOS controlling HA devices, and HA using OVOS's own speech engines).
 
-⚪ **Manual install only** (or enable the installer's `homeassistant` feature, which installs and
+**Manual install only** (or enable the installer's `homeassistant` feature, which installs and
 configures it for you)
 
 The `skill-homeassistant` skill (maintained by OscillateLabs) lets OVOS control your Home
@@ -153,7 +156,7 @@ access token.
 
 ### PyRadios
 
-🟡 **Installer optional** (`extra-skills` feature)
+**Installer optional** (`extra-skills` feature)
 
 A client for the Radio Browser API, a large, community-maintained directory of internet radio
 stations.
@@ -168,7 +171,7 @@ stations.
 
 ### SomaFM
 
-🟡 **Installer optional** (`extra-skills` feature)
+**Installer optional** (`extra-skills` feature)
 
 Listen to a variety of commercial-free internet radio stations from SomaFM.
 
@@ -183,7 +186,7 @@ Listen to a variety of commercial-free internet radio stations from SomaFM.
 
 ### News
 
-🟡 **Installer optional** (`extra-skills` feature)
+**Installer optional** (`extra-skills` feature)
 
 News streams from around the globe.
 
@@ -201,7 +204,7 @@ News streams from around the globe.
 
 ### Local Media
 
-🟡 **Installer optional** (`extra-skills` feature)
+**Installer optional** (`extra-skills` feature)
 
 Local media file browser for OpenVoiceOS. Browse and play audio/video files from a USB drive or
 local folder.
@@ -213,6 +216,7 @@ local folder.
 - show my usb drive
 - start usb browser app
 - show my usb
+
 - show file browser app
 - show file browser
 - open usb
@@ -234,7 +238,7 @@ local folder.
 
 ### Dad Jokes
 
-🟡 **Installer optional** (`extra-skills` feature)
+**Installer optional** (`extra-skills` feature)
 
 Brighten your day with dad humor. Laughter is not guaranteed, but eye rolls are likely.
 
@@ -245,6 +249,7 @@ Brighten your day with dad humor. Laughter is not guaranteed, but eye rolls are 
 - Do you know any Chuck Norris jokes?
 - Tell me a joke about dentists.
 - Say a joke.
+
 - Tell me a joke.
 - Do you know any jokes?
 
@@ -253,7 +258,7 @@ Brighten your day with dad humor. Laughter is not guaranteed, but eye rolls are 
 
 ### Parrot
 
-🟢 **Installer default**
+**Installer default**
 
 Turn OpenVoiceOS into an echoing parrot! Make OVOS repeat whatever you want.
 
@@ -264,6 +269,7 @@ Turn OpenVoiceOS into an echoing parrot! Make OVOS repeat whatever you want.
 - speak I can say anything you'd like!
 - start parrot
 - repeat Once upon a midnight dreary, while I pondered, weak and weary, Over many a quaint and curious volume of forgotten lore
+
 - Repeat what you just said
 - What did I just say?
 - Can you repeat that?
@@ -275,7 +281,7 @@ Turn OpenVoiceOS into an echoing parrot! Make OVOS repeat whatever you want.
 
 ### Confucius Quotes
 
-⚪ **Manual install only**
+**Manual install only**
 
 Quotes from Confucius.
 
@@ -291,7 +297,7 @@ Quotes from Confucius.
 
 ### Today in History
 
-⚪ **Manual install only**
+**Manual install only**
 
 Provides historical events for today or any other calendar day using information pulled from
 Wikipedia.
@@ -309,7 +315,7 @@ Wikipedia.
 
 ### Number Facts
 
-⚪ **Manual install only**
+**Manual install only**
 
 Facts about numbers.
 
@@ -320,6 +326,7 @@ Facts about numbers.
 - trivia about tomorrow
 - fact about number 666
 - fact about yesterday
+
 - curiosity about year 1992
 - math fact about number 7
 
@@ -328,7 +335,7 @@ Facts about numbers.
 
 ### Movie Master
 
-⚪ **Manual install only**
+**Manual install only**
 
 Find information about movies, actors, and production details. Easily find information about a
 movie with your voice.
@@ -340,6 +347,7 @@ movie with your voice.
 - What genres does the flick _______ belong to?
 - Who plays in the movie _______?
 - How long is the movie _______?
+
 - Look for information on the movie _______.
 - Do you have info on the film _______?
 - What is the movie _______ about?
@@ -351,7 +359,7 @@ movie with your voice.
 
 ### ISS Location
 
-⚪ **Manual install only**
+**Manual install only**
 
 Track the location of the International Space Station.
 
@@ -368,7 +376,7 @@ Track the location of the International Space Station.
 
 ### DuckDuckGo
 
-🟢 **Installer default**
+**Installer default**
 
 Use DuckDuckGo to answer questions.
 
@@ -383,7 +391,7 @@ Use DuckDuckGo to answer questions.
 
 ### Wikipedia
 
-🟢 **Installer default**
+**Installer default**
 
 Query Wikipedia for answers to all your questions. Get just a summary, or ask for more to get
 in-depth information.
@@ -395,6 +403,7 @@ in-depth information.
 - Tell me about beans
 - Tell me More
 - Tell me about the Pembroke Welsh Corgi
+
 - Check Wikipedia for beans
 - Tell me about Elon Musk
 
@@ -403,7 +412,7 @@ in-depth information.
 
 ### WikiHow
 
-🟢 **Installer default**
+**Installer default**
 
 How to do nearly everything.
 
@@ -417,7 +426,7 @@ How to do nearly everything.
 
 ### Wolfie (Wolfram Alpha)
 
-🟢 **Installer default**
+**Installer default**
 
 Use Wolfram Alpha for general knowledge questions.
 
@@ -435,7 +444,7 @@ Use Wolfram Alpha for general knowledge questions.
 
 ### Wordnet
 
-⚪ **Manual install only**
+**Manual install only**
 
 Use Wordnet to answer dictionary-like questions.
 
@@ -449,7 +458,7 @@ Use Wordnet to answer dictionary-like questions.
 
 ### Spelling
 
-🟢 **Installer default**
+**Installer default**
 
 Provides the spelling of words and phrases upon request.
 
@@ -465,7 +474,7 @@ Provides the spelling of words and phrases upon request.
 
 ### Personal
 
-🟢 **Installer default**
+**Installer default**
 
 Learn history and personality of the assistant. Ask about the 'birth' and parentage of the voice
 assistant and get a taste of the community who is fostering this open source artificial
@@ -483,7 +492,7 @@ intelligence.
 
 ### Hello World
 
-🟢 **Installer default**
+**Installer default**
 
 Introductory [skill](skill-design-guidelines.md) so that skill authors can see how an OVOS skill
 is put together.
@@ -503,7 +512,7 @@ is put together.
 
 ### Volume
 
-🟢 **Installer default**
+**Installer default**
 
 Control the volume of OVOS with verbal commands.
 
@@ -514,6 +523,7 @@ Control the volume of OVOS with verbal commands.
 - mute audio
 - volume to high level
 - reset volume
+
 - volume to high
 - volume level low
 - toggle audio
@@ -525,7 +535,7 @@ Control the volume of OVOS with verbal commands.
 
 ### IP Address
 
-🟢 **Installer default**
+**Installer default**
 
 Network connection information.
 
@@ -542,7 +552,7 @@ Network connection information.
 
 ### Speedtest
 
-🟢 **Installer default**
+**Installer default**
 
 Runs an internet bandwidth test using speedtest.net.
 
@@ -555,7 +565,7 @@ Runs an internet bandwidth test using speedtest.net.
 
 ### Boot Finished
 
-🟢 **Installer default**
+**Installer default**
 
 Provides notifications when OpenVoiceOS has fully started and all core services are ready. It
 listens for the `mycroft.ready` bus event (emitted once every core service reports ready) and
@@ -573,7 +583,7 @@ finished.
 
 ### Dictation
 
-🟢 **Installer default**
+**Installer default**
 
 Continuously transcribes user speech to a text file while enabled.
 
@@ -587,7 +597,7 @@ Continuously transcribes user speech to a text file while enabled.
 
 ### Audio Recording
 
-🟢 **Installer default**
+**Installer default**
 
 Record and manage audio clips directly from your assistant.
 
@@ -604,7 +614,7 @@ Record and manage audio clips directly from your assistant.
 
 ### Commands
 
-⚪ **Manual install only**
+**Manual install only**
 
 Allows you to execute shell scripts and system commands via voice. Useful for headless boxes
 where you want a voice shortcut to a maintenance script instead of SSHing in.

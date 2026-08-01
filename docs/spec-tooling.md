@@ -1,6 +1,6 @@
 # Specification Tooling
 
-!!! note "Maturity — Beta ⬤⬤⬤◯◯"
+!!! note "Maturity: Beta ⬤⬤⬤◯◯"
     In real use but still settling. Watch releases for the occasional breaking change. Rated by [repository health](maturity.md), not version.
 
 !!! abstract "In a nutshell"
@@ -12,7 +12,7 @@
     migration** (which lets the ecosystem adopt the new spec topic names without
     a flag day).
 
-??? info "📐 Formal specification"
+??? info "Formal specification"
     These tools serve the **[OpenVoiceOS/architecture](https://github.com/OpenVoiceOS/architecture)** specs. See the [spec index](architecture-specs.md).
 
 ---
@@ -36,8 +36,8 @@ clause-for-clause.
 | Message envelope | [OVOS-MSG-1](https://github.com/OpenVoiceOS/architecture/blob/dev/msg-1.md) | The `{type, data, context}` `Message` and its `forward`/`reply`/`response` derivations |
 | `Session` / `SessionManager` | [OVOS-SESSION-1](https://github.com/OpenVoiceOS/architecture/blob/dev/session-1.md) | The registered session-carrier field set with omission-not-null (de)serialization, plus a process-wide one-object-per-`session_id` registry that folds each incoming snapshot onto the live object and re-stamps `forward`/`reply`/`response` derivations with it |
 | Context gating & decay | [OVOS-CONTEXT-1](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-context.md) | Stateless helpers over the flat `session.intent_context` map: `gate_satisfied`/`is_live`/`decrement`/`prune`/`enforce_cap` for `requires_context`/`excludes_context` gating and decay, plus `context_supplied_slots`/`context_slot_candidates` for context-sourced slot fill |
-| `IntentBuilder` / `Intent` | [OVOS-INTENT-4 §5](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-4.md) | Adapt-free, plugin-agnostic keyword-intent definition — `require`/`optionally`/`one_of`/`exclude`/`build()` — mapping to the `ovos.intent.register.keyword` payload; `voc_match` matches an utterance against a `.voc` file; source-compatible with the `ovos-workshop` classes it replaces |
-| `SpecMessage` | multiple ([PIPELINE-1](https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md), [INTENT-4](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-4.md), [STOP-1](https://github.com/OpenVoiceOS/architecture/blob/dev/stop-1.md), [PERSONA-1](https://github.com/OpenVoiceOS/architecture/blob/dev/persona.md), [FALLBACK-1](https://github.com/OpenVoiceOS/architecture/blob/dev/fallback.md), …) | An enum of every canonical `ovos.*` spec bus topic, plus `MIGRATION_MAP`/`NamespaceTranslator` — the legacy↔`ovos.*` rename table the [namespace bridge](bus-service.md#namespace-migration) applies |
+| `IntentBuilder` / `Intent` | [OVOS-INTENT-4 §5](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-4.md) | Adapt-free, plugin-agnostic keyword-intent definition (`require`/`optionally`/`one_of`/`exclude`/`build()`), mapping to the `ovos.intent.register.keyword` payload. `voc_match` matches an utterance against a `.voc` file. Source-compatible with the `ovos-workshop` classes it replaces |
+| `SpecMessage` | multiple ([PIPELINE-1](https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md), [INTENT-4](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-4.md), [STOP-1](https://github.com/OpenVoiceOS/architecture/blob/dev/stop-1.md), [PERSONA-1](https://github.com/OpenVoiceOS/architecture/blob/dev/persona.md), [FALLBACK-1](https://github.com/OpenVoiceOS/architecture/blob/dev/fallback.md), …) | An enum of every canonical `ovos.*` spec bus topic, plus `MIGRATION_MAP`/`NamespaceTranslator`: the legacy-to-`ovos.*` rename table the [namespace bridge](bus-service.md#namespace-migration) applies |
 | `ovos-spec-lint` | [OVOS-INTENT-1](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-1.md) / [-2](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-2.md) | A linter that validates a `locale/` folder against the resource-format specs, including `.blacklist`/`.entity` naming and slot-free constraints |
 
 ```bash

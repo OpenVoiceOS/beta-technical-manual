@@ -1,6 +1,6 @@
 # ovos-workshop Documentation
 
-!!! success "Maturity — Mature ⬤⬤⬤⬤⬤"
+!!! success "Maturity: Mature ⬤⬤⬤⬤⬤"
     This package is long-lived, tested in production, and actively maintained. You can depend on it freely. It is rated by [repository health](maturity.md), not by version number.
 
 !!! abstract "In a nutshell"
@@ -59,7 +59,7 @@ OVOSSkill                             ovos_workshop/skills/ovos.py
 ├── UniversalSkill                    ovos_workshop/skills/auto_translatable.py
 │   └── UniversalFallback             ovos_workshop/skills/auto_translatable.py
 └── OVOSAbstractApplication           ovos_workshop/app.py
-    (not loaded by ovos-core itself — used by things that run alongside it,
+    (not loaded by ovos-core itself - used by things that run alongside it,
      e.g. ovos-persona's PersonaService and the OCP media player)
 
 # CommonQuery skills are plain OVOSSkills using the @common_query decorator
@@ -124,10 +124,10 @@ Resource files live in the skill's `locale/` directory, organized by language ta
 ```text
 locale/
   en-us/
-    dialog/   # .dialog files — spoken responses
-    vocab/    # .voc files — keyword lists for Adapt
-    intent/   # .intent files — Padatious training phrases
-    regex/    # .rx files — named-entity patterns
+    dialog/   # .dialog files - spoken responses
+    vocab/    # .voc files - keyword lists for Adapt
+    intent/   # .intent files - Padatious training phrases
+    regex/    # .rx files - named-entity patterns
 
 ```
 

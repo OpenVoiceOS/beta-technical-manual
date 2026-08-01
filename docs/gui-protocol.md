@@ -6,12 +6,12 @@
 !!! tip "Building a remote client?"
     Skip this legacy protocol. See [Screens on OVOS Today](gui-status.md) for the current approach.
 
-!!! danger "The OVOS GUI is deprecated — see [Screens on OVOS Today](gui-status.md) for the full picture"
+!!! danger "The OVOS GUI is deprecated: see [Screens on OVOS Today](gui-status.md) for the full picture"
     This page documents the legacy protocol. There is no generally usable OVOS GUI right now,
     and a replacement is **Upcoming**.
 
-??? info "📐 Formal specification"
-    The **forward** model for the display subsystem is **[OVOS-GUI-1 — GUI Display Subsystem](https://github.com/OpenVoiceOS/architecture/blob/dev/gui-1.md)** (a formal [architecture spec](architecture-specs.md)). It replaces the legacy protocol on this page with a clean separation: an application declares *what* to show by naming a template from a **closed `SYSTEM_*` vocabulary** and pushing flat session-data. Interchangeable **render backends (adapters)** decide *how* to draw it, fanned out to every installed adapter. The wire messages stay `gui.value.set` / `gui.page.show` / `gui.clear.namespace`, but a `gui.page.show` whose first page is **not** a `SYSTEM_*` template is rejected (no more arbitrary QML). A GUI message is routed **solely by its `session_id`**. This page documents the legacy Qt-WebSocket protocol that the OVOS-GUI-1 adapter model supersedes. Where they differ, the spec is the canonical target (see the "Upcoming" note at the foot of this page and [GUI Adapter Plugins](gui-adapters.md)).
+??? info "Formal specification"
+    The **forward** model for the display subsystem is **[OVOS-GUI-1: GUI Display Subsystem](https://github.com/OpenVoiceOS/architecture/blob/dev/gui-1.md)** (a formal [architecture spec](architecture-specs.md)). It replaces the legacy protocol on this page with a clean separation: an application declares *what* to show by naming a template from a **closed `SYSTEM_*` vocabulary** and pushing flat session-data. Interchangeable **render backends (adapters)** decide *how* to draw it, fanned out to every installed adapter. The wire messages stay `gui.value.set` / `gui.page.show` / `gui.clear.namespace`, but a `gui.page.show` whose first page is **not** a `SYSTEM_*` template is rejected (no more arbitrary QML). A GUI message is routed **solely by its `session_id`**. This page documents the legacy Qt-WebSocket protocol that the OVOS-GUI-1 adapter model supersedes. Where they differ, the spec is the canonical target (see the "Upcoming" note at the foot of this page and [GUI Adapter Plugins](gui-adapters.md)).
 
 The `ovos-gui` service exposes two communication channels:
 
@@ -49,7 +49,6 @@ the skill's namespace.
     "__idle": null
   }
 }
-
 ```
 
 | Field | Description |
@@ -78,11 +77,10 @@ Sent by `GUIInterface.show_page()` / `show_pages()` to request one or more pages
     "__idle": null
   }
 }
-
 ```
 
 `page_names` are page resource identifiers. The built-in pages use `SYSTEM_*` names (e.g.
-`SYSTEM_TextFrame`, `SYSTEM_ImageFrame`, `SYSTEM_Face`); skills may also ship their own
+`SYSTEM_TextFrame`, `SYSTEM_ImageFrame`, `SYSTEM_Face`). Skills may also ship their own
 `.qml` pages and reference them by name. `NamespaceManager` records the page list against
 the namespace and mirrors it to clients as `mycroft.gui.list.insert` with the resolved
 page URIs.
@@ -101,7 +99,6 @@ Removes a specific page from a skill's namespace page list.
     "__from": "ovos-skill-weather"
   }
 }
-
 ```
 
 ---
@@ -117,7 +114,6 @@ Clears all pages from a skill's namespace.
     "__from": "ovos-skill-weather"
   }
 }
-
 ```
 
 ---
@@ -136,7 +132,6 @@ clients as `mycroft.events.triggered` with `namespace = __from`.
     "params": {"item": 3}
   }
 }
-
 ```
 
 ---
@@ -155,7 +150,6 @@ Removes a skill's namespace from the active display stack and discards its
     "__from": "ovos-skill-weather"
   }
 }
-
 ```
 
 ---
@@ -170,7 +164,6 @@ namespace currently at the top of the active stack. It carries no payload.
   "type": "mycroft.gui.screen.close",
   "data": {}
 }
-
 ```
 
 ---
@@ -188,7 +181,6 @@ Emitted by `NamespaceManager` after a namespace has been deactivated and cleared
     "skill_id": "ovos-skill-weather"
   }
 }
-
 ```
 
 #### `gui.namespace.displayed`
@@ -202,7 +194,6 @@ Emitted when a namespace moves to the top of the active display stack.
     "skill_id": "ovos-skill-weather"
   }
 }
-
 ```
 
 ---
@@ -265,7 +256,6 @@ All messages are JSON objects sent over the WebSocket connection at `ws://localh
     "framework": "qt5"
   }
 }
-
 ```
 
 **`ovos-gui` → Qt client (OVOS messagebus reply):**
@@ -279,7 +269,6 @@ All messages are JSON objects sent over the WebSocket connection at `ws://localh
     "framework": "qt5"
   }
 }
-
 ```
 
 The Qt client then opens a WebSocket connection to `ws://localhost:18181/gui`.
@@ -318,7 +307,6 @@ The first item is always the namespace currently shown.
   "position": 0,
   "data": [{"skill_id": "ovos-skill-weather"}]
 }
-
 ```
 
 **Move namespace** (existing skill re-activated):
@@ -331,7 +319,6 @@ The first item is always the namespace currently shown.
   "to": 0,
   "items_number": 1
 }
-
 ```
 
 **Remove namespace** (skill cleared / idle):
@@ -343,7 +330,6 @@ The first item is always the namespace currently shown.
   "position": 0,
   "items_number": 1
 }
-
 ```
 
 ---
@@ -364,7 +350,6 @@ Qt client. Values may be strings, numbers, booleans, or lists.
     "condition": "Sunny"
   }
 }
-
 ```
 
 **Delete a key:**
@@ -375,7 +360,6 @@ Qt client. Values may be strings, numbers, booleans, or lists.
   "namespace": "ovos-skill-weather",
   "property": "current_temp"
 }
-
 ```
 
 **List operations** (for list-typed session values):
@@ -388,7 +372,6 @@ Qt client. Values may be strings, numbers, booleans, or lists.
   "position": 0,
   "values": [{"date": "tomorrow", "temperature": 13}]
 }
-
 ```
 
 ```json
@@ -399,7 +382,6 @@ Qt client. Values may be strings, numbers, booleans, or lists.
   "position": 0,
   "values": [{"date": "tomorrow", "temperature": 15}]
 }
-
 ```
 
 ```json
@@ -411,7 +393,6 @@ Qt client. Values may be strings, numbers, booleans, or lists.
   "to": 0,
   "items_number": 1
 }
-
 ```
 
 ```json
@@ -422,7 +403,6 @@ Qt client. Values may be strings, numbers, booleans, or lists.
   "position": 0,
   "items_number": 1
 }
-
 ```
 
 ---
@@ -440,7 +420,6 @@ Each active skill is associated with a list of page URIs.
   "position": 0,
   "data": [{"url": "SYSTEM:TextFrame.qml", "page": "TextFrame.qml"}]
 }
-
 ```
 
 The `SYSTEM:` URI scheme is resolved by the Qt client to the matching system-template QML
@@ -457,7 +436,6 @@ resolution order). Skill-provided `.qml` pages are sent as ordinary file URIs.
   "to": 2,
   "items_number": 1
 }
-
 ```
 
 **Remove pages:**
@@ -469,7 +447,6 @@ resolution order). Skill-provided `.qml` pages are sent as ordinary file URIs.
   "position": 0,
   "items_number": 1
 }
-
 ```
 
 ---
@@ -486,14 +463,13 @@ Events can be emitted by the GUI client (e.g. user tapped a button) or by the sk
   "event_name": "my.gui.event",
   "parameters": {"item": 3}
 }
-
 ```
 
 #### Page focus / interaction (client → core)
 
 When the user swipes to a different page or interacts with one, the Qt client signals
 core. `ovos-gui` listens for `gui.page_gained_focus` and `gui.page_interaction` on the
-OVOS bus; both carry `skill_id` and a zero-based `page_number`. The interaction event also
+OVOS bus. Both carry `skill_id` and a zero-based `page_number`. The interaction event also
 resets the namespace's idle-removal timer.
 
 ```json
@@ -501,7 +477,6 @@ resets the namespace's idle-removal timer.
   "type": "gui.page_gained_focus",
   "data": {"skill_id": "ovos-skill-weather", "page_number": 0}
 }
-
 ```
 
 #### System status events
@@ -515,7 +490,6 @@ Core bus events forwarded to Qt clients:
   "event_name": "recognizer_loop:wakeword",
   "data": {}
 }
-
 ```
 
 ---
@@ -547,17 +521,17 @@ User swipes / taps on Qt:
 
 ---
 
-!!! warning "Upcoming — unreleased"
+!!! warning "Upcoming: unreleased"
     In the GUI-rework, specified by the
     [OVOS-GUI-1](https://github.com/OpenVoiceOS/architecture/blob/dev/gui-1.md) spec
     (see [GUI Service](gui-service.md)), the bus contract changes:
 
-    - `gui.page.show` will accept **only** `SYSTEM_*` template names — custom QML pages are no
+    - `gui.page.show` will accept **only** `SYSTEM_*` template names. Custom QML pages are no
       longer supported.
     - Instead of mirroring to Qt clients directly, template events fan out to every loaded
       `opm.gui_adapter` plugin (see [GUI Adapter Plugins](gui-adapters.md)). The Qt WebSocket
       protocol on this page becomes one such adapter.
 
-    None of this is implemented in `ovos-gui` yet — see
+    None of this is implemented in `ovos-gui` yet. See
     [GUI Adapter Plugins](gui-adapters.md) for what the adapter plugins being built ahead of
     this rework have already settled on.

@@ -1,13 +1,13 @@
 # Speech Service
 
-!!! info "Maturity — Stable ⬤⬤⬤⬤◯"
+!!! info "Maturity: Stable ⬤⬤⬤⬤◯"
     Established and production-ready, actively maintained. Rated by [repository health](maturity.md), not version.
 
 !!! abstract "In a nutshell"
     The speech service is the "ears" of OpenVoiceOS. It listens through the microphone, waits for a wake word (like "Hey Mycroft"), and then turns whatever you say next into text so the rest of the system can act on it. Think of it as the part that hears you and writes down your request. From here that text is handed off to the [Intent Service](intent-service.md), which works out what to do. New to the terms? See the [Glossary](glossary.md).
 
 ??? info "📐 Formal specification"
-    The capture → audio-transformer chain → STT → utterance flow and the listening-lifecycle signals are specified by **[OVOS-AUDIO-IN-1 — Audio Input Service](https://github.com/OpenVoiceOS/architecture/blob/dev/audio-in.md)**. The audio-transformer chain that runs on the raw audio before STT is specified by **[OVOS-TRANSFORM-1 — Transformer Plugins](https://github.com/OpenVoiceOS/architecture/blob/dev/transformer.md)** (§3.1). See also the [spec index](architecture-specs.md). `ovos-dinkum-listener` is the reference implementation. The spec topic names below are canonical, with the legacy name noted once.
+    The capture → audio-transformer chain → STT → utterance flow and the listening-lifecycle signals are specified by **[OVOS-AUDIO-IN-1: Audio Input Service](https://github.com/OpenVoiceOS/architecture/blob/dev/audio-in.md)**. The audio-transformer chain that runs on the raw audio before STT is specified by **[OVOS-TRANSFORM-1: Transformer Plugins](https://github.com/OpenVoiceOS/architecture/blob/dev/transformer.md)** (§3.1). See also the [spec index](architecture-specs.md). `ovos-dinkum-listener` is the reference implementation. The spec topic names below are canonical, with the legacy name noted once.
 
 `ovos-dinkum-listener` is the service responsible for audio capture, [Wake Word](wake-word-plugins.md) detection, and [Speech-to-Text](stt-plugins.md) ([STT](stt-plugins.md)). It is the default, full-featured listener. `ovos-simple-listener` is a lighter alternative that emits the same `recognizer_loop:*` bus events but without the full state machine.
 
@@ -61,7 +61,7 @@ The speech service is the "ears" of OpenVoiceOS. It continuously listens to the 
 global **mode** (set in `listener.mode` / over the bus) and an internal **state** that
 advances chunk by chunk:
 
-- **Modes** (`ListeningMode`): `wakeword` (default — wait for the wake word),
+- **Modes** (`ListeningMode`): `wakeword` (default, wait for the wake word),
   `continuous` (always transcribe), `hybrid` (continuous but only act after the wake
   word), `sleeping`.
 
@@ -79,14 +79,14 @@ Source: `ovos_dinkum_listener/voice_loop/voice_loop.py:36` (`ListeningState`) an
 The listener emits its activity on the OVOS [messagebus](bus-service.md). The most
 useful events for downstream services:
 
-Canonical (spec) names are shown first, with the legacy name in parentheses. The `ovos.listener.*` and `ovos.utterance.handle` names come from [OVOS-AUDIO-IN-1 §5–§6](https://github.com/OpenVoiceOS/architecture/blob/dev/audio-in.md). `ovos-dinkum-listener` emits the spec `ovos.*` topics directly for the record/awoken/utterance events (via `SpecMessage`). For those, `ovos-bus-client`'s `NamespaceTranslator` runs on every client with both directions on by default (see [Bus Service](bus-service.md#namespace-migration)). Emitting a spec topic also emits its legacy alias, and vice versa, so subscribers can use either name. The wake-word event (`recognizer_loop:wakeword`) is the exception: it has no spec counterpart in the rename map, so it travels under the legacy name only. See the [legacy ↔ spec migration table](bus-events.md#legacy-spec-migration) for the full mapping.
+Canonical (spec) names are shown first, with the legacy name in parentheses. The `ovos.listener.*` and `ovos.utterance.handle` names come from [OVOS-AUDIO-IN-1 §5-§6](https://github.com/OpenVoiceOS/architecture/blob/dev/audio-in.md). `ovos-dinkum-listener` emits the spec `ovos.*` topics directly for the record/awoken/utterance events (via `SpecMessage`). For those, `ovos-bus-client`'s `NamespaceTranslator` runs on every client with both directions on by default (see [Bus Service](bus-service.md#namespace-migration)). Emitting a spec topic also emits its legacy alias, and vice versa, so subscribers can use either name. The wake-word event (`recognizer_loop:wakeword`) is the exception: it has no spec counterpart in the rename map, so it travels under the legacy name only. See the [legacy ↔ spec migration table](bus-events.md#legacy-spec-migration) for the full mapping.
 
 | Message | Payload | Meaning |
 |---|---|---|
 | `ovos.listener.record.started` (legacy: `recognizer_loop:record_begin`) | none | Command recording started (§6.1) |
 | `ovos.listener.record.ended` (legacy: `recognizer_loop:record_end`) | none | Command recording ended (§6.2) |
-| `recognizer_loop:wakeword` | `{"utterance": str, "key_phrase": str, …}` | Wake word detected; capture is opening. Legacy-only — the wake-word event is not part of the spec rename (there is no `ovos.listener.wakeword`). `utterance` is the spoken key phrase (underscores/hyphens spaced out), `key_phrase` its raw form; `filename` is added when `listener.record_wake_words` is on. A per-wake-word `stt_lang` override, when configured, rides the message context (surfaced as `session.request_lang`) rather than the payload |
-| `ovos.utterance.handle` (legacy: `recognizer_loop:utterance`) | `{"utterances": [str], "lang"}` | Transcribed command — the main result (§5, OVOS-PIPELINE-1 §9.1) |
+| `recognizer_loop:wakeword` | `{"utterance": str, "key_phrase": str, …}` | Wake word detected. Capture is opening. Legacy-only: the wake-word event is not part of the spec rename (there is no `ovos.listener.wakeword`). `utterance` is the spoken key phrase (underscores/hyphens spaced out), `key_phrase` its raw form. `filename` is added when `listener.record_wake_words` is on. A per-wake-word `stt_lang` override, when configured, rides the message context (surfaced as `session.request_lang`) rather than the payload |
+| `ovos.utterance.handle` (legacy: `recognizer_loop:utterance`) | `{"utterances": [str], "lang"}` | Transcribed command: the main result (§5, OVOS-PIPELINE-1 §9.1) |
 | `recognizer_loop:speech.recognition.unknown` | none | STT returned nothing (silence / failure) |
 | `ovos.listener.awoken` (legacy: `mycroft.awoken`) | none | Listener woke from sleep (§6.4) |
 
@@ -106,8 +106,8 @@ STT/loop values):
 
 | Command | Behaviour |
 | --- | --- |
-| `recognizer_loop:b64_transcribe` | Transcribes the audio and returns the result on the message response as `{"transcriptions": [...], "lang"}` — a pure STT call that emits no utterance event |
-| `recognizer_loop:b64_audio` | Transcribes and, if the result clears `min_stt_confidence`, emits the normal `ovos.utterance.handle` (`recognizer_loop:utterance`) event as if the audio had come from the mic; otherwise emits `recognizer_loop:speech.recognition.unknown` |
+| `recognizer_loop:b64_transcribe` | Transcribes the audio and returns the result on the message response as `{"transcriptions": [...], "lang"}`, a pure STT call that emits no utterance event |
+| `recognizer_loop:b64_audio` | Transcribes and, if the result clears `min_stt_confidence`, emits the normal `ovos.utterance.handle` (`recognizer_loop:utterance`) event as if the audio had come from the mic. Otherwise it emits `recognizer_loop:speech.recognition.unknown` |
 
 !!! note "Sleep is device-scoped, not session-scoped"
 
@@ -123,7 +123,7 @@ STT/loop values):
     The listener publishes the transcribed command on the spec topic
     `ovos.utterance.handle`. `ovos-bus-client`'s namespace translator (on by default)
     also emits the legacy `recognizer_loop:utterance` alias, so subscribers can use
-    either topic name — see [Bus Service — Namespace migration](bus-service.md#namespace-migration)
+    either topic name. See [Bus Service: Namespace migration](bus-service.md#namespace-migration)
     for how to turn that aliasing off once every consumer speaks the spec namespace.
 
 ## Configuration

@@ -23,22 +23,19 @@ Intents are built with the fluent `IntentCreator` builder, then registered on th
 
 ```python
 from palavreado import IntentContainer, IntentCreator
-
 container = IntentContainer()
-
 intent = (
     IntentCreator("greet")
     .require("hello", ["hello", "hi"])
     .optionally("name", ["john", "mary"])
 )
 container.add_intent(intent)
-
 result = container.calc_intent("hello there")
 print(result["name"])                # greet
 print(result["conf"])                # confidence score
-print(result["keywords"])            # {'hello': ['hello']} — matched keyword slots
-print(result["utterance"])           # 'hello there' — the original utterance
-print(result["utterance_remainder"]) # 'there' — words not consumed by any slot
+print(result["keywords"])            # {'hello': ['hello']} - matched keyword slots
+print(result["utterance"])           # 'hello there' - the original utterance
+print(result["utterance_remainder"]) # 'there' - words not consumed by any slot
 ```
 
 An intent only fires when **every required slot** has at least one keyword match in the
