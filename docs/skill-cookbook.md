@@ -6,7 +6,7 @@
 Each recipe below is a **complete skill module** (or a clearly-marked excerpt of one), followed by notes on the moving parts and links to the reference page that documents each API in full. None of these recipes invent new methods: every class, method signature, and bus event name was checked against the installed `ovos-workshop`, `ovos-bus-client`, and `ovos-utils` packages.
 
 !!! note "Scaffolding not shown"
-    To keep each recipe focused, `requirements.txt`, `manifest.yml`, `setup.py`/`pyproject.toml`, and the `__init__.py` boilerplate needed to actually publish a skill are omitted here. See [Skill Anatomy](skill-design-guidelines.md) and [Skill Structure](core.md) for those. Intent files (`.intent`, `.voc`) referenced below live under `locale/<lang>/`.
+    To keep each recipe focused, `requirements.txt`, `manifest.yml`, `setup.py`/`pyproject.toml`, and the `__init__.py` boilerplate needed to actually publish a skill are omitted here. See [Anatomy of a Skill](skill-structure.md) for those. Intent files (`.intent`, `.voc`) referenced below live under `locale/<lang>/`.
 
 ---
 

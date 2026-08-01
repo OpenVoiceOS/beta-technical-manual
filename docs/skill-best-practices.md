@@ -98,17 +98,12 @@ def initialize(self):
     Thread(target=self._load_large_dataset, daemon=True).start()
 ```
 
-### Declare Runtime Requirements
-Be explicit about what your skill needs (e.g., internet access, a GUI). This allows the [Skill Manager](skill-manager.md) to only load your skill when its requirements are met, saving system resources.
-
-```python
-from ovos_utils.process_utils import RuntimeRequirements
-
-class WeatherSkill(OVOSSkill):
-    @classproperty
-    def runtime_requirements(self):
-        return RuntimeRequirements(requires_internet=True, requires_gui=False)
-```
+### Handle missing resources at runtime, not load time
+Do not rely on `RuntimeRequirements` to gate loading. It is a
+[deprecated mechanism](skill-runtime-requirements.md): with default configuration all
+skills load unconditionally, and the declaration only takes effect when
+`skills.use_deferred_loading` is enabled. Instead, check for the network, the GUI, or
+other resources inside your handlers and fail gracefully with a spoken error.
 
 ---
 
