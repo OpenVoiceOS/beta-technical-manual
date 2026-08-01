@@ -85,9 +85,22 @@ flowchart TD
 
 *Diagram:* The merge order starts at the bundled default config and ends at the in-memory patch, which wins as the highest priority over remote, distribution, system, and user layers.
 
-The XDG user layer is actually a list of configs (one per XDG config dir, for example
-`/etc/xdg/mycroft/mycroft.conf` plus `~/.config/mycroft/mycroft.conf`), all merged
-in order. All layers are `LocalConf` dict subclasses backed by a file. Only the user
+The XDG user layer is actually a list of configs, one per XDG config dir.
+
+!!! warning "`/etc/xdg` wins over `~/.config`, not the other way round"
+    `get_xdg_config_locations()` returns `[~/.config/mycroft/mycroft.conf,
+    /etc/xdg/mycroft/mycroft.conf]`, and the layers merge left to right, so the **last** one
+    wins. A key set in `/etc/xdg/mycroft/mycroft.conf` overrides the same key in the user's
+    own file.
+
+    That inverts the XDG base-directory spec, where `XDG_CONFIG_HOME` has the highest
+    precedence. Verify what your device does before relying on either order:
+
+    ```bash
+    python3 -c "from ovos_config.locations import get_xdg_config_locations as f; print(f())"
+    ```
+
+    The last path printed is the one that wins. All layers are `LocalConf` dict subclasses backed by a file. Only the user
 config (`~/.config/mycroft/mycroft.conf`) should be edited by users. The **`RemoteConf`**
 layer is the optional backend or paired-server settings cache (the legacy Mycroft-Home /
 `home.mycroft.ai` model). It is merged low in the stack and can be turned off with the
@@ -197,12 +210,27 @@ The system config (`/etc/mycroft/mycroft.conf`) can enforce constraints:
 | Key in system config | Effect |
 |---|---|
 | `protected_keys` | Dict of `{"user": [...], "remote": [...]}`: keys stripped from the user / remote layer before merging |
-| `disable_user_config` | If `true`, the user XDG config layer is ignored |
+| `disable_user_config` | If `true`, every layer except `default` and `system` is ignored — see the warning below |
 | `disable_remote_config` | If `true`, the remote / backend config layer is ignored |
 
-These constraints are read from the `system` section, and **only** from the
-distribution or system config. Values set in the default or user layers are
-ignored. Nested keys use `:` as the separator (for example, `"listener:sample_rate"`).
+!!! danger "`disable_user_config` drops more than the user layer"
+    The merge filter treats every layer whose path is neither the bundled default nor the
+    system config as a user layer. That includes the **distribution** layer
+    (`/usr/share/mycroft/mycroft.conf`), the **remote** layer, and the in-memory **patch**
+    that `configuration.patch` bus messages write to.
+
+    So an OEM that ships a distribution config and then locks the device with
+    `disable_user_config` erases its own settings and silences every runtime config update.
+    The device falls back to stock defaults, with no error and no log line. Verified: with
+    `lang` set to `pt-PT` in the distribution layer, turning the flag on returns `en-US`.
+
+    To lock a device, put the values in `/etc/mycroft/mycroft.conf` (the system layer), which
+    the filter keeps.
+
+These constraints are read from the `system` section of the distribution config, then the
+system config, then the **bundled default** — which does ship a `system` block, so on a stock
+install the constraints in force come from the default layer. A `system` section in a user
+config is ignored. Nested keys use `:` as the separator (for example, `"listener:sample_rate"`).
 
 Example: stop users from rebinding the messagebus host (must live in the `system` section of `/etc/mycroft/mycroft.conf`):
 
@@ -285,7 +313,7 @@ ovos-config autoconfigure -l de-de --online --male
 | `-g, --gpu` | Configure plugins for GPU (only valid together with `--offline`) |
 | `-m, --male` / `-f, --female` | Default voice gender (if neither is given, TTS configuration is skipped) |
 
-`--online`/`--offline` and `--male`/`--female` are each mutually exclusive pairs.
+`--male`/`--female` is enforced as a mutually exclusive pair — passing both is a usage error. Passing both `--online` and `--offline` is **not** an error: it silently selects the hybrid profile, so a provisioning script that passes both gets online STT while believing the command failed.
 `--gpu` cannot be combined with `--online`/`--hybrid` or a Raspberry Pi platform.
 
 ### `telemetry`
@@ -300,16 +328,23 @@ ovos-config telemetry --disable   # opt out
 
 ## Tips
 
-- Always edit `~/.config/mycroft/mycroft.conf` (user layer). Never edit system or default files.
+- Edit `~/.config/mycroft/mycroft.conf` (user layer). Never edit system or default files. If
+  the device also has `/etc/xdg/mycroft/mycroft.conf`, check that it does not set the same key
+  — it wins over yours.
 
 
 - JSON files support C-style `//` comments.
 
 
-- `get_config_locations()` returns the full list of active config file paths for debugging.
+- `get_config_locations()` is a rough guide, not the load list: it includes the legacy
+  `~/.mycroft/mycroft.conf`, which is never loaded, omits `/etc/xdg/mycroft/mycroft.conf`,
+  which is, ignores the path environment variables, and lists the remote layer in a different
+  position than the merge uses. For what is really in play, print
+  `get_xdg_config_locations()` and the layer paths on `Configuration`.
 
 
-- Use `disable_user_config` with caution. It silently skips the user layer.
+- Use `disable_user_config` with caution. It silently skips the distribution and remote
+  layers and runtime patches too, not only the user layer.
 
 
 - For the package layout, entry points, and other internals, see

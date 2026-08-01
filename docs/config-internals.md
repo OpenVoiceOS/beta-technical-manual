@@ -32,14 +32,26 @@ are driven by the bus handlers below rather than called directly.
 
 | Bus Event | Handler | Action |
 |---|---|---|
-| `configuration.updated` | `Configuration.updated` | Reload all config layers |
+| `configuration.updated` | `Configuration.updated` | Reload the default, system, remote and XDG layers |
 | `configuration.patch` | `Configuration.patch` | Apply `data["config"]` as an in-memory patch |
 | `configuration.patch.clear` | `Configuration.patch_clear` | Clear the in-memory patch |
 | `configuration.cache.clear` | `Configuration.clear_cache` | Drop the cached merged config |
 | `mycroft.paired` | `Configuration.handle_remote_update` | Reload the remote/backend config layer |
 | `mycroft.internet.connected` | `Configuration.handle_remote_update` | Reload the remote/backend config layer |
 
-`Configuration.set_config_watcher()` uses `ovos-utils`' `FileWatcher` (watchdog) to monitor config files on disk. It reloads automatically when they change.
+`configuration.updated` does not reload the distribution layer. `reload()` covers default,
+system, remote and the XDG configs only. A script that edits
+`/usr/share/mycroft/mycroft.conf` and then emits this event sees no change. The file watcher
+still picks the edit up on its own.
+
+`Configuration.set_config_watcher()` uses `ovos-utils`' `FileWatcher` (watchdog) to monitor
+config files on disk, and reloads when a watched file changes.
+
+The watch list is built once, from the files that exist at that moment
+(`[p for p in paths if isfile(p)]`), and is never rebuilt. A config file created **after** the
+service started is therefore not watched at all. On a fresh install with no
+`~/.config/mycroft/mycroft.conf`, creating one later needs a restart before live reload
+applies to it.
 
 ---
 
@@ -106,8 +118,11 @@ Configuration.system        # MycroftSystemConfig
 Configuration.xdg_configs   # list[LocalConf] — the user/XDG layer(s)
 ```
 
-There is no `.user` attribute. The editable user config is the last entry in
-`Configuration.xdg_configs`. To write the user file directly, use `MycroftUserConfig()`
+There is no `.user` attribute. The editable user config is the **first** entry in
+`Configuration.xdg_configs`. The list runs from `$XDG_CONFIG_HOME` outwards and the merge runs
+left to right, so the last entry wins. On most systems that last entry is
+`/etc/xdg/mycroft/mycroft.conf`, not the user's own file. See [Config Layer
+Stack](config.md#config-layer-stack). To write the user file directly, use `MycroftUserConfig()`
 (see Config Models above). Or call `update_mycroft_config()` to merge a change and emit the
 `configuration.patch` bus notification in one step.
 

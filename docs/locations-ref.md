@@ -25,8 +25,9 @@ All paths respect the `OVOS_CONFIG_BASE_FOLDER` environment variable (default: `
 | `WEB_CONFIG_CACHE` | `~/.config/mycroft/web_cache.json` | Cache of the optional remote/backend config layer (env: `MYCROFT_WEB_CACHE`) |
 
 In addition to `USER_CONFIG`, every XDG config dir is scanned, so a system-wide
-`/etc/xdg/mycroft/mycroft.conf` is also merged at the user layer (below your `~/.config`
-file). File formats are JSON (`.json` or `.conf`, with C-style `//` comments supported) or
+`/etc/xdg/mycroft/mycroft.conf` is also merged at the user layer — **above** your
+`~/.config` file, not below it. It is last in the merge, so it wins. See [Configuration:
+Config Layer Stack](config.md#config-layer-stack). File formats are JSON (`.json` or `.conf`, with C-style `//` comments supported) or
 YAML (`.yml` or `.yaml`).
 
 ---
@@ -98,18 +99,37 @@ paths = get_config_locations()
 
 ```
 
-Returns an ordered list of all config file paths that `Configuration` will load, from lowest to highest priority. Useful for debugging which files are in use.
+Returns a list of well-known config paths. Treat it as a rough guide, not as the load list:
+
+- `~/.mycroft/mycroft.conf` is in the list but is never loaded. Only `find_user_config()`
+  looks at it.
+- `/etc/xdg/mycroft/mycroft.conf` is **not** in the list, but it is loaded, and it wins over
+  the user config.
+- The order differs from the merge: here the remote layer sits third, while
+  `load_all_configs()` merges it second, just above the bundled default.
+- The path environment variables below are ignored — the function rebuilds
+  `/usr/share/<base>/<file>` and `/etc/<base>/<file>` literally.
+
+To see what is actually in play, print `get_xdg_config_locations()` together with the layer
+paths on `Configuration`.
 
 ---
 
 ## Environment Variable Influence
 
-The paths above are all affected by:
-
 | Environment Variable | Effect |
 |---|---|
 | `OVOS_CONFIG_BASE_FOLDER` | Replaces `"mycroft"` as the XDG subdirectory name |
 | `OVOS_CONFIG_FILENAME` | Replaces `"mycroft.conf"` as the config filename |
+| `OVOS_DEFAULT_CONFIG` | Absolute path to the bundled default config |
+| `OVOS_DISTRIBUTION_CONFIG` | Absolute path to the distribution config |
+| `MYCROFT_SYSTEM_CONFIG` | Absolute path to the system config |
+| `MYCROFT_WEB_CACHE` | Absolute path to the remote-config cache |
+
+The four absolute-path variables replace a whole path, so they are not affected by
+`OVOS_CONFIG_BASE_FOLDER` or `OVOS_CONFIG_FILENAME`. The bundled default config does not use
+the base folder at all: it resolves from `OVOS_DEFAULT_CONFIG` or the installed package
+directory.
 
 See [Configuration Management](config.md) for the full env var API.
 
