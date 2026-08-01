@@ -119,16 +119,29 @@ separate project with its own protocol and docs.
 1. Install and run the server: `pip install hivemind-core`, then `hivemind-core listen`.
    By default it bridges to a local `ovos-core` through `hivemind-ovos-agent-plugin`.
 2. Provision each satellite with its own access key: `hivemind-core add-client`.
-3. On each satellite, install `hivemind-websocket-client` and run
-   `hivemind-client set-identity` to store that key.
+3. On each satellite, install the client — the distribution is `hivemind-bus-client`, the
+   repository is `hivemind-websocket-client` — and store the key:
+
+   ```bash
+   pip install hivemind-bus-client
+   hivemind-client set-identity --key <access_key> --password <password> --host <server>
+   ```
+
+   `set-identity` with no arguments raises: it needs at least one of `--key`, `--password` or
+   `--siteid`.
 4. Verify with `hivemind-client test-identity` before trusting the link.
 5. For a mic-only satellite that leaves STT/TTS to the server, use
    `hivemind-mic-satellite` instead of running a full listener/audio pair locally.
 
-By default `hivemind-core listen` binds `0.0.0.0` on port `5678` (the websocket protocol
-plugin), so it is reachable on the LAN as soon as it starts. There is no `listen` flag to
-change host or port. Edit the server config instead (`network_protocol` ->
-`hivemind-websocket-plugin` -> `host`/`port`).
+By default `hivemind-core listen` starts **two** listeners, both on `0.0.0.0`: the websocket
+protocol plugin on `5678` and the HTTP protocol plugin on `5679`. Both are in the default
+`network_protocol` config and both start, so a firewall rule that only covers 5678 leaves the
+second one open. Local-network presence is on by default too, so the node announces itself
+over mDNS.
+
+There is no `listen` flag to change host or port. Edit the server config instead
+(`network_protocol` -> `hivemind-websocket-plugin` / `hivemind-http-plugin` -> `host`/`port`),
+and set `presence.enabled` to `false` to stop the mDNS announcements.
 `hivemind-client set-identity` writes the access key, password, and server address to a
 JSON identity file at `~/.config/hivemind/_identity.json` (XDG config dir, `hivemind`
 subfolder). Point `--host`/`--port` at the server when running `set-identity` on the

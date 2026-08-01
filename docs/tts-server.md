@@ -160,9 +160,13 @@ the server behaves exactly as before:
 
 ## ElevenLabs Streaming (`stream-input`)
 
-Besides the plain HTTP ElevenLabs-compatible routes (`/v1/voices`, `/v1/models`,
-`/v1/text-to-speech/{voice_id}`), the server also implements ElevenLabs' WebSocket
-streaming protocol at `/v1/text-to-speech/{voice_id}/stream-input`. This lets clients written
+Every ElevenLabs-compatible route sits behind the `/elevenlabs` prefix. Point an ElevenLabs
+SDK at `http://<host>:9666/elevenlabs`, not at the server root. See [Server Compatibility
+Layers](server-compat-layers.md).
+
+The plain HTTP routes are `/elevenlabs/v1/voices`, `/elevenlabs/v1/models` and
+`/elevenlabs/v1/text-to-speech/{voice_id}`. The server also implements ElevenLabs' WebSocket
+streaming protocol, at `/elevenlabs/v1/text-to-speech/{voice_id}/stream-input`. This lets clients written
 against the real ElevenLabs streaming SDK work unmodified.
 
 The client connects with the voice in the path and synthesis options in the query string

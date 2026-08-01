@@ -243,16 +243,24 @@ receiving the request, not a public fallback.
 for audio language detection
 
 ```jsonc
-  "listener": {
-    "audio_transformers": {
-        "ovos-audio-lang-server-plugin": {
-          "urls": ["http://localhost:8080/lang_detect"],
-          "verify_ssl": true
-        }
-    }
+  "audio_transformers": {
+      "ovos-audio-lang-server-plugin": {
+        "urls": ["http://localhost:8080/lang_detect"],
+        "verify_ssl": true
+      }
   }
 
 ```
+
+!!! danger "`audio_transformers` goes at the top level, not under `listener`"
+    The plugin is constructed with no config, so it falls back to
+    `AudioTransformer._read_mycroft_conf()`, which reads the **top-level** `audio_transformers`
+    block only. A `listener.audio_transformers` block is read by the transformer *service*,
+    which logs it as deprecated, but never reaches this plugin.
+
+    Put the block in the wrong place and `urls` is silently empty — so the plugin falls back to
+    its built-in default and posts your audio to a public server on the internet. There is no
+    error to notice.
 
 The singular `url` key (a single string or a list) is also accepted as an alias for `urls`,
 and takes precedence over `urls` when both are set. The optional `user_agent` (STT client and

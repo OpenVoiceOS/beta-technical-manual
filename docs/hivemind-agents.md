@@ -136,8 +136,8 @@ surface stays minimal. It answers straight from the configured persona.
     "hivemind-persona-agent-plugin": {
       "persona": {
         "name": "Llama",
-        "solvers": ["ovos-solver-openai-plugin"],
-        "ovos-solver-openai-plugin": {
+        "solvers": ["ovos-chat-openai-plugin"],
+        "ovos-chat-openai-plugin": {
           "api_url": "https://llama.smartgic.io/v1",
           "key": "sk-xxxx",
           "system_prompt": "You are helpful, creative, clever, and very friendly."

@@ -231,7 +231,7 @@ pip install ovos-transcription-validator-plugin
 
 ```
 
-* **Source**: [GitHub Repository](https://github.com/OpenVoiceOS/ovos-transcription-validator-plugin)
+* **Source**: [GitHub Repository](https://github.com/TigreGotico/ovos-transcription-validator-plugin)
 
 ---
 
