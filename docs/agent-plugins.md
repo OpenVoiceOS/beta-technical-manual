@@ -37,6 +37,10 @@ parallel `*.config` group for config metadata). The discovery helpers live in
 | `opm.agents.retrieval.qa` | `QAIndexerEngine` | Index + retrieve over a Q/A corpus |
 | `opm.agents.toolbox` | — | Tool / function-calling registry |
 
+To write your own engine, see [Building Agent Plugins](building-agent-plugins.md) for
+the base-class decision guide, method contracts, packaging walkthroughs, and the solver
+migration path.
+
 The legacy `opm.solver.*` groups (and the `QuestionSolver` family in
 `ovos_plugin_manager.templates.solvers`) are deprecated. See [Specialized Agent Engine
 Types](advanced-solvers.md) for the migration map. For per-engine method contracts and config

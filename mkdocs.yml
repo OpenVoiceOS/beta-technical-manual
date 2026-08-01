@@ -233,6 +233,7 @@ nav:
           - Persona Server: persona-server.md
       - Agent Engines:
           - Agent Engine Types: agent-plugins.md
+          - Building Agent Plugins: building-agent-plugins.md
           - Specialized Solvers: advanced-solvers.md
       - Agentic Loops: agentic-loop.md
       - Tools & Interoperability:
