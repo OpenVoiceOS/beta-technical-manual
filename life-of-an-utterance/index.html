@@ -672,7 +672,7 @@
         <li class="md-nav__item">
   <a href="#1-capture-and-wake-word-detection" class="md-nav__link">
     <span class="md-ellipsis">
-      1. Capture and Wake Word Detection
+      1. Capture and Wake-word Detection
     </span>
   </a>
   
@@ -1365,7 +1365,7 @@
         <li class="md-nav__item">
   <a href="#1-capture-and-wake-word-detection" class="md-nav__link">
     <span class="md-ellipsis">
-      1. Capture and Wake Word Detection
+      1. Capture and Wake-word Detection
     </span>
   </a>
   
@@ -1517,7 +1517,7 @@ OpenVoiceOS, from the moment sound hits the microphone to the final spoken respo
     Core-&gt;&gt;Bus: ovos.utterance.handled</code></pre>
 <p><em>Diagram: a sequence from the microphone capturing raw audio through wake-word detection, STT, and the pipeline match (stop, converse, OCP, padatious, adapt, fallback) in ovos-core, to a skill's intent handler, TTS playback in ovos-audio, and the final ovos.utterance.handled event.</em></p>
 <hr />
-<h2 id="1-capture-and-wake-word-detection">1. Capture and <a href="../wake-word-plugins/">Wake Word</a> Detection<a class="headerlink" href="#1-capture-and-wake-word-detection" title="Permanent link">&para;</a></h2>
+<h2 id="1-capture-and-wake-word-detection">1. Capture and <a href="../wake-word-plugins/">Wake-word</a> Detection<a class="headerlink" href="#1-capture-and-wake-word-detection" title="Permanent link">&para;</a></h2>
 <p><strong>Service:</strong> <code>ovos-dinkum-listener</code> (or similar)
 <strong>Input:</strong> Raw audio from the microphone plugin.</p>
 <p>The listener service is always active, monitoring a stream of audio.</p>
@@ -1526,7 +1526,7 @@ OpenVoiceOS, from the moment sound hits the microphone to the final spoken respo
 <p><strong><a href="../vad-plugins/">VAD</a> Plugin</strong>: Continuously checks if someone is speaking.</p>
 </li>
 <li>
-<p><strong>Wake Word Plugin</strong>: Monitors the audio stream for the configured wake word (e.g., "Hey Mycroft").</p>
+<p><strong>Wake-word Plugin</strong>: Monitors the audio stream for the configured wake word (e.g., "Hey Mycroft").</p>
 </li>
 <li>
 <p><strong>Trigger</strong>: Once the wake word is detected, the listener begins recording the subsequent audio as a potential utterance.</p>

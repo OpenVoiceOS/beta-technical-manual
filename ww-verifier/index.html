@@ -1498,22 +1498,22 @@
   
 
 
-<h1 id="wake-word-verifier-plugins">Wake Word Verifier Plugins<a class="headerlink" href="#wake-word-verifier-plugins" title="Permanent link">&para;</a></h1>
+<h1 id="wake-word-verifier-plugins">Wake-word Verifier Plugins<a class="headerlink" href="#wake-word-verifier-plugins" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>A "wake word" is the phrase that gets the assistant's attention, like "Hey Mycroft". Sometimes the assistant thinks it heard that phrase when it didn't. A wake word verifier is a second pair of ears: after the wake word seems to have been detected, it double-checks the recorded audio and can cancel a false alarm before the assistant starts listening. This cuts down on the device waking up by accident. See the <a href="../wake-word-plugins/">Wake Word plugins</a> for the detectors themselves, or the <a href="../glossary/">Glossary</a> for terms.</p>
+<p>A "wake word" is the phrase that gets the assistant's attention, like "Hey Mycroft". Sometimes the assistant thinks it heard that phrase when it didn't. A wake-word verifier is a second pair of ears: after the wake word seems to have been detected, it double-checks the recorded audio and can cancel a false alarm before the assistant starts listening. This cuts down on the device waking up by accident. See the <a href="../wake-word-plugins/">Wake-word plugins</a> for the detectors themselves, or the <a href="../glossary/">Glossary</a> for terms.</p>
 </div>
-<p>The wake word verifier framework lets one or more secondary plugins inspect the audio captured during a wake-word detection event and veto false triggers. This is separate from the detection plugin itself and runs as a post-detection gate.</p>
+<p>The wake-word verifier framework lets one or more secondary plugins inspect the audio captured during a wake-word detection event and veto false triggers. This is separate from the detection plugin itself and runs as a post-detection gate.</p>
 <hr />
 <h2 id="pre-wake-vad">Pre-Wake VAD<a class="headerlink" href="#pre-wake-vad" title="Permanent link">&para;</a></h2>
-<p>Before the wake word detector even fires, an optional VAD gate can filter frames that are clearly silent, reducing the detection surface for false activations.</p>
+<p>Before the wake-word detector even fires, an optional VAD gate can filter frames that are clearly silent, reducing the detection surface for false activations.</p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="p">{</span>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span><span class="nt">&quot;listener&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">    </span><span class="nt">&quot;vad_pre_wake_enabled&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
 </span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">  </span><span class="p">}</span>
 </span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="p">}</span>
 </span></code></pre></div>
-<p>When enabled, audio frames pass through the configured VAD plugin before reaching the wake word model. A 5-second fallback returns the listener to the pre-wake VAD state if no wake word is detected.</p>
+<p>When enabled, audio frames pass through the configured VAD plugin before reaching the wake-word model. A 5-second fallback returns the listener to the pre-wake VAD state if no wake word is detected.</p>
 <hr />
 <h2 id="verifier-configuration">Verifier Configuration<a class="headerlink" href="#verifier-configuration" title="Permanent link">&para;</a></h2>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="p">{</span>
@@ -1636,7 +1636,7 @@
 <p>Use case: household authorization, a shared-wake-word deployment where each registered user's voice profile allows or denies activation.</p>
 <hr />
 <h2 id="precise-onnx-plugin">Precise-ONNX Plugin<a class="headerlink" href="#precise-onnx-plugin" title="Permanent link">&para;</a></h2>
-<p><code>ovos-ww-plugin-precise-onnx</code> provides high-accuracy wake word detection from <code>.onnx</code> model files, without TensorFlow Lite dependency.</p>
+<p><code>ovos-ww-plugin-precise-onnx</code> provides high-accuracy wake-word detection from <code>.onnx</code> model files, without TensorFlow Lite dependency.</p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="p">{</span>
 </span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">  </span><span class="nt">&quot;hotwords&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 </span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">    </span><span class="nt">&quot;hey_mycroft&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
@@ -1653,11 +1653,11 @@
 <blockquote>
 <p><strong>Status:</strong> <a href="https://github.com/OpenVoiceOS/ovos-ww-plugin-microwakeword">OpenVoiceOS/ovos-ww-plugin-microwakeword</a> is in development. It is not yet published to PyPI.</p>
 </blockquote>
-<p>OVOS wake-word plugin wrapping <a href="https://github.com/kahrendt/microWakeWord">microWakeWord</a> TFLite streaming models from the ESPHome ecosystem. Enables zero-cost sub-1 MB wake word models originally designed for microcontrollers.</p>
+<p>OVOS wake-word plugin wrapping <a href="https://github.com/kahrendt/microWakeWord">microWakeWord</a> TFLite streaming models from the ESPHome ecosystem. Enables zero-cost sub-1 MB wake-word models originally designed for microcontrollers.</p>
 <hr />
 <h2 id="related-pages">Related Pages<a class="headerlink" href="#related-pages" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="../wake-word-plugins/">Wake Word Plugins</a>: detection plugin reference</li>
+<li><a href="../wake-word-plugins/">Wake-word Plugins</a>: detection plugin reference</li>
 <li><a href="../vad-plugins/">VAD Plugins</a></li>
 <li><a href="../speech-service/">Listener / Speech Service</a></li>
 </ul>
@@ -1666,7 +1666,7 @@
 <li><a href="https://blog.openvoiceos.org/posts/2025-11-06-prewake-vad">A Noise Filter for Better Listening (Pre-Wake VAD)</a>: OVOS blog</li>
 </ul>
 <hr />
-<p><strong>Read next:</strong> <a href="../wake-word-plugins/">Wake Word Plugins</a>
+<p><strong>Read next:</strong> <a href="../wake-word-plugins/">Wake-word Plugins</a>
 <strong>Related:</strong> <a href="../vad-plugins/">VAD Plugins</a> · <a href="../speech-service/">Speech Service</a> · <a href="../choosing-plugins/">Choosing Plugins</a></p>
 
 

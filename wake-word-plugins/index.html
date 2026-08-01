@@ -963,17 +963,17 @@
         <li class="md-nav__item">
   <a href="#wake-word-configuration" class="md-nav__link">
     <span class="md-ellipsis">
-      Wake Word Configuration
+      Wake-word Configuration
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Wake Word Configuration">
+    <nav class="md-nav" aria-label="Wake-word Configuration">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#hotword-types-and-per-hotword-keys" class="md-nav__link">
+  <a href="#wake-word-entry-types-and-keys" class="md-nav__link">
     <span class="md-ellipsis">
-      Hotword types and per-hotword keys
+      Wake-word entry types and keys
     </span>
   </a>
   
@@ -982,7 +982,7 @@
           <li class="md-nav__item">
   <a href="#wake-word-verifiers" class="md-nav__link">
     <span class="md-ellipsis">
-      Wake word verifiers
+      Wake-word verifiers
     </span>
   </a>
   
@@ -1552,17 +1552,17 @@
         <li class="md-nav__item">
   <a href="#wake-word-configuration" class="md-nav__link">
     <span class="md-ellipsis">
-      Wake Word Configuration
+      Wake-word Configuration
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Wake Word Configuration">
+    <nav class="md-nav" aria-label="Wake-word Configuration">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#hotword-types-and-per-hotword-keys" class="md-nav__link">
+  <a href="#wake-word-entry-types-and-keys" class="md-nav__link">
     <span class="md-ellipsis">
-      Hotword types and per-hotword keys
+      Wake-word entry types and keys
     </span>
   </a>
   
@@ -1571,7 +1571,7 @@
           <li class="md-nav__item">
   <a href="#wake-word-verifiers" class="md-nav__link">
     <span class="md-ellipsis">
-      Wake word verifiers
+      Wake-word verifiers
     </span>
   </a>
   
@@ -1792,12 +1792,12 @@
   
 
 
-<h1 id="wake-word-plugins">Wake Word Plugins<a class="headerlink" href="#wake-word-plugins" title="Permanent link">&para;</a></h1>
+<h1 id="wake-word-plugins">Wake-word Plugins<a class="headerlink" href="#wake-word-plugins" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>A <em>wake word</em> is the special phrase that gets your assistant's attention, like "Hey Mycroft". It only starts paying attention when you mean to talk to it, instead of listening all the time. Wake word plugins are the different tools that listen for that phrase. Some are more accurate for a fixed phrase. Others let you pick your own wake word with less setup. See the <a href="../glossary/">Glossary</a> and the <a href="../speech-service/">listener service</a> for related details.</p>
+<p>A <em>wake word</em> is the special phrase that gets your assistant's attention, like "Hey Mycroft". It only starts paying attention when you mean to talk to it, instead of listening all the time. Wake-word plugins are the different tools that listen for that phrase. Some are more accurate for a fixed phrase. Others let you pick your own wake word with less setup. See the <a href="../glossary/">Glossary</a> and the <a href="../speech-service/">listener service</a> for related details.</p>
 </div>
-<p>Wake Word plugins let Open Voice OS detect specific words or sounds, typically the assistant's name (for example "Hey Mycroft"). You can customize them for other use cases. These plugins let the system listen for and react to activation commands or phrases.</p>
+<p>Wake-word plugins let Open Voice OS detect specific words or sounds, typically the assistant's name (for example "Hey Mycroft"). You can customize them for other use cases. These plugins let the system listen for and react to activation commands or phrases.</p>
 <div class="admonition note">
 <p class="admonition-title">Audio format contract</p>
 <p>Wake-word plugins receive raw PCM from the <a href="../mic-plugins/#the-microphone-interface">microphone plugin</a>: <strong>16 kHz sample rate, 16-bit samples, mono, little-endian</strong>, delivered in <strong>4096-byte chunks</strong> by default.</p>
@@ -1843,7 +1843,7 @@ restart them depends on how OVOS was installed:</p>
 <li>Say the new phrase. The assistant now wakes on it instead of "hey mycroft".</li>
 </ol>
 <h2 id="available-plugins">Available Plugins<a class="headerlink" href="#available-plugins" title="Permanent link">&para;</a></h2>
-<p>OVOS supports different wake word detection plugins, each with its own strengths and use cases.
+<p>OVOS supports different wake-word detection plugins, each with its own strengths and use cases.
 The full roster with descriptions and licenses lives in one place: the
 <a href="#ww-plugins-reference">WW Plugins Reference</a> table below. The default OVOS plugin for
 <code>hey_mycroft</code> is <code>ovos-ww-plugin-precise-onnx</code>, falling back down this chain if a plugin further
@@ -1876,7 +1876,7 @@ the listener pipeline.</p>
 strong alternative when you want better accuracy than Vosk without training your own
 Precise model.</p>
 </div>
-<h2 id="wake-word-configuration">Wake Word Configuration<a class="headerlink" href="#wake-word-configuration" title="Permanent link">&para;</a></h2>
+<h2 id="wake-word-configuration">Wake-word Configuration<a class="headerlink" href="#wake-word-configuration" title="Permanent link">&para;</a></h2>
 <div class="admonition tip">
 <p class="admonition-title">Too many false alarms, or not hearing you at all?</p>
 <ul>
@@ -1889,7 +1889,7 @@ Precise model.</p>
 time and test before changing the other. The full technical breakdown of what each number
 actually does is below.</p>
 </div>
-<p>The <code>hotwords</code> section in your <code>mycroft.conf</code> allows you to configure the wake word detection parameters for each plugin. For instance:</p>
+<p>The <code>hotwords</code> section in your <code>mycroft.conf</code> allows you to configure the wake-word detection parameters for each plugin. For instance:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>&quot;hotwords&quot;: {
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>  &quot;hey_mycroft&quot;: {
 </span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>    &quot;module&quot;: &quot;ovos-ww-plugin-precise-onnx&quot;,
@@ -1903,20 +1903,20 @@ actually does is below.</p>
 <blockquote>
 <p>See the full docs for the <a href="../speech-service/">listener service</a></p>
 </blockquote>
-<h3 id="hotword-types-and-per-hotword-keys">Hotword types and per-hotword keys<a class="headerlink" href="#hotword-types-and-per-hotword-keys" title="Permanent link">&para;</a></h3>
+<h3 id="wake-word-entry-types-and-keys">Wake-word entry types and keys<a class="headerlink" href="#wake-word-entry-types-and-keys" title="Permanent link">&para;</a></h3>
 <p>Each entry under <code>hotwords</code> is one of four types, set by a boolean key. <code>active: null</code> (the
 default) auto-enables the main wake word (<code>listener.wake_word</code>) and the stand-up word
-(<code>listener.stand_up_word</code>); every other hotword stays disabled until you set <code>active: true</code>.</p>
+(<code>listener.stand_up_word</code>); every other entry stays disabled until you set <code>active: true</code>.</p>
 <pre class="mermaid"><code>flowchart TD
-    A["Hotword entry in&lt;br/&gt;mycroft.conf"] --&gt; B{"listen: true, or&lt;br/&gt;matches&lt;br/&gt;listener.wake_word?"}
+    A["Wake-word entry in&lt;br/&gt;mycroft.conf"] --&gt; B{"listen: true, or&lt;br/&gt;matches&lt;br/&gt;listener.wake_word?"}
     B --&gt;|yes| C["Listen word: starts&lt;br/&gt;VAD/STT recording"]
     B --&gt;|no| D{"wakeup: true, or&lt;br/&gt;matches&lt;br/&gt;listener.stand_up_word?"}
     D --&gt;|yes| E["Wakeup word: exits&lt;br/&gt;sleep mode"]
     D --&gt;|no| F{"stopword: true?"}
     F --&gt;|yes| G["Stop word: ends free&lt;br/&gt;RECORDING mode"]
     F --&gt;|no| H{"active: true?"}
-    H --&gt;|yes| I["Plain hotword: sound /&lt;br/&gt;bus event, no STT"]</code></pre>
-<p><em>Diagram:</em> The flow starts at the hotword entry in mycroft.conf and ends at one of four outcomes, and it branches in sequence through the listen, wakeup, stopword, and active checks to pick the matching hotword type.</p>
+    H --&gt;|yes| I["Plain wake word: sound/&lt;br/&gt;bus event, no STT"]</code></pre>
+<p><em>Diagram:</em> The flow starts at the wake-word entry in mycroft.conf and ends at one of four outcomes, and it branches in sequence through the listen, wakeup, stopword, and active checks to pick the matching wake-word type.</p>
 <table>
 <thead>
 <tr>
@@ -1942,14 +1942,14 @@ default) auto-enables the main wake word (<code>listener.wake_word</code>) and t
 <td>Ends free <code>RECORDING</code> mode</td>
 </tr>
 <tr>
-<td>Plain hotword</td>
+<td>Plain wake word</td>
 <td>none of the above, <code>active: true</code></td>
 <td>Plays a sound and/or emits a bus event, without starting STT</td>
 </tr>
 </tbody>
 </table>
 <p>Beyond <code>module</code>, <code>active</code>, <code>listen</code>, <code>wakeup</code>, <code>stopword</code>, and <code>sensitivity</code>/<code>trigger_level</code>,
-each hotword accepts:</p>
+each entry accepts:</p>
 <table>
 <thead>
 <tr>
@@ -1972,7 +1972,7 @@ each hotword accepts:</p>
 <tr>
 <td><code>utterance</code></td>
 <td><code>str</code></td>
-<td>Hard-coded utterance text, bypassing STT entirely for this hotword.</td>
+<td>Hard-coded utterance text, bypassing STT entirely for this entry.</td>
 </tr>
 <tr>
 <td><code>stt_lang</code></td>
@@ -2012,16 +2012,16 @@ each hotword accepts:</p>
 </span><span id="__span-4-29"><a id="__codelineno-4-29" name="__codelineno-4-29" href="#__codelineno-4-29"></a>  }
 </span><span id="__span-4-30"><a id="__codelineno-4-30" name="__codelineno-4-30" href="#__codelineno-4-30"></a>}
 </span></code></pre></div>
-<h3 id="wake-word-verifiers">Wake word verifiers<a class="headerlink" href="#wake-word-verifiers" title="Permanent link">&para;</a></h3>
-<p>After a wake word engine fires, optional <em>verifier</em> plugins can inspect the raw wake-word
+<h3 id="wake-word-verifiers">Wake-word verifiers<a class="headerlink" href="#wake-word-verifiers" title="Permanent link">&para;</a></h3>
+<p>After a wake-word engine fires, optional <em>verifier</em> plugins can inspect the raw wake word
 audio and suppress false detections before any callback runs. Verifiers implement the
 <code>HotWordVerifier</code> interface (from <code>ovos-plugin-manager</code>) and are configured under
 <code>listener.ww_verifiers</code>:</p>
 <pre class="mermaid"><code>flowchart LR
-    A[Wake word engine fires] --&gt; B["HotWordVerifier.&lt;br/&gt;verify()"]
+    A[Wake-word engine fires] --&gt; B["HotWordVerifier.&lt;br/&gt;verify()"]
     B --&gt;|"False"| C[Detection suppressed]
     B --&gt;|"True, or exception&lt;br/&gt;raised (fail open)"| D["Detection proceeds,&lt;br/&gt;callback runs"]</code></pre>
-<p><em>Diagram:</em> The flow starts when the wake word engine fires and ends with the detection either suppressed or proceeding to run the callback, and it branches on the HotWordVerifier.verify() result, failing open on exception.</p>
+<p><em>Diagram:</em> The flow starts when the wake-word engine fires and ends with the detection either suppressed or proceeding to run the callback, and it branches on the HotWordVerifier.verify() result, failing open on exception.</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>&quot;listener&quot;: {
 </span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>  &quot;ww_verifiers&quot;: {
 </span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>    &quot;ovos-ww-verifier-plugin-speaker&quot;: {&quot;threshold&quot;: 0.1}
@@ -2041,7 +2041,7 @@ the other.</p>
 <h2 id="tips-and-caveats">Tips and Caveats<a class="headerlink" href="#tips-and-caveats" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
-<p><strong>Vosk Plugin</strong>: The Vosk plugin is useful when you need a simple setup that doesn't require training a wake word model. It's great for quickly gathering data during the development stage.</p>
+<p><strong>Vosk Plugin</strong>: The Vosk plugin is useful when you need a simple setup that doesn't require training a wake-word model. It's great for quickly gathering data during the development stage.</p>
 </li>
 <li>
 <p><strong>Precision and Sensitivity</strong>: Adjust the <code>sensitivity</code> and <code>trigger_level</code> settings carefully. Too high a sensitivity can lead to false positives, while too low may miss detection.</p>
@@ -2055,7 +2055,7 @@ the other.</p>
 </ul>
 <p>In short, <code>sensitivity</code> controls how easily <em>one</em> chunk counts as a hit. <code>trigger_level</code> controls how many hits in a row are needed to confirm the wake word.</p>
 <h2 id="plugin-development">Plugin Development<a class="headerlink" href="#plugin-development" title="Permanent link">&para;</a></h2>
-<p>All wake word plugins inherit from the <code>HotWordEngine</code> base class provided by
+<p>All wake-word plugins inherit from the <code>HotWordEngine</code> base class provided by
 <code>ovos-plugin-manager</code>.</p>
 <h3 id="the-hotwordengine-interface">The HotWordEngine Interface<a class="headerlink" href="#the-hotwordengine-interface" title="Permanent link">&para;</a></h3>
 <p>This is the actual base class shipped in <code>ovos_plugin_manager.templates.hotwords</code>:</p>
@@ -2085,7 +2085,7 @@ already resolved by the base <code>__init__</code> when a subclass doesn't pass 
 <h3 id="key-methods">Key Methods<a class="headerlink" href="#key-methods" title="Permanent link">&para;</a></h3>
 <ul>
 <li><strong><code>found_wake_word()</code></strong>: Required (abstract). Returns whether the wake word has been
-  detected, and resets any internal tracking of the wake word state. It takes no audio
+  detected, and resets any internal tracking of the wake-word state. It takes no audio
   argument: real-time audio only reaches the plugin through <code>update(chunk)</code>, on the
   current <code>dev</code> contract.</li>
 <li><strong><code>update(chunk)</code></strong>: Required (abstract). Processes one raw PCM audio chunk (see the
@@ -2226,7 +2226,7 @@ separately-licensed model, that is called out under "model".</p>
 </tr>
 <tr>
 <td><a href="#ovos-ww-plugin-vosk">ovos-ww-plugin-vosk</a></td>
-<td>Mycroft wake word plugin for <a href="https://alphacephei.com/vosk/">Vosk</a></td>
+<td>Mycroft wake-word plugin for <a href="https://alphacephei.com/vosk/">Vosk</a></td>
 <td>Apache-2.0 (model: see model card)</td>
 <td>Stable</td>
 </tr>
@@ -2294,7 +2294,7 @@ separately-licensed model, that is called out under "model".</p>
 <p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-ww-plugin-vosk">OpenVoiceOS/ovos-ww-plugin-vosk</a></p>
 </li>
 <li>
-<p><strong>Description</strong>: Mycroft wake word plugin for <a href="https://alphacephei.com/vosk/">Vosk</a></p>
+<p><strong>Description</strong>: Mycroft wake-word plugin for <a href="https://alphacephei.com/vosk/">Vosk</a></p>
 </li>
 </ul>
 <h3 id="default-configuration_1">Default Configuration<a class="headerlink" href="#default-configuration_1" title="Permanent link">&para;</a></h3>
@@ -2315,7 +2315,7 @@ separately-licensed model, that is called out under "model".</p>
 <p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-ww-plugin-precise-onnx">OpenVoiceOS/ovos-ww-plugin-precise-onnx</a></p>
 </li>
 <li>
-<p><strong>Description</strong>: Runs Precise wake word models exported to ONNX. It is the plugin the bundled default <code>mycroft.conf</code> ships for <code>hey_mycroft</code>.</p>
+<p><strong>Description</strong>: Runs Precise wake-word models exported to ONNX. It is the plugin the bundled default <code>mycroft.conf</code> ships for <code>hey_mycroft</code>.</p>
 </li>
 </ul>
 <h3 id="default-configuration_2">Default Configuration<a class="headerlink" href="#default-configuration_2" title="Permanent link">&para;</a></h3>
@@ -2332,13 +2332,13 @@ separately-licensed model, that is called out under "model".</p>
 </span><span id="__span-14-11"><a id="__codelineno-14-11" name="__codelineno-14-11" href="#__codelineno-14-11"></a>}
 </span></code></pre></div>
 <div class="admonition tip">
-<p class="admonition-title">Donating wake-word samples</p>
+<p class="admonition-title">Donating wake word samples</p>
 <p>The listener can optionally upload wake-word audio samples to an open-data server to help improve detection accuracy. This is opt-in and off by default. See <a href="../privacy-security/#opt-in-wake-word-and-stt-sample-donation">Privacy &amp; Security</a>.</p>
 </div>
 <hr />
 <hr />
 <p><strong>Read next:</strong> <a href="../stt-plugins/">STT Plugins</a>
-<strong>Related:</strong> <a href="../ww-verifier/">Wake Word Verifiers</a> · <a href="../vad-plugins/">VAD Plugins</a> · <a href="../choosing-plugins/">Choosing Plugins</a> · <a href="https://blog.openvoiceos.org/posts/2025-11-03-precise-onnx">Precise Wake Word Engine Goes ONNX!</a></p>
+<strong>Related:</strong> <a href="../ww-verifier/">Wake-word Verifiers</a> · <a href="../vad-plugins/">VAD Plugins</a> · <a href="../choosing-plugins/">Choosing Plugins</a> · <a href="https://blog.openvoiceos.org/posts/2025-11-03-precise-onnx">Precise Wake-word Engine Goes ONNX!</a></p>
 
 
 

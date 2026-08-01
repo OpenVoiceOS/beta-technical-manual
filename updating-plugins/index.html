@@ -1596,8 +1596,8 @@
 
 <h1 id="updating-plugins-from-older-ovos">Updating Plugins From Older OVOS<a class="headerlink" href="#updating-plugins-from-older-ovos" title="Permanent link">&para;</a></h1>
 <h2 id="in-a-nutshell">In a nutshell<a class="headerlink" href="#in-a-nutshell" title="Permanent link">&para;</a></h2>
-<p>This page is for maintainers of STT, TTS, wake-word, audio-backend, media,
-GUI-adapter, PHAL, and solver/engine plugins moving forward from an older
+<p>This page is for maintainers of <a href="../stt-plugins/">STT</a>, <a href="../tts-plugins/">TTS</a>, <a href="../wake-word-plugins/">wake word</a>, audio-backend, <a href="../media-plugins/">media</a>,
+<a href="../gui-adapters/">GUI-adapter</a>, <a href="../phal/">PHAL</a>, and solver/engine plugins moving forward from an older
 OVOS install. Entries are in date order: start at the version you are
 currently running and read forward to your target version. For the
 Big-ticket migrations (the changes with the widest blast radius, including
@@ -1640,9 +1640,9 @@ Lifecycle:</li>
 </tbody>
 </table>
 <h3 id="audio-backend-template-methods-became-abstract">Audio-backend template methods became abstract<a class="headerlink" href="#audio-backend-template-methods-became-abstract" title="Permanent link">&para;</a></h3>
-<p><code>AudioBackend</code>/<code>RemoteAudioBackend</code> templates in <code>ovos-plugin-manager</code>
+<p><code>AudioBackend</code>/<code>RemoteAudioBackend</code> templates in <a href="../plugin-manager/"><code>ovos-plugin-manager</code></a>
 turned previously-optional methods into <code>@abstractmethod</code>, and dropped the
-dependency on the old <code>common_play</code> base class (OCP's predecessor).</p>
+dependency on the old <code>common_play</code> base class (<a href="../ocp-pipeline/">OCP</a>'s predecessor).</p>
 <ul>
 <li>Migration: implement every required method on your <code>AudioBackend</code>
   subclass or instantiation raises <code>TypeError: Can't instantiate abstract
@@ -1715,8 +1715,8 @@ Lifecycle:</li>
 <h3 id="dialect-matching-switched-to-tag_distance">Dialect matching switched to <code>tag_distance</code><a class="headerlink" href="#dialect-matching-switched-to-tag_distance" title="Permanent link">&para;</a></h3>
 <p>Ad-hoc exact-prefix dialect matching (<code>en</code> matches <code>en-us</code> via
 <code>.startswith</code>) was replaced with <code>langcodes.tag_distance</code> (threshold
-<code>&lt; 10</code>) across STT, TTS, wake-word, and tokenization plugin config
-resolution.</p>
+<code>&lt; 10</code>) across <a href="../stt-plugins/">STT</a>, <a href="../tts-plugins/">TTS</a>, <a href="../wake-word-plugins/">wake word</a>, and tokenization plugin
+<a href="../config-reference/">config</a> resolution.</p>
 <ul>
 <li>Migration: no code change needed for callers of the public
   <code>get_plugin_config</code> family. Re-verify locale resolution after upgrading
@@ -1972,7 +1972,7 @@ is deprecated with a stated removal target of the next major version.</p>
 </tbody>
 </table>
 <ul>
-<li>Migration: move to the matching <code>templates/agents.py</code> engine class
+<li>Migration: move to the matching <code>templates/agents.py</code> <a href="../agent-plugins/">agent engine</a> class
   before the removal version ships.
 Lifecycle:</li>
 </ul>
@@ -2058,7 +2058,7 @@ bare background thread with no bus events wired by the base class at all.</p>
 <li>Migration: mix in <code>EnclosureProtocolListener</code> from the separate
   <code>ovos-ui-enclosure-protocol</code> package for both the enclosure commands and
   <code>register_core_events()</code>. The <code>EnclosureAPI</code> producer moved to
-  <code>ovos-gui-api-client</code>.
+  <code>ovos-gui-api-client</code>. See <a href="../phal/">PHAL</a> for the current plugin contract.
 Lifecycle:</li>
 </ul>
 <table>
@@ -2107,7 +2107,8 @@ parameter was also replaced by plain <code>**context</code> kwargs.</p>
 <ul>
 <li>Migration: implement the single <code>search(signals, lang='en-us',
   **context)</code> method. Read routing/availability info from <code>**context</code>
-  instead of the removed <code>QueryContext</code> helper methods.
+  instead of the removed <code>QueryContext</code> helper methods. See <a href="../ovos-media/">Media Service</a>
+  and <a href="../ocp-pipeline/">OCP</a> for how providers are queried.
 Lifecycle:</li>
 </ul>
 <table>

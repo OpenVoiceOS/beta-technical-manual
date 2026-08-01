@@ -1912,7 +1912,7 @@ candidates read it. <code>execute()</code> then remains the single-best convenie
 <p>Audio arrives synchronously per chunk: <code>stream_data()</code> is called once per captured
 chunk on the mic thread, so it must return well under the per-chunk time budget
 (the same real-time cadence constraint a wake-word plugin's <code>update(chunk)</code> runs
-under. See <a href="../wake-word-plugins/#key-methods">Wake Word Plugins: Key Methods</a>). Do any
+under. See <a href="../wake-word-plugins/#key-methods">Wake-word Plugins: Key Methods</a>). Do any
 slow work (network calls, heavy inference) on the <code>StreamThread</code> this class
 manages, not inline in <code>stream_data()</code>.</p>
 <p><code>StreamingSTT</code> runs the streaming work on a background thread, fed through a queue:</p>
@@ -2078,7 +2078,7 @@ construct it yourself with your config dict.</p>
 </ol>
 <hr />
 <p><strong>Read next:</strong> <a href="../tts-plugins/">TTS Plugins</a>
-<strong>Related:</strong> <a href="../wake-word-plugins/">Wake Word Plugins</a> · <a href="../stt-server/">STT Server</a> · <a href="../choosing-plugins/">Choosing Plugins</a> · <a href="https://blog.openvoiceos.org/posts/2026-02-16-onnx-asr">Real-Time Offline Speech Recognition on OVOS (ONNX ASR)</a></p>
+<strong>Related:</strong> <a href="../wake-word-plugins/">Wake-word Plugins</a> · <a href="../stt-server/">STT Server</a> · <a href="../choosing-plugins/">Choosing Plugins</a> · <a href="https://blog.openvoiceos.org/posts/2026-02-16-onnx-asr">Real-Time Offline Speech Recognition on OVOS (ONNX ASR)</a></p>
 
 
 

@@ -1627,7 +1627,7 @@ radius, including the ovos-config 2.0.0 pipeline renames), see
 layer, <code>/usr/share/&lt;base_folder&gt;/&lt;config_filename&gt;</code>, inserted between
 DEFAULT and SYSTEM.</p>
 <ul>
-<li>Migration: config precedence is now DEFAULT &lt; DISTRIBUTION
+<li>Migration: <a href="../config/">config</a> precedence is now DEFAULT &lt; DISTRIBUTION
   (<code>/usr/share/...</code>) &lt; SYSTEM (<code>/etc/...</code>) &lt; web-cache (remote) &lt; OLD_USER
   &lt; USER. Distro packagers should install an overwrite-safe default to the
   DISTRIBUTION path.
@@ -1664,7 +1664,7 @@ Lifecycle:</li>
 and its settings block were removed from the shipped <code>mycroft.conf</code>.</p>
 <ul>
 <li>Migration: set <code>tts.fallback_module</code> and the settings block explicitly
-  in your own config if a fallback TTS is still wanted (mimic3 itself is
+  in your own config if a fallback <a href="../tts-plugins/">TTS</a> is still wanted (mimic3 itself is
   deprecated upstream).
 Lifecycle:</li>
 </ul>
@@ -1701,7 +1701,7 @@ Lifecycle:</li>
 running mycroft-core installation as a source for the DEFAULT config
 layer. Only the bundled <code>ovos_config/mycroft.conf</code> is used as DEFAULT.</p>
 <ul>
-<li>Migration: put overrides in SYSTEM/USER config layers
+<li>Migration: put overrides in SYSTEM/USER <a href="../config/">config</a> layers
   (<code>/etc/mycroft/mycroft.conf</code>, <code>~/.config/mycroft/mycroft.conf</code>) instead
   of relying on a legacy mycroft-core file being picked up.
 Lifecycle:</li>
@@ -1740,8 +1740,8 @@ public-server-based one, and <code>mpris</code> under <code>Audio.backends.OCP</
 disabled by default.</p>
 <ul>
 <li>Migration: set <code>mpris: true</code> under <code>Audio.backends.OCP</code> (pre-<code>ovos-media</code>
-  split. See the OCP→ovos-media entry in the hub's Big-ticket migrations)
-  if MPRIS is wanted. Pin the old lang-detect plugin explicitly if
+  split. See the <a href="../ocp-pipeline/">OCP</a>→<a href="../ovos-media/">ovos-media</a> entry in the hub's Big-ticket migrations)
+  if MPRIS is wanted. Pin the old <a href="../translation-plugins/">lang-detect plugin</a> explicitly if
   network-free detection is required.
 Lifecycle:</li>
 </ul>
@@ -1779,7 +1779,8 @@ messages by <code>message.context["source"]</code>) was replaced by
 <ul>
 <li>Migration: remove <code>native_sources</code> from config/constructor calls. Ensure
   playback-control messages either omit <code>context.session</code> (defaults to
-  <code>"default"</code>) or explicitly set <code>session_id: "default"</code>.
+  <code>"default"</code>) or explicitly set <code>session_id: "default"</code>. See <a href="../session/">Session</a>
+  for how <code>session_id</code> scoping works.
 Lifecycle:</li>
 </ul>
 <table>
@@ -1984,9 +1985,10 @@ removal of the <code>mycroft</code> compat package including Selene API support
 (<code>2a10fa9c1c</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/439" title="GitHub Issue: TigreGotico/ovos-technical-manual #439">#439</a>, 2025-03-04, first stable release <code>1.1.0</code>).</p>
 <h3 id="padatious_medium-dropped-from-default-pipeline"><code>padatious_medium</code> dropped from default pipeline<a class="headerlink" href="#padatious_medium-dropped-from-default-pipeline" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Migration: add <code>padatious_medium</code> back explicitly to <code>core.pipeline</code> in
+<li>Migration: add <code>padatious_medium</code> back explicitly to <code>core.pipeline</code> (see
+  <a href="../pipelines-overview/">Pipelines Overview</a>) in
   USER config if you want it (maintainers' note: "it is always wrong in
-  benchmarks").
+  benchmarks"). See the <a href="../padatious-pipeline/">Padatious pipeline</a> page for what it does.
 Lifecycle:</li>
 </ul>
 <table>
@@ -2020,8 +2022,8 @@ Lifecycle:</li>
 autoconfigure "recommends" registry now resolves to
 <code>ovos-tts-plugin-phoonnx</code> instead of the prior per-language recommendation.</p>
 <ul>
-<li>Migration: pin the desired TTS plugin explicitly under <code>tts.module</code> in
-  <code>mycroft.conf</code> if the old default is still wanted. Phoonnx requires its
+<li>Migration: pin the desired <a href="../tts-plugins/">TTS</a> plugin explicitly under <code>tts.module</code> in
+  <code>mycroft.conf</code> (see <a href="../config-reference/">Config Reference</a>) if the old default is still wanted. Phoonnx requires its
   own model/voice availability per language.
 Lifecycle:</li>
 </ul>

@@ -1538,7 +1538,7 @@ knowing about each other. See the
 <p>The diagram above illustrates how a user utterance moves through the system:</p>
 <ol>
 <li><strong>Microphone Input</strong>: Captured by a microphone plugin.</li>
-<li><strong><a href="../wake-word-plugins/">Wake Word</a> Detection</strong>: The <code>ovos-dinkum-listener</code> (or similar) monitors the stream for the wake word.</li>
+<li><strong><a href="../wake-word-plugins/">Wake-word</a> Detection</strong>: The <code>ovos-dinkum-listener</code> (or similar) monitors the stream for the wake word.</li>
 <li><strong><a href="../stt-plugins/">Speech-to-Text</a> (<a href="../stt-plugins/">STT</a>)</strong>: Once the wake word is detected, the subsequent audio is sent to an STT engine.</li>
 <li><strong>messagebus</strong>: The transcribed text is published to the bus as <code>ovos.utterance.handle</code>, the utterance entry point (<a href="https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md">OVOS-PIPELINE-1 §9.1</a>; legacy name <code>recognizer_loop:utterance</code>).</li>
 <li><strong><a href="../intent-service/">Intent Service</a></strong>: the <strong>orchestrator</strong> (<code>ovos-core</code>) picks up the utterance and runs it through the <strong><a href="../pipelines-overview/">pipeline</a></strong> of matcher plugins. The first plugin to claim it wins (<a href="https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md">OVOS-PIPELINE-1</a>).</li>
@@ -1559,7 +1559,7 @@ knowing about each other. See the
     IS --- PP["Pipeline plugins&lt;br/&gt;Adapt, Padatious, Converse, Fallback, …"]
     CORE --- SS["SkillsStore&lt;br/&gt;runtime pip install/uninstall"]
     CORE --- ES["EventScheduler&lt;br/&gt;timed bus events"]
-    BUS --- LISTENER["ovos-dinkum-listener&lt;br/&gt;STT / wake-word → ovos.utterance.handle"]
+    BUS --- LISTENER["ovos-dinkum-listener&lt;br/&gt;STT / wake word → ovos.utterance.handle"]
     BUS --- AUDIO["ovos-audio&lt;br/&gt;TTS / sound playback (+ legacy media audioservice)"]
     BUS --- MEDIA["ovos-media&lt;br/&gt;standalone media-playback (opt-in, PoC)"]
     BUS --- GUI["ovos-gui&lt;br/&gt;GUI layer"]
@@ -1610,7 +1610,7 @@ stage of the <a href="../life-of-an-utterance/">utterance lifecycle</a>.</p>
 <h3 id="ovos-core">ovos-core<a class="headerlink" href="#ovos-core" title="Permanent link">&para;</a></h3>
 <p>The "brain" of the system. It manages the lifecycle of skills and coordinates intent matching through a multi-stage pipeline. In the formal model it is the <strong>orchestrator</strong>: the role that runs the <a href="../pipelines-overview/">pipeline</a> of matcher plugins, dispatches the winning match to a handler on <code>&lt;skill_id&gt;:&lt;intent_name&gt;</code>, and emits the handler-lifecycle events (<a href="https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md">OVOS-PIPELINE-1</a>).</p>
 <h3 id="speech-service">Speech Service<a class="headerlink" href="#speech-service" title="Permanent link">&para;</a></h3>
-<p>Handles audio capture, wake word detection, and STT. It is responsible for turning "sound" into "data".</p>
+<p>Handles audio capture, wake-word detection, and STT. It is responsible for turning "sound" into "data".</p>
 <h3 id="audio-service">Audio Service<a class="headerlink" href="#audio-service" title="Permanent link">&para;</a></h3>
 <p>The output layer. It manages TTS generation and audio playback, ensuring that only one thing is speaking at a time and handling audio focus.</p>
 <h3 id="gui-service">GUI Service<a class="headerlink" href="#gui-service" title="Permanent link">&para;</a></h3>
@@ -1625,7 +1625,7 @@ stage of the <a href="../life-of-an-utterance/">utterance lifecycle</a>.</p>
 <li><strong>Microphone Plugins</strong>: see the <a href="../mic-plugins/">Microphone Plugins catalog</a>.</li>
 <li><strong>STT Plugins</strong>: see the <a href="../stt-plugins/">STT Plugins catalog</a>.</li>
 <li><strong>TTS Plugins</strong>: see the <a href="../tts-plugins/">TTS Plugins catalog</a>.</li>
-<li><strong>Wake Word Plugins</strong>: see the <a href="../wake-word-plugins/">Wake Word Plugins catalog</a>.</li>
+<li><strong>Wake-word Plugins</strong>: see the <a href="../wake-word-plugins/">Wake-word Plugins catalog</a>.</li>
 <li><strong>Intent Plugins</strong>: <a href="../adapt-pipeline/">Adapt</a>, <a href="../padatious-pipeline/">Padatious</a>, <a href="../cq-pipeline/">Common Query</a>, and the rest of the <a href="../pipelines-overview/">pipeline overview</a>.</li>
 </ul>
 <p>This allows OVOS to run on everything from a high-end server to a Raspberry Pi Zero.</p>

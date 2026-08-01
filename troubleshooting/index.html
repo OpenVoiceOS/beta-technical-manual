@@ -1755,7 +1755,7 @@ need no extra install. Then reach for <code>ovos-busmon</code> when you want eve
     S1{"Stage 1: bus reachable?\nbus.log"}
     S1 -- no --&gt; F1["start ovos-messagebus,\nthen ovos-core / ovos-dinkum-listener"]
     S1 -- yes --&gt; S2{"Stage 2: mic/wake word fired?\nrecognizer_loop:record_begin"}
-    S2 -- no --&gt; F2["check mic device/gain\nor wake word plugin"]
+    S2 -- no --&gt; F2["check mic device/gain\nor wake-word plugin"]
     S2 -- yes --&gt; S3{"Stage 3: STT produced text?\nrecognizer_loop:utterance"}
     S3 -- no --&gt; F3["check STT plugin / network / API key"]
     S3 -- yes --&gt; S4{"Stage 4: intent matched?\novos.intent.matched"}
@@ -1947,7 +1947,7 @@ connections. Hardware problems show up in Stage 2.</p>
 </div>
 <hr />
 <h2 id="prove-the-microphone-and-speaker-work">Prove the microphone and speaker work<a class="headerlink" href="#prove-the-microphone-and-speaker-work" title="Permanent link">&para;</a></h2>
-<p>Do these checks before you read wake-word or STT logs. They test the sound card itself, not
+<p>Do these checks before you read wake word or STT logs. They test the sound card itself, not
 OVOS, and they work on any Linux install (Raspberry Pi image or otherwise). If you're on
 raspOVOS, there is also a Pi-specific diagnostics script: see <a href="../raspovos-troubleshooting/#audio-issues">RaspOVOS Troubleshooting →
 Audio Issues</a>.</p>
@@ -2015,7 +2015,7 @@ speaker work</a> above.</p>
 <tbody>
 <tr>
 <td>No <code>Record begin</code> line at all when you speak</td>
-<td>Wake word plugin isn't hearing you: check the <a href="#prove-the-microphone-and-speaker-work">mic device/gain</a>, or the <a href="../wake-word-plugins/">wake word</a> model/sensitivity.</td>
+<td>Wake-word plugin isn't hearing you: check the <a href="#prove-the-microphone-and-speaker-work">mic device/gain</a>, or the <a href="../wake-word-plugins/">wake word</a> model/sensitivity.</td>
 </tr>
 <tr>
 <td><code>Record begin</code> fires but never followed by <code>Record end</code></td>
@@ -2023,7 +2023,7 @@ speaker work</a> above.</p>
 </tr>
 <tr>
 <td>Repeated wake-word triggers with no speech after</td>
-<td>False positives: the wake word threshold may be too low.</td>
+<td>False positives: the wake-word threshold may be too low.</td>
 </tr>
 </tbody>
 </table>
@@ -2048,7 +2048,7 @@ until you delete them. Nothing prunes the directory. Turn both keys back off and
 <a href="../privacy-security/#what-is-written-to-disk">Privacy &amp; Security</a> for what the listener writes
 to disk by default.</p>
 <p><code>ovos-listen</code> can also force a listening cycle without saying the wake word at all. This is
-useful for isolating STT problems (Stage 3) from wake-word problems.</p>
+useful for isolating STT problems (Stage 3) from wake word problems.</p>
 <hr />
 <h2 id="stage-3-did-stt-produce-text">Stage 3: Did STT produce text?<a class="headerlink" href="#stage-3-did-stt-produce-text" title="Permanent link">&para;</a></h2>
 <p><strong>Log:</strong> <code>voice.log</code>. <strong>Bus filter:</strong> <code>recognizer_loop:utterance</code> (spec name <code>ovos.utterance.handle</code>)</p>

@@ -1595,8 +1595,8 @@
 <summary>📐 Formal specification</summary>
 <p>The capture → audio-transformer chain → STT → utterance flow and the listening-lifecycle signals are specified by <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/audio-in.md">OVOS-AUDIO-IN-1: Audio Input Service</a></strong>. The audio-transformer chain that runs on the raw audio before STT is specified by <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/transformer.md">OVOS-TRANSFORM-1: Transformer Plugins</a></strong> (§3.1). See also the <a href="../architecture-specs/">spec index</a>. <code>ovos-dinkum-listener</code> is the reference implementation. The spec topic names below are canonical, with the legacy name noted once.</p>
 </details>
-<p><code>ovos-dinkum-listener</code> is the service responsible for audio capture, <a href="../wake-word-plugins/">Wake Word</a> detection, and <a href="../stt-plugins/">Speech-to-Text</a> (<a href="../stt-plugins/">STT</a>). It is the default, full-featured listener. <code>ovos-simple-listener</code> is a lighter alternative that emits the same <code>recognizer_loop:*</code> bus events but without the full state machine.</p>
-<p>A third, even more minimal option is <code>mycroft-classic-listener</code>, the original mycroft-core listener ported to the OVOS plugin ecosystem. It implements the same <code>recognizer_loop:*</code> contract but does <strong>not</strong> support <code>instant_listen</code>, multiple hotwords, VAD, listening modes, or fallback STT (fallback hotwords via OPM are supported).</p>
+<p><code>ovos-dinkum-listener</code> is the service responsible for audio capture, <a href="../wake-word-plugins/">wake word</a> detection, and <a href="../stt-plugins/">Speech-to-Text</a> (<a href="../stt-plugins/">STT</a>). It is the default, full-featured listener. <code>ovos-simple-listener</code> is a lighter alternative that emits the same <code>recognizer_loop:*</code> bus events but without the full state machine.</p>
+<p>A third, even more minimal option is <code>mycroft-classic-listener</code>, the original mycroft-core listener ported to the OVOS plugin ecosystem. It implements the same <code>recognizer_loop:*</code> contract but does <strong>not</strong> support <code>instant_listen</code>, multiple wake words, VAD, listening modes, or fallback STT (fallback wake words via OPM are supported).</p>
 <hr />
 <details class="abstract">
 <summary>Technical Reference</summary>
@@ -1605,7 +1605,7 @@
 <p><code>OVOSDinkumVoiceService</code>: <a href="https://github.com/OpenVoiceOS/ovos-dinkum-listener/blob/dev/ovos_dinkum_listener/service.py"><code>ovos_dinkum_listener/service.py</code></a>. This is the service <code>Thread</code>. <code>run()</code> connects to the bus and drives the voice loop.</p>
 </li>
 <li>
-<p><code>DinkumVoiceLoop.run()</code>: <a href="https://github.com/OpenVoiceOS/ovos-dinkum-listener/blob/dev/ovos_dinkum_listener/voice_loop/voice_loop.py"><code>ovos_dinkum_listener/voice_loop/voice_loop.py</code></a>. This is the per-chunk state machine that drives <a href="../vad-plugins/">VAD</a>, <a href="../wake-word-plugins/">Wake Word</a> and <a href="../stt-plugins/">STT</a> via per-state handlers.</p>
+<p><code>DinkumVoiceLoop.run()</code>: <a href="https://github.com/OpenVoiceOS/ovos-dinkum-listener/blob/dev/ovos_dinkum_listener/voice_loop/voice_loop.py"><code>ovos_dinkum_listener/voice_loop/voice_loop.py</code></a>. This is the per-chunk state machine that drives <a href="../vad-plugins/">VAD</a>, <a href="../wake-word-plugins/">Wake word</a> and <a href="../stt-plugins/">STT</a> via per-state handlers.</p>
 </li>
 <li>
 <p><code>OVOSDinkumVoiceService._stt_text()</code>: <a href="https://github.com/OpenVoiceOS/ovos-dinkum-listener/blob/dev/ovos_dinkum_listener/service.py"><code>ovos_dinkum_listener/service.py</code></a>. It emits the utterance message after <a href="../stt-plugins/">STT</a> returns text. The listener emits the spec topic <code>ovos.utterance.handle</code> (<code>SpecMessage.UTTERANCE</code>) directly, and <code>ovos-bus-client</code>'s <code>NamespaceTranslator</code> (see <a href="../bus-service/#namespace-migration">Bus Service</a>) also emits the legacy <code>recognizer_loop:utterance</code> alias for old consumers.</p>
@@ -1614,7 +1614,7 @@
 <hr />
 </details>
 <h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
-<p>The speech service is the "ears" of OpenVoiceOS. It continuously listens to the environment, waiting for a specific <a href="../wake-word-plugins/">Wake Word</a>. When the word is detected, it records the user's command and sends it to an <a href="../stt-plugins/">STT</a> engine for transcription.</p>
+<p>The speech service is the "ears" of OpenVoiceOS. It continuously listens to the environment, waiting for a specific <a href="../wake-word-plugins/">Wake word</a>. When the word is detected, it records the user's command and sends it to an <a href="../stt-plugins/">STT</a> engine for transcription.</p>
 <h3 id="key-components">Key Components<a class="headerlink" href="#key-components" title="Permanent link">&para;</a></h3>
 <ul>
 <li>
@@ -1624,7 +1624,7 @@
 <p><strong><a href="../vad-plugins/">Voice Activity Detection</a> (<a href="../vad-plugins/">VAD</a>)</strong>: Identifies when a user starts and stops speaking.</p>
 </li>
 <li>
-<p><strong><a href="../wake-word-plugins/">Wake Word</a> Plugin</strong>: Monitors the audio stream for the trigger phrase.</p>
+<p><strong><a href="../wake-word-plugins/">Wake word</a> Plugin</strong>: Monitors the audio stream for the trigger phrase.</p>
 </li>
 <li>
 <p><strong><a href="../stt-plugins/">STT</a> Plugin</strong>: Transcribes the recorded command into text.</p>
@@ -1632,7 +1632,7 @@
 </ul>
 <h2 id="architecture">Architecture<a class="headerlink" href="#architecture" title="Permanent link">&para;</a></h2>
 <pre class="mermaid"><code>flowchart TD
-    Mic[Microphone] --&gt;|audio| VADWW[VAD / Wake Word]
+    Mic[Microphone] --&gt;|audio| VADWW[VAD / Wake word]
     VADWW --&gt;|trigger| Rec[Recording]
     Rec --&gt;|audio| XForm["Audio-transformer&lt;br/&gt;chain (TRANSFORM-1&lt;br/&gt;§3.1)"]
     XForm --&gt; STT[STT Plugin]
@@ -1772,14 +1772,14 @@ for how to turn that aliasing off once every consumer speaks the spec namespace.
 <div class="admonition tip">
 <p class="admonition-title">Saving wake-word audio locally</p>
 <p>Set <code>listener.record_wake_words: true</code> and the listener writes each detected
-wake-word clip to disk (under its <code>wake_words</code> save directory) and adds the
-<code>filename</code> to the wake-word message. This is handy for gathering training data or
+wake word clip to disk (under its <code>wake_words</code> save directory) and adds the
+<code>filename</code> to the wake word message. This is handy for gathering training data or
 debugging false triggers. The clips stay on the device. The listener itself does
 not upload anything.</p>
 </div>
 <hr />
 <p><strong>Read next:</strong> <a href="../audio-service/">Audio Service</a> · <a href="../concepts-overview/">Concepts Overview</a>
-<strong>Related:</strong> <a href="../wake-word-plugins/">Wake Word Plugins</a> · <a href="../stt-plugins/">STT Plugins</a> · <a href="../intent-service/">Intent Service</a> · <a href="../vad-plugins/">VAD Plugins</a></p>
+<strong>Related:</strong> <a href="../wake-word-plugins/">Wake-word Plugins</a> · <a href="../stt-plugins/">STT Plugins</a> · <a href="../intent-service/">Intent Service</a> · <a href="../vad-plugins/">VAD Plugins</a></p>
 
 
 

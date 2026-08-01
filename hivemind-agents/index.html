@@ -1474,6 +1474,9 @@ GitHub organization (not <code>OpenVoiceOS</code>), with its own
 <a href="https://jarbashivemind.github.io/HiveMind-community-docs/">community docs</a>. The OVOS
 <a href="../maturity/">Maturity Scale</a>, which rates OVOS-org repository health, does not apply to
 it. This page covers only how HiveMind relates to OVOS.</p>
+<p>HiveMind has its own documentation site; this manual covers only the OVOS-side
+integration. See the <a href="https://jarbashivemind.github.io/HiveMind-community-docs/">community docs</a>
+for HiveMind itself.</p>
 <p>HiveMind is the <strong>voice-satellite transport</strong>: how a mic/speaker device or remote client
 reaches an OVOS brain. MCP and A2A (see <a href="../agent-interop/">Agent Interop</a>) are different:
 LLM/agent tool protocols that let AI systems call each other's tools.</p>
@@ -1590,7 +1593,7 @@ key holding its config.</p>
 <p>A server is only useful once something connects to it. On the client side:</p>
 <ul>
 <li><strong><a href="https://github.com/JarbasHiveMind/hivemind-websocket-client"><code>hivemind-websocket-client</code></a></strong>: the client library and the <code>hivemind-client</code> CLI (<code>set-identity</code>, send utterances, and more).</li>
-<li><strong><a href="https://github.com/JarbasHiveMind/hivemind-mic-satellite"><code>hivemind-mic-satellite</code></a></strong>: a thin device that only does wake-word and microphone capture. STT and TTS run server-side.</li>
+<li><strong><a href="https://github.com/JarbasHiveMind/hivemind-mic-satellite"><code>hivemind-mic-satellite</code></a></strong>: a thin device that only does wake word and microphone capture. STT and TTS run server-side.</li>
 <li><strong><a href="https://github.com/JarbasHiveMind/hivemind-listener"><code>hivemind-listener</code></a></strong>: the server-side audio entry point that performs STT/TTS for audio satellites, with binary audio moving over the mesh.</li>
 </ul>
 <p>This split is the real "voice satellite" story: cheap devices listen and speak, and the server thinks.</p>

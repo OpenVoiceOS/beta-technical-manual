@@ -777,11 +777,11 @@
         <li class="md-nav__item">
   <a href="#wake-word-issues" class="md-nav__link">
     <span class="md-ellipsis">
-      Wake Word Issues
+      Wake-word Issues
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Wake Word Issues">
+    <nav class="md-nav" aria-label="Wake-word Issues">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -794,9 +794,9 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#alternative-wake-word-vosk-plugin" class="md-nav__link">
+  <a href="#alternative-wake-word-plugin-vosk" class="md-nav__link">
     <span class="md-ellipsis">
-      Alternative Wake Word: Vosk Plugin
+      Alternative Wake-word Plugin: Vosk
     </span>
   </a>
   
@@ -1512,11 +1512,11 @@
         <li class="md-nav__item">
   <a href="#wake-word-issues" class="md-nav__link">
     <span class="md-ellipsis">
-      Wake Word Issues
+      Wake-word Issues
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Wake Word Issues">
+    <nav class="md-nav" aria-label="Wake-word Issues">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1529,9 +1529,9 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#alternative-wake-word-vosk-plugin" class="md-nav__link">
+  <a href="#alternative-wake-word-plugin-vosk" class="md-nav__link">
     <span class="md-ellipsis">
-      Alternative Wake Word: Vosk Plugin
+      Alternative Wake-word Plugin: Vosk
     </span>
   </a>
   
@@ -1909,8 +1909,8 @@ problems in plain language before you dig into the technical steps below.</p>
 </span><span id="__span-3-86"><a id="__codelineno-3-86" name="__codelineno-3-86" href="#__codelineno-3-86"></a><span class="o">[</span>WARNING<span class="o">]</span><span class="w"> </span>Note:<span class="w"> </span>This<span class="w"> </span>operation<span class="w"> </span>only<span class="w"> </span>deletes<span class="w"> </span>the<span class="w"> </span>skills.<span class="w"> </span>Configuration<span class="w"> </span>files<span class="w"> </span>and<span class="w"> </span>pipeline<span class="w"> </span>plugins<span class="w"> </span><span class="o">(</span>which<span class="w"> </span>still<span class="w"> </span>influence<span class="w"> </span>intent<span class="w"> </span>matching<span class="o">)</span><span class="w"> </span>are<span class="w"> </span>NOT<span class="w"> </span>affected<span class="w"> </span>by<span class="w"> </span>this<span class="w"> </span>action.
 </span></code></pre></div>
 </details>
-<h2 id="wake-word-issues">Wake Word Issues<a class="headerlink" href="#wake-word-issues" title="Permanent link">&para;</a></h2>
-<p>Wake word detection in raspOVOS offers several options, each with its advantages and limitations. Understanding these
+<h2 id="wake-word-issues">Wake-word Issues<a class="headerlink" href="#wake-word-issues" title="Permanent link">&para;</a></h2>
+<p>Wake-word detection in raspOVOS offers several options, each with its advantages and limitations. Understanding these
 can help resolve potential issues and improve performance.</p>
 <p>By default, raspOVOS uses the <code>precise-lite</code> model with the wake word "hey mycroft." This model was trained by MycroftAI
 for their Mark2 device. However, there are a few things to consider:</p>
@@ -1931,18 +1931,18 @@ for their Mark2 device. However, there are a few things to consider:</p>
 <p>If the default model is not working well for you, consider training your own precise model. Here are some helpful
 resources for creating a more tailored solution:</p>
 <ul>
-<li><a href="https://huggingface.co/collections/Jarbas/wake-word-datasets-672cc275fa4bddff9cf69c39">Helpful Wake Word Datasets on Hugging Face</a></li>
+<li><a href="https://huggingface.co/collections/Jarbas/wake-word-datasets-672cc275fa4bddff9cf69c39">Helpful Wake-word Datasets on Hugging Face</a></li>
 <li><a href="https://github.com/secretsauceai/wakeword-data-collector">Data Collection</a></li>
-<li><a href="https://github.com/secretsauceai/precise-wakeword-model-maker">Wake Word Trainer</a></li>
+<li><a href="https://github.com/secretsauceai/precise-wakeword-model-maker">Wake-word Trainer</a></li>
 <li><a href="https://github.com/OpenVoiceOS/precise-lite-trainer">precise-lite-trainer Code</a></li>
-<li><a href="https://github.com/OpenVoiceOS/ovos-ww-auto-synth-dataset">Synthetic Data Creation for Wake Words</a></li>
+<li><a href="https://github.com/OpenVoiceOS/ovos-ww-auto-synth-dataset">Synthetic Data Creation for Wake words</a></li>
 </ul>
-<h3 id="alternative-wake-word-vosk-plugin">Alternative Wake Word: Vosk Plugin<a class="headerlink" href="#alternative-wake-word-vosk-plugin" title="Permanent link">&para;</a></h3>
-<p>If you're looking for an alternative to the precise model, the Vosk wake word plugin is another option.</p>
+<h3 id="alternative-wake-word-plugin-vosk">Alternative Wake-word Plugin: Vosk<a class="headerlink" href="#alternative-wake-word-plugin-vosk" title="Permanent link">&para;</a></h3>
+<p>If you're looking for an alternative to the precise model, the Vosk wake-word plugin is another option.</p>
 <ul>
-<li><a href="https://github.com/OpenVoiceOS/ovos-ww-plugin-vosk">Vosk Wake Word Plugin GitHub</a></li>
+<li><a href="https://github.com/OpenVoiceOS/ovos-ww-plugin-vosk">Vosk Wake-word Plugin GitHub</a></li>
 </ul>
-<p>One of the main advantages of using the <strong>Vosk Wake Word Plugin</strong> is that it does <strong>not require a training step</strong>.</p>
+<p>One of the main advantages of using the <strong>Vosk Wake-word Plugin</strong> is that it does <strong>not require a training step</strong>.</p>
 <p>Instead, it uses Kaldi with a limited language model, which means it can work out-of-the-box with certain wake words
 without needing to collect and train custom data.</p>
 <p>The performance of Vosk may vary depending on the wake word you choose. Some wake words may work better than

@@ -1586,7 +1586,7 @@ the <code>ovos-workshop</code> 4.0.0 → 7.0.0 release train), see
 <a href="../updating-from-older-ovos/#big-ticket-migrations">Updating from Older OVOS</a>.</p>
 <h2 id="if-you-maintain-skills">If you maintain skills<a class="headerlink" href="#if-you-maintain-skills" title="Permanent link">&para;</a></h2>
 <h3 id="skill-settings-file-store-rewritten">Skill-settings file-store rewritten<a class="headerlink" href="#skill-settings-file-store-rewritten" title="Permanent link">&para;</a></h3>
-<p>Skill settings moved to <code>json_database</code>-backed XDG-default storage,
+<p><a href="../skill-settings/">Skill settings</a> moved to <code>json_database</code>-backed XDG-default storage,
 replacing the old ad-hoc file kludge, with a one-time auto-migration.</p>
 <ul>
 <li>Migration: rely on the <code>self.settings</code> API. Do not read/write the old
@@ -1620,8 +1620,8 @@ Lifecycle:</li>
 </tbody>
 </table>
 <h3 id="fallback-dispatcher-no-longer-bus-driven">Fallback dispatcher no longer bus-driven<a class="headerlink" href="#fallback-dispatcher-no-longer-bus-driven" title="Permanent link">&para;</a></h3>
-<p><code>converse</code> and fallback dispatch became event-based through dedicated
-services (<code>ConverseService</code>, the fallback pipeline) instead of being
+<p><a href="../converse/"><code>converse</code></a> and fallback dispatch became event-based through dedicated
+services (<code>ConverseService</code>, the <a href="../fallback-pipeline/">fallback pipeline</a>) instead of being
 called directly in-process on <code>MycroftSkill</code> instances.</p>
 <ul>
 <li>Migration: implement the converse acknowledge handshake if you drive
@@ -1663,7 +1663,8 @@ the old paths. Those shims were deleted with no further compat.</p>
 <li>Migration: <code>from ovos_workshop.skills.decorators.killable import
   killable_intent</code> → <code>from ovos_workshop.decorators.killable import
   killable_intent</code> (same pattern for <code>ocp</code>, <code>layers</code>, <code>converse</code>,
-  <code>fallback_handler</code>).
+  <code>fallback_handler</code>). Pin a floor version if you need to support both
+  paths at once; see <a href="../version-compat-guide/">version gates</a>.
 Lifecycle:</li>
 </ul>
 <table>
@@ -1698,7 +1699,8 @@ both classic Mycroft skills and OVOS skills, and that auto-initialized
 classic-style skills, was removed. Skills built for mycroft-core no longer
 load.</p>
 <ul>
-<li>Migration: subclass <code>ovos_workshop.skills.ovos.OVOSSkill</code> directly.
+<li>Migration: subclass <code>ovos_workshop.skills.ovos.OVOSSkill</code> directly, following the
+  <a href="../skill-design-guidelines/">skill design guidelines</a>.
   Skill lifecycle is now entirely <code>SkillLoader</code>-driven: <code>bus</code>/<code>skill_id</code>
   are passed to <code>__init__</code>, not injected via metaclass into a later
   <code>initialize()</code> call.
@@ -1772,8 +1774,10 @@ Lifecycle:</li>
 <h3 id="ovosskill_conditional_activate-removed"><code>OVOSSkill._conditional_activate()</code> removed<a class="headerlink" href="#ovosskill_conditional_activate-removed" title="Permanent link">&para;</a></h3>
 <p>The private helper that auto-re-activated a skill after converse/intent
 handling, and the skill class's own emission of <code>ovos.utterance.handled</code>,
-are both gone: that bookkeeping moved into <code>ovos-core</code>'s fallback
-pipeline to stop duplicate events.</p>
+are both gone: that bookkeeping moved into <code>ovos-core</code>'s
+<a href="../fallback-pipeline/">fallback pipeline</a> to stop duplicate events. See
+<a href="../pipelines-overview/">Pipelines Overview</a> for how pipeline plugins are ordered
+and dispatched.</p>
 <ul>
 <li>Migration: remove any override or call of <code>_conditional_activate</code>. Do
   not assume the skill class emits <code>ovos.utterance.handled</code> yourself.
@@ -1812,7 +1816,8 @@ two-way settings sync, <code>settingsmeta.json</code> auto-upload) are all remov
 <ul>
 <li>Migration: remove <code>enable_settings_manager</code> from <code>super().__init__()</code>
   calls. Use <code>self.settings</code> (local <code>JsonStorage</code>) only. There is no
-  backend settings sync in OVOS.
+  backend settings sync in OVOS. See <a href="../skill-settings-meta/">Skill Settings Meta</a>
+  for the current <code>settingsmeta.json</code> schema.
 Lifecycle:</li>
 </ul>
 <table>
@@ -1923,7 +1928,8 @@ exists. Locale lookups (<code>_get_dialog</code>, <code>_get_word</code>,
 <ul>
 <li>Migration: use <code>self.speak_dialog(key)</code> or
   <code>CoreResources(lang).load_dialog_file(...)</code> instead of importing
-  <code>_get_dialog</code> directly.
+  <code>_get_dialog</code> directly. See <a href="../resource-files/">Resource Files</a> for how dialog and
+  vocab resources are organized and loaded.
 Lifecycle:</li>
 </ul>
 <table>

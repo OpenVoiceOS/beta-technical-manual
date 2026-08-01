@@ -1574,7 +1574,7 @@ the modest extra CPU cost of running it. <code>ovos-vad-plugin-webrtcvad</code> 
 fallback: CPU-only and widely used, at somewhat lower accuracy. <code>ovos-vad-plugin-noise</code>
 trades the most accuracy for requiring no model download at all.</p>
 <p><strong>Relative footprint:</strong> silero runs a small neural model, so it is heavier than the
-energy/noise or WebRTC VADs. It is still light next to a wake-word or STT model, since
+energy/noise or WebRTC VADs. It is still light next to a wake word or STT model, since
 VAD only has to classify one chunk as speech/silence, not decode it.</p>
 </div>
 <h2 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">&para;</a></h2>
@@ -1805,13 +1805,13 @@ construct it yourself with your config dict.</p>
 <div class="admonition tip">
 <p class="admonition-title">Same package also provides a pre-wake VAD verifier</p>
 <p><code>ovos-vad-plugin-silero</code> registers a second entry point, <code>ovos-ww-verifier-silero</code>
-(<code>opm.wake_word.verifier</code>), which re-checks that a wake-word activation actually
+(<code>opm.wake_word.verifier</code>), which re-checks that a wake word activation actually
 contains speech before waking. It works as a "noise filter" that cuts false wakes.
 It has its own <code>threshold</code> (default <code>0.1</code>). See the Pre-Wake VAD blog post below.</p>
 </div>
 <hr />
 <hr />
-<p><strong>Read next:</strong> <a href="../wake-word-plugins/">Wake Word Plugins</a>
+<p><strong>Read next:</strong> <a href="../wake-word-plugins/">Wake-word Plugins</a>
 <strong>Related:</strong> <a href="../mic-plugins/">Microphone Plugins</a> · <a href="../stt-plugins/">STT Plugins</a> · <a href="../choosing-plugins/">Choosing Plugins</a> · <a href="https://blog.openvoiceos.org/posts/2025-11-06-prewake-vad">OVOS Just Got a Noise Filter (Pre-Wake VAD)</a></p>
 
 
