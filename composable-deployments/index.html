@@ -1695,6 +1695,7 @@ installs <code>ovos_PHAL</code> and <code>ovos_PHAL_admin</code> with underscore
 <code>ovos-gui-service</code>, not <code>ovos-gui</code>. Check <code>pip show -f &lt;package&gt;</code> if a script is not found.</p>
 </div>
 <h3 id="pointing-services-at-a-shared-bus">Pointing services at a shared bus<a class="headerlink" href="#pointing-services-at-a-shared-bus" title="Permanent link">&para;</a></h3>
+<p>For a step-by-step build of a server-plus-satellites deployment, see <a href="../satellites/">Satellites</a>.</p>
 <p>Every process reads the <code>websocket</code> block from its own <a href="../config/">configuration</a> to find the bus:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>{
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>  &quot;websocket&quot;: {
@@ -1783,11 +1784,9 @@ without any network socket at all. See <a href="../core-libraries/">Core Librari
 these packages and their upstream docs.</p>
 <h2 id="containers-one-service-per-box">Containers: one service per box<a class="headerlink" href="#containers-one-service-per-box" title="Permanent link">&para;</a></h2>
 <p><a href="https://github.com/OpenVoiceOS/ovos-docker"><code>ovos-docker</code></a> mirrors the same split at the
-container level. It ships one Dockerfile/image per service (<code>messagebus</code>, <code>core</code>, <code>listener</code>,
-<code>audio</code>, <code>phal</code>, <code>phal-admin</code>, <code>gui</code>, <code>gui-websocket</code>, <code>skills</code>), plus compose files that wire them
-together over a shared network. Because each image only installs the one service's package, they
-can be scheduled independently: scaled, restarted, or placed on different hosts, as long as
-<code>websocket.host</code> in each container's configuration resolves to the bus container.</p>
+container level: one image per service, wired together with compose files. See
+<a href="../docker-deployment/">Running OVOS in Containers</a> for the compose layout, audio device
+passthrough, and the networking rules those containers run under.</p>
 <p>The same idea shows up as standalone servers for individual speech components, packaged as their
 own containers/services rather than as OVOS services at all:</p>
 <table>
@@ -1955,6 +1954,7 @@ concept. It has no way to tell two <code>ovos-core</code> processes apart or arb
 give you redundancy or failover. It gives you duplicate handling of every message and
 double-emitted lifecycle events (for example, two <code>ovos.intent.handler.start</code>/<code>.complete</code> pairs for
 one utterance), since both instances react to the same broadcast independently.</p>
+<p>For a step-by-step build, see <a href="../satellites/">Satellites</a>.</p>
 <p>There is no supported skill-level or bus-level workaround for this. Filtering handlers by
 <code>session_id</code> inside a skill does not make it safe to run two instances of a singleton
 service against the same bus. The duplication happens at the message-dispatch level, before
@@ -1969,6 +1969,7 @@ satellites talking to a single HiveMind server, not by running two copies of <co
 talk to is on the same machine. Treat every default as loopback-only until you have explicitly
 verified the config for a given deployment. The services start and look healthy on separate
 hosts with the defaults untouched, but they simply cannot reach each other.</p>
+<p>For a step-by-step build, see <a href="../satellites/">Satellites</a>.</p>
 <hr />
 <p><strong>Read next:</strong> <a href="../config/">Configuration Overview</a> · <a href="../concepts-overview/">Concepts Overview</a>
 <strong>Related:</strong> <a href="../bus-service/">Bus Service</a> · <a href="../core-libraries/">Core Libraries</a> · <a href="../hivemind-agents/">Remote Agents with HiveMind</a> · <a href="../install-raspovos/">Install raspOVOS</a></p>

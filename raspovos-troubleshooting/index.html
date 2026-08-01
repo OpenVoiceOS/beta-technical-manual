@@ -2012,6 +2012,12 @@ choosing a wake word that works well in various environments:</p>
 </ul>
 <hr />
 <h2 id="audio-issues">Audio Issues<a class="headerlink" href="#audio-issues" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>Generic sound-card checks live in <a href="../troubleshooting/#prove-the-microphone-and-speaker-work">Troubleshooting → Prove the microphone and speaker
+work</a>: <code>arecord -l</code>/<code>aplay -l</code>,
+the record/playback test, <code>alsamixer</code>/<code>amixer</code> levels, and PulseAudio vs PipeWire notes. Run
+those first on any raspOVOS box too. The checks below are raspOVOS-specific.</p>
+</blockquote>
 <ul>
 <li><strong>Run Diagnostics script:</strong><ul>
 <li>raspOVOS includes a helper script <code>ovos-audio-diagnostics</code> that will print basic info about your sound system</li>
@@ -2038,81 +2044,38 @@ choosing a wake word that works well in various environments:</p>
 </span><span id="__span-5-18"><a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a>CARD<span class="w"> </span>NAME:<span class="w"> </span>snd_rpi_proto
 </span></code></pre></div>
 <ul>
-<li><strong>Check Input Devices:</strong><ul>
-<li>Run <code>arecord -l</code> to list all detected audio capture devices (microphones).</li>
-</ul>
-</li>
-</ul>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>**** List of CAPTURE Hardware Devices ****
-</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>card 2: sndrpiproto [snd_rpi_proto], device 0: WM8731 HiFi wm8731-hifi-0 [WM8731 HiFi wm8731-hifi-0]
-</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>Subdevices: 0/1
-</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>Subdevice #0: subdevice #0
-</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>card 3: Device [USB Audio Device], device 0: USB Audio [USB Audio]
-</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>Subdevices: 1/1
-</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>Subdevice #0: subdevice #0
-</span></code></pre></div>
-<ul>
-<li><strong>Check Output Devices:</strong><ul>
-<li>Run <code>aplay -l</code> to list all detected audio playback devices (speakers). Verify your card is being detected
-  correctly</li>
-</ul>
-</li>
-</ul>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>**** List of PLAYBACK Hardware Devices ****
-</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>card 0: Headphones [bcm2835 Headphones], device 0: bcm2835 Headphones [bcm2835 Headphones]
-</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>Subdevices: 7/8
-</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>Subdevice #0: subdevice #0
-</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>Subdevice #1: subdevice #1
-</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>Subdevice #2: subdevice #2
-</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>Subdevice #3: subdevice #3
-</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>Subdevice #4: subdevice #4
-</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>Subdevice #5: subdevice #5
-</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>Subdevice #6: subdevice #6
-</span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>Subdevice #7: subdevice #7
-</span><span id="__span-7-12"><a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a>card 1: vc4hdmi [vc4-hdmi], device 0: MAI PCM i2s-hifi-0 [MAI PCM i2s-hifi-0]
-</span><span id="__span-7-13"><a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a>Subdevices: 1/1
-</span><span id="__span-7-14"><a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a>Subdevice #0: subdevice #0
-</span><span id="__span-7-15"><a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a>card 2: sndrpiproto [snd_rpi_proto], device 0: WM8731 HiFi wm8731-hifi-0 [WM8731 HiFi wm8731-hifi-0]
-</span><span id="__span-7-16"><a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a>Subdevices: 1/1
-</span><span id="__span-7-17"><a id="__codelineno-7-17" name="__codelineno-7-17" href="#__codelineno-7-17"></a>Subdevice #0: subdevice #0
-</span></code></pre></div>
-<ul>
-<li><strong>Verify Volume and Mute status:</strong><ul>
-<li>Run <code>alsamixer</code> and verify that volume isn't too low or audio muted.</li>
-</ul>
-</li>
 <li><strong>Check audio setup logs:</strong></li>
 <li>During boot the audio setup generates a log file, saved to the <code>/tmp</code> directory:<ul>
 <li><code>/tmp/autosoundcard.log</code> (for soundcard autoconfiguration)</li>
 </ul>
 </li>
 </ul>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>==&gt; /tmp/autosoundcard.log &lt;==
-</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>Fri 17 Jan 11:42:46 WET 2025 - **** List of PLAYBACK Hardware Devices ****
-</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>card 0: Headphones [bcm2835 Headphones], device 0: bcm2835 Headphones [bcm2835 Headphones]
-</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>Subdevices: 8/8
-</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>Subdevice #0: subdevice #0
-</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>Subdevice #1: subdevice #1
-</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>Subdevice #2: subdevice #2
-</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>Subdevice #3: subdevice #3
-</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a>Subdevice #4: subdevice #4
-</span><span id="__span-8-10"><a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a>Subdevice #5: subdevice #5
-</span><span id="__span-8-11"><a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a>Subdevice #6: subdevice #6
-</span><span id="__span-8-12"><a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a>Subdevice #7: subdevice #7
-</span><span id="__span-8-13"><a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a>card 1: Device [USB Audio Device], device 0: USB Audio [USB Audio]
-</span><span id="__span-8-14"><a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a>Subdevices: 1/1
-</span><span id="__span-8-15"><a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a>Subdevice #0: subdevice #0
-</span><span id="__span-8-16"><a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a>card 2: vc4hdmi [vc4-hdmi], device 0: MAI PCM i2s-hifi-0 [MAI PCM i2s-hifi-0]
-</span><span id="__span-8-17"><a id="__codelineno-8-17" name="__codelineno-8-17" href="#__codelineno-8-17"></a>Subdevices: 1/1
-</span><span id="__span-8-18"><a id="__codelineno-8-18" name="__codelineno-8-18" href="#__codelineno-8-18"></a>Subdevice #0: subdevice #0
-</span><span id="__span-8-19"><a id="__codelineno-8-19" name="__codelineno-8-19" href="#__codelineno-8-19"></a>card 3: sndrpiproto [snd_rpi_proto], device 0: WM8731 HiFi wm8731-hifi-0 [WM8731 HiFi wm8731-hifi-0]
-</span><span id="__span-8-20"><a id="__codelineno-8-20" name="__codelineno-8-20" href="#__codelineno-8-20"></a>Subdevices: 0/1
-</span><span id="__span-8-21"><a id="__codelineno-8-21" name="__codelineno-8-21" href="#__codelineno-8-21"></a>Subdevice #0: subdevice #0
-</span><span id="__span-8-22"><a id="__codelineno-8-22" name="__codelineno-8-22" href="#__codelineno-8-22"></a>Fri 17 Jan 11:42:48 WET 2025 - Mark 1 soundcard detected by ovos-i2csound.
-</span><span id="__span-8-23"><a id="__codelineno-8-23" name="__codelineno-8-23" href="#__codelineno-8-23"></a>Fri 17 Jan 11:42:48 WET 2025 - Detected CARD_NUMBER for Mark 1 soundcard: 3
-</span><span id="__span-8-24"><a id="__codelineno-8-24" name="__codelineno-8-24" href="#__codelineno-8-24"></a>Fri 17 Jan 11:42:48 WET 2025 - Configuring ALSA default card
-</span><span id="__span-8-25"><a id="__codelineno-8-25" name="__codelineno-8-25" href="#__codelineno-8-25"></a>Fri 17 Jan 11:42:48 WET 2025 - Running as user, modifying ~/.asoundrc
-</span><span id="__span-8-26"><a id="__codelineno-8-26" name="__codelineno-8-26" href="#__codelineno-8-26"></a>Fri 17 Jan 11:42:48 WET 2025 - ALSA default card set to: 3
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>==&gt; /tmp/autosoundcard.log &lt;==
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>Fri 17 Jan 11:42:46 WET 2025 - **** List of PLAYBACK Hardware Devices ****
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>card 0: Headphones [bcm2835 Headphones], device 0: bcm2835 Headphones [bcm2835 Headphones]
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>Subdevices: 8/8
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>Subdevice #0: subdevice #0
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>Subdevice #1: subdevice #1
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>Subdevice #2: subdevice #2
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>Subdevice #3: subdevice #3
+</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>Subdevice #4: subdevice #4
+</span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a>Subdevice #5: subdevice #5
+</span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a>Subdevice #6: subdevice #6
+</span><span id="__span-6-12"><a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a>Subdevice #7: subdevice #7
+</span><span id="__span-6-13"><a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a>card 1: Device [USB Audio Device], device 0: USB Audio [USB Audio]
+</span><span id="__span-6-14"><a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a>Subdevices: 1/1
+</span><span id="__span-6-15"><a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a>Subdevice #0: subdevice #0
+</span><span id="__span-6-16"><a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a>card 2: vc4hdmi [vc4-hdmi], device 0: MAI PCM i2s-hifi-0 [MAI PCM i2s-hifi-0]
+</span><span id="__span-6-17"><a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a>Subdevices: 1/1
+</span><span id="__span-6-18"><a id="__codelineno-6-18" name="__codelineno-6-18" href="#__codelineno-6-18"></a>Subdevice #0: subdevice #0
+</span><span id="__span-6-19"><a id="__codelineno-6-19" name="__codelineno-6-19" href="#__codelineno-6-19"></a>card 3: sndrpiproto [snd_rpi_proto], device 0: WM8731 HiFi wm8731-hifi-0 [WM8731 HiFi wm8731-hifi-0]
+</span><span id="__span-6-20"><a id="__codelineno-6-20" name="__codelineno-6-20" href="#__codelineno-6-20"></a>Subdevices: 0/1
+</span><span id="__span-6-21"><a id="__codelineno-6-21" name="__codelineno-6-21" href="#__codelineno-6-21"></a>Subdevice #0: subdevice #0
+</span><span id="__span-6-22"><a id="__codelineno-6-22" name="__codelineno-6-22" href="#__codelineno-6-22"></a>Fri 17 Jan 11:42:48 WET 2025 - Mark 1 soundcard detected by ovos-i2csound.
+</span><span id="__span-6-23"><a id="__codelineno-6-23" name="__codelineno-6-23" href="#__codelineno-6-23"></a>Fri 17 Jan 11:42:48 WET 2025 - Detected CARD_NUMBER for Mark 1 soundcard: 3
+</span><span id="__span-6-24"><a id="__codelineno-6-24" name="__codelineno-6-24" href="#__codelineno-6-24"></a>Fri 17 Jan 11:42:48 WET 2025 - Configuring ALSA default card
+</span><span id="__span-6-25"><a id="__codelineno-6-25" name="__codelineno-6-25" href="#__codelineno-6-25"></a>Fri 17 Jan 11:42:48 WET 2025 - Running as user, modifying ~/.asoundrc
+</span><span id="__span-6-26"><a id="__codelineno-6-26" name="__codelineno-6-26" href="#__codelineno-6-26"></a>Fri 17 Jan 11:42:48 WET 2025 - ALSA default card set to: 3
 </span></code></pre></div>
 <ul>
 <li><strong>Confirm available audio sinks:</strong><ul>
@@ -2124,97 +2087,90 @@ choosing a wake word that works well in various environments:</p>
 </ul>
 <details class="example">
 <summary>Full <code>wpctl status</code> / <code>wpctl inspect</code> transcript</summary>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="o">(</span>ovos<span class="o">)</span><span class="w"> </span>ovos@raspOVOS:~<span class="w"> </span>$<span class="w"> </span>wpctl<span class="w"> </span>status
-</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>PipeWire<span class="w"> </span><span class="s1">&#39;pipewire-0&#39;</span><span class="w"> </span><span class="o">[</span><span class="m">1</span>.2.4,<span class="w"> </span>ovos@raspOVOS,<span class="w"> </span>cookie:3349583741<span class="o">]</span>
-</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>└─<span class="w"> </span>Clients:
-</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>
-</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="w">   </span><span class="m">33</span>.<span class="w"> </span>WirePlumber<span class="w">                         </span><span class="o">[</span><span class="m">1</span>.2.4,<span class="w"> </span>ovos@raspOVOS,<span class="w"> </span>pid:695<span class="o">]</span>
-</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>
-</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>
-</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="w">   </span><span class="m">34</span>.<span class="w"> </span>WirePlumber<span class="w"> </span><span class="o">[</span>export<span class="o">]</span><span class="w">                </span><span class="o">[</span><span class="m">1</span>.2.4,<span class="w"> </span>ovos@raspOVOS,<span class="w"> </span>pid:695<span class="o">]</span>
-</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>
-</span><span id="__span-9-10"><a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a>
-</span><span id="__span-9-11"><a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a><span class="w">   </span><span class="m">47</span>.<span class="w"> </span>PipeWire<span class="w"> </span>ALSA<span class="w"> </span><span class="o">[</span>librespot<span class="o">]</span><span class="w">           </span><span class="o">[</span><span class="m">1</span>.2.4,<span class="w"> </span>ovos@raspOVOS,<span class="w"> </span>pid:702<span class="o">]</span>
-</span><span id="__span-9-12"><a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a>
-</span><span id="__span-9-13"><a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a>
-</span><span id="__span-9-14"><a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a><span class="w">   </span><span class="m">67</span>.<span class="w"> </span>PipeWire<span class="w"> </span>ALSA<span class="w"> </span><span class="o">[</span>python3.11<span class="o">]</span><span class="w">          </span><span class="o">[</span><span class="m">1</span>.2.4,<span class="w"> </span>ovos@raspOVOS,<span class="w"> </span>pid:691<span class="o">]</span>
-</span><span id="__span-9-15"><a id="__codelineno-9-15" name="__codelineno-9-15" href="#__codelineno-9-15"></a>
-</span><span id="__span-9-16"><a id="__codelineno-9-16" name="__codelineno-9-16" href="#__codelineno-9-16"></a>
-</span><span id="__span-9-17"><a id="__codelineno-9-17" name="__codelineno-9-17" href="#__codelineno-9-17"></a><span class="w">   </span><span class="m">75</span>.<span class="w"> </span>PipeWire<span class="w"> </span>ALSA<span class="w"> </span><span class="o">[</span>python3.11<span class="o">]</span><span class="w">          </span><span class="o">[</span><span class="m">1</span>.2.4,<span class="w"> </span>ovos@raspOVOS,<span class="w"> </span>pid:699<span class="o">]</span>
-</span><span id="__span-9-18"><a id="__codelineno-9-18" name="__codelineno-9-18" href="#__codelineno-9-18"></a>
-</span><span id="__span-9-19"><a id="__codelineno-9-19" name="__codelineno-9-19" href="#__codelineno-9-19"></a>
-</span><span id="__span-9-20"><a id="__codelineno-9-20" name="__codelineno-9-20" href="#__codelineno-9-20"></a><span class="w">   </span><span class="m">83</span>.<span class="w"> </span>PipeWire<span class="w"> </span>ALSA<span class="w"> </span><span class="o">[</span>python3.11<span class="o">]</span><span class="w">          </span><span class="o">[</span><span class="m">1</span>.2.4,<span class="w"> </span>ovos@raspOVOS,<span class="w"> </span>pid:700<span class="o">]</span>
-</span><span id="__span-9-21"><a id="__codelineno-9-21" name="__codelineno-9-21" href="#__codelineno-9-21"></a>
-</span><span id="__span-9-22"><a id="__codelineno-9-22" name="__codelineno-9-22" href="#__codelineno-9-22"></a>
-</span><span id="__span-9-23"><a id="__codelineno-9-23" name="__codelineno-9-23" href="#__codelineno-9-23"></a><span class="w">   </span><span class="m">84</span>.<span class="w"> </span>wpctl<span class="w">                               </span><span class="o">[</span><span class="m">1</span>.2.4,<span class="w"> </span>ovos@raspOVOS,<span class="w"> </span>pid:1710<span class="o">]</span>
-</span><span id="__span-9-24"><a id="__codelineno-9-24" name="__codelineno-9-24" href="#__codelineno-9-24"></a>
-</span><span id="__span-9-25"><a id="__codelineno-9-25" name="__codelineno-9-25" href="#__codelineno-9-25"></a>Audio
-</span><span id="__span-9-26"><a id="__codelineno-9-26" name="__codelineno-9-26" href="#__codelineno-9-26"></a>├─<span class="w"> </span>Devices:
-</span><span id="__span-9-27"><a id="__codelineno-9-27" name="__codelineno-9-27" href="#__codelineno-9-27"></a>│<span class="w">      </span><span class="m">42</span>.<span class="w"> </span>Built-in<span class="w"> </span>Audio<span class="w">                      </span><span class="o">[</span>alsa<span class="o">]</span>
-</span><span id="__span-9-28"><a id="__codelineno-9-28" name="__codelineno-9-28" href="#__codelineno-9-28"></a>│<span class="w">      </span><span class="m">43</span>.<span class="w"> </span>Built-in<span class="w"> </span>Audio<span class="w">                      </span><span class="o">[</span>alsa<span class="o">]</span>
-</span><span id="__span-9-29"><a id="__codelineno-9-29" name="__codelineno-9-29" href="#__codelineno-9-29"></a>│<span class="w">      </span><span class="m">44</span>.<span class="w"> </span>Built-in<span class="w"> </span>Audio<span class="w">                      </span><span class="o">[</span>alsa<span class="o">]</span>
-</span><span id="__span-9-30"><a id="__codelineno-9-30" name="__codelineno-9-30" href="#__codelineno-9-30"></a>│<span class="w">  </span>
-</span><span id="__span-9-31"><a id="__codelineno-9-31" name="__codelineno-9-31" href="#__codelineno-9-31"></a>├─<span class="w"> </span>Sinks:
-</span><span id="__span-9-32"><a id="__codelineno-9-32" name="__codelineno-9-32" href="#__codelineno-9-32"></a>│<span class="w">  </span>*<span class="w">   </span><span class="m">36</span>.<span class="w"> </span>Built-in<span class="w"> </span>Audio<span class="w"> </span>Stereo<span class="w">               </span><span class="o">[</span>vol:<span class="w"> </span><span class="m">0</span>.40<span class="o">]</span>
-</span><span id="__span-9-33"><a id="__codelineno-9-33" name="__codelineno-9-33" href="#__codelineno-9-33"></a>│<span class="w">      </span><span class="m">45</span>.<span class="w"> </span>Built-in<span class="w"> </span>Audio<span class="w"> </span>Stereo<span class="w">               </span><span class="o">[</span>vol:<span class="w"> </span><span class="m">0</span>.85<span class="o">]</span>
-</span><span id="__span-9-34"><a id="__codelineno-9-34" name="__codelineno-9-34" href="#__codelineno-9-34"></a>│<span class="w">      </span><span class="m">46</span>.<span class="w"> </span>Built-in<span class="w"> </span>Audio<span class="w"> </span>Digital<span class="w"> </span>Stereo<span class="w"> </span><span class="o">(</span>HDMI<span class="o">)</span><span class="w"> </span><span class="o">[</span>vol:<span class="w"> </span><span class="m">0</span>.40<span class="o">]</span>
-</span><span id="__span-9-35"><a id="__codelineno-9-35" name="__codelineno-9-35" href="#__codelineno-9-35"></a>│<span class="w">  </span>
-</span><span id="__span-9-36"><a id="__codelineno-9-36" name="__codelineno-9-36" href="#__codelineno-9-36"></a>├─<span class="w"> </span>Sink<span class="w"> </span>endpoints:
-</span><span id="__span-9-37"><a id="__codelineno-9-37" name="__codelineno-9-37" href="#__codelineno-9-37"></a>│<span class="w">  </span>
-</span><span id="__span-9-38"><a id="__codelineno-9-38" name="__codelineno-9-38" href="#__codelineno-9-38"></a>├─<span class="w"> </span>Sources:
-</span><span id="__span-9-39"><a id="__codelineno-9-39" name="__codelineno-9-39" href="#__codelineno-9-39"></a>│<span class="w">  </span>*<span class="w">   </span><span class="m">37</span>.<span class="w"> </span>Built-in<span class="w"> </span>Audio<span class="w"> </span>Stereo<span class="w">               </span><span class="o">[</span>vol:<span class="w"> </span><span class="m">1</span>.00<span class="o">]</span>
-</span><span id="__span-9-40"><a id="__codelineno-9-40" name="__codelineno-9-40" href="#__codelineno-9-40"></a>│<span class="w">  </span>
-</span><span id="__span-9-41"><a id="__codelineno-9-41" name="__codelineno-9-41" href="#__codelineno-9-41"></a>├─<span class="w"> </span>Source<span class="w"> </span>endpoints:
-</span><span id="__span-9-42"><a id="__codelineno-9-42" name="__codelineno-9-42" href="#__codelineno-9-42"></a>│<span class="w">  </span>
-</span><span id="__span-9-43"><a id="__codelineno-9-43" name="__codelineno-9-43" href="#__codelineno-9-43"></a>└─<span class="w"> </span>Streams:
-</span><span id="__span-9-44"><a id="__codelineno-9-44" name="__codelineno-9-44" href="#__codelineno-9-44"></a>
-</span><span id="__span-9-45"><a id="__codelineno-9-45" name="__codelineno-9-45" href="#__codelineno-9-45"></a><span class="w">   </span><span class="m">48</span>.<span class="w"> </span>PipeWire<span class="w"> </span>ALSA<span class="w"> </span><span class="o">[</span>librespot<span class="o">]</span><span class="w">                                   </span>
-</span><span id="__span-9-46"><a id="__codelineno-9-46" name="__codelineno-9-46" href="#__codelineno-9-46"></a>
-</span><span id="__span-9-47"><a id="__codelineno-9-47" name="__codelineno-9-47" href="#__codelineno-9-47"></a>
-</span><span id="__span-9-48"><a id="__codelineno-9-48" name="__codelineno-9-48" href="#__codelineno-9-48"></a><span class="w">        </span><span class="m">63</span>.<span class="w"> </span>output_FL<span class="w">       </span>&gt;<span class="w"> </span>WM8731<span class="w"> </span>HiFi<span class="w"> </span>wm8731-hifi-0:playback_FL<span class="w"> </span><span class="o">[</span>active<span class="o">]</span>
-</span><span id="__span-9-49"><a id="__codelineno-9-49" name="__codelineno-9-49" href="#__codelineno-9-49"></a>
-</span><span id="__span-9-50"><a id="__codelineno-9-50" name="__codelineno-9-50" href="#__codelineno-9-50"></a>
-</span><span id="__span-9-51"><a id="__codelineno-9-51" name="__codelineno-9-51" href="#__codelineno-9-51"></a><span class="w">        </span><span class="m">64</span>.<span class="w"> </span>output_FR<span class="w">       </span>&gt;<span class="w"> </span>WM8731<span class="w"> </span>HiFi<span class="w"> </span>wm8731-hifi-0:playback_FR<span class="w"> </span><span class="o">[</span>active<span class="o">]</span>
-</span><span id="__span-9-52"><a id="__codelineno-9-52" name="__codelineno-9-52" href="#__codelineno-9-52"></a>
-</span><span id="__span-9-53"><a id="__codelineno-9-53" name="__codelineno-9-53" href="#__codelineno-9-53"></a>
-</span><span id="__span-9-54"><a id="__codelineno-9-54" name="__codelineno-9-54" href="#__codelineno-9-54"></a><span class="w">   </span><span class="m">68</span>.<span class="w"> </span>PipeWire<span class="w"> </span>ALSA<span class="w"> </span><span class="o">[</span>python3.11<span class="o">]</span><span class="w">                                  </span>
-</span><span id="__span-9-55"><a id="__codelineno-9-55" name="__codelineno-9-55" href="#__codelineno-9-55"></a>
-</span><span id="__span-9-56"><a id="__codelineno-9-56" name="__codelineno-9-56" href="#__codelineno-9-56"></a>
-</span><span id="__span-9-57"><a id="__codelineno-9-57" name="__codelineno-9-57" href="#__codelineno-9-57"></a><span class="w">        </span><span class="m">69</span>.<span class="w"> </span>input_FL<span class="w">        </span>&lt;<span class="w"> </span>WM8731<span class="w"> </span>HiFi<span class="w"> </span>wm8731-hifi-0:capture_FL<span class="w">  </span><span class="o">[</span>active<span class="o">]</span>
-</span><span id="__span-9-58"><a id="__codelineno-9-58" name="__codelineno-9-58" href="#__codelineno-9-58"></a>
-</span><span id="__span-9-59"><a id="__codelineno-9-59" name="__codelineno-9-59" href="#__codelineno-9-59"></a>
-</span><span id="__span-9-60"><a id="__codelineno-9-60" name="__codelineno-9-60" href="#__codelineno-9-60"></a><span class="w">        </span><span class="m">70</span>.<span class="w"> </span>monitor_FL<span class="w">     </span>
-</span><span id="__span-9-61"><a id="__codelineno-9-61" name="__codelineno-9-61" href="#__codelineno-9-61"></a>
-</span><span id="__span-9-62"><a id="__codelineno-9-62" name="__codelineno-9-62" href="#__codelineno-9-62"></a>
-</span><span id="__span-9-63"><a id="__codelineno-9-63" name="__codelineno-9-63" href="#__codelineno-9-63"></a><span class="w">        </span><span class="m">71</span>.<span class="w"> </span>input_FR<span class="w">        </span>&lt;<span class="w"> </span>WM8731<span class="w"> </span>HiFi<span class="w"> </span>wm8731-hifi-0:capture_FR<span class="w">  </span><span class="o">[</span>active<span class="o">]</span>
-</span><span id="__span-9-64"><a id="__codelineno-9-64" name="__codelineno-9-64" href="#__codelineno-9-64"></a>
-</span><span id="__span-9-65"><a id="__codelineno-9-65" name="__codelineno-9-65" href="#__codelineno-9-65"></a>
-</span><span id="__span-9-66"><a id="__codelineno-9-66" name="__codelineno-9-66" href="#__codelineno-9-66"></a><span class="w">        </span><span class="m">72</span>.<span class="w"> </span>monitor_FR<span class="w">              </span>
-</span><span id="__span-9-67"><a id="__codelineno-9-67" name="__codelineno-9-67" href="#__codelineno-9-67"></a>
-</span><span id="__span-9-68"><a id="__codelineno-9-68" name="__codelineno-9-68" href="#__codelineno-9-68"></a><span class="o">(</span>ovos<span class="o">)</span><span class="w"> </span>ovos@raspOVOS:~<span class="w"> </span>$<span class="w"> </span>wpctl<span class="w"> </span>inspect<span class="w"> </span><span class="m">36</span>
-</span><span id="__span-9-69"><a id="__codelineno-9-69" name="__codelineno-9-69" href="#__codelineno-9-69"></a>id<span class="w"> </span><span class="m">36</span>,<span class="w"> </span><span class="nb">type</span><span class="w"> </span>PipeWire:Interface:Node
-</span><span id="__span-9-70"><a id="__codelineno-9-70" name="__codelineno-9-70" href="#__codelineno-9-70"></a><span class="w">   </span>alsa.card<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;2&quot;</span>
-</span><span id="__span-9-71"><a id="__codelineno-9-71" name="__codelineno-9-71" href="#__codelineno-9-71"></a><span class="w">   </span>alsa.card_name<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;snd_rpi_proto&quot;</span>
-</span><span id="__span-9-72"><a id="__codelineno-9-72" name="__codelineno-9-72" href="#__codelineno-9-72"></a><span class="w">   </span>alsa.class<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;generic&quot;</span>
-</span><span id="__span-9-73"><a id="__codelineno-9-73" name="__codelineno-9-73" href="#__codelineno-9-73"></a><span class="w">   </span>alsa.device<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;0&quot;</span>
-</span><span id="__span-9-74"><a id="__codelineno-9-74" name="__codelineno-9-74" href="#__codelineno-9-74"></a><span class="w">   </span>alsa.driver_name<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;snd_soc_rpi_proto&quot;</span>
-</span><span id="__span-9-75"><a id="__codelineno-9-75" name="__codelineno-9-75" href="#__codelineno-9-75"></a><span class="w">   </span>alsa.id<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;sndrpiproto&quot;</span>
-</span><span id="__span-9-76"><a id="__codelineno-9-76" name="__codelineno-9-76" href="#__codelineno-9-76"></a><span class="w">   </span>alsa.long_card_name<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;snd_rpi_proto&quot;</span>
-</span><span id="__span-9-77"><a id="__codelineno-9-77" name="__codelineno-9-77" href="#__codelineno-9-77"></a><span class="w">   </span>alsa.name<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;WM8731 HiFi wm8731-hifi-0&quot;</span>
-</span><span id="__span-9-78"><a id="__codelineno-9-78" name="__codelineno-9-78" href="#__codelineno-9-78"></a><span class="w">   </span>alsa.resolution_bits<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;16&quot;</span>
-</span><span id="__span-9-79"><a id="__codelineno-9-79" name="__codelineno-9-79" href="#__codelineno-9-79"></a><span class="w">   </span>alsa.subclass<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;generic-mix&quot;</span>
-</span><span id="__span-9-80"><a id="__codelineno-9-80" name="__codelineno-9-80" href="#__codelineno-9-80"></a><span class="w">   </span>alsa.subdevice<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;0&quot;</span>
-</span><span id="__span-9-81"><a id="__codelineno-9-81" name="__codelineno-9-81" href="#__codelineno-9-81"></a><span class="w">   </span>alsa.subdevice_name<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;subdevice #0&quot;</span>
-</span><span id="__span-9-82"><a id="__codelineno-9-82" name="__codelineno-9-82" href="#__codelineno-9-82"></a><span class="w">   </span>...
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="o">(</span>ovos<span class="o">)</span><span class="w"> </span>ovos@raspOVOS:~<span class="w"> </span>$<span class="w"> </span>wpctl<span class="w"> </span>status
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>PipeWire<span class="w"> </span><span class="s1">&#39;pipewire-0&#39;</span><span class="w"> </span><span class="o">[</span><span class="m">1</span>.2.4,<span class="w"> </span>ovos@raspOVOS,<span class="w"> </span>cookie:3349583741<span class="o">]</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>└─<span class="w"> </span>Clients:
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="w">   </span><span class="m">33</span>.<span class="w"> </span>WirePlumber<span class="w">                         </span><span class="o">[</span><span class="m">1</span>.2.4,<span class="w"> </span>ovos@raspOVOS,<span class="w"> </span>pid:695<span class="o">]</span>
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="w">   </span><span class="m">34</span>.<span class="w"> </span>WirePlumber<span class="w"> </span><span class="o">[</span>export<span class="o">]</span><span class="w">                </span><span class="o">[</span><span class="m">1</span>.2.4,<span class="w"> </span>ovos@raspOVOS,<span class="w"> </span>pid:695<span class="o">]</span>
+</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>
+</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>
+</span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="w">   </span><span class="m">47</span>.<span class="w"> </span>PipeWire<span class="w"> </span>ALSA<span class="w"> </span><span class="o">[</span>librespot<span class="o">]</span><span class="w">           </span><span class="o">[</span><span class="m">1</span>.2.4,<span class="w"> </span>ovos@raspOVOS,<span class="w"> </span>pid:702<span class="o">]</span>
+</span><span id="__span-7-12"><a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a>
+</span><span id="__span-7-13"><a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a>
+</span><span id="__span-7-14"><a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a><span class="w">   </span><span class="m">67</span>.<span class="w"> </span>PipeWire<span class="w"> </span>ALSA<span class="w"> </span><span class="o">[</span>python3.11<span class="o">]</span><span class="w">          </span><span class="o">[</span><span class="m">1</span>.2.4,<span class="w"> </span>ovos@raspOVOS,<span class="w"> </span>pid:691<span class="o">]</span>
+</span><span id="__span-7-15"><a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a>
+</span><span id="__span-7-16"><a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a>
+</span><span id="__span-7-17"><a id="__codelineno-7-17" name="__codelineno-7-17" href="#__codelineno-7-17"></a><span class="w">   </span><span class="m">75</span>.<span class="w"> </span>PipeWire<span class="w"> </span>ALSA<span class="w"> </span><span class="o">[</span>python3.11<span class="o">]</span><span class="w">          </span><span class="o">[</span><span class="m">1</span>.2.4,<span class="w"> </span>ovos@raspOVOS,<span class="w"> </span>pid:699<span class="o">]</span>
+</span><span id="__span-7-18"><a id="__codelineno-7-18" name="__codelineno-7-18" href="#__codelineno-7-18"></a>
+</span><span id="__span-7-19"><a id="__codelineno-7-19" name="__codelineno-7-19" href="#__codelineno-7-19"></a>
+</span><span id="__span-7-20"><a id="__codelineno-7-20" name="__codelineno-7-20" href="#__codelineno-7-20"></a><span class="w">   </span><span class="m">83</span>.<span class="w"> </span>PipeWire<span class="w"> </span>ALSA<span class="w"> </span><span class="o">[</span>python3.11<span class="o">]</span><span class="w">          </span><span class="o">[</span><span class="m">1</span>.2.4,<span class="w"> </span>ovos@raspOVOS,<span class="w"> </span>pid:700<span class="o">]</span>
+</span><span id="__span-7-21"><a id="__codelineno-7-21" name="__codelineno-7-21" href="#__codelineno-7-21"></a>
+</span><span id="__span-7-22"><a id="__codelineno-7-22" name="__codelineno-7-22" href="#__codelineno-7-22"></a>
+</span><span id="__span-7-23"><a id="__codelineno-7-23" name="__codelineno-7-23" href="#__codelineno-7-23"></a><span class="w">   </span><span class="m">84</span>.<span class="w"> </span>wpctl<span class="w">                               </span><span class="o">[</span><span class="m">1</span>.2.4,<span class="w"> </span>ovos@raspOVOS,<span class="w"> </span>pid:1710<span class="o">]</span>
+</span><span id="__span-7-24"><a id="__codelineno-7-24" name="__codelineno-7-24" href="#__codelineno-7-24"></a>
+</span><span id="__span-7-25"><a id="__codelineno-7-25" name="__codelineno-7-25" href="#__codelineno-7-25"></a>Audio
+</span><span id="__span-7-26"><a id="__codelineno-7-26" name="__codelineno-7-26" href="#__codelineno-7-26"></a>├─<span class="w"> </span>Devices:
+</span><span id="__span-7-27"><a id="__codelineno-7-27" name="__codelineno-7-27" href="#__codelineno-7-27"></a>│<span class="w">      </span><span class="m">42</span>.<span class="w"> </span>Built-in<span class="w"> </span>Audio<span class="w">                      </span><span class="o">[</span>alsa<span class="o">]</span>
+</span><span id="__span-7-28"><a id="__codelineno-7-28" name="__codelineno-7-28" href="#__codelineno-7-28"></a>│<span class="w">      </span><span class="m">43</span>.<span class="w"> </span>Built-in<span class="w"> </span>Audio<span class="w">                      </span><span class="o">[</span>alsa<span class="o">]</span>
+</span><span id="__span-7-29"><a id="__codelineno-7-29" name="__codelineno-7-29" href="#__codelineno-7-29"></a>│<span class="w">      </span><span class="m">44</span>.<span class="w"> </span>Built-in<span class="w"> </span>Audio<span class="w">                      </span><span class="o">[</span>alsa<span class="o">]</span>
+</span><span id="__span-7-30"><a id="__codelineno-7-30" name="__codelineno-7-30" href="#__codelineno-7-30"></a>│<span class="w">  </span>
+</span><span id="__span-7-31"><a id="__codelineno-7-31" name="__codelineno-7-31" href="#__codelineno-7-31"></a>├─<span class="w"> </span>Sinks:
+</span><span id="__span-7-32"><a id="__codelineno-7-32" name="__codelineno-7-32" href="#__codelineno-7-32"></a>│<span class="w">  </span>*<span class="w">   </span><span class="m">36</span>.<span class="w"> </span>Built-in<span class="w"> </span>Audio<span class="w"> </span>Stereo<span class="w">               </span><span class="o">[</span>vol:<span class="w"> </span><span class="m">0</span>.40<span class="o">]</span>
+</span><span id="__span-7-33"><a id="__codelineno-7-33" name="__codelineno-7-33" href="#__codelineno-7-33"></a>│<span class="w">      </span><span class="m">45</span>.<span class="w"> </span>Built-in<span class="w"> </span>Audio<span class="w"> </span>Stereo<span class="w">               </span><span class="o">[</span>vol:<span class="w"> </span><span class="m">0</span>.85<span class="o">]</span>
+</span><span id="__span-7-34"><a id="__codelineno-7-34" name="__codelineno-7-34" href="#__codelineno-7-34"></a>│<span class="w">      </span><span class="m">46</span>.<span class="w"> </span>Built-in<span class="w"> </span>Audio<span class="w"> </span>Digital<span class="w"> </span>Stereo<span class="w"> </span><span class="o">(</span>HDMI<span class="o">)</span><span class="w"> </span><span class="o">[</span>vol:<span class="w"> </span><span class="m">0</span>.40<span class="o">]</span>
+</span><span id="__span-7-35"><a id="__codelineno-7-35" name="__codelineno-7-35" href="#__codelineno-7-35"></a>│<span class="w">  </span>
+</span><span id="__span-7-36"><a id="__codelineno-7-36" name="__codelineno-7-36" href="#__codelineno-7-36"></a>├─<span class="w"> </span>Sink<span class="w"> </span>endpoints:
+</span><span id="__span-7-37"><a id="__codelineno-7-37" name="__codelineno-7-37" href="#__codelineno-7-37"></a>│<span class="w">  </span>
+</span><span id="__span-7-38"><a id="__codelineno-7-38" name="__codelineno-7-38" href="#__codelineno-7-38"></a>├─<span class="w"> </span>Sources:
+</span><span id="__span-7-39"><a id="__codelineno-7-39" name="__codelineno-7-39" href="#__codelineno-7-39"></a>│<span class="w">  </span>*<span class="w">   </span><span class="m">37</span>.<span class="w"> </span>Built-in<span class="w"> </span>Audio<span class="w"> </span>Stereo<span class="w">               </span><span class="o">[</span>vol:<span class="w"> </span><span class="m">1</span>.00<span class="o">]</span>
+</span><span id="__span-7-40"><a id="__codelineno-7-40" name="__codelineno-7-40" href="#__codelineno-7-40"></a>│<span class="w">  </span>
+</span><span id="__span-7-41"><a id="__codelineno-7-41" name="__codelineno-7-41" href="#__codelineno-7-41"></a>├─<span class="w"> </span>Source<span class="w"> </span>endpoints:
+</span><span id="__span-7-42"><a id="__codelineno-7-42" name="__codelineno-7-42" href="#__codelineno-7-42"></a>│<span class="w">  </span>
+</span><span id="__span-7-43"><a id="__codelineno-7-43" name="__codelineno-7-43" href="#__codelineno-7-43"></a>└─<span class="w"> </span>Streams:
+</span><span id="__span-7-44"><a id="__codelineno-7-44" name="__codelineno-7-44" href="#__codelineno-7-44"></a>
+</span><span id="__span-7-45"><a id="__codelineno-7-45" name="__codelineno-7-45" href="#__codelineno-7-45"></a><span class="w">   </span><span class="m">48</span>.<span class="w"> </span>PipeWire<span class="w"> </span>ALSA<span class="w"> </span><span class="o">[</span>librespot<span class="o">]</span><span class="w">                                   </span>
+</span><span id="__span-7-46"><a id="__codelineno-7-46" name="__codelineno-7-46" href="#__codelineno-7-46"></a>
+</span><span id="__span-7-47"><a id="__codelineno-7-47" name="__codelineno-7-47" href="#__codelineno-7-47"></a>
+</span><span id="__span-7-48"><a id="__codelineno-7-48" name="__codelineno-7-48" href="#__codelineno-7-48"></a><span class="w">        </span><span class="m">63</span>.<span class="w"> </span>output_FL<span class="w">       </span>&gt;<span class="w"> </span>WM8731<span class="w"> </span>HiFi<span class="w"> </span>wm8731-hifi-0:playback_FL<span class="w"> </span><span class="o">[</span>active<span class="o">]</span>
+</span><span id="__span-7-49"><a id="__codelineno-7-49" name="__codelineno-7-49" href="#__codelineno-7-49"></a>
+</span><span id="__span-7-50"><a id="__codelineno-7-50" name="__codelineno-7-50" href="#__codelineno-7-50"></a>
+</span><span id="__span-7-51"><a id="__codelineno-7-51" name="__codelineno-7-51" href="#__codelineno-7-51"></a><span class="w">        </span><span class="m">64</span>.<span class="w"> </span>output_FR<span class="w">       </span>&gt;<span class="w"> </span>WM8731<span class="w"> </span>HiFi<span class="w"> </span>wm8731-hifi-0:playback_FR<span class="w"> </span><span class="o">[</span>active<span class="o">]</span>
+</span><span id="__span-7-52"><a id="__codelineno-7-52" name="__codelineno-7-52" href="#__codelineno-7-52"></a>
+</span><span id="__span-7-53"><a id="__codelineno-7-53" name="__codelineno-7-53" href="#__codelineno-7-53"></a>
+</span><span id="__span-7-54"><a id="__codelineno-7-54" name="__codelineno-7-54" href="#__codelineno-7-54"></a><span class="w">   </span><span class="m">68</span>.<span class="w"> </span>PipeWire<span class="w"> </span>ALSA<span class="w"> </span><span class="o">[</span>python3.11<span class="o">]</span><span class="w">                                  </span>
+</span><span id="__span-7-55"><a id="__codelineno-7-55" name="__codelineno-7-55" href="#__codelineno-7-55"></a>
+</span><span id="__span-7-56"><a id="__codelineno-7-56" name="__codelineno-7-56" href="#__codelineno-7-56"></a>
+</span><span id="__span-7-57"><a id="__codelineno-7-57" name="__codelineno-7-57" href="#__codelineno-7-57"></a><span class="w">        </span><span class="m">69</span>.<span class="w"> </span>input_FL<span class="w">        </span>&lt;<span class="w"> </span>WM8731<span class="w"> </span>HiFi<span class="w"> </span>wm8731-hifi-0:capture_FL<span class="w">  </span><span class="o">[</span>active<span class="o">]</span>
+</span><span id="__span-7-58"><a id="__codelineno-7-58" name="__codelineno-7-58" href="#__codelineno-7-58"></a>
+</span><span id="__span-7-59"><a id="__codelineno-7-59" name="__codelineno-7-59" href="#__codelineno-7-59"></a>
+</span><span id="__span-7-60"><a id="__codelineno-7-60" name="__codelineno-7-60" href="#__codelineno-7-60"></a><span class="w">        </span><span class="m">70</span>.<span class="w"> </span>monitor_FL<span class="w">     </span>
+</span><span id="__span-7-61"><a id="__codelineno-7-61" name="__codelineno-7-61" href="#__codelineno-7-61"></a>
+</span><span id="__span-7-62"><a id="__codelineno-7-62" name="__codelineno-7-62" href="#__codelineno-7-62"></a>
+</span><span id="__span-7-63"><a id="__codelineno-7-63" name="__codelineno-7-63" href="#__codelineno-7-63"></a><span class="w">        </span><span class="m">71</span>.<span class="w"> </span>input_FR<span class="w">        </span>&lt;<span class="w"> </span>WM8731<span class="w"> </span>HiFi<span class="w"> </span>wm8731-hifi-0:capture_FR<span class="w">  </span><span class="o">[</span>active<span class="o">]</span>
+</span><span id="__span-7-64"><a id="__codelineno-7-64" name="__codelineno-7-64" href="#__codelineno-7-64"></a>
+</span><span id="__span-7-65"><a id="__codelineno-7-65" name="__codelineno-7-65" href="#__codelineno-7-65"></a>
+</span><span id="__span-7-66"><a id="__codelineno-7-66" name="__codelineno-7-66" href="#__codelineno-7-66"></a><span class="w">        </span><span class="m">72</span>.<span class="w"> </span>monitor_FR<span class="w">              </span>
+</span><span id="__span-7-67"><a id="__codelineno-7-67" name="__codelineno-7-67" href="#__codelineno-7-67"></a>
+</span><span id="__span-7-68"><a id="__codelineno-7-68" name="__codelineno-7-68" href="#__codelineno-7-68"></a><span class="o">(</span>ovos<span class="o">)</span><span class="w"> </span>ovos@raspOVOS:~<span class="w"> </span>$<span class="w"> </span>wpctl<span class="w"> </span>inspect<span class="w"> </span><span class="m">36</span>
+</span><span id="__span-7-69"><a id="__codelineno-7-69" name="__codelineno-7-69" href="#__codelineno-7-69"></a>id<span class="w"> </span><span class="m">36</span>,<span class="w"> </span><span class="nb">type</span><span class="w"> </span>PipeWire:Interface:Node
+</span><span id="__span-7-70"><a id="__codelineno-7-70" name="__codelineno-7-70" href="#__codelineno-7-70"></a><span class="w">   </span>alsa.card<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;2&quot;</span>
+</span><span id="__span-7-71"><a id="__codelineno-7-71" name="__codelineno-7-71" href="#__codelineno-7-71"></a><span class="w">   </span>alsa.card_name<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;snd_rpi_proto&quot;</span>
+</span><span id="__span-7-72"><a id="__codelineno-7-72" name="__codelineno-7-72" href="#__codelineno-7-72"></a><span class="w">   </span>alsa.class<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;generic&quot;</span>
+</span><span id="__span-7-73"><a id="__codelineno-7-73" name="__codelineno-7-73" href="#__codelineno-7-73"></a><span class="w">   </span>alsa.device<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;0&quot;</span>
+</span><span id="__span-7-74"><a id="__codelineno-7-74" name="__codelineno-7-74" href="#__codelineno-7-74"></a><span class="w">   </span>alsa.driver_name<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;snd_soc_rpi_proto&quot;</span>
+</span><span id="__span-7-75"><a id="__codelineno-7-75" name="__codelineno-7-75" href="#__codelineno-7-75"></a><span class="w">   </span>alsa.id<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;sndrpiproto&quot;</span>
+</span><span id="__span-7-76"><a id="__codelineno-7-76" name="__codelineno-7-76" href="#__codelineno-7-76"></a><span class="w">   </span>alsa.long_card_name<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;snd_rpi_proto&quot;</span>
+</span><span id="__span-7-77"><a id="__codelineno-7-77" name="__codelineno-7-77" href="#__codelineno-7-77"></a><span class="w">   </span>alsa.name<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;WM8731 HiFi wm8731-hifi-0&quot;</span>
+</span><span id="__span-7-78"><a id="__codelineno-7-78" name="__codelineno-7-78" href="#__codelineno-7-78"></a><span class="w">   </span>alsa.resolution_bits<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;16&quot;</span>
+</span><span id="__span-7-79"><a id="__codelineno-7-79" name="__codelineno-7-79" href="#__codelineno-7-79"></a><span class="w">   </span>alsa.subclass<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;generic-mix&quot;</span>
+</span><span id="__span-7-80"><a id="__codelineno-7-80" name="__codelineno-7-80" href="#__codelineno-7-80"></a><span class="w">   </span>alsa.subdevice<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;0&quot;</span>
+</span><span id="__span-7-81"><a id="__codelineno-7-81" name="__codelineno-7-81" href="#__codelineno-7-81"></a><span class="w">   </span>alsa.subdevice_name<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;subdevice #0&quot;</span>
+</span><span id="__span-7-82"><a id="__codelineno-7-82" name="__codelineno-7-82" href="#__codelineno-7-82"></a><span class="w">   </span>...
 </span></code></pre></div>
 </details>
-<ul>
-<li><strong>Test Audio:</strong><ul>
-<li>Record a short test file with <code>arecord -f test.wav</code>.</li>
-<li>Play it back with <code>aplay test.wav</code>.</li>
-</ul>
-</li>
-</ul>
 <h3 id="re-triggering-auto-detection-without-a-reboot">Re-triggering auto-detection without a reboot<a class="headerlink" href="#re-triggering-auto-detection-without-a-reboot" title="Permanent link">&para;</a></h3>
 <p>If the wrong output device got picked, or a HAT wasn't detected, you don't need to reboot to
 re-run detection. Two separate systemd services do it:</p>
@@ -2250,11 +2206,11 @@ using the <a href="https://github.com/OpenVoiceOS/ovos-utterance-corrections-plu
 <p>💡 You can define replacements at word level <code>~/.local/share/mycroft/word_corrections.json</code></p>
 </blockquote>
 <p>for example whisper STT often gets artist names wrong, this allows you to correct them</p>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="p">{</span>
-</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">  </span><span class="nt">&quot;Jimmy Hendricks&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Jimi Hendrix&quot;</span><span class="p">,</span>
-</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="w">  </span><span class="nt">&quot;Eric Klapptern&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Eric Clapton&quot;</span><span class="p">,</span>
-</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="w">  </span><span class="nt">&quot;Eric Klappton&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Eric Clapton&quot;</span>
-</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="p">}</span>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="p">{</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">  </span><span class="nt">&quot;Jimmy Hendricks&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Jimi Hendrix&quot;</span><span class="p">,</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">  </span><span class="nt">&quot;Eric Klapptern&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Eric Clapton&quot;</span><span class="p">,</span>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="w">  </span><span class="nt">&quot;Eric Klappton&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Eric Clapton&quot;</span>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="p">}</span>
 </span></code></pre></div>
 <h3 id="silence-removal">Silence Removal<a class="headerlink" href="#silence-removal" title="Permanent link">&para;</a></h3>
 <p>By default OVOS applies <a href="../vad-plugins/">VAD</a> (<a href="../vad-plugins/">Voice Activity Detection</a>) to crop silence from the audio sent to STT, this helps in

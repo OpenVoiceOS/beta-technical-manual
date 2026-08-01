@@ -14,7 +14,7 @@
         <link rel="prev" href="../privacy-security/">
       
       
-        <link rel="next" href="../updating-from-older-ovos/">
+        <link rel="next" href="../satellites/">
       
       
       <link rel="icon" href="https://github.com/OpenVoiceOS/ovos_assets/blob/master/Logo/ovos-logo-512.png?raw=true">
@@ -1071,6 +1071,48 @@
   
   
   
+    <li class="md-nav__item">
+      <a href="../satellites/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Satellites (one brain, many speakers)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../docker-deployment/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Running OVOS in Containers
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
     
     
     
@@ -1860,6 +1902,7 @@ postinst, a golden image) rather than hand-editing every device's user config. F
 pinning the same wake word, STT/TTS servers, or <code>ready_settings</code> across an entire fleet.</p>
 <hr />
 <h2 id="thin-clients-a-shared-speech-backend">Thin clients + a shared speech backend<a class="headerlink" href="#thin-clients-a-shared-speech-backend" title="Permanent link">&para;</a></h2>
+<p>For a step-by-step build of a server-plus-satellites deployment, see <a href="../satellites/">Satellites</a>.</p>
 <p>A common fleet topology is several low-power "thin" devices that only run the bus, listener
 and audio services, all pointed at one shared, more capable machine that does the actual
 speech-to-text and text-to-speech work over HTTP (see <a href="../stt-server/">STT server</a> and

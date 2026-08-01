@@ -157,7 +157,15 @@
          <lastmod>2026-08-01</lastmod>
     </url>
     <url>
+         <loc>https://tigregotico.github.io/ovos-technical-manual/dev-environment/</loc>
+         <lastmod>2026-08-01</lastmod>
+    </url>
+    <url>
          <loc>https://tigregotico.github.io/ovos-technical-manual/dialog-transformers/</loc>
+         <lastmod>2026-08-01</lastmod>
+    </url>
+    <url>
+         <loc>https://tigregotico.github.io/ovos-technical-manual/docker-deployment/</loc>
          <lastmod>2026-08-01</lastmod>
     </url>
     <url>
@@ -494,6 +502,10 @@
     </url>
     <url>
          <loc>https://tigregotico.github.io/ovos-technical-manual/resource-files/</loc>
+         <lastmod>2026-08-01</lastmod>
+    </url>
+    <url>
+         <loc>https://tigregotico.github.io/ovos-technical-manual/satellites/</loc>
          <lastmod>2026-08-01</lastmod>
     </url>
     <url>

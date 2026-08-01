@@ -8,13 +8,13 @@
       
       
       
-        <link rel="canonical" href="https://tigregotico.github.io/ovos-technical-manual/updating-skills/">
+        <link rel="canonical" href="https://tigregotico.github.io/ovos-technical-manual/docker-deployment/">
       
       
-        <link rel="prev" href="../updating-from-older-ovos/">
+        <link rel="prev" href="../satellites/">
       
       
-        <link rel="next" href="../updating-plugins/">
+        <link rel="next" href="../updating-from-older-ovos/">
       
       
       <link rel="icon" href="https://github.com/OpenVoiceOS/ovos_assets/blob/master/Logo/ovos-logo-512.png?raw=true">
@@ -22,7 +22,7 @@
     
     
       
-        <title>For Skill Maintainers - OpenVoiceOS Technical Manual</title>
+        <title>Running OVOS in Containers - OpenVoiceOS Technical Manual</title>
       
     
     
@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#updating-skills-from-older-ovos" class="md-skip">
+        <a href="#running-ovos-in-containers" class="md-skip">
           Skip to content
         </a>
       
@@ -111,7 +111,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              For Skill Maintainers
+              Running OVOS in Containers
             
           </span>
         </div>
@@ -915,90 +915,6 @@
                 
   
   
-  
-  
-    <li class="md-nav__item">
-      <a href="../docker-deployment/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Running OVOS in Containers
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-    
-  
-  
-  
-    
-    
-    
-      
-      
-    
-    
-      
-    
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9_6" checked>
-        
-          
-          <label class="md-nav__link" for="__nav_9_6" id="__nav_9_6_label" tabindex="0">
-            
-  
-  <span class="md-ellipsis">
-    Updating from Older OVOS
-  </span>
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_9_6_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_9_6">
-            <span class="md-nav__icon md-icon"></span>
-            Updating from Older OVOS
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../updating-from-older-ovos/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Overview & Big-Ticket Migrations
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
     
   
   
@@ -1015,7 +931,7 @@
           
   
   <span class="md-ellipsis">
-    For Skill Maintainers
+    Running OVOS in Containers
   </span>
   
 
@@ -1026,7 +942,7 @@
         
   
   <span class="md-ellipsis">
-    For Skill Maintainers
+    Running OVOS in Containers
   </span>
   
 
@@ -1048,116 +964,56 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#in-a-nutshell" class="md-nav__link">
+  <a href="#what-ovos-docker-ships" class="md-nav__link">
     <span class="md-ellipsis">
-      In a nutshell
+      What ovos-docker ships
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#if-you-maintain-skills" class="md-nav__link">
+  <a href="#a-working-compose-file" class="md-nav__link">
     <span class="md-ellipsis">
-      If you maintain skills
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="If you maintain skills">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#skill-settings-file-store-rewritten" class="md-nav__link">
-    <span class="md-ellipsis">
-      Skill-settings file-store rewritten
+      A working compose file
     </span>
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#fallback-dispatcher-no-longer-bus-driven" class="md-nav__link">
+      
+        <li class="md-nav__item">
+  <a href="#audio-device-passthrough" class="md-nav__link">
     <span class="md-ellipsis">
-      Fallback dispatcher no longer bus-driven
+      Audio device passthrough
     </span>
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#ovos_workshopskillsdecorators-shim-paths-removed" class="md-nav__link">
+      
+        <li class="md-nav__item">
+  <a href="#networking" class="md-nav__link">
     <span class="md-ellipsis">
-      ovos_workshop.skills.decorators.* shim paths removed
+      Networking
     </span>
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#mycroft-core-mycroftskill-compat-shim-removed" class="md-nav__link">
+      
+        <li class="md-nav__item">
+  <a href="#headless-stttts-servers-as-containers" class="md-nav__link">
     <span class="md-ellipsis">
-      mycroft-core MycroftSkill compat shim removed
+      Headless: STT/TTS servers as containers
     </span>
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#ovos_workshopdecoratorscompatbackwards_compat-removed" class="md-nav__link">
+      
+        <li class="md-nav__item">
+  <a href="#limitations" class="md-nav__link">
     <span class="md-ellipsis">
-      ovos_workshop.decorators.compat.backwards_compat removed
+      Limitations
     </span>
   </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#ovosskill_conditional_activate-removed" class="md-nav__link">
-    <span class="md-ellipsis">
-      OVOSSkill._conditional_activate() removed
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#backend-settings-sync-removed-from-ovosskill" class="md-nav__link">
-    <span class="md-ellipsis">
-      Backend settings sync removed from OVOSSkill
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#legacy-non-installable-skill-loading-removed" class="md-nav__link">
-    <span class="md-ellipsis">
-      Legacy non-installable skill loading removed
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#skill-locale-directories-renamed-to-canonical-bcp-47" class="md-nav__link">
-    <span class="md-ellipsis">
-      Skill locale directories renamed to canonical BCP-47
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_get_dialog-removed-as-a-public-symbol" class="md-nav__link">
-    <span class="md-ellipsis">
-      _get_dialog() removed as a public symbol
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -1176,65 +1032,37 @@
   
   
   
-    <li class="md-nav__item">
-      <a href="../updating-plugins/" class="md-nav__link">
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
         
   
+  
+    <a href="../updating-from-older-ovos/" class="md-nav__link">
+      
+  
   <span class="md-ellipsis">
-    For Plugin Maintainers
+    Updating from Older OVOS
   </span>
   
 
-      </a>
-    </li>
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
   
 
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../updating-deployers/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    For Device & Fleet Operators
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../updating-remote-clients/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    For Remote Bus Clients
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
       
     </li>
   
@@ -1445,116 +1273,56 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#in-a-nutshell" class="md-nav__link">
+  <a href="#what-ovos-docker-ships" class="md-nav__link">
     <span class="md-ellipsis">
-      In a nutshell
+      What ovos-docker ships
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#if-you-maintain-skills" class="md-nav__link">
+  <a href="#a-working-compose-file" class="md-nav__link">
     <span class="md-ellipsis">
-      If you maintain skills
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="If you maintain skills">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#skill-settings-file-store-rewritten" class="md-nav__link">
-    <span class="md-ellipsis">
-      Skill-settings file-store rewritten
+      A working compose file
     </span>
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#fallback-dispatcher-no-longer-bus-driven" class="md-nav__link">
+      
+        <li class="md-nav__item">
+  <a href="#audio-device-passthrough" class="md-nav__link">
     <span class="md-ellipsis">
-      Fallback dispatcher no longer bus-driven
+      Audio device passthrough
     </span>
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#ovos_workshopskillsdecorators-shim-paths-removed" class="md-nav__link">
+      
+        <li class="md-nav__item">
+  <a href="#networking" class="md-nav__link">
     <span class="md-ellipsis">
-      ovos_workshop.skills.decorators.* shim paths removed
+      Networking
     </span>
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#mycroft-core-mycroftskill-compat-shim-removed" class="md-nav__link">
+      
+        <li class="md-nav__item">
+  <a href="#headless-stttts-servers-as-containers" class="md-nav__link">
     <span class="md-ellipsis">
-      mycroft-core MycroftSkill compat shim removed
+      Headless: STT/TTS servers as containers
     </span>
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#ovos_workshopdecoratorscompatbackwards_compat-removed" class="md-nav__link">
+      
+        <li class="md-nav__item">
+  <a href="#limitations" class="md-nav__link">
     <span class="md-ellipsis">
-      ovos_workshop.decorators.compat.backwards_compat removed
+      Limitations
     </span>
   </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#ovosskill_conditional_activate-removed" class="md-nav__link">
-    <span class="md-ellipsis">
-      OVOSSkill._conditional_activate() removed
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#backend-settings-sync-removed-from-ovosskill" class="md-nav__link">
-    <span class="md-ellipsis">
-      Backend settings sync removed from OVOSSkill
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#legacy-non-installable-skill-loading-removed" class="md-nav__link">
-    <span class="md-ellipsis">
-      Legacy non-installable skill loading removed
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#skill-locale-directories-renamed-to-canonical-bcp-47" class="md-nav__link">
-    <span class="md-ellipsis">
-      Skill locale directories renamed to canonical BCP-47
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_get_dialog-removed-as-a-public-symbol" class="md-nav__link">
-    <span class="md-ellipsis">
-      _get_dialog() removed as a public symbol
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -1576,385 +1344,163 @@
   
 
 
-<h1 id="updating-skills-from-older-ovos">Updating Skills From Older OVOS<a class="headerlink" href="#updating-skills-from-older-ovos" title="Permanent link">&para;</a></h1>
-<h2 id="in-a-nutshell">In a nutshell<a class="headerlink" href="#in-a-nutshell" title="Permanent link">&para;</a></h2>
-<p>This page is for skill maintainers moving a skill forward from an older
-OVOS install. Entries are in date order: start at the version you are
-currently running and read forward to your target version. For the
-Big-ticket migrations (the changes with the widest blast radius, including
-the <code>ovos-workshop</code> 4.0.0 → 7.0.0 release train), see
-<a href="../updating-from-older-ovos/#big-ticket-migrations">Updating from Older OVOS</a>.</p>
-<h2 id="if-you-maintain-skills">If you maintain skills<a class="headerlink" href="#if-you-maintain-skills" title="Permanent link">&para;</a></h2>
-<h3 id="skill-settings-file-store-rewritten">Skill-settings file-store rewritten<a class="headerlink" href="#skill-settings-file-store-rewritten" title="Permanent link">&para;</a></h3>
-<p>Skill settings moved to <code>json_database</code>-backed XDG-default storage,
-replacing the old ad-hoc file kludge, with a one-time auto-migration.</p>
+<h1 id="running-ovos-in-containers">Running OVOS in Containers<a class="headerlink" href="#running-ovos-in-containers" title="Permanent link">&para;</a></h1>
+<div class="admonition abstract">
+<p class="admonition-title">In a nutshell</p>
+<p><a href="https://github.com/OpenVoiceOS/ovos-docker"><code>ovos-docker</code></a> publishes one container image
+per OVOS service, plus reference <code>docker-compose.yml</code> files that wire them together. Every
+compose service uses <code>network_mode: host</code>, so containers reach each other and the bus over
+the host's own loopback and network interfaces, not a private bridge network. This page
+covers the compose layout, audio device passthrough, networking, and the headless-server
+pattern for STT/TTS.</p>
+</div>
+<h2 id="what-ovos-docker-ships">What ovos-docker ships<a class="headerlink" href="#what-ovos-docker-ships" title="Permanent link">&para;</a></h2>
+<p><code>ovos-docker</code> builds one image per service, published under <code>docker.io/smartgic</code>:</p>
 <ul>
-<li>Migration: rely on the <code>self.settings</code> API. Do not read/write the old
-  non-XDG settings file path directly.
-Lifecycle:</li>
+<li><code>ovos-messagebus</code>, <code>ovos-core</code>, <code>ovos-audio</code>, <code>ovos-listener</code>, <code>ovos-cli</code></li>
+<li><code>ovos-phal</code>, <code>ovos-phal-admin</code>, <code>ovos-plugin-ggwave</code></li>
+<li><code>ovos-gui-websocket</code>, <code>ovos-gui-original</code>, <code>ovos-gui-shell</code></li>
+<li><code>ovos-skill-base</code> and default skill images</li>
 </ul>
-<table>
-<thead>
-<tr>
-<th>Phase</th>
-<th>Version</th>
-<th>Notes</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Active</td>
-<td>before <code>3299173</code></td>
-<td></td>
-</tr>
-<tr>
-<td>Deprecated but functional</td>
-<td>unverified</td>
-<td>only a one-time auto-migration is recorded, not a hard cutover date</td>
-</tr>
-<tr>
-<td>Dropped</td>
-<td><code>3299173734</code> (2022-02-02)</td>
-<td>(ovos-core <code>3299173</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/11" title="GitHub Issue: TigreGotico/ovos-technical-manual #11">#11</a>)</td>
-</tr>
-</tbody>
-</table>
-<h3 id="fallback-dispatcher-no-longer-bus-driven">Fallback dispatcher no longer bus-driven<a class="headerlink" href="#fallback-dispatcher-no-longer-bus-driven" title="Permanent link">&para;</a></h3>
-<p><code>converse</code> and fallback dispatch became event-based through dedicated
-services (<code>ConverseService</code>, the fallback pipeline) instead of being
-called directly in-process on <code>MycroftSkill</code> instances.</p>
+<p>There is no single "OVOS in one container" image. Each image installs one Python package and
+runs one process. This mirrors the split described in
+<a href="../composable-deployments/">Composable Deployments</a>: scale, restart, or relocate any one
+service without touching the rest.</p>
+<h2 id="a-working-compose-file">A working compose file<a class="headerlink" href="#a-working-compose-file" title="Permanent link">&para;</a></h2>
+<p>This is a trimmed version of the reference
+<a href="https://github.com/OpenVoiceOS/ovos-docker/blob/dev/compose/docker-compose.yml"><code>compose/docker-compose.yml</code></a>.
+It covers the messagebus, core, listener, and audio services, with the config, tmp, and
+IPC volume mounts the upstream file uses.</p>
+<div class="language-yaml highlight"><span class="filename">docker-compose.yml</span><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nt">services</span><span class="p">:</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span><span class="nt">ovos_messagebus</span><span class="p">:</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">docker.io/smartgic/ovos-messagebus:${VERSION}</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">    </span><span class="nt">network_mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">host</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">    </span><span class="nt">volumes</span><span class="p">:</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft:ro</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ovos_local_state:/home/${OVOS_USER}/.local/state/mycroft</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${TMP_FOLDER}:/tmp/mycroft</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="w">  </span><span class="nt">ovos_listener</span><span class="p">:</span>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">docker.io/smartgic/ovos-listener:${VERSION}</span>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="w">    </span><span class="nt">network_mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">host</span>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="w">    </span><span class="nt">devices</span><span class="p">:</span>
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/dev/snd</span>
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="w">    </span><span class="nt">volumes</span><span class="p">:</span>
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">~/.config/pulse/cookie:/home/${OVOS_USER}/.config/pulse/cookie:ro</span>
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft:ro</span>
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ovos_local_state:/home/${OVOS_USER}/.local/state/mycroft</span>
+</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${TMP_FOLDER}:/tmp/mycroft</span>
+</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${XDG_RUNTIME_DIR}/pulse:${XDG_RUNTIME_DIR}/pulse:ro</span>
+</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="w">    </span><span class="nt">depends_on</span><span class="p">:</span>
+</span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ovos_messagebus</span>
+</span><span id="__span-0-23"><a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>
+</span><span id="__span-0-24"><a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a><span class="w">  </span><span class="nt">ovos_audio</span><span class="p">:</span>
+</span><span id="__span-0-25"><a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a><span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">docker.io/smartgic/ovos-audio:${VERSION}</span>
+</span><span id="__span-0-26"><a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a><span class="w">    </span><span class="nt">network_mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">host</span>
+</span><span id="__span-0-27"><a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a><span class="w">    </span><span class="nt">devices</span><span class="p">:</span>
+</span><span id="__span-0-28"><a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/dev/snd</span>
+</span><span id="__span-0-29"><a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a><span class="w">    </span><span class="nt">volumes</span><span class="p">:</span>
+</span><span id="__span-0-30"><a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">~/.config/pulse/cookie:/home/${OVOS_USER}/.config/pulse/cookie:ro</span>
+</span><span id="__span-0-31"><a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft</span>
+</span><span id="__span-0-32"><a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ovos_tts_cache:/home/${OVOS_USER}/.cache/mycroft</span>
+</span><span id="__span-0-33"><a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${TMP_FOLDER}:/tmp/mycroft</span>
+</span><span id="__span-0-34"><a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${XDG_RUNTIME_DIR}/pulse:${XDG_RUNTIME_DIR}/pulse:ro</span>
+</span><span id="__span-0-35"><a id="__codelineno-0-35" name="__codelineno-0-35" href="#__codelineno-0-35"></a><span class="w">    </span><span class="nt">depends_on</span><span class="p">:</span>
+</span><span id="__span-0-36"><a id="__codelineno-0-36" name="__codelineno-0-36" href="#__codelineno-0-36"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ovos_messagebus</span>
+</span><span id="__span-0-37"><a id="__codelineno-0-37" name="__codelineno-0-37" href="#__codelineno-0-37"></a>
+</span><span id="__span-0-38"><a id="__codelineno-0-38" name="__codelineno-0-38" href="#__codelineno-0-38"></a><span class="w">  </span><span class="nt">ovos_core</span><span class="p">:</span>
+</span><span id="__span-0-39"><a id="__codelineno-0-39" name="__codelineno-0-39" href="#__codelineno-0-39"></a><span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">docker.io/smartgic/ovos-core:${VERSION}</span>
+</span><span id="__span-0-40"><a id="__codelineno-0-40" name="__codelineno-0-40" href="#__codelineno-0-40"></a><span class="w">    </span><span class="nt">network_mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">host</span>
+</span><span id="__span-0-41"><a id="__codelineno-0-41" name="__codelineno-0-41" href="#__codelineno-0-41"></a><span class="w">    </span><span class="nt">volumes</span><span class="p">:</span>
+</span><span id="__span-0-42"><a id="__codelineno-0-42" name="__codelineno-0-42" href="#__codelineno-0-42"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft</span>
+</span><span id="__span-0-43"><a id="__codelineno-0-43" name="__codelineno-0-43" href="#__codelineno-0-43"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ovos_local_state:/home/${OVOS_USER}/.local/state/mycroft</span>
+</span><span id="__span-0-44"><a id="__codelineno-0-44" name="__codelineno-0-44" href="#__codelineno-0-44"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${TMP_FOLDER}:/tmp/mycroft</span>
+</span><span id="__span-0-45"><a id="__codelineno-0-45" name="__codelineno-0-45" href="#__codelineno-0-45"></a><span class="w">    </span><span class="nt">depends_on</span><span class="p">:</span>
+</span><span id="__span-0-46"><a id="__codelineno-0-46" name="__codelineno-0-46" href="#__codelineno-0-46"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ovos_messagebus</span>
+</span><span id="__span-0-47"><a id="__codelineno-0-47" name="__codelineno-0-47" href="#__codelineno-0-47"></a>
+</span><span id="__span-0-48"><a id="__codelineno-0-48" name="__codelineno-0-48" href="#__codelineno-0-48"></a><span class="nt">volumes</span><span class="p">:</span>
+</span><span id="__span-0-49"><a id="__codelineno-0-49" name="__codelineno-0-49" href="#__codelineno-0-49"></a><span class="w">  </span><span class="nt">ovos_local_state</span><span class="p">:</span>
+</span><span id="__span-0-50"><a id="__codelineno-0-50" name="__codelineno-0-50" href="#__codelineno-0-50"></a><span class="w">  </span><span class="nt">ovos_tts_cache</span><span class="p">:</span>
+</span></code></pre></div>
+<p><code>OVOS_CONFIG_FOLDER</code> mounts the host's <code>mycroft.conf</code> directory into every container's
+<code>~/.config/mycroft</code>. Every service reads the same file this way, so a single edit on the host
+reaches all of them. <code>TMP_FOLDER</code> mounts a shared host directory to <code>/tmp/mycroft</code> in every
+container: this is how the listener hands recorded audio to the rest of the pipeline. Named
+volumes (<code>ovos_local_state</code>, <code>ovos_tts_cache</code>, and in the full reference file also
+<code>ovos_models</code>, <code>ovos_vosk</code>, <code>ovos_listener_records</code>, <code>ovos_nltk</code>) hold anything that must
+survive a container rebuild: downloaded models, the TTS cache, and local runtime state.</p>
+<p>The <a href="https://github.com/OpenVoiceOS/ovos-docker/blob/dev/compose/docker-compose.yml">full reference file</a>
+also runs <code>ovos_phal</code> and <code>ovos_phal_admin</code> with <code>privileged: true</code> and <code>cap_add: [SYS_ADMIN,
+DAC_OVERRIDE]</code>, plus <code>/dev</code> and <code>/sys</code> mounts, for hardware access (LEDs, buttons, power
+control). Add those only for the services that need direct hardware access.</p>
+<h2 id="audio-device-passthrough">Audio device passthrough<a class="headerlink" href="#audio-device-passthrough" title="Permanent link">&para;</a></h2>
+<p>The listener and audio containers both need <code>/dev/snd</code> passed through with <code>devices:
+["/dev/snd"]</code>, plus access to the host's sound server. Upstream mounts PulseAudio's or
+PipeWire's runtime socket read-only:</p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nt">volumes</span><span class="p">:</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${XDG_RUNTIME_DIR}/pulse:${XDG_RUNTIME_DIR}/pulse:ro</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${XDG_RUNTIME_DIR}/pipewire-0:${XDG_RUNTIME_DIR}/pipewire-0:ro</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">~/.config/pulse/cookie:/home/${OVOS_USER}/.config/pulse/cookie:ro</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="nt">environment</span><span class="p">:</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">  </span><span class="nt">PULSE_SERVER</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">unix:${XDG_RUNTIME_DIR}/pulse/native</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">  </span><span class="nt">PULSE_COOKIE</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/home/${OVOS_USER}/.config/pulse/cookie</span>
+</span></code></pre></div>
+<p>Without the PulseAudio cookie, the containers cannot authenticate against the host's sound
+server even with the socket mounted. <code>ovos-docker</code> ships separate compose overlays for macOS
+and Windows (<code>docker-compose.macos.yml</code>, <code>docker-compose.windows.yml</code>), because neither host
+exposes a native PulseAudio/PipeWire socket the same way Linux does.</p>
+<h2 id="networking">Networking<a class="headerlink" href="#networking" title="Permanent link">&para;</a></h2>
+<p>Every service in the reference compose files runs with <code>network_mode: host</code>. There is no
+private bridge network and no inter-container DNS: a container reaches the bus at
+<code>localhost:8181</code>, same as a bare-metal process would.</p>
+<div class="admonition danger">
+<p class="admonition-title">Host networking shares the loopback across every container</p>
+<p>With <code>network_mode: host</code>, <code>127.0.0.1</code> inside a container is the <strong>host's</strong> loopback, not
+a container-private one. Any process on that host, containerized or not, can reach a bus
+bound to <code>127.0.0.1</code>. Treat the whole host as the trust boundary, not the individual
+container. See <a href="../production-operations/#thin-clients-a-shared-speech-backend">Production Operations</a>
+for the same warning applied to a thin-client fleet.</p>
+</div>
+<p>The bus listens on port <code>8181</code>. The GUI service listens on a separate port, <code>18181</code> by
+default (config key <code>gui_websocket.base_port</code>, see <a href="../bus-service/">Bus Service</a>). Both
+default to binding <code>127.0.0.1</code> only. Widening <code>gui_websocket.host</code> to <code>0.0.0.0</code> opts a
+container into LAN exposure of the GUI socket, and combined with host networking that reaches
+the whole LAN, not just the device. Leave it at the default unless a remote display client
+needs it.</p>
+<p>If you ever run these images with a non-host network driver instead (a private bridge
+network), point <code>websocket.host</code> in each container's <code>mycroft.conf</code> at the messagebus
+container's name or hostname, the way any other split-host OVOS deployment does (see
+<a href="../composable-deployments/">Composable Deployments</a>). The upstream compose files do not do
+this: they rely on host networking and <code>localhost</code> throughout.</p>
+<h2 id="headless-stttts-servers-as-containers">Headless: STT/TTS servers as containers<a class="headerlink" href="#headless-stttts-servers-as-containers" title="Permanent link">&para;</a></h2>
+<p><code>ovos-docker</code> also builds standalone STT and TTS server images, one per baked-in engine:
+<code>ovos-stt-server-onnx-asr</code>, <code>ovos-stt-server-onnx-asr-cuda</code>, <code>ovos-tts-server-piper</code>,
+<code>ovos-tts-server-kokoro</code>, <code>ovos-tts-server-phoonnx</code>, and others. These serve plain HTTP and
+have no bus dependency, so they work as a shared backend for bare-metal or thin-client
+satellites that only run the bus, listener, and audio locally. See
+<a href="../stt-server/">Self-hosted STT Server</a> and <a href="../tts-server/">Self-hosted TTS Server</a> for the
+HTTP contract and plugin-side config keys, and
+<a href="../production-operations/#thin-clients-a-shared-speech-backend">Production Operations: thin clients + a shared speech backend</a>
+for a worked compose example splitting the speech backend from the thin client.</p>
+<h2 id="limitations">Limitations<a class="headerlink" href="#limitations" title="Permanent link">&para;</a></h2>
 <ul>
-<li>Migration: implement the converse acknowledge handshake if you drive
-  converse externally (for example a custom orchestrator). Do not assume
-  <code>converse()</code> is polled for skills that never override it.
-Lifecycle:</li>
+<li><strong>Wake word and mic latency.</strong> The listener still runs continuous audio capture and wake
+  word detection inside the container. Passing <code>/dev/snd</code> and the sound-server socket through
+  adds a layer compared to a bare-metal process; on constrained hardware, measure wake word
+  latency before committing to a containerized listener rather than assuming it matches
+  bare metal.</li>
+<li><strong>GPU access.</strong> <code>ovos-stt-server-onnx-asr-cuda</code> exists as a named image, which implies GPU
+  passthrough for that variant, but the upstream README and compose files documented here do
+  not spell out the <code>docker run --gpus</code> or NVIDIA Container Toolkit setup needed to use it.
+  Treat GPU passthrough as unverified until you check the image's own Dockerfile or open an
+  issue against <code>ovos-docker</code> for the missing steps.</li>
+<li><strong>Privileged containers.</strong> PHAL and PHAL-admin need <code>privileged: true</code> for hardware access
+  (LEDs, buttons, power). That is a real, not cosmetic, trust boundary: a privileged
+  container has the same access to the host as a root process would.</li>
 </ul>
-<table>
-<thead>
-<tr>
-<th>Phase</th>
-<th>Version</th>
-<th>Notes</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Active</td>
-<td>before <code>4fff98e</code></td>
-<td></td>
-</tr>
-<tr>
-<td>Deprecated but functional</td>
-<td>none</td>
-<td>architecture change, not a deprecate-then-drop symbol</td>
-</tr>
-<tr>
-<td>Dropped</td>
-<td><code>4fff98ecfc</code> (2022-02-02)</td>
-<td>landed (ovos-core <code>4fff98e</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/32" title="GitHub Issue: TigreGotico/ovos-technical-manual #32">#32</a>)</td>
-</tr>
-</tbody>
-</table>
-<h3 id="ovos_workshopskillsdecorators-shim-paths-removed"><code>ovos_workshop.skills.decorators.*</code> shim paths removed<a class="headerlink" href="#ovos_workshopskillsdecorators-shim-paths-removed" title="Permanent link">&para;</a></h3>
-<p>The 2022 move of decorators from <code>skills.decorators.*</code> to top-level
-<code>decorators.*</code> (<code>9ca2018</code>, 2022-06-02) had kept 4-line re-export shims at
-the old paths. Those shims were deleted with no further compat.</p>
-<ul>
-<li>Migration: <code>from ovos_workshop.skills.decorators.killable import
-  killable_intent</code> → <code>from ovos_workshop.decorators.killable import
-  killable_intent</code> (same pattern for <code>ocp</code>, <code>layers</code>, <code>converse</code>,
-  <code>fallback_handler</code>).
-Lifecycle:</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th>Phase</th>
-<th>Version</th>
-<th>Notes</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Active</td>
-<td>before <code>9ca2018</code> (2022-06-02)</td>
-<td></td>
-</tr>
-<tr>
-<td>Deprecated but functional</td>
-<td><code>9ca2018</code> to pre-<code>1.0.0</code></td>
-<td>shim re-export</td>
-</tr>
-<tr>
-<td>Dropped</td>
-<td><code>1.0.0</code></td>
-<td>(ovos-workshop <code>2d684a1</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/235" title="GitHub Issue: TigreGotico/ovos-technical-manual #235">#235</a>)</td>
-</tr>
-</tbody>
-</table>
-<h3 id="mycroft-core-mycroftskill-compat-shim-removed">mycroft-core <code>MycroftSkill</code> compat shim removed<a class="headerlink" href="#mycroft-core-mycroftskill-compat-shim-removed" title="Permanent link">&para;</a></h3>
-<p>The metaclass hack that let <code>isinstance(skill, MycroftSkill)</code> succeed for
-both classic Mycroft skills and OVOS skills, and that auto-initialized
-classic-style skills, was removed. Skills built for mycroft-core no longer
-load.</p>
-<ul>
-<li>Migration: subclass <code>ovos_workshop.skills.ovos.OVOSSkill</code> directly.
-  Skill lifecycle is now entirely <code>SkillLoader</code>-driven: <code>bus</code>/<code>skill_id</code>
-  are passed to <code>__init__</code>, not injected via metaclass into a later
-  <code>initialize()</code> call.
-Lifecycle:</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th>Phase</th>
-<th>Version</th>
-<th>Notes</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Active</td>
-<td>pre-<code>2d684a1</code></td>
-<td></td>
-</tr>
-<tr>
-<td>Deprecated but functional</td>
-<td>through the <code>V0.0.x</code> era</td>
-<td>with warnings</td>
-</tr>
-<tr>
-<td>Dropped</td>
-<td><code>1.0.0</code> (ovos-workshop <code>2d684a1</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/235" title="GitHub Issue: TigreGotico/ovos-technical-manual #235">#235</a>, 2024-10-15)</td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<p>The maintainers later bumped <code>VERSION_MAJOR</code> to <code>8</code> in
-<code>7c8a1e4</code> (2025-11-09) purely to acknowledge, after the fact, that this
-should have been versioned as a major bump: treat <code>2d684a1</code>/<code>1.0.0</code> as
-the real boundary.</p>
-<h3 id="ovos_workshopdecoratorscompatbackwards_compat-removed"><code>ovos_workshop.decorators.compat.backwards_compat</code> removed<a class="headerlink" href="#ovos_workshopdecoratorscompatbackwards_compat-removed" title="Permanent link">&para;</a></h3>
-<p>The <code>backwards_compat(classic_core=, pre_008=, no_core=)</code> decorator, which
-branched behavior by detecting <code>mycroft.version.CORE_VERSION_STR</code> /
-<code>ovos_core.version</code>, was deleted along with the mycroft-skill compat shim.</p>
-<ul>
-<li>Migration: remove any use of <code>backwards_compat</code>. Branch on your own
-  feature-detection logic if you still need version-conditional behavior.
-Lifecycle:</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th>Phase</th>
-<th>Version</th>
-<th>Notes</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Active</td>
-<td>pre-<code>2d684a1</code></td>
-<td></td>
-</tr>
-<tr>
-<td>Deprecated but functional</td>
-<td>unverified</td>
-<td></td>
-</tr>
-<tr>
-<td>Dropped</td>
-<td><code>1.0.0</code></td>
-<td>(ovos-workshop <code>2d684a1</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/235" title="GitHub Issue: TigreGotico/ovos-technical-manual #235">#235</a>)</td>
-</tr>
-</tbody>
-</table>
-<h3 id="ovosskill_conditional_activate-removed"><code>OVOSSkill._conditional_activate()</code> removed<a class="headerlink" href="#ovosskill_conditional_activate-removed" title="Permanent link">&para;</a></h3>
-<p>The private helper that auto-re-activated a skill after converse/intent
-handling, and the skill class's own emission of <code>ovos.utterance.handled</code>,
-are both gone: that bookkeeping moved into <code>ovos-core</code>'s fallback
-pipeline to stop duplicate events.</p>
-<ul>
-<li>Migration: remove any override or call of <code>_conditional_activate</code>. Do
-  not assume the skill class emits <code>ovos.utterance.handled</code> yourself.
-Lifecycle:</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th>Phase</th>
-<th>Version</th>
-<th>Notes</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Active</td>
-<td>before <code>6649c4f</code></td>
-<td></td>
-</tr>
-<tr>
-<td>Deprecated but functional</td>
-<td>unverified</td>
-<td></td>
-</tr>
-<tr>
-<td>Dropped</td>
-<td><code>2.0.0</code> (ovos-workshop <code>6649c4f</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/262" title="GitHub Issue: TigreGotico/ovos-technical-manual #262">#262</a>, 2024-10-31)</td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<h3 id="backend-settings-sync-removed-from-ovosskill">Backend settings sync removed from <code>OVOSSkill</code><a class="headerlink" href="#backend-settings-sync-removed-from-ovosskill" title="Permanent link">&para;</a></h3>
-<p><code>enable_settings_manager</code> kwarg, <code>self.settings_manager</code>,
-<code>self._settings_meta</code>, and <code>SkillSettingsManager</code> (Selene/backend
-two-way settings sync, <code>settingsmeta.json</code> auto-upload) are all removed.</p>
-<ul>
-<li>Migration: remove <code>enable_settings_manager</code> from <code>super().__init__()</code>
-  calls. Use <code>self.settings</code> (local <code>JsonStorage</code>) only. There is no
-  backend settings sync in OVOS.
-Lifecycle:</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th>Phase</th>
-<th>Version</th>
-<th>Notes</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Active</td>
-<td>before <code>3c026c2</code></td>
-<td></td>
-</tr>
-<tr>
-<td>Deprecated but functional</td>
-<td>unverified</td>
-<td></td>
-</tr>
-<tr>
-<td>Dropped</td>
-<td><code>3.0.0</code> (ovos-workshop <code>3c026c2</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/295" title="GitHub Issue: TigreGotico/ovos-technical-manual #295">#295</a>, 2024-11-19)</td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<h3 id="legacy-non-installable-skill-loading-removed">Legacy non-installable skill loading removed<a class="headerlink" href="#legacy-non-installable-skill-loading-removed" title="Permanent link">&para;</a></h3>
-<p><code>skill_launcher.py</code> dropped the remaining dead code paths for loading
-non-pip-installable, classic-mycroft-style skills.</p>
-<ul>
-<li>Migration: package skills as installable Python packages with entry
-  points. Loose-file skill loading from a bare folder is unsupported.
-Lifecycle:</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th>Phase</th>
-<th>Version</th>
-<th>Notes</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Active</td>
-<td>before <code>421899f</code></td>
-<td></td>
-</tr>
-<tr>
-<td>Deprecated but functional</td>
-<td>unverified</td>
-<td></td>
-</tr>
-<tr>
-<td>Dropped</td>
-<td><code>7.0.x</code> line, <code>421899f</code> (2025-06-21)</td>
-<td>(ovos-workshop <code>421899f</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/362" title="GitHub Issue: TigreGotico/ovos-technical-manual #362">#362</a>)</td>
-</tr>
-</tbody>
-</table>
-<p><code>ovos-core</code>'s own equivalent removal of folder-based skill loading
-(<code>_load_skill</code>, <code>_get_skill_directories</code>, <code>_unload_removed_skills</code>)
-landed the same era in <code>62024dbf98</code> (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/690" title="GitHub Issue: TigreGotico/ovos-technical-manual #690">#690</a>, 2025-06-10, <code>1.3.0</code>).</p>
-<h3 id="skill-locale-directories-renamed-to-canonical-bcp-47">Skill locale directories renamed to canonical BCP-47<a class="headerlink" href="#skill-locale-directories-renamed-to-canonical-bcp-47" title="Permanent link">&para;</a></h3>
-<p>Bundled locale directories under <code>ovos_workshop/locale/</code> were renamed from
-lowercase/short codes (<code>en-us</code>, <code>da</code>, <code>eu</code>, <code>fa-fa</code>) to canonical BCP-47
-(<code>en-US</code>, <code>da-DK</code>, <code>eu-ES</code>, <code>fa-IR</code>) to fix duplicate zip entries in wheel
-builds.</p>
-<ul>
-<li>Migration: ship resource files under canonical BCP-47 folder names. Use
-  <code>ovos_utils.lang.get_language_dir()</code> / <code>CoreResources</code> for resolution
-  instead of manual lowercase path construction.
-Lifecycle:</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th>Phase</th>
-<th>Version</th>
-<th>Notes</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Active</td>
-<td>before <code>e12559e</code></td>
-<td></td>
-</tr>
-<tr>
-<td>Deprecated but functional</td>
-<td>unverified</td>
-<td></td>
-</tr>
-<tr>
-<td>Dropped</td>
-<td><code>e12559e</code> (2026-04-03), pre-<code>8.0.0</code></td>
-<td>(ovos-workshop <code>e12559e</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/392" title="GitHub Issue: TigreGotico/ovos-technical-manual #392">#392</a>)</td>
-</tr>
-</tbody>
-</table>
-<h3 id="_get_dialog-removed-as-a-public-symbol"><code>_get_dialog()</code> removed as a public symbol<a class="headerlink" href="#_get_dialog-removed-as-a-public-symbol" title="Permanent link">&para;</a></h3>
-<p>Module-level <code>_get_dialog()</code> on <code>ovos_workshop.skills.ovos</code> no longer
-exists. Locale lookups (<code>_get_dialog</code>, <code>_get_word</code>,
-<code>CommonQuerySkill.__init__</code>, <code>translated_noise_words</code>) all route through
-<code>CoreResources</code>/<code>self.resources</code> now.</p>
-<ul>
-<li>Migration: use <code>self.speak_dialog(key)</code> or
-  <code>CoreResources(lang).load_dialog_file(...)</code> instead of importing
-  <code>_get_dialog</code> directly.
-Lifecycle:</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th>Phase</th>
-<th>Version</th>
-<th>Notes</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Active</td>
-<td>before <code>acbd438</code></td>
-<td></td>
-</tr>
-<tr>
-<td>Deprecated but functional</td>
-<td>unverified</td>
-<td></td>
-</tr>
-<tr>
-<td>Dropped</td>
-<td><code>acbd438</code> (2026-04-08), pre-<code>8.0.0</code></td>
-<td>(ovos-workshop <code>acbd438</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/395" title="GitHub Issue: TigreGotico/ovos-technical-manual #395">#395</a>)</td>
-</tr>
-</tbody>
-</table>
 <hr />
-<p><strong>Read next:</strong> <a href="../version-compat-guide/">Version-Compatible Skills &amp; Plugins</a> · <a href="../upcoming-changes/">Upcoming Changes</a>
-<strong>Related:</strong> <a href="../updating-from-older-ovos/">Updating from Older OVOS</a> · <a href="../migrating-from-mycroft/">Migrating From Mycroft</a></p>
+<p><strong>Read next:</strong> <a href="../production-operations/">Production Operations</a>
+<strong>Related:</strong> <a href="../composable-deployments/">Composable Deployments</a> · <a href="../stt-server/">Self-hosted STT Server</a> · <a href="../tts-server/">Self-hosted TTS Server</a></p>
 
 
 
