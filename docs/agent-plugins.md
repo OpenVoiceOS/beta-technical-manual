@@ -67,6 +67,9 @@ examples, see [Agents & Personas](personas.md) and [Advanced Solvers](advanced-s
 | [ovos-persona-server](#ovos-persona-server) | Standalone server that exposes an OVOS persona over an HTTP API. |
 | [ovos-solver-plugin-rivescript](#ovos-solver-plugin-rivescript) | A rule-based chatbot answer engine for OVOS, using RiveScript pattern matching. |
 
+See [Available ToolBoxes](#available-toolboxes) and [Available Chat Engines](#available-chat-engines)
+below for the standalone `opm.agents.toolbox` and `opm.agents.chat` plugin registries.
+
 ## ovos-qdrant-embeddings-plugin
 
 - **GitHub**: [OpenVoiceOS/ovos-qdrant-embeddings-plugin](https://github.com/OpenVoiceOS/ovos-qdrant-embeddings-plugin)
@@ -231,5 +234,59 @@ Per-collection metadata defaults `hnsw:space` to `cosine` when not specified.
 - **Description**: A rule-based chatbot answer engine for OVOS, using RiveScript pattern matching.
 
 - **Config**: `"lang"`: language code used to pick the bundled RiveScript brain (defaults to `en-us`).
+
+---
+
+## Available ToolBoxes
+
+These `opm.agents.toolbox` plugins each wrap one external service as a set of callable
+`AgentTool` functions. Call them directly with `ToolBox.call_tool(name, kwargs)`, or over the
+bus via `ovos.persona.tools.{toolbox_id}.call`. See [Tool Plugins](tool-plugins.md) for the
+`ToolBox` API itself.
+
+| Plugin ID | Tools | Package | API key |
+|---|---|---|---|
+| `ovos-wikipedia-tools` | `search_wikipedia`, `get_wikipedia_sections`, `get_wikipedia_page` | `ovos-wikipedia-solver` | None, public Wikipedia REST API |
+| `ovos-ddg-tools` | `search_duckduckgo`, `get_duckduckgo_infobox` | `ovos-ddg-solver-plugin` | None, DuckDuckGo Instant Answer API |
+| `ovos-wolfram-alpha-tools` | `compute`, `compute_full` | `ovos-wolfram-alpha-solver` | Optional, free key at developer.wolframalpha.com; a demo key ships in the plugin |
+| `ovos-weather-tools` | `get_current_weather`, `get_daily_forecast`, `get_hourly_forecast` | `ovos-skill-weather` | None, Open-Meteo public API |
+| `ovos-datetime-tools` | `get_current_datetime`, `convert_timezone`, `get_timezone_for_location` | `ovos-skill-date-time` | None, stdlib + pytz |
+| `ovos-ip-tools` | `get_local_ip_addresses`, `get_public_ip` | `ovos-skill-ip` | None |
+| `ovos-iss-tools` | `get_iss_position`, `get_iss_crew` | `ovos-skill-iss-location` | Optional, geonames.org user for reverse geocoding |
+| `ovos-speedtest-tools` | `run_speedtest` | `ovos-skill-speedtest` | None, Speedtest.net |
+| `ovos-wallpapers-tools` | `search_wallpapers` | `ovos-skill-wallpapers` | None, wallhaven.cc public API |
+| `ovos-wikihow-tools` | `search_wikihow`, `get_wikihow_steps` | `ovos-skill-wikihow` | None, pywikihow scraper |
+| `ovos-wordnet-tools` | `lookup_word`, `define_word` | `ovos-skill-wordnet` | None, local NLTK corpus |
+
+The [agentic loop](agentic-loop.md) bundles its own toolboxes (`ovos-filesystem-tools`,
+`ovos-shell-tools`, `ovos-web-search-tools`, `ovos-clock-tools`, `ovos-skill-md-toolbox`) —
+see that page for those.
+
+## Available Chat Engines
+
+`opm.agents.chat` plugins beyond the ones documented above as their own catalog entries
+(`ovos-openai-plugin`, `ovos-gguf-plugin`):
+
+| Plugin ID | Backend | Package |
+|---|---|---|
+| `ovos-chat-gemini-code-plugin` | Gemini (code) | `ovos-gemini-plugin` |
+| `ovos-chat-gemini-session-plugin` | Gemini (session) | `ovos-gemini-plugin` |
+| `ovos-chat-claude-code-plugin` | Claude (code) | `ovos-claude-plugin` |
+| `ovos-chat-claude-code-session-plugin` | Claude (session) | `ovos-claude-plugin` |
+| `ovos-chat-kilo-plugin` | Kilo (Anthropic) | `ovos-kilo-plugin` |
+| `ovos-chat-kilo-session-plugin` | Kilo (session) | `ovos-kilo-plugin` |
+| `ovos-chat-qwen-code-plugin` | Qwen-Code | `ovos-qwen-code-plugin` |
+| `ovos-chat-opencode-plugin` | OpenCode | `ovos-opencode-plugin` |
+| `ovos-chat-opencode-session-plugin` | OpenCode (session) | `ovos-opencode-plugin` |
+
+The Mixture-of-Solvers (`ovos-MoS`) family combines several chat engines into one:
+
+| Plugin ID | Strategy |
+|---|---|
+| `ovos-mos-king-reranker` | One "king" engine reranks candidate answers from the others |
+| `ovos-mos-king-generative` | One "king" engine generates the final answer from the others' candidates |
+| `ovos-mos-democracy` | Majority vote across all configured engines |
+| `ovos-mos-duopoly-reranker` | Reranker variant restricted to two engines |
+| `ovos-mos-duopoly-generative` | Generative variant restricted to two engines |
 
 ---

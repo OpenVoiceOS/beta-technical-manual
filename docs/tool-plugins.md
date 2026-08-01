@@ -71,6 +71,20 @@ registers the messagebus handlers described below. The full authoring guide with
 `AgentTool`, `ToolArguments`, and `ToolOutput` examples is embedded in the
 [Plugin Manager reference](plugin-manager.md).
 
+### Static vs instance members
+
+| Member | Kind | Why |
+|---|---|---|
+| `tool_json_list` | `@property` | Reads `self.tools`, so it needs the instance's discovered tools. |
+| `openai_tools` | `@property` | Calls `self.tools_to_openai_spec(self.tool_json_list)` on this instance's own tools. |
+| `tools_to_openai_spec` | `@staticmethod` | Converts a plain `tool_json_list`-shaped list to the OpenAI tools spec. It takes no `self`, so a caller can hand it a list merged from **several** toolboxes at once, not just one instance's tools. |
+| `normalize_tools` | `@staticmethod` | Coerces a `ToolBox`, an OpenAI tool dict, or a list mixing either, into one flat OpenAI tools list. It has to work before an instance is chosen, since one of its inputs is a whole list of toolboxes. |
+| `validate_input` / `validate_output` | `@staticmethod` | Validate a given `AgentTool`'s schema against raw arguments/results; the tool being validated is passed in, so no instance state is needed. |
+
+`ovos-agentic-loop`'s `NativeToolCallEngine` is the concrete case that needs `tools_to_openai_spec`
+to be static: it merges `tool_json_list` output from several toolboxes into one list before
+converting the merged list to the OpenAI spec in a single call.
+
 ---
 
 ## PHAL Bus Provider

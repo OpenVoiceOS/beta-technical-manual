@@ -271,7 +271,7 @@ ovos-say-to "what time is it"
 ```
 
 This runs `MessageBusClient().emit(Message("recognizer_loop:utterance", {"utterances": ["what time
-is it"], "lang": "en-us"}))`, exactly the same message the listener would have emitted. It is the
+is it"], "lang": "en-US"}))`, exactly the same message the listener would have emitted. It is the
 single most useful command for isolating "is my problem in audio, or in matching/skills?" without
 having to speak into a microphone at all.
 
@@ -438,6 +438,8 @@ instead. The same first-time caveat applies, so add it directly to the user conf
 
 Two environment variables set the *starting* level and logger name before any configuration loads,
 mostly useful when running a service by hand: `OVOS_DEFAULT_LOG_LEVEL` and `OVOS_DEFAULT_LOG_NAME`.
+`OVOS_CONFIG_BASE_FOLDER` sets the XDG base folder name (default `mycroft`) that logging and
+`PIDLock` use to find the config and PID directories.
 
 ---
 

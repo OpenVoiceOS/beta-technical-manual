@@ -40,9 +40,17 @@ print(match)   # best fuzzy match, with name, entities and a confidence score
 
 Installed as a pipeline plugin (`nebulento[ovos]`), Nebulento listens on the **same
 `padatious:register_intent` bus events as [Padatious](padatious-pipeline.md)**. This makes it a
-drop-in alternative. Skills register their `.intent` files exactly as before. A hierarchical
-variant is also available. See [Pipelines Overview](pipelines-overview.md) for how matchers are
-ordered and configured.
+drop-in alternative. Skills register their `.intent` files exactly as before. See
+[Pipelines Overview](pipelines-overview.md) for how matchers are ordered and configured.
+
+The package registers two `opm.pipeline` entry points: the flat `ovos-nebulento-pipeline-plugin`,
+and a hierarchical variant, `ovos-nebulento-hierarchical-pipeline-plugin`. Use the flat plugin by
+default. Switch to the hierarchical one when you have many skills with lexically distinct
+vocabulary and want domain-scoped matching, or the `domain_threshold` off-topic gate.
+
+Nebulento picks a match strategy (e.g. `TOKEN_SET_RATIO`) to control how it scores similarity, and
+supports context gating to narrow which intents are even considered for a given utterance. See the
+plugin's own docs for the full list of strategies and how to set up context gating.
 
 !!! tip "When to choose Nebulento"
     Use it when users phrase things inconsistently or make typos (e.g. typed input, noisy STT),

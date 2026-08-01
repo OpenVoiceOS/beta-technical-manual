@@ -181,7 +181,7 @@ Every message on the bus is a JSON object with three fields:
 ```json
 {
   "type": "recognizer_loop:utterance",
-  "data": {"utterances": ["what time is it"], "lang": "en-us"},
+  "data": {"utterances": ["what time is it"], "lang": "en-US"},
   "context": {"session": {"session_id": "default"}, "source": "listener"}
 }
 
@@ -339,6 +339,23 @@ adoption gradual and safe.
 
 ---
 
+## High-level API wrappers
+
+`ovos-bus-client` ships four wrapper classes that give plugin and skill authors a typed method
+call instead of hand-building `Message` objects for common subsystems: `GUIInterface`,
+`OCPInterface`, `EnclosureAPI`, and `EventSchedulerInterface` (in `ovos_bus_client/apis/`). Skills
+reach these through properties such as `self.gui`, `self.audio_service` (OCP), and
+`self.event_scheduler` rather than importing the classes directly.
+
+Most of their methods accept an optional `source_message` argument. Pass the `Message` that
+triggered the call through so the outgoing message inherits its `session`. Skipping
+`source_message` means the outgoing message has no session, which can cause OCP and the GUI to
+act on the wrong device in a multi-user deployment (several satellites sharing one `ovos-core`
+over HiveMind). Always pass it through when the wrapper call happens inside a handler that
+received a message.
+
+---
+
 ## Services That Connect to the Bus
 
 | Service | Role |
@@ -444,6 +461,13 @@ A separate, drop-in Rust implementation exists as its own project for deployment
     numbers put webrockets ahead at higher concurrency. On a stable install, stay on the
     default Tornado server unless profiling shows the bus is a bottleneck.
 
+    **Known limitations of webrockets today:** no TLS termination at all (see above);
+    `max_msg_size` is silently ignored rather than enforced, so an oversized frame is not
+    rejected the way it would be on the Tornado backend; and it does not implement the
+    `MessageBusEventHandler.on()` emitter hook that the Tornado backend exposes for embedding
+    custom server-side handlers. Treat webrockets as a throughput experiment, not a feature-equal
+    drop-in, until these close.
+
 ---
 
 ## Filter / Debug Mode
@@ -475,7 +499,7 @@ bus = MessageBusClient()
 bus.run_in_thread()  # connects on a background daemon thread
 
 # fire-and-forget
-bus.emit(Message("ovos.utterance.handle", {"utterances": ["what time is it"], "lang": "en-us"}))
+bus.emit(Message("ovos.utterance.handle", {"utterances": ["what time is it"], "lang": "en-US"}))
 
 # request/response: send a message, then wait for a specific reply type
 response = bus.wait_for_response(

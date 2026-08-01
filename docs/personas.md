@@ -77,6 +77,27 @@ configuration inline.
 The `"solvers"` key is an alias for `"handlers"` (legacy compat). Plugins are tried in order.
 The first non-`None` response wins.
 
+### Available Personas
+
+`opm.plugin.persona` plugins ship a ready-made persona as a static dict (`chat_engine`,
+`system_prompt`, and optionally `toolboxes`), which `ovos-persona` loads directly instead of
+reading a hand-written JSON file:
+
+| Persona ID | Backend | Package |
+|---|---|---|
+| `OpenAI` | `ovos-chat-openai-plugin` | `ovos-openai-plugin` |
+| `Claude` | `ovos-chat-claude-plugin` | `ovos-claude-plugin` |
+| `Gemini` | `ovos-chat-gemini-plugin` | `ovos-gemini-plugin` |
+| `Kilo` | `ovos-chat-kilo-plugin` | `ovos-kilo-plugin` |
+| `QwenCode` | `ovos-chat-qwen-code-plugin` | `ovos-qwen-code-plugin` |
+| `OpenCode` | `ovos-chat-opencode-plugin` | `ovos-opencode-plugin` |
+| `Wikipedia` | Wikipedia solver | `ovos-wikipedia-solver` |
+| `WikiGPT` | `ovos-wikigpt` | `ovos-wikipedia-solver` |
+| `DuckDuckGo` | DDG solver | `ovos-ddg-solver-plugin` |
+| `Wolfram Alpha` | Wolfram solver | `ovos-wolfram-alpha-solver` |
+| `WikiHow` | WikiHow solver | `ovos-skill-wikihow` |
+| `Wordnet` | WordNet solver | `ovos-skill-wordnet` |
+
 ### Persona with session memory
 
 Pair any chat engine with an `opm.agents.memory` plugin to persist per-session conversation
@@ -251,11 +272,15 @@ enables OVOS to act as an agent inside another system, for example a Docker netw
   "ovos-messagebus": {
     "autoconnect": true,
     "host": "127.0.0.1",
-    "port": 8181
+    "port": 8181,
+    "timeout": 30,
+    "source_name": "messagebus_chat_agent"
   }
 }
 
 ```
+
+`timeout` (default `30`) is how long the engine waits for a `speak` reply per utterance; it resets on every `speak` it receives, so a skill that emits several `speak` messages in a row does not time out early. `source_name` (default `messagebus_chat_agent`) is written to `context.source` on every bus message the engine sends, so routing rules on the target `ovos-core` can identify — and exclude — traffic that originated from this engine.
 
 This plugin replaces the removed `OVOSMessagebusSolver` / `ovos-solver-bus-plugin`, which lived
 under the deprecated `neon.plugin.solver` group; install
@@ -264,8 +289,14 @@ migrate any persona that referenced the old solver to the `ovos-messagebus` chat
 
 **Note:** routing OVOS back through itself creates an infinite loop if this engine is used inside
 a persona that is *already* loaded by the same running `ovos-core`. It is intended for
-cross-instance bridging, not local routing. For secure remote access see
-[HiveMind Agents](hivemind-agents.md).
+cross-instance bridging, not local routing. Use `source_name` to detect or filter such loops on
+the receiving side. For secure remote access see [HiveMind Agents](hivemind-agents.md).
+
+Multi-turn continuity on the OVOS side (`get_response`, common query follow-ups, context) comes
+from the target core's own `SessionManager`, which every bus message carrying a `Session` keeps
+current — this engine needs no history cache of its own for that. A [memory plugin](persona-memory.md)
+layered on top of this engine only affects the LLM-facing `messages` list; it does not drive
+OVOS-side skill or session continuity.
 
 ---
 

@@ -45,6 +45,8 @@ Two rules hold for every backend in this package:
 
 The short-term memory previously hard-coded in `ovos-persona` is now a plugin under this interface, so all memory strategies are composable.
 
+`update_history` normalizes what it is given before storing it: a leading message left over with no matching turn is dropped, and consecutive assistant messages are merged into one, so callers do not need to pre-clean the message list themselves.
+
 ---
 
 ## Per-Session Persona Tracking
@@ -77,6 +79,8 @@ In a persona JSON or YAML file, set `memory_module` to the plugin entry point, a
 ```
 
 A persona selects exactly **one** backend, but that one may be `ovos-memory-plugin-composite`, which loads and consolidates several of the others.
+
+If a persona sets no `memory_module` at all, `ovos-persona` falls back to its own bundled backend, `ovos-agents-short-term-memory-plugin` (class `BasicShortTermMemory`). It keeps a plain verbatim window, defaulting to `max_history: 5` and `system_prompt: ""`.
 
 ---
 

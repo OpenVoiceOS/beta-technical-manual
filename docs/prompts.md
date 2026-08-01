@@ -41,7 +41,7 @@ import random
 
 class AskMeSkill(OVOSSkill):
     @intent_handler('ask_me_something.intent')
-    def handle_set_favorite(self):
+    def handle_set_favorite(self, message):
         question = random.choice(self.question_list)
         self.speak(question, expect_response=True)
 
@@ -61,7 +61,7 @@ from ovos_workshop.decorators import intent_handler
 
 class IceCreamSkill(OVOSSkill):
     @intent_handler('set.favorite.intent')
-    def handle_set_favorite(self):
+    def handle_set_favorite(self, message):
         favorite_flavor = self.get_response('what.is.your.favorite.flavor')
         self.speak_dialog('confirm.favorite.flavor', {'flavor': favorite_flavor})
 
@@ -98,7 +98,7 @@ from ovos_workshop.decorators import intent_handler
 
 class IceCreamSkill(OVOSSkill):
     @intent_handler('do.you.like.intent')
-    def handle_do_you_like(self):
+    def handle_do_you_like(self, message):
         likes_ice_cream = self.ask_yesno('do.you.like.ice.cream')
         if likes_ice_cream == 'yes':
             self.speak_dialog('does.like')
@@ -180,7 +180,7 @@ class IceCreamSkill(OVOSSkill):
         self.flavors = ['vanilla', 'chocolate', 'mint']
 
     @intent_handler('request.icecream.intent')
-    def handle_request_icecream(self):
+    def handle_request_icecream(self, message):
         self.speak_dialog('welcome')
         selection = self.ask_selection(self.flavors, 'what.flavor')
         self.speak_dialog('coming.right_up', {'flavor': selection})

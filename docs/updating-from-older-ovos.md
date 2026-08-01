@@ -76,7 +76,7 @@ before late 2024, check it against this table.
 | `messagebus.EventContainer` | `ovos_utils.events.EventContainer` |
 | `messagebus.BusService`, `.BusFeedProvider`, `.BusQuery`, `.BusFeedConsumer` | removed, no replacement |
 | `enclosure.api.EnclosureApi` | `ovos_bus_client.apis.enclosure.EnclosureApi` |
-| `enclosure.mark1.*` (Mark1 eyes/faceplate/animations) | removed, no replacement in this repo (check `ovos-PHAL-plugin-mk1`, unverified) |
+| `enclosure.mark1.*` (Mark1 eyes/faceplate/animations) | removed, no replacement in this repo. `ovos-PHAL-plugin-mk1` carries the eyes/faceplate/mouth handling instead |
 | `configuration.*` (`get_default_lang`, `find_user_config`, `read_mycroft_config`, ...) | `ovos_config.config.*` / `ovos_config.locations` / `ovos_config.locale` |
 | `fingerprinting.*` (`detect_platform`, `is_mycroft_core`, ...) | removed, no direct successor |
 | `intents.*` (`IntentQueryApi`, `IntentServiceInterface`) | `ovos_workshop.intents` |
@@ -755,10 +755,11 @@ The separate `ovos.conf` INI file controlling `base_folder`/
 `config_filename`/XDG behavior is deprecated. Those values move
 exclusively to environment variables.
 
-- Migration: replace `ovos.conf` `[core] base_folder=...` with the
-  equivalent env var override. Exact env var names were not confirmed by
-  the dossier this page is built from: see
-  [Verification gaps](#verification-gaps).
+- Migration: replace `ovos.conf` `[core] base_folder=...` /
+  `config_filename=...` / `default_config_path=...` with the env vars
+  `OVOS_CONFIG_BASE_FOLDER`, `OVOS_CONFIG_FILENAME`, and
+  `OVOS_DEFAULT_CONFIG` (all introduced in the same commit that
+  deprecated `ovos.conf`, `76d9310`, `ovos_config/meta.py`).
 - Lifecycle: active before `76d9310`. Deprecated but functional from
   `76d9310` (2024-08-16). Drop version unverified (ovos-config `76d9310`, #138).
 
@@ -1021,8 +1022,11 @@ out-of-the-box wire behavior is initially unchanged):
 - Lifecycle: active (legacy-only) before mid-2026. Deprecated but
   functional (dual-emit or `legacy_namespace`-gated) from mid-2026
   onward. Hard drop only confirmed for `ovos-bus-client`'s own bridge
-  (`f1a481d`, 2026-08-01): whether `legacy_namespace` itself has since
-  flipped its default to `False` in `ovos-core` is unverified.
+  (`f1a481d`, 2026-08-01). `legacy_namespace` gating in `ovos-core`
+  itself (`f4c00d90b2`/`f9862a760e`, "gate bus topics by
+  legacy_namespace") lives only on unmerged feature branches as of this
+  sweep, not on `dev`: the default has not flipped because the flag has
+  not shipped to a stable release yet.
 
 ### `mycroft-bus-client` package retirement (package-level, not wire-level)
 
@@ -1076,43 +1080,32 @@ history this page is built from. Treat the corresponding table cells as
 "unverified" and re-check against the named repository's release history
 before relying on them:
 
-- **ovos-utils**: whether `ovos_utils.enclosure.mark1.*` (Mark1 hardware
-  display code) has an actual successor in `ovos-PHAL-plugin-mk1` or a
-  similar plugin. Whether `ovos_utils.gui.GUITracker` has a real successor
-  anywhere (for example inside `ovos-gui`). The exact mycroft-core commit
-  that performed the original `mycroft.* → ovos_*` rename predates
-  `ovos-utils`'s own history and was not located. Whether
-  `network_utils.is_connected()`'s targeted `2.0.0` removal has shipped.
-- **ovos-workshop**: whether `0613836` ("refactor the old patches module")
-  removed a public symbol. Whether the 2024-10-15/2024-10-11 lang-code
-  casing commits (`5aaf424`, `6843f0f`) changed behavior for skills
-  relying on lowercase region codes.
-- **ovos-config**: exact renamed/removed symbols in the `08c95a7` Selene
-  API refactor. Exact replacement environment variable names for the
-  deprecated `ovos.conf` `base_folder`/`config_filename` settings. Exact
-  key path that STT-embedded language preferences moved to in `ede6243`.
-  Whether the `f0c5cb1` partial-path CLI parsing change can silently
-  reinterpret a previously-valid `-k` argument.
-- **ovos-core**: the exact commit that finally deleted the
-  `mycroft-speech-client`/`mycroft-messagebus` legacy console-script entry
-  points (confirmed gone after `2a10fa9c1c`, but the specific removal
-  commit was not pinned). Whether `legacy_namespace` has since flipped its
-  default to `False`. The precise version at which `ready_setting`
-  (`ee97d74aba`) was fully removed rather than merely deprecated.
-- **ovos-plugin-manager**: pre-2022 function-name renames on
-  text-transformer `find_*`/`load_*` helpers (`33771d3`): direction
-  confirmed, literal old-name-to-new-name mapping not re-derived. Whether
-  the solver-family removal (deprecated in `53564ce`, target "next major")
-  has actually shipped yet.
-- **ovos-media**: whether a config toggle exists to restore
-  pre-`1306eb7`/`e07d655` "OCP ignores external MPRIS players" behavior.
-  Full symbol-level API diff of the `d249e89` `player.py` rewrite beyond
-  what the `f1d152c` regression fix incidentally revealed. The exact point
-  at which `ovos-media` became production-recommended over `ovos-audio`'s
-  classic `AudioService`.
+- **ovos-utils**: whether `ovos_utils.gui.GUITracker` has a real successor
+  anywhere. A search of `ovos-gui`'s current history found no
+  `GUITracker`/`GUIPlaybackStatus` symbol anywhere in that repo, so this
+  still reads as "no successor," but a positive absence is weaker proof
+  than a located replacement. The exact mycroft-core commit that performed
+  the original `mycroft.* → ovos_*` rename predates `ovos-utils`'s own
+  history: it requires the `mycroft-core` repository's own history, which
+  is not cloned in this workspace.
+- **ovos-config**: exact key path that STT-embedded language preferences
+  moved to in `ede6243`. The commit's own `autoconfigure` CLI command
+  writes the standardized language tag to the top-level `lang` config key
+  (config root, not nested under `stt`), which is consistent with the PR's
+  "split prefs from stt into base config" description, but no dedicated
+  migration diff moving an existing nested key was found to confirm this
+  covers every prior STT-embedded language setting.
+- **ovos-media**: full symbol-level API diff of the `d249e89` `player.py`
+  rewrite beyond what the `f1d152c` regression fix incidentally revealed.
+  The exact point at which `ovos-media` became production-recommended over
+  `ovos-audio`'s classic `AudioService`: that call is a project
+  announcement/roadmap decision, not a single commit, so it requires the
+  release notes and blog history rather than `git log`.
 - **ovos-audio**: the exact mycroft-core commit/version that `047a0a1`
-  extracted `ovos_audio` from (no shared ancestor commit exists in this
-  repo's history).
+  extracted `ovos_audio` from. `047a0a1` is the first substantive commit
+  in `ovos-audio`'s own history (no shared ancestor commit exists in this
+  repo), so pinning the mycroft-core side requires the `mycroft-core`
+  repository's own history, which is not cloned in this workspace.
 - **ovos-bus-client**: no `mycroft.conf` semantics change was found to
   originate in this repo (it does not own config parsing). No explicit
   "MycroftSkill → OVOSSkill" commit exists in this repo either (that

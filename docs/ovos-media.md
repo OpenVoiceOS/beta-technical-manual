@@ -263,6 +263,8 @@ the player by its entry-point name.
 | [`ovos-media-plugin-spotify`](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify) | audio | Spotify Connect |
 | [`ovos-media-plugin-chromecast`](https://github.com/OpenVoiceOS/ovos-media-plugin-chromecast) | audio, video | Cast to a Chromecast device |
 | [`ovos-media-plugin-qt5`](https://github.com/OpenVoiceOS/ovos-media-plugin-qt5) | audio, video, web | Hand off to the [GUI](gui-service.md) player. **Legacy**, depends on the deprecated [ovos-shell](ovos-shell.md) (see [GUI status](gui-status.md)) |
+| `ovos-media-plugin-mass` | audio | Hands playback off to a [Music Assistant](https://music-assistant.io/) server. Does not implement `next()`/`previous()` through the legacy `AudioBackend` interface — only through the Music Assistant queue API (see Known Coupling Issues below) |
+| `ovos-media-plugin-mpris` | audio, video | Drives an external MPRIS player (e.g. an already-running desktop media app) instead of playing the stream itself |
 
 ### Stream Extractor Plugins
 
@@ -342,10 +344,18 @@ dbus-send --session --dest=org.freedesktop.DBus --type=method_call --print-reply
 
 ### External Player Reflection & Takeover
 
-`OcpMprisExporter` (`ovos_media/mpris.py`) has two roles. Registering OCP itself on the
-D-Bus session bus (above) is always active once `enable_mpris` is set. A second, opt-in
-role lets OCP *reflect and take over* other MPRIS players already running on the same
-machine (Spotify, VLC, Firefox, …):
+`OcpMprisExporter` (`ovos_media/mpris.py`) has two roles, referred to as **Role A** and
+**Role B**. Role A is registering OCP itself on the D-Bus session bus (above) — always active
+once `enable_mpris` is set, and it is what lets an MPRIS client like `playerctl` control OCP:
+
+```bash
+playerctl --player=org.mpris.MediaPlayer2.OCP play-pause
+playerctl --player=org.mpris.MediaPlayer2.OCP next
+playerctl --player=org.mpris.MediaPlayer2.OCP metadata
+```
+
+Role B is the opt-in second role, and lets OCP *reflect and take over* other MPRIS players
+already running on the same machine (Spotify, VLC, Firefox, …):
 
 ```json
 {
@@ -377,6 +387,7 @@ players interchangeably.
     "enable_mpris": false,       // expose OVOS playback on the MPRIS D-Bus interface
     "mpris_poll_interval": 1,    // seconds between MPRIS state polls (when enable_mpris)
     "ignored_players": [],       // MPRIS player names OVOS should not track/adopt
+    "dbus_type": "session",      // "session" (per-user, default) or "system" D-Bus
 
     // message sources trusted to bypass per-session validation
     "native_sources": ["debug_cli", "audio"],
@@ -388,16 +399,29 @@ players interchangeably.
     "preferred_video_services": ["vlc", "mplayer"],
     "preferred_web_services": [],
 
+    // force playback through the audio players even for video/web media, e.g. on headless setups
+    "playback_mode": "FORCE_AUDIO",
+
     "audio_players": {
       "vlc": { "module": "ovos-media-audio-plugin-vlc", "aliases": ["VLC"], "active": true },
       "cli": { "module": "ovos-media-audio-plugin-cli", "aliases": ["Command Line"], "active": true }
     },
     "video_players": {
       "vlc": { "module": "ovos-media-video-plugin-vlc", "aliases": ["VLC"], "active": true }
+    },
+    "web_players": {
+      "mpv": { "module": "ovos-media-web-plugin-mpv", "aliases": ["mpv"], "active": true }
     }
   }
 }
 ```
+
+`dbus_type` picks which D-Bus the MPRIS integration registers and scans on: the per-user
+**session** bus (default) or the system-wide **system** bus. `playback_mode` forces media that
+would normally need a video or web player through the audio players instead (`PlaybackMode`
+values such as `FORCE_AUDIO`) — useful on a headless/speaker-only device that has no screen to
+show video on. `web_players` configures `opm.media.web` backends the same way `audio_players`
+and `video_players` do, keyed by local name with a `module` entry-point name.
 
 > The `gui` / `browser` module names shown in earlier drafts are not real
 > backends. The bundled players are `vlc`, `mplayer`, `cli`, `spotify`,
@@ -429,6 +453,19 @@ Beyond the per-player `ovos.audio.service.*` / `ovos.video.service.*` API, the
 | `ovos.common_play.ping` | Liveness probe. Lets callers detect a running `ovos-media` |
 | `ovos.common_play.search.start` / `ovos.common_play.search.end` | Bracket an in-progress OCP search |
 | `opm.audio.query` | OPM plugin-discovery compatibility with the legacy `PlaybackService` handler |
+| `ovos.common_play.seek` | Seek within the current track |
+| `ovos.common_play.playlist.set` / `.queue` / `.clear` | Replace, append to, or empty the playlist |
+| `ovos.common_play.shuffle.toggle` / `.set` / `.unset` | Toggle or explicitly set/unset shuffle mode |
+| `ovos.common_play.repeat.toggle` / `.set` / `.unset` | Toggle or explicitly set/unset repeat mode |
+| `ovos.common_play.duck` / `.unduck` | Duck/restore volume for a competing sound (e.g. TTS) |
+| `ovos.common_play.cork` / `.uncork` | Pause/resume playback for a competing sound, without ducking |
+| `ovos.common_play.like` / `.unlike` | Mark or unmark the current track as a liked song |
+| `ovos.common_play.status` | Report full current player status |
+| `SEI.get` | Report the stream extractor identifiers `ovos-media` supports |
+
+These live alongside the legacy ducking/cork aliases kept for backward compatibility. The full
+~30-entry `OCPMediaPlayer` handler list, including exact legacy alias names, is in
+`ovos_media/player.py`.
 
 ---
 
@@ -470,6 +507,30 @@ registers `@ocp_search()` to expose liked songs as a search result. There is no
 
 The Music Assistant audio backend does not implement `next()` or `previous()` through the legacy
 `AudioBackend` interface. Only through the MA queue API.
+
+---
+
+## HiveMind: multi-session gating
+
+On a server that fans playback out to several [HiveMind](hivemind-agents.md) satellites, not
+every bus handler should act on behalf of every session. `ovos_media/utils.py`'s
+`require_default_session()` gates the subset of handlers that only make sense for the local
+("default") session — for example, the legacy `mycroft.audio.service.*` handlers a single
+physical machine's audio hardware would receive — while the OCP-native `ovos.common_play.*`
+handlers stay session-aware and can target whichever satellite's player state they're addressed
+to.
+
+The `media.validate_source` config flag (see [Configuration](#configuration) above) controls how
+strict this gating is:
+
+- `true` (default): the daemon only acts on messages carrying the local "default" session.
+  Correct for a single-device install where `ovos-media` and the microphone are the same box.
+- `false`: needed on a server fronting multiple HiveMind satellites, so a satellite's own session
+  can drive playback remotely instead of every command being silently scoped to "default".
+
+Get this wrong on a server/satellite topology and playback commands from a satellite either get
+ignored (`validate_source: true` on a multi-satellite server) or, worse, target the wrong
+device's player state.
 
 ---
 

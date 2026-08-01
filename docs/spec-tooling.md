@@ -63,6 +63,11 @@ Lint a skill's locale folder against the grammar and format specs:
 ovos-spec-lint my-skill/locale
 ```
 
+`ovos-spec-lint` also takes a `--spec-version` flag for linting a skill that has not fully
+migrated yet: `--spec-version 1` (the default) treats a `.blacklist` violation as an error;
+`--spec-version 0` demotes the same violation to a warning, so a repo can adopt the
+[`.blacklist` file](resource-files.md) incrementally instead of all at once.
+
 The session carrier, the keyword-intent builder, and the canonical topic
 vocabulary follow the same pattern: plain data plus stdlib-only helpers.
 
@@ -150,3 +155,6 @@ This is what makes spec adoption gradual rather than a breaking change. The full
 mechanism, and how to turn the bridges off once a deployment is fully
 modernised, is documented under
 [**messagebus Service → Namespace migration**](bus-service.md#namespace-migration).
+
+`ovos-spec-tools` owns the **vocabulary** of the mapping: `SpecMessage` and `MIGRATION_MAP`. The
+runtime bridge itself, the dual-emit and receive-side de-duplication, lives in `ovos-bus-client`.

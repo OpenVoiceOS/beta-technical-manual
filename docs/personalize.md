@@ -23,6 +23,13 @@ allowed (JSONC). Open it with any text editor, for example:
 nano ~/.config/mycroft/mycroft.conf
 ```
 
+!!! tip "Prefer a browser over a terminal?"
+    RaspOVOS images ship two web editors: `ovos-yaml-editor` edits this same
+    configuration in the browser (port 9210), and `ovos-skill-config-tool` edits
+    individual skill settings (port 8000). Open `http://<device-ip>:9210` from any
+    computer on your network. On other installs you can add them with pip. See
+    [RaspOVOS](install-raspovos.md) for details.
+
 Before restarting, double-check the file still parses. A stray missing comma or bracket will
 stop it from loading. Because `mycroft.conf` allows `//` comments, plain `json.tool` will
 reject it even when it's fine. Use the same comment-aware loader OVOS itself uses. This runs
@@ -56,8 +63,10 @@ Full walkthrough, plugin choices, and tuning: [Wake Word Plugins](wake-word-plug
 
 Install the plugin's package first. `phoonnx` ships the `ovos-tts-plugin-phoonnx` plugin,
 so without it OVOS has nothing to load and the voice won't actually change. Activate the
-same Python environment OVOS runs in *before* running this, or the plugin installs
-somewhere OVOS never looks:
+same Python [virtual environment](glossary.md) OVOS runs in
+*before* running this, or the plugin installs somewhere OVOS never looks. On raspOVOS
+images and ovos-installer setups this is the environment the installer created, for
+example `source ~/.venvs/ovos/bin/activate`:
 
 ```bash
 pip install phoonnx
@@ -88,13 +97,13 @@ walks through picking a voice that stays clear at a reduced rate.
 
 ```json
 {
-  "lang": "de-de"
+  "lang": "de-DE"
 }
 ```
 
 This one line is enough on its own. STT, TTS, and every language-aware plugin follow the
 global `lang` automatically. Want the *recommended* plugins/voices for that language instead
-of your current ones? Run `ovos-config autoconfigure -l de-de --offline` afterwards. Full
+of your current ones? Run `ovos-config autoconfigure -l de-DE --offline` afterwards. Full
 picture, supported-language table, and gaps to watch for: [Language Support](lang-support.md).
 
 ## Related pages

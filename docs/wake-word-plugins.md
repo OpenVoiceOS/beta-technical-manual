@@ -84,6 +84,85 @@ The `hotwords` section in your `mycroft.conf` allows you to configure the wake w
 
 > See the full docs for the [listener service](speech-service.md)
 
+### Hotword types and per-hotword keys
+
+Each entry under `hotwords` is one of four types, set by a boolean key. `active: null` (the
+default) auto-enables the main wake word (`listener.wake_word`) and the stand-up word
+(`listener.stand_up_word`); every other hotword stays disabled until you set `active: true`.
+
+| Type | Config key | Effect when detected |
+|---|---|---|
+| Listen word | `listen: true`, or matches `listener.wake_word` | Starts the VAD/STT recording pipeline |
+| Wakeup word | `wakeup: true`, or matches `listener.stand_up_word` | Exits sleep mode |
+| Stop word | `stopword: true` | Ends free `RECORDING` mode |
+| Plain hotword | none of the above, `active: true` | Plays a sound and/or emits a bus event, without starting STT |
+
+Beyond `module`, `active`, `listen`, `wakeup`, `stopword`, and `sensitivity`/`trigger_level`,
+each hotword accepts:
+
+| Key | Type | Description |
+|---|---|---|
+| `sound` | `str` \| `list` | Sound file played on detection. |
+| `bus_event` | `str` | Bus message type emitted on detection. |
+| `utterance` | `str` | Hard-coded utterance text, bypassing STT entirely for this hotword. |
+| `stt_lang` | `str` | Overrides the STT language for the command that follows this hotword. |
+
+```jsonc
+"hotwords": {
+  "hey_mycroft": {
+    "module": "ovos-ww-plugin-precise-lite",
+    "listen": true,
+    "sound": "snd/start_listening.wav",
+    "active": null
+  },
+  "wake_up": {
+    "module": "ovos-ww-plugin-vosk",
+    "wakeup": true,
+    "active": null
+  },
+  "stop_recording": {
+    "module": "ovos-ww-plugin-vosk",
+    "stopword": true,
+    "active": true
+  },
+  "hey_computer": {
+    "module": "ovos-ww-plugin-precise-lite",
+    "bus_event": "my.custom.event",
+    "sound": "snd/ding.wav",
+    "active": true
+  },
+  "hola_mycroft": {
+    "module": "ovos-ww-plugin-precise-lite",
+    "listen": true,
+    "stt_lang": "es-es",
+    "active": true
+  }
+}
+```
+
+### Wake word verifiers
+
+After a wake word engine fires, optional *verifier* plugins can inspect the raw wake-word
+audio and suppress false detections before any callback runs. Verifiers implement the
+`HotWordVerifier` interface (from `ovos-plugin-manager`) and are configured under
+`listener.ww_verifiers`:
+
+```jsonc
+"listener": {
+  "ww_verifiers": {
+    "ovos-ww-verifier-silero": {"threshold": 0.1}
+  }
+}
+```
+
+Verifiers fail open: if a verifier plugin raises an unexpected exception, the exception is
+logged and the detection is **not** suppressed. Only an explicit `False` return from
+`HotWordVerifier.verify()` discards the wake. Disable a verifier without removing it from
+config with `"enabled": false`.
+
+!!! warning "Double VAD with `ovos-ww-verifier-silero`"
+    Enabling `ovos-ww-verifier-silero` together with `"vad_pre_wake_enabled": true` applies
+    Silero VAD twice on the same audio. Use one or the other.
 
 ## Tips and Caveats
 

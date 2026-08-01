@@ -589,6 +589,25 @@ Fri 17 Jan 11:42:48 WET 2025 - ALSA default card set to: 3
     - Record a short test file with `arecord -f test.wav`.
     - Play it back with `aplay test.wav`.
 
+### Re-triggering auto-detection without a reboot
+
+If the wrong output device got picked, or a HAT wasn't detected, you don't need to reboot to
+re-run detection. Two separate systemd services do it:
+
+- `sudo systemctl restart autoconfigure_soundcard.service`: re-picks the default output.
+- `sudo systemctl restart i2csound.service`: re-detects an i2c sound HAT (Respeaker, Mark 2's
+  SJ201, etc.).
+
+These are the same services the boot-time helper scripts run automatically. Restarting them by
+hand re-runs the same detection logic without a full reboot.
+
+raspOVOS also ships a handful of non-interactive `/usr/libexec` helper scripts, invoked by
+systemd rather than typed at a prompt: `ovos-i2csound` and `soundcard-autoconfigure` (the
+scripts behind the two services above), `usb-autovolume`, the `ovos-systemd-*` service
+launchers, and `ovos-reboot-signal`/`ovos-shutdown-signal` (bus signal emitters for reboot and
+shutdown). You won't normally run these directly, but their names are worth knowing when reading
+`ologs` output during audio troubleshooting.
+
 ---
 
 ## STT tips and tricks

@@ -95,6 +95,13 @@ def test_hello_matches_and_speaks():
 `skill_ids` restricts which skill(s) `ovoscope` loads for the test, so you're only ever testing
 your own skill, not every skill installed on the machine.
 
+!!! tip "Skip the boilerplate with the `minicroft` fixture"
+    Once `ovoscope` is installed, it auto-registers a class-scoped `minicroft` pytest fixture
+    through the `pytest11` entry point. Write your test as a normal `test_*(minicroft)` function
+    and it hands you a ready `MiniCroft` instance, with no `setUp`/`tearDown` boilerplate to write.
+    The example above builds everything by hand so you can see what is actually happening; once
+    you understand it, the fixture is the leaner way to write most tests.
+
 ## Step 3: Run it
 
 ```bash

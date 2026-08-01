@@ -154,6 +154,33 @@ itself, a separate concern from the `speech_begin`/`silence_end` timing above.
 
 ---
 
+## 7. Logging
+
+```jsonc
+"logging": {
+  "log_level": "DEBUG",
+  "logs": {
+    "path": "/opt/ovos/logs/",
+    "max_bytes": 50000000,
+    "backup_count": 6
+  },
+  "audio": {
+    "log_level": "INFO",
+    "logs": { "path": "/var/log/ovos/" }
+  }
+}
+```
+
+| Key | Default | Description |
+|---|---|---|
+| `logging.log_level` | `"INFO"` | Global log level. |
+| `logging.logs.path` | `"stdout"` | Log directory. Set to `"stdout"` to log to console only. |
+| `logging.logs.max_bytes` | `50000000` | Max log file size, in bytes, before rotation. |
+| `logging.logs.backup_count` | `3` | Number of rotated log files to keep. |
+| `logging.<service_name>` | — | A section named after a service (for example `logging.audio`) overrides the global `log_level` and `logs` settings for that service only. |
+
+---
+
 ## All Keys (Generated)
 
 !!! note "Blank Description cells"
@@ -355,7 +382,9 @@ itself, a separate concern from the `speech_begin`/`silence_end` timing above.
 | `session.ttl` | `-1` |  |
 | `stt.module` | `"ovos-stt-plugin-server"` | Stock default is `ovos-stt-plugin-server`, which routes voice audio to a public community server for speech-to-text. See [Privacy & Security](privacy-security.md). |
 | `stt.fallback_module` | `""` |  |
-| `tts.pulse_duck` | `false` |  |
+| `tts.pulse_duck` | `false` | If true, ducking uses OS-level PulseAudio instead of `ovos.common_play.duck`/`.unduck` bus events. |
+| `tts.ocp_cork` | `false` | If true, `PlaybackThread` emits `ovos.common_play.cork` before speech and `ovos.common_play.uncork` after. |
+| `tts.ocp_duck` | `false` | If true, `PlaybackThread` emits `ovos.common_play.duck` before speech and `ovos.common_play.unduck` after. |
 | `tts.module` | `"ovos-tts-plugin-server"` | Stock default is `ovos-tts-plugin-server`, which routes text to a public community server for text-to-speech. See [Privacy & Security](privacy-security.md). |
 | `tts.fallback_module` | `""` |  |
 | `tts.ovos-tts-plugin-mimic.voice` | `"ap"` |  |

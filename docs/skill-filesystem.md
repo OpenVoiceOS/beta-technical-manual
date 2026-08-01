@@ -142,7 +142,7 @@ The absolute path to the skill's installed root directory (e.g. `~/.local/share/
 
 ```python
 import json
-from ovos_workshop.skills.ovos import OVOSSkill
+from ovos_workshop.skills import OVOSSkill
 from ovos_workshop.decorators import intent_handler
 
 

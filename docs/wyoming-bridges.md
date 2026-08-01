@@ -352,7 +352,7 @@ Configuration is read entirely from `mycroft.conf`:
       "module": "ovos-ww-plugin-vosk",
       "rule": "fuzzy",
       "samples": ["wake up"],
-      "lang": "en-us",
+      "lang": "en-US",
       "wakeup": true
     }
   }

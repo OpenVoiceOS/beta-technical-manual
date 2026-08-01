@@ -34,7 +34,7 @@ To switch to a German voice, you only need:
 
 ```json
 {
-  "lang": "de-de"
+  "lang": "de-DE"
 }
 ```
 
@@ -88,10 +88,10 @@ tts_module = config["tts"]["module"]          # nested access
 
 # Persist a change to the user config file on disk (merges into ~/.config/mycroft/mycroft.conf)
 from ovos_config.config import update_mycroft_config
-update_mycroft_config({"lang": "de-de"})
+update_mycroft_config({"lang": "de-DE"})
 
 # Pass a bus to also emit configuration.patch after writing, so other processes pick it up
-update_mycroft_config({"lang": "de-de"}, bus=bus)
+update_mycroft_config({"lang": "de-DE"}, bus=bus)
 
 ```
 

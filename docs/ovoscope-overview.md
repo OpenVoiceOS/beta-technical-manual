@@ -72,6 +72,35 @@ For full sequence assertions — message types, ordering, routing, and session s
 `expected_messages` and call `test.execute()` directly (see the
 [usage guide](https://github.com/OpenVoiceOS/ovoscope/blob/dev/docs/usage-guide.md)).
 
+`ovoscope` also ships ready-made pipeline-stage lists, so you do not have to hand-write
+`session.pipeline = [...]` for common cases: `ADAPT_PIPELINE`, `PADATIOUS_PIPELINE`,
+`FALLBACK_PIPELINE`, `PERSONA_PIPELINE`, and `DEFAULT_TEST_PIPELINE` (a deterministic mix that
+deliberately excludes persona/Ollama/OCP/m2v plugins). Import them from `ovoscope` and assign
+to `session.pipeline`. See [end2end-test.md](https://github.com/OpenVoiceOS/ovoscope/blob/dev/docs/end2end-test.md)
+for the full list.
+
+### Testing skills still in development, and non-utterance triggers
+
+Pass `extra_skills={skill_id: SkillClass}` to `MiniCroft` to load a skill class directly, with no
+PyPI entry point required. This is useful for testing a skill before it is packaged.
+
+To drive a non-utterance handler — a GUI event, a timer firing, an API call — call
+`MiniCroft.inject_message()` instead of sending an utterance through the pipeline.
+
+---
+
+## What `ovoscope` does not do
+
+`ovoscope` tests at the `recognizer_loop:utterance` level and in-process. It does not:
+
+- open a real WebSocket bus
+- run the PHAL or audio services
+- render the GUI
+- perform real TTS
+
+Keep this in mind when a test needs one of these — it needs the real stack (or a dedicated
+harness), not `ovoscope`.
+
 ---
 
 ## The harnesses (full reference in the repo)

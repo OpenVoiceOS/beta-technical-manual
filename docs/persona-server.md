@@ -78,6 +78,9 @@ Solvers are tried in order. The first that returns an answer wins. Some solvers 
 | `/ollama/api/chat` | POST | Ollama chat |
 | `/ollama/api/generate` | POST | Ollama generate |
 | `/ollama/api/tags` | GET | Ollama model listing |
+| `/ollama/api/show` | POST | Ollama model details |
+| `/ollama/api/ps` | GET | Ollama running-model listing (stub) |
+| `/ollama/api/pull`, `/ollama/api/push` | POST | Ollama pull/push (stubs; there is nothing to pull or push) |
 | `/ollama/api/embed`, `/ollama/api/embeddings` | POST | Ollama embeddings |
 | `/anthropic/v1/...` | POST/GET | Anthropic-compatible messages API |
 | `/gemini/v1beta/models/...` | POST/GET | Gemini-compatible API |
@@ -95,7 +98,9 @@ The legacy unprefixed paths `/v1/...` and `/api/...` (OpenAI and Ollama respecti
 mounted as deprecated aliases of `/openai/v1/...` and `/ollama/api/...`. Responses on these
 legacy paths carry `Deprecation` and `Link` headers pointing at the canonical path.
 
-There is no authentication. Put the server behind a reverse proxy if it is exposed.
+There is no authentication. Put the server behind a reverse proxy if it is exposed. Every vendor router accepts the usual auth header for that vendor (`Authorization`, `x-api-key`, or a `?key=` query param) but silently ignores it — an invalid or missing key does not get rejected with a 401, it is simply not checked.
+
+Every router also accepts a `model` field in the request body but ignores its value: the loaded persona's own `name` is always the model identifier returned in the response, regardless of what the client asked for. The Bedrock router also picks its request/response shape from the `model_id` prefix (`anthropic.claude`, `meta.llama`, `amazon.titan`, `cohere.command`), so the same server endpoint speaks a different wire format depending on that string.
 
 ### Memory, RAG & embeddings
 
@@ -119,6 +124,26 @@ configured via environment variables:
 | `EMBEDDINGS_MODEL` / `EMBEDDINGS_URL` / `EMBEDDINGS_KEY` | unset | Model + remote embeddings endpoint/key |
 | `FILE_STORAGE_PATH` | `~/.cache/ovos-persona-server/files` | Where uploaded files are stored |
 | `FILE_STORAGE_STRATEGY` | `disk` | `disk`, `database`, or `both` |
+
+All three embeddings endpoints (`/openai/v1/embeddings`, `/ollama/api/embed(dings)`, `/cohere/v1/embed`) share one detection mechanism: the server looks through the persona's loaded handlers for the first one that implements `get_embeddings()`. If none do, every embeddings endpoint returns `501` with `{"detail": "No embeddings solver configured for this persona."}`.
+
+---
+
+## Streaming
+
+Set `stream=true` (where the vendor API supports it) to get incremental output. Each router speaks the wire format its vendor expects:
+
+| Vendor | Format |
+|---|---|
+| OpenAI | SSE, terminated by `data: [DONE]` |
+| Ollama | newline-delimited JSON (NDJSON) |
+| Anthropic | SSE with named events (`message_start`, `content_block_delta`, ...) |
+| Gemini | SSE of full-response objects |
+| Cohere | NDJSON with an `event_type` field per line |
+| HuggingFace TGI | SSE token events |
+| AWS Bedrock | SSE with `outputText` events |
+
+Tool calling is only supported with `stream=false`, regardless of vendor.
 
 ---
 

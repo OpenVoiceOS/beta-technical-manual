@@ -117,6 +117,15 @@ journalctl --user -u ovos-skills.service -f
     `loginctl enable-linger ovos` if you keep user units but want them running without an
     active login session.
 
+!!! warning "`PIDLock` kills the previous process silently"
+    Most OVOS services use `PIDLock` (from `ovos-utils`) to guard against two copies running
+    under the same name. On construction, `PIDLock` kills any existing process holding that
+    name's PID file, then writes its own PID. There is no warning or confirmation prompt. If
+    you start a service by hand while a systemd-managed copy is already running under the
+    same name, `PIDLock` kills the systemd-managed one. The PID file is deleted on exit via
+    `SIGINT`/`SIGTERM` handlers, so a process killed harder than that (`SIGKILL`, power loss)
+    can leave a stale PID file behind that the next start-up will happily reuse.
+
 ---
 
 ## Knowing when the assistant is actually ready

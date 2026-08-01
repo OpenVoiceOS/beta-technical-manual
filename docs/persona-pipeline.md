@@ -249,7 +249,16 @@ Each persona defines a `handlers` list (the older key `solvers` is still accepte
 
 `"ovos-persona-pipeline-plugin-high"` supports a set of core voice intents to manage persona interactions.
 
-These intents control the Persona Service directly, without extra setup. The backing intent/vocab files are `list_personas.intent`, `active_persona.intent`, `summon.intent` (activate), `ask.intent` (single-shot), and `Release.voc` (stop).
+These intents control the Persona Service directly, without extra setup. The backing intent/vocab files are `list_personas.intent`, `active_persona.intent`, `summon.intent` (activate), `ask.intent` (single-shot), and `Release.voc` (stop). Each intent file maps to a bus event:
+
+| File | Bus event |
+|---|---|
+| `summon.intent` | `persona:summon` |
+| `ask.intent` | `persona:query` |
+| `list_personas.intent` | `persona:list` |
+| `active_persona.intent` | `persona:check` |
+
+A spoken persona name is matched against the registered personas by fuzzy string matching (`PARTIAL_TOKEN_SET_RATIO`, minimum score `0.7`), so close matches like "chat gpt" resolve to a persona named "ChatGPT".
 
 ### **List Personas**
 
@@ -294,6 +303,24 @@ Enables users to query a persona directly without entering an interactive sessio
 - "Shut up"
 
 Releasing a persona (via the `Release.voc` keyword match) ends the active session. The service marks the session inactive, so any in-flight streaming response stops and subsequent utterances flow back through the normal pipeline. Persona uses `skill_id` `persona.openvoiceos`.
+
+---
+
+## Bus Events
+
+The Persona Service listens for these bus events:
+
+| Event | Purpose |
+|---|---|
+| `persona:query` | Ask the active (or a named) persona a single-shot question |
+| `persona:summon` | Activate a persona for the session |
+| `persona:list` | List available personas |
+| `persona:check` | Report which persona is active |
+| `persona:release` | Deactivate the active persona |
+| `recognizer_loop:utterance` | Utterance routed in from the pipeline while a persona is active |
+| `speak` | Persona response delivered back to the user |
+
+Responses use these dialog keys: `activated_persona`, `release_persona`, `active_persona`, `no_active_persona`, `unknown_persona`, `no_personas`, `list_personas`, `persona_error`.
 
 ---
 

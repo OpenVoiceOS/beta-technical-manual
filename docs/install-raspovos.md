@@ -27,6 +27,11 @@ This tutorial is designed for users new to Raspberry Pi and raspOVOS. Follow the
 
 ### Picking a plugin combo for your Pi tier
 
+!!! tip "You can skip this section on a first read"
+    The image ships with working defaults for your Pi. Come back here later if you want
+    to swap the speech engines. The config blocks below are optional tuning, not setup
+    steps.
+
 The Pi model above sets the ceiling on what you can run comfortably. As a starting point per
 tier (see [STT Plugins](stt-plugins.md), [TTS Plugins](tts-plugins.md),
 [Wake Word Plugins](wake-word-plugins.md) and [VAD Plugins](vad-plugins.md) for the full rosters):
@@ -57,12 +62,14 @@ tier (see [STT Plugins](stt-plugins.md), [TTS Plugins](tts-plugins.md),
   See [STT server](stt-server.md) if you want to self-host that server instead of using a
   public one.
 
-- **Pi 4:** a comfortable middle ground for local, on-device models. Examples:
-  [`ovos-stt-plugin-onnx-asr`](stt-plugins.md#ovos-stt-plugin-onnx-asr) with a small,
-  `int8`-quantized model, and [`ovos-tts-plugin-phoonnx`](tts-plugins.md#ovos-tts-plugin-phoonnx).
+- **Pi 4:** a comfortable middle ground for local, on-device models. The `hybrid` and `offline`
+  raspOVOS images actually ship [`ovos-tts-plugin-piper`](tts-plugins.md#ovos-tts-plugin-piper)
+  as the default TTS for this tier, and this is what the config below uses. An optional swap is
+  [`ovos-tts-plugin-phoonnx`](tts-plugins.md#ovos-tts-plugin-phoonnx), which is not what ships by
+  default but is a valid alternative if you install it yourself.
 
   ```jsonc
-  // ~/.config/mycroft/mycroft.conf — Pi 4-class tier: local ONNX STT/TTS
+  // ~/.config/mycroft/mycroft.conf — Pi 4-class tier: local ONNX STT, shipped Piper TTS
   {
     "stt": {
       "module": "ovos-stt-plugin-onnx-asr",
@@ -72,7 +79,7 @@ tier (see [STT Plugins](stt-plugins.md), [TTS Plugins](tts-plugins.md),
       }
     },
     "tts": {
-      "module": "ovos-tts-plugin-phoonnx"
+      "module": "ovos-tts-plugin-piper"
     },
     "listener": {
       "VAD": {
@@ -88,20 +95,23 @@ tier (see [STT Plugins](stt-plugins.md), [TTS Plugins](tts-plugins.md),
   ```
 
 - **Pi 5:** the offline STT performance improvement noted above gives you the most headroom for
-  larger local models, including Whisper-class STT, if you want to stay fully offline.
+  larger local models, including Whisper-class STT, if you want to stay fully offline. The
+  `offline` raspOVOS image actually ships
+  [`ovos-stt-plugin-citrinet`](stt-plugins.md#ovos-stt-plugin-citrinet) as the default STT (with
+  `ovos-stt-plugin-fasterwhisper` shipped only for a few languages), and
+  [`ovos-tts-plugin-piper`](tts-plugins.md#ovos-tts-plugin-piper) as the default TTS. The config
+  below uses those shipped defaults. Optional swaps, not what ships by default, are
+  `ovos-stt-plugin-fasterwhisper` (a larger, more accurate Whisper-class model, if your language
+  isn't one of the ones it already ships for) and `ovos-tts-plugin-phoonnx`.
 
   ```jsonc
-  // ~/.config/mycroft/mycroft.conf — Pi 5-class tier: larger local STT model
+  // ~/.config/mycroft/mycroft.conf — Pi 5-class tier: shipped Citrinet STT, Piper TTS
   {
     "stt": {
-      "module": "ovos-stt-plugin-fasterwhisper",
-      "ovos-stt-plugin-fasterwhisper": {
-        "model": "large-v3",
-        "compute_type": "int8"
-      }
+      "module": "ovos-stt-plugin-citrinet"
     },
     "tts": {
-      "module": "ovos-tts-plugin-phoonnx"
+      "module": "ovos-tts-plugin-piper"
     },
     "listener": {
       "VAD": {
@@ -115,6 +125,14 @@ tier (see [STT Plugins](stt-plugins.md), [TTS Plugins](tts-plugins.md),
     }
   }
   ```
+
+!!! note "What each variant actually ships"
+    These are starting-point configs, not a description of the exact image running on your
+    Pi. The `hybrid`/`offline` raspOVOS images ship `ovos-tts-plugin-piper` for TTS, and the
+    `offline` image ships `ovos-stt-plugin-citrinet` for STT (`ovos-stt-plugin-fasterwhisper`
+    only for a handful of languages). The plugins above are all valid choices you can opt into,
+    but if you expect the running image to already match one of these snippets exactly, check
+    what actually shipped first.
 
 !!! tip "How to apply these settings"
     To apply these settings, see [Make It Yours](personalize.md) for where `mycroft.conf`
@@ -193,6 +211,11 @@ A Pi 3 user should pick `lite`. A Pi 5 user who wants to stay fully offline shou
         - **Keyboard Layout:** Configure the correct layout for your region.
 
    **Important:** **Do NOT change the default username** (`ovos`), as it is required for the system to function properly.
+
+   **If you skip this step**, the image boots with its stock credentials: username `ovos`,
+   password `ovos`, hostname `raspOVOS`. These are published defaults, so the device is
+   reachable over SSH by anyone on the network who knows them. Set a real password here, or
+   change it at first boot, if the device will be reachable on a network you don't fully trust.
 
 ![Raspberry Pi Imager "Edit Settings" general tab: hostname, username, password, and Wi-Fi fields](https://github.com/user-attachments/assets/9509ea57-ae46-4c0b-b9e9-97935579d207)
 
@@ -322,7 +345,12 @@ time to reprint the full list.
 **Managing packages:**
 
 - `ovos-install`: install OVOS packages with the correct version constraints.
-- `ovos-update`: update all OVOS and skill packages.
+- `ovos-update`: routine, in-place update of all OVOS and skill packages, scoped to the release
+  channel recorded in `/opt/ovos/tag`. It does not change the base image. Moving to a new
+  raspOVOS release (a major image update) instead means reflashing a new image and restoring
+  your `.config/mycroft` and `.local/share/mycroft` from a backup — see the repo's
+  [update how-to](https://github.com/OpenVoiceOS/raspOVOS/blob/dev/docs/how-to/update.md) for the
+  backup/restore commands.
 - `ovos-force-reinstall`: force a full reinstall of all OVOS packages (last-resort repair).
 - `ovos-freeze`: export installed OVOS packages to `requirements.txt`.
 - `ovos-outdated`: list outdated OVOS/skill packages.
@@ -351,6 +379,7 @@ time to reprint the full list.
 - `ovos-commands`: usage examples for the installed skills.
 - `ovos-support`: compile logs into a support package to share when asking for help.
 - `ovos-help`: reprint this command list.
+- `ovos-logo`: print the raspOVOS logo.
 
 !!! note "Audio HAT setup on raspOVOS uses `ovos-i2csound`"
     On raspOVOS, an i2c sound HAT (such as a Respeaker or the Mark 2's SJ201) is detected and

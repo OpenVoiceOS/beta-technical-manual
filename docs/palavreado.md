@@ -45,6 +45,22 @@ utterance. Optional slots add to the result when present, but they are not requi
 
 Installed as a pipeline plugin (`palavreado[ovos]`), Palavreado responds to the **same `register_vocab` / `register_intent` bus events as [Adapt](adapt-pipeline.md)**. Swapping it in requires zero skill changes. Your `.voc` files keep working. See [Pipelines Overview](pipelines-overview.md) for how matchers are ordered and configured.
 
+Like the other confidence-tier pipeline plugins, it fires at three thresholds:
+
+| Method | Fires when | Default threshold |
+|---|---|---|
+| `match_high` | `conf >= conf_high` | 0.65 |
+| `match_medium` | `conf >= conf_med` | 0.45 |
+| `match_low` | `conf >= conf_low` | 0.25 |
+
+Set `conf_high`, `conf_med`, `conf_low`, and `max_words` under `mycroft.conf`'s `"intents.palavreado"` section to tune these.
+
+!!! warning "Adapt compatibility gap: `at_least_one` groups"
+    Palavreado only partially supports Adapt's `at_least_one` requirement groups: it treats them
+    as optional rather than enforcing that at least one member matches. A skill that relies on
+    strict `at_least_one` enforcement may match differently under Palavreado than under Adapt —
+    check this before swapping it in for a skill that uses `at_least_one`.
+
 !!! tip "When to choose Palavreado"
     Use it as a lighter, simpler stand-in for Adapt when you want keyword matching without
     Adapt's full rule engine. For example-based (whole-sentence) matching, use

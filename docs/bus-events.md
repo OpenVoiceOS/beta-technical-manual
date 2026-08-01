@@ -181,7 +181,7 @@ directly.
 |---|---|---|
 | `recognizer_loop:utterance` | `ovos.utterance.handle` | transcribed utterance (PIPELINE-1 §9.1) |
 | `speak` | `ovos.utterance.speak` | TTS request (PIPELINE-1 §9.6) |
-| `speak:b64_audio` | `ovos.utterance.speak.b64` | inline-audio speak request |
+| `speak:b64_audio` | `ovos.utterance.speak.b64` | inline-audio speak request, handled by `ovos-audio`'s `handle_b64_audio` |
 | `speak:b64_audio.response` | `ovos.audio.speech` | synthesized-audio reply |
 | `recognizer_loop:audio_output_start` | `ovos.audio.output.started` | playback began (AUDIO-1 §5.1) |
 | `recognizer_loop:audio_output_end` | `ovos.audio.output.ended` | playback ended (AUDIO-1 §5.2) |
