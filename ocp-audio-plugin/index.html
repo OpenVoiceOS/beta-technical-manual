@@ -1391,12 +1391,12 @@ The pieces:</p>
 <li>drives the actual audio output through a lower-level audio backend (<code>mpv</code>, <code>vlc</code>, or
      <code>simple</code>).</li>
 </ul>
-<pre class="mermaid"><code>flowchart LR
-    A[OCP pipeline / OCP skills&lt;br/&gt;search results] --&gt; B[OCP audio plugin]
-    B --&gt; C[Queue + player state]
-    C --&gt; D[Stream extractors]
-    D --&gt; E[MPRIS]
-    D --&gt; F[Audio backend&lt;br/&gt;mpv / vlc / simple]</code></pre>
+<pre class="mermaid"><code>flowchart TD
+    A["OCP pipeline / skills&lt;br/&gt;search results"] --&gt; B["OCP audio plugin"]
+    B --&gt; C["Queue +&lt;br/&gt;player state"]
+    C --&gt; D["Stream extractors"]
+    D --&gt; E["MPRIS"]
+    D --&gt; F["Audio backend&lt;br/&gt;mpv / vlc / simple"]</code></pre>
 <p><em>Diagram:</em> The flow starts at OCP pipeline and skill search results and ends at playback, and the stream extractors branch output to either MPRIS or the mpv/vlc/simple audio backend.</p>
 <p>OCP is a <em>coordinator</em>, not an audio codec: it does the voice/queue/MPRIS logic and then hands
 the raw stream to one of the simple audio backends to make sound.</p>

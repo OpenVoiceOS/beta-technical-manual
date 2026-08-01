@@ -1335,10 +1335,10 @@
 <p>TTS sits inside the audio output service, specified by <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/audio-out.md">OVOS-AUDIO-1: Audio Output Service</a></strong>: an <code>ovos.utterance.speak</code> response runs through the dialog-transformer chain → TTS → tts-transformer chain → playback queue. See the <a href="../architecture-specs/">spec index</a>.</p>
 </details>
 <p>TTS plugins are responsible for converting text into audio for playback.</p>
-<pre class="mermaid"><code>flowchart LR
-    A[sentence] --&gt; B["get_tts(sentence, wav_file)"]
+<pre class="mermaid"><code>flowchart TD
+    A[sentence] --&gt; B["get_tts(sentence,&lt;br/&gt;wav_file)"]
     B --&gt; C["audio file (audio_ext)"]
-    C --&gt; D["cache, keyed by sentence hash"]
+    C --&gt; D["cache, keyed by&lt;br/&gt;sentence hash"]
     D --&gt; E["play_wav/ogg/mp3_cmdline"]
     B --&gt; F[phonemes]
     F --&gt; G["viseme()"]
@@ -2000,17 +2000,17 @@ the full precedence rules.</p>
 <h3 id="reducing-time-to-first-audio">Reducing time to first audio<a class="headerlink" href="#reducing-time-to-first-audio" title="Permanent link">&para;</a></h3>
 <p>Two different mechanisms both get audio to the user faster. They are often both called
 "streaming", so the manual names them apart:</p>
-<pre class="mermaid"><code>flowchart LR
-    subgraph Chunking["Sentence chunking - works with every plugin"]
-        A1[Long reply] --&gt; A2["preprocess_sentence splits into sentences"]
+<pre class="mermaid"><code>flowchart TD
+    subgraph Chunking["Sentence chunking (all plugins)"]
+        A1[Long reply] --&gt; A2["preprocess_sentence&lt;br/&gt;splits into sentences"]
         A2 --&gt; A3["get_tts() per sentence"]
-        A3 --&gt; A4[First sentence plays while rest still synthesizes]
+        A3 --&gt; A4["First sentence plays&lt;br/&gt;while rest synthesizes"]
     end
     subgraph Streaming["Real streaming - pre-alpha"]
-        B1[sentence] --&gt; B2["stream_tts() yields audio chunks"]
+        B1[sentence] --&gt; B2["stream_tts() yields&lt;br/&gt;audio chunks"]
         B2 --&gt; B3{"tts.enable_streaming?"}
-        B3 --&gt;|true| B4[ovos-audio plays chunks as they arrive]
-        B3 --&gt;|false| B5[Write full wav_file, then play: queued path]
+        B3 --&gt;|true| B4["ovos-audio plays&lt;br/&gt;chunks as they arrive"]
+        B3 --&gt;|false| B5["Write full wav_file,&lt;br/&gt;then play: queued path"]
     end</code></pre>
 <p><em>Diagram:</em> The chunking flow starts at a long reply and ends with the first sentence playing while the rest synthesizes, and the streaming flow starts at a sentence and branches on tts.enable_streaming between chunk playback in ovos-audio and the queued full-wav path.</p>
 <p><strong>Sentence chunking ("fake streaming").</strong> Long replies are split into sentences before

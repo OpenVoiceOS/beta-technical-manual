@@ -1488,32 +1488,32 @@ legacy name is noted once where current code still emits it.</p>
 OpenVoiceOS, from the moment sound hits the microphone to the final spoken response.</p>
 <p>The sequence diagram below traces the same eight stages across the services and bus events involved:</p>
 <pre class="mermaid"><code>sequenceDiagram
-    participant Mic as Microphone
-    participant Listener as ovos-dinkum-listener
-    participant Bus as messagebus
-    participant Core as ovos-core (IntentService)
+    participant Mic as Mic
+    participant Listener as Listener
+    participant Bus as Bus
+    participant Core as Core (IntentSvc)
     participant Skill as Skill
     participant Audio as ovos-audio
-    participant Speakers as Speakers / GUI
+    participant Speakers as Speakers/GUI
 
     Mic-&gt;&gt;Listener: raw audio stream
-    Listener-&gt;&gt;Listener: wake word + VAD detect
-    Listener-&gt;&gt;Bus: ovos.listener.record.started
+    Listener-&gt;&gt;Listener: wake word + VAD&lt;br/&gt;detect
+    Listener-&gt;&gt;Bus: ovos.listener.&lt;br/&gt;record.started
     Listener-&gt;&gt;Listener: STT transcription
-    Listener-&gt;&gt;Bus: ovos.listener.record.ended
+    Listener-&gt;&gt;Bus: ovos.listener.&lt;br/&gt;record.ended
     Listener-&gt;&gt;Bus: ovos.utterance.handle
     Bus-&gt;&gt;Core: ovos.utterance.handle
-    Core-&gt;&gt;Core: utterance + metadata transformers
-    Core-&gt;&gt;Core: pipeline match (stop → converse → OCP → padatious → adapt → fallback)
+    Core-&gt;&gt;Core: utterance + metadata&lt;br/&gt;transformers
+    Core-&gt;&gt;Core: pipeline match&lt;br/&gt;(stop → converse → OCP →&lt;br/&gt;padatious → adapt → fallback)
     Core-&gt;&gt;Bus: ovos.intent.matched
-    Core-&gt;&gt;Bus: ovos.intent.handler.start
+    Core-&gt;&gt;Bus: ovos.intent.&lt;br/&gt;handler.start
     Bus-&gt;&gt;Skill: skill_id:intent_name
     Skill-&gt;&gt;Skill: intent handler logic
     Skill-&gt;&gt;Bus: ovos.utterance.speak
-    Core-&gt;&gt;Bus: ovos.intent.handler.complete
+    Core-&gt;&gt;Bus: ovos.intent.&lt;br/&gt;handler.complete
     Bus-&gt;&gt;Audio: ovos.utterance.speak
-    Audio-&gt;&gt;Audio: dialog transformer + TTS + tts-transformer
-    Audio-&gt;&gt;Speakers: play WAV / update GUI
+    Audio-&gt;&gt;Audio: dialog transformer +&lt;br/&gt;TTS + tts-transformer
+    Audio-&gt;&gt;Speakers: play WAV /&lt;br/&gt;update GUI
     Core-&gt;&gt;Bus: ovos.utterance.handled</code></pre>
 <p><em>Diagram: a sequence from the microphone capturing raw audio through wake-word detection, STT, and the pipeline match (stop, converse, OCP, padatious, adapt, fallback) in ovos-core, to a skill's intent handler, TTS playback in ovos-audio, and the final ovos.utterance.handled event.</em></p>
 <hr />

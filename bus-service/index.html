@@ -2213,15 +2213,15 @@ and the new names interoperate transparently while the ecosystem moves over.</p>
 <pre class="mermaid"><code>sequenceDiagram
     participant Producer
     participant Bus as ovos-messagebus
-    participant Client as MessageBusClient (any process)
-    participant LegacyHandler as handler on legacy topic
-    participant SpecHandler as handler on ovos.* topic
+    participant Client as BusClient&lt;br/&gt;(any process)
+    participant LegacyHandler as legacy topic&lt;br/&gt;handler
+    participant SpecHandler as ovos.* topic&lt;br/&gt;handler
 
     Producer-&gt;&gt;Bus: emit(recognizer_loop:utterance)
-    Bus-&gt;&gt;Client: broadcast recognizer_loop:utterance
-    Client-&gt;&gt;Client: on_message: NamespaceTranslator lookup
-    Client-&gt;&gt;LegacyHandler: dispatch recognizer_loop:utterance
-    Client-&gt;&gt;SpecHandler: locally re-dispatch ovos.utterance.handle</code></pre>
+    Bus-&gt;&gt;Client: broadcast&lt;br/&gt;recognizer_loop:utterance
+    Client-&gt;&gt;Client: on_message:&lt;br/&gt;NamespaceTranslator lookup
+    Client-&gt;&gt;LegacyHandler: dispatch&lt;br/&gt;recognizer_loop:utterance
+    Client-&gt;&gt;SpecHandler: locally re-dispatch&lt;br/&gt;ovos.utterance.handle</code></pre>
 <p><em>Diagram: a producer emits the legacy recognizer_loop:utterance topic, the bus broadcasts it unchanged, and each receiving MessageBusClient uses the NamespaceTranslator to dispatch it to both the legacy handler and, re-dispatched locally, the spec ovos.utterance.handle handler.</em></p>
 <ul>
 <li>A single logical <code>emit()</code> sends exactly <strong>one</strong> message over the websocket: the topic the

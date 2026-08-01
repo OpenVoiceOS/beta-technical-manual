@@ -1524,12 +1524,12 @@
 <li><strong>Medium Confidence</strong>: Secondary parsers that handle less specific queries.</li>
 <li><strong>Low Confidence</strong>: <a href="../fallback-pipeline/">Fallback</a> mechanisms for ambiguous or unrecognized inputs.</li>
 </ul>
-<pre class="mermaid"><code>flowchart LR
-    U[Utterance] --&gt; H["High Confidence\n(e.g. Padatious high)"]
+<pre class="mermaid"><code>flowchart TD
+    U[Utterance] --&gt; H["High Confidence&lt;br/&gt;(e.g. Padatious high)"]
     H -- claims --&gt; D1[Dispatch to skill]
     H -- no match --&gt; M["Medium Confidence"]
     M -- claims --&gt; D1
-    M -- no match --&gt; L["Low Confidence\n(Fallback)"]
+    M -- no match --&gt; L["Low Confidence&lt;br/&gt;(Fallback)"]
     L -- claims --&gt; D1
     L -- no match --&gt; UM[ovos.intent.unmatched]</code></pre>
 <p><em>Diagram: an utterance is tried against High Confidence, then Medium Confidence, then Low Confidence (fallback) stages in order, dispatching to the skill as soon as one claims it, or ending as ovos.intent.unmatched if none do.</em></p>

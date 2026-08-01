@@ -1680,12 +1680,12 @@ unit's stdout to the journal (the default) and ship <code>journalctl</code> outp
 does not include a log-shipping client.</p>
 <hr />
 <h2 id="backup-and-restore">Backup and restore<a class="headerlink" href="#backup-and-restore" title="Permanent link">&para;</a></h2>
-<pre class="mermaid"><code>flowchart LR
-    Backup["cp ~/.config/mycroft\n+ ~/.local/share/mycroft"] --&gt; Store[Store backup\nsecurely]
-    Store -.-&gt; Install[Install OVOS\non new machine]
-    Install --&gt; Stop["systemctl --user stop\novos.service"]
-    Stop --&gt; CopyBack[Copy config/data\nback into place]
-    CopyBack --&gt; Restart["systemctl --user start\novos.service"]
+<pre class="mermaid"><code>flowchart TD
+    Backup["cp ~/.config/mycroft&lt;br/&gt;+ ~/.local/share/mycroft"] --&gt; Store[Store backup&lt;br/&gt;securely]
+    Store -.-&gt; Install[Install OVOS&lt;br/&gt;on new machine]
+    Install --&gt; Stop["systemctl --user stop&lt;br/&gt;ovos.service"]
+    Stop --&gt; CopyBack[Copy config/data&lt;br/&gt;back into place]
+    CopyBack --&gt; Restart["systemctl --user start&lt;br/&gt;ovos.service"]
     Restart --&gt; Probe[Re-run readiness probe]</code></pre>
 <p><em>Diagram:</em> The flow starts at backing up the config and data directories and ends at re-running the readiness probe, and the stored backup branches off to a new machine before the service is stopped, restored, and restarted.</p>
 <p>Two kinds of state matter on an OVOS device: the packages that are installed, and everything
@@ -1790,10 +1790,10 @@ your current era. If you maintain custom skills or plugins, see
 </div>
 <h2 id="staged-upgrades-and-rollback">Staged upgrades and rollback<a class="headerlink" href="#staged-upgrades-and-rollback" title="Permanent link">&para;</a></h2>
 <pre class="mermaid"><code>flowchart LR
-    Freeze["Freeze known-good packages\n(uv pip freeze)"] --&gt; Canary[Upgrade one\ncanary device]
-    Canary --&gt; Verify{Readiness probe +\nreal voice check pass?}
-    Verify -- yes --&gt; Fleet[Roll the same command\nout to the rest of the fleet]
-    Verify -- no --&gt; Rollback["--force-reinstall known-good,\nrestart ovos.service"]</code></pre>
+    Freeze["Freeze known-good&lt;br/&gt;packages&lt;br/&gt;(uv pip freeze)"] --&gt; Canary[Upgrade one&lt;br/&gt;canary device]
+    Canary --&gt; Verify{Readiness probe +&lt;br/&gt;real voice check pass?}
+    Verify -- yes --&gt; Fleet[Roll same command&lt;br/&gt;out to fleet]
+    Verify -- no --&gt; Rollback["--force-reinstall&lt;br/&gt;known-good,&lt;br/&gt;restart ovos.service"]</code></pre>
 <p><em>Diagram:</em> The flow starts at freezing known-good packages and ends at either the fleet rollout or a rollback, and it branches on whether the canary device passes its readiness probe and real voice check.</p>
 <p><a href="../release-channels/">Release channels</a> covers <code>stable</code>/<code>testing</code>/<code>alpha</code> constraints files.
 For a fleet, the same mechanism gives you a controlled, reversible upgrade path:</p>

@@ -1608,14 +1608,14 @@
 <p>Each matcher filters registered fallbacks with <code>range.start &lt; priority ≤ range.stop</code> (exclusive start, inclusive stop). Lower priority numbers run first. A fallback that registers without a priority defaults to <code>101</code>, placing it in the low tier. Priorities can be overridden by users via config.</p>
 <hr />
 <h2 id="how-it-works">How It Works<a class="headerlink" href="#how-it-works" title="Permanent link">&para;</a></h2>
-<pre class="mermaid"><code>flowchart LR
-    U["Utterance\n(all other matchers failed)"] --&gt; H["-high\n(0 &lt; p ≤ 5)"]
-    H -- no willing skill --&gt; M["-medium\n(5 &lt; p ≤ 90)"]
-    M -- no willing skill --&gt; L["-low\n(90 &lt; p ≤ 101)"]
-    H -- willing skill --&gt; D["ovos.skills.fallback.{skill_id}.request"]
+<pre class="mermaid"><code>flowchart TD
+    U["Utterance&lt;br/&gt;(all matchers failed)"] --&gt; H["-high&lt;br/&gt;(0 &lt; p ≤ 5)"]
+    H -- no willing skill --&gt; M["-medium&lt;br/&gt;(5 &lt; p ≤ 90)"]
+    M -- no willing skill --&gt; L["-low&lt;br/&gt;(90 &lt; p ≤ 101)"]
+    H -- willing skill --&gt; D["ovos.skills.fallback.&lt;br/&gt;{skill_id}.request"]
     M -- willing skill --&gt; D
     L -- willing skill --&gt; D
-    L -- no willing skill --&gt; N["ovos.intent.unmatched"]</code></pre>
+    L -- no willing skill --&gt; N["ovos.intent.&lt;br/&gt;unmatched"]</code></pre>
 <p><em>Diagram: an utterance that failed all other matchers is tried against high, then medium, then low priority fallback skills, dispatching to the first willing skill, or ending as ovos.intent.unmatched if none accept it.</em></p>
 <ol>
 <li>

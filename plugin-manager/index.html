@@ -1900,10 +1900,10 @@ other projects.</p>
 <code>setup.py</code> or <code>pyproject.toml</code>. OPM uses <code>importlib.metadata.entry_points()</code> to discover
 all installed plugins of a given type at runtime. No manual registration is required.</p>
 <pre class="mermaid"><code>flowchart LR
-    A["Entry point&lt;br/&gt;e.g. opm.stt"] --&gt; B["find_*_plugins()&lt;br/&gt;importlib.metadata.entry_points()"]
+    A["Entry point&lt;br/&gt;e.g. opm.stt"] --&gt; B["find_*_plugins()&lt;br/&gt;via entry_points()"]
     B --&gt; C["load_*_plugin(name)"]
-    C --&gt; D["Factory&lt;br/&gt;e.g. OVOSSTTFactory.create()"]
-    D --&gt; E[Configured plugin instance]</code></pre>
+    C --&gt; D["Factory&lt;br/&gt;e.g. STTFactory.create()"]
+    D --&gt; E["Configured&lt;br/&gt;plugin instance"]</code></pre>
 <p><em>Diagram:</em> The flow starts at the entry point declaration and ends at a configured plugin instance, passing through plugin discovery, loading, and the factory that builds it.</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span> <span class="nn">ovos_plugin_manager.stt</span> <span class="kn">import</span> <span class="n">find_stt_plugins</span><span class="p">,</span> <span class="n">load_stt_plugin</span>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>

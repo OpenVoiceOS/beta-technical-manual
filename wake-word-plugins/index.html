@@ -1908,14 +1908,14 @@ actually does is below.</p>
 default) auto-enables the main wake word (<code>listener.wake_word</code>) and the stand-up word
 (<code>listener.stand_up_word</code>); every other hotword stays disabled until you set <code>active: true</code>.</p>
 <pre class="mermaid"><code>flowchart TD
-    A[Hotword entry in mycroft.conf] --&gt; B{"listen: true, or matches listener.wake_word?"}
-    B --&gt;|yes| C["Listen word: starts VAD/STT recording"]
-    B --&gt;|no| D{"wakeup: true, or matches listener.stand_up_word?"}
-    D --&gt;|yes| E["Wakeup word: exits sleep mode"]
+    A["Hotword entry in&lt;br/&gt;mycroft.conf"] --&gt; B{"listen: true, or&lt;br/&gt;matches&lt;br/&gt;listener.wake_word?"}
+    B --&gt;|yes| C["Listen word: starts&lt;br/&gt;VAD/STT recording"]
+    B --&gt;|no| D{"wakeup: true, or&lt;br/&gt;matches&lt;br/&gt;listener.stand_up_word?"}
+    D --&gt;|yes| E["Wakeup word: exits&lt;br/&gt;sleep mode"]
     D --&gt;|no| F{"stopword: true?"}
-    F --&gt;|yes| G["Stop word: ends free RECORDING mode"]
+    F --&gt;|yes| G["Stop word: ends free&lt;br/&gt;RECORDING mode"]
     F --&gt;|no| H{"active: true?"}
-    H --&gt;|yes| I["Plain hotword: sound / bus event, no STT"]</code></pre>
+    H --&gt;|yes| I["Plain hotword: sound /&lt;br/&gt;bus event, no STT"]</code></pre>
 <p><em>Diagram:</em> The flow starts at the hotword entry in mycroft.conf and ends at one of four outcomes, and it branches in sequence through the listen, wakeup, stopword, and active checks to pick the matching hotword type.</p>
 <table>
 <thead>
@@ -2018,9 +2018,9 @@ audio and suppress false detections before any callback runs. Verifiers implemen
 <code>HotWordVerifier</code> interface (from <code>ovos-plugin-manager</code>) and are configured under
 <code>listener.ww_verifiers</code>:</p>
 <pre class="mermaid"><code>flowchart LR
-    A[Wake word engine fires] --&gt; B["HotWordVerifier.verify()"]
+    A[Wake word engine fires] --&gt; B["HotWordVerifier.&lt;br/&gt;verify()"]
     B --&gt;|"False"| C[Detection suppressed]
-    B --&gt;|"True, or exception raised (fail open)"| D[Detection proceeds, callback runs]</code></pre>
+    B --&gt;|"True, or exception&lt;br/&gt;raised (fail open)"| D["Detection proceeds,&lt;br/&gt;callback runs"]</code></pre>
 <p><em>Diagram:</em> The flow starts when the wake word engine fires and ends with the detection either suppressed or proceeding to run the callback, and it branches on the HotWordVerifier.verify() result, failing open on exception.</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>&quot;listener&quot;: {
 </span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>  &quot;ww_verifiers&quot;: {

@@ -1286,20 +1286,20 @@ matching), outbound translation as a <strong>dialog</strong>- or <strong>tts-tra
 </div>
 <h3 id="interaction-flow">Interaction Flow<a class="headerlink" href="#interaction-flow" title="Permanent link">&para;</a></h3>
 <pre class="mermaid"><code>sequenceDiagram
-    participant U as User (Spanish)
+    participant U as User (ES)
     participant STT
-    participant UT as Utterance Transformer
+    participant UT as UtteranceXForm
     participant Core as ovos-core
-    participant Skill as Time Skill (English)
-    participant DT as Dialog Transformer
+    participant Skill as Time Skill (EN)
+    participant DT as DialogXForm
     participant TTS
 
     U-&gt;&gt;STT: "¿Qué hora es?"
     STT-&gt;&gt;UT: text (Spanish)
-    UT-&gt;&gt;Core: "What time is it?" (translated to English)
+    UT-&gt;&gt;Core: "What time is it?"&lt;br/&gt;(translated to English)
     Core-&gt;&gt;Skill: match TimeIntent
     Skill-&gt;&gt;DT: "The time is 10:00 AM"
-    DT-&gt;&gt;TTS: "Son las 10:00 AM" (translated back to Spanish)
+    DT-&gt;&gt;TTS: "Son las 10:00 AM"&lt;br/&gt;(translated back to Spanish)
     TTS-&gt;&gt;U: speaks Spanish response</code></pre>
 <p><em>Diagram:</em> The sequence starts with the Spanish-speaking user and ends with TTS speaking the Spanish response, branching through translation to English for the skill match and back to Spanish for the reply.</p>
 <ol>
