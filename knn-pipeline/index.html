@@ -954,6 +954,24 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#worked-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#when-to-use-it-and-when-not-to" class="md-nav__link">
+    <span class="md-ellipsis">
+      When to use it, and when not to
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#requirements-footprint" class="md-nav__link">
     <span class="md-ellipsis">
       Requirements &amp; footprint
@@ -1369,6 +1387,24 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#worked-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#when-to-use-it-and-when-not-to" class="md-nav__link">
+    <span class="md-ellipsis">
+      When to use it, and when not to
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#requirements-footprint" class="md-nav__link">
     <span class="md-ellipsis">
       Requirements &amp; footprint
@@ -1429,6 +1465,16 @@ class <code>HierarchicalKNNIntentPipeline</code>) powered by a <strong>two-stage
 backed by <strong>IBM Granite</strong> embeddings and a <strong><a href="https://github.com/facebookresearch/faiss">FAISS</a></strong>
 index.</p>
 <h2 id="how-it-works">How it works<a class="headerlink" href="#how-it-works" title="Permanent link">&para;</a></h2>
+<pre class="mermaid"><code>flowchart TD
+    U[Utterance] --&gt; E[Encode with Granite embedding model]
+    E --&gt; D[Stage 1: narrow to likely domain]
+    D --&gt; N[Stage 2: k-NN search\nwithin that domain's FAISS index]
+    N --&gt; F{Filter to labels\nregistered by loaded skills}
+    F --&gt; B[Best surviving label + probability]
+    B --&gt; C{Probability clears\nstage threshold?}
+    C --&gt;|yes| I[Intent + confidence]
+    C --&gt;|no| X[No match, try next stage]</code></pre>
+<p><em>Diagram: the utterance is embedded, narrowed to a likely domain, searched against that domain's k-NN index for the closest labeled example, filtered to intents the loaded skills actually registered, and accepted only if the winning label's probability clears the current stage's threshold.</em></p>
 <ul>
 <li><strong>Two-stage search</strong>: it first narrows to the likely <strong>domain</strong>, then to the <strong>intent</strong> within
   it, using Wu-Lin pairwise probability estimation. This keeps search fast as the intent set
@@ -1441,6 +1487,73 @@ index.</p>
 <p>It works well as a <strong>high-recall semantic stage</strong> for cases where the deterministic engines
 fail to produce a high-confidence match. It is conceptually similar to
 <a href="../m2v-pipeline/">Model2Vec</a>, but uses a pre-built FAISS index and a hierarchical classifier.</p>
+<hr />
+<h2 id="worked-example">Worked example<a class="headerlink" href="#worked-example" title="Permanent link">&para;</a></h2>
+<p>Suppose a device ships this pipeline config:</p>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="p">{</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span><span class="nt">&quot;intents&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">    </span><span class="nt">&quot;ovos_hierarchical_knn_pipeline&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">      </span><span class="nt">&quot;hf_repo_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;fdemelo/ovos-hierarchical-knn-granite-97m-multilingual-r2&quot;</span><span class="p">,</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">      </span><span class="nt">&quot;conf_high&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.7</span><span class="p">,</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">      </span><span class="nt">&quot;conf_medium&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.5</span><span class="p">,</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">      </span><span class="nt">&quot;conf_low&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.15</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">    </span><span class="p">},</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">    </span><span class="nt">&quot;pipeline&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="w">      </span><span class="s2">&quot;ovos-padatious-pipeline-plugin-high&quot;</span><span class="p">,</span>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="w">      </span><span class="s2">&quot;ovos-adapt-pipeline-plugin-high&quot;</span><span class="p">,</span>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="w">      </span><span class="s2">&quot;ovos-hierarchical-knn-pipeline-high&quot;</span><span class="p">,</span>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="w">      </span><span class="s2">&quot;ovos-hierarchical-knn-pipeline-medium&quot;</span><span class="p">,</span>
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="w">      </span><span class="s2">&quot;ovos-fallback-pipeline-plugin-low&quot;</span>
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="w">    </span><span class="p">]</span>
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="w">  </span><span class="p">}</span>
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="p">}</span>
+</span></code></pre></div>
+<p>A weather skill is loaded and has registered the Padatious intent label
+<code>weather.openvoiceos:weather.intent</code>. The user says "how's the sky looking today".</p>
+<p>Neither Padatious nor Adapt match this phrasing directly (it is not one of the
+weather skill's example sentences and shares no required keyword). The pipeline
+reaches <code>ovos-hierarchical-knn-pipeline-high</code>:</p>
+<ol>
+<li><code>_match()</code> (<code>ovos_hierarchical_knn_pipeline/__init__.py</code>) encodes the utterance
+   and calls <code>self.model.predict_proba([utterance])</code>, the two-stage domain-then-intent
+   search in <code>HierarchicalPairKNNClassifier</code>.</li>
+<li>The raw prediction is filtered against <code>self.intents</code>, the set of labels the
+   pipeline has synced from the Adapt and Padatious manifests over the bus
+   (<code>intent.service.adapt.manifest</code>, <code>intent.service.padatious.manifest</code>,
+   <code>register_intent</code>, <code>padatious:register_intent</code>). The <code>weather.openvoiceos:...</code>
+   label is registered, so it survives the filter. A label belonging to a skill
+   that is not installed would be dropped even if the classifier scored it highest.</li>
+<li>If the surviving top label's probability is at least <code>conf_high</code> (<code>0.7</code>), <code>match_high</code>
+   returns an <code>IntentHandlerMatch</code> for it. If it only clears <code>0.5</code>, <code>match_high</code>
+   returns <code>None</code> and the orchestrator tries <code>ovos-hierarchical-knn-pipeline-medium</code>
+   next, where the same label now clears <code>conf_medium</code>.</li>
+</ol>
+<p>If the user instead says "stop" with no weather skill active, the same <code>_match()</code>
+call also considers the special label <code>stop:stop</code> (source: <code>_SPECIAL_LABELS</code> and
+<code>_allowed_special_labels()</code> in <code>__init__.py</code>), but only because
+<code>ovos-stop-pipeline-plugin</code> normally runs earlier and would have already claimed
+it. <code>stop:stop</code> is only reachable through this pipeline when
+<code>ovos-stop-pipeline-plugin</code> is itself listed in <code>session.pipeline</code>.</p>
+<hr />
+<h2 id="when-to-use-it-and-when-not-to">When to use it, and when not to<a class="headerlink" href="#when-to-use-it-and-when-not-to" title="Permanent link">&para;</a></h2>
+<p>Use the Hierarchical KNN pipeline as a <strong>semantic safety net</strong> behind Adapt and
+Padatious, on hardware that can spare roughly 560 MB and an AVX2 CPU. It helps
+most when your skills see a lot of paraphrasing you did not anticipate and you
+already accept the cost of a heavier matcher.</p>
+<p>Do not reach for it first. It is not in the default pipeline, and for good reasons:</p>
+<ul>
+<li>It downloads and holds a ~94 MB embedding model plus a FAISS index in memory,
+  a real cost on a Raspberry Pi or similar constrained device.</li>
+<li>It only covers 11 languages. Outside those, it will not match anything useful.</li>
+<li>It needs an AVX2-capable CPU for the quantised encoder, which rules out some
+  low-power boards.</li>
+<li>It generalizes, so like <a href="../m2v-pipeline/">Model2Vec</a> it can claim an utterance
+  a more precise deterministic engine would have nailed if placed after it in
+  the pipeline. Keep Padatious and Adapt's high-confidence stages ahead of it.</li>
+</ul>
+<p>If your hardware cannot afford the footprint, <a href="../m2v-pipeline/">Model2Vec</a> is a
+lighter semantic alternative. If you need literal or fuzzy matching without any
+embedding model at all, see <a href="../padacioso/">Padacioso</a> or <a href="../nebulento/">Nebulento</a>.</p>
 <h2 id="requirements-footprint">Requirements &amp; footprint<a class="headerlink" href="#requirements-footprint" title="Permanent link">&para;</a></h2>
 <ul>
 <li><strong>Languages</strong>: en, pt, es, fr, it, de, nl, ca, gl, da, eu (11).</li>
@@ -1449,21 +1562,21 @@ fail to produce a high-confidence match. It is conceptually similar to
 <li>The quantised encoder (<code>model_quint8_avx2.onnx</code>) requires an <strong>AVX2-capable CPU</strong>. Total
   footprint is ~560 MB (index + encoder).</li>
 </ul>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pip<span class="w"> </span>install<span class="w"> </span>ovos-hierarchical-knn-pipeline
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>pip<span class="w"> </span>install<span class="w"> </span>ovos-hierarchical-knn-pipeline
 </span></code></pre></div>
 <h2 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">&para;</a></h2>
 <p>Settings live under <code>intents.ovos_hierarchical_knn_pipeline</code> in <code>mycroft.conf</code>:</p>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="p">{</span>
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span><span class="nt">&quot;intents&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">    </span><span class="nt">&quot;ovos_hierarchical_knn_pipeline&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">      </span><span class="nt">&quot;hf_repo_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;fdemelo/ovos-hierarchical-knn-granite-97m-multilingual-r2&quot;</span><span class="p">,</span>
-</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">      </span><span class="nt">&quot;conf_high&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.7</span><span class="p">,</span>
-</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">      </span><span class="nt">&quot;conf_medium&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.5</span><span class="p">,</span>
-</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">      </span><span class="nt">&quot;conf_low&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.15</span><span class="p">,</span>
-</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="w">      </span><span class="nt">&quot;ignore_intents&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span>
-</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="w">    </span><span class="p">}</span>
-</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="w">  </span><span class="p">}</span>
-</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="p">}</span>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="p">{</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">  </span><span class="nt">&quot;intents&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">    </span><span class="nt">&quot;ovos_hierarchical_knn_pipeline&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">      </span><span class="nt">&quot;hf_repo_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;fdemelo/ovos-hierarchical-knn-granite-97m-multilingual-r2&quot;</span><span class="p">,</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">      </span><span class="nt">&quot;conf_high&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.7</span><span class="p">,</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">      </span><span class="nt">&quot;conf_medium&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.5</span><span class="p">,</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">      </span><span class="nt">&quot;conf_low&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.15</span><span class="p">,</span>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">      </span><span class="nt">&quot;ignore_intents&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span>
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="w">  </span><span class="p">}</span>
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="p">}</span>
 </span></code></pre></div>
 <table>
 <thead>

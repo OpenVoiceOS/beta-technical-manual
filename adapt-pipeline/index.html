@@ -1405,6 +1405,15 @@
 </span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>    <span class="o">...</span>
 </span></code></pre></div>
 <p>"switch on the lamp" then matches with high confidence because both required keywords are present.</p>
+<pre class="mermaid"><code>flowchart TD
+    U[Utterance] --&gt; T[Tokenize]
+    T --&gt; M{Match .voc keywords\nrequired / one-of / excluded}
+    M --&gt;|keywords found| S[Score by keyword count]
+    S --&gt; C{Score clears\nstage threshold?}
+    C --&gt;|yes| I[Intent + confidence]
+    C --&gt;|no| N[No match, try next stage]
+    M --&gt;|no keywords| N</code></pre>
+<p><em>Diagram: the utterance is tokenized, checked against each skill's registered .voc keyword rule, scored by how many required keywords matched, then accepted as an intent only if the score clears the current stage's threshold.</em></p>
 <p>Adapt is good for <strong>explicit, deterministic command-and-control</strong>. But it scales poorly across many skills, and it is hard to localize. <strong>It is not recommended for broad deployments.</strong></p>
 <p>Prefer it for <strong>personal skills</strong> where you control the full vocabulary.</p>
 <hr />

@@ -2031,6 +2031,9 @@ unregistered and will be silently skipped rather than erroring.</p>
 </span><span id="__span-3-14"><a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a><span class="c1">// (now standalone opt-in plugins); add &quot;ovos-adapt-pipeline-plugin-low&quot; and</span>
 </span><span id="__span-3-15"><a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a><span class="c1">// the common-query plugin id back explicitly if you still want them.</span>
 </span></code></pre></div>
+<p>These are the same pipeline stages as the current default, just written in the old
+short-name notation instead of full plugin IDs. See <a href="../pipelines-overview/">Pipelines Overview</a>
+for the current stage list and how the pipeline matcher chain works.</p>
 <p>The same commit changed the default <code>"lang"</code> value in <code>mycroft.conf</code> from
 <code>"en-us"</code> to <code>"en-US"</code>. Any code doing an exact string comparison against
 the lowercase default breaks. Compare case-insensitively or update the

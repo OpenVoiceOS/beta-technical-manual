@@ -1247,6 +1247,10 @@
 
 
 <h1 id="agents-overview">Agents Overview<a class="headerlink" href="#agents-overview" title="Permanent link">&para;</a></h1>
+<div class="admonition abstract">
+<p class="admonition-title">In a nutshell</p>
+<p>This tab covers adding conversational AI or LLM-backed behavior to OVOS through personas, instead of (or alongside) fixed skills. It walks from the persona concept through engine choice, memory, tools, and the LLM backends a persona can run on. For a fixed, deterministic skill instead, see the Skills tab.</p>
+</div>
 <p>This tab is for anyone adding conversational AI or LLM-backed behavior to OVOS, instead of (or alongside) fixed skills.</p>
 <h2 id="start-here">Start here<a class="headerlink" href="#start-here" title="Permanent link">&para;</a></h2>
 <ol>
@@ -1256,23 +1260,29 @@
 <li><a href="../building-agent-plugins/">Building Agent Plugins</a>: write your own engine when the built-in ones don't fit.</li>
 </ol>
 <h2 id="personas">Personas<a class="headerlink" href="#personas" title="Permanent link">&para;</a></h2>
+<p>Two ways to extend a persona past a single-turn reply: give it memory across a conversation, or run it as its own service other clients can reach.</p>
 <ul>
 <li><a href="../persona-memory/">Persona Memory</a>: giving a persona recall across a conversation</li>
 <li><a href="../persona-server/">Persona Server</a>: hosting personas as a standalone service</li>
 </ul>
 <h2 id="loops-tools-interoperability">Loops, tools, interoperability<a class="headerlink" href="#loops-tools-interoperability" title="Permanent link">&para;</a></h2>
+<p>Once a persona can talk, it can also act. This group covers how an agent plans over multiple steps, how it calls out to tools, and how it reaches (or is reached by) agents and tools outside OVOS. Start with the loop architectures page.</p>
 <ul>
 <li><a href="../agentic-loop/">Agentic Loop Architectures</a>: how an agent plans and acts over multiple steps.</li>
 <li><a href="../tool-plugins/">Agent Tool Plugins</a>: giving an agent actions it can call.</li>
 <li><a href="../agent-interop/">Interoperability (MCP/UTCP/A2A)</a>: connecting to tools and agents outside OVOS.</li>
 </ul>
 <h2 id="llm-backends">LLM Backends<a class="headerlink" href="#llm-backends" title="Permanent link">&para;</a></h2>
+<p>The engines a persona can run its language model on: a hosted or self-hosted OpenAI-style API, a local GGUF model, or an LLM used as a pipeline transformer instead of a persona.</p>
 <ul>
 <li><a href="../openai-plugin/">OpenAI-compatible</a>: hosted or self-hosted OpenAI-style APIs.</li>
 <li><a href="../gguf-plugin/">GGUF / Local LLM</a>: running a model locally.</li>
 <li><a href="../llm-transformers/">LLM Transformers</a>: using an LLM as a pipeline transformer rather than a persona.</li>
 </ul>
 <p>Want a fixed, deterministic skill instead of an open-ended agent? That's the Skills tab. Deploying a persona remotely over HiveMind? See <a href="../hivemind-agents/">Remote Agents with HiveMind</a> in the Production tab.</p>
+<hr />
+<p><strong>Read next:</strong> <a href="../personas/">Personas &amp; PersonaService</a>
+<strong>Related:</strong> <a href="../skills-overview/">Skill Development Overview</a> · <a href="../pipelines-overview/">Pipeline Overview &amp; Reference</a> · <a href="../production-overview/">Production Overview</a></p>
 
 
 

@@ -1650,6 +1650,15 @@
 <p>A fuzzy (<code>exact=False</code>) match of the same <code>stop</code> / <code>global_stop</code> vocab, for phrases that contain a stop command but are not exact. When it matches, it delegates to <code>match_low</code> to compute a confidence score.</p>
 <h3 id="low-confidence-stop_low">Low-confidence (<code>stop_low</code>)<a class="headerlink" href="#low-confidence-stop_low" title="Permanent link">&para;</a></h3>
 <p>Scores the utterance against the <code>stop</code> vocab list via fuzzy matching (<code>match_one</code>), adds a small bonus when active skills are present, and rejects anything below <code>min_conf</code> (default <code>0.5</code>). Used as a permissive catch-all so phrases like "can you stop now?" still reach the stop logic.</p>
+<pre class="mermaid"><code>flowchart TD
+    U[Utterance] --&gt; V{Matches stop /\nglobal_stop vocab?}
+    V --&gt;|no| N[No match]
+    V --&gt;|global_stop or\nno active skills| G[Global stop\nbroadcast ovos.stop]
+    V --&gt;|yes, skills active| P[Ping active skills\novos.stop.ping]
+    P --&gt; W{Any skill replies\ncan_handle?}
+    W --&gt;|yes| D[Dispatch stop to\nmost recent responder]
+    W --&gt;|no, timeout| G</code></pre>
+<p><em>Diagram: an utterance that matches the stop vocabulary either targets the most recently active skill that confirms it can stop, or falls back to a global stop broadcast when there is nothing to target or no skill responds in time.</em></p>
 <hr />
 <h2 id="localization">Localization<a class="headerlink" href="#localization" title="Permanent link">&para;</a></h2>
 <p>The plugin supports stop commands in multiple languages using <code>.voc</code> files bundled in <code>ovos-core</code> under <code>ovos_core/intent_services/locale/&lt;lang&gt;/</code>:</p>

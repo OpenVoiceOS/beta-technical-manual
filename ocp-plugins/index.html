@@ -1611,39 +1611,62 @@ is itself <code>"{sei}//..."</code> for another extractor, <code>StreamHandler</
 <tr>
 <th>Plugin</th>
 <th>Description</th>
+<th>License</th>
+<th>Maturity</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><a href="#ovos-ocp-files-plugin">ovos-ocp-files-plugin</a></td>
 <td>Lets OCP play local files (<code>file://</code> URIs) and reads their audio tags/metadata so the player can show a title and artist</td>
+<td>MIT</td>
+<td>not rated</td>
 </tr>
 <tr>
 <td><a href="#ovos-ocp-news-plugin">ovos-ocp-news-plugin</a></td>
 <td>Extracts the real stream for a known set of spoken-news provider URLs at playback time</td>
+<td>Apache-2.0</td>
+<td>not rated</td>
 </tr>
 <tr>
 <td><a href="#ovos-ocp-bandcamp-plugin">ovos-ocp-bandcamp-plugin</a></td>
 <td>Scrapes Bandcamp pages via <code>py-bandcamp</code> to extract the real audio stream</td>
+<td>Apache-2.0</td>
+<td>not rated</td>
 </tr>
 <tr>
 <td><a href="#ovos-ocp-rss-plugin">ovos-ocp-rss-plugin</a></td>
 <td>Parses an RSS/podcast feed and extracts the newest audio enclosure as the playable stream</td>
+<td>Apache-2.0</td>
+<td>not rated</td>
 </tr>
 <tr>
 <td><a href="#ovos-ocp-youtube-plugin">ovos-ocp-youtube-plugin</a></td>
 <td>Resolves YouTube/YouTube Music URLs via a selectable <code>yt-dlp</code>/pytube/Invidious/webview backend</td>
+<td>Apache-2.0</td>
+<td>not rated</td>
 </tr>
 <tr>
 <td><a href="#ovos-ocp-m3u-plugin">ovos-ocp-m3u-plugin</a></td>
 <td>Downloads a <code>.pls</code>/<code>.m3u</code> playlist and extracts the first playable stream URL inside it</td>
+<td>Apache-2.0</td>
+<td>not rated</td>
 </tr>
 <tr>
 <td><a href="#ovos-media-classifier">ovos-media-classifier</a></td>
 <td>⚠️ experimental: pluggable media-intent classifier that routes a request to the right <code>MediaProvider</code>s</td>
+<td>Apache-2.0</td>
+<td>not rated</td>
 </tr>
 </tbody>
 </table>
+<p>Maturity reflects repository health (age, activity, open issues/PRs, in-repo docs), not version. See the <a href="../maturity/">Maturity Scale</a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Maturity not yet rated for this family</p>
+<p>These plugins are not yet individually rated in the manual (see the OCP comparison
+table in <a href="../choosing-plugins/#speech-input">Choosing Plugins</a>). "not rated" means
+unrated, not unmature.</p>
+</div>
 <h2 id="ovos-ocp-files-plugin">ovos-ocp-files-plugin<a class="headerlink" href="#ovos-ocp-files-plugin" title="Permanent link">&para;</a></h2>
 <ul>
 <li>

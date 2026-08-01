@@ -1545,6 +1545,16 @@ become the pipeline matcher IDs <code>ovos-m2v-pipeline-high</code> / <code>-med
 </ol>
 <p>Because matching is restricted to intents that are actually loaded, the model can
 ship knowledge of many skills without firing for skills you do not have installed.</p>
+<pre class="mermaid"><code>flowchart TD
+    U[Utterance] --&gt; E[Embed with Model2Vec model]
+    R[Registered Adapt/Padatious\nintent labels] --&gt; F
+    E --&gt; SC[Score every known label]
+    SC --&gt; F{Filter to\nregistered labels}
+    F --&gt; B[Keep best-scoring label]
+    B --&gt; C{Score clears\nstage threshold?}
+    C --&gt;|yes| I[Intent + confidence]
+    C --&gt;|no| N[No match, try next stage]</code></pre>
+<p><em>Diagram: the utterance is embedded, scored against every label the model knows, filtered down to labels that are actually registered by loaded skills, and the best surviving label is accepted only if it clears the current stage's threshold.</em></p>
 <hr />
 <h2 id="two-operating-modes">Two operating modes<a class="headerlink" href="#two-operating-modes" title="Permanent link">&para;</a></h2>
 <p>The pipeline has a <code>mode</code> config key:</p>

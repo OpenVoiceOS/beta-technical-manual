@@ -2140,67 +2140,103 @@ plugins should use them.</p>
 <tr>
 <th>Plugin</th>
 <th>Description</th>
+<th>License</th>
+<th>Maturity</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><a href="#ovos-qdrant-embeddings-plugin">ovos-qdrant-embeddings-plugin</a></td>
 <td>The <code>QdrantEmbeddingsDB</code> plugin integrates with the <a href="https://qdrant.tech/">qdrant</a> database to store, retrieve, and query embeddings. This plugin extends the abstract <code>EmbeddingsDB</code> class, using qdrant's capabilities.</td>
+<td>MIT</td>
+<td>Beta</td>
 </tr>
 <tr>
 <td><a href="#ovos-solver-plugin-aiml">ovos-solver-plugin-aiml</a></td>
 <td>A rule-based chatbot answer engine for OVOS, using AIML pattern matching.</td>
+<td>MIT</td>
+<td>Alpha</td>
 </tr>
 <tr>
 <td><a href="#ovos-persona">ovos-persona</a></td>
 <td>The <strong><code>PersonaPipeline</code></strong> brings multi-persona management to OpenVoiceOS (OVOS), enabling interactive conversations with virtual assistants. With personas, you can customize how queries are handled by assigning specific solvers to each persona.</td>
+<td>Apache-2.0</td>
+<td>Stable</td>
 </tr>
 <tr>
 <td><a href="#ovos-openai-plugin">ovos-openai-plugin</a></td>
 <td>Uses the <a href="https://platform.openai.com/docs/api-reference/completions/create">OpenAI Completions API</a> to provide a chat engine, a dialog-rewriting transformer, and a summarizer, all pointed at any OpenAI-compatible endpoint.</td>
+<td>Apache-2.0</td>
+<td>Beta</td>
 </tr>
 <tr>
 <td><a href="#ovos-messagebus-chat-plugin">ovos-messagebus-chat-plugin</a></td>
 <td><code>OVOSMessagebusChatAgent</code>: a <code>ChatEngine</code> (<code>opm.agents.chat</code>, entry point <code>ovos-messagebus</code>) that proxies each turn through a connected OVOS messagebus pipeline.</td>
+<td>Apache-2.0</td>
+<td>Alpha</td>
 </tr>
 <tr>
 <td><a href="#ovos-wikipedia-plugin">ovos-wikipedia-plugin</a></td>
 <td>Answers factual questions by querying Wikipedia.</td>
+<td>Apache-2.0</td>
+<td>Alpha</td>
 </tr>
 <tr>
 <td><a href="#ovos-chromadb-embeddings-plugin">ovos-chromadb-embeddings-plugin</a></td>
 <td>The <code>ChromaEmbeddingsDB</code> plugin integrates with the <a href="https://www.trychroma.com/">ChromaDB</a> database to store, retrieve, and query embeddings. This plugin extends the abstract <code>EmbeddingsDB</code> class, using ChromaDB's capabilities.</td>
+<td>MIT</td>
+<td>Beta</td>
 </tr>
 <tr>
 <td><a href="#ovos-wolfram-alpha-plugin">ovos-wolfram-alpha-plugin</a></td>
 <td>Answers computational and factual questions via the Wolfram Alpha API.</td>
+<td>Apache-2.0</td>
+<td>Alpha</td>
 </tr>
 <tr>
 <td><a href="#ovos-ddg-plugin">ovos-ddg-plugin</a></td>
 <td>Answers questions using DuckDuckGo instant-answer results.</td>
+<td>Apache-2.0</td>
+<td>Alpha</td>
 </tr>
 <tr>
 <td><a href="#ovos-solver-yesno-plugin">ovos-solver-YesNo-plugin</a></td>
 <td>A simple tool to indicate whether a user answered "yes" or "no" to a yes/no prompt.</td>
+<td>Apache-2.0</td>
+<td>Deprecated</td>
 </tr>
 <tr>
 <td><a href="#ovos-solver-failure-plugin">ovos-solver-failure-plugin</a></td>
 <td>Extreme fallback, just complains it does not have a brain</td>
+<td>MIT</td>
+<td>Beta</td>
 </tr>
 <tr>
 <td><a href="#ovos-gguf-plugin">ovos-gguf-plugin</a></td>
 <td>Unified GGUF wrapper for chat, summarization, dialog rewriting, translation, language detection, and text embeddings, all backed by quantized GGUF models via <code>llama-cpp-python</code>.</td>
+<td>MIT</td>
+<td>Beta</td>
 </tr>
 <tr>
 <td><a href="#ovos-persona-server">ovos-persona-server</a></td>
 <td>Standalone server that exposes an OVOS persona over an HTTP API.</td>
+<td>Apache-2.0</td>
+<td>Stable</td>
 </tr>
 <tr>
 <td><a href="#ovos-solver-plugin-rivescript">ovos-solver-plugin-rivescript</a></td>
 <td>A rule-based chatbot answer engine for OVOS, using RiveScript pattern matching.</td>
+<td>MIT</td>
+<td>Alpha</td>
 </tr>
 </tbody>
 </table>
+<p>Maturity reflects repository health (age, activity, open issues/PRs, in-repo docs), not version. See the <a href="../maturity/">Maturity Scale</a>.</p>
+<div class="admonition note">
+<p class="admonition-title"><code>ovos-solver-YesNo-plugin</code> is deprecated</p>
+<p>Superseded by <a href="https://github.com/OpenVoiceOS/ovos-YesNo-plugin">ovos-YesNo-plugin</a>
+(needs <code>ovos-plugin-manager&gt;=2.4.0</code>). See <a href="../deprecated-repos/">Deprecated Repos</a>.</p>
+</div>
 <p>See <a href="#available-toolboxes">Available ToolBoxes</a> and <a href="#available-chat-engines">Available Chat Engines</a>
 below for the standalone <code>opm.agents.toolbox</code> and <code>opm.agents.chat</code> plugin registries.</p>
 <h2 id="ovos-qdrant-embeddings-plugin">ovos-qdrant-embeddings-plugin<a class="headerlink" href="#ovos-qdrant-embeddings-plugin" title="Permanent link">&para;</a></h2>

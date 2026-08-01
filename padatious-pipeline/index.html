@@ -861,6 +861,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#how-it-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      How it works
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#pipeline-stages" class="md-nav__link">
     <span class="md-ellipsis">
       Pipeline Stages
@@ -1396,6 +1405,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#how-it-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      How it works
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#pipeline-stages" class="md-nav__link">
     <span class="md-ellipsis">
       Pipeline Stages
@@ -1507,6 +1525,16 @@
 </span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>    <span class="o">...</span>
 </span></code></pre></div>
 <hr />
+<h2 id="how-it-works">How it works<a class="headerlink" href="#how-it-works" title="Permanent link">&para;</a></h2>
+<pre class="mermaid"><code>flowchart TD
+    F[.intent example files] --&gt; TR[Train neural model]
+    TR --&gt; MO[Trained model, cached]
+    U[Utterance] --&gt; SC[Score against model]
+    MO --&gt; SC
+    SC --&gt; C{Best score clears\nstage threshold?}
+    C --&gt;|yes| I[Intent + confidence + slots]
+    C --&gt;|no| N[No match, try next stage]</code></pre>
+<p><em>Diagram: example sentences train a small neural model ahead of time, then an incoming utterance is scored against that model, and the best-scoring intent is returned only if it clears the current stage's confidence threshold.</em></p>
 <h2 id="pipeline-stages">Pipeline Stages<a class="headerlink" href="#pipeline-stages" title="Permanent link">&para;</a></h2>
 <p>The plugin ships a single OPM entry point, <code>ovos-padatious-pipeline-plugin</code>, mapped to the <code>PadatiousPipeline</code> class. That class is a <code>ConfidenceMatcherPipeline</code>, so OVOS exposes three matcher stages from it. You select these in your pipeline config by the IDs below (the short <code>padatious_*</code> aliases still work but are deprecated):</p>
 <table>

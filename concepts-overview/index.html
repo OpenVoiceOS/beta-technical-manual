@@ -1408,6 +1408,10 @@
 
 
 <h1 id="concepts-overview">Concepts Overview<a class="headerlink" href="#concepts-overview" title="Permanent link">&para;</a></h1>
+<div class="admonition abstract">
+<p class="admonition-title">In a nutshell</p>
+<p>This tab explains how OpenVoiceOS is built: the processes, the shared message bus that connects them, and the rules each part must follow. It is for developers, integrators, and curious users who want the architecture, not just the install steps. For hands-on install and setup, see the Get Started tab.</p>
+</div>
 <p>This tab is for anyone who wants to understand how OpenVoiceOS is built, not just use it: developers, integrators, and curious users.</p>
 <h2 id="start-here">Start here<a class="headerlink" href="#start-here" title="Permanent link">&para;</a></h2>
 <ol>
@@ -1417,17 +1421,20 @@
 <li><a href="../security-model/">Security &amp; Trust Model</a>: what OVOS assumes about the device it runs on.</li>
 </ol>
 <h2 id="specs-and-quality">Specs and quality<a class="headerlink" href="#specs-and-quality" title="Permanent link">&para;</a></h2>
+<p>OVOS components follow written specs, and this manual has tooling to check code against them. Start with the specs themselves, then the tooling, then the badge scale used to mark how mature each part is.</p>
 <ul>
 <li><a href="../architecture-specs/">Formal Specifications</a>: component contracts written down, not just implemented.</li>
 <li><a href="../spec-tooling/">Specification Tooling</a>: tools that check code against those contracts.</li>
 <li><a href="../maturity/">Maturity Scale</a>: how to read the maturity badges used throughout this manual.</li>
 </ul>
 <h2 id="system-pieces">System pieces<a class="headerlink" href="#system-pieces" title="Permanent link">&para;</a></h2>
+<p>Two cross-cutting pieces don't fit under a single service: how plugins get discovered, and how to run OVOS as a library instead of a full assistant.</p>
 <ul>
 <li><a href="../plugin-manager/">Plugin Manager</a>: how OVOS finds and loads swappable plugins.</li>
 <li><a href="../composable-deployments/">Composable Deployments</a>: using OVOS as a library instead of the full assistant.</li>
 </ul>
 <h2 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">&para;</a></h2>
+<p>Start with the overview to learn where config files live and how they layer, then use the reference and locations pages as lookup tables.</p>
 <ul>
 <li><a href="../config/">Overview</a>: how settings are changed and where they live.</li>
 <li><a href="../config-reference/">Reference</a>: lookup table of settings and defaults.</li>
@@ -1439,13 +1446,16 @@
 <li><a href="../core/">Overview</a>, <a href="../skill-manager/">Skill Manager</a>, <a href="../intent-service/">Intent Service</a>, <a href="../skill-installer/">Skill Installer</a>.</li>
 </ul>
 <h2 id="sibling-services">Sibling Services<a class="headerlink" href="#sibling-services" title="Permanent link">&para;</a></h2>
-<p>These run as their own processes on the bus, separate from <code>ovos-core</code>.</p>
+<p>These run as their own processes on the bus, separate from <code>ovos-core</code>. Each page covers one service; start with whichever one matches the part of the system you're investigating.</p>
 <ul>
 <li><a href="../speech-service/">Speech Service</a>, <a href="../audio-service/">Audio Service</a>, <a href="../ovos-media/">Media Service</a>.</li>
 <li><a href="../gui-status/">Screens on OVOS Today</a>, <a href="../gui-service/">GUI Service (legacy)</a>.</li>
 <li><a href="../phal/">PHAL</a> for hardware access.</li>
 </ul>
 <p>Digging into how intents get matched? That's the Pipeline tab. Building a skill? That's the Skills tab.</p>
+<hr />
+<p><strong>Read next:</strong> <a href="../architecture-overview/">High-level Overview</a>
+<strong>Related:</strong> <a href="../pipelines-overview/">Pipeline Overview &amp; Reference</a> · <a href="../skills-overview/">Skill Development Overview</a> · <a href="../reference-overview/">Reference Overview</a></p>
 
 
 
