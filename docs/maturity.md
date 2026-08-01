@@ -5,7 +5,7 @@
     component can bear in a real deployment: a rock-solid dependency, a usable-but-moving
     target, or an early experiment that may change under you. The rating comes from the
     health of the component's source repository, not its version number. See the levels
-    below, then read [How maturity is judged](#how-maturity-is-judged) for the detail.
+    below, then read the criteria under [Why it's not the version number](#why-its-not-the-version-number) for the detail.
 
 ## The levels
 

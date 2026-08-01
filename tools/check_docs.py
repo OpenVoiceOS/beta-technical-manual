@@ -176,6 +176,11 @@ def _check_link(src: Path, target: str, headings_by_file) -> tuple[bool, str]:
     if not path_part:
         return True, ""
     resolved = (src.parent / unquote(path_part)).resolve()
+    if not resolved.exists() and src.parent.name == "snippets":
+        # snippet fragments are inlined into docs/ pages before link
+        # resolution, so their relative links resolve from docs/, not
+        # from the snippets dir
+        resolved = (src.parent.parent / unquote(path_part)).resolve()
     if not resolved.exists():
         return False, f"file not found: {path_part}"
     if anchor:

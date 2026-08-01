@@ -2,7 +2,7 @@
 # Reusable Workflow Reference: PR Workflows
 
 !!! abstract "In a nutshell"
-    This page documents the shared workflows that gate a pull request: build/install/test matrices, plugin (OPM) detection, ovoscope skill tests, license and repo-health checks, and the language-specific skill, locale, spec, intent-case, and TTS-intelligibility checks. Most post a section to the shared OVOS PR Checks comment (see [PR Checks Comment Pattern](#pr-checks-comment-pattern) below). For version-bump and release workflows, see [Release Workflows](gh-automations-release-workflows.md). For lint, coverage, security scans, and notifications, see [Quality Workflows](gh-automations-quality-workflows.md). Start with the [gh-automations overview](gh-automations-overview.md) for the big picture, or the full [Workflow Reference index](gh-automations-workflows.md).
+    This page documents the shared workflows that gate a pull request: build/install/test matrices, plugin (OPM) detection, ovoscope skill tests, license and repo-health checks, and the language-specific skill, locale, spec, intent-case, and TTS-intelligibility checks. Most post a section to the shared OVOS PR Checks comment (see the [PR Checks Comment Pattern](gh-automations-quality-workflows.md#pr-checks-comment-pattern)). For version-bump and release workflows, see [Release Workflows](gh-automations-release-workflows.md). For lint, coverage, security scans, and notifications, see [Quality Workflows](gh-automations-quality-workflows.md). Start with the [gh-automations overview](gh-automations-overview.md) for the big picture, or the full [Workflow Reference index](gh-automations-workflows.md).
 
 All reusable workflows are in `.github/workflows/` and are called via:
 
@@ -30,7 +30,7 @@ uses: OpenVoiceOS/gh-automations/.github/workflows/<name>.yml@dev
 ---
 ## `build-tests.yml`
 
-Runs build, install, and optionally tests across a configurable matrix of Python versions. Posts a `🔨 Build Tests` section to the PR comment. (The channel-compatibility check lives in [`release-preview.yml`](#release-previewyml), not here.)
+Runs build, install, and optionally tests across a configurable matrix of Python versions. Posts a `🔨 Build Tests` section to the PR comment. (The channel-compatibility check lives in [`release-preview.yml`](gh-automations-release-workflows.md#release-previewyml), not here.)
 
 **Source:** `.github/workflows/build-tests.yml`
 

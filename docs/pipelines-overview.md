@@ -63,7 +63,9 @@ This lets a stateful interceptor that depends on session state claim "yes" / "ne
 
 Such selective plugins are deliberately conservative. They claim only when both the utterance and the session warrant it, and return `None` otherwise, trusting their position rather than competing on a score. Heterogeneous engines share no common score space to rank across anyway.
 
-**Pipeline IDs vs. plugins.** The IDs you list in your `pipeline` config (like `ovos-adapt-pipeline-plugin-high`) are not separate plugins. A confidence-aware plugin registers a single OPM entry point (e.g. `ovos-adapt-pipeline-plugin`), and OVOS derives the `-high`/`-medium`/`-low` matcher stages from it at runtime. Plugins that match at only one confidence level (such as `ovos-converse-pipeline-plugin` or `ovos-common-query-pipeline-plugin`) expose a single bare ID.
+### Pipeline IDs vs. plugins
+
+The IDs you list in your `pipeline` config (like `ovos-adapt-pipeline-plugin-high`) are not separate plugins. A confidence-aware plugin registers a single OPM entry point (e.g. `ovos-adapt-pipeline-plugin`), and OVOS derives the `-high`/`-medium`/`-low` matcher stages from it at runtime. Plugins that match at only one confidence level (such as `ovos-converse-pipeline-plugin` or `ovos-common-query-pipeline-plugin`) expose a single bare ID.
 
 The older short names (`adapt_high`, `common_qa`, …) are **deprecated aliases**. ovos-core still accepts them and rewrites them to the canonical plugin IDs via the `_PIPELINE_MIGRATION_MAP`, so existing configs keep working this way. The bundled default configuration and new configs alike should use the canonical names shown below.
 
