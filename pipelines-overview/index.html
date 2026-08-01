@@ -685,6 +685,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Pipeline Structure">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pipeline-ids-vs-plugins" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pipeline IDs vs. plugins
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1306,6 +1321,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Pipeline Structure">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pipeline-ids-vs-plugins" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pipeline IDs vs. plugins
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1513,7 +1543,8 @@ models when they do); to keep a plugin from initializing at all, uninstall its p
 <p>Ordering is <strong>the arbitration model, not a missing feature</strong> (PIPELINE-1 §6.2). An earlier plugin gets to answer before any later plugin is asked.</p>
 <p>This lets a stateful interceptor that depends on session state claim "yes" / "next" / "resume" / "stop" <em>before</em> a general pipeline plugin would match the bare words. Examples include converse with an open response window, an active persona, OCP holding paused media to <em>resume</em>, and stop.</p>
 <p>Such selective plugins are deliberately conservative. They claim only when both the utterance and the session warrant it, and return <code>None</code> otherwise, trusting their position rather than competing on a score. Heterogeneous engines share no common score space to rank across anyway.</p>
-<p><strong>Pipeline IDs vs. plugins.</strong> The IDs you list in your <code>pipeline</code> config (like <code>ovos-adapt-pipeline-plugin-high</code>) are not separate plugins. A confidence-aware plugin registers a single OPM entry point (e.g. <code>ovos-adapt-pipeline-plugin</code>), and OVOS derives the <code>-high</code>/<code>-medium</code>/<code>-low</code> matcher stages from it at runtime. Plugins that match at only one confidence level (such as <code>ovos-converse-pipeline-plugin</code> or <code>ovos-common-query-pipeline-plugin</code>) expose a single bare ID.</p>
+<h3 id="pipeline-ids-vs-plugins">Pipeline IDs vs. plugins<a class="headerlink" href="#pipeline-ids-vs-plugins" title="Permanent link">&para;</a></h3>
+<p>The IDs you list in your <code>pipeline</code> config (like <code>ovos-adapt-pipeline-plugin-high</code>) are not separate plugins. A confidence-aware plugin registers a single OPM entry point (e.g. <code>ovos-adapt-pipeline-plugin</code>), and OVOS derives the <code>-high</code>/<code>-medium</code>/<code>-low</code> matcher stages from it at runtime. Plugins that match at only one confidence level (such as <code>ovos-converse-pipeline-plugin</code> or <code>ovos-common-query-pipeline-plugin</code>) expose a single bare ID.</p>
 <p>The older short names (<code>adapt_high</code>, <code>common_qa</code>, …) are <strong>deprecated aliases</strong>. ovos-core still accepts them and rewrites them to the canonical plugin IDs via the <code>_PIPELINE_MIGRATION_MAP</code>, so existing configs keep working this way. The bundled default configuration and new configs alike should use the canonical names shown below.</p>
 <hr />
 <h2 id="available-pipeline-components">Available Pipeline Components<a class="headerlink" href="#available-pipeline-components" title="Permanent link">&para;</a></h2>
