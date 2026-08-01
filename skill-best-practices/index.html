@@ -1034,9 +1034,9 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#declare-runtime-requirements" class="md-nav__link">
+  <a href="#handle-missing-resources-at-runtime-not-load-time" class="md-nav__link">
     <span class="md-ellipsis">
-      Declare Runtime Requirements
+      Handle missing resources at runtime, not load time
     </span>
   </a>
   
@@ -1623,9 +1623,9 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#declare-runtime-requirements" class="md-nav__link">
+  <a href="#handle-missing-resources-at-runtime-not-load-time" class="md-nav__link">
     <span class="md-ellipsis">
-      Declare Runtime Requirements
+      Handle missing resources at runtime, not load time
     </span>
   </a>
   
@@ -1802,15 +1802,12 @@ receive follow-up utterances, subclass <code>ConversationalSkill</code> instead 
 </span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>    <span class="c1"># register intents / events here, keep it fast</span>
 </span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>    <span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_load_large_dataset</span><span class="p">,</span> <span class="n">daemon</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
 </span></code></pre></div>
-<h3 id="declare-runtime-requirements">Declare Runtime Requirements<a class="headerlink" href="#declare-runtime-requirements" title="Permanent link">&para;</a></h3>
-<p>Be explicit about what your skill needs (e.g., internet access, a GUI). This allows the <a href="../skill-manager/">Skill Manager</a> to only load your skill when its requirements are met, saving system resources.</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kn">from</span> <span class="nn">ovos_utils.process_utils</span> <span class="kn">import</span> <span class="n">RuntimeRequirements</span>
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>
-</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="k">class</span> <span class="nc">WeatherSkill</span><span class="p">(</span><span class="n">OVOSSkill</span><span class="p">):</span>
-</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>    <span class="nd">@classproperty</span>
-</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>    <span class="k">def</span> <span class="nf">runtime_requirements</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>        <span class="k">return</span> <span class="n">RuntimeRequirements</span><span class="p">(</span><span class="n">requires_internet</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">requires_gui</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-</span></code></pre></div>
+<h3 id="handle-missing-resources-at-runtime-not-load-time">Handle missing resources at runtime, not load time<a class="headerlink" href="#handle-missing-resources-at-runtime-not-load-time" title="Permanent link">&para;</a></h3>
+<p>Do not rely on <code>RuntimeRequirements</code> to gate loading. It is a
+<a href="../skill-runtime-requirements/">deprecated mechanism</a>: with default configuration all
+skills load unconditionally, and the declaration only takes effect when
+<code>skills.use_deferred_loading</code> is enabled. Instead, check for the network, the GUI, or
+other resources inside your handlers and fail gracefully with a spoken error.</p>
 <hr />
 <h2 id="4-error-handling">4. Error Handling<a class="headerlink" href="#4-error-handling" title="Permanent link">&para;</a></h2>
 <h3 id="be-graceful-with-failures">Be Graceful with Failures<a class="headerlink" href="#be-graceful-with-failures" title="Permanent link">&para;</a></h3>
@@ -1823,18 +1820,18 @@ receive follow-up utterances, subclass <code>ConversationalSkill</code> instead 
 <p><strong>Good:</strong> "I'm sorry, I couldn't reach the weather service right now. Please try again later."</p>
 </li>
 </ul>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="k">def</span> <span class="nf">handle_weather_intent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
-</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>    <span class="k">try</span><span class="p">:</span>
-</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_weather</span><span class="p">()</span>
-</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>    <span class="k">except</span> <span class="ne">ConnectionError</span><span class="p">:</span>
-</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">speak_dialog</span><span class="p">(</span><span class="s2">&quot;weather.error&quot;</span><span class="p">)</span>
-</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>        <span class="k">return</span>
-</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">speak_dialog</span><span class="p">(</span><span class="s2">&quot;weather&quot;</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="k">def</span> <span class="nf">handle_weather_intent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>    <span class="k">try</span><span class="p">:</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_weather</span><span class="p">()</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>    <span class="k">except</span> <span class="ne">ConnectionError</span><span class="p">:</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">speak_dialog</span><span class="p">(</span><span class="s2">&quot;weather.error&quot;</span><span class="p">)</span>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>        <span class="k">return</span>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">speak_dialog</span><span class="p">(</span><span class="s2">&quot;weather&quot;</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
 </span></code></pre></div>
 <h3 id="log-informatively">Log Informatively<a class="headerlink" href="#log-informatively" title="Permanent link">&para;</a></h3>
 <p>Use <code>self.log</code> to provide useful information for debugging, but avoid logging sensitive user data or being overly "spammy".</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;fetching weather for </span><span class="si">{</span><span class="n">location</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;weather API request failed&quot;</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;fetching weather for </span><span class="si">{</span><span class="n">location</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;weather API request failed&quot;</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </span></code></pre></div>
 <hr />
 <h2 id="5-gui-and-visuals">5. GUI and Visuals<a class="headerlink" href="#5-gui-and-visuals" title="Permanent link">&para;</a></h2>
@@ -1842,10 +1839,10 @@ receive follow-up utterances, subclass <code>ConversationalSkill</code> instead 
 <p>If your skill has a GUI, test it on both horizontal and vertical screens. Use <a href="../qt5-gui/">Kirigami</a>'s responsive components to ensure it looks good on everything from a small smart speaker to a large TV.</p>
 <h3 id="sync-visuals-with-speech">Sync Visuals with Speech<a class="headerlink" href="#sync-visuals-with-speech" title="Permanent link">&para;</a></h3>
 <p>When using <code>self.gui.show_page()</code>, try to synchronize the visual information with the spoken response. Don't overwhelm the user with too much text on the screen while the assistant is speaking.</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="k">def</span> <span class="nf">handle_weather_intent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
-</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">gui</span><span class="p">[</span><span class="s2">&quot;temperature&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;21°C&quot;</span>
-</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">gui</span><span class="o">.</span><span class="n">show_page</span><span class="p">(</span><span class="s2">&quot;weather.qml&quot;</span><span class="p">,</span> <span class="n">override_idle</span><span class="o">=</span><span class="mi">60</span><span class="p">)</span>
-</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">speak_dialog</span><span class="p">(</span><span class="s2">&quot;weather&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;temperature&quot;</span><span class="p">:</span> <span class="mi">21</span><span class="p">})</span>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="k">def</span> <span class="nf">handle_weather_intent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">gui</span><span class="p">[</span><span class="s2">&quot;temperature&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;21°C&quot;</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">gui</span><span class="o">.</span><span class="n">show_page</span><span class="p">(</span><span class="s2">&quot;weather.qml&quot;</span><span class="p">,</span> <span class="n">override_idle</span><span class="o">=</span><span class="mi">60</span><span class="p">)</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">speak_dialog</span><span class="p">(</span><span class="s2">&quot;weather&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;temperature&quot;</span><span class="p">:</span> <span class="mi">21</span><span class="p">})</span>
 </span></code></pre></div>
 <hr />
 <p><em>Source code: <a href="https://github.com/OpenVoiceOS/ovos-workshop">OpenVoiceOS/ovos-workshop</a>.</em></p>
