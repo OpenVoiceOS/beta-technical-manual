@@ -11,10 +11,10 @@ Writing a plugin instead of choosing one? Jump to [Writing your own](#writing-yo
 TTS plugins are responsible for converting text into audio for playback.
 
 ```mermaid
-flowchart LR
-    A[sentence] --> B["get_tts(sentence, wav_file)"]
+flowchart TD
+    A[sentence] --> B["get_tts(sentence,<br/>wav_file)"]
     B --> C["audio file (audio_ext)"]
-    C --> D["cache, keyed by sentence hash"]
+    C --> D["cache, keyed by<br/>sentence hash"]
     D --> E["play_wav/ogg/mp3_cmdline"]
     B --> F[phonemes]
     F --> G["viseme()"]
@@ -618,17 +618,17 @@ Two different mechanisms both get audio to the user faster. They are often both 
 "streaming", so the manual names them apart:
 
 ```mermaid
-flowchart LR
-    subgraph Chunking["Sentence chunking - works with every plugin"]
-        A1[Long reply] --> A2["preprocess_sentence splits into sentences"]
+flowchart TD
+    subgraph Chunking["Sentence chunking (all plugins)"]
+        A1[Long reply] --> A2["preprocess_sentence<br/>splits into sentences"]
         A2 --> A3["get_tts() per sentence"]
-        A3 --> A4[First sentence plays while rest still synthesizes]
+        A3 --> A4["First sentence plays<br/>while rest synthesizes"]
     end
     subgraph Streaming["Real streaming - pre-alpha"]
-        B1[sentence] --> B2["stream_tts() yields audio chunks"]
+        B1[sentence] --> B2["stream_tts() yields<br/>audio chunks"]
         B2 --> B3{"tts.enable_streaming?"}
-        B3 -->|true| B4[ovos-audio plays chunks as they arrive]
-        B3 -->|false| B5[Write full wav_file, then play: queued path]
+        B3 -->|true| B4["ovos-audio plays<br/>chunks as they arrive"]
+        B3 -->|false| B5["Write full wav_file,<br/>then play: queued path"]
     end
 ```
 

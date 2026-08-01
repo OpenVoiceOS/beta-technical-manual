@@ -65,8 +65,8 @@ The loading process follows this flow:
 ```mermaid
 flowchart LR
     A["load_plugin_skills()"] --> B["find_skill_plugins()<br/>{skill_id: SkillClass}"]
-    B --> C["_get_plugin_skill_loader(skill_id, skill_class)<br/>build a PluginSkillLoader"]
-    C --> D["_load_plugin_skill(skill_id, skill_class)<br/>instantiate & start the skill"]
+    B --> C["_get_plugin_skill_<br/>loader()<br/>build a<br/>PluginSkillLoader"]
+    C --> D["_load_plugin_skill()<br/>instantiate &<br/>start the skill"]
 ```
 
 *Diagram: skill loading runs left to right from load_plugin_skills, through find_skill_plugins and building a PluginSkillLoader, to _load_plugin_skill instantiating and starting the skill.*

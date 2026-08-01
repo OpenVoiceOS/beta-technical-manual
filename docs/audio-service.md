@@ -89,10 +89,10 @@ streams. See the **Two independent subsystems** note at the top of this page.
 ### Subsystem 1 — TTS / sound playback (always on, OVOS-AUDIO-1 §3)
 
 ```mermaid
-flowchart LR
-    Bus[MessageBus] -->|"ovos.utterance.speak (legacy: speak)"| DXForm["dialog-transformers §3.5"]
+flowchart TD
+    Bus[MessageBus] -->|"ovos.utterance.speak<br/>(legacy: speak)"| DXForm["dialog-transformers<br/>§3.5"]
     DXForm --> TTS[TTS Plugin]
-    TTS --> TXForm["tts-transformers §3.6"]
+    TTS --> TXForm["tts-transformers<br/>§3.6"]
     Bus -->|play_sound| Queue[TTS.queue]
     TXForm --> Queue
     Queue --> Thread[PlaybackThread]

@@ -74,13 +74,13 @@ __patch                (in-memory overlay applied last)
 ```
 
 ```mermaid
-flowchart LR
-    A[MycroftDefaultConfig<br/>bundled default] --> B[RemoteConf<br/>backend/paired-server cache]
-    B --> C[OvosDistributionConfig<br/>/usr/share/mycroft/mycroft.conf]
-    C --> D[MycroftSystemConfig<br/>/etc/mycroft/mycroft.conf]
-    D --> E[MycroftUserConfig<br/>~/.config/mycroft/mycroft.conf]
-    E --> F[__patch<br/>in-memory overlay]
-    F --> W[Wins: highest priority]
+flowchart TD
+    A["MycroftDefaultConfig<br/>bundled default"] --> B["RemoteConf<br/>backend/paired cache"]
+    B --> C["OvosDistributionConfig<br/>/usr/share/mycroft/..."]
+    C --> D["MycroftSystemConfig<br/>/etc/mycroft/..."]
+    D --> E["MycroftUserConfig<br/>~/.config/mycroft/..."]
+    E --> F["__patch<br/>in-memory overlay"]
+    F --> W["Wins: highest<br/>priority"]
 ```
 
 *Diagram:* The merge order starts at the bundled default config and ends at the in-memory patch, which wins as the highest priority over remote, distribution, system, and user layers.

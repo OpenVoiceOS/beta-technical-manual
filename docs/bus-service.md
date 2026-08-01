@@ -319,15 +319,15 @@ The canonical legacy to spec topic map lives in the `NamespaceTranslator` from
 sequenceDiagram
     participant Producer
     participant Bus as ovos-messagebus
-    participant Client as MessageBusClient (any process)
-    participant LegacyHandler as handler on legacy topic
-    participant SpecHandler as handler on ovos.* topic
+    participant Client as BusClient<br/>(any process)
+    participant LegacyHandler as legacy topic<br/>handler
+    participant SpecHandler as ovos.* topic<br/>handler
 
     Producer->>Bus: emit(recognizer_loop:utterance)
-    Bus->>Client: broadcast recognizer_loop:utterance
-    Client->>Client: on_message: NamespaceTranslator lookup
-    Client->>LegacyHandler: dispatch recognizer_loop:utterance
-    Client->>SpecHandler: locally re-dispatch ovos.utterance.handle
+    Bus->>Client: broadcast<br/>recognizer_loop:utterance
+    Client->>Client: on_message:<br/>NamespaceTranslator lookup
+    Client->>LegacyHandler: dispatch<br/>recognizer_loop:utterance
+    Client->>SpecHandler: locally re-dispatch<br/>ovos.utterance.handle
 ```
 
 *Diagram: a producer emits the legacy recognizer_loop:utterance topic, the bus broadcasts it unchanged, and each receiving MessageBusClient uses the NamespaceTranslator to dispatch it to both the legacy handler and, re-dispatched locally, the spec ovos.utterance.handle handler.*

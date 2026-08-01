@@ -43,12 +43,12 @@ You can swap implementations without touching the rest:
 - **Binary data handler**: how binary payloads (e.g. audio) move over the mesh.
 
 ```mermaid
-flowchart LR
-    Kitchen[Kitchen satellite] -- HiveMind protocol --> Listener["hivemind_listener\n:5678"]
-    Bedroom[Bedroom satellite] -- HiveMind protocol --> Listener
-    Restroom[Restroom satellite] -- HiveMind protocol --> Listener
-    Listener --> Core["hivemind-core\n(auth + permissions)"]
-    Core --> Agent["ovos-core\n(hivemind-ovos-agent-plugin)"]
+flowchart TD
+    Kitchen["Kitchen<br/>satellite"] -- HiveMind protocol --> Listener["hivemind_listener<br/>:5678"]
+    Bedroom["Bedroom<br/>satellite"] -- HiveMind protocol --> Listener
+    Restroom["Restroom<br/>satellite"] -- HiveMind protocol --> Listener
+    Listener --> Core["hivemind-core<br/>(auth + permissions)"]
+    Core --> Agent["ovos-core<br/>(hivemind-ovos-<br/>agent-plugin)"]
 ```
 
 *Diagram:* The flow starts at the kitchen, bedroom, and restroom satellites and ends at ovos-core, and all three satellites branch into the shared hivemind_listener before converging through hivemind-core.

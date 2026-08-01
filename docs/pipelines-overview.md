@@ -38,12 +38,12 @@ When an utterance arrives, OVOS walks the pipeline in order and hands the uttera
 *   **Low Confidence**: [Fallback](fallback-pipeline.md) mechanisms for ambiguous or unrecognized inputs.
 
 ```mermaid
-flowchart LR
-    U[Utterance] --> H["High Confidence\n(e.g. Padatious high)"]
+flowchart TD
+    U[Utterance] --> H["High Confidence<br/>(e.g. Padatious high)"]
     H -- claims --> D1[Dispatch to skill]
     H -- no match --> M["Medium Confidence"]
     M -- claims --> D1
-    M -- no match --> L["Low Confidence\n(Fallback)"]
+    M -- no match --> L["Low Confidence<br/>(Fallback)"]
     L -- claims --> D1
     L -- no match --> UM[ovos.intent.unmatched]
 ```

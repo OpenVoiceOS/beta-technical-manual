@@ -27,32 +27,32 @@ The sequence diagram below traces the same eight stages across the services and 
 
 ```mermaid
 sequenceDiagram
-    participant Mic as Microphone
-    participant Listener as ovos-dinkum-listener
-    participant Bus as messagebus
-    participant Core as ovos-core (IntentService)
+    participant Mic as Mic
+    participant Listener as Listener
+    participant Bus as Bus
+    participant Core as Core (IntentSvc)
     participant Skill as Skill
     participant Audio as ovos-audio
-    participant Speakers as Speakers / GUI
+    participant Speakers as Speakers/GUI
 
     Mic->>Listener: raw audio stream
-    Listener->>Listener: wake word + VAD detect
-    Listener->>Bus: ovos.listener.record.started
+    Listener->>Listener: wake word + VAD<br/>detect
+    Listener->>Bus: ovos.listener.<br/>record.started
     Listener->>Listener: STT transcription
-    Listener->>Bus: ovos.listener.record.ended
+    Listener->>Bus: ovos.listener.<br/>record.ended
     Listener->>Bus: ovos.utterance.handle
     Bus->>Core: ovos.utterance.handle
-    Core->>Core: utterance + metadata transformers
-    Core->>Core: pipeline match (stop → converse → OCP → padatious → adapt → fallback)
+    Core->>Core: utterance + metadata<br/>transformers
+    Core->>Core: pipeline match<br/>(stop → converse → OCP →<br/>padatious → adapt → fallback)
     Core->>Bus: ovos.intent.matched
-    Core->>Bus: ovos.intent.handler.start
+    Core->>Bus: ovos.intent.<br/>handler.start
     Bus->>Skill: skill_id:intent_name
     Skill->>Skill: intent handler logic
     Skill->>Bus: ovos.utterance.speak
-    Core->>Bus: ovos.intent.handler.complete
+    Core->>Bus: ovos.intent.<br/>handler.complete
     Bus->>Audio: ovos.utterance.speak
-    Audio->>Audio: dialog transformer + TTS + tts-transformer
-    Audio->>Speakers: play WAV / update GUI
+    Audio->>Audio: dialog transformer +<br/>TTS + tts-transformer
+    Audio->>Speakers: play WAV /<br/>update GUI
     Core->>Bus: ovos.utterance.handled
 ```
 

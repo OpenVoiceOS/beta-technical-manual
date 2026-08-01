@@ -98,14 +98,14 @@ default) auto-enables the main wake word (`listener.wake_word`) and the stand-up
 
 ```mermaid
 flowchart TD
-    A[Hotword entry in mycroft.conf] --> B{"listen: true, or matches listener.wake_word?"}
-    B -->|yes| C["Listen word: starts VAD/STT recording"]
-    B -->|no| D{"wakeup: true, or matches listener.stand_up_word?"}
-    D -->|yes| E["Wakeup word: exits sleep mode"]
+    A["Hotword entry in<br/>mycroft.conf"] --> B{"listen: true, or<br/>matches<br/>listener.wake_word?"}
+    B -->|yes| C["Listen word: starts<br/>VAD/STT recording"]
+    B -->|no| D{"wakeup: true, or<br/>matches<br/>listener.stand_up_word?"}
+    D -->|yes| E["Wakeup word: exits<br/>sleep mode"]
     D -->|no| F{"stopword: true?"}
-    F -->|yes| G["Stop word: ends free RECORDING mode"]
+    F -->|yes| G["Stop word: ends free<br/>RECORDING mode"]
     F -->|no| H{"active: true?"}
-    H -->|yes| I["Plain hotword: sound / bus event, no STT"]
+    H -->|yes| I["Plain hotword: sound /<br/>bus event, no STT"]
 ```
 
 *Diagram:* The flow starts at the hotword entry in mycroft.conf and ends at one of four outcomes, and it branches in sequence through the listen, wakeup, stopword, and active checks to pick the matching hotword type.
@@ -169,9 +169,9 @@ audio and suppress false detections before any callback runs. Verifiers implemen
 
 ```mermaid
 flowchart LR
-    A[Wake word engine fires] --> B["HotWordVerifier.verify()"]
+    A[Wake word engine fires] --> B["HotWordVerifier.<br/>verify()"]
     B -->|"False"| C[Detection suppressed]
-    B -->|"True, or exception raised (fail open)"| D[Detection proceeds, callback runs]
+    B -->|"True, or exception<br/>raised (fail open)"| D["Detection proceeds,<br/>callback runs"]
 ```
 
 *Diagram:* The flow starts when the wake word engine fires and ends with the detection either suppressed or proceeding to run the callback, and it branches on the HotWordVerifier.verify() result, failing open on exception.

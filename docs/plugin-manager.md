@@ -34,10 +34,10 @@ all installed plugins of a given type at runtime. No manual registration is requ
 
 ```mermaid
 flowchart LR
-    A["Entry point<br/>e.g. opm.stt"] --> B["find_*_plugins()<br/>importlib.metadata.entry_points()"]
+    A["Entry point<br/>e.g. opm.stt"] --> B["find_*_plugins()<br/>via entry_points()"]
     B --> C["load_*_plugin(name)"]
-    C --> D["Factory<br/>e.g. OVOSSTTFactory.create()"]
-    D --> E[Configured plugin instance]
+    C --> D["Factory<br/>e.g. STTFactory.create()"]
+    D --> E["Configured<br/>plugin instance"]
 ```
 
 *Diagram:* The flow starts at the entry point declaration and ends at a configured plugin instance, passing through plugin discovery, loading, and the factory that builds it.

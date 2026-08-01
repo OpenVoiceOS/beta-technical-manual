@@ -48,12 +48,12 @@ The speech service is the "ears" of OpenVoiceOS. It continuously listens to the 
 ## Architecture
 
 ```mermaid
-flowchart LR
+flowchart TD
     Mic[Microphone] -->|audio| VADWW[VAD / Wake Word]
     VADWW -->|trigger| Rec[Recording]
-    Rec -->|audio| XForm["Audio-transformer chain (TRANSFORM-1 §3.1)"]
+    Rec -->|audio| XForm["Audio-transformer<br/>chain (TRANSFORM-1<br/>§3.1)"]
     XForm --> STT[STT Plugin]
-    STT -->|text, emits ovos.utterance.handle| Bus[MessageBus]
+    STT -->|"text, emits<br/>ovos.utterance.handle"| Bus[MessageBus]
 ```
 
 *Diagram:* The flow starts at the microphone and ends at the message bus, and it routes audio through the audio-transformer chain before the STT plugin converts it to text.

@@ -39,13 +39,13 @@ class MyMemory(AgentContextManager):  # all three methods are abstract
 `AgentMessage` (`role`, `content`, optional `tool_calls` / `tool_call_id` / `name`) is the canonical message type, from `ovos_plugin_manager.templates.agents`. The persona calls `build_conversation_context` before each turn and `update_history` after each exchange.
 
 ```mermaid
-flowchart LR
-    U[Utterance] --> BCC[build_conversation_context]
-    H[get_history: stored session history] --> BCC
-    M[Memory plugin: summaries / retrieved snippets] --> BCC
-    BCC --> ML["Message list (system? + history + USER utterance)"]
-    ML --> CE[Chat engine: continue_chat]
-    CE --> UH[update_history: append new turns]
+flowchart TD
+    U["Utterance"] --> BCC["build_conversation_<br/>context"]
+    H["get_history:<br/>stored session history"] --> BCC
+    M["Memory plugin:<br/>summaries / snippets"] --> BCC
+    BCC --> ML["Message list<br/>(system? + history +<br/>USER utterance)"]
+    ML --> CE["Chat engine:<br/>continue_chat"]
+    CE --> UH["update_history:<br/>append new turns"]
 ```
 
 *Diagram:* The flow starts at the utterance plus stored history and memory, builds a message list via build_conversation_context, and ends at update_history appending the new turns after the chat engine replies.

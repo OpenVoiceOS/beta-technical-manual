@@ -34,12 +34,12 @@ The pieces:
      `simple`).
 
 ```mermaid
-flowchart LR
-    A[OCP pipeline / OCP skills<br/>search results] --> B[OCP audio plugin]
-    B --> C[Queue + player state]
-    C --> D[Stream extractors]
-    D --> E[MPRIS]
-    D --> F[Audio backend<br/>mpv / vlc / simple]
+flowchart TD
+    A["OCP pipeline / skills<br/>search results"] --> B["OCP audio plugin"]
+    B --> C["Queue +<br/>player state"]
+    C --> D["Stream extractors"]
+    D --> E["MPRIS"]
+    D --> F["Audio backend<br/>mpv / vlc / simple"]
 ```
 
 *Diagram:* The flow starts at OCP pipeline and skill search results and ends at playback, and the stream extractors branch output to either MPRIS or the mpv/vlc/simple audio backend.

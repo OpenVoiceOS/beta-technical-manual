@@ -249,12 +249,12 @@ does not include a log-shipping client.
 ## Backup and restore
 
 ```mermaid
-flowchart LR
-    Backup["cp ~/.config/mycroft\n+ ~/.local/share/mycroft"] --> Store[Store backup\nsecurely]
-    Store -.-> Install[Install OVOS\non new machine]
-    Install --> Stop["systemctl --user stop\novos.service"]
-    Stop --> CopyBack[Copy config/data\nback into place]
-    CopyBack --> Restart["systemctl --user start\novos.service"]
+flowchart TD
+    Backup["cp ~/.config/mycroft<br/>+ ~/.local/share/mycroft"] --> Store[Store backup<br/>securely]
+    Store -.-> Install[Install OVOS<br/>on new machine]
+    Install --> Stop["systemctl --user stop<br/>ovos.service"]
+    Stop --> CopyBack[Copy config/data<br/>back into place]
+    CopyBack --> Restart["systemctl --user start<br/>ovos.service"]
     Restart --> Probe[Re-run readiness probe]
 ```
 
@@ -355,10 +355,10 @@ regressed rather than the whole stack.
 
 ```mermaid
 flowchart LR
-    Freeze["Freeze known-good packages\n(uv pip freeze)"] --> Canary[Upgrade one\ncanary device]
-    Canary --> Verify{Readiness probe +\nreal voice check pass?}
-    Verify -- yes --> Fleet[Roll the same command\nout to the rest of the fleet]
-    Verify -- no --> Rollback["--force-reinstall known-good,\nrestart ovos.service"]
+    Freeze["Freeze known-good<br/>packages<br/>(uv pip freeze)"] --> Canary[Upgrade one<br/>canary device]
+    Canary --> Verify{Readiness probe +<br/>real voice check pass?}
+    Verify -- yes --> Fleet[Roll same command<br/>out to fleet]
+    Verify -- no --> Rollback["--force-reinstall<br/>known-good,<br/>restart ovos.service"]
 ```
 
 *Diagram:* The flow starts at freezing known-good packages and ends at either the fleet rollout or a rollback, and it branches on whether the canary device passes its readiness probe and real voice check.

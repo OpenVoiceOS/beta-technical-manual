@@ -34,20 +34,20 @@ The plugin consists of two main components:
 
 ```mermaid
 sequenceDiagram
-    participant U as User (Spanish)
+    participant U as User (ES)
     participant STT
-    participant UT as Utterance Transformer
+    participant UT as UtteranceXForm
     participant Core as ovos-core
-    participant Skill as Time Skill (English)
-    participant DT as Dialog Transformer
+    participant Skill as Time Skill (EN)
+    participant DT as DialogXForm
     participant TTS
 
     U->>STT: "¿Qué hora es?"
     STT->>UT: text (Spanish)
-    UT->>Core: "What time is it?" (translated to English)
+    UT->>Core: "What time is it?"<br/>(translated to English)
     Core->>Skill: match TimeIntent
     Skill->>DT: "The time is 10:00 AM"
-    DT->>TTS: "Son las 10:00 AM" (translated back to Spanish)
+    DT->>TTS: "Son las 10:00 AM"<br/>(translated back to Spanish)
     TTS->>U: speaks Spanish response
 ```
 

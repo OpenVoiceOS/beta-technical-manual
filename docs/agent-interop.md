@@ -6,20 +6,20 @@
 OVOS exposes its speech, translation, and reasoning services as agent tools via two discovery and calling protocols: **MCP** (Model Context Protocol) and **UTCP** (Universal Tool Calling Protocol). It also implements bidirectional **A2A** (Agent-to-Agent) bridging.
 
 ```mermaid
-flowchart LR
+flowchart TD
     subgraph OVOS Service Servers
         STT[STT Server]
         TTS[TTS Server]
         TX[Translate Server]
         PS[Persona Server]
     end
-    Ext[External MCP/UTCP client<br/>e.g. Claude Desktop] -->|/mcp, /utcp| STT
+    Ext["External MCP/UTCP<br/>client<br/>e.g. Claude Desktop"] -->|/mcp, /utcp| STT
     Ext -->|/mcp, /utcp| TTS
     Ext -->|/mcp, /utcp| TX
-    Ext -->|/mcp, /utcp, /tools/*| PS
-    PS -->|/.well-known/agent.json, tasks/send| A2AClient[External A2A client]
-    ExtA2A[External A2A server] -->|ovos-a2a-solver ChatEngine| Persona[OVOS persona]
-    ExtMCP[External MCP/UTCP server] -->|ovos-mcp-toolbox / ovos-utcp-toolbox| Loop[Agentic loop ToolBox]
+    Ext -->|"/mcp, /utcp,<br/>/tools/*"| PS
+    PS -->|"/.well-known/<br/>agent.json,<br/>tasks/send"| A2AClient["External<br/>A2A client"]
+    ExtA2A["External<br/>A2A server"] -->|"ovos-a2a-solver<br/>ChatEngine"| Persona[OVOS persona]
+    ExtMCP["External MCP/UTCP<br/>server"] -->|"ovos-mcp-toolbox /<br/>ovos-utcp-toolbox"| Loop["Agentic loop<br/>ToolBox"]
 ```
 
 *Diagram:* The flow starts at an external MCP/UTCP client or server and ends at OVOS's service servers or agentic loop ToolBox, branching between the persona server's A2A client link and the OVOS-persona A2A solver path.

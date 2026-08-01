@@ -84,12 +84,12 @@ own walkthrough before the chronological per-audience lists below.
 
 ```mermaid
 flowchart LR
-    A["2024-03\nOCP -> ovos-media\nconfig split"] --> B["2024-09\novos-utils 0.1.0\ngutting"]
-    B --> C["2025-06-07/08\novos-workshop\n4.0.0 -> 7.0.0"]
-    C --> D["2025-06-16\novos-config 2.0.0\npipeline renames"]
-    D --> E["2026-01\nopm 2.0\nwake-word signature"]
-    E --> F["2026-04-08\nCommonQuerySkill\nremoved"]
-    F --> G["2026-06-25\nbus-client dual-emit\nbridge + transformer flip"]
+    A["2024-03<br/>OCP -> ovos-media<br/>config split"] --> B["2024-09<br/>ovos-utils 0.1.0<br/>gutting"]
+    B --> C["2025-06-07/08<br/>ovos-workshop<br/>4.0.0 -> 7.0.0"]
+    C --> D["2025-06-16<br/>ovos-config 2.0.0<br/>pipeline renames"]
+    D --> E["2026-01<br/>opm 2.0<br/>wake-word signature"]
+    E --> F["2026-04-08<br/>CommonQuerySkill<br/>removed"]
+    F --> G["2026-06-25<br/>bus-client dual-emit<br/>bridge +<br/>transformer flip"]
 ```
 
 *Diagram: the OCP-to-ovos-media split, the ovos-utils gutting, the ovos-workshop

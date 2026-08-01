@@ -170,15 +170,15 @@ fully local, privacy-preserving conversational agents:
 Entry point: `opm.pipeline = ovos-persona-pipeline-plugin`
 
 ```mermaid
-flowchart LR
+flowchart TD
     U[Utterance] --> PS[PersonaService]
-    PS -->|match_high: summon/release/list/check/ask| MI[Persona management intent?]
+    PS -->|"match_high:<br/>summon/release/<br/>list/check/ask"| MI[Persona mgmt intent?]
     MI -->|matched| R1[Handle intent]
-    MI -->|no match, persona active| ML[match_low]
-    PS -->|match_medium: keyword fallback| MM[Summon/ask keyword match]
-    ML -->|handle_fallback + default_persona| DP[default_persona]
+    MI -->|no match,<br/>persona active| ML[match_low]
+    PS -->|"match_medium:<br/>keyword fallback"| MM[Summon/ask keyword match]
+    ML -->|handle_fallback +<br/>default_persona| DP[default_persona]
     DP --> H1[handlers, in order]
-    H1 -->|first non-None response| A[Answer]
+    H1 -->|first non-None<br/>response| A[Answer]
 ```
 
 *Diagram:* The flow starts at the utterance and ends at the answer, branching between a matched persona-management intent, a keyword-matched summon/ask, and a fallback through default_persona's handlers.

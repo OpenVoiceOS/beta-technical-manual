@@ -52,14 +52,14 @@ Each matcher filters registered fallbacks with `range.start < priority ≤ range
 ## How It Works
 
 ```mermaid
-flowchart LR
-    U["Utterance\n(all other matchers failed)"] --> H["-high\n(0 < p ≤ 5)"]
-    H -- no willing skill --> M["-medium\n(5 < p ≤ 90)"]
-    M -- no willing skill --> L["-low\n(90 < p ≤ 101)"]
-    H -- willing skill --> D["ovos.skills.fallback.{skill_id}.request"]
+flowchart TD
+    U["Utterance<br/>(all matchers failed)"] --> H["-high<br/>(0 < p ≤ 5)"]
+    H -- no willing skill --> M["-medium<br/>(5 < p ≤ 90)"]
+    M -- no willing skill --> L["-low<br/>(90 < p ≤ 101)"]
+    H -- willing skill --> D["ovos.skills.fallback.<br/>{skill_id}.request"]
     M -- willing skill --> D
     L -- willing skill --> D
-    L -- no willing skill --> N["ovos.intent.unmatched"]
+    L -- no willing skill --> N["ovos.intent.<br/>unmatched"]
 ```
 
 *Diagram: an utterance that failed all other matchers is tried against high, then medium, then low priority fallback skills, dispatching to the first willing skill, or ending as ovos.intent.unmatched if none accept it.*
