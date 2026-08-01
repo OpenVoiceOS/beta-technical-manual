@@ -10,7 +10,7 @@ on:
 
 jobs:
   links-and-json:
-    name: Links + JSON fences
+    name: Links + JSON fences + PyPI names
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -23,6 +23,13 @@ jobs:
         run: |
           python3 tools/check_docs.py links
           python3 tools/check_docs.py json
+
+      # Plugin IDs, repository names and pip distribution names are three
+      # different things in this ecosystem, and the docs have shipped
+      # `pip install <plugin-id>` commands that 404. Every lookup that cannot
+      # reach PyPI is skipped, so a network outage cannot fail the build.
+      - name: Check documented pip packages exist on PyPI
+        run: python3 tools/check_docs.py packages
 
   strict-build:
     name: Strict mkdocs build

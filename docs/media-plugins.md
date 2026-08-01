@@ -193,8 +193,11 @@ Then select it in your audio/media backend config. See [Media playback: legacy v
   `ovos_cli`).
 
 ```bash
-pip install ovos-media-plugin-cli
+pip install git+https://github.com/OpenVoiceOS/ovos-media-plugin-cli
 ```
+
+There is no PyPI release yet, matching its Alpha rating above — install it from git until
+there is one.
 
 Then select it in your audio/media backend config, optionally setting the `command` to
 a specific CLI player. See [Media playback: legacy vs. ovos-media](ovos-media.md).

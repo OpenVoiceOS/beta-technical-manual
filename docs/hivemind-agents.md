@@ -90,8 +90,8 @@ By default it serves the local `ovos-core` via `hivemind-ovos-agent-plugin` (con
 issued in step 1. This step makes everything else work:
 
 ```bash
-pip install hivemind-websocket-client
-hivemind-client set-identity    # stores the access key / host for this node
+pip install hivemind-bus-client   # repo name is hivemind-websocket-client
+hivemind-client set-identity      # stores the access key / host for this node
 ```
 
 After `set-identity`, clients (and the [solver](#using-hivemind-as-a-solver) below) can connect
@@ -161,7 +161,7 @@ For a step-by-step build of a server-plus-satellites deployment, see [Satellites
 
 A server is only useful once something connects to it. On the client side:
 
-- **[`hivemind-websocket-client`](https://github.com/JarbasHiveMind/hivemind-websocket-client)**: the client library and the `hivemind-client` CLI (`set-identity`, send utterances, and more).
+- **[`hivemind-websocket-client`](https://github.com/JarbasHiveMind/hivemind-websocket-client)**: the client library and the `hivemind-client` CLI (`set-identity`, send utterances, and more). Installs as `hivemind-bus-client` — the repository and the distribution have different names.
 - **[`hivemind-mic-satellite`](https://github.com/JarbasHiveMind/hivemind-mic-satellite)**: a thin device that only does wake word and microphone capture. STT and TTS run server-side.
 - **[`hivemind-listener`](https://github.com/JarbasHiveMind/hivemind-listener)**: the server-side audio entry point that performs STT/TTS for audio satellites, with binary audio moving over the mesh.
 

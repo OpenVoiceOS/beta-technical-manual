@@ -11,6 +11,11 @@ json: []
 # check_docs.py parses leniently: comments/trailing commas stripped, then
 # accepted standalone or wrapped in `{ }` as a fragment.
 
+# Distribution names a `pip install` in the docs uses that PyPI does not know.
+# Only for names that are correct despite the 404 — never to paper over a wrong
+# package name, which is the bug this check exists to catch.
+packages: []
+
 python_imports:
   - module: ovos_media_classifier
     reason: "docs/media-plugins.md references ovos-media-classifier (real top-level exports KeywordMediaClassifier/load_media_classifier, verified); optional package not in the minimal CI python-imports install set."

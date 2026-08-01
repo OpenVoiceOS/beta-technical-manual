@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Doc-drift checker for the OVOS Technical Manual (mkdocs-material site).
 
-Subcommands: links, json, python-imports, signatures, all
+Subcommands: links, json, python-imports, signatures, packages, all
 
 Stdlib only (yaml is optional, only used to validate the workflow file
 separately, not by this script).
@@ -17,6 +17,7 @@ import re
 import subprocess
 import sys
 from pathlib import Path
+from typing import Optional
 from urllib.parse import unquote
 
 DOCS_DIR = Path("docs")
@@ -62,6 +63,7 @@ def load_allowlist() -> dict:
     except Exception:
         data = _naive_yaml_parse(ALLOWLIST_PATH.read_text())
     data.setdefault("json", [])
+    data.setdefault("packages", [])
     data.setdefault("python_imports", [])
     data.setdefault("placeholder_modules", [])
     data.setdefault("signatures", [])
@@ -400,6 +402,103 @@ def check_python_imports(allowlist) -> tuple[int, int, list[str]]:
 
 
 # ---------------------------------------------------------------------------
+# Check: packages
+# ---------------------------------------------------------------------------
+
+#: pip flags whose next token is a value, not a package to look up.
+_PIP_VALUE_FLAGS = {"-c", "--constraint", "-r", "--requirement", "-i", "--index-url",
+                    "--extra-index-url", "-t", "--target", "--prefix", "--find-links",
+                    "-f", "--python", "-p"}
+
+PIP_INSTALL_RE = re.compile(r"^\s*(?:sudo\s+)?(?:uv\s+)?pip\d?\s+install\s+(?P<args>.+)$")
+
+
+def _pip_targets(body: str):
+    """Yield (package_name, rel_lineno) for every pip install in a shell fence.
+
+    Only plain distribution names are returned. A target that is a path, a URL, a
+    git ref, a requirements file or a shell variable is skipped: those are not
+    names PyPI can be asked about.
+    """
+    for i, line in enumerate(body.splitlines(), start=1):
+        line = line.split("#", 1)[0]
+        m = PIP_INSTALL_RE.match(line)
+        if not m:
+            continue
+        skip_value = False
+        for tok in m.group("args").split():
+            tok = tok.strip("\"'")
+            if skip_value:
+                skip_value = False
+                continue
+            if tok in _PIP_VALUE_FLAGS:
+                skip_value = True
+                continue
+            if tok.startswith("-") or tok in (".", ".[dev]"):
+                continue
+            if any(c in tok for c in "/\\$<>|{}") or tok.startswith("git+"):
+                continue
+            name = re.split(r"[\[=<>!~;]", tok)[0].strip()
+            if not re.fullmatch(r"[A-Za-z][A-Za-z0-9._-]*[A-Za-z0-9]", name or ""):
+                continue
+            yield name, i
+
+
+def _pypi_exists(name: str) -> Optional[bool]:
+    """True/False if PyPI answered, None if the network did not."""
+    import urllib.error
+    import urllib.request
+    url = f"https://pypi.org/pypi/{name}/json"
+    try:
+        with urllib.request.urlopen(url, timeout=15) as r:
+            return r.status == 200
+    except urllib.error.HTTPError as e:
+        if e.code == 404:
+            return False
+        return None
+    except Exception:
+        return None
+
+
+def check_packages(allowlist) -> tuple[int, int, list[str]]:
+    """Every `pip install <name>` in the docs must name a real PyPI project.
+
+    Plugin IDs and repository names routinely differ from the distribution that
+    provides them (the padatious pipeline plugin installs as `ovos-padatious`),
+    and the docs used to tell readers to install names that 404.
+    """
+    failures: list[str] = []
+    passed = 0
+    allowed = {a.get("package") for a in allowlist.get("packages", [])}
+    seen: dict[str, Optional[bool]] = {}
+    offline = 0
+
+    for f in all_md_files():
+        text = f.read_text(errors="replace")
+        for lang, body, lineno, skip in iter_fences(text):
+            if lang.lower() not in ("bash", "sh", "shell", "console") or skip:
+                continue
+            for name, rel in _pip_targets(body):
+                if name in allowed:
+                    passed += 1
+                    continue
+                if name not in seen:
+                    seen[name] = _pypi_exists(name)
+                exists = seen[name]
+                if exists is None:
+                    offline += 1
+                    continue
+                if exists:
+                    passed += 1
+                else:
+                    failures.append(
+                        f"{f}:{lineno + rel - 1}: `pip install {name}` -> no such project on PyPI")
+    if offline:
+        print(f"  (note: {offline} lookup(s) skipped, PyPI unreachable)")
+    return passed, len(failures), failures
+
+
+# ---------------------------------------------------------------------------
 # Check: signatures (best effort)
 # ---------------------------------------------------------------------------
 
@@ -519,7 +618,8 @@ def _report(name: str, passed: int, failed: int, failures: list[str]) -> bool:
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("check", choices=["links", "json", "python-imports", "signatures", "all"])
+    parser.add_argument("check", choices=["links", "json", "python-imports", "signatures",
+                                          "packages", "all"])
     args = parser.parse_args()
 
     allowlist = load_allowlist()
@@ -534,6 +634,9 @@ def main():
     if args.check in ("python-imports", "all"):
         p, n, fails = check_python_imports(allowlist)
         ok &= _report("python-imports", p, n, fails)
+    if args.check in ("packages", "all"):
+        p, n, fails = check_packages(allowlist)
+        ok &= _report("packages", p, n, fails)
     if args.check in ("signatures", "all"):
         p, n, fails = check_signatures(allowlist)
         ok &= _report("signatures", p, n, fails)
