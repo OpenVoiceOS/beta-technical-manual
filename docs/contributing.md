@@ -11,7 +11,7 @@
 Every OVOS repository publishes through the same shared pipeline, described in full on the
 [gh-automations](gh-automations-overview.md) page:
 
-1. **Branch**: work happens on a feature branch, not directly on `dev`.
+1. **Branch**: work happens on a feature branch, not directly on `dev`. Name the branch after its conventional-commit type: `fix/<topic>`, `feat/<topic>`, or `docs/<topic>`.
 2. **Pull request into `dev`**: opening a PR against `dev` triggers the shared **OVOS PR
    Checks**: build/install/test, license and dependency scanning, plugin-manifest detection
    (for plugin repos), coverage, and a version-bump preview. These checks post their results

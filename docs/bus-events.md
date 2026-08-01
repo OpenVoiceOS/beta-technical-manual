@@ -10,11 +10,12 @@
     documents that event in context. This page does not introduce anything new.
 
 !!! note
-    Many events have a legacy `mycroft.*`/bare name alongside a newer `ovos.*` name. Only one
-    of the two is actually put on the wire. Each connected client's bus library locally
-    re-dispatches it under the other name too, so a handler on either name receives it (see
-    [Bus Service: legacy/modern topic pairs](bus-service.md#namespace-migration) for the
-    mechanism). The tables below show both names where applicable.
+    Many events have a legacy `mycroft.*`/bare name alongside a newer `ovos.*` name. On
+    current cores only the `ovos.*` spec name works: the compatibility bridge that used
+    to deliver both names was removed from `ovos-bus-client` in `f1a481d` (2026-08-01).
+    The tables below keep both names so you can recognize legacy spellings in old code,
+    but new code must use the spec name. See
+    [Updating from Older OVOS](updating-from-older-ovos.md#if-you-consume-the-message-bus-remotely).
 
 ## Listener / wake word
 
@@ -166,11 +167,12 @@ See [Bus Service: common message types](bus-service.md#key-message-categories).
 
 ## Legacy ↔ spec migration
 
-OVOS is renaming its bus topics onto the `ovos.*` spec namespace. You do not have to migrate
-all at once: `ovos-bus-client`'s `NamespaceTranslator` runs on every client with both directions
-on by default, so a message emitted on either the legacy or the spec topic is re-emitted on the
-other (see [Bus Service: namespace migration](bus-service.md#namespace-migration)). A direct bus
-consumer can therefore subscribe on either name today and switch to the spec name at its own pace.
+OVOS renamed its bus topics onto the `ovos.*` spec namespace. The migration period is
+over: the receive-side bridge that made legacy and spec names interchangeable was removed
+from `ovos-bus-client` in `f1a481d` (2026-08-01), and current clients speak spec topics
+only (see [Bus Service: namespace migration](bus-service.md#namespace-migration)). Use the
+table below to translate any legacy name you still have in code to its spec name. Only
+deployments pinned to a pre-removal `ovos-bus-client` still accept both spellings.
 
 The pairs below are the authoritative rename map (`ovos_spec_tools`'s `MIGRATION_MAP`). Unless
 marked **shape-changing**, the payload is identical on both topics. Shape-changing pairs are

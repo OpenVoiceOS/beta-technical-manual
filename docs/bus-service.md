@@ -295,41 +295,25 @@ ecosystem of independently-released repos cannot happen in one coordinated step.
 So **`ovos-bus-client` migrates automatically and incrementally**. The legacy
 and the new names interoperate transparently while the ecosystem moves over.
 
-The canonical legacy ↔ spec topic map lives in the `NamespaceTranslator` from
-[`ovos-spec-tools`](spec-tooling.md), and each `MessageBusClient` applies it on the
-**receive** side, not by putting a second copy on the wire:
+The canonical legacy to spec topic map lives in `ovos_spec_tools`'s `MIGRATION_MAP`
+(see [Specification Tooling](spec-tooling.md)). During the migration period,
+`ovos-bus-client` shipped a receive-side compatibility bridge (the
+`NamespaceTranslator`): each client locally re-dispatched an incoming message under
+its counterpart topic, in both directions, so producers and consumers could switch
+names in any order.
 
-- A single logical `emit()` sends exactly **one** message over the websocket: the topic the
-  caller actually chose.
-- When that message arrives back over the websocket (to every connected client, including the
-  sender), each client's `on_message` handler locally re-dispatches it under its counterpart
-  topic(s) too, using the translator to reshape the payload where the shape changed. This is a
-  listener-delivery convenience *inside each process*, not a second bus message. The broadcast
-  server never sees or re-broadcasts a counterpart frame.
-- **listen**: subscribing to *either* name (`bus.on(...)`) also delivers the counterpart, with
-  **de-duplication** so a handler that would match both fires exactly once.
+!!! danger "The compatibility bridge is gone"
+    `ovos-bus-client` removed the bridge in `f1a481d` (2026-08-01, after the 2.7.x
+    series). Current clients speak the `ovos.*` spec topics and nothing else. The old
+    `modernize` / `emit_legacy` flags and their environment variables now raise
+    `RuntimeError` when set. Remote consumers still emitting or subscribing to legacy
+    topic spellings stop working against a current core and must migrate to the spec
+    names. See [Updating from Older OVOS](updating-from-older-ovos.md#if-you-consume-the-message-bus-remotely)
+    for the full lifecycle and migration steps.
 
-The result is the same practical guarantee: a producer and a consumer can each switch from a
-legacy topic to its `ovos.*` spec name **in any order, with no coordination**, and without every
-component having to switch over at the same time. This is achieved by translating on receipt in
-every connected process rather than by widening what goes out on the wire.
-
-### Turning the bridges off
-
-Each direction is independently controllable (default `true`), via environment
-variable or bus configuration:
-
-| Direction | Env var | Config key | Effect |
-|---|---|---|---|
-| modernize | `OVOS_BUS_MODERNIZE` | `modernize` | a received **legacy** topic is also locally re-dispatched under its `ovos.*` counterpart |
-| emit_legacy | `OVOS_BUS_EMIT_LEGACY` | `emit_legacy` | a received **`ovos.*`** topic is also locally re-dispatched under its legacy counterpart |
-
-Because the bridging happens per-process on receive, turning a direction off only stops that
-process from locally delivering the counterpart to its own handlers. It does not add or remove
-any traffic on the wire. A deployment whose components all speak `ovos.*` can set
-`emit_legacy=false` once no local handler still needs the legacy delivery. One with no legacy
-producers left can also disable `modernize`. Until then, leave both on. That is what keeps
-adoption gradual and safe.
+On deployments pinned to a pre-removal `ovos-bus-client`, the bridge still behaves as
+released there: both directions defaulted to on, and bridging happened per process on
+receive, never as a second wire message.
 
 !!! note "Bridged is not the same as conformant"
     [`ovos-test-harness`](spec-tooling.md) asserts spec behavior on the

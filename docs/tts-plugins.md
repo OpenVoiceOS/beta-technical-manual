@@ -451,22 +451,14 @@ inspects `available_languages` sees an empty set and treats the plugin as suppor
 
 ### Entry point
 
-To make the class detectable as a TTS plugin, the package needs to provide an entry point under the `opm.tts` namespace.
+To make the class detectable as a TTS plugin, the package needs to provide an entry point under the `opm.tts` namespace. To expose your sample configurations (the `MyTTSConfig` dict below) for UI discovery, register them under `opm.tts.config`:
 
-```python
-setup([...],
-      entry_points = {'opm.tts': 'example_tts = my_tts:myTTS'}
-      )
+```toml
+[project.entry-points."opm.tts"]
+example_tts = "my_tts:myTTS"
 
-```
-
-To expose your sample configurations (the `MyTTSConfig` dict below) for UI discovery, register them under `opm.tts.config`:
-
-```python
-entry_points = {
-    'opm.tts': 'example_tts = my_tts:myTTS',
-    'opm.tts.config': 'example_tts.config = my_tts:MyTTSConfig'
-}
+[project.entry-points."opm.tts.config"]
+"example_tts.config" = "my_tts:MyTTSConfig"
 ```
 
 > **Backward Compatibility**: `ovos-plugin-manager` still supports legacy `mycroft.plugin.tts` entry points, but new plugins should use the `opm.*` namespace.

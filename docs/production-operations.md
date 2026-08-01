@@ -330,6 +330,13 @@ regressed rather than the whole stack.
 
 ---
 
+!!! warning "Check the breaking-change reference before any version jump"
+    An upgrade that crosses release eras can hit renamed config keys, changed skill
+    APIs, and removed bus topics. Before upgrading, find your current era in
+    [Updating from Older OVOS](updating-from-older-ovos.md) and read forward. If you
+    maintain custom skills or plugins, see
+    [Version-Compatible Skills & Plugins](version-compat-guide.md).
+
 ## Staged upgrades and rollback
 
 [Release channels](release-channels.md) covers `stable`/`testing`/`alpha` constraints files.

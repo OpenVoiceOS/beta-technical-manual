@@ -446,7 +446,7 @@ from ovos_workshop.skills.fallback import FallbackSkill
 class LLMFallbackSkill(FallbackSkill):
     def initialize(self):
         # a specific solver plugin id, e.g. "ovos-solver-openai-persona-plugin";
-        # load_solver_plugin looks it up via the opm.solver entry point group
+        # find_question_solver_plugins lists everything registered under opm.solver
         from ovos_plugin_manager.solvers import find_question_solver_plugins
         plugin_id = self.settings.get("solver_plugin", "ovos-solver-openai-persona-plugin")
         plugins = find_question_solver_plugins()

@@ -56,6 +56,10 @@ Rate control is per-plugin config, so check the active plugin's page first. [SSM
 Polly). Every other plugin just strips the tag and speaks the plain text, so it does nothing for
 most voices:
 
+!!! note "This one is for people who write skills"
+    The snippet below is Python code that goes inside a skill. If you do not write
+    skills, ask the skill author for a rate option, or pick a calmer voice instead.
+
 ```python
 from ovos_utils.ssml import SSMLBuilder
 

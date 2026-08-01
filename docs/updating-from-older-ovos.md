@@ -16,6 +16,8 @@ Use it like this:
 2. Read that section from the top. Entries are in date order. Start at the
    version you are currently running and read forward to your target
    version.
+   The Big-ticket migrations section is grouped by theme, not by date: read
+   it as a set of standalone deep dives, not a chronological sequence.
 3. Each entry names the exact symbol, config key, or bus message that
    changed, the fix, and the commit that landed it. Use the commit sha to
    confirm the change against the source repository if you need more detail.
@@ -399,6 +401,43 @@ Lifecycle:
 
 ## If you maintain skills
 
+### Skill-settings file-store rewritten
+
+Skill settings moved to `json_database`-backed XDG-default storage,
+replacing the old ad-hoc file kludge, with a one-time auto-migration.
+
+- Migration: rely on the `self.settings` API. Do not read/write the old
+  non-XDG settings file path directly.
+- Lifecycle: active before `3299173`. Unverified deprecation window (the
+  dossier records a one-time auto-migration, not a hard cutover date).
+  dropped `3299173734` (2022-02-02), (ovos-core `3299173`, #11).
+
+### Fallback dispatcher no longer bus-driven
+
+`converse` and fallback dispatch became event-based through dedicated
+services (`ConverseService`, the fallback pipeline) instead of being
+called directly in-process on `MycroftSkill` instances.
+
+- Migration: implement the converse acknowledge handshake if you drive
+  converse externally (for example a custom orchestrator). Do not assume
+  `converse()` is polled for skills that never override it.
+- Lifecycle: active before `4fff98e`. No deprecation window (architecture change, not a
+  deprecate-then-drop symbol). Landed `4fff98ecfc` (2022-02-02), (ovos-core `4fff98e`, #32).
+
+### `ovos_workshop.skills.decorators.*` shim paths removed
+
+The 2022 move of decorators from `skills.decorators.*` to top-level
+`decorators.*` (`9ca2018`, 2022-06-02) had kept 4-line re-export shims at
+the old paths. Those shims were deleted with no further compat.
+
+- Migration: `from ovos_workshop.skills.decorators.killable import
+  killable_intent` → `from ovos_workshop.decorators.killable import
+  killable_intent` (same pattern for `ocp`, `layers`, `converse`,
+  `fallback_handler`).
+- Lifecycle: active before `9ca2018` (2022-06-02). Deprecated but
+  functional (shim re-export) `9ca2018` to pre-`1.0.0`. Dropped `1.0.0`
+  (ovos-workshop `2d684a1`, #235).
+
 ### mycroft-core `MycroftSkill` compat shim removed
 
 The metaclass hack that let `isinstance(skill, MycroftSkill)` succeed for
@@ -428,20 +467,6 @@ branched behavior by detecting `mycroft.version.CORE_VERSION_STR` /
 - Lifecycle: active pre-`2d684a1`. Unverified deprecation window. Dropped
   `1.0.0` (ovos-workshop `2d684a1`, #235).
 
-### `ovos_workshop.skills.decorators.*` shim paths removed
-
-The 2022 move of decorators from `skills.decorators.*` to top-level
-`decorators.*` (`9ca2018`, 2022-06-02) had kept 4-line re-export shims at
-the old paths. Those shims were deleted with no further compat.
-
-- Migration: `from ovos_workshop.skills.decorators.killable import
-  killable_intent` → `from ovos_workshop.decorators.killable import
-  killable_intent` (same pattern for `ocp`, `layers`, `converse`,
-  `fallback_handler`).
-- Lifecycle: active before `9ca2018` (2022-06-02). Deprecated but
-  functional (shim re-export) `9ca2018` to pre-`1.0.0`. Dropped `1.0.0`
-  (ovos-workshop `2d684a1`, #235).
-
 ### `OVOSSkill._conditional_activate()` removed
 
 The private helper that auto-re-activated a skill after converse/intent
@@ -465,6 +490,19 @@ two-way settings sync, `settingsmeta.json` auto-upload) are all removed.
   backend settings sync in OVOS.
 - Lifecycle: active before `3c026c2`. Unverified deprecation window.
   dropped `3.0.0` (ovos-workshop `3c026c2`, #295, 2024-11-19).
+
+### Legacy non-installable skill loading removed
+
+`skill_launcher.py` dropped the remaining dead code paths for loading
+non-pip-installable, classic-mycroft-style skills.
+
+- Migration: package skills as installable Python packages with entry
+  points. Loose-file skill loading from a bare folder is unsupported.
+- Lifecycle: active before `421899f`. Unverified deprecation window.
+  dropped in the `7.0.x` line, `421899f` (2025-06-21), (ovos-workshop `421899f`, #362).
+  `ovos-core`'s own equivalent removal of folder-based skill loading
+  (`_load_skill`, `_get_skill_directories`, `_unload_removed_skills`)
+  landed the same era in `62024dbf98` (#690, 2025-06-10, `1.3.0`).
 
 ### Skill locale directories renamed to canonical BCP-47
 
@@ -491,42 +529,6 @@ exists. Locale lookups (`_get_dialog`, `_get_word`,
   `_get_dialog` directly.
 - Lifecycle: active before `acbd438`. Unverified deprecation window.
   dropped `acbd438` (2026-04-08), pre-`8.0.0` (ovos-workshop `acbd438`, #395).
-
-### Legacy non-installable skill loading removed
-
-`skill_launcher.py` dropped the remaining dead code paths for loading
-non-pip-installable, classic-mycroft-style skills.
-
-- Migration: package skills as installable Python packages with entry
-  points. Loose-file skill loading from a bare folder is unsupported.
-- Lifecycle: active before `421899f`. Unverified deprecation window.
-  dropped in the `7.0.x` line, `421899f` (2025-06-21), (ovos-workshop `421899f`, #362).
-  `ovos-core`'s own equivalent removal of folder-based skill loading
-  (`_load_skill`, `_get_skill_directories`, `_unload_removed_skills`)
-  landed the same era in `62024dbf98` (#690, 2025-06-10, `1.3.0`).
-
-### Skill-settings file-store rewritten
-
-Skill settings moved to `json_database`-backed XDG-default storage,
-replacing the old ad-hoc file kludge, with a one-time auto-migration.
-
-- Migration: rely on the `self.settings` API. Do not read/write the old
-  non-XDG settings file path directly.
-- Lifecycle: active before `3299173`. Unverified deprecation window (the
-  dossier records a one-time auto-migration, not a hard cutover date).
-  dropped `3299173734` (2022-02-02), (ovos-core `3299173`, #11).
-
-### Fallback dispatcher no longer bus-driven
-
-`converse` and fallback dispatch became event-based through dedicated
-services (`ConverseService`, the fallback pipeline) instead of being
-called directly in-process on `MycroftSkill` instances.
-
-- Migration: implement the converse acknowledge handshake if you drive
-  converse externally (for example a custom orchestrator). Do not assume
-  `converse()` is polled for skills that never override it.
-- Lifecycle: active before `4fff98e`. No deprecation window (architecture change, not a
-  deprecate-then-drop symbol). Landed `4fff98ecfc` (2022-02-02), (ovos-core `4fff98e`, #32).
 
 ---
 
@@ -608,31 +610,6 @@ deprecated in `ovos-plugin-manager`. The companion work moves it toward
 - Lifecycle: active before `15beb84`. No deprecation window (no deprecation window, added
   directly as abstract). Landed `15beb84` (2025-07-22), (ovos-plugin-manager `15beb84`, #333).
 
-### Solver plugin family deprecated in favor of agent engines
-
-The entire `templates/solvers.py` family (`QuestionSolver`, `CorpusSolver`,
-`TldrSolver`, `EvidenceSolver`, `MultipleChoiceSolver`, `EntailmentSolver`)
-is deprecated with a stated removal target of the next major version.
-
-| Deprecated | Replacement |
-|---|---|
-| `QuestionSolver` | `ChatEngine` / `RetrievalEngine` |
-| `CorpusSolver` | `DocumentIndexerEngine` / `QAIndexerEngine` |
-| `TldrSolver` | `SummarizerEngine` |
-| `EvidenceSolver` | `ExtractiveQAEngine` |
-| `MultipleChoiceSolver` | `ReRankerEngine` |
-| `EntailmentSolver` | `NaturalLanguageInferenceEngine` |
-
-- Migration: move to the matching `templates/agents.py` engine class
-  before the removal version ships.
-- Lifecycle: active before `53564ce`. Deprecated but functional from
-  `53564ce` (2026-01-29), `opm.solver.*` entry points still discoverable.
-  removal target is the current major version plus one: not yet shipped
-  as of this dossier's sweep (ovos-plugin-manager `53564ce`, #365).
-  `ovos-bus-client`'s parallel `opm.py` (`neon.plugin.solver`-based chat
-  class) was already removed outright in `d526e99` (#207, 2026-05-18,
-  `2.0.0`): migrate to `ovos-messagebus-chat-plugin`.
-
 ### `opm.*` canonical entry-point rename
 
 Every `PluginTypes`/`PluginConfigTypes` entry-point group string that had
@@ -670,6 +647,53 @@ old literal string breaks.
   alias table (`ovos.plugin.VAD` mapped to lowercase `opm.vad` instead of
   `opm.VAD`) silently broke discovery of un-migrated VAD plugins for about
   eleven months, fixed in `3a7a330` (#401, 2026-06-16).
+
+### Solver plugin family deprecated in favor of agent engines
+
+The entire `templates/solvers.py` family (`QuestionSolver`, `CorpusSolver`,
+`TldrSolver`, `EvidenceSolver`, `MultipleChoiceSolver`, `EntailmentSolver`)
+is deprecated with a stated removal target of the next major version.
+
+| Deprecated | Replacement |
+|---|---|
+| `QuestionSolver` | `ChatEngine` / `RetrievalEngine` |
+| `CorpusSolver` | `DocumentIndexerEngine` / `QAIndexerEngine` |
+| `TldrSolver` | `SummarizerEngine` |
+| `EvidenceSolver` | `ExtractiveQAEngine` |
+| `MultipleChoiceSolver` | `ReRankerEngine` |
+| `EntailmentSolver` | `NaturalLanguageInferenceEngine` |
+
+- Migration: move to the matching `templates/agents.py` engine class
+  before the removal version ships.
+- Lifecycle: active before `53564ce`. Deprecated but functional from
+  `53564ce` (2026-01-29), `opm.solver.*` entry points still discoverable.
+  removal target is the current major version plus one: not yet shipped
+  as of this dossier's sweep (ovos-plugin-manager `53564ce`, #365).
+  `ovos-bus-client`'s parallel `opm.py` (`neon.plugin.solver`-based chat
+  class) was already removed outright in `d526e99` (#207, 2026-05-18,
+  `2.0.0`): migrate to `ovos-messagebus-chat-plugin`.
+
+### GUI adapter plugin handler signature gains `session_id`
+
+All `handle_show_*` template handlers, `on_namespace_activated`,
+`on_namespace_deactivated`, `on_status_event`, `on_session_update`, and
+`dispatch_template()` gained a new `session_id: str = "default"` parameter
+inserted **before** the existing `site_id` parameter.
+
+```python
+# old
+def handle_show_text(self, skill_id, data, site_id="default"): ...
+
+# new
+def handle_show_text(self, skill_id, data, session_id="default", site_id="default"): ...
+```
+
+- Migration: switch any positional `site_id` call sites to keyword
+  arguments, or insert `session_id="default"` explicitly before the old
+  third positional argument.
+- Lifecycle: active before `34a0f13`. No deprecation window (explicit `BREAKING CHANGE:` in
+  the commit body, no deprecation window). Dropped/landed `34a0f13`
+  (2026-03-12), (ovos-plugin-manager `34a0f13`).
 
 ### PHAL enclosure abstraction dropped
 
@@ -716,31 +740,34 @@ class MyProvider(MediaProvider):
   earlier in `83ade15`, #405). Dropped `8a03351` and `1741181`, both
   2026-06-25 (ovos-plugin-manager `8a03351`, `1741181`).
 
-### GUI adapter plugin handler signature gains `session_id`
-
-All `handle_show_*` template handlers, `on_namespace_activated`,
-`on_namespace_deactivated`, `on_status_event`, `on_session_update`, and
-`dispatch_template()` gained a new `session_id: str = "default"` parameter
-inserted **before** the existing `site_id` parameter.
-
-```python
-# old
-def handle_show_text(self, skill_id, data, site_id="default"): ...
-
-# new
-def handle_show_text(self, skill_id, data, session_id="default", site_id="default"): ...
-```
-
-- Migration: switch any positional `site_id` call sites to keyword
-  arguments, or insert `session_id="default"` explicitly before the old
-  third positional argument.
-- Lifecycle: active before `34a0f13`. No deprecation window (explicit `BREAKING CHANGE:` in
-  the commit body, no deprecation window). Dropped/landed `34a0f13`
-  (2026-03-12), (ovos-plugin-manager `34a0f13`).
-
 ---
 
 ## If you operate a device or fleet (config changes)
+
+### Distribution config layer added, precedence order changed
+
+`get_config_locations()` gained a `distribution=True` parameter and a new
+layer, `/usr/share/<base_folder>/<config_filename>`, inserted between
+DEFAULT and SYSTEM.
+
+- Migration: config precedence is now DEFAULT < DISTRIBUTION
+  (`/usr/share/...`) < SYSTEM (`/etc/...`) < web-cache (remote) < OLD_USER
+  < USER. Distro packagers should install an overwrite-safe default to the
+  DISTRIBUTION path.
+- Lifecycle: additive, not a removal. Landed pre-`0.1.0`, (ovos-config `3781f01`, #128).
+
+### `mimic3` no longer the default TTS fallback
+
+The default `tts.fallback_module` value `"ovos-tts-plugin-mimic3-server"`
+and its settings block were removed from the shipped `mycroft.conf`.
+
+- Migration: set `tts.fallback_module` and the settings block explicitly
+  in your own config if a fallback TTS is still wanted (mimic3 itself is
+  deprecated upstream).
+- Lifecycle: active before `bc9be86`. No deprecation window. Dropped `bc9be86` (2023-11-05),
+  (ovos-config `bc9be86`, #81). `ovos-audio`'s matching default change
+  (`tts.fallback_module` `"mimic"` → `""`) landed separately in `c47e596`
+  (2024-01-26).
 
 ### `mycroft.conf` no longer probes a mycroft-core install
 
@@ -753,6 +780,56 @@ layer. Only the bundled `ovos_config/mycroft.conf` is used as DEFAULT.
   of relying on a legacy mycroft-core file being picked up.
 - Lifecycle: active before `0b16d46`. No deprecation window. Dropped `0.1.0` (2023-12-28),
   (ovos-config `0b16d46`, #90).
+
+### Default TTS fallback and MPRIS/lang-detect defaults changed
+
+Three unrelated default-value changes landed in one `mycroft.conf` update:
+`duck_while_listening` removed entirely (documented an unimplemented
+feature), the default language-detection plugin switched to a
+public-server-based one, and `mpris` under `Audio.backends.OCP` was
+disabled by default.
+
+- Migration: set `mpris: true` under `Audio.backends.OCP` (pre-`ovos-media`
+  split. See the OCP→ovos-media entry above for the post-split location)
+  if MPRIS is wanted. Pin the old lang-detect plugin explicitly if
+  network-free detection is required.
+- Lifecycle: active before `bff2d72`. No deprecation window. Dropped/changed `bff2d72`
+  (2024-02-26), (ovos-config `bff2d72`, #112).
+
+### `native_sources` config key replaced by session-based routing
+
+`ovos-audio`'s `native_sources` allowlist (gating playback-control bus
+messages by `message.context["source"]`) was replaced by
+`@require_default_session()`, gating on
+`message.context["session"]["session_id"] == "default"` instead.
+
+- Migration: remove `native_sources` from config/constructor calls. Ensure
+  playback-control messages either omit `context.session` (defaults to
+  `"default"`) or explicitly set `session_id: "default"`.
+- Lifecycle: active before `01499ee`. Unverified deprecation window (the
+  gating decorator was introduced in `c5d95a4`, 2024-06-06, then replaced
+  outright). Dropped `01499ee` (2025-03-06), (ovos-audio `01499ee`, #121).
+  `ovos-media` landed the matching change with `require_default_session()`
+  plus a new `media.validate_source` (bool, default `True`) config key in
+  `4601792` (#58, 2026-06-26): set `media.validate_source: false` on a
+  central `ovos-media` instance that must act on non-default/remote
+  HiveMind sessions.
+
+### Listener defaults changed (instant_listen, remove_silence, mic backend)
+
+`listener.instant_listen` and `listener.remove_silence` flipped to enabled
+by default (`54a0844`, #133, 2024-06-11). The default microphone module
+was reverted from an interim `sounddevice`-family default back to `alsa`
+once OPM plugin-fallback support made the missing-ALSA case safe
+(`0bbec90`, #155, 2024-09-15).
+
+- Migration: set `listener.instant_listen: false` and
+  `listener.remove_silence: false` to restore old timing/silence behavior.
+  explicitly pin a different mic backend if ALSA is unavailable on your
+  host (OPM now falls back to `sounddevice` automatically on ALSA load
+  failure).
+- Lifecycle: default-value changes, not deprecate-then-drop. `54a0844`
+  (2024-06-11), `0bbec90` (2024-09-15).
 
 ### `ovos.conf` deprecated in favor of environment variables
 
@@ -767,6 +844,20 @@ exclusively to environment variables.
   deprecated `ovos.conf`, `76d9310`, `ovos_config/meta.py`).
 - Lifecycle: active before `76d9310`. Deprecated but functional from
   `76d9310` (2024-08-16). Drop version unverified (ovos-config `76d9310`, #138).
+
+### `ready` settings block removed
+
+The `"ready"` start-up gating config block (14 lines) was dropped entirely
+from shipped `mycroft.conf` defaults.
+
+- Migration: consult `ovos-core`'s listener release notes for the
+  replacement readiness mechanism (the skill-based "finished booting"
+  signal). `ready_settings`/`ready` keys have no default anymore.
+- Lifecycle: active before `94f2348`. No deprecation window. Dropped `94f2348` (2024-10-15),
+  (ovos-config `94f2348`, #166). On the `ovos-core` side, the matching
+  `SkillManager.is_device_ready()`/`check_services_ready()`/
+  `handle_check_device_readiness()` methods (deprecated since `1.0.0`)
+  were removed outright in `62024dbf98` (#690, 2025-06-10, `1.3.0`).
 
 ### Backend/microservices config block removed
 
@@ -793,34 +884,6 @@ entirely from `mycroft.conf` and `ovos_config/models.py`:
   the `mycroft` compat package including Selene API support
   (`2a10fa9c1c`, #439, 2025-03-04, first stable release `1.1.0`).
 
-### Default TTS fallback and MPRIS/lang-detect defaults changed
-
-Three unrelated default-value changes landed in one `mycroft.conf` update:
-`duck_while_listening` removed entirely (documented an unimplemented
-feature), the default language-detection plugin switched to a
-public-server-based one, and `mpris` under `Audio.backends.OCP` was
-disabled by default.
-
-- Migration: set `mpris: true` under `Audio.backends.OCP` (pre-`ovos-media`
-  split. See the OCP→ovos-media entry above for the post-split location)
-  if MPRIS is wanted. Pin the old lang-detect plugin explicitly if
-  network-free detection is required.
-- Lifecycle: active before `bff2d72`. No deprecation window. Dropped/changed `bff2d72`
-  (2024-02-26), (ovos-config `bff2d72`, #112).
-
-### `mimic3` no longer the default TTS fallback
-
-The default `tts.fallback_module` value `"ovos-tts-plugin-mimic3-server"`
-and its settings block were removed from the shipped `mycroft.conf`.
-
-- Migration: set `tts.fallback_module` and the settings block explicitly
-  in your own config if a fallback TTS is still wanted (mimic3 itself is
-  deprecated upstream).
-- Lifecycle: active before `bc9be86`. No deprecation window. Dropped `bc9be86` (2023-11-05),
-  (ovos-config `bc9be86`, #81). `ovos-audio`'s matching default change
-  (`tts.fallback_module` `"mimic"` → `""`) landed separately in `c47e596`
-  (2024-01-26).
-
 ### `padatious_medium` dropped from default pipeline
 
 - Migration: add `padatious_medium` back explicitly to `core.pipeline` in
@@ -828,48 +891,6 @@ and its settings block were removed from the shipped `mycroft.conf`.
   benchmarks").
 - Lifecycle: active before `b08b7b8`. No deprecation window. Dropped `b08b7b8` (2025-02-28,
   tag `1.0.2`), (ovos-config `b08b7b8`, #200).
-
-### `ready` settings block removed
-
-The `"ready"` start-up gating config block (14 lines) was dropped entirely
-from shipped `mycroft.conf` defaults.
-
-- Migration: consult `ovos-core`'s listener release notes for the
-  replacement readiness mechanism (the skill-based "finished booting"
-  signal). `ready_settings`/`ready` keys have no default anymore.
-- Lifecycle: active before `94f2348`. No deprecation window. Dropped `94f2348` (2024-10-15),
-  (ovos-config `94f2348`, #166). On the `ovos-core` side, the matching
-  `SkillManager.is_device_ready()`/`check_services_ready()`/
-  `handle_check_device_readiness()` methods (deprecated since `1.0.0`)
-  were removed outright in `62024dbf98` (#690, 2025-06-10, `1.3.0`).
-
-### Distribution config layer added, precedence order changed
-
-`get_config_locations()` gained a `distribution=True` parameter and a new
-layer, `/usr/share/<base_folder>/<config_filename>`, inserted between
-DEFAULT and SYSTEM.
-
-- Migration: config precedence is now DEFAULT < DISTRIBUTION
-  (`/usr/share/...`) < SYSTEM (`/etc/...`) < web-cache (remote) < OLD_USER
-  < USER. Distro packagers should install an overwrite-safe default to the
-  DISTRIBUTION path.
-- Lifecycle: additive, not a removal. Landed pre-`0.1.0`, (ovos-config `3781f01`, #128).
-
-### Listener defaults changed (instant_listen, remove_silence, mic backend)
-
-`listener.instant_listen` and `listener.remove_silence` flipped to enabled
-by default (`54a0844`, #133, 2024-06-11). The default microphone module
-was reverted from an interim `sounddevice`-family default back to `alsa`
-once OPM plugin-fallback support made the missing-ALSA case safe
-(`0bbec90`, #155, 2024-09-15).
-
-- Migration: set `listener.instant_listen: false` and
-  `listener.remove_silence: false` to restore old timing/silence behavior.
-  explicitly pin a different mic backend if ALSA is unavailable on your
-  host (OPM now falls back to `sounddevice` automatically on ALSA load
-  failure).
-- Lifecycle: default-value changes, not deprecate-then-drop. `54a0844`
-  (2024-06-11), `0bbec90` (2024-09-15).
 
 ### phoonnx becomes the default offline TTS in autoconfigure
 
@@ -897,25 +918,6 @@ internal caching. Signatures are unchanged so this is warning-only so far.
   version string reads a placeholder that does not match the current
   major line (ovos-config `087a112`, #253).
 
-### `native_sources` config key replaced by session-based routing
-
-`ovos-audio`'s `native_sources` allowlist (gating playback-control bus
-messages by `message.context["source"]`) was replaced by
-`@require_default_session()`, gating on
-`message.context["session"]["session_id"] == "default"` instead.
-
-- Migration: remove `native_sources` from config/constructor calls. Ensure
-  playback-control messages either omit `context.session` (defaults to
-  `"default"`) or explicitly set `session_id: "default"`.
-- Lifecycle: active before `01499ee`. Unverified deprecation window (the
-  gating decorator was introduced in `c5d95a4`, 2024-06-06, then replaced
-  outright). Dropped `01499ee` (2025-03-06), (ovos-audio `01499ee`, #121).
-  `ovos-media` landed the matching change with `require_default_session()`
-  plus a new `media.validate_source` (bool, default `True`) config key in
-  `4601792` (#58, 2026-06-26): set `media.validate_source: false` on a
-  central `ovos-media` instance that must act on non-default/remote
-  HiveMind sessions.
-
 ---
 
 ## If you consume the message bus remotely (HiveMind and other clients)
@@ -924,21 +926,22 @@ This section is for anyone connecting to the bus as a separate process:
 HiveMind satellites, custom dashboards, external automation, or any code
 that parses raw wire messages instead of going through a skill.
 
-### HiveMind agent protocol and messagebus-solver removed from ovos-bus-client
+### `mycroft-bus-client` package retirement (package-level, not wire-level)
 
-`ovos_bus_client/hpm.py` (`OVOSAgentProtocol`/`OVOSProtocol`) and
-`ovos_bus_client/opm.py` (the `neon.plugin.solver`-based chat class) were
-deleted, along with the `hivemind.agent.protocol` entry point.
+Every repo in the org switched its dependency and imports from the
+upstream `mycroft-bus-client` package to `ovos-bus-client`. This is a
+Python import change, not a wire change: listed here because it is the
+package-level ancestor of the topic-level migration above.
 
-- Migration: `from ovos_bus_client.hpm import OVOSAgentProtocol` → install
-  `hivemind-ovos-agent-plugin` and import from there (the entry-point
-  *name* is preserved, so HiveMind-core configs need no change, only the
-  dependency install). `ovos_bus_client.opm` (QuestionSolver-based chat) →
-  `ovos-messagebus-chat-plugin` (implements `ChatEngine`, uses
-  `SessionManager` for multi-turn state). See
-  JarbasHiveMind/HiveMind-core#85.
-- Lifecycle: active before `d526e99`. Unverified deprecation window.
-  dropped `2.0.0` (ovos-bus-client `d526e99`, #207, 2026-05-18).
+- Migration: `pip install ovos-bus-client`. `from mycroft_bus_client
+  import Message` → `from ovos_bus_client.message import Message` (or
+  `from ovos_bus_client import MessageBusClient`).
+- Lifecycle: active before 2023-04. Dropped (isinstance compat kept
+  briefly, `04def5d`) starting `9396c71` (2023-04-05, ovos-bus-client's
+  own extraction). The ecosystem-wide dependency swap landed at
+  `b1a9d39e16` (2023-04-11) in `ovos-core`, and matching one-line swaps in
+  `ovos-audio` (`426a48b`), `ovos-media` (`426a48b`), and
+  `ovos-messagebus` (`a1bc1c1`), all within the same week.
 
 ### GUI wire protocol moved to template-based `GUIInterface`
 
@@ -957,6 +960,56 @@ favor of `GUIInterface` for visual output.
   series of `refactor!:` commits from `59ee94e` (2026-03-12) through
   `0d145d3` (2026-06-25). Classic API becomes private at `0d145d3`
   (ovos-bus-client `0d145d3`).
+
+### HiveMind agent protocol and messagebus-solver removed from ovos-bus-client
+
+`ovos_bus_client/hpm.py` (`OVOSAgentProtocol`/`OVOSProtocol`) and
+`ovos_bus_client/opm.py` (the `neon.plugin.solver`-based chat class) were
+deleted, along with the `hivemind.agent.protocol` entry point.
+
+- Migration: `from ovos_bus_client.hpm import OVOSAgentProtocol` → install
+  `hivemind-ovos-agent-plugin` and import from there (the entry-point
+  *name* is preserved, so HiveMind-core configs need no change, only the
+  dependency install). `ovos_bus_client.opm` (QuestionSolver-based chat) →
+  `ovos-messagebus-chat-plugin` (implements `ChatEngine`, uses
+  `SessionManager` for multi-turn state). See
+  JarbasHiveMind/HiveMind-core#85.
+- Lifecycle: active before `d526e99`. Unverified deprecation window.
+  dropped `2.0.0` (ovos-bus-client `d526e99`, #207, 2026-05-18).
+
+### Per-service legacy topic migrations (spec-bus adoption, 2026-06)
+
+Every listener/core service in the org migrated its own emit/listen sites
+to `ovos_spec_tools.SpecMessage` constants around the same time, mostly
+gated behind a `legacy_namespace` config key (default `True`, so
+out-of-the-box wire behavior is initially unchanged):
+
+| Legacy topic | Spec topic | Landed in |
+|---|---|---|
+| `recognizer_loop:utterance` | `ovos.utterance.handle` (`SpecMessage.UTTERANCE`) | ovos-core `1672e35ed0` (#772/#775) · ovos-dinkum-listener `d9dc04e` (#232) · ovos-simple-listener `b8326fa` (#26) · mycroft-classic-listener `4458a3f` (#23, `1.0.0`) |
+| `mycroft.awoken` | `SpecMessage.LISTENER_AWOKEN` | ovos-dinkum-listener `d9dc04e` · mycroft-classic-listener `4458a3f` |
+| `recognizer_loop:record_begin` / `record_end` | `SpecMessage.LISTENER_RECORD_STARTED` / `_ENDED` | ovos-dinkum-listener `d9dc04e` · mycroft-classic-listener `4458a3f` |
+| `mycroft.mic.listen` | `SpecMessage.MIC_LISTEN` | ovos-dinkum-listener `d9dc04e` · mycroft-classic-listener `4458a3f` |
+| `recognizer_loop:audio_output_start` / `_end` | `SpecMessage.AUDIO_OUTPUT_STARTED` / `_ENDED` | ovos-dinkum-listener `d9dc04e` · mycroft-classic-listener `4458a3f` |
+| `recognizer_loop:sleep` | `SpecMessage.LISTENER_SLEEP` | ovos-dinkum-listener `d9dc04e` · mycroft-classic-listener `4458a3f` |
+| `mycroft.stop`, per-skill stop pings, `complete_intent_failure` | `ovos.stop`, `ovos.stop.ping`, `ovos.intent.unmatched` | ovos-core `f4c00d90b2` (2026-06-05) |
+| `stop.openvoiceos.stop.response` | removed, not replaced | ovos-core `2b05201705` (2026-06-29): `StopService` no longer registers itself as a skill, do not count it as a participating skill in custom global-stop aggregation |
+
+- Migration: for any deployment that explicitly sets
+  `legacy_namespace: false`, subscribe to the `ovos.*` spec topics instead
+  of the legacy ones. Default deployments are unaffected until that flag's
+  default flips (not yet flipped as of this dossier's sweep). Prefer
+  `ovos_spec_tools.SpecMessage.*` constants over hardcoded topic strings
+  going forward, since their literal values are not always the same as
+  the legacy strings they replace.
+- Lifecycle: active (legacy-only) before mid-2026. Deprecated but
+  functional (dual-emit or `legacy_namespace`-gated) from mid-2026
+  onward. Hard drop only confirmed for `ovos-bus-client`'s own bridge
+  (`f1a481d`, 2026-08-01). `legacy_namespace` gating in `ovos-core`
+  itself (`f4c00d90b2`/`f9862a760e`, "gate bus topics by
+  legacy_namespace") lives only on unmerged feature branches as of this
+  sweep, not on `dev`: the default has not flipped because the flag has
+  not shipped to a stable release yet.
 
 ### SESSION-1 spec adoption changes session wire semantics
 
@@ -998,57 +1051,6 @@ above for the full timeline. The short version for remote clients: as of
 OVOS-MSG-1 (`ovos.*`) topics only, with no bridge back to legacy topic
 spellings. A HiveMind satellite still emitting or expecting legacy topics
 silently stops being received.
-
-### Per-service legacy topic migrations (spec-bus adoption, 2026-06)
-
-Every listener/core service in the org migrated its own emit/listen sites
-to `ovos_spec_tools.SpecMessage` constants around the same time, mostly
-gated behind a `legacy_namespace` config key (default `True`, so
-out-of-the-box wire behavior is initially unchanged):
-
-| Legacy topic | Spec topic | Landed in |
-|---|---|---|
-| `recognizer_loop:utterance` | `ovos.utterance.handle` (`SpecMessage.UTTERANCE`) | ovos-core `1672e35ed0` (#772/#775) · ovos-dinkum-listener `d9dc04e` (#232) · ovos-simple-listener `b8326fa` (#26) · mycroft-classic-listener `4458a3f` (#23, `1.0.0`) |
-| `mycroft.awoken` | `SpecMessage.LISTENER_AWOKEN` | ovos-dinkum-listener `d9dc04e` · mycroft-classic-listener `4458a3f` |
-| `recognizer_loop:record_begin` / `record_end` | `SpecMessage.LISTENER_RECORD_STARTED` / `_ENDED` | ovos-dinkum-listener `d9dc04e` · mycroft-classic-listener `4458a3f` |
-| `mycroft.mic.listen` | `SpecMessage.MIC_LISTEN` | ovos-dinkum-listener `d9dc04e` · mycroft-classic-listener `4458a3f` |
-| `recognizer_loop:audio_output_start` / `_end` | `SpecMessage.AUDIO_OUTPUT_STARTED` / `_ENDED` | ovos-dinkum-listener `d9dc04e` · mycroft-classic-listener `4458a3f` |
-| `recognizer_loop:sleep` | `SpecMessage.LISTENER_SLEEP` | ovos-dinkum-listener `d9dc04e` · mycroft-classic-listener `4458a3f` |
-| `mycroft.stop`, per-skill stop pings, `complete_intent_failure` | `ovos.stop`, `ovos.stop.ping`, `ovos.intent.unmatched` | ovos-core `f4c00d90b2` (2026-06-05) |
-| `stop.openvoiceos.stop.response` | removed, not replaced | ovos-core `2b05201705` (2026-06-29): `StopService` no longer registers itself as a skill, do not count it as a participating skill in custom global-stop aggregation |
-
-- Migration: for any deployment that explicitly sets
-  `legacy_namespace: false`, subscribe to the `ovos.*` spec topics instead
-  of the legacy ones. Default deployments are unaffected until that flag's
-  default flips (not yet flipped as of this dossier's sweep). Prefer
-  `ovos_spec_tools.SpecMessage.*` constants over hardcoded topic strings
-  going forward, since their literal values are not always the same as
-  the legacy strings they replace.
-- Lifecycle: active (legacy-only) before mid-2026. Deprecated but
-  functional (dual-emit or `legacy_namespace`-gated) from mid-2026
-  onward. Hard drop only confirmed for `ovos-bus-client`'s own bridge
-  (`f1a481d`, 2026-08-01). `legacy_namespace` gating in `ovos-core`
-  itself (`f4c00d90b2`/`f9862a760e`, "gate bus topics by
-  legacy_namespace") lives only on unmerged feature branches as of this
-  sweep, not on `dev`: the default has not flipped because the flag has
-  not shipped to a stable release yet.
-
-### `mycroft-bus-client` package retirement (package-level, not wire-level)
-
-Every repo in the org switched its dependency and imports from the
-upstream `mycroft-bus-client` package to `ovos-bus-client`. This is a
-Python import change, not a wire change: listed here because it is the
-package-level ancestor of the topic-level migration above.
-
-- Migration: `pip install ovos-bus-client`. `from mycroft_bus_client
-  import Message` → `from ovos_bus_client.message import Message` (or
-  `from ovos_bus_client import MessageBusClient`).
-- Lifecycle: active before 2023-04. Dropped (isinstance compat kept
-  briefly, `04def5d`) starting `9396c71` (2023-04-05, ovos-bus-client's
-  own extraction). The ecosystem-wide dependency swap landed at
-  `b1a9d39e16` (2023-04-11) in `ovos-core`, and matching one-line swaps in
-  `ovos-audio` (`426a48b`), `ovos-media` (`426a48b`), and
-  `ovos-messagebus` (`a1bc1c1`), all within the same week.
 
 ---
 
