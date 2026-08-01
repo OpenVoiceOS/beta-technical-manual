@@ -1892,15 +1892,23 @@ is actually talking to your server:</p>
 <a href="../bus-service/"><code>ovos-busmon</code></a>, to confirm the configured <code>urls</code> server is the one
 receiving the request, not a public fallback.</p>
 <p>for audio language detection</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>  &quot;listener&quot;: {
-</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>    &quot;audio_transformers&quot;: {
-</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>        &quot;ovos-audio-lang-server-plugin&quot;: {
-</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>          &quot;urls&quot;: [&quot;http://localhost:8080/lang_detect&quot;],
-</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>          &quot;verify_ssl&quot;: true
-</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>        }
-</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>    }
-</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>  }
+<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>  &quot;audio_transformers&quot;: {
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>      &quot;ovos-audio-lang-server-plugin&quot;: {
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>        &quot;urls&quot;: [&quot;http://localhost:8080/lang_detect&quot;],
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>        &quot;verify_ssl&quot;: true
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>      }
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>  }
 </span></code></pre></div>
+<div class="admonition danger">
+<p class="admonition-title"><code>audio_transformers</code> goes at the top level, not under <code>listener</code></p>
+<p>The plugin is constructed with no config, so it falls back to
+<code>AudioTransformer._read_mycroft_conf()</code>, which reads the <strong>top-level</strong> <code>audio_transformers</code>
+block only. A <code>listener.audio_transformers</code> block is read by the transformer <em>service</em>,
+which logs it as deprecated, but never reaches this plugin.</p>
+<p>Put the block in the wrong place and <code>urls</code> is silently empty — so the plugin falls back to
+its built-in default and posts your audio to a public server on the internet. There is no
+error to notice.</p>
+</div>
 <p>The singular <code>url</code> key (a single string or a list) is also accepted as an alias for <code>urls</code>,
 and takes precedence over <code>urls</code> when both are set. The optional <code>user_agent</code> (STT client and
 lang-detect classifier alike) overrides the request <code>User-Agent</code> sent to servers. It defaults

@@ -1733,9 +1733,12 @@ the server behaves exactly as before:</p>
 </span></code></pre></div>
 <hr />
 <h2 id="elevenlabs-streaming-stream-input">ElevenLabs Streaming (<code>stream-input</code>)<a class="headerlink" href="#elevenlabs-streaming-stream-input" title="Permanent link">&para;</a></h2>
-<p>Besides the plain HTTP ElevenLabs-compatible routes (<code>/v1/voices</code>, <code>/v1/models</code>,
-<code>/v1/text-to-speech/{voice_id}</code>), the server also implements ElevenLabs' WebSocket
-streaming protocol at <code>/v1/text-to-speech/{voice_id}/stream-input</code>. This lets clients written
+<p>Every ElevenLabs-compatible route sits behind the <code>/elevenlabs</code> prefix. Point an ElevenLabs
+SDK at <code>http://&lt;host&gt;:9666/elevenlabs</code>, not at the server root. See <a href="../server-compat-layers/">Server Compatibility
+Layers</a>.</p>
+<p>The plain HTTP routes are <code>/elevenlabs/v1/voices</code>, <code>/elevenlabs/v1/models</code> and
+<code>/elevenlabs/v1/text-to-speech/{voice_id}</code>. The server also implements ElevenLabs' WebSocket
+streaming protocol, at <code>/elevenlabs/v1/text-to-speech/{voice_id}/stream-input</code>. This lets clients written
 against the real ElevenLabs streaming SDK work unmodified.</p>
 <p>The client connects with the voice in the path and synthesis options in the query string
 (<code>model_id</code>, <code>output_format</code>, <code>language_code</code>, <code>sync_alignment</code>, …), then sends JSON text
