@@ -1812,27 +1812,25 @@ is direct:</p>
 <p>Each spec is a standalone document with a scope statement, the normative wire
 format, and a conformance section. The key words <strong>MUST</strong>, <strong>SHOULD</strong>, and
 <strong>MAY</strong> are used as in <a href="https://www.rfc-editor.org/rfc/rfc2119">RFC 2119</a>.</p>
-<p>Every spec header carries two separate numbers, and it matters which one you
-cite:</p>
+<p>Every spec header carries three fields, for example
+<code>**Spec ID:** OVOS-MSG-1 · **Version:** 2 · **Status:** Draft</code>:</p>
 <ul>
-<li><strong>Version</strong>: the spec's compatibility class (V0/V1/V2, see the README
-  registry below). It changes only when an edit breaks compatibility with the
-  prior class. A spec is cited by class (<code>OVOS-MSG-1 v1</code>).</li>
-<li>
-<p><strong>Revision</strong>: a monotonic counter of normative edits <em>within</em> a class,
-  starting at <code>1</code>. A refinement, such as tightening a requirement, adding an
-  optional field, or correcting a cross-reference, bumps the revision, not the
-  version. <code>Revision</code> disambiguates which text of a given class you mean
-  (<code>v1 rev 3</code>). Non-normative edits (typos, formatting) don't bump it at all.</p>
-</li>
-<li>
-<p><strong>Newcomers:</strong> read the scope and the worked examples. Skip the conformance
+<li><strong>Spec ID</strong>: what you cite, always with a section number — <code>OVOS-MSG-1 §2.1.1</code>.</li>
+<li><strong>Version</strong>: the spec's compatibility class (see the README registry below). It changes only
+  when an edit breaks compatibility with the prior class.</li>
+<li><strong>Status</strong>: where the document stands. <strong>Every spec is currently <code>Draft</code>.</strong> Nothing here is
+  ratified, so a requirement can still change. That is the reason the specs and the code are
+  audited against each other continuously rather than once.</li>
+</ul>
+<p>The versioning policy also speaks of a revision number for editorial changes within a class.
+No spec header carries one today, so cite the spec ID and section, not a revision.</p>
+<ul>
+<li><strong>Newcomers:</strong> read the scope and the worked examples. Skip the conformance
   tables until you need them. Start with
   <a href="https://github.com/OpenVoiceOS/architecture/blob/dev/msg-1.md">OVOS-MSG-1</a>
   (the message), then
   <a href="https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md">OVOS-PIPELINE-1</a>
-  (how an utterance is handled).</p>
-</li>
+  (how an utterance is handled).</li>
 <li><strong>Skill authors:</strong> OVOS-INTENT-1 → INTENT-2 → INTENT-3 cover everything you
   declare. Add INTENT-4 only if you need the registration wire format.</li>
 <li><strong>Plugin / orchestrator builders:</strong> the conformance sections are your test

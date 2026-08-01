@@ -1419,13 +1419,12 @@
 <h1 id="glossary-of-terms">Glossary of Terms<a class="headerlink" href="#glossary-of-terms" title="Permanent link">&para;</a></h1>
 <p>This glossary defines common terms, acronyms, and concepts used throughout the OpenVoiceOS (OVOS) ecosystem. New to OVOS? Skim this first. Most pages assume these words.</p>
 <details class="info">
-<summary>Formal specification</summary>
-<p>Entries marked <strong>formal</strong> name part of the <strong>formal vocabulary</strong> of the OVOS
-architecture: concepts with a normative, implementation-agnostic
-definition. Each links to its authoritative spec. For the full set and how
-they fit together, see the <strong><a href="../architecture-specs/">spec index</a></strong>. You can
-safely skip these on a first read. They matter once you're checking a
-component for spec conformance, not for everyday use.</p>
+<summary>Entries that cite a spec</summary>
+<p>An entry that links to an <code>OVOS-*</code> spec names part of the <strong>formal vocabulary</strong> of the
+OVOS architecture: a concept with a normative, implementation-agnostic definition, and the
+link goes to the spec that defines it. For the full set and how they fit together, see the
+<strong><a href="../architecture-specs/">spec index</a></strong>. You can safely skip those links on a first read.
+They matter once you are checking a component for spec conformance, not for everyday use.</p>
 </details>
 <h2 id="a">A<a class="headerlink" href="#a" title="Permanent link">&para;</a></h2>
 <dl>
@@ -1577,7 +1576,7 @@ component for spec conformance, not for everyday use.</p>
 <dt><strong>RAG (Retrieval-Augmented Generation)</strong></dt>
 <dd>Fetching relevant remembered/retrieved context and giving it to an LLM <em>before</em> it answers. See <a href="../persona-memory/">Persona Memory</a>.</dd>
 <dt><strong>Recency-targeted stop</strong></dt>
-<dd>The stop plugin's fallback when no handler answers the stoppability poll in time: target the most recently activated <code>active_handlers</code> entry instead of escalating to a global stop. <a href="https://github.com/OpenVoiceOS/architecture/blob/dev/stop-1.md">OVOS-STOP-1 §4.1</a>.</dd>
+<dd>How the stop plugin picks a target once the stoppability poll comes back with <strong>at least one</strong> <code>can_handle: true</code> responder: it stops the entry with the highest <code>activated_at</code> in <code>session.active_handlers</code>. If no handler answers positively, it does the opposite of targeting — it escalates to a global stop. <a href="https://github.com/OpenVoiceOS/architecture/blob/dev/stop-1.md">OVOS-STOP-1 §4.1</a>.</dd>
 <dt><strong>Release Channel</strong></dt>
 <dd>A stability track, either <em>stable</em>, <em>testing</em>, or <em>alpha</em>, that controls how new the installed packages are. See <a href="../release-channels/">Release Channels</a>.</dd>
 <dt><strong>Reserved <code>intent_name</code></strong></dt>

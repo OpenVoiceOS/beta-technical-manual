@@ -1774,13 +1774,16 @@ support it claims to offer.</p>
 <h2 id="when-not-to-do-this">When NOT to do this<a class="headerlink" href="#when-not-to-do-this" title="Permanent link">&para;</a></h2>
 <p>Some breaks are not shimmable, and trying anyway produces code that looks safe and
 is not.</p>
-<p><strong>Wire behavior scheduled for removal.</strong> The <code>ovos-bus-client</code> legacy-topic dual-emit
+<p><strong>Wire behavior scheduled for removal.</strong> The <code>ovos-bus-client</code> legacy-topic namespace
 bridge (<code>modernize</code>/<code>emit_legacy</code>, both default ON from <code>e25ab12</code>, 2026-06-25) is
 scheduled for deletion by the open kill-switch
 <a href="https://github.com/OpenVoiceOS/ovos-bus-client/pull/272">ovos-bus-client#272</a>. After
 it merges, <code>MessageBusClient</code> speaks OVOS-MSG-1 spec topics only and passing
 <code>emit_legacy</code>, <code>modernize</code>, or <code>intent_reemit_blanket</code> to the constructor raises
 <code>RuntimeError</code>.</p>
+<p>The bridge translates on the <strong>receive</strong> side, re-dispatching to local listeners. It does not
+put a second copy on the wire, so one <code>emit()</code> is still one websocket message — see <a href="../bus-namespace-migration/">Bus
+Namespace Migration</a>. Do not size bus traffic as if it doubled.</p>
 <p>There will be no client-side shim for this: migrate remote clients and
 satellites to <code>ovos.*</code> spec topics while the bridge still covers both spellings. Do
 not write new code that shims legacy topic names. See <a href="../migration-bus-dual-emit/">The bus-client

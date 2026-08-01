@@ -1660,7 +1660,7 @@ the only screen stack that runs today.</p>
 <p><code>ovos-workshop#421</code> also touches <code>ovos-ocp-audio-plugin</code>, <code>ovos-skill-iss-location</code>,
 <code>ovos-pydantic-models</code>, and <code>ovos-skill-homescreen</code>.</p>
 <h2 id="ovos-media">ovos-media<a class="headerlink" href="#ovos-media" title="Permanent link">&para;</a></h2>
-<p><code>ovos-media</code> is <strong>alpha and not officially released</strong>. <code>ovos-audio</code> remains
+<p><code>ovos-media</code> is <strong>not officially released</strong> — <a href="../ovos-media/">Media Service</a> rates it proof-of-concept on the <a href="../maturity/">maturity scale</a>. <code>ovos-audio</code> remains
 the production audio service, and stock installs keep
 <code>enable_old_audioservice: true</code> (the default). See
 <a href="../ovos-media/">Media Service (ovos-media)</a> for its maturity status. Two
@@ -1712,9 +1712,11 @@ playable media</strong> (a voice game, an ebook reader) stays an OCP skill. See
 <p>Repositories across the org are being brought into conformance with the
 <a href="../architecture-specs/">Formal Specifications</a>, largely OVOS-STOP-1,
 OVOS-CONTEXT-1, OVOS-TRANSFORM-1, and OVOS-PIPELINE-1. A related but separate
-effort, the legacy bus-namespace migration, already completed its removal
-phase for <code>ovos-bus-client</code>'s own namespace bridge (see
-<a href="../updating-from-older-ovos/">Updating from Older OVOS</a>). The PRs below carry
+effort, the legacy bus-namespace migration, has not removed anything yet:
+<code>ovos-bus-client</code>'s namespace bridge is still live on <code>dev</code>, with <code>modernize</code> and
+<code>emit_legacy</code> both defaulting to on, and its kill-switch
+(<a href="https://github.com/OpenVoiceOS/ovos-bus-client/pull/272">ovos-bus-client#272</a>) is still an
+open draft. See <a href="../bus-namespace-migration/">Bus Namespace Migration</a>. The PRs below carry
 that migration the rest of the way: a set of coordinated kill-switches that
 drop the last hardcoded legacy topic literals from <code>ovos-core</code>, <code>ovos-workshop</code>,
 and the <code>ovos-utils</code> test double. Each is explicitly gated to merge only once
@@ -1738,7 +1740,7 @@ fleets no longer run legacy-namespace consumers.</p>
 <td>3.0.0</td>
 </tr>
 <tr>
-<td><a href="https://github.com/OpenVoiceOS/ovos-core/pull/777">ovos-core#777</a></td>
+<td><a href="https://github.com/OpenVoiceOS/ovos-core/pull/777">ovos-core#777 (closed)</a></td>
 <td>OVOS-STOP-1 bus surface bridged to legacy topics (superseded by <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/802" title="GitHub Issue: TigreGotico/ovos-technical-manual #802">#802</a>)</td>
 <td>n/a</td>
 <td>No</td>

@@ -1532,7 +1532,7 @@ clause-for-clause.</p>
 </tr>
 <tr>
 <td>Language-tag matching</td>
-<td><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/intent-2.md">OVOS-INTENT-2 §2.2</a></td>
+<td><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/intent-2.md">OVOS-INTENT-2 §2.2</a> <em>(non-normative)</em></td>
 <td>Picks the closest available BCP-47 language for a request</td>
 </tr>
 <tr>
@@ -1584,10 +1584,36 @@ clause-for-clause.</p>
 <p>Lint a skill's locale folder against the grammar and format specs:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>ovos-spec-lint<span class="w"> </span>my-skill/locale
 </span></code></pre></div>
-<p><code>ovos-spec-lint</code> also takes a <code>--spec-version</code> flag for linting a skill that has not fully
-migrated yet: <code>--spec-version 1</code> (the default) treats a <code>.blacklist</code> violation as an error;
-<code>--spec-version 0</code> demotes the same violation to a warning, so a repo can adopt the
-<a href="../resource-files/"><code>.blacklist</code> file</a> incrementally instead of all at once.</p>
+<p><code>ovos-spec-lint</code> also takes a <code>--spec-version</code> flag, for linting a skill that targets an older
+runtime. It answers "would a runtime at spec version N ignore any of these files?". Accepted
+values are <code>0</code> to <code>3</code>, and the default is <strong>3</strong>.</p>
+<p>The gate only ever emits a warning, never an error, and it fires when a resource role is
+<em>newer</em> than the version you name. Each role has the version it arrived in:</p>
+<table>
+<thead>
+<tr>
+<th>Role</th>
+<th>Requires</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="../resource-files/"><code>.blacklist</code></a></td>
+<td>1</td>
+</tr>
+<tr>
+<td><code>.prompt</code></td>
+<td>2</td>
+</tr>
+<tr>
+<td><code>&lt;name&gt;</code></td>
+<td>3</td>
+</tr>
+</tbody>
+</table>
+<p>So <code>--spec-version 0</code> warns about a <code>.blacklist</code>, and any value from 1 up says nothing about
+it. Use the flag to check what an older deployment would silently drop, not to grade a
+migration.</p>
 <h2 id="session-intents-and-the-topic-vocabulary">Session, intents, and the topic vocabulary<a class="headerlink" href="#session-intents-and-the-topic-vocabulary" title="Permanent link">&para;</a></h2>
 <p>The session carrier, the keyword-intent builder, and the canonical topic
 vocabulary follow the same pattern: plain data plus stdlib-only helpers.</p>
