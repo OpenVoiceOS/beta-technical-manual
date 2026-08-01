@@ -201,7 +201,7 @@ pip install ovos-stt-plugin-server
 
 !!! note "Key name: `urls`, not `host`"
     This STT companion plugin reads the **`urls`** key (a list of strings). The
-    [TTS companion plugin](tts-server.md#companion-plugin) reads a different key,
+    [TTS companion plugin](tts-server-deployment.md#companion-plugin) reads a different key,
     **`host`**. The two are not interchangeable. If you set the wrong key, the
     plugin does not error. It silently ignores the value and falls back to the
     public servers described below.

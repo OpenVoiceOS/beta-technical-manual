@@ -153,7 +153,7 @@ You rarely need to implement a spec from scratch. The
 implementation ([`ovos-spec-tools`](https://github.com/OpenVoiceOS/ovos-spec-tools)),
 the executable conformance suite
 ([`ovos-test-harness`](https://github.com/OpenVoiceOS/ovos-test-harness)), and the
-[bus-client namespace migration](bus-service.md#namespace-migration) that lets the
+[bus-client namespace migration](bus-namespace-migration.md#namespace-migration) that lets the
 ecosystem adopt the new `ovos.*` topics without a flag day.
 
 ---

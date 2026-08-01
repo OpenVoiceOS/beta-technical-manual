@@ -4,6 +4,11 @@ repo_name: TigreGotico/ovos-technical-manual
 repo_url: https://github.com/TigreGotico/ovos-technical-manual
 edit_uri: edit/master/docs/
 
+# snippets/ holds include-only fragments. They are pulled into real pages by
+# pymdownx.snippets, so they must not be built as standalone pages.
+exclude_docs: |
+  snippets/
+
 theme:
   name: material
   logo: https://github.com/OpenVoiceOS/ovos_assets/blob/master/Logo/ovos-logo-512.png?raw=true
@@ -103,7 +108,12 @@ nav:
           - RaspOVOS Troubleshooting: raspovos-troubleshooting.md
       - Make it yours: personalize.md
       - Fun stuff to try: showcase.md
-      - What can I say? (Skills): skill-examples.md
+      - What can I say? (Skills):
+          - Overview: skill-examples.md
+          - Alerts & Time: skill-examples-alerts-time.md
+          - Music & Radio: skill-examples-media.md
+          - Fun & Trivia: skill-examples-fun.md
+          - Utilities: skill-examples-utilities.md
       - Accessibility: accessibility.md
       - Coming from Mycroft: coming-from-mycroft.md
       - Coming from Alexa: coming-from-alexa.md
@@ -116,8 +126,13 @@ nav:
       - Life of an Utterance: life-of-an-utterance.md
       - Formal Specifications: architecture-specs.md
       - Specification Tooling: spec-tooling.md
+      - ovos-spec-tools: spec-tools-lib.md
+      - ovos-test-harness: spec-test-harness.md
       - Maturity Scale: maturity.md
       - MessageBus Service: bus-service.md
+      - Bus Restart & Reconnect: bus-reconnect.md
+      - Bus Namespace Migration: bus-namespace-migration.md
+      - Bus Recipes: bus-recipes.md
       - Security & Trust Model: security-model.md
       - Plugin Manager: plugin-manager.md
       - Composable Deployments: composable-deployments.md
@@ -137,6 +152,7 @@ nav:
           - Screens on OVOS Today: gui-status.md
           - GUI Service (legacy): gui-service.md
           - PHAL (Hardware Abstraction): phal.md
+          - Writing PHAL Plugins: phal-authoring.md
   - Pipeline:
       - Overview & Reference: pipelines-overview.md
       - Building Your Pipeline: building-your-pipeline.md
@@ -176,7 +192,20 @@ nav:
       - Skill Development Overview: skills-overview.md
       - Tutorials:
           - Your First Skill: first-skill.md
-          - Skill Cookbook: skill-cookbook.md
+          - Skill Cookbook:
+              - Recipe Index: skill-cookbook.md
+              - Reminder with Restart Persistence: recipe-reminder-persistence.md
+              - Configurable + Reactive Settings: recipe-reactive-settings.md
+              - Safe External API Call: recipe-safe-api-call.md
+              - Multi-turn Conversation: recipe-multi-turn-conversation.md
+              - Local Media Playlist: recipe-local-media-playlist.md
+              - GUI + Voice Together: recipe-gui-plus-voice.md
+              - Fallback to an LLM Solver: recipe-llm-fallback.md
+              - Ambient Bus-Event Behavior: recipe-ambient-bus-events.md
+              - Converse-Driven Game Loop: recipe-conversational-game.md
+              - Validated Slot Collection: recipe-validated-get-response.md
+              - Control an External Device (MQTT): recipe-mqtt-device-control.md
+              - A Skill with a Settings UI: recipe-settings-ui.md
       - Guides:
           - Migrating from Mycroft: migrating-from-mycroft.md
           - Version-Compatible Skills & Plugins: version-compat-guide.md
@@ -222,10 +251,14 @@ nav:
       - Plugin Arena (benchmarks): plugin-arena.md
       - Speech & Audio:
           - Microphone: mic-plugins.md
+          - Microphone Plugin Development: mic-plugin-development.md
           - VAD: vad-plugins.md
           - Wake Word: wake-word-plugins.md
+          - Wake Word Plugin Development: wake-word-plugin-development.md
           - Wake Word Verifiers: ww-verifier.md
           - STT: stt-plugins.md
+          - STT Plugins Reference: stt-plugins-reference.md
+          - STT Plugin Development: stt-plugin-development.md
           - TTS: tts-plugins.md
           - G2P: g2p-plugins.md
       - Media Playback:
@@ -263,6 +296,13 @@ nav:
       - Running OVOS in Containers: docker-deployment.md
       - Updating from Older OVOS:
           - Overview & Big-Ticket Migrations: updating-from-older-ovos.md
+          - ovos-utils 0.1.0 Gutting: migration-ovos-utils-0-1.md
+          - ovos-workshop 7.0.0 Release Train: migration-workshop-7.md
+          - ovos-config 2.0.0: migration-config-2-0.md
+          - Bus-Client Dual-Emit Bridge: migration-bus-dual-emit.md
+          - OCP to ovos-media: migration-ocp-to-media.md
+          - Wake-word opm 2.0: migration-opm-2.md
+          - Audio-Transformer Chain Order: migration-audio-transformer-order.md
           - For Skill Maintainers: updating-skills.md
           - For Plugin Maintainers: updating-plugins.md
           - For Device & Fleet Operators: updating-deployers.md
@@ -271,6 +311,7 @@ nav:
       - Self-hosting Servers:
           - STT Server: stt-server.md
           - TTS Server: tts-server.md
+          - TTS Server Deployment: tts-server-deployment.md
           - Translate Server: translate-server.md
           - Server Compatibility Layers: server-compat-layers.md
       - HiveMind: hivemind-agents.md
@@ -305,6 +346,9 @@ nav:
           - Release Workflows: gh-automations-release-workflows.md
           - PR Check Workflows: gh-automations-pr-workflows.md
           - Quality Workflows: gh-automations-quality-workflows.md
+          - Coverage & Security Workflows: gh-automations-coverage-security.md
+          - Lint & Docs Workflows: gh-automations-lint-docs.md
+          - PR Comment Pattern & Scripts: gh-automations-pr-comment-scripts.md
       - Project Info:
           - Timeline: timeline.md
           - Deprecated & Archived Repos: deprecated-repos.md

@@ -186,7 +186,7 @@ systemctl --user restart ovos.service
 Then confirm the new value took effect. For an STT or TTS server change, check the
 voice/audio logs, or watch live traffic with [`ovos-busmon`](bus-service.md), to see which
 server actually receives the request. See [STT server](stt-server.md#companion-plugin) and
-[TTS server](tts-server.md#companion-plugin) for the plugin-side config keys.
+[TTS server](tts-server-deployment.md#companion-plugin) for the plugin-side config keys.
 
 ---
 

@@ -2,7 +2,7 @@
 # Reusable Workflow Reference: PR Workflows
 
 !!! abstract "In a nutshell"
-    This page documents the shared workflows that gate a pull request: build/install/test matrices, plugin (OPM) detection, ovoscope skill tests, license and repo-health checks, and the language-specific skill, locale, spec, intent-case, and TTS-intelligibility checks. Most post a section to the shared OVOS PR Checks comment (see the [PR Checks Comment Pattern](gh-automations-quality-workflows.md#pr-checks-comment-pattern)). For version-bump and release workflows, see [Release Workflows](gh-automations-release-workflows.md). For lint, coverage, security scans, and notifications, see [Quality Workflows](gh-automations-quality-workflows.md). Start with the [gh-automations overview](gh-automations-overview.md) for the big picture, or the full [Workflow Reference index](gh-automations-workflows.md).
+    This page documents the shared workflows that gate a pull request: build/install/test matrices, plugin (OPM) detection, ovoscope skill tests, license and repo-health checks, and the language-specific skill, locale, spec, intent-case, and TTS-intelligibility checks. Most post a section to the shared OVOS PR Checks comment (see the [PR Checks Comment Pattern](gh-automations-pr-comment-scripts.md#pr-checks-comment-pattern)). For version-bump and release workflows, see [Release Workflows](gh-automations-release-workflows.md). For lint, coverage, security scans, and notifications, see [Quality Workflows](gh-automations-quality-workflows.md). Start with the [gh-automations overview](gh-automations-overview.md) for the big picture, or the full [Workflow Reference index](gh-automations-workflows.md).
 
 All reusable workflows are in `.github/workflows/` and are called via:
 

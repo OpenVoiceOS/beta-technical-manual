@@ -97,7 +97,7 @@ thin-client bridge), the pattern worth keeping is:
 
 `After=` only orders unit *start*. It says nothing about whether the messagebus is actually
 accepting connections yet, and it says nothing about what happens when the bus unit *restarts*
-later. See [Bus restart / reconnect behavior](bus-service.md#bus-restart-reconnect-behavior) for
+later. See [Bus restart / reconnect behavior](bus-reconnect.md#bus-restart-reconnect-behavior) for
 what a dependent service's existing bus connection does when that happens (short version: it
 reconnects on its own with backoff, so `Restart=on-failure` on the messagebus unit is enough.
 You do not need to also restart every dependent service).
@@ -606,7 +606,7 @@ each one before you open a port on a shared network.
   widening the bus itself. See [Composable Deployments: Satellites](satellites.md) for how a
   satellite fits into a wider topology.
 - Serving the bus itself over TLS (for the cases above where it does need to leave localhost)
-  is covered in [Bus Service: Serving the bus over TLS](bus-service.md#configuration).
+  is covered in [Bus restart / reconnect behavior: Serving the bus over TLS](bus-reconnect.md#bus-restart-reconnect-behavior).
 
 ---
 

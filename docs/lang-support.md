@@ -210,7 +210,7 @@ ovos-config autoconfigure -l fr-fr --hybrid --female
 
 The recommendations are data-driven: they come from per-language `*.conf` files bundled in `ovos-config` (`recommends/`), so the exact models depend on your installed version. See [`ovos-config`](config.md) for full options.
 
-The bundled offline STT recommendation is [`ovos-stt-plugin-onnx-asr`](stt-plugins.md#ovos-stt-plugin-onnx-asr)
+The bundled offline STT recommendation is [`ovos-stt-plugin-onnx-asr`](stt-plugins-reference.md#ovos-stt-plugin-onnx-asr)
 for every covered language, running a per-language ONNX model picked from the
 [OpenVoiceOS STT ONNX](https://huggingface.co/collections/OpenVoiceOS/stt-asr-onnx) collection.
 On CPU it prefers `int8`-quantized weights where the model ships them, for a smaller
@@ -249,7 +249,7 @@ Two more flags tune the result for your hardware:
 
 > The table below is a snapshot of the bundled recommendations. The authoritative list is whatever `recommends/offline_stt/*.conf`, `recommends/offline_female/*.conf`, and `recommends/offline_male/*.conf` files ship in your installed `ovos-config`. It grows as new models are added to the OVOS Hugging Face collections.
 
-Offline STT is [`ovos-stt-plugin-onnx-asr`](stt-plugins.md#ovos-stt-plugin-onnx-asr) everywhere
+Offline STT is [`ovos-stt-plugin-onnx-asr`](stt-plugins-reference.md#ovos-stt-plugin-onnx-asr) everywhere
 it's listed. Where the table shows an offline TTS entry, it is always
 [`ovos-tts-plugin-phoonnx`](tts-plugins.md#ovos-tts-plugin-phoonnx), pinned to a specific male
 and/or female voice. `int8` next to a model means a quantized CPU build is available and used

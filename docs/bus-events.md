@@ -13,7 +13,7 @@
     Many events have a legacy `mycroft.*`/bare name alongside a newer `ovos.*` name. Only
     one of the two goes on the wire, and each connected client's bus library locally
     re-dispatches it under the other name too, so a handler on either name receives it
-    (see [Bus Service: namespace migration](bus-service.md#namespace-migration)). Use the
+    (see [Bus Service: namespace migration](bus-namespace-migration.md#namespace-migration)). Use the
     spec name in new code: an open kill-switch pull request
     ([ovos-bus-client#272](https://github.com/OpenVoiceOS/ovos-bus-client/pull/272))
     removes the legacy bridge once the fleet has migrated. The tables below show both
@@ -110,7 +110,7 @@ Handled by every `OVOSSkill` instance. See [OVOSSkill API](ovos-skill.md#system-
 | `mycroft.skill.enable_intent` / `mycroft.skill.disable_intent` | Enable/disable one of the skill's intents |
 | `mycroft.skill.set_cross_context` / `mycroft.skill.remove_cross_context` | Manage cross-skill context |
 | `mycroft.skills.settings.changed` | Remote settings update: see [Skill Settings](skill-settings.md#change-callback) for the full change-notification flow |
-| `ovos.skills.settings_changed` | Local settings file changed: see `settings_change_callback` in [Skill Settings](skill-settings.md#change-callback) ([Skill Cookbook recipe 2](skill-cookbook.md#2-user-configurable-behavior-settings-settingsmeta-live-reload)) for reacting to it from a skill |
+| `ovos.skills.settings_changed` | Local settings file changed: see `settings_change_callback` in [Skill Settings](skill-settings.md#change-callback) ([Skill Cookbook recipe 2](recipe-reactive-settings.md)) for reacting to it from a skill |
 | `homescreen.metadata.get` | Homescreen requesting metadata |
 | `{skill_id}.public_api` | Skill API introspection (see [Skill API: Inter-Skill RPC](ovos-skill.md#skill-api-inter-skill-rpc)) |
 
@@ -254,7 +254,7 @@ See [Bus Service: common message types](bus-service.md#key-message-categories).
 OVOS is renaming its bus topics onto the `ovos.*` spec namespace. During the migration,
 `ovos-bus-client`'s receive-side bridge makes legacy and spec names interchangeable, both
 directions on by default (see
-[Bus Service: namespace migration](bus-service.md#namespace-migration)). That bridge is
+[Bus Service: namespace migration](bus-namespace-migration.md#namespace-migration)). That bridge is
 scheduled for removal by the open kill-switch pull request
 [ovos-bus-client#272](https://github.com/OpenVoiceOS/ovos-bus-client/pull/272): after it
 merges, only the spec names work. Use the table below to move any legacy name in your

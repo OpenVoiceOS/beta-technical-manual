@@ -73,7 +73,7 @@ flowchart TD
 - **Say *"unmute"* or *"unmute volume"*.** OVOS keeps mic-mute and speaker-mute separate. Muting
   the microphone does not silence the speaker, and the reverse is also true.
 - **Say *"volume up"* or *"set volume to 80".*** These are handled by the built-in
-  [Volume skill](skill-examples.md#volume) (`ovos-skill-volume`), which understands phrasing like
+  [Volume skill](skill-examples-utilities.md#volume) (`ovos-skill-volume`), which understands phrasing like
   "volume up", "quieter", "mute", "unmute", "toggle mute", "set volume to 50", and "what's the
   current volume".
 - **Check the physical connections** if voice control makes no difference at all. Check the speaker cable

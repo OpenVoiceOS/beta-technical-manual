@@ -59,52 +59,54 @@ Several reusable workflows check this repo out again at runtime to reach `script
 A typical repo runs `build-tests.yml` as a PR gate, `publish-alpha.yml` when a PR merges to
 `dev`, and `publish-stable.yml` when the resulting release PR merges to `master`:
 
-```yaml
-# .github/workflows/build_tests.yml - gate every PR into dev
-name: Run Build Tests
-on:
-  pull_request:
-    branches: [dev]
-jobs:
-  build_tests:
-    uses: OpenVoiceOS/gh-automations/.github/workflows/build-tests.yml@dev
-    secrets: inherit
-    with:
-      install_extras: 'test'
-      test_path: 'test/'
-```
+??? example "Worked example: full workflow files"
 
-```yaml
-# .github/workflows/publish_alpha.yml - bump + publish an alpha on merge to dev
-name: Publish Alpha Build
-on:
-  pull_request:
-    types: [closed]
-    branches: [dev]
-jobs:
-  publish_alpha:
-    if: github.event.pull_request.merged == true
-    uses: OpenVoiceOS/gh-automations/.github/workflows/publish-alpha.yml@dev
-    secrets: inherit
-    with:
-      publish_pypi: true
-      update_changelog: true
-```
+    ```yaml
+    # .github/workflows/build_tests.yml - gate every PR into dev
+    name: Run Build Tests
+    on:
+      pull_request:
+        branches: [dev]
+    jobs:
+      build_tests:
+        uses: OpenVoiceOS/gh-automations/.github/workflows/build-tests.yml@dev
+        secrets: inherit
+        with:
+          install_extras: 'test'
+          test_path: 'test/'
+    ```
 
-```yaml
-# .github/workflows/publish_stable.yml - declare stable + publish on push to master
-name: Publish Stable Build
-on:
-  push:
-    branches: [master]
-jobs:
-  publish_stable:
-    uses: OpenVoiceOS/gh-automations/.github/workflows/publish-stable.yml@dev
-    secrets: inherit
-    with:
-      publish_pypi: true
-      sync_dev: true
-```
+    ```yaml
+    # .github/workflows/publish_alpha.yml - bump + publish an alpha on merge to dev
+    name: Publish Alpha Build
+    on:
+      pull_request:
+        types: [closed]
+        branches: [dev]
+    jobs:
+      publish_alpha:
+        if: github.event.pull_request.merged == true
+        uses: OpenVoiceOS/gh-automations/.github/workflows/publish-alpha.yml@dev
+        secrets: inherit
+        with:
+          publish_pypi: true
+          update_changelog: true
+    ```
+
+    ```yaml
+    # .github/workflows/publish_stable.yml - declare stable + publish on push to master
+    name: Publish Stable Build
+    on:
+      push:
+        branches: [master]
+    jobs:
+      publish_stable:
+        uses: OpenVoiceOS/gh-automations/.github/workflows/publish-stable.yml@dev
+        secrets: inherit
+        with:
+          publish_pypi: true
+          sync_dev: true
+    ```
 
 The three form a pipeline. `build-tests` must pass before a PR can merge to `dev`.
 `publish-alpha` then bumps the version, tags a pre-release, publishes it to PyPI, and opens the

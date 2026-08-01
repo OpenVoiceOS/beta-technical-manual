@@ -1,7 +1,7 @@
 # OCP Skills
 
 !!! abstract "In a nutshell"
-    OCP (OVOS Common Playback) is the part of OVOS that handles playing media, like music, podcasts, or radio. An OCP skill doesn't listen for "play X" itself; instead it acts as a source of media. When someone asks to play something, OVOS asks every OCP skill "can you find this?", each one answers with whatever it can offer and how good a match it thinks it is, and OVOS plays the best result. It's like asking several record shops for an album and going with whoever has the closest match. New terms are explained in the [Glossary](glossary.md). Just want to play music or radio? Install a ready-made skill instead of writing one — see [What Can I Say? Music & Radio](skill-examples.md#music-radio); this page is for developers writing a new OCP media skill.
+    OCP (OVOS Common Playback) is the part of OVOS that handles playing media, like music, podcasts, or radio. An OCP skill doesn't listen for "play X" itself; instead it acts as a source of media. When someone asks to play something, OVOS asks every OCP skill "can you find this?", each one answers with whatever it can offer and how good a match it thinks it is, and OVOS plays the best result. It's like asking several record shops for an album and going with whoever has the closest match. New terms are explained in the [Glossary](glossary.md). Just want to play music or radio? Install a ready-made skill instead of writing one — see [What Can I Say? Music & Radio](skill-examples-media.md#music-radio); this page is for developers writing a new OCP media skill.
 
 --8<-- "snippets/what-ocp-means.md"
 

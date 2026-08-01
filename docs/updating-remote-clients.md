@@ -152,8 +152,8 @@ Lifecycle:
 
 ### Legacy `mycroft.*`/`recognizer_loop:*` topic bridge scheduled for removal
 
-See [The bus-client legacy-topic dual-emit and its removal](updating-from-older-ovos.md#the-bus-client-legacy-topic-dual-emit-and-its-removal)
-in the hub for the full timeline. The short version for remote clients: the
+See [The bus-client legacy-topic dual-emit and its removal](migration-bus-dual-emit.md)
+for the full timeline. The short version for remote clients: the
 bridge is on by default in current releases, and the open kill-switch
 [ovos-bus-client#272](https://github.com/OpenVoiceOS/ovos-bus-client/pull/272)
 deletes it once the fleet has migrated. After it merges,

@@ -47,7 +47,7 @@ fan-speed and thermal-shutdown control.
 Custom LEDs and buttons are the two things almost every maker adds. Instead of writing your
 own bus-message plumbing, subclass the abstract base classes in
 [`ovos-hardware-helpers`](https://github.com/OpenVoiceOS/ovos-hardware-helpers). Wrap the
-result in a [PHAL plugin](phal.md#writing-phal-plugins). See that page for the entry-point
+result in a [PHAL plugin](phal-authoring.md). See that page for the entry-point
 and validator mechanics. This section covers the hardware interface itself.
 
 ### LEDs: `AbstractLed`
@@ -152,7 +152,7 @@ class MyFanController(AbstractFan):
 Wire an instance of any of these classes up inside a `PHALPlugin.__init__`. Poll your GPIO or
 i2c hardware on a background thread, or drive it from an interrupt callback, and call the
 matching `on_*`, `set_led`, or `set_fan_speed` methods. See
-[PHAL: Writing PHAL Plugins](phal.md#writing-phal-plugins) for the full plugin lifecycle,
+[PHAL: Writing PHAL Plugins](phal-authoring.md) for the full plugin lifecycle,
 validator, and entry-point registration.
 
 ---
@@ -194,11 +194,11 @@ On top of that fixed base, from lightest to heaviest:
 - **Lightest**: an energy/noise-threshold [VAD](vad-plugins.md#ovos-vad-plugin-noise) with no
   model download, a small wake-word model such as
   [`ovos-ww-plugin-precise-onnx`](wake-word-plugins.md#ovos-ww-plugin-precise-onnx), and cloud
-  [STT](stt-plugins.md#ovos-stt-plugin-azure)/[TTS](tts-plugins.md#ovos-tts-plugin-azure) such as
+  [STT](stt-plugins-reference.md#ovos-stt-plugin-azure)/[TTS](tts-plugins.md#ovos-tts-plugin-azure) such as
   Azure, Polly, or Edge-TTS. Inference happens on someone else's server, so the device only
   needs enough CPU for the always-on core plus audio capture and playback.
 - **Middle**: local, on-device inference using a small or quantized model. Examples:
-  [`ovos-stt-plugin-onnx-asr`](stt-plugins.md#ovos-stt-plugin-onnx-asr) with a small
+  [`ovos-stt-plugin-onnx-asr`](stt-plugins-reference.md#ovos-stt-plugin-onnx-asr) with a small
   `int8`-quantized model, [`ovos-tts-plugin-phoonnx`](tts-plugins.md#ovos-tts-plugin-phoonnx),
   and [`ovos-vad-plugin-silero`](vad-plugins.md#ovos-vad-plugin-silero)'s small neural VAD model.
   `int8` weights consistently have a lower footprint than `fp32` for the same model.

@@ -6,7 +6,7 @@
 Voice Activity Detection (VAD) is a critical component in the OVOS listener pipeline. It identifies segments of audio that contain human speech, so the system can ignore silence and background noise.
 
 !!! note "Audio format contract"
-    Like STT and wake-word plugins, VAD plugins receive raw PCM from the [microphone plugin](mic-plugins.md#the-microphone-interface): **16 kHz sample rate, 16-bit samples, mono, little-endian**, delivered in **4096-byte chunks** by default.
+    Like STT and wake-word plugins, VAD plugins receive raw PCM from the [microphone plugin](mic-plugin-development.md#the-microphone-interface): **16 kHz sample rate, 16-bit samples, mono, little-endian**, delivered in **4096-byte chunks** by default.
 
 ## How it works
 

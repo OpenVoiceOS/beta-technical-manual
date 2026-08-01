@@ -209,7 +209,7 @@ If you see that, start (or restart) `ovos-messagebus`, then `ovos-core` and `ovo
 and check `bus.log` for a clean startup (no repeated `Connection Refused` lines). Clients
 reconnect on their own with a backing-off retry (5 s → 60 s cap), so a bus restart does **not**
 require restarting every client by hand. See [Bus restart / reconnect
-behavior](bus-service.md#bus-restart-reconnect-behavior) for exactly what to expect while they
+behavior](bus-reconnect.md#bus-restart-reconnect-behavior) for exactly what to expect while they
 recover.
 
 In `ovos-busmon`, this stage is trivially visible: if the bus was down when busmon started, its

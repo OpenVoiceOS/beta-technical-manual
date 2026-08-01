@@ -11,7 +11,7 @@
 
 ## Make it tell jokes
 
-The [Dad Jokes skill](skill-examples.md#dad-jokes) (`ovos-skill-icanhazdadjokes`) answers "tell me
+The [Dad Jokes skill](skill-examples-fun.md#dad-jokes) (`ovos-skill-icanhazdadjokes`) answers "tell me
 a joke", "do you know any Chuck Norris jokes?", or "tell me a joke about dentists" with a fresh
 pun every time. Install it with `pip install ovos-skill-icanhazdadjokes`, then:
 
@@ -19,7 +19,7 @@ pun every time. Install it with `pip install ovos-skill-icanhazdadjokes`, then:
 
 ## Turn it into a parrot
 
-The [Parrot skill](skill-examples.md#parrot) (`ovos-skill-parrot`) makes OVOS repeat whatever you
+The [Parrot skill](skill-examples-fun.md#parrot) (`ovos-skill-parrot`) makes OVOS repeat whatever you
 say back to you. "Repeat Once upon a midnight dreary…" or "say Goodnight, Gracie" gets echoed
 verbatim. Install it with one command (`pip install ovos-skill-parrot`). It's a fun way to show
 that speech really is captured and understood, not faked.
@@ -67,15 +67,15 @@ skeleton that reacts to trick-or-treaters, is really just three ordinary OVOS pi
 together:
 
 1. **A scheduled greeting.** Use `self.schedule_event(...)` (see
-   [Scheduled events with restart persistence](skill-cookbook.md#1-a-reminder-skill-scheduled-events-with-restart-persistence)
+   [Scheduled events with restart persistence](recipe-reminder-persistence.md)
    for the pattern) to have the prop speak on its own every so often, unprompted. For example,
    "Who dares approach?" every few minutes while it's active.
 2. **A spooky voice.** Pick an eerie-sounding [TTS voice](tts-plugins.md) so the scheduled lines
    and any replies sound in character.
 3. **A parrot-style reply for trick-or-treaters.** Reuse the same idea as the
-   [Parrot skill](skill-examples.md#parrot). Echo back whatever the kids say, in the spooky
+   [Parrot skill](skill-examples-fun.md#parrot). Echo back whatever the kids say, in the spooky
    voice, for an instant "it's alive!" reaction. Or use
-   [`converse`](skill-cookbook.md#4-continuous-conversation-multi-turn-dialog-with-converse-and-get_response)
+   [`converse`](recipe-multi-turn-conversation.md)
    to hold a short back-and-forth instead of a single line.
 
 Nothing here needs custom hardware. A speaker and a device running OVOS is enough to try the
@@ -89,8 +89,8 @@ if you want to build a standalone battery/speaker enclosure for it.
 
 ## Play your own music, or control your smart home
 
-OVOS plays internet radio ([PyRadios](skill-examples.md#pyradios),
-[SomaFM](skill-examples.md#somafm)) and local audio files out of the box. It has no bundled
+OVOS plays internet radio ([PyRadios](skill-examples-media.md#pyradios),
+[SomaFM](skill-examples-media.md#somafm)) and local audio files out of the box. It has no bundled
 Spotify or other streaming-service player. See [Media Plugins](media-plugins.md) for what can be
 added.
 

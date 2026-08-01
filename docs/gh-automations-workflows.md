@@ -31,16 +31,16 @@ uses: OpenVoiceOS/gh-automations/.github/workflows/<name>.yml@dev
 | `spec-lint.yml` | Runs `ovos-spec-lint` against a skill's locale folder for OVOS-INTENT-1/2 conformance. | [PR Workflows](gh-automations-pr-workflows.md#spec-lintyml) |
 | `intent-case-tests.yml` | Runs the file-based ovoscope intent-routing accuracy matrix, sharded by language. | [PR Workflows](gh-automations-pr-workflows.md#intent-case-testsyml) |
 | `tts-intelligibility.yml` | Scores TTS output intelligibility via a synthesize-then-transcribe round trip. | [PR Workflows](gh-automations-pr-workflows.md#tts-intelligibilityyml) |
-| `coverage.yml` | Runs `pytest --cov`, posts a coverage report, and optionally deploys HTML to `gh-pages`. | [Quality Workflows](gh-automations-quality-workflows.md#coverageyml) |
-| `coverage-pages.yml` *(deprecated)* | Legacy coverage-to-`gh-pages` deployment, replaced by `coverage.yml`. | [Quality Workflows](gh-automations-quality-workflows.md#coverage-pagesyml-deprecated) |
-| `pip-audit.yml` | Scans dependencies for known CVEs and optionally uploads a SARIF report. | [Quality Workflows](gh-automations-quality-workflows.md#pip-audityml) |
-| `downstream-check.yml` | Reports which packages depend on a given package, using `pipdeptree`. | [Quality Workflows](gh-automations-quality-workflows.md#downstream-checkyml) |
-| `lint.yml` | Runs `ruff` and/or `pre-commit`. | [Quality Workflows](gh-automations-quality-workflows.md#lintyml) |
-| `type-check.yml` | Runs `mypy`, informational only unless `fail_on_errors: true`. | [Quality Workflows](gh-automations-quality-workflows.md#type-checkyml) |
-| `docs-check.yml` | Verifies required documentation files exist and optionally lints Markdown. | [Quality Workflows](gh-automations-quality-workflows.md#docs-checkyml) |
-| `notify-matrix.yml` | Sends a message to the OVOS Matrix channel. | [Quality Workflows](gh-automations-quality-workflows.md#notify-matrixyml) |
+| `coverage.yml` | Runs `pytest --cov`, posts a coverage report, and optionally deploys HTML to `gh-pages`. | [Coverage and Security Workflows](gh-automations-coverage-security.md#coverageyml) |
+| `coverage-pages.yml` *(deprecated)* | Legacy coverage-to-`gh-pages` deployment, replaced by `coverage.yml`. | [Coverage and Security Workflows](gh-automations-coverage-security.md#coverage-pagesyml-deprecated) |
+| `pip-audit.yml` | Scans dependencies for known CVEs and optionally uploads a SARIF report. | [Coverage and Security Workflows](gh-automations-coverage-security.md#pip-audityml) |
+| `downstream-check.yml` | Reports which packages depend on a given package, using `pipdeptree`. | [Coverage and Security Workflows](gh-automations-coverage-security.md#downstream-checkyml) |
+| `lint.yml` | Runs `ruff` and/or `pre-commit`. | [Lint and Docs Workflows](gh-automations-lint-docs.md#lintyml) |
+| `type-check.yml` | Runs `mypy`, informational only unless `fail_on_errors: true`. | [Lint and Docs Workflows](gh-automations-lint-docs.md#type-checkyml) |
+| `docs-check.yml` | Verifies required documentation files exist and optionally lints Markdown. | [Lint and Docs Workflows](gh-automations-lint-docs.md#docs-checkyml) |
+| `notify-matrix.yml` | Sends a message to the OVOS Matrix channel. | [Lint and Docs Workflows](gh-automations-lint-docs.md#notify-matrixyml) |
 
-The [PR Checks Comment Pattern](gh-automations-quality-workflows.md#pr-checks-comment-pattern) and [Scripts Reference](gh-automations-quality-workflows.md#scripts-reference) sections, describing the shared PR-comment mechanism and the Python scripts used across all of the above workflows, live on the Quality Workflows page.
+The [PR Checks Comment Pattern](gh-automations-pr-comment-scripts.md#pr-checks-comment-pattern) and [Scripts Reference](gh-automations-pr-comment-scripts.md#scripts-reference) sections, describing the shared PR-comment mechanism and the Python scripts used across all of the above workflows, live on the PR Comment Pattern and Scripts page.
 
 ---
 

@@ -99,7 +99,7 @@ tier (see [STT Plugins](stt-plugins.md), [TTS Plugins](tts-plugins.md),
 - **Pi 5:** the offline STT performance improvement noted above gives you the most headroom for
   larger local models, including Whisper-class STT, if you want to stay fully offline. The
   `offline` raspOVOS image actually ships
-  [`ovos-stt-plugin-citrinet`](stt-plugins.md#ovos-stt-plugin-citrinet) as the default STT (with
+  [`ovos-stt-plugin-citrinet`](stt-plugins-reference.md#ovos-stt-plugin-citrinet) as the default STT (with
   `ovos-stt-plugin-fasterwhisper` shipped only for a few languages), and
   [`ovos-tts-plugin-piper`](tts-plugins.md#ovos-tts-plugin-piper) as the default TTS. The config
   below uses those shipped defaults. Optional swaps, not what ships by default, are

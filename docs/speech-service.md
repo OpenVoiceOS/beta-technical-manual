@@ -23,7 +23,7 @@ A third, even more minimal option is `mycroft-classic-listener`, the original my
     - `DinkumVoiceLoop.run()`: [`ovos_dinkum_listener/voice_loop/voice_loop.py`](https://github.com/OpenVoiceOS/ovos-dinkum-listener/blob/dev/ovos_dinkum_listener/voice_loop/voice_loop.py). This is the per-chunk state machine that drives [VAD](vad-plugins.md), [Wake word](wake-word-plugins.md) and [STT](stt-plugins.md) via per-state handlers.
 
 
-    - `OVOSDinkumVoiceService._stt_text()`: [`ovos_dinkum_listener/service.py`](https://github.com/OpenVoiceOS/ovos-dinkum-listener/blob/dev/ovos_dinkum_listener/service.py). It emits the utterance message after [STT](stt-plugins.md) returns text. The listener emits the spec topic `ovos.utterance.handle` (`SpecMessage.UTTERANCE`) directly, and `ovos-bus-client`'s `NamespaceTranslator` (see [Bus Service](bus-service.md#namespace-migration)) also emits the legacy `recognizer_loop:utterance` alias for old consumers.
+    - `OVOSDinkumVoiceService._stt_text()`: [`ovos_dinkum_listener/service.py`](https://github.com/OpenVoiceOS/ovos-dinkum-listener/blob/dev/ovos_dinkum_listener/service.py). It emits the utterance message after [STT](stt-plugins.md) returns text. The listener emits the spec topic `ovos.utterance.handle` (`SpecMessage.UTTERANCE`) directly, and `ovos-bus-client`'s `NamespaceTranslator` (see [Bus Service](bus-namespace-migration.md#namespace-migration)) also emits the legacy `recognizer_loop:utterance` alias for old consumers.
     
     ---
     
@@ -84,7 +84,7 @@ useful events for downstream services:
 
 Canonical (spec) names are shown first, with the legacy name in parentheses. The `ovos.listener.*` and `ovos.utterance.handle` names come from [OVOS-AUDIO-IN-1 §5-§6](https://github.com/OpenVoiceOS/architecture/blob/dev/audio-in.md). `ovos-dinkum-listener` emits the spec `ovos.*` topics directly for the record/awoken/utterance events (via `SpecMessage`).
 
-For those, `ovos-bus-client`'s `NamespaceTranslator` runs on every client with both directions on by default (see [Bus Service](bus-service.md#namespace-migration)). Emitting a spec topic also emits its legacy alias, and vice versa, so subscribers can use either name.
+For those, `ovos-bus-client`'s `NamespaceTranslator` runs on every client with both directions on by default (see [Bus Service](bus-namespace-migration.md#namespace-migration)). Emitting a spec topic also emits its legacy alias, and vice versa, so subscribers can use either name.
 
 The wake-word event (`recognizer_loop:wakeword`) is the exception: it has no spec counterpart in the rename map, so it travels under the legacy name only. See the [legacy ↔ spec migration table](bus-events.md#legacy-spec-migration) for the full mapping.
 
@@ -133,7 +133,7 @@ STT/loop values):
     The listener publishes the transcribed command on the spec topic
     `ovos.utterance.handle`. `ovos-bus-client`'s namespace translator (on by default)
     also emits the legacy `recognizer_loop:utterance` alias, so subscribers can use
-    either topic name. See [Bus Service: Namespace migration](bus-service.md#namespace-migration)
+    either topic name. See [Bus Service: Namespace migration](bus-namespace-migration.md#namespace-migration)
     for how to turn that aliasing off once every consumer speaks the spec namespace.
 
 ## Configuration

@@ -15,7 +15,7 @@
 ## Voice is not a fallback here
 
 Every core interaction works with sound alone, no display required. That includes waking the
-assistant, asking a question, hearing the answer, adjusting [volume](skill-examples.md#volume),
+assistant, asking a question, hearing the answer, adjusting [volume](skill-examples-utilities.md#volume),
 and asking what it can do. This isn't a design aspiration. A skill is not required to register
 any [GUI](gui-service.md) page at all, and a skill with nothing to show on screen simply speaks
 its response instead. The current OVOS GUI stack is itself
@@ -76,7 +76,7 @@ config key where one exists.
 Voice-first interaction is itself the main accessibility feature for limited dexterity. Nothing
 in day-to-day use requires precise pointing, a keyboard, or reaching a physical control. A
 [wake word](wake-word-plugins.md) and speech cover waking, asking, and adjusting
-[volume](skill-examples.md#volume) without touching the device at all. Two things are worth
+[volume](skill-examples-utilities.md#volume) without touching the device at all. Two things are worth
 tuning specifically for this:
 
 - **Wake-word sensitivity.** If pressing a physical button or repeating a phrase precisely is

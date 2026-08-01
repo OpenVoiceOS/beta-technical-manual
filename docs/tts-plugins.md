@@ -359,7 +359,7 @@ separately-licensed model or a paid cloud service, that is called out under "mod
 !!! warning "Talks to a public community server by default"
     The `host` below points at a best-effort, publicly-run community server, not a private
     or guaranteed-available endpoint. Point it at your own self-hosted server (see
-    [tts-server](tts-server.md#companion-plugin)) if you need privacy or reliability.
+    [tts-server](tts-server-deployment.md#companion-plugin)) if you need privacy or reliability.
 
 ### Default Configuration
 
@@ -377,7 +377,7 @@ separately-licensed model or a paid cloud service, that is called out under "mod
 ```
 
 That default `host` is a public community-run Piper server, not an address on your network. See
-[tts-server](tts-server.md#companion-plugin) to self-host, or pick a fully offline voice from the
+[tts-server](tts-server-deployment.md#companion-plugin) to self-host, or pick a fully offline voice from the
 table above.
 
 --8<-- "snippets/community-servers.md"

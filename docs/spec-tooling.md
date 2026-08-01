@@ -5,12 +5,18 @@
 
 !!! abstract "In a nutshell"
     The [Formal Specifications](architecture-specs.md) say *what* must happen.
-    Three pieces of tooling turn that from prose into something you can build on
-    and check: **ovos-spec-tools** (a ready-made, conformant implementation of
-    the low-level primitives), **ovos-test-harness** (an executable test suite
-    that proves a running stack obeys the specs), and the **bus-client namespace
-    migration** (which lets the ecosystem adopt the new spec topic names without
-    a flag day).
+    Two pieces of tooling turn that from prose into something you can build on
+    and check:
+
+    - [**ovos-spec-tools**](spec-tools-lib.md): a ready-made, conformant
+      implementation of the low-level primitives (template expansion, locale
+      loading, sessions, the keyword-intent builder, the topic vocabulary).
+    - [**ovos-test-harness**](spec-test-harness.md): an executable test suite
+      that proves a running stack obeys the specs.
+
+    A related, separate mechanism lets the ecosystem adopt the new `ovos.*`
+    topic names without a flag day: see
+    [Bus namespace migration](bus-namespace-migration.md).
 
 ??? info "Formal specification"
     These tools serve the **[OpenVoiceOS/architecture](https://github.com/OpenVoiceOS/architecture)** specs. See the [spec index](architecture-specs.md).
@@ -19,146 +25,36 @@
 
 ## ovos-spec-tools: the reference implementation
 
-[**ovos-spec-tools**](https://github.com/OpenVoiceOS/ovos-spec-tools) is the
-**single conformant implementation** of the low-level primitives the specs
-describe. OVOS components used to reimplement template expansion, resource
-loading, and language matching in several places, and the copies drifted.
-Rather than reimplement (and re-introduce the bugs), depend on this package. It
-is dependency-light (the core has **no dependencies**) and tracks the specs
-clause-for-clause.
-
-| Primitive | Spec | What it does |
-|-----------|------|--------------|
-| Sentence-template expander | [OVOS-INTENT-1](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-1.md) | Expands `(a\|b)` / `[opt]` / `{slot}` / `<vocab>` into the sentences it denotes |
-| Locale resource loader | [OVOS-INTENT-2](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-2.md) | Loads a skill's `locale/` `.intent` / `.dialog` / `.voc` / `.entity` / `.blacklist` / `.prompt` files |
-| Dialog & prompt renderer | [OVOS-INTENT-2 §4](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-2.md) | Renders a spoken `.dialog` line or a `.prompt` with slot substitution |
-| Language-tag matching | [OVOS-INTENT-2 §2.2](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-2.md) | Picks the closest available BCP-47 language for a request |
-| Message envelope | [OVOS-MSG-1](https://github.com/OpenVoiceOS/architecture/blob/dev/msg-1.md) | The `{type, data, context}` `Message` and its `forward`/`reply`/`response` derivations |
-| `Session` / `SessionManager` | [OVOS-SESSION-1](https://github.com/OpenVoiceOS/architecture/blob/dev/session-1.md) | The registered session-carrier field set with omission-not-null (de)serialization, plus a process-wide one-object-per-`session_id` registry that folds each incoming snapshot onto the live object and re-stamps `forward`/`reply`/`response` derivations with it |
-| Context gating & decay | [OVOS-CONTEXT-1](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-context.md) | Stateless helpers over the flat `session.intent_context` map: `gate_satisfied`/`is_live`/`decrement`/`prune`/`enforce_cap` for `requires_context`/`excludes_context` gating and decay, plus `context_supplied_slots`/`context_slot_candidates` for context-sourced slot fill |
-| `IntentBuilder` / `Intent` | [OVOS-INTENT-4 §5](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-4.md) | Adapt-free, plugin-agnostic keyword-intent definition (`require`/`optionally`/`one_of`/`exclude`/`build()`), mapping to the `ovos.intent.register.keyword` payload. `voc_match` matches an utterance against a `.voc` file. Source-compatible with the `ovos-workshop` classes it replaces |
-| `SpecMessage` | multiple ([PIPELINE-1](https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md), [INTENT-4](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-4.md), [STOP-1](https://github.com/OpenVoiceOS/architecture/blob/dev/stop-1.md), [PERSONA-1](https://github.com/OpenVoiceOS/architecture/blob/dev/persona.md), [FALLBACK-1](https://github.com/OpenVoiceOS/architecture/blob/dev/fallback.md), …) | An enum of every canonical `ovos.*` spec bus topic, plus `MIGRATION_MAP`/`NamespaceTranslator`: the legacy-to-`ovos.*` rename table the [namespace bridge](bus-service.md#namespace-migration) applies |
-| `ovos-spec-lint` | [OVOS-INTENT-1](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-1.md) / [-2](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-2.md) | A linter that validates a `locale/` folder against the resource-format specs, including `.blacklist`/`.entity` naming and slot-free constraints |
-
-```bash
-pip install ovos-spec-tools            # core — no dependencies (Python 3.10+)
-pip install ovos-spec-tools[langcodes] # adds smart language fallback
-```
-
-```python
-from ovos_spec_tools import expand, LocaleResources, render, closest_lang, Message
-
-expand("(turn|switch) [the] light")             # every sentence the template denotes
-res = LocaleResources("my-skill/locale")
-render(res.load_dialog("weather", "en-US"),     # a spoken response
-       slots={"temperature": 21})
-closest_lang("en-AU", ["pt-BR", "en-US"])       # -> 'en-US'
-m = Message("ovos.intent.list", {}, {"source": "skill.id"})
-m.response({"intents": ["..."]}).serialize()    # -> the 'ovos.intent.list.response' JSON
-```
-
-Lint a skill's locale folder against the grammar and format specs:
-
-```bash
-ovos-spec-lint my-skill/locale
-```
-
-`ovos-spec-lint` also takes a `--spec-version` flag for linting a skill that has not fully
-migrated yet: `--spec-version 1` (the default) treats a `.blacklist` violation as an error;
-`--spec-version 0` demotes the same violation to a warning, so a repo can adopt the
-[`.blacklist` file](resource-files.md) incrementally instead of all at once.
-
-The session carrier, the keyword-intent builder, and the canonical topic
-vocabulary follow the same pattern: plain data plus stdlib-only helpers.
-
-```python
-from ovos_spec_tools import IntentBuilder, Session, SpecMessage
-
-# OVOS-SESSION-1 wire-shape carrier; SessionManager (in ovos_spec_tools.session)
-# is the optional one-object-per-session_id registry built on top of it
-session = Session(session_id="default", lang="en-US")
-
-# OVOS-INTENT-4 §5 keyword-intent structure — adapt-free, source-compatible
-# with the ovos-workshop IntentBuilder skills already import
-intent = IntentBuilder("HelloIntent").require("Hello").build()
-
-SpecMessage.SPEAK.value  # -> 'ovos.utterance.speak', the spec-canonical topic name
-```
-
-!!! tip "When to reach for it"
-    Building an intent-matching pipeline plugin, a skill loader, a satellite, or any third-party
-    tool that touches OVOS templates, locale files, language selection, or the
-    bus envelope? Depend on `ovos-spec-tools` instead of hand-rolling. That is
-    exactly the drift the package exists to prevent. See also
-    [Resource Files](resource-files.md) and [Language Selection](lang-selection.md).
-
----
+[ovos-spec-tools](spec-tools-lib.md) is the single conformant implementation of
+the low-level primitives the specs describe: the sentence-template expander,
+locale resource loader, dialog/prompt renderer, language matching, the message
+envelope, `Session`/`SessionManager`, context gating, `IntentBuilder`, the
+`SpecMessage` topic vocabulary, and the `ovos-spec-lint` locale linter. Depend
+on it instead of reimplementing these pieces. See
+[ovos-spec-tools](spec-tools-lib.md) for the full primitive table and usage.
 
 ## ovos-test-harness: the conformance suite
 
-[**ovos-test-harness**](https://github.com/OpenVoiceOS/ovos-test-harness) is the
-**executable counterpart** of the specs. Each test asserts one observable bus
-behavior a spec mandates, against a *real running OVOS stack*. If the specs are
-the law, this harness is the courtroom. It puts a concrete combination of OVOS
-repos on trial against the law and returns a verdict per normative clause:
-**pass**, **`xfail`** (a documented gap), or **fail**.
-
-**Why a separate repo.** A single spec clause is only satisfied when a
-*combination* of branches across a dozen repos lines up: `ovos-core`,
-`ovos-workshop`, `ovos-bus-client`, the pipeline plugins, fixture skills. You
-cannot prove that from inside any one repo, because that repo's CI installs only
-its own package plus whatever pip resolves, and pip is free to downgrade a
-sibling out of the exact combination you are trying to validate.
-
-**The model.** The harness is **not a package**. There is no `pip install .`.
-Its [`requirements.txt`](https://github.com/OpenVoiceOS/ovos-test-harness) is the
-**stack under test**: every line pins one repo to an exact git ref or version, so
-CI never re-resolves and never downgrades a component. Each test then:
-
-- imports the spec vocabulary from [`ovos-spec-tools`](https://github.com/OpenVoiceOS/ovos-spec-tools), so a topic name is *provably spec-defined* rather than a magic string.
-- drives and captures the live bus through [`ovoscope`](https://github.com/OpenVoiceOS/ovoscope) (see [Testing Skills](ovoscope-overview.md)).
-- asserts the spec-mandated behavior and records pass / `xfail` / fail.
-
-**Coverage.** All 20 specs on the architecture `dev` branch currently have
-conformance suites (SESSION-1 and SESSION-2 share one suite. INTENT-4 has both an
-orchestrator suite and a per-plugin registration-compliance suite). The
-authoritative spec→suite traceability matrix lives in the repo's
-[`docs/coverage.md`](https://github.com/OpenVoiceOS/ovos-test-harness/blob/dev/docs/coverage.md).
-Documented conformance gaps are recorded as `xfail` entries and catalogued in
-[`docs/known-gaps.md`](https://github.com/OpenVoiceOS/ovos-test-harness/blob/dev/docs/known-gaps.md).
-
-**Pre-flighting a cross-repo change.** To certify an unmerged combination,
-maintainers pin the candidate branches in `requirements.txt` and open a harness
-PR. CI then installs exactly that stack and runs the full conformance suite
-against it, flipping each ref to `@dev` as it merges. One structural limit: two
-branches of the *same* repo cannot both be installed, so pick one ref per repo.
-
-This is where an implementation is **proven to conform** to the merged
-architecture specs. It is the bridge between the prescriptive Markdown and the code
-that has to honour it.
-
----
+[ovos-test-harness](spec-test-harness.md) is the executable counterpart of the
+specs. It pins an exact combination of OVOS repos (`ovos-core`,
+`ovos-workshop`, `ovos-bus-client`, pipeline plugins, fixture skills) and runs
+the full conformance suite against that real, running stack. It records a
+pass/`xfail`/fail verdict per normative clause. Maintainers also use it to
+pre-flight an unmerged cross-repo change before merge. See
+[ovos-test-harness](spec-test-harness.md) for the coverage model and how to
+pre-flight a change.
 
 ## Adopting the spec namespace: without a flag day
 
-The specs rename many bus topics into the `ovos.*` namespace (for example
-`recognizer_loop:utterance` → `ovos.utterance.handle`). Migrating an ecosystem
-of independently-released repos to new topic names all at once is impossible.
-So [**ovos-bus-client**](bus-service.md) does it **automatically and
-incrementally**. A single message travels the wire once, and each
-connected client translates on receive: a subscription to either the legacy or
-the `ovos.*` name is also delivered its migrated counterpart locally
-(de-duplicated), so a producer and consumer can each switch to `ovos.*`
-**in any order, with no coordination**.
-
-This is what makes spec adoption gradual rather than a breaking change. The full
-mechanism, and how to turn the bridges off once a deployment is fully
-modernised, is documented under
-[**messagebus Service → Namespace migration**](bus-service.md#namespace-migration).
-
-`ovos-spec-tools` owns the **vocabulary** of the mapping: `SpecMessage` and `MIGRATION_MAP`. The
-runtime bridge itself, the dual-emit and receive-side de-duplication, lives in `ovos-bus-client`.
+The specs rename many bus topics into the `ovos.*` namespace. Migrating an
+ecosystem of independently-released repos to new topic names all at once is
+impossible, so `ovos-bus-client` bridges old and new names automatically and
+incrementally. `ovos-spec-tools` owns the **vocabulary** of that mapping
+(`SpecMessage` / `MIGRATION_MAP`). The runtime bridge itself lives in
+`ovos-bus-client`. See [Bus namespace migration](bus-namespace-migration.md)
+for the full mechanism, the on/off switches, and the pending removal of the
+bridge.
 
 ---
-**Read next:** [Maturity Scale](maturity.md) · [Concepts Overview](concepts-overview.md)
+**Read next:** [ovos-spec-tools](spec-tools-lib.md) · [ovos-test-harness](spec-test-harness.md) · [Bus namespace migration](bus-namespace-migration.md)
 **Related:** [Formal Specifications](architecture-specs.md) · [MessageBus Service](bus-service.md) · [Intent Service](intent-service.md) · [Core Libraries](core-libraries.md)

@@ -288,8 +288,8 @@ it merges, `MessageBusClient` speaks OVOS-MSG-1 spec topics only and passing
 
 There will be no client-side shim for this: migrate remote clients and
 satellites to `ovos.*` spec topics while the bridge still covers both spellings. Do
-not write new code that shims legacy topic names. See [Updating From
-Older OVOS](updating-from-older-ovos.md#the-bus-client-legacy-topic-dual-emit-and-its-removal)
+not write new code that shims legacy topic names. See [The bus-client
+legacy-topic dual-emit and its removal](migration-bus-dual-emit.md)
 for the full migration path.
 
 **Pre-fork mycroft-core.** The `MycroftSkill` compat metaclass that let classic
