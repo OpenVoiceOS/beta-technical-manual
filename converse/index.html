@@ -1651,21 +1651,22 @@ activation control.</p>
     participant O as Orchestrator
     U-&gt;&gt;P: new utterance
     P-&gt;&gt;S: &lt;skill_id&gt;.converse.ping
-    S--&gt;&gt;P: &lt;skill_id&gt;.converse.pong
+    S--&gt;&gt;P: skill.converse.pong
     alt skill claims
         P-&gt;&gt;O: Match(intent_name=converse)
-        O-&gt;&gt;S: dispatch &lt;skill_id&gt;:converse
+        O-&gt;&gt;S: dispatch match_type=converse:skill
     else no claim
         P-&gt;&gt;O: fall through to intent pipeline
     end</code></pre>
 <p><em>Diagram:</em> The sequence starts with a new user utterance and ends with the orchestrator dispatching to the skill if it claims the turn, or falling through to the intent pipeline if not.</p>
 </details>
 <div class="admonition note">
-<p class="admonition-title">Upcoming — <code>stop</code> joins the reserved names</p>
-<p>An in-progress change (<a href="https://github.com/OpenVoiceOS/ovos-core/pull/802">ovos-core#802</a>)
-formalizes <code>stop</code> as a third reserved <code>intent_name</code>, alongside <code>converse</code> and <code>response</code>,
-with a separable legacy-compatibility bridge for existing consumers. See
-<a href="../intent-service/">Intent Service</a> for the pipeline-plugin side of this change.</p>
+<p class="admonition-title"><code>stop</code> is a reserved name too</p>
+<p><code>stop</code> is a reserved <code>intent_name</code> alongside <code>converse</code> and <code>response</code>
+(<a href="https://github.com/OpenVoiceOS/ovos-core/pull/802">ovos-core#802</a>, STOP-1 §4). A match
+produced by the stop pipeline plugin suppresses the <code>session.active_handlers</code> push, the
+same way a converse match does. See <a href="../intent-service/">Intent Service</a> for the
+pipeline-plugin side.</p>
 </div>
 <p><strong>What / why (beginners):</strong> <code>converse()</code> lets a skill keep listening after it has just spoken, without registering a new intent for every possible follow-up. Once your skill runs, it goes onto the <strong>Active Skills List</strong> for a few minutes. While it is there, every new utterance is offered to its <code>converse()</code> method before normal intent parsing. This is how you handle "yes / no / thanks / the red one" replies that only make sense right after your skill acted.</p>
 <p>Each <a href="../skill-design-guidelines/">Skill</a> may define a <code>converse()</code> method. This method is called any time the skill has been recently active and a new utterance is processed.</p>
@@ -1730,14 +1731,19 @@ whitelist/blacklist — covered on <a href="../permissions/">Permissions &amp; A
 </div>
 <h2 id="active-skill-list">Active Skill List<a class="headerlink" href="#active-skill-list" title="Permanent link">&para;</a></h2>
 <p>A Skill is considered active if it has been called in the last 5 minutes. This window is the
-<code>converse.response_timeout</code> config value (default <code>300</code> seconds) and can be changed in
+<code>skills.converse.timeout</code> config value (default <code>300</code> seconds) and can be changed in
 <code>mycroft.conf</code>:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>{
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>  &quot;converse&quot;: {
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>    &quot;response_timeout&quot;: 300
-</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>  }
-</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>}
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>  &quot;skills&quot;: {
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>    &quot;converse&quot;: {
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>      &quot;timeout&quot;: 300
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>    }
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>  }
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>}
 </span></code></pre></div>
+<p>Note the nesting. <code>ConverseService</code> reads its config from <code>Configuration()["skills"]["converse"]</code>,
+so a <code>converse</code> block at the top level of <code>mycroft.conf</code> is never read. Per-skill overrides go
+in the sibling <code>skill_timeouts</code> mapping.</p>
 <p>Skills are called in order of when they were last active. For example, if a user speaks the following commands:</p>
 <blockquote>
 <p>Hey Mycroft, set a timer for 10 minutes</p>

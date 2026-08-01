@@ -1720,9 +1720,11 @@ whose gate is not satisfied against <code>session.intent_context</code> at match
 <p>The private/shared scoping rules are identical on both sides: a bare key gates privately
 against the registering <code>skill_id</code>, and reading a shared key needs the explicit
 <code>{"key": "person", "scope": "shared"}</code> form.</p>
-<p>Context lives on the per-conversation <a href="../session/">Session</a> (<code>Session.context</code>, an
-<code>IntentContextManager</code> from <code>ovos_bus_client.session</code>). It is <strong>session-scoped</strong>,
-not a single global store, so concurrent users and devices keep separate context.</p>
+<p>Context lives on the per-conversation <a href="../session/">Session</a>, in <code>Session.intent_context</code>. It
+is <strong>session-scoped</strong>, not a single global store, so concurrent users and devices keep
+separate context.</p>
+<p><code>Session.context</code> still resolves, but it is a read-only projection over <code>intent_context</code> kept
+for older code, and touching it warns. Write to <code>intent_context</code>.</p>
 <hr />
 <h2 id="follow-up-questions">Follow-up questions<a class="headerlink" href="#follow-up-questions" title="Permanent link">&para;</a></h2>
 <h3 id="keyword-contexts">Keyword Contexts<a class="headerlink" href="#keyword-contexts" title="Permanent link">&para;</a></h3>

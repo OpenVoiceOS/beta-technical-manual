@@ -1728,11 +1728,13 @@ are met:</p>
 <p>After new skills are loaded, the manager requests pipeline re-training:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>mycroft.skills.train  →  (pipeline plugins that need it train, e.g. padatious)
 </span></code></pre></div>
-<p>The manager emits <code>mycroft.skills.train</code> and blocks up to 60 seconds via
-<code>bus.wait_for_response(..., "mycroft.skills.trained", timeout=60)</code>. It logs an
-error if training times out or reports an error. Pipeline plugins with a
-deferred training step reply on <code>mycroft.skills.trained</code>. Plugins without one
-never reply, and the call times out.</p>
+<p>The manager emits <code>mycroft.skills.train</code> and moves on. It is fire-and-forget: no reply
+topic is part of the spec, and the manager waits for nothing.</p>
+<p>Do not implement a <code>mycroft.skills.trained</code> reply. Nothing listens for one. An earlier
+version blocked on <code>wait_for_response(..., "mycroft.skills.trained", timeout=60)</code>, which
+stalled boot for a full minute on every install without a deferred-training engine, since
+no such engine was there to answer. A single responder could not speak for every loaded
+pipeline anyway.</p>
 <h2 id="settings-file-watcher">Settings File Watcher<a class="headerlink" href="#settings-file-watcher" title="Permanent link">&para;</a></h2>
 <p>When enabled, a <code>FileWatcher</code> monitors <code>~/.config/ovos/skills/*/settings.json</code>. Any change emits:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>ovos.skills.settings_changed  {skill_id: &quot;...&quot;}
@@ -1764,30 +1766,33 @@ never reply, and the call times out.</p>
 </tr>
 <tr>
 <td><code>mycroft.network.connected</code></td>
-<td><code>handle_network_connected</code></td>
+<td><code>handle_network_connected</code> *</td>
 </tr>
 <tr>
 <td><code>mycroft.internet.connected</code></td>
-<td><code>handle_internet_connected</code></td>
+<td><code>handle_internet_connected</code> *</td>
 </tr>
 <tr>
 <td><code>mycroft.gui.available</code></td>
-<td><code>handle_gui_connected</code></td>
+<td><code>handle_gui_connected</code> *</td>
 </tr>
 <tr>
 <td><code>mycroft.network.disconnected</code></td>
-<td><code>handle_network_disconnected</code></td>
+<td><code>handle_network_disconnected</code> *</td>
 </tr>
 <tr>
 <td><code>mycroft.internet.disconnected</code></td>
-<td><code>handle_internet_disconnected</code></td>
+<td><code>handle_internet_disconnected</code> *</td>
 </tr>
 <tr>
 <td><code>mycroft.gui.unavailable</code></td>
-<td><code>handle_gui_disconnected</code></td>
+<td><code>handle_gui_disconnected</code> *</td>
 </tr>
 </tbody>
 </table>
+<p>* The six connectivity events are subscribed <strong>only</strong> when deferred loading is on, which it
+is not by default. On a stock install nothing is listening on them, so emitting one changes
+nothing. The four <code>skillmanager.*</code> events above are always subscribed.</p>
 <hr />
 <p><strong>Read next:</strong> <a href="../intent-service/">Intent Service</a> · <a href="../skill-installer/">Skill Installer</a>
 <strong>Related:</strong> <a href="../core/">ovos-core Overview</a> · <a href="../skill-structure/">Anatomy of a Skill</a> · <a href="../skill-runtime-requirements/">Runtime Requirements</a></p>
