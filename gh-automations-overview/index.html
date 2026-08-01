@@ -2020,6 +2020,10 @@ full diagram of this same pipeline.</p>
 <td>Build/install/test matrix across Python versions. Posts <code>Build Tests</code>.</td>
 </tr>
 <tr>
+<td><code>channel-compat.yml</code></td>
+<td>Run the test suite at the versions an OVOS distro release channel pins, to catch what is green on <code>dev</code> but broken on the fleet. Posts <code>Channel Compat</code>.</td>
+</tr>
+<tr>
 <td><code>coverage.yml</code></td>
 <td>Run pytest with coverage. Post <code>Coverage</code>. Optionally deploy the HTML report to Pages (<code>deploy_pages: true</code>).</td>
 </tr>

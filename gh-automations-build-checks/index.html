@@ -1396,6 +1396,57 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#channel-compatyml" class="md-nav__link">
+    <span class="md-ellipsis">
+      channel-compat.yml
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="channel-compat.yml">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#inputs_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Inputs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-one-rule" class="md-nav__link">
+    <span class="md-ellipsis">
+      The one rule
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#expect-red-on-the-first-run" class="md-nav__link">
+    <span class="md-ellipsis">
+      Expect red on the first run
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Usage
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#python-supportyml-deprecated" class="md-nav__link">
     <span class="md-ellipsis">
       python-support.yml (deprecated)
@@ -1406,7 +1457,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#inputs_1" class="md-nav__link">
+  <a href="#inputs_2" class="md-nav__link">
     <span class="md-ellipsis">
       Inputs
     </span>
@@ -1711,6 +1762,57 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#channel-compatyml" class="md-nav__link">
+    <span class="md-ellipsis">
+      channel-compat.yml
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="channel-compat.yml">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#inputs_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Inputs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-one-rule" class="md-nav__link">
+    <span class="md-ellipsis">
+      The one rule
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#expect-red-on-the-first-run" class="md-nav__link">
+    <span class="md-ellipsis">
+      Expect red on the first run
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Usage
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#python-supportyml-deprecated" class="md-nav__link">
     <span class="md-ellipsis">
       python-support.yml (deprecated)
@@ -1721,7 +1823,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#inputs_1" class="md-nav__link">
+  <a href="#inputs_2" class="md-nav__link">
     <span class="md-ellipsis">
       Inputs
     </span>
@@ -1755,7 +1857,7 @@
 <h1 id="reusable-workflow-reference-build-checks">Reusable Workflow Reference: Build Checks<a class="headerlink" href="#reusable-workflow-reference-build-checks" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>This page documents the shared workflows that verify a package builds and installs across Python versions: <code>build-tests.yml</code> and the deprecated <code>python-support.yml</code>. For OVOS-plugin (OPM) detection, license, and repo-health checks, see <a href="../gh-automations-plugin-repo-checks/">Plugin, License, and Repo Checks</a>. For skill and locale packaging checks, see <a href="../gh-automations-repo-skill-checks/">Skill and Locale Checks</a>. For end-to-end skill test execution, see <a href="../gh-automations-skill-test-workflows/">Skill Test Workflows</a>. Start with the <a href="../gh-automations-overview/">gh-automations overview</a> for the big picture, or the full <a href="../gh-automations-workflows/">Workflow Reference index</a>.</p>
+<p>This page documents the shared workflows that verify a package builds, installs, and still runs where it has to: <code>build-tests.yml</code> across Python versions, <code>channel-compat.yml</code> against an OVOS distro release channel, and the deprecated <code>python-support.yml</code>. For OVOS-plugin (OPM) detection, license, and repo-health checks, see <a href="../gh-automations-plugin-repo-checks/">Plugin, License, and Repo Checks</a>. For skill and locale packaging checks, see <a href="../gh-automations-repo-skill-checks/">Skill and Locale Checks</a>. For end-to-end skill test execution, see <a href="../gh-automations-skill-test-workflows/">Skill Test Workflows</a>. Start with the <a href="../gh-automations-overview/">gh-automations overview</a> for the big picture, or the full <a href="../gh-automations-workflows/">Workflow Reference index</a>.</p>
 </div>
 <p>All reusable workflows are in <code>.github/workflows/</code> and are called via:</p>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">OpenVoiceOS/gh-automations/.github/workflows/&lt;name&gt;.yml@dev</span>
@@ -1766,14 +1868,15 @@
 <p><strong>Workflows on this page:</strong></p>
 <ul>
 <li><a href="#build-testsyml"><code>build-tests.yml</code></a></li>
+<li><a href="#channel-compatyml"><code>channel-compat.yml</code></a></li>
 <li><a href="#python-supportyml-deprecated"><code>python-support.yml</code> (deprecated)</a></li>
 </ul>
 <hr />
 <h2 id="build-testsyml"><code>build-tests.yml</code><a class="headerlink" href="#build-testsyml" title="Permanent link">&para;</a></h2>
-<p>Runs build, install, and optionally tests across a configurable matrix of Python versions. Posts a <code>🔨 Build Tests</code> section to the PR comment. (The channel-compatibility check lives in <a href="../gh-automations-release-workflows/#release-previewyml"><code>release-preview.yml</code></a>, not here.)</p>
+<p>Runs build, install, and optionally tests across a configurable matrix of Python versions. Posts a <code>🔨 Build Tests</code> section to the PR comment. To run those tests against a release channel instead of current <code>dev</code>, see <a href="#channel-compatyml"><code>channel-compat.yml</code></a> below.</p>
 <p><strong>Source:</strong> <code>.github/workflows/build-tests.yml</code></p>
 <!-- BEGIN GENERATED: workflow-io:build-tests.yml -->
-<!-- This section is auto-generated by tools/gen_reference.py from the upstream source of truth. Do not hand-edit. Re-run the script instead. -->
+<!-- This section is auto-generated by tools/gen_reference.py from the upstream source of truth. Do not hand-edit; re-run the script instead. -->
 <h3 id="inputs">Inputs<a class="headerlink" href="#inputs" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
@@ -1884,6 +1987,144 @@
 </li>
 </ul>
 <hr />
+<h2 id="channel-compatyml"><code>channel-compat.yml</code><a class="headerlink" href="#channel-compatyml" title="Permanent link">&para;</a></h2>
+<p>Runs the repo's test suite against an OVOS distro release channel: every dependency
+is installed at the version that channel pins, and only the repo under test comes
+from the checkout. Posts a <code>📡 Channel Compat</code> section (one per channel) to the PR
+comment.</p>
+<p><strong>Source:</strong> <code>.github/workflows/channel-compat.yml</code></p>
+<!-- BEGIN GENERATED: workflow-io:channel-compat.yml -->
+<!-- This section is auto-generated by tools/gen_reference.py from the upstream source of truth. Do not hand-edit; re-run the script instead. -->
+<h3 id="inputs_1">Inputs<a class="headerlink" href="#inputs_1" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Input</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>channel_url</code></td>
+<td>string</td>
+<td><em>(required)</em></td>
+<td>Raw URL of the OVOS distro constraints file for the channel under test, e.g. <a href="https://raw.githubusercontent.com/OpenVoiceOS/OpenVoiceOS/main/constraints-stable.txt">https://raw.githubusercontent.com/OpenVoiceOS/OpenVoiceOS/main/constraints-stable.txt</a></td>
+</tr>
+<tr>
+<td><code>channel_name</code></td>
+<td>string</td>
+<td><code>""</code></td>
+<td>Short label for the channel, used in job output and artifact names. Defaults to the constraints filename with the 'constraints-' prefix and '.txt' suffix removed (so 'stable' or 'testing').</td>
+</tr>
+<tr>
+<td><code>runner</code></td>
+<td>string</td>
+<td><code>ubuntu-latest</code></td>
+<td>Runner label</td>
+</tr>
+<tr>
+<td><code>test_path</code></td>
+<td>string</td>
+<td><code>test/</code></td>
+<td>Path passed to pytest.</td>
+</tr>
+<tr>
+<td><code>python_version</code></td>
+<td>string</td>
+<td><code>3.11</code></td>
+<td>Python version to use.</td>
+</tr>
+<tr>
+<td><code>system_deps</code></td>
+<td>string</td>
+<td><code>""</code></td>
+<td>Extra apt packages to install before testing (space-separated). ovos-padatious needs 'swig libfann-dev'.</td>
+</tr>
+<tr>
+<td><code>pre_install_pip</code></td>
+<td>string</td>
+<td><code>""</code></td>
+<td>Optional space-separated pip requirement specs installed BEFORE the repo under test, under the channel constraints. Use for test-only siblings the channel does not name. Named to match the same input on build-tests.yml and ovoscope.yml.</td>
+</tr>
+<tr>
+<td><code>install_extras</code></td>
+<td>string</td>
+<td><code>test</code></td>
+<td>pip extras used when installing the repo under test, e.g. 'test' or 'dev,test'. Set to '' to install the package with no extras.</td>
+</tr>
+<tr>
+<td><code>pytest_args</code></td>
+<td>string</td>
+<td><code>-v --tb=short -rxX</code></td>
+<td>Extra arguments appended to the pytest invocation.</td>
+</tr>
+<tr>
+<td><code>pr_comment</code></td>
+<td>boolean</td>
+<td><code>true</code></td>
+<td>Post a '📡 Channel Compat' section (one per channel) in the OVOS PR Checks comment. Only runs on pull_request events.</td>
+</tr>
+<tr>
+<td><code>soft_fail</code></td>
+<td>boolean</td>
+<td><code>false</code></td>
+<td>Report the run but do not fail the job when tests fail. GitHub does not allow <code>continue-on-error</code> on a job that calls a reusable workflow, so callers that want an advisory gate set this instead. Use it while a repo's channel baseline is still being established, then turn it off.</td>
+</tr>
+<tr>
+<td><code>timeout_minutes</code></td>
+<td>number</td>
+<td><code>45</code></td>
+<td>Job timeout.</td>
+</tr>
+</tbody>
+</table>
+<!-- END GENERATED -->
+
+<h3 id="the-one-rule">The one rule<a class="headerlink" href="#the-one-rule" title="Permanent link">&para;</a></h3>
+<p>The channel wins for every package it names, <strong>except the repo under test</strong>. The pull
+request is the thing being judged, so its version must come from the checkout. <code>pip</code>
+has no "constrain everything except X", so the workflow reads the package name from
+<code>pyproject.toml</code> (falling back to <code>setup.py --name</code>) and strips that line out of the
+constraints file before installing.</p>
+<h3 id="expect-red-on-the-first-run">Expect red on the first run<a class="headerlink" href="#expect-red-on-the-first-run" title="Permanent link">&para;</a></h3>
+<p>A repo's first channel run usually fails a pile of tests. That is the finding, not a
+broken job. Call it with <code>soft_fail: true</code> until the baseline is understood, then turn
+it off. <code>soft_fail</code> exists because GitHub does not allow <code>continue-on-error</code> on a job
+that calls a reusable workflow.</p>
+<p>An install that cannot resolve at all is also a finding: it means the repo's own
+dependency floors have outgrown the channel. The job reports that as a warning in the
+step summary rather than a test failure.</p>
+<p><a href="https://github.com/OpenVoiceOS/ovos-test-harness">ovos-test-harness</a> carries the
+worked example, including checked-in per-channel known-gap files (<code>test/channel_gaps/</code>)
+that keep known failures green while new breakage stays red. Suites that keep such a
+baseline read the channel name from the <code>OVOS_CHANNEL</code> environment variable, which the
+workflow sets.</p>
+<h3 id="usage">Usage<a class="headerlink" href="#usage" title="Permanent link">&para;</a></h3>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Channel Compat</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="nt">on</span><span class="p">:</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">  </span><span class="nt">pull_request</span><span class="p">:</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">    </span><span class="nt">branches</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">dev</span><span class="p p-Indicator">]</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="nt">jobs</span><span class="p">:</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">  </span><span class="nt">stable</span><span class="p">:</span>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">    </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">OpenVoiceOS/gh-automations/.github/workflows/channel-compat.yml@dev</span>
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="w">    </span><span class="nt">with</span><span class="p">:</span>
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="w">      </span><span class="nt">channel_url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://raw.githubusercontent.com/OpenVoiceOS/OpenVoiceOS/main/constraints-stable.txt</span>
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="w">      </span><span class="nt">soft_fail</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="w">  </span><span class="nt">testing</span><span class="p">:</span>
+</span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="w">    </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">OpenVoiceOS/gh-automations/.github/workflows/channel-compat.yml@dev</span>
+</span><span id="__span-2-14"><a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a><span class="w">    </span><span class="nt">with</span><span class="p">:</span>
+</span><span id="__span-2-15"><a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a><span class="w">      </span><span class="nt">channel_url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://raw.githubusercontent.com/OpenVoiceOS/OpenVoiceOS/main/constraints-testing.txt</span>
+</span></code></pre></div>
+<p>Call it once per channel. <code>channel_name</code> defaults to the constraints filename with the
+<code>constraints-</code> prefix and <code>.txt</code> suffix removed, so the two jobs above label themselves
+<code>stable</code> and <code>testing</code> on their own.</p>
+<!-- BEGIN GENERATED: workflow-io:channel-compat.yml -->
+<!-- END GENERATED -->
+
+<hr />
 <h2 id="python-supportyml-deprecated"><code>python-support.yml</code> <em>(deprecated)</em><a class="headerlink" href="#python-supportyml-deprecated" title="Permanent link">&para;</a></h2>
 <blockquote>
 <p><strong>Deprecated, use <a href="#build-testsyml"><code>build-tests.yml</code></a> instead</strong> (and <a href="../gh-automations-plugin-repo-checks/#opm-checkyml"><code>opm-check.yml</code></a> for OPM detection). Kept for backward compatibility. Scheduled for removal after 2027-01-01. New repos should not adopt it.</p>
@@ -1891,8 +2132,8 @@
 <p>Runs an install matrix across Python versions and install modes (regular + editable). Optionally checks OPM detection using a legacy <code>entry_point</code> ID. Posts a <code>🐍 Python Support</code> section to the PR comment.</p>
 <p><strong>Source:</strong> <code>.github/workflows/python-support.yml</code></p>
 <!-- BEGIN GENERATED: workflow-io:python-support.yml -->
-<!-- This section is auto-generated by tools/gen_reference.py from the upstream source of truth. Do not hand-edit. Re-run the script instead. -->
-<h3 id="inputs_1">Inputs<a class="headerlink" href="#inputs_1" title="Permanent link">&para;</a></h3>
+<!-- This section is auto-generated by tools/gen_reference.py from the upstream source of truth. Do not hand-edit; re-run the script instead. -->
+<h3 id="inputs_2">Inputs<a class="headerlink" href="#inputs_2" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
 <tr>
