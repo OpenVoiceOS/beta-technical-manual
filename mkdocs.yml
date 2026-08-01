@@ -89,6 +89,7 @@ nav:
       - Introduction: index.md
       - Glossary: glossary.md
   - Get Started:
+      - Start Here: start-here.md
       - Install with ovos-installer: ovos-installer.md
       - Manual & Advanced Install: release-channels.md
       - RaspOVOS image:
@@ -100,10 +101,11 @@ nav:
       - Accessibility: accessibility.md
       - Coming from Mycroft: coming-from-mycroft.md
       - Coming from Alexa: coming-from-alexa.md
-  - Help & Troubleshooting:
-      - It's not behaving: everyday-help.md
-      - Troubleshooting & Debugging: troubleshooting.md
+      - Help & Troubleshooting:
+          - It's not behaving: everyday-help.md
+          - Troubleshooting & Debugging: troubleshooting.md
   - Concepts:
+      - Concepts Overview: concepts-overview.md
       - High-level Overview: architecture-overview.md
       - Life of an Utterance: life-of-an-utterance.md
       - Formal Specifications: architecture-specs.md
@@ -129,7 +131,7 @@ nav:
           - Screens on OVOS Today: gui-status.md
           - GUI Service (legacy): gui-service.md
           - PHAL (Hardware Abstraction): phal.md
-  - Intent Pipeline:
+  - Pipeline:
       - Overview & Reference: pipelines-overview.md
       - Building Your Pipeline: building-your-pipeline.md
       - Debugging Intent Matching: debugging-intent-matching.md
@@ -155,14 +157,15 @@ nav:
           - Dialog: dialog-transformers.md
           - Audio: audio-transformers.md
           - TTS: tts-transformers.md
-  - Language Support:
+  - Language:
       - Overview: lang-support.md
       - Language Selection (internals): lang-selection.md
       - Customizing Resources: lang-customization.md
       - Bidirectional Translation: bidirectional-translation.md
       - Contributing Translations: ovos-localize-tutorial.md
       - Translation Plugins: translation-plugins.md
-  - Skill Development:
+  - Skills:
+      - Skill Development Overview: skills-overview.md
       - Tutorials:
           - Your First Skill: first-skill.md
           - Skill Cookbook: skill-cookbook.md
@@ -205,7 +208,7 @@ nav:
           - Media Skills (OCP): ocp-skills.md
           - Universal Skills: universal-skills.md
       - Testing Reference (ovoscope): ovoscope-overview.md
-  - Plugin Ecosystem:
+  - Plugins:
       - Index & Overview: plugins-index.md
       - Choosing Plugins (compare & recommend): choosing-plugins.md
       - Plugin Arena (benchmarks): plugin-arena.md
@@ -227,7 +230,8 @@ nav:
           - Qt5 GUI (legacy): qt5-gui.md
           - Home Screen (legacy): homescreen.md
           - GUI Adapters (upcoming): gui-adapters.md
-  - AI Agents & Personas:
+  - Agents:
+      - Agents Overview: agents-overview.md
       - Personas:
           - Personas & PersonaService: personas.md
           - Persona Memory: persona-memory.md
@@ -244,7 +248,8 @@ nav:
           - OpenAI-compatible: openai-plugin.md
           - GGUF / Local LLM: gguf-plugin.md
           - LLM Transformers: llm-transformers.md
-  - Production & Security:
+  - Production:
+      - Production Overview: production-overview.md
       - Privacy & Security: privacy-security.md
       - Production Operations: production-operations.md
       - Updating from Older OVOS: updating-from-older-ovos.md
@@ -259,6 +264,7 @@ nav:
           - Overview: home-assistant.md
           - Wyoming Bridges (OVOS engines for HA): wyoming-bridges.md
   - Reference:
+      - Reference Overview: reference-overview.md
       - OVOS Repository Index: ecosystem-index.md
       - Bus Events Reference: bus-events.md
       - Command-line Tools: cli-tools.md
@@ -276,18 +282,18 @@ nav:
           - i2c Sound & Audio Setup: i2c-sound.md
           - Mark 1: mark1.md
           - Mark 2: mark2.md
+      - Contributing & Project Infra:
+          - Contributing: contributing.md
+          - gh-automations Overview: gh-automations-overview.md
+          - gh-automations Release: gh-automations-release.md
+          - gh-automations Workflows: gh-automations-workflows.md
+          - Release Workflows: gh-automations-release-workflows.md
+          - PR Check Workflows: gh-automations-pr-workflows.md
+          - Quality Workflows: gh-automations-quality-workflows.md
       - Project Info:
           - Timeline: timeline.md
           - Deprecated & Archived Repos: deprecated-repos.md
           - License: license.md
-  - Contributing & Project Infra:
-      - Contributing: contributing.md
-      - gh-automations Overview: gh-automations-overview.md
-      - gh-automations Release: gh-automations-release.md
-      - gh-automations Workflows: gh-automations-workflows.md
-      - Release Workflows: gh-automations-release-workflows.md
-      - PR Check Workflows: gh-automations-pr-workflows.md
-      - Quality Workflows: gh-automations-quality-workflows.md
 
 extra_css:
   - css/extra.css
