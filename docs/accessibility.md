@@ -97,13 +97,13 @@ tuning specifically for this:
   an interactive typed chat with the running assistant. You type instead of speaking and get the
   same responses.
 
-## Where support is thin today
+## Where support is thin
 
 - **Typed input is terminal-only.** `ovos-simple-cli` gives a text alternative to speech, but
-  there is no GUI or on-screen typed-input path today, so it assumes comfort with a terminal.
+  there is no GUI or on-screen typed-input path, so it assumes comfort with a terminal.
 
 - **The legacy GUI stack is deprecated.** Anything that depended on visual screen content, rather
-  than speech, is not a reliable path right now regardless of assistive technology. See
+  than speech, is not a reliable path regardless of assistive technology. See
   [GUI Service](gui-service.md) for the current status and the replacement effort underway.
 - **No dedicated screen-reader integration exists for the installer's interactive wizard mode**
   beyond the scenario-file path above. The wizard itself is a standard terminal menu, not one

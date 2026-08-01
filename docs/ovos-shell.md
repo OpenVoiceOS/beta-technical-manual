@@ -7,7 +7,7 @@
     `ovos-shell` is the old on-screen interface for OVOS. It is the full-screen app that draws the assistant's face, status, settings panel, and skill screens on devices with a display (like the Mark 2). It is the *legacy* GUI: deprecated, effectively broken today, and being replaced by a ground-up rework. This page is kept mainly for reference and for maintaining existing Mark 2 devices. See the [Glossary](glossary.md) for unfamiliar terms.
 
 !!! danger "The OVOS GUI is deprecated — see [Screens on OVOS Today](gui-status.md) for the full picture"
-    `ovos-shell` is part of the legacy stack. There is no generally usable OVOS GUI right now,
+    `ovos-shell` is part of the legacy stack. There is no generally usable OVOS GUI,
     and a replacement is **Upcoming**.
 
 [ovos-shell](https://github.com/OpenVoiceOS/ovos-shell) is the **legacy Qt5/[Kirigami](qt5-gui.md)

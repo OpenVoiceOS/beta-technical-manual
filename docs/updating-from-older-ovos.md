@@ -58,8 +58,8 @@ The project follows a deprecate-then-drop pattern almost everywhere:
 
 Each repository publishes its own changelog and tag history on GitHub
 (`OpenVoiceOS/<repo>/releases` and `CHANGELOG.md` where present). When an
-entry below says "nearest release," it means the dossier this page is
-built from could not tie the change to an exact tag, so the closest
+entry below says "nearest release," it means the change could not be
+tied to an exact tag, so the closest
 release date after the commit is given instead.
 
 ---
@@ -408,8 +408,8 @@ replacing the old ad-hoc file kludge, with a one-time auto-migration.
 
 - Migration: rely on the `self.settings` API. Do not read/write the old
   non-XDG settings file path directly.
-- Lifecycle: active before `3299173`. Unverified deprecation window (the
-  dossier records a one-time auto-migration, not a hard cutover date).
+- Lifecycle: active before `3299173`. Unverified deprecation window (only
+  a one-time auto-migration is recorded, not a hard cutover date).
   dropped `3299173734` (2022-02-02), (ovos-core `3299173`, #11).
 
 ### Fallback dispatcher no longer bus-driven
@@ -668,7 +668,7 @@ is deprecated with a stated removal target of the next major version.
 - Lifecycle: active before `53564ce`. Deprecated but functional from
   `53564ce` (2026-01-29), `opm.solver.*` entry points still discoverable.
   removal target is the current major version plus one: not yet shipped
-  as of this dossier's sweep (ovos-plugin-manager `53564ce`, #365).
+  as of `53564ce` (ovos-plugin-manager, #365).
   `ovos-bus-client`'s parallel `opm.py` (`neon.plugin.solver`-based chat
   class) was already removed outright in `d526e99` (#207, 2026-05-18,
   `2.0.0`): migrate to `ovos-messagebus-chat-plugin`.
@@ -998,7 +998,7 @@ out-of-the-box wire behavior is initially unchanged):
 - Migration: for any deployment that explicitly sets
   `legacy_namespace: false`, subscribe to the `ovos.*` spec topics instead
   of the legacy ones. Default deployments are unaffected until that flag's
-  default flips (not yet flipped as of this dossier's sweep). Prefer
+  default flips (not yet flipped as of `f4c00d90b2`/`f9862a760e`). Prefer
   `ovos_spec_tools.SpecMessage.*` constants over hardcoded topic strings
   going forward, since their literal values are not always the same as
   the legacy strings they replace.
@@ -1007,9 +1007,9 @@ out-of-the-box wire behavior is initially unchanged):
   onward. Hard drop only confirmed for `ovos-bus-client`'s own bridge
   (`f1a481d`, 2026-08-01). `legacy_namespace` gating in `ovos-core`
   itself (`f4c00d90b2`/`f9862a760e`, "gate bus topics by
-  legacy_namespace") lives only on unmerged feature branches as of this
-  sweep, not on `dev`: the default has not flipped because the flag has
-  not shipped to a stable release yet.
+  legacy_namespace") lives only on unmerged feature branches, not on
+  `dev`: the default has not flipped because the flag has not shipped to
+  a stable release yet.
 
 ### SESSION-1 spec adoption changes session wire semantics
 
@@ -1088,8 +1088,8 @@ items below were pinned against that combined history and against the
 named sibling repositories directly. The one former policy question is
 settled by the project's current status:
 
-- **ovos-media**: it has never become production-recommended. As of this
-  page's last update, `ovos-media` is alpha and not officially released.
+- **ovos-media**: it has never become production-recommended. `ovos-media`
+  is alpha and not officially released.
   `ovos-audio` remains the production audio service, and stock installs
   keep `enable_old_audioservice: true` (the default). See
   [Media Service (ovos-media)](ovos-media.md) for its maturity status.

@@ -23,8 +23,10 @@ Depending on your experience level and goals, you can choose one of the followin
 The easiest way for most users. A guided TUI (Text User Interface) script that handles dependencies, environment setup, and service configuration for you.
 
 ### 2. [raspOVOS](install-raspovos.md): pre-built Raspberry Pi image
-The flagship, actively maintained pre-built image for the Raspberry Pi. Flash it and
-boot straight into a working assistant. No manual install steps are required.
+A pre-built flash-and-boot image for the Raspberry Pi. The images are in a maintenance
+pause and a refreshed release is on the roadmap, so check the
+[raspOVOS repository](https://github.com/OpenVoiceOS/raspOVOS) status before choosing
+this path. The installer above is the recommended route on the Pi.
 
 ### 3. Manual Installation (Advanced)
 Install individual components via `pip` or `uv`. Best for developers or custom integration (e.g., headless nodes, Docker containers).
@@ -117,11 +119,12 @@ These channels are managed via the [constraints files](https://pip.pypa.io/en/st
     harden it.
 
 !!! warning "Stable pins an older snapshot than Testing"
-    Formal codename releases have not landed yet. `constraints-stable.txt` still pins the
-    versions from the last stable release (ovos-core `1.3.1` at that time), an older,
-    unmaintained snapshot. `constraints-testing.txt` tracks newer versions (ovos-core `2.1.1`
-    at the time of writing). Until the next codename release ships, use **Testing** as the
-    recommended channel for most distros and users. This matches upstream guidance in
+    Formal codename releases have not landed yet. `constraints-stable.txt` pins the versions
+    from the last stable release (ovos-core `1.3.1`), an older, unmaintained snapshot.
+    `constraints-testing.txt` tracks newer versions. Check
+    [the constraints files themselves](https://github.com/OpenVoiceOS/ovos-releases) for the
+    exact pins. Until the next codename release ships, use **Testing** as the recommended
+    channel for most distros and users. This matches upstream guidance in
     [ovos-releases](https://github.com/OpenVoiceOS/ovos-releases).
 
 ```bash
@@ -194,7 +197,7 @@ Rather than using a full distro, you can manually pick which components to insta
 - [`ovos-core`](https://github.com/OpenVoiceOS/ovos-core): skill handling
 - [`ovos-audio`](https://github.com/OpenVoiceOS/ovos-audio): text-to-speech ([TTS](tts-plugins.md)), audio playback
 - [`ovos-dinkum-listener`](https://github.com/OpenVoiceOS/ovos-dinkum-listener): wake word, voice activation
-- [`ovos-gui`](https://github.com/OpenVoiceOS/ovos-gui): GUI integration (warning: the legacy [GUI](gui-service.md) is deprecated and not usable right now. A replacement is in progress, so you can omit this on most setups)
+- [`ovos-gui`](https://github.com/OpenVoiceOS/ovos-gui): GUI integration (warning: the legacy [GUI](gui-service.md) is deprecated and not usable. A replacement is in progress, so you can omit this on most setups)
 - [`ovos-PHAL`](https://github.com/OpenVoiceOS/ovos-PHAL): hardware abstraction layer
 
 Media playback (music, podcasts, video) is a separate concern from the components above.

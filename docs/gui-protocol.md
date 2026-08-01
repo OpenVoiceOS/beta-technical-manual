@@ -7,7 +7,7 @@
     Skip this legacy protocol. See [Screens on OVOS Today](gui-status.md) for the current approach.
 
 !!! danger "The OVOS GUI is deprecated: see [Screens on OVOS Today](gui-status.md) for the full picture"
-    This page documents the legacy protocol. There is no generally usable OVOS GUI right now,
+    This page documents the legacy protocol. There is no generally usable OVOS GUI,
     and a replacement is **Upcoming**.
 
 ??? info "Formal specification"

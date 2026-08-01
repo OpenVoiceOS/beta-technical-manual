@@ -16,6 +16,14 @@
     remains the way to provide media today, and stays the simpler path for setups still on
     the legacy audio service.
 
+    The split also changes what OCP *skills* are for. Once MediaProvider plugins own
+    catalog search, an OCP skill is for the case where **the skill itself is the playable
+    media**: a voice game (see [ovos-skill-moon-game](https://github.com/OpenVoiceOS/ovos-skill-moon-game)),
+    an ebook reader, any experience the player can start, pause, and resume like a track.
+    If your skill is only a searchable catalog of external media (a station list, a
+    podcast feed), plan to ship it as a MediaProvider plugin when that lands. If the
+    skill is the thing being played, it stays an OCP skill.
+
 !!! abstract "In a nutshell"
     OCP (OVOS Common Playback) is the part of OVOS that handles playing media, like music, podcasts, or radio. An OCP skill doesn't listen for "play X" itself; instead it acts as a source of media. When someone asks to play something, OVOS asks every OCP skill "can you find this?", each one answers with whatever it can offer and how good a match it thinks it is, and OVOS plays the best result. It's like asking several record shops for an album and going with whoever has the closest match. New terms are explained in the [Glossary](glossary.md).
 

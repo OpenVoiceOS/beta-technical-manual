@@ -14,7 +14,7 @@
 - There is **no companion phone app** for pairing or day-to-day control, the way the Alexa or
   Google Home apps work. You set up and configure OVOS over SSH in a terminal, or by editing a
   text file. See [Make It Yours](personalize.md).
-- There is **no generally usable on-screen visual assistant** right now. See
+- There is **no generally usable on-screen visual assistant**. See
   [Screens on OVOS Today](gui-status.md) for the honest state of that. OVOS is voice-first. A
   screen, where present, is a bonus, not the primary interface.
 - **Smart-home control isn't automatic.** Alexa and Google devices come with smart-home skills

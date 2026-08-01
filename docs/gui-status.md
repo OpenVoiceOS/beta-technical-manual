@@ -10,7 +10,7 @@
 
 ## The honest verdict
 
-There is **no generally usable OVOS GUI right now**. The only screen stack that actually
+There is **no generally usable OVOS GUI**. The only screen stack that actually
 runs is the **legacy Qt5 stack**: [`ovos-shell`](ovos-shell.md) wrapping
 [`mycroft-gui-qt5`](qt5-gui.md), talking over the [legacy GUI protocol](gui-protocol.md) to
 [`ovos-gui`](gui-service.md). That stack is **deprecated upstream** (Qt5 itself is no

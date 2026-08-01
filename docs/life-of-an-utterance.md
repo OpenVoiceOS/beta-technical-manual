@@ -172,7 +172,7 @@ The skill emits an `ovos.utterance.speak` message containing the response text. 
 -   **Playback**: `ovos-audio` plays the generated WAV file through the configured audio output (e.g., ALSA, PulseAudio).
 
 
--   **GUI**: If the skill provided a UI (via `self.gui.show_page()`), the `ovos-gui` service renders the [QML](qt5-gui.md)/HTML view on the screen, often synchronized with the spoken response. ⚠️ The current ("legacy") [GUI](gui-service.md) is **deprecated**. There is no generally usable OVOS GUI right now (a replacement is in progress). The spoken response still works regardless.
+-   **GUI**: If the skill provided a UI (via `self.gui.show_page()`), the `ovos-gui` service renders the [QML](qt5-gui.md)/HTML view on the screen, often synchronized with the spoken response. ⚠️ The current ("legacy") [GUI](gui-service.md) is **deprecated**. There is no generally usable OVOS GUI (a replacement is in progress). The spoken response still works regardless.
 
 ---
 

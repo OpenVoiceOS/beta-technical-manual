@@ -2,9 +2,9 @@
 
 !!! abstract "In a nutshell"
     **OCP** ("OVOS Common Play") is the voice media player behind "play some jazz" or "play the
-    news". Today it ships as a plugin for the old [audio service](audio-service.md): the package
+    news". It ships as a plugin for the old [audio service](audio-service.md): the package
     `ovos-plugin-common-play`, which registers as an *audio backend* called `ovos_common_play`.
-    This is the **default** way OVOS plays media right now. It still works and is enabled out of
+    This is the **default** way OVOS plays media. It still works and is enabled out of
     the box, but it is **legacy**: a dedicated replacement, [`ovos-media`](ovos-media.md), is
     being built to take over the playback job. This page explains what the OCP audio plugin is,
     why it lives inside the audio service, and how `ovos-media` will replace it. For the *intent*

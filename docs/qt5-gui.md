@@ -5,7 +5,7 @@
 
 !!! danger "The OVOS GUI is deprecated: see [Screens on OVOS Today](gui-status.md) for the full picture"
     The Qt5/QML client described here is part of the legacy stack. There is no generally
-    usable OVOS GUI right now, and a replacement is **Upcoming**.
+    usable OVOS GUI, and a replacement is **Upcoming**.
 
     The [Qt5 gui-client](https://github.com/OpenVoiceOS/mycroft-gui-qt5) is the **only client
     that currently runs**, but **Qt5 itself has been deprecated upstream for a long time** and

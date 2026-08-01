@@ -1,14 +1,16 @@
 # RaspOVOS: A Beginner's Guide to Setting Up Your Raspberry Pi with OVOS
 
 !!! abstract "In a nutshell"
-    This is a step-by-step guide to turning a Raspberry Pi (a small, inexpensive computer) into a working OVOS voice assistant by flashing a ready-made "raspOVOS" image onto an SD card or USB drive. It walks you through hardware choices, writing the image, first boot, connecting to Wi-Fi, and the handy commands you'll use afterward. raspOVOS is the main, ready-made OpenVoiceOS experience for the Raspberry Pi. Flash it and boot straight into a working assistant, with no manual install steps required. See the [Glossary](glossary.md) for unfamiliar terms.
+    This is a step-by-step guide to turning a Raspberry Pi (a small, inexpensive computer) into a working OVOS voice assistant by flashing a ready-made "raspOVOS" image onto an SD card or USB drive. It walks you through hardware choices, writing the image, first boot, connecting to Wi-Fi, and the handy commands you'll use afterward. raspOVOS is a ready-made OpenVoiceOS image for the Raspberry Pi: flash it and boot into a working assistant. Read the status warning below before choosing it for a new setup. See the [Glossary](glossary.md) for unfamiliar terms.
 
-!!! tip "Ready-made Raspberry Pi image"
-    **raspOVOS** is a ready-made, actively maintained image built specifically for the
-    Raspberry Pi. It is the quickest way to get a full OVOS voice assistant running on Pi
-    hardware. If you're installing on non-Pi hardware, or want to install onto an
-    existing Raspberry Pi OS setup instead of flashing a new image, use the
-    **[`ovos-installer`](ovos-installer.md)** instead.
+!!! warning "Project status: maintenance pause"
+    The raspOVOS images are in a maintenance pause and are not the recommended install
+    path. The project roadmap plans a refreshed image. Check the
+    [raspOVOS repository](https://github.com/OpenVoiceOS/raspOVOS) for status before
+    flashing. For a supported setup on a Raspberry Pi, install Raspberry Pi OS and use
+    the [ovos-installer](ovos-installer.md). This guide stays for people running an
+    existing raspOVOS image.
+
 
 This tutorial is designed for users new to Raspberry Pi and raspOVOS. Follow these steps to set up your device.
 
