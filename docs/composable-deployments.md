@@ -293,7 +293,7 @@ check each package's changelog before upgrading only one service.
 
 A single-host install exchanges messages over loopback, effectively free. Splitting services
 across hosts puts real network latency and reliability on the critical path of every utterance.
-Wake word detection, STT, intent matching, and TTS all round-trip through the bus. A slow or
+Wake-word detection, STT, intent matching, and TTS all round-trip through the bus. A slow or
 lossy link between the listener and the bus is felt as sluggish or dropped voice interactions, not
 as an error message.
 

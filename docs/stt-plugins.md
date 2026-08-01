@@ -537,7 +537,7 @@ sequenceDiagram
 Audio arrives synchronously per chunk: `stream_data()` is called once per captured
 chunk on the mic thread, so it must return well under the per-chunk time budget
 (the same real-time cadence constraint a wake-word plugin's `update(chunk)` runs
-under. See [Wake Word Plugins: Key Methods](wake-word-plugins.md#key-methods)). Do any
+under. See [Wake-word Plugins: Key Methods](wake-word-plugins.md#key-methods)). Do any
 slow work (network calls, heavy inference) on the `StreamThread` this class
 manages, not inline in `stream_data()`.
 
@@ -731,4 +731,4 @@ construct it yourself with your config dict.
 
 ---
 **Read next:** [TTS Plugins](tts-plugins.md)
-**Related:** [Wake Word Plugins](wake-word-plugins.md) · [STT Server](stt-server.md) · [Choosing Plugins](choosing-plugins.md) · [Real-Time Offline Speech Recognition on OVOS (ONNX ASR)](https://blog.openvoiceos.org/posts/2026-02-16-onnx-asr)
+**Related:** [Wake-word Plugins](wake-word-plugins.md) · [STT Server](stt-server.md) · [Choosing Plugins](choosing-plugins.md) · [Real-Time Offline Speech Recognition on OVOS (ONNX ASR)](https://blog.openvoiceos.org/posts/2026-02-16-onnx-asr)

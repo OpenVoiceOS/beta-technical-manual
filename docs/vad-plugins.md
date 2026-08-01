@@ -25,7 +25,7 @@ The VAD engine continuously monitors the microphone's audio stream. Its primary 
     trades the most accuracy for requiring no model download at all.
 
     **Relative footprint:** silero runs a small neural model, so it is heavier than the
-    energy/noise or WebRTC VADs. It is still light next to a wake-word or STT model, since
+    energy/noise or WebRTC VADs. It is still light next to a wake word or STT model, since
     VAD only has to classify one chunk as speech/silence, not decode it.
 
 ## Configuration
@@ -265,12 +265,12 @@ Detailed per-plugin configuration for the same roster listed in
 
 !!! tip "Same package also provides a pre-wake VAD verifier"
     `ovos-vad-plugin-silero` registers a second entry point, `ovos-ww-verifier-silero`
-    (`opm.wake_word.verifier`), which re-checks that a wake-word activation actually
+    (`opm.wake_word.verifier`), which re-checks that a wake word activation actually
     contains speech before waking. It works as a "noise filter" that cuts false wakes.
     It has its own `threshold` (default `0.1`). See the Pre-Wake VAD blog post below.
 
 ---
 
 ---
-**Read next:** [Wake Word Plugins](wake-word-plugins.md)
+**Read next:** [Wake-word Plugins](wake-word-plugins.md)
 **Related:** [Microphone Plugins](mic-plugins.md) · [STT Plugins](stt-plugins.md) · [Choosing Plugins](choosing-plugins.md) · [OVOS Just Got a Noise Filter (Pre-Wake VAD)](https://blog.openvoiceos.org/posts/2025-11-06-prewake-vad)

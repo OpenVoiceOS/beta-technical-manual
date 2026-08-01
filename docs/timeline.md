@@ -125,7 +125,7 @@
 - Nov 2021 - `ovos-core` version **0.0.1** released
 - Nov 2021 - [ovos-utils](https://github.com/OpenVoiceOS/ovos-utils) adopted in `ovos-core`
 - Nov 2021 - [ovos-plugin-manager](https://github.com/OpenVoiceOS/ovos-plugin-manager) adopted in `ovos-core`
-- Nov 2021 - multiple wake words support added
+- Nov 2021 - multiple wake-words support added
 - Nov 2021 - installable skills (setup.py) support added
 - Nov 2021 - [ovos-PHAL](https://github.com/OpenVoiceOS/ovos-PHAL) released (mycroft compatible)
 - Nov 2021 - [skill-ovos-hello-world](https://github.com/OpenVoiceOS/skill-ovos-hello-world) forked from Mycroft
@@ -196,7 +196,7 @@
 - Dec 2022 - [skill-ovos-bandcamp](https://github.com/OpenVoiceOS/skill-ovos-bandcamp) transferred from @JarbasAl to OVOS
 - Jan 2023 - `ovos-core` version **0.0.6** released
 - Jan 2023 - negative user feedback from the community for Mark 2, lots of bugs and missing features
-- Jan 2023 - "fallback" wake word support added to `ovos-plugin-manager`
+- Jan 2023 - "fallback" wake-word support added to `ovos-plugin-manager`
 - Jan 2023 - [skill-ovos-local-media](https://github.com/OpenVoiceOS/skill-ovos-local-media) released
 - Jan 2023 - [ChatGPT skill](https://github.com/OpenVoiceOS/skill-ovos-fallback-chatgpt/) released
 - Feb 2023 - `ovos-config` cli tool by community member @sgee released

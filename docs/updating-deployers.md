@@ -18,7 +18,7 @@ radius, including the ovos-config 2.0.0 pipeline renames), see
 layer, `/usr/share/<base_folder>/<config_filename>`, inserted between
 DEFAULT and SYSTEM.
 
-- Migration: config precedence is now DEFAULT < DISTRIBUTION
+- Migration: [config](config.md) precedence is now DEFAULT < DISTRIBUTION
   (`/usr/share/...`) < SYSTEM (`/etc/...`) < web-cache (remote) < OLD_USER
   < USER. Distro packagers should install an overwrite-safe default to the
   DISTRIBUTION path.
@@ -36,7 +36,7 @@ The default `tts.fallback_module` value `"ovos-tts-plugin-mimic3-server"`
 and its settings block were removed from the shipped `mycroft.conf`.
 
 - Migration: set `tts.fallback_module` and the settings block explicitly
-  in your own config if a fallback TTS is still wanted (mimic3 itself is
+  in your own config if a fallback [TTS](tts-plugins.md) is still wanted (mimic3 itself is
   deprecated upstream).
 Lifecycle:
 
@@ -55,7 +55,7 @@ Lifecycle:
 running mycroft-core installation as a source for the DEFAULT config
 layer. Only the bundled `ovos_config/mycroft.conf` is used as DEFAULT.
 
-- Migration: put overrides in SYSTEM/USER config layers
+- Migration: put overrides in SYSTEM/USER [config](config.md) layers
   (`/etc/mycroft/mycroft.conf`, `~/.config/mycroft/mycroft.conf`) instead
   of relying on a legacy mycroft-core file being picked up.
 Lifecycle:
@@ -75,8 +75,8 @@ public-server-based one, and `mpris` under `Audio.backends.OCP` was
 disabled by default.
 
 - Migration: set `mpris: true` under `Audio.backends.OCP` (pre-`ovos-media`
-  split. See the OCP→ovos-media entry in the hub's Big-ticket migrations)
-  if MPRIS is wanted. Pin the old lang-detect plugin explicitly if
+  split. See the [OCP](ocp-pipeline.md)→[ovos-media](ovos-media.md) entry in the hub's Big-ticket migrations)
+  if MPRIS is wanted. Pin the old [lang-detect plugin](translation-plugins.md) explicitly if
   network-free detection is required.
 Lifecycle:
 
@@ -95,7 +95,8 @@ messages by `message.context["source"]`) was replaced by
 
 - Migration: remove `native_sources` from config/constructor calls. Ensure
   playback-control messages either omit `context.session` (defaults to
-  `"default"`) or explicitly set `session_id: "default"`.
+  `"default"`) or explicitly set `session_id: "default"`. See [Session](session.md)
+  for how `session_id` scoping works.
 Lifecycle:
 
 | Phase | Version | Notes |
@@ -204,9 +205,10 @@ removal of the `mycroft` compat package including Selene API support
 
 ### `padatious_medium` dropped from default pipeline
 
-- Migration: add `padatious_medium` back explicitly to `core.pipeline` in
+- Migration: add `padatious_medium` back explicitly to `core.pipeline` (see
+  [Pipelines Overview](pipelines-overview.md)) in
   USER config if you want it (maintainers' note: "it is always wrong in
-  benchmarks").
+  benchmarks"). See the [Padatious pipeline](padatious-pipeline.md) page for what it does.
 Lifecycle:
 
 | Phase | Version | Notes |
@@ -221,8 +223,8 @@ Every `offline_male`/`offline_female` TTS recommendation in the
 autoconfigure "recommends" registry now resolves to
 `ovos-tts-plugin-phoonnx` instead of the prior per-language recommendation.
 
-- Migration: pin the desired TTS plugin explicitly under `tts.module` in
-  `mycroft.conf` if the old default is still wanted. Phoonnx requires its
+- Migration: pin the desired [TTS](tts-plugins.md) plugin explicitly under `tts.module` in
+  `mycroft.conf` (see [Config Reference](config-reference.md)) if the old default is still wanted. Phoonnx requires its
   own model/voice availability per language.
 Lifecycle:
 

@@ -400,7 +400,7 @@ received a message.
 | [ovos-core](core.md) | Intent pipeline, skill orchestration |
 | ovos-audio | [TTS](tts-plugins.md) rendering and audio playback |
 | ovos-gui | GUI namespace management |
-| ovos-dinkum-listener | Wake word detection and [STT](stt-plugins.md) transcription |
+| ovos-dinkum-listener | Wake-word detection and [STT](stt-plugins.md) transcription |
 | ovos-PHAL | Hardware abstraction layer |
 
 GUI clients connect to `ovos-gui`'s own WebSocket (`ws://localhost:18181/gui`), not directly to the messagebus.

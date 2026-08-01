@@ -233,12 +233,12 @@ There are roughly **280** public, non-archived repositories in the [`OpenVoiceOS
     | [ovos-wolfram-alpha-plugin](https://github.com/OpenVoiceOS/ovos-wolfram-alpha-plugin) | Marked alpha upstream - Wolfram Alpha integration providing a retrieval engine and an... | [Meta & infrastructure / other components](#meta-infrastructure-other-components-46) |
     | [ovos-wordnet-plugin](https://github.com/OpenVoiceOS/ovos-wordnet-plugin) | Exposes WordNet as a retrieval engine and an agent toolbox with lookup tools... | [Meta & infrastructure / other components](#meta-infrastructure-other-components-46) |
     | [ovos-workshop](https://github.com/OpenVoiceOS/ovos-workshop) | Base classes, decorators, and helpers for building skills and applications for... | [Core services & libraries](#core-services-libraries-18) |
-    | [ovos-ww-community-dataset](https://github.com/OpenVoiceOS/ovos-ww-community-dataset) | Wake Word training data provided by the OpenVoiceOS/Mycroft Community. | [Datasets & Models](#datasets-models-3) |
-    | [ovos-ww-plugin-microwakeword](https://github.com/OpenVoiceOS/ovos-ww-plugin-microwakeword) | OVOS wake-word plugin wrapping microWakeWord TFLite streaming models from the ESPHome... | [Wake Word plugins](#wake-word-plugins-7) |
-    | [ovos-ww-plugin-openWakeWord](https://github.com/OpenVoiceOS/ovos-ww-plugin-openWakeWord) | This is an OVOS plugin for openWakeWord, an open-source wake word or phrase detection... | [Wake Word plugins](#wake-word-plugins-7) |
-    | [ovos-ww-plugin-precise-onnx](https://github.com/OpenVoiceOS/ovos-ww-plugin-precise-onnx) | OpenVoiceOS wake-word plugin for Precise using onnxruntime instead of tflite, paired with... | [Wake Word plugins](#wake-word-plugins-7) |
-    | [ovos-ww-plugin-vosk](https://github.com/OpenVoiceOS/ovos-ww-plugin-vosk) | Mycroft wake word plugin for Vosk. Registers under `opm.wake_word`; loaded by... | [Wake Word plugins](#wake-word-plugins-7) |
-    | [ovos-ww-plugin-wakewordlab](https://github.com/OpenVoiceOS/ovos-ww-plugin-wakewordlab) | OVOS wake word plugin using wakewordlab - compact neural wake word detection with Silero... | [Wake Word plugins](#wake-word-plugins-7) |
+    | [ovos-ww-community-dataset](https://github.com/OpenVoiceOS/ovos-ww-community-dataset) | Wake-word training data provided by the OpenVoiceOS/Mycroft Community. | [Datasets & Models](#datasets-models-3) |
+    | [ovos-ww-plugin-microwakeword](https://github.com/OpenVoiceOS/ovos-ww-plugin-microwakeword) | OVOS wake-word plugin wrapping microWakeWord TFLite streaming models from the ESPHome... | [Wake-word plugins](#wake-word-plugins-7) |
+    | [ovos-ww-plugin-openWakeWord](https://github.com/OpenVoiceOS/ovos-ww-plugin-openWakeWord) | This is an OVOS plugin for openWakeWord, an open-source wake word or phrase detection... | [Wake-word plugins](#wake-word-plugins-7) |
+    | [ovos-ww-plugin-precise-onnx](https://github.com/OpenVoiceOS/ovos-ww-plugin-precise-onnx) | OpenVoiceOS wake-word plugin for Precise using onnxruntime instead of tflite, paired with... | [Wake-word plugins](#wake-word-plugins-7) |
+    | [ovos-ww-plugin-vosk](https://github.com/OpenVoiceOS/ovos-ww-plugin-vosk) | Mycroft wake-word plugin for Vosk. Registers under `opm.wake_word`; loaded by... | [Wake-word plugins](#wake-word-plugins-7) |
+    | [ovos-ww-plugin-wakewordlab](https://github.com/OpenVoiceOS/ovos-ww-plugin-wakewordlab) | OVOS wake-word plugin using wakewordlab - compact neural wake-word detection with Silero... | [Wake-word plugins](#wake-word-plugins-7) |
     | [ovos-ww-verifier-plugin-speaker](https://github.com/OpenVoiceOS/ovos-ww-verifier-plugin-speaker) | A wake-word verifier plugin that rejects wake-word triggers from voices that are not... | [Meta & infrastructure / other components](#meta-infrastructure-other-components-46) |
     | [ovos-wyoming-docker](https://github.com/OpenVoiceOS/ovos-wyoming-docker) | A collection of Docker images for running OVOS services using the Wyoming Protocol. | [Tooling & CI](#tooling-ci-14) |
     | [ovos-yaml-editor](https://github.com/OpenVoiceOS/ovos-yaml-editor) | The OpenVoiceOS Config Editor is a web-based application for managing and editing the... | [Tooling & CI](#tooling-ci-14) |
@@ -251,7 +251,7 @@ There are roughly **280** public, non-archived repositories in the [`OpenVoiceOS
     | [padatious_cache](https://github.com/OpenVoiceOS/padatious_cache) | Pre-trained Padatious intent classifiers to significantly accelerate the first boot and... | [Pipeline / Intent plugins](#pipeline-intent-plugins-10) |
     | [palavreado](https://github.com/OpenVoiceOS/palavreado) | A dead-simple keyword-based intent parser positioned as a drop-in replacement for Adapt.... | [Meta & infrastructure / other components](#meta-infrastructure-other-components-46) |
     | [pi-gen](https://github.com/OpenVoiceOS/pi-gen) | A mirror of the official tool used to build Raspberry Pi OS images (formerly Raspbian).... | [Meta & infrastructure / other components](#meta-infrastructure-other-components-46) |
-    | [precise-lite-models](https://github.com/OpenVoiceOS/precise-lite-models) | Free models for usage with precise-lite. Registers under `opm.wake_word`; loaded by... | [Wake Word plugins](#wake-word-plugins-7) |
+    | [precise-lite-models](https://github.com/OpenVoiceOS/precise-lite-models) | Free models for usage with precise-lite. Registers under `opm.wake_word`; loaded by... | [Wake-word plugins](#wake-word-plugins-7) |
     | [pyhtmx-gui-client](https://github.com/OpenVoiceOS/pyhtmx-gui-client) | A GUI client for OpenVoiceOS built with HTMX, TailwindCSS, and daisyUI instead of Qt.... | [Meta & infrastructure / other components](#meta-infrastructure-other-components-46) |
     | [quebra_frases](https://github.com/OpenVoiceOS/quebra_frases) | A small utility library that chunks strings into byte-sized pieces (sentences, words,... | [Meta & infrastructure / other components](#meta-infrastructure-other-components-46) |
     | [raspOVOS](https://github.com/OpenVoiceOS/raspOVOS) | raspOVOS is the flagship OpenVoiceOS experience for the Raspberry Pi: ready-to-flash... | [Hardware / OS images](#hardware-os-images-10) |
@@ -265,7 +265,7 @@ There are roughly **280** public, non-archived repositories in the [`OpenVoiceOS
     | [wallpaper_changer](https://github.com/OpenVoiceOS/wallpaper_changer) | A Python library that changes the desktop wallpaper programmatically across several Linux... | [Meta & infrastructure / other components](#meta-infrastructure-other-components-46) |
     | [wyoming-ovos-stt](https://github.com/OpenVoiceOS/wyoming-ovos-stt) | expose OVOS STT plugins via wyoming for usage with the voice pee. | [Tooling & CI](#tooling-ci-14) |
     | [wyoming-ovos-tts](https://github.com/OpenVoiceOS/wyoming-ovos-tts) | expose OVOS TTS plugins via wyoming for usage with the voice pee. | [Tooling & CI](#tooling-ci-14) |
-    | [wyoming-ovos-wakeword](https://github.com/OpenVoiceOS/wyoming-ovos-wakeword) | expose OVOS wake word plugins via wyoming for usage with the voice pee. Registers under... | [Wake Word plugins](#wake-word-plugins-7) |
+    | [wyoming-ovos-wakeword](https://github.com/OpenVoiceOS/wyoming-ovos-wakeword) | expose OVOS wake-word plugins via wyoming for usage with the voice pee. Registers under... | [Wake-word plugins](#wake-word-plugins-7) |
 
 ## Core services & libraries (18)
 
@@ -586,7 +586,7 @@ Most register under the `opm.tts` entry-point group and are loaded by ovos-audio
 :   This repository contains a Python package for a Text-to-Speech (TTS) transformer that uses SoX (Sound eXchange) for audio processing. The transformer applies various effects to the generated audio before playback.
 
 
-## Wake Word plugins (7)
+## Wake-word plugins (7)
 
 **[ovos-ww-plugin-microwakeword](https://github.com/OpenVoiceOS/ovos-ww-plugin-microwakeword)**
 :   OVOS wake-word plugin wrapping microWakeWord TFLite streaming models from the ESPHome ecosystem. Registers under `opm.wake_word`; loaded by ovos-dinkum-listener when configured as the active wake-word engine.
@@ -598,16 +598,16 @@ Most register under the `opm.tts` entry-point group and are loaded by ovos-audio
 :   OpenVoiceOS wake-word plugin for Precise using onnxruntime instead of tflite, paired with pre-trained models from precise-lite-models. Registers under `opm.wake_word`; loaded by ovos-dinkum-listener when configured as the active wake-word engine.
 
 **[ovos-ww-plugin-vosk](https://github.com/OpenVoiceOS/ovos-ww-plugin-vosk)**
-:   Mycroft wake word plugin for Vosk. Registers under `opm.wake_word`; loaded by ovos-dinkum-listener when configured as the active wake-word engine.
+:   Mycroft wake-word plugin for Vosk. Registers under `opm.wake_word`; loaded by ovos-dinkum-listener when configured as the active wake-word engine.
 
 **[ovos-ww-plugin-wakewordlab](https://github.com/OpenVoiceOS/ovos-ww-plugin-wakewordlab)**
-:   OVOS wake word plugin using wakewordlab — compact neural wake word detection with Silero VAD pre-filtering. Registers under `opm.wake_word`; loaded by ovos-dinkum-listener when configured as the active wake-word engine.
+:   OVOS wake-word plugin using wakewordlab — compact neural wake-word detection with Silero VAD pre-filtering. Registers under `opm.wake_word`; loaded by ovos-dinkum-listener when configured as the active wake-word engine.
 
 **[precise-lite-models](https://github.com/OpenVoiceOS/precise-lite-models)**
 :   Free models for usage with precise-lite. Registers under `opm.wake_word`; loaded by ovos-dinkum-listener when configured as the active wake-word engine.
 
 **[wyoming-ovos-wakeword](https://github.com/OpenVoiceOS/wyoming-ovos-wakeword)**
-:   expose OVOS wake word plugins via wyoming for usage with the voice pee. Registers under `opm.wake_word`; loaded by ovos-dinkum-listener when configured as the active wake-word engine.
+:   expose OVOS wake-word plugins via wyoming for usage with the voice pee. Registers under `opm.wake_word`; loaded by ovos-dinkum-listener when configured as the active wake-word engine.
 
 
 ## VAD plugins (3)
@@ -955,7 +955,7 @@ These are consumed by training or benchmarking pipelines and plugin test suites;
 :   All datasets released under the Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0) license.
 
 **[ovos-ww-community-dataset](https://github.com/OpenVoiceOS/ovos-ww-community-dataset)**
-:   Wake Word training data provided by the OpenVoiceOS/Mycroft Community.
+:   Wake-word training data provided by the OpenVoiceOS/Mycroft Community.
 
 **[voices_demo](https://github.com/OpenVoiceOS/voices_demo)**
 :   Audio samples demonstrating available TTS voices, for comparing options before configuring one.

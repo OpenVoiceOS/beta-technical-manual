@@ -14,6 +14,10 @@
     [Maturity Scale](maturity.md), which rates OVOS-org repository health, does not apply to
     it. This page covers only how HiveMind relates to OVOS.
 
+    HiveMind has its own documentation site; this manual covers only the OVOS-side
+    integration. See the [community docs](https://jarbashivemind.github.io/HiveMind-community-docs/)
+    for HiveMind itself.
+
     HiveMind is the **voice-satellite transport**: how a mic/speaker device or remote client
     reaches an OVOS brain. MCP and A2A (see [Agent Interop](agent-interop.md)) are different:
     LLM/agent tool protocols that let AI systems call each other's tools.
@@ -158,7 +162,7 @@ For a step-by-step build of a server-plus-satellites deployment, see [Satellites
 A server is only useful once something connects to it. On the client side:
 
 - **[`hivemind-websocket-client`](https://github.com/JarbasHiveMind/hivemind-websocket-client)**: the client library and the `hivemind-client` CLI (`set-identity`, send utterances, and more).
-- **[`hivemind-mic-satellite`](https://github.com/JarbasHiveMind/hivemind-mic-satellite)**: a thin device that only does wake-word and microphone capture. STT and TTS run server-side.
+- **[`hivemind-mic-satellite`](https://github.com/JarbasHiveMind/hivemind-mic-satellite)**: a thin device that only does wake word and microphone capture. STT and TTS run server-side.
 - **[`hivemind-listener`](https://github.com/JarbasHiveMind/hivemind-listener)**: the server-side audio entry point that performs STT/TTS for audio satellites, with binary audio moving over the mesh.
 
 This split is the real "voice satellite" story: cheap devices listen and speak, and the server thinks.

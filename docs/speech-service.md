@@ -9,9 +9,9 @@
 ??? info "📐 Formal specification"
     The capture → audio-transformer chain → STT → utterance flow and the listening-lifecycle signals are specified by **[OVOS-AUDIO-IN-1: Audio Input Service](https://github.com/OpenVoiceOS/architecture/blob/dev/audio-in.md)**. The audio-transformer chain that runs on the raw audio before STT is specified by **[OVOS-TRANSFORM-1: Transformer Plugins](https://github.com/OpenVoiceOS/architecture/blob/dev/transformer.md)** (§3.1). See also the [spec index](architecture-specs.md). `ovos-dinkum-listener` is the reference implementation. The spec topic names below are canonical, with the legacy name noted once.
 
-`ovos-dinkum-listener` is the service responsible for audio capture, [Wake Word](wake-word-plugins.md) detection, and [Speech-to-Text](stt-plugins.md) ([STT](stt-plugins.md)). It is the default, full-featured listener. `ovos-simple-listener` is a lighter alternative that emits the same `recognizer_loop:*` bus events but without the full state machine.
+`ovos-dinkum-listener` is the service responsible for audio capture, [wake word](wake-word-plugins.md) detection, and [Speech-to-Text](stt-plugins.md) ([STT](stt-plugins.md)). It is the default, full-featured listener. `ovos-simple-listener` is a lighter alternative that emits the same `recognizer_loop:*` bus events but without the full state machine.
 
-A third, even more minimal option is `mycroft-classic-listener`, the original mycroft-core listener ported to the OVOS plugin ecosystem. It implements the same `recognizer_loop:*` contract but does **not** support `instant_listen`, multiple hotwords, VAD, listening modes, or fallback STT (fallback hotwords via OPM are supported).
+A third, even more minimal option is `mycroft-classic-listener`, the original mycroft-core listener ported to the OVOS plugin ecosystem. It implements the same `recognizer_loop:*` contract but does **not** support `instant_listen`, multiple wake words, VAD, listening modes, or fallback STT (fallback wake words via OPM are supported).
 
 ---
 
@@ -20,7 +20,7 @@ A third, even more minimal option is `mycroft-classic-listener`, the original my
     - `OVOSDinkumVoiceService`: [`ovos_dinkum_listener/service.py`](https://github.com/OpenVoiceOS/ovos-dinkum-listener/blob/dev/ovos_dinkum_listener/service.py). This is the service `Thread`. `run()` connects to the bus and drives the voice loop.
 
 
-    - `DinkumVoiceLoop.run()`: [`ovos_dinkum_listener/voice_loop/voice_loop.py`](https://github.com/OpenVoiceOS/ovos-dinkum-listener/blob/dev/ovos_dinkum_listener/voice_loop/voice_loop.py). This is the per-chunk state machine that drives [VAD](vad-plugins.md), [Wake Word](wake-word-plugins.md) and [STT](stt-plugins.md) via per-state handlers.
+    - `DinkumVoiceLoop.run()`: [`ovos_dinkum_listener/voice_loop/voice_loop.py`](https://github.com/OpenVoiceOS/ovos-dinkum-listener/blob/dev/ovos_dinkum_listener/voice_loop/voice_loop.py). This is the per-chunk state machine that drives [VAD](vad-plugins.md), [Wake word](wake-word-plugins.md) and [STT](stt-plugins.md) via per-state handlers.
 
 
     - `OVOSDinkumVoiceService._stt_text()`: [`ovos_dinkum_listener/service.py`](https://github.com/OpenVoiceOS/ovos-dinkum-listener/blob/dev/ovos_dinkum_listener/service.py). It emits the utterance message after [STT](stt-plugins.md) returns text. The listener emits the spec topic `ovos.utterance.handle` (`SpecMessage.UTTERANCE`) directly, and `ovos-bus-client`'s `NamespaceTranslator` (see [Bus Service](bus-service.md#namespace-migration)) also emits the legacy `recognizer_loop:utterance` alias for old consumers.
@@ -30,7 +30,7 @@ A third, even more minimal option is `mycroft-classic-listener`, the original my
 
 ## Overview
 
-The speech service is the "ears" of OpenVoiceOS. It continuously listens to the environment, waiting for a specific [Wake Word](wake-word-plugins.md). When the word is detected, it records the user's command and sends it to an [STT](stt-plugins.md) engine for transcription.
+The speech service is the "ears" of OpenVoiceOS. It continuously listens to the environment, waiting for a specific [Wake word](wake-word-plugins.md). When the word is detected, it records the user's command and sends it to an [STT](stt-plugins.md) engine for transcription.
 
 ### Key Components
 
@@ -40,7 +40,7 @@ The speech service is the "ears" of OpenVoiceOS. It continuously listens to the 
 - **[Voice Activity Detection](vad-plugins.md) ([VAD](vad-plugins.md))**: Identifies when a user starts and stops speaking.
 
 
-- **[Wake Word](wake-word-plugins.md) Plugin**: Monitors the audio stream for the trigger phrase.
+- **[Wake word](wake-word-plugins.md) Plugin**: Monitors the audio stream for the trigger phrase.
 
 
 - **[STT](stt-plugins.md) Plugin**: Transcribes the recorded command into text.
@@ -49,7 +49,7 @@ The speech service is the "ears" of OpenVoiceOS. It continuously listens to the 
 
 ```mermaid
 flowchart TD
-    Mic[Microphone] -->|audio| VADWW[VAD / Wake Word]
+    Mic[Microphone] -->|audio| VADWW[VAD / Wake word]
     VADWW -->|trigger| Rec[Recording]
     Rec -->|audio| XForm["Audio-transformer<br/>chain (TRANSFORM-1<br/>§3.1)"]
     XForm --> STT[STT Plugin]
@@ -159,11 +159,11 @@ The speech service is configured in the `listener`, `hotwords`, and `stt` sectio
 
 !!! tip "Saving wake-word audio locally"
     Set `listener.record_wake_words: true` and the listener writes each detected
-    wake-word clip to disk (under its `wake_words` save directory) and adds the
-    `filename` to the wake-word message. This is handy for gathering training data or
+    wake word clip to disk (under its `wake_words` save directory) and adds the
+    `filename` to the wake word message. This is handy for gathering training data or
     debugging false triggers. The clips stay on the device. The listener itself does
     not upload anything.
 
 ---
 **Read next:** [Audio Service](audio-service.md) · [Concepts Overview](concepts-overview.md)
-**Related:** [Wake Word Plugins](wake-word-plugins.md) · [STT Plugins](stt-plugins.md) · [Intent Service](intent-service.md) · [VAD Plugins](vad-plugins.md)
+**Related:** [Wake-word Plugins](wake-word-plugins.md) · [STT Plugins](stt-plugins.md) · [Intent Service](intent-service.md) · [VAD Plugins](vad-plugins.md)

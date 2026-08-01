@@ -105,6 +105,10 @@ time expressions.
 
 **Format**
 
+`nice_relative_time` is marked WIP for every listed locale below except `eu`, which has a
+full implementation. WIP here means an imperfect, usually language-agnostic placeholder, per
+the legend above.
+
 | Language | `nice_date`<br>`nice_date_time`<br>`nice_day` <br>`nice_weekday` <br>`nice_month` <br>`nice_year` <br>`get_date_strings` | `nice_time` | `nice_relative_time` | `nice_duration` |
 |----------|--------------------------------------------------------------------------------------------------------------------------|-------------|----------------------|-----------------|
 | an       | yes                                                                                                                        | yes           | WIP                   | yes               |

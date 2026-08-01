@@ -81,7 +81,7 @@ tuning specifically for this:
 
 - **Wake-word sensitivity.** If pressing a physical button or repeating a phrase precisely is
   hard, tune the wake word to trigger more easily rather than relying on a hands-on retry. See
-  [Wake Word Plugins](wake-word-plugins.md#wake-word-configuration) for the `sensitivity` and
+  [Wake-word Plugins](wake-word-plugins.md#wake-word-configuration) for the `sensitivity` and
   `trigger_level` keys, and the "It's not listening to me" section of
   [It's Not Working](everyday-help.md#its-not-listening-to-me) for the quick version.
 - **Fewer, calmer confirmation steps.** For anyone who finds fast disambiguation prompts hard to
@@ -121,4 +121,4 @@ tuning specifically for this:
 ---
 
 **Read next:** [Make it yours](personalize.md) · [It's not behaving](everyday-help.md)
-**Related:** [Wake Word Plugins](wake-word-plugins.md) · [Command-line Tools](cli-tools.md) · [SSML](ssml.md) · [Troubleshooting & Debugging](troubleshooting.md)
+**Related:** [Wake-word Plugins](wake-word-plugins.md) · [Command-line Tools](cli-tools.md) · [SSML](ssml.md) · [Troubleshooting & Debugging](troubleshooting.md)

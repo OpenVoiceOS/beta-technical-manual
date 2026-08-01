@@ -254,7 +254,7 @@ A radio-button list of installation profiles:
 :   A microphone/speaker endpoint that talks to a separate OVOS core over the network. See [composable deployments](composable-deployments.md). It skips the feature-selection screen (no local skills/GUI/LLM/Home Assistant to configure), but adds four HiveMind connection prompts: host, port, access key, and password.
 
 `listener`
-:   Runs only the listening/wake-word side of OVOS.
+:   Runs only the listening/wake word side of OVOS.
 
 `server`
 :   A headless core with no local audio hardware assumptions, meant to serve satellites. It also skips GUI/LLM/Home Assistant options.
@@ -405,7 +405,7 @@ OVOS is now installed and ready to use. Try saying things like:
     OVOS only starts listening after it hears its wake word (`hey mycroft` by
     default). Say **"Hey Mycroft"** and wait for the listening sound/prompt
     before speaking your request. A bare "What's the weather?" with no wake
-    word first won't be heard. See [Wake Word plugins](wake-word-plugins.md)
+    word first won't be heard. See [Wake-word plugins](wake-word-plugins.md)
     if you want to change it.
 
 ---

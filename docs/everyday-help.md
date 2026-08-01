@@ -59,7 +59,7 @@ flowchart TD
   These are copy-paste terminal commands, not settings screens, but you don't need to understand
   them. Just run each one and see if you get sound back.
 - **The wake word keeps missing or keeps false-triggering.** This is a sensitivity setting, not a
-  hardware fault. See [Wake Word Plugins](wake-word-plugins.md#wake-word-configuration) for how to
+  hardware fault. See [Wake-word Plugins](wake-word-plugins.md#wake-word-configuration) for how to
   adjust `sensitivity` and `trigger_level` in `mycroft.conf`, and pick a less noise-prone wake word
   if needed. Unlike the fixes above, this one needs opening a text config file, not just talking
   to the assistant. See [Make It Yours](personalize.md) for the general edit-and-restart
@@ -84,7 +84,7 @@ flowchart TD
 
 ## "It heard me but got it wrong"
 
-- **Speak in short, plain sentences.** Long, run-on requests are harder for both wake-word and
+- **Speak in short, plain sentences.** Long, run-on requests are harder for both wake word and
   speech-to-text to parse than "what time is it" or "set a timer for ten minutes".
 - **Check you're using words it actually understands.** Every OVOS skill only reacts to specific
   phrasings ("intents"). [What can I say?](skill-examples.md) lists real, working example phrases

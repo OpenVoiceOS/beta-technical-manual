@@ -107,8 +107,8 @@ Lifecycle:
 
 | Phase | Version | Notes |
 |---|---|---|
-| Active | legacy-only, before mid-2026 | |
-| Deprecated but functional | from mid-2026 onward | dual-emit or `legacy_namespace`-gated |
+| Active | legacy-only, before ovos-core `f4c00d90b2` (2026-06-05) | |
+| Deprecated but functional | dual-emit, from ovos-core `f4c00d90b2` (2026-06-05) onward | dual-emit or `legacy_namespace`-gated |
 | Dropped | no hard drop has shipped | `ovos-bus-client`'s bridge removal is the unmerged kill-switch [PR #272](https://github.com/OpenVoiceOS/ovos-bus-client/pull/272) (commit `f1a481d` on its branch) |
 
 `legacy_namespace` gating in `ovos-core` itself (`f4c00d90b2`/`f9862a760e`,

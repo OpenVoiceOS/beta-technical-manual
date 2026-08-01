@@ -114,10 +114,10 @@ Users can add language support for a skill by creating a new language folder in 
    - Once the files are copied over, verify that the new language is supported by the skill.
 
 
-   - Restart OpenVoiceOS to allow the skill to recognize the newly added language resources.
+   - Restart OpenVoiceOS to allow the skill to recognize the added language resources.
 
 
-   - Test the skill using the newly added language to ensure that it functions correctly and uses the appropriate language-specific resources.
+   - Test the skill using the added language to ensure that it functions correctly and uses the appropriate language-specific resources.
 
 By following these steps, users can add support for additional languages to existing skills by creating new language folders and copying the required resource files.
 

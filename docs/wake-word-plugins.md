@@ -1,9 +1,9 @@
-# Wake Word Plugins
+# Wake-word Plugins
 
 !!! abstract "In a nutshell"
-    A *wake word* is the special phrase that gets your assistant's attention, like "Hey Mycroft". It only starts paying attention when you mean to talk to it, instead of listening all the time. Wake word plugins are the different tools that listen for that phrase. Some are more accurate for a fixed phrase. Others let you pick your own wake word with less setup. See the [Glossary](glossary.md) and the [listener service](speech-service.md) for related details.
+    A *wake word* is the special phrase that gets your assistant's attention, like "Hey Mycroft". It only starts paying attention when you mean to talk to it, instead of listening all the time. Wake-word plugins are the different tools that listen for that phrase. Some are more accurate for a fixed phrase. Others let you pick your own wake word with less setup. See the [Glossary](glossary.md) and the [listener service](speech-service.md) for related details.
 
-Wake Word plugins let Open Voice OS detect specific words or sounds, typically the assistant's name (for example "Hey Mycroft"). You can customize them for other use cases. These plugins let the system listen for and react to activation commands or phrases.
+Wake-word plugins let Open Voice OS detect specific words or sounds, typically the assistant's name (for example "Hey Mycroft"). You can customize them for other use cases. These plugins let the system listen for and react to activation commands or phrases.
 
 !!! note "Audio format contract"
     Wake-word plugins receive raw PCM from the [microphone plugin](mic-plugins.md#the-microphone-interface): **16 kHz sample rate, 16-bit samples, mono, little-endian**, delivered in **4096-byte chunks** by default.
@@ -29,7 +29,7 @@ Wake Word plugins let Open Voice OS detect specific words or sounds, typically t
 
 ## Available Plugins
 
-OVOS supports different wake word detection plugins, each with its own strengths and use cases.
+OVOS supports different wake-word detection plugins, each with its own strengths and use cases.
 The full roster with descriptions and licenses lives in one place: the
 [WW Plugins Reference](#ww-plugins-reference) table below. The default OVOS plugin for
 `hey_mycroft` is `ovos-ww-plugin-precise-onnx`, falling back down this chain if a plugin further
@@ -61,7 +61,7 @@ separate from the recommendation.
     strong alternative when you want better accuracy than Vosk without training your own
     Precise model.
 
-## Wake Word Configuration
+## Wake-word Configuration
 
 !!! tip "Too many false alarms, or not hearing you at all?"
     - **It wakes up on its own too often (false alarms)?** Raise `trigger_level`. This gives
@@ -73,7 +73,7 @@ separate from the recommendation.
     time and test before changing the other. The full technical breakdown of what each number
     actually does is below.
 
-The `hotwords` section in your `mycroft.conf` allows you to configure the wake word detection parameters for each plugin. For instance:
+The `hotwords` section in your `mycroft.conf` allows you to configure the wake-word detection parameters for each plugin. For instance:
 
 ```jsonc
 "hotwords": {
@@ -90,41 +90,41 @@ The `hotwords` section in your `mycroft.conf` allows you to configure the wake w
 
 > See the full docs for the [listener service](speech-service.md)
 
-### Hotword types and per-hotword keys
+### Wake-word entry types and keys
 
 Each entry under `hotwords` is one of four types, set by a boolean key. `active: null` (the
 default) auto-enables the main wake word (`listener.wake_word`) and the stand-up word
-(`listener.stand_up_word`); every other hotword stays disabled until you set `active: true`.
+(`listener.stand_up_word`); every other entry stays disabled until you set `active: true`.
 
 ```mermaid
 flowchart TD
-    A["Hotword entry in<br/>mycroft.conf"] --> B{"listen: true, or<br/>matches<br/>listener.wake_word?"}
+    A["Wake-word entry in<br/>mycroft.conf"] --> B{"listen: true, or<br/>matches<br/>listener.wake_word?"}
     B -->|yes| C["Listen word: starts<br/>VAD/STT recording"]
     B -->|no| D{"wakeup: true, or<br/>matches<br/>listener.stand_up_word?"}
     D -->|yes| E["Wakeup word: exits<br/>sleep mode"]
     D -->|no| F{"stopword: true?"}
     F -->|yes| G["Stop word: ends free<br/>RECORDING mode"]
     F -->|no| H{"active: true?"}
-    H -->|yes| I["Plain hotword: sound /<br/>bus event, no STT"]
+    H -->|yes| I["Plain wake word: sound/<br/>bus event, no STT"]
 ```
 
-*Diagram:* The flow starts at the hotword entry in mycroft.conf and ends at one of four outcomes, and it branches in sequence through the listen, wakeup, stopword, and active checks to pick the matching hotword type.
+*Diagram:* The flow starts at the wake-word entry in mycroft.conf and ends at one of four outcomes, and it branches in sequence through the listen, wakeup, stopword, and active checks to pick the matching wake-word type.
 
 | Type | Config key | Effect when detected |
 |---|---|---|
 | Listen word | `listen: true`, or matches `listener.wake_word` | Starts the VAD/STT recording pipeline |
 | Wakeup word | `wakeup: true`, or matches `listener.stand_up_word` | Exits sleep mode |
 | Stop word | `stopword: true` | Ends free `RECORDING` mode |
-| Plain hotword | none of the above, `active: true` | Plays a sound and/or emits a bus event, without starting STT |
+| Plain wake word | none of the above, `active: true` | Plays a sound and/or emits a bus event, without starting STT |
 
 Beyond `module`, `active`, `listen`, `wakeup`, `stopword`, and `sensitivity`/`trigger_level`,
-each hotword accepts:
+each entry accepts:
 
 | Key | Type | Description |
 |---|---|---|
 | `sound` | `str` \| `list` | Sound file played on detection. |
 | `bus_event` | `str` | Bus message type emitted on detection. |
-| `utterance` | `str` | Hard-coded utterance text, bypassing STT entirely for this hotword. |
+| `utterance` | `str` | Hard-coded utterance text, bypassing STT entirely for this entry. |
 | `stt_lang` | `str` | Overrides the STT language for the command that follows this hotword. |
 
 ```jsonc
@@ -160,21 +160,21 @@ each hotword accepts:
 }
 ```
 
-### Wake word verifiers
+### Wake-word verifiers
 
-After a wake word engine fires, optional *verifier* plugins can inspect the raw wake-word
+After a wake-word engine fires, optional *verifier* plugins can inspect the raw wake word
 audio and suppress false detections before any callback runs. Verifiers implement the
 `HotWordVerifier` interface (from `ovos-plugin-manager`) and are configured under
 `listener.ww_verifiers`:
 
 ```mermaid
 flowchart LR
-    A[Wake word engine fires] --> B["HotWordVerifier.<br/>verify()"]
+    A[Wake-word engine fires] --> B["HotWordVerifier.<br/>verify()"]
     B -->|"False"| C[Detection suppressed]
     B -->|"True, or exception<br/>raised (fail open)"| D["Detection proceeds,<br/>callback runs"]
 ```
 
-*Diagram:* The flow starts when the wake word engine fires and ends with the detection either suppressed or proceeding to run the callback, and it branches on the HotWordVerifier.verify() result, failing open on exception.
+*Diagram:* The flow starts when the wake-word engine fires and ends with the detection either suppressed or proceeding to run the callback, and it branches on the HotWordVerifier.verify() result, failing open on exception.
 
 ```jsonc
 "listener": {
@@ -196,7 +196,7 @@ config with `"enabled": false`.
 
 ## Tips and Caveats
 
-- **Vosk Plugin**: The Vosk plugin is useful when you need a simple setup that doesn't require training a wake word model. It's great for quickly gathering data during the development stage.
+- **Vosk Plugin**: The Vosk plugin is useful when you need a simple setup that doesn't require training a wake-word model. It's great for quickly gathering data during the development stage.
 
 
 - **Precision and Sensitivity**: Adjust the `sensitivity` and `trigger_level` settings carefully. Too high a sensitivity can lead to false positives, while too low may miss detection.
@@ -212,7 +212,7 @@ In short, `sensitivity` controls how easily *one* chunk counts as a hit. `trigge
 
 ## Plugin Development
 
-All wake word plugins inherit from the `HotWordEngine` base class provided by
+All wake-word plugins inherit from the `HotWordEngine` base class provided by
 `ovos-plugin-manager`.
 
 ### The HotWordEngine Interface
@@ -249,7 +249,7 @@ already resolved by the base `__init__` when a subclass doesn't pass its own `co
 ### Key Methods
 
 - **`found_wake_word()`**: Required (abstract). Returns whether the wake word has been
-  detected, and resets any internal tracking of the wake word state. It takes no audio
+  detected, and resets any internal tracking of the wake-word state. It takes no audio
   argument: real-time audio only reaches the plugin through `update(chunk)`, on the
   current `dev` contract.
 - **`update(chunk)`**: Required (abstract). Processes one raw PCM audio chunk (see the
@@ -393,7 +393,7 @@ separately-licensed model, that is called out under "model".
 |--------|-------------|---------|----------|
 | [ovos-ww-plugin-precise-lite](#ovos-ww-plugin-precise-lite) | First fallback below the default: a trained Precise wake-word model exported to TFLite. Warning: archived, kept working as installed. `ovos-ww-plugin-precise-onnx` is the maintained successor. | Apache-2.0 | Deprecated |
 | [ovos-ww-plugin-openWakeWord](#ovos-ww-plugin-openwakeword) | Wake-word detection using the open-source openWakeWord neural models. | Apache-2.0 (model: see model card) | Stable |
-| [ovos-ww-plugin-vosk](#ovos-ww-plugin-vosk) | Mycroft wake word plugin for [Vosk](https://alphacephei.com/vosk/) | Apache-2.0 (model: see model card) | Stable |
+| [ovos-ww-plugin-vosk](#ovos-ww-plugin-vosk) | Mycroft wake-word plugin for [Vosk](https://alphacephei.com/vosk/) | Apache-2.0 (model: see model card) | Stable |
 | [ovos-ww-plugin-precise-onnx](#ovos-ww-plugin-precise-onnx) | Default plugin for `hey_mycroft`: a Precise wake-word model exported to ONNX. | Apache-2.0 | Beta |
 | [ovos-ww-plugin-wakewordlab](https://github.com/OpenVoiceOS/ovos-ww-plugin-wakewordlab) | Compact (~240 KB) neural wake-word models with a Silero VAD pre-filter (`.wkw`/`.onnx`). **Not yet on PyPI**, install from source. | Apache-2.0 | Alpha |
 | [ovos-ww-plugin-wakeforge](https://github.com/OpenVoiceOS/ovos-ww-plugin-wakeforge) | Runs custom wake-word models trained with [wakeforge](https://github.com/TigreGotico/wakeforge): train a detector from a single phrase, export a two-file model. **Not yet on PyPI**, install from source. | Apache-2.0 | Alpha |
@@ -439,7 +439,7 @@ Maturity reflects repository health (age, activity, open issues/PRs, in-repo doc
 - **GitHub**: [OpenVoiceOS/ovos-ww-plugin-vosk](https://github.com/OpenVoiceOS/ovos-ww-plugin-vosk)
 
 
-- **Description**: Mycroft wake word plugin for [Vosk](https://alphacephei.com/vosk/)
+- **Description**: Mycroft wake-word plugin for [Vosk](https://alphacephei.com/vosk/)
 
 ### Default Configuration
 
@@ -463,7 +463,7 @@ Maturity reflects repository health (age, activity, open issues/PRs, in-repo doc
 - **GitHub**: [OpenVoiceOS/ovos-ww-plugin-precise-onnx](https://github.com/OpenVoiceOS/ovos-ww-plugin-precise-onnx)
 
 
-- **Description**: Runs Precise wake word models exported to ONNX. It is the plugin the bundled default `mycroft.conf` ships for `hey_mycroft`.
+- **Description**: Runs Precise wake-word models exported to ONNX. It is the plugin the bundled default `mycroft.conf` ships for `hey_mycroft`.
 
 ### Default Configuration
 
@@ -482,11 +482,11 @@ Maturity reflects repository health (age, activity, open issues/PRs, in-repo doc
 
 ```
 
-!!! tip "Donating wake-word samples"
+!!! tip "Donating wake word samples"
     The listener can optionally upload wake-word audio samples to an open-data server to help improve detection accuracy. This is opt-in and off by default. See [Privacy & Security](privacy-security.md#opt-in-wake-word-and-stt-sample-donation).
 
 ---
 
 ---
 **Read next:** [STT Plugins](stt-plugins.md)
-**Related:** [Wake Word Verifiers](ww-verifier.md) · [VAD Plugins](vad-plugins.md) · [Choosing Plugins](choosing-plugins.md) · [Precise Wake Word Engine Goes ONNX!](https://blog.openvoiceos.org/posts/2025-11-03-precise-onnx)
+**Related:** [Wake-word Verifiers](ww-verifier.md) · [VAD Plugins](vad-plugins.md) · [Choosing Plugins](choosing-plugins.md) · [Precise Wake-word Engine Goes ONNX!](https://blog.openvoiceos.org/posts/2025-11-03-precise-onnx)

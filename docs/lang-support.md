@@ -89,7 +89,7 @@ order:
 
 4. **Validate with real usage.** Once STT/TTS plugins exist for the language, get it benchmarked
    and human-rated on the [Plugin Arena](plugin-arena.md), and test real speech end-to-end.
-   **Deliverable:** the language's plugins entered into the arena's STT/TTS/wake-word leagues.
+   **Deliverable:** the language's plugins entered into the arena's STT/TTS/wake word leagues.
 
 We welcome and encourage community participation to improve language support. Every contribution helps make OVOS more accessible to speakers around the world.
 

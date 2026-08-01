@@ -60,7 +60,7 @@ sequenceDiagram
 
 ---
 
-## 1. Capture and [Wake Word](wake-word-plugins.md) Detection
+## 1. Capture and [Wake-word](wake-word-plugins.md) Detection
 **Service:** `ovos-dinkum-listener` (or similar)
 **Input:** Raw audio from the microphone plugin.
 
@@ -69,7 +69,7 @@ The listener service is always active, monitoring a stream of audio.
 -   **[VAD](vad-plugins.md) Plugin**: Continuously checks if someone is speaking.
 
 
--   **Wake Word Plugin**: Monitors the audio stream for the configured wake word (e.g., "Hey Mycroft").
+-   **Wake-word Plugin**: Monitors the audio stream for the configured wake word (e.g., "Hey Mycroft").
 
 
 -   **Trigger**: Once the wake word is detected, the listener begins recording the subsequent audio as a potential utterance.

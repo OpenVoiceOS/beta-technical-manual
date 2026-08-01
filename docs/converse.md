@@ -1,5 +1,11 @@
 # Converse
 
+!!! info "Which page do you want?"
+    This page covers the skill-side `converse()` API. [Converse Pipeline](converse-pipeline.md)
+    covers the pipeline stage that dispatches to it. [Session](session.md) covers session
+    state. [Layers](layers.md) covers intent layers. [Permissions](permissions.md) covers
+    activation control.
+
 !!! abstract "In a nutshell"
     Normally a skill answers one request and then forgets about you. "Converse" lets a skill stay in the conversation for a little while after it has spoken, so it can catch a quick follow-up like "yes", "no", "thanks", or "the red one" that only makes sense as a reply. This is the difference between a one-off answer and a short back-and-forth chat. See [Converse Pipeline](converse-pipeline.md) for how this feature is implemented as a pipeline plugin inside `ovos-core`. New terms are explained in the [Glossary](glossary.md).
 

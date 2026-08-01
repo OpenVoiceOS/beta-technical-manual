@@ -1,15 +1,15 @@
-# Wake Word Verifier Plugins
+# Wake-word Verifier Plugins
 
 !!! abstract "In a nutshell"
-    A "wake word" is the phrase that gets the assistant's attention, like "Hey Mycroft". Sometimes the assistant thinks it heard that phrase when it didn't. A wake word verifier is a second pair of ears: after the wake word seems to have been detected, it double-checks the recorded audio and can cancel a false alarm before the assistant starts listening. This cuts down on the device waking up by accident. See the [Wake Word plugins](wake-word-plugins.md) for the detectors themselves, or the [Glossary](glossary.md) for terms.
+    A "wake word" is the phrase that gets the assistant's attention, like "Hey Mycroft". Sometimes the assistant thinks it heard that phrase when it didn't. A wake-word verifier is a second pair of ears: after the wake word seems to have been detected, it double-checks the recorded audio and can cancel a false alarm before the assistant starts listening. This cuts down on the device waking up by accident. See the [Wake-word plugins](wake-word-plugins.md) for the detectors themselves, or the [Glossary](glossary.md) for terms.
 
-The wake word verifier framework lets one or more secondary plugins inspect the audio captured during a wake-word detection event and veto false triggers. This is separate from the detection plugin itself and runs as a post-detection gate.
+The wake-word verifier framework lets one or more secondary plugins inspect the audio captured during a wake-word detection event and veto false triggers. This is separate from the detection plugin itself and runs as a post-detection gate.
 
 ---
 
 ## Pre-Wake VAD
 
-Before the wake word detector even fires, an optional VAD gate can filter frames that are clearly silent, reducing the detection surface for false activations.
+Before the wake-word detector even fires, an optional VAD gate can filter frames that are clearly silent, reducing the detection surface for false activations.
 
 ```json
 {
@@ -19,7 +19,7 @@ Before the wake word detector even fires, an optional VAD gate can filter frames
 }
 ```
 
-When enabled, audio frames pass through the configured VAD plugin before reaching the wake word model. A 5-second fallback returns the listener to the pre-wake VAD state if no wake word is detected.
+When enabled, audio frames pass through the configured VAD plugin before reaching the wake-word model. A 5-second fallback returns the listener to the pre-wake VAD state if no wake word is detected.
 
 ---
 
@@ -133,7 +133,7 @@ Use case: household authorization, a shared-wake-word deployment where each regi
 
 ## Precise-ONNX Plugin
 
-`ovos-ww-plugin-precise-onnx` provides high-accuracy wake word detection from `.onnx` model files, without TensorFlow Lite dependency.
+`ovos-ww-plugin-precise-onnx` provides high-accuracy wake-word detection from `.onnx` model files, without TensorFlow Lite dependency.
 
 ```json
 {
@@ -154,13 +154,13 @@ Use case: household authorization, a shared-wake-word deployment where each regi
 
 > **Status:** [OpenVoiceOS/ovos-ww-plugin-microwakeword](https://github.com/OpenVoiceOS/ovos-ww-plugin-microwakeword) is in development. It is not yet published to PyPI.
 
-OVOS wake-word plugin wrapping [microWakeWord](https://github.com/kahrendt/microWakeWord) TFLite streaming models from the ESPHome ecosystem. Enables zero-cost sub-1 MB wake word models originally designed for microcontrollers.
+OVOS wake-word plugin wrapping [microWakeWord](https://github.com/kahrendt/microWakeWord) TFLite streaming models from the ESPHome ecosystem. Enables zero-cost sub-1 MB wake-word models originally designed for microcontrollers.
 
 ---
 
 ## Related Pages
 
-- [Wake Word Plugins](wake-word-plugins.md): detection plugin reference
+- [Wake-word Plugins](wake-word-plugins.md): detection plugin reference
 - [VAD Plugins](vad-plugins.md)
 - [Listener / Speech Service](speech-service.md)
 
@@ -169,5 +169,5 @@ OVOS wake-word plugin wrapping [microWakeWord](https://github.com/kahrendt/micro
 - [A Noise Filter for Better Listening (Pre-Wake VAD)](https://blog.openvoiceos.org/posts/2025-11-06-prewake-vad): OVOS blog
 
 ---
-**Read next:** [Wake Word Plugins](wake-word-plugins.md)
+**Read next:** [Wake-word Plugins](wake-word-plugins.md)
 **Related:** [VAD Plugins](vad-plugins.md) · [Speech Service](speech-service.md) · [Choosing Plugins](choosing-plugins.md)

@@ -2,8 +2,8 @@
 
 ## In a nutshell
 
-This page is for maintainers of STT, TTS, wake-word, audio-backend, media,
-GUI-adapter, PHAL, and solver/engine plugins moving forward from an older
+This page is for maintainers of [STT](stt-plugins.md), [TTS](tts-plugins.md), [wake word](wake-word-plugins.md), audio-backend, [media](media-plugins.md),
+[GUI-adapter](gui-adapters.md), [PHAL](phal.md), and solver/engine plugins moving forward from an older
 OVOS install. Entries are in date order: start at the version you are
 currently running and read forward to your target version. For the
 Big-ticket migrations (the changes with the widest blast radius, including
@@ -30,9 +30,9 @@ Lifecycle:
 
 ### Audio-backend template methods became abstract
 
-`AudioBackend`/`RemoteAudioBackend` templates in `ovos-plugin-manager`
+`AudioBackend`/`RemoteAudioBackend` templates in [`ovos-plugin-manager`](plugin-manager.md)
 turned previously-optional methods into `@abstractmethod`, and dropped the
-dependency on the old `common_play` base class (OCP's predecessor).
+dependency on the old `common_play` base class ([OCP](ocp-pipeline.md)'s predecessor).
 
 - Migration: implement every required method on your `AudioBackend`
   subclass or instantiation raises `TypeError: Can't instantiate abstract
@@ -67,8 +67,8 @@ Lifecycle:
 
 Ad-hoc exact-prefix dialect matching (`en` matches `en-us` via
 `.startswith`) was replaced with `langcodes.tag_distance` (threshold
-`< 10`) across STT, TTS, wake-word, and tokenization plugin config
-resolution.
+`< 10`) across [STT](stt-plugins.md), [TTS](tts-plugins.md), [wake word](wake-word-plugins.md), and tokenization plugin
+[config](config-reference.md) resolution.
 
 - Migration: no code change needed for callers of the public
   `get_plugin_config` family. Re-verify locale resolution after upgrading
@@ -176,7 +176,7 @@ is deprecated with a stated removal target of the next major version.
 | `MultipleChoiceSolver` | `ReRankerEngine` |
 | `EntailmentSolver` | `NaturalLanguageInferenceEngine` |
 
-- Migration: move to the matching `templates/agents.py` engine class
+- Migration: move to the matching `templates/agents.py` [agent engine](agent-plugins.md) class
   before the removal version ships.
 Lifecycle:
 
@@ -227,7 +227,7 @@ bare background thread with no bus events wired by the base class at all.
 - Migration: mix in `EnclosureProtocolListener` from the separate
   `ovos-ui-enclosure-protocol` package for both the enclosure commands and
   `register_core_events()`. The `EnclosureAPI` producer moved to
-  `ovos-gui-api-client`.
+  `ovos-gui-api-client`. See [PHAL](phal.md) for the current plugin contract.
 Lifecycle:
 
 | Phase | Version | Notes |
@@ -259,7 +259,8 @@ class MyProvider(MediaProvider):
 
 - Migration: implement the single `search(signals, lang='en-us',
   **context)` method. Read routing/availability info from `**context`
-  instead of the removed `QueryContext` helper methods.
+  instead of the removed `QueryContext` helper methods. See [Media Service](ovos-media.md)
+  and [OCP](ocp-pipeline.md) for how providers are queried.
 Lifecycle:
 
 | Phase | Version | Notes |

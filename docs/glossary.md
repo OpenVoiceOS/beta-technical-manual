@@ -137,7 +137,7 @@ This glossary defines common terms, acronyms, and concepts used throughout the O
 :   A JSON object sent over the messagebus, containing a `type`, `data`, and `context`.
 
 **MiniCroft**
-:   A lightweight, in-process version of OVOS Core used for end-to-end testing with `ovoscope`.
+:   A lightweight, in-process version of `ovos-core` used for end-to-end testing with `ovoscope`.
 
 **`mycroft.conf`**
 :   OVOS's main [configuration](config.md) file (JSON). The same filename is layered across system → distribution → user locations, with the user's copy winning.
@@ -274,7 +274,7 @@ This glossary defines common terms, acronyms, and concepts used throughout the O
 
 ## W
 
-**[Wake Word](wake-word-plugins.md)**
+**[Wake word](wake-word-plugins.md)**
 :   The specific phrase (e.g., "Hey Mycroft") that triggers the listener to start recording.
 
 **[Wyoming](wyoming-bridges.md)**
@@ -295,7 +295,7 @@ current name in new writing:
 |---|---|
 | Solver | [Agent Engine](agent-plugins.md) |
 | Intent engine / intent parser | [Pipeline plugin](pipelines-overview.md) |
-| Hotword / wakeword (as a standalone term) | [Wake Word](wake-word-plugins.md). Note: this stays as written inside real identifiers, such as the `wakeword` config keys and the `recognizer_loop:wakeword` bus message. |
+| Hotword / wake word (as a standalone term) | [Wake word](wake-word-plugins.md). Note: this stays as written inside real identifiers, such as the `wakeword` config keys and the `recognizer_loop:wakeword` bus message. |
 
 ---
 

@@ -46,7 +46,7 @@ flowchart TD
     IS --- PP["Pipeline plugins<br/>Adapt, Padatious, Converse, Fallback, …"]
     CORE --- SI["Skill Installer<br/>runtime pip install/uninstall"]
     CORE --- EVS["Event Scheduler<br/>timed bus events"]
-    BUS --- LISTENER["ovos-dinkum-listener<br/>STT / wake-word → ovos.utterance.handle<br/>(legacy: recognizer_loop:utterance)"]
+    BUS --- LISTENER["ovos-dinkum-listener<br/>STT / wake word → ovos.utterance.handle<br/>(legacy: recognizer_loop:utterance)"]
     BUS --- AUDIO["ovos-audio<br/>TTS playback"]
     BUS --- GUI["ovos-gui<br/>GUI layer"]
     BUS --- PHAL["ovos-phal<br/>hardware/platform plugins"]

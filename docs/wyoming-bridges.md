@@ -6,7 +6,7 @@
 [Wyoming](https://github.com/rhasspy/wyoming) is a simple TCP-based peer-to-peer protocol
 for voice assistant components, originally developed for Home Assistant's voice pipeline.
 It defines a small set of typed events that flow over a socket connection, covering the
-three main voice pipeline stages: wake word detection, speech-to-text, and text-to-speech.
+three main voice pipeline stages: wake-word detection, speech-to-text, and text-to-speech.
 
 OVOS provides three Wyoming bridge packages that expose any installed OVOS plugin as a
 Wyoming-compatible server. This allows Home Assistant, Rhasspy, and other Wyoming clients
@@ -255,10 +255,10 @@ Server → Info(tts=[TtsProgram(name=plugin_name, voices=[TtsVoice(...)])])
 
 ---
 
-## Wake Word Bridge (`wyoming-ovos-wakeword`)
+## Wake-word Bridge (`wyoming-ovos-wakeword`)
 
-Exposes any OVOS wake word plugin as a Wyoming wake word detection server.
-Supports **multiple simultaneous wake word models** loaded on demand per client session.
+Exposes any OVOS wake-word plugin as a Wyoming wake-word detection server.
+Supports **multiple simultaneous wake-word models** loaded on demand per client session.
 
 ### Architecture
 
@@ -285,7 +285,7 @@ Wyoming client                   wyoming-ovos-wakeword              OVOS plugin 
 **`OVOSWakeWordEventHandler`**
 
 One instance per client connection. Maintains a dict of loaded `HotWordEngine` instances,
-keyed by hotword name (lazy-loaded on first use). The connection is persistent. The
+keyed by wake-word name (lazy-loaded on first use). The connection is persistent. The
 handler keeps running (`return True`) for continuous detection.
 
 | Event type | Action |
@@ -336,7 +336,7 @@ wyoming-ovos-wakeword --uri tcp://0.0.0.0:7893 --zeroconf my-ovos-wakeword
 
 Configuration is read entirely from `mycroft.conf`:
 
-- `mycroft.conf["listener"]["wake_word"]`: default active wake word name (if no `Detect` event is sent)
+- `mycroft.conf["listener"]["wake_word"]`: default active wake-word name (if no `Detect` event is sent)
 
 
 - `mycroft.conf["hotwords"]`: dict of all configured hotword definitions

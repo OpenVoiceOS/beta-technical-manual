@@ -13,7 +13,7 @@ the `ovos-workshop` 4.0.0 → 7.0.0 release train), see
 
 ### Skill-settings file-store rewritten
 
-Skill settings moved to `json_database`-backed XDG-default storage,
+[Skill settings](skill-settings.md) moved to `json_database`-backed XDG-default storage,
 replacing the old ad-hoc file kludge, with a one-time auto-migration.
 
 - Migration: rely on the `self.settings` API. Do not read/write the old
@@ -28,8 +28,8 @@ Lifecycle:
 
 ### Fallback dispatcher no longer bus-driven
 
-`converse` and fallback dispatch became event-based through dedicated
-services (`ConverseService`, the fallback pipeline) instead of being
+[`converse`](converse.md) and fallback dispatch became event-based through dedicated
+services (`ConverseService`, the [fallback pipeline](fallback-pipeline.md)) instead of being
 called directly in-process on `MycroftSkill` instances.
 
 - Migration: implement the converse acknowledge handshake if you drive
@@ -52,7 +52,8 @@ the old paths. Those shims were deleted with no further compat.
 - Migration: `from ovos_workshop.skills.decorators.killable import
   killable_intent` → `from ovos_workshop.decorators.killable import
   killable_intent` (same pattern for `ocp`, `layers`, `converse`,
-  `fallback_handler`).
+  `fallback_handler`). Pin a floor version if you need to support both
+  paths at once; see [version gates](version-compat-guide.md).
 Lifecycle:
 
 | Phase | Version | Notes |
@@ -68,7 +69,8 @@ both classic Mycroft skills and OVOS skills, and that auto-initialized
 classic-style skills, was removed. Skills built for mycroft-core no longer
 load.
 
-- Migration: subclass `ovos_workshop.skills.ovos.OVOSSkill` directly.
+- Migration: subclass `ovos_workshop.skills.ovos.OVOSSkill` directly, following the
+  [skill design guidelines](skill-design-guidelines.md).
   Skill lifecycle is now entirely `SkillLoader`-driven: `bus`/`skill_id`
   are passed to `__init__`, not injected via metaclass into a later
   `initialize()` call.
@@ -105,8 +107,10 @@ Lifecycle:
 
 The private helper that auto-re-activated a skill after converse/intent
 handling, and the skill class's own emission of `ovos.utterance.handled`,
-are both gone: that bookkeeping moved into `ovos-core`'s fallback
-pipeline to stop duplicate events.
+are both gone: that bookkeeping moved into `ovos-core`'s
+[fallback pipeline](fallback-pipeline.md) to stop duplicate events. See
+[Pipelines Overview](pipelines-overview.md) for how pipeline plugins are ordered
+and dispatched.
 
 - Migration: remove any override or call of `_conditional_activate`. Do
   not assume the skill class emits `ovos.utterance.handled` yourself.
@@ -126,7 +130,8 @@ two-way settings sync, `settingsmeta.json` auto-upload) are all removed.
 
 - Migration: remove `enable_settings_manager` from `super().__init__()`
   calls. Use `self.settings` (local `JsonStorage`) only. There is no
-  backend settings sync in OVOS.
+  backend settings sync in OVOS. See [Skill Settings Meta](skill-settings-meta.md)
+  for the current `settingsmeta.json` schema.
 Lifecycle:
 
 | Phase | Version | Notes |
@@ -181,7 +186,8 @@ exists. Locale lookups (`_get_dialog`, `_get_word`,
 
 - Migration: use `self.speak_dialog(key)` or
   `CoreResources(lang).load_dialog_file(...)` instead of importing
-  `_get_dialog` directly.
+  `_get_dialog` directly. See [Resource Files](resource-files.md) for how dialog and
+  vocab resources are organized and loaded.
 Lifecycle:
 
 | Phase | Version | Notes |

@@ -76,18 +76,18 @@ There are roughly **84** archived repositories (the exact count drifts as more g
 
 ## Wake-word & VAD plugins (9)
 
-*Older wake-word/VAD engines. The Precise family is superseded by the ONNX build.*
+*Older wake word/VAD engines. The Precise family is superseded by the ONNX build.*
 
 | Repository | What it was | Replacement / status |
 |---|---|---|
 | [ovos-vad-plugin-precise](https://github.com/OpenVoiceOS/ovos-vad-plugin-precise) | tflite GRU VAD detector | [ovos-vad-plugin-silero](https://github.com/OpenVoiceOS/ovos-vad-plugin-silero) |
-| [ovos-ww-plugin-nyumaya-legacy](https://github.com/OpenVoiceOS/ovos-ww-plugin-nyumaya-legacy) | hotword plugin for mycroft-core | Removed: use [ovos-ww-plugin-precise-onnx](https://github.com/OpenVoiceOS/ovos-ww-plugin-precise-onnx) / openWakeWord |
+| [ovos-ww-plugin-nyumaya-legacy](https://github.com/OpenVoiceOS/ovos-ww-plugin-nyumaya-legacy) | wake-word plugin for mycroft-core | Removed: use [ovos-ww-plugin-precise-onnx](https://github.com/OpenVoiceOS/ovos-ww-plugin-precise-onnx) / openWakeWord |
 | [ovos-ww-plugin-pocketsphinx](https://github.com/OpenVoiceOS/ovos-ww-plugin-pocketsphinx) | OpenVoiceOS plugin for detecting wake words with pocketsphinx | [ovos-ww-plugin-vosk](https://github.com/OpenVoiceOS/ovos-ww-plugin-vosk) |
 | [ovos-ww-plugin-precise](https://github.com/OpenVoiceOS/ovos-ww-plugin-precise) | mycroft plugin for detecting wake word with precise | [ovos-ww-plugin-precise-onnx](https://github.com/OpenVoiceOS/ovos-ww-plugin-precise-onnx) |
-| [ovos-ww-plugin-precise-lite](https://github.com/OpenVoiceOS/ovos-ww-plugin-precise-lite) | TFLite Precise wake-word plugin | Archived, but still the shipped default hotword engine in the bundled `mycroft.conf`: [ovos-ww-plugin-precise-onnx](https://github.com/OpenVoiceOS/ovos-ww-plugin-precise-onnx) is the maintained successor for new setups |
+| [ovos-ww-plugin-precise-lite](https://github.com/OpenVoiceOS/ovos-ww-plugin-precise-lite) | TFLite Precise wake-word plugin | Archived, but still the shipped default wake-word engine in the bundled `mycroft.conf`: [ovos-ww-plugin-precise-onnx](https://github.com/OpenVoiceOS/ovos-ww-plugin-precise-onnx) is the maintained successor for new setups |
 | [ovos-ww-plugin-snowboy](https://github.com/OpenVoiceOS/ovos-ww-plugin-snowboy) | snowboy plugin for mycroft | Removed: use [ovos-ww-plugin-precise-onnx](https://github.com/OpenVoiceOS/ovos-ww-plugin-precise-onnx) / openWakeWord |
-| [precise-lite](https://github.com/OpenVoiceOS/precise-lite) | A lightweight, simple-to-use, RNN wake word listener | [ovos-ww-plugin-precise-onnx](https://github.com/OpenVoiceOS/ovos-ww-plugin-precise-onnx) |
-| [precise-lite-trainer](https://github.com/OpenVoiceOS/precise-lite-trainer) | train wake word models | Archived: no current OVOS-org training tool replaces it |
+| [precise-lite](https://github.com/OpenVoiceOS/precise-lite) | A lightweight, simple-to-use, RNN wake-word listener | [ovos-ww-plugin-precise-onnx](https://github.com/OpenVoiceOS/ovos-ww-plugin-precise-onnx) |
+| [precise-lite-trainer](https://github.com/OpenVoiceOS/precise-lite-trainer) | train wake-word models | Archived: no current OVOS-org training tool replaces it |
 | [precise_lite_runner](https://github.com/OpenVoiceOS/precise_lite_runner) | Standalone runner library for using Precise Lite wake-word models outside OVOS | [ovos-ww-plugin-precise-onnx](https://github.com/OpenVoiceOS/ovos-ww-plugin-precise-onnx) |
 
 ## PHAL & GUI plugins (16)

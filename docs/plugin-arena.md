@@ -150,4 +150,4 @@ Modality-specific fields (kept inline or in `extras`):
 
 ---
 **Read next:** [Choosing Plugins](choosing-plugins.md) · [Microphone Plugins](mic-plugins.md)
-**Related:** [Maturity Scale](maturity.md) · [STT Plugins](stt-plugins.md) · [TTS Plugins](tts-plugins.md) · [Wake Word Verifier](ww-verifier.md)
+**Related:** [Maturity Scale](maturity.md) · [STT Plugins](stt-plugins.md) · [TTS Plugins](tts-plugins.md) · [Wake-word Verifier](ww-verifier.md)

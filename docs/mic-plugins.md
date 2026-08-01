@@ -284,5 +284,5 @@ config where a plugin has one).
 
 ---
 **Read next:** [VAD Plugins](vad-plugins.md)
-**Related:** [Choosing Plugins](choosing-plugins.md) · [Wake Word Plugins](wake-word-plugins.md) · [STT Plugins](stt-plugins.md)
+**Related:** [Choosing Plugins](choosing-plugins.md) · [Wake-word Plugins](wake-word-plugins.md) · [STT Plugins](stt-plugins.md)
 

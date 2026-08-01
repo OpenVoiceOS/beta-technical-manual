@@ -165,7 +165,7 @@ connection is at that moment.
 Beyond intent-matching metrics, `ovos-dinkum-listener` can optionally upload the
 audio samples it captures (wake-word detections and transcribed utterances) to
 an [ovos-opendata-server](https://github.com/OpenVoiceOS/ovos-opendata-server)
-instance, so contributors can help improve wake-word and STT plugins with real
+instance, so contributors can help improve wake word and STT plugins with real
 recordings. This is exclusively opt-in and off by default: nothing is ever
 uploaded unless `open_data.ww_urls` or `open_data.stt_urls` is explicitly
 configured with at least one server, and there is no default server. Uploads run

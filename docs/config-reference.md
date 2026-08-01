@@ -82,7 +82,7 @@ All of these live under the top-level `listener` key:
 | `listener.fake_barge_in` | `true` | Mute output during recording. |
 | `listener.recording_timeout`| `10.0` | Max seconds for a single recording. |
 | `listener.remove_silence` | `true` | Strip leading/trailing silence before sending audio to STT. |
-| `listener.wake_word` | `"hey_mycroft"` | Default hotword (matches an entry under `hotwords`). |
+| `listener.wake_word` | `"hey_mycroft"` | Default wake word (matches an entry under `hotwords`). |
 
 ### Microphone Plugin
 
@@ -461,7 +461,7 @@ The shipped `mycroft.conf` has no `persona` key and no default persona values. P
 | `listener.phoneme_duration` | `120` |  |
 | `listener.multiplier` | `1.0` |  |
 | `listener.energy_ratio` | `1.5` |  |
-| `listener.wake_word` | `"hey_mycroft"` | Default hotword (matches an entry under `hotwords`). |
+| `listener.wake_word` | `"hey_mycroft"` | Default wake word (matches an entry under `hotwords`). |
 | `listener.stand_up_word` | `"wake_up"` |  |
 | `listener.recording_timeout_with_silence` | `3.0` |  |
 | `listener.instant_listen` | `true` |  |

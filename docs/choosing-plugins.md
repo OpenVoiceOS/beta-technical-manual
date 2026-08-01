@@ -31,7 +31,7 @@
     ```
 
     The wake word is **not** in the snippet because it already defaults to **precise-onnx**
-    (`hey_mycroft`). See [Wake Word](#wake-word) to change the phrase. Prefer one command?
+    (`hey_mycroft`). See [Wake word](#wake-word) to change the phrase. Prefer one command?
     `ovos-config autoconfigure -l en-us --offline` writes the language + these defaults for
     you (it needs `ovos-config` already installed, and configures rather than installs plugins).
 
@@ -70,9 +70,9 @@ Detects when speech starts/stops. See the [VAD catalog](vad-plugins.md).
 | ovos-vad-plugin-webrtcvad | Stable | offline | Lighter CPU-only fallback with tunable aggressiveness |
 | ovos-vad-plugin-noise | Stable | offline | Lightest possible — energy threshold, no model at all |
 
-### Wake Word
+### Wake word
 
-Listens for the activation phrase. See the [Wake Word catalog](wake-word-plugins.md).
+Listens for the activation phrase. See the [Wake word catalog](wake-word-plugins.md).
 
 | Plugin | Maturity | Runs | Choose this if |
 |---|---|---|---|

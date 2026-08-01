@@ -270,7 +270,7 @@ silently skipped. Both sources respect `persona_blacklist`.
 
 ---
 
-## OVOS Core as a Chat Engine
+## ovos-core as a Chat Engine
 
 `ovos-messagebus-chat-plugin` (entry point `ovos-messagebus`, class `OVOSMessagebusChatAgent`,
 group `opm.agents.chat`) exposes a running `ovos-core` instance as a persona handler. This

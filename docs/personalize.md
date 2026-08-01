@@ -61,7 +61,7 @@ for the full CLI). Once the file parses cleanly, apply the change:
 }
 ```
 
-Full walkthrough, plugin choices, and tuning: [Wake Word Plugins](wake-word-plugins.md#change-your-wake-word).
+Full walkthrough, plugin choices, and tuning: [Wake-word Plugins](wake-word-plugins.md#change-your-wake-word).
 
 ## Change your voice
 
@@ -119,4 +119,4 @@ picture, supported-language table, and gaps to watch for: [Language Support](lan
 ---
 
 **Read next:** [Fun stuff to try](showcase.md)
-**Related:** [Configuration Management](config.md) · [Wake Word Plugins](wake-word-plugins.md) · [TTS Plugins](tts-plugins.md) · [Language Support](lang-support.md)
+**Related:** [Configuration Management](config.md) · [Wake-word Plugins](wake-word-plugins.md) · [TTS Plugins](tts-plugins.md) · [Language Support](lang-support.md)

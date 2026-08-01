@@ -81,8 +81,8 @@ The entry point group is the canonical identifier used in `setup.py` / `pyprojec
 |---|---|---|
 | [STT](stt-plugins.md) ([Speech-to-Text](stt-plugins.md)) | `opm.stt` | `ovos_plugin_manager.templates.stt.STT` |
 | [TTS](tts-plugins.md) ([Text-to-Speech](tts-plugins.md)) | `opm.tts` | `ovos_plugin_manager.templates.tts.TTS` |
-| [Wake Word](wake-word-plugins.md) | `opm.wake_word` | `ovos_plugin_manager.templates.hotwords.HotWordEngine` |
-| Wake Word Verifier | `opm.wake_word.verifier` | `HotWordVerifier` |
+| [Wake word](wake-word-plugins.md) | `opm.wake_word` | `ovos_plugin_manager.templates.hotwords.HotWordEngine` |
+| Wake-word Verifier | `opm.wake_word.verifier` | `HotWordVerifier` |
 | [VAD](vad-plugins.md) ([Voice Activity Detection](vad-plugins.md)) | `opm.VAD` | `VADEngine` |
 | Microphone | `opm.microphone` | `Microphone` |
 | G2P (Grapheme-to-Phoneme) | `opm.g2p` | `Grapheme2PhonemePlugin` |
@@ -589,7 +589,7 @@ satellites:
 
 - [HiveMind voice satellite](https://github.com/JarbasHiveMind/HiveMind-voice-sat): distributed voice pipeline
 
-STT, TTS, and WakeWord plugin types retain backward compatibility with Mycroft-Core via
+STT, TTS, and Wake-word plugin types retain backward compatibility with Mycroft-Core via
 legacy entry point aliases (`mycroft.plugin.*`).
 
 ---

@@ -20,7 +20,7 @@ reason to support more than one OVOS generation from the same codebase:
   [Release Channels](release-channels.md)) and cannot be bumped on demand.
 - **A fleet you do not fully control.** HiveMind satellites, community devices, or any
   install base where you cannot force every node to upgrade together.
-- **A published plugin with many downstream users.** A wake-word or TTS plugin on PyPI
+- **A published plugin with many downstream users.** A wake word or TTS plugin on PyPI
   gets installed against whatever core each user already runs. Breaking one generation
   to support another has a real cost you do not pay if you just track latest.
 

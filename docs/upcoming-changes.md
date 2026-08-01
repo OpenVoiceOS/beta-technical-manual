@@ -136,7 +136,7 @@ headline efforts above.
 
 | PR | What it changes | Audience | Breaking | Version |
 |---|---|---|---|---|
-| [#243](https://github.com/OpenVoiceOS/ovos-dinkum-listener/pull/243) | Adds opt-in upload of wake-word/STT samples (pairs with ovos-config#278) | deployers who opt in to data-sharing | No | 0.8.3 |
+| [#243](https://github.com/OpenVoiceOS/ovos-dinkum-listener/pull/243) | Adds opt-in upload of wake word/STT samples (pairs with ovos-config#278) | deployers who opt in to data-sharing | No | 0.8.3 |
 | [#215](https://github.com/OpenVoiceOS/ovos-dinkum-listener/pull/215) | Adds a `duration` field to the utterance bus message | skill/plugin authors, remote bus consumers | No | 0.8.3 |
 
 ### ovos-gui

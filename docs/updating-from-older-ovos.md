@@ -33,7 +33,7 @@ Use it like this:
 | Audience page | Covers |
 |---|---|
 | [Updating Skills](updating-skills.md) | `OVOSSkill`/`ovos-workshop` API breaks, settings storage, locale resources |
-| [Updating Plugins](updating-plugins.md) | STT/TTS/wake-word/audio-backend/media/GUI-adapter/PHAL/solver plugin contract breaks |
+| [Updating Plugins](updating-plugins.md) | STT/TTS/wake word/audio-backend/media/GUI-adapter/PHAL/solver plugin contract breaks |
 | [Updating Deployers](updating-deployers.md) | `mycroft.conf`/`ovos.conf` key renames, removed blocks, changed defaults |
 | [Updating Remote Clients](updating-remote-clients.md) | Bus package/wire changes for HiveMind satellites and other remote bus consumers |
 

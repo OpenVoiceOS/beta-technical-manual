@@ -13,7 +13,7 @@ it's easy to conflate them. Pick the one, or both, that matches what you're tryi
 
 | Direction | What it does | Runs where | Details |
 |---|---|---|---|
-| **HA uses OVOS's engines** | Home Assistant's own [Assist](https://www.home-assistant.io/voice_control/) voice pipeline uses an OVOS wake-word, speech-to-text, or text-to-speech plugin instead of (or alongside) its built-in ones | A small OVOS-side bridge process, reachable from HA over the network | [Wyoming Bridges](wyoming-bridges.md) |
+| **HA uses OVOS's engines** | Home Assistant's own [Assist](https://www.home-assistant.io/voice_control/) voice pipeline uses an OVOS wake word, speech-to-text, or text-to-speech plugin instead of (or alongside) its built-in ones | A small OVOS-side bridge process, reachable from HA over the network | [Wyoming Bridges](wyoming-bridges.md) |
 | **OVOS controls HA devices** | Your OVOS assistant understands utterances like "turn on the lights" and relays them to your Home Assistant instance | A skill running inside OVOS | See below |
 
 ---

@@ -36,9 +36,9 @@ This tutorial is designed for users new to Raspberry Pi and raspOVOS. Follow the
 
 The Pi model above sets the ceiling on what you can run comfortably. As a starting point per
 tier (see [STT Plugins](stt-plugins.md), [TTS Plugins](tts-plugins.md),
-[Wake Word Plugins](wake-word-plugins.md) and [VAD Plugins](vad-plugins.md) for the full rosters):
+[Wake-word Plugins](wake-word-plugins.md) and [VAD Plugins](vad-plugins.md) for the full rosters):
 
-- **Pi 3 (minimum):** lean on cloud services or the lightest local plugins: a small wake-word
+- **Pi 3 (minimum):** lean on cloud services or the lightest local plugins: a small wake word
   model, an energy/noise VAD, and cloud STT/TTS. If you need fully offline, use the smallest
   local models you can find. Avoid local Whisper-class STT/TTS here. It is the heaviest option
   in the rosters, and this is the board least equipped to run it.
@@ -363,7 +363,7 @@ time to reprint the full list.
 **Inspecting plugins:**
 
 - `ls-skills`: list the `skill_id` of every installed skill.
-- `ls-stt` / `ls-tts` / `ls-ww` / `ls-tx`: list installed [STT](stt-plugins.md) / [TTS](tts-plugins.md) / wake-word / [translation](translation-plugins.md) plugins.
+- `ls-stt` / `ls-tts` / `ls-ww` / `ls-tx`: list installed [STT](stt-plugins.md) / [TTS](tts-plugins.md) / wake word / [translation](translation-plugins.md) plugins.
 
 **Sound/audio:**
 

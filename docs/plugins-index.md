@@ -17,8 +17,8 @@ their config, and install commands.
 - I want to hear the assistant on speakers or a headset → [Microphone](mic-plugins.md) is the
   input side; for the output voice see [TTS](tts-plugins.md).
 - I want it to stop listening to background noise → [VAD](vad-plugins.md).
-- I want to change the activation phrase or engine → [Wake Word](wake-word-plugins.md).
-- I want fewer false wake-ups → [Wake Word Verifiers](ww-verifier.md).
+- I want to change the activation phrase or engine → [Wake word](wake-word-plugins.md).
+- I want fewer false wake-ups → [Wake-word Verifiers](ww-verifier.md).
 - I want more accurate transcription → [STT](stt-plugins.md).
 - I want a different voice → [TTS](tts-plugins.md).
 - I want mouth/viseme animation on a Mark 1-style face → [G2P](g2p-plugins.md).
@@ -58,8 +58,8 @@ TTS, and G2P.
 |---|---|---|
 | [Microphone](mic-plugins.md) | `opm.microphone` | Captures audio from a microphone or audio source |
 | [VAD](vad-plugins.md) (Voice Activity Detection) | `opm.VAD` | Detects when speech starts and stops |
-| [Wake Word](wake-word-plugins.md) | `opm.wake_word` | Listens for the activation phrase (e.g. "hey Mycroft") |
-| [Wake Word Verifiers](ww-verifier.md) | `opm.wake_word.verifier` | Second-stage check to reject false wake-word triggers |
+| [Wake word](wake-word-plugins.md) | `opm.wake_word` | Listens for the activation phrase (e.g. "hey Mycroft") |
+| [Wake-word Verifiers](ww-verifier.md) | `opm.wake_word.verifier` | Second-stage check to reject false wake-word triggers |
 | [STT](stt-plugins.md) (Speech-to-Text) | `opm.stt` | Transcribes captured speech into text |
 | [TTS](tts-plugins.md) (Text-to-Speech) | `opm.tts` | Turns reply text back into spoken audio |
 | [G2P](g2p-plugins.md) (Grapheme-to-Phoneme) | `opm.g2p` | Converts text to phonemes (e.g. for mouth/visemes) |

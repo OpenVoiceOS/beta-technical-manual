@@ -30,7 +30,7 @@ knowing about each other. See the
 The diagram above illustrates how a user utterance moves through the system:
 
 1. **Microphone Input**: Captured by a microphone plugin.
-2. **[Wake Word](wake-word-plugins.md) Detection**: The `ovos-dinkum-listener` (or similar) monitors the stream for the wake word.
+2. **[Wake-word](wake-word-plugins.md) Detection**: The `ovos-dinkum-listener` (or similar) monitors the stream for the wake word.
 3. **[Speech-to-Text](stt-plugins.md) ([STT](stt-plugins.md))**: Once the wake word is detected, the subsequent audio is sent to an STT engine.
 4. **messagebus**: The transcribed text is published to the bus as `ovos.utterance.handle`, the utterance entry point ([OVOS-PIPELINE-1 §9.1](https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md); legacy name `recognizer_loop:utterance`).
 5. **[Intent Service](intent-service.md)**: the **orchestrator** (`ovos-core`) picks up the utterance and runs it through the **[pipeline](pipelines-overview.md)** of matcher plugins. The first plugin to claim it wins ([OVOS-PIPELINE-1](https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md)).
@@ -54,7 +54,7 @@ flowchart TD
     IS --- PP["Pipeline plugins<br/>Adapt, Padatious, Converse, Fallback, …"]
     CORE --- SS["SkillsStore<br/>runtime pip install/uninstall"]
     CORE --- ES["EventScheduler<br/>timed bus events"]
-    BUS --- LISTENER["ovos-dinkum-listener<br/>STT / wake-word → ovos.utterance.handle"]
+    BUS --- LISTENER["ovos-dinkum-listener<br/>STT / wake word → ovos.utterance.handle"]
     BUS --- AUDIO["ovos-audio<br/>TTS / sound playback (+ legacy media audioservice)"]
     BUS --- MEDIA["ovos-media<br/>standalone media-playback (opt-in, PoC)"]
     BUS --- GUI["ovos-gui<br/>GUI layer"]
@@ -88,7 +88,7 @@ The backbone of OVOS. All components communicate via this WebSocket-based bus. I
 The "brain" of the system. It manages the lifecycle of skills and coordinates intent matching through a multi-stage pipeline. In the formal model it is the **orchestrator**: the role that runs the [pipeline](pipelines-overview.md) of matcher plugins, dispatches the winning match to a handler on `<skill_id>:<intent_name>`, and emits the handler-lifecycle events ([OVOS-PIPELINE-1](https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md)).
 
 ### Speech Service
-Handles audio capture, wake word detection, and STT. It is responsible for turning "sound" into "data".
+Handles audio capture, wake-word detection, and STT. It is responsible for turning "sound" into "data".
 
 ### Audio Service
 The output layer. It manages TTS generation and audio playback, ensuring that only one thing is speaking at a time and handling audio focus.
@@ -110,7 +110,7 @@ One of OVOS's greatest strengths is its plugin-based architecture. Almost every 
 - **Microphone Plugins**: see the [Microphone Plugins catalog](mic-plugins.md).
 - **STT Plugins**: see the [STT Plugins catalog](stt-plugins.md).
 - **TTS Plugins**: see the [TTS Plugins catalog](tts-plugins.md).
-- **Wake Word Plugins**: see the [Wake Word Plugins catalog](wake-word-plugins.md).
+- **Wake-word Plugins**: see the [Wake-word Plugins catalog](wake-word-plugins.md).
 - **Intent Plugins**: [Adapt](adapt-pipeline.md), [Padatious](padatious-pipeline.md), [Common Query](cq-pipeline.md), and the rest of the [pipeline overview](pipelines-overview.md).
 
 This allows OVOS to run on everything from a high-end server to a Raspberry Pi Zero.

@@ -23,7 +23,7 @@ flowchart TD
     S1{"Stage 1: bus reachable?\nbus.log"}
     S1 -- no --> F1["start ovos-messagebus,\nthen ovos-core / ovos-dinkum-listener"]
     S1 -- yes --> S2{"Stage 2: mic/wake word fired?\nrecognizer_loop:record_begin"}
-    S2 -- no --> F2["check mic device/gain\nor wake word plugin"]
+    S2 -- no --> F2["check mic device/gain\nor wake-word plugin"]
     S2 -- yes --> S3{"Stage 3: STT produced text?\nrecognizer_loop:utterance"}
     S3 -- no --> F3["check STT plugin / network / API key"]
     S3 -- yes --> S4{"Stage 4: intent matched?\novos.intent.matched"}
@@ -224,7 +224,7 @@ once the bus is back.
 
 ## Prove the microphone and speaker work
 
-Do these checks before you read wake-word or STT logs. They test the sound card itself, not
+Do these checks before you read wake word or STT logs. They test the sound card itself, not
 OVOS, and they work on any Linux install (Raspberry Pi image or otherwise). If you're on
 raspOVOS, there is also a Pi-specific diagnostics script: see [RaspOVOS Troubleshooting →
 Audio Issues](raspovos-troubleshooting.md#audio-issues).
@@ -317,9 +317,9 @@ Common failure signatures:
 
 | Symptom in `voice.log` | Likely cause |
 |---|---|
-| No `Record begin` line at all when you speak | Wake word plugin isn't hearing you: check the [mic device/gain](#prove-the-microphone-and-speaker-work), or the [wake word](wake-word-plugins.md) model/sensitivity. |
+| No `Record begin` line at all when you speak | Wake-word plugin isn't hearing you: check the [mic device/gain](#prove-the-microphone-and-speaker-work), or the [wake word](wake-word-plugins.md) model/sensitivity. |
 | `Record begin` fires but never followed by `Record end` | VAD never detects silence: check the [VAD plugin](vad-plugins.md) config. |
-| Repeated wake-word triggers with no speech after | False positives: the wake word threshold may be too low. |
+| Repeated wake-word triggers with no speech after | False positives: the wake-word threshold may be too low. |
 
 To hear the recorded audio yourself, turn on the listener's own recording keys in
 [configuration](config.md) (user config, under `"listener"`):
@@ -349,7 +349,7 @@ until you delete them. Nothing prunes the directory. Turn both keys back off and
 to disk by default.
 
 `ovos-listen` can also force a listening cycle without saying the wake word at all. This is
-useful for isolating STT problems (Stage 3) from wake-word problems.
+useful for isolating STT problems (Stage 3) from wake word problems.
 
 ---
 

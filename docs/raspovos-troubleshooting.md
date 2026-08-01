@@ -285,9 +285,9 @@ If you want to revert OVOS to a blank state you can use `ovos-reset-brain` to re
 
     ```
 
-## Wake Word Issues
+## Wake-word Issues
 
-Wake word detection in raspOVOS offers several options, each with its advantages and limitations. Understanding these
+Wake-word detection in raspOVOS offers several options, each with its advantages and limitations. Understanding these
 can help resolve potential issues and improve performance.
 
 By default, raspOVOS uses the `precise-lite` model with the wake word "hey mycroft." This model was trained by MycroftAI
@@ -307,19 +307,19 @@ for their Mark2 device. However, there are a few things to consider:
 If the default model is not working well for you, consider training your own precise model. Here are some helpful
 resources for creating a more tailored solution:
 
-- [Helpful Wake Word Datasets on Hugging Face](https://huggingface.co/collections/Jarbas/wake-word-datasets-672cc275fa4bddff9cf69c39)
+- [Helpful Wake-word Datasets on Hugging Face](https://huggingface.co/collections/Jarbas/wake-word-datasets-672cc275fa4bddff9cf69c39)
 - [Data Collection](https://github.com/secretsauceai/wakeword-data-collector)
-- [Wake Word Trainer](https://github.com/secretsauceai/precise-wakeword-model-maker)
+- [Wake-word Trainer](https://github.com/secretsauceai/precise-wakeword-model-maker)
 - [precise-lite-trainer Code](https://github.com/OpenVoiceOS/precise-lite-trainer)
-- [Synthetic Data Creation for Wake Words](https://github.com/OpenVoiceOS/ovos-ww-auto-synth-dataset)
+- [Synthetic Data Creation for Wake words](https://github.com/OpenVoiceOS/ovos-ww-auto-synth-dataset)
 
-### Alternative Wake Word: Vosk Plugin
+### Alternative Wake-word Plugin: Vosk
 
-If you're looking for an alternative to the precise model, the Vosk wake word plugin is another option.
+If you're looking for an alternative to the precise model, the Vosk wake-word plugin is another option.
 
-- [Vosk Wake Word Plugin GitHub](https://github.com/OpenVoiceOS/ovos-ww-plugin-vosk)
+- [Vosk Wake-word Plugin GitHub](https://github.com/OpenVoiceOS/ovos-ww-plugin-vosk)
 
-One of the main advantages of using the **Vosk Wake Word Plugin** is that it does **not require a training step**.
+One of the main advantages of using the **Vosk Wake-word Plugin** is that it does **not require a training step**.
 
 Instead, it uses Kaldi with a limited language model, which means it can work out-of-the-box with certain wake words
 without needing to collect and train custom data.

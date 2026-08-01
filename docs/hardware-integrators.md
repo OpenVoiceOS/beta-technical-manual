@@ -176,7 +176,7 @@ systemctl --user status ovos-skills.service | grep Memory
 top -b -n 1 -u ovos
 ```
 
-Run the same commands idle and mid-conversation. The delta tells you what your wake-word, STT,
+Run the same commands idle and mid-conversation. The delta tells you what your wake word, STT,
 and TTS choice actually costs on your board. That number matters far more than any generic
 published figure.
 
