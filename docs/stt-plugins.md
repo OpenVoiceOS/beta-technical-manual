@@ -79,7 +79,7 @@ separately-licensed model, that is called out under "model".
 | [ovos-stt-plugin-vosk](#ovos-stt-plugin-vosk) | Mycroft STT plugin for [Vosk](https://alphacephei.com/vosk/) | Apache-2.0 (model: see model card) | Stable |
 | [ovos-stt-plugin-onnx-asr](#ovos-stt-plugin-onnx-asr) | Runs [onnx-asr](https://github.com/istupakov/onnx-asr) models (NeMo Parakeet/Canary, Whisper, wav2vec2, …) fully offline via ONNX Runtime, a strong default for on-device, offline recognition. | Apache-2.0 (model: see model card) | Beta |
 
-Maturity reflects repository health (age, activity, open issues/PRs, in-repo docs), not version. See the [Maturity Scale](maturity.md).
+--8<-- "snippets/maturity-disclaimer.md"
 
 !!! note "License and Maturity are independent axes"
     The **License** column reports what the repository itself declares. "No

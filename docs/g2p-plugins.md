@@ -20,7 +20,7 @@ A G2P plugin takes a word or an utterance and returns a list of phonemes in a sp
 |--------|----------|-------------|----------|
 | `ovos-g2p-plugin-mimic` | ARPA | Uses the Mimic 1 engine for G2P conversion. Shipped by [ovos-tts-plugin-mimic](https://github.com/OpenVoiceOS/ovos-tts-plugin-mimic) (the TTS plugin also registers an `opm.g2p` entry point). | Beta |
 
-Maturity reflects repository health (age, activity, open issues/PRs, in-repo docs), not version — see the [Maturity Scale](maturity.md).
+--8<-- "snippets/maturity-disclaimer.md"
 
 !!! note "Roster completeness"
     This table lists the G2P plugins known to register an `opm.g2p` entry point. It is

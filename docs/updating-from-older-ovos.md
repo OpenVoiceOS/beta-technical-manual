@@ -315,6 +315,10 @@ unregistered and will be silently skipped rather than erroring.
 // the common-query plugin id back explicitly if you still want them.
 ```
 
+These are the same pipeline stages as the current default, just written in the old
+short-name notation instead of full plugin IDs. See [Pipelines Overview](pipelines-overview.md)
+for the current stage list and how the pipeline matcher chain works.
+
 The same commit changed the default `"lang"` value in `mycroft.conf` from
 `"en-us"` to `"en-US"`. Any code doing an exact string comparison against
 the lowercase default breaks. Compare case-insensitively or update the

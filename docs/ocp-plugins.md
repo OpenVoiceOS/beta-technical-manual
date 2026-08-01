@@ -155,15 +155,22 @@ is itself `"{sei}//..."` for another extractor, `StreamHandler` calls that one n
 
 ---
 
-| Plugin | Description |
-|--------|-------------|
-| [ovos-ocp-files-plugin](#ovos-ocp-files-plugin) | Lets OCP play local files (`file://` URIs) and reads their audio tags/metadata so the player can show a title and artist |
-| [ovos-ocp-news-plugin](#ovos-ocp-news-plugin) | Extracts the real stream for a known set of spoken-news provider URLs at playback time |
-| [ovos-ocp-bandcamp-plugin](#ovos-ocp-bandcamp-plugin) | Scrapes Bandcamp pages via `py-bandcamp` to extract the real audio stream |
-| [ovos-ocp-rss-plugin](#ovos-ocp-rss-plugin) | Parses an RSS/podcast feed and extracts the newest audio enclosure as the playable stream |
-| [ovos-ocp-youtube-plugin](#ovos-ocp-youtube-plugin) | Resolves YouTube/YouTube Music URLs via a selectable `yt-dlp`/pytube/Invidious/webview backend |
-| [ovos-ocp-m3u-plugin](#ovos-ocp-m3u-plugin) | Downloads a `.pls`/`.m3u` playlist and extracts the first playable stream URL inside it |
-| [ovos-media-classifier](#ovos-media-classifier) | ⚠️ experimental: pluggable media-intent classifier that routes a request to the right `MediaProvider`s |
+| Plugin | Description | License | Maturity |
+|--------|-------------|---------|----------|
+| [ovos-ocp-files-plugin](#ovos-ocp-files-plugin) | Lets OCP play local files (`file://` URIs) and reads their audio tags/metadata so the player can show a title and artist | MIT | not rated |
+| [ovos-ocp-news-plugin](#ovos-ocp-news-plugin) | Extracts the real stream for a known set of spoken-news provider URLs at playback time | Apache-2.0 | not rated |
+| [ovos-ocp-bandcamp-plugin](#ovos-ocp-bandcamp-plugin) | Scrapes Bandcamp pages via `py-bandcamp` to extract the real audio stream | Apache-2.0 | not rated |
+| [ovos-ocp-rss-plugin](#ovos-ocp-rss-plugin) | Parses an RSS/podcast feed and extracts the newest audio enclosure as the playable stream | Apache-2.0 | not rated |
+| [ovos-ocp-youtube-plugin](#ovos-ocp-youtube-plugin) | Resolves YouTube/YouTube Music URLs via a selectable `yt-dlp`/pytube/Invidious/webview backend | Apache-2.0 | not rated |
+| [ovos-ocp-m3u-plugin](#ovos-ocp-m3u-plugin) | Downloads a `.pls`/`.m3u` playlist and extracts the first playable stream URL inside it | Apache-2.0 | not rated |
+| [ovos-media-classifier](#ovos-media-classifier) | ⚠️ experimental: pluggable media-intent classifier that routes a request to the right `MediaProvider`s | Apache-2.0 | not rated |
+
+--8<-- "snippets/maturity-disclaimer.md"
+
+!!! note "Maturity not yet rated for this family"
+    These plugins are not yet individually rated in the manual (see the OCP comparison
+    table in [Choosing Plugins](choosing-plugins.md#speech-input)). "not rated" means
+    unrated, not unmature.
 
 ## ovos-ocp-files-plugin
 

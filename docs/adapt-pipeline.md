@@ -33,6 +33,19 @@ def handle_light_on(self, message):
 
 "switch on the lamp" then matches with high confidence because both required keywords are present.
 
+```mermaid
+flowchart TD
+    U[Utterance] --> T[Tokenize]
+    T --> M{Match .voc keywords\nrequired / one-of / excluded}
+    M -->|keywords found| S[Score by keyword count]
+    S --> C{Score clears\nstage threshold?}
+    C -->|yes| I[Intent + confidence]
+    C -->|no| N[No match, try next stage]
+    M -->|no keywords| N
+```
+
+*Diagram: the utterance is tokenized, checked against each skill's registered .voc keyword rule, scored by how many required keywords matched, then accepted as an intent only if the score clears the current stage's threshold.*
+
 Adapt is good for **explicit, deterministic command-and-control**. But it scales poorly across many skills, and it is hard to localize. **It is not recommended for broad deployments.**
 
 Prefer it for **personal skills** where you control the full vocabulary.

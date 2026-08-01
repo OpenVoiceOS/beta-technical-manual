@@ -335,22 +335,28 @@ plugins should use them.
 
 ## Plugin catalog
 
-| Plugin | Description |
-|--------|-------------|
-| [ovos-qdrant-embeddings-plugin](#ovos-qdrant-embeddings-plugin) | The `QdrantEmbeddingsDB` plugin integrates with the [qdrant](https://qdrant.tech/) database to store, retrieve, and query embeddings. This plugin extends the abstract `EmbeddingsDB` class, using qdrant's capabilities. |
-| [ovos-solver-plugin-aiml](#ovos-solver-plugin-aiml) | A rule-based chatbot answer engine for OVOS, using AIML pattern matching. |
-| [ovos-persona](#ovos-persona) | The **`PersonaPipeline`** brings multi-persona management to OpenVoiceOS (OVOS), enabling interactive conversations with virtual assistants. With personas, you can customize how queries are handled by assigning specific solvers to each persona. |
-| [ovos-openai-plugin](#ovos-openai-plugin) | Uses the [OpenAI Completions API](https://platform.openai.com/docs/api-reference/completions/create) to provide a chat engine, a dialog-rewriting transformer, and a summarizer, all pointed at any OpenAI-compatible endpoint. |
-| [ovos-messagebus-chat-plugin](#ovos-messagebus-chat-plugin) | `OVOSMessagebusChatAgent`: a `ChatEngine` (`opm.agents.chat`, entry point `ovos-messagebus`) that proxies each turn through a connected OVOS messagebus pipeline. |
-| [ovos-wikipedia-plugin](#ovos-wikipedia-plugin) | Answers factual questions by querying Wikipedia. |
-| [ovos-chromadb-embeddings-plugin](#ovos-chromadb-embeddings-plugin) | The `ChromaEmbeddingsDB` plugin integrates with the [ChromaDB](https://www.trychroma.com/) database to store, retrieve, and query embeddings. This plugin extends the abstract `EmbeddingsDB` class, using ChromaDB's capabilities. |
-| [ovos-wolfram-alpha-plugin](#ovos-wolfram-alpha-plugin) | Answers computational and factual questions via the Wolfram Alpha API. |
-| [ovos-ddg-plugin](#ovos-ddg-plugin) | Answers questions using DuckDuckGo instant-answer results. |
-| [ovos-solver-YesNo-plugin](#ovos-solver-yesno-plugin) | A simple tool to indicate whether a user answered "yes" or "no" to a yes/no prompt. |
-| [ovos-solver-failure-plugin](#ovos-solver-failure-plugin) | Extreme fallback, just complains it does not have a brain |
-| [ovos-gguf-plugin](#ovos-gguf-plugin) | Unified GGUF wrapper for chat, summarization, dialog rewriting, translation, language detection, and text embeddings, all backed by quantized GGUF models via `llama-cpp-python`. |
-| [ovos-persona-server](#ovos-persona-server) | Standalone server that exposes an OVOS persona over an HTTP API. |
-| [ovos-solver-plugin-rivescript](#ovos-solver-plugin-rivescript) | A rule-based chatbot answer engine for OVOS, using RiveScript pattern matching. |
+| Plugin | Description | License | Maturity |
+|--------|-------------|---------|----------|
+| [ovos-qdrant-embeddings-plugin](#ovos-qdrant-embeddings-plugin) | The `QdrantEmbeddingsDB` plugin integrates with the [qdrant](https://qdrant.tech/) database to store, retrieve, and query embeddings. This plugin extends the abstract `EmbeddingsDB` class, using qdrant's capabilities. | MIT | Beta |
+| [ovos-solver-plugin-aiml](#ovos-solver-plugin-aiml) | A rule-based chatbot answer engine for OVOS, using AIML pattern matching. | MIT | Alpha |
+| [ovos-persona](#ovos-persona) | The **`PersonaPipeline`** brings multi-persona management to OpenVoiceOS (OVOS), enabling interactive conversations with virtual assistants. With personas, you can customize how queries are handled by assigning specific solvers to each persona. | Apache-2.0 | Stable |
+| [ovos-openai-plugin](#ovos-openai-plugin) | Uses the [OpenAI Completions API](https://platform.openai.com/docs/api-reference/completions/create) to provide a chat engine, a dialog-rewriting transformer, and a summarizer, all pointed at any OpenAI-compatible endpoint. | Apache-2.0 | Beta |
+| [ovos-messagebus-chat-plugin](#ovos-messagebus-chat-plugin) | `OVOSMessagebusChatAgent`: a `ChatEngine` (`opm.agents.chat`, entry point `ovos-messagebus`) that proxies each turn through a connected OVOS messagebus pipeline. | Apache-2.0 | Alpha |
+| [ovos-wikipedia-plugin](#ovos-wikipedia-plugin) | Answers factual questions by querying Wikipedia. | Apache-2.0 | Alpha |
+| [ovos-chromadb-embeddings-plugin](#ovos-chromadb-embeddings-plugin) | The `ChromaEmbeddingsDB` plugin integrates with the [ChromaDB](https://www.trychroma.com/) database to store, retrieve, and query embeddings. This plugin extends the abstract `EmbeddingsDB` class, using ChromaDB's capabilities. | MIT | Beta |
+| [ovos-wolfram-alpha-plugin](#ovos-wolfram-alpha-plugin) | Answers computational and factual questions via the Wolfram Alpha API. | Apache-2.0 | Alpha |
+| [ovos-ddg-plugin](#ovos-ddg-plugin) | Answers questions using DuckDuckGo instant-answer results. | Apache-2.0 | Alpha |
+| [ovos-solver-YesNo-plugin](#ovos-solver-yesno-plugin) | A simple tool to indicate whether a user answered "yes" or "no" to a yes/no prompt. | Apache-2.0 | Deprecated |
+| [ovos-solver-failure-plugin](#ovos-solver-failure-plugin) | Extreme fallback, just complains it does not have a brain | MIT | Beta |
+| [ovos-gguf-plugin](#ovos-gguf-plugin) | Unified GGUF wrapper for chat, summarization, dialog rewriting, translation, language detection, and text embeddings, all backed by quantized GGUF models via `llama-cpp-python`. | MIT | Beta |
+| [ovos-persona-server](#ovos-persona-server) | Standalone server that exposes an OVOS persona over an HTTP API. | Apache-2.0 | Stable |
+| [ovos-solver-plugin-rivescript](#ovos-solver-plugin-rivescript) | A rule-based chatbot answer engine for OVOS, using RiveScript pattern matching. | MIT | Alpha |
+
+--8<-- "snippets/maturity-disclaimer.md"
+
+!!! note "`ovos-solver-YesNo-plugin` is deprecated"
+    Superseded by [ovos-YesNo-plugin](https://github.com/OpenVoiceOS/ovos-YesNo-plugin)
+    (needs `ovos-plugin-manager>=2.4.0`). See [Deprecated Repos](deprecated-repos.md).
 
 See [Available ToolBoxes](#available-toolboxes) and [Available Chat Engines](#available-chat-engines)
 below for the standalone `opm.agents.toolbox` and `opm.agents.chat` plugin registries.

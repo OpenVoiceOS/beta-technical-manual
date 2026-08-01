@@ -82,6 +82,20 @@ For an utterance it:
 Because matching is restricted to intents that are actually loaded, the model can
 ship knowledge of many skills without firing for skills you do not have installed.
 
+```mermaid
+flowchart TD
+    U[Utterance] --> E[Embed with Model2Vec model]
+    R[Registered Adapt/Padatious\nintent labels] --> F
+    E --> SC[Score every known label]
+    SC --> F{Filter to\nregistered labels}
+    F --> B[Keep best-scoring label]
+    B --> C{Score clears\nstage threshold?}
+    C -->|yes| I[Intent + confidence]
+    C -->|no| N[No match, try next stage]
+```
+
+*Diagram: the utterance is embedded, scored against every label the model knows, filtered down to labels that are actually registered by loaded skills, and the best surviving label is accepted only if it clears the current stage's threshold.*
+
 ---
 
 ## Two operating modes

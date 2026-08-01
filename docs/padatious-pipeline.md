@@ -39,6 +39,21 @@ def handle_weather(self, message):
 
 ---
 
+## How it works
+
+```mermaid
+flowchart TD
+    F[.intent example files] --> TR[Train neural model]
+    TR --> MO[Trained model, cached]
+    U[Utterance] --> SC[Score against model]
+    MO --> SC
+    SC --> C{Best score clears\nstage threshold?}
+    C -->|yes| I[Intent + confidence + slots]
+    C -->|no| N[No match, try next stage]
+```
+
+*Diagram: example sentences train a small neural model ahead of time, then an incoming utterance is scored against that model, and the best-scoring intent is returned only if it clears the current stage's confidence threshold.*
+
 ## Pipeline Stages
 
 The plugin ships a single OPM entry point, `ovos-padatious-pipeline-plugin`, mapped to the `PadatiousPipeline` class. That class is a `ConfidenceMatcherPipeline`, so OVOS exposes three matcher stages from it. You select these in your pipeline config by the IDs below (the short `padatious_*` aliases still work but are deprecated):

@@ -103,6 +103,19 @@ A fuzzy (`exact=False`) match of the same `stop` / `global_stop` vocab, for phra
 
 Scores the utterance against the `stop` vocab list via fuzzy matching (`match_one`), adds a small bonus when active skills are present, and rejects anything below `min_conf` (default `0.5`). Used as a permissive catch-all so phrases like "can you stop now?" still reach the stop logic.
 
+```mermaid
+flowchart TD
+    U[Utterance] --> V{Matches stop /\nglobal_stop vocab?}
+    V -->|no| N[No match]
+    V -->|global_stop or\nno active skills| G[Global stop\nbroadcast ovos.stop]
+    V -->|yes, skills active| P[Ping active skills\novos.stop.ping]
+    P --> W{Any skill replies\ncan_handle?}
+    W -->|yes| D[Dispatch stop to\nmost recent responder]
+    W -->|no, timeout| G
+```
+
+*Diagram: an utterance that matches the stop vocabulary either targets the most recently active skill that confirms it can stop, or falls back to a global stop broadcast when there is nothing to target or no skill responds in time.*
+
 ---
 
 ## Localization

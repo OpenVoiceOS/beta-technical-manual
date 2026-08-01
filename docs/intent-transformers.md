@@ -31,12 +31,14 @@ Transformers run sorted by `priority`, **lowest first**. A transformer with `pri
 
 `ovos-core` declares these two plugins as dependencies, so a standard install ships with them present. Each one only *runs* when its plugin name is listed under `intent_transformers` in your config:
 
-| Plugin name (config key)        | PyPI package                | Description                                                                                         | Priority |
-|---------------------------------|-----------------------------| -------------------------------------------------------------------------------------------------- | -------- |
-| `ovos-keyword-template-matcher` | `keyword-template-matcher`  | Extracts values from `{placeholder}`-style intent templates                                        | 1        |
-| `ovos-ahocorasick-ner-plugin`   | `ahocorasick-ner`           | Performs NER using Aho-Corasick keyword matching based on registered entities from skill templates | 5        |
+| Plugin name (config key)        | PyPI package                | Description                                                                                         | Priority | License | Maturity |
+|---------------------------------|-----------------------------| -------------------------------------------------------------------------------------------------- | -------- | ------- | -------- |
+| `ovos-keyword-template-matcher` | `keyword-template-matcher`  | Extracts values from `{placeholder}`-style intent templates                                        | 1        | MIT | Alpha |
+| `ovos-ahocorasick-ner-plugin`   | `ahocorasick-ner`           | Performs NER using Aho-Corasick keyword matching based on registered entities from skill templates | 5        | Apache-2.0 | Alpha |
 
 A transformer is loaded only if its plugin name appears under `intent_transformers`. Set `"active": false` to skip it. (Note: `keyword-template-matcher` runs before `ahocorasick-ner`, since 1 < 5.)
+
+--8<-- "snippets/maturity-disclaimer.md"
 
 ---
 

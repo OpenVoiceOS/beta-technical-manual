@@ -39,7 +39,7 @@
 OK)? Jump straight to **[Pick by scenario](#pick-by-scenario)**.
 
 **How to read the tables.** ⭐ marks the recommended default. **Maturity** rates
-[repository health](maturity.md) (PoC → Alpha → Beta → Stable → Mature), *not* how good the
+[repository health](maturity.md) (Proof-of-concept → Alpha → Beta → Stable → Mature), *not* how good the
 plugin is. A Beta default can be the right pick. **Offline** means it runs on-device with
 no network. **Online** calls a cloud service (separate terms). **Hybrid** talks to a server
 you can self-host. Pick the row whose *"choose this if"* matches you, then open the catalog

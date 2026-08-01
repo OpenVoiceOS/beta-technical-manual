@@ -1,5 +1,8 @@
 # Production Overview
 
+!!! abstract "In a nutshell"
+    This tab is for anyone running OVOS beyond a single test device: fleets of devices, self-hosted servers, and deployments that must stay current across upgrades. It is not for a first install on one device; see the Get Started tab for that.
+
 This tab is for anyone running OVOS beyond a single test device: fleets, servers, and long-lived deployments.
 
 ## Start here
@@ -22,11 +25,19 @@ Keeping a production deployment current means reading these together:
 
 ## Self-hosting Servers
 
+Run your own STT, TTS, or translation backend instead of depending on a third party. Each protocol has its own page; Server Compatibility Layers covers keeping them working as OVOS versions change.
+
 - [STT Server](stt-server.md), [TTS Server](tts-server.md), [Translate Server](translate-server.md).
 
 ## Home Assistant
+
+Connecting OVOS to an existing Home Assistant install, either as a client or by exposing OVOS engines as Wyoming-protocol services HA can call.
 
 - [Overview](home-assistant.md): connecting OVOS to a Home Assistant install.
 - [Wyoming Bridges](wyoming-bridges.md): using OVOS engines as Wyoming-protocol services for HA.
 
 New to OVOS and just want it working on one device? That's the Get Started tab. Building the agent that runs on your fleet? That's the Agents tab.
+
+---
+**Read next:** [Production Operations](production-operations.md)
+**Related:** [Get Started](start-here.md) · [Agents Overview](agents-overview.md) · [Reference Overview](reference-overview.md)
