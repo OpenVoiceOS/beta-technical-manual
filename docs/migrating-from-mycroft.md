@@ -97,7 +97,7 @@ What changed, line by line:
   (or one of its subclasses, such as `FallbackSkill` or `OVOSCommonPlaybackSkill`. See
   [Skill Classes](skill-classes.md)). There is no `CommonQuerySkill` base class. A plain
   `OVOSSkill` joins CommonQuery by decorating a method with
-  [`@common_query()`](skill-classes.md#commonquery-common_query-on-ovosskill).
+  [`@common_query()`](skill-classes-reference.md#commonquery-common_query-on-ovosskill).
 - Replace `@intent_file_handler` with `@intent_handler`.
 - Drop any code that depends on `home.mycroft.ai` (pairing checks, remote settings sync, cloud
   STT/TTS calls). There is nothing to pair with. Local plugins provide the equivalent

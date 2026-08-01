@@ -154,7 +154,7 @@ once the bus is back.
 Do these checks before you read wake word or STT logs. They test the sound card itself, not
 OVOS, and they work on any Linux install (Raspberry Pi image or otherwise). If you're on
 raspOVOS, there is also a Pi-specific diagnostics script: see [RaspOVOS
-Troubleshooting](raspovos-troubleshooting.md), "Audio Issues".
+Troubleshooting](raspovos-troubleshooting.md#audio-issues), "Audio Issues".
 
 ### Does the OS see your microphone and speaker?
 

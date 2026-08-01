@@ -57,7 +57,7 @@ uv pip freeze > known-good.txt
 ```
 
 This plain `known-good.txt` in the current directory is the single-machine form of the same
-convention [Production Operations](production-operations.md#staged-upgrades-and-rollback) uses
+convention [Staged Upgrades and Rollback](staged-upgrades.md#staged-upgrades-and-rollback) uses
 for a fleet: a dated, absolute path like `/etc/ovos/known-good-2026-07-01.txt`. Same pattern,
 just scaled from one machine to many.
 
@@ -69,16 +69,16 @@ requirement as nothing to do. Force the reinstall of the exact frozen versions i
 uv pip install --force-reinstall -r known-good.txt
 ```
 
-See [Production Operations: staged upgrades and rollback](production-operations.md#staged-upgrades-and-rollback)
+See [Staged Upgrades and Rollback](staged-upgrades.md#staged-upgrades-and-rollback)
 for the same pattern applied across a fleet of devices rather than one machine. If the
 rollback needs more than package versions, for example your device's `mycroft.conf` or a
 skill's `settings.json` was also damaged, see the [backup and restore
-recipe](production-operations.md#backup-recipe) instead.
+recipe](backup-restore.md#backup-recipe) instead.
 
 !!! tip "Moving to a newer OS image"
     Flashing a fresh OS image (a new raspOVOS release, a new Raspberry Pi OS build) wipes
     the disk. Back up `mycroft.conf` and each skill's `settings.json` first, following the
-    [backup and restore recipe](production-operations.md#backup-recipe), then restore them
+    [backup and restore recipe](backup-restore.md#backup-recipe), then restore them
     onto the new image the same way.
 
 ---

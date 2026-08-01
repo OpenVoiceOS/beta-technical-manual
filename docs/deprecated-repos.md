@@ -13,7 +13,7 @@ about retired repositories, not how to write skills today.
 This page covers **repo-level** deprecations (an entire repository retired). For
 **entry-point-level** deprecations, an old OPM entry point group renamed to a
 canonical one while the plugin itself keeps working, see
-[Plugin Manager: Deprecated Types](plugin-manager.md#deprecated-types).
+[Plugin Types Reference: Deprecated Types](plugin-types-reference.md#deprecated-types).
 
 There are roughly **84** archived repositories (the exact count drifts as more get archived). They are grouped by area below. Each row gives the reason and the current replacement where one exists.
 

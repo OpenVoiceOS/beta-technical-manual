@@ -44,8 +44,8 @@ setting shared by every voice. OVOS supports many [TTS plugins](tts-plugins.md),
 voice key a given engine accepts lives in that plugin's own configuration block. It is keyed by
 the plugin's module name, under `tts` in `mycroft.conf`, following the pattern
 `tts.<module-name>.<key>` (for example, `tts.ovos-tts-plugin-matxa-multispeaker-cat.voice`).
-[`ovos-tts-plugin-matxa-multispeaker-cat`](tts-plugins.md#ovos-tts-plugin-matxa-multispeaker-cat)
-and [`ovos-tts-plugin-edge-tts`](tts-plugins.md#ovos-tts-plugin-edge-tts) each expose their own
+[`ovos-tts-plugin-matxa-multispeaker-cat`](tts-plugins-reference.md#ovos-tts-plugin-matxa-multispeaker-cat)
+and [`ovos-tts-plugin-edge-tts`](tts-plugins-reference.md#ovos-tts-plugin-edge-tts) each expose their own
 `voice` key for picking a specific speaker. This manual's [TTS Plugins](tts-plugins.md) reference
 does not currently document a dedicated rate or speed key for any individual plugin. Check that
 plugin's own repository for one before falling back to SSML below.

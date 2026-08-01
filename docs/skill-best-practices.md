@@ -66,7 +66,7 @@ If your skill asks a follow-up question (using `expect_response=True`), make sur
 !!! warning "Requires `ConversationalSkill`"
     Plain `OVOSSkill` subclasses never have `converse()` called. OVOS silently ignores it. To
     receive follow-up utterances, subclass `ConversationalSkill` instead (see
-    [Skill Classes](skill-classes.md#conversationalskill) and [Converse](converse.md)).
+    [Skill Classes Reference](skill-classes-reference.md#conversationalskill) and [Converse](converse.md)).
 
 ```python
 from ovos_workshop.skills.converse import ConversationalSkill

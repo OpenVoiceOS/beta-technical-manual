@@ -24,7 +24,7 @@ my-transformer = "my_package.module:MyTransformer"
 !!! note "No config-discovery entry point for transformers"
     TTS and STT plugins can register a second entry point (`opm.tts.config`, `opm.stt.config`)
     that exposes sample configurations for UI discovery. See
-    [TTS Plugins: Entry point](tts-plugins.md#entry-point). `ovos-plugin-manager`'s
+    [TTS Plugins: Entry point](tts-plugin-development.md#entry-point). `ovos-plugin-manager`'s
     `PluginConfigTypes` enum has no matching entry for any transformer type (audio, utterance,
     metadata, intent, dialog, or tts transformers). A transformer plugin only registers under
     its `opm.transformer.*` group. There is no equivalent `opm.transformer.text.config` group to
@@ -45,7 +45,7 @@ my-transformer = "my_package.module:MyTransformer"
 3. **Publish to PyPI.** The Plugin Arena's benchmark sweep installs competitors from PyPI, so a
    transformer plugin needs a PyPI release before it can be entered. See
    [Plugin Arena: Getting Your Plugin Ranked](plugin-arena.md#getting-your-plugin-ranked) and
-   [TTS Plugins: Package and publish](tts-plugins.md#package-and-publish) for the shared steps.
+   [TTS Plugins: Package and publish](tts-plugin-development.md#package-and-publish) for the shared steps.
 
 ## Test your plugin locally
 

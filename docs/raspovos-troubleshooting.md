@@ -11,39 +11,41 @@ problems in plain language before you dig into the technical steps below.
 
 ---
 
-??? question "Undervoltage Detected Warning"
+## Undervoltage Detected Warning
 
-    If you see an **undervoltage detected** warning:
+If you see an **undervoltage detected** warning:
 
-    - Check your power adapter and cable.
-    - Ensure the adapter can supply enough current (e.g., 5A for Raspberry Pi 5).
-    - Replace long or thin cables with shorter, thicker ones for better power delivery.
+- Check your power adapter and cable.
+- Ensure the adapter can supply enough current (e.g., 5A for Raspberry Pi 5).
+- Replace long or thin cables with shorter, thicker ones for better power delivery.
 
-??? question "System Boot Issues"
+## System Boot Issues
 
-    If the device does not complete its boot sequence:
+If the device does not complete its boot sequence:
 
-    1. Ensure the power supply is stable and sufficient for your Raspberry Pi model.
+1. Ensure the power supply is stable and sufficient for your Raspberry Pi model.
 
-    2. If the OS boots but OVOS doesn't work:
+2. If the OS boots but OVOS doesn't work:
 
-         - See if all OVOS services started up correctly with `ovos-status` command
-         - Check log files in `~/.local/state/mycroft/` for OVOS error messages.
+     - See if all OVOS services started up correctly with `ovos-status` command
+     - Check log files in `~/.local/state/mycroft/` for OVOS error messages.
 
-    3. Re-flash the image if necessary, ensuring all configuration options are set correctly.
+3. Re-flash the image if necessary, ensuring all configuration options are set correctly.
 
-??? question 'OVOS Fails to Speak "I am Ready"' {: #ovos-fails-to-speak-i-am-ready }
+## OVOS Fails to Speak "I am Ready"
 
-    - Confirm the device has a working Internet connection. Otherwise OVOS won't consider itself ready
-    - The "I am Ready" announcement is spoken by the `ovos-skill-boot-finished` skill: if that skill is not installed or failed to load, the device can be fully working yet stay silent at boot. Check it appears in the loaded-skills list (see "How to check installed skills" below, where `skill-ovos-boot-finished.openvoiceos` should be present).
-    - For what "ready" actually means and how to probe it on headless or fleet deployments, see [Knowing when the assistant is actually ready](production-operations.md#knowing-when-the-assistant-is-actually-ready).
+- Confirm the device has a working Internet connection. Otherwise OVOS won't consider itself ready
+- The "I am Ready" announcement is spoken by the `ovos-skill-boot-finished` skill: if that skill is not installed or failed to load, the device can be fully working yet stay silent at boot. Check it appears in the loaded-skills list (see [How to check installed skills](#how-to-check-installed-skills) below, where `skill-ovos-boot-finished.openvoiceos` should be present).
+- For what "ready" actually means and how to probe it on headless or fleet deployments, see [Knowing when the assistant is actually ready](production-operations.md#knowing-when-the-assistant-is-actually-ready).
 
-??? question "How to debug intent matching" {: #how-to-debug-intent-matching }
+## How to debug intent matching
 
-    To easily debug intent parsing, open a terminal and run `ologs | grep intent`. This shows you live logs related only to intent parsing
+To easily debug intent parsing, open a terminal and run `ologs | grep intent`. This shows you live logs related only to intent parsing.
+
+??? example "Fix"
 
     !!! note "`ologs` is a raspOVOS shortcut"
-        `ologs` is a raspOVOS-only shell alias (`tail -f` over the log files, see [raspOVOS commands](install-raspovos.md#helpful-commands)). It is **not** the portable [`ovos-logs`](cli-tools.md#reading-the-logs-ovos-logs) CLI. On a non-raspOVOS install use `ovos-logs` (or `tail -f` on the [log files](troubleshooting.md)) instead.
+        `ologs` is a raspOVOS-only shell alias (`tail -f` over the log files, see [raspOVOS commands](raspovos-commands-reference.md#helpful-commands)). It is **not** the portable [`ovos-logs`](cli-tools.md#reading-the-logs-ovos-logs) CLI. On a non-raspOVOS install use `ovos-logs` (or `tail -f` on the [log files](troubleshooting.md)) instead.
 
     then in another terminal send commands with `ovos-say-to "sentence to test"`  (or use your voice)
 
@@ -65,9 +67,11 @@ problems in plain language before you dig into the technical steps below.
 
     ```
 
-??? question "How to check installed skills" {: #how-to-check-installed-skills }
+## How to check installed skills
 
-    use the `ls-skills` command
+Use the `ls-skills` command to list every installed skill.
+
+??? example "Fix"
 
     ```bash
     (ovos) ovos@raspOVOS:~ $ ls-skills
@@ -117,9 +121,11 @@ problems in plain language before you dig into the technical steps below.
 
     ```
 
-??? question "How to check available intents"
+## How to check available intents
 
-    Skills can optionally provide metadata, if they do instructions will be available under `ovos-commands`
+Skills can optionally provide metadata, if they do instructions will be available under `ovos-commands`.
+
+??? example "Fix"
 
     ```bash
     (ovos) ovos@raspOVOS:~ $ ovos-commands 
@@ -179,102 +185,106 @@ problems in plain language before you dig into the technical steps below.
 
     ```
 
-??? question "How to remove all skills"
+## How to remove all skills
 
-    If you want to revert OVOS to a blank state you can use `ovos-reset-brain` to remove ALL skills
+If you want to revert OVOS to a blank state you can use `ovos-reset-brain` to remove ALL skills
 
-    ??? example "Full `ovos-reset-brain` transcript"
-        ```bash
-        (ovos) ovos@raspOVOS:~ $ ovos-reset-brain 
-        [INFO] Starting OpenVoiceOS skill uninstallation process...
-        WARNING: This will uninstall all installed skills. Do you want to continue? (y/n): y
-        Using Python 3.11.2 environment at: .venvs/ovos
-        [INFO] The following skills will be uninstalled:
+??? example "Full `ovos-reset-brain` transcript"
+    ```bash
+    (ovos) ovos@raspOVOS:~ $ ovos-reset-brain 
+    [INFO] Starting OpenVoiceOS skill uninstallation process...
+    WARNING: This will uninstall all installed skills. Do you want to continue? (y/n): y
+    Using Python 3.11.2 environment at: .venvs/ovos
+    [INFO] The following skills will be uninstalled:
 
-        - ovos-skill-alerts
-        - ovos-skill-audio-recording
-        - ovos-skill-boot-finished
-        - ovos-skill-camera
-        - ovos-skill-cmd
-        - ovos-skill-confucius-quotes
-        - ovos-skill-date-time
-        - ovos-skill-days-in-history
-        - ovos-skill-dictation
-        - ovos-skill-fallback-unknown
-        - ovos-skill-example-quotes
-        - ovos-skill-hello-world
-        - ovos-skill-icanhazdadjokes
-        - ovos-skill-ip
-        - ovos-skill-iss-location
-        - ovos-skill-laugh
-        - ovos-skill-local-media
-        - ovos-skill-moviemaster
-        - ovos-skill-naptime
-        - ovos-skill-number-facts
-        - ovos-skill-parrot
-        - ovos-skill-personal
-        - ovos-skill-pyradios
-        - ovos-skill-randomness
-        - ovos-skill-somafm
-        - ovos-skill-speedtest
-        - ovos-skill-spelling
-        - ovos-skill-spotify
-        - ovos-skill-volume
-        - ovos-skill-weather
-        - ovos-skill-wikihow
-        - ovos-skill-wikipedia
-        - skill-ddg
-        - skill-news
-        - skill-ovos-fallback-chatgpt
-        - skill-wolfie
-        - skill-wordnet
-        [INFO] Uninstalling skills...
-        Using Python 3.11.2 environment at: .venvs/ovos
-        Uninstalled 37 packages in 513ms
+    - ovos-skill-alerts
+    - ovos-skill-audio-recording
+    - ovos-skill-boot-finished
+    - ovos-skill-camera
+    - ovos-skill-cmd
+    - ovos-skill-confucius-quotes
+    - ovos-skill-date-time
+    - ovos-skill-days-in-history
+    - ovos-skill-dictation
+    - ovos-skill-fallback-unknown
+    - ovos-skill-example-quotes
+    - ovos-skill-hello-world
+    - ovos-skill-icanhazdadjokes
+    - ovos-skill-ip
+    - ovos-skill-iss-location
+    - ovos-skill-laugh
+    - ovos-skill-local-media
+    - ovos-skill-moviemaster
+    - ovos-skill-naptime
+    - ovos-skill-number-facts
+    - ovos-skill-parrot
+    - ovos-skill-personal
+    - ovos-skill-pyradios
+    - ovos-skill-randomness
+    - ovos-skill-somafm
+    - ovos-skill-speedtest
+    - ovos-skill-spelling
+    - ovos-skill-spotify
+    - ovos-skill-volume
+    - ovos-skill-weather
+    - ovos-skill-wikihow
+    - ovos-skill-wikipedia
+    - skill-ddg
+    - skill-news
+    - skill-ovos-fallback-chatgpt
+    - skill-wolfie
+    - skill-wordnet
+    [INFO] Uninstalling skills...
+    Using Python 3.11.2 environment at: .venvs/ovos
+    Uninstalled 37 packages in 513ms
 
-         - ovos-skill-alerts==0.1.15
-         - ovos-skill-audio-recording==0.2.5a5
-         - ovos-skill-boot-finished==0.4.9
-         - ovos-skill-camera==1.0.3a4
-         - ovos-skill-cmd==0.2.8
-         - ovos-skill-confucius-quotes==0.1.11a1
-         - ovos-skill-date-time==0.4.6
-         - ovos-skill-days-in-history==0.3.9
-         - ovos-skill-dictation==0.2.10
-         - ovos-skill-fallback-unknown==0.1.6a2
-         - ovos-skill-example-quotes==0.0.1
-         - ovos-skill-hello-world==0.1.11a4
-         - ovos-skill-icanhazdadjokes==0.3.2
-         - ovos-skill-ip==0.2.7a1
-         - ovos-skill-iss-location==0.2.10
-         - ovos-skill-laugh==0.2.1a3
-         - ovos-skill-local-media==0.2.9
-         - ovos-skill-moviemaster==0.0.8a4
-         - ovos-skill-naptime==0.3.12a1
-         - ovos-skill-number-facts==0.1.10
-         - ovos-skill-parrot==0.1.14
-         - ovos-skill-personal==0.1.9
-         - ovos-skill-pyradios==0.1.5a1
-         - ovos-skill-randomness==0.1.2a1
-         - ovos-skill-somafm==0.1.5
-         - ovos-skill-speedtest==0.3.3a4
-         - ovos-skill-spelling==0.2.6a3
-         - ovos-skill-spotify==0.1.9
-         - ovos-skill-volume==0.1.13a2
-         - ovos-skill-weather==0.1.14
-         - ovos-skill-wikihow==0.2.14
-         - ovos-skill-wikipedia==0.6.0a1
-         - skill-ddg==0.1.15
-         - skill-news==0.1.12
-         - skill-ovos-fallback-chatgpt==0.1.12
-         - skill-wolfie==0.3.0
-         - skill-wordnet==0.1.1
-        [SUCCESS] All skills have been uninstalled successfully.
-        [WARNING] Note: This operation only deletes the skills. Configuration files and pipeline plugins (which still influence intent matching) are NOT affected by this action.
+     - ovos-skill-alerts==0.1.15
+     - ovos-skill-audio-recording==0.2.5a5
+     - ovos-skill-boot-finished==0.4.9
+     - ovos-skill-camera==1.0.3a4
+     - ovos-skill-cmd==0.2.8
+     - ovos-skill-confucius-quotes==0.1.11a1
+     - ovos-skill-date-time==0.4.6
+     - ovos-skill-days-in-history==0.3.9
+     - ovos-skill-dictation==0.2.10
+     - ovos-skill-fallback-unknown==0.1.6a2
+     - ovos-skill-example-quotes==0.0.1
+     - ovos-skill-hello-world==0.1.11a4
+     - ovos-skill-icanhazdadjokes==0.3.2
+     - ovos-skill-ip==0.2.7a1
+     - ovos-skill-iss-location==0.2.10
+     - ovos-skill-laugh==0.2.1a3
+     - ovos-skill-local-media==0.2.9
+     - ovos-skill-moviemaster==0.0.8a4
+     - ovos-skill-naptime==0.3.12a1
+     - ovos-skill-number-facts==0.1.10
+     - ovos-skill-parrot==0.1.14
+     - ovos-skill-personal==0.1.9
+     - ovos-skill-pyradios==0.1.5a1
+     - ovos-skill-randomness==0.1.2a1
+     - ovos-skill-somafm==0.1.5
+     - ovos-skill-speedtest==0.3.3a4
+     - ovos-skill-spelling==0.2.6a3
+     - ovos-skill-spotify==0.1.9
+     - ovos-skill-volume==0.1.13a2
+     - ovos-skill-weather==0.1.14
+     - ovos-skill-wikihow==0.2.14
+     - ovos-skill-wikipedia==0.6.0a1
+     - skill-ddg==0.1.15
+     - skill-news==0.1.12
+     - skill-ovos-fallback-chatgpt==0.1.12
+     - skill-wolfie==0.3.0
+     - skill-wordnet==0.1.1
+    [SUCCESS] All skills have been uninstalled successfully.
+    [WARNING] Note: This operation only deletes the skills. Configuration files and pipeline plugins (which still influence intent matching) are NOT affected by this action.
 
-        ```
+    ```
 
-??? question "Wake-word Issues"
+## Wake-word Issues
+
+Wake-word detection can misfire or fail to trigger depending on your microphone, the wake word you chose, or the plugin in use.
+
+??? example "Fix"
 
     Wake-word detection in raspOVOS offers several options, each with its advantages and limitations. Understanding these
     can help resolve potential issues and improve performance.
@@ -377,12 +387,14 @@ problems in plain language before you dig into the technical steps below.
     - **Avoid Overused Words:** Stay away from wake words like "hey" or "hello," as they are often used in daily speech and
       can trigger false positives. Try combining a less common word with a familiar greeting for better results.
 
-??? question "Audio Issues" {: #audio-issues }
+## Audio Issues
 
-    > Generic sound-card checks live in [Troubleshooting → Prove the microphone and speaker
-    > work](troubleshooting.md#prove-the-microphone-and-speaker-work): `arecord -l`/`aplay -l`,
-    > the record/playback test, `alsamixer`/`amixer` levels, and PulseAudio vs PipeWire notes. Run
-    > those first on any raspOVOS box too. The checks below are raspOVOS-specific.
+> Generic sound-card checks live in [Troubleshooting → Prove the microphone and speaker
+> work](troubleshooting.md#prove-the-microphone-and-speaker-work): `arecord -l`/`aplay -l`,
+> the record/playback test, `alsamixer`/`amixer` levels, and PulseAudio vs PipeWire notes. Run
+> those first on any raspOVOS box too. The checks below are raspOVOS-specific.
+
+??? example "Fix"
 
     - **Run Diagnostics script:**
         - raspOVOS includes a helper script `ovos-audio-diagnostics` that will print basic info about your sound system
@@ -541,7 +553,11 @@ problems in plain language before you dig into the technical steps below.
     shutdown). You won't normally run these directly, but their names are worth knowing when reading
     `ologs` output during audio troubleshooting.
 
-??? question "STT tips and tricks"
+## STT tips and tricks
+
+Wrong or garbled transcriptions usually trace back to the audio itself, a plugin mismatch, or the listen sound leaking into the recording.
+
+??? example "Fix"
 
     ### Saving Transcriptions
 

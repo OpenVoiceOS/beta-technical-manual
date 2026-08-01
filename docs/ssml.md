@@ -161,8 +161,8 @@ OVOS plugin set actually parse and act on SSML tags:
 
 | Plugin | Supported tags |
 |--------|----------------|
-| [ovos-tts-plugin-espeakNG](tts-plugins.md#ovos-tts-plugin-espeakng) | `speak`, `say-as`, `voice`, `audio`, `prosody`, `break`, `emphasis`, `sub`, `tts:style`, `p`, `s`, `mark` |
-| [ovos-tts-plugin-polly](tts-plugins.md#ovos-tts-plugin-polly) | `speak`, `say-as`, `voice`, `prosody`, `break`, `emphasis`, `sub`, `lang`, `phoneme`, `w`, `whisper`, `p`, `s`, `mark`, plus the Amazon-specific `amazon:auto-breaths` and `amazon:effect` |
+| [ovos-tts-plugin-espeakNG](tts-plugins-reference.md#ovos-tts-plugin-espeakng) | `speak`, `say-as`, `voice`, `audio`, `prosody`, `break`, `emphasis`, `sub`, `tts:style`, `p`, `s`, `mark` |
+| [ovos-tts-plugin-polly](tts-plugins-reference.md#ovos-tts-plugin-polly) | `speak`, `say-as`, `voice`, `prosody`, `break`, `emphasis`, `sub`, `lang`, `phoneme`, `w`, `whisper`, `p`, `s`, `mark`, plus the Amazon-specific `amazon:auto-breaths` and `amazon:effect` |
 
 For any other engine, SSML tags are stripped before synthesis (see below). Check a specific
 plugin's source for its `ssml_tags` list if you need to confirm support beyond these two.

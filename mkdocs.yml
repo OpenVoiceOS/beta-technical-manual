@@ -107,6 +107,7 @@ nav:
       - Rolling Back an Upgrade: release-rollback.md
       - RaspOVOS image:
           - RaspOVOS: install-raspovos.md
+          - RaspOVOS Command Reference: raspovos-commands-reference.md
           - RaspOVOS Troubleshooting: raspovos-troubleshooting.md
       - Make it yours: personalize.md
       - Fun stuff to try: showcase.md
@@ -139,9 +140,11 @@ nav:
       - Bus Recipes: bus-recipes.md
       - Security & Trust Model: security-model.md
       - Plugin Manager: plugin-manager.md
+      - Plugin Types Reference: plugin-types-reference.md
       - Composable Deployments: composable-deployments.md
       - Configuration:
           - Overview: config.md
+          - Internals: config-internals.md
           - Reference: config-reference.md
           - All Configuration Keys: config-all-keys.md
           - Locations: locations-ref.md
@@ -154,6 +157,7 @@ nav:
           - Speech Service: speech-service.md
           - Audio Service: audio-service.md
           - Media Service (ovos-media): ovos-media.md
+          - ovos-media OCP Pipeline Plugin: ovos-media-pipeline.md
           - ovos-media MPRIS Integration: ovos-media-mpris.md
           - ovos-media Legacy Compatibility: ovos-media-compat.md
           - Screens on OVOS Today: gui-status.md
@@ -241,6 +245,7 @@ nav:
           - OVOSSkill API: ovos-skill.md
           - Skill API (Inter-Skill RPC): skill-api.md
           - Skill Base Classes: skill-classes.md
+          - Skill Classes Reference: skill-classes-reference.md
           - Decorators: decorators.md
           - Advanced Decorators: decorators-advanced.md
           - Skill Settings: skill-settings.md
@@ -272,6 +277,8 @@ nav:
           - STT Plugins Reference: stt-plugins-reference.md
           - STT Plugin Development: stt-plugin-development.md
           - TTS: tts-plugins.md
+          - TTS Plugins Reference: tts-plugins-reference.md
+          - Writing a TTS Plugin: tts-plugin-development.md
           - G2P: g2p-plugins.md
       - Media Playback:
           - OCP Audio Plugin (legacy default): ocp-audio-plugin.md
@@ -295,7 +302,9 @@ nav:
           - Persona Server: persona-server.md
       - Agent Engines:
           - Agent Engine Types: agent-plugins.md
+          - Agent Plugins Reference: agent-plugins-reference.md
           - Building Agent Plugins: building-agent-plugins.md
+          - Agent Plugin Walkthroughs: agent-plugin-walkthroughs.md
       - Agentic Loops: agentic-loop.md
       - Tools & Interoperability:
           - Agent Tool Plugins: tool-plugins.md
@@ -308,6 +317,9 @@ nav:
       - Production Overview: production-overview.md
       - Privacy & Security: privacy-security.md
       - Production Operations: production-operations.md
+      - Backup and Restore: backup-restore.md
+      - Staged Upgrades and Rollback: staged-upgrades.md
+      - Observability: observability.md
       - Production Hardening: production-hardening.md
       - Satellites (one brain, many speakers): satellites.md
       - Running OVOS in Containers: docker-deployment.md
@@ -335,6 +347,7 @@ nav:
       - Home Assistant:
           - Overview: home-assistant.md
           - Wyoming Bridges (OVOS engines for HA): wyoming-bridges.md
+          - Wyoming Wake-word Bridge: wyoming-wakeword-bridge.md
   - Reference:
       - Reference Overview: reference-overview.md
       - OVOS Repository Index: ecosystem-index.md
@@ -362,6 +375,10 @@ nav:
           - gh-automations Workflows: gh-automations-workflows.md
           - Release Workflows: gh-automations-release-workflows.md
           - PR Check Workflows: gh-automations-pr-workflows.md
+          - Build Checks: gh-automations-build-checks.md
+          - Plugin, License & Repo Checks: gh-automations-plugin-repo-checks.md
+          - Skill & Locale Checks: gh-automations-repo-skill-checks.md
+          - Skill Test Workflows: gh-automations-skill-test-workflows.md
           - Quality Workflows: gh-automations-quality-workflows.md
           - Coverage & Security Workflows: gh-automations-coverage-security.md
           - Lint & Docs Workflows: gh-automations-lint-docs.md

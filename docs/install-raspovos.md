@@ -11,7 +11,6 @@
     the [ovos-installer](ovos-installer.md). This guide stays for people running an
     existing raspOVOS image.
 
-
 This tutorial is designed for users new to Raspberry Pi and raspOVOS. Follow these steps to set up your device.
 
 ---
@@ -65,9 +64,9 @@ tier (see [STT Plugins](stt-plugins.md), [TTS Plugins](tts-plugins.md),
   public one.
 
 - **Pi 4:** a comfortable middle ground for local, on-device models. The `hybrid` and `offline`
-  raspOVOS images actually ship [`ovos-tts-plugin-piper`](tts-plugins.md#ovos-tts-plugin-piper)
+  raspOVOS images actually ship [`ovos-tts-plugin-piper`](tts-plugins-reference.md#ovos-tts-plugin-piper)
   as the default TTS for this tier, and this is what the config below uses. An optional swap is
-  [`ovos-tts-plugin-phoonnx`](tts-plugins.md#ovos-tts-plugin-phoonnx), which is not what ships by
+  [`ovos-tts-plugin-phoonnx`](tts-plugins-reference.md#ovos-tts-plugin-phoonnx), which is not what ships by
   default but is a valid alternative if you install it yourself.
 
   ```jsonc
@@ -101,7 +100,7 @@ tier (see [STT Plugins](stt-plugins.md), [TTS Plugins](tts-plugins.md),
   `offline` raspOVOS image actually ships
   [`ovos-stt-plugin-citrinet`](stt-plugins-reference.md#ovos-stt-plugin-citrinet) as the default STT (with
   `ovos-stt-plugin-fasterwhisper` shipped only for a few languages), and
-  [`ovos-tts-plugin-piper`](tts-plugins.md#ovos-tts-plugin-piper) as the default TTS. The config
+  [`ovos-tts-plugin-piper`](tts-plugins-reference.md#ovos-tts-plugin-piper) as the default TTS. The config
   below uses those shipped defaults. Optional swaps, not what ships by default, are
   `ovos-stt-plugin-fasterwhisper` (a larger, more accurate Whisper-class model, if your language
   isn't one of the ones it already ships for) and `ovos-tts-plugin-phoonnx`.
@@ -183,19 +182,15 @@ A Pi 3 user should pick `lite`. A Pi 5 user who wants to stay fully offline shou
 
 1. **Download and Install Raspberry Pi Imager**
 
-
     - Visit [Raspberry Pi Imager](https://www.raspberrypi.com/software/) and download the appropriate version for your OS.
     - Install and launch the imager.
 
-
 2. **Flash the Image to Storage**
-
 
     - Insert your SD card or USB drive into your computer.
     - In the Raspberry Pi Imager:
         - **Choose OS:** Select "Use custom" and locate the raspOVOS image file.
         - **Choose Storage:** Select your SD card or USB drive.
-
 
 ![Raspberry Pi Imager "Choose Device" screen listing supported Pi models](https://github.com/user-attachments/assets/92458289-a3c3-4c7b-afc8-126881445f9f)
 
@@ -204,7 +199,6 @@ A Pi 3 user should pick `lite`. A Pi 5 user who wants to stay fully offline shou
 ![Raspberry Pi Imager "Choose Storage" screen listing the target SD card or USB drive](https://github.com/user-attachments/assets/47c92497-d1a2-4f2d-90be-189806736c0d)
 
 3. **Advanced Configuration Options**
-
 
     - Click **Next** and select **Edit Settings** to customize settings, including:
         - **Password:** Change the default password.
@@ -227,7 +221,6 @@ A Pi 3 user should pick `lite`. A Pi 5 user who wants to stay fully offline shou
 
 4. **Write the Image**
 
-
     - Click **Save** and then **Yes** to flash the image onto your storage device.
     - Once complete, safely remove the SD card or USB drive from your computer.
 
@@ -244,26 +237,19 @@ A Pi 3 user should pick `lite`. A Pi 5 user who wants to stay fully offline shou
 
 1. **Initialization:**
 
-
     - The system will expand the filesystem, generate SSH keys, and perform other setups.
-
 
 2. **Reboots:**
 
-
     - The device will reboot **up to three times** during this process.
 
-
 3. **Autologin:**
-
 
     - The `ovos` user will automatically log in to the terminal after boot. This is a
       text-only command screen, not a graphical desktop. See [Make It Yours](personalize.md)
       and [It's Not Working: Quick Fixes](everyday-help.md) for the basics of using it.
 
-
 4. **Check System Status:**
-
 
     - Use the `ologs` command to monitor logs and confirm that the system has fully initialized.
 
@@ -277,9 +263,7 @@ Use this whenever you have a computer to flash the image with.
 
 1. Open Raspberry Pi Imager and select Edit Settings Option.
 
-
 2. Enter your **SSID (Wi-Fi network name)** and **password** in the Wi-Fi configuration fields.
-
 
 3. Write the image to your SD card or USB drive, and your Wi-Fi will be pre-configured.
 
@@ -291,15 +275,11 @@ no on-screen confirmation. Treat it as a fallback, not the primary path.
 
 1. Open [ggwave Wi-Fi setup](https://openvoiceos.github.io/ovos-audio-transformer-plugin-ggwave/) on a device with speakers.
 
-
 2. Enter your **SSID** and **password** and transmit the data as sound.
-
 
 3. Place the transmitting device near the Raspberry Pi microphone.
 
-
 4. If successful, the **raspOVOS device** (not the transmitting phone/laptop) plays an acknowledgment tone.
-
 
     - If decoding fails or credentials are incorrect, the raspOVOS device plays an error tone instead.
 
@@ -318,84 +298,19 @@ no on-screen confirmation. Treat it as a fallback, not the primary path.
   announce it out loud. If Wi-Fi isn't configured yet or the network is unreachable,
   the device stays silent instead. Check `ovos-status` and the `ologs` output (see
   below) to confirm the services actually started, even without a spoken confirmation.
-  See [raspOVOS Troubleshooting](raspovos-troubleshooting.md), "OVOS Fails to Speak
+  See [raspOVOS Troubleshooting](raspovos-troubleshooting.md#ovos-fails-to-speak-i-am-ready), "OVOS Fails to Speak
   'I am Ready'", if it never speaks up once online.
 
 ---
 
 ## Step 6: Using OVOS Commands
 
-### Helpful Commands
-
 When you log in, raspOVOS prints a welcome banner listing its built-in helper commands. These
 are **raspOVOS-specific shell helpers** (aliases and small scripts baked into the image). They
 are part of the raspOVOS image, not a standard `pip install` of OVOS. Run `ovos-help` at any
-time to reprint the full list.
-
-**Web interfaces:**
-
-- `ovos-yaml-editor`: web editor for OVOS configuration (port 9210).
-- `ovos-skill-config-tool`: web editor for individual skill settings (port 8000).
-
-**Talking to OVOS:**
-
-- `ovos-config`: manage your local OVOS configuration files.
-- `ovos-listen`: activate the microphone to listen for a command.
-- `ovos-speak <phrase>`: have OVOS speak a phrase to the user.
-- `ovos-say-to <phrase>`: send an utterance to OVOS as if you had spoken it.
-- `ovos-simple-cli`: chat with your device from the terminal.
-- `ovos-docs-viewer`: open the documentation viewer (also `ovos-manual`, `ovos-skills-info`).
-
-**Managing packages:**
-
-- `ovos-install`: install OVOS packages with the correct version constraints.
-- `ovos-update`: routine, in-place update of all OVOS and skill packages, scoped to the release
-  channel recorded in `/opt/ovos/tag`. It does not change the base image. Moving to a new
-  raspOVOS release (a major image update) instead means reflashing a new image and restoring
-  your `.config/mycroft` and `.local/share/mycroft` from a backup — see the repo's
-  [update how-to](https://github.com/OpenVoiceOS/raspOVOS/blob/dev/docs/how-to/update.md) for the
-  backup/restore commands.
-- `ovos-force-reinstall`: force a full reinstall of all OVOS packages (last-resort repair).
-- `ovos-freeze`: export installed OVOS packages to `requirements.txt`.
-- `ovos-outdated`: list outdated OVOS/skill packages.
-- `ovos-reset-brain`: reset the "OVOS brain" to a blank state by uninstalling all skills.
-
-**Inspecting plugins:**
-
-- `ls-skills`: list the `skill_id` of every installed skill.
-- `ls-stt` / `ls-tts` / `ls-ww` / `ls-tx`: list installed [STT](stt-plugins.md) / [TTS](tts-plugins.md) / wake word / [translation](translation-plugins.md) plugins.
-
-**Sound/audio:**
-
-- `ovos-audio-diagnostics`: print the active sound server, sinks, and default output device.
-- `ovos-audio-setup`: interactive audio configuration menu (handy after wiring up a HAT).
-
-**Logs and status:**
-
-- `ologs`: view all logs in real time.
-- `ovos-logs [COMMAND] --help`: a small tool to help navigate the logs.
-- `ovos-status`: list OVOS-related systemd services.
-- `ovos-restart`: restart all OVOS-related systemd services.
-- `ovos-server-status`: check the live status of the public OVOS servers.
-
-**Misc:**
-
-- `ovos-commands`: usage examples for the installed skills.
-- `ovos-support`: compile logs into a support package to share when asking for help.
-- `ovos-help`: reprint this command list.
-- `ovos-logo`: print the raspOVOS logo.
-
-!!! note "Audio HAT setup on raspOVOS uses `ovos-i2csound`"
-    On raspOVOS, an i2c sound HAT (such as a Respeaker or the Mark 2's SJ201) is detected and
-    configured at boot by the **`ovos-i2csound`** service shipped in the image, which writes the
-    detected board to `/etc/OpenVoiceOS/i2c_platform`. This is specific to the raspOVOS image.
-    The [ovos-installer](ovos-installer.md) does **not** use it (see
-    [Mark 2 Hardware](mark2.md) for the installer's kernel-driver approach).
-
-### Check Logs in Real-Time
-
-- Use the `ologs` command to monitor logs live on your screen.
-- If you're unsure whether the system has finished booting, check logs using this command.
+time to reprint the full list, and see the [RaspOVOS Commands Reference](raspovos-commands-reference.md)
+for the complete list — including web interfaces, package management, plugin inspection, and log
+commands like `ologs` for checking logs in real time.
 
 ---
 

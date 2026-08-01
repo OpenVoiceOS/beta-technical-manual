@@ -73,7 +73,7 @@ If you're contributing a new ability rather than a core fix, start with
 [Anatomy of a Skill](skill-structure.md) for the reference structure. For plugins (a new STT
 engine, TTS voice, wake word, and so on), browse the [Plugin Ecosystem](plugins-index.md) page for the
 category you're extending, and use an existing plugin in that category as a template. The plugin
-base classes referenced throughout this manual (for example, the [TTS plugin template](tts-plugins.md#plugin-template))
+base classes referenced throughout this manual (for example, the [TTS plugin template](tts-plugin-development.md#plugin-template))
 are the contract your plugin's entry point needs to satisfy.
 
 ## Contributing to language support

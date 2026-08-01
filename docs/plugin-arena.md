@@ -72,7 +72,7 @@ The plugin must be published to PyPI first. The arena itself never installs plug
 [GitHub-Native, Zero Servers](#github-native-zero-servers) above). Whoever runs the offline
 prediction job that produces the competitor's HuggingFace dataset needs to `pip install` the
 plugin by name, which only works once it is on PyPI. See [TTS Plugins: Package and
-publish](tts-plugins.md#package-and-publish) or [Writing a Transformer Plugin: Package and
+publish](tts-plugin-development.md#package-and-publish) or [Writing a Transformer Plugin: Package and
 publish](transformer-plugin-development.md#package-and-publish) for the steps to get there.
 
 1. Add a JSON file at `registry/competitors/<modality>/<competitor-id>.json`, where `<modality>`

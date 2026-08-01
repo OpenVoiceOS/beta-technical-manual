@@ -108,7 +108,7 @@ When picking the default output, `soundcard-autoconfigure` follows a **fixed pri
 [`OpenVoiceOS/ovos-tools`](https://github.com/OpenVoiceOS/ovos-tools) is a set of helper bash
 utilities used by [raspOVOS](install-raspovos.md) and usable on other Linux systems. It
 includes some of the audio and diagnostic helpers exposed by the image's
-[command set](install-raspovos.md#helpful-commands).
+[command set](raspovos-commands-reference.md#helpful-commands).
 
 ---
 

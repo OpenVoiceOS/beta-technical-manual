@@ -216,7 +216,7 @@ for every covered language, running a per-language ONNX model picked from the
 On CPU it prefers `int8`-quantized weights where the model ships them, for a smaller
 footprint and faster load.
 
-TTS uses [`ovos-tts-plugin-phoonnx`](tts-plugins.md#ovos-tts-plugin-phoonnx)
+TTS uses [`ovos-tts-plugin-phoonnx`](tts-plugins-reference.md#ovos-tts-plugin-phoonnx)
 for every language, auto-selecting a default voice. The table below shows the exact
 per-language model and voice picked for each.
 
@@ -254,7 +254,7 @@ table (which offline STT model and TTS voice each language code gets from
 parser, side by side for the original, longest-supported languages).
 
 Briefly: offline STT comes from [`ovos-stt-plugin-onnx-asr`](stt-plugins-reference.md#ovos-stt-plugin-onnx-asr)
-and offline TTS from [`ovos-tts-plugin-phoonnx`](tts-plugins.md#ovos-tts-plugin-phoonnx)
+and offline TTS from [`ovos-tts-plugin-phoonnx`](tts-plugins-reference.md#ovos-tts-plugin-phoonnx)
 wherever a recommendation is bundled. Several regional variants, including **EN-GB**,
 **PT-BR**, **AR-SA**, and three of the four Catalan variants, ship a TTS voice but no
 bundled offline STT recommendation yet. A language absent from both tables, such as

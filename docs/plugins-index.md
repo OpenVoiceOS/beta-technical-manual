@@ -122,7 +122,7 @@ About 21 PHAL plugins in the catalog.
 ## Other plugin types
 
 These plugin types are defined by the Plugin Manager but don't yet have a dedicated catalog
-page here. See [Plugin Manager → Plugin Types](plugin-manager.md#plugin-types) for their
+page here. See [Plugin Types Reference](plugin-types-reference.md#plugin-types) for their
 entry-point group and template base class:
 
 - **Voice Clone** (`opm.vc`): clones a voice for TTS synthesis
@@ -132,7 +132,7 @@ entry-point group and template base class:
 - **Knowledge Triples** (`opm.triples`): extracts subject-predicate-object triples from text
 
 For the full machine-readable list of plugin types and template base classes, see the
-**[Plugin Manager → Plugin Types](plugin-manager.md#plugin-types)** table. To create your own
+**[Plugin Types Reference](plugin-types-reference.md#plugin-types)** table. To create your own
 plugin, each catalog page above includes a template and entry-point example.
 
 ---

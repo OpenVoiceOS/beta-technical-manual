@@ -143,7 +143,7 @@ service from an editable checkout of its own repo while fixing a bug in it, see
 - [ovos-bus-client Overview](core-libraries.md#ovos-bus-client): the library behind the `ovos-*` bus commands.
 - [Logging](core-libraries.md#ovos-utils): log locations and levels that `ovos-logs` reads.
 - [ovos-docs-viewer](docs-viewer.md): the in-terminal documentation browser.
-- [RaspOVOS helper commands](install-raspovos.md#helpful-commands): extra CLIs added by the RaspOVOS image.
+- [RaspOVOS helper commands](raspovos-commands-reference.md#helpful-commands): extra CLIs added by the RaspOVOS image.
 
 ---
 

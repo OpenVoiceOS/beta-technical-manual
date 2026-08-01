@@ -42,9 +42,9 @@ build a themed assistant for a party or a kid's room.
 
 Swapping which [TTS plugin](tts-plugins.md) OVOS uses changes what it sounds like. Some plugins
 also expose several distinct voices through their own `voice` config key. For example,
-[`ovos-tts-plugin-matxa-multispeaker-cat`](tts-plugins.md#ovos-tts-plugin-matxa-multispeaker-cat)
+[`ovos-tts-plugin-matxa-multispeaker-cat`](tts-plugins-reference.md#ovos-tts-plugin-matxa-multispeaker-cat)
 picks a specific speaker/dialect with `"voice": "valencia/gina"`, and
-[`ovos-tts-plugin-edge-tts`](tts-plugins.md#ovos-tts-plugin-edge-tts) offers dozens of
+[`ovos-tts-plugin-edge-tts`](tts-plugins-reference.md#ovos-tts-plugin-edge-tts) offers dozens of
 cloud voices across many languages and accents. Set the plugin (and, where supported, its `voice`)
 under the `tts` section of `mycroft.conf` and restart to hear the change:
 

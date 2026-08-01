@@ -11,7 +11,7 @@
 
 Offline STT is [`ovos-stt-plugin-onnx-asr`](stt-plugins-reference.md#ovos-stt-plugin-onnx-asr) everywhere
 it's listed. Where the table shows an offline TTS entry, it is always
-[`ovos-tts-plugin-phoonnx`](tts-plugins.md#ovos-tts-plugin-phoonnx), pinned to a specific male
+[`ovos-tts-plugin-phoonnx`](tts-plugins-reference.md#ovos-tts-plugin-phoonnx), pinned to a specific male
 and/or female voice. `int8` next to a model means a quantized CPU build is available and used
 by default.
 

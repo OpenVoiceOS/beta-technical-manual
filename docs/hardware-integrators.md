@@ -194,12 +194,12 @@ On top of that fixed base, from lightest to heaviest:
 - **Lightest**: an energy/noise-threshold [VAD](vad-plugins.md#ovos-vad-plugin-noise) with no
   model download, a small wake-word model such as
   [`ovos-ww-plugin-precise-onnx`](wake-word-plugins.md#ovos-ww-plugin-precise-onnx), and cloud
-  [STT](stt-plugins-reference.md#ovos-stt-plugin-azure)/[TTS](tts-plugins.md#ovos-tts-plugin-azure) such as
+  [STT](stt-plugins-reference.md#ovos-stt-plugin-azure)/[TTS](tts-plugins-reference.md#ovos-tts-plugin-azure) such as
   Azure, Polly, or Edge-TTS. Inference happens on someone else's server, so the device only
   needs enough CPU for the always-on core plus audio capture and playback.
 - **Middle**: local, on-device inference using a small or quantized model. Examples:
   [`ovos-stt-plugin-onnx-asr`](stt-plugins-reference.md#ovos-stt-plugin-onnx-asr) with a small
-  `int8`-quantized model, [`ovos-tts-plugin-phoonnx`](tts-plugins.md#ovos-tts-plugin-phoonnx),
+  `int8`-quantized model, [`ovos-tts-plugin-phoonnx`](tts-plugins-reference.md#ovos-tts-plugin-phoonnx),
   and [`ovos-vad-plugin-silero`](vad-plugins.md#ovos-vad-plugin-silero)'s small neural VAD model.
   `int8` weights consistently have a lower footprint than `fp32` for the same model.
 - **Heaviest**: local Whisper-class or other large general-purpose models. See the `large`
@@ -220,7 +220,7 @@ fits the model alone.
     [release channel's constraints file](release-channels.md#choosing-a-release-channel). This
     is the same command whether you run it by hand over SSH or push it out with your own
     device-management tooling, such as Ansible, a custom MDM agent, or a cron job. See
-    [Production Operations: staged upgrades](production-operations.md#staged-upgrades-and-rollback)
+    [Staged Upgrades and Rollback](staged-upgrades.md#staged-upgrades-and-rollback)
     for the update-and-rollback pattern. If your product needs image-level OTA that swaps the
     whole OS image, not just Python packages, bring your own solution, such as Mender,
     SWUpdate, or RAUC. OVOS has no opinion on that layer.

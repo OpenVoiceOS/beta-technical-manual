@@ -221,152 +221,12 @@ Example: stop users from rebinding the messagebus host (must live in the `system
 
 ---
 
-## Patch Mechanism
+## Internals: Patch Mechanism, Config Models, Env Overrides
 
-The `__patch` overlay is an in-memory dict merged on top of all file-backed layers. It is used for temporary overrides that should not be persisted to disk. Writing a key on the singleton goes into this patch:
-
-```python
-config = Configuration()
-config["lang"] = "fr-fr"   # stored in the in-memory __patch layer
-
-```
-
-The patch is applied and cleared via `Configuration.patch(message)` and
-`Configuration.patch_clear(message)`. Both are `@staticmethod`s that take a bus
-`Message` (they read `message.data["config"]`), not a plain dict. In practice they
-are driven by the bus handlers below rather than called directly.
-
----
-
-## Bus Integration
-
-`Configuration.set_config_update_handlers(bus)` registers the following listeners:
-
-| Bus Event | Handler | Action |
-|---|---|---|
-| `configuration.updated` | `Configuration.updated` | Reload all config layers |
-| `configuration.patch` | `Configuration.patch` | Apply `data["config"]` as an in-memory patch |
-| `configuration.patch.clear` | `Configuration.patch_clear` | Clear the in-memory patch |
-| `configuration.cache.clear` | `Configuration.clear_cache` | Drop the cached merged config |
-| `mycroft.paired` | `Configuration.handle_remote_update` | Reload the remote/backend config layer |
-| `mycroft.internet.connected` | `Configuration.handle_remote_update` | Reload the remote/backend config layer |
-
-`Configuration.set_config_watcher()` uses `ovos-utils`' `FileWatcher` (watchdog) to monitor config files on disk. It reloads automatically when they change.
-
----
-
-## Config Models
-
-Each layer is a `LocalConf` instance, a file-backed `dict` subclass.
-
-**Module:** `ovos_config.models`
-
-| Class | Path | Notes |
-|---|---|---|
-| `LocalConf` | any path | Base class; supports JSON and YAML |
-| `ReadOnlyConfig` | any path | Raises `PermissionError` on mutation (unless `allow_overwrite=True`) |
-| `MycroftDefaultConfig` | bundled `mycroft.conf` | `ReadOnlyConfig` |
-| `OvosDistributionConfig` | `/usr/share/mycroft/mycroft.conf` | `ReadOnlyConfig` |
-| `MycroftSystemConfig` | `/etc/mycroft/mycroft.conf` | `ReadOnlyConfig` |
-| `RemoteConf` | backend / paired-server cache | Optional remote layer (`LocalConf`) |
-| `MycroftUserConfig` | `~/.config/mycroft/mycroft.conf` | Primary user layer (`LocalConf`) |
-
-`MycroftUserConfig` is also exported under the alias `MycroftXDGConfig` for backward
-compatibility.
-
-```python
-from ovos_config.models import LocalConf, MycroftUserConfig
-
-# Direct access to a layer
-user = MycroftUserConfig()
-user["tts"] = {"module": "ovos-tts-plugin-phoonnx"}
-user.store()   # write to disk
-
-```
-
-### `LocalConf` Key Methods
-
-| Method | Description |
-|---|---|
-| `load_local(path=None)` | Read from `path` (or `self.path`) and merge into self |
-| `store(path=None)` | Write current contents to disk |
-| `merge(conf)` | Deep-merge another dict into self |
-| `reload()` | Re-read from disk if the file changed since last load |
-
-`LocalConf` uses a single shared class-level `NamedLock("ovos_config")` to coordinate concurrent reads and writes across all instances.
-
-### Merge Semantics
-
-- Scalar values: higher-priority layer wins
-
-
-- Dict values: recursively merged
-
-
-- List values: higher-priority layer replaces (no deduplication)
-
----
-
-## Accessing Individual Layers
-
-The individual layers are class attributes on `Configuration` (not per-instance):
-
-```python
-Configuration.default       # MycroftDefaultConfig
-Configuration.remote        # RemoteConf — backend / paired-server cache (optional)
-Configuration.distribution  # OvosDistributionConfig
-Configuration.system        # MycroftSystemConfig
-Configuration.xdg_configs   # list[LocalConf] — the user/XDG layer(s)
-
-```
-
-There is no `.user` attribute. The editable user config is the last entry in
-`Configuration.xdg_configs`. To write the user file directly, use `MycroftUserConfig()`
-(see Config Models above). Or call `update_mycroft_config()` to merge a change and emit the
-`configuration.patch` bus notification in one step.
-
----
-
-## Environment Variable Overrides
-
-**Module:** `ovos_config.meta`
-
-| Variable | Default | Effect |
-|---|---|---|
-| `OVOS_CONFIG_BASE_FOLDER` | `"mycroft"` | XDG subdirectory name for all config/data/cache paths |
-| `OVOS_CONFIG_FILENAME` | `"mycroft.conf"` | Config filename inside the XDG config directory |
-| `OVOS_DEFAULT_CONFIG` | package `mycroft.conf` | Path to the bundled default config |
-
-The framework reads these at import time. Override at runtime:
-
-```python
-from ovos_config.meta import set_xdg_base, set_config_filename, set_default_config
-
-set_xdg_base("my_distro")                        # changes ~/.config/my_distro/
-set_config_filename("mycroft.conf")                  # changes filename
-set_default_config("/opt/my_distro/default.conf") # changes bundled defaults
-
-```
-
-### Distribution Overrides
-
-Distributions can change the default XDG base folder or config filename by setting environment variables:
-
-- `OVOS_CONFIG_BASE_FOLDER`: changes `~/.config/mycroft/` to `~/.config/custom/` (default: `mycroft`).
-
-
-- `OVOS_CONFIG_FILENAME`: changes `mycroft.conf` to `custom.json` (default: `mycroft.conf`).
-
-
-- `OVOS_DEFAULT_CONFIG`: provides a full path to a custom default configuration file.
-
----
-
-## XDG Path Helpers
-
-**Module:** `ovos_config.locations`. Helper functions such as `get_xdg_config_save_path()`
-and `find_user_config()` compute the paths above. See [Locations](locations-ref.md) for the
-full reference and usage examples.
+The in-memory patch overlay, the `LocalConf`/`ReadOnlyConfig` class hierarchy backing
+each layer, the bus events that keep processes in sync, environment-variable overrides,
+and XDG path helpers are covered on the
+**[Configuration Internals](config-internals.md)** page. Most users never need this.
 
 ---
 
@@ -451,6 +311,10 @@ ovos-config telemetry --disable   # opt out
 
 - Use `disable_user_config` with caution. It silently skips the user layer.
 
+
+- For the package layout, entry points, and other internals, see
+  [Configuration Internals](config-internals.md).
+
 ---
 
 ## Related Pages
@@ -463,41 +327,13 @@ ovos-config telemetry --disable   # opt out
 
 - [ovos-core](core.md) — `skills`, `intents`, `utterance_transformers` config sections
 
-## Package Layout
 
-```text
-ovos_config/
-├── config.py       # Configuration singleton
-├── models.py       # LocalConf, ReadOnlyConfig, layer classes
-├── locations.py    # XDG path helpers and constants
-├── meta.py         # Env var overrides (XDG base, filename, default config)
-├── locale.py       # Language/timezone helpers
-├── utils.py        # init_module_config(), deprecated FileWatcher re-exports
-└── __main__.py     # ovos-config CLI (show / get / set / telemetry / autoconfigure)
-
-```
-
----
-
-## Entry Points
-
-`ovos-config` registers no plugin entry points of its own. Every other OVOS component consumes it as a dependency.
-
-The CLI is registered via `setup.py`:
-
-```python
-entry_points={
-    "console_scripts": [
-        "ovos-config=ovos_config.__main__:config"
-    ]
-}
-
-```
+- [Configuration Internals](config-internals.md) — patch mechanism, config models, env overrides, package layout
 
 ---
 
 *Source code: [OpenVoiceOS/ovos-config](https://github.com/OpenVoiceOS/ovos-config).*
 
 ---
-**Read next:** [Configuration Reference](config-reference.md) · [Locations](locations-ref.md)
+**Read next:** [Configuration Reference](config-reference.md) · [Configuration Internals](config-internals.md)
 **Related:** [Bus Service](bus-service.md) · [ovos-core Overview](core.md) · [Composable Deployments](composable-deployments.md)

@@ -248,100 +248,19 @@ does not include a log-shipping client.
 
 ## Backup and restore
 
-```mermaid
-flowchart TD
-    Backup["cp ~/.config/mycroft<br/>+ ~/.local/share/mycroft"] --> Store[Store backup<br/>securely]
-    Store -.-> Install[Install OVOS<br/>on new machine]
-    Install --> Stop["systemctl --user stop<br/>ovos.service"]
-    Stop --> CopyBack[Copy config/data<br/>back into place]
-    CopyBack --> Restart["systemctl --user start<br/>ovos.service"]
-    Restart --> Probe[Re-run readiness probe]
-```
-
-*Diagram:* The flow starts at backing up the config and data directories and ends at re-running the readiness probe, and the stored backup branches off to a new machine before the service is stopped, restored, and restarted.
-
 Two kinds of state matter on an OVOS device: the packages that are installed, and everything
-under a user's config/data directories. The staged-upgrade recipe below covers packages. This
-section covers the directories.
-
-| What | Path | Source |
-|---|---|---|
-| User config (`mycroft.conf`), may hold plaintext secrets | `~/.config/mycroft/mycroft.conf` | [Locations](locations-ref.md#path-constants) |
-| System config (fleet-wide layer, if you use one) | `/etc/mycroft/mycroft.conf` | [Locations](locations-ref.md#path-constants), [one config for many devices](#one-config-for-many-devices-the-system-config-layer) |
-| Per-skill settings | `~/.config/mycroft/skills/<skill_id>/settings.json` | [Skill Settings: Storage Location](skill-settings.md#storage-location) |
-| Per-skill persistent files | `~/.local/share/mycroft/filesystem/skills/<skill_id>/` | [Filesystem Access: Storage Path](skill-filesystem.md#storage-path) |
-
-`~/.config/mycroft` and `~/.local/share/mycroft` are the effective defaults under the standard
-XDG layout. Both move together if `OVOS_CONFIG_BASE_FOLDER` renames the `mycroft` subdirectory
-system-wide (see [Locations](locations-ref.md#environment-variable-influence)).
-
-### Backup recipe
-
-A copy is enough. Nothing here needs a database dump or a running service to stop first,
-though restarting the service afterward picks up any config changes made in the meantime:
-
-```bash
-BACKUP_DIR=~/ovos-backup-$(date +%F)
-mkdir -p "$BACKUP_DIR"
-cp -a ~/.config/mycroft "$BACKUP_DIR/config"
-cp -a ~/.local/share/mycroft "$BACKUP_DIR/data"
-```
-
-`mycroft.conf` can contain plaintext API keys and tokens (see
-[Privacy & Security: mycroft.conf can contain plaintext secrets](privacy-security.md#mycroftconf-can-contain-plaintext-secrets)).
-Store the backup with the same care you'd give the original file, and never commit it to a
-public repository.
-
-### Restore onto a fresh install
-
-1. [Install OVOS](ovos-installer.md) normally on the new machine, and confirm the stock
-   assistant works before restoring anything, so a restore problem is not confused with an
-   install problem.
-2. Stop the services: `systemctl --user stop ovos.service`.
-3. Copy the backed-up directories back into place, overwriting the freshly-installed defaults:
-
-   ```bash
-   cp -a "$BACKUP_DIR/config/." ~/.config/mycroft/
-   cp -a "$BACKUP_DIR/data/." ~/.local/share/mycroft/
-   ```
-
-4. Restart: `systemctl --user start ovos.service`, then re-run the readiness probe above
-   before relying on the device.
-
-Skills themselves are not part of this backup. They are Python packages, reinstalled the same
-way they were installed originally (see [Skill Installer](skill-installer.md) or your own
-provisioning step). Only their settings and persisted files travel with the config/data
-backup above.
+under a user's config/data directories. The full backup recipe, the restore-onto-fresh-install
+steps, and the exact config/data paths have moved to their own page:
+**[Backup and Restore](backup-restore.md)**.
 
 ---
 
-## Updating a single device
+## Updating a device or a fleet
 
-The [staged-upgrade recipe](#staged-upgrades-and-rollback) below is written for a fleet, but
-the same steps apply to a single, standalone device with the fleet-specific parts dropped:
-back up the config, freeze the current package set, upgrade, and verify.
-
-```bash
-# 1. Back up config and freeze the current package set, in case you need to go back
-cp ~/.config/mycroft/mycroft.conf ~/.config/mycroft/mycroft.conf.bak-$(date +%F)
-uv pip freeze > ~/ovos-known-good-$(date +%F).txt
-
-# 2. Upgrade against a pinned constraints file (stays within one release channel)
-uv pip install --upgrade ovos-core[mycroft] \
-    -c https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-stable.txt
-
-# 3. Restart and re-run the readiness probe above before declaring success
-systemctl --user restart ovos.service
-```
-
-If it misbehaves, roll back the same way as in the fleet recipe:
-`uv pip install --force-reinstall -r ~/ovos-known-good-<date>.txt`, then restart the service.
-See [Staged upgrades and rollback](#staged-upgrades-and-rollback) for why `--force-reinstall`
-is required on rollback, and [Rolling Back an OVOS Upgrade: Pinning or rolling back a single
-package](release-rollback.md#pinning-or-rolling-back-a-single-package) if only one package
-regressed rather than the whole stack.
-
----
+Upgrading safely means freezing the current package set before you touch anything, so you can
+roll back with `--force-reinstall` if the upgrade misbehaves. The single-device recipe, the
+fleet canary pattern, and how to detect a partially-failed rollback have moved to their own
+page: **[Staged Upgrades and Rollback](staged-upgrades.md)**.
 
 !!! warning "Check the breaking-change reference before any version jump"
     An upgrade that crosses release eras can hit renamed config keys, changed skill
@@ -350,77 +269,6 @@ regressed rather than the whole stack.
     [Updating from Older OVOS](updating-from-older-ovos.md) hub, and read forward from
     your current era. If you maintain custom skills or plugins, see
     [Version-Compatible Skills & Plugins](version-compat-guide.md).
-
-## Staged upgrades and rollback
-
-```mermaid
-flowchart LR
-    Freeze["Freeze known-good<br/>packages<br/>(uv pip freeze)"] --> Canary[Upgrade one<br/>canary device]
-    Canary --> Verify{Readiness probe +<br/>real voice check pass?}
-    Verify -- yes --> Fleet[Roll same command<br/>out to fleet]
-    Verify -- no --> Rollback["--force-reinstall<br/>known-good,<br/>restart ovos.service"]
-```
-
-*Diagram:* The flow starts at freezing known-good packages and ends at either the fleet rollout or a rollback, and it branches on whether the canary device passes its readiness probe and real voice check.
-
-[Release channels](release-channels.md) covers `stable`/`testing`/`alpha` constraints files.
-For a fleet, the same mechanism gives you a controlled, reversible upgrade path:
-
-If only a single package regressed, rolling back the whole stack is unnecessary. See
-[Rolling Back an OVOS Upgrade: Pinning or rolling back a single
-package](release-rollback.md#pinning-or-rolling-back-a-single-package) for pinning and
-restarting just that one package across the fleet.
-
-!!! tip "Back up your configuration too"
-    Package freezing protects the code. It does not protect your settings. Before an
-    upgrade, also copy `~/.config/mycroft/mycroft.conf` somewhere safe. It can contain
-    plaintext tokens and API keys (see [privacy-security](privacy-security.md#mycroftconf-can-contain-plaintext-secrets)),
-    so store the backup with the same care you'd give the original file.
-
-```bash
-# 1. Freeze exactly what's currently installed, in case you need to go back
-uv pip freeze > /etc/ovos/known-good-$(date +%F).txt
-cp ~/.config/mycroft/mycroft.conf ~/.config/mycroft/mycroft.conf.bak-$(date +%F)
-
-# 2. Upgrade against a pinned constraints file (stays within one release channel)
-uv pip install --upgrade ovos-core[mycroft] \
-    -c https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-stable.txt
-
-# 3. Restart and re-run the readiness probe above before declaring success
-systemctl --user restart ovos.service
-```
-
-If the upgrade misbehaves, roll back to the frozen set:
-
-```bash
-uv pip install --force-reinstall -r /etc/ovos/known-good-2026-07-01.txt  # use the actual date from the freeze file you created in step 1
-systemctl --user restart ovos.service
-```
-
-`--force-reinstall` is needed on rollback because a plain `pip install` treats "already
-satisfies requirement" as nothing to do. It will not downgrade a package back to an older
-pinned version on its own.
-
-!!! tip "Stage it on one device first"
-    Constraints files are a moving target upstream. Roll an upgrade out to one canary device,
-    confirm the readiness probe and a couple of real voice interactions succeed, then repeat
-    the same `uv pip install -c ...` command across the rest of the fleet.
-
-!!! warning "Detecting a partially-failed rollback"
-    `--force-reinstall` can itself be interrupted (network drop, disk full, `Ctrl-C`) partway
-    through reinstalling the packages listed in the frozen file, leaving some packages back at
-    the old pinned version and others still on the newer one. Compare the current environment
-    against the frozen file to check:
-
-    ```bash
-    diff <(uv pip freeze | sort) <(sort /etc/ovos/known-good-2026-07-01.txt)
-    ```
-
-    Any line in the diff is a package whose installed version does not match the known-good
-    snapshot. Re-run the `--force-reinstall` rollback command to finish the job before
-    restarting the service. `uv pip check` is also worth running after either an upgrade or a
-    rollback: it reports any dependency resolution left inconsistent (declared requirements no
-    longer satisfied by what's installed), which a partial rollback commonly causes.
 
 ---
 
@@ -459,67 +307,14 @@ leaves localhost, and the HiveMind alternative to opening the bus directly: see
 
 ---
 
-## Observability: what exists and what doesn't
+## Observability
 
-!!! warning "There is no built-in metrics endpoint"
-    OVOS does not expose a Prometheus-style `/metrics` endpoint or any built-in dashboard. The
-    closest thing is usage-metric uploads, and those are **explicitly opt-in**: disabled by
-    default, with nothing sent anywhere unless you deliberately configure an endpoint (see the
-    commented-out `opendataConfig`-style keys in the default `mycroft.conf`, and
-    [`ovos-opendata-server`](ecosystem-index.md) if you want to run your own collector). That
-    is a telemetry pipeline you opt into, not an operational metrics/monitoring system.
-
-For day-to-day, per-device debugging, use:
-
-- **`ovos-busmon`**: a browser-based web UI (FastAPI + WebSocket) that streams the live message traffic on a device's bus in
-  real time. The fastest way to see whether wake word → STT → intent → TTS is actually firing.
-- **`ovos-logs`** (above) for historical logs.
-- The [readiness probe](#knowing-when-the-assistant-is-actually-ready) as a synthetic check you
-  can run from outside the device (cron, a monitoring agent, a CI job) on a schedule.
-
-There is no supported way to scrape per-request latency or error rates across a fleet today.
-If you need that, you will need to build it on top of the bus messages yourself.
-
-### Building fleet-wide alerting yourself
-
-Since there is no push-based metrics endpoint, fleet alerting has to be built the other way
-around. Something outside each device polls its
-[readiness probe](#knowing-when-the-assistant-is-actually-ready) on a schedule and reports a
-non-zero exit to whatever already pages you. A `systemd` timer wrapping the probe script from
-above is enough to get started:
-
-```ini title="~/.config/systemd/user/ovos-alert.service"
-[Unit]
-Description=Check OVOS readiness and alert on failure
-
-[Service]
-Type=oneshot
-ExecStart=/bin/sh -c '/usr/local/bin/ovos-ready-probe || /usr/local/bin/notify-monitoring-agent "ovos not ready"'
-```
-
-```ini title="~/.config/systemd/user/ovos-alert.timer"
-[Unit]
-Description=Run the OVOS readiness check every 5 minutes
-
-[Timer]
-OnBootSec=5min
-OnUnitActiveSec=5min
-
-[Install]
-WantedBy=timers.target
-```
-
-```bash
-systemctl --user enable --now ovos-alert.timer
-```
-
-`notify-monitoring-agent` above is a stand-in for whatever already collects failures on your
-fleet: a `curl` to a Healthchecks.io/Cronitor-style dead-man's-switch URL, a call into your
-monitoring agent's CLI, an email, a webhook. The same pattern works as a plain `cron` entry
-(`*/5 * * * * /usr/local/bin/ovos-ready-probe || /usr/local/bin/notify-monitoring-agent ...`) on a
-system without `systemd --user` timers. This is something you build, not something OVOS ships.
-But it is the whole shape of a working readiness alert: schedule the probe, act on its exit code.
+OVOS has no built-in metrics endpoint or dashboard. Day-to-day debugging leans on `ovos-busmon`
+(a live bus monitor) and the logs described above. Fleet-wide alerting is something you build
+yourself on top of the readiness probe. The full picture, including a ready-to-adapt
+`systemd` timer for polling the readiness probe, has moved to its own page:
+**[Observability](observability.md)**.
 
 ---
 **Read next:** [Privacy & Security](privacy-security.md)
-**Related:** [STT Server](stt-server.md) · [Updating from Older OVOS](updating-from-older-ovos.md) · [HiveMind](hivemind-agents.md) · [Release Channels](release-channels.md)
+**Related:** [Backup and Restore](backup-restore.md) · [Staged Upgrades and Rollback](staged-upgrades.md) · [Observability](observability.md) · [STT Server](stt-server.md) · [Updating from Older OVOS](updating-from-older-ovos.md) · [HiveMind](hivemind-agents.md) · [Release Channels](release-channels.md)
