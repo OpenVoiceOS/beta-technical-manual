@@ -44,8 +44,13 @@ Typed [Pydantic](https://docs.pydantic.dev/) models for OVOS bus messages: a sch
 lets tools validate and introspect message types instead of passing around raw dicts.
 
 - Source: [OpenVoiceOS/ovos-pydantic-models](https://github.com/OpenVoiceOS/ovos-pydantic-models)
-- API docs: [`/docs`](https://github.com/OpenVoiceOS/ovos-pydantic-models/tree/dev/docs)
+- Protocol reference: [MessageBus Protocol Reference](https://openvoiceos.github.io/ovos-pydantic-models/), a
+  browsable catalog of every modelled message, grouped by subsystem
 - License: Apache-2.0
+
+The models are generated semi-automatically from source, so the published catalog can lag or
+diverge from the code. Treat it as a map of the message space, not as the contract. The
+[formal specifications](architecture-specs.md) remain the authority on required behavior.
 
 ## `ovos-plugin-manager` (OPM)
 

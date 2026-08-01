@@ -9,6 +9,17 @@
     through six different pages to find one event name. Each row links back to the page that
     documents that event in context. This page does not introduce anything new.
 
+!!! tip "Looking for a message this page does not list?"
+    This page is curated. It covers the events the manual explains in context, not every event
+    that exists. For the exhaustive machine-generated catalog, browse the
+    [MessageBus Protocol Reference](https://openvoiceos.github.io/ovos-pydantic-models/), built
+    from [`ovos-pydantic-models`](core-libraries.md#ovos-pydantic-models). It is searchable and
+    grouped by subsystem, and it includes deprecated subsystems that this page leaves out.
+
+    Its models are generated semi-automatically from source, so entries can be incomplete or out
+    of date. Check the behavior against the code or the
+    [formal specifications](architecture-specs.md) before you depend on it.
+
 !!! note
     Many events have a legacy `mycroft.*`/bare name alongside a newer `ovos.*` name. Only
     one of the two goes on the wire, and each connected client's bus library locally
