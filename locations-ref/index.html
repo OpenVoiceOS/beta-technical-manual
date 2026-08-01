@@ -804,6 +804,27 @@
   
   
     <li class="md-nav__item">
+      <a href="../security-model/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Security & Trust Model
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../plugin-manager/" class="md-nav__link">
         
   
@@ -860,10 +881,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_9" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_10" checked>
         
           
-          <label class="md-nav__link" for="__nav_4_9" id="__nav_4_9_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_4_10" id="__nav_4_10_label" tabindex="0">
             
   
   <span class="md-ellipsis">
@@ -874,8 +895,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_9_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_4_9">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_10_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4_10">
             <span class="md-nav__icon md-icon"></span>
             Configuration
           </label>
@@ -1680,6 +1701,10 @@ configuration. See the <a href="../glossary/">Glossary</a>.</p>
 </tr>
 </tbody>
 </table>
+<p>In addition to <code>USER_CONFIG</code>, every XDG config dir is scanned, so a system-wide
+<code>/etc/xdg/mycroft/mycroft.conf</code> is also merged at the user layer (below your <code>~/.config</code>
+file). File formats are JSON (<code>.json</code> or <code>.conf</code>, with C-style <code>//</code> comments supported) or
+YAML (<code>.yml</code> or <code>.yaml</code>).</p>
 <hr />
 <h2 id="xdg-path-helpers">XDG Path Helpers<a class="headerlink" href="#xdg-path-helpers" title="Permanent link">&para;</a></h2>
 <p>These return the canonical XDG-compliant paths for config, data, and cache directories.</p>

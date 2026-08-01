@@ -804,6 +804,27 @@
   
   
     <li class="md-nav__item">
+      <a href="../security-model/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Security & Trust Model
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../plugin-manager/" class="md-nav__link">
         
   
@@ -860,10 +881,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_9" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_10" checked>
         
           
-          <label class="md-nav__link" for="__nav_4_9" id="__nav_4_9_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_4_10" id="__nav_4_10_label" tabindex="0">
             
   
   <span class="md-ellipsis">
@@ -874,8 +895,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_9_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_4_9">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_10_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4_10">
             <span class="md-nav__icon md-icon"></span>
             Configuration
           </label>
@@ -2037,42 +2058,9 @@ is set, and the user/XDG layers when <code>disable_user_config</code> is set.</p
 <p>Because <code>Configuration</code> is a singleton, all instances share the same merged view. The framework calls <code>Configuration.load_all_configs()</code> automatically on first access.</p>
 <hr />
 <h2 id="file-locations">File Locations<a class="headerlink" href="#file-locations" title="Permanent link">&para;</a></h2>
-<p>All paths respect the <code>OVOS_CONFIG_BASE_FOLDER</code> environment variable (default: <code>"mycroft"</code>).</p>
-<table>
-<thead>
-<tr>
-<th>Constant</th>
-<th>Default Path</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>DEFAULT_CONFIG</code></td>
-<td><code>&lt;package&gt;/mycroft.conf</code></td>
-<td>Bundled default config (read-only)</td>
-</tr>
-<tr>
-<td><code>DISTRIBUTION_CONFIG</code></td>
-<td><code>/usr/share/mycroft/mycroft.conf</code></td>
-<td>Distribution-level override (env: <code>OVOS_DISTRIBUTION_CONFIG</code>)</td>
-</tr>
-<tr>
-<td><code>SYSTEM_CONFIG</code></td>
-<td><code>/etc/mycroft/mycroft.conf</code></td>
-<td>System-level config (env: <code>MYCROFT_SYSTEM_CONFIG</code>)</td>
-</tr>
-<tr>
-<td><code>USER_CONFIG</code></td>
-<td><code>~/.config/mycroft/mycroft.conf</code></td>
-<td>XDG user config (primary editable)</td>
-</tr>
-</tbody>
-</table>
-<p>In addition to <code>USER_CONFIG</code>, every XDG config dir is scanned, so a system-wide
-<code>/etc/xdg/mycroft/mycroft.conf</code> is also merged at the user layer (below your
-<code>~/.config</code> file). File formats are JSON (<code>.json</code> or <code>.conf</code>, with C-style <code>//</code>
-comments supported) or YAML (<code>.yml</code> or <code>.yaml</code>).</p>
+<p>Config files stack from a bundled default up through distribution, system, and XDG user
+layers, all under the <code>OVOS_CONFIG_BASE_FOLDER</code> environment variable (default: <code>"mycroft"</code>).
+See <a href="../locations-ref/">Locations</a> for the full path-constant table and file-format details.</p>
 <div class="admonition warning">
 <p class="admonition-title">Secrets and permissions</p>
 <p>Anything you add here, such as an LLM API key, a Home Assistant token, or a custom
@@ -2372,40 +2360,33 @@ compatibility.</p>
 </ul>
 <hr />
 <h2 id="xdg-path-helpers">XDG Path Helpers<a class="headerlink" href="#xdg-path-helpers" title="Permanent link">&para;</a></h2>
-<p><strong>Module:</strong> <code>ovos_config.locations</code></p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="kn">from</span> <span class="nn">ovos_config.locations</span> <span class="kn">import</span> <span class="p">(</span>
-</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>    <span class="n">get_xdg_config_save_path</span><span class="p">,</span>   <span class="c1"># e.g. ~/.config/mycroft/</span>
-</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>    <span class="n">get_xdg_data_save_path</span><span class="p">,</span>     <span class="c1"># e.g. ~/.local/share/mycroft/</span>
-</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>    <span class="n">get_xdg_cache_save_path</span><span class="p">,</span>    <span class="c1"># e.g. ~/.cache/mycroft/</span>
-</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>    <span class="n">find_user_config</span><span class="p">,</span>           <span class="c1"># finds user config, with XDG→legacy fallback</span>
-</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>    <span class="n">get_config_locations</span><span class="p">,</span>       <span class="c1"># ordered list of all active config paths</span>
-</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a><span class="p">)</span>
-</span></code></pre></div>
-<p><code>get_config_locations()</code> returns the full list of active config file paths. It's useful for debugging which files are in use.</p>
+<p><strong>Module:</strong> <code>ovos_config.locations</code>. Helper functions such as <code>get_xdg_config_save_path()</code>
+and <code>find_user_config()</code> compute the paths above. See <a href="../locations-ref/">Locations</a> for the
+full reference and usage examples.</p>
 <hr />
 <h2 id="cli-reference">CLI Reference<a class="headerlink" href="#cli-reference" title="Permanent link">&para;</a></h2>
 <p><strong>Entry point:</strong> <code>ovos-config</code> | <strong>Module:</strong> <code>ovos_config.__main__</code></p>
 <h3 id="show"><code>show</code><a class="headerlink" href="#show" title="Permanent link">&para;</a></h3>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>ovos-config<span class="w"> </span>show<span class="w">                        </span><span class="c1"># full merged config</span>
-</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>ovos-config<span class="w"> </span>show<span class="w"> </span>-u<span class="w"> </span>--section<span class="w"> </span>tts<span class="w">       </span><span class="c1"># user config, tts section only</span>
-</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>ovos-config<span class="w"> </span>show<span class="w"> </span>-s<span class="w"> </span>-l<span class="w">                  </span><span class="c1"># list sections of system config</span>
-</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>ovos-config<span class="w"> </span>show<span class="w"> </span>-u<span class="w"> </span>--section<span class="w"> </span>base<span class="w">      </span><span class="c1"># user config, top-level scalar keys</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>ovos-config<span class="w"> </span>show<span class="w">                        </span><span class="c1"># full merged config</span>
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>ovos-config<span class="w"> </span>show<span class="w"> </span>-u<span class="w"> </span>--section<span class="w"> </span>tts<span class="w">       </span><span class="c1"># user config, tts section only</span>
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>ovos-config<span class="w"> </span>show<span class="w"> </span>-s<span class="w"> </span>-l<span class="w">                  </span><span class="c1"># list sections of system config</span>
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>ovos-config<span class="w"> </span>show<span class="w"> </span>-u<span class="w"> </span>--section<span class="w"> </span>base<span class="w">      </span><span class="c1"># user config, top-level scalar keys</span>
 </span></code></pre></div>
 <p>Merge priority displayed: <code>user &gt; system &gt; remote &gt; default</code></p>
 <h3 id="get"><code>get</code><a class="headerlink" href="#get" title="Permanent link">&para;</a></h3>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>ovos-config<span class="w"> </span>get<span class="w"> </span>-k<span class="w"> </span>lang<span class="w">                 </span><span class="c1"># find all keys containing &quot;lang&quot;</span>
-</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>ovos-config<span class="w"> </span>get<span class="w"> </span>-k<span class="w"> </span>/tts/module<span class="w">          </span><span class="c1"># get exact value at tts.module (strict path)</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>ovos-config<span class="w"> </span>get<span class="w"> </span>-k<span class="w"> </span>lang<span class="w">                 </span><span class="c1"># find all keys containing &quot;lang&quot;</span>
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>ovos-config<span class="w"> </span>get<span class="w"> </span>-k<span class="w"> </span>/tts/module<span class="w">          </span><span class="c1"># get exact value at tts.module (strict path)</span>
 </span></code></pre></div>
 <h3 id="set"><code>set</code><a class="headerlink" href="#set" title="Permanent link">&para;</a></h3>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>ovos-config<span class="w"> </span><span class="nb">set</span><span class="w"> </span>-k<span class="w"> </span>/tts/module<span class="w"> </span>-v<span class="w"> </span>ovos-tts-plugin-phoonnx
-</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>ovos-config<span class="w"> </span><span class="nb">set</span><span class="w"> </span>-k<span class="w"> </span>blacklisted_skills<span class="w"> </span>-v<span class="w"> </span>my-bad-skill<span class="w">   </span><span class="c1"># append to list</span>
-</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>ovos-config<span class="w"> </span><span class="nb">set</span><span class="w"> </span>-k<span class="w"> </span>gui<span class="w">                  </span><span class="c1"># interactive: choose key and enter value</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>ovos-config<span class="w"> </span><span class="nb">set</span><span class="w"> </span>-k<span class="w"> </span>/tts/module<span class="w"> </span>-v<span class="w"> </span>ovos-tts-plugin-phoonnx
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>ovos-config<span class="w"> </span><span class="nb">set</span><span class="w"> </span>-k<span class="w"> </span>blacklisted_skills<span class="w"> </span>-v<span class="w"> </span>my-bad-skill<span class="w">   </span><span class="c1"># append to list</span>
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>ovos-config<span class="w"> </span><span class="nb">set</span><span class="w"> </span>-k<span class="w"> </span>gui<span class="w">                  </span><span class="c1"># interactive: choose key and enter value</span>
 </span></code></pre></div>
 <p>Values are type-cast to match the existing value's type. List targets append rather than replace.</p>
 <h3 id="autoconfigure"><code>autoconfigure</code><a class="headerlink" href="#autoconfigure" title="Permanent link">&para;</a></h3>
 <p>Automatically configure language, <a href="../stt-plugins/">STT</a>, and <a href="../tts-plugins/">TTS</a> from a language code:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>ovos-config<span class="w"> </span>autoconfigure<span class="w"> </span>-l<span class="w"> </span>en-us<span class="w"> </span>--offline<span class="w"> </span>--female
-</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>ovos-config<span class="w"> </span>autoconfigure<span class="w"> </span>-l<span class="w"> </span>de-de<span class="w"> </span>--online<span class="w"> </span>--male
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>ovos-config<span class="w"> </span>autoconfigure<span class="w"> </span>-l<span class="w"> </span>en-us<span class="w"> </span>--offline<span class="w"> </span>--female
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>ovos-config<span class="w"> </span>autoconfigure<span class="w"> </span>-l<span class="w"> </span>de-de<span class="w"> </span>--online<span class="w"> </span>--male
 </span></code></pre></div>
 <table>
 <thead>
@@ -2448,8 +2429,8 @@ compatibility.</p>
 <p><code>--online</code>/<code>--offline</code> and <code>--male</code>/<code>--female</code> are each mutually exclusive pairs.
 <code>--gpu</code> cannot be combined with <code>--online</code>/<code>--hybrid</code> or a Raspberry Pi platform.</p>
 <h3 id="telemetry"><code>telemetry</code><a class="headerlink" href="#telemetry" title="Permanent link">&para;</a></h3>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>ovos-config<span class="w"> </span>telemetry<span class="w"> </span>--enable<span class="w">    </span><span class="c1"># opt in to intent telemetry upload</span>
-</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>ovos-config<span class="w"> </span>telemetry<span class="w"> </span>--disable<span class="w">   </span><span class="c1"># opt out</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>ovos-config<span class="w"> </span>telemetry<span class="w"> </span>--enable<span class="w">    </span><span class="c1"># opt in to intent telemetry upload</span>
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>ovos-config<span class="w"> </span>telemetry<span class="w"> </span>--disable<span class="w">   </span><span class="c1"># opt out</span>
 </span></code></pre></div>
 <hr />
 <h2 id="tips">Tips<a class="headerlink" href="#tips" title="Permanent link">&para;</a></h2>
@@ -2481,24 +2462,24 @@ compatibility.</p>
 </li>
 </ul>
 <h2 id="package-layout">Package Layout<a class="headerlink" href="#package-layout" title="Permanent link">&para;</a></h2>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>ovos_config/
-</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>├── config.py       # Configuration singleton
-</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>├── models.py       # LocalConf, ReadOnlyConfig, layer classes
-</span><span id="__span-19-4"><a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a>├── locations.py    # XDG path helpers and constants
-</span><span id="__span-19-5"><a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a>├── meta.py         # Env var overrides (XDG base, filename, default config)
-</span><span id="__span-19-6"><a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a>├── locale.py       # Language/timezone helpers
-</span><span id="__span-19-7"><a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a>├── utils.py        # init_module_config(), deprecated FileWatcher re-exports
-</span><span id="__span-19-8"><a id="__codelineno-19-8" name="__codelineno-19-8" href="#__codelineno-19-8"></a>└── __main__.py     # ovos-config CLI (show / get / set / telemetry / autoconfigure)
+<div class="language-text highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>ovos_config/
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>├── config.py       # Configuration singleton
+</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>├── models.py       # LocalConf, ReadOnlyConfig, layer classes
+</span><span id="__span-18-4"><a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a>├── locations.py    # XDG path helpers and constants
+</span><span id="__span-18-5"><a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a>├── meta.py         # Env var overrides (XDG base, filename, default config)
+</span><span id="__span-18-6"><a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a>├── locale.py       # Language/timezone helpers
+</span><span id="__span-18-7"><a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a>├── utils.py        # init_module_config(), deprecated FileWatcher re-exports
+</span><span id="__span-18-8"><a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a>└── __main__.py     # ovos-config CLI (show / get / set / telemetry / autoconfigure)
 </span></code></pre></div>
 <hr />
 <h2 id="entry-points">Entry Points<a class="headerlink" href="#entry-points" title="Permanent link">&para;</a></h2>
 <p><code>ovos-config</code> registers no plugin entry points of its own. Every other OVOS component consumes it as a dependency.</p>
 <p>The CLI is registered via <code>setup.py</code>:</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="n">entry_points</span><span class="o">=</span><span class="p">{</span>
-</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>    <span class="s2">&quot;console_scripts&quot;</span><span class="p">:</span> <span class="p">[</span>
-</span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>        <span class="s2">&quot;ovos-config=ovos_config.__main__:config&quot;</span>
-</span><span id="__span-20-4"><a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a>    <span class="p">]</span>
-</span><span id="__span-20-5"><a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a><span class="p">}</span>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="n">entry_points</span><span class="o">=</span><span class="p">{</span>
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>    <span class="s2">&quot;console_scripts&quot;</span><span class="p">:</span> <span class="p">[</span>
+</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>        <span class="s2">&quot;ovos-config=ovos_config.__main__:config&quot;</span>
+</span><span id="__span-19-4"><a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a>    <span class="p">]</span>
+</span><span id="__span-19-5"><a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a><span class="p">}</span>
 </span></code></pre></div>
 <hr />
 <p><em>Source code: <a href="https://github.com/OpenVoiceOS/ovos-config">OpenVoiceOS/ovos-config</a>.</em></p>

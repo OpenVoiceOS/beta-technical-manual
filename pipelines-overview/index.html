@@ -14,7 +14,7 @@
         <link rel="prev" href="../phal/">
       
       
-        <link rel="next" href="../adapt-pipeline/">
+        <link rel="next" href="../building-your-pipeline/">
       
       
       <link rel="icon" href="https://github.com/OpenVoiceOS/ovos_assets/blob/master/Logo/ovos-logo-512.png?raw=true">
@@ -843,10 +843,61 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#pipeline-plugins-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pipeline Plugins Reference
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../building-your-pipeline/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Building Your Pipeline
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../debugging-intent-matching/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Debugging Intent Matching
+  </span>
+  
+
+      </a>
     </li>
   
 
@@ -1396,6 +1447,15 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#pipeline-plugins-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pipeline Plugins Reference
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1694,86 +1754,44 @@ pipeline. They expose the same high/medium/low confidence tiers as Adapt/Padatio
 </span><span id="__span-0-27"><a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a><span class="p">}</span>
 </span></code></pre></div>
 <hr />
-<h1 id="pipeline-plugins-reference">Pipeline Plugins Reference<a class="headerlink" href="#pipeline-plugins-reference" title="Permanent link">&para;</a></h1>
+<h2 id="pipeline-plugins-reference">Pipeline Plugins Reference<a class="headerlink" href="#pipeline-plugins-reference" title="Permanent link">&para;</a></h2>
+<p>Each pipeline plugin has its own manual page with full configuration details:</p>
 <table>
 <thead>
 <tr>
 <th>Plugin</th>
 <th>Description</th>
+<th>Manual page</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><a href="#ovos-common-query-pipeline-plugin">ovos-common-query-pipeline-plugin</a></td>
+<td><code>ovos-common-query-pipeline-plugin</code></td>
 <td>Answer questions by gathering answers from several skills</td>
+<td><a href="../common-query/">Common Query</a></td>
 </tr>
 <tr>
-<td><a href="#ovos-m2v-pipeline">ovos-m2v-pipeline</a></td>
+<td><code>ovos-m2v-pipeline</code></td>
 <td>Intent matching powered by the Model2Vec model</td>
+<td><a href="../m2v-pipeline/">M2V Pipeline</a></td>
 </tr>
 <tr>
-<td><a href="#ovos-padatious-pipeline-plugin">ovos-padatious-pipeline-plugin</a></td>
+<td><code>ovos-padatious-pipeline-plugin</code></td>
 <td>Neural network intent-matching pipeline plugin</td>
+<td><a href="../padatious-pipeline/">Padatious Pipeline</a></td>
 </tr>
 <tr>
-<td><a href="#ovos-adapt-pipeline-plugin">ovos-adapt-pipeline-plugin</a></td>
+<td><code>ovos-adapt-pipeline-plugin</code></td>
 <td>Adapt Intent Parser</td>
+<td><a href="../adapt-pipeline/">Adapt Pipeline</a></td>
 </tr>
 <tr>
-<td><a href="#ovos-ocp-pipeline-plugin">ovos-ocp-pipeline-plugin</a></td>
+<td><code>ovos-ocp-pipeline-plugin</code></td>
 <td>Specialized media handling</td>
+<td><a href="../ocp-pipeline/">OCP Pipeline</a></td>
 </tr>
 </tbody>
 </table>
-<h2 id="ovos-common-query-pipeline-plugin">ovos-common-query-pipeline-plugin<a class="headerlink" href="#ovos-common-query-pipeline-plugin" title="Permanent link">&para;</a></h2>
-<ul>
-<li>
-<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-common-query-pipeline-plugin">https://github.com/OpenVoiceOS/ovos-common-query-pipeline-plugin</a></p>
-</li>
-<li>
-<p><strong>Description</strong>: The OVOS Common Query Framework is designed to answer questions by gathering answers from several skills and selecting the best one.</p>
-</li>
-</ul>
-<hr />
-<h2 id="ovos-m2v-pipeline">ovos-m2v-pipeline<a class="headerlink" href="#ovos-m2v-pipeline" title="Permanent link">&para;</a></h2>
-<ul>
-<li>
-<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-m2v-pipeline">https://github.com/OpenVoiceOS/ovos-m2v-pipeline</a></p>
-</li>
-<li>
-<p><strong>Description</strong>: An intent matching pipeline powered by the Model2Vec model for intent classification.</p>
-</li>
-</ul>
-<hr />
-<h2 id="ovos-padatious-pipeline-plugin">ovos-padatious-pipeline-plugin<a class="headerlink" href="#ovos-padatious-pipeline-plugin" title="Permanent link">&para;</a></h2>
-<ul>
-<li>
-<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-padatious-pipeline-plugin">https://github.com/OpenVoiceOS/ovos-padatious-pipeline-plugin</a></p>
-</li>
-<li>
-<p><strong>Description</strong>: An efficient and agile neural network intent-matching pipeline plugin.</p>
-</li>
-</ul>
-<hr />
-<h2 id="ovos-adapt-pipeline-plugin">ovos-adapt-pipeline-plugin<a class="headerlink" href="#ovos-adapt-pipeline-plugin" title="Permanent link">&para;</a></h2>
-<ul>
-<li>
-<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-adapt-pipeline-plugin">https://github.com/OpenVoiceOS/ovos-adapt-pipeline-plugin</a></p>
-</li>
-<li>
-<p><strong>Description</strong>: Adapt Intent Parser.</p>
-</li>
-</ul>
-<hr />
-<h2 id="ovos-ocp-pipeline-plugin">ovos-ocp-pipeline-plugin<a class="headerlink" href="#ovos-ocp-pipeline-plugin" title="Permanent link">&para;</a></h2>
-<ul>
-<li>
-<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-ocp-pipeline-plugin">https://github.com/OpenVoiceOS/ovos-ocp-pipeline-plugin</a></p>
-</li>
-<li>
-<p><strong>Description</strong>: OVOS plugin for specialized media handling.</p>
-</li>
-</ul>
 
 
 

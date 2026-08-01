@@ -1,0 +1,1688 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://tigregotico.github.io/ovos-technical-manual/building-your-pipeline/">
+      
+      
+        <link rel="prev" href="../pipelines-overview/">
+      
+      
+        <link rel="next" href="../debugging-intent-matching/">
+      
+      
+      <link rel="icon" href="https://github.com/OpenVoiceOS/ovos_assets/blob/master/Logo/ovos-logo-512.png?raw=true">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.31">
+    
+    
+      
+        <title>Building Your Pipeline - OpenVoiceOS Technical Manual</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.3cba04c6.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../css/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="grey" data-md-color-accent="red">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#building-your-pipeline" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="OpenVoiceOS Technical Manual" class="md-header__button md-logo" aria-label="OpenVoiceOS Technical Manual" data-md-component="logo">
+      
+  <img src="https://github.com/OpenVoiceOS/ovos_assets/blob/master/Logo/ovos-logo-512.png?raw=true" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            OpenVoiceOS Technical Manual
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Building Your Pipeline
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="grey" data-md-color-accent="red"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="grey" data-md-color-accent="red"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/TigreGotico/ovos-technical-manual" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    TigreGotico/ovos-technical-manual
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href=".." class="md-tabs__link">
+          
+  
+  Home
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../ovos-installer/" class="md-tabs__link">
+          
+  
+  Get Started
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../everyday-help/" class="md-tabs__link">
+          
+  
+  Help & Troubleshooting
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../architecture-overview/" class="md-tabs__link">
+          
+  
+  Concepts
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../pipelines-overview/" class="md-tabs__link">
+          
+  
+  Intent Pipeline
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../lang-support/" class="md-tabs__link">
+          
+  
+  Language Support
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../first-skill/" class="md-tabs__link">
+          
+  
+  Skill Development
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../plugins-index/" class="md-tabs__link">
+          
+  
+  Plugin Ecosystem
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../personas/" class="md-tabs__link">
+          
+  
+  AI Agents & Personas
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../privacy-security/" class="md-tabs__link">
+          
+  
+  Production & Security
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../ecosystem-index/" class="md-tabs__link">
+          
+  
+  Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../contributing/" class="md-tabs__link">
+          
+  
+  Contributing & Project Infra
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="OpenVoiceOS Technical Manual" class="md-nav__button md-logo" aria-label="OpenVoiceOS Technical Manual" data-md-component="logo">
+      
+  <img src="https://github.com/OpenVoiceOS/ovos_assets/blob/master/Logo/ovos-logo-512.png?raw=true" alt="logo">
+
+    </a>
+    OpenVoiceOS Technical Manual
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/TigreGotico/ovos-technical-manual" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    TigreGotico/ovos-technical-manual
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href=".." class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../ovos-installer/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Get Started
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../everyday-help/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Help & Troubleshooting
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../architecture-overview/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Concepts
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Intent Pipeline
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Intent Pipeline
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pipelines-overview/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Overview & Reference
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Building Your Pipeline
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Building Your Pipeline
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#how-the-pipeline-list-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      How the pipeline list works
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-a-the-stock-voice-assistant-default" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example A: the stock voice-assistant default
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-b-a-media-focused-device" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example B: a media-focused device
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-c-a-personachatbot-first-assistant" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example C: a persona/chatbot-first assistant
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ordering-rules-of-thumb" class="md-nav__link">
+    <span class="md-ellipsis">
+      Ordering rules of thumb
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-pages" class="md-nav__link">
+    <span class="md-ellipsis">
+      Related Pages
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../debugging-intent-matching/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Debugging Intent Matching
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../adapt-pipeline/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Pipeline Matchers
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../padacioso/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Alternative Parsers
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../transformer-plugins/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Transformers
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../lang-support/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Language Support
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    
+  
+  
+    <a href="../first-skill/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Skill Development
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../plugins-index/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Plugin Ecosystem
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    
+  
+  
+    <a href="../personas/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    AI Agents & Personas
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../privacy-security/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Production & Security
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../ecosystem-index/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Reference
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../contributing/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Contributing & Project Infra
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#how-the-pipeline-list-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      How the pipeline list works
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-a-the-stock-voice-assistant-default" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example A: the stock voice-assistant default
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-b-a-media-focused-device" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example B: a media-focused device
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-c-a-personachatbot-first-assistant" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example C: a persona/chatbot-first assistant
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ordering-rules-of-thumb" class="md-nav__link">
+    <span class="md-ellipsis">
+      Ordering rules of thumb
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-pages" class="md-nav__link">
+    <span class="md-ellipsis">
+      Related Pages
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="building-your-pipeline">Building Your Pipeline<a class="headerlink" href="#building-your-pipeline" title="Permanent link">&para;</a></h1>
+<div class="admonition abstract">
+<p class="admonition-title">In a nutshell</p>
+<p>The <code>intents.pipeline</code> list in <code>mycroft.conf</code> is the whole arbitration model for intent
+matching. OVOS tries each stage in the order you list, and the first one that claims the
+utterance wins. This page shows three fully worked pipeline configs, built only from stages
+documented elsewhere in this manual, so you can see how the ordering rules play out in
+practice. See the <a href="../pipelines-overview/">Intent Pipeline Overview</a> for the full stage
+reference.</p>
+</div>
+<hr />
+<h2 id="how-the-pipeline-list-works">How the pipeline list works<a class="headerlink" href="#how-the-pipeline-list-works" title="Permanent link">&para;</a></h2>
+<p>Every entry in <code>intents.pipeline</code> is a <strong>pipeline ID</strong> for a plugin already installed and
+initialized. OVOS walks the list in order and hands the utterance to each stage until one
+returns a match. There is no cross-plugin score comparison. Each plugin's own <code>conf_high</code> /
+<code>conf_med</code> / <code>conf_low</code> thresholds are its private accept gate, not a rank the orchestrator
+compares between plugins.</p>
+<p>Reordering the list changes which stage gets first refusal on an utterance. Removing an ID
+from the list stops that stage from being <em>tried</em>, but the plugin is still loaded at startup
+unless you uninstall its package. See <a href="../pipelines-overview/">Pipelines Overview</a> for the full
+list of available stage IDs and their confidence tiers.</p>
+<p>The three configs below are complete and directly runnable. Nothing is left as "add remaining
+stages as needed."</p>
+<hr />
+<h2 id="example-a-the-stock-voice-assistant-default">Example A: the stock voice-assistant default<a class="headerlink" href="#example-a-the-stock-voice-assistant-default" title="Permanent link">&para;</a></h2>
+<p>This is the bundled default pipeline shipped in <code>mycroft.conf</code>, reproduced exactly as listed in
+the <a href="../pipelines-overview/#available-pipeline-components">Pipelines Overview</a>:</p>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="p">{</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span><span class="nt">&quot;intents&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">    </span><span class="nt">&quot;pipeline&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">      </span><span class="s2">&quot;ovos-stop-pipeline-plugin-high&quot;</span><span class="p">,</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">      </span><span class="s2">&quot;ovos-converse-pipeline-plugin&quot;</span><span class="p">,</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">      </span><span class="s2">&quot;ovos-ocp-pipeline-plugin-high&quot;</span><span class="p">,</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">      </span><span class="s2">&quot;ovos-padatious-pipeline-plugin-high&quot;</span><span class="p">,</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">      </span><span class="s2">&quot;ovos-adapt-pipeline-plugin-high&quot;</span><span class="p">,</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">      </span><span class="s2">&quot;ovos-m2v-pipeline-high&quot;</span><span class="p">,</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="w">      </span><span class="s2">&quot;ovos-ocp-pipeline-plugin-medium&quot;</span><span class="p">,</span>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="w">      </span><span class="s2">&quot;ovos-fallback-pipeline-plugin-high&quot;</span><span class="p">,</span>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="w">      </span><span class="s2">&quot;ovos-stop-pipeline-plugin-medium&quot;</span><span class="p">,</span>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="w">      </span><span class="s2">&quot;ovos-adapt-pipeline-plugin-medium&quot;</span><span class="p">,</span>
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="w">      </span><span class="s2">&quot;ovos-fallback-pipeline-plugin-medium&quot;</span><span class="p">,</span>
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="w">      </span><span class="s2">&quot;ovos-fallback-pipeline-plugin-low&quot;</span>
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="w">    </span><span class="p">]</span>
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="w">  </span><span class="p">}</span>
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="p">}</span>
+</span></code></pre></div>
+<p>Why each stage sits where it does:</p>
+<ul>
+<li><strong><code>ovos-stop-pipeline-plugin-high</code></strong>: stop is a dedicated, always-on pipeline plugin, not a
+  skill. It must sit first so an exact "stop" or "cancel" is intercepted before any other stage
+  sees the bare word. See <a href="../stop-pipeline/">Stop Pipeline</a>.</li>
+<li><strong><code>ovos-converse-pipeline-plugin</code></strong>: converse depends on session state (which skills are
+  active, who is awaiting a reply), so it must run before the general matchers so a skill mid
+  conversation can claim "yes", "the kitchen", or "stop" before a generic parser would. See
+  <a href="../converse-pipeline/">Converse Pipeline</a>.</li>
+<li><strong><code>ovos-ocp-pipeline-plugin-high</code></strong>: OCP's high tier claims explicit media intents and, while
+  it holds paused media for the session, bare control words like "resume" or "next". It needs
+  to run early for the same session-aware reason as converse. See <a href="../ocp-pipeline/">OCP Pipeline</a>.</li>
+<li><strong><code>ovos-padatious-pipeline-plugin-high</code></strong>: Padatious's high tier runs before Adapt's, so a
+  strong example-sentence match wins over a keyword rule. See
+  <a href="../padatious-pipeline/">Padatious Pipeline</a>.</li>
+<li><strong><code>ovos-adapt-pipeline-plugin-high</code></strong>: Adapt's high tier runs right after Padatious's, so a
+  strong keyword match still beats most fallbacks even when no example sentence matched. See
+  <a href="../adapt-pipeline/">Adapt Pipeline</a>.</li>
+<li><strong><code>ovos-m2v-pipeline-high</code></strong>: placed after the high tiers of Padatious and Adapt, so exact and
+  keyword matches win first and Model2Vec only catches the paraphrases the deterministic engines
+  miss. See <a href="../m2v-pipeline/">Model2Vec Pipeline</a>.</li>
+<li><strong><code>ovos-ocp-pipeline-plugin-medium</code></strong>: catches utterances classified as media queries by
+  keyword rather than an explicit intent, once the higher-confidence stages have passed. See
+  <a href="../ocp-pipeline/">OCP Pipeline</a>.</li>
+<li><strong><code>ovos-fallback-pipeline-plugin-high</code></strong>: the fallback plugin's high-priority range
+  (<code>0 &lt; p ≤ 5</code>) is reserved for critical fallback handlers, tried before medium-confidence
+  matchers get another pass. See <a href="../fallback-pipeline/">Fallback Pipeline</a>.</li>
+<li><strong><code>ovos-stop-pipeline-plugin-medium</code></strong>: a fuzzy (non-exact) stop match, for stop phrases that
+  are not a literal "stop" or "cancel". See <a href="../stop-pipeline/">Stop Pipeline</a>.</li>
+<li><strong><code>ovos-adapt-pipeline-plugin-medium</code></strong>: Adapt's medium tier, a second, looser pass over
+  keyword rules.</li>
+<li><strong><code>ovos-fallback-pipeline-plugin-medium</code></strong> and <strong><code>ovos-fallback-pipeline-plugin-low</code></strong>: general
+  and catch-all fallback skills, tried last, in ascending priority order, only once every regular
+  matcher has passed.</li>
+</ul>
+<p>Note what is deliberately absent: Padatious/Adapt's low tier, Model2Vec's medium/low tiers,
+OCP's low tier, Common Query, Persona, and stop/padatious's low tiers are not in the default
+list. You add them yourself if you want them.</p>
+<hr />
+<h2 id="example-b-a-media-focused-device">Example B: a media-focused device<a class="headerlink" href="#example-b-a-media-focused-device" title="Permanent link">&para;</a></h2>
+<p>A device used mainly for music or podcasts can afford to promote OCP further and add its low
+tier, which the <a href="../ocp-pipeline/">OCP Pipeline</a> page warns should only run "on devices used
+mainly for media playback" because it can fire on any phrase containing a known artist or show
+name.</p>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="p">{</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span><span class="nt">&quot;intents&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">    </span><span class="nt">&quot;ovos-ocp-pipeline-plugin&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">      </span><span class="nt">&quot;min_score&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">50</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">    </span><span class="p">},</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">    </span><span class="nt">&quot;pipeline&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">      </span><span class="s2">&quot;ovos-stop-pipeline-plugin-high&quot;</span><span class="p">,</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="w">      </span><span class="s2">&quot;ovos-converse-pipeline-plugin&quot;</span><span class="p">,</span>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="w">      </span><span class="s2">&quot;ovos-ocp-pipeline-plugin-high&quot;</span><span class="p">,</span>
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="w">      </span><span class="s2">&quot;ovos-padatious-pipeline-plugin-high&quot;</span><span class="p">,</span>
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="w">      </span><span class="s2">&quot;ovos-adapt-pipeline-plugin-high&quot;</span><span class="p">,</span>
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="w">      </span><span class="s2">&quot;ovos-ocp-pipeline-plugin-medium&quot;</span><span class="p">,</span>
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="w">      </span><span class="s2">&quot;ovos-fallback-pipeline-plugin-medium&quot;</span><span class="p">,</span>
+</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="w">      </span><span class="s2">&quot;ovos-ocp-pipeline-plugin-low&quot;</span>
+</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="w">    </span><span class="p">]</span>
+</span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="w">  </span><span class="p">}</span>
+</span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="p">}</span>
+</span></code></pre></div>
+<p>Why each stage sits where it does:</p>
+<ul>
+<li><strong><code>ovos-stop-pipeline-plugin-high</code></strong> and <strong><code>ovos-converse-pipeline-plugin</code></strong>: stop and
+  converse stay first for the same session-state reasons as Example A. A media device still
+  needs "stop" and an in-progress conversation to win before playback control does.</li>
+<li><strong><code>ovos-ocp-pipeline-plugin-high</code></strong>: promoted right after converse, ahead of Padatious/Adapt,
+  because on this device explicit playback commands and stateful "resume"/"next" control words
+  are the primary use case.</li>
+<li><strong><code>ovos-padatious-pipeline-plugin-high</code></strong> and <strong><code>ovos-adapt-pipeline-plugin-high</code></strong>: regular
+  skill intents (setting timers, asking the weather, and so on) still get their normal
+  high-confidence pass.</li>
+<li><strong><code>ovos-ocp-pipeline-plugin-medium</code></strong>: catches keyword-classified media queries that the
+  explicit-intent high tier missed, per the <a href="../ocp-pipeline/">OCP Pipeline</a> quick-start example.</li>
+<li><strong><code>ovos-fallback-pipeline-plugin-medium</code></strong>: a general fallback pass before the most permissive
+  OCP tier gets a turn, so a misheard non-media utterance is not swallowed by a loose media
+  keyword hit.</li>
+<li><strong><code>ovos-ocp-pipeline-plugin-low</code></strong>: last, and only justified on a media-focused device, exactly
+  as the OCP page recommends. It keys off any skill-registered media keyword, so placing it last
+  limits the damage from a false positive.</li>
+</ul>
+<hr />
+<h2 id="example-c-a-personachatbot-first-assistant">Example C: a persona/chatbot-first assistant<a class="headerlink" href="#example-c-a-personachatbot-first-assistant" title="Permanent link">&para;</a></h2>
+<p>This reproduces the <strong>Hybrid Mode</strong> configuration from the
+<a href="../persona-pipeline/#2-hybrid-mode-skills-first">Persona Pipeline</a> page: skills get first refusal,
+and the persona (an LLM-backed conversational agent) fills in wherever they fall short, before
+the catch-all fallback skills get a turn.</p>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="p">{</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">  </span><span class="nt">&quot;intents&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">    </span><span class="nt">&quot;persona&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">      </span><span class="nt">&quot;handle_fallback&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">      </span><span class="nt">&quot;default_persona&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Remote Llama&quot;</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">    </span><span class="p">},</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">    </span><span class="nt">&quot;pipeline&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">      </span><span class="s2">&quot;ovos-stop-pipeline-plugin-high&quot;</span><span class="p">,</span>
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="w">      </span><span class="s2">&quot;ovos-converse-pipeline-plugin&quot;</span><span class="p">,</span>
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="w">      </span><span class="s2">&quot;ovos-padatious-pipeline-plugin-high&quot;</span><span class="p">,</span>
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="w">      </span><span class="s2">&quot;ovos-adapt-pipeline-plugin-high&quot;</span><span class="p">,</span>
+</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="w">      </span><span class="s2">&quot;ovos-persona-pipeline-plugin-high&quot;</span><span class="p">,</span>
+</span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="w">      </span><span class="s2">&quot;ovos-padatious-pipeline-plugin-medium&quot;</span><span class="p">,</span>
+</span><span id="__span-2-14"><a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a><span class="w">      </span><span class="s2">&quot;ovos-adapt-pipeline-plugin-medium&quot;</span><span class="p">,</span>
+</span><span id="__span-2-15"><a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a><span class="w">      </span><span class="s2">&quot;ovos-fallback-pipeline-plugin-high&quot;</span><span class="p">,</span>
+</span><span id="__span-2-16"><a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a><span class="w">      </span><span class="s2">&quot;ovos-fallback-pipeline-plugin-medium&quot;</span><span class="p">,</span>
+</span><span id="__span-2-17"><a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a><span class="w">      </span><span class="s2">&quot;ovos-fallback-pipeline-plugin-low&quot;</span>
+</span><span id="__span-2-18"><a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a><span class="w">    </span><span class="p">]</span>
+</span><span id="__span-2-19"><a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a><span class="w">  </span><span class="p">}</span>
+</span><span id="__span-2-20"><a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a><span class="p">}</span>
+</span></code></pre></div>
+<p>Why each stage sits where it does:</p>
+<ul>
+<li><strong><code>ovos-stop-pipeline-plugin-high</code></strong> and <strong><code>ovos-converse-pipeline-plugin</code></strong>: unchanged from
+  Examples A and B. Stop must always win over a chatty persona, and an in-progress skill
+  conversation still gets priority.</li>
+<li><strong><code>ovos-padatious-pipeline-plugin-high</code></strong> and <strong><code>ovos-adapt-pipeline-plugin-high</code></strong>: regular
+  skills get first refusal, which is the point of Hybrid Mode: "preserves traditional voice
+  assistant behavior" while the persona "fills in where skills fall short."
+  See <a href="../persona-pipeline/">Persona Pipeline</a>.</li>
+<li><strong><code>ovos-persona-pipeline-plugin-high</code></strong>: placed after the deterministic high tiers but before
+  their medium tiers. An active or default persona (<code>handle_fallback: true</code>, <code>default_persona</code>)
+  catches open-ended chat and unmatched questions before the pipeline relaxes to a looser
+  keyword pass.</li>
+<li><strong><code>ovos-padatious-pipeline-plugin-medium</code></strong> and <strong><code>ovos-adapt-pipeline-plugin-medium</code></strong>: a
+  second, looser skill-matching pass in case the persona missed something a skill could still
+  answer.</li>
+<li><strong><code>ovos-fallback-pipeline-plugin-high</code></strong>, <strong><code>-medium</code></strong>, <strong><code>-low</code></strong>: the standard fallback
+  ladder closes out the pipeline, in ascending priority order, in case neither skills nor the
+  persona claimed the utterance.</li>
+</ul>
+<p>For a persona-first deployment where the chatbot should override skills entirely, see
+<a href="../persona-pipeline/#1-full-control-persona-first">Persona Pipeline: Full Control mode</a> instead.</p>
+<hr />
+<h2 id="ordering-rules-of-thumb">Ordering rules of thumb<a class="headerlink" href="#ordering-rules-of-thumb" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Stop goes first.</strong> STOP-1 only works because a high-confidence stop stage placed first in
+  the pipeline can intercept the bare word "stop" before any other plugin claims it. See
+  <a href="../stop-pipeline/">Stop Pipeline</a>.</li>
+<li><strong>Converse goes early, before the general matchers.</strong> It depends on session state (is a skill
+  still active, is someone awaiting a reply), so it needs first refusal on utterances that
+  continue an existing exchange. See <a href="../converse-pipeline/">Converse Pipeline</a>.</li>
+<li><strong>High tiers before medium tiers before low tiers.</strong> A high-confidence match is tried before
+  any medium-confidence stage, and a medium-confidence stage before any low-confidence one. This
+  is the arbitration model itself, not an optional convention. See
+  <a href="../pipelines-overview/">Pipelines Overview</a>.</li>
+<li><strong>Statistical/semantic stages (Model2Vec, Hierarchical KNN) go after the deterministic
+  engines' high tiers.</strong> They generalize well, which also means they can claim an utterance a
+  more precise parser would have nailed if placed too early. See
+  <a href="../m2v-pipeline/">Model2Vec Pipeline</a> and <a href="../knn-pipeline/">Hierarchical KNN Pipeline</a>.</li>
+<li><strong>Fallback goes last.</strong> By design it only runs "after all other matchers fail," and its own
+  high/medium/low tiers further order fallback skills by priority range. See
+  <a href="../fallback-pipeline/">Fallback Pipeline</a>.</li>
+<li><strong>A persona's placement encodes its strategy.</strong> First and ahead of skills for a full-control
+  chatbot, after the skills' high tiers for a hybrid assistant, or last (a <code>-low</code> stage) for a
+  pure "default persona when nothing else matched" setup. See
+  <a href="../persona-pipeline/">Persona Pipeline</a>.</li>
+</ul>
+<hr />
+<h2 id="related-pages">Related Pages<a class="headerlink" href="#related-pages" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="../pipelines-overview/">Intent Pipeline Overview</a>: the full stage reference and the bundled
+  default pipeline</li>
+<li><a href="../adapt-pipeline/">Adapt Pipeline</a>, <a href="../padatious-pipeline/">Padatious Pipeline</a>,
+  <a href="../m2v-pipeline/">Model2Vec Pipeline</a>, <a href="../knn-pipeline/">Hierarchical KNN Pipeline</a>: the
+  deterministic and semantic matchers</li>
+<li><a href="../converse-pipeline/">Converse Pipeline</a>, <a href="../stop-pipeline/">Stop Pipeline</a>: the
+  session-aware interceptors</li>
+<li><a href="../ocp-pipeline/">OCP Pipeline</a>, <a href="../cq-pipeline/">Common Query Pipeline</a>,
+  <a href="../persona-pipeline/">Persona Pipeline</a>: the specialized matchers</li>
+<li><a href="../fallback-pipeline/">Fallback Pipeline</a>: the catch-all stages tried last</li>
+<li><a href="../debugging-intent-matching/">Debugging Intent Matching</a>: what to check when a pipeline you
+  built does not behave as expected</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.path", "navigation.prune", "navigation.top", "navigation.tracking", "navigation.instant", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate"], "search": "../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.fe8b6f2b.min.js"></script>
+      
+    
+  </body>
+</html>

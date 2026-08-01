@@ -1225,6 +1225,69 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../gh-automations-release-workflows/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Release Workflows
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../gh-automations-pr-workflows/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    PR Check Workflows
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../gh-automations-quality-workflows/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Quality Workflows
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -1436,7 +1499,7 @@
 </table>
 <p>Priority is major &gt; minor &gt; build &gt; alpha. If the current version is already stable (alpha = 0), an unlabelled bump first increments <code>BUILD</code>: <code>1.2.3</code> → <code>1.2.4a1</code>.</p>
 <blockquote>
-<p>Labels are typically applied automatically from conventional-commit PR titles by a <em>separate</em> labeller workflow in your repo (e.g. one using <code>bcoe/conventional-release-labels</code>). That labeller is <strong>not</strong> part of gh-automations — <code>publish-alpha.yml</code> only consumes whatever labels are present at merge time. The <a href="../gh-automations-workflows/#release-previewyml"><code>release-preview.yml</code></a> workflow, by contrast, falls back to parsing the PR title prefix when no label is set.</p>
+<p>Labels are typically applied automatically from conventional-commit PR titles by a <em>separate</em> labeller workflow in your repo (e.g. one using <code>bcoe/conventional-release-labels</code>). That labeller is <strong>not</strong> part of gh-automations — <code>publish-alpha.yml</code> only consumes whatever labels are present at merge time. The <a href="../gh-automations-release-workflows/#release-previewyml"><code>release-preview.yml</code></a> workflow, by contrast, falls back to parsing the PR title prefix when no label is set.</p>
 </blockquote>
 <hr />
 <h2 id="alpha-release-on-pr-merge-to-dev">Alpha Release (on PR merge to <code>dev</code>)<a class="headerlink" href="#alpha-release-on-pr-merge-to-dev" title="Permanent link">&para;</a></h2>

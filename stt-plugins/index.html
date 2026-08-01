@@ -1094,90 +1094,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#stt" class="md-nav__link">
-    <span class="md-ellipsis">
-      STT
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="STT">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#n-best-hypotheses-transcribe" class="md-nav__link">
-    <span class="md-ellipsis">
-      N-best hypotheses: transcribe()
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#language-detection" class="md-nav__link">
-    <span class="md-ellipsis">
-      Language detection
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#streamingstt" class="md-nav__link">
-    <span class="md-ellipsis">
-      StreamingSTT
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="StreamingSTT">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#chunk-semantics" class="md-nav__link">
-    <span class="md-ellipsis">
-      Chunk semantics
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#entry-point" class="md-nav__link">
-    <span class="md-ellipsis">
-      Entry point
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#standalone-usage" class="md-nav__link">
-    <span class="md-ellipsis">
-      Standalone Usage
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#plugin-template" class="md-nav__link">
-    <span class="md-ellipsis">
-      Plugin Template
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -1538,90 +1454,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#stt" class="md-nav__link">
-    <span class="md-ellipsis">
-      STT
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="STT">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#n-best-hypotheses-transcribe" class="md-nav__link">
-    <span class="md-ellipsis">
-      N-best hypotheses: transcribe()
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#language-detection" class="md-nav__link">
-    <span class="md-ellipsis">
-      Language detection
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#streamingstt" class="md-nav__link">
-    <span class="md-ellipsis">
-      StreamingSTT
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="StreamingSTT">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#chunk-semantics" class="md-nav__link">
-    <span class="md-ellipsis">
-      Chunk semantics
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#entry-point" class="md-nav__link">
-    <span class="md-ellipsis">
-      Entry point
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#standalone-usage" class="md-nav__link">
-    <span class="md-ellipsis">
-      Standalone Usage
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#plugin-template" class="md-nav__link">
-    <span class="md-ellipsis">
-      Plugin Template
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -1645,6 +1477,7 @@
 <p class="admonition-title">In a nutshell</p>
 <p>STT stands for <em>Speech-to-Text</em>: this is the part that listens to your spoken words and writes them down as text the assistant can read. It is the same idea as the dictation feature on a phone. Different STT plugins offer different trade-offs in speed, accuracy, and whether they run on your own device or in the cloud, so you can pick the one that suits you. See the <a href="../glossary/">Glossary</a> for related terms.</p>
 </div>
+<p>Writing a plugin instead of choosing one? Jump to <a href="#writing-your-own-stt-plugin">Writing your own</a>.</p>
 <details class="info">
 <summary>Formal specification</summary>
 <p>STT sits inside the audio input service, specified by <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/audio-in.md">OVOS-AUDIO-IN-1: Audio Input Service</a></strong>: capture → audio-transformer chain → STT → utterance. The transcript is emitted on <code>ovos.utterance.handle</code> (<a href="https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md">OVOS-PIPELINE-1 §9.1</a>). See the <a href="../architecture-specs/">spec index</a>.</p>
@@ -1686,192 +1519,6 @@ Whisper-class one, independent of the plugin wrapping it.</p>
 </span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="p">}</span>
 </span></code></pre></div>
 <p>The roster below lists available plugins with a recommended starting configuration for each. This may differ from a plugin's built-in default, noted where relevant.</p>
-<h2 id="stt"><code>STT</code><a class="headerlink" href="#stt" title="Permanent link">&para;</a></h2>
-<p>The base STT, this handles the audio in "batch mode" taking a complete audio file, and returning the complete transcription.</p>
-<p>Each STT plugin class needs to define the <code>execute()</code> method taking two arguments:</p>
-<ul>
-<li>
-<p><code>audio</code> <span class="arithmatex">\([AudioData](https://github.com/Uberi/speech_recognition/blob/master/reference/library-reference.rst#audiodataframe_data-bytes-sample_rate-int-sample_width-int---audiodata) object\)</span> - the audio data to be transcribed.  </p>
-</li>
-<li>
-<p><code>language</code> <span class="arithmatex">\(str\)</span> - <em>optional</em> - the BCP-47 language code. When omitted, the plugin uses its
-  configured or detected language</p>
-</li>
-</ul>
-<p>The bare minimum STT class will look something like</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">from</span> <span class="nn">ovos_plugin_manager.templates.stt</span> <span class="kn">import</span> <span class="n">STT</span>
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="k">class</span> <span class="nc">MySTT</span><span class="p">(</span><span class="n">STT</span><span class="p">):</span>
-</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>    <span class="k">def</span> <span class="nf">execute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">audio</span><span class="p">,</span> <span class="n">language</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>        <span class="c1"># Handle audio data and return transcribed text</span>
-</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>        <span class="p">[</span><span class="o">...</span><span class="p">]</span>
-</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>        <span class="k">return</span> <span class="n">text</span>
-</span></code></pre></div>
-<h3 id="n-best-hypotheses-transcribe">N-best hypotheses: <code>transcribe()</code><a class="headerlink" href="#n-best-hypotheses-transcribe" title="Permanent link">&para;</a></h3>
-<p><code>execute()</code> returns a single best string. The richer method is <code>transcribe(audio, lang=None)</code>,
-which returns a <strong>list of <code>(transcript, confidence)</code> tuples</strong>, confidence a float from <code>0.0</code> to <code>1.0</code>.
-The template implements it for you as <code>[(self.execute(audio, lang), 1.0)]</code>, so a plugin that
-only knows its single best answer needs to implement nothing extra.</p>
-<p>If the wrapped engine can produce several hypotheses with scores, <strong>override <code>transcribe()</code></strong>.
-It is the preferred entry point, and consumers that rescore or disambiguate between
-candidates read it. <code>execute()</code> then remains the single-best convenience wrapper.</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">class</span> <span class="nc">MySTT</span><span class="p">(</span><span class="n">STT</span><span class="p">):</span>
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>    <span class="k">def</span> <span class="nf">execute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">audio</span><span class="p">,</span> <span class="n">language</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">transcribe</span><span class="p">(</span><span class="n">audio</span><span class="p">,</span> <span class="n">language</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
-</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>
-</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>    <span class="k">def</span> <span class="nf">transcribe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">audio</span><span class="p">,</span> <span class="n">lang</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>        <span class="c1"># return hypotheses best-first</span>
-</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>        <span class="k">return</span> <span class="p">[(</span><span class="s2">&quot;turn on the lights&quot;</span><span class="p">,</span> <span class="mf">0.91</span><span class="p">),</span>
-</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>                <span class="p">(</span><span class="s2">&quot;turn on the light&quot;</span><span class="p">,</span> <span class="mf">0.62</span><span class="p">)]</span>
-</span></code></pre></div>
-<h3 id="language-detection">Language detection<a class="headerlink" href="#language-detection" title="Permanent link">&para;</a></h3>
-<p>An STT plugin can be paired with an audio language detector. The audio service calls
-<code>bind(detector)</code> to hand the plugin an <code>AudioLanguageDetector</code>. The plugin then exposes:</p>
-<ul>
-<li>
-<p><code>detect_language(audio, valid_langs=None)</code> → <code>(lang, confidence)</code>. It delegates to the bound
-  detector, defaulting <code>valid_langs</code> to the plugin's own <code>available_languages</code>. With no detector
-  bound it raises <code>NotImplementedError</code>. Language detection is opt-in per deployment.</p>
-</li>
-<li>
-<p><code>transcribe(audio, lang="auto")</code>. The <code>"auto"</code> sentinel runs <code>detect_language()</code> first and
-  transcribes in whatever it returns. If detection fails, the plugin falls back to <code>self.lang</code>
-  and transcribes anyway, so <code>"auto"</code> never turns a detector problem into a failed
-  transcription.</p>
-</li>
-</ul>
-<h2 id="streamingstt"><code>StreamingSTT</code><a class="headerlink" href="#streamingstt" title="Permanent link">&para;</a></h2>
-<p>A more advanced STT class for streaming data to the STT. This will receive chunks of audio data as they become available and they are streamed to an STT engine.</p>
-<p>The plugin author needs to implement the <code>create_streaming_thread()</code> method creating a thread for handling data sent through <code>self.queue</code>. </p>
-<p>The thread this method creates should be based on the <code>StreamThread</code> class. Its abstract <code>handle_audio_stream(audio, language)</code> method also needs to be implemented. It receives a generator of audio chunks and should set <code>self.text</code> to the transcript. <code>finalize()</code> returns that stored text once the stream ends.</p>
-<h3 id="chunk-semantics">Chunk semantics<a class="headerlink" href="#chunk-semantics" title="Permanent link">&para;</a></h3>
-<p>Audio arrives synchronously per chunk: <code>stream_data()</code> is called once per captured
-chunk on the mic thread, so it must return well under the per-chunk time budget
-(the same real-time cadence constraint a wake-word plugin's <code>update(chunk)</code> runs
-under. See <a href="../wake-word-plugins/#key-methods">Wake Word Plugins: Key Methods</a>). Do any
-slow work (network calls, heavy inference) on the <code>StreamThread</code> this class
-manages, not inline in <code>stream_data()</code>.</p>
-<p><code>StreamingSTT</code> runs the streaming work on a background thread, fed through a queue:</p>
-<ul>
-<li><code>stream_start(language=None)</code> creates a fresh <code>Queue</code>, builds a <code>StreamThread</code> via <code>create_streaming_thread()</code>, and starts it.</li>
-<li>Each call to <code>stream_data(chunk)</code> puts one raw PCM <code>bytes</code> chunk (16 kHz/16-bit/mono, <code>chunk_size</code>-sized, see the audio format contract above) onto that queue.</li>
-<li>The <code>StreamThread</code>'s <code>run()</code> calls your <code>handle_audio_stream(audio, language)</code> with <code>audio</code> as a <strong>generator</strong> that yields chunks off the queue until a <code>None</code> sentinel appears. Your implementation should loop over it (e.g. <code>for chunk in audio:</code>) and feed each chunk to the underlying engine, setting <code>self.text</code> as partial/final results arrive.</li>
-<li><code>stream_stop()</code> pushes the <code>None</code> sentinel, joins the thread, and calls <code>finalize()</code> on it to retrieve the stored <code>self.text</code> as the final transcript. This is also what <code>execute()</code> returns for a <code>StreamingSTT</code> plugin.</li>
-</ul>
-<p>A complete minimal streaming plugin:</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kn">from</span> <span class="nn">queue</span> <span class="kn">import</span> <span class="n">Queue</span>
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="kn">from</span> <span class="nn">threading</span> <span class="kn">import</span> <span class="n">Thread</span>
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="kn">from</span> <span class="nn">ovos_plugin_manager.templates.stt</span> <span class="kn">import</span> <span class="n">StreamingSTT</span><span class="p">,</span> <span class="n">StreamThread</span>
-</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>
-</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>
-</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="k">class</span> <span class="nc">MyStreamThread</span><span class="p">(</span><span class="n">StreamThread</span><span class="p">):</span>
-</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">queue</span><span class="p">:</span> <span class="n">Queue</span><span class="p">,</span> <span class="n">language</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">engine</span><span class="p">):</span>
-</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">queue</span><span class="p">,</span> <span class="n">language</span><span class="p">)</span>
-</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">engine</span> <span class="o">=</span> <span class="n">engine</span>
-</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>
-</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>    <span class="k">def</span> <span class="nf">handle_audio_stream</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">audio</span><span class="p">,</span> <span class="n">language</span><span class="p">):</span>
-</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>        <span class="c1"># `audio` is a generator of raw PCM byte chunks; `self.queue.get()`</span>
-</span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>        <span class="c1"># returns None once the caller closes the stream.</span>
-</span><span id="__span-4-14"><a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a>        <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">audio</span><span class="p">:</span>
-</span><span id="__span-4-15"><a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a>            <span class="n">partial</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">feed</span><span class="p">(</span><span class="n">chunk</span><span class="p">,</span> <span class="n">language</span><span class="p">)</span>
-</span><span id="__span-4-16"><a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a>            <span class="k">if</span> <span class="n">partial</span><span class="p">:</span>
-</span><span id="__span-4-17"><a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a>                <span class="bp">self</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">partial</span>
-</span><span id="__span-4-18"><a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">text</span>
-</span><span id="__span-4-19"><a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a>
-</span><span id="__span-4-20"><a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a>
-</span><span id="__span-4-21"><a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a><span class="k">class</span> <span class="nc">MyStreamingSTT</span><span class="p">(</span><span class="n">StreamingSTT</span><span class="p">):</span>
-</span><span id="__span-4-22"><a id="__codelineno-4-22" name="__codelineno-4-22" href="#__codelineno-4-22"></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-</span><span id="__span-4-23"><a id="__codelineno-4-23" name="__codelineno-4-23" href="#__codelineno-4-23"></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-</span><span id="__span-4-24"><a id="__codelineno-4-24" name="__codelineno-4-24" href="#__codelineno-4-24"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">engine</span> <span class="o">=</span> <span class="n">MyStreamingEngine</span><span class="p">()</span>
-</span><span id="__span-4-25"><a id="__codelineno-4-25" name="__codelineno-4-25" href="#__codelineno-4-25"></a>
-</span><span id="__span-4-26"><a id="__codelineno-4-26" name="__codelineno-4-26" href="#__codelineno-4-26"></a>    <span class="k">def</span> <span class="nf">create_streaming_thread</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="__span-4-27"><a id="__codelineno-4-27" name="__codelineno-4-27" href="#__codelineno-4-27"></a>        <span class="k">return</span> <span class="n">MyStreamThread</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">queue</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">lang</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="p">)</span>
-</span><span id="__span-4-28"><a id="__codelineno-4-28" name="__codelineno-4-28" href="#__codelineno-4-28"></a>
-</span><span id="__span-4-29"><a id="__codelineno-4-29" name="__codelineno-4-29" href="#__codelineno-4-29"></a>    <span class="nd">@property</span>
-</span><span id="__span-4-30"><a id="__codelineno-4-30" name="__codelineno-4-30" href="#__codelineno-4-30"></a>    <span class="k">def</span> <span class="nf">available_languages</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="__span-4-31"><a id="__codelineno-4-31" name="__codelineno-4-31" href="#__codelineno-4-31"></a>        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;en-us&quot;</span><span class="p">}</span>
-</span></code></pre></div>
-<h2 id="entry-point">Entry point<a class="headerlink" href="#entry-point" title="Permanent link">&para;</a></h2>
-<p>To make the class detectable as an STT plugin, the package needs to provide an entry point under the <code>opm.stt</code> namespace.</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">setup</span><span class="p">([</span><span class="o">...</span><span class="p">],</span>
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>      <span class="n">entry_points</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;opm.stt&#39;</span><span class="p">:</span> <span class="s1">&#39;example_stt = my_stt:mySTT&#39;</span><span class="p">}</span>
-</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>      <span class="p">)</span>
-</span></code></pre></div>
-<p>Where <code>example_stt</code> is the STT plugin name, <code>my_stt</code> is the Python module and <code>mySTT</code> is the class in the module to return.</p>
-<p>To expose your sample configurations (the <code>MySTTConfig</code> dict below) for UI discovery, register them under <code>opm.stt.config</code>:</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">entry_points</span> <span class="o">=</span> <span class="p">{</span>
-</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>    <span class="s1">&#39;opm.stt&#39;</span><span class="p">:</span> <span class="s1">&#39;example_stt = my_stt:mySTT&#39;</span><span class="p">,</span>
-</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>    <span class="s1">&#39;opm.stt.config&#39;</span><span class="p">:</span> <span class="s1">&#39;example_stt.config = my_stt:MySTTConfig&#39;</span>
-</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="p">}</span>
-</span></code></pre></div>
-<blockquote>
-<p><strong>Backward Compatibility</strong>: <code>ovos-plugin-manager</code> still supports legacy <code>mycroft.plugin.stt</code> entry points, but new plugins should use the <code>opm.*</code> namespace.</p>
-</blockquote>
-<h2 id="standalone-usage">Standalone Usage<a class="headerlink" href="#standalone-usage" title="Permanent link">&para;</a></h2>
-<p>STT plugins can be used in your own projects, without a running OVOS instance, by
-importing the plugin class directly. For example, with <code>ovos-stt-plugin-vosk</code>:</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kn">from</span> <span class="nn">ovos_stt_plugin_vosk</span> <span class="kn">import</span> <span class="n">VoskKaldiSTT</span>
-</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="kn">from</span> <span class="nn">ovos_plugin_manager.utils.audio</span> <span class="kn">import</span> <span class="n">AudioFile</span>
-</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>
-</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="n">plug</span> <span class="o">=</span> <span class="n">VoskKaldiSTT</span><span class="p">()</span>
-</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>
-</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="c1"># verify lang is supported</span>
-</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="n">lang</span> <span class="o">=</span> <span class="s2">&quot;en-us&quot;</span>
-</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="k">assert</span> <span class="n">lang</span> <span class="ow">in</span> <span class="n">plug</span><span class="o">.</span><span class="n">available_languages</span>
-</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>
-</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="c1"># read the whole file into an AudioData object</span>
-</span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="k">with</span> <span class="n">AudioFile</span><span class="p">(</span><span class="s2">&quot;test.wav&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">source</span><span class="p">:</span>
-</span><span id="__span-7-12"><a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a>    <span class="n">audio</span> <span class="o">=</span> <span class="n">source</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-</span><span id="__span-7-13"><a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a>
-</span><span id="__span-7-14"><a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a><span class="c1"># transcribe</span>
-</span><span id="__span-7-15"><a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a><span class="n">transcript</span> <span class="o">=</span> <span class="n">plug</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">audio</span><span class="p">,</span> <span class="n">lang</span><span class="p">)</span>
-</span></code></pre></div>
-<h2 id="plugin-template">Plugin Template<a class="headerlink" href="#plugin-template" title="Permanent link">&para;</a></h2>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="kn">from</span> <span class="nn">ovos_plugin_manager.templates.stt</span> <span class="kn">import</span> <span class="n">STT</span>
-</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>
-</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>
-</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="c1"># base plugin class</span>
-</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="k">class</span> <span class="nc">MySTTPlugin</span><span class="p">(</span><span class="n">STT</span><span class="p">):</span>
-</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>        <span class="c1"># read config settings for your plugin</span>
-</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a>        <span class="n">lm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;language-model&quot;</span><span class="p">)</span>
-</span><span id="__span-8-10"><a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a>        <span class="n">hmm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;acoustic-model&quot;</span><span class="p">)</span>
-</span><span id="__span-8-11"><a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a>
-</span><span id="__span-8-12"><a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a>    <span class="k">def</span> <span class="nf">execute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">audio</span><span class="p">,</span> <span class="n">language</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-</span><span id="__span-8-13"><a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a>        <span class="c1"># Implement STT engine logic here</span>
-</span><span id="__span-8-14"><a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a>        <span class="n">transcript</span> <span class="o">=</span> <span class="s2">&quot;You said this&quot;</span>
-</span><span id="__span-8-15"><a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a>        <span class="k">return</span> <span class="n">transcript</span>
-</span><span id="__span-8-16"><a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a>
-</span><span id="__span-8-17"><a id="__codelineno-8-17" name="__codelineno-8-17" href="#__codelineno-8-17"></a>    <span class="nd">@property</span>
-</span><span id="__span-8-18"><a id="__codelineno-8-18" name="__codelineno-8-18" href="#__codelineno-8-18"></a>    <span class="k">def</span> <span class="nf">available_languages</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="__span-8-19"><a id="__codelineno-8-19" name="__codelineno-8-19" href="#__codelineno-8-19"></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Return languages supported by this STT implementation in this state</span>
-</span><span id="__span-8-20"><a id="__codelineno-8-20" name="__codelineno-8-20" href="#__codelineno-8-20"></a><span class="sd">        This property should be overridden by the derived class to advertise</span>
-</span><span id="__span-8-21"><a id="__codelineno-8-21" name="__codelineno-8-21" href="#__codelineno-8-21"></a><span class="sd">        what languages that engine supports.</span>
-</span><span id="__span-8-22"><a id="__codelineno-8-22" name="__codelineno-8-22" href="#__codelineno-8-22"></a><span class="sd">        Returns:</span>
-</span><span id="__span-8-23"><a id="__codelineno-8-23" name="__codelineno-8-23" href="#__codelineno-8-23"></a><span class="sd">            set: supported languages</span>
-</span><span id="__span-8-24"><a id="__codelineno-8-24" name="__codelineno-8-24" href="#__codelineno-8-24"></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="__span-8-25"><a id="__codelineno-8-25" name="__codelineno-8-25" href="#__codelineno-8-25"></a>        <span class="c1"># Return a set of supported BCP-47 language codes</span>
-</span><span id="__span-8-26"><a id="__codelineno-8-26" name="__codelineno-8-26" href="#__codelineno-8-26"></a>        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;en-us&quot;</span><span class="p">,</span> <span class="s2">&quot;es-es&quot;</span><span class="p">}</span>
-</span><span id="__span-8-27"><a id="__codelineno-8-27" name="__codelineno-8-27" href="#__codelineno-8-27"></a>
-</span><span id="__span-8-28"><a id="__codelineno-8-28" name="__codelineno-8-28" href="#__codelineno-8-28"></a>
-</span><span id="__span-8-29"><a id="__codelineno-8-29" name="__codelineno-8-29" href="#__codelineno-8-29"></a><span class="c1"># sample valid configurations per language</span>
-</span><span id="__span-8-30"><a id="__codelineno-8-30" name="__codelineno-8-30" href="#__codelineno-8-30"></a>
-</span><span id="__span-8-31"><a id="__codelineno-8-31" name="__codelineno-8-31" href="#__codelineno-8-31"></a><span class="c1"># &quot;display_name&quot; and &quot;offline&quot; provide metadata for UI</span>
-</span><span id="__span-8-32"><a id="__codelineno-8-32" name="__codelineno-8-32" href="#__codelineno-8-32"></a>
-</span><span id="__span-8-33"><a id="__codelineno-8-33" name="__codelineno-8-33" href="#__codelineno-8-33"></a><span class="c1"># &quot;priority&quot; is used to calculate position in selection dropdown </span>
-</span><span id="__span-8-34"><a id="__codelineno-8-34" name="__codelineno-8-34" href="#__codelineno-8-34"></a>
-</span><span id="__span-8-35"><a id="__codelineno-8-35" name="__codelineno-8-35" href="#__codelineno-8-35"></a><span class="c1">#       0 - top, 100-bottom</span>
-</span><span id="__span-8-36"><a id="__codelineno-8-36" name="__codelineno-8-36" href="#__codelineno-8-36"></a>
-</span><span id="__span-8-37"><a id="__codelineno-8-37" name="__codelineno-8-37" href="#__codelineno-8-37"></a><span class="c1"># all other keys represent an example valid config for the plugin </span>
-</span><span id="__span-8-38"><a id="__codelineno-8-38" name="__codelineno-8-38" href="#__codelineno-8-38"></a><span class="n">MySTTConfig</span> <span class="o">=</span> <span class="p">{</span>
-</span><span id="__span-8-39"><a id="__codelineno-8-39" name="__codelineno-8-39" href="#__codelineno-8-39"></a>    <span class="n">lang</span><span class="p">:</span> <span class="p">[{</span><span class="s2">&quot;lang&quot;</span><span class="p">:</span> <span class="n">lang</span><span class="p">,</span>
-</span><span id="__span-8-40"><a id="__codelineno-8-40" name="__codelineno-8-40" href="#__codelineno-8-40"></a>            <span class="s2">&quot;display_name&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;MySTT (</span><span class="si">{</span><span class="n">lang</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
-</span><span id="__span-8-41"><a id="__codelineno-8-41" name="__codelineno-8-41" href="#__codelineno-8-41"></a>            <span class="s2">&quot;priority&quot;</span><span class="p">:</span> <span class="mi">70</span><span class="p">,</span>
-</span><span id="__span-8-42"><a id="__codelineno-8-42" name="__codelineno-8-42" href="#__codelineno-8-42"></a>            <span class="s2">&quot;offline&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}]</span>
-</span><span id="__span-8-43"><a id="__codelineno-8-43" name="__codelineno-8-43" href="#__codelineno-8-43"></a>    <span class="k">for</span> <span class="n">lang</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;en-us&quot;</span><span class="p">,</span> <span class="s2">&quot;es-es&quot;</span><span class="p">]</span>
-</span><span id="__span-8-44"><a id="__codelineno-8-44" name="__codelineno-8-44" href="#__codelineno-8-44"></a><span class="p">}</span>
-</span></code></pre></div>
 <h1 id="stt-plugins-reference">STT plugins Reference<a class="headerlink" href="#stt-plugins-reference" title="Permanent link">&para;</a></h1>
 <p>Code license is the SPDX license of the plugin's own repository. Where the plugin wraps a
 separately-licensed model, that is called out under "model".</p>
@@ -2005,12 +1652,12 @@ with a permissive license but thin docs. Don't read one column as implying the o
 </li>
 </ul>
 <h3 id="default-configuration">Default Configuration<a class="headerlink" href="#default-configuration" title="Permanent link">&para;</a></h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>  &quot;stt&quot;: {
-</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>    &quot;module&quot;: &quot;ovos-stt-plugin-wav2vec&quot;,
-</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>    &quot;ovos-stt-plugin-wav2vec&quot;: {
-</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>        &quot;model&quot;: &quot;proxectonos/Nos_ASR-wav2vec2-large-xlsr-53-gl-with-lm&quot;
-</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>    }
-</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>  }
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>  &quot;stt&quot;: {
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>    &quot;module&quot;: &quot;ovos-stt-plugin-wav2vec&quot;,
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>    &quot;ovos-stt-plugin-wav2vec&quot;: {
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>        &quot;model&quot;: &quot;proxectonos/Nos_ASR-wav2vec2-large-xlsr-53-gl-with-lm&quot;
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>    }
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>  }
 </span></code></pre></div>
 <p>There is no single hardcoded default model: the plugin picks a model from an internal
 per-language table (keyed by BCP-47 language code) unless <code>model</code> is set explicitly, and
@@ -2054,12 +1701,12 @@ API with an API key. Google can change or revoke access to this endpoint at any 
 </li>
 </ul>
 <h3 id="default-configuration_1">Default Configuration<a class="headerlink" href="#default-configuration_1" title="Permanent link">&para;</a></h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>&quot;stt&quot;: {
-</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>    &quot;module&quot;: &quot;ovos-stt-plugin-mms&quot;,
-</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>    &quot;ovos-stt-plugin-mms&quot;: {
-</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>      &quot;model&quot;: &quot;facebook/mms-1b-all&quot;
-</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>    }
-</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>}
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>&quot;stt&quot;: {
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>    &quot;module&quot;: &quot;ovos-stt-plugin-mms&quot;,
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>    &quot;ovos-stt-plugin-mms&quot;: {
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>      &quot;model&quot;: &quot;facebook/mms-1b-all&quot;
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>    }
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>}
 </span></code></pre></div>
 <hr />
 <h2 id="ovos-stt-server-plugin">ovos-stt-server-plugin<a class="headerlink" href="#ovos-stt-server-plugin" title="Permanent link">&para;</a></h2>
@@ -2078,13 +1725,13 @@ a private or guaranteed-available endpoint. Point it at your own self-hosted ser
 <a href="../stt-server/#companion-plugin">stt-server</a>) if you need privacy or reliability.</p>
 </div>
 <h3 id="default-configuration_2">Default Configuration<a class="headerlink" href="#default-configuration_2" title="Permanent link">&para;</a></h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>  &quot;stt&quot;: {
-</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>    &quot;module&quot;: &quot;ovos-stt-plugin-server&quot;,
-</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>    &quot;ovos-stt-plugin-server&quot;: {
-</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>      &quot;urls&quot;: [&quot;https://0.0.0.0:8080/stt&quot;],
-</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>      &quot;verify_ssl&quot;: true
-</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>    },
-</span><span id="__span-11-7"><a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a> }
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>  &quot;stt&quot;: {
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>    &quot;module&quot;: &quot;ovos-stt-plugin-server&quot;,
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>    &quot;ovos-stt-plugin-server&quot;: {
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>      &quot;urls&quot;: [&quot;https://0.0.0.0:8080/stt&quot;],
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>      &quot;verify_ssl&quot;: true
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>    },
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a> }
 </span></code></pre></div>
 <p>Leaving <code>urls</code> unset falls back to public community-run STT servers rather than failing. See
 <a href="../stt-server/#companion-plugin">stt-server</a> for a self-hosted alternative, or pick a fully
@@ -2117,13 +1764,13 @@ servers entirely: fully offline plugins exist for everything.</p>
 </li>
 </ul>
 <h3 id="default-configuration_3">Default Configuration<a class="headerlink" href="#default-configuration_3" title="Permanent link">&para;</a></h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>  &quot;stt&quot;: {
-</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>    &quot;module&quot;: &quot;ovos-stt-plugin-whisper&quot;,
-</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>    &quot;ovos-stt-plugin-whisper&quot;: {
-</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>        &quot;model&quot;: &quot;openai/whisper-large-v3&quot;,
-</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>        &quot;use_cuda&quot;: true
-</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>    }
-</span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a>  }
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>  &quot;stt&quot;: {
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>    &quot;module&quot;: &quot;ovos-stt-plugin-whisper&quot;,
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>    &quot;ovos-stt-plugin-whisper&quot;: {
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>        &quot;model&quot;: &quot;openai/whisper-large-v3&quot;,
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>        &quot;use_cuda&quot;: true
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>    }
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>  }
 </span></code></pre></div>
 <hr />
 <h2 id="ovos-stt-plugin-whispercpp">ovos-stt-plugin-whispercpp<a class="headerlink" href="#ovos-stt-plugin-whispercpp" title="Permanent link">&para;</a></h2>
@@ -2136,12 +1783,12 @@ servers entirely: fully offline plugins exist for everything.</p>
 </li>
 </ul>
 <h3 id="default-configuration_4">Default Configuration<a class="headerlink" href="#default-configuration_4" title="Permanent link">&para;</a></h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>  &quot;stt&quot;: {
-</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>    &quot;module&quot;: &quot;ovos-stt-plugin-whispercpp&quot;,
-</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>    &quot;ovos-stt-plugin-whispercpp&quot;: {
-</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>        &quot;model&quot;: &quot;tiny&quot;
-</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>    }
-</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>  }
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>  &quot;stt&quot;: {
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>    &quot;module&quot;: &quot;ovos-stt-plugin-whispercpp&quot;,
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>    &quot;ovos-stt-plugin-whispercpp&quot;: {
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>        &quot;model&quot;: &quot;tiny&quot;
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>    }
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>  }
 </span></code></pre></div>
 <hr />
 <h2 id="ovos-stt-plugin-fasterwhisper">ovos-stt-plugin-fasterwhisper<a class="headerlink" href="#ovos-stt-plugin-fasterwhisper" title="Permanent link">&para;</a></h2>
@@ -2155,16 +1802,16 @@ servers entirely: fully offline plugins exist for everything.</p>
 </ul>
 <p>CTranslate2 also supports <code>int8</code> / <code>int8_float16</code> compute types for lower-RAM CPU deployments. Change <code>compute_type</code> to use them.</p>
 <h3 id="default-configuration_5">Default Configuration<a class="headerlink" href="#default-configuration_5" title="Permanent link">&para;</a></h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>  &quot;stt&quot;: {
-</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>    &quot;module&quot;: &quot;ovos-stt-plugin-fasterwhisper&quot;,
-</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>    &quot;ovos-stt-plugin-fasterwhisper&quot;: {
-</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>        &quot;model&quot;: &quot;large-v3&quot;,
-</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>        &quot;use_cuda&quot;: true,
-</span><span id="__span-14-6"><a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a>        &quot;compute_type&quot;: &quot;float16&quot;,
-</span><span id="__span-14-7"><a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a>        &quot;beam_size&quot;: 5,
-</span><span id="__span-14-8"><a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a>        &quot;cpu_threads&quot;: 4
-</span><span id="__span-14-9"><a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a>    }
-</span><span id="__span-14-10"><a id="__codelineno-14-10" name="__codelineno-14-10" href="#__codelineno-14-10"></a>  }
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>  &quot;stt&quot;: {
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>    &quot;module&quot;: &quot;ovos-stt-plugin-fasterwhisper&quot;,
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>    &quot;ovos-stt-plugin-fasterwhisper&quot;: {
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>        &quot;model&quot;: &quot;large-v3&quot;,
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>        &quot;use_cuda&quot;: true,
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>        &quot;compute_type&quot;: &quot;float16&quot;,
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>        &quot;beam_size&quot;: 5,
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>        &quot;cpu_threads&quot;: 4
+</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>    }
+</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>  }
 </span></code></pre></div>
 <hr />
 <h2 id="ovos-stt-plugin-nemo">ovos-stt-plugin-nemo<a class="headerlink" href="#ovos-stt-plugin-nemo" title="Permanent link">&para;</a></h2>
@@ -2178,13 +1825,13 @@ servers entirely: fully offline plugins exist for everything.</p>
 </ul>
 <p>CPU is the shipped default (<code>use_cuda: false</code>). Set <code>use_cuda: true</code> for acceptable throughput on supported GPUs. The GPU recommendation is about speed, not a required default.</p>
 <h3 id="default-configuration_6">Default Configuration<a class="headerlink" href="#default-configuration_6" title="Permanent link">&para;</a></h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>  &quot;stt&quot;: {
-</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>    &quot;module&quot;: &quot;ovos-stt-plugin-nemo&quot;,
-</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>    &quot;ovos-stt-plugin-nemo&quot;: {
-</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>        &quot;model&quot;: &quot;stt_eu_conformer_ctc_large&quot;,
-</span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a>        &quot;use_cuda&quot;: false
-</span><span id="__span-15-6"><a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a>    }
-</span><span id="__span-15-7"><a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a>  }
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>  &quot;stt&quot;: {
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>    &quot;module&quot;: &quot;ovos-stt-plugin-nemo&quot;,
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>    &quot;ovos-stt-plugin-nemo&quot;: {
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>        &quot;model&quot;: &quot;stt_eu_conformer_ctc_large&quot;,
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>        &quot;use_cuda&quot;: false
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>    }
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>  }
 </span></code></pre></div>
 <hr />
 <h2 id="ovos-stt-plugin-whisper-lm">ovos-stt-plugin-whisper-lm<a class="headerlink" href="#ovos-stt-plugin-whisper-lm" title="Permanent link">&para;</a></h2>
@@ -2197,17 +1844,17 @@ servers entirely: fully offline plugins exist for everything.</p>
 </li>
 </ul>
 <h3 id="default-configuration_7">Default Configuration<a class="headerlink" href="#default-configuration_7" title="Permanent link">&para;</a></h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>  &quot;stt&quot;: {
-</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>    &quot;module&quot;: &quot;ovos-stt-plugin-whisper-lm&quot;,
-</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>    &quot;ovos-stt-plugin-whisper-lm&quot;: {
-</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a>        &quot;model&quot;: &quot;zuazo/whisper-medium-eu&quot;,
-</span><span id="__span-16-5"><a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>        &quot;lm_repo&quot;: &quot;HiTZ/whisper-lm-ngrams&quot;,
-</span><span id="__span-16-6"><a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a>        &quot;lm_model&quot;: &quot;5gram-eu.bin&quot;,
-</span><span id="__span-16-7"><a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a>        &quot;lm_alpha&quot;: 0.33582369,
-</span><span id="__span-16-8"><a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a>        &quot;lm_beta&quot;: 0.68825565,
-</span><span id="__span-16-9"><a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a>        &quot;use_cuda&quot;: true
-</span><span id="__span-16-10"><a id="__codelineno-16-10" name="__codelineno-16-10" href="#__codelineno-16-10"></a>    }
-</span><span id="__span-16-11"><a id="__codelineno-16-11" name="__codelineno-16-11" href="#__codelineno-16-11"></a>  }
+<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>  &quot;stt&quot;: {
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>    &quot;module&quot;: &quot;ovos-stt-plugin-whisper-lm&quot;,
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>    &quot;ovos-stt-plugin-whisper-lm&quot;: {
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>        &quot;model&quot;: &quot;zuazo/whisper-medium-eu&quot;,
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>        &quot;lm_repo&quot;: &quot;HiTZ/whisper-lm-ngrams&quot;,
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>        &quot;lm_model&quot;: &quot;5gram-eu.bin&quot;,
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>        &quot;lm_alpha&quot;: 0.33582369,
+</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>        &quot;lm_beta&quot;: 0.68825565,
+</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>        &quot;use_cuda&quot;: true
+</span><span id="__span-9-10"><a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a>    }
+</span><span id="__span-9-11"><a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a>  }
 </span></code></pre></div>
 <hr />
 <h2 id="ovos-stt-plugin-citrinet">ovos-stt-plugin-citrinet<a class="headerlink" href="#ovos-stt-plugin-citrinet" title="Permanent link">&para;</a></h2>
@@ -2220,12 +1867,12 @@ servers entirely: fully offline plugins exist for everything.</p>
 </li>
 </ul>
 <h3 id="default-configuration_8">Default Configuration<a class="headerlink" href="#default-configuration_8" title="Permanent link">&para;</a></h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>  &quot;stt&quot;: {
-</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>    &quot;module&quot;: &quot;ovos-stt-plugin-citrinet&quot;,
-</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>    &quot;ovos-stt-plugin-citrinet&quot;: {
-</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a>      &quot;lang&quot;: &quot;ca&quot;
-</span><span id="__span-17-5"><a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a>    }
-</span><span id="__span-17-6"><a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a>  }
+<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>  &quot;stt&quot;: {
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>    &quot;module&quot;: &quot;ovos-stt-plugin-citrinet&quot;,
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>    &quot;ovos-stt-plugin-citrinet&quot;: {
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>      &quot;lang&quot;: &quot;ca&quot;
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>    }
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>  }
 </span></code></pre></div>
 <hr />
 <h2 id="ovos-stt-plugin-nos">ovos-stt-plugin-nos<a class="headerlink" href="#ovos-stt-plugin-nos" title="Permanent link">&para;</a></h2>
@@ -2238,9 +1885,9 @@ servers entirely: fully offline plugins exist for everything.</p>
 </li>
 </ul>
 <h3 id="default-configuration_9">Default Configuration<a class="headerlink" href="#default-configuration_9" title="Permanent link">&para;</a></h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>&quot;stt&quot;: {
-</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>    &quot;module&quot;: &quot;ovos-stt-plugin-nos&quot;
-</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>}
+<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>&quot;stt&quot;: {
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>    &quot;module&quot;: &quot;ovos-stt-plugin-nos&quot;
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>}
 </span></code></pre></div>
 <hr />
 <h2 id="ovos-stt-plugin-hitz">ovos-stt-plugin-HiTZ<a class="headerlink" href="#ovos-stt-plugin-hitz" title="Permanent link">&para;</a></h2>
@@ -2253,12 +1900,12 @@ servers entirely: fully offline plugins exist for everything.</p>
 </li>
 </ul>
 <h3 id="default-configuration_10">Default Configuration<a class="headerlink" href="#default-configuration_10" title="Permanent link">&para;</a></h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>  &quot;stt&quot;: {
-</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>    &quot;module&quot;: &quot;ovos-stt-plugin-HiTZ&quot;,
-</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>    &quot;ovos-stt-plugin-HiTZ&quot;: {
-</span><span id="__span-19-4"><a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a>        &quot;model&quot;: &quot;stt_eu_conformer_transducer_large&quot;
-</span><span id="__span-19-5"><a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a>    }
-</span><span id="__span-19-6"><a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a>  }
+<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>  &quot;stt&quot;: {
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>    &quot;module&quot;: &quot;ovos-stt-plugin-HiTZ&quot;,
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>    &quot;ovos-stt-plugin-HiTZ&quot;: {
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>        &quot;model&quot;: &quot;stt_eu_conformer_transducer_large&quot;
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>    }
+</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>  }
 </span></code></pre></div>
 <hr />
 <h2 id="ovos-stt-plugin-vosk">ovos-stt-plugin-vosk<a class="headerlink" href="#ovos-stt-plugin-vosk" title="Permanent link">&para;</a></h2>
@@ -2271,12 +1918,12 @@ servers entirely: fully offline plugins exist for everything.</p>
 </li>
 </ul>
 <h3 id="default-configuration_11">Default Configuration<a class="headerlink" href="#default-configuration_11" title="Permanent link">&para;</a></h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>  &quot;stt&quot;: {
-</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>    &quot;module&quot;: &quot;ovos-stt-plugin-vosk&quot;,
-</span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>    &quot;ovos-stt-plugin-vosk&quot;: {
-</span><span id="__span-20-4"><a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a>        &quot;model&quot;: &quot;/path/to/unzipped/model/folder&quot;
-</span><span id="__span-20-5"><a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a>    }
-</span><span id="__span-20-6"><a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a>  }
+<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>  &quot;stt&quot;: {
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>    &quot;module&quot;: &quot;ovos-stt-plugin-vosk&quot;,
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>    &quot;ovos-stt-plugin-vosk&quot;: {
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>        &quot;model&quot;: &quot;/path/to/unzipped/model/folder&quot;
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>    }
+</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>  }
 </span></code></pre></div>
 <hr />
 <h2 id="ovos-stt-plugin-onnx-asr">ovos-stt-plugin-onnx-asr<a class="headerlink" href="#ovos-stt-plugin-onnx-asr" title="Permanent link">&para;</a></h2>
@@ -2290,12 +1937,12 @@ servers entirely: fully offline plugins exist for everything.</p>
 </ul>
 <h3 id="recommended-configuration">Recommended Configuration<a class="headerlink" href="#recommended-configuration" title="Permanent link">&para;</a></h3>
 <p>If <code>model</code> is omitted, the plugin loads its <strong>built-in default <code>nemo-canary-1b-v2</code></strong>, a ~1B-parameter model with strong accuracy but a heavier footprint. For typical offline devices we recommend setting the lighter <code>nemo-parakeet-tdt-0.6b-v3</code> explicitly:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>  &quot;stt&quot;: {
-</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>    &quot;module&quot;: &quot;ovos-stt-plugin-onnx-asr&quot;,
-</span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>    &quot;ovos-stt-plugin-onnx-asr&quot;: {
-</span><span id="__span-21-4"><a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a>        &quot;model&quot;: &quot;nemo-parakeet-tdt-0.6b-v3&quot;
-</span><span id="__span-21-5"><a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a>    }
-</span><span id="__span-21-6"><a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a>  }
+<div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>  &quot;stt&quot;: {
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>    &quot;module&quot;: &quot;ovos-stt-plugin-onnx-asr&quot;,
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>    &quot;ovos-stt-plugin-onnx-asr&quot;: {
+</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>        &quot;model&quot;: &quot;nemo-parakeet-tdt-0.6b-v3&quot;
+</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>    }
+</span><span id="__span-14-6"><a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a>  }
 </span></code></pre></div>
 <table>
 <thead>
@@ -2334,6 +1981,193 @@ servers entirely: fully offline plugins exist for everything.</p>
 </div>
 <p>Besides the built-in aliases and the <code>onnx-asr</code> repository's own model hub, the plugin loads any repo id from the <a href="https://huggingface.co/collections/OpenVoiceOS/stt-asr-onnx">OpenVoiceOS/stt-asr-onnx</a> collection. This collection holds curated single-language and regional ONNX conversions of NeMo Conformer/Parakeet and Whisper checkpoints, grouped roughly by family: AI4Bharat/Vaani models for Indian languages, NVIDIA Conformer/Parakeet models for major European languages (plus Kabyle, Belarusian, Esperanto, Kinyarwanda), Iberian-language Conformer models, and per-language Whisper finetunes. Most ship both fp32 and int8 weights (<code>quantization: "int8"</code> works). A few large models are fp32-only. See the collection itself for the exhaustive, current list. It grows independently of this plugin's release cycle.</p>
 <hr />
+<h2 id="writing-your-own-stt-plugin">Writing your own STT plugin<a class="headerlink" href="#writing-your-own-stt-plugin" title="Permanent link">&para;</a></h2>
+<h3 id="stt"><code>STT</code><a class="headerlink" href="#stt" title="Permanent link">&para;</a></h3>
+<p>The base STT, this handles the audio in "batch mode" taking a complete audio file, and returning the complete transcription.</p>
+<p>Each STT plugin class needs to define the <code>execute()</code> method taking two arguments:</p>
+<ul>
+<li>
+<p><code>audio</code> <span class="arithmatex">\([AudioData](https://github.com/Uberi/speech_recognition/blob/master/reference/library-reference.rst#audiodataframe_data-bytes-sample_rate-int-sample_width-int---audiodata) object\)</span> - the audio data to be transcribed.  </p>
+</li>
+<li>
+<p><code>language</code> <span class="arithmatex">\(str\)</span> - <em>optional</em> - the BCP-47 language code. When omitted, the plugin uses its
+  configured or detected language</p>
+</li>
+</ul>
+<p>The bare minimum STT class will look something like</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="kn">from</span> <span class="nn">ovos_plugin_manager.templates.stt</span> <span class="kn">import</span> <span class="n">STT</span>
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="k">class</span> <span class="nc">MySTT</span><span class="p">(</span><span class="n">STT</span><span class="p">):</span>
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>    <span class="k">def</span> <span class="nf">execute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">audio</span><span class="p">,</span> <span class="n">language</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+</span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a>        <span class="c1"># Handle audio data and return transcribed text</span>
+</span><span id="__span-15-6"><a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a>        <span class="p">[</span><span class="o">...</span><span class="p">]</span>
+</span><span id="__span-15-7"><a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a>        <span class="k">return</span> <span class="n">text</span>
+</span></code></pre></div>
+<h4 id="n-best-hypotheses-transcribe">N-best hypotheses: <code>transcribe()</code><a class="headerlink" href="#n-best-hypotheses-transcribe" title="Permanent link">&para;</a></h4>
+<p><code>execute()</code> returns a single best string. The richer method is <code>transcribe(audio, lang=None)</code>,
+which returns a <strong>list of <code>(transcript, confidence)</code> tuples</strong>, confidence a float from <code>0.0</code> to <code>1.0</code>.
+The template implements it for you as <code>[(self.execute(audio, lang), 1.0)]</code>, so a plugin that
+only knows its single best answer needs to implement nothing extra.</p>
+<p>If the wrapped engine can produce several hypotheses with scores, <strong>override <code>transcribe()</code></strong>.
+It is the preferred entry point, and consumers that rescore or disambiguate between
+candidates read it. <code>execute()</code> then remains the single-best convenience wrapper.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="k">class</span> <span class="nc">MySTT</span><span class="p">(</span><span class="n">STT</span><span class="p">):</span>
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>    <span class="k">def</span> <span class="nf">execute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">audio</span><span class="p">,</span> <span class="n">language</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">transcribe</span><span class="p">(</span><span class="n">audio</span><span class="p">,</span> <span class="n">language</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a>
+</span><span id="__span-16-5"><a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>    <span class="k">def</span> <span class="nf">transcribe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">audio</span><span class="p">,</span> <span class="n">lang</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+</span><span id="__span-16-6"><a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a>        <span class="c1"># return hypotheses best-first</span>
+</span><span id="__span-16-7"><a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a>        <span class="k">return</span> <span class="p">[(</span><span class="s2">&quot;turn on the lights&quot;</span><span class="p">,</span> <span class="mf">0.91</span><span class="p">),</span>
+</span><span id="__span-16-8"><a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a>                <span class="p">(</span><span class="s2">&quot;turn on the light&quot;</span><span class="p">,</span> <span class="mf">0.62</span><span class="p">)]</span>
+</span></code></pre></div>
+<h4 id="language-detection">Language detection<a class="headerlink" href="#language-detection" title="Permanent link">&para;</a></h4>
+<p>An STT plugin can be paired with an audio language detector. The audio service calls
+<code>bind(detector)</code> to hand the plugin an <code>AudioLanguageDetector</code>. The plugin then exposes:</p>
+<ul>
+<li>
+<p><code>detect_language(audio, valid_langs=None)</code> → <code>(lang, confidence)</code>. It delegates to the bound
+  detector, defaulting <code>valid_langs</code> to the plugin's own <code>available_languages</code>. With no detector
+  bound it raises <code>NotImplementedError</code>. Language detection is opt-in per deployment.</p>
+</li>
+<li>
+<p><code>transcribe(audio, lang="auto")</code>. The <code>"auto"</code> sentinel runs <code>detect_language()</code> first and
+  transcribes in whatever it returns. If detection fails, the plugin falls back to <code>self.lang</code>
+  and transcribes anyway, so <code>"auto"</code> never turns a detector problem into a failed
+  transcription.</p>
+</li>
+</ul>
+<h3 id="streamingstt"><code>StreamingSTT</code><a class="headerlink" href="#streamingstt" title="Permanent link">&para;</a></h3>
+<p>A more advanced STT class for streaming data to the STT. This will receive chunks of audio data as they become available and they are streamed to an STT engine.</p>
+<p>The plugin author needs to implement the <code>create_streaming_thread()</code> method creating a thread for handling data sent through <code>self.queue</code>. </p>
+<p>The thread this method creates should be based on the <code>StreamThread</code> class. Its abstract <code>handle_audio_stream(audio, language)</code> method also needs to be implemented. It receives a generator of audio chunks and should set <code>self.text</code> to the transcript. <code>finalize()</code> returns that stored text once the stream ends.</p>
+<h4 id="chunk-semantics">Chunk semantics<a class="headerlink" href="#chunk-semantics" title="Permanent link">&para;</a></h4>
+<p>Audio arrives synchronously per chunk: <code>stream_data()</code> is called once per captured
+chunk on the mic thread, so it must return well under the per-chunk time budget
+(the same real-time cadence constraint a wake-word plugin's <code>update(chunk)</code> runs
+under. See <a href="../wake-word-plugins/#key-methods">Wake Word Plugins: Key Methods</a>). Do any
+slow work (network calls, heavy inference) on the <code>StreamThread</code> this class
+manages, not inline in <code>stream_data()</code>.</p>
+<p><code>StreamingSTT</code> runs the streaming work on a background thread, fed through a queue:</p>
+<ul>
+<li><code>stream_start(language=None)</code> creates a fresh <code>Queue</code>, builds a <code>StreamThread</code> via <code>create_streaming_thread()</code>, and starts it.</li>
+<li>Each call to <code>stream_data(chunk)</code> puts one raw PCM <code>bytes</code> chunk (16 kHz/16-bit/mono, <code>chunk_size</code>-sized, see the audio format contract above) onto that queue.</li>
+<li>The <code>StreamThread</code>'s <code>run()</code> calls your <code>handle_audio_stream(audio, language)</code> with <code>audio</code> as a <strong>generator</strong> that yields chunks off the queue until a <code>None</code> sentinel appears. Your implementation should loop over it (e.g. <code>for chunk in audio:</code>) and feed each chunk to the underlying engine, setting <code>self.text</code> as partial/final results arrive.</li>
+<li><code>stream_stop()</code> pushes the <code>None</code> sentinel, joins the thread, and calls <code>finalize()</code> on it to retrieve the stored <code>self.text</code> as the final transcript. This is also what <code>execute()</code> returns for a <code>StreamingSTT</code> plugin.</li>
+</ul>
+<p>A complete minimal streaming plugin:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="kn">from</span> <span class="nn">queue</span> <span class="kn">import</span> <span class="n">Queue</span>
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="kn">from</span> <span class="nn">threading</span> <span class="kn">import</span> <span class="n">Thread</span>
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="kn">from</span> <span class="nn">ovos_plugin_manager.templates.stt</span> <span class="kn">import</span> <span class="n">StreamingSTT</span><span class="p">,</span> <span class="n">StreamThread</span>
+</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a>
+</span><span id="__span-17-5"><a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a>
+</span><span id="__span-17-6"><a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a><span class="k">class</span> <span class="nc">MyStreamThread</span><span class="p">(</span><span class="n">StreamThread</span><span class="p">):</span>
+</span><span id="__span-17-7"><a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">queue</span><span class="p">:</span> <span class="n">Queue</span><span class="p">,</span> <span class="n">language</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">engine</span><span class="p">):</span>
+</span><span id="__span-17-8"><a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">queue</span><span class="p">,</span> <span class="n">language</span><span class="p">)</span>
+</span><span id="__span-17-9"><a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">engine</span> <span class="o">=</span> <span class="n">engine</span>
+</span><span id="__span-17-10"><a id="__codelineno-17-10" name="__codelineno-17-10" href="#__codelineno-17-10"></a>
+</span><span id="__span-17-11"><a id="__codelineno-17-11" name="__codelineno-17-11" href="#__codelineno-17-11"></a>    <span class="k">def</span> <span class="nf">handle_audio_stream</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">audio</span><span class="p">,</span> <span class="n">language</span><span class="p">):</span>
+</span><span id="__span-17-12"><a id="__codelineno-17-12" name="__codelineno-17-12" href="#__codelineno-17-12"></a>        <span class="c1"># `audio` is a generator of raw PCM byte chunks; `self.queue.get()`</span>
+</span><span id="__span-17-13"><a id="__codelineno-17-13" name="__codelineno-17-13" href="#__codelineno-17-13"></a>        <span class="c1"># returns None once the caller closes the stream.</span>
+</span><span id="__span-17-14"><a id="__codelineno-17-14" name="__codelineno-17-14" href="#__codelineno-17-14"></a>        <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">audio</span><span class="p">:</span>
+</span><span id="__span-17-15"><a id="__codelineno-17-15" name="__codelineno-17-15" href="#__codelineno-17-15"></a>            <span class="n">partial</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">feed</span><span class="p">(</span><span class="n">chunk</span><span class="p">,</span> <span class="n">language</span><span class="p">)</span>
+</span><span id="__span-17-16"><a id="__codelineno-17-16" name="__codelineno-17-16" href="#__codelineno-17-16"></a>            <span class="k">if</span> <span class="n">partial</span><span class="p">:</span>
+</span><span id="__span-17-17"><a id="__codelineno-17-17" name="__codelineno-17-17" href="#__codelineno-17-17"></a>                <span class="bp">self</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">partial</span>
+</span><span id="__span-17-18"><a id="__codelineno-17-18" name="__codelineno-17-18" href="#__codelineno-17-18"></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">text</span>
+</span><span id="__span-17-19"><a id="__codelineno-17-19" name="__codelineno-17-19" href="#__codelineno-17-19"></a>
+</span><span id="__span-17-20"><a id="__codelineno-17-20" name="__codelineno-17-20" href="#__codelineno-17-20"></a>
+</span><span id="__span-17-21"><a id="__codelineno-17-21" name="__codelineno-17-21" href="#__codelineno-17-21"></a><span class="k">class</span> <span class="nc">MyStreamingSTT</span><span class="p">(</span><span class="n">StreamingSTT</span><span class="p">):</span>
+</span><span id="__span-17-22"><a id="__codelineno-17-22" name="__codelineno-17-22" href="#__codelineno-17-22"></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+</span><span id="__span-17-23"><a id="__codelineno-17-23" name="__codelineno-17-23" href="#__codelineno-17-23"></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</span><span id="__span-17-24"><a id="__codelineno-17-24" name="__codelineno-17-24" href="#__codelineno-17-24"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">engine</span> <span class="o">=</span> <span class="n">MyStreamingEngine</span><span class="p">()</span>
+</span><span id="__span-17-25"><a id="__codelineno-17-25" name="__codelineno-17-25" href="#__codelineno-17-25"></a>
+</span><span id="__span-17-26"><a id="__codelineno-17-26" name="__codelineno-17-26" href="#__codelineno-17-26"></a>    <span class="k">def</span> <span class="nf">create_streaming_thread</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="__span-17-27"><a id="__codelineno-17-27" name="__codelineno-17-27" href="#__codelineno-17-27"></a>        <span class="k">return</span> <span class="n">MyStreamThread</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">queue</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">lang</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="p">)</span>
+</span><span id="__span-17-28"><a id="__codelineno-17-28" name="__codelineno-17-28" href="#__codelineno-17-28"></a>
+</span><span id="__span-17-29"><a id="__codelineno-17-29" name="__codelineno-17-29" href="#__codelineno-17-29"></a>    <span class="nd">@property</span>
+</span><span id="__span-17-30"><a id="__codelineno-17-30" name="__codelineno-17-30" href="#__codelineno-17-30"></a>    <span class="k">def</span> <span class="nf">available_languages</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="__span-17-31"><a id="__codelineno-17-31" name="__codelineno-17-31" href="#__codelineno-17-31"></a>        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;en-us&quot;</span><span class="p">}</span>
+</span></code></pre></div>
+<h3 id="entry-point">Entry point<a class="headerlink" href="#entry-point" title="Permanent link">&para;</a></h3>
+<p>To make the class detectable as an STT plugin, the package needs to provide an entry point under the <code>opm.stt</code> namespace.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="n">setup</span><span class="p">([</span><span class="o">...</span><span class="p">],</span>
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>      <span class="n">entry_points</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;opm.stt&#39;</span><span class="p">:</span> <span class="s1">&#39;example_stt = my_stt:mySTT&#39;</span><span class="p">}</span>
+</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>      <span class="p">)</span>
+</span></code></pre></div>
+<p>Where <code>example_stt</code> is the STT plugin name, <code>my_stt</code> is the Python module and <code>mySTT</code> is the class in the module to return.</p>
+<p>To expose your sample configurations (the <code>MySTTConfig</code> dict below) for UI discovery, register them under <code>opm.stt.config</code>:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="n">entry_points</span> <span class="o">=</span> <span class="p">{</span>
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>    <span class="s1">&#39;opm.stt&#39;</span><span class="p">:</span> <span class="s1">&#39;example_stt = my_stt:mySTT&#39;</span><span class="p">,</span>
+</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>    <span class="s1">&#39;opm.stt.config&#39;</span><span class="p">:</span> <span class="s1">&#39;example_stt.config = my_stt:MySTTConfig&#39;</span>
+</span><span id="__span-19-4"><a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a><span class="p">}</span>
+</span></code></pre></div>
+<blockquote>
+<p><strong>Backward Compatibility</strong>: <code>ovos-plugin-manager</code> still supports legacy <code>mycroft.plugin.stt</code> entry points, but new plugins should use the <code>opm.*</code> namespace.</p>
+</blockquote>
+<h3 id="standalone-usage">Standalone Usage<a class="headerlink" href="#standalone-usage" title="Permanent link">&para;</a></h3>
+<p>STT plugins can be used in your own projects, without a running OVOS instance, by
+importing the plugin class directly. For example, with <code>ovos-stt-plugin-vosk</code>:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="kn">from</span> <span class="nn">ovos_stt_plugin_vosk</span> <span class="kn">import</span> <span class="n">VoskKaldiSTT</span>
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a><span class="kn">from</span> <span class="nn">ovos_plugin_manager.utils.audio</span> <span class="kn">import</span> <span class="n">AudioFile</span>
+</span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>
+</span><span id="__span-20-4"><a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a><span class="n">plug</span> <span class="o">=</span> <span class="n">VoskKaldiSTT</span><span class="p">()</span>
+</span><span id="__span-20-5"><a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a>
+</span><span id="__span-20-6"><a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a><span class="c1"># verify lang is supported</span>
+</span><span id="__span-20-7"><a id="__codelineno-20-7" name="__codelineno-20-7" href="#__codelineno-20-7"></a><span class="n">lang</span> <span class="o">=</span> <span class="s2">&quot;en-us&quot;</span>
+</span><span id="__span-20-8"><a id="__codelineno-20-8" name="__codelineno-20-8" href="#__codelineno-20-8"></a><span class="k">assert</span> <span class="n">lang</span> <span class="ow">in</span> <span class="n">plug</span><span class="o">.</span><span class="n">available_languages</span>
+</span><span id="__span-20-9"><a id="__codelineno-20-9" name="__codelineno-20-9" href="#__codelineno-20-9"></a>
+</span><span id="__span-20-10"><a id="__codelineno-20-10" name="__codelineno-20-10" href="#__codelineno-20-10"></a><span class="c1"># read the whole file into an AudioData object</span>
+</span><span id="__span-20-11"><a id="__codelineno-20-11" name="__codelineno-20-11" href="#__codelineno-20-11"></a><span class="k">with</span> <span class="n">AudioFile</span><span class="p">(</span><span class="s2">&quot;test.wav&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">source</span><span class="p">:</span>
+</span><span id="__span-20-12"><a id="__codelineno-20-12" name="__codelineno-20-12" href="#__codelineno-20-12"></a>    <span class="n">audio</span> <span class="o">=</span> <span class="n">source</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</span><span id="__span-20-13"><a id="__codelineno-20-13" name="__codelineno-20-13" href="#__codelineno-20-13"></a>
+</span><span id="__span-20-14"><a id="__codelineno-20-14" name="__codelineno-20-14" href="#__codelineno-20-14"></a><span class="c1"># transcribe</span>
+</span><span id="__span-20-15"><a id="__codelineno-20-15" name="__codelineno-20-15" href="#__codelineno-20-15"></a><span class="n">transcript</span> <span class="o">=</span> <span class="n">plug</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">audio</span><span class="p">,</span> <span class="n">lang</span><span class="p">)</span>
+</span></code></pre></div>
+<h3 id="plugin-template">Plugin Template<a class="headerlink" href="#plugin-template" title="Permanent link">&para;</a></h3>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="kn">from</span> <span class="nn">ovos_plugin_manager.templates.stt</span> <span class="kn">import</span> <span class="n">STT</span>
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>
+</span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>
+</span><span id="__span-21-4"><a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a><span class="c1"># base plugin class</span>
+</span><span id="__span-21-5"><a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a><span class="k">class</span> <span class="nc">MySTTPlugin</span><span class="p">(</span><span class="n">STT</span><span class="p">):</span>
+</span><span id="__span-21-6"><a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+</span><span id="__span-21-7"><a id="__codelineno-21-7" name="__codelineno-21-7" href="#__codelineno-21-7"></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</span><span id="__span-21-8"><a id="__codelineno-21-8" name="__codelineno-21-8" href="#__codelineno-21-8"></a>        <span class="c1"># read config settings for your plugin</span>
+</span><span id="__span-21-9"><a id="__codelineno-21-9" name="__codelineno-21-9" href="#__codelineno-21-9"></a>        <span class="n">lm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;language-model&quot;</span><span class="p">)</span>
+</span><span id="__span-21-10"><a id="__codelineno-21-10" name="__codelineno-21-10" href="#__codelineno-21-10"></a>        <span class="n">hmm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;acoustic-model&quot;</span><span class="p">)</span>
+</span><span id="__span-21-11"><a id="__codelineno-21-11" name="__codelineno-21-11" href="#__codelineno-21-11"></a>
+</span><span id="__span-21-12"><a id="__codelineno-21-12" name="__codelineno-21-12" href="#__codelineno-21-12"></a>    <span class="k">def</span> <span class="nf">execute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">audio</span><span class="p">,</span> <span class="n">language</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+</span><span id="__span-21-13"><a id="__codelineno-21-13" name="__codelineno-21-13" href="#__codelineno-21-13"></a>        <span class="c1"># Implement STT engine logic here</span>
+</span><span id="__span-21-14"><a id="__codelineno-21-14" name="__codelineno-21-14" href="#__codelineno-21-14"></a>        <span class="n">transcript</span> <span class="o">=</span> <span class="s2">&quot;You said this&quot;</span>
+</span><span id="__span-21-15"><a id="__codelineno-21-15" name="__codelineno-21-15" href="#__codelineno-21-15"></a>        <span class="k">return</span> <span class="n">transcript</span>
+</span><span id="__span-21-16"><a id="__codelineno-21-16" name="__codelineno-21-16" href="#__codelineno-21-16"></a>
+</span><span id="__span-21-17"><a id="__codelineno-21-17" name="__codelineno-21-17" href="#__codelineno-21-17"></a>    <span class="nd">@property</span>
+</span><span id="__span-21-18"><a id="__codelineno-21-18" name="__codelineno-21-18" href="#__codelineno-21-18"></a>    <span class="k">def</span> <span class="nf">available_languages</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="__span-21-19"><a id="__codelineno-21-19" name="__codelineno-21-19" href="#__codelineno-21-19"></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Return languages supported by this STT implementation in this state</span>
+</span><span id="__span-21-20"><a id="__codelineno-21-20" name="__codelineno-21-20" href="#__codelineno-21-20"></a><span class="sd">        This property should be overridden by the derived class to advertise</span>
+</span><span id="__span-21-21"><a id="__codelineno-21-21" name="__codelineno-21-21" href="#__codelineno-21-21"></a><span class="sd">        what languages that engine supports.</span>
+</span><span id="__span-21-22"><a id="__codelineno-21-22" name="__codelineno-21-22" href="#__codelineno-21-22"></a><span class="sd">        Returns:</span>
+</span><span id="__span-21-23"><a id="__codelineno-21-23" name="__codelineno-21-23" href="#__codelineno-21-23"></a><span class="sd">            set: supported languages</span>
+</span><span id="__span-21-24"><a id="__codelineno-21-24" name="__codelineno-21-24" href="#__codelineno-21-24"></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="__span-21-25"><a id="__codelineno-21-25" name="__codelineno-21-25" href="#__codelineno-21-25"></a>        <span class="c1"># Return a set of supported BCP-47 language codes</span>
+</span><span id="__span-21-26"><a id="__codelineno-21-26" name="__codelineno-21-26" href="#__codelineno-21-26"></a>        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;en-us&quot;</span><span class="p">,</span> <span class="s2">&quot;es-es&quot;</span><span class="p">}</span>
+</span><span id="__span-21-27"><a id="__codelineno-21-27" name="__codelineno-21-27" href="#__codelineno-21-27"></a>
+</span><span id="__span-21-28"><a id="__codelineno-21-28" name="__codelineno-21-28" href="#__codelineno-21-28"></a>
+</span><span id="__span-21-29"><a id="__codelineno-21-29" name="__codelineno-21-29" href="#__codelineno-21-29"></a><span class="c1"># sample valid configurations per language</span>
+</span><span id="__span-21-30"><a id="__codelineno-21-30" name="__codelineno-21-30" href="#__codelineno-21-30"></a>
+</span><span id="__span-21-31"><a id="__codelineno-21-31" name="__codelineno-21-31" href="#__codelineno-21-31"></a><span class="c1"># &quot;display_name&quot; and &quot;offline&quot; provide metadata for UI</span>
+</span><span id="__span-21-32"><a id="__codelineno-21-32" name="__codelineno-21-32" href="#__codelineno-21-32"></a>
+</span><span id="__span-21-33"><a id="__codelineno-21-33" name="__codelineno-21-33" href="#__codelineno-21-33"></a><span class="c1"># &quot;priority&quot; is used to calculate position in selection dropdown </span>
+</span><span id="__span-21-34"><a id="__codelineno-21-34" name="__codelineno-21-34" href="#__codelineno-21-34"></a>
+</span><span id="__span-21-35"><a id="__codelineno-21-35" name="__codelineno-21-35" href="#__codelineno-21-35"></a><span class="c1">#       0 - top, 100-bottom</span>
+</span><span id="__span-21-36"><a id="__codelineno-21-36" name="__codelineno-21-36" href="#__codelineno-21-36"></a>
+</span><span id="__span-21-37"><a id="__codelineno-21-37" name="__codelineno-21-37" href="#__codelineno-21-37"></a><span class="c1"># all other keys represent an example valid config for the plugin </span>
+</span><span id="__span-21-38"><a id="__codelineno-21-38" name="__codelineno-21-38" href="#__codelineno-21-38"></a><span class="n">MySTTConfig</span> <span class="o">=</span> <span class="p">{</span>
+</span><span id="__span-21-39"><a id="__codelineno-21-39" name="__codelineno-21-39" href="#__codelineno-21-39"></a>    <span class="n">lang</span><span class="p">:</span> <span class="p">[{</span><span class="s2">&quot;lang&quot;</span><span class="p">:</span> <span class="n">lang</span><span class="p">,</span>
+</span><span id="__span-21-40"><a id="__codelineno-21-40" name="__codelineno-21-40" href="#__codelineno-21-40"></a>            <span class="s2">&quot;display_name&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;MySTT (</span><span class="si">{</span><span class="n">lang</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+</span><span id="__span-21-41"><a id="__codelineno-21-41" name="__codelineno-21-41" href="#__codelineno-21-41"></a>            <span class="s2">&quot;priority&quot;</span><span class="p">:</span> <span class="mi">70</span><span class="p">,</span>
+</span><span id="__span-21-42"><a id="__codelineno-21-42" name="__codelineno-21-42" href="#__codelineno-21-42"></a>            <span class="s2">&quot;offline&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}]</span>
+</span><span id="__span-21-43"><a id="__codelineno-21-43" name="__codelineno-21-43" href="#__codelineno-21-43"></a>    <span class="k">for</span> <span class="n">lang</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;en-us&quot;</span><span class="p">,</span> <span class="s2">&quot;es-es&quot;</span><span class="p">]</span>
+</span><span id="__span-21-44"><a id="__codelineno-21-44" name="__codelineno-21-44" href="#__codelineno-21-44"></a><span class="p">}</span>
+</span></code></pre></div>
 <h2 id="further-reading">Further reading<a class="headerlink" href="#further-reading" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="https://blog.openvoiceos.org/posts/2026-02-16-onnx-asr">Real-Time Offline Speech Recognition on OVOS (ONNX ASR)</a>, OVOS blog</li>

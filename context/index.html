@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#follow-up-questions" class="md-skip">
+        <a href="#context" class="md-skip">
           Skip to content
         </a>
       
@@ -955,6 +955,48 @@
   
   
     <li class="md-nav__item">
+      <a href="../intents-adapt/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Adapt Intents
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../intents-padatious/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Padatious Intents
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../prompts/" class="md-nav__link">
         
   
@@ -1022,11 +1064,26 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#follow-up-questions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Follow-up questions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Follow-up questions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#keyword-contexts" class="md-nav__link">
     <span class="md-ellipsis">
       Keyword Contexts
     </span>
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1649,11 +1706,26 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#follow-up-questions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Follow-up questions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Follow-up questions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#keyword-contexts" class="md-nav__link">
     <span class="md-ellipsis">
       Keyword Contexts
     </span>
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1711,7 +1783,7 @@
   
 
 
-<h1 id="follow-up-questions">Follow up questions<a class="headerlink" href="#follow-up-questions" title="Permanent link">&para;</a></h1>
+<h1 id="context">Context<a class="headerlink" href="#context" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
 <p>Normally each thing you say to your assistant is treated on its own, with no memory of the last sentence. Conversational context is the short-term memory that lets you ask a follow-up like "where's <em>he</em> from?" right after "how tall is John Cleese?" The assistant remembers you were talking about Cleese and fills in the blank. Skill authors mark which details to remember. That memory is kept separate for each ongoing conversation, so different people or devices don't get mixed up. See <a href="../skill-design-guidelines/">Skill design guidelines</a> or the <a href="../glossary/">Glossary</a>.</p>
@@ -1782,7 +1854,8 @@ against the registering <code>skill_id</code>, and reading a shared key needs th
 <code>IntentContextManager</code> from <code>ovos_bus_client.session</code>). It is <strong>session-scoped</strong>,
 not a single global store, so concurrent users and devices keep separate context.</p>
 <hr />
-<h2 id="keyword-contexts">Keyword Contexts<a class="headerlink" href="#keyword-contexts" title="Permanent link">&para;</a></h2>
+<h2 id="follow-up-questions">Follow-up questions<a class="headerlink" href="#follow-up-questions" title="Permanent link">&para;</a></h2>
+<h3 id="keyword-contexts">Keyword Contexts<a class="headerlink" href="#keyword-contexts" title="Permanent link">&para;</a></h3>
 <blockquote>
 <p>How tall is John Cleese?</p>
 </blockquote>

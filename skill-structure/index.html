@@ -1922,6 +1922,9 @@ without it, and only some community config tools still read it.</p>
 </span><span id="__span-8-19"><a id="__codelineno-8-19" name="__codelineno-8-19" href="#__codelineno-8-19"></a><span class="k">[tool.setuptools.package-data]</span>
 </span><span id="__span-8-20"><a id="__codelineno-8-20" name="__codelineno-8-20" href="#__codelineno-8-20"></a><span class="s2">&quot;*&quot;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;locale/**/*&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;ui/**/*&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;*.json&quot;</span><span class="p">]</span>
 </span></code></pre></div>
+<p>This broad glob is deliberate: <code>locale/**/*</code> picks up every dialog/vocab/intent file
+regardless of how you nest them under a language folder, and <code>ui/**/*</code> bundles GUI (QML/HTML)
+assets alongside the code.</p>
 <h4 id="skilljson"><code>skill.json</code><a class="headerlink" href="#skilljson" title="Permanent link">&para;</a></h4>
 <p>This is an optional, per-language file. It lives alongside your dialog and intent
 files (e.g. <code>locale/en-us/skill.json</code>). At runtime it is read for exactly one purpose:

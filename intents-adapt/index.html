@@ -1,0 +1,2166 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://tigregotico.github.io/ovos-technical-manual/intents-adapt/">
+      
+      
+        <link rel="prev" href="../intents/">
+      
+      
+        <link rel="next" href="../intents-padatious/">
+      
+      
+      <link rel="icon" href="https://github.com/OpenVoiceOS/ovos_assets/blob/master/Logo/ovos-logo-512.png?raw=true">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.31">
+    
+    
+      
+        <title>Adapt Intents - OpenVoiceOS Technical Manual</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.3cba04c6.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../css/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="grey" data-md-color-accent="red">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#adapt-intents-keyword-intents" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="OpenVoiceOS Technical Manual" class="md-header__button md-logo" aria-label="OpenVoiceOS Technical Manual" data-md-component="logo">
+      
+  <img src="https://github.com/OpenVoiceOS/ovos_assets/blob/master/Logo/ovos-logo-512.png?raw=true" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            OpenVoiceOS Technical Manual
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Adapt Intents
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="grey" data-md-color-accent="red"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="grey" data-md-color-accent="red"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/TigreGotico/ovos-technical-manual" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    TigreGotico/ovos-technical-manual
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href=".." class="md-tabs__link">
+          
+  
+  Home
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../ovos-installer/" class="md-tabs__link">
+          
+  
+  Get Started
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../everyday-help/" class="md-tabs__link">
+          
+  
+  Help & Troubleshooting
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../architecture-overview/" class="md-tabs__link">
+          
+  
+  Concepts
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../pipelines-overview/" class="md-tabs__link">
+          
+  
+  Intent Pipeline
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../lang-support/" class="md-tabs__link">
+          
+  
+  Language Support
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../first-skill/" class="md-tabs__link">
+          
+  
+  Skill Development
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../plugins-index/" class="md-tabs__link">
+          
+  
+  Plugin Ecosystem
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../personas/" class="md-tabs__link">
+          
+  
+  AI Agents & Personas
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../privacy-security/" class="md-tabs__link">
+          
+  
+  Production & Security
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../ecosystem-index/" class="md-tabs__link">
+          
+  
+  Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../contributing/" class="md-tabs__link">
+          
+  
+  Contributing & Project Infra
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="OpenVoiceOS Technical Manual" class="md-nav__button md-logo" aria-label="OpenVoiceOS Technical Manual" data-md-component="logo">
+      
+  <img src="https://github.com/OpenVoiceOS/ovos_assets/blob/master/Logo/ovos-logo-512.png?raw=true" alt="logo">
+
+    </a>
+    OpenVoiceOS Technical Manual
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/TigreGotico/ovos-technical-manual" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    TigreGotico/ovos-technical-manual
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href=".." class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../ovos-installer/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Get Started
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../everyday-help/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Help & Troubleshooting
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../architecture-overview/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Concepts
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../pipelines-overview/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Intent Pipeline
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../lang-support/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Language Support
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Skill Development
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            Skill Development
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../first-skill/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Tutorials
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../migrating-from-mycroft/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Guides
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_7_3" id="__nav_7_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Logic & Intents
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_7_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_7_3">
+            <span class="md-nav__icon md-icon"></span>
+            Logic & Intents
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../intents/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Intent Design
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Adapt Intents
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Adapt Intents
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#defining-keywords-and-entities" class="md-nav__link">
+    <span class="md-ellipsis">
+      Defining keywords and entities
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Defining keywords and entities">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#vocab-voc-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      Vocab (.voc) Files
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#regular-expression-rx-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      Regular Expression (.rx) Files
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-keyword-intents-in-a-skill" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using Keyword Intents in a Skill
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Using Keyword Intents in a Skill">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#creating-the-intent-handler" class="md-nav__link">
+    <span class="md-ellipsis">
+      Creating the Intent Handler
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#including-it-in-a-skill" class="md-nav__link">
+    <span class="md-ellipsis">
+      Including it in a Skill
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-problems" class="md-nav__link">
+    <span class="md-ellipsis">
+      Common Problems
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Common Problems">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#more-vocab" class="md-nav__link">
+    <span class="md-ellipsis">
+      More vocab!
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#i-have-added-new-phrases-in-the-voc-file-but-mycroft-isnt-recognizing-them" class="md-nav__link">
+    <span class="md-ellipsis">
+      I have added new phrases in the .voc file, but Mycroft isn't recognizing them
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#i-am-unable-to-match-against-the-utterance-string" class="md-nav__link">
+    <span class="md-ellipsis">
+      I am unable to match against the utterance string
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#my-intent-is-defined-correctly-but-never-matches" class="md-nav__link">
+    <span class="md-ellipsis">
+      My intent is defined correctly but never matches
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../intents-padatious/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Padatious Intents
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../prompts/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Asking the User
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../context/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Context
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../layers/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Intent Layers
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../permissions/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Permissions & Activation Control
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../converse/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Continuous Conversation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../session/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Context & Sessions
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../statements/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Dialog & Statements
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ssml/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    SSML
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../customization/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Customization
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../skill-json/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    skill.json
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../workshop-overview/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Skill APIs
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../testing-your-skill/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Testing Your Skill
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../skill-dev-faq/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Skill Dev F.A.Q.
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../fallbacks/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Advanced Skill Types
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ovoscope-overview/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Testing Reference (ovoscope)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../plugins-index/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Plugin Ecosystem
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    
+  
+  
+    <a href="../personas/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    AI Agents & Personas
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../privacy-security/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Production & Security
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../ecosystem-index/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Reference
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../contributing/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Contributing & Project Infra
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#defining-keywords-and-entities" class="md-nav__link">
+    <span class="md-ellipsis">
+      Defining keywords and entities
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Defining keywords and entities">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#vocab-voc-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      Vocab (.voc) Files
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#regular-expression-rx-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      Regular Expression (.rx) Files
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-keyword-intents-in-a-skill" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using Keyword Intents in a Skill
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Using Keyword Intents in a Skill">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#creating-the-intent-handler" class="md-nav__link">
+    <span class="md-ellipsis">
+      Creating the Intent Handler
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#including-it-in-a-skill" class="md-nav__link">
+    <span class="md-ellipsis">
+      Including it in a Skill
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-problems" class="md-nav__link">
+    <span class="md-ellipsis">
+      Common Problems
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Common Problems">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#more-vocab" class="md-nav__link">
+    <span class="md-ellipsis">
+      More vocab!
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#i-have-added-new-phrases-in-the-voc-file-but-mycroft-isnt-recognizing-them" class="md-nav__link">
+    <span class="md-ellipsis">
+      I have added new phrases in the .voc file, but Mycroft isn't recognizing them
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#i-am-unable-to-match-against-the-utterance-string" class="md-nav__link">
+    <span class="md-ellipsis">
+      I am unable to match against the utterance string
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#my-intent-is-defined-correctly-but-never-matches" class="md-nav__link">
+    <span class="md-ellipsis">
+      My intent is defined correctly but never matches
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="adapt-intents-keyword-intents">Adapt Intents (Keyword Intents)<a class="headerlink" href="#adapt-intents-keyword-intents" title="Permanent link">&para;</a></h1>
+<p>See also: <a href="../intents/">Intent Design</a> for how the two intent styles compare, and
+<a href="../adapt-pipeline/">Adapt Pipeline</a> for how the plugin matches these intents at runtime.</p>
+<div class="admonition abstract">
+<p class="admonition-title">In a nutshell</p>
+<p>Keyword intents (also called Adapt intents) match an utterance by looking for required
+and optional keywords, not whole phrases. You define the keywords in <code>.voc</code> files and,
+optionally, capture free-form entities with <code>.rx</code> regex files. Keyword intents are more
+flexible than template intents and integrate tightly with
+<a href="../context/">conversational context</a>, but a badly designed one can produce false
+matches. New terms are explained in the <a href="../glossary/">Glossary</a>.</p>
+</div>
+<p>Keyword-based pipeline plugins determine user intent from a list of keywords or entities
+contained in a user's utterance.</p>
+<h2 id="defining-keywords-and-entities">Defining keywords and entities<a class="headerlink" href="#defining-keywords-and-entities" title="Permanent link">&para;</a></h2>
+<h3 id="vocab-voc-files">Vocab (.voc) Files<a class="headerlink" href="#vocab-voc-files" title="Permanent link">&para;</a></h3>
+<p>Vocab files define keywords that the pipeline plugin looks for in a user's utterance to
+determine their intent.</p>
+<p>These files live in the skill's <code>locale/&lt;lang&gt;/</code> directory (e.g. <code>locale/en-us/Potato.voc</code>).
+They can have one or more lines listing synonyms or terms with the same meaning in the
+context of this skill. OVOS matches <em>any</em> of these keywords with the intent.</p>
+<blockquote>
+<p>Language directories are named with BCP-47 tags and compared case-insensitively, so <code>en-us</code> and <code>en-US</code> denote the same language (OVOS-INTENT-2 §3). The older split layout (<code>vocab/&lt;lang&gt;/</code>, <code>regex/&lt;lang&gt;/</code>, <code>dialog/&lt;lang&gt;/</code>) is still supported for legacy skills, but new skills should use a single <code>locale/&lt;lang&gt;/</code> folder per language.</p>
+</blockquote>
+<p>Consider a simple <code>Potato.voc</code>. Within this file we might include:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>potato
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>potatoes
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>spud
+</span></code></pre></div>
+<p>If the User speaks <em>either</em>:</p>
+<blockquote>
+<p>potato</p>
+</blockquote>
+<p>or</p>
+<blockquote>
+<p>potatoes</p>
+</blockquote>
+<p>or</p>
+<blockquote>
+<p>spud</p>
+</blockquote>
+<p>OVOS matches this to any keyword intents that use the <code>Potato</code> keyword.</p>
+<h3 id="regular-expression-rx-files">Regular Expression (.rx) Files<a class="headerlink" href="#regular-expression-rx-files" title="Permanent link">&para;</a></h3>
+<p>Regular expressions (or regex) let us capture entities based on the structure of an utterance.</p>
+<p>We strongly recommend you avoid regex. It is hard to make portable across languages, hard to
+translate, and the reported confidence of the intents is not great.</p>
+<p>We suggest using template intents (<code>.intent</code> files) instead if you find yourself needing regex.
+See <a href="../intents-padatious/">Padatious Intents</a>.</p>
+<blockquote>
+<p>Regex (<code>.rx</code>) is <strong>not</strong> a resource role in the <a href="https://github.com/OpenVoiceOS/architecture/blob/dev/intent-2.md">OVOS-INTENT-2</a> specification. It is an Adapt-specific extension. Prefer <code>.entity</code> slot constraints or template intents for portability.</p>
+</blockquote>
+<p>These files live in the skill's <code>locale/&lt;lang&gt;/</code> directory. They can have one or more lines
+providing different ways an entity may be referenced. OVOS executes these lines in the order
+they appear and returns the first result as an entity to the intent handler.</p>
+<p>Let's consider a <code>type.rx</code> file to extract the type of potato we are interested in. Within this file we might include:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>.* about (?P&lt;Type&gt;.*) potatoes
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>.* (make|like) (?P&lt;Type&gt;.*) potato
+</span></code></pre></div>
+<p><strong>What is this regex doing?</strong> <code>.*</code> matches zero, one, or more of any single character.
+<code>(?P&lt;Type&gt;.*)</code> is known as a named capturing group. The variable name is defined between the
+"&lt;&gt;", and what is captured is defined after this name. In this case we use <code>.*</code> to capture
+anything.</p>
+<p><a href="https://github.com/ziishaned/learn-regex/blob/master/README.md">Learn more about Regular Expressions</a>.</p>
+<p>So our first line would match an utterance such as:</p>
+<blockquote>
+<p>Tell me about <em>sweet potatoes</em></p>
+</blockquote>
+<p>The second line will match either:</p>
+<blockquote>
+<p>Do you like <em>deep fried potato</em></p>
+</blockquote>
+<p>or</p>
+<blockquote>
+<p>How do I make <em>mashed potato</em></p>
+</blockquote>
+<p>From these three utterances, what will the extracted <code>Type</code> be:\
+1. <code>sweet</code>\
+2. <code>deep fried</code>\
+3. <code>mashed</code></p>
+<p>This <code>Type</code> will be available to use in your Skill's Intent Handler on the <code>message</code> object. We can access this using:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>message.data.get(&#39;Type&#39;)
+</span></code></pre></div>
+<h2 id="using-keyword-intents-in-a-skill">Using Keyword Intents in a Skill<a class="headerlink" href="#using-keyword-intents-in-a-skill" title="Permanent link">&para;</a></h2>
+<p>Now that we have a vocab and a regular expression defined, let's look at how to use these in a
+simple skill.</p>
+<p>For the following example we will use the two files we outlined above:</p>
+<ul>
+<li>
+<p><code>Potato.voc</code></p>
+</li>
+<li>
+<p><code>Type.rx</code></p>
+</li>
+</ul>
+<p>We will also add some new <code>.voc</code> files:</p>
+<ul>
+<li>
+<p><code>Like.voc</code>: containing a single line "like"</p>
+</li>
+<li>
+<p><code>You.voc</code>: containing a single line "you"</p>
+</li>
+<li>
+<p><code>I.voc</code>: containing a single line "I"</p>
+</li>
+</ul>
+<h3 id="creating-the-intent-handler">Creating the Intent Handler<a class="headerlink" href="#creating-the-intent-handler" title="Permanent link">&para;</a></h3>
+<p>To construct a keyword intent, we use the <code>intent_handler()</code> decorator and pass in the <code>IntentBuilder</code> helper class.</p>
+<p><a href="https://en.wikipedia.org/wiki/Python_syntax_and_semantics#Decorators">Learn more about <em>decorators</em> in Python</a>.</p>
+<p>Both of these must be imported before we can use them:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kn">from</span> <span class="nn">ovos_workshop.intents</span> <span class="kn">import</span> <span class="n">IntentBuilder</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="kn">from</span> <span class="nn">ovos_workshop.decorators</span> <span class="kn">import</span> <span class="n">intent_handler</span>
+</span></code></pre></div>
+<p>The <code>IntentBuilder</code> is then passed the name of the intent as a string, followed by one or more
+parameters that correspond with one of our <code>.voc</code> or <code>.rx</code> files.</p>
+<p><em>Excerpt: the decorator on its own. A complete skill using it appears further below.</em></p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nd">@intent_handler</span><span class="p">(</span><span class="n">IntentBuilder</span><span class="p">(</span><span class="s1">&#39;IntentName&#39;</span><span class="p">)</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>                              <span class="o">.</span><span class="n">require</span><span class="p">(</span><span class="s1">&#39;Potato&#39;</span><span class="p">)</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>                              <span class="o">.</span><span class="n">require</span><span class="p">(</span><span class="s1">&#39;Like&#39;</span><span class="p">)</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>                              <span class="o">.</span><span class="n">optionally</span><span class="p">(</span><span class="s1">&#39;Type&#39;</span><span class="p">)</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>                              <span class="o">.</span><span class="n">one_of</span><span class="p">(</span><span class="s1">&#39;You&#39;</span><span class="p">,</span> <span class="s1">&#39;I&#39;</span><span class="p">))</span>
+</span></code></pre></div>
+<p>In this example:</p>
+<ul>
+<li>
+<p>the <code>Potato</code> and <code>Like</code> keywords are required. Each must be present for the intent to match.</p>
+</li>
+<li>
+<p>the <code>Type</code> entity is optional. A stronger match happens if this is found, but it is not required.</p>
+</li>
+<li>
+<p>we require at least one of the <code>You</code> or <code>I</code> keywords.</p>
+</li>
+</ul>
+<p>What are some utterances that would match this intent?</p>
+<blockquote>
+<p>Do you like potato? Do you like fried potato? Will I like mashed potato? Do you think I would like potato?</p>
+</blockquote>
+<p>What are some utterances that would <em>not</em> match the intent?</p>
+<blockquote>
+<p>How do I make mashed potato?</p>
+</blockquote>
+<p><em>The required <code>Like</code> keyword is missing.</em></p>
+<blockquote>
+<p>Is it like a potato?</p>
+</blockquote>
+<p><em>Neither the <code>You</code> nor <code>I</code> keyword is found.</em></p>
+<h3 id="including-it-in-a-skill">Including it in a Skill<a class="headerlink" href="#including-it-in-a-skill" title="Permanent link">&para;</a></h3>
+<p>Now we can create our Potato Skill:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kn">from</span> <span class="nn">ovos_workshop.intents</span> <span class="kn">import</span> <span class="n">IntentBuilder</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="kn">from</span> <span class="nn">ovos_workshop.skills</span> <span class="kn">import</span> <span class="n">OVOSSkill</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="kn">from</span> <span class="nn">ovos_workshop.decorators</span> <span class="kn">import</span> <span class="n">intent_handler</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="k">class</span> <span class="nc">PotatoSkill</span><span class="p">(</span><span class="n">OVOSSkill</span><span class="p">):</span>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>    <span class="nd">@intent_handler</span><span class="p">(</span><span class="n">IntentBuilder</span><span class="p">(</span><span class="s1">&#39;WhatIsPotato&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">require</span><span class="p">(</span><span class="s1">&#39;What&#39;</span><span class="p">)</span>
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>                    <span class="o">.</span><span class="n">require</span><span class="p">(</span><span class="s1">&#39;Potato&#39;</span><span class="p">))</span>
+</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>    <span class="k">def</span> <span class="nf">handle_what_is</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">speak_dialog</span><span class="p">(</span><span class="s1">&#39;potato.description&#39;</span><span class="p">)</span>
+</span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>
+</span><span id="__span-5-13"><a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>    <span class="nd">@intent_handler</span><span class="p">(</span><span class="n">IntentBuilder</span><span class="p">(</span><span class="s1">&#39;DoYouLikePotato&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">require</span><span class="p">(</span><span class="s1">&#39;Potato&#39;</span><span class="p">)</span>
+</span><span id="__span-5-14"><a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a>                    <span class="o">.</span><span class="n">require</span><span class="p">(</span><span class="s1">&#39;Like&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">optionally</span><span class="p">(</span><span class="s1">&#39;Type&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">one_of</span><span class="p">(</span><span class="s1">&#39;You&#39;</span><span class="p">,</span> <span class="s1">&#39;I&#39;</span><span class="p">))</span>
+</span><span id="__span-5-15"><a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a>    <span class="k">def</span> <span class="nf">handle_do_you_like</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+</span><span id="__span-5-16"><a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a>        <span class="n">potato_type</span> <span class="o">=</span> <span class="n">message</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;Type&#39;</span><span class="p">)</span>
+</span><span id="__span-5-17"><a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a>        <span class="k">if</span> <span class="n">potato_type</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="__span-5-18"><a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">speak_dialog</span><span class="p">(</span><span class="s1">&#39;like.potato.type&#39;</span><span class="p">,</span>
+</span><span id="__span-5-19"><a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a>                              <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="n">potato_type</span><span class="p">})</span>
+</span><span id="__span-5-20"><a id="__codelineno-5-20" name="__codelineno-5-20" href="#__codelineno-5-20"></a>        <span class="k">else</span><span class="p">:</span>
+</span><span id="__span-5-21"><a id="__codelineno-5-21" name="__codelineno-5-21" href="#__codelineno-5-21"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">speak_dialog</span><span class="p">(</span><span class="s1">&#39;like.potato.generic&#39;</span><span class="p">)</span>
+</span></code></pre></div>
+<p>See <a href="../skill-examples/">Skill Examples</a> for real, working skills that use keyword intents this way.</p>
+<h2 id="common-problems">Common Problems<a class="headerlink" href="#common-problems" title="Permanent link">&para;</a></h2>
+<h3 id="more-vocab">More vocab!<a class="headerlink" href="#more-vocab" title="Permanent link">&para;</a></h3>
+<p>One of the most common mistakes when getting started with skills is that the vocab file
+doesn't include all the keywords or terms a user might use to trigger the intent. Map out
+your skill and test the interactions with others to see how they might ask questions
+differently.</p>
+<h3 id="i-have-added-new-phrases-in-the-voc-file-but-mycroft-isnt-recognizing-them">I have added new phrases in the .voc file, but Mycroft isn't recognizing them<a class="headerlink" href="#i-have-added-new-phrases-in-the-voc-file-but-mycroft-isnt-recognizing-them" title="Permanent link">&para;</a></h3>
+<ol>
+<li>
+<p>OVOS normalizes compound words like "don't", "won't", and "shouldn't", so they become "do not", "will not", "should not". Use the normalized words in your <code>.voc</code> files. Similarly, the normalization process removes definite articles like "the", so avoid using them in your <code>.voc</code> or <code>.rx</code> files as well.</p>
+</li>
+<li>
+<p>A tab is not 4 spaces. Sometimes your text editor or IDE automatically replaces tabs with spaces or vice versa. This may lead to an indentation error. Make sure there are no extra tabs and that your editor doesn't replace your spaces.</p>
+</li>
+<li>
+<p>Wrong order of file directories is a common mistake. You have to make a language sub-folder inside the dialog, vocab, or locale folders, such as <code>skill-dir/locale/en-us/somefile.dialog</code>. Make sure your <code>.voc</code> files and <code>.dialog</code> files sit inside a language subfolder.</p>
+</li>
+</ol>
+<h3 id="i-am-unable-to-match-against-the-utterance-string">I am unable to match against the utterance string<a class="headerlink" href="#i-am-unable-to-match-against-the-utterance-string" title="Permanent link">&para;</a></h3>
+<p>The speech-to-text engine returns the utterance string all lowercase. Convert any string
+matching you do to lowercase as well. For example, here is a method excerpt from inside a
+skill class:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>    <span class="nd">@intent_handler</span><span class="p">(</span><span class="n">IntentBuilder</span><span class="p">(</span><span class="s1">&#39;Example&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">require</span><span class="p">(</span><span class="s1">&#39;Example&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">require</span><span class="p">(</span><span class="s1">&#39;Intent&#39;</span><span class="p">))</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>    <span class="k">def</span> <span class="nf">handle_example</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>        <span class="n">utterance</span> <span class="o">=</span> <span class="n">message</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;utterance&#39;</span><span class="p">)</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>        <span class="k">if</span> <span class="s1">&#39;Proper Noun&#39;</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="n">utterance</span><span class="p">:</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">speak</span><span class="p">(</span><span class="s1">&#39;Found it&#39;</span><span class="p">)</span>
+</span></code></pre></div>
+<h3 id="my-intent-is-defined-correctly-but-never-matches">My intent is defined correctly but never matches<a class="headerlink" href="#my-intent-is-defined-correctly-but-never-matches" title="Permanent link">&para;</a></h3>
+<p>If the <code>.voc</code>/<code>.rx</code> files look right and the utterance still doesn't match anything, check
+whether the intent has actually been <strong>disabled</strong> rather than badly written. A skill can turn
+individual intents off with <code>disable_intent()</code>, and whitelist/blacklist controls can also gate
+off a skill or its converse participation entirely. See <a href="../layers/">Intent Layers</a> for
+per-skill intent enable/disable state and <a href="../permissions/">Permissions &amp; Activation Control</a> for
+the coarser skill-level gates.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.path", "navigation.prune", "navigation.top", "navigation.tracking", "navigation.instant", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate"], "search": "../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.fe8b6f2b.min.js"></script>
+      
+    
+  </body>
+</html>

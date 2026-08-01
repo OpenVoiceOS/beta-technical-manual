@@ -1731,7 +1731,7 @@ proxies, and <a href="../persona-server/"><code>ovos-persona-server</code></a>.<
 <p>The old <code>ovos-solver-openai-plugin</code> entry point and the <code>OpenAIChatCompletionsSolver</code> /
 <code>OpenAICompletionsSolver</code> classes no longer exist. Personas that referenced them must
 switch to the <code>ovos-chat-openai-plugin</code> agent engine (still listed under a persona's
-<code>solvers</code> / <code>handlers</code> key, which <code>ovos-persona</code> accepts).</p>
+<code>handlers</code> key).</p>
 </div>
 <hr />
 <h2 id="plugins-overview">Plugins Overview<a class="headerlink" href="#plugins-overview" title="Permanent link">&para;</a></h2>
@@ -1993,8 +1993,6 @@ This lets you keep API keys on a single server and offload LLM computation:</p>
 </span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="w">  </span><span class="p">}</span>
 </span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="p">}</span>
 </span></code></pre></div>
-<p>A persona's chat engine can equally be listed under the <code>solvers</code> key. <code>ovos-persona</code>
-accepts either <code>handlers</code> or <code>solvers</code> and dispatches the same way.</p>
 <p>Activate by voice: <code>"Chat with My Local LLM"</code>.</p>
 <hr />
 <h2 id="rag-memory-opmagentsmemory">RAG Memory (<code>opm.agents.memory</code>)<a class="headerlink" href="#rag-memory-opmagentsmemory" title="Permanent link">&para;</a></h2>
@@ -2067,7 +2065,7 @@ memory plugins live in <code>ovos-memory-plugins</code> instead.</p>
 </table>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="p">{</span>
 </span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;kb-assistant&quot;</span><span class="p">,</span>
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">  </span><span class="nt">&quot;solvers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;ovos-chat-openai-plugin&quot;</span><span class="p">],</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">  </span><span class="nt">&quot;handlers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;ovos-chat-openai-plugin&quot;</span><span class="p">],</span>
 </span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">  </span><span class="nt">&quot;memory_module&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ovos-openai-rag-memory-plugin&quot;</span><span class="p">,</span>
 </span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">  </span><span class="nt">&quot;ovos-openai-rag-memory-plugin&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 </span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">    </span><span class="nt">&quot;api_url&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;http://localhost:8337/openai/v1&quot;</span><span class="p">,</span>

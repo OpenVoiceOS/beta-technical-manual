@@ -14,7 +14,7 @@
         <link rel="prev" href="../skill-structure/">
       
       
-        <link rel="next" href="../prompts/">
+        <link rel="next" href="../intents-adapt/">
       
       
       <link rel="icon" href="https://github.com/OpenVoiceOS/ovos_assets/blob/master/Logo/ovos-logo-512.png?raw=true">
@@ -980,233 +980,11 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#keyword-intents" class="md-nav__link">
+  <a href="#choosing-an-engine" class="md-nav__link">
     <span class="md-ellipsis">
-      Keyword Intents
+      Choosing an engine
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="Keyword Intents">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#defining-keywords-and-entities" class="md-nav__link">
-    <span class="md-ellipsis">
-      Defining keywords and entities
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Defining keywords and entities">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#vocab-voc-files" class="md-nav__link">
-    <span class="md-ellipsis">
-      Vocab (.voc) Files
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#regular-expression-rx-files" class="md-nav__link">
-    <span class="md-ellipsis">
-      Regular Expression (.rx) Files
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#using-keyword-intents-in-a-skill" class="md-nav__link">
-    <span class="md-ellipsis">
-      Using Keyword Intents in a Skill
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Using Keyword Intents in a Skill">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#creating-the-intent-handler" class="md-nav__link">
-    <span class="md-ellipsis">
-      Creating the Intent Handler
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#including-it-in-a-skill" class="md-nav__link">
-    <span class="md-ellipsis">
-      Including it in a Skill
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#common-problems" class="md-nav__link">
-    <span class="md-ellipsis">
-      Common Problems
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Common Problems">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#more-vocab" class="md-nav__link">
-    <span class="md-ellipsis">
-      More vocab!
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#i-have-added-new-phrases-in-the-voc-file-but-mycroft-isnt-recognizing-them" class="md-nav__link">
-    <span class="md-ellipsis">
-      I have added new phrases in the .voc file, but Mycroft isn't recognizing them
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#i-am-unable-to-match-against-the-utterance-string" class="md-nav__link">
-    <span class="md-ellipsis">
-      I am unable to match against the utterance string
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#example-based-intents" class="md-nav__link">
-    <span class="md-ellipsis">
-      Example based Intents
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Example based Intents">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#creating-intents" class="md-nav__link">
-    <span class="md-ellipsis">
-      Creating Intents
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Creating Intents">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#defining-entities" class="md-nav__link">
-    <span class="md-ellipsis">
-      Defining entities
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#specific-entities" class="md-nav__link">
-    <span class="md-ellipsis">
-      Specific Entities
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#number-matching" class="md-nav__link">
-    <span class="md-ellipsis">
-      Number matching
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#entities-with-unknown-tokens" class="md-nav__link">
-    <span class="md-ellipsis">
-      Entities with unknown tokens
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#parentheses-expansion" class="md-nav__link">
-    <span class="md-ellipsis">
-      Parentheses Expansion
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#using-it-in-a-skill" class="md-nav__link">
-    <span class="md-ellipsis">
-      Using it in a Skill
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#common-problems_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      Common Problems
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Common Problems">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#my-intent-is-defined-correctly-but-never-matches" class="md-nav__link">
-    <span class="md-ellipsis">
-      My intent is defined correctly but never matches
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -1214,6 +992,48 @@
   
 </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../intents-adapt/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Adapt Intents
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../intents-padatious/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Padatious Intents
+  </span>
+  
+
+      </a>
     </li>
   
 
@@ -1835,233 +1655,11 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#keyword-intents" class="md-nav__link">
+  <a href="#choosing-an-engine" class="md-nav__link">
     <span class="md-ellipsis">
-      Keyword Intents
+      Choosing an engine
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="Keyword Intents">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#defining-keywords-and-entities" class="md-nav__link">
-    <span class="md-ellipsis">
-      Defining keywords and entities
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Defining keywords and entities">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#vocab-voc-files" class="md-nav__link">
-    <span class="md-ellipsis">
-      Vocab (.voc) Files
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#regular-expression-rx-files" class="md-nav__link">
-    <span class="md-ellipsis">
-      Regular Expression (.rx) Files
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#using-keyword-intents-in-a-skill" class="md-nav__link">
-    <span class="md-ellipsis">
-      Using Keyword Intents in a Skill
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Using Keyword Intents in a Skill">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#creating-the-intent-handler" class="md-nav__link">
-    <span class="md-ellipsis">
-      Creating the Intent Handler
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#including-it-in-a-skill" class="md-nav__link">
-    <span class="md-ellipsis">
-      Including it in a Skill
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#common-problems" class="md-nav__link">
-    <span class="md-ellipsis">
-      Common Problems
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Common Problems">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#more-vocab" class="md-nav__link">
-    <span class="md-ellipsis">
-      More vocab!
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#i-have-added-new-phrases-in-the-voc-file-but-mycroft-isnt-recognizing-them" class="md-nav__link">
-    <span class="md-ellipsis">
-      I have added new phrases in the .voc file, but Mycroft isn't recognizing them
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#i-am-unable-to-match-against-the-utterance-string" class="md-nav__link">
-    <span class="md-ellipsis">
-      I am unable to match against the utterance string
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#example-based-intents" class="md-nav__link">
-    <span class="md-ellipsis">
-      Example based Intents
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Example based Intents">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#creating-intents" class="md-nav__link">
-    <span class="md-ellipsis">
-      Creating Intents
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Creating Intents">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#defining-entities" class="md-nav__link">
-    <span class="md-ellipsis">
-      Defining entities
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#specific-entities" class="md-nav__link">
-    <span class="md-ellipsis">
-      Specific Entities
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#number-matching" class="md-nav__link">
-    <span class="md-ellipsis">
-      Number matching
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#entities-with-unknown-tokens" class="md-nav__link">
-    <span class="md-ellipsis">
-      Entities with unknown tokens
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#parentheses-expansion" class="md-nav__link">
-    <span class="md-ellipsis">
-      Parentheses Expansion
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#using-it-in-a-skill" class="md-nav__link">
-    <span class="md-ellipsis">
-      Using it in a Skill
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#common-problems_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      Common Problems
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Common Problems">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#my-intent-is-defined-correctly-but-never-matches" class="md-nav__link">
-    <span class="md-ellipsis">
-      My intent is defined correctly but never matches
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -2092,9 +1690,9 @@ pipeline plugins that match the intents described on this page.</p>
 Melbourne", or just "weather" all mean roughly the same thing. An <em>intent</em> is what the
 user is actually trying to do. The part of OVOS that figures it out is a <em>pipeline
 plugin</em> (older docs call this an "intent parser" or "intent engine"; see the
-<a href="../glossary/">Glossary</a>). This page explains how OVOS recognizes intents and pulls out
-the useful details, like a place or a date, and describes the two styles you can use to
-define them. New terms are explained in the <a href="../glossary/">Glossary</a>.</p>
+<a href="../glossary/">Glossary</a>). This page explains what an intent is and helps you choose
+between the two engines OVOS ships by default. New terms are explained in the
+<a href="../glossary/">Glossary</a>.</p>
 </div>
 <details class="info">
 <summary>📐 Formal specification</summary>
@@ -2104,7 +1702,7 @@ define them. New terms are explained in the <a href="../glossary/">Glossary</a>.
 <li><strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/intent-1.md">OVOS-INTENT-1: Sentence Template Grammar</a></strong>: the <code>(a|b)</code> / <code>[optional]</code> / <code>{slot}</code> / <code>&lt;vocab&gt;</code> grammar that template intents and vocabularies are written in.</li>
 <li><strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/intent-4.md">OVOS-INTENT-4: Intent &amp; Entity Registration</a></strong>: the broadcast, fire-and-forget bus messages (<code>ovos.intent.register.keyword</code> / <code>.template</code>) a skill emits to declare its intents.</li>
 </ul>
-<p>The on-disk file formats (<code>.intent</code>, <code>.voc</code>, <code>.entity</code>) are <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/intent-2.md">OVOS-INTENT-2: Locale Resource Formats</a></strong>. See <a href="../resource-files/">Resource Files</a>. Where this page's engine-specific syntax diverges from the portable grammar, it is flagged inline and the spec is canonical.</p>
+<p>The on-disk file formats (<code>.intent</code>, <code>.voc</code>, <code>.entity</code>) are <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/intent-2.md">OVOS-INTENT-2: Locale Resource Formats</a></strong>. See <a href="../resource-files/">Resource Files</a>. Where an engine-specific syntax diverges from the portable grammar, it is flagged inline on that engine's page, and the spec is canonical.</p>
 </details>
 <p>A user can accomplish the same task by expressing their intent in multiple ways. The matching
 pipeline plugin's role is to extract key data elements from the user's speech that specify
@@ -2119,450 +1717,66 @@ the user accomplish their intended task.</p>
 <p>Even though these are three different expressions, for most of us they probably have roughly
 the same meaning. In each case we would assume the user expects OVOS to respond with today's
 weather for their current location. The matching pipeline plugin's role is to determine what
-this intent is.</p>
-<p>In the example above, we might extract data elements like:</p>
-<ul>
-<li>
-<p><strong>weather</strong>: we know that Julie wants to know about the weather, but she has not been
-  specific about the type of weather, such as <em>wind</em>, <em>precipitation</em>, <em>snowfall</em> or the risk
-  of <em>fire danger</em> from bushfires. Melbourne, Australia rarely experiences snowfall, but falls
-  under bushfire risk every summer.</p>
-</li>
-<li>
-<p><strong>location</strong>: Julie has stated her location as Melbourne, but she does not say that she
-  means Melbourne, Australia. How do we distinguish this from Melbourne, Florida, United States?</p>
-</li>
-<li>
-<p><strong>date</strong>: Julie has been specific about the <em>timeframe</em> she wants weather data for: today.
-  But how do we know what today means in Julie's timezone? Melbourne, Australia is between
-  14-18 hours ahead of the United States. We don't want to give Julie yesterday's weather,
-  particularly as Melbourne is known for changeable weather.</p>
-</li>
-</ul>
-<p>OVOS provides two kinds of intent, each with its own strengths. The
+this intent is, and to extract data elements like the weather type, the location, and the date.</p>
+<h2 id="choosing-an-engine">Choosing an engine<a class="headerlink" href="#choosing-an-engine" title="Permanent link">&para;</a></h2>
+<p>OVOS provides two kinds of intent, matched by two default pipeline plugins. The
 <a href="https://github.com/OpenVoiceOS/architecture/blob/dev/intent-3.md">OVOS-INTENT-3</a>
 specification calls them <strong>template intents</strong> and <strong>keyword intents</strong>. Each individual
-registration uses exactly one method. The two shapes are never mixed within one registration.
-But a single intent name may carry <strong>one registration of each method</strong>, giving the same
-handler two independent training-data representations. Registering a new keyword (or
-template) registration replaces only the prior registration under that same method, leaving
-the other method's registration for that intent untouched.</p>
-<p><strong>Template intents</strong> (example based) are matched against whole phrases. These are generally
-more accurate, but require you to include sample phrases covering the breadth of ways a user
-might ask. They live in <code>.intent</code> files.</p>
-<p><strong>Keyword intents</strong> (rule based) look for specific required keywords. They are more flexible,
-but being rule based they can produce false matches. A badly designed keyword intent can throw
-the parser off. Their main advantage is tight integration with <a href="../context/">conversational context</a>
-for continuous dialogs. They are built from <code>.voc</code> files.</p>
-<p>Padatious and Adapt are the two default pipeline plugins that match intents:</p>
-<ul>
-<li>
-<p><strong><a href="../padatious-pipeline/">Padatious</a></strong>: a lightweight neural network trained on whole phrases (template intents).</p>
-</li>
-<li>
-<p><strong><a href="../adapt-pipeline/">Adapt</a></strong>: a keyword based parser (keyword intents).</p>
-</li>
-</ul>
+registration uses exactly one method, but a single intent name may carry <strong>one registration of
+each method</strong>, giving the same handler two independent training-data representations.
+Registering a new keyword (or template) registration replaces only the prior registration
+under that same method, leaving the other method's registration for that intent untouched.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><a href="../intents-adapt/">Adapt</a> (keyword intents)</th>
+<th><a href="../intents-padatious/">Padatious</a> (template intents)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Matches on</td>
+<td>required and optional keywords, from <code>.voc</code> files</td>
+<td>whole example phrases, from <code>.intent</code> files</td>
+</tr>
+<tr>
+<td>Strength</td>
+<td>strict, predictable matching. Handles digits well.</td>
+<td>Easy to create. Easy entity extraction.</td>
+</tr>
+<tr>
+<td>Weakness</td>
+<td>a badly designed keyword set can produce false matches</td>
+<td>weak paraphrase handling. Digits become <code>#</code> internally.</td>
+</tr>
+<tr>
+<td>Best for</td>
+<td>personal or private skills, command-and-control, single-language skills you fully control</td>
+<td>public-facing or general-purpose skills, kiosk or assistant environments, multilingual skills</td>
+</tr>
+<tr>
+<td>Avoid for</td>
+<td>public-facing or general-purpose assistant skills</td>
+<td>complex conversational skills, overlapping intents, or matching numbers</td>
+</tr>
+</tbody>
+</table>
 <blockquote>
 <p>NOTE: Padatious does not handle numbers well. Internally it sees all digits as "#". If you need to match digits, use Adapt (keyword intents) instead.</p>
 </blockquote>
-<p>We will now look at each in more detail, including how to use them in a <a href="../skill-design-guidelines/">Skill</a>.</p>
-<h2 id="keyword-intents">Keyword Intents<a class="headerlink" href="#keyword-intents" title="Permanent link">&para;</a></h2>
-<p>Keyword-based pipeline plugins determine user intent from a list of keywords or entities
-contained in a user's utterance.</p>
-<h3 id="defining-keywords-and-entities">Defining keywords and entities<a class="headerlink" href="#defining-keywords-and-entities" title="Permanent link">&para;</a></h3>
-<h4 id="vocab-voc-files">Vocab (.voc) Files<a class="headerlink" href="#vocab-voc-files" title="Permanent link">&para;</a></h4>
-<p>Vocab files define keywords that the pipeline plugin looks for in a user's utterance to
-determine their intent.</p>
-<p>These files live in the skill's <code>locale/&lt;lang&gt;/</code> directory (e.g. <code>locale/en-us/Potato.voc</code>).
-They can have one or more lines listing synonyms or terms with the same meaning in the
-context of this skill. OVOS matches <em>any</em> of these keywords with the intent.</p>
-<blockquote>
-<p>Language directories are named with BCP-47 tags and compared case-insensitively, so <code>en-us</code> and <code>en-US</code> denote the same language (OVOS-INTENT-2 §3). The older split layout (<code>vocab/&lt;lang&gt;/</code>, <code>regex/&lt;lang&gt;/</code>, <code>dialog/&lt;lang&gt;/</code>) is still supported for legacy skills, but new skills should use a single <code>locale/&lt;lang&gt;/</code> folder per language.</p>
-</blockquote>
-<p>Consider a simple <code>Potato.voc</code>. Within this file we might include:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>potato
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>potatoes
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>spud
-</span></code></pre></div>
-<p>If the User speaks <em>either</em>:</p>
-<blockquote>
-<p>potato</p>
-</blockquote>
-<p>or</p>
-<blockquote>
-<p>potatoes</p>
-</blockquote>
-<p>or</p>
-<blockquote>
-<p>spud</p>
-</blockquote>
-<p>OVOS matches this to any keyword intents that use the <code>Potato</code> keyword.</p>
-<h4 id="regular-expression-rx-files">Regular Expression (.rx) Files<a class="headerlink" href="#regular-expression-rx-files" title="Permanent link">&para;</a></h4>
-<p>Regular expressions (or regex) let us capture entities based on the structure of an utterance.</p>
-<p>We strongly recommend you avoid regex. It is hard to make portable across languages, hard to
-translate, and the reported confidence of the intents is not great.</p>
-<p>We suggest using template intents (<code>.intent</code> files) instead if you find yourself needing regex.</p>
-<blockquote>
-<p>Regex (<code>.rx</code>) is <strong>not</strong> a resource role in the <a href="https://github.com/OpenVoiceOS/architecture/blob/dev/intent-2.md">OVOS-INTENT-2</a> specification. It is an Adapt-specific extension. Prefer <code>.entity</code> slot constraints or template intents for portability.</p>
-</blockquote>
-<p>These files live in the skill's <code>locale/&lt;lang&gt;/</code> directory. They can have one or more lines
-providing different ways an entity may be referenced. OVOS executes these lines in the order
-they appear and returns the first result as an entity to the intent handler.</p>
-<p>Let's consider a <code>type.rx</code> file to extract the type of potato we are interested in. Within this file we might include:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>.* about (?P&lt;Type&gt;.*) potatoes
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>.* (make|like) (?P&lt;Type&gt;.*) potato
-</span></code></pre></div>
-<p><strong>What is this regex doing?</strong> <code>.*</code> matches zero, one, or more of any single character.
-<code>(?P&lt;Type&gt;.*)</code> is known as a named capturing group. The variable name is defined between the
-"&lt;&gt;", and what is captured is defined after this name. In this case we use <code>.*</code> to capture
-anything.</p>
-<p><a href="https://github.com/ziishaned/learn-regex/blob/master/README.md">Learn more about Regular Expressions</a>.</p>
-<p>So our first line would match an utterance such as:</p>
-<blockquote>
-<p>Tell me about <em>sweet potatoes</em></p>
-</blockquote>
-<p>The second line will match either:</p>
-<blockquote>
-<p>Do you like <em>deep fried potato</em></p>
-</blockquote>
-<p>or</p>
-<blockquote>
-<p>How do I make <em>mashed potato</em></p>
-</blockquote>
-<p>From these three utterances, what will the extracted <code>Type</code> be:\
-1. <code>sweet</code>\
-2. <code>deep fried</code>\
-3. <code>mashed</code></p>
-<p>This <code>Type</code> will be available to use in your Skill's Intent Handler on the <code>message</code> object. We can access this using:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>message.data.get(&#39;Type&#39;)
-</span></code></pre></div>
-<h3 id="using-keyword-intents-in-a-skill">Using Keyword Intents in a Skill<a class="headerlink" href="#using-keyword-intents-in-a-skill" title="Permanent link">&para;</a></h3>
-<p>Now that we have a vocab and a regular expression defined, let's look at how to use these in a
-simple skill.</p>
-<p>For the following example we will use the two files we outlined above:</p>
+<p>See the pipeline plugin pages for the full picture of how each engine matches at runtime,
+including confidence thresholds and entry points:</p>
 <ul>
-<li>
-<p><code>Potato.voc</code></p>
-</li>
-<li>
-<p><code>Type.rx</code></p>
-</li>
+<li><strong><a href="../adapt-pipeline/">Adapt Pipeline</a></strong>: a keyword based parser (keyword intents). See
+  <a href="../intents-adapt/">Adapt Intents</a> for how to write <code>.voc</code>/<code>.rx</code> files and build keyword
+  intents in a skill.</li>
+<li><strong><a href="../padatious-pipeline/">Padatious Pipeline</a></strong>: a lightweight neural network trained on
+  whole phrases (template intents). See <a href="../intents-padatious/">Padatious Intents</a> for how to
+  write <code>.intent</code>/<code>.entity</code> files and build example-based intents in a skill.</li>
 </ul>
-<p>We will also add some new <code>.voc</code> files:</p>
-<ul>
-<li>
-<p><code>Like.voc</code>: containing a single line "like"</p>
-</li>
-<li>
-<p><code>You.voc</code>: containing a single line "you"</p>
-</li>
-<li>
-<p><code>I.voc</code>: containing a single line "I"</p>
-</li>
-</ul>
-<h4 id="creating-the-intent-handler">Creating the Intent Handler<a class="headerlink" href="#creating-the-intent-handler" title="Permanent link">&para;</a></h4>
-<p>To construct a keyword intent, we use the <code>intent_handler()</code> decorator and pass in the <code>IntentBuilder</code> helper class.</p>
-<p><a href="https://en.wikipedia.org/wiki/Python_syntax_and_semantics#Decorators">Learn more about <em>decorators</em> in Python</a>.</p>
-<p>Both of these must be imported before we can use them:</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kn">from</span> <span class="nn">ovos_workshop.intents</span> <span class="kn">import</span> <span class="n">IntentBuilder</span>
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="kn">from</span> <span class="nn">ovos_workshop.decorators</span> <span class="kn">import</span> <span class="n">intent_handler</span>
-</span></code></pre></div>
-<p>The <code>IntentBuilder</code> is then passed the name of the intent as a string, followed by one or more
-parameters that correspond with one of our <code>.voc</code> or <code>.rx</code> files.</p>
-<p><em>Excerpt: the decorator on its own. A complete skill using it appears further below.</em></p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nd">@intent_handler</span><span class="p">(</span><span class="n">IntentBuilder</span><span class="p">(</span><span class="s1">&#39;IntentName&#39;</span><span class="p">)</span>
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>                              <span class="o">.</span><span class="n">require</span><span class="p">(</span><span class="s1">&#39;Potato&#39;</span><span class="p">)</span>
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>                              <span class="o">.</span><span class="n">require</span><span class="p">(</span><span class="s1">&#39;Like&#39;</span><span class="p">)</span>
-</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>                              <span class="o">.</span><span class="n">optionally</span><span class="p">(</span><span class="s1">&#39;Type&#39;</span><span class="p">)</span>
-</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>                              <span class="o">.</span><span class="n">one_of</span><span class="p">(</span><span class="s1">&#39;You&#39;</span><span class="p">,</span> <span class="s1">&#39;I&#39;</span><span class="p">))</span>
-</span></code></pre></div>
-<p>In this example:</p>
-<ul>
-<li>
-<p>the <code>Potato</code> and <code>Like</code> keywords are required. Each must be present for the intent to match.</p>
-</li>
-<li>
-<p>the <code>Type</code> entity is optional. A stronger match happens if this is found, but it is not required.</p>
-</li>
-<li>
-<p>we require at least one of the <code>You</code> or <code>I</code> keywords.</p>
-</li>
-</ul>
-<p>What are some utterances that would match this intent?</p>
-<blockquote>
-<p>Do you like potato? Do you like fried potato? Will I like mashed potato? Do you think I would like potato?</p>
-</blockquote>
-<p>What are some utterances that would <em>not</em> match the intent?</p>
-<blockquote>
-<p>How do I make mashed potato?</p>
-</blockquote>
-<p><em>The required <code>Like</code> keyword is missing.</em></p>
-<blockquote>
-<p>Is it like a potato?</p>
-</blockquote>
-<p><em>Neither the <code>You</code> nor <code>I</code> keyword is found.</em></p>
-<h4 id="including-it-in-a-skill">Including it in a Skill<a class="headerlink" href="#including-it-in-a-skill" title="Permanent link">&para;</a></h4>
-<p>Now we can create our Potato Skill:</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kn">from</span> <span class="nn">ovos_workshop.intents</span> <span class="kn">import</span> <span class="n">IntentBuilder</span>
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="kn">from</span> <span class="nn">ovos_workshop.skills</span> <span class="kn">import</span> <span class="n">OVOSSkill</span>
-</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="kn">from</span> <span class="nn">ovos_workshop.decorators</span> <span class="kn">import</span> <span class="n">intent_handler</span>
-</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>
-</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>
-</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="k">class</span> <span class="nc">PotatoSkill</span><span class="p">(</span><span class="n">OVOSSkill</span><span class="p">):</span>
-</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>
-</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>    <span class="nd">@intent_handler</span><span class="p">(</span><span class="n">IntentBuilder</span><span class="p">(</span><span class="s1">&#39;WhatIsPotato&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">require</span><span class="p">(</span><span class="s1">&#39;What&#39;</span><span class="p">)</span>
-</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>                    <span class="o">.</span><span class="n">require</span><span class="p">(</span><span class="s1">&#39;Potato&#39;</span><span class="p">))</span>
-</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>    <span class="k">def</span> <span class="nf">handle_what_is</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
-</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">speak_dialog</span><span class="p">(</span><span class="s1">&#39;potato.description&#39;</span><span class="p">)</span>
-</span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>
-</span><span id="__span-5-13"><a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>    <span class="nd">@intent_handler</span><span class="p">(</span><span class="n">IntentBuilder</span><span class="p">(</span><span class="s1">&#39;DoYouLikePotato&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">require</span><span class="p">(</span><span class="s1">&#39;Potato&#39;</span><span class="p">)</span>
-</span><span id="__span-5-14"><a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a>                    <span class="o">.</span><span class="n">require</span><span class="p">(</span><span class="s1">&#39;Like&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">optionally</span><span class="p">(</span><span class="s1">&#39;Type&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">one_of</span><span class="p">(</span><span class="s1">&#39;You&#39;</span><span class="p">,</span> <span class="s1">&#39;I&#39;</span><span class="p">))</span>
-</span><span id="__span-5-15"><a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a>    <span class="k">def</span> <span class="nf">handle_do_you_like</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
-</span><span id="__span-5-16"><a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a>        <span class="n">potato_type</span> <span class="o">=</span> <span class="n">message</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;Type&#39;</span><span class="p">)</span>
-</span><span id="__span-5-17"><a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a>        <span class="k">if</span> <span class="n">potato_type</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="__span-5-18"><a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">speak_dialog</span><span class="p">(</span><span class="s1">&#39;like.potato.type&#39;</span><span class="p">,</span>
-</span><span id="__span-5-19"><a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a>                              <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="n">potato_type</span><span class="p">})</span>
-</span><span id="__span-5-20"><a id="__codelineno-5-20" name="__codelineno-5-20" href="#__codelineno-5-20"></a>        <span class="k">else</span><span class="p">:</span>
-</span><span id="__span-5-21"><a id="__codelineno-5-21" name="__codelineno-5-21" href="#__codelineno-5-21"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">speak_dialog</span><span class="p">(</span><span class="s1">&#39;like.potato.generic&#39;</span><span class="p">)</span>
-</span></code></pre></div>
-<p>See <a href="../skill-examples/">Skill Examples</a> for real, working skills that use keyword intents this way.</p>
-<h3 id="common-problems">Common Problems<a class="headerlink" href="#common-problems" title="Permanent link">&para;</a></h3>
-<h4 id="more-vocab">More vocab!<a class="headerlink" href="#more-vocab" title="Permanent link">&para;</a></h4>
-<p>One of the most common mistakes when getting started with skills is that the vocab file
-doesn't include all the keywords or terms a user might use to trigger the intent. Map out
-your skill and test the interactions with others to see how they might ask questions
-differently.</p>
-<h4 id="i-have-added-new-phrases-in-the-voc-file-but-mycroft-isnt-recognizing-them">I have added new phrases in the .voc file, but Mycroft isn't recognizing them<a class="headerlink" href="#i-have-added-new-phrases-in-the-voc-file-but-mycroft-isnt-recognizing-them" title="Permanent link">&para;</a></h4>
-<ol>
-<li>
-<p>OVOS normalizes compound words like "don't", "won't", and "shouldn't", so they become "do not", "will not", "should not". Use the normalized words in your <code>.voc</code> files. Similarly, the normalization process removes definite articles like "the", so avoid using them in your <code>.voc</code> or <code>.rx</code> files as well.</p>
-</li>
-<li>
-<p>A tab is not 4 spaces. Sometimes your text editor or IDE automatically replaces tabs with spaces or vice versa. This may lead to an indentation error. Make sure there are no extra tabs and that your editor doesn't replace your spaces.</p>
-</li>
-<li>
-<p>Wrong order of file directories is a common mistake. You have to make a language sub-folder inside the dialog, vocab, or locale folders, such as <code>skill-dir/locale/en-us/somefile.dialog</code>. Make sure your <code>.voc</code> files and <code>.dialog</code> files sit inside a language subfolder.</p>
-</li>
-</ol>
-<h4 id="i-am-unable-to-match-against-the-utterance-string">I am unable to match against the utterance string<a class="headerlink" href="#i-am-unable-to-match-against-the-utterance-string" title="Permanent link">&para;</a></h4>
-<p>The speech-to-text engine returns the utterance string all lowercase. Convert any string
-matching you do to lowercase as well. For example, here is a method excerpt from inside a
-skill class:</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>    <span class="nd">@intent_handler</span><span class="p">(</span><span class="n">IntentBuilder</span><span class="p">(</span><span class="s1">&#39;Example&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">require</span><span class="p">(</span><span class="s1">&#39;Example&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">require</span><span class="p">(</span><span class="s1">&#39;Intent&#39;</span><span class="p">))</span>
-</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>    <span class="k">def</span> <span class="nf">handle_example</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
-</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>        <span class="n">utterance</span> <span class="o">=</span> <span class="n">message</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;utterance&#39;</span><span class="p">)</span>
-</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>        <span class="k">if</span> <span class="s1">&#39;Proper Noun&#39;</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="n">utterance</span><span class="p">:</span>
-</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">speak</span><span class="p">(</span><span class="s1">&#39;Found it&#39;</span><span class="p">)</span>
-</span></code></pre></div>
-<h2 id="example-based-intents">Example based Intents<a class="headerlink" href="#example-based-intents" title="Permanent link">&para;</a></h2>
-<p>Example-based parsers have several key benefits over other intent parsing technologies.</p>
-<ul>
-<li>
-<p>Intents are easy to create.</p>
-</li>
-<li>
-<p>You can easily extract entities and use these in skills. For example, "Find the nearest gas station" becomes <code>{ "place":"gas station"}</code>.</p>
-</li>
-<li>
-<p>Disambiguation between intents is easier.</p>
-</li>
-<li>
-<p>It is harder to create a bad intent that throws the pipeline plugin off.</p>
-</li>
-</ul>
-<h3 id="creating-intents">Creating Intents<a class="headerlink" href="#creating-intents" title="Permanent link">&para;</a></h3>
-<p>Most example-based pipeline plugins use a series of example sentences to train a machine
-learning model to identify an intent. Regex can also run behind the scenes, for example to
-extract entities.</p>
-<p>The examples are stored in a skill's <code>locale/&lt;lang&gt;/</code> directory, in files ending in <code>.intent</code>.
-For example, if you were to create a <em>tomato</em> skill to respond to questions about a <em>tomato</em>,
-you would create the file</p>
-<p><code>locale/en-us/what.is.a.tomato.intent</code></p>
-<p>This file would contain examples of questions asking what a <em>tomato</em> is.</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>what would you say a tomato is
-</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>what is a tomato
-</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>describe a tomato
-</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>what defines a tomato
-</span></code></pre></div>
-<p>These sample phrases do not require punctuation like a question mark. We can also leave out
-contractions such as "what's", since OVOS automatically expands this to "what is" before
-parsing the utterance.</p>
-<p>As a rule of thumb, aim for several examples per intent covering the different ways a user
-might phrase the request. Too few examples gives the model little to generalize from.</p>
-<p>The above example lets us map many phrases to a single intent. Often, though, we need to
-extract specific data from an utterance. This might be a date, location, category, or some
-other <code>entity</code>.</p>
-<h4 id="defining-entities">Defining entities<a class="headerlink" href="#defining-entities" title="Permanent link">&para;</a></h4>
-<p>Let's now find out OVOS's opinion on different types of tomatoes. To do this we will create a
-new intent file: <code>locale/en-us/do.you.like.intent</code></p>
-<p>with examples of questions about mycroft's opinion about tomatoes:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>are you fond of tomatoes
-</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>do you like tomatoes
-</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>what are your thoughts on tomatoes
-</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>are you fond of {type} tomatoes
-</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>do you like {type} tomatoes
-</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>what are your thoughts on {type} tomatoes
-</span></code></pre></div>
-<p>Note the <code>{type}</code> in the above examples. These are wild cards where matching content is
-forwarded to the skill's intent handler.</p>
-<blockquote>
-<p><strong>WARNING</strong>: digits are not allowed in the entity name inside the <code>{}</code>. <strong>Do NOT</strong> use <code>{room1}</code>, use <code>{room_one}</code>.</p>
-</blockquote>
-<h4 id="specific-entities">Specific Entities<a class="headerlink" href="#specific-entities" title="Permanent link">&para;</a></h4>
-<p>In the above example, <code>{type}</code> matches anything. This makes the intent flexible, but it will
-also match if we say something like "Do you like eating tomatoes?" It would think the type of
-tomato is <code>"eating"</code>, which doesn't make much sense. Instead, we can specify what type of
-things the <code>{type}</code> of tomato should be. We do this by defining the type entity file here:</p>
-<p><code>locale/en-us/type.entity</code></p>
-<p>which might contain something like:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>red
-</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>reddish
-</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>green
-</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>greenish
-</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>yellow
-</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>yellowish
-</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>ripe
-</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>unripe
-</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>pale
-</span></code></pre></div>
-<p>You must register this in the skill before use, most commonly in the <code>initialize()</code> method:</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="kn">from</span> <span class="nn">ovos_workshop.skills</span> <span class="kn">import</span> <span class="n">OVOSSkill</span>
-</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="kn">from</span> <span class="nn">ovos_workshop.decorators</span> <span class="kn">import</span> <span class="n">intent_handler</span>
-</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>
-</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="k">class</span> <span class="nc">TomatoSkill</span><span class="p">(</span><span class="n">OVOSSkill</span><span class="p">):</span>
-</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">register_entity_file</span><span class="p">(</span><span class="s1">&#39;type.entity&#39;</span><span class="p">)</span>
-</span></code></pre></div>
-<p>Now, we can say things like "do you like greenish tomatoes?" and it will tag type as
-<code>"greenish"</code>. However, if we say "do you like eating tomatoes?", the phrase will not match,
-since <code>"eating"</code> is not included in our <code>type.entity</code> file.</p>
-<h4 id="number-matching">Number matching<a class="headerlink" href="#number-matching" title="Permanent link">&para;</a></h4>
-<blockquote>
-<p><strong>Engine-specific:</strong> the <code>#</code> digit token and the <code>:0</code> unknown-token shown below are <strong>Padatious extensions</strong>. They are <strong>not</strong> part of the <a href="https://github.com/OpenVoiceOS/architecture/blob/dev/intent-1.md">OVOS-INTENT-1</a> Sentence Template Grammar (which has no digit token and no wildcard), so they are not portable to other pipeline plugins. Use them only when you know your skill targets Padatious.</p>
-</blockquote>
-<p>Let's say you are writing an intent to call a phone number. You can make it match only
-specific formats of numbers by writing out possible arrangements using <code>#</code> where a number
-would go. For example, with the following intent:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>Call {number}.
-</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>Call the phone number {number}.
-</span></code></pre></div>
-<p>the number.entity could be written as:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>+### (###) ###-####
-</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>+## (###) ###-####
-</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>+# (###) ###-####
-</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>(###) ###-####
-</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>###-####
-</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>###-###-####
-</span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a>###.###.####
-</span><span id="__span-12-8"><a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a>
-</span><span id="__span-12-9"><a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a>### ### ####
-</span></code></pre></div>
-<h4 id="entities-with-unknown-tokens">Entities with unknown tokens<a class="headerlink" href="#entities-with-unknown-tokens" title="Permanent link">&para;</a></h4>
-<p>Let's say you want to create an intent to match places:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>Directions to {place}.
-</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>Navigate me to {place}.
-</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>Open maps to {place}.
-</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>Show me how to get to {place}.
-</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>How do I get to {place}?
-</span></code></pre></div>
-<p>This alone will work, but it will still get a high confidence with a phrase like "How do I get
-to the boss in my game?" We can try creating a <code>.entity</code> file with things like:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>New York City
-</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>
-</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>#### Georgia Street
-</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>San Francisco
-</span></code></pre></div>
-<p>The problem is that now anything that is not specifically a mix of New York City, San
-Francisco, or something on Georgia Street won't match. Instead, we can specify an unknown word
-with <code>:0</code>. This would be written as:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>:0 :0 City
-</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>
-</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>#### :0 Street
-</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>:0 :0
-</span></code></pre></div>
-<p>Now, while this will still match quite a lot, it will match things like "Directions to
-Baldwin City" more than "How do I get to the boss in my game?"</p>
-<p><em>NOTE: Currently, the number of <code>:0</code> words is not fully taken into account, so the above might
-match quite liberally. This will change in the future.</em></p>
-<h4 id="parentheses-expansion">Parentheses Expansion<a class="headerlink" href="#parentheses-expansion" title="Permanent link">&para;</a></h4>
-<p>Sometimes you might find yourself writing many variations of the same thing. For example, to
-write a skill that orders food, you might write the following intent:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>Order some {food}.
-</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>Order some {food} from {place}.
-</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>Grab some {food}.
-</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a>Grab some {food} from {place}.
-</span></code></pre></div>
-<p>Rather than writing out all combinations of possibilities, you can embed them into one or more
-lines by writing each possible option inside parentheses with <code>|</code> between each part. For
-example, that same intent above could be written as:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>(Order | Grab) some {food}
-</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>(Order | Grab) some {food} from {place}
-</span></code></pre></div>
-<p>or even on a single-line:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>(Order | Grab) some {food} (from {place} | )
-</span></code></pre></div>
-<blockquote>
-<p>The empty-branch trick <code>(from {place} | )</code> makes a segment optional. The portable <a href="https://github.com/OpenVoiceOS/architecture/blob/dev/intent-1.md">OVOS-INTENT-1</a> equivalent is the square-bracket optional <code>[from {place}]</code>. <code>[x]</code> is defined as exactly equivalent to <code>(x|)</code>. Prefer the bracket form when you want spec-conformant templates.</p>
-</blockquote>
-<p>Nested parentheses are supported to create even more complex combinations, such as the following:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>(Look (at | for) | Find) {object}.
-</span></code></pre></div>
-<p>Which would expand to:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>Look at {object}
-</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>Look for {object}
-</span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>Find {object}
-</span></code></pre></div>
-<p>There is no performance benefit to using parentheses expansion. When used appropriately, this
-syntax can be much clearer to read. However, break more complex structures down into multiple
-lines to aid readability and reduce false utterances in the model. Overuse can even cause the
-model training to time out, making the skill unusable.</p>
-<h3 id="using-it-in-a-skill">Using it in a Skill<a class="headerlink" href="#using-it-in-a-skill" title="Permanent link">&para;</a></h3>
-<p>The <code>intent_handler()</code> decorator can create an examples-based intent handler by passing in the
-filename of the <code>.intent</code> file as a string.</p>
-<p>You may also see the <code>@intent_file_handler</code> decorator used in skills. This is deprecated. You
-can now replace any instance of this with the simpler <code>@intent_handler</code> decorator.</p>
-<p>From our first example above, we created a file <code>locale/en-us/what.is.a.tomato.intent</code>. To
-register an intent using this file we can use the following decorator, shown on its own.
-Place it above a handler method inside your skill class:</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="nd">@intent_handler</span><span class="p">(</span><span class="s1">&#39;what.is.a.tomato.intent&#39;</span><span class="p">)</span>
-</span></code></pre></div>
-<p>This <em>decorator</em> must be imported before it is used:</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="kn">from</span> <span class="nn">ovos_workshop.decorators</span> <span class="kn">import</span> <span class="n">intent_handler</span>
-</span></code></pre></div>
-<p><a href="https://en.wikipedia.org/wiki/Python_syntax_and_semantics#Decorators">Learn more about <em>decorators</em> in Python</a>.</p>
-<p>Now we can create our Tomato Skill:</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="kn">from</span> <span class="nn">ovos_workshop.skills</span> <span class="kn">import</span> <span class="n">OVOSSkill</span>
-</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a><span class="kn">from</span> <span class="nn">ovos_workshop.decorators</span> <span class="kn">import</span> <span class="n">intent_handler</span>
-</span><span id="__span-23-3"><a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>
-</span><span id="__span-23-4"><a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a><span class="k">class</span> <span class="nc">TomatoSkill</span><span class="p">(</span><span class="n">OVOSSkill</span><span class="p">):</span>
-</span><span id="__span-23-5"><a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a>
-</span><span id="__span-23-6"><a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a>    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="__span-23-7"><a id="__codelineno-23-7" name="__codelineno-23-7" href="#__codelineno-23-7"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">register_entity_file</span><span class="p">(</span><span class="s1">&#39;type.entity&#39;</span><span class="p">)</span>
-</span><span id="__span-23-8"><a id="__codelineno-23-8" name="__codelineno-23-8" href="#__codelineno-23-8"></a>
-</span><span id="__span-23-9"><a id="__codelineno-23-9" name="__codelineno-23-9" href="#__codelineno-23-9"></a>    <span class="nd">@intent_handler</span><span class="p">(</span><span class="s1">&#39;what.is.a.tomato.intent&#39;</span><span class="p">)</span>
-</span><span id="__span-23-10"><a id="__codelineno-23-10" name="__codelineno-23-10" href="#__codelineno-23-10"></a>    <span class="k">def</span> <span class="nf">handle_what_is</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
-</span><span id="__span-23-11"><a id="__codelineno-23-11" name="__codelineno-23-11" href="#__codelineno-23-11"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">speak_dialog</span><span class="p">(</span><span class="s1">&#39;tomato.description&#39;</span><span class="p">)</span>
-</span><span id="__span-23-12"><a id="__codelineno-23-12" name="__codelineno-23-12" href="#__codelineno-23-12"></a>
-</span><span id="__span-23-13"><a id="__codelineno-23-13" name="__codelineno-23-13" href="#__codelineno-23-13"></a>    <span class="nd">@intent_handler</span><span class="p">(</span><span class="s1">&#39;do.you.like.intent&#39;</span><span class="p">)</span>
-</span><span id="__span-23-14"><a id="__codelineno-23-14" name="__codelineno-23-14" href="#__codelineno-23-14"></a>    <span class="k">def</span> <span class="nf">handle_do_you_like</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
-</span><span id="__span-23-15"><a id="__codelineno-23-15" name="__codelineno-23-15" href="#__codelineno-23-15"></a>        <span class="n">tomato_type</span> <span class="o">=</span> <span class="n">message</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;type&#39;</span><span class="p">)</span>
-</span><span id="__span-23-16"><a id="__codelineno-23-16" name="__codelineno-23-16" href="#__codelineno-23-16"></a>        <span class="k">if</span> <span class="n">tomato_type</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="__span-23-17"><a id="__codelineno-23-17" name="__codelineno-23-17" href="#__codelineno-23-17"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">speak_dialog</span><span class="p">(</span><span class="s1">&#39;like.tomato.type&#39;</span><span class="p">,</span>
-</span><span id="__span-23-18"><a id="__codelineno-23-18" name="__codelineno-23-18" href="#__codelineno-23-18"></a>                              <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="n">tomato_type</span><span class="p">})</span>
-</span><span id="__span-23-19"><a id="__codelineno-23-19" name="__codelineno-23-19" href="#__codelineno-23-19"></a>        <span class="k">else</span><span class="p">:</span>
-</span><span id="__span-23-20"><a id="__codelineno-23-20" name="__codelineno-23-20" href="#__codelineno-23-20"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">speak_dialog</span><span class="p">(</span><span class="s1">&#39;like.tomato.generic&#39;</span><span class="p">)</span>
-</span></code></pre></div>
-<p>See <a href="../first-skill/">Your First Skill</a> for a complete, minimal example of a template-intent skill from scratch.</p>
-<h3 id="common-problems_1">Common Problems<a class="headerlink" href="#common-problems_1" title="Permanent link">&para;</a></h3>
-<p>See <a href="#i-am-unable-to-match-against-the-utterance-string">I am unable to match against the utterance string</a> above. The same lowercase-normalization note applies to template-based intent handlers.</p>
-<h4 id="my-intent-is-defined-correctly-but-never-matches">My intent is defined correctly but never matches<a class="headerlink" href="#my-intent-is-defined-correctly-but-never-matches" title="Permanent link">&para;</a></h4>
-<p>If the <code>.intent</code>/<code>.voc</code> files look right and the utterance still doesn't match anything, check
-whether the intent has actually been <strong>disabled</strong> rather than badly written. A skill can turn
-individual intents off with <code>disable_intent()</code>, and whitelist/blacklist controls can also gate
-off a skill or its converse participation entirely. See <a href="../layers/">Intent Layers</a> for
-per-skill intent enable/disable state and <a href="../permissions/">Permissions &amp; Activation Control</a> for
-the coarser skill-level gates.</p>
+<p>We will now look at each in more detail, including how to use them in a
+<a href="../skill-design-guidelines/">Skill</a>.</p>
 
 
 

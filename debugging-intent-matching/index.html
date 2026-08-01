@@ -1,0 +1,1591 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://tigregotico.github.io/ovos-technical-manual/debugging-intent-matching/">
+      
+      
+        <link rel="prev" href="../building-your-pipeline/">
+      
+      
+        <link rel="next" href="../adapt-pipeline/">
+      
+      
+      <link rel="icon" href="https://github.com/OpenVoiceOS/ovos_assets/blob/master/Logo/ovos-logo-512.png?raw=true">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.31">
+    
+    
+      
+        <title>Debugging Intent Matching - OpenVoiceOS Technical Manual</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.3cba04c6.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../css/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="grey" data-md-color-accent="red">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#debugging-intent-matching" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="OpenVoiceOS Technical Manual" class="md-header__button md-logo" aria-label="OpenVoiceOS Technical Manual" data-md-component="logo">
+      
+  <img src="https://github.com/OpenVoiceOS/ovos_assets/blob/master/Logo/ovos-logo-512.png?raw=true" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            OpenVoiceOS Technical Manual
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Debugging Intent Matching
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="grey" data-md-color-accent="red"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="grey" data-md-color-accent="red"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/TigreGotico/ovos-technical-manual" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    TigreGotico/ovos-technical-manual
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href=".." class="md-tabs__link">
+          
+  
+  Home
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../ovos-installer/" class="md-tabs__link">
+          
+  
+  Get Started
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../everyday-help/" class="md-tabs__link">
+          
+  
+  Help & Troubleshooting
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../architecture-overview/" class="md-tabs__link">
+          
+  
+  Concepts
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../pipelines-overview/" class="md-tabs__link">
+          
+  
+  Intent Pipeline
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../lang-support/" class="md-tabs__link">
+          
+  
+  Language Support
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../first-skill/" class="md-tabs__link">
+          
+  
+  Skill Development
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../plugins-index/" class="md-tabs__link">
+          
+  
+  Plugin Ecosystem
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../personas/" class="md-tabs__link">
+          
+  
+  AI Agents & Personas
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../privacy-security/" class="md-tabs__link">
+          
+  
+  Production & Security
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../ecosystem-index/" class="md-tabs__link">
+          
+  
+  Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../contributing/" class="md-tabs__link">
+          
+  
+  Contributing & Project Infra
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="OpenVoiceOS Technical Manual" class="md-nav__button md-logo" aria-label="OpenVoiceOS Technical Manual" data-md-component="logo">
+      
+  <img src="https://github.com/OpenVoiceOS/ovos_assets/blob/master/Logo/ovos-logo-512.png?raw=true" alt="logo">
+
+    </a>
+    OpenVoiceOS Technical Manual
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/TigreGotico/ovos-technical-manual" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    TigreGotico/ovos-technical-manual
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href=".." class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../ovos-installer/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Get Started
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../everyday-help/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Help & Troubleshooting
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../architecture-overview/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Concepts
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Intent Pipeline
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Intent Pipeline
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pipelines-overview/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Overview & Reference
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../building-your-pipeline/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Building Your Pipeline
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Debugging Intent Matching
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Debugging Intent Matching
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#nothing-matched" class="md-nav__link">
+    <span class="md-ellipsis">
+      Nothing matched
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-wrong-skill-answered" class="md-nav__link">
+    <span class="md-ellipsis">
+      The wrong skill answered
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#matching-is-slow-or-works-only-after-a-while" class="md-nav__link">
+    <span class="md-ellipsis">
+      Matching is slow or works only after a while
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#it-matched-but-the-wrong-handler-ran" class="md-nav__link">
+    <span class="md-ellipsis">
+      It matched but the wrong handler ran
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-pages" class="md-nav__link">
+    <span class="md-ellipsis">
+      Related Pages
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../adapt-pipeline/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Pipeline Matchers
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../padacioso/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Alternative Parsers
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../transformer-plugins/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Transformers
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../lang-support/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Language Support
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    
+  
+  
+    <a href="../first-skill/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Skill Development
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../plugins-index/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Plugin Ecosystem
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    
+  
+  
+    <a href="../personas/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    AI Agents & Personas
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../privacy-security/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Production & Security
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../ecosystem-index/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Reference
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../contributing/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Contributing & Project Infra
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#nothing-matched" class="md-nav__link">
+    <span class="md-ellipsis">
+      Nothing matched
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-wrong-skill-answered" class="md-nav__link">
+    <span class="md-ellipsis">
+      The wrong skill answered
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#matching-is-slow-or-works-only-after-a-while" class="md-nav__link">
+    <span class="md-ellipsis">
+      Matching is slow or works only after a while
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#it-matched-but-the-wrong-handler-ran" class="md-nav__link">
+    <span class="md-ellipsis">
+      It matched but the wrong handler ran
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-pages" class="md-nav__link">
+    <span class="md-ellipsis">
+      Related Pages
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="debugging-intent-matching">Debugging Intent Matching<a class="headerlink" href="#debugging-intent-matching" title="Permanent link">&para;</a></h1>
+<div class="admonition abstract">
+<p class="admonition-title">In a nutshell</p>
+<p>Intent matching problems fall into four buckets: nothing matched at all, the wrong skill
+answered, matching is slow or seems to "wake up" after a while, or a match happened but the
+wrong handler ran. This page is a symptom-indexed index into checks and gotchas that live
+scattered across the pipeline pages, plus the bus events to watch for each one. Start with
+<a href="../troubleshooting/">Troubleshooting &amp; Debugging</a> if you have not yet confirmed the mic, wake
+word, and STT stages are healthy. This page assumes the utterance already reached the intent
+pipeline.</p>
+</div>
+<hr />
+<h2 id="nothing-matched">Nothing matched<a class="headerlink" href="#nothing-matched" title="Permanent link">&para;</a></h2>
+<p>The utterance reached <code>IntentService</code>, every pipeline stage passed on it, and the assistant said
+nothing (or spoke the fallback-unknown dialog if one is installed).</p>
+<ul>
+<li>Reproduce it deterministically without speaking, using <code>ovos-say-to "the phrase"</code>, then grep
+  <code>skills.log</code> for the utterance. Every matcher that passed logs a miss line
+  (<code>no match from &lt;bound method ...&gt;</code>), naming the matcher's Python function. See
+  <a href="../troubleshooting/#stage-4-which-pipeline-stage-matched-or-didnt">Troubleshooting: Stage 4</a>.</li>
+<li>Check <code>intents.pipeline</code> in your config. A stage that is not listed is never tried, even if it
+  is installed. Confirm the intent you expect is actually in an enabled matcher's confidence
+  range. See <a href="../pipelines-overview/#customizing-the-pipeline">Pipelines Overview</a> and
+  <a href="../building-your-pipeline/">Building Your Pipeline</a>.</li>
+<li>If the missing intent is a Padatious <code>.intent</code> file, remember training is asynchronous.
+  On a cold start, or right after installing a skill, Padatious matches will silently fail until
+  training completes. Set <code>instant_train</code> if you need deterministic behavior while testing. See
+  <a href="../padatious-pipeline/#advanced">Padatious Pipeline: gotcha</a>.</li>
+<li>If you expect Adapt to catch it, confirm both the vocabulary and the rule are registered by
+  checking <code>skills.log</code> for <code>register_vocab</code> / <code>register_intent</code> traffic, since Adapt has no
+  training step and should match immediately once registered. See
+  <a href="../adapt-pipeline/">Adapt Pipeline</a>.</li>
+</ul>
+<p><strong>Bus events to watch</strong> (with <code>ovos-busmon</code> or by grepping the logs): <code>ovos.utterance.handle</code>
+(legacy <code>recognizer_loop:utterance</code>, confirms the utterance entered the pipeline at all),
+<code>ovos.intent.matched</code> (absent means nothing claimed it), and the terminal
+<code>ovos.intent.unmatched</code> (legacy <code>complete_intent_failure</code>), the definitive "no pipeline stage
+claimed the utterance" marker. Every request also ends with exactly one <code>ovos.utterance.handled</code>
+regardless of outcome. Its absence means the intent service itself crashed or hung, which is a
+different problem than a genuine miss. See <a href="../bus-events/#intent-matching-context">Bus Events Reference</a>
+and <a href="../troubleshooting/#stage-4-which-pipeline-stage-matched-or-didnt">Troubleshooting: Stage 4</a>.</p>
+<hr />
+<h2 id="the-wrong-skill-answered">The wrong skill answered<a class="headerlink" href="#the-wrong-skill-answered" title="Permanent link">&para;</a></h2>
+<p>The pipeline claimed the utterance, and something spoke, but it was not the skill you expected.</p>
+<ul>
+<li><strong>Adapt collisions are silent.</strong> Two skills that require overlapping vocabulary can shadow
+  each other. The higher-scoring match wins with no warning logged. Make each skill's required
+  keywords as specific as possible, or prefer the domain/hierarchical Adapt entry points
+  (<code>ovos-adapt-domain-pipeline-plugin</code>, <code>ovos-adapt-hierarchical-pipeline-plugin</code>) when running
+  many skills together. See <a href="../adapt-pipeline/#advanced">Adapt Pipeline: gotcha</a>.</li>
+<li><strong>Check ordering, not just thresholds.</strong> First-match-wins means an earlier stage's loose match
+  can beat a later stage's precise one. If a semantic matcher like Model2Vec or Hierarchical KNN
+  sits ahead of Padatious/Adapt's high tiers, it can claim an utterance a more precise parser
+  would have nailed. The usual fix is to place the semantic matcher's high tier after the
+  deterministic engines' high tiers, or interleave by confidence. See
+  <a href="../m2v-pipeline/#gotcha-ordering-against-the-deterministic-engines">Model2Vec Pipeline: gotcha</a>
+  and <a href="../building-your-pipeline/#ordering-rules-of-thumb">Building Your Pipeline: ordering rules of thumb</a>.</li>
+<li><strong>Inspect which stage actually claimed it.</strong> <code>skills.log</code> logs the winning matcher by name
+  (for example <code>adapt_high match (en-us): IntentMatch(...)</code>), and <code>ovos-busmon</code> shows the same
+  information in the <code>ovos.intent.matched</code> payload. Reproduce with <code>ovos-say-to</code> first so the
+  utterance is fixed while you inspect. See
+  <a href="../troubleshooting/#stage-4-which-pipeline-stage-matched-or-didnt">Troubleshooting: Stage 4</a>.</li>
+</ul>
+<p><strong>Bus events to watch</strong>: <code>ovos.intent.matched</code> (its payload names the skill and intent that
+claimed the utterance, so filter on this first) and <code>&lt;skill_id&gt;:&lt;intent_name&gt;</code> (the actual
+dispatch topic that invoked the handler, confirming which skill really ran). See
+<a href="../bus-events/#intent-matching-context">Bus Events Reference</a>.</p>
+<hr />
+<h2 id="matching-is-slow-or-works-only-after-a-while">Matching is slow or works only after a while<a class="headerlink" href="#matching-is-slow-or-works-only-after-a-while" title="Permanent link">&para;</a></h2>
+<p>The assistant eventually responds, or responds correctly only after the system has been running
+a while, but the first attempt (or every attempt) feels sluggish.</p>
+<ul>
+<li><strong>Padatious trains asynchronously.</strong> Right after boot or after installing/updating a skill,
+  Padatious retrains its model in the background. Matches silently fail (not slowly, but not at
+  all) until training finishes, which can look like "it started working after a minute." Set
+  <code>instant_train: true</code> if you need synchronous, deterministic training instead. See
+  <a href="../padatious-pipeline/#advanced">Padatious Pipeline: gotcha</a>.</li>
+<li><strong>Converse and stop both wait up to 0.5s</strong> for each active skill to answer a ping before
+  moving on, so a slow-to-respond skill process adds latency to every turn while it is active.
+  See <a href="../converse-pipeline/#how-it-works">Converse Pipeline</a> and
+  <a href="../stop-pipeline/#how-it-works">Stop Pipeline</a>.</li>
+<li><strong>Common Query can add several seconds.</strong> It waits <code>min_response_wait</code> (1s) before evaluating
+  answers and caps total gathering at <code>max_response_wait</code> (4s by default, 6s in the bundled
+  config), extending by <code>extension_time</code> per skill that reports it is still searching. A
+  reranker plugin, if configured, adds further latency, noticeably so on constrained hardware.
+  See <a href="../cq-pipeline/#configuration">Common Query Pipeline: Configuration</a> and
+  <a href="../cq-pipeline/#performance">Performance</a>.</li>
+<li><strong>Hierarchical KNN has its own classifier timeout</strong>, <code>timeout</code> (default 1 second), the time it
+  waits for the classifier before giving up on a match. See
+  <a href="../knn-pipeline/#configuration">Hierarchical KNN Pipeline: Configuration</a>.</li>
+</ul>
+<p><strong>Bus events to watch</strong>: time the gap between <code>ovos.utterance.handle</code> and <code>ovos.intent.matched</code>
+(or the terminal <code>ovos.utterance.handled</code>) in <code>ovos-busmon</code>'s timeline view to see which stage
+is eating the time. For Common Query specifically, watch <code>question:query</code> and
+<code>question:query.response</code> to see how long skills take to reply. See
+<a href="../bus-events/">Bus Events Reference</a> and
+<a href="../troubleshooting/#watch-the-bus-while-you-speak-ovos-busmon">Troubleshooting: watch the bus</a>.</p>
+<hr />
+<h2 id="it-matched-but-the-wrong-handler-ran">It matched but the wrong handler ran<a class="headerlink" href="#it-matched-but-the-wrong-handler-ran" title="Permanent link">&para;</a></h2>
+<p><code>ovos.intent.matched</code> fired, the correct skill and intent even look right in the log, but the
+behavior that ran was not what the intent should do.</p>
+<ul>
+<li><strong>Confirm the dispatch topic actually reached the skill.</strong> The winning match dispatches on
+  <code>&lt;skill_id&gt;:&lt;intent_name&gt;</code>. If the skill process never received it, check the skill actually
+  loaded and that its registered <code>skill_id</code> matches the one in the match payload; a mismatch
+  here means "no traceback, no speak, handler simply never runs." See
+  <a href="../troubleshooting/#stage-5-did-the-skill-handler-raise">Troubleshooting: Stage 5</a>.
+  If a handler did run but raised, the traceback lands right after the <code>final intent match</code> log
+  line, in which case the fix is in the skill's own handler code, not the pipeline.</li>
+<li><strong>Reserved intent names cannot be reused by skills.</strong> <code>converse</code>, <code>response</code>, <code>stop</code>,
+  <code>common_query</code>, and <code>fallback</code> are reserved <code>intent_name</code> values leased to the converse, stop,
+  common-query, and fallback stages. A skill that accidentally registers an intent under one of
+  these names will collide with the reserved stage's own dispatch. See
+  <a href="../pipelines-overview/#what-is-an-intent-pipeline">Pipelines Overview: spec vocabulary</a>.</li>
+<li><strong>For Adapt, revisit the silent-collision gotcha above.</strong> A match with the right-looking skill
+  ID but the wrong intent inside that skill is often two overlapping <code>IntentBuilder</code> rules in
+  the same skill, or another skill's vocabulary bleeding into this one's rule. See
+  <a href="../adapt-pipeline/#advanced">Adapt Pipeline: gotcha</a>.</li>
+</ul>
+<p><strong>Bus events to watch</strong>: <code>&lt;skill_id&gt;:&lt;intent_name&gt;</code> (confirms exactly which handler was
+dispatched), and the handler-lifecycle trio <code>ovos.intent.handler.start</code> →
+<code>ovos.intent.handler.complete</code> / <code>ovos.intent.handler.error</code> to see whether the handler ran to
+completion or raised. Filter <code>ovos-busmon</code> by the specific skill's ID to isolate its traffic.
+See <a href="../bus-events/#intent-matching-context">Bus Events Reference</a> and
+<a href="../troubleshooting/#stage-5-did-the-skill-handler-raise">Troubleshooting: Stage 5</a>.</p>
+<hr />
+<h2 id="related-pages">Related Pages<a class="headerlink" href="#related-pages" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="../troubleshooting/">Troubleshooting &amp; Debugging</a>: the full stage-by-stage guide this page
+  assumes, covering mic, wake word, and STT before the intent pipeline</li>
+<li><a href="../pipelines-overview/">Pipelines Overview</a>: the stage reference and confidence-tier model</li>
+<li><a href="../building-your-pipeline/">Building Your Pipeline</a>: worked pipeline configs and ordering
+  rules of thumb</li>
+<li><a href="../adapt-pipeline/">Adapt Pipeline</a>, <a href="../padatious-pipeline/">Padatious Pipeline</a>,
+  <a href="../m2v-pipeline/">Model2Vec Pipeline</a>: the matchers most of these gotchas live in</li>
+<li><a href="../cq-pipeline/">Common Query Pipeline</a>, <a href="../knn-pipeline/">Hierarchical KNN Pipeline</a>: the
+  slower, network- or classifier-backed stages</li>
+<li><a href="../bus-events/">Bus Events Reference</a>: every event named above, in one table</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.path", "navigation.prune", "navigation.top", "navigation.tracking", "navigation.instant", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate"], "search": "../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.fe8b6f2b.min.js"></script>
+      
+    
+  </body>
+</html>

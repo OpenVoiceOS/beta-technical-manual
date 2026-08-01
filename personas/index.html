@@ -1653,6 +1653,8 @@ runtime.</p>
 <h2 id="agent-engine-plugins-opm-opmagents">Agent Engine Plugins (OPM <code>opm.agents.*</code>)<a class="headerlink" href="#agent-engine-plugins-opm-opmagents" title="Permanent link">&para;</a></h2>
 <p>Agent engines are the building blocks. Each engine type solves one well-defined sub-problem. They
 are discovered and loaded by <code>ovos-plugin-manager</code> at runtime using Python entry points.</p>
+<p>See <a href="../agent-plugins/">Agent Plugins</a> for the full <code>opm.agents.*</code> entry-point table. The
+engine types used on this page are:</p>
 <table>
 <thead>
 <tr>
@@ -1668,78 +1670,13 @@ are discovered and loaded by <code>ovos-plugin-manager</code> at runtime using P
 <td>Multi-turn conversational LLM</td>
 </tr>
 <tr>
-<td><code>opm.agents.chat.multimodal</code></td>
-<td><code>MultimodalChatEngine</code></td>
-<td>Chat + vision/audio/files (base64)</td>
-</tr>
-<tr>
-<td><code>opm.agents.multimodal_adapter</code></td>
-<td><code>MultimodalAdapter</code></td>
-<td>Describe non-text content as text</td>
-</tr>
-<tr>
-<td><code>opm.agents.summarizer</code></td>
-<td><code>SummarizerEngine</code></td>
-<td>Condense long text to a few sentences</td>
-</tr>
-<tr>
-<td><code>opm.agents.summarizer.chat</code></td>
-<td><code>ChatSummarizerEngine</code></td>
-<td>Compress structured chat history</td>
-</tr>
-<tr>
-<td><code>opm.agents.reranker</code></td>
-<td><code>ReRankerEngine</code></td>
-<td>Score and rank candidate answers</td>
-</tr>
-<tr>
-<td><code>opm.agents.option_matcher</code></td>
-<td><code>OptionMatcherEngine</code></td>
-<td>Match an utterance to a fixed option set</td>
-</tr>
-<tr>
-<td><code>opm.agents.extractive_qa</code></td>
-<td><code>ExtractiveQAEngine</code></td>
-<td>Extract the best passage from evidence</td>
-</tr>
-<tr>
-<td><code>opm.agents.nli</code></td>
-<td><code>NaturalLanguageInferenceEngine</code></td>
-<td>Entailment prediction (premise → hypothesis)</td>
-</tr>
-<tr>
-<td><code>opm.agents.yesno</code></td>
-<td><code>YesNoEngine</code></td>
-<td>Classify ambiguous responses as yes / no / unknown</td>
-</tr>
-<tr>
-<td><code>opm.agents.coref</code></td>
-<td><code>CoreferenceEngine</code></td>
-<td>Pronoun / coreference resolution</td>
-</tr>
-<tr>
 <td><code>opm.agents.memory</code></td>
 <td><code>AgentContextManager</code></td>
 <td>Per-session conversation history management</td>
 </tr>
 <tr>
-<td><code>opm.agents.retrieval</code></td>
-<td><code>RetrievalEngine</code></td>
-<td>Retrieval-augmented generation</td>
-</tr>
-<tr>
-<td><code>opm.agents.retrieval.documents</code></td>
-<td><code>DocumentIndexerEngine</code></td>
-<td>Index + retrieve over a document corpus</td>
-</tr>
-<tr>
-<td><code>opm.agents.retrieval.qa</code></td>
-<td><code>QAIndexerEngine</code></td>
-<td>Index + retrieve over a Q/A corpus</td>
-</tr>
-<tr>
 <td><code>opm.agents.toolbox</code></td>
-<td>—</td>
+<td>none</td>
 <td>Tool/function-calling registry</td>
 </tr>
 </tbody>
@@ -1851,7 +1788,7 @@ as <code>PersonaServerRAGMemory</code>. See <a href="../persona-memory/">Persona
 fully local, privacy-preserving conversational agents:</p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="p">{</span>
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;OldSchoolBot&quot;</span><span class="p">,</span>
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">  </span><span class="nt">&quot;solvers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">  </span><span class="nt">&quot;handlers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 </span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">    </span><span class="s2">&quot;ovos-wikipedia-plugin&quot;</span><span class="p">,</span>
 </span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">    </span><span class="s2">&quot;ovos-ddg-plugin&quot;</span><span class="p">,</span>
 </span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">    </span><span class="s2">&quot;ovos-wolfram-alpha-plugin&quot;</span><span class="p">,</span>

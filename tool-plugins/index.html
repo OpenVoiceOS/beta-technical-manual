@@ -1668,45 +1668,11 @@ come back as an <code>error</code> field. The plugin never stays silent.</p>
 </span></code></pre></div>
 <hr />
 <h2 id="ovos-agentic-loop-toolboxes">ovos-agentic-loop Toolboxes<a class="headerlink" href="#ovos-agentic-loop-toolboxes" title="Permanent link">&para;</a></h2>
-<p><a href="../agentic-loop/">ovos-agentic-loop</a> bundles six ready-to-use toolboxes:</p>
-<table>
-<thead>
-<tr>
-<th>Entry point</th>
-<th>Key tools</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>ovos-math-tools</code></td>
-<td><code>evaluate_expression</code>, <code>unit_convert</code>, <code>statistics_summary</code>, <code>solve_equation</code></td>
-</tr>
-<tr>
-<td><code>ovos-filesystem-tools</code></td>
-<td><code>read_file</code>, <code>write_file</code>, <code>list_directory</code>, <code>search_in_files</code>, <code>find_files</code></td>
-</tr>
-<tr>
-<td><code>ovos-shell-tools</code></td>
-<td><code>run_command</code> (disabled by default)</td>
-</tr>
-<tr>
-<td><code>ovos-web-search-tools</code></td>
-<td><code>web_search</code></td>
-</tr>
-<tr>
-<td><code>ovos-clock-tools</code></td>
-<td><code>get_current_datetime</code></td>
-</tr>
-<tr>
-<td><code>ovos-skill-md-toolbox</code></td>
-<td>One tool per installed <code>SKILL.md</code></td>
-</tr>
-</tbody>
-</table>
+<p>The built-in toolboxes are listed on <a href="../agentic-loop/#built-in-toolboxes">Agentic Loops</a>.</p>
 <p>Wire them into a persona:</p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="p">{</span>
 </span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;researcher&quot;</span><span class="p">,</span>
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">  </span><span class="nt">&quot;solvers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;ovos-react-loop&quot;</span><span class="p">],</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">  </span><span class="nt">&quot;handlers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;ovos-react-loop&quot;</span><span class="p">],</span>
 </span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">  </span><span class="nt">&quot;ovos-react-loop&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 </span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">    </span><span class="nt">&quot;brain&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ovos-chat-openai-plugin&quot;</span><span class="p">,</span>
 </span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">    </span><span class="nt">&quot;toolboxes&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;ovos-math-tools&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;ovos-web-search-tools&quot;</span><span class="p">]</span>

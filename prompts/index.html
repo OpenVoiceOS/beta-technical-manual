@@ -11,7 +11,7 @@
         <link rel="canonical" href="https://tigregotico.github.io/ovos-technical-manual/prompts/">
       
       
-        <link rel="prev" href="../intents/">
+        <link rel="prev" href="../intents-padatious/">
       
       
         <link rel="next" href="../context/">
@@ -952,6 +952,48 @@
                 
   
   
+  
+  
+    <li class="md-nav__item">
+      <a href="../intents-adapt/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Adapt Intents
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../intents-padatious/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Padatious Intents
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
     
   
   
@@ -1831,6 +1873,8 @@ the <a href="../skill-design-guidelines/">Skill Design Guidelines</a>.</p>
 </ul>
 <p><code>get_response()</code> returns the matched utterance as a <code>str</code>, or <code>None</code> if no valid response
 was captured. The first argument is the dialog to speak.</p>
+<p><code>get_response()</code> suspends the converse channel for this skill until the user responds or a
+timeout is hit. Raise <code>AbortQuestion</code> to cancel gracefully.</p>
 <hr />
 <h3 id="3-yesno-questions-with-ask_yesno">3. Yes/No Questions with <code>ask_yesno()</code><a class="headerlink" href="#3-yesno-questions-with-ask_yesno" title="Permanent link">&para;</a></h3>
 <p>Detects affirmations or negations from user responses.</p>

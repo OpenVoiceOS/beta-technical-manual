@@ -1739,6 +1739,8 @@ random so the assistant doesn't sound robotic:</p>
 <p>The entry-point key (<code>my-first.youruser</code>) becomes your skill's <strong><code>skill_id</code></strong>
 (<code>&lt;skill-name&gt;.&lt;author&gt;</code>). The value points at your skill class. The <code>opm.skill</code> group is
 how the <a href="../plugin-manager/">Plugin Manager</a> discovers installed skills.</p>
+<p>For the full packaging reference (including GUI assets in package-data), see
+<a href="../skill-structure/">Anatomy of a Skill</a>.</p>
 <h2 id="step-6-install-it-and-talk-to-it">Step 6 — Install it and talk to it<a class="headerlink" href="#step-6-install-it-and-talk-to-it" title="Permanent link">&para;</a></h2>
 <p>First, activate the same Python environment OVOS runs in, so the skill installs into the
 interpreter <code>ovos-core</code> actually uses. For example, <code>source ~/.venvs/ovos/bin/activate</code> for
@@ -1796,7 +1798,8 @@ built wheel) before OVOS can see the new file.</p>
 <li><strong>Have a back-and-forth</strong> ("what's your name?" then a reply). See <a href="../converse/">Continuous Conversation</a>.</li>
 <li><strong>Save settings or files</strong>. See <a href="../skill-settings/">Skill Settings</a> and <a href="../skill-filesystem/">Filesystem</a>.</li>
 <li><strong>Make it sound good and behave well</strong>. See <a href="../skill-best-practices/">Skill Best Practices</a>.</li>
-<li><strong>Test it automatically</strong>. See <a href="../ovoscope-overview/">Skill Testing</a>.</li>
+<li><strong>Test it automatically</strong>. See <a href="../testing-your-skill/">Test Your Skill</a>, which continues this
+  exact example. For the broader <code>ovoscope</code> reference, see <a href="../ovoscope-overview/">Testing Skills with ovoscope</a>.</li>
 <li><strong>Publish it</strong> so others can install it. See <a href="../skill-json/#sharing-your-skill">Sharing your skill</a>.</li>
 <li><strong>See how an utterance actually travels through OVOS</strong>. See <a href="../life-of-an-utterance/">Life of an Utterance</a>.</li>
 <li>Browse real skills for ideas in <a href="../skill-examples/">Skill Examples</a>.</li>

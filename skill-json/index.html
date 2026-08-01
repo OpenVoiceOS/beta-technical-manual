@@ -955,6 +955,48 @@
   
   
     <li class="md-nav__item">
+      <a href="../intents-adapt/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Adapt Intents
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../intents-padatious/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Padatious Intents
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../prompts/" class="md-nav__link">
         
   
@@ -1267,6 +1309,48 @@
       Sharing your skill
     </span>
   </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#maintaining-a-published-skill" class="md-nav__link">
+    <span class="md-ellipsis">
+      Maintaining a published skill
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Maintaining a published skill">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bumping-the-version" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bumping the version
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#new-release-vs-new-skill_id" class="md-nav__link">
+    <span class="md-ellipsis">
+      New release vs. new skill_id
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#keeping-pip_spec-floors-current" class="md-nav__link">
+    <span class="md-ellipsis">
+      Keeping pip_spec floors current
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1775,6 +1859,48 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#maintaining-a-published-skill" class="md-nav__link">
+    <span class="md-ellipsis">
+      Maintaining a published skill
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Maintaining a published skill">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bumping-the-version" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bumping the version
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#new-release-vs-new-skill_id" class="md-nav__link">
+    <span class="md-ellipsis">
+      New release vs. new skill_id
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#keeping-pip_spec-floors-current" class="md-nav__link">
+    <span class="md-ellipsis">
+      Keeping pip_spec floors current
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#see-also" class="md-nav__link">
     <span class="md-ellipsis">
       See Also
@@ -2009,6 +2135,44 @@ so external installers have somewhere to pull the skill from.</p>
 <p>A complete, accurate <code>skill.json</code> is what makes the difference between a bare repository link
 and a nicely presented store entry. See the <a href="#field-reference">Field Reference</a> above.</p>
 </div>
+<h2 id="maintaining-a-published-skill">Maintaining a published skill<a class="headerlink" href="#maintaining-a-published-skill" title="Permanent link">&para;</a></h2>
+<p>Once a skill is out and installed by other people, changing it is a compatibility question
+as much as a code change.</p>
+<h3 id="bumping-the-version">Bumping the version<a class="headerlink" href="#bumping-the-version" title="Permanent link">&para;</a></h3>
+<p>A skill's version lives in <code>pyproject.toml</code> (<code>version = "0.0.1"</code> in the <a href="../first-skill/#step-5-make-it-installable">first-skill
+tutorial</a>), the same as any other Python package.
+The manual does not document an OVOS-specific version scheme for skills, so follow the
+general rule: <a href="https://semver.org">semver</a>. A backward-compatible fix or addition bumps the
+patch or minor number. A change that breaks how the skill is used, its settings, or its
+intents bumps the major number.</p>
+<h3 id="new-release-vs-new-skill_id">New release vs. new <code>skill_id</code><a class="headerlink" href="#new-release-vs-new-skill_id" title="Permanent link">&para;</a></h3>
+<p><code>skill_id</code> is derived from the <code>opm.skill</code> entry-point key, in <code>&lt;skill-name&gt;.&lt;author&gt;</code> form
+(see <a href="#packaging-the-opmskill-entry-point">Packaging: the <code>opm.skill</code> Entry Point</a> and
+<a href="../first-skill/#step-5-make-it-installable">first-skill: Step 5</a>). Because installers, the
+skill store, and <code>SkillManager</code> all key off <code>skill_id</code>, treat it the same way you would treat
+a package name:</p>
+<ul>
+<li>A change to intents, dialog, settings, or behavior that stays compatible, or one that
+  intentionally breaks compatibility, is still <strong>the same skill</strong>: release a new version
+  under the same <code>skill_id</code>.</li>
+<li>Renaming the skill in a way that changes the entry-point key is a <strong>breaking rename</strong>. It
+  produces a new <code>skill_id</code>, which installers and <code>SkillManager</code> treat as an entirely
+  different skill: old installs won't pick it up automatically, and anyone depending on the
+  old <code>skill_id</code> (other skills, automation, documentation) needs to switch over. Only do this
+  deliberately, and update <code>skill.json</code>'s <code>skill_id</code> field and the entry-point key together
+  so they stay in sync.</li>
+</ul>
+<h3 id="keeping-pip_spec-floors-current">Keeping <code>pip_spec</code> floors current<a class="headerlink" href="#keeping-pip_spec-floors-current" title="Permanent link">&para;</a></h3>
+<p><code>dependencies</code> in <code>pyproject.toml</code> (for example <code>ovos-workshop&gt;=0.0.1</code> in the <a href="../first-skill/#step-5-make-it-installable">first-skill
+tutorial</a>) pin a floor, not an exact version. If a
+release relies on behavior only present from a newer <code>ovos-workshop</code> (or another dependency)
+than what's currently declared, raise that floor in the same release. An outdated floor lets
+an installer set up a combination the skill was never tested against, which shows up later as
+a hard-to-diagnose bug report rather than a clean install failure. The same applies to the
+<code>pip_spec</code> field in <code>skill.json</code> itself if it carries a version constraint: keep it aligned
+with what <code>pyproject.toml</code> actually requires. Run the skill's tests (see <a href="../testing-your-skill/">Testing Your
+Skill</a>) against the raised floor before releasing, not just against
+whatever happens to already be installed in your dev environment.</p>
 <h2 id="see-also">See Also<a class="headerlink" href="#see-also" title="Permanent link">&para;</a></h2>
 <ul>
 <li>

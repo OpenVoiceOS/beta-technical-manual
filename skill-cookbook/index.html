@@ -915,6 +915,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#recipe-index" class="md-nav__link">
+    <span class="md-ellipsis">
+      Recipe index
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#1-a-reminder-skill-scheduled-events-with-restart-persistence" class="md-nav__link">
     <span class="md-ellipsis">
       1. A reminder skill: scheduled events with restart persistence
@@ -1103,15 +1112,6 @@
         
       </ul>
     </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#recipe-index" class="md-nav__link">
-    <span class="md-ellipsis">
-      Recipe index
-    </span>
-  </a>
   
 </li>
       
@@ -1616,6 +1616,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#recipe-index" class="md-nav__link">
+    <span class="md-ellipsis">
+      Recipe index
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#1-a-reminder-skill-scheduled-events-with-restart-persistence" class="md-nav__link">
     <span class="md-ellipsis">
       1. A reminder skill: scheduled events with restart persistence
@@ -1807,15 +1816,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#recipe-index" class="md-nav__link">
-    <span class="md-ellipsis">
-      Recipe index
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -1839,6 +1839,67 @@
 <p class="admonition-title">In a nutshell</p>
 <p>The rest of this manual documents individual building blocks (settings, scheduling, playback, a GUI) one at a time. This page instead shows them <strong>combined</strong>, the way a real skill uses them: a complete, working file for each common job a skill needs to do. If you already know what <code>schedule_event</code> or <code>@ocp_search</code> does and just want to see it used correctly next to everything else it needs, start here.</p>
 </div>
+<h2 id="recipe-index">Recipe index<a class="headerlink" href="#recipe-index" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Recipe</th>
+<th>Base class</th>
+<th>Key APIs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Reminder with restart persistence</td>
+<td><code>OVOSSkill</code></td>
+<td><code>schedule_event</code>, <code>settings</code></td>
+</tr>
+<tr>
+<td>2</td>
+<td>Configurable + reactive settings</td>
+<td><code>OVOSSkill</code></td>
+<td><code>settings_change_callback</code>, <code>settingsmeta.yaml</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td>Safe external API call</td>
+<td><code>OVOSSkill</code></td>
+<td><code>runtime_requirements</code>, <code>file_system</code></td>
+</tr>
+<tr>
+<td>4</td>
+<td>Multi-turn conversation</td>
+<td><code>ConversationalSkill</code></td>
+<td><code>get_response</code>, <code>converse</code>, <code>activate</code></td>
+</tr>
+<tr>
+<td>5</td>
+<td>Local media playlist</td>
+<td><code>OVOSCommonPlaybackSkill</code></td>
+<td><code>@ocp_search</code>, <code>MediaType</code>/<code>PlaybackType</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td>GUI + voice together</td>
+<td><code>OVOSSkill</code></td>
+<td><code>self.gui</code>, <code>show_page</code></td>
+</tr>
+<tr>
+<td>7</td>
+<td>Fallback to an LLM solver</td>
+<td><code>FallbackSkill</code></td>
+<td><code>register_fallback</code>, <code>QuestionSolver</code></td>
+</tr>
+<tr>
+<td>8</td>
+<td>Ambient bus-event behavior</td>
+<td><code>OVOSSkill</code></td>
+<td><code>add_event</code>, <code>recognizer_loop:*</code></td>
+</tr>
+</tbody>
+</table>
 <p>Each recipe below is a <strong>complete skill module</strong> (or a clearly-marked excerpt of one), followed by notes on the moving parts and links to the reference page that documents each API in full. None of these recipes invent new methods: every class, method signature, and bus event name was checked against the installed <code>ovos-workshop</code>, <code>ovos-bus-client</code>, and <code>ovos-utils</code> packages.</p>
 <div class="admonition note">
 <p class="admonition-title">Scaffolding not shown</p>
@@ -2301,68 +2362,6 @@ Everything in this recipe targets the current, <strong>deprecated</strong> <code
 <li><code>schedule_repeating_event(handler, when, frequency, name=...)</code> with <code>when=None</code> starts the first run after one <code>frequency</code> interval. Pass a <code>datetime</code> for <code>when</code> instead if the first run needs to happen at a specific moment.</li>
 <li>This skill emits its own <code>ovos.ambient_mood.changed</code> event rather than reaching into a light/hardware plugin directly, keeping it decoupled from whatever actually consumes the mood (a PHAL plugin, another skill, a GUI). See <a href="../bus-service/">Bus Service</a> for the emit/on API and <a href="../converse-pipeline/">PIPELINE-1 correlation</a> for how bus events relate to a given utterance's session.</li>
 </ul>
-<hr />
-<h2 id="recipe-index">Recipe index<a class="headerlink" href="#recipe-index" title="Permanent link">&para;</a></h2>
-<table>
-<thead>
-<tr>
-<th>#</th>
-<th>Recipe</th>
-<th>Base class</th>
-<th>Key APIs</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1</td>
-<td>Reminder with restart persistence</td>
-<td><code>OVOSSkill</code></td>
-<td><code>schedule_event</code>, <code>settings</code></td>
-</tr>
-<tr>
-<td>2</td>
-<td>Configurable + reactive settings</td>
-<td><code>OVOSSkill</code></td>
-<td><code>settings_change_callback</code>, <code>settingsmeta.yaml</code></td>
-</tr>
-<tr>
-<td>3</td>
-<td>Safe external API call</td>
-<td><code>OVOSSkill</code></td>
-<td><code>runtime_requirements</code>, <code>file_system</code></td>
-</tr>
-<tr>
-<td>4</td>
-<td>Multi-turn conversation</td>
-<td><code>ConversationalSkill</code></td>
-<td><code>get_response</code>, <code>converse</code>, <code>activate</code></td>
-</tr>
-<tr>
-<td>5</td>
-<td>Local media playlist</td>
-<td><code>OVOSCommonPlaybackSkill</code></td>
-<td><code>@ocp_search</code>, <code>MediaType</code>/<code>PlaybackType</code></td>
-</tr>
-<tr>
-<td>6</td>
-<td>GUI + voice together</td>
-<td><code>OVOSSkill</code></td>
-<td><code>self.gui</code>, <code>show_page</code></td>
-</tr>
-<tr>
-<td>7</td>
-<td>Fallback to an LLM solver</td>
-<td><code>FallbackSkill</code></td>
-<td><code>register_fallback</code>, <code>QuestionSolver</code></td>
-</tr>
-<tr>
-<td>8</td>
-<td>Ambient bus-event behavior</td>
-<td><code>OVOSSkill</code></td>
-<td><code>add_event</code>, <code>recognizer_loop:*</code></td>
-</tr>
-</tbody>
-</table>
 
 
 

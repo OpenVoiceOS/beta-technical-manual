@@ -1552,7 +1552,7 @@ major LLM vendors, so an OVOS persona becomes a drop-in replacement for an LLM b
 third-party tools. The running server mounts <strong>OpenAI-</strong> and <strong>Ollama-compatible</strong> chat
 endpoints, a UTCP tool surface, and vendor-compatible routers for <strong>Anthropic</strong>, <strong>Gemini</strong>,
 <strong>Cohere</strong>, <strong>AWS Bedrock</strong>, and <strong>HuggingFace TGI</strong> (plus MCP, if installed).</p>
-<p>It is a FastAPI app served by <code>uvicorn</code>. The server loads a persona from a JSON file at startup. The persona's <code>solvers</code> do the actual work (anything from a local rule-based bot to a remote LLM).</p>
+<p>It is a FastAPI app served by <code>uvicorn</code>. The server loads a persona from a JSON file at startup. The persona's <code>handlers</code> do the actual work (anything from a local rule-based bot to a remote LLM).</p>
 <hr />
 <h2 id="install">Install<a class="headerlink" href="#install" title="Permanent link">&para;</a></h2>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pip<span class="w"> </span>install<span class="w"> </span>ovos-persona-server
@@ -1600,10 +1600,10 @@ endpoints, a UTCP tool surface, and vendor-compatible routers for <strong>Anthro
 <p>The console script is <code>ovos-persona-server</code> (module <code>ovos_persona_server.__main__:main</code>).</p>
 <hr />
 <h2 id="the-persona-file">The Persona File<a class="headerlink" href="#the-persona-file" title="Permanent link">&para;</a></h2>
-<p>A persona is a JSON object whose <code>solvers</code> list names the plugins that answer queries. Per-solver config is keyed by the plugin name. Example pointing at an OpenAI-compatible LLM:</p>
+<p>A persona is a JSON object whose <code>handlers</code> list names the plugins that answer queries. Per-plugin config is keyed by the plugin name. Example pointing at an OpenAI-compatible LLM:</p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="p">{</span>
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;kb-assistant&quot;</span><span class="p">,</span>
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">  </span><span class="nt">&quot;solvers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;ovos-solver-openai-plugin&quot;</span><span class="p">],</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">  </span><span class="nt">&quot;handlers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;ovos-solver-openai-plugin&quot;</span><span class="p">],</span>
 </span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">  </span><span class="nt">&quot;ovos-solver-openai-plugin&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 </span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">    </span><span class="nt">&quot;api_url&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://llama.smartgic.io/v1&quot;</span><span class="p">,</span>
 </span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">    </span><span class="nt">&quot;model&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;llama3.1:8b&quot;</span><span class="p">,</span>
@@ -1796,8 +1796,8 @@ configured via environment variables:</p>
 </span></code></pre></div>
 <p>If instead you get a connection error, double-check the server is actually running on that
 host/port (<code>ovos-persona-server --persona ... --port 8337</code>) and that the URL includes the
-<code>/openai/v1</code> prefix. An empty or error-shaped <code>content</code> usually means the persona's <code>solvers</code>
-failed to answer. Check the server logs and the solver's own config (API key, model name).</p>
+<code>/openai/v1</code> prefix. An empty or error-shaped <code>content</code> usually means the persona's <code>handlers</code>
+failed to answer. Check the server logs and the handler's own config (API key, model name).</p>
 </div>
 <hr />
 <h2 id="ollama-compatible-use">Ollama-Compatible Use<a class="headerlink" href="#ollama-compatible-use" title="Permanent link">&para;</a></h2>
@@ -1816,7 +1816,7 @@ name(s) from the persona's solver config.</p>
   <code>stream=false</code>.</p>
 </li>
 <li>
-<p>Make sure your persona file's <code>solvers</code> and their config are complete. A missing plugin or model means the persona cannot answer.</p>
+<p>Make sure your persona file's <code>handlers</code> and their config are complete. A missing plugin or model means the persona cannot answer.</p>
 </li>
 <li>
 <p>Capabilities (chat history, tool use, embeddings) depend entirely on the chosen solver plugins, so behavior varies by persona.</p>

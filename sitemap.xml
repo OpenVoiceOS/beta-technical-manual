@@ -53,6 +53,10 @@
          <lastmod>2026-08-01</lastmod>
     </url>
     <url>
+         <loc>https://tigregotico.github.io/ovos-technical-manual/building-your-pipeline/</loc>
+         <lastmod>2026-08-01</lastmod>
+    </url>
+    <url>
          <loc>https://tigregotico.github.io/ovos-technical-manual/bus-events/</loc>
          <lastmod>2026-08-01</lastmod>
     </url>
@@ -133,6 +137,10 @@
          <lastmod>2026-08-01</lastmod>
     </url>
     <url>
+         <loc>https://tigregotico.github.io/ovos-technical-manual/debugging-intent-matching/</loc>
+         <lastmod>2026-08-01</lastmod>
+    </url>
+    <url>
          <loc>https://tigregotico.github.io/ovos-technical-manual/decorators/</loc>
          <lastmod>2026-08-01</lastmod>
     </url>
@@ -178,6 +186,18 @@
     </url>
     <url>
          <loc>https://tigregotico.github.io/ovos-technical-manual/gh-automations-overview/</loc>
+         <lastmod>2026-08-01</lastmod>
+    </url>
+    <url>
+         <loc>https://tigregotico.github.io/ovos-technical-manual/gh-automations-pr-workflows/</loc>
+         <lastmod>2026-08-01</lastmod>
+    </url>
+    <url>
+         <loc>https://tigregotico.github.io/ovos-technical-manual/gh-automations-quality-workflows/</loc>
+         <lastmod>2026-08-01</lastmod>
+    </url>
+    <url>
+         <loc>https://tigregotico.github.io/ovos-technical-manual/gh-automations-release-workflows/</loc>
          <lastmod>2026-08-01</lastmod>
     </url>
     <url>
@@ -238,6 +258,14 @@
     </url>
     <url>
          <loc>https://tigregotico.github.io/ovos-technical-manual/intent-transformers/</loc>
+         <lastmod>2026-08-01</lastmod>
+    </url>
+    <url>
+         <loc>https://tigregotico.github.io/ovos-technical-manual/intents-adapt/</loc>
+         <lastmod>2026-08-01</lastmod>
+    </url>
+    <url>
+         <loc>https://tigregotico.github.io/ovos-technical-manual/intents-padatious/</loc>
          <lastmod>2026-08-01</lastmod>
     </url>
     <url>
@@ -450,6 +478,10 @@
     </url>
     <url>
          <loc>https://tigregotico.github.io/ovos-technical-manual/resource-files/</loc>
+         <lastmod>2026-08-01</lastmod>
+    </url>
+    <url>
+         <loc>https://tigregotico.github.io/ovos-technical-manual/security-model/</loc>
          <lastmod>2026-08-01</lastmod>
     </url>
     <url>
