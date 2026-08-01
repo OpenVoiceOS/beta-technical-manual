@@ -63,6 +63,58 @@ See the full generated [`ovos-logs --help` output](#command-help-output-generate
 
 ---
 
+## Watching the bus: `ovos-busmon`
+
+Shipped by **[`ovos-busmon`](https://github.com/OpenVoiceOS/ovos-busmon)**. A small web app that
+connects to the [messagebus](bus-service.md) and streams every message live to a browser tab, in
+one filterable, searchable timeline.
+
+| Command | What it does |
+|---|---|
+| `ovos-busmon` | Start the web UI (default `http://127.0.0.1:8005`), connecting outward to a messagebus at `localhost:8181`. |
+
+See [Watch the bus while you speak: `ovos-busmon`](troubleshooting.md#watch-the-bus-while-you-speak-ovos-busmon)
+for installation, configuration variables, security notes, and a walkthrough.
+
+---
+
+## Configuring skill settings from a browser: `ovos-skill-config-tool`
+
+A community-built web UI, **[OVOS Skill Config Tool](https://github.com/OscillateLabsLLC/ovos-skill-config-tool)**,
+for editing installed skills' settings without hand-editing `settings.json`.
+
+| Command | What it does |
+|---|---|
+| `ovos-skill-config-tool` | Start the web UI (default `http://0.0.0.0:8000`). |
+
+See [Skill Settings → Web-Based Settings UI](skill-settings.md#web-based-settings-ui-community)
+for installation and credential configuration.
+
+---
+
+## Testing skills offline: `ovoscope`
+
+Shipped by **[`ovoscope`](https://github.com/TigreGotico/ovoscope)**. Runs an in-process, mocked
+assistant that loads real skills and the real intent-matching engines without audio hardware, so a
+bug can be captured once and replayed instead of re-triggered on real hardware.
+
+| Command | What it does |
+|---|---|
+| `ovoscope record` | Capture a fixture, optionally `--live` from a running OVOS instance. |
+| `ovoscope run <fixture>` | Replay a fixture and exit non-zero on failure. |
+| `ovoscope diff <a> <b>` | Compare two fixture files. |
+
+See the [ovoscope guide](ovoscope-overview.md) for the full workflow, including `End2EndTest` for
+writing an assertion once a fixture is captured.
+
+---
+
+!!! note "HiveMind CLI tools"
+    HiveMind ships its own CLI tools (`hivemind-core`, `hivemind-client`), covered in
+    [HiveMind Agents](hivemind-agents.md).
+
+---
+
 ## Running the services by hand
 
 Each core OVOS service is normally started by your service manager (systemd, the

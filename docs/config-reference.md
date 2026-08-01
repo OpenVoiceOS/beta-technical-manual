@@ -186,6 +186,131 @@ itself, a separate concern from the `speech_begin`/`silence_end` timing above.
 
 ---
 
+## 8. GUI
+
+The `gui` key controls the on-screen interface. The `gui_websocket` key controls the separate socket that GUI clients connect to.
+
+| Key | Default | Description |
+|---|---|---|
+| `gui.idle_display_skill` | `"ovos-skill-homescreen.openvoiceos"` | Skill ID of the homescreen shown when no skill is active. |
+| `gui.extension` | `"generic"` | GUI platform extension. Enclosures can set a different one for their own screen. |
+| `gui.generic.homescreen_supported` | `true` | Whether the `generic` extension shows a homescreen. |
+| `gui.disable_gui` | `false` | On a headless device, set to `true` to stop all GUI bus messages. |
+| `gui_websocket.host` | `"0.0.0.0"` | Host the GUI websocket binds to. It listens on all interfaces by default, not just localhost. Restrict it to `127.0.0.1` if no client needs network access. See [Bus Service](bus-service.md) for network-exposure guidance. |
+| `gui_websocket.base_port` | `18181` | Base port for the GUI websocket. Each connected GUI client gets its own port from this point up. |
+| `gui_websocket.route` | `"/gui"` | URL route for the GUI websocket. |
+| `gui_websocket.ssl` | `false` | Enable TLS on the GUI websocket. |
+
+!!! warning "`gui_websocket.host` binds to all interfaces by default"
+    Unlike the core `websocket` key, `gui_websocket.host` ships as `"0.0.0.0"`, not
+    `"127.0.0.1"`. Any device on the network can reach it unless you narrow it or
+    firewall the port.
+
+Source: `mycroft.conf` lines 356–361 (`gui_websocket`) and lines 609–627 (`gui`) in [OpenVoiceOS/ovos-config](https://github.com/OpenVoiceOS/ovos-config).
+
+---
+
+## 9. PHAL (Hardware Abstraction Layer)
+
+PHAL plugins read their settings from the top-level `PHAL` key, and PHAL admin plugins from `PHAL.admin`. Neither key has a default block in the shipped `mycroft.conf`: with no `PHAL` key present, every PHAL plugin loads with an empty config and its own internal defaults.
+
+```jsonc
+"PHAL": {
+  "some-phal-plugin-id": {
+    "enabled": true
+  },
+  "admin": {
+    "some-admin-plugin-id": {
+      "enabled": true
+    }
+  }
+}
+```
+
+A PHAL plugin is disabled by setting `"enabled": false` under its plugin ID. Admin plugins run with elevated privileges and are read from a nested `admin` block, not the top level.
+
+Source: `Configuration().get("PHAL")` in `ovos_PHAL/service.py` line 59 and the `PHAL.admin` docstring in `ovos_PHAL/admin.py` lines 32–46, [OpenVoiceOS/ovos-PHAL](https://github.com/OpenVoiceOS/ovos-PHAL). No `PHAL` block appears in the shipped `mycroft.conf`.
+
+---
+
+## 10. OCP / Media
+
+`intents.OCP` tunes the OCP intent pipeline plugin. `Audio` selects the legacy audio service backend, which OCP still uses for actual playback.
+
+| Key | Default | Description |
+|---|---|---|
+| `intents.OCP.legacy` | `false` | Force the old audio-service bus API instead of OCP. |
+| `intents.OCP.min_score` | `40` | Minimum confidence score, 0-100, for OCP to accept an utterance as a media request. |
+| `intents.OCP.filter_media` | `true` | Filter out results OCP judges not to be playable media. |
+| `intents.OCP.filter_SEI` | `true` | Filter results by Search Engine Index compatibility. |
+| `intents.OCP.playback_mode` | `0` | Playback mode passed to the audio backend. |
+| `intents.OCP.search_fallback` | `true` | Fall back to a general media search when no skill claims the request. |
+
+```jsonc
+"Audio": {
+  "native_sources": ["debug_cli", "audio", "mycroft-gui"],
+  "default-backend": "mpv",
+  "backends": {
+    "OCP": {
+      "type": "ovos_common_play",
+      "preferred_audio_services": ["mpv", "vlc", "simple"],
+      "active": true
+    }
+  }
+}
+```
+
+| Key | Default | Description |
+|---|---|---|
+| `Audio.default-backend` | `"mpv"` | Audio backend used for playback. |
+| `Audio.backends.OCP.type` | `"ovos_common_play"` | Backend type for the OCP entry. Do not set this to the string `"OCP"`; that name is only valid as the key under `backends`. |
+| `Audio.backends.OCP.preferred_audio_services` | `["mpv", "vlc", "simple"]` | Order in which OCP tries local media players. |
+| `Audio.backends.OCP.active` | `true` | Whether the OCP backend is available for selection. |
+
+Source: `mycroft.conf` lines 188–203 (`intents.OCP`) and lines 705–726 (`Audio`) in [OpenVoiceOS/ovos-config](https://github.com/OpenVoiceOS/ovos-config).
+
+---
+
+## 11. Skills
+
+All of these live under the top-level `skills` key.
+
+| Key | Default | Description |
+|---|---|---|
+| `skills.blacklisted_skills` | `["skill-ovos-stop.openvoiceos"]` | Skill IDs that never load, even if installed. The stop skill is blacklisted because stop handling is now built into core. |
+| `skills.fallbacks.fallback_mode` | `"accept_all"` | Which skills may act as a fallback handler: `accept_all`, `whitelist`, or `blacklist`. |
+| `skills.fallbacks.fallback_whitelist` | `[]` | Skill IDs allowed as fallback handlers when `fallback_mode` is `whitelist`. |
+| `skills.fallbacks.fallback_blacklist` | `[]` | Skill IDs excluded from fallback handling when `fallback_mode` is `blacklist`. |
+| `skills.fallbacks.fallback_priorities` | `{}` | Per-skill-ID override of a skill's own default fallback priority. |
+| `skills.converse.timeout` | `300` | Seconds a skill stays active for converse before it is deactivated, if the user does not interact with it. |
+| `skills.converse.converse_mode` | `"accept_all"` | Which skills may take part in converse: `accept_all`, `whitelist`, or `blacklist`. |
+| `skills.converse.converse_whitelist` | `[]` | Skill IDs allowed to converse when `converse_mode` is `whitelist`. |
+| `skills.converse.converse_blacklist` | `[]` | Skill IDs excluded from converse when `converse_mode` is `blacklist`. |
+| `skills.converse.converse_activation` | `"accept_all"` | How a skill may activate itself: `accept_all`, `priority`, `whitelist`, or `blacklist`. |
+| `skills.converse.max_activations` | `-1` | Times per minute a skill may self-activate. `-1` means no limit; `0` disables self-activation. |
+| `skills.converse.cross_activation` | `true` | If `true`, any skill may activate any other skill, not only itself. |
+| `skills.converse.cross_deactivation` | `true` | If `true`, any skill may deactivate any other skill, not only itself. |
+
+Source: `mycroft.conf` lines 235–304 (`skills`) in [OpenVoiceOS/ovos-config](https://github.com/OpenVoiceOS/ovos-config).
+
+---
+
+## 12. Session
+
+| Key | Default | Description |
+|---|---|---|
+| `session.ttl` | `-1` | Time to live, in seconds, for a remote session. `-1` means sessions do not expire. |
+
+Source: `mycroft.conf` lines 643–646 (`session`) in [OpenVoiceOS/ovos-config](https://github.com/OpenVoiceOS/ovos-config).
+
+---
+
+## 13. Personas / Agents
+
+The shipped `mycroft.conf` has no `persona` key and no default persona values. Persona and LLM-agent settings are read from the persona service's own config file, not from `mycroft.conf`. See [Personas](personas.md) for that service's settings and file location.
+
+---
+
 ## All Keys (Generated)
 
 !!! note "Blank Description cells"
@@ -288,7 +413,7 @@ itself, a separate concern from the `speech_begin`/`silence_end` timing above.
 | `websocket.ssl` | `false` |  |
 | `websocket.shared_connection` | `true` |  |
 | `websocket.max_msg_size` | `25` |  |
-| `gui_websocket.host` | `"127.0.0.1"` | Bound to localhost by default. Widening it to `0.0.0.0` exposes the socket to the network. See [Bus Service](bus-service.md) for network-exposure guidance. |
+| `gui_websocket.host` | `"0.0.0.0"` | Listens on all interfaces by default. Set it to `127.0.0.1` unless a remote display needs network access. See [Bus Service](bus-service.md) for network-exposure guidance. |
 | `gui_websocket.base_port` | `18181` |  |
 | `gui_websocket.route` | `"/gui"` |  |
 | `gui_websocket.ssl` | `false` |  |

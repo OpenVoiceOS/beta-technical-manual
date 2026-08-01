@@ -348,7 +348,16 @@ uv pip install --force-reinstall -r known-good.txt
 ```
 
 See [Production Operations: staged upgrades and rollback](production-operations.md#staged-upgrades-and-rollback)
-for the same pattern applied across a fleet of devices rather than one machine.
+for the same pattern applied across a fleet of devices rather than one machine. If the
+rollback needs more than package versions, for example your device's `mycroft.conf` or a
+skill's `settings.json` was also damaged, see the [backup and restore
+recipe](production-operations.md#backup-recipe) instead.
+
+!!! tip "Moving to a newer OS image"
+    Flashing a fresh OS image (a new raspOVOS release, a new Raspberry Pi OS build) wipes
+    the disk. Back up `mycroft.conf` and each skill's `settings.json` first, following the
+    [backup and restore recipe](production-operations.md#backup-recipe), then restore them
+    onto the new image the same way.
 
 ---
 

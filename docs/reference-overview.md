@@ -25,6 +25,7 @@ Standalone text-parsing libraries used across OVOS.
 ## Tools
 
 - [ovos-docs-viewer](docs-viewer.md): browsing this documentation offline or in-app.
+- [ovos-skill-config-tool](skill-settings.md#web-based-settings-ui-community): a web UI for editing skill settings.
 
 ## Contributing & Project Infra
 

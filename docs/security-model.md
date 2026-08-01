@@ -122,6 +122,9 @@ repeat the operational hardening steps. For those, including the network surface
 install, what gets written to disk, and a concrete checklist, see
 [Privacy & Security](privacy-security.md).
 
+For the operational checklist, ports, binds, and firewall rules, see
+[Production Operations: Network hardening](production-operations.md#network-hardening).
+
 ---
 **Read next:** [Plugin Manager](plugin-manager.md) · [Concepts Overview](concepts-overview.md)
 **Related:** [Privacy & Security](privacy-security.md) · [PHAL](phal.md) · [Skill Installer](skill-installer.md) · [Remote Agents with HiveMind](hivemind-agents.md)

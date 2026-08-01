@@ -15,6 +15,12 @@
 
 OpenVoiceOS is designed to be multi-language from the ground up. This page explains the technical logic used by `ovos-core` to determine which language should be used for a given user utterance.
 
+To switch your assistant's language, set `lang` in `mycroft.conf` to the new default. To
+understand a second language as well, without replacing the primary one, list it under
+`secondary_langs`. See [Make It Yours](personalize.md#change-your-language) for the config
+snippet. Everything below explains how `ovos-core` picks a language per utterance once
+those keys are set.
+
 The raw material for that decision is the session's six language signals — `lang`,
 `secondary_langs`, `output_lang`, `stt_lang`, `request_lang` and `detected_lang` — plus the
 per-payload `data.lang`. Each is defined in

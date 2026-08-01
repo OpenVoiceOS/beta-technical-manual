@@ -30,6 +30,10 @@ nano ~/.config/mycroft/mycroft.conf
     computer on your network. On other installs you can add them with pip. See
     [RaspOVOS](install-raspovos.md) for details.
 
+    To change one skill's own settings, not the global config, use the [Web-Based
+    Settings UI](skill-settings.md#web-based-settings-ui-community) instead. No
+    terminal needed.
+
 Before restarting, double-check the file still parses. A stray missing comma or bracket will
 stop it from loading. Because `mycroft.conf` allows `//` comments, plain `json.tool` will
 reject it even when it's fine. Use the same comment-aware loader OVOS itself uses. This runs
@@ -105,6 +109,12 @@ This one line is enough on its own. STT, TTS, and every language-aware plugin fo
 global `lang` automatically. Want the *recommended* plugins/voices for that language instead
 of your current ones? Run `ovos-config autoconfigure -l de-DE --offline` afterwards. Full
 picture, supported-language table, and gaps to watch for: [Language Support](lang-support.md).
+
+!!! tip "Switching language"
+    `lang` sets the primary language. To also understand a second language without
+    replacing the primary one, add it to `secondary_langs`. See [Language
+    Selection](lang-selection.md) for how OVOS picks a language per utterance from
+    these two keys.
 
 ---
 

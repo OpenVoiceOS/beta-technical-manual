@@ -18,6 +18,7 @@
 | 9 | Converse-driven game loop | `ConversationalGameSkill` | `on_play_game`, `on_game_command`, `converse` |
 | 10 | Validated slot collection | `OVOSSkill` | `get_response(validator=..., on_fail=..., num_retries=...)` |
 | 11 | Control an external device (MQTT) | `OVOSSkill` | `paho.mqtt.client.Client`, `connect`, `publish`, `disconnect` |
+| 12 | A skill with a settings UI | `OVOSSkill` | `settingsmeta.yaml`, `ovos-skill-config-tool`, `settings_change_callback` |
 
 Each recipe below is a **complete skill module** (or a clearly-marked excerpt of one), followed by notes on the moving parts and links to the reference page that documents each API in full. None of these recipes invent new methods: every class, method signature, and bus event name was checked against the installed `ovos-workshop`, `ovos-bus-client`, and `ovos-utils` packages.
 
@@ -718,6 +719,81 @@ class MqttPlugSkill(OVOSSkill):
 - `publish(topic, payload, qos=...)` returns an `MQTTMessageInfo`. `wait_for_publish(timeout=...)` blocks until the broker acknowledges it, or the timeout elapses. `is_published()` confirms it went through, so a network drop mid-call is caught instead of silently swallowed.
 - `disconnect()` closes the connection cleanly. Pair it with `loop_stop()` in `shutdown()` so the skill doesn't leave a background thread or an open socket behind when unloaded.
 - If the hardware is attached to the OVOS device itself, a [PHAL plugin](phal.md) is the intended home for device control; a skill and broker like this one suits a device reachable over the network instead.
+
+---
+
+## 12. A skill with a settings UI: declare, edit, read, react
+
+**When you'd want this:** a user should be able to change a skill's settings from a
+browser, with no terminal and no hand-edited JSON, and the skill should pick up the
+change immediately.
+
+Three parts wire together: a `settingsmeta.yaml` field declaration, a settings-editing
+UI that reads and writes it, and the skill's own code that reads the stored value and
+reacts when it changes.
+
+`settingsmeta.yaml`, next to the skill's `__init__.py`:
+
+```yaml
+skillMetadata:
+  sections:
+    - name: "Greeter"
+      fields:
+        - name: "volume"
+          type: "number"
+          label: "Reply volume (0-100)"
+          value: 50
+```
+
+```python
+from ovos_workshop.skills import OVOSSkill
+from ovos_workshop.decorators import intent_handler
+
+
+class GreeterSkill(OVOSSkill):
+    def initialize(self):
+        self.settings_change_callback = self.on_settings_changed
+        self.on_settings_changed()  # apply the stored (or default) value now
+
+    def on_settings_changed(self):
+        self.volume = self.settings.get("volume", 50)
+        self.log.info(f"reply volume is now {self.volume}")
+
+    @intent_handler("greet.intent")
+    def handle_greet(self, message):
+        self.speak_dialog("greeting", {"volume": self.volume})
+```
+
+Restart the skill (or all of OVOS) so it picks up the new `settingsmeta.yaml` field.
+Then install and run the community web UI to edit the value from a browser instead of
+a text editor:
+
+```bash
+pip install ovos-skill-config-tool
+ovos-skill-config-tool
+```
+
+Open `http://<device-ip>:8000`, find the skill by name, and change "Reply volume".
+Saving writes the new value to the skill's `settings.json`. The running skill notices
+the change and calls `on_settings_changed()` without a restart.
+
+### Moving parts
+
+- `settingsmeta.yaml` only declares the field for a UI to render; it does not create or
+  validate the key by itself. See [Skill Settings Meta](skill-settings-meta.md) for the
+  full field-type table.
+- `self.settings.get("volume", 50)` reads the stored value, falling back to `50` if the
+  key is absent (e.g. before any UI has ever saved a value). See [Skill
+  Settings](skill-settings.md#accessing-settings).
+- `self.settings_change_callback`, assigned in `initialize()`, is called with no
+  arguments whenever `settings.json` changes on disk (the file watcher) or a remote
+  settings backend pushes an update for this skill. See [Skill Settings: Change
+  Callback](skill-settings.md#change-callback).
+- [`ovos-skill-config-tool`](https://github.com/OscillateLabsLLC/ovos-skill-config-tool)
+  is the community web UI referenced above. It edits the same `settings.json` the skill
+  itself reads; it does not talk to the skill process directly. See [Skill Settings:
+  Web-Based Settings UI](skill-settings.md#web-based-settings-ui-community) for
+  installation and default credentials.
 
 ---
 

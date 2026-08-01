@@ -109,7 +109,7 @@ Handled by every `OVOSSkill` instance. See [OVOSSkill API](ovos-skill.md#system-
 | `ovos.stop.ping` (legacy: `{skill_id}.stop.ping`) | Check whether this skill can stop. Also **dual-subscribed, not translator-bridged** (see the [Not bridged](#not-bridged-adopt-the-spec-directly) note) |
 | `mycroft.skill.enable_intent` / `mycroft.skill.disable_intent` | Enable/disable one of the skill's intents |
 | `mycroft.skill.set_cross_context` / `mycroft.skill.remove_cross_context` | Manage cross-skill context |
-| `mycroft.skills.settings.changed` | Remote settings update |
+| `mycroft.skills.settings.changed` | Remote settings update: see [Skill Settings](skill-settings.md#change-callback) for the full change-notification flow |
 | `ovos.skills.settings_changed` | Local settings file changed: see `settings_change_callback` in [Skill Settings](skill-settings.md#change-callback) ([Skill Cookbook recipe 2](skill-cookbook.md#2-user-configurable-behavior-settings-settingsmeta-live-reload)) for reacting to it from a skill |
 | `homescreen.metadata.get` | Homescreen requesting metadata |
 | `{skill_id}.public_api` | Skill API introspection (see [Skill API: Inter-Skill RPC](ovos-skill.md#skill-api-inter-skill-rpc)) |
@@ -153,6 +153,88 @@ Handled by `ovos-gui`. See [GUI Service](gui-service.md).
 | `gui.page.delete` / `gui.page.delete.all` | Remove page(s) from the namespace |
 | `gui.event.send` | Send a custom event into the namespace |
 | `gui.clear.namespace` | Remove a skill's namespace from the active GUI stack |
+
+## OCP / media playback
+
+Handled by `ovos-media`'s `MediaService`/`OCPPlayer` and the `ovos-ocp-pipeline-plugin`
+intent pipeline. All topics live under the `ovos.common_play.*` namespace, there is no
+legacy alias for this surface.
+
+| Event | Direction | Meaning |
+|---|---|---|
+| `ovos.common_play.search` | in | Pipeline plugin asks OCP to search for playable media |
+| `ovos.common_play.play_search` | in | Skill dispatch label for a matched "play X" intent |
+| `ovos.common_play.play` | in | Start playback of a track or playlist |
+| `ovos.common_play.pause` | in | Pause playback |
+| `ovos.common_play.play_pause` | in | Toggle play/pause |
+| `ovos.common_play.resume` | in | Resume paused playback |
+| `ovos.common_play.stop` | in | Stop playback |
+| `ovos.common_play.next` / `.previous` | in | Skip to next/previous track |
+| `ovos.common_play.seek` | in | Seek within the current track |
+| `ovos.common_play.get_track_length` / `.get_track_position` / `.set_track_position` | in | Query or set playback position |
+| `ovos.common_play.track_info` | in | Query metadata for the current track |
+| `ovos.common_play.playlist.set` / `.clear` / `.queue` | in | Manage the active playlist |
+| `ovos.common_play.shuffle.toggle` / `.set` / `.unset` | in | Manage shuffle mode |
+| `ovos.common_play.repeat.toggle` / `.set` / `.unset` | in | Manage repeat mode |
+| `ovos.common_play.duck` / `.unduck` / `.cork` / `.uncork` | in | Manage playback ducking around TTS/other audio |
+| `ovos.common_play.status` | in | Request a player state sync (also emitted by OCP itself on launch) |
+| `ovos.common_play.status.response` | out | Reply to `.status`, carries current player state |
+| `ovos.common_play.track.state` | out | `{"state": TrackState}` playback state changed (loading, playing audio/video, paused, ended) |
+| `ovos.common_play.media.state` | out | Low-level backend media state changed |
+| `ovos.common_play.home` | in | Request the OCP home/media browser view |
+| `ovos.common_play.ping` / `.pong` | in/out | OCP service discovery handshake |
+| `ovos.common_play.search.start` / `.search.end` | out | Marks the start/end of a search request |
+| `ovos.common_play.announce` | in | A skill registers itself as an OCP media provider |
+| `ovos.common_play.register_keyword` / `.deregister_keyword` | in | A skill registers/removes its media-type keywords for the pipeline plugin |
+| `ovos.common_play.skills.detach` | in | Remove a skill from the OCP provider list |
+| `ovos.common_play.SEI.get` / `.SEI.get.response` | out/in | Query a client's available stream extractor plugins |
+| `ovos.common_play.like` / `.unlike` | in | Mark/unmark the current track as liked |
+| `ovos.common_play.liked_tracks.play` | out | Play the liked-tracks playlist |
+
+## PHAL (hardware abstraction)
+
+Handled by the PHAL service (`ovos-PHAL`) and its plugins. See [PHAL](phal.md).
+
+| Event | Direction | Meaning |
+|---|---|---|
+| `system.reboot` | in | Request a device reboot, handled by `ovos-PHAL-plugin-system` |
+| `system.reboot.start` | out | Reboot is starting |
+| `system.shutdown` | in | Request a device shutdown |
+| `system.shutdown.start` | out | Shutdown is starting |
+| `system.factory.reset` | in | Request a factory reset |
+| `system.factory.reset.register` | in | A plugin registers itself as a factory-reset participant |
+| `system.factory.reset.ping` | out | Ask registered plugins to run their factory-reset step |
+| `system.configure.language` | in | Request a device-wide language change |
+| `system.configure.language.complete` | out | Language change finished |
+| `system.mycroft.service.restart` | in | Request `ovos-core` be restarted |
+| `system.mycroft.service.restart.start` | out | `ovos-core` restart is starting |
+| `system.ssh.enable` / `.disable` | in | Enable/disable the SSH server |
+| `system.ssh.enabled` / `.disabled` | out | SSH server state changed |
+| `system.ssh.status` | in | Query SSH server state |
+| `system.clock.synced` | in | System clock finished syncing over NTP |
+
+Every `PHALPlugin` subclass also listens on the same core listener/audio topics documented
+above (`recognizer_loop:record_begin`, `recognizer_loop:audio_output_start`,
+`mycroft.awoken`, `speak`, and the `enclosure.*` display/eyes/mouth topics), so a PHAL
+plugin can react to the utterance lifecycle without going through a skill.
+
+## Volume / mute
+
+Handled by `ovos-PHAL-plugin-alsa` and `ovos-PHAL-plugin-pulseaudio` (whichever is loaded
+for the platform's audio stack). `ovos-audio` also emits `mycroft.volume.*` on its own
+startup to normalize the initial volume.
+
+| Event | Direction | Meaning |
+|---|---|---|
+| `mycroft.volume.get` | in/out | Query current volume; the same topic carries the reply as a response message with `{"percent"}` |
+| `mycroft.volume.set` | in | Set volume to `{"percent"}` |
+| `mycroft.volume.set.gui` | in | Set volume from a GUI slider |
+| `mycroft.volume.increase` | in | Raise volume by a step |
+| `mycroft.volume.decrease` | in | Lower volume by a step |
+| `mycroft.volume.mute` | in | Mute audio output |
+| `mycroft.volume.unmute` | in | Unmute audio output |
+| `mycroft.volume.mute.toggle` | in | Toggle mute state |
+| `mycroft.volume.get.sliding.panel` | in | Query volume for the GUI sliding panel |
 
 ## Session & skill management
 

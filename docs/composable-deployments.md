@@ -79,12 +79,13 @@ cooperate exactly as if they were on the same box, as long as each can reach the
 display clients connect over a second WebSocket.
 
 !!! warning "Loopback by default"
-    `websocket.host` (bus), `gui_websocket.host`, and most PHAL plugin bindings default to
-    loopback or same-host assumptions. Distributing those services is a deliberate config
-    change, not the out-of-the-box behavior. See [Caveats](#caveats) below.
+    `websocket.host` (bus) and most PHAL plugin bindings default to loopback or same-host
+    assumptions. Distributing those services is a deliberate config change, not the
+    out-of-the-box behavior. See [Caveats](#caveats) below.
 
-    `gui_websocket.host` ships as `127.0.0.1`. Widen it to `0.0.0.0` only if a display client
-    genuinely runs on another machine, since that exposes the GUI protocol socket to the LAN.
+    `gui_websocket.host` is the exception: it ships as `0.0.0.0`, which exposes the GUI
+    protocol socket to the LAN. Set it to `127.0.0.1` unless a display client genuinely runs
+    on another machine.
 
 ## Standalone skills
 

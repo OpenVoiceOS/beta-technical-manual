@@ -5,6 +5,13 @@
 
 Settings provide per-skill persistent key-value storage backed by a JSON file. They let users configure skill behavior: changing defaults, providing API keys, or adjusting integration preferences.
 
+!!! tip "Which file does what"
+    | File | Holds | Covered on |
+    |---|---|---|
+    | `settings.json` | The runtime values a user actually set. | This page. |
+    | `settingsmeta.json`/`.yaml` | The UI declaration: which fields a settings UI should show. | [Skill Settings Meta](skill-settings-meta.md) |
+    | `skill.json` | Packaging metadata for distribution (id, author, requirements). | [Skill Packaging: skill.json](skill-json.md) |
+
 ---
 
 ## Quick start

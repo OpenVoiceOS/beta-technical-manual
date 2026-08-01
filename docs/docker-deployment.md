@@ -130,11 +130,10 @@ private bridge network and no inter-container DNS: a container reaches the bus a
     for the same warning applied to a thin-client fleet.
 
 The bus listens on port `8181`. The GUI service listens on a separate port, `18181` by
-default (config key `gui_websocket.base_port`, see [Bus Service](bus-service.md)). Both
-default to binding `127.0.0.1` only. Widening `gui_websocket.host` to `0.0.0.0` opts a
-container into LAN exposure of the GUI socket, and combined with host networking that reaches
-the whole LAN, not just the device. Leave it at the default unless a remote display client
-needs it.
+default (config key `gui_websocket.base_port`, see [Bus Service](bus-service.md)). The bus
+binds `127.0.0.1` by default, but the GUI socket ships bound to `0.0.0.0`. Combined with host
+networking, that puts the unauthenticated GUI socket on the whole LAN, not just the device.
+Set `gui_websocket.host` to `127.0.0.1` unless a remote display client needs it.
 
 If you ever run these images with a non-host network driver instead (a private bridge
 network), point `websocket.host` in each container's `mycroft.conf` at the messagebus
