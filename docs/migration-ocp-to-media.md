@@ -21,11 +21,15 @@ itself off after the upgrade with no explicit setting to blame.
 Audio-service responsibility split out of `ovos-audio` into a dedicated
 `ovos-media` daemon starting January 2024. Two config changes to track:
 
-```jsonc
-// old (mycroft.conf, read by ovos-media before 89a50c0)
-{"OCP": {"disable_mpris": false}}
+Old — `mycroft.conf`, read by `ovos-media` before `89a50c0`:
 
-// new (mycroft.conf, 89a50c0 onward)
+```json
+{"OCP": {"disable_mpris": false}}
+```
+
+New — `mycroft.conf`, `89a50c0` onward:
+
+```json
 {"media": {"enable_mpris": true}}
 ```
 

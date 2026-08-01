@@ -25,23 +25,28 @@ deployer-facing config break in the ecosystem. If you have a customized
 `core.pipeline` list in your `mycroft.conf`, every stage ID in it is now
 unregistered and will be silently skipped rather than erroring.
 
+Old `core.pipeline`, before `2.0.0`:
+
 ```json
-// old core.pipeline (pre-2.0.0)
 ["stop_high", "converse", "ocp_high", "padatious_high", "adapt_high",
  "ocp_medium", "fallback_high", "stop_medium", "adapt_medium",
  "fallback_medium", "adapt_low", "common_qa", "fallback_low"]
+```
 
-// new core.pipeline (2.0.0+)
+New `core.pipeline`, `2.0.0` and later:
+
+```json
 ["ovos-stop-pipeline-plugin-high", "ovos-converse-pipeline-plugin",
  "ovos-ocp-pipeline-plugin-high", "ovos-padatious-pipeline-plugin-high",
  "ovos-adapt-pipeline-plugin-high", "ovos-ocp-pipeline-plugin-medium",
  "ovos-fallback-pipeline-plugin-high", "ovos-stop-pipeline-plugin-medium",
  "ovos-adapt-pipeline-plugin-medium", "ovos-fallback-pipeline-plugin-medium",
  "ovos-m2v-pipeline-high", "ovos-fallback-pipeline-plugin-low"]
-// note: adapt_low and common_qa are dropped from the default list entirely
-// (now standalone opt-in plugins); add "ovos-adapt-pipeline-plugin-low" and
-// the common-query plugin id back explicitly if you still want them.
 ```
+
+`adapt_low` and `common_qa` are dropped from the default list entirely — they
+are standalone opt-in plugins now. Add `"ovos-adapt-pipeline-plugin-low"` and
+the common-query plugin ID back explicitly if you still want them.
 
 These are the same pipeline stages as the current default, just written in the old
 short-name notation instead of full plugin IDs. See [Pipelines Overview](pipelines-overview.md)
