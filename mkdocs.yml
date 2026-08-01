@@ -246,6 +246,7 @@ nav:
   - Production & Security:
       - Privacy & Security: privacy-security.md
       - Production Operations: production-operations.md
+      - Updating from Older OVOS: updating-from-older-ovos.md
       - Self-hosting Servers:
           - STT Server: stt-server.md
           - TTS Server: tts-server.md
