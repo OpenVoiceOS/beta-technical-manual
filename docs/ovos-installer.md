@@ -307,7 +307,7 @@ This report is generated and sent **once**, right after installation
 completes. Nothing else about this specific report is collected afterwards.
 Below is the field list. Every one of these is always included in the report
 whenever you opt in. None of them is something you type in yourself _(see the
-[Ansible template](https://github.com/OpenVoiceOS/ovos-installer/blob/main/ansible/roles/ovos_installer/templates/telemetry.json.j2) used to build it)_.
+[Ansible task](https://github.com/OpenVoiceOS/ovos-installer/blob/main/ansible/roles/ovos_telemetry/tasks/main.yml) that builds it)_.
 
 | Data                   | Description                                              |
 | ---------------------- | -------------------------------------------------------- |
@@ -320,7 +320,9 @@ whenever you opt in. None of them is something you type in yourself _(see the
 | `extra_skills_feature` | Extra OVOS's skills enabled during the installation        |
 | `gui_feature`          | GUI enabled during the installation                        |
 | `hardware`             | Is the device a Mark 1, Mark II or DevKit                  |
+| `homeassistant_feature`| Home Assistant feature enabled during the installation     |
 | `installed_at`         | Date when OVOS has been installed                          |
+| `llm_feature`          | LLM feature enabled during the installation                 |
 | `os_kernel`            | Kernel version of the host where OVOS is running           |
 | `os_name`              | OS name of the host where OVOS is running                  |
 | `os_type`              | OS type of the host where OVOS is running                  |
@@ -341,9 +343,8 @@ community metrics endpoint to your installed `mycroft.conf`. That makes the
 basis. It reports every time it processes a voice command, not just during setup. If
 you want data collection to stop once installation is over, decline this
 prompt (declining the first, install-time prompt is not enough on its own).
-The `open_data` key in the bundled `mycroft.conf` itself is commented
-"EXCLUSIVELY OPT-IN". The choice always remains yours, whether made here in
-the installer or later by hand.
+The choice always remains yours, whether made here in the installer or later
+by hand editing the `open_data` key in `mycroft.conf`.
 
 ---
 
@@ -469,10 +470,11 @@ If the installer fails, it generates a log file and uploads it to [dpaste.com](h
 OVOS is a community-driven project, maintained by volunteers. Feedback, bug reports, and patience are welcome.
 
 !!! tip "Check the install without reading logs"
-    The installer ships `scripts/ovos-health-check.sh`, which reports whether each service is
-    up and the messagebus is reachable. Run it before digging through logs. See
+    Run `systemctl --user status ovos.service` to see whether each unit came up cleanly; it
+    cascades to the individual OVOS services (`PartOf=ovos.service`). Check that before digging
+    through logs. See
     [Production Operations](production-operations.md#knowing-when-the-assistant-is-actually-ready)
-    for the readiness pattern it wraps.
+    for the readiness pattern and the full unit list.
 
 ## Further reading
 

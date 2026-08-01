@@ -50,7 +50,7 @@ msg = AgentMessage(role=MessageRole.USER, content="What is the speed of light?")
 `MessageRole` values: `SYSTEM`, `DEVELOPER`, `USER`, `ASSISTANT`, `TOOL`.
 
 See [Agent Plugins](agent-plugins.md) for the full engine-type reference and configuration
-examples for Claude, OpenAI, and local GGUF models.
+examples for OpenAI-compatible and local GGUF models.
 
 ---
 
@@ -83,18 +83,14 @@ The first non-`None` response wins.
 `system_prompt`, and optionally `toolboxes`), which `ovos-persona` loads directly instead of
 reading a hand-written JSON file:
 
+This manual only covers plugins backed by an OpenVoiceOS-org repository:
+
 | Persona ID | Backend | Package |
 |---|---|---|
 | `OpenAI` | `ovos-chat-openai-plugin` | `ovos-openai-plugin` |
-| `Claude` | `ovos-chat-claude-plugin` | `ovos-claude-plugin` |
-| `Gemini` | `ovos-chat-gemini-plugin` | `ovos-gemini-plugin` |
-| `Kilo` | `ovos-chat-kilo-plugin` | `ovos-kilo-plugin` |
-| `QwenCode` | `ovos-chat-qwen-code-plugin` | `ovos-qwen-code-plugin` |
-| `OpenCode` | `ovos-chat-opencode-plugin` | `ovos-opencode-plugin` |
-| `Wikipedia` | Wikipedia solver | `ovos-wikipedia-solver` |
-| `WikiGPT` | `ovos-wikigpt` | `ovos-wikipedia-solver` |
-| `DuckDuckGo` | DDG solver | `ovos-ddg-solver-plugin` |
-| `Wolfram Alpha` | Wolfram solver | `ovos-wolfram-alpha-solver` |
+| `Wikipedia` | Wikipedia solver | `ovos-wikipedia-plugin` |
+| `DuckDuckGo` | DDG solver | `ovos-ddg-plugin` |
+| `Wolfram Alpha` | Wolfram solver | `ovos-wolfram-alpha-plugin` |
 | `WikiHow` | WikiHow solver | `ovos-skill-wikihow` |
 | `Wordnet` | WordNet solver | `ovos-skill-wordnet` |
 

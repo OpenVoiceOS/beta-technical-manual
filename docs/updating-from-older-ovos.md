@@ -126,7 +126,7 @@ Lifecycle:
 |---|---|---|
 | Active | any tag before `V0.1.0` | mycroft-core-derived helpers, no shims |
 | Deprecated but functional | `80a2f7c` (2023-12-29) through the `0.1.0` alpha stream (`0.1.0a1`..`0.1.0a16`) | `@deprecated`/`log_deprecation` shims naming the replacement |
-| Dropped | `V0.1.0` (2024-09-10, mass deletion in `3a77617`) | (ovos-utils `3a77617`) |
+| Dropped | `V0.1.0` (2024-09-10; the mass deletion landed earlier in `3a77617`, 2023-12-29) | (ovos-utils `3a77617`) |
 
 A follow-up removed the last messagebus shim module entirely: `ovos_utils.messagebus`
 (a 1-line re-export left behind after 0.1.0) was deleted in `9c1fd55` (#304,
@@ -285,26 +285,27 @@ migrate from legacy `mycroft.*`/`recognizer_loop:*` spellings to the
    `ovos_spec_tools.NamespaceTranslator` (shared with `FakeBus`).
 4. `0f0a241` (#258, 2026-07-03): fixes a bug where the dual-emit doubled
    every message on the raw `on_message` firehose between #230 and this fix.
-5. `f1a481d` (2026-08-01): **the bridge is removed entirely.**
-   `MessageBusClient` speaks OVOS-MSG-1 spec topics only. The `emit_legacy`,
-   `modernize`, and `intent_reemit_blanket` constructor flags are deleted.
-   passing any of them now raises `RuntimeError`. A client or satellite
-   still emitting or expecting legacy topic spellings stops being received
-   with no fallback.
+5. Planned removal: the open kill-switch pull request
+   [ovos-bus-client#272](https://github.com/OpenVoiceOS/ovos-bus-client/pull/272)
+   (commit `f1a481d` on its branch, not merged to `dev`) deletes the bridge
+   entirely: `MessageBusClient` then speaks OVOS-MSG-1 spec topics only, the
+   `emit_legacy`/`modernize`/`intent_reemit_blanket` flags are deleted, and
+   passing them raises `RuntimeError`. Its stated merge condition is a fleet
+   already upgraded. See [Upcoming Changes](upcoming-changes.md).
 
-Migration: every producer and consumer must speak `ovos.*` spec topics
-directly before upgrading past `f1a481d`. Remove any explicit
+Migration: move every producer and consumer to `ovos.*` spec topics now,
+while the bridge still covers both spellings. Remove explicit
 `emit_legacy`/`modernize`/`intent_reemit_blanket` arguments from your
-`MessageBusClient` construction. The mapping tables
-(`ovos_spec_tools.MIGRATION_MAP`, `SPEC_TO_LEGACY`) remain available for
-migration tooling only, not for live bus wiring.
+`MessageBusClient` construction so the eventual flag deletion cannot break
+you. The mapping tables (`ovos_spec_tools.MIGRATION_MAP`, `SPEC_TO_LEGACY`)
+remain available for migration tooling.
 
 Lifecycle:
 
 | Change | Active | Deprecated but functional | Dropped |
 |---|---|---|---|
 | Legacy-only `mycroft.*`/`recognizer_loop:*` topics, no bridge | before `679f120` (2026-06-25) | n/a | superseded by dual-emit |
-| Dual-emit bridge (`modernize`/`emit_legacy`, both default ON) | `e25ab12` (2026-06-25) | through `2.6.x` line | `f1a481d` (2026-08-01) |
+| Dual-emit bridge (`modernize`/`emit_legacy`, both default ON) | `e25ab12` (2026-06-25) | current releases (bridge on by default) | pending: [ovos-bus-client#272](https://github.com/OpenVoiceOS/ovos-bus-client/pull/272), unmerged |
 
 ### OCP → ovos-media config split
 
@@ -1008,8 +1009,10 @@ out-of-the-box wire behavior is initially unchanged):
   the legacy strings they replace.
 - Lifecycle: active (legacy-only) before mid-2026. Deprecated but
   functional (dual-emit or `legacy_namespace`-gated) from mid-2026
-  onward. Hard drop only confirmed for `ovos-bus-client`'s own bridge
-  (`f1a481d`, 2026-08-01). `legacy_namespace` gating in `ovos-core`
+  onward. No hard drop has shipped: `ovos-bus-client`'s bridge removal is
+  the unmerged kill-switch
+  [PR #272](https://github.com/OpenVoiceOS/ovos-bus-client/pull/272)
+  (commit `f1a481d` on its branch). `legacy_namespace` gating in `ovos-core`
   itself (`f4c00d90b2`/`f9862a760e`, "gate bus topics by
   legacy_namespace") lives only on unmerged feature branches, not on
   `dev`: the default has not flipped because the flag has not shipped to
@@ -1047,14 +1050,16 @@ out-of-the-box wire behavior is initially unchanged):
   expiry deprecated but functional from `b54269c` (2026-06-29), drop
   version unverified.
 
-### Legacy `mycroft.*`/`recognizer_loop:*` topic bridge removed
+### Legacy `mycroft.*`/`recognizer_loop:*` topic bridge scheduled for removal
 
 See [The bus-client legacy-topic dual-emit and its removal](#the-bus-client-legacy-topic-dual-emit-and-its-removal)
-above for the full timeline. The short version for remote clients: as of
-`ovos-bus-client` `f1a481d` (2026-08-01), `MessageBusClient` speaks
-OVOS-MSG-1 (`ovos.*`) topics only, with no bridge back to legacy topic
-spellings. A HiveMind satellite still emitting or expecting legacy topics
-silently stops being received.
+above for the full timeline. The short version for remote clients: the
+bridge is on by default in current releases, and the open kill-switch
+[ovos-bus-client#272](https://github.com/OpenVoiceOS/ovos-bus-client/pull/272)
+deletes it once the fleet has migrated. After it merges,
+`MessageBusClient` speaks OVOS-MSG-1 (`ovos.*`) topics only, and a
+HiveMind satellite still emitting or expecting legacy topics silently
+stops being received. Migrate ahead of it.
 
 ---
 

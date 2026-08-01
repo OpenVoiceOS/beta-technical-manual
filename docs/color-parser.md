@@ -171,11 +171,11 @@ from ovos_color_parser import color_from_description
 
 # Averaged across all "red" entries in the database
 averaged = color_from_description("Red")
-print(averaged.hex_str)   # "#B84D54"
+print(averaged.hex_str)   # "#B63143"
 
 # Snapped to the nearest exact palette entry
 snapped = color_from_description("Red", cast_to_palette=True)
-print(snapped.hex_str)    # "#B9484E"  ("Dusty Red")
+print(snapped.hex_str)    # "#B92843"
 ```
 
 ### Perceptual distance
@@ -185,7 +185,7 @@ from ovos_color_parser import color_distance, color_from_description
 
 a = color_from_description("green")
 b = color_from_description("purple")
-print(color_distance(a, b))   # ~62.64
+print(color_distance(a, b))   # ~63.72
 ```
 
 ### Closest color from a custom palette

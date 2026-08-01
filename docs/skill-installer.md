@@ -16,10 +16,10 @@ The `SkillsStore` is a built-in subsystem of `ovos-core` that provides runtime s
 
 ??? abstract "Technical Reference"
 
-    - `SkillsStore.pip_install()`: [`ovos_core/skill_installer.py:85`](https://github.com/OpenVoiceOS/ovos-core/blob/dev/ovos_core/skill_installer.py). Core logic for calling `pip` or `uv`.
+    - `SkillsStore.pip_install()`: [`ovos_core/skill_installer.py:86`](https://github.com/OpenVoiceOS/ovos-core/blob/dev/ovos_core/skill_installer.py). Core logic for calling `pip` or `uv`.
 
 
-    - `SkillsStore.handle_install_skill()`: [`ovos_core/skill_installer.py:288`](https://github.com/OpenVoiceOS/ovos-core/blob/dev/ovos_core/skill_installer.py). Bus event handler for `ovos.skills.install`.
+    - `SkillsStore.handle_install_skill()`: [`ovos_core/skill_installer.py:293`](https://github.com/OpenVoiceOS/ovos-core/blob/dev/ovos_core/skill_installer.py). Bus event handler for `ovos.skills.install`.
 
 
     - After a successful install, `ovos_core/skill_installer.py` re-imports `ovos_plugin_manager` (Python's `importlib.reload`) so the new entry points are picked up.

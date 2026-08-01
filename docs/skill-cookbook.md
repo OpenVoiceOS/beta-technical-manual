@@ -613,7 +613,7 @@ class GuessNumberGameSkill(ConversationalGameSkill):
 - Set `self.settings["auto_save"] = True` and implement `on_save_game()` for autosave-before-stop behavior; `ConversationalGameSkill` calls it for you on every `converse()` turn and on `stop()` when both the setting and the override are present (checked via `save_is_implemented`).
 
 !!! tip "Full production example"
-    [`ovos-skill-moon-game`](https://github.com/OpenVoiceOS/ovos-skill-moon-game) is a full `ConversationalGameSkill`: a branching narrative driven entirely through `on_game_command`, with `IntentLayers` gating which branch-specific phrases are even considered at each story beat. `FrotzSkill` (from the `pyfrotz` package, used by [`ovos-skill-cave-adventure-game`](https://github.com/OpenVoiceOS/ovos-skill-cave-adventure-game) and [`ovos-skill-hhgg-game`](https://github.com/OpenVoiceOS/ovos-skill-hhgg-game)) shows the same hooks wrapping something entirely different: every utterance in `on_game_command` is piped as a raw command to an external Z-machine interpreter process, and its text output is what gets spoken.
+    [`skill-moon-game`](https://github.com/JarbasSkills/skill-moon-game) is a full `ConversationalGameSkill`: a branching narrative driven entirely through `on_game_command`, with `IntentLayers` gating which branch-specific phrases are even considered at each story beat. `FrotzSkill` (from the [`pyfrotz`](https://github.com/JarbasAl/pyfrotz) package) shows the same hooks wrapping something entirely different: every utterance in `on_game_command` is piped as a raw command to an external Z-machine interpreter process, and its text output is what gets spoken.
 
 ---
 
@@ -670,7 +670,7 @@ Every pattern in this cookbook also runs in a real, installable skill. Read the 
 | `FallbackSkill` + `@common_query` | [`ovos-skill-wolfie`](https://github.com/OpenVoiceOS/ovos-skill-wolfie), [`ovos-skill-ddg`](https://github.com/OpenVoiceOS/ovos-skill-ddg), [`ovos-skill-wordnet`](https://github.com/OpenVoiceOS/ovos-skill-wordnet) |
 | `@common_query` on a plain `OVOSSkill` | [`ovos-skill-wikipedia`](https://github.com/OpenVoiceOS/ovos-skill-wikipedia) |
 | Minimal `converse` | [`ovos-skill-parrot`](https://github.com/OpenVoiceOS/ovos-skill-parrot) |
-| Converse-driven game (`ConversationalGameSkill`) | [`ovos-skill-moon-game`](https://github.com/OpenVoiceOS/ovos-skill-moon-game) |
+| Converse-driven game (`ConversationalGameSkill`) | [`skill-moon-game`](https://github.com/JarbasSkills/skill-moon-game) |
 | GUI sequencing (`show_text` then `show_image`) | [`ovos-skill-camera`](https://github.com/OpenVoiceOS/ovos-skill-camera) |
 | GUI ownership handoff (`gui.release()`) | [`ovos-skill-wallpapers`](https://github.com/OpenVoiceOS/ovos-skill-wallpapers) |
 | Validated `get_response` slot collection | [`ovos-skill-mark1-ctrl`](https://github.com/OpenVoiceOS/ovos-skill-mark1-ctrl) |

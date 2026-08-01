@@ -96,28 +96,34 @@ All compat routers are always loaded. No feature flag is needed.
 ## Persona Server Compat Routes
 
 `pip install ovos-persona-server`. `create_persona_app()` mounts the routes below.
-It mounts a chat router at prefix `/v1` (`POST /v1/chat/completions`, OpenAI-compatible),
-an Ollama router at prefix `/api`, and a UTCP router at `/tools`. It also mounts `/mcp`
-when the `mcp` extra is installed.
+It mounts a chat router at prefix `/openai/v1` (`POST /openai/v1/chat/completions`,
+OpenAI-compatible), an Ollama router at prefix `/ollama/api`, and a UTCP router at `/tools`.
+It also mounts `/mcp` when the `mcp` extra is installed.
 
 | Prefix | Vendor |
 |--------|--------|
-| `/v1` | OpenAI-compatible chat (`POST /v1/chat/completions`) |
-| `/api` | Ollama |
+| `/openai/v1` | OpenAI-compatible chat (`POST /openai/v1/chat/completions`) |
+| `/ollama/api` | Ollama |
+| `/cohere/v1` | Cohere |
+| `/tgi` | HuggingFace TGI |
+| `/bedrock/model` | AWS Bedrock |
+| `/gemini/v1beta/models` | Google Gemini |
+| `/anthropic/v1` | Anthropic |
 | `/tools` | UTCP tool manifest and invocation |
 | `/mcp` | MCP server (requires the `mcp` extra) |
 
-!!! note "Other vendor routers exist but are not mounted"
-    The source tree also has vendor-specific router modules for Anthropic, Gemini,
-    Cohere, HuggingFace TGI, and AWS Bedrock. `create_persona_app()` does not mount
-    any of them yet, so their routes are not reachable in the shipped app.
+!!! note "All vendor routers are mounted"
+    The source tree's vendor-specific router modules for Anthropic, Gemini, Cohere,
+    HuggingFace TGI, and AWS Bedrock are all mounted by `create_persona_app()`, each
+    under its own prefix, so every one of these compat routes is reachable in the
+    shipped app.
 
 ### OpenAI-compatible example
 
 ```python
 import openai
 
-client = openai.OpenAI(api_key="", base_url="http://localhost:8337/v1")
+client = openai.OpenAI(api_key="", base_url="http://localhost:8337/openai/v1")
 response = client.chat.completions.create(
     model="",
     messages=[{"role": "user", "content": "tell me a joke"}]

@@ -140,7 +140,7 @@ voice pipeline can actually hear and answer you yet.
 !!! note "Requires the boot-finished skill to be installed"
     `mycroft.ready` is emitted by a skill, not by `ovos-core` itself. It is pulled in by the
     `skills-audio` [extra](release-channels.md#what-are-ovos-extras)
-    (`ovos-core[skills-audio]`, which pins `ovos-skill-boot-finished>=0.4.8` in `ovos-core`'s
+    (`ovos-core[skills-audio]`, which pins `ovos-skill-boot-finished>=0.5.5a2` in `ovos-core`'s
     own `pyproject.toml`) and is installed by default on most full setups, but a from-scratch,
     headless, or minimal install must include it explicitly for the readiness probe below to
     ever get a response.
@@ -510,11 +510,11 @@ resource limit and healthcheck spelled out.
     as the trust boundary, not the individual container.
 
     Host networking also exposes any service that binds `0.0.0.0` straight onto the LAN, not
-    just the host's own loopback. [`gui-service.md`](gui-service.md) notes that
-    `gui_websocket.host` defaults to `0.0.0.0` (all interfaces). Combined with
-    `network_mode: host` here, that default puts the GUI WebSocket on the LAN, not just the
-    device. Set `gui_websocket.host` to `127.0.0.1` unless a remote display client genuinely
-    needs LAN access.
+    just the host's own loopback. `gui_websocket.host` defaults to `127.0.0.1` (loopback only);
+    widening it to `0.0.0.0` (all interfaces) is the opt-in for remote display clients. Combined
+    with `network_mode: host` here, that opt-in puts the GUI WebSocket on the LAN, not just the
+    device. Leave `gui_websocket.host` at its `127.0.0.1` default unless a remote display client
+    genuinely needs LAN access.
 
 Each thin client still runs its own bus, listener, audio and core. Only the heavy STT/TTS
 inference is centralized. This is the same pattern as

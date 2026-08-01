@@ -80,7 +80,7 @@ their config, and install commands.
 | Type | Entry point | What it does |
 |---|---|---|
 | [OCP Stream Extractors](ocp-plugins.md) | `opm.ocp.extractor` | Resolve a playable stream from a URL (YouTube, RSS, …) |
-| [OCP Media Classifiers](media-plugins.md#ovos-media-classifier) | `opm.media.classifier` | Recognize media intent + entities (artist, title, station, …) in an utterance |
+| [OCP Media Classifiers](media-plugins.md#ovos-media-classifier) | none yet **(experimental)** | Recognize media intent + entities (artist, title, station, …) in an utterance. Not yet built or released as an OPM entry-point group. See the [Media Playback](media-plugins.md#ovos-media-classifier) page. |
 | [Media Playback](media-plugins.md) | `opm.media.audio` / `.video` / `.web` | Backend players for [ovos-media](ovos-media.md) |
 | [GUI Adapters](gui-adapters.md) | `opm.gui_adapter` **(unreleased)** | Render backends for the GUI. Not yet built or released. See the [GUI Adapters](gui-adapters.md) page. |
 

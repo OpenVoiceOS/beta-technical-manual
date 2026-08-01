@@ -150,7 +150,7 @@ audio and suppress false detections before any callback runs. Verifiers implemen
 ```jsonc
 "listener": {
   "ww_verifiers": {
-    "ovos-ww-verifier-silero": {"threshold": 0.1}
+    "ovos-ww-verifier-plugin-speaker": {"threshold": 0.1}
   }
 }
 ```
@@ -160,9 +160,10 @@ logged and the detection is **not** suppressed. Only an explicit `False` return 
 `HotWordVerifier.verify()` discards the wake. Disable a verifier without removing it from
 config with `"enabled": false`.
 
-!!! warning "Double VAD with `ovos-ww-verifier-silero`"
-    Enabling `ovos-ww-verifier-silero` together with `"vad_pre_wake_enabled": true` applies
-    Silero VAD twice on the same audio. Use one or the other.
+!!! warning "Double VAD if you use a Silero-based verifier"
+    If your verifier plugin runs Silero VAD internally, enabling it together with
+    `"vad_pre_wake_enabled": true` applies Silero VAD twice on the same audio. Use one or
+    the other.
 
 ## Tips and Caveats
 

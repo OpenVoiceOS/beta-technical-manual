@@ -295,25 +295,45 @@ ecosystem of independently-released repos cannot happen in one coordinated step.
 So **`ovos-bus-client` migrates automatically and incrementally**. The legacy
 and the new names interoperate transparently while the ecosystem moves over.
 
-The canonical legacy to spec topic map lives in `ovos_spec_tools`'s `MIGRATION_MAP`
-(see [Specification Tooling](spec-tooling.md)). During the migration period,
-`ovos-bus-client` shipped a receive-side compatibility bridge (the
-`NamespaceTranslator`): each client locally re-dispatched an incoming message under
-its counterpart topic, in both directions, so producers and consumers could switch
-names in any order.
+The canonical legacy to spec topic map lives in the `NamespaceTranslator` from
+[`ovos-spec-tools`](spec-tooling.md), and each `MessageBusClient` applies it on the
+**receive** side, not by putting a second copy on the wire:
 
-!!! danger "The compatibility bridge is gone"
-    `ovos-bus-client` removed the bridge in `f1a481d` (2026-08-01, after the 2.7.x
-    series). Current clients speak the `ovos.*` spec topics and nothing else. The old
-    `modernize` / `emit_legacy` flags and their environment variables now raise
-    `RuntimeError` when set. Remote consumers still emitting or subscribing to legacy
-    topic spellings stop working against a current core and must migrate to the spec
-    names. See [Updating from Older OVOS](updating-from-older-ovos.md#if-you-consume-the-message-bus-remotely-hivemind-and-other-clients)
-    for the full lifecycle and migration steps.
+- A single logical `emit()` sends exactly **one** message over the websocket: the topic the
+  caller actually chose.
+- When that message arrives back over the websocket (to every connected client, including the
+  sender), each client's `on_message` handler locally re-dispatches it under its counterpart
+  topic(s) too, using the translator to reshape the payload where the shape changed. This is a
+  listener-delivery convenience *inside each process*, not a second bus message. The broadcast
+  server never sees or re-broadcasts a counterpart frame.
+- **listen**: subscribing to *either* name (`bus.on(...)`) also delivers the counterpart, with
+  **de-duplication** so a handler that would match both fires exactly once.
 
-On deployments pinned to a pre-removal `ovos-bus-client`, the bridge still behaves as
-released there: both directions defaulted to on, and bridging happened per process on
-receive, never as a second wire message.
+The result: a producer and a consumer can each switch from a legacy topic to its `ovos.*`
+spec name **in any order, with no coordination**, without every component switching at once.
+
+### Turning the bridges off
+
+Each direction is independently controllable (default `true`), via environment
+variable or bus configuration:
+
+| Direction | Env var | Config key | Effect |
+|---|---|---|---|
+| modernize | `OVOS_BUS_MODERNIZE` | `modernize` | a received **legacy** topic is also locally re-dispatched under its `ovos.*` counterpart |
+| emit_legacy | `OVOS_BUS_EMIT_LEGACY` | `emit_legacy` | a received **`ovos.*`** topic is also locally re-dispatched under its legacy counterpart |
+
+Because the bridging happens per-process on receive, turning a direction off only stops that
+process from locally delivering the counterpart to its own handlers. A deployment whose
+components all speak `ovos.*` can set `emit_legacy=false` once no local handler still needs
+the legacy delivery, and disable `modernize` once no legacy producers remain.
+
+!!! warning "The bridge is scheduled for removal"
+    [ovos-bus-client#272](https://github.com/OpenVoiceOS/ovos-bus-client/pull/272) is an
+    open kill-switch pull request that deletes the bridge entirely: after it merges,
+    clients speak `ovos.*` spec topics and nothing else, and setting the `modernize` /
+    `emit_legacy` flags raises `RuntimeError`. Its stated merge condition is a fleet
+    already upgraded to spec topics. Migrate remote consumers to the spec names ahead of
+    it. See [Upcoming Changes](upcoming-changes.md).
 
 !!! note "Bridged is not the same as conformant"
     [`ovos-test-harness`](spec-tooling.md) asserts spec behavior on the

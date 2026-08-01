@@ -133,7 +133,7 @@ mouth/face, you don't need a G2P plugin at all.** See the [G2P catalog](g2p-plug
 
 | Plugin | Maturity | Runs | Choose this if |
 |---|---|---|---|
-| ⭐ **ovos-g2p-plugin-mimic** | Beta | offline | The PyPI-published default — ARPA phonemes via the Mimic 1 engine |
+| ⭐ **ovos-tts-plugin-mimic** | Beta | offline | The PyPI-published default — ships the `ovos-g2p-plugin-mimic` entry point, ARPA phonemes via the Mimic 1 engine |
 
 ---
 
@@ -148,7 +148,7 @@ Detect a text's language and translate. See the [Translation catalog](translatio
 | ⭐ **ovos-translate-plugin-nllb** | Stable | offline | Recommended offline translation (NLLB-200 via CTranslate2) |
 | ⭐ **ovos-lang-detector-fasttext-plugin** | Stable | offline | Recommended offline detection, pairs with NLLB |
 | ovos-lang-detector-classics-plugin | Stable | offline | Offline detection voting across classic detectors |
-| ovos-translate-plugin-server | Stable | hybrid | Self-/community-hosted translate server with public failover |
+| ovos-translate-server-plugin | Stable | hybrid | Self-/community-hosted translate server with public failover (talks to an `ovos-translate-server` instance) |
 | ovos-google-translate-plugin | Stable | online | Free cloud translate+detect when coverage beats keeping text local |
 
 ---

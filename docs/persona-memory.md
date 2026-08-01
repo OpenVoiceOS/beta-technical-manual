@@ -68,7 +68,7 @@ In a persona JSON or YAML file, set `memory_module` to the plugin entry point, a
 ```json
 {
   "name": "MyAssistant",
-  "handlers": ["ovos-solver-openai-plugin"],
+  "handlers": ["ovos-chat-openai-plugin"],
   "memory_module": "ovos-memory-plugin-longterm",
   "ovos-memory-plugin-longterm": {
     "api_url": "http://localhost:8000/v1",
@@ -159,7 +159,10 @@ Install the known-good offline stack with the extra:
 pip install 'ovos-memory-plugins[local-rag]'
 ```
 
-which pulls `ovos-gguf-embeddings-plugin` (labse gguf embeddings) + `ovos-chromadb-embeddings-plugin` (persistent local vector store). Any embeddings + `EmbeddingsDB` pair works (e.g. point `embeddings_db_plugin` at `ovos-qdrant-embeddings-plugin`).
+which pulls `ovos-gguf-plugin` (whose `ovos-gguf-embeddings-plugin` entry point provides labse
+gguf embeddings) + `ovos-chromadb-embeddings-plugin` (persistent local vector store). Any
+embeddings + `EmbeddingsDB` pair works (e.g. point `embeddings_db_plugin` at
+`ovos-qdrant-embeddings-plugin`).
 
 | Key | Default | Notes |
 |---|---|---|

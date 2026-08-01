@@ -14,8 +14,10 @@ Fallback Skills each have a **priority** and are tried in order from low priorit
 
 !!! note "Two different facts: internal stages vs. your pick"
     The pipeline internally splits the 0-101 priority space into three dispatch stages,
-    checked in this order: `fallback_high` (priority 0 up to, but not including, 5),
-    `fallback_medium` (5 up to 90), and `fallback_low` (90 up to 101). These are implemented directly
+    checked in this order: `fallback_high` (priority above 0, up to and including 5),
+    `fallback_medium` (above 5, up to and including 90), and `fallback_low` (above 90, up to and
+    including 101). A priority of exactly `5` lands in `fallback_high`; exactly `90` lands in
+    `fallback_medium`. These are implemented directly
     in `ovos-core`'s `FallbackService` (no separate pipeline plugin package involved).
     That is an implementation detail, not a recommendation. The **recommended pick ranges**
     below are a separate, coarser convention. They help you choose *where in the medium/low stages*

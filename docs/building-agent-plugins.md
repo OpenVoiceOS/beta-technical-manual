@@ -78,7 +78,7 @@ question-to-question is much more accurate than matching a question against raw 
 `get_best_passage(evidence, question, lang)`, receives the evidence text as an argument
 and returns the span inside it that answers the question. It is the *last* step of a
 pipeline whose earlier steps (often a `RetrievalEngine`) already found the evidence.
-[ovos-wikipedia-solver](https://github.com/OpenVoiceOS/ovos-wikipedia-solver) shows the
+[ovos-wikipedia-plugin](https://github.com/OpenVoiceOS/ovos-wikipedia-plugin) shows the
 combination: retrieval fetches a Wikipedia summary, then an extractive QA engine pulls
 out the one sentence worth speaking aloud.
 

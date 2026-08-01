@@ -166,13 +166,22 @@ Wyoming client                    wyoming-ovos-tts                  OVOS plugin 
 **`OVOSTTSEventHandler`**
 
 One instance per client connection. On `Synthesize`, calls `TTS.synth(text)` which returns
-a path to a WAV file. The WAV is split into chunks of 1024 samples and streamed back as
-`AudioStart` + `AudioChunk`* + `AudioStop`.
+a path to a WAV file. The WAV is split into chunks (1024 samples by default) and streamed
+back as `AudioStart` + `AudioChunk`* + `AudioStop`.
 
 | Event type | Action |
 |---|---|
 | `Describe` | Send `Info` advertising the loaded plugin as a TTS voice |
 | `Synthesize` | Call `TTS.synth()`, stream WAV chunks |
+| `SynthesizeStart` / `SynthesizeChunk` / `SynthesizeStop` | Streaming synthesis: text chunks are fed to a `SentenceBoundaryDetector`, and each complete sentence is synthesized and streamed as soon as it is detected, rather than waiting for the whole text |
+
+!!! note "Streaming synthesis is on by default"
+    `wyoming-ovos-tts` advertises `supports_synthesize_streaming` and accepts the
+    `SynthesizeStart`/`SynthesizeChunk`/`SynthesizeStop` protocol unless you pass
+    `--no-streaming`. A `SentenceBoundaryDetector` buffers incoming text chunks and releases
+    complete sentences for synthesis as they arrive; whatever text is left when `SynthesizeStop`
+    is received is synthesized and flushed before `SynthesizeStopped` is sent. With
+    `--no-streaming`, only the plain `Synthesize` event is handled.
 
 ### Running
 
@@ -185,7 +194,11 @@ wyoming-ovos-tts --plugin-name <ovos-tts-plugin-name> --uri tcp://0.0.0.0:7892
 |---|---|---|---|
 | `--plugin-name` | Yes | (none) | OVOS TTS plugin module name (e.g. `ovos-tts-plugin-piper`) |
 | `--uri` | No | `stdio://` | `tcp://HOST:PORT` or `unix:///path/to/socket` |
+| `--no-streaming` | No | `False` | Disable streaming synthesis (`SynthesizeStart`/`SynthesizeChunk`/`SynthesizeStop`); only plain `Synthesize` is handled |
+| `--samples-per-chunk` | No | `1024` | Audio samples per Wyoming `AudioChunk` |
 | `--debug` | No | `False` | Enable DEBUG log level |
+| `--log-format` | No | `logging.BASIC_FORMAT` | Format string for log messages |
+| `--version` | No | — | Print the installed version and exit |
 
 Examples:
 

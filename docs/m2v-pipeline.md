@@ -196,12 +196,3 @@ precise parser would have nailed. The usual setup is to place
 confidence) so exact matches win first and Model2Vec catches the paraphrases the
 others miss. Tune `conf_high`/`conf_medium`/`conf_low` to control how aggressive it
 is.
-
-!!! note "Hierarchical and domain variants"
-    Besides the flat classifier and prototype plugins above, the same package also
-    ships `ovos-m2v-hierarchical-prototype-pipeline`
-    (`Model2VecHierarchicalPrototypePipeline`), `ovos-m2v-hierarchical-intent-pipeline`
-    (`Model2VecHierarchicalIntentPipeline`), and `ovos-m2v-domain-intent-pipeline`
-    (`Model2VecDomainIntentPipeline`) entry points. These run a two-stage match
-    (domain/skill first, then intent within it) to cut down on cross-skill
-    collisions when many skills are loaded; none are enabled by default.

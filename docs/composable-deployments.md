@@ -72,14 +72,13 @@ cooperate exactly as if they were on the same box, as long as each can reach the
 `host:port`. The [GUI service](gui-service.md) has its own analogous `gui_websocket` block, since
 display clients connect over a second WebSocket.
 
-!!! warning "Loopback by default — except the GUI socket"
-    `websocket.host` (bus) and most PHAL plugin bindings default to loopback or same-host
-    assumptions. Distributing those services is a deliberate config change, not the
-    out-of-the-box behavior. See [Caveats](#caveats) below.
+!!! warning "Loopback by default"
+    `websocket.host` (bus), `gui_websocket.host`, and most PHAL plugin bindings default to
+    loopback or same-host assumptions. Distributing those services is a deliberate config
+    change, not the out-of-the-box behavior. See [Caveats](#caveats) below.
 
-    `gui_websocket.host` is the exception. It ships as `0.0.0.0`, so the GUI protocol socket is
-    reachable from the whole LAN on a default install. Narrow it to `127.0.0.1` unless a display
-    client genuinely runs on another machine.
+    `gui_websocket.host` ships as `127.0.0.1`. Widen it to `0.0.0.0` only if a display client
+    genuinely runs on another machine, since that exposes the GUI protocol socket to the LAN.
 
 ## Standalone skills
 

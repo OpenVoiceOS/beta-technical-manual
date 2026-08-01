@@ -22,7 +22,7 @@ pip install ovos-persona-server
 Install the solver plugin(s) your persona references, e.g.:
 
 ```bash
-pip install ovos-solver-openai-plugin
+pip install ovos-openai-plugin
 ```
 
 Optional extras: `rag` (file/vector-store endpoints), `mcp` (MCP transport), and `a2a`
@@ -54,8 +54,8 @@ A persona is a JSON object whose `handlers` list names the plugins that answer q
 ```json
 {
   "name": "kb-assistant",
-  "handlers": ["ovos-solver-openai-plugin"],
-  "ovos-solver-openai-plugin": {
+  "handlers": ["ovos-chat-openai-plugin"],
+  "ovos-chat-openai-plugin": {
     "api_url": "https://llama.smartgic.io/v1",
     "model": "llama3.1:8b",
     "key": "sk-xxx"

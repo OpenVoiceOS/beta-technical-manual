@@ -10,12 +10,14 @@
     documents that event in context. This page does not introduce anything new.
 
 !!! note
-    Many events have a legacy `mycroft.*`/bare name alongside a newer `ovos.*` name. On
-    current cores only the `ovos.*` spec name works: the compatibility bridge that used
-    to deliver both names was removed from `ovos-bus-client` in `f1a481d` (2026-08-01).
-    The tables below keep both names so you can recognize legacy spellings in old code,
-    but new code must use the spec name. See
-    [Updating from Older OVOS](updating-from-older-ovos.md#if-you-consume-the-message-bus-remotely-hivemind-and-other-clients).
+    Many events have a legacy `mycroft.*`/bare name alongside a newer `ovos.*` name. Only
+    one of the two goes on the wire, and each connected client's bus library locally
+    re-dispatches it under the other name too, so a handler on either name receives it
+    (see [Bus Service: namespace migration](bus-service.md#namespace-migration)). Use the
+    spec name in new code: an open kill-switch pull request
+    ([ovos-bus-client#272](https://github.com/OpenVoiceOS/ovos-bus-client/pull/272))
+    removes the legacy bridge once the fleet has migrated. The tables below show both
+    names where applicable.
 
 ## Listener / wake word
 
@@ -167,12 +169,14 @@ See [Bus Service: common message types](bus-service.md#key-message-categories).
 
 ## Legacy ↔ spec migration
 
-OVOS renamed its bus topics onto the `ovos.*` spec namespace. The migration period is
-over: the receive-side bridge that made legacy and spec names interchangeable was removed
-from `ovos-bus-client` in `f1a481d` (2026-08-01), and current clients speak spec topics
-only (see [Bus Service: namespace migration](bus-service.md#namespace-migration)). Use the
-table below to translate any legacy name you still have in code to its spec name. Only
-deployments pinned to a pre-removal `ovos-bus-client` still accept both spellings.
+OVOS is renaming its bus topics onto the `ovos.*` spec namespace. During the migration,
+`ovos-bus-client`'s receive-side bridge makes legacy and spec names interchangeable, both
+directions on by default (see
+[Bus Service: namespace migration](bus-service.md#namespace-migration)). That bridge is
+scheduled for removal by the open kill-switch pull request
+[ovos-bus-client#272](https://github.com/OpenVoiceOS/ovos-bus-client/pull/272): after it
+merges, only the spec names work. Use the table below to move any legacy name in your
+code to its spec name ahead of that.
 
 The pairs below are the authoritative rename map (`ovos_spec_tools`'s `MIGRATION_MAP`). Unless
 marked **shape-changing**, the payload is identical on both topics. Shape-changing pairs are

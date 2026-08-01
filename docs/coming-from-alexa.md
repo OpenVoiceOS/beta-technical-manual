@@ -70,10 +70,10 @@ with a screen.
 Some Echo habits have no equivalent. It is better to know that before you unplug anything.
 
 - **Synchronized multi-room audio.** Speaker groups that play the same thing in step across
-  rooms are not part of OVOS itself. Each device is independent. The
-  [RaspOVOS](install-raspovos.md) image ships [Snapcast](https://github.com/badaix/snapcast),
-  which solves synchronized playback at the system level. You wire it up yourself, and it is
-  not driven by voice.
+  rooms are not part of OVOS itself. Each device is independent. Synchronized playback needs
+  a system-level solution such as [Snapcast](https://github.com/badaix/snapcast), which
+  neither OVOS nor the [RaspOVOS](install-raspovos.md) image ships. You wire it up yourself,
+  and it is not driven by voice.
 - **Shopping and to-do lists.** There is no bundled list skill, and nothing syncs to a phone
   app. Adding items by voice means installing a community skill or writing one. The
   [Skill Cookbook](skill-cookbook.md) has the pattern.

@@ -307,11 +307,14 @@ earlier). These are the dispatch stage boundaries, verified in `FallbackService`
 (`ovos_core/intent_services/fallback_service.py`). This is a separate fact from *which* priority
 you should actually pick for a handler, covered in [Fallback Skill](fallbacks.md#order-of-precedence):
 
-| Range (inclusive start, exclusive stop) | Pipeline stage |
+| Range (exclusive start, inclusive stop) | Pipeline stage |
 |---|---|
 | 0–5 | `fallback_high` |
 | 5–90 | `fallback_medium` |
 | 90–101 | `fallback_low` |
+
+A priority of exactly `5` lands in `fallback_high`, and exactly `90` lands in `fallback_medium`,
+since the stage boundary itself is included in the lower stage.
 
 Priority can be overridden in config:
 

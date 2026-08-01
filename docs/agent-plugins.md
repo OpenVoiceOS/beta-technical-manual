@@ -57,10 +57,10 @@ examples, see [Agents & Personas](personas.md) and [Advanced Solvers](advanced-s
 | [ovos-persona](#ovos-persona) | The **`PersonaPipeline`** brings multi-persona management to OpenVoiceOS (OVOS), enabling interactive conversations with virtual assistants. With personas, you can customize how queries are handled by assigning specific solvers to each persona. |
 | [ovos-openai-plugin](#ovos-openai-plugin) | Uses the [OpenAI Completions API](https://platform.openai.com/docs/api-reference/completions/create) to provide a chat engine, a dialog-rewriting transformer, and a summarizer, all pointed at any OpenAI-compatible endpoint. |
 | [ovos-messagebus-chat-plugin](#ovos-messagebus-chat-plugin) | `OVOSMessagebusChatAgent`: a `ChatEngine` (`opm.agents.chat`, entry point `ovos-messagebus`) that proxies each turn through a connected OVOS messagebus pipeline. |
-| [ovos-wikipedia-solver](#ovos-wikipedia-solver) | Answers factual questions by querying Wikipedia. |
+| [ovos-wikipedia-plugin](#ovos-wikipedia-plugin) | Answers factual questions by querying Wikipedia. |
 | [ovos-chromadb-embeddings-plugin](#ovos-chromadb-embeddings-plugin) | The `ChromaEmbeddingsDB` plugin integrates with the [ChromaDB](https://www.trychroma.com/) database to store, retrieve, and query embeddings. This plugin extends the abstract `EmbeddingsDB` class, using ChromaDB's capabilities. |
-| [ovos-wolfram-alpha-solver](#ovos-wolfram-alpha-solver) | Answers computational and factual questions via the Wolfram Alpha API. |
-| [ovos-ddg-solver-plugin](#ovos-ddg-solver-plugin) | Answers questions using DuckDuckGo instant-answer results. |
+| [ovos-wolfram-alpha-plugin](#ovos-wolfram-alpha-plugin) | Answers computational and factual questions via the Wolfram Alpha API. |
+| [ovos-ddg-plugin](#ovos-ddg-plugin) | Answers questions using DuckDuckGo instant-answer results. |
 | [ovos-solver-YesNo-plugin](#ovos-solver-yesno-plugin) | A simple tool to indicate whether a user answered "yes" or "no" to a yes/no prompt. |
 | [ovos-solver-failure-plugin](#ovos-solver-failure-plugin) | Extreme fallback, just complains it does not have a brain |
 | [ovos-gguf-plugin](#ovos-gguf-plugin) | Unified GGUF wrapper for chat, summarization, dialog rewriting, translation, language detection, and text embeddings, all backed by quantized GGUF models via `llama-cpp-python`. |
@@ -130,9 +130,9 @@ below for the standalone `opm.agents.toolbox` and `opm.agents.chat` plugin regis
 
 ---
 
-## ovos-wikipedia-solver
+## ovos-wikipedia-plugin
 
-- **GitHub**: [OpenVoiceOS/ovos-wikipedia-solver](https://github.com/OpenVoiceOS/ovos-wikipedia-solver)
+- **GitHub**: [OpenVoiceOS/ovos-wikipedia-plugin](https://github.com/OpenVoiceOS/ovos-wikipedia-plugin)
 
 
 - **Description**: Answers factual questions by querying Wikipedia.
@@ -162,9 +162,9 @@ Per-collection metadata defaults `hnsw:space` to `cosine` when not specified.
 
 ---
 
-## ovos-wolfram-alpha-solver
+## ovos-wolfram-alpha-plugin
 
-- **GitHub**: [OpenVoiceOS/ovos-wolfram-alpha-solver](https://github.com/OpenVoiceOS/ovos-wolfram-alpha-solver)
+- **GitHub**: [OpenVoiceOS/ovos-wolfram-alpha-plugin](https://github.com/OpenVoiceOS/ovos-wolfram-alpha-plugin)
 
 
 - **Description**: Answers computational and factual questions via the Wolfram Alpha API.
@@ -175,9 +175,9 @@ Per-collection metadata defaults `hnsw:space` to `cosine` when not specified.
 
 ---
 
-## ovos-ddg-solver-plugin
+## ovos-ddg-plugin
 
-- **GitHub**: [OpenVoiceOS/ovos-ddg-solver-plugin](https://github.com/OpenVoiceOS/ovos-ddg-solver-plugin)
+- **GitHub**: [OpenVoiceOS/ovos-ddg-plugin](https://github.com/OpenVoiceOS/ovos-ddg-plugin)
 
 
 - **Description**: Answers questions using DuckDuckGo instant-answer results.
@@ -246,9 +246,9 @@ bus via `ovos.persona.tools.{toolbox_id}.call`. See [Tool Plugins](tool-plugins.
 
 | Plugin ID | Tools | Package | API key |
 |---|---|---|---|
-| `ovos-wikipedia-tools` | `search_wikipedia`, `get_wikipedia_sections`, `get_wikipedia_page` | `ovos-wikipedia-solver` | None, public Wikipedia REST API |
-| `ovos-ddg-tools` | `search_duckduckgo`, `get_duckduckgo_infobox` | `ovos-ddg-solver-plugin` | None, DuckDuckGo Instant Answer API |
-| `ovos-wolfram-alpha-tools` | `compute`, `compute_full` | `ovos-wolfram-alpha-solver` | Optional, free key at developer.wolframalpha.com; a demo key ships in the plugin |
+| `ovos-wikipedia-tools` | `search_wikipedia`, `get_wikipedia_sections`, `get_wikipedia_page` | `ovos-wikipedia-plugin` | None, public Wikipedia REST API |
+| `ovos-ddg-tools` | `search_duckduckgo`, `get_duckduckgo_infobox` | `ovos-ddg-plugin` | None, DuckDuckGo Instant Answer API |
+| `ovos-wolfram-alpha-tools` | `compute`, `compute_full` | `ovos-wolfram-alpha-plugin` | Optional, free key at developer.wolframalpha.com; a demo key ships in the plugin |
 | `ovos-weather-tools` | `get_current_weather`, `get_daily_forecast`, `get_hourly_forecast` | `ovos-skill-weather` | None, Open-Meteo public API |
 | `ovos-datetime-tools` | `get_current_datetime`, `convert_timezone`, `get_timezone_for_location` | `ovos-skill-date-time` | None, stdlib + pytz |
 | `ovos-ip-tools` | `get_local_ip_addresses`, `get_public_ip` | `ovos-skill-ip` | None |
@@ -265,28 +265,7 @@ see that page for those.
 ## Available Chat Engines
 
 `opm.agents.chat` plugins beyond the ones documented above as their own catalog entries
-(`ovos-openai-plugin`, `ovos-gguf-plugin`):
-
-| Plugin ID | Backend | Package |
-|---|---|---|
-| `ovos-chat-gemini-code-plugin` | Gemini (code) | `ovos-gemini-plugin` |
-| `ovos-chat-gemini-session-plugin` | Gemini (session) | `ovos-gemini-plugin` |
-| `ovos-chat-claude-code-plugin` | Claude (code) | `ovos-claude-plugin` |
-| `ovos-chat-claude-code-session-plugin` | Claude (session) | `ovos-claude-plugin` |
-| `ovos-chat-kilo-plugin` | Kilo (Anthropic) | `ovos-kilo-plugin` |
-| `ovos-chat-kilo-session-plugin` | Kilo (session) | `ovos-kilo-plugin` |
-| `ovos-chat-qwen-code-plugin` | Qwen-Code | `ovos-qwen-code-plugin` |
-| `ovos-chat-opencode-plugin` | OpenCode | `ovos-opencode-plugin` |
-| `ovos-chat-opencode-session-plugin` | OpenCode (session) | `ovos-opencode-plugin` |
-
-The Mixture-of-Solvers (`ovos-MoS`) family combines several chat engines into one:
-
-| Plugin ID | Strategy |
-|---|---|
-| `ovos-mos-king-reranker` | One "king" engine reranks candidate answers from the others |
-| `ovos-mos-king-generative` | One "king" engine generates the final answer from the others' candidates |
-| `ovos-mos-democracy` | Majority vote across all configured engines |
-| `ovos-mos-duopoly-reranker` | Reranker variant restricted to two engines |
-| `ovos-mos-duopoly-generative` | Generative variant restricted to two engines |
+(`ovos-openai-plugin`, `ovos-gguf-plugin`) are not currently shipped by an OpenVoiceOS-org
+repository. This manual only documents plugins backed by an OpenVoiceOS-org repo.
 
 ---

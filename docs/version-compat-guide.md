@@ -62,7 +62,7 @@ class MySkill(*_BASES):
         ...
 ```
 
-The same pattern applies to the `ovos-utils` `0.1.0` gutting (2024-09-10, `3a77617`),
+The same pattern applies to the `ovos-utils` `0.1.0` gutting (released 2024-09-10; deletion commit `3a77617`, 2023-12-29),
 which deleted almost every helper that had accumulated in `ovos_utils` since the
 Mycroft era. For example `get_mycroft_bus`/`wait_for_reply` moved to
 `ovos_bus_client.util`:
@@ -79,8 +79,11 @@ except ImportError:
 
 Use this when the two generations cannot both exist as importable symbols at once, for
 example a renamed method on the same class, or a whole class that got deleted rather
-than moved. Check the installed version of the package that owns the break with
-`importlib.metadata.version` and `packaging.version.parse`, then branch.
+than moved. Every OVOS package ships a `version.py` module with integer constants
+(`VERSION_MAJOR`, `VERSION_MINOR`, `VERSION_BUILD`, `VERSION_ALPHA`) between
+`START_VERSION_BLOCK`/`END_VERSION_BLOCK` markers. Import the constants from the
+package that owns the break and branch on them. This needs no extra dependency and no
+string parsing.
 
 `ConversationalSkill.can_answer` was renamed to `can_converse` in `ovos-workshop`
 `7.0.0` (`1fdd532`, #348), one day after the `can_answer` name shipped in `5.0.0`.
@@ -88,19 +91,25 @@ Define both names and delegate one to the other so callers on either generation 
 the method they expect:
 
 ```python
-from importlib.metadata import version
-from packaging.version import parse
-
-_WORKSHOP_VERSION = parse(version("ovos-workshop"))
+from ovos_workshop.version import VERSION_MAJOR as WORKSHOP_MAJOR
 
 class MySkill(OVOSSkill, ConversationalSkill):
     def can_converse(self, message) -> bool:
         return True
 
-    if _WORKSHOP_VERSION < parse("7.0.0"):
+    if WORKSHOP_MAJOR < 7:
         # ovos-workshop 5.0.0-6.0.1 called this method can_answer
         def can_answer(self, message) -> bool:
             return self.can_converse(message)
+```
+
+For a break that landed inside a minor or build release, compare the tuple:
+
+```python
+from ovos_workshop import version
+
+if (version.VERSION_MAJOR, version.VERSION_MINOR) >= (7, 1):
+    ...  # post-break behavior
 ```
 
 The `CommonQuerySkill` removal is the sharper case: the class itself is gone in
@@ -269,14 +278,15 @@ support it claims to offer.
 Some breaks are not shimmable, and trying anyway produces code that looks safe and
 is not.
 
-**Removed wire behavior.** The `ovos-bus-client` legacy-topic dual-emit bridge
-(`modernize`/`emit_legacy`, both default ON from `e25ab12`, 2026-06-25) is gone as of
-`f1a481d` (2026-08-01). `MessageBusClient` speaks OVOS-MSG-1 spec topics only from
-that commit forward, and passing `emit_legacy`, `modernize`, or
-`intent_reemit_blanket` to the constructor now raises `RuntimeError` instead of being
-silently ignored. There is no client-side shim for this: a remote client or satellite
-still emitting or expecting legacy `mycroft.*`/`recognizer_loop:*` topics must migrate
-to `ovos.*` spec topics before talking to a bus past that commit. See [Updating From
+**Wire behavior scheduled for removal.** The `ovos-bus-client` legacy-topic dual-emit
+bridge (`modernize`/`emit_legacy`, both default ON from `e25ab12`, 2026-06-25) is
+scheduled for deletion by the open kill-switch
+[ovos-bus-client#272](https://github.com/OpenVoiceOS/ovos-bus-client/pull/272). After
+it merges, `MessageBusClient` speaks OVOS-MSG-1 spec topics only and passing
+`emit_legacy`, `modernize`, or `intent_reemit_blanket` to the constructor raises
+`RuntimeError`. There will be no client-side shim for this: migrate remote clients and
+satellites to `ovos.*` spec topics while the bridge still covers both spellings. Do
+not write new code that shims legacy topic names. See [Updating From
 Older OVOS](updating-from-older-ovos.md#the-bus-client-legacy-topic-dual-emit-and-its-removal)
 for the full migration path.
 

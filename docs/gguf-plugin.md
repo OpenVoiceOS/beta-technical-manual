@@ -15,7 +15,7 @@ You can share one `Llama` between engines by passing `gguf_engine=` in code.
 
 Install: `pip install ovos-gguf-plugin`
 
-Repository: `OpenVoiceOS Workspace/Agent Plugins/ovos-gguf-plugin`
+**GitHub**: [OpenVoiceOS/ovos-gguf-plugin](https://github.com/OpenVoiceOS/ovos-gguf-plugin)
 
 ---
 

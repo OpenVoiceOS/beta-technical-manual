@@ -149,8 +149,10 @@ The discovery helpers (`find_*_transformer_plugins`, `load_*_transformer_plugin`
 `ovos_plugin_manager.text_transformers`, `.intent_transformers`, `.metadata_transformers`,
 `.audio_transformers`, and `.dialog_transformers`.
 
-The dialog module also exposes the `find_tts_transformer_plugins` / `load_tts_transformer_plugin`
-helpers. There is no separate `tts_transformers` module.
+`find_tts_transformer_plugins` / `load_tts_transformer_plugin` live in their own
+`ovos_plugin_manager.tts_transformers` module. `ovos_plugin_manager.dialog_transformers`
+re-exports both names for backwards compatibility, but that module is not their canonical
+home.
 
 ## Creating a Plugin
 

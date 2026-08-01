@@ -18,7 +18,7 @@
 
     The split also changes what OCP *skills* are for. Once MediaProvider plugins own
     catalog search, an OCP skill is for the case where **the skill itself is the playable
-    media**: a voice game (see [ovos-skill-moon-game](https://github.com/OpenVoiceOS/ovos-skill-moon-game)),
+    media**: a voice game (see [ovos-skill-moon-game](https://github.com/JarbasSkills/skill-moon-game)),
     an ebook reader, any experience the player can start, pause, and resume like a track.
     If your skill is only a searchable catalog of external media (a station list, a
     podcast feed), plan to ship it as a MediaProvider plugin when that lands. If the
@@ -110,10 +110,13 @@ General steps to create a skill:
   - Values are between 0 and 100
 
 
-  - Results below the `min_score` config threshold (`intents.ovos-ocp-pipeline-plugin.min_score`,
-    default `50`) are filtered out before OCP picks a winner across all responding skills. There
-    is no fixed confidence value that short-circuits and cancels other skills' searches early.
-    Higher scores simply make your result more likely to win the cross-skill comparison
+  - Results below the `min_score` config threshold (`intents.OCP.min_score`, shipped default
+    `40` in `mycroft.conf`) are filtered out before OCP picks a winner across all responding
+    skills. The plugin also checks `intents.ovos-ocp-pipeline-plugin.min_score` first if present,
+    but that key is absent from the default config; `50` is only the code fallback when neither
+    key is set. There is no fixed confidence value that short-circuits and cancels other skills'
+    searches early. Higher scores simply make your result more likely to win the cross-skill
+    comparison
 
 
 - `ocp_featured_media`: return a playlist for the OCP menu if selected from GUI (optional)
