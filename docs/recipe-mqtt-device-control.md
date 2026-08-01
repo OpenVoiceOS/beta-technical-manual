@@ -5,6 +5,10 @@
 
 **When you'd want this:** a device on the network, such as a smart plug or a relay board, listens for commands on an MQTT topic. The skill publishes to that topic on a voice command. It uses the same timeout-plus-spoken-error pattern as [Recipe 3](recipe-safe-api-call.md), applied to a broker connection instead of an HTTP call.
 
+This recipe needs a broker client that OVOS does not ship. Declare it in your skill's
+`pyproject.toml` (`dependencies = ["paho-mqtt"]`) and install it, or every run stops at
+`ModuleNotFoundError: No module named 'paho'`.
+
 ```python
 import paho.mqtt.client as mqtt
 from ovos_workshop.skills import OVOSSkill

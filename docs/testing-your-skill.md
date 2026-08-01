@@ -38,16 +38,21 @@ contributor needs:
 
 ```toml
 [project.optional-dependencies]
-test = ["ovoscope", "ovos-padatious-pipeline-plugin"]
+test = ["ovoscope", "ovos-padatious"]
 ```
 
 ## Step 2: Write the first `End2EndTest`
 
 !!! note "Prerequisite: the Padatious pipeline plugin"
     This test drives `session.pipeline = ["ovos-padatious-pipeline-plugin"]`, so that plugin
-    must actually be installed: `pip show ovos-padatious-pipeline-plugin || pip install
-    ovos-padatious-pipeline-plugin`. If the test runs but reports no spoken output at all,
-    check for a missing pipeline plugin first, not a bug in your skill.
+    must actually be installed: `pip show ovos-padatious || pip install ovos-padatious`.
+
+    The pipeline ID and the pip package have different names — `pip install
+    ovos-padatious-pipeline-plugin` fails, there is no such package. See [Pipeline IDs vs.
+    plugins](pipelines-overview.md#pipeline-ids-vs-plugins).
+
+    If the test runs but reports no spoken output at all, check for a missing pipeline plugin
+    first, not a bug in your skill.
 
 Create `test/test_hello.py` next to your skill's `pyproject.toml`:
 

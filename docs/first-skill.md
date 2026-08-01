@@ -200,6 +200,19 @@ From inside the `ovos-skill-my-first/` folder:
 pip install -e .
 ```
 
+Your skill matches with a `.intent` file, which is handled by **Padatious**. Padatious is an
+optional install, because its neural-network backend is LGPL — a plain OVOS install may not
+have it. Check, and add it if it is missing:
+
+```bash
+pip show ovos-padatious || pip install ovos-padatious
+```
+
+The pipeline ID is `ovos-padatious-pipeline-plugin`, but the package you install is
+`ovos-padatious` — `pip install ovos-padatious-pipeline-plugin` fails, there is no such
+package. See [Pipeline IDs vs.
+plugins](pipelines-overview.md#pipeline-ids-vs-plugins).
+
 Restart `ovos-core` (or it will pick the skill up on its next scan). See
 [Stage 1 of Troubleshooting](troubleshooting.md#stage-1-is-the-service-even-running-and-is-the-bus-reachable)
 for exactly how to start/restart the OVOS services. Then say your configured wake word first
@@ -211,11 +224,15 @@ OVOS replies with one of your dialog lines. You just wrote a skill.
 
 !!! note "If OVOS doesn't reply"
     Check the skills log for your skill_id: `ovos-logs show -l skills`. See
-    [Troubleshooting](troubleshooting.md) for how to read what it's telling you. `Hello.intent`
-    is a **Padatious** template intent, so the live device also needs
-    `ovos-padatious-pipeline-plugin` installed and listed in its `intents.pipeline` config for
-    the file to match at all. See [Test Your Skill](testing-your-skill.md) for the same
-    requirement in the automated test.
+    [Troubleshooting](troubleshooting.md) for how to read what it's telling you.
+
+    The most common cause is the one in Step 6: `Hello.intent` is a Padatious intent, and
+    Padatious is an optional install. Re-run that check.
+
+    You do not need to edit any pipeline config. The stage is in the shipped default
+    `intents.pipeline` already — the plugin just has to be installed for the default to have
+    anything to load. [Test Your Skill](testing-your-skill.md) hits the same requirement in
+    the automated test.
 
 !!! tip "No microphone handy, or want to test without talking?"
     You can send the utterance straight onto the bus as text, skipping the wake word and mic

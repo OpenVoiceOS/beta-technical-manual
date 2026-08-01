@@ -86,12 +86,13 @@ Remember, OVOS has a language setting that determines from which directory to fi
 
 #### File locations
 
-The [Skill Structure](skill-structure.md) section describes where to place the Intent file and dialog file. There are two choices:
+The [Skill Structure](skill-structure.md) section describes where to place the Intent file and
+dialog file. Put both in `locale/en-us`.
 
-1. Put both files in `locale/en-us`
-
-
-2. Put the dialog file in `dialog/en-us` , and put the Intent file in `vocab/en-us`
+You will also see an older split layout in existing skills: the dialog file in `dialog/en-us`
+and the intent file in `vocab/en-us`. `dialog` and `vocab` are **deprecated**. They still work,
+so a skill you are reading may use them, but do not start a new skill that way. If both layouts
+exist for the same resource, `locale` wins.
 
 ### Statements with variables
 

@@ -85,6 +85,30 @@ Such selective plugins are deliberately conservative. They claim only when both 
 
 The IDs you list in your `pipeline` config (like `ovos-adapt-pipeline-plugin-high`) are not separate plugins. A confidence-aware plugin registers a single OPM entry point (e.g. `ovos-adapt-pipeline-plugin`), and OVOS derives the `-high`/`-medium`/`-low` matcher stages from it at runtime. Plugins that match at only one confidence level (such as `ovos-converse-pipeline-plugin` or `ovos-common-query-pipeline-plugin`) expose a single bare ID.
 
+#### The pip package is a third name again
+
+A pipeline ID is not a package name either, and `pip install <pipeline-id>` fails outright for
+several of them. Install the distribution, not the ID:
+
+| Pipeline ID | pip package |
+|---|---|
+| `ovos-padatious-pipeline-plugin` | `ovos-padatious` |
+| `ovos-adapt-pipeline-plugin` | `ovos-adapt-parser` |
+| `ovos-m2v-pipeline` | `ovos-m2v-pipeline` |
+| `ovos-persona-pipeline-plugin` | `ovos-persona` |
+| `ovos-ocp-pipeline-plugin` | `ovos-ocp-pipeline-plugin` |
+| `ovos-common-query-pipeline-plugin` | `ovos-common-query-pipeline-plugin` |
+
+The last two match, which is what makes the others easy to get wrong. To find the package
+behind any installed pipeline ID, ask the entry point which distribution registered it:
+
+```bash
+python3 -c "
+from importlib.metadata import distributions
+print([d.metadata['Name'] for d in distributions()
+       for e in d.entry_points if e.group == 'opm.pipeline'])"
+```
+
 The older short names (`adapt_high`, `common_qa`, …) are **deprecated aliases**. ovos-core still accepts them and rewrites them to the canonical plugin IDs via the `_PIPELINE_MIGRATION_MAP`, so existing configs keep working this way. The bundled default configuration and new configs alike should use the canonical names shown below.
 
 ---
