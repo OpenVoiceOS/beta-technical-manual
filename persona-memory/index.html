@@ -1734,6 +1734,7 @@
 <li>The <strong>last</strong> message is ALWAYS the current user utterance.</li>
 </ul>
 <p>The short-term memory previously hard-coded in <code>ovos-persona</code> is now a plugin under this interface, so all memory strategies are composable.</p>
+<p><code>update_history</code> normalizes what it is given before storing it: a leading message left over with no matching turn is dropped, and consecutive assistant messages are merged into one, so callers do not need to pre-clean the message list themselves.</p>
 <hr />
 <h2 id="per-session-persona-tracking">Per-Session Persona Tracking<a class="headerlink" href="#per-session-persona-tracking" title="Permanent link">&para;</a></h2>
 <p>Persona management is session-isolated:</p>
@@ -1758,6 +1759,7 @@
 </span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="p">}</span>
 </span></code></pre></div>
 <p>A persona selects exactly <strong>one</strong> backend, but that one may be <code>ovos-memory-plugin-composite</code>, which loads and consolidates several of the others.</p>
+<p>If a persona sets no <code>memory_module</code> at all, <code>ovos-persona</code> falls back to its own bundled backend, <code>ovos-agents-short-term-memory-plugin</code> (class <code>BasicShortTermMemory</code>). It keeps a plain verbatim window, defaulting to <code>max_history: 5</code> and <code>system_prompt: ""</code>.</p>
 <hr />
 <h2 id="choosing-a-backend">Choosing a backend<a class="headerlink" href="#choosing-a-backend" title="Permanent link">&para;</a></h2>
 <table>

@@ -856,6 +856,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Audio Issues">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#re-triggering-auto-detection-without-a-reboot" class="md-nav__link">
+    <span class="md-ellipsis">
+      Re-triggering auto-detection without a reboot
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1627,6 +1642,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Audio Issues">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#re-triggering-auto-detection-without-a-reboot" class="md-nav__link">
+    <span class="md-ellipsis">
+      Re-triggering auto-detection without a reboot
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -2269,6 +2299,22 @@ choosing a wake word that works well in various environments:</p>
 </ul>
 </li>
 </ul>
+<h3 id="re-triggering-auto-detection-without-a-reboot">Re-triggering auto-detection without a reboot<a class="headerlink" href="#re-triggering-auto-detection-without-a-reboot" title="Permanent link">&para;</a></h3>
+<p>If the wrong output device got picked, or a HAT wasn't detected, you don't need to reboot to
+re-run detection. Two separate systemd services do it:</p>
+<ul>
+<li><code>sudo systemctl restart autoconfigure_soundcard.service</code>: re-picks the default output.</li>
+<li><code>sudo systemctl restart i2csound.service</code>: re-detects an i2c sound HAT (Respeaker, Mark 2's
+  SJ201, etc.).</li>
+</ul>
+<p>These are the same services the boot-time helper scripts run automatically. Restarting them by
+hand re-runs the same detection logic without a full reboot.</p>
+<p>raspOVOS also ships a handful of non-interactive <code>/usr/libexec</code> helper scripts, invoked by
+systemd rather than typed at a prompt: <code>ovos-i2csound</code> and <code>soundcard-autoconfigure</code> (the
+scripts behind the two services above), <code>usb-autovolume</code>, the <code>ovos-systemd-*</code> service
+launchers, and <code>ovos-reboot-signal</code>/<code>ovos-shutdown-signal</code> (bus signal emitters for reboot and
+shutdown). You won't normally run these directly, but their names are worth knowing when reading
+<code>ologs</code> output during audio troubleshooting.</p>
 <hr />
 <h2 id="stt-tips-and-tricks">STT tips and tricks<a class="headerlink" href="#stt-tips-and-tricks" title="Permanent link">&para;</a></h2>
 <h3 id="saving-transcriptions">Saving Transcriptions<a class="headerlink" href="#saving-transcriptions" title="Permanent link">&para;</a></h3>

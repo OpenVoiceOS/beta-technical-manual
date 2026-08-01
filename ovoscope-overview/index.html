@@ -1124,6 +1124,30 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Your first test">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#testing-skills-still-in-development-and-non-utterance-triggers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Testing skills still in development, and non-utterance triggers
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-ovoscope-does-not-do" class="md-nav__link">
+    <span class="md-ellipsis">
+      What ovoscope does not do
+    </span>
+  </a>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1417,6 +1441,30 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Your first test">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#testing-skills-still-in-development-and-non-utterance-triggers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Testing skills still in development, and non-utterance triggers
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-ovoscope-does-not-do" class="md-nav__link">
+    <span class="md-ellipsis">
+      What ovoscope does not do
+    </span>
+  </a>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1520,6 +1568,28 @@ the speak is ever checked.</p>
 <p>For full sequence assertions — message types, ordering, routing, and session state — populate
 <code>expected_messages</code> and call <code>test.execute()</code> directly (see the
 <a href="https://github.com/OpenVoiceOS/ovoscope/blob/dev/docs/usage-guide.md">usage guide</a>).</p>
+<p><code>ovoscope</code> also ships ready-made pipeline-stage lists, so you do not have to hand-write
+<code>session.pipeline = [...]</code> for common cases: <code>ADAPT_PIPELINE</code>, <code>PADATIOUS_PIPELINE</code>,
+<code>FALLBACK_PIPELINE</code>, <code>PERSONA_PIPELINE</code>, and <code>DEFAULT_TEST_PIPELINE</code> (a deterministic mix that
+deliberately excludes persona/Ollama/OCP/m2v plugins). Import them from <code>ovoscope</code> and assign
+to <code>session.pipeline</code>. See <a href="https://github.com/OpenVoiceOS/ovoscope/blob/dev/docs/end2end-test.md">end2end-test.md</a>
+for the full list.</p>
+<h3 id="testing-skills-still-in-development-and-non-utterance-triggers">Testing skills still in development, and non-utterance triggers<a class="headerlink" href="#testing-skills-still-in-development-and-non-utterance-triggers" title="Permanent link">&para;</a></h3>
+<p>Pass <code>extra_skills={skill_id: SkillClass}</code> to <code>MiniCroft</code> to load a skill class directly, with no
+PyPI entry point required. This is useful for testing a skill before it is packaged.</p>
+<p>To drive a non-utterance handler — a GUI event, a timer firing, an API call — call
+<code>MiniCroft.inject_message()</code> instead of sending an utterance through the pipeline.</p>
+<hr />
+<h2 id="what-ovoscope-does-not-do">What <code>ovoscope</code> does not do<a class="headerlink" href="#what-ovoscope-does-not-do" title="Permanent link">&para;</a></h2>
+<p><code>ovoscope</code> tests at the <code>recognizer_loop:utterance</code> level and in-process. It does not:</p>
+<ul>
+<li>open a real WebSocket bus</li>
+<li>run the PHAL or audio services</li>
+<li>render the GUI</li>
+<li>perform real TTS</li>
+</ul>
+<p>Keep this in mind when a test needs one of these — it needs the real stack (or a dedicated
+harness), not <code>ovoscope</code>.</p>
 <hr />
 <h2 id="the-harnesses-full-reference-in-the-repo">The harnesses (full reference in the repo)<a class="headerlink" href="#the-harnesses-full-reference-in-the-repo" title="Permanent link">&para;</a></h2>
 <p><code>ovoscope</code> ships a harness per subsystem. Each is documented in the tool's

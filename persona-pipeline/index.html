@@ -1174,6 +1174,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#bus-events" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bus Events
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#related-pages" class="md-nav__link">
     <span class="md-ellipsis">
       Related Pages
@@ -1863,6 +1872,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#bus-events" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bus Events
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#related-pages" class="md-nav__link">
     <span class="md-ellipsis">
       Related Pages
@@ -2161,7 +2179,34 @@
 <hr />
 <h2 id="persona-intents">Persona Intents<a class="headerlink" href="#persona-intents" title="Permanent link">&para;</a></h2>
 <p><code>"ovos-persona-pipeline-plugin-high"</code> supports a set of core voice intents to manage persona interactions.</p>
-<p>These intents control the Persona Service directly, without extra setup. The backing intent/vocab files are <code>list_personas.intent</code>, <code>active_persona.intent</code>, <code>summon.intent</code> (activate), <code>ask.intent</code> (single-shot), and <code>Release.voc</code> (stop).</p>
+<p>These intents control the Persona Service directly, without extra setup. The backing intent/vocab files are <code>list_personas.intent</code>, <code>active_persona.intent</code>, <code>summon.intent</code> (activate), <code>ask.intent</code> (single-shot), and <code>Release.voc</code> (stop). Each intent file maps to a bus event:</p>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Bus event</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>summon.intent</code></td>
+<td><code>persona:summon</code></td>
+</tr>
+<tr>
+<td><code>ask.intent</code></td>
+<td><code>persona:query</code></td>
+</tr>
+<tr>
+<td><code>list_personas.intent</code></td>
+<td><code>persona:list</code></td>
+</tr>
+<tr>
+<td><code>active_persona.intent</code></td>
+<td><code>persona:check</code></td>
+</tr>
+</tbody>
+</table>
+<p>A spoken persona name is matched against the registered personas by fuzzy string matching (<code>PARTIAL_TOKEN_SET_RATIO</code>, minimum score <code>0.7</code>), so close matches like "chat gpt" resolve to a persona named "ChatGPT".</p>
 <h3 id="list-personas"><strong>List Personas</strong><a class="headerlink" href="#list-personas" title="Permanent link">&para;</a></h3>
 <p><strong>Example Utterances</strong>:</p>
 <ul>
@@ -2199,6 +2244,48 @@
 <li>"Shut up"</li>
 </ul>
 <p>Releasing a persona (via the <code>Release.voc</code> keyword match) ends the active session. The service marks the session inactive, so any in-flight streaming response stops and subsequent utterances flow back through the normal pipeline. Persona uses <code>skill_id</code> <code>persona.openvoiceos</code>.</p>
+<hr />
+<h2 id="bus-events">Bus Events<a class="headerlink" href="#bus-events" title="Permanent link">&para;</a></h2>
+<p>The Persona Service listens for these bus events:</p>
+<table>
+<thead>
+<tr>
+<th>Event</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>persona:query</code></td>
+<td>Ask the active (or a named) persona a single-shot question</td>
+</tr>
+<tr>
+<td><code>persona:summon</code></td>
+<td>Activate a persona for the session</td>
+</tr>
+<tr>
+<td><code>persona:list</code></td>
+<td>List available personas</td>
+</tr>
+<tr>
+<td><code>persona:check</code></td>
+<td>Report which persona is active</td>
+</tr>
+<tr>
+<td><code>persona:release</code></td>
+<td>Deactivate the active persona</td>
+</tr>
+<tr>
+<td><code>recognizer_loop:utterance</code></td>
+<td>Utterance routed in from the pipeline while a persona is active</td>
+</tr>
+<tr>
+<td><code>speak</code></td>
+<td>Persona response delivered back to the user</td>
+</tr>
+</tbody>
+</table>
+<p>Responses use these dialog keys: <code>activated_persona</code>, <code>release_persona</code>, <code>active_persona</code>, <code>no_active_persona</code>, <code>unknown_persona</code>, <code>no_personas</code>, <code>list_personas</code>, <code>persona_error</code>.</p>
 <hr />
 <h2 id="related-pages">Related Pages<a class="headerlink" href="#related-pages" title="Permanent link">&para;</a></h2>
 <ul>

@@ -1076,6 +1076,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#streaming" class="md-nav__link">
+    <span class="md-ellipsis">
+      Streaming
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#openai-compatible-example" class="md-nav__link">
     <span class="md-ellipsis">
       OpenAI-Compatible Example
@@ -1489,6 +1498,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#streaming" class="md-nav__link">
+    <span class="md-ellipsis">
+      Streaming
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#openai-compatible-example" class="md-nav__link">
     <span class="md-ellipsis">
       OpenAI-Compatible Example
@@ -1659,6 +1677,21 @@ endpoints, a UTCP tool surface, and vendor-compatible routers for <strong>Anthro
 <td>Ollama model listing</td>
 </tr>
 <tr>
+<td><code>/ollama/api/show</code></td>
+<td>POST</td>
+<td>Ollama model details</td>
+</tr>
+<tr>
+<td><code>/ollama/api/ps</code></td>
+<td>GET</td>
+<td>Ollama running-model listing (stub)</td>
+</tr>
+<tr>
+<td><code>/ollama/api/pull</code>, <code>/ollama/api/push</code></td>
+<td>POST</td>
+<td>Ollama pull/push (stubs; there is nothing to pull or push)</td>
+</tr>
+<tr>
 <td><code>/ollama/api/embed</code>, <code>/ollama/api/embeddings</code></td>
 <td>POST</td>
 <td>Ollama embeddings</td>
@@ -1723,7 +1756,8 @@ endpoints, a UTCP tool surface, and vendor-compatible routers for <strong>Anthro
 <p>The legacy unprefixed paths <code>/v1/...</code> and <code>/api/...</code> (OpenAI and Ollama respectively) remain
 mounted as deprecated aliases of <code>/openai/v1/...</code> and <code>/ollama/api/...</code>. Responses on these
 legacy paths carry <code>Deprecation</code> and <code>Link</code> headers pointing at the canonical path.</p>
-<p>There is no authentication. Put the server behind a reverse proxy if it is exposed.</p>
+<p>There is no authentication. Put the server behind a reverse proxy if it is exposed. Every vendor router accepts the usual auth header for that vendor (<code>Authorization</code>, <code>x-api-key</code>, or a <code>?key=</code> query param) but silently ignores it — an invalid or missing key does not get rejected with a 401, it is simply not checked.</p>
+<p>Every router also accepts a <code>model</code> field in the request body but ignores its value: the loaded persona's own <code>name</code> is always the model identifier returned in the response, regardless of what the client asked for. The Bedrock router also picks its request/response shape from the <code>model_id</code> prefix (<code>anthropic.claude</code>, <code>meta.llama</code>, <code>amazon.titan</code>, <code>cohere.command</code>), so the same server endpoint speaks a different wire format depending on that string.</p>
 <h3 id="memory-rag-embeddings">Memory, RAG &amp; embeddings<a class="headerlink" href="#memory-rag-embeddings" title="Permanent link">&para;</a></h3>
 <p>By default the server is a <strong>stateless passthrough</strong>. The client owns conversation
 state. Two modes are selected by the <code>CHAT_MEMORY</code> environment variable:</p>
@@ -1773,6 +1807,49 @@ configured via environment variables:</p>
 </tr>
 </tbody>
 </table>
+<p>All three embeddings endpoints (<code>/openai/v1/embeddings</code>, <code>/ollama/api/embed(dings)</code>, <code>/cohere/v1/embed</code>) share one detection mechanism: the server looks through the persona's loaded handlers for the first one that implements <code>get_embeddings()</code>. If none do, every embeddings endpoint returns <code>501</code> with <code>{"detail": "No embeddings solver configured for this persona."}</code>.</p>
+<hr />
+<h2 id="streaming">Streaming<a class="headerlink" href="#streaming" title="Permanent link">&para;</a></h2>
+<p>Set <code>stream=true</code> (where the vendor API supports it) to get incremental output. Each router speaks the wire format its vendor expects:</p>
+<table>
+<thead>
+<tr>
+<th>Vendor</th>
+<th>Format</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>OpenAI</td>
+<td>SSE, terminated by <code>data: [DONE]</code></td>
+</tr>
+<tr>
+<td>Ollama</td>
+<td>newline-delimited JSON (NDJSON)</td>
+</tr>
+<tr>
+<td>Anthropic</td>
+<td>SSE with named events (<code>message_start</code>, <code>content_block_delta</code>, ...)</td>
+</tr>
+<tr>
+<td>Gemini</td>
+<td>SSE of full-response objects</td>
+</tr>
+<tr>
+<td>Cohere</td>
+<td>NDJSON with an <code>event_type</code> field per line</td>
+</tr>
+<tr>
+<td>HuggingFace TGI</td>
+<td>SSE token events</td>
+</tr>
+<tr>
+<td>AWS Bedrock</td>
+<td>SSE with <code>outputText</code> events</td>
+</tr>
+</tbody>
+</table>
+<p>Tool calling is only supported with <code>stream=false</code>, regardless of vendor.</p>
 <hr />
 <h2 id="openai-compatible-example">OpenAI-Compatible Example<a class="headerlink" href="#openai-compatible-example" title="Permanent link">&para;</a></h2>
 <p>Point the <code>openai</code> SDK at the <code>/openai/v1</code> path:</p>

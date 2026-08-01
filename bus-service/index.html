@@ -1018,6 +1018,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#high-level-api-wrappers" class="md-nav__link">
+    <span class="md-ellipsis">
+      High-level API wrappers
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#services-that-connect-to-the-bus" class="md-nav__link">
     <span class="md-ellipsis">
       Services That Connect to the Bus
@@ -1874,6 +1883,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#high-level-api-wrappers" class="md-nav__link">
+    <span class="md-ellipsis">
+      High-level API wrappers
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#services-that-connect-to-the-bus" class="md-nav__link">
     <span class="md-ellipsis">
       Services That Connect to the Bus
@@ -2151,7 +2169,7 @@ Tornado closes the connection when a message exceeds this size.</p>
 <p>Every message on the bus is a JSON object with three fields:</p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="p">{</span>
 </span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">  </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;recognizer_loop:utterance&quot;</span><span class="p">,</span>
-</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">  </span><span class="nt">&quot;data&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;utterances&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;what time is it&quot;</span><span class="p">],</span><span class="w"> </span><span class="nt">&quot;lang&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;en-us&quot;</span><span class="p">},</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">  </span><span class="nt">&quot;data&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;utterances&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;what time is it&quot;</span><span class="p">],</span><span class="w"> </span><span class="nt">&quot;lang&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;en-US&quot;</span><span class="p">},</span>
 </span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">  </span><span class="nt">&quot;context&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;session&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;session_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;default&quot;</span><span class="p">},</span><span class="w"> </span><span class="nt">&quot;source&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;listener&quot;</span><span class="p">}</span>
 </span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="p">}</span>
 </span></code></pre></div>
@@ -2385,6 +2403,19 @@ speaks <code>ovos.*</code> directly. The bridge keeps it <strong>interoperable</
 meantime, but it does not make it conformant.</p>
 </div>
 <hr />
+<h2 id="high-level-api-wrappers">High-level API wrappers<a class="headerlink" href="#high-level-api-wrappers" title="Permanent link">&para;</a></h2>
+<p><code>ovos-bus-client</code> ships four wrapper classes that give plugin and skill authors a typed method
+call instead of hand-building <code>Message</code> objects for common subsystems: <code>GUIInterface</code>,
+<code>OCPInterface</code>, <code>EnclosureAPI</code>, and <code>EventSchedulerInterface</code> (in <code>ovos_bus_client/apis/</code>). Skills
+reach these through properties such as <code>self.gui</code>, <code>self.audio_service</code> (OCP), and
+<code>self.event_scheduler</code> rather than importing the classes directly.</p>
+<p>Most of their methods accept an optional <code>source_message</code> argument. Pass the <code>Message</code> that
+triggered the call through so the outgoing message inherits its <code>session</code>. Skipping
+<code>source_message</code> means the outgoing message has no session, which can cause OCP and the GUI to
+act on the wrong device in a multi-user deployment (several satellites sharing one <code>ovos-core</code>
+over HiveMind). Always pass it through when the wrapper call happens inside a handler that
+received a message.</p>
+<hr />
 <h2 id="services-that-connect-to-the-bus">Services That Connect to the Bus<a class="headerlink" href="#services-that-connect-to-the-bus" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -2492,6 +2523,12 @@ itself. Use the default Tornado backend to serve <code>wss://</code> directly.)<
 <code>--compare</code>) that pits Tornado, webrockets, and the Rust server against each other. Early
 numbers put webrockets ahead at higher concurrency. On a stable install, stay on the
 default Tornado server unless profiling shows the bus is a bottleneck.</p>
+<p><strong>Known limitations of webrockets today:</strong> no TLS termination at all (see above);
+<code>max_msg_size</code> is silently ignored rather than enforced, so an oversized frame is not
+rejected the way it would be on the Tornado backend; and it does not implement the
+<code>MessageBusEventHandler.on()</code> emitter hook that the Tornado backend exposes for embedding
+custom server-side handlers. Treat webrockets as a throughput experiment, not a feature-equal
+drop-in, until these close.</p>
 </div>
 <hr />
 <h2 id="filter-debug-mode">Filter / Debug Mode<a class="headerlink" href="#filter-debug-mode" title="Permanent link">&para;</a></h2>
@@ -2511,7 +2548,7 @@ default Tornado server unless profiling shows the bus is a bottleneck.</p>
 </span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="n">bus</span><span class="o">.</span><span class="n">run_in_thread</span><span class="p">()</span>  <span class="c1"># connects on a background daemon thread</span>
 </span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>
 </span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="c1"># fire-and-forget</span>
-</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="n">bus</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">Message</span><span class="p">(</span><span class="s2">&quot;ovos.utterance.handle&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;utterances&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;what time is it&quot;</span><span class="p">],</span> <span class="s2">&quot;lang&quot;</span><span class="p">:</span> <span class="s2">&quot;en-us&quot;</span><span class="p">}))</span>
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="n">bus</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">Message</span><span class="p">(</span><span class="s2">&quot;ovos.utterance.handle&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;utterances&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;what time is it&quot;</span><span class="p">],</span> <span class="s2">&quot;lang&quot;</span><span class="p">:</span> <span class="s2">&quot;en-US&quot;</span><span class="p">}))</span>
 </span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>
 </span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="c1"># request/response: send a message, then wait for a specific reply type</span>
 </span><span id="__span-9-10"><a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a><span class="n">response</span> <span class="o">=</span> <span class="n">bus</span><span class="o">.</span><span class="n">wait_for_response</span><span class="p">(</span>

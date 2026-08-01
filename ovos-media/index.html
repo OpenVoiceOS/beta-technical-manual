@@ -1332,6 +1332,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#hivemind-multi-session-gating" class="md-nav__link">
+    <span class="md-ellipsis">
+      HiveMind: multi-session gating
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#features" class="md-nav__link">
     <span class="md-ellipsis">
       Features
@@ -2082,6 +2091,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#hivemind-multi-session-gating" class="md-nav__link">
+    <span class="md-ellipsis">
+      HiveMind: multi-session gating
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#features" class="md-nav__link">
     <span class="md-ellipsis">
       Features
@@ -2481,6 +2499,16 @@ the player by its entry-point name.</p>
 <td>audio, video, web</td>
 <td>Hand off to the <a href="../gui-service/">GUI</a> player. <strong>Legacy</strong>, depends on the deprecated <a href="../ovos-shell/">ovos-shell</a> (see <a href="../gui-status/">GUI status</a>)</td>
 </tr>
+<tr>
+<td><code>ovos-media-plugin-mass</code></td>
+<td>audio</td>
+<td>Hands playback off to a <a href="https://music-assistant.io/">Music Assistant</a> server. Does not implement <code>next()</code>/<code>previous()</code> through the legacy <code>AudioBackend</code> interface — only through the Music Assistant queue API (see Known Coupling Issues below)</td>
+</tr>
+<tr>
+<td><code>ovos-media-plugin-mpris</code></td>
+<td>audio, video</td>
+<td>Drives an external MPRIS player (e.g. an already-running desktop media app) instead of playing the stream itself</td>
+</tr>
 </tbody>
 </table>
 <h3 id="stream-extractor-plugins">Stream Extractor Plugins<a class="headerlink" href="#stream-extractor-plugins" title="Permanent link">&para;</a></h3>
@@ -2552,16 +2580,21 @@ in connected devices.</p>
 </span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="c1"># Should show: &quot;org.mpris.MediaPlayer2.OCP&quot;</span>
 </span></code></pre></div>
 <h3 id="external-player-reflection-takeover">External Player Reflection &amp; Takeover<a class="headerlink" href="#external-player-reflection-takeover" title="Permanent link">&para;</a></h3>
-<p><code>OcpMprisExporter</code> (<code>ovos_media/mpris.py</code>) has two roles. Registering OCP itself on the
-D-Bus session bus (above) is always active once <code>enable_mpris</code> is set. A second, opt-in
-role lets OCP <em>reflect and take over</em> other MPRIS players already running on the same
-machine (Spotify, VLC, Firefox, …):</p>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="p">{</span>
-</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">  </span><span class="nt">&quot;media&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">    </span><span class="nt">&quot;enable_mpris&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="w">    </span><span class="nt">&quot;manage_external_players&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
-</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="w">  </span><span class="p">}</span>
-</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="p">}</span>
+<p><code>OcpMprisExporter</code> (<code>ovos_media/mpris.py</code>) has two roles, referred to as <strong>Role A</strong> and
+<strong>Role B</strong>. Role A is registering OCP itself on the D-Bus session bus (above) — always active
+once <code>enable_mpris</code> is set, and it is what lets an MPRIS client like <code>playerctl</code> control OCP:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>playerctl<span class="w"> </span>--player<span class="o">=</span>org.mpris.MediaPlayer2.OCP<span class="w"> </span>play-pause
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>playerctl<span class="w"> </span>--player<span class="o">=</span>org.mpris.MediaPlayer2.OCP<span class="w"> </span>next
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>playerctl<span class="w"> </span>--player<span class="o">=</span>org.mpris.MediaPlayer2.OCP<span class="w"> </span>metadata
+</span></code></pre></div>
+<p>Role B is the opt-in second role, and lets OCP <em>reflect and take over</em> other MPRIS players
+already running on the same machine (Spotify, VLC, Firefox, …):</p>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="p">{</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="w">  </span><span class="nt">&quot;media&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">    </span><span class="nt">&quot;enable_mpris&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="w">    </span><span class="nt">&quot;manage_external_players&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="w">  </span><span class="p">}</span>
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="p">}</span>
 </span></code></pre></div>
 <p>With <code>manage_external_players</code> enabled, OCP periodically scans D-Bus for other
 <code>org.mpris.MediaPlayer2.*</code> players and mirrors their metadata and playback state onto
@@ -2574,32 +2607,45 @@ through to whichever external player is currently active, letting one set of con
 players interchangeably.</p>
 <hr />
 <h2 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">&para;</a></h2>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>{
-</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>  &quot;media&quot;: {
-</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>    &quot;enable_mpris&quot;: false,       // expose OVOS playback on the MPRIS D-Bus interface
-</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>    &quot;mpris_poll_interval&quot;: 1,    // seconds between MPRIS state polls (when enable_mpris)
-</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>    &quot;ignored_players&quot;: [],       // MPRIS player names OVOS should not track/adopt
-</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>
-</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>    // message sources trusted to bypass per-session validation
-</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>    &quot;native_sources&quot;: [&quot;debug_cli&quot;, &quot;audio&quot;],
-</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>    // when true, the daemon only acts on the local (&quot;default&quot;) session.
-</span><span id="__span-9-10"><a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a>    // set false for HiveMind/multi-session setups that drive playback remotely
-</span><span id="__span-9-11"><a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a>    &quot;validate_source&quot;: true,
-</span><span id="__span-9-12"><a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a>
-</span><span id="__span-9-13"><a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a>    &quot;preferred_audio_services&quot;: [&quot;vlc&quot;, &quot;mplayer&quot;, &quot;cli&quot;],
-</span><span id="__span-9-14"><a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a>    &quot;preferred_video_services&quot;: [&quot;vlc&quot;, &quot;mplayer&quot;],
-</span><span id="__span-9-15"><a id="__codelineno-9-15" name="__codelineno-9-15" href="#__codelineno-9-15"></a>    &quot;preferred_web_services&quot;: [],
-</span><span id="__span-9-16"><a id="__codelineno-9-16" name="__codelineno-9-16" href="#__codelineno-9-16"></a>
-</span><span id="__span-9-17"><a id="__codelineno-9-17" name="__codelineno-9-17" href="#__codelineno-9-17"></a>    &quot;audio_players&quot;: {
-</span><span id="__span-9-18"><a id="__codelineno-9-18" name="__codelineno-9-18" href="#__codelineno-9-18"></a>      &quot;vlc&quot;: { &quot;module&quot;: &quot;ovos-media-audio-plugin-vlc&quot;, &quot;aliases&quot;: [&quot;VLC&quot;], &quot;active&quot;: true },
-</span><span id="__span-9-19"><a id="__codelineno-9-19" name="__codelineno-9-19" href="#__codelineno-9-19"></a>      &quot;cli&quot;: { &quot;module&quot;: &quot;ovos-media-audio-plugin-cli&quot;, &quot;aliases&quot;: [&quot;Command Line&quot;], &quot;active&quot;: true }
-</span><span id="__span-9-20"><a id="__codelineno-9-20" name="__codelineno-9-20" href="#__codelineno-9-20"></a>    },
-</span><span id="__span-9-21"><a id="__codelineno-9-21" name="__codelineno-9-21" href="#__codelineno-9-21"></a>    &quot;video_players&quot;: {
-</span><span id="__span-9-22"><a id="__codelineno-9-22" name="__codelineno-9-22" href="#__codelineno-9-22"></a>      &quot;vlc&quot;: { &quot;module&quot;: &quot;ovos-media-video-plugin-vlc&quot;, &quot;aliases&quot;: [&quot;VLC&quot;], &quot;active&quot;: true }
-</span><span id="__span-9-23"><a id="__codelineno-9-23" name="__codelineno-9-23" href="#__codelineno-9-23"></a>    }
-</span><span id="__span-9-24"><a id="__codelineno-9-24" name="__codelineno-9-24" href="#__codelineno-9-24"></a>  }
-</span><span id="__span-9-25"><a id="__codelineno-9-25" name="__codelineno-9-25" href="#__codelineno-9-25"></a>}
+<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>{
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>  &quot;media&quot;: {
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>    &quot;enable_mpris&quot;: false,       // expose OVOS playback on the MPRIS D-Bus interface
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>    &quot;mpris_poll_interval&quot;: 1,    // seconds between MPRIS state polls (when enable_mpris)
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>    &quot;ignored_players&quot;: [],       // MPRIS player names OVOS should not track/adopt
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>    &quot;dbus_type&quot;: &quot;session&quot;,      // &quot;session&quot; (per-user, default) or &quot;system&quot; D-Bus
+</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>
+</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>    // message sources trusted to bypass per-session validation
+</span><span id="__span-10-9"><a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a>    &quot;native_sources&quot;: [&quot;debug_cli&quot;, &quot;audio&quot;],
+</span><span id="__span-10-10"><a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a>    // when true, the daemon only acts on the local (&quot;default&quot;) session.
+</span><span id="__span-10-11"><a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a>    // set false for HiveMind/multi-session setups that drive playback remotely
+</span><span id="__span-10-12"><a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a>    &quot;validate_source&quot;: true,
+</span><span id="__span-10-13"><a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a>
+</span><span id="__span-10-14"><a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a>    &quot;preferred_audio_services&quot;: [&quot;vlc&quot;, &quot;mplayer&quot;, &quot;cli&quot;],
+</span><span id="__span-10-15"><a id="__codelineno-10-15" name="__codelineno-10-15" href="#__codelineno-10-15"></a>    &quot;preferred_video_services&quot;: [&quot;vlc&quot;, &quot;mplayer&quot;],
+</span><span id="__span-10-16"><a id="__codelineno-10-16" name="__codelineno-10-16" href="#__codelineno-10-16"></a>    &quot;preferred_web_services&quot;: [],
+</span><span id="__span-10-17"><a id="__codelineno-10-17" name="__codelineno-10-17" href="#__codelineno-10-17"></a>
+</span><span id="__span-10-18"><a id="__codelineno-10-18" name="__codelineno-10-18" href="#__codelineno-10-18"></a>    // force playback through the audio players even for video/web media, e.g. on headless setups
+</span><span id="__span-10-19"><a id="__codelineno-10-19" name="__codelineno-10-19" href="#__codelineno-10-19"></a>    &quot;playback_mode&quot;: &quot;FORCE_AUDIO&quot;,
+</span><span id="__span-10-20"><a id="__codelineno-10-20" name="__codelineno-10-20" href="#__codelineno-10-20"></a>
+</span><span id="__span-10-21"><a id="__codelineno-10-21" name="__codelineno-10-21" href="#__codelineno-10-21"></a>    &quot;audio_players&quot;: {
+</span><span id="__span-10-22"><a id="__codelineno-10-22" name="__codelineno-10-22" href="#__codelineno-10-22"></a>      &quot;vlc&quot;: { &quot;module&quot;: &quot;ovos-media-audio-plugin-vlc&quot;, &quot;aliases&quot;: [&quot;VLC&quot;], &quot;active&quot;: true },
+</span><span id="__span-10-23"><a id="__codelineno-10-23" name="__codelineno-10-23" href="#__codelineno-10-23"></a>      &quot;cli&quot;: { &quot;module&quot;: &quot;ovos-media-audio-plugin-cli&quot;, &quot;aliases&quot;: [&quot;Command Line&quot;], &quot;active&quot;: true }
+</span><span id="__span-10-24"><a id="__codelineno-10-24" name="__codelineno-10-24" href="#__codelineno-10-24"></a>    },
+</span><span id="__span-10-25"><a id="__codelineno-10-25" name="__codelineno-10-25" href="#__codelineno-10-25"></a>    &quot;video_players&quot;: {
+</span><span id="__span-10-26"><a id="__codelineno-10-26" name="__codelineno-10-26" href="#__codelineno-10-26"></a>      &quot;vlc&quot;: { &quot;module&quot;: &quot;ovos-media-video-plugin-vlc&quot;, &quot;aliases&quot;: [&quot;VLC&quot;], &quot;active&quot;: true }
+</span><span id="__span-10-27"><a id="__codelineno-10-27" name="__codelineno-10-27" href="#__codelineno-10-27"></a>    },
+</span><span id="__span-10-28"><a id="__codelineno-10-28" name="__codelineno-10-28" href="#__codelineno-10-28"></a>    &quot;web_players&quot;: {
+</span><span id="__span-10-29"><a id="__codelineno-10-29" name="__codelineno-10-29" href="#__codelineno-10-29"></a>      &quot;mpv&quot;: { &quot;module&quot;: &quot;ovos-media-web-plugin-mpv&quot;, &quot;aliases&quot;: [&quot;mpv&quot;], &quot;active&quot;: true }
+</span><span id="__span-10-30"><a id="__codelineno-10-30" name="__codelineno-10-30" href="#__codelineno-10-30"></a>    }
+</span><span id="__span-10-31"><a id="__codelineno-10-31" name="__codelineno-10-31" href="#__codelineno-10-31"></a>  }
+</span><span id="__span-10-32"><a id="__codelineno-10-32" name="__codelineno-10-32" href="#__codelineno-10-32"></a>}
 </span></code></pre></div>
+<p><code>dbus_type</code> picks which D-Bus the MPRIS integration registers and scans on: the per-user
+<strong>session</strong> bus (default) or the system-wide <strong>system</strong> bus. <code>playback_mode</code> forces media that
+would normally need a video or web player through the audio players instead (<code>PlaybackMode</code>
+values such as <code>FORCE_AUDIO</code>) — useful on a headless/speaker-only device that has no screen to
+show video on. <code>web_players</code> configures <code>opm.media.web</code> backends the same way <code>audio_players</code>
+and <code>video_players</code> do, keyed by local name with a <code>module</code> entry-point name.</p>
 <blockquote>
 <p>The <code>gui</code> / <code>browser</code> module names shown in earlier drafts are not real
 backends. The bundled players are <code>vlc</code>, <code>mplayer</code>, <code>cli</code>, <code>spotify</code>,
@@ -2645,8 +2691,47 @@ available).</p>
 <td><code>opm.audio.query</code></td>
 <td>OPM plugin-discovery compatibility with the legacy <code>PlaybackService</code> handler</td>
 </tr>
+<tr>
+<td><code>ovos.common_play.seek</code></td>
+<td>Seek within the current track</td>
+</tr>
+<tr>
+<td><code>ovos.common_play.playlist.set</code> / <code>.queue</code> / <code>.clear</code></td>
+<td>Replace, append to, or empty the playlist</td>
+</tr>
+<tr>
+<td><code>ovos.common_play.shuffle.toggle</code> / <code>.set</code> / <code>.unset</code></td>
+<td>Toggle or explicitly set/unset shuffle mode</td>
+</tr>
+<tr>
+<td><code>ovos.common_play.repeat.toggle</code> / <code>.set</code> / <code>.unset</code></td>
+<td>Toggle or explicitly set/unset repeat mode</td>
+</tr>
+<tr>
+<td><code>ovos.common_play.duck</code> / <code>.unduck</code></td>
+<td>Duck/restore volume for a competing sound (e.g. TTS)</td>
+</tr>
+<tr>
+<td><code>ovos.common_play.cork</code> / <code>.uncork</code></td>
+<td>Pause/resume playback for a competing sound, without ducking</td>
+</tr>
+<tr>
+<td><code>ovos.common_play.like</code> / <code>.unlike</code></td>
+<td>Mark or unmark the current track as a liked song</td>
+</tr>
+<tr>
+<td><code>ovos.common_play.status</code></td>
+<td>Report full current player status</td>
+</tr>
+<tr>
+<td><code>SEI.get</code></td>
+<td>Report the stream extractor identifiers <code>ovos-media</code> supports</td>
+</tr>
 </tbody>
 </table>
+<p>These live alongside the legacy ducking/cork aliases kept for backward compatibility. The full
+~30-entry <code>OCPMediaPlayer</code> handler list, including exact legacy alias names, is in
+<code>ovos_media/player.py</code>.</p>
 <hr />
 <h2 id="legacy-compatibility">Legacy Compatibility<a class="headerlink" href="#legacy-compatibility" title="Permanent link">&para;</a></h2>
 <h3 id="classicaudioserviceinterface">ClassicAudioServiceInterface<a class="headerlink" href="#classicaudioserviceinterface" title="Permanent link">&para;</a></h3>
@@ -2678,6 +2763,26 @@ registers <code>@ocp_search()</code> to expose liked songs as a search result. T
 <h3 id="no-nextprev-in-some-backends">No next/prev in some backends<a class="headerlink" href="#no-nextprev-in-some-backends" title="Permanent link">&para;</a></h3>
 <p>The Music Assistant audio backend does not implement <code>next()</code> or <code>previous()</code> through the legacy
 <code>AudioBackend</code> interface. Only through the MA queue API.</p>
+<hr />
+<h2 id="hivemind-multi-session-gating">HiveMind: multi-session gating<a class="headerlink" href="#hivemind-multi-session-gating" title="Permanent link">&para;</a></h2>
+<p>On a server that fans playback out to several <a href="../hivemind-agents/">HiveMind</a> satellites, not
+every bus handler should act on behalf of every session. <code>ovos_media/utils.py</code>'s
+<code>require_default_session()</code> gates the subset of handlers that only make sense for the local
+("default") session — for example, the legacy <code>mycroft.audio.service.*</code> handlers a single
+physical machine's audio hardware would receive — while the OCP-native <code>ovos.common_play.*</code>
+handlers stay session-aware and can target whichever satellite's player state they're addressed
+to.</p>
+<p>The <code>media.validate_source</code> config flag (see <a href="#configuration">Configuration</a> above) controls how
+strict this gating is:</p>
+<ul>
+<li><code>true</code> (default): the daemon only acts on messages carrying the local "default" session.
+  Correct for a single-device install where <code>ovos-media</code> and the microphone are the same box.</li>
+<li><code>false</code>: needed on a server fronting multiple HiveMind satellites, so a satellite's own session
+  can drive playback remotely instead of every command being silently scoped to "default".</li>
+</ul>
+<p>Get this wrong on a server/satellite topology and playback commands from a satellite either get
+ignored (<code>validate_source: true</code> on a multi-satellite server) or, worse, target the wrong
+device's player state.</p>
 <hr />
 <h2 id="features">Features<a class="headerlink" href="#features" title="Permanent link">&para;</a></h2>
 <h3 id="liked-songs">Liked Songs<a class="headerlink" href="#liked-songs" title="Permanent link">&para;</a></h3>

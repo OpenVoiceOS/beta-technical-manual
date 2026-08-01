@@ -1160,6 +1160,24 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#available-toolboxes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Available ToolBoxes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#available-chat-engines" class="md-nav__link">
+    <span class="md-ellipsis">
+      Available Chat Engines
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1620,6 +1638,24 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#available-toolboxes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Available ToolBoxes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#available-chat-engines" class="md-nav__link">
+    <span class="md-ellipsis">
+      Available Chat Engines
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1823,6 +1859,8 @@ examples, see <a href="../personas/">Agents &amp; Personas</a> and <a href="../a
 </tr>
 </tbody>
 </table>
+<p>See <a href="#available-toolboxes">Available ToolBoxes</a> and <a href="#available-chat-engines">Available Chat Engines</a>
+below for the standalone <code>opm.agents.toolbox</code> and <code>opm.agents.chat</code> plugin registries.</p>
 <h2 id="ovos-qdrant-embeddings-plugin">ovos-qdrant-embeddings-plugin<a class="headerlink" href="#ovos-qdrant-embeddings-plugin" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
@@ -2063,6 +2101,183 @@ examples, see <a href="../personas/">Agents &amp; Personas</a> and <a href="../a
 <p><strong>Config</strong>: <code>"lang"</code>: language code used to pick the bundled RiveScript brain (defaults to <code>en-us</code>).</p>
 </li>
 </ul>
+<hr />
+<h2 id="available-toolboxes">Available ToolBoxes<a class="headerlink" href="#available-toolboxes" title="Permanent link">&para;</a></h2>
+<p>These <code>opm.agents.toolbox</code> plugins each wrap one external service as a set of callable
+<code>AgentTool</code> functions. Call them directly with <code>ToolBox.call_tool(name, kwargs)</code>, or over the
+bus via <code>ovos.persona.tools.{toolbox_id}.call</code>. See <a href="../tool-plugins/">Tool Plugins</a> for the
+<code>ToolBox</code> API itself.</p>
+<table>
+<thead>
+<tr>
+<th>Plugin ID</th>
+<th>Tools</th>
+<th>Package</th>
+<th>API key</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ovos-wikipedia-tools</code></td>
+<td><code>search_wikipedia</code>, <code>get_wikipedia_sections</code>, <code>get_wikipedia_page</code></td>
+<td><code>ovos-wikipedia-solver</code></td>
+<td>None, public Wikipedia REST API</td>
+</tr>
+<tr>
+<td><code>ovos-ddg-tools</code></td>
+<td><code>search_duckduckgo</code>, <code>get_duckduckgo_infobox</code></td>
+<td><code>ovos-ddg-solver-plugin</code></td>
+<td>None, DuckDuckGo Instant Answer API</td>
+</tr>
+<tr>
+<td><code>ovos-wolfram-alpha-tools</code></td>
+<td><code>compute</code>, <code>compute_full</code></td>
+<td><code>ovos-wolfram-alpha-solver</code></td>
+<td>Optional, free key at developer.wolframalpha.com; a demo key ships in the plugin</td>
+</tr>
+<tr>
+<td><code>ovos-weather-tools</code></td>
+<td><code>get_current_weather</code>, <code>get_daily_forecast</code>, <code>get_hourly_forecast</code></td>
+<td><code>ovos-skill-weather</code></td>
+<td>None, Open-Meteo public API</td>
+</tr>
+<tr>
+<td><code>ovos-datetime-tools</code></td>
+<td><code>get_current_datetime</code>, <code>convert_timezone</code>, <code>get_timezone_for_location</code></td>
+<td><code>ovos-skill-date-time</code></td>
+<td>None, stdlib + pytz</td>
+</tr>
+<tr>
+<td><code>ovos-ip-tools</code></td>
+<td><code>get_local_ip_addresses</code>, <code>get_public_ip</code></td>
+<td><code>ovos-skill-ip</code></td>
+<td>None</td>
+</tr>
+<tr>
+<td><code>ovos-iss-tools</code></td>
+<td><code>get_iss_position</code>, <code>get_iss_crew</code></td>
+<td><code>ovos-skill-iss-location</code></td>
+<td>Optional, geonames.org user for reverse geocoding</td>
+</tr>
+<tr>
+<td><code>ovos-speedtest-tools</code></td>
+<td><code>run_speedtest</code></td>
+<td><code>ovos-skill-speedtest</code></td>
+<td>None, Speedtest.net</td>
+</tr>
+<tr>
+<td><code>ovos-wallpapers-tools</code></td>
+<td><code>search_wallpapers</code></td>
+<td><code>ovos-skill-wallpapers</code></td>
+<td>None, wallhaven.cc public API</td>
+</tr>
+<tr>
+<td><code>ovos-wikihow-tools</code></td>
+<td><code>search_wikihow</code>, <code>get_wikihow_steps</code></td>
+<td><code>ovos-skill-wikihow</code></td>
+<td>None, pywikihow scraper</td>
+</tr>
+<tr>
+<td><code>ovos-wordnet-tools</code></td>
+<td><code>lookup_word</code>, <code>define_word</code></td>
+<td><code>ovos-skill-wordnet</code></td>
+<td>None, local NLTK corpus</td>
+</tr>
+</tbody>
+</table>
+<p>The <a href="../agentic-loop/">agentic loop</a> bundles its own toolboxes (<code>ovos-filesystem-tools</code>,
+<code>ovos-shell-tools</code>, <code>ovos-web-search-tools</code>, <code>ovos-clock-tools</code>, <code>ovos-skill-md-toolbox</code>) —
+see that page for those.</p>
+<h2 id="available-chat-engines">Available Chat Engines<a class="headerlink" href="#available-chat-engines" title="Permanent link">&para;</a></h2>
+<p><code>opm.agents.chat</code> plugins beyond the ones documented above as their own catalog entries
+(<code>ovos-openai-plugin</code>, <code>ovos-gguf-plugin</code>):</p>
+<table>
+<thead>
+<tr>
+<th>Plugin ID</th>
+<th>Backend</th>
+<th>Package</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ovos-chat-gemini-code-plugin</code></td>
+<td>Gemini (code)</td>
+<td><code>ovos-gemini-plugin</code></td>
+</tr>
+<tr>
+<td><code>ovos-chat-gemini-session-plugin</code></td>
+<td>Gemini (session)</td>
+<td><code>ovos-gemini-plugin</code></td>
+</tr>
+<tr>
+<td><code>ovos-chat-claude-code-plugin</code></td>
+<td>Claude (code)</td>
+<td><code>ovos-claude-plugin</code></td>
+</tr>
+<tr>
+<td><code>ovos-chat-claude-code-session-plugin</code></td>
+<td>Claude (session)</td>
+<td><code>ovos-claude-plugin</code></td>
+</tr>
+<tr>
+<td><code>ovos-chat-kilo-plugin</code></td>
+<td>Kilo (Anthropic)</td>
+<td><code>ovos-kilo-plugin</code></td>
+</tr>
+<tr>
+<td><code>ovos-chat-kilo-session-plugin</code></td>
+<td>Kilo (session)</td>
+<td><code>ovos-kilo-plugin</code></td>
+</tr>
+<tr>
+<td><code>ovos-chat-qwen-code-plugin</code></td>
+<td>Qwen-Code</td>
+<td><code>ovos-qwen-code-plugin</code></td>
+</tr>
+<tr>
+<td><code>ovos-chat-opencode-plugin</code></td>
+<td>OpenCode</td>
+<td><code>ovos-opencode-plugin</code></td>
+</tr>
+<tr>
+<td><code>ovos-chat-opencode-session-plugin</code></td>
+<td>OpenCode (session)</td>
+<td><code>ovos-opencode-plugin</code></td>
+</tr>
+</tbody>
+</table>
+<p>The Mixture-of-Solvers (<code>ovos-MoS</code>) family combines several chat engines into one:</p>
+<table>
+<thead>
+<tr>
+<th>Plugin ID</th>
+<th>Strategy</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ovos-mos-king-reranker</code></td>
+<td>One "king" engine reranks candidate answers from the others</td>
+</tr>
+<tr>
+<td><code>ovos-mos-king-generative</code></td>
+<td>One "king" engine generates the final answer from the others' candidates</td>
+</tr>
+<tr>
+<td><code>ovos-mos-democracy</code></td>
+<td>Majority vote across all configured engines</td>
+</tr>
+<tr>
+<td><code>ovos-mos-duopoly-reranker</code></td>
+<td>Reranker variant restricted to two engines</td>
+</tr>
+<tr>
+<td><code>ovos-mos-duopoly-generative</code></td>
+<td>Generative variant restricted to two engines</td>
+</tr>
+</tbody>
+</table>
 <hr />
 
 

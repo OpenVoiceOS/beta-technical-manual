@@ -1585,6 +1585,10 @@ clause-for-clause.</p>
 <p>Lint a skill's locale folder against the grammar and format specs:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>ovos-spec-lint<span class="w"> </span>my-skill/locale
 </span></code></pre></div>
+<p><code>ovos-spec-lint</code> also takes a <code>--spec-version</code> flag for linting a skill that has not fully
+migrated yet: <code>--spec-version 1</code> (the default) treats a <code>.blacklist</code> violation as an error;
+<code>--spec-version 0</code> demotes the same violation to a warning, so a repo can adopt the
+<a href="../resource-files/"><code>.blacklist</code> file</a> incrementally instead of all at once.</p>
 <p>The session carrier, the keyword-intent builder, and the canonical topic
 vocabulary follow the same pattern: plain data plus stdlib-only helpers.</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kn">from</span> <span class="nn">ovos_spec_tools</span> <span class="kn">import</span> <span class="n">IntentBuilder</span><span class="p">,</span> <span class="n">Session</span><span class="p">,</span> <span class="n">SpecMessage</span>
@@ -1660,6 +1664,8 @@ the <code>ovos.*</code> name is also delivered its migrated counterpart locally
 mechanism, and how to turn the bridges off once a deployment is fully
 modernised, is documented under
 <a href="../bus-service/#namespace-migration"><strong>messagebus Service → Namespace migration</strong></a>.</p>
+<p><code>ovos-spec-tools</code> owns the <strong>vocabulary</strong> of the mapping: <code>SpecMessage</code> and <code>MIGRATION_MAP</code>. The
+runtime bridge itself, the dual-emit and receive-side de-duplication, lives in <code>ovos-bus-client</code>.</p>
 
 
 

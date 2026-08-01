@@ -1117,6 +1117,15 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#static-vs-instance-members" class="md-nav__link">
+    <span class="md-ellipsis">
+      Static vs instance members
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1450,6 +1459,15 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#static-vs-instance-members" class="md-nav__link">
+    <span class="md-ellipsis">
+      Static vs instance members
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1594,6 +1612,46 @@ and forwards it, so each instance keeps a distinct bus topic.</p>
 registers the messagebus handlers described below. The full authoring guide with more
 <code>AgentTool</code>, <code>ToolArguments</code>, and <code>ToolOutput</code> examples is embedded in the
 <a href="../plugin-manager/">Plugin Manager reference</a>.</p>
+<h3 id="static-vs-instance-members">Static vs instance members<a class="headerlink" href="#static-vs-instance-members" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Member</th>
+<th>Kind</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>tool_json_list</code></td>
+<td><code>@property</code></td>
+<td>Reads <code>self.tools</code>, so it needs the instance's discovered tools.</td>
+</tr>
+<tr>
+<td><code>openai_tools</code></td>
+<td><code>@property</code></td>
+<td>Calls <code>self.tools_to_openai_spec(self.tool_json_list)</code> on this instance's own tools.</td>
+</tr>
+<tr>
+<td><code>tools_to_openai_spec</code></td>
+<td><code>@staticmethod</code></td>
+<td>Converts a plain <code>tool_json_list</code>-shaped list to the OpenAI tools spec. It takes no <code>self</code>, so a caller can hand it a list merged from <strong>several</strong> toolboxes at once, not just one instance's tools.</td>
+</tr>
+<tr>
+<td><code>normalize_tools</code></td>
+<td><code>@staticmethod</code></td>
+<td>Coerces a <code>ToolBox</code>, an OpenAI tool dict, or a list mixing either, into one flat OpenAI tools list. It has to work before an instance is chosen, since one of its inputs is a whole list of toolboxes.</td>
+</tr>
+<tr>
+<td><code>validate_input</code> / <code>validate_output</code></td>
+<td><code>@staticmethod</code></td>
+<td>Validate a given <code>AgentTool</code>'s schema against raw arguments/results; the tool being validated is passed in, so no instance state is needed.</td>
+</tr>
+</tbody>
+</table>
+<p><code>ovos-agentic-loop</code>'s <code>NativeToolCallEngine</code> is the concrete case that needs <code>tools_to_openai_spec</code>
+to be static: it merges <code>tool_json_list</code> output from several toolboxes into one list before
+converting the merged list to the OpenAI spec in a single call.</p>
 <hr />
 <h2 id="phal-bus-provider">PHAL Bus Provider<a class="headerlink" href="#phal-bus-provider" title="Permanent link">&para;</a></h2>
 <p><a href="https://github.com/OpenVoiceOS/ovos-PHAL-plugin-tools">OpenVoiceOS/ovos-PHAL-plugin-tools</a> is a PHAL plugin that loads all installed <code>ToolBox</code> plugins and registers them on the messagebus. Any component that can emit bus messages can then use them.</p>

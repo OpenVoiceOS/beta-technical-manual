@@ -1812,6 +1812,12 @@ existing Raspberry Pi OS setup instead of flashing a new image, use the
   minimum. Don't expect a usable experience there. Start from a Pi 3 or newer.</li>
 </ul>
 <h3 id="picking-a-plugin-combo-for-your-pi-tier">Picking a plugin combo for your Pi tier<a class="headerlink" href="#picking-a-plugin-combo-for-your-pi-tier" title="Permanent link">&para;</a></h3>
+<div class="admonition tip">
+<p class="admonition-title">You can skip this section on a first read</p>
+<p>The image ships with working defaults for your Pi. Come back here later if you want
+to swap the speech engines. The config blocks below are optional tuning, not setup
+steps.</p>
+</div>
 <p>The Pi model above sets the ceiling on what you can run comfortably. As a starting point per
 tier (see <a href="../stt-plugins/">STT Plugins</a>, <a href="../tts-plugins/">TTS Plugins</a>,
 <a href="../wake-word-plugins/">Wake Word Plugins</a> and <a href="../vad-plugins/">VAD Plugins</a> for the full rosters):</p>
@@ -1840,11 +1846,13 @@ tier (see <a href="../stt-plugins/">STT Plugins</a>, <a href="../tts-plugins/">T
 <p>See <a href="../stt-server/">STT server</a> if you want to self-host that server instead of using a
   public one.</p>
 <ul>
-<li><strong>Pi 4:</strong> a comfortable middle ground for local, on-device models. Examples:
-  <a href="../stt-plugins/#ovos-stt-plugin-onnx-asr"><code>ovos-stt-plugin-onnx-asr</code></a> with a small,
-  <code>int8</code>-quantized model, and <a href="../tts-plugins/#ovos-tts-plugin-phoonnx"><code>ovos-tts-plugin-phoonnx</code></a>.</li>
+<li><strong>Pi 4:</strong> a comfortable middle ground for local, on-device models. The <code>hybrid</code> and <code>offline</code>
+  raspOVOS images actually ship <a href="../tts-plugins/#ovos-tts-plugin-piper"><code>ovos-tts-plugin-piper</code></a>
+  as the default TTS for this tier, and this is what the config below uses. An optional swap is
+  <a href="../tts-plugins/#ovos-tts-plugin-phoonnx"><code>ovos-tts-plugin-phoonnx</code></a>, which is not what ships by
+  default but is a valid alternative if you install it yourself.</li>
 </ul>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>// ~/.config/mycroft/mycroft.conf — Pi 4-class tier: local ONNX STT/TTS
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>// ~/.config/mycroft/mycroft.conf — Pi 4-class tier: local ONNX STT, shipped Piper TTS
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>{
 </span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>  &quot;stt&quot;: {
 </span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>    &quot;module&quot;: &quot;ovos-stt-plugin-onnx-asr&quot;,
@@ -1854,7 +1862,7 @@ tier (see <a href="../stt-plugins/">STT Plugins</a>, <a href="../tts-plugins/">T
 </span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>    }
 </span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>  },
 </span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>  &quot;tts&quot;: {
-</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>    &quot;module&quot;: &quot;ovos-tts-plugin-phoonnx&quot;
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>    &quot;module&quot;: &quot;ovos-tts-plugin-piper&quot;
 </span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>  },
 </span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>  &quot;listener&quot;: {
 </span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>    &quot;VAD&quot;: {
@@ -1870,32 +1878,44 @@ tier (see <a href="../stt-plugins/">STT Plugins</a>, <a href="../tts-plugins/">T
 </span></code></pre></div>
 <ul>
 <li><strong>Pi 5:</strong> the offline STT performance improvement noted above gives you the most headroom for
-  larger local models, including Whisper-class STT, if you want to stay fully offline.</li>
+  larger local models, including Whisper-class STT, if you want to stay fully offline. The
+  <code>offline</code> raspOVOS image actually ships
+  <a href="../stt-plugins/#ovos-stt-plugin-citrinet"><code>ovos-stt-plugin-citrinet</code></a> as the default STT (with
+  <code>ovos-stt-plugin-fasterwhisper</code> shipped only for a few languages), and
+  <a href="../tts-plugins/#ovos-tts-plugin-piper"><code>ovos-tts-plugin-piper</code></a> as the default TTS. The config
+  below uses those shipped defaults. Optional swaps, not what ships by default, are
+  <code>ovos-stt-plugin-fasterwhisper</code> (a larger, more accurate Whisper-class model, if your language
+  isn't one of the ones it already ships for) and <code>ovos-tts-plugin-phoonnx</code>.</li>
 </ul>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>// ~/.config/mycroft/mycroft.conf — Pi 5-class tier: larger local STT model
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>// ~/.config/mycroft/mycroft.conf — Pi 5-class tier: shipped Citrinet STT, Piper TTS
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>{
 </span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>  &quot;stt&quot;: {
-</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>    &quot;module&quot;: &quot;ovos-stt-plugin-fasterwhisper&quot;,
-</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>    &quot;ovos-stt-plugin-fasterwhisper&quot;: {
-</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>      &quot;model&quot;: &quot;large-v3&quot;,
-</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>      &quot;compute_type&quot;: &quot;int8&quot;
-</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>    }
-</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>  },
-</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>  &quot;tts&quot;: {
-</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>    &quot;module&quot;: &quot;ovos-tts-plugin-phoonnx&quot;
-</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>  },
-</span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>  &quot;listener&quot;: {
-</span><span id="__span-2-14"><a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>    &quot;VAD&quot;: {
-</span><span id="__span-2-15"><a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a>      &quot;module&quot;: &quot;ovos-vad-plugin-silero&quot;
-</span><span id="__span-2-16"><a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a>    }
-</span><span id="__span-2-17"><a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a>  },
-</span><span id="__span-2-18"><a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a>  &quot;hotwords&quot;: {
-</span><span id="__span-2-19"><a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a>    &quot;hey_mycroft&quot;: {
-</span><span id="__span-2-20"><a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a>      &quot;module&quot;: &quot;ovos-ww-plugin-precise-onnx&quot;
-</span><span id="__span-2-21"><a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a>    }
-</span><span id="__span-2-22"><a id="__codelineno-2-22" name="__codelineno-2-22" href="#__codelineno-2-22"></a>  }
-</span><span id="__span-2-23"><a id="__codelineno-2-23" name="__codelineno-2-23" href="#__codelineno-2-23"></a>}
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>    &quot;module&quot;: &quot;ovos-stt-plugin-citrinet&quot;
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>  },
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>  &quot;tts&quot;: {
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>    &quot;module&quot;: &quot;ovos-tts-plugin-piper&quot;
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>  },
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>  &quot;listener&quot;: {
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>    &quot;VAD&quot;: {
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>      &quot;module&quot;: &quot;ovos-vad-plugin-silero&quot;
+</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>    }
+</span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>  },
+</span><span id="__span-2-14"><a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>  &quot;hotwords&quot;: {
+</span><span id="__span-2-15"><a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a>    &quot;hey_mycroft&quot;: {
+</span><span id="__span-2-16"><a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a>      &quot;module&quot;: &quot;ovos-ww-plugin-precise-onnx&quot;
+</span><span id="__span-2-17"><a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a>    }
+</span><span id="__span-2-18"><a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a>  }
+</span><span id="__span-2-19"><a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a>}
 </span></code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">What each variant actually ships</p>
+<p>These are starting-point configs, not a description of the exact image running on your
+Pi. The <code>hybrid</code>/<code>offline</code> raspOVOS images ship <code>ovos-tts-plugin-piper</code> for TTS, and the
+<code>offline</code> image ships <code>ovos-stt-plugin-citrinet</code> for STT (<code>ovos-stt-plugin-fasterwhisper</code>
+only for a handful of languages). The plugins above are all valid choices you can opt into,
+but if you expect the running image to already match one of these snippets exactly, check
+what actually shipped first.</p>
+</div>
 <div class="admonition tip">
 <p class="admonition-title">How to apply these settings</p>
 <p>To apply these settings, see <a href="../personalize/">Make It Yours</a> for where <code>mycroft.conf</code>
@@ -1986,6 +2006,10 @@ of three <strong>variants</strong>, which trade on-device processing against the
 </li>
 </ol>
 <p><strong>Important:</strong> <strong>Do NOT change the default username</strong> (<code>ovos</code>), as it is required for the system to function properly.</p>
+<p><strong>If you skip this step</strong>, the image boots with its stock credentials: username <code>ovos</code>,
+   password <code>ovos</code>, hostname <code>raspOVOS</code>. These are published defaults, so the device is
+   reachable over SSH by anyone on the network who knows them. Set a real password here, or
+   change it at first boot, if the device will be reachable on a network you don't fully trust.</p>
 <p><img alt="Raspberry Pi Imager &quot;Edit Settings&quot; general tab: hostname, username, password, and Wi-Fi fields" src="https://github.com/user-attachments/assets/9509ea57-ae46-4c0b-b9e9-97935579d207" /></p>
 <p><img alt="Raspberry Pi Imager &quot;Edit Settings&quot; services/locale tab: SSH and keyboard layout options" src="https://github.com/user-attachments/assets/252af1a0-54dc-4450-aa4a-eb0f0a4d139f" /></p>
 <ol>
@@ -2108,7 +2132,12 @@ time to reprint the full list.</p>
 <p><strong>Managing packages:</strong></p>
 <ul>
 <li><code>ovos-install</code>: install OVOS packages with the correct version constraints.</li>
-<li><code>ovos-update</code>: update all OVOS and skill packages.</li>
+<li><code>ovos-update</code>: routine, in-place update of all OVOS and skill packages, scoped to the release
+  channel recorded in <code>/opt/ovos/tag</code>. It does not change the base image. Moving to a new
+  raspOVOS release (a major image update) instead means reflashing a new image and restoring
+  your <code>.config/mycroft</code> and <code>.local/share/mycroft</code> from a backup — see the repo's
+  <a href="https://github.com/OpenVoiceOS/raspOVOS/blob/dev/docs/how-to/update.md">update how-to</a> for the
+  backup/restore commands.</li>
 <li><code>ovos-force-reinstall</code>: force a full reinstall of all OVOS packages (last-resort repair).</li>
 <li><code>ovos-freeze</code>: export installed OVOS packages to <code>requirements.txt</code>.</li>
 <li><code>ovos-outdated</code>: list outdated OVOS/skill packages.</li>
@@ -2137,6 +2166,7 @@ time to reprint the full list.</p>
 <li><code>ovos-commands</code>: usage examples for the installed skills.</li>
 <li><code>ovos-support</code>: compile logs into a support package to share when asking for help.</li>
 <li><code>ovos-help</code>: reprint this command list.</li>
+<li><code>ovos-logo</code>: print the raspOVOS logo.</li>
 </ul>
 <div class="admonition note">
 <p class="admonition-title">Audio HAT setup on raspOVOS uses <code>ovos-i2csound</code></p>

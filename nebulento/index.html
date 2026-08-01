@@ -1457,9 +1457,15 @@ hundreds of training sentences per intent).</p>
 <h2 id="in-the-ovos-pipeline">In the OVOS pipeline<a class="headerlink" href="#in-the-ovos-pipeline" title="Permanent link">&para;</a></h2>
 <p>Installed as a pipeline plugin (<code>nebulento[ovos]</code>), Nebulento listens on the <strong>same
 <code>padatious:register_intent</code> bus events as <a href="../padatious-pipeline/">Padatious</a></strong>. This makes it a
-drop-in alternative. Skills register their <code>.intent</code> files exactly as before. A hierarchical
-variant is also available. See <a href="../pipelines-overview/">Pipelines Overview</a> for how matchers are
-ordered and configured.</p>
+drop-in alternative. Skills register their <code>.intent</code> files exactly as before. See
+<a href="../pipelines-overview/">Pipelines Overview</a> for how matchers are ordered and configured.</p>
+<p>The package registers two <code>opm.pipeline</code> entry points: the flat <code>ovos-nebulento-pipeline-plugin</code>,
+and a hierarchical variant, <code>ovos-nebulento-hierarchical-pipeline-plugin</code>. Use the flat plugin by
+default. Switch to the hierarchical one when you have many skills with lexically distinct
+vocabulary and want domain-scoped matching, or the <code>domain_threshold</code> off-topic gate.</p>
+<p>Nebulento picks a match strategy (e.g. <code>TOKEN_SET_RATIO</code>) to control how it scores similarity, and
+supports context gating to narrow which intents are even considered for a given utterance. See the
+plugin's own docs for the full list of strategies and how to set up context gating.</p>
 <div class="admonition tip">
 <p class="admonition-title">When to choose Nebulento</p>
 <p>Use it when users phrase things inconsistently or make typos (e.g. typed input, noisy STT),

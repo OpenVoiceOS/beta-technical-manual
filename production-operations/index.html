@@ -1655,6 +1655,16 @@ use <code>systemctl enable --now</code> (no <code>--user</code>). You will also 
 <code>loginctl enable-linger ovos</code> if you keep user units but want them running without an
 active login session.</p>
 </div>
+<div class="admonition warning">
+<p class="admonition-title"><code>PIDLock</code> kills the previous process silently</p>
+<p>Most OVOS services use <code>PIDLock</code> (from <code>ovos-utils</code>) to guard against two copies running
+under the same name. On construction, <code>PIDLock</code> kills any existing process holding that
+name's PID file, then writes its own PID. There is no warning or confirmation prompt. If
+you start a service by hand while a systemd-managed copy is already running under the
+same name, <code>PIDLock</code> kills the systemd-managed one. The PID file is deleted on exit via
+<code>SIGINT</code>/<code>SIGTERM</code> handlers, so a process killed harder than that (<code>SIGKILL</code>, power loss)
+can leave a stale PID file behind that the next start-up will happily reuse.</p>
+</div>
 <hr />
 <h2 id="knowing-when-the-assistant-is-actually-ready">Knowing when the assistant is actually ready<a class="headerlink" href="#knowing-when-the-assistant-is-actually-ready" title="Permanent link">&para;</a></h2>
 <p>Services report a rolling status (<code>started</code> → <code>ready</code> → <code>error</code>/<code>stopping</code>) over the bus, and

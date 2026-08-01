@@ -2436,7 +2436,7 @@ before late 2024, check it against this table.</p>
 </tr>
 <tr>
 <td><code>enclosure.mark1.*</code> (Mark1 eyes/faceplate/animations)</td>
-<td>removed, no replacement in this repo (check <code>ovos-PHAL-plugin-mk1</code>, unverified)</td>
+<td>removed, no replacement in this repo. <code>ovos-PHAL-plugin-mk1</code> carries the eyes/faceplate/mouth handling instead</td>
 </tr>
 <tr>
 <td><code>configuration.*</code> (<code>get_default_lang</code>, <code>find_user_config</code>, <code>read_mycroft_config</code>, ...)</td>
@@ -3322,10 +3322,11 @@ layer. Only the bundled <code>ovos_config/mycroft.conf</code> is used as DEFAULT
 <code>config_filename</code>/XDG behavior is deprecated. Those values move
 exclusively to environment variables.</p>
 <ul>
-<li>Migration: replace <code>ovos.conf</code> <code>[core] base_folder=...</code> with the
-  equivalent env var override. Exact env var names were not confirmed by
-  the dossier this page is built from: see
-  <a href="#verification-gaps">Verification gaps</a>.</li>
+<li>Migration: replace <code>ovos.conf</code> <code>[core] base_folder=...</code> /
+  <code>config_filename=...</code> / <code>default_config_path=...</code> with the env vars
+  <code>OVOS_CONFIG_BASE_FOLDER</code>, <code>OVOS_CONFIG_FILENAME</code>, and
+  <code>OVOS_DEFAULT_CONFIG</code> (all introduced in the same commit that
+  deprecated <code>ovos.conf</code>, <code>76d9310</code>, <code>ovos_config/meta.py</code>).</li>
 <li>Lifecycle: active before <code>76d9310</code>. Deprecated but functional from
   <code>76d9310</code> (2024-08-16). Drop version unverified (ovos-config <code>76d9310</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/138" title="GitHub Issue: TigreGotico/ovos-technical-manual #138">#138</a>).</li>
 </ul>
@@ -3616,8 +3617,11 @@ out-of-the-box wire behavior is initially unchanged):</p>
 <li>Lifecycle: active (legacy-only) before mid-2026. Deprecated but
   functional (dual-emit or <code>legacy_namespace</code>-gated) from mid-2026
   onward. Hard drop only confirmed for <code>ovos-bus-client</code>'s own bridge
-  (<code>f1a481d</code>, 2026-08-01): whether <code>legacy_namespace</code> itself has since
-  flipped its default to <code>False</code> in <code>ovos-core</code> is unverified.</li>
+  (<code>f1a481d</code>, 2026-08-01). <code>legacy_namespace</code> gating in <code>ovos-core</code>
+  itself (<code>f4c00d90b2</code>/<code>f9862a760e</code>, "gate bus topics by
+  legacy_namespace") lives only on unmerged feature branches as of this
+  sweep, not on <code>dev</code>: the default has not flipped because the flag has
+  not shipped to a stable release yet.</li>
 </ul>
 <h3 id="mycroft-bus-client-package-retirement-package-level-not-wire-level"><code>mycroft-bus-client</code> package retirement (package-level, not wire-level)<a class="headerlink" href="#mycroft-bus-client-package-retirement-package-level-not-wire-level" title="Permanent link">&para;</a></h3>
 <p>Every repo in the org switched its dependency and imports from the
@@ -3666,43 +3670,32 @@ history this page is built from. Treat the corresponding table cells as
 "unverified" and re-check against the named repository's release history
 before relying on them:</p>
 <ul>
-<li><strong>ovos-utils</strong>: whether <code>ovos_utils.enclosure.mark1.*</code> (Mark1 hardware
-  display code) has an actual successor in <code>ovos-PHAL-plugin-mk1</code> or a
-  similar plugin. Whether <code>ovos_utils.gui.GUITracker</code> has a real successor
-  anywhere (for example inside <code>ovos-gui</code>). The exact mycroft-core commit
-  that performed the original <code>mycroft.* → ovos_*</code> rename predates
-  <code>ovos-utils</code>'s own history and was not located. Whether
-  <code>network_utils.is_connected()</code>'s targeted <code>2.0.0</code> removal has shipped.</li>
-<li><strong>ovos-workshop</strong>: whether <code>0613836</code> ("refactor the old patches module")
-  removed a public symbol. Whether the 2024-10-15/2024-10-11 lang-code
-  casing commits (<code>5aaf424</code>, <code>6843f0f</code>) changed behavior for skills
-  relying on lowercase region codes.</li>
-<li><strong>ovos-config</strong>: exact renamed/removed symbols in the <code>08c95a7</code> Selene
-  API refactor. Exact replacement environment variable names for the
-  deprecated <code>ovos.conf</code> <code>base_folder</code>/<code>config_filename</code> settings. Exact
-  key path that STT-embedded language preferences moved to in <code>ede6243</code>.
-  Whether the <code>f0c5cb1</code> partial-path CLI parsing change can silently
-  reinterpret a previously-valid <code>-k</code> argument.</li>
-<li><strong>ovos-core</strong>: the exact commit that finally deleted the
-  <code>mycroft-speech-client</code>/<code>mycroft-messagebus</code> legacy console-script entry
-  points (confirmed gone after <code>2a10fa9c1c</code>, but the specific removal
-  commit was not pinned). Whether <code>legacy_namespace</code> has since flipped its
-  default to <code>False</code>. The precise version at which <code>ready_setting</code>
-  (<code>ee97d74aba</code>) was fully removed rather than merely deprecated.</li>
-<li><strong>ovos-plugin-manager</strong>: pre-2022 function-name renames on
-  text-transformer <code>find_*</code>/<code>load_*</code> helpers (<code>33771d3</code>): direction
-  confirmed, literal old-name-to-new-name mapping not re-derived. Whether
-  the solver-family removal (deprecated in <code>53564ce</code>, target "next major")
-  has actually shipped yet.</li>
-<li><strong>ovos-media</strong>: whether a config toggle exists to restore
-  pre-<code>1306eb7</code>/<code>e07d655</code> "OCP ignores external MPRIS players" behavior.
-  Full symbol-level API diff of the <code>d249e89</code> <code>player.py</code> rewrite beyond
-  what the <code>f1d152c</code> regression fix incidentally revealed. The exact point
-  at which <code>ovos-media</code> became production-recommended over <code>ovos-audio</code>'s
-  classic <code>AudioService</code>.</li>
+<li><strong>ovos-utils</strong>: whether <code>ovos_utils.gui.GUITracker</code> has a real successor
+  anywhere. A search of <code>ovos-gui</code>'s current history found no
+  <code>GUITracker</code>/<code>GUIPlaybackStatus</code> symbol anywhere in that repo, so this
+  still reads as "no successor," but a positive absence is weaker proof
+  than a located replacement. The exact mycroft-core commit that performed
+  the original <code>mycroft.* → ovos_*</code> rename predates <code>ovos-utils</code>'s own
+  history: it requires the <code>mycroft-core</code> repository's own history, which
+  is not cloned in this workspace.</li>
+<li><strong>ovos-config</strong>: exact key path that STT-embedded language preferences
+  moved to in <code>ede6243</code>. The commit's own <code>autoconfigure</code> CLI command
+  writes the standardized language tag to the top-level <code>lang</code> config key
+  (config root, not nested under <code>stt</code>), which is consistent with the PR's
+  "split prefs from stt into base config" description, but no dedicated
+  migration diff moving an existing nested key was found to confirm this
+  covers every prior STT-embedded language setting.</li>
+<li><strong>ovos-media</strong>: full symbol-level API diff of the <code>d249e89</code> <code>player.py</code>
+  rewrite beyond what the <code>f1d152c</code> regression fix incidentally revealed.
+  The exact point at which <code>ovos-media</code> became production-recommended over
+  <code>ovos-audio</code>'s classic <code>AudioService</code>: that call is a project
+  announcement/roadmap decision, not a single commit, so it requires the
+  release notes and blog history rather than <code>git log</code>.</li>
 <li><strong>ovos-audio</strong>: the exact mycroft-core commit/version that <code>047a0a1</code>
-  extracted <code>ovos_audio</code> from (no shared ancestor commit exists in this
-  repo's history).</li>
+  extracted <code>ovos_audio</code> from. <code>047a0a1</code> is the first substantive commit
+  in <code>ovos-audio</code>'s own history (no shared ancestor commit exists in this
+  repo), so pinning the mycroft-core side requires the <code>mycroft-core</code>
+  repository's own history, which is not cloned in this workspace.</li>
 <li><strong>ovos-bus-client</strong>: no <code>mycroft.conf</code> semantics change was found to
   originate in this repo (it does not own config parsing). No explicit
   "MycroftSkill → OVOSSkill" commit exists in this repo either (that

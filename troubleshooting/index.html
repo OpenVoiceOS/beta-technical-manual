@@ -1689,7 +1689,7 @@ text directly onto the bus as if STT had already produced it:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>ovos-say-to<span class="w"> </span><span class="s2">&quot;what time is it&quot;</span>
 </span></code></pre></div>
 <p>This runs <code>MessageBusClient().emit(Message("recognizer_loop:utterance", {"utterances": ["what time
-is it"], "lang": "en-us"}))</code>, exactly the same message the listener would have emitted. It is the
+is it"], "lang": "en-US"}))</code>, exactly the same message the listener would have emitted. It is the
 single most useful command for isolating "is my problem in audio, or in matching/skills?" without
 having to speak into a microphone at all.</p>
 <p>In <code>ovos-busmon</code>, filter by <code>recognizer_loop:*</code> (or the spec name <code>ovos.utterance.handle</code>): seeing
@@ -1849,7 +1849,9 @@ configuration layer. It must be set locally (user or system config) to take effe
 <a href="../config/">Configuration</a> for how the configuration layers are merged.</p>
 </div>
 <p>Two environment variables set the <em>starting</em> level and logger name before any configuration loads,
-mostly useful when running a service by hand: <code>OVOS_DEFAULT_LOG_LEVEL</code> and <code>OVOS_DEFAULT_LOG_NAME</code>.</p>
+mostly useful when running a service by hand: <code>OVOS_DEFAULT_LOG_LEVEL</code> and <code>OVOS_DEFAULT_LOG_NAME</code>.
+<code>OVOS_CONFIG_BASE_FOLDER</code> sets the XDG base folder name (default <code>mycroft</code>) that logging and
+<code>PIDLock</code> use to find the config and PID directories.</p>
 <hr />
 <h2 id="reproducing-an-issue-offline-with-ovoscope">Reproducing an issue offline with <code>ovoscope</code><a class="headerlink" href="#reproducing-an-issue-offline-with-ovoscope" title="Permanent link">&para;</a></h2>
 <p>If a bug reproduces reliably, don't keep re-triggering it on real hardware. Capture it once and

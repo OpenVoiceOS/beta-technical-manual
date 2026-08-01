@@ -1093,6 +1093,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#7-logging" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. Logging
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#all-keys-generated" class="md-nav__link">
     <span class="md-ellipsis">
       All Keys (Generated)
@@ -1722,6 +1731,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#7-logging" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. Logging
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#all-keys-generated" class="md-nav__link">
     <span class="md-ellipsis">
       All Keys (Generated)
@@ -1972,6 +1990,57 @@ It's a different config subtree from the same-named <code>listener.VAD</code> se
 <td><code>shared_connection</code></td>
 <td><code>true</code></td>
 <td>If true, all skills share one websocket.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="7-logging">7. Logging<a class="headerlink" href="#7-logging" title="Permanent link">&para;</a></h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>&quot;logging&quot;: {
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>  &quot;log_level&quot;: &quot;DEBUG&quot;,
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>  &quot;logs&quot;: {
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>    &quot;path&quot;: &quot;/opt/ovos/logs/&quot;,
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>    &quot;max_bytes&quot;: 50000000,
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>    &quot;backup_count&quot;: 6
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>  },
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>  &quot;audio&quot;: {
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>    &quot;log_level&quot;: &quot;INFO&quot;,
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>    &quot;logs&quot;: { &quot;path&quot;: &quot;/var/log/ovos/&quot; }
+</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>  }
+</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>}
+</span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>logging.log_level</code></td>
+<td><code>"INFO"</code></td>
+<td>Global log level.</td>
+</tr>
+<tr>
+<td><code>logging.logs.path</code></td>
+<td><code>"stdout"</code></td>
+<td>Log directory. Set to <code>"stdout"</code> to log to console only.</td>
+</tr>
+<tr>
+<td><code>logging.logs.max_bytes</code></td>
+<td><code>50000000</code></td>
+<td>Max log file size, in bytes, before rotation.</td>
+</tr>
+<tr>
+<td><code>logging.logs.backup_count</code></td>
+<td><code>3</code></td>
+<td>Number of rotated log files to keep.</td>
+</tr>
+<tr>
+<td><code>logging.&lt;service_name&gt;</code></td>
+<td>—</td>
+<td>A section named after a service (for example <code>logging.audio</code>) overrides the global <code>log_level</code> and <code>logs</code> settings for that service only.</td>
 </tr>
 </tbody>
 </table>
@@ -2916,7 +2985,17 @@ each one does and where it's actually stored.</p>
 <tr>
 <td><code>tts.pulse_duck</code></td>
 <td><code>false</code></td>
-<td></td>
+<td>If true, ducking uses OS-level PulseAudio instead of <code>ovos.common_play.duck</code>/<code>.unduck</code> bus events.</td>
+</tr>
+<tr>
+<td><code>tts.ocp_cork</code></td>
+<td><code>false</code></td>
+<td>If true, <code>PlaybackThread</code> emits <code>ovos.common_play.cork</code> before speech and <code>ovos.common_play.uncork</code> after.</td>
+</tr>
+<tr>
+<td><code>tts.ocp_duck</code></td>
+<td><code>false</code></td>
+<td>If true, <code>PlaybackThread</code> emits <code>ovos.common_play.duck</code> before speech and <code>ovos.common_play.unduck</code> after.</td>
 </tr>
 <tr>
 <td><code>tts.module</code></td>
