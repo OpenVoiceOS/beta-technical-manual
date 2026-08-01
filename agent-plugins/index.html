@@ -1683,7 +1683,7 @@ parallel <code>*.config</code> group for config metadata). The discovery helpers
 </tr>
 <tr>
 <td><code>opm.agents.toolbox</code></td>
-<td>—</td>
+<td>none</td>
 <td>Tool / function-calling registry</td>
 </tr>
 </tbody>
@@ -1723,7 +1723,7 @@ examples, see <a href="../personas/">Agents &amp; Personas</a> and <a href="../a
 </tr>
 <tr>
 <td><a href="#ovos-messagebus-chat-plugin">ovos-messagebus-chat-plugin</a></td>
-<td><code>OVOSMessagebusChatAgent</code> — a <code>ChatEngine</code> (<code>opm.agents.chat</code>, entry point <code>ovos-messagebus</code>) that proxies each turn through a connected OVOS messagebus pipeline.</td>
+<td><code>OVOSMessagebusChatAgent</code>: a <code>ChatEngine</code> (<code>opm.agents.chat</code>, entry point <code>ovos-messagebus</code>) that proxies each turn through a connected OVOS messagebus pipeline.</td>
 </tr>
 <tr>
 <td><a href="#ovos-wikipedia-solver">ovos-wikipedia-solver</a></td>
@@ -1751,7 +1751,7 @@ examples, see <a href="../personas/">Agents &amp; Personas</a> and <a href="../a
 </tr>
 <tr>
 <td><a href="#ovos-gguf-plugin">ovos-gguf-plugin</a></td>
-<td>Unified GGUF wrapper — chat, summarization, dialog rewriting, translation, language detection, and text embeddings, all backed by quantized GGUF models via <code>llama-cpp-python</code>.</td>
+<td>Unified GGUF wrapper for chat, summarization, dialog rewriting, translation, language detection, and text embeddings, all backed by quantized GGUF models via <code>llama-cpp-python</code>.</td>
 </tr>
 <tr>
 <td><a href="#ovos-persona-server">ovos-persona-server</a></td>
@@ -1766,7 +1766,7 @@ examples, see <a href="../personas/">Agents &amp; Personas</a> and <a href="../a
 <h2 id="ovos-qdrant-embeddings-plugin">ovos-qdrant-embeddings-plugin<a class="headerlink" href="#ovos-qdrant-embeddings-plugin" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
-<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-qdrant-embeddings-plugin">https://github.com/OpenVoiceOS/ovos-qdrant-embeddings-plugin</a></p>
+<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-qdrant-embeddings-plugin">OpenVoiceOS/ovos-qdrant-embeddings-plugin</a></p>
 </li>
 <li>
 <p><strong>Description</strong>: The <code>QdrantEmbeddingsDB</code> plugin integrates with the <a href="https://qdrant.tech/">qdrant</a> database to store, retrieve, and query embeddings. This plugin extends the abstract <code>EmbeddingsDB</code> class, using qdrant's capabilities.</p>
@@ -1789,7 +1789,7 @@ examples, see <a href="../personas/">Agents &amp; Personas</a> and <a href="../a
 <tbody>
 <tr>
 <td><code>vector_size</code></td>
-<td>—</td>
+<td>none</td>
 <td><strong>Required.</strong> Dimension of the stored embedding vectors.</td>
 </tr>
 <tr>
@@ -1799,7 +1799,7 @@ examples, see <a href="../personas/">Agents &amp; Personas</a> and <a href="../a
 </tr>
 <tr>
 <td><code>host</code></td>
-<td>—</td>
+<td>none</td>
 <td>When set, connects to a remote Qdrant server (otherwise a persistent local client is used).</td>
 </tr>
 <tr>
@@ -1818,7 +1818,7 @@ examples, see <a href="../personas/">Agents &amp; Personas</a> and <a href="../a
 <h2 id="ovos-solver-plugin-aiml">ovos-solver-plugin-aiml<a class="headerlink" href="#ovos-solver-plugin-aiml" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
-<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-solver-plugin-aiml">https://github.com/OpenVoiceOS/ovos-solver-plugin-aiml</a></p>
+<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-solver-plugin-aiml">OpenVoiceOS/ovos-solver-plugin-aiml</a></p>
 </li>
 <li>
 <p><strong>Description</strong>: A rule-based chatbot answer engine for OVOS, using AIML pattern matching.</p>
@@ -1831,7 +1831,7 @@ examples, see <a href="../personas/">Agents &amp; Personas</a> and <a href="../a
 <h2 id="ovos-persona">ovos-persona<a class="headerlink" href="#ovos-persona" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
-<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-persona">https://github.com/OpenVoiceOS/ovos-persona</a></p>
+<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-persona">OpenVoiceOS/ovos-persona</a></p>
 </li>
 <li>
 <p><strong>Description</strong>: The <strong><code>PersonaPipeline</code></strong> brings multi-persona management to OpenVoiceOS (OVOS), enabling interactive conversations with virtual assistants. With personas, you can customize how queries are handled by assigning specific solvers to each persona.</p>
@@ -1841,7 +1841,7 @@ examples, see <a href="../personas/">Agents &amp; Personas</a> and <a href="../a
 <h2 id="ovos-openai-plugin">ovos-openai-plugin<a class="headerlink" href="#ovos-openai-plugin" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
-<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-openai-plugin">https://github.com/OpenVoiceOS/ovos-openai-plugin</a></p>
+<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-openai-plugin">OpenVoiceOS/ovos-openai-plugin</a></p>
 </li>
 <li>
 <p><strong>Description</strong>: An OpenAI-compatible engine family (chat, dialog-rewriting, and summarization) usable with any OpenAI-compatible endpoint. See <a href="../openai-plugin/">OpenAI Plugin</a> for the full entry-point table, config keys, and examples.</p>
@@ -1851,7 +1851,7 @@ examples, see <a href="../personas/">Agents &amp; Personas</a> and <a href="../a
 <h2 id="ovos-messagebus-chat-plugin">ovos-messagebus-chat-plugin<a class="headerlink" href="#ovos-messagebus-chat-plugin" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
-<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-messagebus-chat-plugin">https://github.com/OpenVoiceOS/ovos-messagebus-chat-plugin</a></p>
+<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-messagebus-chat-plugin">OpenVoiceOS/ovos-messagebus-chat-plugin</a></p>
 </li>
 <li>
 <p><strong>Entry point</strong>: <code>ovos-messagebus</code> → <code>OVOSMessagebusChatAgent</code> (group <code>opm.agents.chat</code>).</p>
@@ -1864,7 +1864,7 @@ examples, see <a href="../personas/">Agents &amp; Personas</a> and <a href="../a
 <h2 id="ovos-wikipedia-solver">ovos-wikipedia-solver<a class="headerlink" href="#ovos-wikipedia-solver" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
-<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-wikipedia-solver">https://github.com/OpenVoiceOS/ovos-wikipedia-solver</a></p>
+<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-wikipedia-solver">OpenVoiceOS/ovos-wikipedia-solver</a></p>
 </li>
 <li>
 <p><strong>Description</strong>: Answers factual questions by querying Wikipedia.</p>
@@ -1877,7 +1877,7 @@ examples, see <a href="../personas/">Agents &amp; Personas</a> and <a href="../a
 <h2 id="ovos-chromadb-embeddings-plugin">ovos-chromadb-embeddings-plugin<a class="headerlink" href="#ovos-chromadb-embeddings-plugin" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
-<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-chromadb-embeddings-plugin">https://github.com/OpenVoiceOS/ovos-chromadb-embeddings-plugin</a></p>
+<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-chromadb-embeddings-plugin">OpenVoiceOS/ovos-chromadb-embeddings-plugin</a></p>
 </li>
 <li>
 <p><strong>Description</strong>: The <code>ChromaEmbeddingsDB</code> plugin integrates with the <a href="https://www.trychroma.com/">ChromaDB</a> database to store, retrieve, and query embeddings. This plugin extends the abstract <code>EmbeddingsDB</code> class, using ChromaDB's capabilities.</p>
@@ -1905,7 +1905,7 @@ examples, see <a href="../personas/">Agents &amp; Personas</a> and <a href="../a
 </tr>
 <tr>
 <td><code>host</code></td>
-<td>—</td>
+<td>none</td>
 <td>When set, connects to a remote ChromaDB HTTP server instead of the local persistent client.</td>
 </tr>
 <tr>
@@ -1920,7 +1920,7 @@ examples, see <a href="../personas/">Agents &amp; Personas</a> and <a href="../a
 <h2 id="ovos-wolfram-alpha-solver">ovos-wolfram-alpha-solver<a class="headerlink" href="#ovos-wolfram-alpha-solver" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
-<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-wolfram-alpha-solver">https://github.com/OpenVoiceOS/ovos-wolfram-alpha-solver</a></p>
+<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-wolfram-alpha-solver">OpenVoiceOS/ovos-wolfram-alpha-solver</a></p>
 </li>
 <li>
 <p><strong>Description</strong>: Answers computational and factual questions via the Wolfram Alpha API.</p>
@@ -1928,14 +1928,14 @@ examples, see <a href="../personas/">Agents &amp; Personas</a> and <a href="../a
 <li>
 <p><strong>Config</strong>: <code>"appid"</code>: your own Wolfram Alpha AppID. Without one, queries go to Wolfram's
   servers on a shared demo key. Either way this solver is a call to a third-party cloud
-  service; it has no offline mode.</p>
+  service. It has no offline mode.</p>
 </li>
 </ul>
 <hr />
 <h2 id="ovos-ddg-solver-plugin">ovos-ddg-solver-plugin<a class="headerlink" href="#ovos-ddg-solver-plugin" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
-<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-ddg-solver-plugin">https://github.com/OpenVoiceOS/ovos-ddg-solver-plugin</a></p>
+<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-ddg-solver-plugin">OpenVoiceOS/ovos-ddg-solver-plugin</a></p>
 </li>
 <li>
 <p><strong>Description</strong>: Answers questions using DuckDuckGo instant-answer results.</p>
@@ -1948,7 +1948,7 @@ examples, see <a href="../personas/">Agents &amp; Personas</a> and <a href="../a
 <h2 id="ovos-solver-yesno-plugin">ovos-solver-YesNo-plugin<a class="headerlink" href="#ovos-solver-yesno-plugin" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
-<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-solver-YesNo-plugin">https://github.com/OpenVoiceOS/ovos-solver-YesNo-plugin</a></p>
+<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-solver-YesNo-plugin">OpenVoiceOS/ovos-solver-YesNo-plugin</a></p>
 </li>
 <li>
 <p><strong>Description</strong>: A simple tool to indicate whether a user answered "yes" or "no" to a yes/no prompt.</p>
@@ -1961,7 +1961,7 @@ examples, see <a href="../personas/">Agents &amp; Personas</a> and <a href="../a
 <h2 id="ovos-solver-failure-plugin">ovos-solver-failure-plugin<a class="headerlink" href="#ovos-solver-failure-plugin" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
-<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-solver-failure-plugin">https://github.com/OpenVoiceOS/ovos-solver-failure-plugin</a></p>
+<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-solver-failure-plugin">OpenVoiceOS/ovos-solver-failure-plugin</a></p>
 </li>
 <li>
 <p><strong>Description</strong>: Extreme fallback, just complains it does not have a brain</p>
@@ -1974,7 +1974,7 @@ examples, see <a href="../personas/">Agents &amp; Personas</a> and <a href="../a
 <h2 id="ovos-gguf-plugin">ovos-gguf-plugin<a class="headerlink" href="#ovos-gguf-plugin" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
-<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-gguf-plugin">https://github.com/OpenVoiceOS/ovos-gguf-plugin</a></p>
+<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-gguf-plugin">OpenVoiceOS/ovos-gguf-plugin</a></p>
 </li>
 <li>
 <p><strong>Description</strong>: A unified GGUF wrapper providing chat, summarization, dialog rewriting, translation, language detection, and text-embedding engines, all backed by quantized GGUF models loaded through <code>llama-cpp-python</code>. See <a href="../gguf-plugin/">GGUF Plugin</a> for the full entry-point table.</p>
@@ -1984,7 +1984,7 @@ examples, see <a href="../personas/">Agents &amp; Personas</a> and <a href="../a
 <h2 id="ovos-persona-server">ovos-persona-server<a class="headerlink" href="#ovos-persona-server" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
-<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-persona-server">https://github.com/OpenVoiceOS/ovos-persona-server</a></p>
+<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-persona-server">OpenVoiceOS/ovos-persona-server</a></p>
 </li>
 <li>
 <p><strong>Description</strong>: Standalone server that exposes an OVOS persona over an HTTP API (e.g. <code>ovos-persona-server --persona rivescript_bot.json</code>).</p>
@@ -1994,7 +1994,7 @@ examples, see <a href="../personas/">Agents &amp; Personas</a> and <a href="../a
 <h2 id="ovos-solver-plugin-rivescript">ovos-solver-plugin-rivescript<a class="headerlink" href="#ovos-solver-plugin-rivescript" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
-<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-solver-plugin-rivescript">https://github.com/OpenVoiceOS/ovos-solver-plugin-rivescript</a></p>
+<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-solver-plugin-rivescript">OpenVoiceOS/ovos-solver-plugin-rivescript</a></p>
 </li>
 <li>
 <p><strong>Description</strong>: A rule-based chatbot answer engine for OVOS, using RiveScript pattern matching.</p>

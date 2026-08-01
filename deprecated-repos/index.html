@@ -1517,7 +1517,7 @@
 <h1 id="deprecated-archived-repositories">Deprecated &amp; Archived Repositories<a class="headerlink" href="#deprecated-archived-repositories" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>This page is a reference list of old OVOS code projects that are no longer maintained, together with what replaced each one. It exists so that if you run into an old package name or an out-of-date guide online, you can look it up here, see that it has been retired, and find the current thing to use instead. You do not need to read it top to bottom — treat it as a lookup table. See the <a href="../glossary/">Glossary</a> for terms.</p>
+<p>This page is a reference list of old OVOS code projects that are no longer maintained, together with what replaced each one. It exists so that if you run into an old package name or an out-of-date guide online, you can look it up here, see that it has been retired, and find the current thing to use instead. You do not need to read it top to bottom: treat it as a lookup table. See the <a href="../glossary/">Glossary</a> for terms.</p>
 </div>
 <p>Looking for an answer to a skill-development question instead? Start at
 <a href="../first-skill/">Your First Skill</a> or the <a href="../skill-dev-faq/">Developer FAQ</a>. This page is only
@@ -1530,9 +1530,9 @@ about retired repositories, not how to write skills today.</p>
 <strong>entry-point-level</strong> deprecations, an old OPM entry point group renamed to a
 canonical one while the plugin itself keeps working, see
 <a href="../plugin-manager/#deprecated-types">Plugin Manager: Deprecated Types</a>.</p>
-<p>There are roughly <strong>84</strong> archived repositories (the exact count drifts as more get archived). They are grouped by area below; each row gives the reason and the current replacement where one exists.</p>
+<p>There are roughly <strong>84</strong> archived repositories (the exact count drifts as more get archived). They are grouped by area below. Each row gives the reason and the current replacement where one exists.</p>
 <h2 id="backend-services-removed-architecture-5">Backend services (removed architecture) (5)<a class="headerlink" href="#backend-services-removed-architecture-5" title="Permanent link">&para;</a></h2>
-<p><em>OVOS no longer uses a central backend; these are removed, not replaced.</em></p>
+<p><em>OVOS no longer uses a central backend. These are removed, not replaced.</em></p>
 <table>
 <thead>
 <tr>
@@ -1545,32 +1545,32 @@ canonical one while the plugin itself keeps working, see
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/ovos-backend-client">ovos-backend-client</a></td>
 <td>client library for interaction with all compatible ovos-core backend services</td>
-<td>Removed — OVOS is backendless</td>
+<td>Removed: OVOS is backendless</td>
 </tr>
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/ovos-backend-manager">ovos-backend-manager</a></td>
 <td>A simple web UI for personal backend, powered by PyWebIO</td>
-<td>Removed — OVOS is backendless</td>
+<td>Removed: OVOS is backendless</td>
 </tr>
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/ovos-binary-shop">ovos-binary-shop</a></td>
 <td>Wheels and pre-compiled binaries for usage with ovos plugins / images</td>
-<td>Removed — wheels are published on PyPI</td>
+<td>Removed: wheels are published on PyPI</td>
 </tr>
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/ovos-personal-backend">ovos-personal-backend</a></td>
 <td>personal backend - self-hosted backend to manage multiple OVOS devices</td>
-<td>Removed — OVOS is backendless</td>
+<td>Removed: OVOS is backendless</td>
 </tr>
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/ovos-stt-plugin-selene">ovos-stt-plugin-selene</a></td>
 <td>STT plugin to use selene backend services</td>
-<td>Removed — OVOS is backendless</td>
+<td>Removed: OVOS is backendless</td>
 </tr>
 </tbody>
 </table>
 <h2 id="skills-renamed-or-folded-into-pipelinesservices-11">Skills (renamed, or folded into pipelines/services) (11)<a class="headerlink" href="#skills-renamed-or-folded-into-pipelinesservices-11" title="Permanent link">&para;</a></h2>
-<p><em>Old Mycroft-era skills; most were renamed <code>skill-ovos-*</code> → <code>ovos-skill-*</code> or folded into core pipelines.</em></p>
+<p><em>Old Mycroft-era skills. Most were renamed <code>skill-ovos-*</code> → <code>ovos-skill-*</code> or folded into core pipelines.</em></p>
 <table>
 <thead>
 <tr>
@@ -1618,12 +1618,12 @@ canonical one while the plugin itself keeps working, see
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/skill-ovos-settings">skill-ovos-settings</a></td>
 <td>Mycroft skill to take control of OpenVoiceOS it's functions and tools.</td>
-<td>GUI rework — <a href="https://github.com/OpenVoiceOS/pyhtmx-gui-client">pyhtmx-gui-client</a></td>
+<td>GUI rework: <a href="https://github.com/OpenVoiceOS/pyhtmx-gui-client">pyhtmx-gui-client</a></td>
 </tr>
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/skill-ovos-setup">skill-ovos-setup</a></td>
 <td>OpenVoiceOS Setup Skill - configure your device and optionally connect it to a backend server</td>
-<td>Removed — OVOS is backendless; onboarding via ovos-installer</td>
+<td>Removed, OVOS is backendless. Onboarding is via ovos-installer</td>
 </tr>
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/skill-ovos-stop">skill-ovos-stop</a></td>
@@ -1671,7 +1671,7 @@ canonical one while the plugin itself keeps working, see
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/ovos-stt-plugin-projectAINA-remote">ovos-stt-plugin-projectAINA-remote</a></td>
 <td>STT plugin calling a remote demo server hosted by Project AINA (Catalan speech models)</td>
-<td>Remote demo server is gone, but it served a Catalan <strong>Whisper</strong> model — run that model locally with <a href="https://github.com/OpenVoiceOS/ovos-stt-plugin-fasterwhisper">ovos-stt-plugin-fasterwhisper</a> or <a href="https://github.com/OpenVoiceOS/ovos-stt-plugin-whisper">ovos-stt-plugin-whisper</a></td>
+<td>Remote demo server is gone, but it served a Catalan <strong>Whisper</strong> model: run that model locally with <a href="https://github.com/OpenVoiceOS/ovos-stt-plugin-fasterwhisper">ovos-stt-plugin-fasterwhisper</a> or <a href="https://github.com/OpenVoiceOS/ovos-stt-plugin-whisper">ovos-stt-plugin-whisper</a></td>
 </tr>
 </tbody>
 </table>
@@ -1689,22 +1689,22 @@ canonical one while the plugin itself keeps working, see
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/ovos-tts-plugin-cotovia-remote">ovos-tts-plugin-cotovia-remote</a></td>
 <td>TTS plugin calling a remote demo server for Cotovia TTS (Galician)</td>
-<td>Removed — unofficial demo server, now gone; no replacement</td>
+<td>Removed, unofficial demo server, now gone. No replacement</td>
 </tr>
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/ovos-tts-plugin-matxa-multispeaker-cat">ovos-tts-plugin-matxa-multispeaker-cat</a></td>
 <td>TTS plugin for the Matxa multispeaker/multidialect Catalan voices</td>
-<td><a href="https://github.com/TigreGotico/phoonnx">phoonnx</a> — runs the same Matxa Catalan models</td>
+<td><a href="https://github.com/TigreGotico/phoonnx">phoonnx</a>: runs the same Matxa Catalan models</td>
 </tr>
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/ovos-tts-plugin-mimic2">ovos-tts-plugin-mimic2</a></td>
 <td>TTS plugin for Mimic2, MycroftAI's proprietary cloud-hosted Tacotron voice</td>
-<td>Removed — proprietary cloud-hosted Tacotron model, never released. The <code>kusal</code> voice in <a href="https://github.com/TigreGotico/phoonnx">phoonnx</a> was trained on the same dataset and can be used instead.</td>
+<td>Removed: proprietary cloud-hosted Tacotron model, never released. The <code>kusal</code> voice in <a href="https://github.com/TigreGotico/phoonnx">phoonnx</a> was trained on the same dataset and can be used instead.</td>
 </tr>
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/ovos-tts-plugin-mimic3">ovos-tts-plugin-mimic3</a></td>
 <td>Text to speech plugin for OVOS using Mimic 3</td>
-<td><a href="https://github.com/TigreGotico/phoonnx">phoonnx</a> — directly supports the Mimic3 voices (as it does Larynx and Piper voices)</td>
+<td><a href="https://github.com/TigreGotico/phoonnx">phoonnx</a>: directly supports the Mimic3 voices (as it does Larynx and Piper voices)</td>
 </tr>
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/ovos-tts-plugin-mimic3-server">ovos-tts-plugin-mimic3-server</a></td>
@@ -1714,17 +1714,17 @@ canonical one while the plugin itself keeps working, see
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/ovos-tts-plugin-nos">ovos-tts-plugin-nos</a></td>
 <td>Galician TTS</td>
-<td><a href="https://github.com/TigreGotico/phoonnx">phoonnx</a> — runs the Proxecto Nós Galician voices</td>
+<td><a href="https://github.com/TigreGotico/phoonnx">phoonnx</a>: runs the Proxecto Nós Galician voices</td>
 </tr>
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/ovos-tts-plugin-piper">ovos-tts-plugin-piper</a></td>
 <td>TTS plugin running Piper ONNX voices</td>
-<td><a href="https://github.com/TigreGotico/phoonnx">phoonnx</a> — runs Piper ONNX voices (incl. the <code>kusal</code> voice)</td>
+<td><a href="https://github.com/TigreGotico/phoonnx">phoonnx</a>: runs Piper ONNX voices (incl. the <code>kusal</code> voice)</td>
 </tr>
 </tbody>
 </table>
 <h2 id="wake-word-vad-plugins-9">Wake-word &amp; VAD plugins (9)<a class="headerlink" href="#wake-word-vad-plugins-9" title="Permanent link">&para;</a></h2>
-<p><em>Older wake-word/VAD engines; the Precise family is superseded by the ONNX build.</em></p>
+<p><em>Older wake-word/VAD engines. The Precise family is superseded by the ONNX build.</em></p>
 <table>
 <thead>
 <tr>
@@ -1742,7 +1742,7 @@ canonical one while the plugin itself keeps working, see
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/ovos-ww-plugin-nyumaya-legacy">ovos-ww-plugin-nyumaya-legacy</a></td>
 <td>hotword plugin for mycroft-core</td>
-<td>Removed — use <a href="https://github.com/OpenVoiceOS/ovos-ww-plugin-precise-onnx">ovos-ww-plugin-precise-onnx</a> / openWakeWord</td>
+<td>Removed: use <a href="https://github.com/OpenVoiceOS/ovos-ww-plugin-precise-onnx">ovos-ww-plugin-precise-onnx</a> / openWakeWord</td>
 </tr>
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/ovos-ww-plugin-pocketsphinx">ovos-ww-plugin-pocketsphinx</a></td>
@@ -1757,12 +1757,12 @@ canonical one while the plugin itself keeps working, see
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/ovos-ww-plugin-precise-lite">ovos-ww-plugin-precise-lite</a></td>
 <td>TFLite Precise wake-word plugin</td>
-<td>Archived, but still the shipped default hotword engine in the bundled <code>mycroft.conf</code> — <a href="https://github.com/OpenVoiceOS/ovos-ww-plugin-precise-onnx">ovos-ww-plugin-precise-onnx</a> is the maintained successor for new setups</td>
+<td>Archived, but still the shipped default hotword engine in the bundled <code>mycroft.conf</code>: <a href="https://github.com/OpenVoiceOS/ovos-ww-plugin-precise-onnx">ovos-ww-plugin-precise-onnx</a> is the maintained successor for new setups</td>
 </tr>
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/ovos-ww-plugin-snowboy">ovos-ww-plugin-snowboy</a></td>
 <td>snowboy plugin for mycroft</td>
-<td>Removed — use <a href="https://github.com/OpenVoiceOS/ovos-ww-plugin-precise-onnx">ovos-ww-plugin-precise-onnx</a> / openWakeWord</td>
+<td>Removed: use <a href="https://github.com/OpenVoiceOS/ovos-ww-plugin-precise-onnx">ovos-ww-plugin-precise-onnx</a> / openWakeWord</td>
 </tr>
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/precise-lite">precise-lite</a></td>
@@ -1772,7 +1772,7 @@ canonical one while the plugin itself keeps working, see
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/precise-lite-trainer">precise-lite-trainer</a></td>
 <td>train wake word models</td>
-<td>Archived — no current OVOS-org training tool replaces it</td>
+<td>Archived: no current OVOS-org training tool replaces it</td>
 </tr>
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/precise_lite_runner">precise_lite_runner</a></td>
@@ -1810,27 +1810,27 @@ canonical one while the plugin itself keeps working, see
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/ovos-PHAL-plugin-brightness-control-rpi">ovos-PHAL-plugin-brightness-control-rpi</a></td>
 <td>PHAL plugin controlling screen brightness on Raspberry Pi devices</td>
-<td>GUI rework — <a href="https://github.com/OpenVoiceOS/pyhtmx-gui-client">pyhtmx-gui-client</a></td>
+<td>GUI rework: <a href="https://github.com/OpenVoiceOS/pyhtmx-gui-client">pyhtmx-gui-client</a></td>
 </tr>
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/ovos-PHAL-plugin-color-scheme-manager">ovos-PHAL-plugin-color-scheme-manager</a></td>
 <td>OVOS Shell ColorScheme Manager Plugin for OVOS PHAL</td>
-<td>GUI rework — <a href="https://github.com/OpenVoiceOS/pyhtmx-gui-client">pyhtmx-gui-client</a></td>
+<td>GUI rework: <a href="https://github.com/OpenVoiceOS/pyhtmx-gui-client">pyhtmx-gui-client</a></td>
 </tr>
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/ovos-PHAL-plugin-configuration-provider">ovos-PHAL-plugin-configuration-provider</a></td>
 <td>PHAL plugin to provide configuration in displayable GUI format</td>
-<td>GUI rework — <a href="https://github.com/OpenVoiceOS/pyhtmx-gui-client">pyhtmx-gui-client</a></td>
+<td>GUI rework: <a href="https://github.com/OpenVoiceOS/pyhtmx-gui-client">pyhtmx-gui-client</a></td>
 </tr>
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/ovos-PHAL-plugin-dashboard">ovos-PHAL-plugin-dashboard</a></td>
 <td>Dashboard PHAL plugin to handle Dashboard operations</td>
-<td>Removed — community-maintained, no official replacement</td>
+<td>Removed: community-maintained, no official replacement</td>
 </tr>
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/ovos-PHAL-plugin-display-manager-ipc">ovos-PHAL-plugin-display-manager-ipc</a></td>
 <td>Legacy Mark 1 faceplate display-manager plugin, tracking which skill "owns" the display</td>
-<td>Removed — folded into <a href="https://github.com/OpenVoiceOS/ovos-gui">ovos-gui</a></td>
+<td>Removed: folded into <a href="https://github.com/OpenVoiceOS/ovos-gui">ovos-gui</a></td>
 </tr>
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/ovos-PHAL-plugin-gui-network-client">ovos-PHAL-plugin-gui-network-client</a></td>
@@ -1840,7 +1840,7 @@ canonical one while the plugin itself keeps working, see
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/ovos-PHAL-plugin-homeassistant">ovos-PHAL-plugin-homeassistant</a></td>
 <td>HomeAssistant PHAL Plugin for OpenVoice OS</td>
-<td>Removed — use a dedicated Home Assistant skill (e.g. OscillateLabsLLC/skill-homeassistant)</td>
+<td>Removed: use a dedicated Home Assistant skill (e.g. OscillateLabsLLC/skill-homeassistant)</td>
 </tr>
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/ovos-PHAL-plugin-mk2">ovos-PHAL-plugin-mk2</a></td>
@@ -1850,7 +1850,7 @@ canonical one while the plugin itself keeps working, see
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/ovos-PHAL-plugin-notification-widgets">ovos-PHAL-plugin-notification-widgets</a></td>
 <td>Notifications and Widgets PHAL plugin</td>
-<td>GUI rework — <a href="https://github.com/OpenVoiceOS/pyhtmx-gui-client">pyhtmx-gui-client</a></td>
+<td>GUI rework: <a href="https://github.com/OpenVoiceOS/pyhtmx-gui-client">pyhtmx-gui-client</a></td>
 </tr>
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/ovos-PHAL-plugin-wifi-setup">ovos-PHAL-plugin-wifi-setup</a></td>
@@ -1860,7 +1860,7 @@ canonical one while the plugin itself keeps working, see
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/ovos-gui-plugin-shell-companion">ovos-gui-plugin-shell-companion</a></td>
 <td>Bus-API companion plugin integrating with the legacy ovos-shell</td>
-<td>GUI rework — <a href="https://github.com/OpenVoiceOS/pyhtmx-gui-client">pyhtmx-gui-client</a></td>
+<td>GUI rework: <a href="https://github.com/OpenVoiceOS/pyhtmx-gui-client">pyhtmx-gui-client</a></td>
 </tr>
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/ovos-media-plugin-qt5">ovos-media-plugin-qt5</a></td>
@@ -1870,7 +1870,7 @@ canonical one while the plugin itself keeps working, see
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/ovos-shell">ovos-shell</a></td>
 <td>The Qt5 (mycroft-gui-qt5-embedding) shell application for EGLFS display platforms</td>
-<td>GUI rework — <a href="https://github.com/OpenVoiceOS/pyhtmx-gui-client">pyhtmx-gui-client</a></td>
+<td>GUI rework: <a href="https://github.com/OpenVoiceOS/pyhtmx-gui-client">pyhtmx-gui-client</a></td>
 </tr>
 </tbody>
 </table>
@@ -1888,12 +1888,12 @@ canonical one while the plugin itself keeps working, see
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/ovos-classifiers">ovos-classifiers</a></td>
 <td>Experimental, pre-alpha grab-bag of text/audio classifiers</td>
-<td>Removed — split into focused libs (ovos-utterance-normalizer, ovos-lang-detector-<em>, ovos-</em>-parser)</td>
+<td>Removed: split into focused libs (ovos-utterance-normalizer, ovos-lang-detector-<em>, ovos-</em>-parser)</td>
 </tr>
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/ovos-cli-client">ovos-cli-client</a></td>
 <td>Standalone debug CLI client, extracted from classic mycroft-core</td>
-<td>Removed — use messagebus tooling (ovos-busmon)</td>
+<td>Removed: use messagebus tooling (ovos-busmon)</td>
 </tr>
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/ovos-listener">ovos-listener</a></td>
@@ -1923,7 +1923,7 @@ canonical one while the plugin itself keeps working, see
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/ovos-lingua-franca">ovos-lingua-franca</a></td>
 <td>Mycroft's multilingual text parsing and formatting library</td>
-<td>Split into focused libraries — <a href="https://github.com/OpenVoiceOS/ovos-date-parser">ovos-date-parser</a>, <a href="https://github.com/OpenVoiceOS/ovos-number-parser">ovos-number-parser</a>, and the other <code>ovos-*-parser</code> packages</td>
+<td>Split into focused libraries: <a href="https://github.com/OpenVoiceOS/ovos-date-parser">ovos-date-parser</a>, <a href="https://github.com/OpenVoiceOS/ovos-number-parser">ovos-number-parser</a>, and the other <code>ovos-*-parser</code> packages</td>
 </tr>
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/zzz-old-ovos-utils">zzz-old-ovos-utils</a></td>
@@ -1946,7 +1946,7 @@ canonical one while the plugin itself keeps working, see
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/ZZZ-raspOVOS">ZZZ-raspOVOS</a></td>
 <td>Run ovos ontop of RaspberryPiOS</td>
-<td><a href="https://github.com/OpenVoiceOS/raspOVOS">raspOVOS</a> — the current, actively maintained image</td>
+<td><a href="https://github.com/OpenVoiceOS/raspOVOS">raspOVOS</a>: the current, actively maintained image</td>
 </tr>
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/awesome-ocp-skills">awesome-ocp-skills</a></td>
@@ -1999,7 +1999,7 @@ canonical one while the plugin itself keeps working, see
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/disable-msm-dummy-repo">disable-msm-dummy-repo</a></td>
 <td>A repository for sharing and collaboration for third-party Mycroft skills development.</td>
-<td>Removed — MSM (Mycroft Skills Manager) test artifact</td>
+<td>Removed: MSM (Mycroft Skills Manager) test artifact</td>
 </tr>
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/hardware-mycroft-mark-1">hardware-mycroft-mark-1</a></td>
@@ -2009,12 +2009,12 @@ canonical one while the plugin itself keeps working, see
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/my-assistant">my-assistant</a></td>
 <td>template repo for derivative voice assistants</td>
-<td>Removed — old assistant template scaffold</td>
+<td>Removed: old assistant template scaffold</td>
 </tr>
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/ovos-skills-info">ovos-skills-info</a></td>
 <td>Skill information parser support skill</td>
-<td>Removed — skill metadata folded into ovos-workshop</td>
+<td>Removed: skill metadata folded into ovos-workshop</td>
 </tr>
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/ovos-solver-YesNo-plugin">ovos-solver-YesNo-plugin</a></td>
@@ -2024,12 +2024,12 @@ canonical one while the plugin itself keeps working, see
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/quiet.py">quiet.py</a></td>
 <td>Python Ctypes Bindings for libquiet</td>
-<td>Removed — use <a href="https://github.com/OpenVoiceOS/ovos-audio-transformer-plugin-ggwave">ovos-audio-transformer-plugin-ggwave</a></td>
+<td>Removed: use <a href="https://github.com/OpenVoiceOS/ovos-audio-transformer-plugin-ggwave">ovos-audio-transformer-plugin-ggwave</a></td>
 </tr>
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/skill-abort-test">skill-abort-test</a></td>
 <td>internal test skill for an <code>ovos_utils</code> change</td>
-<td>Removed — internal test skill</td>
+<td>Removed: internal test skill</td>
 </tr>
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/skill-balena-wifi-setup">skill-balena-wifi-setup</a></td>
@@ -2039,12 +2039,12 @@ canonical one while the plugin itself keeps working, see
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/skill-monkey-patch-tester">skill-monkey-patch-tester</a></td>
 <td>test monkey patches</td>
-<td>Removed — internal test skill</td>
+<td>Removed: internal test skill</td>
 </tr>
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/skill-monkey-patcher">skill-monkey-patcher</a></td>
 <td>apply patches to mycroft-core at runtime</td>
-<td>Removed — mycroft-core runtime patcher; no replacement</td>
+<td>Removed, mycroft-core runtime patcher. No replacement</td>
 </tr>
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/skill-template-repo">skill-template-repo</a></td>
@@ -2054,17 +2054,17 @@ canonical one while the plugin itself keeps working, see
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/template-package-repo">template-package-repo</a></td>
 <td>Starter template repo for scaffolding a new plugin package</td>
-<td>Removed — use <a href="https://github.com/OpenVoiceOS/gh-automations">gh-automations</a> shared workflows</td>
+<td>Removed: use <a href="https://github.com/OpenVoiceOS/gh-automations">gh-automations</a> shared workflows</td>
 </tr>
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/tskill-ocp-cps">tskill-ocp-cps</a></td>
 <td>Internal test skill exercising the OCP common-play-service contract</td>
-<td>Removed — internal test skill</td>
+<td>Removed: internal test skill</td>
 </tr>
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/tskill-osm_parsing">tskill-osm_parsing</a></td>
 <td>Repository to test OSM parser testing</td>
-<td>Removed — internal test skill</td>
+<td>Removed: internal test skill</td>
 </tr>
 </tbody>
 </table>

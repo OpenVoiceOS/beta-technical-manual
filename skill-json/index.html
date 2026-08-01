@@ -1752,7 +1752,7 @@
 </li>
 </ol>
 <blockquote>
-<p>⚠️ <strong>Avoid using old <code>skill.json</code> formats</strong> found in some legacy skills where the file exists at the root level. These are deprecated.</p>
+<p><strong>Warning:</strong> Avoid using old <code>skill.json</code> formats found in some legacy skills where the file exists at the root level. These are deprecated.</p>
 </blockquote>
 <hr />
 <h2 id="example-skilljson">Example <code>skill.json</code><a class="headerlink" href="#example-skilljson" title="Permanent link">&para;</a></h2>
@@ -1784,13 +1784,8 @@
 </span></code></pre></div>
 <hr />
 <h2 id="field-reference">Field Reference<a class="headerlink" href="#field-reference" title="Permanent link">&para;</a></h2>
-<p>None of these fields are enforced by <code>ovos-workshop</code> at runtime. Only
-<code>examples</code> is actually read (it is registered with the homescreen so it can
-show sample phrases for the skill). Everything else is a convention followed
-by skill-store and CI tooling. Ecosystem lint tooling (the <code>check_skill.py</code>
-compliance check used in CI) treats <code>skill_id</code>, <code>name</code>, <code>description</code>,
-<code>examples</code>, and <code>tags</code> as the fields it expects to be present. Treat the rest
-as recommended, not mandatory.</p>
+<p>None of these fields are enforced by <code>ovos-workshop</code> at runtime. Only <code>examples</code> is actually read (it is registered with the homescreen so it can show sample phrases for the skill). Everything else is a convention followed by skill-store and CI tooling.</p>
+<p>Ecosystem lint tooling (the <code>check_skill.py</code> compliance check used in CI) treats <code>skill_id</code>, <code>name</code>, <code>description</code>, <code>examples</code>, and <code>tags</code> as the fields it expects to be present. Treat the rest as recommended, not mandatory.</p>
 <table>
 <thead>
 <tr>
@@ -1804,79 +1799,79 @@ as recommended, not mandatory.</p>
 <tr>
 <td><code>skill_id</code></td>
 <td>string</td>
-<td>✅ Yes</td>
+<td>Yes</td>
 <td>Unique ID, typically <code>repo.author</code> style (lowercase).</td>
 </tr>
 <tr>
 <td><code>source</code></td>
 <td>string</td>
-<td>❌ Optional</td>
+<td>Optional</td>
 <td>Git URL to install from source.</td>
 </tr>
 <tr>
 <td><code>package_name</code></td>
 <td>string</td>
-<td>❌ Optional</td>
+<td>Optional</td>
 <td>Python package name (e.g., for PyPI installs).</td>
 </tr>
 <tr>
 <td><code>pip_spec</code></td>
 <td>string</td>
-<td>❌ Optional</td>
+<td>Optional</td>
 <td><a href="https://peps.python.org/pep-0508/">PEP 508</a> install spec.</td>
 </tr>
 <tr>
 <td><code>license</code></td>
 <td>string</td>
-<td>❌ Optional</td>
+<td>Optional</td>
 <td>License ID (see <a href="https://spdx.org/licenses/">SPDX list</a>).</td>
 </tr>
 <tr>
 <td><code>author</code></td>
 <td>string</td>
-<td>❌ Optional</td>
+<td>Optional</td>
 <td>Display name of the skill author.</td>
 </tr>
 <tr>
 <td><code>extra_plugins</code></td>
 <td>object</td>
-<td>❌ Optional</td>
+<td>Optional</td>
 <td>Dependencies to be installed in other OVOS services (not this skill).</td>
 </tr>
 <tr>
 <td><code>icon</code></td>
 <td>string</td>
-<td>❌ Optional</td>
+<td>Optional</td>
 <td>URL to a skill icon (SVG recommended).</td>
 </tr>
 <tr>
 <td><code>images</code></td>
 <td>list</td>
-<td>❌ Optional</td>
+<td>Optional</td>
 <td>Screenshots or promotional images.</td>
 </tr>
 <tr>
 <td><code>name</code></td>
 <td>string</td>
-<td>✅ Yes</td>
+<td>Yes</td>
 <td>User-facing skill name (some skills use <code>title</code> instead or as well).</td>
 </tr>
 <tr>
 <td><code>description</code></td>
 <td>string</td>
-<td>✅ Yes</td>
+<td>Yes</td>
 <td>Short, one-line summary of the skill.</td>
 </tr>
 <tr>
 <td><code>examples</code></td>
 <td>list</td>
-<td>✅ Yes</td>
-<td>Example utterances your skill handles — the only field <code>ovos-workshop</code> actually reads, to register with the homescreen.</td>
+<td>Yes</td>
+<td>Example utterances your skill handles: the only field <code>ovos-workshop</code> actually reads, to register with the homescreen.</td>
 </tr>
 <tr>
 <td><code>tags</code></td>
 <td>list</td>
-<td>✅ Yes</td>
+<td>Yes</td>
 <td>Keywords for searchability.</td>
 </tr>
 </tbody>
@@ -1924,17 +1919,9 @@ so external installers have somewhere to pull the skill from.</p>
 <h2 id="sharing-your-skill">Sharing your skill<a class="headerlink" href="#sharing-your-skill" title="Permanent link">&para;</a></h2>
 <p>Once your skill works, publishing it is the same as publishing any Python package:</p>
 <ol>
-<li><strong>Push it to a GitHub repository</strong> under your own account (or the <code>OpenVoiceOS</code> org if you're
-   contributing an official skill). The <code>source</code> field in <code>skill.json</code> should point at it.</li>
-<li><strong>Optionally publish it to PyPI</strong> so it can be installed with a plain <code>pip install</code>, and set
-   <code>package_name</code> in <code>skill.json</code> to that PyPI name. Skills without a PyPI release are still
-   installable directly from git via <code>pip_spec</code> (see the <a href="https://peps.python.org/pep-0508/">PEP 508</a>
-   spec syntax used there).</li>
-<li><strong>List it on the <a href="https://store.openvoiceos.org">OVOS Skill store</a></strong>. See
-   <a href="https://github.com/OpenVoiceOS/OVOS-skills-store">OVOS-skills-store</a> for how skills get added.
-   The store reads the <code>skill.json</code> fields above (<code>name</code>, <code>description</code>, <code>examples</code>, <code>tags</code>,
-   <code>icon</code>, <code>images</code>) to build the listing card, and <code>source</code>/<code>pip_spec</code>/<code>package_name</code> to know how
-   to install it.</li>
+<li><strong>Push it to a GitHub repository</strong> under your own account (or the <code>OpenVoiceOS</code> org if you're contributing an official skill). The <code>source</code> field in <code>skill.json</code> should point at it.</li>
+<li><strong>Optionally publish it to PyPI</strong> so it can be installed with a plain <code>pip install</code>, and set <code>package_name</code> in <code>skill.json</code> to that PyPI name. Skills without a PyPI release are still installable directly from git via <code>pip_spec</code> (see the <a href="https://peps.python.org/pep-0508/">PEP 508</a> spec syntax used there).</li>
+<li><strong>List it on the <a href="https://store.openvoiceos.org">OVOS Skill store</a></strong>. See <a href="https://github.com/OpenVoiceOS/OVOS-skills-store">OVOS-skills-store</a> for how skills get added. The store reads the <code>skill.json</code> fields above (<code>name</code>, <code>description</code>, <code>examples</code>, <code>tags</code>, <code>icon</code>, <code>images</code>) to build the listing card, and <code>source</code>/<code>pip_spec</code>/<code>package_name</code> to know how to install it.</li>
 </ol>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
@@ -1944,7 +1931,7 @@ and a nicely presented store entry. See the <a href="#field-reference">Field Ref
 <h2 id="see-also">See Also<a class="headerlink" href="#see-also" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
-<p><a href="https://peps.python.org/pep-0508/">PEP 508 – Dependency specification</a></p>
+<p><a href="https://peps.python.org/pep-0508/">PEP 508: Dependency specification</a></p>
 </li>
 <li>
 <p><a href="https://spdx.org/licenses/">SPDX License List</a></p>

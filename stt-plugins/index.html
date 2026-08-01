@@ -1089,7 +1089,7 @@
           <li class="md-nav__item">
   <a href="#n-best-hypotheses-transcribe" class="md-nav__link">
     <span class="md-ellipsis">
-      N-best hypotheses — transcribe()
+      N-best hypotheses: transcribe()
     </span>
   </a>
   
@@ -1491,7 +1491,7 @@
           <li class="md-nav__item">
   <a href="#n-best-hypotheses-transcribe" class="md-nav__link">
     <span class="md-ellipsis">
-      N-best hypotheses — transcribe()
+      N-best hypotheses: transcribe()
     </span>
   </a>
   
@@ -1586,7 +1586,7 @@
 <p>STT stands for <em>Speech-to-Text</em>: this is the part that listens to your spoken words and writes them down as text the assistant can read. It is the same idea as the dictation feature on a phone. Different STT plugins offer different trade-offs in speed, accuracy, and whether they run on your own device or in the cloud, so you can pick the one that suits you. See the <a href="../glossary/">Glossary</a> for related terms.</p>
 </div>
 <details class="info">
-<summary>📐 Formal specification</summary>
+<summary>Formal specification</summary>
 <p>STT sits inside the audio input service, specified by <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/audio-in.md">OVOS-AUDIO-IN-1: Audio Input Service</a></strong>: capture → audio-transformer chain → STT → utterance. The transcript is emitted on <code>ovos.utterance.handle</code> (<a href="https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md">OVOS-PIPELINE-1 §9.1</a>). See the <a href="../architecture-specs/">spec index</a>.</p>
 </details>
 <div class="admonition note">
@@ -1602,9 +1602,9 @@ starting point: it runs entirely through ONNX Runtime, with no PyTorch/transform
 dependency, and covers NeMo Parakeet/Canary, Whisper and wav2vec2 model families. Cloud
 STT (e.g. <code>ovos-stt-plugin-azure</code>) is a fair choice when the local device doesn't have
 the compute budget for on-device recognition.</p>
-<p><code>ovos-stt-plugin-onnx-asr</code> is rated <strong>Beta</strong> while several alternatives are Stable;
-it is recommended here for its offline quality and footprint, and per the
-<a href="../maturity/">Maturity Scale</a> maturity is not the same as a recommendation.</p>
+<p><code>ovos-stt-plugin-onnx-asr</code> is rated <strong>Beta</strong> while several alternatives are Stable.
+It is recommended here for its offline quality and footprint. Per the
+<a href="../maturity/">Maturity Scale</a>, maturity is not the same as a recommendation.</p>
 <p><strong>Footprint:</strong> as noted in the <a href="#ovos-stt-plugin-onnx-asr">plugin's own entry</a>, most models
 in the <a href="https://huggingface.co/collections/OpenVoiceOS/stt-asr-onnx">OpenVoiceOS/stt-asr-onnx</a>
 collection ship both <code>fp32</code> and <code>int8</code> weights. Pick <code>int8</code> for the lower-RAM, lower-compute
@@ -1634,7 +1634,7 @@ Whisper-class one, independent of the plugin wrapping it.</p>
 <p><code>audio</code> <span class="arithmatex">\([AudioData](https://github.com/Uberi/speech_recognition/blob/master/reference/library-reference.rst#audiodataframe_data-bytes-sample_rate-int-sample_width-int---audiodata) object\)</span> - the audio data to be transcribed.  </p>
 </li>
 <li>
-<p><code>language</code> <span class="arithmatex">\(str\)</span> - <em>optional</em> - the BCP-47 language code; when omitted the plugin uses its
+<p><code>language</code> <span class="arithmatex">\(str\)</span> - <em>optional</em> - the BCP-47 language code. When omitted, the plugin uses its
   configured or detected language</p>
 </li>
 </ul>
@@ -1647,13 +1647,13 @@ Whisper-class one, independent of the plugin wrapping it.</p>
 </span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>        <span class="p">[</span><span class="o">...</span><span class="p">]</span>
 </span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>        <span class="k">return</span> <span class="n">text</span>
 </span></code></pre></div>
-<h3 id="n-best-hypotheses-transcribe">N-best hypotheses — <code>transcribe()</code><a class="headerlink" href="#n-best-hypotheses-transcribe" title="Permanent link">&para;</a></h3>
+<h3 id="n-best-hypotheses-transcribe">N-best hypotheses: <code>transcribe()</code><a class="headerlink" href="#n-best-hypotheses-transcribe" title="Permanent link">&para;</a></h3>
 <p><code>execute()</code> returns a single best string. The richer method is <code>transcribe(audio, lang=None)</code>,
-which returns a <strong>list of <code>(transcript, confidence)</code> tuples</strong>, confidence a float in <code>0.0</code>–<code>1.0</code>.
+which returns a <strong>list of <code>(transcript, confidence)</code> tuples</strong>, confidence a float from <code>0.0</code> to <code>1.0</code>.
 The template implements it for you as <code>[(self.execute(audio, lang), 1.0)]</code>, so a plugin that
 only knows its single best answer needs to implement nothing extra.</p>
-<p>If the wrapped engine can produce several hypotheses with scores, <strong>override <code>transcribe()</code></strong>
-— it is the preferred entry point, and consumers that rescore or disambiguate between
+<p>If the wrapped engine can produce several hypotheses with scores, <strong>override <code>transcribe()</code></strong>.
+It is the preferred entry point, and consumers that rescore or disambiguate between
 candidates read it. <code>execute()</code> then remains the single-best convenience wrapper.</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">class</span> <span class="nc">MySTT</span><span class="p">(</span><span class="n">STT</span><span class="p">):</span>
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>    <span class="k">def</span> <span class="nf">execute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">audio</span><span class="p">,</span> <span class="n">language</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -1666,7 +1666,7 @@ candidates read it. <code>execute()</code> then remains the single-best convenie
 </span></code></pre></div>
 <h3 id="language-detection">Language detection<a class="headerlink" href="#language-detection" title="Permanent link">&para;</a></h3>
 <p>An STT plugin can be paired with an audio language detector. The audio service calls
-<code>bind(detector)</code> to hand the plugin an <code>AudioLanguageDetector</code>; the plugin then exposes:</p>
+<code>bind(detector)</code> to hand the plugin an <code>AudioLanguageDetector</code>. The plugin then exposes:</p>
 <ul>
 <li>
 <p><code>detect_language(audio, valid_langs=None)</code> → <code>(lang, confidence)</code>. It delegates to the bound
@@ -1683,7 +1683,7 @@ candidates read it. <code>execute()</code> then remains the single-best convenie
 <h2 id="streamingstt"><code>StreamingSTT</code><a class="headerlink" href="#streamingstt" title="Permanent link">&para;</a></h2>
 <p>A more advanced STT class for streaming data to the STT. This will receive chunks of audio data as they become available and they are streamed to an STT engine.</p>
 <p>The plugin author needs to implement the <code>create_streaming_thread()</code> method creating a thread for handling data sent through <code>self.queue</code>. </p>
-<p>The thread this method creates should be based on the <code>StreamThread</code> class. Its abstract <code>handle_audio_stream(audio, language)</code> method also needs to be implemented. It receives a generator of audio chunks and should set <code>self.text</code> to the transcript; <code>finalize()</code> returns that stored text once the stream ends.</p>
+<p>The thread this method creates should be based on the <code>StreamThread</code> class. Its abstract <code>handle_audio_stream(audio, language)</code> method also needs to be implemented. It receives a generator of audio chunks and should set <code>self.text</code> to the transcript. <code>finalize()</code> returns that stored text once the stream ends.</p>
 <h3 id="chunk-semantics">Chunk semantics<a class="headerlink" href="#chunk-semantics" title="Permanent link">&para;</a></h3>
 <p>Audio arrives synchronously per chunk: <code>stream_data()</code> is called once per captured
 chunk on the mic thread, so it must return well under the per-chunk time budget
@@ -1745,7 +1745,7 @@ manages, not inline in <code>stream_data()</code>.</p>
 </span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="p">}</span>
 </span></code></pre></div>
 <blockquote>
-<p>💡 <strong>Backward Compatibility</strong>: <code>ovos-plugin-manager</code> still supports legacy <code>mycroft.plugin.stt</code> entry points, but new plugins should use the <code>opm.*</code> namespace.</p>
+<p><strong>Backward Compatibility</strong>: <code>ovos-plugin-manager</code> still supports legacy <code>mycroft.plugin.stt</code> entry points, but new plugins should use the <code>opm.*</code> namespace.</p>
 </blockquote>
 <h2 id="standalone-usage">Standalone Usage<a class="headerlink" href="#standalone-usage" title="Permanent link">&para;</a></h2>
 <p>STT plugins can be used in your own projects, without a running OVOS instance, by
@@ -1813,7 +1813,7 @@ importing the plugin class directly. For example, with <code>ovos-stt-plugin-vos
 </span><span id="__span-8-44"><a id="__codelineno-8-44" name="__codelineno-8-44" href="#__codelineno-8-44"></a><span class="p">}</span>
 </span></code></pre></div>
 <h1 id="stt-plugins-reference">STT plugins Reference<a class="headerlink" href="#stt-plugins-reference" title="Permanent link">&para;</a></h1>
-<p>Code license is the SPDX license of the plugin's own repository; where the plugin wraps a
+<p>Code license is the SPDX license of the plugin's own repository. Where the plugin wraps a
 separately-licensed model, that is called out under "model".</p>
 <table>
 <thead>
@@ -1845,7 +1845,7 @@ separately-licensed model, that is called out under "model".</p>
 </tr>
 <tr>
 <td><a href="#ovos-stt-plugin-mms">ovos-stt-plugin-mms</a></td>
-<td>OVOS plugin for <a href="https://huggingface.co/docs/transformers/main/en/model_doc/mms">The Massively Multilingual Speech (MMS) project</a> ⚠️ <strong>Archived</strong> — MMS models also run under <a href="https://github.com/OpenVoiceOS/ovos-stt-plugin-wav2vec2">ovos-stt-plugin-wav2vec2</a>.</td>
+<td>OVOS plugin for <a href="https://huggingface.co/docs/transformers/main/en/model_doc/mms">The Massively Multilingual Speech (MMS) project</a>. Warning: archived. MMS models also run under <a href="https://github.com/OpenVoiceOS/ovos-stt-plugin-wav2vec2">ovos-stt-plugin-wav2vec2</a>.</td>
 <td>Apache-2.0 (model: see model card)</td>
 <td>Deprecated</td>
 </tr>
@@ -1864,7 +1864,7 @@ separately-licensed model, that is called out under "model".</p>
 <tr>
 <td><a href="#ovos-stt-plugin-whisper">ovos-stt-plugin-whisper</a></td>
 <td>OpenVoiceOS STT plugin for <a href="https://github.com/guillaumekln/faster-whisper">Whisper</a>, using transformers library</td>
-<td>Apache-2.0 (code default model: <code>base</code>; configure a larger model such as <a href="https://huggingface.co/openai/whisper-large-v3">openai/whisper-large-v3</a> for higher accuracy)</td>
+<td>Apache-2.0 (code default model: <code>base</code>. Configure a larger model such as <a href="https://huggingface.co/openai/whisper-large-v3">openai/whisper-large-v3</a> for higher accuracy)</td>
 <td>Beta</td>
 </tr>
 <tr>
@@ -1899,13 +1899,13 @@ separately-licensed model, that is called out under "model".</p>
 </tr>
 <tr>
 <td><a href="#ovos-stt-plugin-nos">ovos-stt-plugin-nos</a></td>
-<td>Galician STT using Proxecto Nós wav2vec2 models. ⚠️ Archived — superseded by <a href="https://github.com/OpenVoiceOS/ovos-stt-plugin-wav2vec2">ovos-stt-plugin-wav2vec2</a>.</td>
+<td>Galician STT using Proxecto Nós wav2vec2 models. Warning: archived, superseded by <a href="https://github.com/OpenVoiceOS/ovos-stt-plugin-wav2vec2">ovos-stt-plugin-wav2vec2</a>.</td>
 <td>Apache-2.0 (model: see model card)</td>
 <td>Deprecated</td>
 </tr>
 <tr>
 <td><a href="#ovos-stt-plugin-hitz">ovos-stt-plugin-HiTZ</a></td>
-<td>OpenVoiceOS STT plugin for <strong>Basque</strong> models trained by <a href="https://huggingface.co/HiTZ">HiTZ</a> ⚠️ <strong>Archived/deprecated.</strong></td>
+<td>OpenVoiceOS STT plugin for <strong>Basque</strong> models trained by <a href="https://huggingface.co/HiTZ">HiTZ</a>. Warning: archived, deprecated.</td>
 <td>see repo (no license file)</td>
 <td>Deprecated</td>
 </tr>
@@ -1917,7 +1917,7 @@ separately-licensed model, that is called out under "model".</p>
 </tr>
 <tr>
 <td><a href="#ovos-stt-plugin-onnx-asr">ovos-stt-plugin-onnx-asr</a></td>
-<td>Runs <a href="https://github.com/istupakov/onnx-asr">onnx-asr</a> models (NeMo Parakeet/Canary, Whisper, wav2vec2, …) fully offline via ONNX Runtime — a strong default for on-device, offline recognition.</td>
+<td>Runs <a href="https://github.com/istupakov/onnx-asr">onnx-asr</a> models (NeMo Parakeet/Canary, Whisper, wav2vec2, …) fully offline via ONNX Runtime, a strong default for on-device, offline recognition.</td>
 <td>Apache-2.0 (model: see model card)</td>
 <td>Beta</td>
 </tr>
@@ -1935,9 +1935,9 @@ with a permissive license but thin docs. Don't read one column as implying the o
 <h2 id="ovos-stt-plugin-wav2vec">ovos-stt-plugin-wav2vec<a class="headerlink" href="#ovos-stt-plugin-wav2vec" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
-<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-stt-plugin-wav2vec">https://github.com/OpenVoiceOS/ovos-stt-plugin-wav2vec</a> (aliased by
+<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-stt-plugin-wav2vec">OpenVoiceOS/ovos-stt-plugin-wav2vec</a> (aliased by
   <a href="https://github.com/OpenVoiceOS/ovos-stt-plugin-wav2vec2">ovos-stt-plugin-wav2vec2</a>. A
-  separate GitHub repo that installs the same package and module id, <code>ovos-stt-plugin-wav2vec</code>;
+  separate GitHub repo that installs the same package and module id, <code>ovos-stt-plugin-wav2vec</code>.
   the repo name differs but the entry point does not, so both resolve to the same plugin)</p>
 </li>
 <li>
@@ -1955,13 +1955,13 @@ with a permissive license but thin docs. Don't read one column as implying the o
 <p>There is no single hardcoded default model: the plugin picks a model from an internal
 per-language table (keyed by BCP-47 language code) unless <code>model</code> is set explicitly, and
 raises an error if the configured <code>lang</code> has no entry and no <code>model</code> is given. The
-<code>proxectonos/Nos_ASR-...</code> model above is only the entry for Galician (<code>gl</code>); other
+<code>proxectonos/Nos_ASR-...</code> model above is only the entry for Galician (<code>gl</code>). Other
 languages resolve to different pretrained models.</p>
 <hr />
 <h2 id="ovos-stt-plugin-azure">ovos-stt-plugin-azure<a class="headerlink" href="#ovos-stt-plugin-azure" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
-<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-stt-plugin-azure">https://github.com/OpenVoiceOS/ovos-stt-plugin-azure</a></p>
+<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-stt-plugin-azure">OpenVoiceOS/ovos-stt-plugin-azure</a></p>
 </li>
 <li>
 <p><strong>Description</strong>: Microsoft Azure cloud speech-to-text.</p>
@@ -1971,7 +1971,7 @@ languages resolve to different pretrained models.</p>
 <h2 id="ovos-stt-plugin-chromium">ovos-stt-plugin-chromium<a class="headerlink" href="#ovos-stt-plugin-chromium" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
-<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-stt-plugin-chromium">https://github.com/OpenVoiceOS/ovos-stt-plugin-chromium</a></p>
+<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-stt-plugin-chromium">OpenVoiceOS/ovos-stt-plugin-chromium</a></p>
 </li>
 <li>
 <p><strong>Description</strong>: Speech-to-text using the Google Chrome browser speech API.</p>
@@ -1987,7 +1987,7 @@ API with an API key. Google can change or revoke access to this endpoint at any 
 <h2 id="ovos-stt-plugin-mms">ovos-stt-plugin-mms<a class="headerlink" href="#ovos-stt-plugin-mms" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
-<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-stt-plugin-mms">https://github.com/OpenVoiceOS/ovos-stt-plugin-mms</a></p>
+<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-stt-plugin-mms">OpenVoiceOS/ovos-stt-plugin-mms</a></p>
 </li>
 <li>
 <p><strong>Description</strong>: OVOS plugin for <a href="https://huggingface.co/docs/transformers/main/en/model_doc/mms">The Massively Multilingual Speech (MMS) project</a></p>
@@ -2005,7 +2005,7 @@ API with an API key. Google can change or revoke access to this endpoint at any 
 <h2 id="ovos-stt-server-plugin">ovos-stt-server-plugin<a class="headerlink" href="#ovos-stt-server-plugin" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
-<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-stt-server-plugin">https://github.com/OpenVoiceOS/ovos-stt-server-plugin</a></p>
+<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-stt-server-plugin">OpenVoiceOS/ovos-stt-server-plugin</a></p>
 </li>
 <li>
 <p><strong>Description</strong>: OpenVoiceOS companion plugin for <a href="https://github.com/OpenVoiceOS/ovos-stt-http-server">OpenVoiceOS STT Server</a></p>
@@ -2040,7 +2040,7 @@ servers entirely: fully offline plugins exist for everything.</p>
 <h2 id="ovos-stt-http-server">ovos-stt-http-server<a class="headerlink" href="#ovos-stt-http-server" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
-<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-stt-http-server">https://github.com/OpenVoiceOS/ovos-stt-http-server</a></p>
+<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-stt-http-server">OpenVoiceOS/ovos-stt-http-server</a></p>
 </li>
 <li>
 <p><strong>Description</strong>: Turn any OVOS STT plugin into a micro service!</p>
@@ -2050,7 +2050,7 @@ servers entirely: fully offline plugins exist for everything.</p>
 <h2 id="ovos-stt-plugin-whisper">ovos-stt-plugin-whisper<a class="headerlink" href="#ovos-stt-plugin-whisper" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
-<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-stt-plugin-whisper">https://github.com/OpenVoiceOS/ovos-stt-plugin-whisper</a></p>
+<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-stt-plugin-whisper">OpenVoiceOS/ovos-stt-plugin-whisper</a></p>
 </li>
 <li>
 <p><strong>Description</strong>: OpenVoiceOS STT plugin for <a href="https://github.com/guillaumekln/faster-whisper">Whisper</a>, using transformers library</p>
@@ -2069,7 +2069,7 @@ servers entirely: fully offline plugins exist for everything.</p>
 <h2 id="ovos-stt-plugin-whispercpp">ovos-stt-plugin-whispercpp<a class="headerlink" href="#ovos-stt-plugin-whispercpp" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
-<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-stt-plugin-whispercpp">https://github.com/OpenVoiceOS/ovos-stt-plugin-whispercpp</a></p>
+<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-stt-plugin-whispercpp">OpenVoiceOS/ovos-stt-plugin-whispercpp</a></p>
 </li>
 <li>
 <p><strong>Description</strong>: OpenVoiceOS STT plugin for <a href="https://github.com/ggerganov/whisper.cpp">whispercpp</a></p>
@@ -2087,7 +2087,7 @@ servers entirely: fully offline plugins exist for everything.</p>
 <h2 id="ovos-stt-plugin-fasterwhisper">ovos-stt-plugin-fasterwhisper<a class="headerlink" href="#ovos-stt-plugin-fasterwhisper" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
-<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-stt-plugin-fasterwhisper">https://github.com/OpenVoiceOS/ovos-stt-plugin-fasterwhisper</a></p>
+<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-stt-plugin-fasterwhisper">OpenVoiceOS/ovos-stt-plugin-fasterwhisper</a></p>
 </li>
 <li>
 <p><strong>Description</strong>: OpenVoiceOS STT plugin for <a href="https://github.com/guillaumekln/faster-whisper">Faster Whisper</a></p>
@@ -2110,13 +2110,13 @@ servers entirely: fully offline plugins exist for everything.</p>
 <h2 id="ovos-stt-plugin-nemo">ovos-stt-plugin-nemo<a class="headerlink" href="#ovos-stt-plugin-nemo" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
-<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-stt-plugin-nemo">https://github.com/OpenVoiceOS/ovos-stt-plugin-nemo</a></p>
+<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-stt-plugin-nemo">OpenVoiceOS/ovos-stt-plugin-nemo</a></p>
 </li>
 <li>
 <p><strong>Description</strong>: OpenVoiceOS STT plugin for <a href="https://docs.nvidia.com/nemo-framework/user-guide/latest/nemotoolkit/asr/models.html">Nemo</a>, GPU is <strong>strongly recommended</strong></p>
 </li>
 </ul>
-<p>CPU is the shipped default (<code>use_cuda: false</code>); set <code>use_cuda: true</code> for acceptable throughput on supported GPUs. The GPU recommendation is about speed, not a required default.</p>
+<p>CPU is the shipped default (<code>use_cuda: false</code>). Set <code>use_cuda: true</code> for acceptable throughput on supported GPUs. The GPU recommendation is about speed, not a required default.</p>
 <h3 id="default-configuration_6">Default Configuration<a class="headerlink" href="#default-configuration_6" title="Permanent link">&para;</a></h3>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>  &quot;stt&quot;: {
 </span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>    &quot;module&quot;: &quot;ovos-stt-plugin-nemo&quot;,
@@ -2130,7 +2130,7 @@ servers entirely: fully offline plugins exist for everything.</p>
 <h2 id="ovos-stt-plugin-whisper-lm">ovos-stt-plugin-whisper-lm<a class="headerlink" href="#ovos-stt-plugin-whisper-lm" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
-<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-stt-plugin-whisper-lm">https://github.com/OpenVoiceOS/ovos-stt-plugin-whisper-lm</a></p>
+<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-stt-plugin-whisper-lm">OpenVoiceOS/ovos-stt-plugin-whisper-lm</a></p>
 </li>
 <li>
 <p><strong>Description</strong>: OpenVoiceOS STT plugin for <a href="https://github.com/hitz-zentroa/whisper-lm-transformers">Whisper-LM-transformers</a>, KenLM and Large language model integration with Whisper ASR models implemented in Hugging Face library.</p>
@@ -2153,7 +2153,7 @@ servers entirely: fully offline plugins exist for everything.</p>
 <h2 id="ovos-stt-plugin-citrinet">ovos-stt-plugin-citrinet<a class="headerlink" href="#ovos-stt-plugin-citrinet" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
-<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-stt-plugin-citrinet">https://github.com/OpenVoiceOS/ovos-stt-plugin-citrinet</a></p>
+<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-stt-plugin-citrinet">OpenVoiceOS/ovos-stt-plugin-citrinet</a></p>
 </li>
 <li>
 <p><strong>Description</strong>: OpenVoiceOS STT plugin</p>
@@ -2171,10 +2171,10 @@ servers entirely: fully offline plugins exist for everything.</p>
 <h2 id="ovos-stt-plugin-nos">ovos-stt-plugin-nos<a class="headerlink" href="#ovos-stt-plugin-nos" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
-<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-stt-plugin-nos">https://github.com/OpenVoiceOS/ovos-stt-plugin-nos</a></p>
+<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-stt-plugin-nos">OpenVoiceOS/ovos-stt-plugin-nos</a></p>
 </li>
 <li>
-<p><strong>Description</strong>: Galician STT using <a href="https://github.com/proxectonos">Proxecto Nós</a> wav2vec2 models. ⚠️ <strong>Archived</strong>. Superseded by <a href="https://github.com/OpenVoiceOS/ovos-stt-plugin-wav2vec2">ovos-stt-plugin-wav2vec2</a>.</p>
+<p><strong>Description</strong>: Galician STT using <a href="https://github.com/proxectonos">Proxecto Nós</a> wav2vec2 models. Warning: archived. Superseded by <a href="https://github.com/OpenVoiceOS/ovos-stt-plugin-wav2vec2">ovos-stt-plugin-wav2vec2</a>.</p>
 </li>
 </ul>
 <h3 id="default-configuration_9">Default Configuration<a class="headerlink" href="#default-configuration_9" title="Permanent link">&para;</a></h3>
@@ -2186,7 +2186,7 @@ servers entirely: fully offline plugins exist for everything.</p>
 <h2 id="ovos-stt-plugin-hitz">ovos-stt-plugin-HiTZ<a class="headerlink" href="#ovos-stt-plugin-hitz" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
-<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-stt-plugin-HiTZ">https://github.com/OpenVoiceOS/ovos-stt-plugin-HiTZ</a></p>
+<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-stt-plugin-HiTZ">OpenVoiceOS/ovos-stt-plugin-HiTZ</a></p>
 </li>
 <li>
 <p><strong>Description</strong>: OpenVoiceOS STT plugin for <strong>Basque</strong> models trained by <a href="https://huggingface.co/HiTZ">HiTZ</a></p>
@@ -2204,7 +2204,7 @@ servers entirely: fully offline plugins exist for everything.</p>
 <h2 id="ovos-stt-plugin-vosk">ovos-stt-plugin-vosk<a class="headerlink" href="#ovos-stt-plugin-vosk" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
-<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk">https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk</a></p>
+<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk">OpenVoiceOS/ovos-stt-plugin-vosk</a></p>
 </li>
 <li>
 <p><strong>Description</strong>: Mycroft STT plugin for <a href="https://alphacephei.com/vosk/">Vosk</a></p>
@@ -2222,7 +2222,7 @@ servers entirely: fully offline plugins exist for everything.</p>
 <h2 id="ovos-stt-plugin-onnx-asr">ovos-stt-plugin-onnx-asr<a class="headerlink" href="#ovos-stt-plugin-onnx-asr" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
-<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-stt-plugin-onnx-asr">https://github.com/OpenVoiceOS/ovos-stt-plugin-onnx-asr</a></p>
+<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-stt-plugin-onnx-asr">OpenVoiceOS/ovos-stt-plugin-onnx-asr</a></p>
 </li>
 <li>
 <p><strong>Description</strong>: Runs <a href="https://github.com/istupakov/onnx-asr">onnx-asr</a> models via ONNX Runtime with no PyTorch/transformers dependency. Inference is fully offline. Models are downloaded from Hugging Face on first load, so it runs offline <strong>after the model has been fetched once</strong> (there is currently no plugin-level option to pin a purely-local model directory). Supports NeMo Parakeet and Canary, Whisper, and wav2vec2 model families.</p>
@@ -2264,7 +2264,7 @@ servers entirely: fully offline plugins exist for everything.</p>
 <tr>
 <td><code>providers</code></td>
 <td>unset</td>
-<td>Explicit list of onnxruntime execution providers; takes precedence over <code>use_cuda</code></td>
+<td>Explicit list of onnxruntime execution providers, takes precedence over <code>use_cuda</code></td>
 </tr>
 </tbody>
 </table>

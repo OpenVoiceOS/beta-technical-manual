@@ -1363,7 +1363,7 @@
 
 <h1 id="specification-tooling">Specification Tooling<a class="headerlink" href="#specification-tooling" title="Permanent link">&para;</a></h1>
 <div class="admonition note">
-<p class="admonition-title">Maturity — Beta ⬤⬤⬤◯◯</p>
+<p class="admonition-title">Maturity: Beta ⬤⬤⬤◯◯</p>
 <p>In real use but still settling. Watch releases for the occasional breaking change. Rated by <a href="../maturity/">repository health</a>, not version.</p>
 </div>
 <div class="admonition abstract">
@@ -1377,7 +1377,7 @@ migration</strong> (which lets the ecosystem adopt the new spec topic names with
 a flag day).</p>
 </div>
 <details class="info">
-<summary>📐 Formal specification</summary>
+<summary>Formal specification</summary>
 <p>These tools serve the <strong><a href="https://github.com/OpenVoiceOS/architecture">OpenVoiceOS/architecture</a></strong> specs. See the <a href="../architecture-specs/">spec index</a>.</p>
 </details>
 <hr />
@@ -1436,12 +1436,12 @@ clause-for-clause.</p>
 <tr>
 <td><code>IntentBuilder</code> / <code>Intent</code></td>
 <td><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/intent-4.md">OVOS-INTENT-4 §5</a></td>
-<td>Adapt-free, plugin-agnostic keyword-intent definition — <code>require</code>/<code>optionally</code>/<code>one_of</code>/<code>exclude</code>/<code>build()</code> — mapping to the <code>ovos.intent.register.keyword</code> payload; <code>voc_match</code> matches an utterance against a <code>.voc</code> file; source-compatible with the <code>ovos-workshop</code> classes it replaces</td>
+<td>Adapt-free, plugin-agnostic keyword-intent definition (<code>require</code>/<code>optionally</code>/<code>one_of</code>/<code>exclude</code>/<code>build()</code>), mapping to the <code>ovos.intent.register.keyword</code> payload. <code>voc_match</code> matches an utterance against a <code>.voc</code> file. Source-compatible with the <code>ovos-workshop</code> classes it replaces</td>
 </tr>
 <tr>
 <td><code>SpecMessage</code></td>
 <td>multiple (<a href="https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md">PIPELINE-1</a>, <a href="https://github.com/OpenVoiceOS/architecture/blob/dev/intent-4.md">INTENT-4</a>, <a href="https://github.com/OpenVoiceOS/architecture/blob/dev/stop-1.md">STOP-1</a>, <a href="https://github.com/OpenVoiceOS/architecture/blob/dev/persona.md">PERSONA-1</a>, <a href="https://github.com/OpenVoiceOS/architecture/blob/dev/fallback.md">FALLBACK-1</a>, …)</td>
-<td>An enum of every canonical <code>ovos.*</code> spec bus topic, plus <code>MIGRATION_MAP</code>/<code>NamespaceTranslator</code> — the legacy↔<code>ovos.*</code> rename table the <a href="../bus-service/#namespace-migration">namespace bridge</a> applies</td>
+<td>An enum of every canonical <code>ovos.*</code> spec bus topic, plus <code>MIGRATION_MAP</code>/<code>NamespaceTranslator</code>: the legacy-to-<code>ovos.*</code> rename table the <a href="../bus-service/#namespace-migration">namespace bridge</a> applies</td>
 </tr>
 <tr>
 <td><code>ovos-spec-lint</code></td>

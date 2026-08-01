@@ -1017,7 +1017,7 @@
         <li class="md-nav__item">
   <a href="#step-1-install-ovoscope" class="md-nav__link">
     <span class="md-ellipsis">
-      Step 1 — Install ovoscope
+      Step 1: Install ovoscope
     </span>
   </a>
   
@@ -1026,7 +1026,7 @@
         <li class="md-nav__item">
   <a href="#step-2-write-the-first-end2endtest" class="md-nav__link">
     <span class="md-ellipsis">
-      Step 2 — Write the first End2EndTest
+      Step 2: Write the first End2EndTest
     </span>
   </a>
   
@@ -1035,7 +1035,7 @@
         <li class="md-nav__item">
   <a href="#step-3-run-it" class="md-nav__link">
     <span class="md-ellipsis">
-      Step 3 — Run it
+      Step 3: Run it
     </span>
   </a>
   
@@ -1044,7 +1044,7 @@
         <li class="md-nav__item">
   <a href="#step-4-test-the-failure-path" class="md-nav__link">
     <span class="md-ellipsis">
-      Step 4 — Test the failure path
+      Step 4: Test the failure path
     </span>
   </a>
   
@@ -1053,7 +1053,7 @@
         <li class="md-nav__item">
   <a href="#step-5-fixtures-and-the-ovoscope-cli" class="md-nav__link">
     <span class="md-ellipsis">
-      Step 5 — Fixtures and the ovoscope CLI
+      Step 5: Fixtures and the ovoscope CLI
     </span>
   </a>
   
@@ -1071,7 +1071,7 @@
         <li class="md-nav__item">
   <a href="#step-6-wire-it-into-ci" class="md-nav__link">
     <span class="md-ellipsis">
-      Step 6 — Wire it into CI
+      Step 6: Wire it into CI
     </span>
   </a>
   
@@ -1377,7 +1377,7 @@
         <li class="md-nav__item">
   <a href="#step-1-install-ovoscope" class="md-nav__link">
     <span class="md-ellipsis">
-      Step 1 — Install ovoscope
+      Step 1: Install ovoscope
     </span>
   </a>
   
@@ -1386,7 +1386,7 @@
         <li class="md-nav__item">
   <a href="#step-2-write-the-first-end2endtest" class="md-nav__link">
     <span class="md-ellipsis">
-      Step 2 — Write the first End2EndTest
+      Step 2: Write the first End2EndTest
     </span>
   </a>
   
@@ -1395,7 +1395,7 @@
         <li class="md-nav__item">
   <a href="#step-3-run-it" class="md-nav__link">
     <span class="md-ellipsis">
-      Step 3 — Run it
+      Step 3: Run it
     </span>
   </a>
   
@@ -1404,7 +1404,7 @@
         <li class="md-nav__item">
   <a href="#step-4-test-the-failure-path" class="md-nav__link">
     <span class="md-ellipsis">
-      Step 4 — Test the failure path
+      Step 4: Test the failure path
     </span>
   </a>
   
@@ -1413,7 +1413,7 @@
         <li class="md-nav__item">
   <a href="#step-5-fixtures-and-the-ovoscope-cli" class="md-nav__link">
     <span class="md-ellipsis">
-      Step 5 — Fixtures and the ovoscope CLI
+      Step 5: Fixtures and the ovoscope CLI
     </span>
   </a>
   
@@ -1431,7 +1431,7 @@
         <li class="md-nav__item">
   <a href="#step-6-wire-it-into-ci" class="md-nav__link">
     <span class="md-ellipsis">
-      Step 6 — Wire it into CI
+      Step 6: Wire it into CI
     </span>
   </a>
   
@@ -1481,7 +1481,7 @@ dialog file might have a typo, or the entry point might not point at the right c
 real utterance, and checking what comes back out. This is the same journey a spoken command takes,
 minus the microphone. <code>ovoscope</code> is the tool the OVOS project itself uses for this. Every skill
 accepted into the ecosystem is expected to ship at least one.</p>
-<h2 id="step-1-install-ovoscope">Step 1 — Install ovoscope<a class="headerlink" href="#step-1-install-ovoscope" title="Permanent link">&para;</a></h2>
+<h2 id="step-1-install-ovoscope">Step 1: Install ovoscope<a class="headerlink" href="#step-1-install-ovoscope" title="Permanent link">&para;</a></h2>
 <p>Activate the same environment you installed the skill into in <a href="../first-skill/">Your First Skill</a>,
 the venv or container you ran <code>pip install -e .</code> in. <code>ovoscope</code> needs to be importable
 alongside the skill and OVOS itself, not just present somewhere on the machine.</p>
@@ -1494,7 +1494,7 @@ contributor needs:</p>
 <div class="language-toml highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">[project.optional-dependencies]</span>
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="n">test</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;ovoscope&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;ovos-padatious-pipeline-plugin&quot;</span><span class="p">]</span>
 </span></code></pre></div>
-<h2 id="step-2-write-the-first-end2endtest">Step 2 — Write the first <code>End2EndTest</code><a class="headerlink" href="#step-2-write-the-first-end2endtest" title="Permanent link">&para;</a></h2>
+<h2 id="step-2-write-the-first-end2endtest">Step 2: Write the first <code>End2EndTest</code><a class="headerlink" href="#step-2-write-the-first-end2endtest" title="Permanent link">&para;</a></h2>
 <div class="admonition note">
 <p class="admonition-title">Prerequisite: the Padatious pipeline plugin</p>
 <p>This test drives <code>session.pipeline = ["ovos-padatious-pipeline-plugin"]</code>, so that plugin
@@ -1545,7 +1545,7 @@ for how the stages fit together.</p>
 </div>
 <p><code>skill_ids</code> restricts which skill(s) <code>ovoscope</code> loads for the test, so you're only ever testing
 your own skill, not every skill installed on the machine.</p>
-<h2 id="step-3-run-it">Step 3 — Run it<a class="headerlink" href="#step-3-run-it" title="Permanent link">&para;</a></h2>
+<h2 id="step-3-run-it">Step 3: Run it<a class="headerlink" href="#step-3-run-it" title="Permanent link">&para;</a></h2>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nv">PYTEST_DISABLE_PLUGIN_AUTOLOAD</span><span class="o">=</span><span class="m">1</span><span class="w"> </span>pytest<span class="w"> </span>test/test_hello.py<span class="w"> </span>-v
 </span></code></pre></div>
 <p><code>PYTEST_DISABLE_PLUGIN_AUTOLOAD=1</code> avoids autoloading unrelated pytest plugins that some OVOS
@@ -1562,7 +1562,7 @@ this (trimmed of the framework's own deprecation-warning noise):</p>
 others you have), not just the one your test needs. On a machine with only the pipeline
 plugins your skill actually depends on, startup is much faster.</p>
 </div>
-<h2 id="step-4-test-the-failure-path">Step 4 — Test the failure path<a class="headerlink" href="#step-4-test-the-failure-path" title="Permanent link">&para;</a></h2>
+<h2 id="step-4-test-the-failure-path">Step 4: Test the failure path<a class="headerlink" href="#step-4-test-the-failure-path" title="Permanent link">&para;</a></h2>
 <p>A test that only ever sends utterances your skill <em>should</em> match doesn't tell you much. Add a
 second test that sends something unrelated and checks the skill stays silent. This is what
 catches an intent file matching too eagerly:</p>
@@ -1605,7 +1605,7 @@ failing condition and assert it spoke the error dialog's text instead of crashin
 leaking a raw traceback to the user. <code>ovos-skill-my-first</code> has no such path. It can't fail, so
 there is nothing further to add here for this particular skill.</p>
 </div>
-<h2 id="step-5-fixtures-and-the-ovoscope-cli">Step 5 — Fixtures and the <code>ovoscope</code> CLI<a class="headerlink" href="#step-5-fixtures-and-the-ovoscope-cli" title="Permanent link">&para;</a></h2>
+<h2 id="step-5-fixtures-and-the-ovoscope-cli">Step 5: Fixtures and the <code>ovoscope</code> CLI<a class="headerlink" href="#step-5-fixtures-and-the-ovoscope-cli" title="Permanent link">&para;</a></h2>
 <p><code>ovoscope</code> also ships a standalone CLI (<code>ovoscope --help</code>) for working with fixtures: recorded
 bus-message sequences you can replay without writing a pytest file:</p>
 <table>
@@ -1680,7 +1680,7 @@ and the handler/utterance completing.</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>ovoscope<span class="w"> </span>run<span class="w"> </span>test/fixtures/hello.json<span class="w"> </span>-v
 </span></code></pre></div>
 <div class="admonition warning">
-<p class="admonition-title">A recorded fixture can be non-deterministic — watch for timestamps</p>
+<p class="admonition-title">A recorded fixture can be non-deterministic: watch for timestamps</p>
 <p>Replaying the fixture above with <code>ovoscope run</code> reliably reports a mismatch. This is not
 because anything is actually broken. It happens because the session's <code>active_handlers</code>
 records a Unix timestamp (<em>when the skill activated</em>) at capture time, and that timestamp is
@@ -1720,7 +1720,7 @@ undoes whatever the previous turn changed: a skill activated in turn 1 will not 
 </span><span id="__span-13-8"><a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a><span class="n">live</span> <span class="o">=</span> <span class="n">SessionManager</span><span class="o">.</span><span class="n">sessions</span><span class="p">[</span><span class="n">my_session</span><span class="o">.</span><span class="n">session_id</span><span class="p">]</span>
 </span><span id="__span-13-9"><a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a><span class="n">bus</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">make_utterance_message</span><span class="p">(</span><span class="s2">&quot;yes&quot;</span><span class="p">,</span> <span class="n">session</span><span class="o">=</span><span class="n">live</span><span class="p">))</span>
 </span></code></pre></div>
-<h2 id="step-6-wire-it-into-ci">Step 6 — Wire it into CI<a class="headerlink" href="#step-6-wire-it-into-ci" title="Permanent link">&para;</a></h2>
+<h2 id="step-6-wire-it-into-ci">Step 6: Wire it into CI<a class="headerlink" href="#step-6-wire-it-into-ci" title="Permanent link">&para;</a></h2>
 <p>Add a workflow that runs the test suite on every pull request:</p>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Skill End-to-End Tests (ovoscope)</span>
 </span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>

@@ -1582,7 +1582,7 @@
 
 <h1 id="audio-service">Audio Service<a class="headerlink" href="#audio-service" title="Permanent link">&para;</a></h1>
 <div class="admonition info">
-<p class="admonition-title">Maturity — Stable ⬤⬤⬤⬤◯</p>
+<p class="admonition-title">Maturity: Stable ⬤⬤⬤⬤◯</p>
 <p>Established and production-ready, actively maintained. Rated by <a href="../maturity/">repository health</a>, not version.</p>
 </div>
 <div class="admonition abstract">
@@ -1591,7 +1591,7 @@
 </div>
 <details class="info">
 <summary>📐 Formal specification</summary>
-<p>The audio <strong>output</strong> service (dialog-transformer chain, TTS synthesis, tts-transformer chain, playback queue, plus remote-client rendering) is specified by <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/audio-out.md">OVOS-AUDIO-1 — Audio Output Service</a></strong>. The dialog and tts transformer chains it hosts are specified by <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/transformer.md">OVOS-TRANSFORM-1 — Transformer Plugins</a></strong> (§3.5 dialog, §3.6 tts). See also the <a href="../architecture-specs/">spec index</a>. Spec topic names are canonical below, with the legacy name noted once. The <em>media</em> audioservice, subsystem 2 below, is a separate, deprecated concern and is not covered by OVOS-AUDIO-1.</p>
+<p>The audio <strong>output</strong> service (dialog-transformer chain, TTS synthesis, tts-transformer chain, playback queue, plus remote-client rendering) is specified by <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/audio-out.md">OVOS-AUDIO-1: Audio Output Service</a></strong>. The dialog and tts transformer chains it hosts are specified by <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/transformer.md">OVOS-TRANSFORM-1: Transformer Plugins</a></strong> (§3.5 dialog, §3.6 tts). See also the <a href="../architecture-specs/">spec index</a>. Spec topic names are canonical below, with the legacy name noted once. The <em>media</em> audioservice, subsystem 2 below, is a separate, deprecated concern and is not covered by OVOS-AUDIO-1.</p>
 </details>
 <p><code>ovos-audio</code> is the component responsible for <a href="../tts-plugins/">TTS</a> synthesis and audio playback. It ensures that only one thing is speaking at a time and manages audio focus between different media sources.</p>
 <p><strong>In plain terms:</strong> when a skill says "tell the user X", that <code>speak</code> message lands here.
@@ -1669,14 +1669,14 @@ streams. See the <strong>Two independent subsystems</strong> note at the top of 
 </li>
 </ul>
 <h2 id="architecture">Architecture<a class="headerlink" href="#architecture" title="Permanent link">&para;</a></h2>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Subsystem 1 — TTS / sound playback (always on):    OVOS-AUDIO-1 §3
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Subsystem 1 - TTS / sound playback (always on):    OVOS-AUDIO-1 §3
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>  [MessageBus] --(ovos.utterance.speak)--&gt; [dialog-transformers §3.5] --&gt; [TTS Plugin] --&gt; [tts-transformers §3.6]
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>               (legacy: speak)                                                                      |
 </span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>               --(play_sound)----------------------------------------------------+                  |
 </span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>                                                                                  v                  v
 </span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>                                                       [TTS.queue] --&gt; [PlaybackThread] --(ALSA/Pulse)--&gt; [Speakers]
 </span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>
-</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>Subsystem 2 — legacy media audioservice (only if enable_old_audioservice):
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>Subsystem 2 - legacy media audioservice (only if enable_old_audioservice):
 </span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>  [MessageBus] --(mycroft.audio.service.play)--&gt; [AudioService] --&gt; [audioservice backend: OCP / mpv / vlc]
 </span></code></pre></div>
 <h2 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">&para;</a></h2>

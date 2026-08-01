@@ -1630,7 +1630,7 @@
 
 <h1 id="speech-service">Speech Service<a class="headerlink" href="#speech-service" title="Permanent link">&para;</a></h1>
 <div class="admonition info">
-<p class="admonition-title">Maturity — Stable ⬤⬤⬤⬤◯</p>
+<p class="admonition-title">Maturity: Stable ⬤⬤⬤⬤◯</p>
 <p>Established and production-ready, actively maintained. Rated by <a href="../maturity/">repository health</a>, not version.</p>
 </div>
 <div class="admonition abstract">
@@ -1639,7 +1639,7 @@
 </div>
 <details class="info">
 <summary>📐 Formal specification</summary>
-<p>The capture → audio-transformer chain → STT → utterance flow and the listening-lifecycle signals are specified by <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/audio-in.md">OVOS-AUDIO-IN-1 — Audio Input Service</a></strong>. The audio-transformer chain that runs on the raw audio before STT is specified by <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/transformer.md">OVOS-TRANSFORM-1 — Transformer Plugins</a></strong> (§3.1). See also the <a href="../architecture-specs/">spec index</a>. <code>ovos-dinkum-listener</code> is the reference implementation. The spec topic names below are canonical, with the legacy name noted once.</p>
+<p>The capture → audio-transformer chain → STT → utterance flow and the listening-lifecycle signals are specified by <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/audio-in.md">OVOS-AUDIO-IN-1: Audio Input Service</a></strong>. The audio-transformer chain that runs on the raw audio before STT is specified by <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/transformer.md">OVOS-TRANSFORM-1: Transformer Plugins</a></strong> (§3.1). See also the <a href="../architecture-specs/">spec index</a>. <code>ovos-dinkum-listener</code> is the reference implementation. The spec topic names below are canonical, with the legacy name noted once.</p>
 </details>
 <p><code>ovos-dinkum-listener</code> is the service responsible for audio capture, <a href="../wake-word-plugins/">Wake Word</a> detection, and <a href="../stt-plugins/">Speech-to-Text</a> (<a href="../stt-plugins/">STT</a>). It is the default, full-featured listener. <code>ovos-simple-listener</code> is a lighter alternative that emits the same <code>recognizer_loop:*</code> bus events but without the full state machine.</p>
 <p>A third, even more minimal option is <code>mycroft-classic-listener</code>, the original mycroft-core listener ported to the OVOS plugin ecosystem. It implements the same <code>recognizer_loop:*</code> contract but does <strong>not</strong> support <code>instant_listen</code>, multiple hotwords, VAD, listening modes, or fallback STT (fallback hotwords via OPM are supported).</p>
@@ -1688,7 +1688,7 @@ global <strong>mode</strong> (set in <code>listener.mode</code> / over the bus) 
 advances chunk by chunk:</p>
 <ul>
 <li>
-<p><strong>Modes</strong> (<code>ListeningMode</code>): <code>wakeword</code> (default — wait for the wake word),
+<p><strong>Modes</strong> (<code>ListeningMode</code>): <code>wakeword</code> (default, wait for the wake word),
   <code>continuous</code> (always transcribe), <code>hybrid</code> (continuous but only act after the wake
   word), <code>sleeping</code>.</p>
 </li>
@@ -1704,7 +1704,7 @@ advances chunk by chunk:</p>
 <h2 id="bus-events">Bus Events<a class="headerlink" href="#bus-events" title="Permanent link">&para;</a></h2>
 <p>The listener emits its activity on the OVOS <a href="../bus-service/">messagebus</a>. The most
 useful events for downstream services:</p>
-<p>Canonical (spec) names are shown first, with the legacy name in parentheses. The <code>ovos.listener.*</code> and <code>ovos.utterance.handle</code> names come from <a href="https://github.com/OpenVoiceOS/architecture/blob/dev/audio-in.md">OVOS-AUDIO-IN-1 §5–§6</a>. <code>ovos-dinkum-listener</code> emits the spec <code>ovos.*</code> topics directly for the record/awoken/utterance events (via <code>SpecMessage</code>). For those, <code>ovos-bus-client</code>'s <code>NamespaceTranslator</code> runs on every client with both directions on by default (see <a href="../bus-service/#namespace-migration">Bus Service</a>). Emitting a spec topic also emits its legacy alias, and vice versa, so subscribers can use either name. The wake-word event (<code>recognizer_loop:wakeword</code>) is the exception: it has no spec counterpart in the rename map, so it travels under the legacy name only. See the <a href="../bus-events/#legacy-spec-migration">legacy ↔ spec migration table</a> for the full mapping.</p>
+<p>Canonical (spec) names are shown first, with the legacy name in parentheses. The <code>ovos.listener.*</code> and <code>ovos.utterance.handle</code> names come from <a href="https://github.com/OpenVoiceOS/architecture/blob/dev/audio-in.md">OVOS-AUDIO-IN-1 §5-§6</a>. <code>ovos-dinkum-listener</code> emits the spec <code>ovos.*</code> topics directly for the record/awoken/utterance events (via <code>SpecMessage</code>). For those, <code>ovos-bus-client</code>'s <code>NamespaceTranslator</code> runs on every client with both directions on by default (see <a href="../bus-service/#namespace-migration">Bus Service</a>). Emitting a spec topic also emits its legacy alias, and vice versa, so subscribers can use either name. The wake-word event (<code>recognizer_loop:wakeword</code>) is the exception: it has no spec counterpart in the rename map, so it travels under the legacy name only. See the <a href="../bus-events/#legacy-spec-migration">legacy ↔ spec migration table</a> for the full mapping.</p>
 <table>
 <thead>
 <tr>
@@ -1727,12 +1727,12 @@ useful events for downstream services:</p>
 <tr>
 <td><code>recognizer_loop:wakeword</code></td>
 <td><code>{"utterance": str, "key_phrase": str, …}</code></td>
-<td>Wake word detected; capture is opening. Legacy-only — the wake-word event is not part of the spec rename (there is no <code>ovos.listener.wakeword</code>). <code>utterance</code> is the spoken key phrase (underscores/hyphens spaced out), <code>key_phrase</code> its raw form; <code>filename</code> is added when <code>listener.record_wake_words</code> is on. A per-wake-word <code>stt_lang</code> override, when configured, rides the message context (surfaced as <code>session.request_lang</code>) rather than the payload</td>
+<td>Wake word detected. Capture is opening. Legacy-only: the wake-word event is not part of the spec rename (there is no <code>ovos.listener.wakeword</code>). <code>utterance</code> is the spoken key phrase (underscores/hyphens spaced out), <code>key_phrase</code> its raw form. <code>filename</code> is added when <code>listener.record_wake_words</code> is on. A per-wake-word <code>stt_lang</code> override, when configured, rides the message context (surfaced as <code>session.request_lang</code>) rather than the payload</td>
 </tr>
 <tr>
 <td><code>ovos.utterance.handle</code> (legacy: <code>recognizer_loop:utterance</code>)</td>
 <td><code>{"utterances": [str], "lang"}</code></td>
-<td>Transcribed command — the main result (§5, OVOS-PIPELINE-1 §9.1)</td>
+<td>Transcribed command: the main result (§5, OVOS-PIPELINE-1 §9.1)</td>
 </tr>
 <tr>
 <td><code>recognizer_loop:speech.recognition.unknown</code></td>
@@ -1767,11 +1767,11 @@ STT/loop values):</p>
 <tbody>
 <tr>
 <td><code>recognizer_loop:b64_transcribe</code></td>
-<td>Transcribes the audio and returns the result on the message response as <code>{"transcriptions": [...], "lang"}</code> — a pure STT call that emits no utterance event</td>
+<td>Transcribes the audio and returns the result on the message response as <code>{"transcriptions": [...], "lang"}</code>, a pure STT call that emits no utterance event</td>
 </tr>
 <tr>
 <td><code>recognizer_loop:b64_audio</code></td>
-<td>Transcribes and, if the result clears <code>min_stt_confidence</code>, emits the normal <code>ovos.utterance.handle</code> (<code>recognizer_loop:utterance</code>) event as if the audio had come from the mic; otherwise emits <code>recognizer_loop:speech.recognition.unknown</code></td>
+<td>Transcribes and, if the result clears <code>min_stt_confidence</code>, emits the normal <code>ovos.utterance.handle</code> (<code>recognizer_loop:utterance</code>) event as if the audio had come from the mic. Otherwise it emits <code>recognizer_loop:speech.recognition.unknown</code></td>
 </tr>
 </tbody>
 </table>
@@ -1789,7 +1789,7 @@ transition.</p>
 <p>The listener publishes the transcribed command on the spec topic
 <code>ovos.utterance.handle</code>. <code>ovos-bus-client</code>'s namespace translator (on by default)
 also emits the legacy <code>recognizer_loop:utterance</code> alias, so subscribers can use
-either topic name — see <a href="../bus-service/#namespace-migration">Bus Service — Namespace migration</a>
+either topic name. See <a href="../bus-service/#namespace-migration">Bus Service: Namespace migration</a>
 for how to turn that aliasing off once every consumer speaks the spec namespace.</p>
 </div>
 <h2 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">&para;</a></h2>

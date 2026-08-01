@@ -1545,49 +1545,49 @@ both families. See the table below for what each currently supports.</p>
 <tr>
 <td><a href="#ovos-media-plugin-spotify">ovos-media-plugin-spotify</a></td>
 <td>Spotify Connect</td>
-<td>✅ both (old audio service + ovos-media)</td>
+<td>yes: both (old audio service + ovos-media)</td>
 <td>Apache-2.0</td>
 <td>Stable</td>
 </tr>
 <tr>
 <td><a href="#ovos-media-plugin-chromecast">ovos-media-plugin-chromecast</a></td>
 <td>Chromecast (audio + video)</td>
-<td>✅ both</td>
+<td>yes: both</td>
 <td>Apache-2.0</td>
 <td>Stable</td>
 </tr>
 <tr>
 <td><a href="#ovos-media-plugin-vlc">ovos-media-plugin-vlc</a></td>
 <td>headless VLC (audio + video)</td>
-<td>✅ both</td>
+<td>yes: both</td>
 <td>Apache-2.0</td>
 <td>Beta</td>
 </tr>
 <tr>
 <td><a href="#ovos-media-plugin-mplayer">ovos-media-plugin-mplayer</a></td>
 <td>MPlayer (audio + video)</td>
-<td>✅ both</td>
+<td>yes: both</td>
 <td>Apache-2.0</td>
 <td>Stable</td>
 </tr>
 <tr>
 <td><a href="#ovos-audio-plugin-mpv">ovos-audio-plugin-mpv</a></td>
 <td>MPV (audio + video)</td>
-<td>✅ both</td>
+<td>yes: both</td>
 <td>Apache-2.0</td>
 <td>Stable</td>
 </tr>
 <tr>
 <td><a href="#ovos-media-plugin-ffplay">ovos-media-plugin-ffplay</a></td>
 <td>ffplay (audio)</td>
-<td>✅ both</td>
+<td>yes: both</td>
 <td>Apache-2.0</td>
 <td>Stable</td>
 </tr>
 <tr>
 <td><a href="#ovos-media-plugin-cli">ovos-media-plugin-cli</a></td>
 <td>generic CLI-command player (audio)</td>
-<td>✅ both</td>
+<td>yes: both</td>
 <td>Apache-2.0</td>
 <td>Alpha</td>
 </tr>
@@ -1661,7 +1661,7 @@ thin docs. Don't read one column as implying the other.</p>
 <p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-ocp-audio-plugin">ovos-ocp-audio-plugin</a></p>
 </li>
 <li>
-<p><strong>Description</strong>: The legacy <strong>"old audio service"</strong> OCP backend. It crams OCP search orchestration, the player state machine, MPRIS and the GUI into a single <code>ovos-audio</code> <code>AudioBackend</code>. ⚠️ <strong>Deprecated but still shipped and enabled by default</strong> (<code>enable_old_audioservice: true</code>). It is superseded by the standalone <a href="../ovos-media/">ovos-media</a> daemon. See the dedicated <strong><a href="../ocp-audio-plugin/">OCP Audio Plugin</a></strong> page for the full background, configuration, and migration path.</p>
+<p><strong>Description</strong>: The legacy <strong>"old audio service"</strong> OCP backend. It combines OCP search orchestration, the player state machine, MPRIS and the GUI into a single <code>ovos-audio</code> <code>AudioBackend</code>. Warning: deprecated but still shipped and enabled by default (<code>enable_old_audioservice: true</code>). The standalone <a href="../ovos-media/">ovos-media</a> daemon supersedes it. See the dedicated <strong><a href="../ocp-audio-plugin/">OCP Audio Plugin</a></strong> page for the full background, configuration, and migration path.</p>
 </li>
 </ul>
 <hr />

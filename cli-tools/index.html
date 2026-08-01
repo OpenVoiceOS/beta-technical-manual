@@ -1054,7 +1054,7 @@
         <li class="md-nav__item">
   <a href="#configuration-ovos-config" class="md-nav__link">
     <span class="md-ellipsis">
-      Configuration — ovos-config
+      Configuration: ovos-config
     </span>
   </a>
   
@@ -1063,7 +1063,7 @@
         <li class="md-nav__item">
   <a href="#talking-to-a-running-ovos-ovos-bus-client" class="md-nav__link">
     <span class="md-ellipsis">
-      Talking to a running OVOS — ovos-bus-client
+      Talking to a running OVOS: ovos-bus-client
     </span>
   </a>
   
@@ -1072,7 +1072,7 @@
         <li class="md-nav__item">
   <a href="#reading-the-logs-ovos-logs" class="md-nav__link">
     <span class="md-ellipsis">
-      Reading the logs — ovos-logs
+      Reading the logs: ovos-logs
     </span>
   </a>
   
@@ -1321,7 +1321,7 @@
         <li class="md-nav__item">
   <a href="#configuration-ovos-config" class="md-nav__link">
     <span class="md-ellipsis">
-      Configuration — ovos-config
+      Configuration: ovos-config
     </span>
   </a>
   
@@ -1330,7 +1330,7 @@
         <li class="md-nav__item">
   <a href="#talking-to-a-running-ovos-ovos-bus-client" class="md-nav__link">
     <span class="md-ellipsis">
-      Talking to a running OVOS — ovos-bus-client
+      Talking to a running OVOS: ovos-bus-client
     </span>
   </a>
   
@@ -1339,7 +1339,7 @@
         <li class="md-nav__item">
   <a href="#reading-the-logs-ovos-logs" class="md-nav__link">
     <span class="md-ellipsis">
-      Reading the logs — ovos-logs
+      Reading the logs: ovos-logs
     </span>
   </a>
   
@@ -1404,7 +1404,7 @@ the <a href="../glossary/">Glossary</a> for unfamiliar terms.</p>
 your <code>PATH</code> when that package is installed. Run any of them with <code>--help</code> for the authoritative,
 version-correct options.</p>
 <hr />
-<h2 id="configuration-ovos-config">Configuration — <code>ovos-config</code><a class="headerlink" href="#configuration-ovos-config" title="Permanent link">&para;</a></h2>
+<h2 id="configuration-ovos-config">Configuration: <code>ovos-config</code><a class="headerlink" href="#configuration-ovos-config" title="Permanent link">&para;</a></h2>
 <p>Shipped by <strong><a href="../config/"><code>ovos-config</code></a></strong>. Inspect and edit the layered
 <a href="../config/">configuration</a> without hand-editing JSON.</p>
 <table>
@@ -1421,15 +1421,15 @@ version-correct options.</p>
 </tr>
 <tr>
 <td><code>ovos-config get -k &lt;key&gt;</code></td>
-<td>Read the value(s) at a key or key path (e.g. <code>-k /tts/module</code>); a loose key name lists every match.</td>
+<td>Read the value(s) at a key or key path (e.g. <code>-k /tts/module</code>). A loose key name lists every match.</td>
 </tr>
 <tr>
 <td><code>ovos-config set -k &lt;key&gt; -v &lt;value&gt;</code></td>
-<td>Write a value into the user configuration; omit <code>-v</code> to be prompted (useful when the key is ambiguous).</td>
+<td>Write a value into the user configuration. Omit <code>-v</code> to be prompted (useful when the key is ambiguous).</td>
 </tr>
 <tr>
 <td><code>ovos-config autoconfigure -l &lt;lang&gt;</code></td>
-<td>Pick sensible default STT/TTS plugins for a language. <code>--lang</code>/<code>-l</code> is required; select <code>--online</code>/<code>-on</code>, <code>--offline</code>/<code>-off</code>, or <code>--hybrid</code>/<code>-hy</code> (offline TTS + online STT — the default when none is given), and optionally <code>--male</code>/<code>-m</code> or <code>--female</code>/<code>-f</code> for the TTS voice (TTS is left unconfigured if neither is passed).</td>
+<td>Pick sensible default STT/TTS plugins for a language. <code>--lang</code>/<code>-l</code> is required. Select <code>--online</code>/<code>-on</code>, <code>--offline</code>/<code>-off</code>, or <code>--hybrid</code>/<code>-hy</code> (offline TTS + online STT: the default when none is given). Optionally add <code>--male</code>/<code>-m</code> or <code>--female</code>/<code>-f</code> for the TTS voice. TTS is left unconfigured if neither is passed.</td>
 </tr>
 <tr>
 <td><code>ovos-config telemetry --enable</code> / <code>--disable</code></td>
@@ -1441,9 +1441,9 @@ version-correct options.</p>
 language-appropriate defaults. See the full generated
 <a href="#command-help-output-generated"><code>ovos-config --help</code> output</a> below.</p>
 <hr />
-<h2 id="talking-to-a-running-ovos-ovos-bus-client">Talking to a running OVOS — <code>ovos-bus-client</code><a class="headerlink" href="#talking-to-a-running-ovos-ovos-bus-client" title="Permanent link">&para;</a></h2>
+<h2 id="talking-to-a-running-ovos-ovos-bus-client">Talking to a running OVOS: <code>ovos-bus-client</code><a class="headerlink" href="#talking-to-a-running-ovos-ovos-bus-client" title="Permanent link">&para;</a></h2>
 <p>Shipped by <strong><a href="../core-libraries/#ovos-bus-client"><code>ovos-bus-client</code></a></strong>. These emit messages to a <em>running</em>
-OVOS over the <a href="../bus-service/">messagebus</a> — handy for testing, scripting, and debugging.</p>
+OVOS over the <a href="../bus-service/">messagebus</a>. They help with testing, scripting, and debugging.</p>
 <table>
 <thead>
 <tr>
@@ -1471,7 +1471,7 @@ OVOS over the <a href="../bus-service/">messagebus</a> — handy for testing, sc
 </tbody>
 </table>
 <hr />
-<h2 id="reading-the-logs-ovos-logs">Reading the logs — <code>ovos-logs</code><a class="headerlink" href="#reading-the-logs-ovos-logs" title="Permanent link">&para;</a></h2>
+<h2 id="reading-the-logs-ovos-logs">Reading the logs: <code>ovos-logs</code><a class="headerlink" href="#reading-the-logs-ovos-logs" title="Permanent link">&para;</a></h2>
 <p>Shipped by <strong><a href="../core-libraries/#ovos-utils"><code>ovos-utils</code></a></strong>. A helper for slicing and filtering the OVOS
 <a href="../core-libraries/#ovos-utils">log files</a> without wrestling with <code>grep</code>/<code>tail</code>.</p>
 <table>
@@ -1488,7 +1488,7 @@ OVOS over the <a href="../bus-service/">messagebus</a> — handy for testing, sc
 </tr>
 <tr>
 <td><code>ovos-logs list</code></td>
-<td>List messages filtered by level — <code>--error</code>, <code>--warning</code>, <code>--exception</code>, <code>--debug</code> — and time.</td>
+<td>List messages filtered by level (<code>--error</code>, <code>--warning</code>, <code>--exception</code>, <code>--debug</code>) and time.</td>
 </tr>
 <tr>
 <td><code>ovos-logs show -l &lt;log&gt;</code></td>
@@ -1504,8 +1504,8 @@ OVOS over the <a href="../bus-service/">messagebus</a> — handy for testing, sc
 <hr />
 <h2 id="running-the-services-by-hand">Running the services by hand<a class="headerlink" href="#running-the-services-by-hand" title="Permanent link">&para;</a></h2>
 <p>Each core OVOS service is normally started by your service manager (systemd, the
-<a href="../ovos-installer/">ovos-installer</a>, or Docker), but every one also has a console script so you
-can launch it directly — useful for debugging or minimal/headless setups.</p>
+<a href="../ovos-installer/">ovos-installer</a>, or Docker). Every one also has a console script, so you
+can launch it directly. This is useful for debugging or minimal/headless setups.</p>
 <table>
 <thead>
 <tr>
@@ -1532,7 +1532,7 @@ can launch it directly — useful for debugging or minimal/headless setups.</p>
 </tr>
 <tr>
 <td><code>ovos-audio</code></td>
-<td>The <a href="../audio-service/">audio service</a> — TTS &amp; sound playback (and the legacy media audioservice)</td>
+<td>The <a href="../audio-service/">audio service</a>: TTS and sound playback (and the legacy media audioservice)</td>
 <td><code>ovos-audio</code></td>
 </tr>
 <tr>
@@ -1574,7 +1574,7 @@ can launch it directly — useful for debugging or minimal/headless setups.</p>
 <hr />
 <h2 id="command-help-output-generated">Command Help Output (Generated)<a class="headerlink" href="#command-help-output-generated" title="Permanent link">&para;</a></h2>
 <!-- BEGIN GENERATED: cli-help-output -->
-<!-- This section is auto-generated by tools/gen_reference.py from the upstream source of truth. Do not hand-edit; re-run the script instead. -->
+<!-- This section is auto-generated by tools/gen_reference.py from the upstream source of truth. Do not hand-edit. Re-run the script instead. -->
 <details class="example">
 <summary><code>ovos-config --help</code></summary>
 <p>```text

@@ -1638,7 +1638,7 @@ VAD only has to classify one chunk as speech/silence, not decode it.</p>
 <tbody>
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/ovos-vad-plugin-webrtcvad">ovos-vad-plugin-webrtcvad</a></td>
-<td>Based on Google's WebRTC VAD (<code>webrtcvad-wheels</code>). Lightweight, CPU-only, widely used. <code>vad_mode</code> (0–3) sets how aggressively it filters out non-speech: <code>0</code> is the least aggressive (most permissive, more likely to classify borderline audio as speech), <code>3</code> is the most aggressive at filtering out non-speech and is the plugin's default.</td>
+<td>Based on Google's WebRTC VAD (<code>webrtcvad-wheels</code>). Lightweight, CPU-only, widely used. <code>vad_mode</code> (0 to 3) sets how aggressively it filters out non-speech. <code>0</code> is the least aggressive: most permissive, more likely to classify borderline audio as speech. <code>3</code> is the most aggressive at filtering out non-speech and is the plugin's default.</td>
 <td>Stable</td>
 </tr>
 <tr>
@@ -1703,7 +1703,7 @@ used by the plugin manager to advertise network/offline behavior.</p>
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="n">my-custom-vad</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;my_package.module:MyCustomVAD&quot;</span>
 </span></code></pre></div>
 <blockquote>
-<p>💡 The legacy alias <code>ovos.plugin.VAD</code> is still accepted, but new plugins should use <code>opm.VAD</code>.</p>
+<p>The legacy alias <code>ovos.plugin.VAD</code> is still accepted, but new plugins should use <code>opm.VAD</code>.</p>
 </blockquote>
 <h2 id="standalone-usage">Standalone Usage<a class="headerlink" href="#standalone-usage" title="Permanent link">&para;</a></h2>
 <p>You can use the VAD engine in your own scripts:</p>
@@ -1725,7 +1725,7 @@ used by the plugin manager to advertise network/offline behavior.</p>
 <h2 id="ovos-vad-plugin-webrtcvad">ovos-vad-plugin-webrtcvad<a class="headerlink" href="#ovos-vad-plugin-webrtcvad" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
-<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-vad-plugin-webrtcvad">https://github.com/OpenVoiceOS/ovos-vad-plugin-webrtcvad</a></p>
+<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-vad-plugin-webrtcvad">OpenVoiceOS/ovos-vad-plugin-webrtcvad</a></p>
 </li>
 <li>
 <p><strong>Description</strong>: Voice activity detection using webrtcvad.</p>
@@ -1735,7 +1735,7 @@ used by the plugin manager to advertise network/offline behavior.</p>
 <h2 id="ovos-vad-plugin-noise">ovos-vad-plugin-noise<a class="headerlink" href="#ovos-vad-plugin-noise" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
-<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-vad-plugin-noise">https://github.com/OpenVoiceOS/ovos-vad-plugin-noise</a></p>
+<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-vad-plugin-noise">OpenVoiceOS/ovos-vad-plugin-noise</a></p>
 </li>
 <li>
 <p><strong>Description</strong>: simple VAD plugin extracted from the old <a href="https://github.com/OpenVoiceOS/ovos-listener/blob/dev/ovos_listener/silence.py">ovos-listener</a></p>
@@ -1745,7 +1745,7 @@ used by the plugin manager to advertise network/offline behavior.</p>
 <h2 id="ovos-vad-plugin-silero">ovos-vad-plugin-silero<a class="headerlink" href="#ovos-vad-plugin-silero" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
-<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-vad-plugin-silero">https://github.com/OpenVoiceOS/ovos-vad-plugin-silero</a></p>
+<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-vad-plugin-silero">OpenVoiceOS/ovos-vad-plugin-silero</a></p>
 </li>
 <li>
 <p><strong>Description</strong>: Silero Voice Activity Detection (VAD) plugin. The Silero ONNX
@@ -1780,12 +1780,12 @@ used by the plugin manager to advertise network/offline behavior.</p>
 <tr>
 <td><code>threshold</code></td>
 <td><code>0.2</code></td>
-<td>Speech-probability cutoff; chunks scoring below it are classified as silence</td>
+<td>Speech-probability cutoff. Chunks scoring below it are classified as silence</td>
 </tr>
 <tr>
 <td><code>model</code></td>
 <td>bundled <code>silero_vad.onnx</code></td>
-<td>Path to a custom ONNX model; defaults to the model shipped in the package</td>
+<td>Path to a custom ONNX model. Defaults to the model shipped in the package</td>
 </tr>
 </tbody>
 </table>

@@ -1648,7 +1648,7 @@ engines, a chat-summarizer, or an utterance transformer. For reranking, install 
 <td><code>n_gpu_layers</code></td>
 <td><code>int</code></td>
 <td><code>0</code></td>
-<td>Layers offloaded to GPU. <code>0</code> = CPU only; <code>-1</code> = all layers on GPU.</td>
+<td>Layers offloaded to GPU. <code>0</code> means CPU only. <code>-1</code> means all layers on GPU.</td>
 </tr>
 <tr>
 <td><code>chat_format</code></td>
@@ -1678,7 +1678,7 @@ engines, a chat-summarizer, or an utterance transformer. For reranking, install 
 <td><code>allow_system_prompts</code></td>
 <td><code>bool</code></td>
 <td><code>false</code></td>
-<td>When <code>true</code>, caller system messages are merged with the configured prompt; when <code>false</code>, stripped.</td>
+<td>When <code>true</code>, caller system messages are merged with the configured prompt. When <code>false</code>, they are stripped.</td>
 </tr>
 </tbody>
 </table>
@@ -1740,7 +1740,8 @@ offline.</p>
 <p><strong>Class:</strong> <code>GGUFSummarizer</code> (<code>ovos_gguf_plugin/summarizer.py:GGUFSummarizer</code>)</p>
 <p><strong>OPM plugin name:</strong> <code>ovos-summarizer-gguf-plugin</code></p>
 <p>Condenses a document into a short summary using a local GGUF model. Delegates generation to a
-<code>GGUFChatEngine</code>. The system prompt and user prompt default to the plugin's localized
+<code>GGUFChatEngine</code>.</p>
+<p>The system prompt and user prompt default to the plugin's localized
 <code>.prompt</code> files. Override with <code>system_prompt</code> and <code>prompt_template</code> (a template with a
 <code>{content}</code> placeholder).</p>
 <table>
@@ -1798,8 +1799,8 @@ offline.</p>
 <p><strong>OPM plugin name:</strong> <code>ovos-dialog-transformer-gguf-plugin</code></p>
 <p>Runs after skill response generation, before <a href="../tts-plugins/">TTS</a> synthesis. Rewrites skill
 responses with a local GGUF model. It only runs when a <code>rewrite_prompt</code> is configured (via
-config or <code>context["prompt"]</code>). Otherwise it falls back to the original dialog. Default priority:
-<code>10</code>. The system prompt defaults to the localized <code>dialog_transform_system</code> prompt.</p>
+config or <code>context["prompt"]</code>). Otherwise it falls back to the original dialog.</p>
+<p>Default priority: <code>10</code>. The system prompt defaults to the localized <code>dialog_transform_system</code> prompt.</p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="p">{</span>
 </span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">  </span><span class="nt">&quot;dialog_transformers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 </span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">    </span><span class="nt">&quot;ovos-dialog-transformer-gguf-plugin&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
@@ -1823,17 +1824,17 @@ config or <code>context["prompt"]</code>). Otherwise it falls back to the origin
 <tbody>
 <tr>
 <td>Real-time voice (low latency)</td>
-<td>1B–3B parameters</td>
+<td>1B to 3B parameters</td>
 <td><code>Phi-3-mini</code> Q4_K_M</td>
 </tr>
 <tr>
 <td>General purpose</td>
-<td>7B–8B parameters</td>
+<td>7B to 8B parameters</td>
 <td><code>Llama-3.1-8B</code> Q4_K_M</td>
 </tr>
 <tr>
 <td>Memory-constrained devices</td>
-<td>1B–1.5B parameters</td>
+<td>1B to 1.5B parameters</td>
 <td><code>Qwen2.5-1.5B</code> Q4_K_M</td>
 </tr>
 </tbody>

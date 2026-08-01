@@ -1507,7 +1507,7 @@
 
 <h1 id="common-query-pipeline">Common Query Pipeline<a class="headerlink" href="#common-query-pipeline" title="Permanent link">&para;</a></h1>
 <div class="admonition info">
-<p class="admonition-title">Maturity — Stable ⬤⬤⬤⬤◯</p>
+<p class="admonition-title">Maturity: Stable ⬤⬤⬤⬤◯</p>
 <p>Established and production-ready, actively maintained. Rated by <a href="../maturity/">repository health</a>, not version.</p>
 </div>
 <div class="admonition abstract">
@@ -1515,17 +1515,17 @@
 <p>When you ask a general-knowledge question like "who wrote Hamlet?", the Common Query pipeline asks all your installed knowledge skills (Wikipedia, Wolfram Alpha, and so on) the same question at once, gathers their answers, and reads back the best one. Think of it as a quiz host who puts the question to every contestant and then announces the strongest reply. It never makes up answers itself. Every answer comes from a skill, so if you have no knowledge skills installed, it simply stays quiet. See the <a href="../pipelines-overview/">Intent Pipeline overview</a> or the <a href="../glossary/">Glossary</a>.</p>
 </div>
 <details class="info">
-<summary>📐 Formal specification</summary>
-<p>Common Query is specified by <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/common-query.md">OVOS-COMMON-QUERY-1 — Common Query Pipeline Plugin</a></strong>, built on <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md">OVOS-PIPELINE-1</a></strong>. See the <a href="../architecture-specs/">spec index</a>.</p>
+<summary>Formal specification</summary>
+<p>Common Query is specified by <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/common-query.md">OVOS-COMMON-QUERY-1: Common Query Pipeline Plugin</a></strong>, built on <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md">OVOS-PIPELINE-1</a></strong>. See the <a href="../architecture-specs/">spec index</a>.</p>
 </details>
 <p>The <strong>Common Query Pipeline Plugin</strong> answers general-knowledge questions. When an
 utterance looks like a question ("Who wrote Hamlet?", "How tall is Everest?"), it
 broadcasts the question to every installed <strong>CommonQuery skill</strong>, collects their
 answers, and picks the best one.</p>
 <p>It does <strong>not</strong> generate text or do retrieval-augmented generation. Every answer
-comes from a skill. It is also not a chit-chat handler. Think of it as a referee
-that asks all your knowledge skills the same question and returns the strongest
-reply.</p>
+comes from a skill. It is also not a chit-chat handler.</p>
+<p>Think of it as a referee that asks all your knowledge skills the same question
+and returns the strongest reply.</p>
 <hr />
 <h2 id="quick-start">Quick start<a class="headerlink" href="#quick-start" title="Permanent link">&para;</a></h2>
 <p>It ships with <code>ovos-core</code>, but can be installed standalone:</p>
@@ -1560,19 +1560,19 @@ a question.</p>
 </thead>
 <tbody>
 <tr>
-<td><code>ovos.common_query.ping</code> / <code>.pong</code> — wants-to-answer poll</td>
+<td><code>ovos.common_query.ping</code> / <code>.pong</code>: wants-to-answer poll</td>
 <td>discovery handshake (same names)</td>
 </tr>
 <tr>
-<td><code>&lt;skill_id&gt;.common_query.request</code> — full-answer request to a claiming skill (dotted, non-dispatch)</td>
+<td><code>&lt;skill_id&gt;.common_query.request</code>: full-answer request to a claiming skill (dotted, non-dispatch)</td>
 <td><code>question:query</code> broadcast</td>
 </tr>
 <tr>
-<td><code>&lt;skill_id&gt;.common_query.response</code> — a skill's answer + <code>conf</code></td>
+<td><code>&lt;skill_id&gt;.common_query.response</code>: a skill's answer plus <code>conf</code></td>
 <td><code>question:query.response</code></td>
 </tr>
 <tr>
-<td><code>&lt;pipeline_id&gt;:common_query</code> — reserved-name handler dispatch (the one genuine colon/dispatch topic in this family)</td>
+<td><code>&lt;pipeline_id&gt;:common_query</code>: reserved-name handler dispatch (the one genuine colon/dispatch topic in this family)</td>
 <td><code>question:action.&lt;skill_id&gt;</code></td>
 </tr>
 </tbody>
@@ -1582,23 +1582,33 @@ a question.</p>
 <p>The matcher class is <code>CommonQAService</code> (a <code>PipelinePlugin</code>, so it exposes a single
 <code>match()</code>, hence the one <code>ovos-common-query-pipeline-plugin</code> ID, not high/medium/low tiers).</p>
 <ol>
-<li><strong>Question detection</strong>: <code>is_question_like()</code> requires at least 3 words and a
+<li>
+<p><strong>Question detection</strong>: <code>is_question_like()</code> requires at least 3 words and a
    "question word" (<code>QuestionWord</code> vocab), and rejects utterances that match
    <code>Play</code>, <code>Weather</code>, <code>Alerts</code>, or a misc blacklist. Non-questions are skipped, so
-   the query never goes out.</li>
-<li><strong>Broadcast</strong>: emits <code>question:query</code> with the phrase. CommonQuery skills are
+   the query never goes out.</p>
+</li>
+<li>
+<p><strong>Broadcast</strong>: emits <code>question:query</code> with the phrase. CommonQuery skills are
    discovered on startup via an <code>ovos.common_query.ping</code> / <code>ovos.common_query.pong</code>
-   handshake.</li>
-<li><strong>Collect</strong>: skills reply on <code>question:query.response</code>, each with an answer and
+   handshake.</p>
+</li>
+<li>
+<p><strong>Collect</strong>: skills reply on <code>question:query.response</code>, each with an answer and
    a self-reported confidence. A skill can ask for more time by replying with
-   <code>searching: true</code>, which extends the timeout.</li>
-<li><strong>Select</strong>: the pipeline chooses the best answer. If a reranker plugin is configured and
+   <code>searching: true</code>, which extends the timeout.</p>
+</li>
+<li>
+<p><strong>Select</strong>: the pipeline chooses the best answer. If a reranker plugin is configured and
    loaded, it scores the candidate answers. Otherwise the skills' own confidences
-   order them.</li>
-<li><strong>Deliver</strong>: returns an <code>IntentHandlerMatch</code>. The match type is
+   order them.</p>
+</li>
+<li>
+<p><strong>Deliver</strong>: returns an <code>IntentHandlerMatch</code>. The match type is
    <code>question:action.&lt;skill_id&gt;</code> (or plain <code>question:action</code> for skills still using
    the deprecated CommonQuery base class), so the selected skill is told to speak
-   its answer.</li>
+   its answer.</p>
+</li>
 </ol>
 <hr />
 <h2 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">&para;</a></h2>

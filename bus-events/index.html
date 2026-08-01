@@ -1614,7 +1614,7 @@ mechanism). The tables below show both names where applicable.</p>
 <tr>
 <td><code>ovos.listener.wakeword</code> (legacy: <code>recognizer_loop:wakeword</code>)</td>
 <td><code>{"wake_word", "lang"}</code></td>
-<td>Wake word detected; capture is opening. <code>lang</code> is optional and only present when the deployment binds wake words to languages</td>
+<td>Wake word detected, capture is opening. <code>lang</code> is optional and only present when the deployment binds wake words to languages</td>
 </tr>
 <tr>
 <td><code>recognizer_loop:speech.recognition.unknown</code></td>
@@ -1624,7 +1624,7 @@ mechanism). The tables below show both names where applicable.</p>
 <tr>
 <td><code>ovos.listener.sleep</code></td>
 <td>none</td>
-<td>Request the listener enter sleep mode and suspend capture — device-scoped, see <a href="../speech-service/">Speech Service</a></td>
+<td>Request the listener enter sleep mode and suspend capture: device-scoped, see <a href="../speech-service/">Speech Service</a></td>
 </tr>
 <tr>
 <td><code>ovos.listener.awoken</code> (legacy: <code>mycroft.awoken</code>)</td>
@@ -1646,17 +1646,17 @@ mechanism). The tables below show both names where applicable.</p>
 <tr>
 <td><code>ovos.utterance.handle</code> (legacy: <code>recognizer_loop:utterance</code>)</td>
 <td><code>{"utterances": [str], "lang"}</code></td>
-<td>Transcribed command enters the pipeline — see <a href="../life-of-an-utterance/">Life of an Utterance</a> and <a href="../intent-service/#bus-events-handled">Intent Service</a></td>
+<td>Transcribed command enters the pipeline: see <a href="../life-of-an-utterance/">Life of an Utterance</a> and <a href="../intent-service/#bus-events-handled">Intent Service</a></td>
 </tr>
 <tr>
 <td><code>ovos.utterance.handled</code></td>
-<td>—</td>
-<td>Universal utterance-lifecycle end-marker; see <a href="../bus-service/#core-intent-pipeline">Bus Service</a></td>
+<td>none</td>
+<td>Universal utterance-lifecycle end-marker. See <a href="../bus-service/#core-intent-pipeline">Bus Service</a></td>
 </tr>
 </tbody>
 </table>
 <h2 id="intent-matching-context">Intent matching &amp; context<a class="headerlink" href="#intent-matching-context" title="Permanent link">&para;</a></h2>
-<p>Handled by <code>ovos-core</code>'s <code>IntentService</code>; see <a href="../intent-service/#bus-events-handled">Intent Service</a>.</p>
+<p>Handled by <code>ovos-core</code>'s <code>IntentService</code>. See <a href="../intent-service/#bus-events-handled">Intent Service</a>.</p>
 <table>
 <thead>
 <tr>
@@ -1693,8 +1693,8 @@ mechanism). The tables below show both names where applicable.</p>
 </tr>
 <tr>
 <td><code>ovos.intent.unmatched</code> (legacy: <code>complete_intent_failure</code>)</td>
-<td>—</td>
-<td>No pipeline stage claimed the utterance — including the <a href="../fallback-pipeline/">fallback</a> stages, which run <em>inside</em> the match loop; this is the terminal "nothing handled it" marker, not a hand-off</td>
+<td>none</td>
+<td>No pipeline stage claimed the utterance, including the <a href="../fallback-pipeline/">fallback</a> stages, which run <em>inside</em> the match loop. This is the terminal "nothing handled it" marker, not a hand-off</td>
 </tr>
 </tbody>
 </table>
@@ -1721,7 +1721,7 @@ mechanism). The tables below show both names where applicable.</p>
 </tr>
 <tr>
 <td><code>ovos.intent.handler.start</code> → <code>ovos.intent.handler.complete</code> / <code>ovos.intent.handler.error</code></td>
-<td>The orchestrator-owned handler-lifecycle trio around the invocation (§8; <strong>not</strong> translator-bridged — see <a href="#legacy-spec-migration">Legacy ↔ spec migration</a>). The skill framework separately emits the legacy <code>mycroft.skill.handler.start</code> / <code>.complete</code> as a private done-signal (there is no legacy <code>.error</code> — the explicit error leg is spec-side only)</td>
+<td>The orchestrator-owned handler-lifecycle trio around the invocation (§8, <strong>not</strong> translator-bridged, see <a href="#legacy-spec-migration">Legacy ↔ spec migration</a>). The skill framework separately emits the legacy <code>mycroft.skill.handler.start</code> / <code>.complete</code> as a private done-signal. There is no legacy <code>.error</code>: the explicit error leg is spec-side only</td>
 </tr>
 </tbody>
 </table>
@@ -1763,7 +1763,7 @@ mechanism). The tables below show both names where applicable.</p>
 </tr>
 <tr>
 <td><code>{skill_id}.converse.get_response</code></td>
-<td>—</td>
+<td>none</td>
 <td>Feed the user's reply back into a pending <code>get_response</code> (see <a href="../ovos-skill/#system-bus-events-handled-per-skill">OVOSSkill API</a>)</td>
 </tr>
 </tbody>
@@ -1835,7 +1835,7 @@ mechanism). The tables below show both names where applicable.</p>
 </tbody>
 </table>
 <h2 id="skill-lifecycle">Skill lifecycle<a class="headerlink" href="#skill-lifecycle" title="Permanent link">&para;</a></h2>
-<p>Handled by every <code>OVOSSkill</code> instance; see <a href="../ovos-skill/#system-bus-events-handled-per-skill">OVOSSkill API</a>.</p>
+<p>Handled by every <code>OVOSSkill</code> instance. See <a href="../ovos-skill/#system-bus-events-handled-per-skill">OVOSSkill API</a>.</p>
 <table>
 <thead>
 <tr>
@@ -1846,11 +1846,11 @@ mechanism). The tables below show both names where applicable.</p>
 <tbody>
 <tr>
 <td><code>ovos.stop</code> (legacy: <code>mycroft.stop</code>)</td>
-<td>Global stop broadcast — every skill subscribes and ceases activity for the inbound session (see below). Only this pair is translator-bridged</td>
+<td>Global stop broadcast: every skill subscribes and ceases activity for the inbound session (see below). Only this pair is translator-bridged</td>
 </tr>
 <tr>
 <td><code>&lt;skill_id&gt;:stop</code> (legacy: <code>{skill_id}.stop</code>)</td>
-<td>Skill-directed stop dispatch. <strong>Dual-subscribed, not translator-bridged</strong> — the skill base class listens on both forms itself (the per-skill <code>{skill_id}.*</code> shape can't be a static map key)</td>
+<td>Skill-directed stop dispatch. <strong>Dual-subscribed, not translator-bridged</strong>: the skill base class listens on both forms itself (the per-skill <code>{skill_id}.*</code> shape can't be a static map key)</td>
 </tr>
 <tr>
 <td><code>ovos.stop.ping</code> (legacy: <code>{skill_id}.stop.ping</code>)</td>
@@ -1870,7 +1870,7 @@ mechanism). The tables below show both names where applicable.</p>
 </tr>
 <tr>
 <td><code>ovos.skills.settings_changed</code></td>
-<td>Local settings file changed — see <code>settings_change_callback</code> in <a href="../skill-settings/#change-callback">Skill Settings</a> (<a href="../skill-cookbook/#2-user-configurable-behavior-settings-settingsmeta-live-reload">Skill Cookbook recipe 2</a>) for reacting to it from a skill</td>
+<td>Local settings file changed: see <code>settings_change_callback</code> in <a href="../skill-settings/#change-callback">Skill Settings</a> (<a href="../skill-cookbook/#2-user-configurable-behavior-settings-settingsmeta-live-reload">Skill Cookbook recipe 2</a>) for reacting to it from a skill</td>
 </tr>
 <tr>
 <td><code>homescreen.metadata.get</code></td>
@@ -1878,7 +1878,7 @@ mechanism). The tables below show both names where applicable.</p>
 </tr>
 <tr>
 <td><code>{skill_id}.public_api</code></td>
-<td>Skill API introspection (see <a href="../ovos-skill/#skill-api-inter-skill-rpc">Skill API — Inter-Skill RPC</a>)</td>
+<td>Skill API introspection (see <a href="../ovos-skill/#skill-api-inter-skill-rpc">Skill API: Inter-Skill RPC</a>)</td>
 </tr>
 </tbody>
 </table>
@@ -1897,7 +1897,7 @@ mechanism). The tables below show both names where applicable.</p>
 <tr>
 <td><code>&lt;pipeline_id&gt;:global_stop</code> (legacy: <code>stop:global</code>)</td>
 <td>in</td>
-<td>Global-stop dispatch — its handler emits the <code>ovos.stop</code> broadcast (and <code>ovos.utterance.handled</code>)</td>
+<td>Global-stop dispatch: its handler emits the <code>ovos.stop</code> broadcast (and <code>ovos.utterance.handled</code>)</td>
 </tr>
 <tr>
 <td><code>&lt;skill_id&gt;:stop</code> (legacy: <code>stop:skill</code> → <code>{skill_id}.stop</code>)</td>
@@ -1922,7 +1922,7 @@ mechanism). The tables below show both names where applicable.</p>
 </tbody>
 </table>
 <h2 id="tts-audio-playback">TTS / audio playback<a class="headerlink" href="#tts-audio-playback" title="Permanent link">&para;</a></h2>
-<p>Handled by <code>ovos-audio</code>; see <a href="../audio-service/">Audio Service</a>.</p>
+<p>Handled by <code>ovos-audio</code>. See <a href="../audio-service/">Audio Service</a>.</p>
 <table>
 <thead>
 <tr>
@@ -1933,7 +1933,7 @@ mechanism). The tables below show both names where applicable.</p>
 <tbody>
 <tr>
 <td><code>ovos.utterance.speak</code> (legacy: <code>speak</code>)</td>
-<td>Natural-language response to synthesize and play — the exit point of the utterance lifecycle</td>
+<td>Natural-language response to synthesize and play: the exit point of the utterance lifecycle</td>
 </tr>
 <tr>
 <td><code>mycroft.audio.queue</code></td>
@@ -1966,7 +1966,7 @@ mechanism). The tables below show both names where applicable.</p>
 </tbody>
 </table>
 <h2 id="gui-forwarding">GUI forwarding<a class="headerlink" href="#gui-forwarding" title="Permanent link">&para;</a></h2>
-<p>Handled by <code>ovos-gui</code>; see <a href="../gui-service/">GUI Service</a>.</p>
+<p>Handled by <code>ovos-gui</code>. See <a href="../gui-service/">GUI Service</a>.</p>
 <table>
 <thead>
 <tr>
@@ -2044,7 +2044,7 @@ mechanism). The tables below show both names where applicable.</p>
 <p>OVOS is renaming its bus topics onto the <code>ovos.*</code> spec namespace. You do not have to migrate
 all at once: <code>ovos-bus-client</code>'s <code>NamespaceTranslator</code> runs on every client with both directions
 on by default, so a message emitted on either the legacy or the spec topic is re-emitted on the
-other (see <a href="../bus-service/#namespace-migration">Bus Service — namespace migration</a>). A direct bus
+other (see <a href="../bus-service/#namespace-migration">Bus Service: namespace migration</a>). A direct bus
 consumer can therefore subscribe on either name today and switch to the spec name at its own pace.</p>
 <p>The pairs below are the authoritative rename map (<code>ovos_spec_tools</code>'s <code>MIGRATION_MAP</code>). Unless
 marked <strong>shape-changing</strong>, the payload is identical on both topics. Shape-changing pairs are
@@ -2157,17 +2157,17 @@ directly.</p>
 <tr>
 <td><code>detach_intent</code></td>
 <td><code>ovos.intent.deregister</code></td>
-<td><strong>shape-changing</strong> — remove one intent (INTENT-4 §8.2)</td>
+<td><strong>shape-changing</strong>: remove one intent (INTENT-4 §8.2)</td>
 </tr>
 <tr>
 <td><code>mycroft.skill.enable_intent</code></td>
 <td><code>ovos.intent.enable</code></td>
-<td><strong>shape-changing</strong> — enable an intent (INTENT-4 §8.5)</td>
+<td><strong>shape-changing</strong>: enable an intent (INTENT-4 §8.5)</td>
 </tr>
 <tr>
 <td><code>mycroft.skill.disable_intent</code></td>
 <td><code>ovos.intent.disable</code></td>
-<td><strong>shape-changing</strong> — disable an intent (INTENT-4 §8.5)</td>
+<td><strong>shape-changing</strong>: disable an intent (INTENT-4 §8.5)</td>
 </tr>
 </tbody>
 </table>

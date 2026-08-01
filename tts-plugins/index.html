@@ -1526,7 +1526,7 @@
 <p>TTS stands for <em>Text-to-Speech</em>: this is the part that gives your assistant its voice, turning written replies into spoken audio you can hear. It is the opposite of dictation. Instead of listening to you, it talks back. Different TTS plugins offer different voices and qualities, and some run on your own device while others use a cloud service. See the <a href="../glossary/">Glossary</a> for related terms.</p>
 </div>
 <details class="info">
-<summary>📐 Formal specification</summary>
+<summary>Formal specification</summary>
 <p>TTS sits inside the audio output service, specified by <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/audio-out.md">OVOS-AUDIO-1: Audio Output Service</a></strong>: an <code>ovos.utterance.speak</code> response runs through the dialog-transformer chain → TTS → tts-transformer chain → playback queue. See the <a href="../architecture-specs/">spec index</a>.</p>
 </details>
 <p>TTS plugins are responsible for converting text into audio for playback.</p>
@@ -1534,9 +1534,10 @@
 <p class="admonition-title">Audio format contract</p>
 <p>A TTS plugin is the <strong>producer</strong> end of the audio path, so it picks the format rather than
 receiving one. <code>get_tts()</code> writes a complete, self-describing audio file to the path it is
-handed and returns that path; the container format must match the plugin's <code>audio_ext</code>
+handed and returns that path. The container format must match the plugin's <code>audio_ext</code>
 (default <code>"wav"</code>, set via the <code>TTS.__init__</code> argument), because <code>audio_ext</code> is what names
-the cache file and what playback dispatches on. Sample rate, bit depth and channel count
+the cache file and what playback dispatches on.</p>
+<p>Sample rate, bit depth and channel count
 are the plugin's own choice and travel inside the file's header. Nothing between
 <code>get_tts()</code> and the speakers resamples, remixes or re-encodes the audio, so whatever the
 engine emits is what is played. The one constraint is that the deployment must have a
@@ -1547,7 +1548,7 @@ Plain 16-bit mono WAV is the safe default.</p>
 <p><code>get_tts()</code> returns the tuple <code>(audio_path, phonemes)</code>. <code>phonemes</code> is optional. Return
 <code>None</code> when the engine exposes none. When present it is a space-separated string of
 <code>phoneme:duration</code> pairs, which the base class's <code>viseme()</code> converts into a list of
-<code>(viseme_code, duration_seconds)</code> tuples for mouth animation; a pair with no <code>:duration</code>
+<code>(viseme_code, duration_seconds)</code> tuples for mouth animation. A pair with no <code>:duration</code>
 is given <code>0.2</code> s. Both the audio and the phonemes are cached together, keyed by sentence
 hash.</p>
 </div>
@@ -1631,7 +1632,7 @@ plugin as supporting no language.</p>
 </span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="p">}</span>
 </span></code></pre></div>
 <blockquote>
-<p>💡 <strong>Backward Compatibility</strong>: <code>ovos-plugin-manager</code> still supports legacy <code>mycroft.plugin.tts</code> entry points, but new plugins should use the <code>opm.*</code> namespace.</p>
+<p><strong>Backward Compatibility</strong>: <code>ovos-plugin-manager</code> still supports legacy <code>mycroft.plugin.tts</code> entry points, but new plugins should use the <code>opm.*</code> namespace.</p>
 </blockquote>
 <h2 id="standalone-usage">Standalone Usage<a class="headerlink" href="#standalone-usage" title="Permanent link">&para;</a></h2>
 <p>You can use TTS plugins independently of the full OVOS stack:</p>
@@ -1736,7 +1737,7 @@ the full precedence rules.</p>
 </span><span id="__span-6-37"><a id="__codelineno-6-37" name="__codelineno-6-37" href="#__codelineno-6-37"></a><span class="p">}</span>
 </span></code></pre></div>
 <h1 id="tts-plugins-reference">TTS Plugins Reference<a class="headerlink" href="#tts-plugins-reference" title="Permanent link">&para;</a></h1>
-<p>Code license is the SPDX license of the plugin's own repository; where the plugin wraps a
+<p>Code license is the SPDX license of the plugin's own repository. Where the plugin wraps a
 separately-licensed model or a paid cloud service, that is called out under "model".</p>
 <table>
 <thead>
@@ -1774,7 +1775,7 @@ separately-licensed model or a paid cloud service, that is called out under "mod
 </tr>
 <tr>
 <td><a href="#ovos-tts-plugin-matxa-multispeaker-cat">ovos-tts-plugin-matxa-multispeaker-cat</a></td>
-<td>🍵 <a href="https://huggingface.co/projecte-aina/matxa-tts-cat-multiaccent">Matxa-TTS</a>, the multispeaker, multidialectal neural TTS model.  It works together with the vocoder model 🥑 <a href="https://huggingface.co/projecte-aina/alvocat-vocos-22khz">alVoCat</a>, to generate high quality and expressive speech efficiently in four Catalan dialects: ⚠️ <strong>Archived/deprecated.</strong></td>
+<td><a href="https://huggingface.co/projecte-aina/matxa-tts-cat-multiaccent">Matxa-TTS</a>, the multispeaker, multidialectal neural TTS model. It works together with the vocoder model <a href="https://huggingface.co/projecte-aina/alvocat-vocos-22khz">alVoCat</a> to generate speech in four Catalan dialects. Warning: archived, deprecated.</td>
 <td>Apache-2.0 (model: see model card)</td>
 <td>Deprecated</td>
 </tr>
@@ -1810,7 +1811,7 @@ separately-licensed model or a paid cloud service, that is called out under "mod
 </tr>
 <tr>
 <td><a href="#ovos-tts-plugin-sam">ovos-tts-plugin-SAM</a></td>
-<td>S.A.M. — Software Automatic Mouth, the classic retro speech synthesizer.</td>
+<td>S.A.M., Software Automatic Mouth, the classic retro speech synthesizer.</td>
 <td>see repo (no license file)</td>
 <td>Mature</td>
 </tr>
@@ -1846,19 +1847,19 @@ separately-licensed model or a paid cloud service, that is called out under "mod
 </tr>
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/ovos-tts-plugin-lux">ovos-tts-plugin-lux</a></td>
-<td>LuxTTS — zipvoice-based voice-cloning TTS (48 kHz, en-US). <em>(not yet packaged / no dedicated section — see repo)</em></td>
+<td>LuxTTS: zipvoice-based voice-cloning TTS (48 kHz, en-US). <em>(not yet packaged, no dedicated section, see repo)</em></td>
 <td>Apache-2.0</td>
 <td>Beta</td>
 </tr>
 <tr>
 <td><a href="#ovos-tts-plugin-phoonnx">ovos-tts-plugin-phoonnx</a></td>
-<td>Built into <a href="https://pypi.org/project/phoonnx">phoonnx</a>, OVOS's own ONNX-based multilingual neural TTS engine — the default choice for fully offline synthesis, with automatic model fetching.</td>
-<td>see repo (no license file; models: see model card)</td>
+<td>Built into <a href="https://pypi.org/project/phoonnx">phoonnx</a>, OVOS's own ONNX-based multilingual neural TTS engine. It is the default choice for fully offline synthesis, with automatic model fetching.</td>
+<td>see repo (no license file, models: see model card)</td>
 <td>Stable</td>
 </tr>
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/ovos-tts-plugin-omnivoice">ovos-tts-plugin-omnivoice</a></td>
-<td>Wraps <a href="https://github.com/k2-fsa/OmniVoice">OmniVoice</a>, a massively multilingual (600+ languages) zero-shot TTS model with <code>auto</code>, voice-design (<code>instruct</code>), and voice-cloning (<code>ref_audio</code>) modes. ⚠️ No packaged release yet — install from source. <em>(not yet packaged / no dedicated section — see repo)</em></td>
+<td>Wraps <a href="https://github.com/k2-fsa/OmniVoice">OmniVoice</a>, a massively multilingual (600+ languages) zero-shot TTS model with <code>auto</code>, voice-design (<code>instruct</code>), and voice-cloning (<code>ref_audio</code>) modes. Warning: no packaged release yet, install from source. <em>(not yet packaged, no dedicated section, see repo)</em></td>
 <td>Apache-2.0 (model: see model card)</td>
 <td>Alpha</td>
 </tr>
@@ -1876,7 +1877,7 @@ with a permissive license but thin docs. Don't read one column as implying the o
 <h2 id="ovos-tts-server">ovos-tts-server<a class="headerlink" href="#ovos-tts-server" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
-<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-tts-server">https://github.com/OpenVoiceOS/ovos-tts-server</a></p>
+<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-tts-server">OpenVoiceOS/ovos-tts-server</a></p>
 </li>
 <li>
 <p><strong>Description</strong>: Turn any OVOS TTS plugin into a micro service!</p>
@@ -1886,7 +1887,7 @@ with a permissive license but thin docs. Don't read one column as implying the o
 <h2 id="ovos-tts-plugin-polly">ovos-tts-plugin-polly<a class="headerlink" href="#ovos-tts-plugin-polly" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
-<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-tts-plugin-polly">https://github.com/OpenVoiceOS/ovos-tts-plugin-polly</a></p>
+<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-tts-plugin-polly">OpenVoiceOS/ovos-tts-plugin-polly</a></p>
 </li>
 <li>
 <p><strong>Description</strong>: Amazon Polly cloud text-to-speech.</p>
@@ -1896,7 +1897,7 @@ with a permissive license but thin docs. Don't read one column as implying the o
 <h2 id="ovos-tts-plugin-google-tx">ovos-tts-plugin-google-tx<a class="headerlink" href="#ovos-tts-plugin-google-tx" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
-<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-tts-plugin-google-tx">https://github.com/OpenVoiceOS/ovos-tts-plugin-google-tx</a></p>
+<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-tts-plugin-google-tx">OpenVoiceOS/ovos-tts-plugin-google-tx</a></p>
 </li>
 <li>
 <p><strong>Description</strong>: OVOS TTS plugin for <a href="https://github.com/pndurette/gTTS">gTTS</a></p>
@@ -1917,7 +1918,7 @@ Text-to-Speech API. Google can change or revoke access to this endpoint at any t
 <h2 id="ovos-tts-plugin-edge-tts">ovos-tts-plugin-edge-tts<a class="headerlink" href="#ovos-tts-plugin-edge-tts" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
-<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-tts-plugin-edge-tts">https://github.com/OpenVoiceOS/ovos-tts-plugin-edge-tts</a></p>
+<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-tts-plugin-edge-tts">OpenVoiceOS/ovos-tts-plugin-edge-tts</a></p>
 </li>
 <li>
 <p><strong>Description</strong>: TTS plugin for <a href="https://openvoiceos.org">OVOS</a> based on <a href="https://github.com/rany2/edge-tts">Edge-TTS</a></p>
@@ -1927,10 +1928,10 @@ Text-to-Speech API. Google can change or revoke access to this endpoint at any t
 <h2 id="ovos-tts-plugin-matxa-multispeaker-cat">ovos-tts-plugin-matxa-multispeaker-cat<a class="headerlink" href="#ovos-tts-plugin-matxa-multispeaker-cat" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
-<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-tts-plugin-matxa-multispeaker-cat">https://github.com/OpenVoiceOS/ovos-tts-plugin-matxa-multispeaker-cat</a></p>
+<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-tts-plugin-matxa-multispeaker-cat">OpenVoiceOS/ovos-tts-plugin-matxa-multispeaker-cat</a></p>
 </li>
 <li>
-<p><strong>Description</strong>: 🍵 <a href="https://huggingface.co/projecte-aina/matxa-tts-cat-multiaccent">Matxa-TTS</a>, the multispeaker, multidialectal neural TTS model.  It works together with the vocoder model 🥑 <a href="https://huggingface.co/projecte-aina/alvocat-vocos-22khz">alVoCat</a>, to generate high quality and expressive speech efficiently in four Catalan dialects:</p>
+<p><strong>Description</strong>: <a href="https://huggingface.co/projecte-aina/matxa-tts-cat-multiaccent">Matxa-TTS</a>, the multispeaker, multidialectal neural TTS model. It works together with the vocoder model <a href="https://huggingface.co/projecte-aina/alvocat-vocos-22khz">alVoCat</a> to generate speech in four Catalan dialects.</p>
 </li>
 </ul>
 <h3 id="default-configuration_1">Default Configuration<a class="headerlink" href="#default-configuration_1" title="Permanent link">&para;</a></h3>
@@ -1945,7 +1946,7 @@ Text-to-Speech API. Google can change or revoke access to this endpoint at any t
 <h2 id="ovos-tts-plugin-marytts">ovos-tts-plugin-marytts<a class="headerlink" href="#ovos-tts-plugin-marytts" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
-<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-tts-plugin-marytts">https://github.com/OpenVoiceOS/ovos-tts-plugin-marytts</a></p>
+<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-tts-plugin-marytts">OpenVoiceOS/ovos-tts-plugin-marytts</a></p>
 </li>
 <li>
 <p><strong>Description</strong>: TTS Plugin for <a href="https://github.com/marytts/marytts">MaryTTS</a></p>
@@ -1964,7 +1965,7 @@ Text-to-Speech API. Google can change or revoke access to this endpoint at any t
 <h2 id="ovos-tts-plugin-espeakng">ovos-tts-plugin-espeakNG<a class="headerlink" href="#ovos-tts-plugin-espeakng" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
-<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-tts-plugin-espeakNG">https://github.com/OpenVoiceOS/ovos-tts-plugin-espeakNG</a></p>
+<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-tts-plugin-espeakNG">OpenVoiceOS/ovos-tts-plugin-espeakNG</a></p>
 </li>
 <li>
 <p><strong>Description</strong>: eSpeak NG offline text-to-speech (robotic, supports many languages).</p>
@@ -1974,7 +1975,7 @@ Text-to-Speech API. Google can change or revoke access to this endpoint at any t
 <h2 id="ovos-tts-plugin-beepspeak">ovos-tts-plugin-beepspeak<a class="headerlink" href="#ovos-tts-plugin-beepspeak" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
-<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-tts-plugin-beepspeak">https://github.com/OpenVoiceOS/ovos-tts-plugin-beepspeak</a></p>
+<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-tts-plugin-beepspeak">OpenVoiceOS/ovos-tts-plugin-beepspeak</a></p>
 </li>
 <li>
 <p><strong>Description</strong>: Novelty R2-D2-style beep text-to-speech.</p>
@@ -1984,7 +1985,7 @@ Text-to-Speech API. Google can change or revoke access to this endpoint at any t
 <h2 id="ovos-tts-plugin-cotovia">ovos-tts-plugin-cotovia<a class="headerlink" href="#ovos-tts-plugin-cotovia" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
-<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-tts-plugin-cotovia">https://github.com/OpenVoiceOS/ovos-tts-plugin-cotovia</a></p>
+<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-tts-plugin-cotovia">OpenVoiceOS/ovos-tts-plugin-cotovia</a></p>
 </li>
 <li>
 <p><strong>Description</strong>: OVOS TTS plugin for <a href="http://gtm.uvigo.es/cotovia">Cotovia TTS</a></p>
@@ -2002,7 +2003,7 @@ Text-to-Speech API. Google can change or revoke access to this endpoint at any t
 <h2 id="ovos-tts-plugin-mimic">ovos-tts-plugin-mimic<a class="headerlink" href="#ovos-tts-plugin-mimic" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
-<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-tts-plugin-mimic">https://github.com/OpenVoiceOS/ovos-tts-plugin-mimic</a></p>
+<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-tts-plugin-mimic">OpenVoiceOS/ovos-tts-plugin-mimic</a></p>
 </li>
 <li>
 <p><strong>Description</strong>: OVOS TTS plugin for <a href="https://github.com/MycroftAI/mimic1">Mimic</a></p>
@@ -2020,7 +2021,7 @@ Text-to-Speech API. Google can change or revoke access to this endpoint at any t
 <h2 id="ovos-tts-plugin-sam">ovos-tts-plugin-SAM<a class="headerlink" href="#ovos-tts-plugin-sam" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
-<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-tts-plugin-SAM">https://github.com/OpenVoiceOS/ovos-tts-plugin-SAM</a></p>
+<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-tts-plugin-SAM">OpenVoiceOS/ovos-tts-plugin-SAM</a></p>
 </li>
 <li>
 <p><strong>Description</strong>: S.A.M., Software Automatic Mouth, the classic retro speech synthesizer.</p>
@@ -2030,7 +2031,7 @@ Text-to-Speech API. Google can change or revoke access to this endpoint at any t
 <h2 id="ovos-tts-plugin-azure">ovos-tts-plugin-azure<a class="headerlink" href="#ovos-tts-plugin-azure" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
-<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-tts-plugin-azure">https://github.com/OpenVoiceOS/ovos-tts-plugin-azure</a></p>
+<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-tts-plugin-azure">OpenVoiceOS/ovos-tts-plugin-azure</a></p>
 </li>
 <li>
 <p><strong>Description</strong>: This TTS service for OpenVoiceOS requires a subscription to Microsoft Azure and the creation of a Speech resource (<a href="https://docs.microsoft.com/en-us/azure/cognitive-services/speech-service/overview#create-the-azure-resource">https://docs.microsoft.com/en-us/azure/cognitive-services/speech-service/overview#create-the-azure-resource</a>)</p>
@@ -2056,7 +2057,7 @@ store instead of hard-coding it in <code>mycroft.conf</code>.</p>
 <h2 id="ovos-tts-plugin-ahotts">ovos-tts-plugin-ahotts<a class="headerlink" href="#ovos-tts-plugin-ahotts" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
-<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-tts-plugin-ahotts">https://github.com/OpenVoiceOS/ovos-tts-plugin-ahotts</a></p>
+<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-tts-plugin-ahotts">OpenVoiceOS/ovos-tts-plugin-ahotts</a></p>
 </li>
 <li>
 <p><strong>Description</strong>: OVOS TTS plugin for <a href="https://github.com/aholab/AhoTTS">AhoTTS</a></p>
@@ -2074,7 +2075,7 @@ store instead of hard-coding it in <code>mycroft.conf</code>.</p>
 <h2 id="ovos-tts-server-plugin">ovos-tts-server-plugin<a class="headerlink" href="#ovos-tts-server-plugin" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
-<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-tts-server-plugin">https://github.com/OpenVoiceOS/ovos-tts-server-plugin</a></p>
+<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-tts-server-plugin">OpenVoiceOS/ovos-tts-server-plugin</a></p>
 </li>
 <li>
 <p><strong>Description</strong>: OpenVoiceOS companion plugin for <a href="https://github.com/OpenVoiceOS/ovos-tts-server">OpenVoiceOS TTS Server</a></p>
@@ -2111,7 +2112,7 @@ servers entirely: fully offline plugins exist for everything.</p>
 <h2 id="ovos-tts-plugin-coqui">ovos-tts-plugin-coqui<a class="headerlink" href="#ovos-tts-plugin-coqui" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
-<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-tts-plugin-coqui">https://github.com/OpenVoiceOS/ovos-tts-plugin-coqui</a></p>
+<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-tts-plugin-coqui">OpenVoiceOS/ovos-tts-plugin-coqui</a></p>
 </li>
 <li>
 <p><strong>Description</strong>: OVOS TTS plugin for <a href="https://coqui-tts.readthedocs.io/en/latest">Coqui TTS</a></p>
@@ -2127,7 +2128,7 @@ servers entirely: fully offline plugins exist for everything.</p>
 <h2 id="ovos-tts-plugin-pico">ovos-tts-plugin-pico<a class="headerlink" href="#ovos-tts-plugin-pico" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
-<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-tts-plugin-pico">https://github.com/OpenVoiceOS/ovos-tts-plugin-pico</a></p>
+<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-tts-plugin-pico">OpenVoiceOS/ovos-tts-plugin-pico</a></p>
 </li>
 <li>
 <p><strong>Description</strong>: SVOX Pico lightweight offline text-to-speech.</p>
@@ -2137,7 +2138,7 @@ servers entirely: fully offline plugins exist for everything.</p>
 <h2 id="ovos-tts-plugin-phoonnx">ovos-tts-plugin-phoonnx<a class="headerlink" href="#ovos-tts-plugin-phoonnx" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
-<p><strong>GitHub</strong>: <a href="https://github.com/TigreGotico/phoonnx">https://github.com/TigreGotico/phoonnx</a></p>
+<p><strong>GitHub</strong>: <a href="https://github.com/TigreGotico/phoonnx">TigreGotico/phoonnx</a></p>
 </li>
 <li>
 <p><strong>Description</strong>: OVOS's own multilingual, ONNX-based neural TTS engine, distributed as part of the <code>phoonnx</code> package. Registering the plugin only requires <code>pip install phoonnx</code>. Model files are fetched and cached automatically the first time a voice is used.</p>
@@ -2159,7 +2160,7 @@ servers entirely: fully offline plugins exist for everything.</p>
 <ol>
 <li><strong>Pin the dependency version.</strong> Put a floor and a ceiling on <code>ovos-plugin-manager</code> in
    <code>pyproject.toml</code>, for example <code>ovos-plugin-manager&gt;=0.5.0,&lt;1.0.0</code>. A floor alone lets a future
-   breaking release slip in unnoticed; a ceiling alone lets an old install miss a needed feature.</li>
+   breaking release slip in unnoticed. A ceiling alone lets an old install miss a needed feature.</li>
 <li><strong>Install for local development.</strong> Run <code>pip install -e .</code> from the plugin's own repository so
    changes to the source take effect without reinstalling. See
    <a href="../plugin-manager/#3-install-and-verify">OVOS Plugin Manager: Install and verify</a> for the
@@ -2195,7 +2196,7 @@ environment or container <code>ovos-core</code>/<code>ovos-audio</code> run in, 
 your voice</a> above.</p>
 <h2 id="further-reading">Further reading<a class="headerlink" href="#further-reading" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="https://blog.openvoiceos.org/posts/2025-10-06-phoonnx">Introducing phoonnx — OVOS's next-gen TTS engine</a>, OVOS blog</li>
+<li><a href="https://blog.openvoiceos.org/posts/2025-10-06-phoonnx">Introducing phoonnx: OVOS's next-gen TTS engine</a>, OVOS blog</li>
 <li><a href="https://blog.openvoiceos.org/posts/2025-06-26-making-synthetic-voices-from-scratch">Making Synthetic Voices From Scratch</a>, OVOS blog</li>
 </ul>
 

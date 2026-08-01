@@ -1913,7 +1913,7 @@
 <p>A "skill" is an add-on that teaches your assistant to do one thing: tell the weather, set an
 alarm, play the radio, answer trivia. This page is a browsable catalog of ready-made skills you
 can add to OVOS, grouped by what they're for, each with real example phrases and how to install
-it. Some come pre-loaded depending on how you set OVOS up; others you add yourself. See
+it. Some come pre-loaded depending on how you set OVOS up, others you add yourself. See
 <a href="../first-skill/">Your First Skill</a> if you want to build your own, or the
 <a href="../glossary/">Glossary</a> for terms.</p>
 </div>
@@ -1926,7 +1926,7 @@ assistant depends on how you installed it. See the legend below.</p>
 one yourself, install its package (the repo link and install command are in the
 collapsed "Install" block under each skill below) and restart <code>ovos-core</code>. It scans for
 installed skills automatically. On RaspOVOS, prefer <code>ovos-install &lt;package&gt;</code>, RaspOVOS's own
-helper, which installs with the correct version constraints; on any other setup, <code>pip install
+helper, which installs with the correct version constraints. On any other setup, <code>pip install
 &lt;package&gt;</code> works the same way. If a skill isn't published to PyPI, install straight from
 git, e.g. <code>pip install git+https://github.com/OpenVoiceOS/ovos-skill-weather</code>. To build your
 own, follow <a href="../first-skill/">Your First Skill</a>.</p>
@@ -1934,17 +1934,17 @@ own, follow <a href="../first-skill/">Your First Skill</a>.</p>
 <div class="admonition info">
 <p class="admonition-title">Availability legend</p>
 <ul>
-<li>🟢 <strong>Installer default</strong>: installed automatically when the <code>ovos-installer</code>'s <code>skills</code>
+<li><strong>Installer default</strong>: installed automatically when the <code>ovos-installer</code>'s <code>skills</code>
   feature is on (the default).</li>
-<li>🟡 <strong>Installer optional</strong>: installed only if you also enable the installer's
+<li><strong>Installer optional</strong>: installed only if you also enable the installer's
   <code>extra-skills</code> feature.</li>
-<li>⚪ <strong>Manual install only</strong>: not offered by the installer at all. Add it yourself with
+<li><strong>Manual install only</strong>: not offered by the installer at all. Add it yourself with
   <code>ovos-install</code> (on RaspOVOS) or <code>pip install</code> (otherwise).</li>
 </ul>
 </div>
 <hr />
 <h2 id="alerts-timers-reminders-alarms">Alerts (Timers, Reminders &amp; Alarms)<a class="headerlink" href="#alerts-timers-reminders-alarms" title="Permanent link">&para;</a></h2>
-<p>🟢 <strong>Installer default</strong></p>
+<p><strong>Installer default</strong></p>
 <p>A skill to manage alarms, timers, reminders, events and todos and optionally sync them with a
 CalDAV service. Handy if you want a hands-free alarm clock, kitchen timer, or todo list that
 survives a reboot and can sync with an external calendar.</p>
@@ -1954,8 +1954,12 @@ survives a reboot and can sync with an external calendar.</p>
 <li>Cancel all reminders.</li>
 <li>When is my next alarm?</li>
 <li>Schedule a tennis event for 2 PM on friday spanning 2 hours.</li>
-<li>What did I miss?</li>
-<li>remind me to take out the trash every Thursday and Sunday at 7 PM.</li>
+<li>
+<p>What did I miss?</p>
+</li>
+<li>
+<p>remind me to take out the trash every Thursday and Sunday at 7 PM.</p>
+</li>
 <li>Start a bread timer for 30 minutes.</li>
 <li>Did I miss anything?</li>
 <li>Set an alarm for 8 AM.</li>
@@ -1967,7 +1971,7 @@ survives a reboot and can sync with an external calendar.</p>
 </details>
 <hr />
 <h2 id="date-time">Date &amp; Time<a class="headerlink" href="#date-time" title="Permanent link">&para;</a></h2>
-<p>🟢 <strong>Installer default</strong></p>
+<p><strong>Installer default</strong></p>
 <p>Get the current time, date, or information about specific calendar days.</p>
 <p><strong>Usage examples:</strong></p>
 <ul>
@@ -1975,8 +1979,12 @@ survives a reboot and can sync with an external calendar.</p>
 <li>Tell me the day of the week</li>
 <li>What day is Memorial Day 2020?</li>
 <li>What's the date?</li>
-<li>Show me the time</li>
-<li>How many days until July 4<sup>th</sup></li>
+<li>
+<p>Show me the time</p>
+</li>
+<li>
+<p>How many days until July 4<sup>th</sup></p>
+</li>
 <li>What time is it in Paris?</li>
 </ul>
 <details class="note">
@@ -1985,7 +1993,7 @@ survives a reboot and can sync with an external calendar.</p>
 </details>
 <hr />
 <h2 id="naptime-snooze-the-assistant">Naptime (Snooze the Assistant)<a class="headerlink" href="#naptime-snooze-the-assistant" title="Permanent link">&para;</a></h2>
-<p>🟢 <strong>Installer default</strong></p>
+<p><strong>Installer default</strong></p>
 <p>Put the assistant to sleep when you don't want to be disturbed. While asleep, the wake word stops
 triggering listening. Say "Wake up" (or the configured stand-up word) to bring it back.</p>
 <p><strong>Usage examples:</strong></p>
@@ -2000,7 +2008,7 @@ triggering listening. Say "Wake up" (or the configured stand-up word) to bring i
 </details>
 <hr />
 <h2 id="weather">Weather<a class="headerlink" href="#weather" title="Permanent link">&para;</a></h2>
-<p>🟢 <strong>Installer default</strong></p>
+<p><strong>Installer default</strong></p>
 <p>Get weather conditions, forecasts, expected precipitation and more! You can also ask for other
 cities around the world. Current conditions and weather forecasts come from OpenMeteo.</p>
 <p><strong>Usage examples:</strong></p>
@@ -2009,8 +2017,12 @@ cities around the world. Current conditions and weather forecasts come from Open
 <li>When will it rain next?</li>
 <li>What's the high temperature tomorrow</li>
 <li>Is it going to snow in Baltimore?</li>
-<li>what is the weather like?</li>
-<li>How windy is it?</li>
+<li>
+<p>what is the weather like?</p>
+</li>
+<li>
+<p>How windy is it?</p>
+</li>
 <li>What is the weather this weekend?</li>
 <li>What is the weather in Houston?</li>
 <li>Will it be cold on Tuesday</li>
@@ -2026,7 +2038,7 @@ cities around the world. Current conditions and weather forecasts come from Open
 itself. It is a separate skill that talks to <a href="https://www.home-assistant.io/">Home Assistant</a>.
 See <a href="../home-assistant/">OVOS &amp; Home Assistant</a> for the full setup story in both directions
 (OVOS controlling HA devices, and HA using OVOS's own speech engines).</p>
-<p>⚪ <strong>Manual install only</strong> (or enable the installer's <code>homeassistant</code> feature, which installs and
+<p><strong>Manual install only</strong> (or enable the installer's <code>homeassistant</code> feature, which installs and
 configures it for you)</p>
 <p>The <code>skill-homeassistant</code> skill (maintained by OscillateLabs) lets OVOS control your Home
 Assistant devices by voice once you've pointed it at your HA instance's URL and a long-lived
@@ -2045,7 +2057,7 @@ access token.</p>
 <hr />
 <h2 id="music-radio">Music &amp; Radio<a class="headerlink" href="#music-radio" title="Permanent link">&para;</a></h2>
 <h3 id="pyradios">PyRadios<a class="headerlink" href="#pyradios" title="Permanent link">&para;</a></h3>
-<p>🟡 <strong>Installer optional</strong> (<code>extra-skills</code> feature)</p>
+<p><strong>Installer optional</strong> (<code>extra-skills</code> feature)</p>
 <p>A client for the Radio Browser API, a large, community-maintained directory of internet radio
 stations.</p>
 <p><strong>Usage examples:</strong></p>
@@ -2058,7 +2070,7 @@ stations.</p>
 <p><a href="https://github.com/OpenVoiceOS/ovos-skill-pyradios"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2Z"/></svg></span> OpenVoiceOS/ovos-skill-pyradios</a> · <code>pip install ovos-skill-pyradios</code> · Maturity: Stable</p>
 </details>
 <h3 id="somafm">SomaFM<a class="headerlink" href="#somafm" title="Permanent link">&para;</a></h3>
-<p>🟡 <strong>Installer optional</strong> (<code>extra-skills</code> feature)</p>
+<p><strong>Installer optional</strong> (<code>extra-skills</code> feature)</p>
 <p>Listen to a variety of commercial-free internet radio stations from SomaFM.</p>
 <p><strong>Usage examples:</strong></p>
 <ul>
@@ -2071,7 +2083,7 @@ stations.</p>
 <p><a href="https://github.com/OpenVoiceOS/ovos-skill-somafm"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2Z"/></svg></span> OpenVoiceOS/ovos-skill-somafm</a> · <code>pip install ovos-skill-somafm</code> · Maturity: Stable</p>
 </details>
 <h3 id="news">News<a class="headerlink" href="#news" title="Permanent link">&para;</a></h3>
-<p>🟡 <strong>Installer optional</strong> (<code>extra-skills</code> feature)</p>
+<p><strong>Installer optional</strong> (<code>extra-skills</code> feature)</p>
 <p>News streams from around the globe.</p>
 <p><strong>Usage examples:</strong></p>
 <ul>
@@ -2087,7 +2099,7 @@ stations.</p>
 <p><a href="https://github.com/OpenVoiceOS/ovos-skill-news"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2Z"/></svg></span> OpenVoiceOS/ovos-skill-news</a> · <code>pip install ovos-skill-news</code> · Maturity: Stable</p>
 </details>
 <h3 id="local-media">Local Media<a class="headerlink" href="#local-media" title="Permanent link">&para;</a></h3>
-<p>🟡 <strong>Installer optional</strong> (<code>extra-skills</code> feature)</p>
+<p><strong>Installer optional</strong> (<code>extra-skills</code> feature)</p>
 <p>Local media file browser for OpenVoiceOS. Browse and play audio/video files from a USB drive or
 local folder.</p>
 <p><strong>Usage examples:</strong></p>
@@ -2096,8 +2108,12 @@ local folder.</p>
 <li>show my file browser</li>
 <li>show my usb drive</li>
 <li>start usb browser app</li>
-<li>show my usb</li>
-<li>show file browser app</li>
+<li>
+<p>show my usb</p>
+</li>
+<li>
+<p>show file browser app</p>
+</li>
 <li>show file browser</li>
 <li>open usb</li>
 <li>start usb browser</li>
@@ -2117,7 +2133,7 @@ available to add.</p>
 <hr />
 <h2 id="fun-trivia">Fun &amp; Trivia<a class="headerlink" href="#fun-trivia" title="Permanent link">&para;</a></h2>
 <h3 id="dad-jokes">Dad Jokes<a class="headerlink" href="#dad-jokes" title="Permanent link">&para;</a></h3>
-<p>🟡 <strong>Installer optional</strong> (<code>extra-skills</code> feature)</p>
+<p><strong>Installer optional</strong> (<code>extra-skills</code> feature)</p>
 <p>Brighten your day with dad humor. Laughter is not guaranteed, but eye rolls are likely.</p>
 <p><strong>Usage examples:</strong></p>
 <ul>
@@ -2125,8 +2141,12 @@ available to add.</p>
 <li>Make me laugh.</li>
 <li>Do you know any Chuck Norris jokes?</li>
 <li>Tell me a joke about dentists.</li>
-<li>Say a joke.</li>
-<li>Tell me a joke.</li>
+<li>
+<p>Say a joke.</p>
+</li>
+<li>
+<p>Tell me a joke.</p>
+</li>
 <li>Do you know any jokes?</li>
 </ul>
 <details class="note">
@@ -2134,7 +2154,7 @@ available to add.</p>
 <p><a href="https://github.com/OpenVoiceOS/ovos-skill-icanhazdadjokes"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2Z"/></svg></span> OpenVoiceOS/ovos-skill-icanhazdadjokes</a> · <code>pip install ovos-skill-icanhazdadjokes</code> · Maturity: Stable</p>
 </details>
 <h3 id="parrot">Parrot<a class="headerlink" href="#parrot" title="Permanent link">&para;</a></h3>
-<p>🟢 <strong>Installer default</strong></p>
+<p><strong>Installer default</strong></p>
 <p>Turn OpenVoiceOS into an echoing parrot! Make OVOS repeat whatever you want.</p>
 <p><strong>Usage examples:</strong></p>
 <ul>
@@ -2142,8 +2162,12 @@ available to add.</p>
 <li>say Goodnight, Gracie</li>
 <li>speak I can say anything you'd like!</li>
 <li>start parrot</li>
-<li>repeat Once upon a midnight dreary, while I pondered, weak and weary, Over many a quaint and curious volume of forgotten lore</li>
-<li>Repeat what you just said</li>
+<li>
+<p>repeat Once upon a midnight dreary, while I pondered, weak and weary, Over many a quaint and curious volume of forgotten lore</p>
+</li>
+<li>
+<p>Repeat what you just said</p>
+</li>
 <li>What did I just say?</li>
 <li>Can you repeat that?</li>
 <li>stop parrot</li>
@@ -2154,7 +2178,7 @@ available to add.</p>
 <p><a href="https://github.com/OpenVoiceOS/ovos-skill-parrot"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2Z"/></svg></span> OpenVoiceOS/ovos-skill-parrot</a> · <code>pip install ovos-skill-parrot</code> · Maturity: Stable</p>
 </details>
 <h3 id="confucius-quotes">Confucius Quotes<a class="headerlink" href="#confucius-quotes" title="Permanent link">&para;</a></h3>
-<p>⚪ <strong>Manual install only</strong></p>
+<p><strong>Manual install only</strong></p>
 <p>Quotes from Confucius.</p>
 <p><strong>Usage examples:</strong></p>
 <ul>
@@ -2168,7 +2192,7 @@ available to add.</p>
 <p><a href="https://github.com/OpenVoiceOS/ovos-skill-confucius-quotes"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2Z"/></svg></span> OpenVoiceOS/ovos-skill-confucius-quotes</a> · <code>pip install ovos-skill-confucius-quotes</code> · Maturity: Stable</p>
 </details>
 <h3 id="today-in-history">Today in History<a class="headerlink" href="#today-in-history" title="Permanent link">&para;</a></h3>
-<p>⚪ <strong>Manual install only</strong></p>
+<p><strong>Manual install only</strong></p>
 <p>Provides historical events for today or any other calendar day using information pulled from
 Wikipedia.</p>
 <p><strong>Usage examples:</strong></p>
@@ -2184,7 +2208,7 @@ Wikipedia.</p>
 <p><a href="https://github.com/OpenVoiceOS/ovos-skill-days-in-history"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2Z"/></svg></span> OpenVoiceOS/ovos-skill-days-in-history</a> · <code>pip install ovos-skill-days-in-history</code> · Maturity: Stable</p>
 </details>
 <h3 id="number-facts">Number Facts<a class="headerlink" href="#number-facts" title="Permanent link">&para;</a></h3>
-<p>⚪ <strong>Manual install only</strong></p>
+<p><strong>Manual install only</strong></p>
 <p>Facts about numbers.</p>
 <p><strong>Usage examples:</strong></p>
 <ul>
@@ -2192,8 +2216,12 @@ Wikipedia.</p>
 <li>trivia about next week</li>
 <li>trivia about tomorrow</li>
 <li>fact about number 666</li>
-<li>fact about yesterday</li>
-<li>curiosity about year 1992</li>
+<li>
+<p>fact about yesterday</p>
+</li>
+<li>
+<p>curiosity about year 1992</p>
+</li>
 <li>math fact about number 7</li>
 </ul>
 <details class="note">
@@ -2201,7 +2229,7 @@ Wikipedia.</p>
 <p><a href="https://github.com/OpenVoiceOS/ovos-skill-number-facts"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2Z"/></svg></span> OpenVoiceOS/ovos-skill-number-facts</a> · <code>pip install ovos-skill-number-facts</code> · Maturity: Stable</p>
 </details>
 <h3 id="movie-master">Movie Master<a class="headerlink" href="#movie-master" title="Permanent link">&para;</a></h3>
-<p>⚪ <strong>Manual install only</strong></p>
+<p><strong>Manual install only</strong></p>
 <p>Find information about movies, actors, and production details. Easily find information about a
 movie with your voice.</p>
 <p><strong>Usage examples:</strong></p>
@@ -2210,8 +2238,12 @@ movie with your voice.</p>
 <li>Tell me about the movie _______</li>
 <li>What genres does the flick _______ belong to?</li>
 <li>Who plays in the movie _______?</li>
-<li>How long is the movie _______?</li>
-<li>Look for information on the movie _______.</li>
+<li>
+<p>How long is the movie _______?</p>
+</li>
+<li>
+<p>Look for information on the movie _______.</p>
+</li>
 <li>Do you have info on the film _______?</li>
 <li>What is the movie _______ about?</li>
 <li>What are the highest rated movies out?</li>
@@ -2222,7 +2254,7 @@ movie with your voice.</p>
 <p><a href="https://github.com/OpenVoiceOS/ovos-skill-moviemaster"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2Z"/></svg></span> OpenVoiceOS/ovos-skill-moviemaster</a> · <code>pip install ovos-skill-moviemaster</code> · Maturity: Stable</p>
 </details>
 <h3 id="iss-location">ISS Location<a class="headerlink" href="#iss-location" title="Permanent link">&para;</a></h3>
-<p>⚪ <strong>Manual install only</strong></p>
+<p><strong>Manual install only</strong></p>
 <p>Track the location of the International Space Station.</p>
 <p><strong>Usage examples:</strong></p>
 <ul>
@@ -2237,7 +2269,7 @@ movie with your voice.</p>
 <p><a href="https://github.com/OpenVoiceOS/ovos-skill-iss-location"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2Z"/></svg></span> OpenVoiceOS/ovos-skill-iss-location</a> · <code>pip install ovos-skill-iss-location</code> · Maturity: Stable</p>
 </details>
 <h3 id="duckduckgo">DuckDuckGo<a class="headerlink" href="#duckduckgo" title="Permanent link">&para;</a></h3>
-<p>🟢 <strong>Installer default</strong></p>
+<p><strong>Installer default</strong></p>
 <p>Use DuckDuckGo to answer questions.</p>
 <p><strong>Usage examples:</strong></p>
 <ul>
@@ -2250,7 +2282,7 @@ movie with your voice.</p>
 <p><a href="https://github.com/OpenVoiceOS/ovos-skill-ddg"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2Z"/></svg></span> OpenVoiceOS/ovos-skill-ddg</a> · <code>pip install ovos-skill-ddg</code> · Maturity: Stable</p>
 </details>
 <h3 id="wikipedia">Wikipedia<a class="headerlink" href="#wikipedia" title="Permanent link">&para;</a></h3>
-<p>🟢 <strong>Installer default</strong></p>
+<p><strong>Installer default</strong></p>
 <p>Query Wikipedia for answers to all your questions. Get just a summary, or ask for more to get
 in-depth information.</p>
 <p><strong>Usage examples:</strong></p>
@@ -2259,8 +2291,12 @@ in-depth information.</p>
 <li>More information</li>
 <li>Tell me about beans</li>
 <li>Tell me More</li>
-<li>Tell me about the Pembroke Welsh Corgi</li>
-<li>Check Wikipedia for beans</li>
+<li>
+<p>Tell me about the Pembroke Welsh Corgi</p>
+</li>
+<li>
+<p>Check Wikipedia for beans</p>
+</li>
 <li>Tell me about Elon Musk</li>
 </ul>
 <details class="note">
@@ -2268,7 +2304,7 @@ in-depth information.</p>
 <p><a href="https://github.com/OpenVoiceOS/ovos-skill-wikipedia"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2Z"/></svg></span> OpenVoiceOS/ovos-skill-wikipedia</a> · <code>pip install ovos-skill-wikipedia</code> · Maturity: Mature</p>
 </details>
 <h3 id="wikihow">WikiHow<a class="headerlink" href="#wikihow" title="Permanent link">&para;</a></h3>
-<p>🟢 <strong>Installer default</strong></p>
+<p><strong>Installer default</strong></p>
 <p>How to do nearly everything.</p>
 <p><strong>Usage examples:</strong></p>
 <ul>
@@ -2280,7 +2316,7 @@ in-depth information.</p>
 <p><a href="https://github.com/OpenVoiceOS/ovos-skill-wikihow"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2Z"/></svg></span> OpenVoiceOS/ovos-skill-wikihow</a> · <code>pip install ovos-skill-wikihow</code> · Maturity: Stable</p>
 </details>
 <h3 id="wolfie-wolfram-alpha">Wolfie (Wolfram Alpha)<a class="headerlink" href="#wolfie-wolfram-alpha" title="Permanent link">&para;</a></h3>
-<p>🟢 <strong>Installer default</strong></p>
+<p><strong>Installer default</strong></p>
 <p>Use Wolfram Alpha for general knowledge questions.</p>
 <p><strong>Usage examples:</strong></p>
 <ul>
@@ -2296,7 +2332,7 @@ in-depth information.</p>
 <p><a href="https://github.com/OpenVoiceOS/ovos-skill-wolfie"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2Z"/></svg></span> OpenVoiceOS/ovos-skill-wolfie</a> · <code>pip install ovos-skill-wolfie</code> · Maturity: Mature</p>
 </details>
 <h3 id="wordnet">Wordnet<a class="headerlink" href="#wordnet" title="Permanent link">&para;</a></h3>
-<p>⚪ <strong>Manual install only</strong></p>
+<p><strong>Manual install only</strong></p>
 <p>Use Wordnet to answer dictionary-like questions.</p>
 <p><strong>Usage examples:</strong></p>
 <ul>
@@ -2308,7 +2344,7 @@ in-depth information.</p>
 <p><a href="https://github.com/OpenVoiceOS/ovos-skill-wordnet"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2Z"/></svg></span> OpenVoiceOS/ovos-skill-wordnet</a> · <code>pip install ovos-skill-wordnet</code> · Maturity: Stable</p>
 </details>
 <h3 id="spelling">Spelling<a class="headerlink" href="#spelling" title="Permanent link">&para;</a></h3>
-<p>🟢 <strong>Installer default</strong></p>
+<p><strong>Installer default</strong></p>
 <p>Provides the spelling of words and phrases upon request.</p>
 <p><strong>Usage examples:</strong></p>
 <ul>
@@ -2322,7 +2358,7 @@ in-depth information.</p>
 <p><a href="https://github.com/OpenVoiceOS/ovos-skill-spelling"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2Z"/></svg></span> OpenVoiceOS/ovos-skill-spelling</a> · <code>pip install ovos-skill-spelling</code> · Maturity: Stable</p>
 </details>
 <h3 id="personal">Personal<a class="headerlink" href="#personal" title="Permanent link">&para;</a></h3>
-<p>🟢 <strong>Installer default</strong></p>
+<p><strong>Installer default</strong></p>
 <p>Learn history and personality of the assistant. Ask about the 'birth' and parentage of the voice
 assistant and get a taste of the community who is fostering this open source artificial
 intelligence.</p>
@@ -2338,7 +2374,7 @@ intelligence.</p>
 <p><a href="https://github.com/OpenVoiceOS/ovos-skill-personal"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2Z"/></svg></span> OpenVoiceOS/ovos-skill-personal</a> · <code>pip install ovos-skill-personal</code> · Maturity: Stable</p>
 </details>
 <h3 id="hello-world">Hello World<a class="headerlink" href="#hello-world" title="Permanent link">&para;</a></h3>
-<p>🟢 <strong>Installer default</strong></p>
+<p><strong>Installer default</strong></p>
 <p>Introductory <a href="../skill-design-guidelines/">skill</a> so that skill authors can see how an OVOS skill
 is put together.</p>
 <p><strong>Usage examples:</strong></p>
@@ -2354,7 +2390,7 @@ is put together.</p>
 <hr />
 <h2 id="utilities-system-voice-control">Utilities (System &amp; Voice Control)<a class="headerlink" href="#utilities-system-voice-control" title="Permanent link">&para;</a></h2>
 <h3 id="volume">Volume<a class="headerlink" href="#volume" title="Permanent link">&para;</a></h3>
-<p>🟢 <strong>Installer default</strong></p>
+<p><strong>Installer default</strong></p>
 <p>Control the volume of OVOS with verbal commands.</p>
 <p><strong>Usage examples:</strong></p>
 <ul>
@@ -2362,8 +2398,12 @@ is put together.</p>
 <li>volume low</li>
 <li>mute audio</li>
 <li>volume to high level</li>
-<li>reset volume</li>
-<li>volume to high</li>
+<li>
+<p>reset volume</p>
+</li>
+<li>
+<p>volume to high</p>
+</li>
 <li>volume level low</li>
 <li>toggle audio</li>
 <li>low volume</li>
@@ -2374,7 +2414,7 @@ is put together.</p>
 <p><a href="https://github.com/OpenVoiceOS/ovos-skill-volume"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2Z"/></svg></span> OpenVoiceOS/ovos-skill-volume</a> · <code>pip install ovos-skill-volume</code> · Maturity: Stable</p>
 </details>
 <h3 id="ip-address">IP Address<a class="headerlink" href="#ip-address" title="Permanent link">&para;</a></h3>
-<p>🟢 <strong>Installer default</strong></p>
+<p><strong>Installer default</strong></p>
 <p>Network connection information.</p>
 <p><strong>Usage examples:</strong></p>
 <ul>
@@ -2389,7 +2429,7 @@ is put together.</p>
 <p><a href="https://github.com/OpenVoiceOS/ovos-skill-ip"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2Z"/></svg></span> OpenVoiceOS/ovos-skill-ip</a> · <code>pip install ovos-skill-ip</code> · Maturity: Stable</p>
 </details>
 <h3 id="speedtest">Speedtest<a class="headerlink" href="#speedtest" title="Permanent link">&para;</a></h3>
-<p>🟢 <strong>Installer default</strong></p>
+<p><strong>Installer default</strong></p>
 <p>Runs an internet bandwidth test using speedtest.net.</p>
 <p><strong>Usage examples:</strong></p>
 <ul>
@@ -2400,7 +2440,7 @@ is put together.</p>
 <p><a href="https://github.com/OpenVoiceOS/ovos-skill-speedtest"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2Z"/></svg></span> OpenVoiceOS/ovos-skill-speedtest</a> · <code>pip install ovos-skill-speedtest</code> · Maturity: Stable</p>
 </details>
 <h3 id="boot-finished">Boot Finished<a class="headerlink" href="#boot-finished" title="Permanent link">&para;</a></h3>
-<p>🟢 <strong>Installer default</strong></p>
+<p><strong>Installer default</strong></p>
 <p>Provides notifications when OpenVoiceOS has fully started and all core services are ready. It
 listens for the <code>mycroft.ready</code> bus event (emitted once every core service reports ready) and
 speaks a short confirmation. This is useful on headless devices where you cannot otherwise tell startup
@@ -2416,7 +2456,7 @@ finished.</p>
 <p><a href="https://github.com/OpenVoiceOS/ovos-skill-boot-finished"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2Z"/></svg></span> OpenVoiceOS/ovos-skill-boot-finished</a> · <code>pip install ovos-skill-boot-finished</code> · Maturity: Stable</p>
 </details>
 <h3 id="dictation">Dictation<a class="headerlink" href="#dictation" title="Permanent link">&para;</a></h3>
-<p>🟢 <strong>Installer default</strong></p>
+<p><strong>Installer default</strong></p>
 <p>Continuously transcribes user speech to a text file while enabled.</p>
 <p><strong>Usage examples:</strong></p>
 <ul>
@@ -2428,7 +2468,7 @@ finished.</p>
 <p><a href="https://github.com/OpenVoiceOS/ovos-skill-dictation"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2Z"/></svg></span> OpenVoiceOS/ovos-skill-dictation</a> · <code>pip install ovos-skill-dictation</code> · Maturity: Stable</p>
 </details>
 <h3 id="audio-recording">Audio Recording<a class="headerlink" href="#audio-recording" title="Permanent link">&para;</a></h3>
-<p>🟢 <strong>Installer default</strong></p>
+<p><strong>Installer default</strong></p>
 <p>Record and manage audio clips directly from your assistant.</p>
 <p><strong>Usage examples:</strong></p>
 <ul>
@@ -2443,7 +2483,7 @@ finished.</p>
 <p><a href="https://github.com/OpenVoiceOS/ovos-skill-audio-recording"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2Z"/></svg></span> OpenVoiceOS/ovos-skill-audio-recording</a> · <code>pip install ovos-skill-audio-recording</code> · Maturity: Stable</p>
 </details>
 <h3 id="commands">Commands<a class="headerlink" href="#commands" title="Permanent link">&para;</a></h3>
-<p>⚪ <strong>Manual install only</strong></p>
+<p><strong>Manual install only</strong></p>
 <p>Allows you to execute shell scripts and system commands via voice. Useful for headless boxes
 where you want a voice shortcut to a maintenance script instead of SSHing in.</p>
 <p><strong>Usage examples:</strong></p>

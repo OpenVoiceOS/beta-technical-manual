@@ -1452,26 +1452,26 @@ compute budget to run NLLB locally.</p>
 <tbody>
 <tr>
 <td><code>ovos-translate-plugin-server</code> (<a href="https://github.com/OpenVoiceOS/ovos-translate-server-plugin">repo</a>)</td>
-<td>✔️</td>
-<td>✔️</td>
+<td>yes</td>
+<td>yes</td>
 <td>API (self/community hosted)</td>
 <td>Apache-2.0</td>
-<td>Client for <a href="https://github.com/OpenVoiceOS/ovos-translate-server">ovos-translate-server</a>; ships a built-in public-server list with failover. Detection is a separate entry-point, <code>ovos-lang-detector-plugin-server</code>.</td>
+<td>Client for <a href="https://github.com/OpenVoiceOS/ovos-translate-server">ovos-translate-server</a>. Ships a built-in public-server list with failover. Detection is a separate entry-point, <code>ovos-lang-detector-plugin-server</code>.</td>
 <td>Stable</td>
 </tr>
 <tr>
 <td><code>ovos-translate-plugin-nllb</code> (<a href="https://github.com/OpenVoiceOS/ovos-translate-plugin-nllb">repo</a>)</td>
-<td>❌</td>
-<td>✔️</td>
+<td>no</td>
+<td>yes</td>
 <td>FOSS (Offline)</td>
 <td>Apache-2.0</td>
-<td>NLLB-200 via CTranslate2; downloads a model the first time.</td>
+<td>NLLB-200 via CTranslate2. Downloads a model the first time.</td>
 <td>Stable</td>
 </tr>
 <tr>
 <td><code>ovos-lang-detector-fasttext-plugin</code> (<a href="https://github.com/OpenVoiceOS/ovos-lang-detector-fasttext-plugin">repo</a>)</td>
-<td>✔️</td>
-<td>❌</td>
+<td>yes</td>
+<td>no</td>
 <td>FOSS (Offline)</td>
 <td>Apache-2.0</td>
 <td>fastText language identification.</td>
@@ -1479,8 +1479,8 @@ compute budget to run NLLB locally.</p>
 </tr>
 <tr>
 <td><code>ovos-lang-detector-classics-plugin</code> (<a href="https://github.com/OpenVoiceOS/ovos-lang-detector-classics-plugin">repo</a>)</td>
-<td>✔️</td>
-<td>❌</td>
+<td>yes</td>
+<td>no</td>
 <td>FOSS (Offline)</td>
 <td>no license file</td>
 <td>A <em>voter</em> (<code>ovos-lang-detector-plugin-voter</code>) that averages classic detectors. By default it uses cld2, langdetect and fastlang. cld3 is also available as a separate sub-plugin.</td>
@@ -1488,8 +1488,8 @@ compute budget to run NLLB locally.</p>
 </tr>
 <tr>
 <td><code>ovos-google-translate-plugin</code> (<a href="https://github.com/OpenVoiceOS/ovos-google-translate-plugin">repo</a>)</td>
-<td>✔️</td>
-<td>✔️</td>
+<td>yes</td>
+<td>yes</td>
 <td>API (free)</td>
 <td>Apache-2.0 (cloud service, separate Google terms)</td>
 <td>Translate (<code>ovos-google-translate-plugin</code>) and detect (<code>ovos-google-lang-detector-plugin</code>) are separate entry-points.</td>
@@ -1524,9 +1524,15 @@ with a permissive license but thin docs. Do not read one column as implying the 
 </span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="p">}</span>
 </span></code></pre></div>
 <ul>
-<li><strong><code>host</code></strong>: a URL string or a list of URLs. When a list, the client tries each in order on failure. Omit it to use the built-in public servers (tried in random order to spread load).</li>
-<li><strong><code>timeout</code></strong>: per-request timeout in seconds (default <code>5</code>).</li>
-<li><strong><code>skip_detection</code></strong> (translator only): when <code>true</code>, the plugin skips the pre-translate <code>/detect/{text}</code> round-trip. The server then infers the source language directly from the <code>/translate/{target}/{text}</code> endpoint. This halves the request count when the server can self-detect. Defaults to <code>false</code>.</li>
+<li>
+<p><strong><code>host</code></strong>: a URL string or a list of URLs. When a list, the client tries each in order on failure. Omit it to use the built-in public servers (tried in random order to spread load).</p>
+</li>
+<li>
+<p><strong><code>timeout</code></strong>: per-request timeout in seconds (default <code>5</code>).</p>
+</li>
+<li>
+<p><strong><code>skip_detection</code></strong> (translator only): when <code>true</code>, the plugin skips the pre-translate <code>/detect/{text}</code> round-trip. The server then infers the source language directly from the <code>/translate/{target}/{text}</code> endpoint. This halves the request count when the server can self-detect. Defaults to <code>false</code>.</p>
+</li>
 </ul>
 <hr />
 <h2 id="technical-explanation">Technical Explanation<a class="headerlink" href="#technical-explanation" title="Permanent link">&para;</a></h2>

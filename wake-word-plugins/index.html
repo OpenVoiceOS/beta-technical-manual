@@ -1065,7 +1065,7 @@
           <li class="md-nav__item">
   <a href="#sensitivity-vs-trigger_level-the-technical-breakdown" class="md-nav__link">
     <span class="md-ellipsis">
-      sensitivity vs trigger_level — the technical breakdown
+      sensitivity vs trigger_level: the technical breakdown
     </span>
   </a>
   
@@ -1608,7 +1608,7 @@
           <li class="md-nav__item">
   <a href="#sensitivity-vs-trigger_level-the-technical-breakdown" class="md-nav__link">
     <span class="md-ellipsis">
-      sensitivity vs trigger_level — the technical breakdown
+      sensitivity vs trigger_level: the technical breakdown
     </span>
   </a>
   
@@ -1881,7 +1881,7 @@ actually does is below.</p>
 </span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>}
 </span></code></pre></div>
 <blockquote>
-<p>💡 see the full docs for the <a href="../speech-service/">listener service</a></p>
+<p>See the full docs for the <a href="../speech-service/">listener service</a></p>
 </blockquote>
 <h2 id="tips-and-caveats">Tips and Caveats<a class="headerlink" href="#tips-and-caveats" title="Permanent link">&para;</a></h2>
 <ul>
@@ -1892,7 +1892,7 @@ actually does is below.</p>
 <p><strong>Precision and Sensitivity</strong>: Adjust the <code>sensitivity</code> and <code>trigger_level</code> settings carefully. Too high a sensitivity can lead to false positives, while too low may miss detection.</p>
 </li>
 </ul>
-<h3 id="sensitivity-vs-trigger_level-the-technical-breakdown"><code>sensitivity</code> vs <code>trigger_level</code> — the technical breakdown<a class="headerlink" href="#sensitivity-vs-trigger_level-the-technical-breakdown" title="Permanent link">&para;</a></h3>
+<h3 id="sensitivity-vs-trigger_level-the-technical-breakdown"><code>sensitivity</code> vs <code>trigger_level</code>: the technical breakdown<a class="headerlink" href="#sensitivity-vs-trigger_level-the-technical-breakdown" title="Permanent link">&para;</a></h3>
 <p>These two settings work together in the model-based Precise plugins (<code>ovos-ww-plugin-precise-lite</code>, <code>ovos-ww-plugin-precise-onnx</code>):</p>
 <ul>
 <li><strong><code>sensitivity</code></strong> (float, 0.0-1.0, default <code>0.5</code>) sets how close a single audio chunk's model output has to be to "yes" before it counts as a match. A chunk counts as activated when its probability exceeds <code>1.0 - sensitivity</code>. Raising <code>sensitivity</code> makes each individual chunk easier to trigger: more false positives, more sensitive to the word.</li>
@@ -1914,14 +1914,14 @@ actually does is below.</p>
 </li>
 </ul>
 <blockquote>
-<p>⚠️ <code>found_wake_word()</code> takes no audio argument. The legacy <code>frame_data</code> parameter has been removed. Plugins now handle real time audio via the <code>update</code> method.</p>
+<p>Warning: <code>found_wake_word()</code> takes no audio argument. The legacy <code>frame_data</code> parameter has been removed. Plugins now handle real time audio via the <code>update</code> method.</p>
 </blockquote>
 <h3 id="registering-your-plugin">Registering Your Plugin<a class="headerlink" href="#registering-your-plugin" title="Permanent link">&para;</a></h3>
 <p>To make your plugin detectable, provide an entry point under the <code>opm.wake_word</code> namespace:</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">setup</span><span class="p">([</span><span class="o">...</span><span class="p">],</span> <span class="n">entry_points</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;opm.wake_word&#39;</span><span class="p">:</span> <span class="s1">&#39;example_ww = my_ww:MyWakeWordEngine&#39;</span><span class="p">})</span>
 </span></code></pre></div>
 <blockquote>
-<p>💡 <strong>Backward Compatibility</strong>: <code>ovos-plugin-manager</code> still supports legacy <code>mycroft.plugin.wake_word</code> entry points, but new plugins should use the <code>opm.*</code> namespace.</p>
+<p><strong>Backward Compatibility</strong>: <code>ovos-plugin-manager</code> still supports legacy <code>mycroft.plugin.wake_word</code> entry points, but new plugins should use the <code>opm.*</code> namespace.</p>
 </blockquote>
 <h3 id="example-plugin">Example Plugin<a class="headerlink" href="#example-plugin" title="Permanent link">&para;</a></h3>
 <p>Here's a simple implementation of a wake word plugin:</p>
@@ -1966,7 +1966,7 @@ separately-licensed model, that is called out under "model".</p>
 <tbody>
 <tr>
 <td><a href="#ovos-ww-plugin-precise-lite">ovos-ww-plugin-precise-lite</a></td>
-<td>First fallback below the default: a trained Precise wake-word model exported to TFLite. ⚠️ <strong>Archived</strong> — kept working as installed; <code>ovos-ww-plugin-precise-onnx</code> is the maintained successor.</td>
+<td>First fallback below the default: a trained Precise wake-word model exported to TFLite. Warning: archived, kept working as installed. <code>ovos-ww-plugin-precise-onnx</code> is the maintained successor.</td>
 <td>Apache-2.0</td>
 <td>Deprecated</td>
 </tr>
@@ -1990,19 +1990,19 @@ separately-licensed model, that is called out under "model".</p>
 </tr>
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/ovos-ww-plugin-wakewordlab">ovos-ww-plugin-wakewordlab</a></td>
-<td>Compact (~240 KB) neural wake-word models with a Silero VAD pre-filter (<code>.wkw</code>/<code>.onnx</code>). <strong>Not yet on PyPI</strong> — install from source.</td>
+<td>Compact (~240 KB) neural wake-word models with a Silero VAD pre-filter (<code>.wkw</code>/<code>.onnx</code>). <strong>Not yet on PyPI</strong>, install from source.</td>
 <td>Apache-2.0</td>
 <td>Alpha</td>
 </tr>
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/ovos-ww-plugin-wakeforge">ovos-ww-plugin-wakeforge</a></td>
-<td>Runs custom wake-word models trained with <a href="https://github.com/TigreGotico/wakeforge">wakeforge</a> — train a detector from a single phrase, export a two-file model. <strong>Not yet on PyPI</strong> — install from source.</td>
+<td>Runs custom wake-word models trained with <a href="https://github.com/TigreGotico/wakeforge">wakeforge</a>: train a detector from a single phrase, export a two-file model. <strong>Not yet on PyPI</strong>, install from source.</td>
 <td>Apache-2.0</td>
 <td>Alpha</td>
 </tr>
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/ovos-ww-plugin-server">ovos-ww-plugin-server</a></td>
-<td>Remote wake-word detection: streams audio to an <a href="https://github.com/OpenVoiceOS/ovos-ww-server">ovos-ww-server</a> instance (offload detection from a thin satellite). <strong>Not yet on PyPI</strong> — install from source.</td>
+<td>Remote wake-word detection: streams audio to an <a href="https://github.com/OpenVoiceOS/ovos-ww-server">ovos-ww-server</a> instance (offload detection from a thin satellite). <strong>Not yet on PyPI</strong>, install from source.</td>
 <td>Apache-2.0</td>
 <td>Alpha</td>
 </tr>
@@ -2012,7 +2012,7 @@ separately-licensed model, that is called out under "model".</p>
 <h2 id="ovos-ww-plugin-precise-lite">ovos-ww-plugin-precise-lite<a class="headerlink" href="#ovos-ww-plugin-precise-lite" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
-<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-ww-plugin-precise-lite">https://github.com/OpenVoiceOS/ovos-ww-plugin-precise-lite</a> ⚠️ <strong>Archived</strong></p>
+<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-ww-plugin-precise-lite">OpenVoiceOS/ovos-ww-plugin-precise-lite</a>. Warning: archived.</p>
 </li>
 <li>
 <p><strong>Description</strong>: Trained Precise wake-word model exported to TFLite. The bundled default <code>mycroft.conf</code> ships it as <code>hey_mycroft_tflite</code>, the first fallback below the ONNX default.</p>
@@ -2033,7 +2033,7 @@ separately-licensed model, that is called out under "model".</p>
 <h2 id="ovos-ww-plugin-openwakeword">ovos-ww-plugin-openWakeWord<a class="headerlink" href="#ovos-ww-plugin-openwakeword" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
-<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-ww-plugin-openWakeWord">https://github.com/OpenVoiceOS/ovos-ww-plugin-openWakeWord</a></p>
+<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-ww-plugin-openWakeWord">OpenVoiceOS/ovos-ww-plugin-openWakeWord</a></p>
 </li>
 <li>
 <p><strong>Description</strong>: Wake-word detection using the open-source openWakeWord neural models.</p>
@@ -2043,7 +2043,7 @@ separately-licensed model, that is called out under "model".</p>
 <h2 id="ovos-ww-plugin-vosk">ovos-ww-plugin-vosk<a class="headerlink" href="#ovos-ww-plugin-vosk" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
-<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-ww-plugin-vosk">https://github.com/OpenVoiceOS/ovos-ww-plugin-vosk</a></p>
+<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-ww-plugin-vosk">OpenVoiceOS/ovos-ww-plugin-vosk</a></p>
 </li>
 <li>
 <p><strong>Description</strong>: Mycroft wake word plugin for <a href="https://alphacephei.com/vosk/">Vosk</a></p>
@@ -2064,7 +2064,7 @@ separately-licensed model, that is called out under "model".</p>
 <h2 id="ovos-ww-plugin-precise-onnx">ovos-ww-plugin-precise-onnx<a class="headerlink" href="#ovos-ww-plugin-precise-onnx" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
-<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-ww-plugin-precise-onnx">https://github.com/OpenVoiceOS/ovos-ww-plugin-precise-onnx</a></p>
+<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-ww-plugin-precise-onnx">OpenVoiceOS/ovos-ww-plugin-precise-onnx</a></p>
 </li>
 <li>
 <p><strong>Description</strong>: Runs Precise wake word models exported to ONNX. It is the plugin the bundled default <code>mycroft.conf</code> ships for <code>hey_mycroft</code>.</p>

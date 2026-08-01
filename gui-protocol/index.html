@@ -1866,13 +1866,13 @@
 <p>Skip this legacy protocol. See <a href="../gui-status/">Screens on OVOS Today</a> for the current approach.</p>
 </div>
 <div class="admonition danger">
-<p class="admonition-title">The OVOS GUI is deprecated — see <a href="../gui-status/">Screens on OVOS Today</a> for the full picture</p>
+<p class="admonition-title">The OVOS GUI is deprecated: see <a href="../gui-status/">Screens on OVOS Today</a> for the full picture</p>
 <p>This page documents the legacy protocol. There is no generally usable OVOS GUI right now,
 and a replacement is <strong>Upcoming</strong>.</p>
 </div>
 <details class="info">
-<summary>📐 Formal specification</summary>
-<p>The <strong>forward</strong> model for the display subsystem is <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/gui-1.md">OVOS-GUI-1 — GUI Display Subsystem</a></strong> (a formal <a href="../architecture-specs/">architecture spec</a>). It replaces the legacy protocol on this page with a clean separation: an application declares <em>what</em> to show by naming a template from a <strong>closed <code>SYSTEM_*</code> vocabulary</strong> and pushing flat session-data. Interchangeable <strong>render backends (adapters)</strong> decide <em>how</em> to draw it, fanned out to every installed adapter. The wire messages stay <code>gui.value.set</code> / <code>gui.page.show</code> / <code>gui.clear.namespace</code>, but a <code>gui.page.show</code> whose first page is <strong>not</strong> a <code>SYSTEM_*</code> template is rejected (no more arbitrary QML). A GUI message is routed <strong>solely by its <code>session_id</code></strong>. This page documents the legacy Qt-WebSocket protocol that the OVOS-GUI-1 adapter model supersedes. Where they differ, the spec is the canonical target (see the "Upcoming" note at the foot of this page and <a href="../gui-adapters/">GUI Adapter Plugins</a>).</p>
+<summary>Formal specification</summary>
+<p>The <strong>forward</strong> model for the display subsystem is <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/gui-1.md">OVOS-GUI-1: GUI Display Subsystem</a></strong> (a formal <a href="../architecture-specs/">architecture spec</a>). It replaces the legacy protocol on this page with a clean separation: an application declares <em>what</em> to show by naming a template from a <strong>closed <code>SYSTEM_*</code> vocabulary</strong> and pushing flat session-data. Interchangeable <strong>render backends (adapters)</strong> decide <em>how</em> to draw it, fanned out to every installed adapter. The wire messages stay <code>gui.value.set</code> / <code>gui.page.show</code> / <code>gui.clear.namespace</code>, but a <code>gui.page.show</code> whose first page is <strong>not</strong> a <code>SYSTEM_*</code> template is rejected (no more arbitrary QML). A GUI message is routed <strong>solely by its <code>session_id</code></strong>. This page documents the legacy Qt-WebSocket protocol that the OVOS-GUI-1 adapter model supersedes. Where they differ, the spec is the canonical target (see the "Upcoming" note at the foot of this page and <a href="../gui-adapters/">GUI Adapter Plugins</a>).</p>
 </details>
 <p>The <code>ovos-gui</code> service exposes two communication channels:</p>
 <ol>
@@ -1944,7 +1944,7 @@ clients as <code>mycroft.session.set</code>.</p>
 </span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="p">}</span>
 </span></code></pre></div>
 <p><code>page_names</code> are page resource identifiers. The built-in pages use <code>SYSTEM_*</code> names (e.g.
-<code>SYSTEM_TextFrame</code>, <code>SYSTEM_ImageFrame</code>, <code>SYSTEM_Face</code>); skills may also ship their own
+<code>SYSTEM_TextFrame</code>, <code>SYSTEM_ImageFrame</code>, <code>SYSTEM_Face</code>). Skills may also ship their own
 <code>.qml</code> pages and reference them by name. <code>NamespaceManager</code> records the page list against
 the namespace and mirrors it to clients as <code>mycroft.gui.list.insert</code> with the resolved
 page URIs.</p>
@@ -2292,7 +2292,7 @@ resolution order). Skill-provided <code>.qml</code> pages are sent as ordinary f
 <h4 id="page-focus-interaction-client-core">Page focus / interaction (client → core)<a class="headerlink" href="#page-focus-interaction-client-core" title="Permanent link">&para;</a></h4>
 <p>When the user swipes to a different page or interacts with one, the Qt client signals
 core. <code>ovos-gui</code> listens for <code>gui.page_gained_focus</code> and <code>gui.page_interaction</code> on the
-OVOS bus; both carry <code>skill_id</code> and a zero-based <code>page_number</code>. The interaction event also
+OVOS bus. Both carry <code>skill_id</code> and a zero-based <code>page_number</code>. The interaction event also
 resets the namespace's idle-removal timer.</p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="p">{</span>
 </span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a><span class="w">  </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;gui.page_gained_focus&quot;</span><span class="p">,</span>
@@ -2330,18 +2330,18 @@ as normal bus events.</p>
 </span></code></pre></div>
 <hr />
 <div class="admonition warning">
-<p class="admonition-title">Upcoming — unreleased</p>
+<p class="admonition-title">Upcoming: unreleased</p>
 <p>In the GUI-rework, specified by the
 <a href="https://github.com/OpenVoiceOS/architecture/blob/dev/gui-1.md">OVOS-GUI-1</a> spec
 (see <a href="../gui-service/">GUI Service</a>), the bus contract changes:</p>
 <ul>
-<li><code>gui.page.show</code> will accept <strong>only</strong> <code>SYSTEM_*</code> template names — custom QML pages are no
+<li><code>gui.page.show</code> will accept <strong>only</strong> <code>SYSTEM_*</code> template names. Custom QML pages are no
   longer supported.</li>
 <li>Instead of mirroring to Qt clients directly, template events fan out to every loaded
   <code>opm.gui_adapter</code> plugin (see <a href="../gui-adapters/">GUI Adapter Plugins</a>). The Qt WebSocket
   protocol on this page becomes one such adapter.</li>
 </ul>
-<p>None of this is implemented in <code>ovos-gui</code> yet — see
+<p>None of this is implemented in <code>ovos-gui</code> yet. See
 <a href="../gui-adapters/">GUI Adapter Plugins</a> for what the adapter plugins being built ahead of
 this rework have already settled on.</p>
 </div>

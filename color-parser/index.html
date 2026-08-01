@@ -1773,7 +1773,7 @@
 <tbody>
 <tr>
 <td><code>ovos_color_parser/__init__.py</code></td>
-<td>Convenience re-exports of the most common model classes and matching functions (a subset — see the API reference for what each submodule exposes)</td>
+<td>Convenience re-exports of the most common model classes and matching functions (a subset: see the API reference for what each submodule exposes)</td>
 </tr>
 <tr>
 <td><code>ovos_color_parser/models.py</code></td>
@@ -1789,7 +1789,7 @@
 </tr>
 <tr>
 <td><code>ovos_color_parser/match/automaton.py</code></td>
-<td><code>SubstringMatcher</code> — an in-house substring-matching automaton used for color-name lookup (no external Aho-Corasick dependency)</td>
+<td><code>SubstringMatcher</code>: an in-house substring-matching automaton used for color-name lookup (no external Aho-Corasick dependency)</td>
 </tr>
 <tr>
 <td><code>ovos_color_parser/vocab/</code></td>
@@ -1812,7 +1812,7 @@
 </span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>     │                                               │
 </span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>     └──as_spectral_color──► SpectralColor ◄─────────┘
 </span></code></pre></div>
-<p>The <code>HueRange</code> dataclass bridges the hue angle (0–360°) to the physical wavelength domain using <code>ISCCNBSSpectralColorTerms</code> as the default mapping table.</p>
+<p>The <code>HueRange</code> dataclass bridges the hue angle (0-360°) to the physical wavelength domain using <code>ISCCNBSSpectralColorTerms</code> as the default mapping table.</p>
 <h3 id="matching-pipeline-matchingpy">Matching pipeline (<code>matching.py</code>)<a class="headerlink" href="#matching-pipeline-matchingpy" title="Permanent link">&para;</a></h3>
 <p><code>color_from_description()</code> runs four steps:</p>
 <ol>
@@ -1846,17 +1846,17 @@
 <tbody>
 <tr>
 <td><code>sRGBAColor</code></td>
-<td><code>r</code>, <code>g</code>, <code>b</code> (0–255 int), <code>a</code> (0–255, default 255), <code>name</code>, <code>description</code></td>
+<td><code>r</code>, <code>g</code>, <code>b</code> (0-255 int), <code>a</code> (0-255, default 255), <code>name</code>, <code>description</code></td>
 <td><code>.as_hls</code>, <code>.as_hsv</code>, <code>.as_spectral_color</code>, <code>.hex_str</code>, <code>from_hex_str(hex_str)</code></td>
 </tr>
 <tr>
 <td><code>HLSColor</code></td>
-<td><code>h</code> (0–360 int), <code>l</code> (0–1 float), <code>s</code> (0–1 float), <code>name</code>, <code>description</code></td>
+<td><code>h</code> (0-360 int), <code>l</code> (0-1 float), <code>s</code> (0-1 float), <code>name</code>, <code>description</code></td>
 <td><code>.as_rgb</code>, <code>.as_hsv</code>, <code>.as_spectral_color</code>, <code>.hex_str</code>, <code>from_hex_str(hex_str)</code></td>
 </tr>
 <tr>
 <td><code>HSVColor</code></td>
-<td><code>h</code> (0–360 int), <code>s</code> (0–1 float), <code>v</code> (0–1 float), <code>name</code>, <code>description</code></td>
+<td><code>h</code> (0-360 int), <code>s</code> (0-1 float), <code>v</code> (0-1 float), <code>name</code>, <code>description</code></td>
 <td><code>.as_rgb</code>, <code>.as_hls</code>, <code>.as_spectral_color</code>, <code>.hex_str</code>, <code>from_hex_str(hex_str)</code></td>
 </tr>
 <tr>
@@ -1877,7 +1877,7 @@
 <tr>
 <td><code>LanguageColorVocabulary</code></td>
 <td><code>terms: List[ColorTerm]</code></td>
-<td>—</td>
+<td>none</td>
 </tr>
 <tr>
 <td><code>sRGBAColorPalette</code></td>
@@ -1923,12 +1923,12 @@
 <tr>
 <td><code>NewtonSpectralColorTerms</code></td>
 <td><code>SpectralColorPalette</code></td>
-<td>Newton's 7-color spectrum (380–690 nm)</td>
+<td>Newton's 7-color spectrum (380-690 nm)</td>
 </tr>
 <tr>
 <td><code>ISCCNBSSpectralColorTerms</code></td>
 <td><code>SpectralColorPalette</code></td>
-<td>ISCC-NBS 8-term spectrum (380–730 nm); default for hue↔wavelength conversion</td>
+<td>ISCC-NBS 8-term spectrum (380-730 nm). Default for hue-to-wavelength conversion</td>
 </tr>
 <tr>
 <td><code>MalacaraSpectralColorTerms</code></td>
@@ -1988,7 +1988,7 @@
 <td><code>color_distance</code></td>
 <td><code>(color_a: Color, color_b: Color) -&gt; float</code></td>
 <td><code>float</code></td>
-<td>CIEDE2000 perceptual distance between two colors in sRGB-255 space. Lower is more similar. Computed by the in-house <code>srgb8_distance</code>/<code>delta_e_cie2000</code> implementation in <code>ovos_color_parser/core/distance.py</code> — no <code>colorspacious</code> dependency.</td>
+<td>CIEDE2000 perceptual distance between two colors in sRGB-255 space. Lower is more similar. Computed by the in-house <code>srgb8_distance</code>/<code>delta_e_cie2000</code> implementation in <code>ovos_color_parser/core/distance.py</code>, with no <code>colorspacious</code> dependency.</td>
 </tr>
 <tr>
 <td><code>closest_color</code></td>
@@ -2006,7 +2006,7 @@
 <td><code>convert_K_to_RGB</code></td>
 <td><code>(colour_temperature: int) -&gt; sRGBAColor</code></td>
 <td><code>sRGBAColor</code></td>
-<td>Converts a color temperature in Kelvin (1 000–40 000 K) to an sRGB color. Algorithm by Tanner Helland. Raises <code>ValueError</code> for temperatures outside the 1 000–40 000 K range, so callers should guard input.</td>
+<td>Converts a color temperature in Kelvin (1 000-40 000 K) to an sRGB color. Algorithm by Tanner Helland. Raises <code>ValueError</code> for temperatures outside the 1 000-40 000 K range, so callers should guard input.</td>
 </tr>
 <tr>
 <td><code>get_contrasting_black_or_white</code></td>
@@ -2065,7 +2065,7 @@
 <tr>
 <td><code>match_colors</code></td>
 <td><code>(description: str, strategy: MatchStrategy = DAMERAU_LEVENSHTEIN_SIMILARITY, fuzzy: bool = False) -&gt; List[Tuple[HLSColor, float]]</code></td>
-<td>Instance method: match <code>description</code> against this instance's color vocabulary. Exact-first; the fuzzy scan runs only when <code>fuzzy=True</code> and exact spotting finds nothing.</td>
+<td>Instance method: match <code>description</code> against this instance's color vocabulary. Tries an exact match first. The fuzzy scan runs only when <code>fuzzy=True</code> and exact spotting finds nothing.</td>
 </tr>
 <tr>
 <td><code>match_objects</code></td>
@@ -2183,7 +2183,7 @@ color resolves to a spectral color term.</p>
 <tbody>
 <tr>
 <td><code>*.json</code> (except the two below)</td>
-<td>Map of <code>"#RRGGBB"</code> → <code>"color name"</code> — one or more files per language</td>
+<td>Map of <code>"#RRGGBB"</code> → <code>"color name"</code>. One or more files per language.</td>
 </tr>
 <tr>
 <td><code>object_colors.json</code></td>
@@ -2237,15 +2237,15 @@ color resolves to a spectral color term.</p>
 </tr>
 <tr>
 <td><code>ovos-number-parser</code></td>
-<td>Peer library in the OVOS NLP stack; not a dependency of this package</td>
+<td>Peer library in the OVOS NLP stack, not a dependency of this package</td>
 </tr>
 <tr>
 <td><code>ovos-date-parser</code></td>
-<td>Peer library in the OVOS NLP stack; not a dependency of this package</td>
+<td>Peer library in the OVOS NLP stack, not a dependency of this package</td>
 </tr>
 <tr>
 <td><code>ovos-lang-parser</code></td>
-<td>Peer library in the OVOS NLP stack; not a dependency of this package</td>
+<td>Peer library in the OVOS NLP stack, not a dependency of this package</td>
 </tr>
 </tbody>
 </table>

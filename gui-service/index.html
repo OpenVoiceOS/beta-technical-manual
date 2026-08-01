@@ -1582,11 +1582,11 @@
 
 <h1 id="gui-service-ovos-gui">GUI Service (ovos-gui)<a class="headerlink" href="#gui-service-ovos-gui" title="Permanent link">&para;</a></h1>
 <div class="admonition note">
-<p class="admonition-title">Maturity — Beta ⬤⬤⬤◯◯</p>
+<p class="admonition-title">Maturity: Beta ⬤⬤⬤◯◯</p>
 <p>The <code>ovos-gui</code> repository is active, but the GUI <strong>stack this page documents is legacy</strong> and being superseded. See <a href="../gui-status/">Screens on OVOS Today</a> for what to use now. The badge rates <a href="../maturity/">repository health</a>, not the stack's status. Read the deprecation notice below.</p>
 </div>
 <div class="admonition danger">
-<p class="admonition-title">The OVOS GUI is deprecated — see <a href="../gui-status/">Screens on OVOS Today</a> for the full picture</p>
+<p class="admonition-title">The OVOS GUI is deprecated: see <a href="../gui-status/">Screens on OVOS Today</a> for the full picture</p>
 <p>This page documents the legacy stack. There is no generally usable OVOS GUI right now,
 and a replacement is <strong>Upcoming</strong>.</p>
 </div>
@@ -1595,15 +1595,15 @@ and a replacement is <strong>Upcoming</strong>.</p>
 <p><code>ovos-gui</code> is the part of OpenVoiceOS that decides what shows up on a screen: text, images, a music player, or an idle home screen. Skills never draw to the display themselves. They send a request to this service, which keeps track of what each skill wants shown and passes it on to whatever screen is connected. Think of it as a stage manager that decides which scene is in front of the audience at any moment. To learn more, see the <a href="../homescreen/">Home Screen</a> and the <a href="../glossary/">Glossary</a>.</p>
 </div>
 <details class="info">
-<summary>📐 Formal specification</summary>
+<summary>Formal specification</summary>
 <p>The <strong>forward</strong> model for the display layer is
-<strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/gui-1.md">OVOS-GUI-1 — GUI Display Subsystem</a></strong>.
+<strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/gui-1.md">OVOS-GUI-1: GUI Display Subsystem</a></strong>.
 It reframes the GUI as a <em>voice-OS peripheral</em>: an application declares
 <strong>what</strong> to show using a <strong>closed <code>SYSTEM_*</code> template vocabulary</strong>, and any
 number of interchangeable <strong>render backends</strong> decide <strong>how</strong> to draw it
 (pixels, a character grid, a synthesized face…), each routed solely by the
 message's <code>session_id</code>. The <code>ovos-gui</code> daemon described on this page is the
-current ("legacy") implementation; read GUI-1 for the target contract this
+current ("legacy") implementation. Read GUI-1 for the target contract this
 subsystem is converging on. For the full set see the
 <strong><a href="../architecture-specs/">spec index</a></strong>.</p>
 </details>
@@ -1841,7 +1841,7 @@ transport.</p>
 </div>
 <hr />
 <div class="admonition warning">
-<p class="admonition-title">Upcoming — unreleased</p>
+<p class="admonition-title">Upcoming: unreleased</p>
 <p>The following describes a <strong>plugin-based rendering rework</strong> that is <strong>not yet
 released</strong> and not present on any published package. It is specified by the
 <a href="https://github.com/OpenVoiceOS/architecture/blob/dev/gui-1.md">OVOS-GUI-1</a> spec

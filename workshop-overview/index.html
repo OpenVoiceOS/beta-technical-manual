@@ -1713,7 +1713,7 @@
 
 <h1 id="ovos-workshop-documentation">ovos-workshop Documentation<a class="headerlink" href="#ovos-workshop-documentation" title="Permanent link">&para;</a></h1>
 <div class="admonition success">
-<p class="admonition-title">Maturity — Mature ⬤⬤⬤⬤⬤</p>
+<p class="admonition-title">Maturity: Mature ⬤⬤⬤⬤⬤</p>
 <p>This package is long-lived, tested in production, and actively maintained. You can depend on it freely. It is rated by <a href="../maturity/">repository health</a>, not by version number.</p>
 </div>
 <div class="admonition abstract">
@@ -1759,7 +1759,7 @@
 </span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>├── UniversalSkill                    ovos_workshop/skills/auto_translatable.py
 </span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>│   └── UniversalFallback             ovos_workshop/skills/auto_translatable.py
 </span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>└── OVOSAbstractApplication           ovos_workshop/app.py
-</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>    (not loaded by ovos-core itself — used by things that run alongside it,
+</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>    (not loaded by ovos-core itself - used by things that run alongside it,
 </span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>     e.g. ovos-persona&#39;s PersonaService and the OCP media player)
 </span><span id="__span-2-14"><a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>
 </span><span id="__span-2-15"><a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a># CommonQuery skills are plain OVOSSkills using the @common_query decorator
@@ -1859,10 +1859,10 @@ See <a href="../skill-settings/">settings.md</a> for change callbacks and file w
 <p>Resource files live in the skill's <code>locale/</code> directory, organized by language tag:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>locale/
 </span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>  en-us/
-</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>    dialog/   # .dialog files — spoken responses
-</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>    vocab/    # .voc files — keyword lists for Adapt
-</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>    intent/   # .intent files — Padatious training phrases
-</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>    regex/    # .rx files — named-entity patterns
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>    dialog/   # .dialog files - spoken responses
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>    vocab/    # .voc files - keyword lists for Adapt
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>    intent/   # .intent files - Padatious training phrases
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>    regex/    # .rx files - named-entity patterns
 </span></code></pre></div>
 <p>Access via <code>self.speak_dialog("my.response")</code>, <code>self.get_response()</code>, etc.
 See <a href="../resource-files/">resource-files.md</a>.</p>
