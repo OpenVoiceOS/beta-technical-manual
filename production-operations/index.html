@@ -1855,6 +1855,14 @@ is required on rollback, and <a href="../release-channels/#pinning-or-rolling-ba
 package</a> if only one package
 regressed rather than the whole stack.</p>
 <hr />
+<div class="admonition warning">
+<p class="admonition-title">Check the breaking-change reference before any version jump</p>
+<p>An upgrade that crosses release eras can hit renamed config keys, changed skill
+APIs, and removed bus topics. Before upgrading, find your current era in
+<a href="../updating-from-older-ovos/">Updating from Older OVOS</a> and read forward. If you
+maintain custom skills or plugins, see
+<a href="../version-compat-guide/">Version-Compatible Skills &amp; Plugins</a>.</p>
+</div>
 <h2 id="staged-upgrades-and-rollback">Staged upgrades and rollback<a class="headerlink" href="#staged-upgrades-and-rollback" title="Permanent link">&para;</a></h2>
 <p><a href="../release-channels/">Release channels</a> covers <code>stable</code>/<code>testing</code>/<code>alpha</code> constraints files.
 For a fleet, the same mechanism gives you a controlled, reversible upgrade path:</p>

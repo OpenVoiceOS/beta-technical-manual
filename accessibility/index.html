@@ -1459,6 +1459,11 @@ plugin's own repository for one before falling back to SSML below.</p>
 <strong>experimental</strong> and only honored by a couple of TTS plugins (currently espeakNG and Amazon
 Polly). Every other plugin just strips the tag and speaks the plain text, so it does nothing for
 most voices:</p>
+<div class="admonition note">
+<p class="admonition-title">This one is for people who write skills</p>
+<p>The snippet below is Python code that goes inside a skill. If you do not write
+skills, ask the skill author for a rate option, or pick a calmer voice instead.</p>
+</div>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span> <span class="nn">ovos_utils.ssml</span> <span class="kn">import</span> <span class="n">SSMLBuilder</span>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">ssml_text</span> <span class="o">=</span> <span class="n">SSMLBuilder</span><span class="p">(</span><span class="n">speak_tag</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">say_slow</span><span class="p">(</span><span class="s2">&quot;Here is the reminder you asked for.&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">build</span><span class="p">()</span>

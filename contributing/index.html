@@ -1375,7 +1375,7 @@ spec" gets checked, and where to ask if you get stuck.</p>
 <p>Every OVOS repository publishes through the same shared pipeline, described in full on the
 <a href="../gh-automations-overview/">gh-automations</a> page:</p>
 <ol>
-<li><strong>Branch</strong>: work happens on a feature branch, not directly on <code>dev</code>.</li>
+<li><strong>Branch</strong>: work happens on a feature branch, not directly on <code>dev</code>. Name the branch after its conventional-commit type: <code>fix/&lt;topic&gt;</code>, <code>feat/&lt;topic&gt;</code>, or <code>docs/&lt;topic&gt;</code>.</li>
 <li><strong>Pull request into <code>dev</code></strong>: opening a PR against <code>dev</code> triggers the shared <strong>OVOS PR
    Checks</strong>: build/install/test, license and dependency scanning, plugin-manifest detection
    (for plugin repos), coverage, and a version-bump preview. These checks post their results
