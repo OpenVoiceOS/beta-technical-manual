@@ -1433,15 +1433,18 @@ alongside the skill and OVOS itself, not just present somewhere on the machine.<
 <code>pyproject.toml</code> instead of installing it loose, so <code>pip install -e .[test]</code> pulls in everything a
 contributor needs:</p>
 <div class="language-toml highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">[project.optional-dependencies]</span>
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="n">test</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;ovoscope&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;ovos-padatious-pipeline-plugin&quot;</span><span class="p">]</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="n">test</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;ovoscope&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;ovos-padatious&quot;</span><span class="p">]</span>
 </span></code></pre></div>
 <h2 id="step-2-write-the-first-end2endtest">Step 2: Write the first <code>End2EndTest</code><a class="headerlink" href="#step-2-write-the-first-end2endtest" title="Permanent link">&para;</a></h2>
 <div class="admonition note">
 <p class="admonition-title">Prerequisite: the Padatious pipeline plugin</p>
 <p>This test drives <code>session.pipeline = ["ovos-padatious-pipeline-plugin"]</code>, so that plugin
-must actually be installed: <code>pip show ovos-padatious-pipeline-plugin || pip install
-ovos-padatious-pipeline-plugin</code>. If the test runs but reports no spoken output at all,
-check for a missing pipeline plugin first, not a bug in your skill.</p>
+must actually be installed: <code>pip show ovos-padatious || pip install ovos-padatious</code>.</p>
+<p>The pipeline ID and the pip package have different names — <code>pip install
+ovos-padatious-pipeline-plugin</code> fails, there is no such package. See <a href="../pipelines-overview/#pipeline-ids-vs-plugins">Pipeline IDs vs.
+plugins</a>.</p>
+<p>If the test runs but reports no spoken output at all, check for a missing pipeline plugin
+first, not a bug in your skill.</p>
 </div>
 <p>Create <code>test/test_hello.py</code> next to your skill's <code>pyproject.toml</code>:</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">from</span> <span class="nn">ovos_bus_client.message</span> <span class="kn">import</span> <span class="n">Message</span>

@@ -1791,15 +1791,12 @@ OVOS randomly selects one of the statements.</p>
 <p>The parameter <code>'tomato.description'</code> is the dialog filename without the ".dialog" extension. Calling this method opens the dialog file, selects one of the statements, and converts that text to speech. OVOS speaks a statement from the dialog file. In this example, OVOS might say "The tomato is a fruit of the nightshade family".</p>
 <p>Remember, OVOS has a language setting that determines from which directory to find the dialog file.</p>
 <h4 id="file-locations">File locations<a class="headerlink" href="#file-locations" title="Permanent link">&para;</a></h4>
-<p>The <a href="../skill-structure/">Skill Structure</a> section describes where to place the Intent file and dialog file. There are two choices:</p>
-<ol>
-<li>
-<p>Put both files in <code>locale/en-us</code></p>
-</li>
-<li>
-<p>Put the dialog file in <code>dialog/en-us</code> , and put the Intent file in <code>vocab/en-us</code></p>
-</li>
-</ol>
+<p>The <a href="../skill-structure/">Skill Structure</a> section describes where to place the Intent file and
+dialog file. Put both in <code>locale/en-us</code>.</p>
+<p>You will also see an older split layout in existing skills: the dialog file in <code>dialog/en-us</code>
+and the intent file in <code>vocab/en-us</code>. <code>dialog</code> and <code>vocab</code> are <strong>deprecated</strong>. They still work,
+so a skill you are reading may use them, but do not start a new skill that way. If both layouts
+exist for the same resource, <code>locale</code> wins.</p>
 <h3 id="statements-with-variables">Statements with variables<a class="headerlink" href="#statements-with-variables" title="Permanent link">&para;</a></h3>
 <p>The second template intent (<a href="../padatious-pipeline/">Padatious</a>), <strong>do.you.like.intent</strong>, demonstrates the use of variables in the Intent file and in one of the dialog files:</p>
 <p><code>do.you.like.intent</code></p>

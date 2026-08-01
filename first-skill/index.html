@@ -1678,6 +1678,15 @@ the skill's path mounted into the container, or copy it in first).</p>
 <p>From inside the <code>ovos-skill-my-first/</code> folder:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.
 </span></code></pre></div>
+<p>Your skill matches with a <code>.intent</code> file, which is handled by <strong>Padatious</strong>. Padatious is an
+optional install, because its neural-network backend is LGPL — a plain OVOS install may not
+have it. Check, and add it if it is missing:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>pip<span class="w"> </span>show<span class="w"> </span>ovos-padatious<span class="w"> </span><span class="o">||</span><span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>ovos-padatious
+</span></code></pre></div>
+<p>The pipeline ID is <code>ovos-padatious-pipeline-plugin</code>, but the package you install is
+<code>ovos-padatious</code> — <code>pip install ovos-padatious-pipeline-plugin</code> fails, there is no such
+package. See <a href="../pipelines-overview/#pipeline-ids-vs-plugins">Pipeline IDs vs.
+plugins</a>.</p>
 <p>Restart <code>ovos-core</code> (or it will pick the skill up on its next scan). See
 <a href="../troubleshooting/#stage-1-is-the-service-even-running-and-is-the-bus-reachable">Stage 1 of Troubleshooting</a>
 for exactly how to start/restart the OVOS services. Then say your configured wake word first
@@ -1689,11 +1698,13 @@ for exactly how to start/restart the OVOS services. Then say your configured wak
 <div class="admonition note">
 <p class="admonition-title">If OVOS doesn't reply</p>
 <p>Check the skills log for your skill_id: <code>ovos-logs show -l skills</code>. See
-<a href="../troubleshooting/">Troubleshooting</a> for how to read what it's telling you. <code>Hello.intent</code>
-is a <strong>Padatious</strong> template intent, so the live device also needs
-<code>ovos-padatious-pipeline-plugin</code> installed and listed in its <code>intents.pipeline</code> config for
-the file to match at all. See <a href="../testing-your-skill/">Test Your Skill</a> for the same
-requirement in the automated test.</p>
+<a href="../troubleshooting/">Troubleshooting</a> for how to read what it's telling you.</p>
+<p>The most common cause is the one in Step 6: <code>Hello.intent</code> is a Padatious intent, and
+Padatious is an optional install. Re-run that check.</p>
+<p>You do not need to edit any pipeline config. The stage is in the shipped default
+<code>intents.pipeline</code> already — the plugin just has to be installed for the default to have
+anything to load. <a href="../testing-your-skill/">Test Your Skill</a> hits the same requirement in
+the automated test.</p>
 </div>
 <div class="admonition tip">
 <p class="admonition-title">No microphone handy, or want to test without talking?</p>

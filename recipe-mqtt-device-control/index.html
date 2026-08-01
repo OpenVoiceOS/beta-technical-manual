@@ -1634,6 +1634,9 @@
 <p>You build an <code>OVOSSkill</code> that controls a networked device over MQTT, publishing commands with <code>paho.mqtt.client.Client</code> behind the same timeout-plus-spoken-error safety pattern as an HTTP call.</p>
 </div>
 <p><strong>When you'd want this:</strong> a device on the network, such as a smart plug or a relay board, listens for commands on an MQTT topic. The skill publishes to that topic on a voice command. It uses the same timeout-plus-spoken-error pattern as <a href="../recipe-safe-api-call/">Recipe 3</a>, applied to a broker connection instead of an HTTP call.</p>
+<p>This recipe needs a broker client that OVOS does not ship. Declare it in your skill's
+<code>pyproject.toml</code> (<code>dependencies = ["paho-mqtt"]</code>) and install it, or every run stops at
+<code>ModuleNotFoundError: No module named 'paho'</code>.</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span> <span class="nn">paho.mqtt.client</span> <span class="k">as</span> <span class="nn">mqtt</span>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kn">from</span> <span class="nn">ovos_workshop.skills</span> <span class="kn">import</span> <span class="n">OVOSSkill</span>
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kn">from</span> <span class="nn">ovos_workshop.decorators</span> <span class="kn">import</span> <span class="n">intent_handler</span>
