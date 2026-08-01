@@ -42,15 +42,17 @@ jobs:
 
 Several reusable workflows check this repo out again at runtime to reach `scripts/` (the PR-comment helper, version utilities, etc.), pinned to `ref: dev`. You do not write this yourself: it lives inside the reusable workflow.
 
-```yaml
+??? example "What the reusable workflow does internally"
 
-- uses: actions/checkout@v7
-  with:
-    repository: OpenVoiceOS/gh-automations
-    ref: dev
-    path: _gh_automations/
+    ```yaml
 
-```
+    - uses: actions/checkout@v7
+      with:
+        repository: OpenVoiceOS/gh-automations
+        ref: dev
+        path: _gh_automations/
+
+    ```
 
 ---
 

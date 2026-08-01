@@ -152,8 +152,9 @@ Override these in your skill class:
     Never call `default_shutdown()` directly.
 
 This constructor/lifecycle/startup/shutdown sequence is shared by every `OVOSSkill`
-subclass below. See [OVOSSkill](ovos-skill.md) for `SkillApi` (inter-skill RPC),
-event scheduling, and the full list of bus events an `OVOSSkill` handles.
+subclass below. See [OVOSSkill](ovos-skill.md) for event scheduling and the full
+list of bus events an `OVOSSkill` handles, and [Skill API: Inter-Skill RPC](skill-api.md)
+for `SkillApi`.
 
 ### Key Properties
 

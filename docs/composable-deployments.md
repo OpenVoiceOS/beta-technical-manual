@@ -252,62 +252,65 @@ graph LR
 ## Caveats
 
 Splitting services this way is fully supported, but it moves responsibilities that a single-host
-install hides for you. These are the most common sources of confusion.
+install hides for you. These are the most common sources of confusion; expand any one that bites
+you.
 
-### Plugins must be installed where they load
+<a id="plugins-must-be-installed-where-they-load"></a>
+??? warning "Plugins must be installed where they load"
+    A plugin is only usable by the process that imports it. Installing an STT plugin next to
+    `ovos-core` does nothing if `ovos-dinkum-listener` is the process that needs it.
 
-A plugin is only usable by the process that imports it. Installing an STT plugin next to
-`ovos-core` does nothing if `ovos-dinkum-listener` is the process that needs it.
+    | Plugin type | Loaded by | Must be installed in |
+    |---|---|---|
+    | STT | `ovos-dinkum-listener` | The listener's environment/container |
+    | TTS | `ovos-audio` | The audio service's environment/container |
+    | VAD, wake word, microphone | `ovos-dinkum-listener` | The listener's environment/container |
+    | Pipeline (intent matching), skills | `ovos-core` | The core's environment/container |
+    | PHAL plugins | `ovos_PHAL` | The PHAL service's environment/container |
+    | GUI adapters | `ovos-gui-service` | The GUI service's environment/container |
+    | [Transformer](transformer-plugins.md) (`opm.transformer.*`) | `ovos-core` (utterance/metadata/intent chains), `ovos-dinkum-listener` (audio chain), `ovos-audio` (dialog/tts chains) | Whichever of those services' environments runs the chain that plugin belongs to |
 
-| Plugin type | Loaded by | Must be installed in |
-|---|---|---|
-| STT | `ovos-dinkum-listener` | The listener's environment/container |
-| TTS | `ovos-audio` | The audio service's environment/container |
-| VAD, wake word, microphone | `ovos-dinkum-listener` | The listener's environment/container |
-| Pipeline (intent matching), skills | `ovos-core` | The core's environment/container |
-| PHAL plugins | `ovos_PHAL` | The PHAL service's environment/container |
-| GUI adapters | `ovos-gui-service` | The GUI service's environment/container |
-| [Transformer](transformer-plugins.md) (`opm.transformer.*`) | `ovos-core` (utterance/metadata/intent chains), `ovos-dinkum-listener` (audio chain), `ovos-audio` (dialog/tts chains) | Whichever of those services' environments runs the chain that plugin belongs to |
+    There is no cross-process plugin discovery. Each service resolves plugins from its **own**
+    Python environment's entry points at startup.
 
-There is no cross-process plugin discovery. Each service resolves plugins from its **own**
-Python environment's entry points at startup.
-
-### Configuration is per-process, not shared
-
-Each process reads its own `mycroft.conf` from its own [XDG config path](config.md)
-(`$XDG_CONFIG_HOME/mycroft`; inside a container, that is the container's filesystem, not the
-host's). Splitting services means keeping the relevant keys **consistent by hand** across every
-process's configuration. A `websocket.host` mismatch, or a listener that doesn't know which STT
-module `ovos-core` expects it to have already run, will silently misbehave rather than error
-loudly.
+<a id="configuration-is-per-process-not-shared"></a>
+??? warning "Configuration is per-process, not shared"
+    Each process reads its own `mycroft.conf` from its own [XDG config path](config.md)
+    (`$XDG_CONFIG_HOME/mycroft`; inside a container, that is the container's filesystem, not the
+    host's). Splitting services means keeping the relevant keys **consistent by hand** across
+    every process's configuration. A `websocket.host` mismatch, or a listener that doesn't know
+    which STT module `ovos-core` expects it to have already run, will silently misbehave rather
+    than error loudly.
 
 ### Version skew is a real risk
 
 See the [danger box above](#example-topology) for the short version. Every process talks over
-the same bus protocol independently. There is no central version negotiation. Mismatched major
-versions across `ovos-bus-client`, `ovos-core`, `ovos-audio`, and `ovos-dinkum-listener` can
-produce message shapes one side doesn't expect. Keep versions aligned across a deployment, and
-check each package's changelog before upgrading only one service.
+the same bus protocol independently. There is no central version negotiation. Mismatched
+major versions across `ovos-bus-client`, `ovos-core`, `ovos-audio`, and
+`ovos-dinkum-listener` can produce message shapes one side doesn't expect. Keep versions
+aligned across a deployment, and check each package's changelog before upgrading only one
+service.
 
-### Latency and network reality
-
-A single-host install exchanges messages over loopback, effectively free. Splitting services
-across hosts puts real network latency and reliability on the critical path of every utterance.
-Wake-word detection, STT, intent matching, and TTS all round-trip through the bus. A slow or
-lossy link between the listener and the bus is felt as sluggish or dropped voice interactions, not
-as an error message.
+<a id="latency-and-network-reality"></a>
+??? warning "Latency and network reality"
+    A single-host install exchanges messages over loopback, effectively free. Splitting services
+    across hosts puts real network latency and reliability on the critical path of every
+    utterance. Wake-word detection, STT, intent matching, and TTS all round-trip through the bus.
+    A slow or lossy link between the listener and the bus is felt as sluggish or dropped voice
+    interactions, not as an error message.
 
 ### Services are implicit singletons per bus
 
-See the [danger box above](#example-topology) for the short version. `ovos-core`, `ovos-audio`,
-and `ovos-dinkum-listener` are each written assuming they are the only instance of that service
-talking to a given bus. The bus itself is pure fan-out with no leader election or ownership
-concept. It has no way to tell two `ovos-core` processes apart or arbitrate between them.
+See the [danger box above](#example-topology) for the short version. `ovos-core`,
+`ovos-audio`, and `ovos-dinkum-listener` are each written assuming they are the only
+instance of that service talking to a given bus. The bus itself is pure fan-out with no
+leader election or ownership concept. It has no way to tell two `ovos-core` processes apart
+or arbitrate between them.
 
 Running two instances of the same service against one bus does not
 give you redundancy or failover. It gives you duplicate handling of every message and
-double-emitted lifecycle events (for example, two `ovos.intent.handler.start`/`.complete` pairs for
-one utterance), since both instances react to the same broadcast independently.
+double-emitted lifecycle events (for example, two `ovos.intent.handler.start`/`.complete`
+pairs for one utterance), since both instances react to the same broadcast independently.
 
 For a step-by-step build, see [Satellites](satellites.md).
 
@@ -324,10 +327,10 @@ satellites talking to a single HiveMind server, not by running two copies of `ov
 
 ### Defaults assume localhost
 
-`websocket.host` (`127.0.0.1`), and most PHAL device-integration plugins, assume everything they
-talk to is on the same machine. Treat every default as loopback-only until you have explicitly
-verified the config for a given deployment. The services start and look healthy on separate
-hosts with the defaults untouched, but they simply cannot reach each other.
+`websocket.host` (`127.0.0.1`), and most PHAL device-integration plugins, assume everything
+they talk to is on the same machine. Treat every default as loopback-only until you have
+explicitly verified the config for a given deployment. The services start and look healthy
+on separate hosts with the defaults untouched, but they simply cannot reach each other.
 
 For a step-by-step build, see [Satellites](satellites.md).
 

@@ -315,69 +315,12 @@ current player state):
 
 ## MPRIS Integration
 
-!!! note "This is `ovos-media`'s support, not the stock-install default"
-    MPRIS integration only exists when you're running `ovos-media` as the playback backend
-    (`enable_old_audioservice: false`). The default `ovos-audio` old-audioservice backend does
-    not provide it.
-
-OCP integrates with MPRIS, allowing OCP to control and be controlled by external players.
-Via MPRIS (and KDEConnect), OCP can display data from external players and control playback
-in connected devices.
-
-```json
-{
-  "media": {
-    "enable_mpris": true,
-    "dbus_type": "session"
-  }
-}
-
-```
-
-Confirm OCP is registered with dbus:
-
-```bash
-dbus-send --session --dest=org.freedesktop.DBus --type=method_call --print-reply \
-  /org/freedesktop/DBus org.freedesktop.DBus.ListNames
-
-# Should show: "org.mpris.MediaPlayer2.OCP"
-
-```
-
-### External Player Reflection & Takeover
-
-`OcpMprisExporter` (`ovos_media/mpris.py`) has two roles, referred to as **Role A** and
-**Role B**. Role A is registering OCP itself on the D-Bus session bus (above) — always active
-once `enable_mpris` is set, and it is what lets an MPRIS client like `playerctl` control OCP:
-
-```bash
-playerctl --player=org.mpris.MediaPlayer2.OCP play-pause
-playerctl --player=org.mpris.MediaPlayer2.OCP next
-playerctl --player=org.mpris.MediaPlayer2.OCP metadata
-```
-
-Role B is the opt-in second role, and lets OCP *reflect and take over* other MPRIS players
-already running on the same machine (Spotify, VLC, Firefox, …):
-
-```json
-{
-  "media": {
-    "enable_mpris": true,
-    "manage_external_players": true
-  }
-}
-
-```
-
-With `manage_external_players` enabled, OCP periodically scans D-Bus for other
-`org.mpris.MediaPlayer2.*` players and mirrors their metadata and playback state onto
-its own OCP bus messages, so an external player's now-playing info shows up the same way
-native OCP media does. When an external player starts playing, OCP automatically pauses
-itself (and vice versa when the external player stops), so only one thing is audibly
-playing at a time. OCP's own transport controls (skip/pause/shuffle/repeat) are proxied
-through to whichever external player is currently active, letting one set of controls
-(voice, GUI, or a remote MPRIS client) drive both native OCP media and third-party
-players interchangeably.
+`ovos-media` can register itself on D-Bus as an MPRIS player, so tools like `playerctl` and
+desktop media widgets can control it, and can optionally reflect and take over other MPRIS
+players already running on the machine. This only applies when running `ovos-media`, not the
+default `ovos-audio` old-audioservice backend. The full setup, dbus verification steps, and
+the Role A / Role B reflection-and-takeover behavior have moved to their own page:
+**[ovos-media MPRIS Integration](ovos-media-mpris.md)**.
 
 ---
 
@@ -472,44 +415,14 @@ These live alongside the legacy ducking/cork aliases kept for backward compatibi
 
 ---
 
-## Legacy Compatibility
+## Legacy Compatibility & Known Coupling Issues
 
-### ClassicAudioServiceInterface
-
-When `ovos-media` is not running (i.e., the system still uses `ovos-ocp-audio-plugin` inside
-`ovos-audio`), the pipeline plugin falls back to emitting `mycroft.audio.service.*` bus messages
-to control the classic audio service via `ovos_bus_client.apis.ocp.ClassicAudioServiceInterface`.
-
-### LegacyCommonPlay Bridge
-
-For skills that still use the old Mycroft `CommonPlaySkill` base class (pre-OCP), the pipeline
-plugin includes a bridge:
-
-- Emits `play:query` instead of `ovos.common_play.query`
-
-
-- Collects `play:query.response` from old-style skills
-
-
-- Emits `play:start` to tell the winning skill to handle playback itself
-
-This bridge is marked for removal in `ovos-core 0.1.0`.
-
----
-
-## Known Coupling Issues
-
-### OCPMediaCatalog is a skill
-
-`OCPMediaCatalog` in `ovos_media/player.py` inherits from `OVOSCommonPlaybackSkill`. This registers
-`ovos-media` as a skill on the bus and loads skill infrastructure (settings, locale, etc.). It
-registers `@ocp_search()` to expose liked songs as a search result. There is no
-`@ocp_featured_media()` handler.
-
-### No next/prev in some backends
-
-The Music Assistant audio backend does not implement `next()` or `previous()` through the legacy
-`AudioBackend` interface. Only through the MA queue API.
+`ovos-media`'s pipeline plugin falls back to the classic `mycroft.audio.service.*` bus messages
+when `ovos-media` is not running, and bridges old pre-OCP `CommonPlaySkill` skills via `play:query`
+/ `play:start`. It also carries some architectural coupling from that history, such as
+`OCPMediaCatalog` registering itself as a skill and the Music Assistant backend's missing
+`next()`/`previous()`. The full detail has moved to its own page:
+**[ovos-media Legacy Compatibility](ovos-media-compat.md)**.
 
 ---
 
@@ -554,4 +467,4 @@ Selected files and folders will be played in OCP. Folders are treated as playlis
 
 ---
 **Read next:** [Screens on OVOS Today](gui-status.md) · [Concepts Overview](concepts-overview.md)
-**Related:** [Audio Service](audio-service.md) · [OCP Pipeline](ocp-pipeline.md) · [Media Playback Plugins](media-plugins.md) · [OCP Extractors](ocp-plugins.md)
+**Related:** [Audio Service](audio-service.md) · [OCP Pipeline](ocp-pipeline.md) · [Media Playback Plugins](media-plugins.md) · [OCP Extractors](ocp-plugins.md) · [ovos-media MPRIS Integration](ovos-media-mpris.md) · [ovos-media Legacy Compatibility](ovos-media-compat.md)

@@ -78,7 +78,7 @@ OVOSSkill                             ovos_workshop/skills/ovos.py
 | [skill-classes.md#ovosabstractapplication](skill-classes.md#ovosabstractapplication) | `OVOSAbstractApplication` | Skill-like app that runs without the intent service |
 | [skill-classes.md#ovosgameskill](skill-classes.md#ovosgameskill) | `OVOSGameSkill`, `ConversationalGameSkill` | [OCP](ocp-pipeline.md)-integrated game loop with converse and auto-save |
 | [skill-classes.md#universalskill](skill-classes.md#universalskill) | `UniversalSkill`, `UniversalFallback` | Auto-translate input/output for any language |
-| [ovos-skill.md](ovos-skill.md) | `SkillApi`, `skill_api_method` | Inter-skill RPC over the [messagebus](bus-service.md) |
+| [skill-api.md](skill-api.md) | `SkillApi`, `skill_api_method` | Inter-skill RPC over the [messagebus](bus-service.md) |
 | [skill-filesystem.md](skill-filesystem.md) | `FileSystemAccess` | Sandboxed, XDG-compliant file storage for skills |
 | [resource-files.md](resource-files.md) | `SkillResources` | Locale, dialog, vocab, regex, and other resource files |
 | [skill-settings.md](skill-settings.md) | `JsonStorage`, `PrivateSettings` | Skill settings: persistence, change callbacks, file watching |

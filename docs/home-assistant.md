@@ -58,7 +58,7 @@ You need two things from your Home Assistant instance before installing the skil
 
 With those two in hand, either:
 
-- Tick the `homeassistant` feature in the [ovos-installer](ovos-installer.md#feature-selection),
+- Tick the `homeassistant` feature in the [ovos-installer](ovos-installer-scenarios.md#feature-selection),
   offered for the `ovos`/`listener` profiles on the `virtualenv` or `containers` install
   method. The installer prompts you for the URL and token during setup, or
 

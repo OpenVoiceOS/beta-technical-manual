@@ -318,8 +318,8 @@ no on-screen confirmation. Treat it as a fallback, not the primary path.
   announce it out loud. If Wi-Fi isn't configured yet or the network is unreachable,
   the device stays silent instead. Check `ovos-status` and the `ologs` output (see
   below) to confirm the services actually started, even without a spoken confirmation.
-  See [raspOVOS Troubleshooting](raspovos-troubleshooting.md#ovos-fails-to-speak-i-am-ready)
-  if it never speaks up once online.
+  See [raspOVOS Troubleshooting](raspovos-troubleshooting.md), "OVOS Fails to Speak
+  'I am Ready'", if it never speaks up once online.
 
 ---
 

@@ -358,8 +358,9 @@ plugins should use them.
     Superseded by [ovos-YesNo-plugin](https://github.com/OpenVoiceOS/ovos-YesNo-plugin)
     (needs `ovos-plugin-manager>=2.4.0`). See [Deprecated Repos](deprecated-repos.md).
 
-See [Available ToolBoxes](#available-toolboxes) and [Available Chat Engines](#available-chat-engines)
-below for the standalone `opm.agents.toolbox` and `opm.agents.chat` plugin registries.
+See [Tool Plugins: Available ToolBoxes](tool-plugins.md#available-toolboxes) and
+[Tool Plugins: Available Chat Engines](tool-plugins.md#available-chat-engines) for the
+standalone `opm.agents.toolbox` and `opm.agents.chat` plugin registries.
 
 ## ovos-qdrant-embeddings-plugin
 
@@ -528,36 +529,10 @@ Per-collection metadata defaults `hnsw:space` to `cosine` when not specified.
 
 ---
 
-## Available ToolBoxes
-
-These `opm.agents.toolbox` plugins each wrap one external service as a set of callable
-`AgentTool` functions. Call them directly with `ToolBox.call_tool(name, kwargs)`, or over the
-bus via `ovos.persona.tools.{toolbox_id}.call`. See [Tool Plugins](tool-plugins.md) for the
-`ToolBox` API itself.
-
-| Plugin ID | Tools | Package | API key |
-|---|---|---|---|
-| `ovos-wikipedia-tools` | `search_wikipedia`, `get_wikipedia_sections`, `get_wikipedia_page` | `ovos-wikipedia-plugin` | None, public Wikipedia REST API |
-| `ovos-ddg-tools` | `search_duckduckgo`, `get_duckduckgo_infobox` | `ovos-ddg-plugin` | None, DuckDuckGo Instant Answer API |
-| `ovos-wolfram-alpha-tools` | `compute`, `compute_full` | `ovos-wolfram-alpha-plugin` | Optional, free key at developer.wolframalpha.com; a demo key ships in the plugin |
-| `ovos-weather-tools` | `get_current_weather`, `get_daily_forecast`, `get_hourly_forecast` | `ovos-skill-weather` | None, Open-Meteo public API |
-| `ovos-datetime-tools` | `get_current_datetime`, `convert_timezone`, `get_timezone_for_location` | `ovos-skill-date-time` | None, stdlib + pytz |
-| `ovos-ip-tools` | `get_local_ip_addresses`, `get_public_ip` | `ovos-skill-ip` | None |
-| `ovos-iss-tools` | `get_iss_position`, `get_iss_crew` | `ovos-skill-iss-location` | Optional, geonames.org user for reverse geocoding |
-| `ovos-speedtest-tools` | `run_speedtest` | `ovos-skill-speedtest` | None, Speedtest.net |
-| `ovos-wallpapers-tools` | `search_wallpapers` | `ovos-skill-wallpapers` | None, wallhaven.cc public API |
-| `ovos-wikihow-tools` | `search_wikihow`, `get_wikihow_steps` | `ovos-skill-wikihow` | None, pywikihow scraper |
-| `ovos-wordnet-tools` | `lookup_word`, `define_word` | `ovos-skill-wordnet` | None, local NLTK corpus |
-
-The [agentic loop](agentic-loop.md) bundles its own toolboxes (`ovos-filesystem-tools`,
-`ovos-shell-tools`, `ovos-web-search-tools`, `ovos-clock-tools`, `ovos-skill-md-toolbox`) —
-see that page for those.
-
-## Available Chat Engines
-
-`opm.agents.chat` plugins beyond the ones documented above as their own catalog entries
-(`ovos-openai-plugin`, `ovos-gguf-plugin`) are not currently shipped by an OpenVoiceOS-org
-repository. This manual only documents plugins backed by an OpenVoiceOS-org repo.
+The standalone `opm.agents.toolbox` and `opm.agents.chat` plugin registries, including the
+full list of available ToolBoxes and chat engines, moved to
+[Tool Plugins: Available ToolBoxes](tool-plugins.md#available-toolboxes) and
+[Tool Plugins: Available Chat Engines](tool-plugins.md#available-chat-engines).
 
 ---
 **Read next:** [Building Agent Plugins](building-agent-plugins.md)

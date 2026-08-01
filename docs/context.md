@@ -177,15 +177,10 @@ class TeaSkill(OVOSSkill):
         self.speak('Of course, would you like Milk with that?',
                    expect_response=True)
 
-    @intent_handler(IntentBuilder('NoMilkIntent').require("NoKeyword").
-                                  require('MilkContext').build())
-    @removes_context('MilkContext')
-    @adds_context('HoneyContext')
-    def handle_no_milk_intent(self, message):
-        self.speak('all right, any Honey?', expect_response=True)
-
 ```
 
+The full, worked-through version of this `TeaSkill`, with every handler, is in
+[Using context to enable Intents](#using-context-to-enable-intents) below.
 
 > **NOTE**: cross skill context is not yet exposed via decorators
 

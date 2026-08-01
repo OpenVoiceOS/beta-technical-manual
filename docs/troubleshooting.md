@@ -93,96 +93,18 @@ All the stages in this guide talk to each other over the [messagebus](bus-servic
 emits an utterance message, the intent service emits a match, the skill emits a `speak`, and so on.
 **[`ovos-busmon`](https://github.com/OpenVoiceOS/ovos-busmon)** is a small web app that connects to
 the bus as a client and streams every one of those messages live to a browser tab, in one
-filterable, searchable timeline.
+filterable, searchable timeline, letting you follow a single utterance across every stage below
+instead of tailing six log files.
 
-!!! note "Bus messages, not logs"
-    `ovos-busmon` shows **live bus messages only**. It does **not** parse the log files. It
-    complements the log tooling ([`ovos-logs`](cli-tools.md#reading-the-logs-ovos-logs) and the
-    per-service `*.log` files), it doesn't replace it. For a terminal-based **log** viewer, the
-    community project [ovos-tui-client](https://github.com/andlo/ovos-tui-client) reads the OVOS
-    logs directly.
+**What to check:** install with `pip install ovos-busmon`, run `ovos-busmon`, and open
+`http://127.0.0.1:8005`. Filter by `recognizer_loop:*` to see the raw utterance leave the
+listener, `ovos.intent.matched` / `ovos.utterance.handled` to see which pipeline stage claimed
+it, and `ovos.utterance.speak` to see whether TTS fired. Keep it bound to `127.0.0.1`/your LAN,
+never expose it to the internet: it mirrors every message on the bus, including STT transcripts,
+and ships with default credentials (`ovos`/`ovos`).
 
-!!! tip "Zero-install demo"
-    A hosted static build is available at
-    [openvoiceos.github.io/ovos-busmon](https://openvoiceos.github.io/ovos-busmon/). No `pip
-    install` needed. Because it's the **static-page** build (not the FastAPI-backed server), the
-    browser connects straight to the bus itself, so it only works when the **browser runs on the
-    same machine as OVOS**. For remote or multi-device use, run the full `pip install ovos-busmon`
-    server below.
-
-Internally, it is a FastAPI + WebSocket/SSE service that opens an `ovos-bus-client` connection to
-the messagebus and keeps an in-memory ring buffer of everything it sees. The browser UI lets you:
-
-- filter the live stream by message type (glob patterns, e.g. `ovos.*` or `recognizer_loop:*`)
-- full-text search across message type, data, context, and session
-- filter by session ID, source, and destination
-- pause/resume capture and sort newest/oldest first
-- export the captured buffer as JSON/JSONL for later inspection
-- inject an arbitrary message onto the bus from the UI (the same trick as `ovos-say-to`, but visual)
-- group the live stream into a **timeline**: per-session, expandable traces with category badges, so
-  you can follow a single utterance across Stages 2-5 as one interaction instead of scanning the raw feed
-- type an utterance into the **chat panel** (`POST /api/chat`). It emits a `recognizer_loop:utterance`
-  with a stable session ID (so multi-turn/converse works), letting you replay a failing interaction
-  deterministically without speaking
-
-There is also a zero-install mode: the UI is a single static page that can open a WebSocket straight
-to `ws://<device>:8181/core` with no server component at all. This is useful for a one-off look
-without installing anything.
-
-### Installing and running it
-
-```bash
-pip install ovos-busmon
-ovos-busmon
-```
-
-To hack on it (or track `dev`), install from a clone instead:
-
-```bash
-git clone https://github.com/OpenVoiceOS/ovos-busmon
-cd ovos-busmon
-pip install .
-ovos-busmon
-```
-
-By default it binds to `http://127.0.0.1:8005` and connects outward to a messagebus at
-`localhost:8181`. Both ends are configurable through environment variables (or a `.env` file next to
-where you run it):
-
-| Variable | Default | Meaning |
-|---|---|---|
-| `OVOS_BUS_HOST` / `OVOS_BUS_PORT` | `localhost` / `8181` | Where the *target* OVOS messagebus is. |
-| `BUSMON_HOST` / `BUSMON_PORT` | `127.0.0.1` / `8005` | Where busmon's own web UI listens. |
-| `BUSMON_USERNAME` / `BUSMON_PASSWORD` | `ovos` / `ovos` | HTTP Basic auth for the web UI. |
-| `BUFFER_SIZE` | `2000` | How many messages the ring buffer keeps. |
-
-A Docker route is also available (`docker compose up --build` from the repo), using the image
-`jarbasai/ovos-busmon:latest`. Its bundled compose file binds the container to `127.0.0.1:8005` only
-and sets `OVOS_BUS_HOST=host.docker.internal` so it can reach a bus running on the host.
-
-!!! warning "Local debugging only: never expose this to the internet"
-    `ovos-busmon` mirrors **every** message on the bus, including STT transcripts, intent matches,
-    and skill responses. It ships with a default username/password (`ovos` / `ovos`) that most
-    people never change. Its message-injection feature also lets anyone who can reach it emit
-    arbitrary commands onto your assistant's bus. Keep it bound to `127.0.0.1` or your local LAN,
-    change the default credentials before leaving it running, and never port-forward it to the
-    public internet.
-
-### A concrete walkthrough
-
-1. Start `ovos-busmon`. It comes up even if the bus is unreachable, but does **not** auto-retry the
-   connection, so start it once the OVOS device is up (or restart busmon after the bus is running).
-2. Open `http://127.0.0.1:8005` in a browser and log in with the configured credentials.
-3. Speak (or trigger) an utterance on the OVOS device.
-4. Filter by `recognizer_loop:*`. The first hit is the raw utterance leaving the listener
-   (Stage 2 below). If nothing appears here, the problem is upstream of the bus entirely (Stage 1).
-5. Filter by `ovos.intent.matched` and `ovos.utterance.handled`. These tell you which pipeline
-   stage claimed the utterance and confirm the lifecycle actually closed (Stage 4/5 below).
-6. Filter by `ovos.utterance.speak`. Its absence, with everything else present, points at a silent
-   skill handler. Its presence with no audio points at the TTS/playback stage (Stage 6).
-
-Each stage further down cites the exact message type to filter on, so this same walkthrough can be
-repeated stage-by-stage instead of glancing at the whole stream at once.
+See **[Watching the Bus: `ovos-busmon`](troubleshooting-bus.md)** for the full install/config
+reference, the security warning in detail, and a step-by-step walkthrough.
 
 ---
 
@@ -231,8 +153,8 @@ once the bus is back.
 
 Do these checks before you read wake word or STT logs. They test the sound card itself, not
 OVOS, and they work on any Linux install (Raspberry Pi image or otherwise). If you're on
-raspOVOS, there is also a Pi-specific diagnostics script: see [RaspOVOS Troubleshooting →
-Audio Issues](raspovos-troubleshooting.md#audio-issues).
+raspOVOS, there is also a Pi-specific diagnostics script: see [RaspOVOS
+Troubleshooting](raspovos-troubleshooting.md), "Audio Issues".
 
 ### Does the OS see your microphone and speaker?
 
@@ -526,57 +448,17 @@ matched the utterance to the [OCP pipeline](ocp-pipeline.md) (`ovos-ocp-pipeline
 `-medium` / `-low`). If OCP never claims the utterance at all, that is a Stage 4 problem, not a
 Stage 7 one: check the pipeline miss log described there first.
 
-### (a) Search found nothing
+**What to check:** three failure shapes, in order. (a) Search found nothing: is an OCP-enabled
+media skill installed at all (see [Media Skills (OCP)](ocp-skills.md))? (b) A result was found
+but the stream never starts: is the right [stream extractor](ocp-plugins.md) plugin (e.g.
+`ovos-ocp-youtube-plugin`) installed for that source? (c) Audio plays on the wrong output or not
+at all: run the hardware/mixer checks from [Prove the microphone and speaker
+work](#prove-the-microphone-and-speaker-work) above, and check the OCP backend's
+`preferred_audio_services` order.
 
-Once OCP classifies the utterance as a playback request, it emits `ovos.common_play.query` and
-collects `ovos.common_play.query.response` results from every installed [OCP-enabled media
-skill](ocp-skills.md). If no skill answers, or every answer is empty, OVOS reports it found
-nothing to play.
-
-Checks:
-
-- Is an OCP-enabled media skill actually installed and loaded? Skills act purely as catalogs
-  here, so with none installed there is nothing to search. See [Media Skills
-  (OCP)](ocp-skills.md).
-- Watch the query round-trip live in [`ovos-busmon`](#watch-the-bus-while-you-speak-ovos-busmon):
-  filter by `ovos.common_play.query*` to confirm the query went out and see which skills (if any)
-  answered, and with what results.
-- Reproduce it without speaking: `ovos-say-to "play some jazz"` (see [Stage 3](#stage-3-did-stt-produce-text)),
-  then check `skills.log` for the matching skill's search handler.
-
-### (b) A result was found but the stream never starts
-
-A search result is only a candidate URI. Before OCP can play it, a [stream
-extractor](ocp-plugins.md) has to resolve that URI to the real, directly-playable stream (this is
-what the `ovos-ocp-*-plugin` packages, e.g. `ovos-ocp-youtube-plugin` or
-`ovos-ocp-bandcamp-plugin`, do). If the matching extractor is missing, misconfigured, or the
-remote service it scrapes changes shape, extraction fails and playback never begins even though a
-result was found.
-
-Check `audio.log` (the [audio service](audio-service.md), which hosts the OCP audio plugin by
-default, or `ovos-media`'s own log if that daemon is enabled instead) for an extractor exception
-around the time of the request. See [OCP Plugins Reference](ocp-plugins.md) for which extractor
-handles which source, and confirm the right one is installed for the kind of link the skill
-returned.
-
-### (c) Audio plays on the wrong output, or not at all
-
-If a stream extracted fine but nothing (or the wrong device) makes sound, this is the same class
-of problem as Stage 6's audio sink failure, not a media-specific bug:
-
-- Run the hardware and mixer checks in [Prove the microphone and speaker
-  work](#prove-the-microphone-and-speaker-work) (`aplay -l`, `alsamixer`, `wpctl status` /
-  `pactl list short sinks`) to confirm the speaker is present, unmuted, and set as the default
-  sink.
-- Check the OCP backend's audio configuration: the `preferred_audio_services` order it uses to
-  pick a lower-level backend (`mpv`, `vlc`, `simple`), described in [OCP Audio
-  Plugin](ocp-audio-plugin.md#configuration). A missing or misconfigured backend in that list can
-  leave OCP with nothing to hand the stream to.
-
-In `ovos-busmon`, filter by `ovos.common_play.status` to see the player's own state (playing,
-paused, stopped) regardless of whether sound is actually audible, useful for telling apart "OCP
-thinks it's playing" (an audio sink problem) from "OCP never started playing" (extractor or
-search problem, (a)/(b) above).
+See **[Troubleshooting Media and Playback](troubleshooting-audio.md)** for the full breakdown of
+all three cases, the exact log lines and `ovos-busmon` filters for each, and links to the
+relevant OCP config pages.
 
 ---
 
@@ -673,4 +555,4 @@ sequence than with a description of the symptom alone.
 ---
 
 **Read next:** [The Life of an Utterance](life-of-an-utterance.md)
-**Related:** [Command-line Tools](cli-tools.md) · [Configuration](config.md) · [ovoscope Overview](ovoscope-overview.md) · [Bus Service](bus-service.md) · [RaspOVOS Troubleshooting](raspovos-troubleshooting.md)
+**Related:** [Command-line Tools](cli-tools.md) · [Configuration](config.md) · [ovoscope Overview](ovoscope-overview.md) · [Bus Service](bus-service.md) · [RaspOVOS Troubleshooting](raspovos-troubleshooting.md) · [Watching the Bus: ovos-busmon](troubleshooting-bus.md) · [Troubleshooting Media and Playback](troubleshooting-audio.md)

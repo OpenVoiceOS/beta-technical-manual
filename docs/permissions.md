@@ -57,7 +57,8 @@ Configure in `mycroft.conf`:
 !!! warning "What you should see in the log when a whitelist blocks converse"
     `ConverseService` returns `False` from this check silently. There is no dedicated log
     line announcing "skill X blocked by whitelist". The observable symptom instead: run
-    `ologs | grep converse` (see [RaspOVOS Troubleshooting](raspovos-troubleshooting.md#how-to-debug-intent-matching))
+    `ologs | grep converse` (see [RaspOVOS Troubleshooting](raspovos-troubleshooting.md), "How to
+    debug intent matching")
     while talking to the device, and the non-whitelisted skill's `skill_id` simply never
     shows up as a candidate. No `mycroft.skill.converse.request`/response pair for it appears
     at all, and its `converse()` method is never invoked. If a skill you expect to converse is

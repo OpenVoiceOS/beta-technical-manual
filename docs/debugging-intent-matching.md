@@ -116,7 +116,7 @@ a while, but the first attempt (or every attempt) feels sluggish.
 is eating the time. For Common Query specifically, watch `question:query` and
 `question:query.response` to see how long skills take to reply. See
 [Bus Events Reference](bus-events.md) and
-[Troubleshooting: watch the bus](troubleshooting.md#watch-the-bus-while-you-speak-ovos-busmon).
+[Watching the Bus: ovos-busmon](troubleshooting-bus.md).
 
 ---
 

@@ -73,7 +73,7 @@ one filterable, searchable timeline.
 |---|---|
 | `ovos-busmon` | Start the web UI (default `http://127.0.0.1:8005`), connecting outward to a messagebus at `localhost:8181`. |
 
-See [Watch the bus while you speak: `ovos-busmon`](troubleshooting.md#watch-the-bus-while-you-speak-ovos-busmon)
+See [Watching the Bus: `ovos-busmon`](troubleshooting-bus.md)
 for installation, configuration variables, security notes, and a walkthrough.
 
 ---

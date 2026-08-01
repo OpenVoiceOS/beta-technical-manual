@@ -337,8 +337,8 @@ systemctl --user restart ovos.service
 If it misbehaves, roll back the same way as in the fleet recipe:
 `uv pip install --force-reinstall -r ~/ovos-known-good-<date>.txt`, then restart the service.
 See [Staged upgrades and rollback](#staged-upgrades-and-rollback) for why `--force-reinstall`
-is required on rollback, and [Release Channels: Pinning or rolling back a single
-package](release-channels.md#pinning-or-rolling-back-a-single-package) if only one package
+is required on rollback, and [Rolling Back an OVOS Upgrade: Pinning or rolling back a single
+package](release-rollback.md#pinning-or-rolling-back-a-single-package) if only one package
 regressed rather than the whole stack.
 
 ---
@@ -367,8 +367,8 @@ flowchart LR
 For a fleet, the same mechanism gives you a controlled, reversible upgrade path:
 
 If only a single package regressed, rolling back the whole stack is unnecessary. See
-[Release Channels: Pinning or rolling back a single
-package](release-channels.md#pinning-or-rolling-back-a-single-package) for pinning and
+[Rolling Back an OVOS Upgrade: Pinning or rolling back a single
+package](release-rollback.md#pinning-or-rolling-back-a-single-package) for pinning and
 restarting just that one package across the fleet.
 
 !!! tip "Back up your configuration too"
@@ -444,169 +444,18 @@ pinning the same wake word, STT/TTS servers, or `ready_settings` across an entir
 
 ## Thin clients + a shared speech backend
 
-For a step-by-step build of a server-plus-satellites deployment, see [Satellites](satellites.md).
-
-A common fleet topology is several low-power "thin" devices that each run a full
-`ovos-core` (with the bus, listener and audio services), all pointed at one shared, more
-capable machine that does the actual speech-to-text and text-to-speech work over HTTP (see
-[STT server](stt-server.md) and [TTS server](tts-server.md)). Only the heavy STT/TTS
-inference is centralized: each device keeps its own core, session, and skills. A sketch,
-based on the real container images published by
-[`ovos-docker`](https://github.com/OpenVoiceOS/ovos-docker). For the client-side config keys
-and a worked example on a single LAN IP, see
-[privacy-security: point a device at your own LAN servers](privacy-security.md#point-a-device-at-your-own-lan-servers).
-
-!!! note "Not the shared-brain pattern"
-    This is not the shared-brain pattern. Every device here keeps its own `ovos-core`, so
-    each room is an independent assistant that shares only speech inference. For one shared
-    brain and session, see [Satellites](satellites.md).
-
-!!! danger "These ports are unauthenticated plain HTTP"
-    `8080` and `9666` below serve unauthenticated plain HTTP by default. Never expose them
-    to untrusted networks. Add API keys and/or put a reverse proxy in front of them before
-    they leave localhost. See [tts-server: Tips & Caveats](tts-server.md#tips-caveats) for
-    how.
-
-```yaml title="docker-compose.yml — central speech backend"
-services:
-  ovos_stt_server:
-    image: docker.io/smartgic/ovos-stt-server-onnx-asr:${VERSION}   # or your own build, see stt-server.md
-    ports: ["8080:8080"]  # UNAUTHENTICATED — do not expose beyond localhost/VPN
-
-  ovos_tts_server:
-    image: docker.io/smartgic/ovos-tts-server-piper:${VERSION}      # or your own build, see tts-server.md
-    ports: ["9666:9666"]  # UNAUTHENTICATED — do not expose beyond localhost/VPN
-```
-
-The speech-server image name encodes the engine baked into it: `ovos-stt-server-onnx-asr`,
-`ovos-stt-server-onnx-asr-cuda`, `ovos-tts-server-piper`, `ovos-tts-server-kokoro`,
-`ovos-tts-server-phoonnx` and so on. Pick the variant carrying the plugin you want. There is
-no generic image that loads an arbitrary engine at runtime.
-
-```yaml title="docker-compose.yml — thin client (per device)"
-services:
-  ovos_messagebus:
-    image: docker.io/smartgic/ovos-messagebus:${VERSION}
-    network_mode: host  # shares host loopback AND LAN interfaces with every container on this host
-
-  ovos_listener:
-    image: docker.io/smartgic/ovos-listener:${VERSION}
-    network_mode: host
-    depends_on: [ovos_messagebus]
-    devices: ["/dev/snd"]                      # microphone passthrough
-    volumes:
-      - ${XDG_RUNTIME_DIR}/pulse:${XDG_RUNTIME_DIR}/pulse:ro
-      - ~/.config/pulse/cookie:/home/${OVOS_USER}/.config/pulse/cookie:ro
-      - ~/.config/mycroft:/home/${OVOS_USER}/.config/mycroft
-    # set stt.module = ovos-stt-plugin-server and stt.ovos-stt-plugin-server.urls to the
-    # central STT server above, in the mounted /home/${OVOS_USER}/.config/mycroft/mycroft.conf
-
-  ovos_audio:
-    image: docker.io/smartgic/ovos-audio:${VERSION}
-    network_mode: host
-    depends_on: [ovos_messagebus]
-    devices: ["/dev/snd"]                      # speaker passthrough
-    volumes:
-      - ${XDG_RUNTIME_DIR}/pulse:${XDG_RUNTIME_DIR}/pulse:ro
-      - ~/.config/pulse/cookie:/home/${OVOS_USER}/.config/pulse/cookie:ro
-      - ~/.config/mycroft:/home/${OVOS_USER}/.config/mycroft
-      - ovos_tts_cache:/home/${OVOS_USER}/.cache/mycroft/tts
-    # set tts.module = ovos-tts-plugin-server and tts.ovos-tts-plugin-server.host to the
-    # central TTS server above, in the mounted /home/${OVOS_USER}/.config/mycroft/mycroft.conf
-
-  ovos_core:
-    image: docker.io/smartgic/ovos-core:${VERSION}
-    network_mode: host
-    depends_on: [ovos_messagebus]
-```
-
-`depends_on` here only orders **container start**. It starts `ovos_messagebus` first, but does
-not wait for it to actually accept WebSocket connections before starting the services listed
-after it. Use the [readiness probe](#knowing-when-the-assistant-is-actually-ready) (or Compose's
-own `depends_on: condition: service_healthy` against a healthcheck that runs it) as the real gate
-if a dependent service needs the bus to be live, not just the container to exist.
-
-Audio devices and sockets have to be handed to the containers that touch them: the listener
-needs the microphone, the audio service needs the speaker, and both need the host's PulseAudio
-or PipeWire socket. Anything you want to survive a container rebuild (downloaded models, the
-TTS cache, listener recordings, local state) belongs in a named volume rather than the
-container filesystem. The
-[reference compose file](https://github.com/OpenVoiceOS/ovos-docker/blob/dev/compose/docker-compose.yml)
-in `ovos-docker` is the fuller version of the sketch above, with every volume, device,
-resource limit and healthcheck spelled out.
-
-!!! danger "`network_mode: host` shares the loopback across every container on that host"
-    With `network_mode: host`, `127.0.0.1` is the **host's** loopback, not a container-private
-    one. Every container and process on that host shares it. A bus bound to `127.0.0.1` is
-    reachable by any of them, not just `ovos_messagebus`.
-
-    "Bound to localhost" no longer means "only reachable by this one process" once host
-    networking is in play. Treat the whole host as the trust boundary, not the individual
-    container.
-
-    Host networking also exposes any service that binds `0.0.0.0` straight onto the LAN, not
-    just the host's own loopback. `gui_websocket.host` ships as `0.0.0.0` (all interfaces), so
-    with `network_mode: host` the GUI WebSocket lands on the LAN, not just the device. Set
-    `gui_websocket.host` to `127.0.0.1` unless a remote display client genuinely needs LAN
-    access.
-
-Each thin client still runs its own bus, listener, audio and core. Only the heavy STT/TTS
-inference is centralized. This is the same pattern as
-[Wyoming bridges](wyoming-bridges.md) and [HiveMind](hivemind-agents.md), just wired directly
-through the companion server plugins instead of a satellite protocol. See
-[Composable Deployments](composable-deployments.md) for the general principle of splitting
-OVOS across machines.
+Several low-power devices, each running a full `ovos-core`, all pointed at one shared
+machine doing the heavy STT/TTS inference over HTTP: see
+[Satellites: Thin clients + a shared speech backend](satellites.md#thin-clients-a-shared-speech-backend)
+for the compose files, the config keys, and the container networking caveats.
 
 ---
 
-## Network hardening
+## Security hardening
 
-OVOS ships several network services. Most bind to `127.0.0.1` by default. Some do not. Check
-each one before you open a port on a shared network.
-
-| Service | Port | Default bind | Auth? | TLS? |
-|---|---|---|---|---|
-| [Messagebus](bus-service.md) | 8181 | `127.0.0.1` | None | Optional (`websocket.ssl`) |
-| [GUI WebSocket](gui-service.md#configuration) | 18181 | `0.0.0.0` (all interfaces) | None | None |
-| [Skill Settings web UI](skill-settings.md) | 8000 | `0.0.0.0` (all interfaces) | Basic auth, default `ovos`/`ovos` | None (put a proxy in front for TLS) |
-| [STT server](stt-server.md) | 8080 | `0.0.0.0` | None | None (put a proxy in front for TLS) |
-| [TTS server](tts-server.md) | 9666 | `0.0.0.0` | None | None (put a proxy in front for TLS) |
-| [Translate server](translate-server.md) HTTP API | 9686 | `0.0.0.0` | None | None (put a proxy in front for TLS) |
-| [Translate server](translate-server.md) MCP endpoint | 9687 | `127.0.0.1` | None | None |
-| [HiveMind](hivemind-agents.md) listener | 5678 | `0.0.0.0` | Access key + password (Noise handshake) | Optional (`ssl` + `cert_dir`/`cert_name` in server config) |
-
-!!! warning "The GUI WebSocket binds to all interfaces by default"
-    Unlike the bus, the GUI WebSocket ships bound to `0.0.0.0`. It has no authentication, no
-    origin check, and no TLS option, and anything it receives is forwarded straight onto the
-    core bus. Set `gui_websocket.host` to `127.0.0.1` unless a remote display genuinely needs
-    network access. See [GUI Service: Configuration](gui-service.md#configuration) for the
-    full warning and the VPN/reverse-proxy alternative.
-
-### Rules to follow
-
-- Keep every service in the table on `127.0.0.1` unless you have a specific, deliberate reason
-  to open it.
-- Never expose the messagebus or the GUI WebSocket to the internet. Either one gives full
-  control of the assistant, and the GUI socket gives it with no authentication at all (see
-  [Security & Trust Model: The bus has no authentication](security-model.md#the-bus-has-no-authentication)).
-- If satellite devices need to reach the bus directly (uncommon; most setups should use
-  HiveMind instead, see below), bind it to `0.0.0.0` only on a network you control, and
-  firewall the port to that network's subnet. For example, with `ufw`, allow only a trusted
-  LAN:
-
-  ```bash
-  ufw allow from 192.168.1.0/24 to any port 8181 proto tcp
-  ufw deny 8181/tcp
-  ```
-
-  Replace `192.168.1.0/24` with your actual LAN subnet.
-- For anything beyond a single trusted LAN (a phone on mobile data, a satellite in another
-  building, a device you don't administer), use [HiveMind](hivemind-agents.md) instead of
-  opening the bus. HiveMind gives satellites an authenticated, encrypted channel without
-  widening the bus itself. See [Composable Deployments: Satellites](satellites.md) for how a
-  satellite fits into a wider topology.
-- Serving the bus itself over TLS (for the cases above where it does need to leave localhost)
-  is covered in [Bus restart / reconnect behavior: Serving the bus over TLS](bus-reconnect.md#bus-restart-reconnect-behavior).
+Which ports OVOS binds by default, what has auth, what needs a firewall rule before it
+leaves localhost, and the HiveMind alternative to opening the bus directly: see
+[Production Hardening](production-hardening.md).
 
 ---
 

@@ -112,7 +112,7 @@ Handled by every `OVOSSkill` instance. See [OVOSSkill API](ovos-skill.md#system-
 | `mycroft.skills.settings.changed` | Remote settings update: see [Skill Settings](skill-settings.md#change-callback) for the full change-notification flow |
 | `ovos.skills.settings_changed` | Local settings file changed: see `settings_change_callback` in [Skill Settings](skill-settings.md#change-callback) ([Skill Cookbook recipe 2](recipe-reactive-settings.md)) for reacting to it from a skill |
 | `homescreen.metadata.get` | Homescreen requesting metadata |
-| `{skill_id}.public_api` | Skill API introspection (see [Skill API: Inter-Skill RPC](ovos-skill.md#skill-api-inter-skill-rpc)) |
+| `{skill_id}.public_api` | Skill API introspection (see [Skill API: Inter-Skill RPC](skill-api.md)) |
 
 ### Stop pipeline
 

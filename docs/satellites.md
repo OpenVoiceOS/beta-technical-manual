@@ -41,7 +41,8 @@ Use HiveMind for anything off your own network, or when you need to tell satelli
 
 Both paths on this page share one `ovos-core` brain across every satellite. If you instead
 want each device to run its own independent `ovos-core` and only share the heavy STT/TTS
-inference, see [Production Operations: thin clients + a shared speech backend](production-operations.md#thin-clients-a-shared-speech-backend).
+inference, see [Thin clients + a shared speech backend](#thin-clients-a-shared-speech-backend)
+below.
 
 ---
 
@@ -137,6 +138,123 @@ Full steps, permission model, and satellite/client packages: see
 [Remote Agents with HiveMind](hivemind-agents.md). Wire-level protocol details live in the
 upstream [HiveMind community docs](https://jarbashivemind.github.io/HiveMind-community-docs/),
 not in this manual.
+
+---
+
+## Thin clients + a shared speech backend
+
+A common fleet topology is several low-power "thin" devices that each run a full
+`ovos-core` (with the bus, listener and audio services), all pointed at one shared, more
+capable machine that does the actual speech-to-text and text-to-speech work over HTTP (see
+[STT server](stt-server.md) and [TTS server](tts-server.md)). Only the heavy STT/TTS
+inference is centralized: each device keeps its own core, session, and skills. A sketch,
+based on the real container images published by
+[`ovos-docker`](https://github.com/OpenVoiceOS/ovos-docker). For the client-side config keys
+and a worked example on a single LAN IP, see
+[privacy-security: point a device at your own LAN servers](privacy-security.md#point-a-device-at-your-own-lan-servers).
+
+!!! note "Not the shared-brain pattern"
+    This is not the shared-brain pattern described above. Every device here keeps its own
+    `ovos-core`, so each room is an independent assistant that shares only speech inference.
+    For one shared brain and session, use the raw shared bus or HiveMind walkthroughs above
+    instead.
+
+!!! danger "These ports are unauthenticated plain HTTP"
+    `8080` and `9666` below serve unauthenticated plain HTTP by default. Never expose them
+    to untrusted networks. Add API keys and/or put a reverse proxy in front of them before
+    they leave localhost. See [tts-server: Tips & Caveats](tts-server.md#tips-caveats) for
+    how.
+
+```yaml title="docker-compose.yml — central speech backend"
+services:
+  ovos_stt_server:
+    image: docker.io/smartgic/ovos-stt-server-onnx-asr:${VERSION}   # or your own build, see stt-server.md
+    ports: ["8080:8080"]  # UNAUTHENTICATED — do not expose beyond localhost/VPN
+
+  ovos_tts_server:
+    image: docker.io/smartgic/ovos-tts-server-piper:${VERSION}      # or your own build, see tts-server.md
+    ports: ["9666:9666"]  # UNAUTHENTICATED — do not expose beyond localhost/VPN
+```
+
+The speech-server image name encodes the engine baked into it: `ovos-stt-server-onnx-asr`,
+`ovos-stt-server-onnx-asr-cuda`, `ovos-tts-server-piper`, `ovos-tts-server-kokoro`,
+`ovos-tts-server-phoonnx` and so on. Pick the variant carrying the plugin you want. There is
+no generic image that loads an arbitrary engine at runtime.
+
+```yaml title="docker-compose.yml — thin client (per device)"
+services:
+  ovos_messagebus:
+    image: docker.io/smartgic/ovos-messagebus:${VERSION}
+    network_mode: host  # shares host loopback AND LAN interfaces with every container on this host
+
+  ovos_listener:
+    image: docker.io/smartgic/ovos-listener:${VERSION}
+    network_mode: host
+    depends_on: [ovos_messagebus]
+    devices: ["/dev/snd"]                      # microphone passthrough
+    volumes:
+      - ${XDG_RUNTIME_DIR}/pulse:${XDG_RUNTIME_DIR}/pulse:ro
+      - ~/.config/pulse/cookie:/home/${OVOS_USER}/.config/pulse/cookie:ro
+      - ~/.config/mycroft:/home/${OVOS_USER}/.config/mycroft
+    # set stt.module = ovos-stt-plugin-server and stt.ovos-stt-plugin-server.urls to the
+    # central STT server above, in the mounted /home/${OVOS_USER}/.config/mycroft/mycroft.conf
+
+  ovos_audio:
+    image: docker.io/smartgic/ovos-audio:${VERSION}
+    network_mode: host
+    depends_on: [ovos_messagebus]
+    devices: ["/dev/snd"]                      # speaker passthrough
+    volumes:
+      - ${XDG_RUNTIME_DIR}/pulse:${XDG_RUNTIME_DIR}/pulse:ro
+      - ~/.config/pulse/cookie:/home/${OVOS_USER}/.config/pulse/cookie:ro
+      - ~/.config/mycroft:/home/${OVOS_USER}/.config/mycroft
+      - ovos_tts_cache:/home/${OVOS_USER}/.cache/mycroft/tts
+    # set tts.module = ovos-tts-plugin-server and tts.ovos-tts-plugin-server.host to the
+    # central TTS server above, in the mounted /home/${OVOS_USER}/.config/mycroft/mycroft.conf
+
+  ovos_core:
+    image: docker.io/smartgic/ovos-core:${VERSION}
+    network_mode: host
+    depends_on: [ovos_messagebus]
+```
+
+`depends_on` here only orders **container start**. It starts `ovos_messagebus` first, but does
+not wait for it to actually accept WebSocket connections before starting the services listed
+after it. Use the [readiness probe](production-operations.md#knowing-when-the-assistant-is-actually-ready)
+(or Compose's own `depends_on: condition: service_healthy` against a healthcheck that runs it)
+as the real gate if a dependent service needs the bus to be live, not just the container to
+exist.
+
+Audio devices and sockets have to be handed to the containers that touch them: the listener
+needs the microphone, the audio service needs the speaker, and both need the host's PulseAudio
+or PipeWire socket. Anything you want to survive a container rebuild (downloaded models, the
+TTS cache, listener recordings, local state) belongs in a named volume rather than the
+container filesystem. The
+[reference compose file](https://github.com/OpenVoiceOS/ovos-docker/blob/dev/compose/docker-compose.yml)
+in `ovos-docker` is the fuller version of the sketch above, with every volume, device,
+resource limit and healthcheck spelled out.
+
+!!! danger "`network_mode: host` shares the loopback across every container on that host"
+    With `network_mode: host`, `127.0.0.1` is the **host's** loopback, not a container-private
+    one. Every container and process on that host shares it. A bus bound to `127.0.0.1` is
+    reachable by any of them, not just `ovos_messagebus`.
+
+    "Bound to localhost" no longer means "only reachable by this one process" once host
+    networking is in play. Treat the whole host as the trust boundary, not the individual
+    container.
+
+    Host networking also exposes any service that binds `0.0.0.0` straight onto the LAN, not
+    just the host's own loopback. `gui_websocket.host` ships as `0.0.0.0` (all interfaces), so
+    with `network_mode: host` the GUI WebSocket lands on the LAN, not just the device. Set
+    `gui_websocket.host` to `127.0.0.1` unless a remote display client genuinely needs LAN
+    access.
+
+Each thin client still runs its own bus, listener, audio and core. Only the heavy STT/TTS
+inference is centralized. This is the same pattern as
+[Wyoming bridges](wyoming-bridges.md) and [HiveMind](hivemind-agents.md), just wired directly
+through the companion server plugins instead of a satellite protocol. See
+[Composable Deployments](composable-deployments.md) for the general principle of splitting
+OVOS across machines.
 
 ---
 

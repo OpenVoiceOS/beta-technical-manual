@@ -184,7 +184,7 @@ That exact path is only an example, not something you can assume. raspOVOS, `ovo
 and container installs each put it somewhere different.
 
 - Check where your particular install created its environment, for example the installer's
-  summary screen (see [ovos-installer](ovos-installer.md#environment-summary)).
+  summary screen (see [ovos-installer](ovos-installer-scenarios.md#environment-summary)).
 - Advanced: if you installed via [systemd](glossary.md), its unit file's
   `Environment=`/`ExecStart=` lines show the path.
 - Still stuck? See [Troubleshooting](troubleshooting.md).

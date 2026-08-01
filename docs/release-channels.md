@@ -60,42 +60,11 @@ read this page, any number here would already be stale. Before upgrading, check 
 - Its `CHANGELOG.md`, where the repository keeps one (generated from conventional
   commits — see [Semantic Versioning](https://semver.org/)).
 
-## Pinning or rolling back a single package
+## Rolling back an upgrade
 
-The [freeze/force-reinstall pattern](#rolling-back) below rolls back your *entire*
-environment. If only one package regressed, you don't need the sledgehammer. Pin
-just that package instead:
-
-```bash
-pip install "ovos-stt-plugin-whisper==<old-version>"
-```
-
-Or, if you're using a local constraints file (see
-[Offline and mirrored installs](#offline-and-mirrored-installs)), append an exact pin
-for that one package to it:
-
-```text
-ovos-stt-plugin-whisper==<old-version>
-```
-
-so the pin survives the next time you reinstall from that constraints file, instead of
-being silently overwritten by the channel's range.
-
-Either way, you need to know what the old, working version was. Get it from your frozen
-snapshot with `grep ovos-stt-plugin-whisper known-good.txt` (see [Rolling Back](#rolling-back)
-below), or, if you didn't freeze one, from `pip show ovos-stt-plugin-whisper` run *before*
-you upgraded.
-
-Pinning the package alone isn't enough. The process that already loaded the old, broken
-version keeps running it in memory until it restarts. Restart whichever service loads that
-package (e.g. `systemctl --user restart ovos-dinkum-listener.service` for an STT plugin)
-before you consider the rollback complete.
-
-!!! note "A release channel isn't a maturity guarantee"
-    Picking the `stable` channel bounds *versions*, not the maturity of every plugin that
-    channel resolves. See [Maturity Scale: a release channel is not a maturity
-    guarantee](maturity.md) for what "stable
-    channel" does and doesn't promise.
+Freezing a known-good package set before an upgrade, rolling the whole stack back if it
+misbehaves, and pinning or rolling back just one regressed package instead of the whole
+environment: see [Rolling Back an OVOS Upgrade](release-rollback.md).
 
 ---
 
@@ -323,44 +292,6 @@ fetch the channel file on every operation:
     uv pip install "ovos-core[mycroft]" -c my-constraints.txt
     ```
 
----
-
-## Rolling Back
-
-Constraints files bound a channel's versions, but they don't record what *you* actually had
-installed before an upgrade. Before upgrading anything you care about, freeze what's currently working:
-
-```bash
-uv pip freeze > known-good.txt
-```
-
-This plain `known-good.txt` in the current directory is the single-machine form of the same
-convention [Production Operations](production-operations.md#staged-upgrades-and-rollback) uses
-for a fleet: a dated, absolute path like `/etc/ovos/known-good-2026-07-01.txt`. Same pattern,
-just scaled from one machine to many.
-
-If an upgrade misbehaves, `pip`/`uv` won't downgrade a package on their own just because a
-newer constraints file changed. An ordinary `install` call treats an already-satisfied
-requirement as nothing to do. Force the reinstall of the exact frozen versions instead:
-
-```bash
-uv pip install --force-reinstall -r known-good.txt
-```
-
-See [Production Operations: staged upgrades and rollback](production-operations.md#staged-upgrades-and-rollback)
-for the same pattern applied across a fleet of devices rather than one machine. If the
-rollback needs more than package versions, for example your device's `mycroft.conf` or a
-skill's `settings.json` was also damaged, see the [backup and restore
-recipe](production-operations.md#backup-recipe) instead.
-
-!!! tip "Moving to a newer OS image"
-    Flashing a fresh OS image (a new raspOVOS release, a new Raspberry Pi OS build) wipes
-    the disk. Back up `mycroft.conf` and each skill's `settings.json` first, following the
-    [backup and restore recipe](production-operations.md#backup-recipe), then restore them
-    onto the new image the same way.
-
----
-
 ## ⚠️ Tips & Caveats
 
 - Using `--pre` installs pre-releases across all dependencies, not just OVOS-specific ones. Use it with caution.
@@ -370,8 +301,6 @@ recipe](production-operations.md#backup-recipe) instead.
 
 ---
 
----
-
 **Read next:** [Make it yours](personalize.md)
-**Related:** [OVOS Releases repo](https://github.com/OpenVoiceOS/ovos-releases) · [Constraints files explanation (pip docs)](https://pip.pypa.io/en/stable/user_guide/#constraints-files) · [Semantic Versioning](https://semver.org/) · [ovos-installer](ovos-installer.md)
+**Related:** [Rolling Back an OVOS Upgrade](release-rollback.md) · [OVOS Releases repo](https://github.com/OpenVoiceOS/ovos-releases) · [Constraints files explanation (pip docs)](https://pip.pypa.io/en/stable/user_guide/#constraints-files) · [Semantic Versioning](https://semver.org/) · [ovos-installer](ovos-installer.md)
 

@@ -29,7 +29,9 @@ music while it talks.
        standalone [`ovos-media`](ovos-media.md) daemon. A second top-level key,
        `disable_ocp` (default `false`, slated to flip to `true`), gates whether the OCP
        audioservice backend loads within this subsystem. Both keys are set at the **top
-       level** of `mycroft.conf`, not under the `Audio` section.
+       level** of `mycroft.conf`, not under the `Audio` section. For the compatibility
+       bridges and known coupling issues this legacy subsystem carries into `ovos-media`,
+       see [ovos-media Legacy Compatibility](ovos-media-compat.md).
 
     Switching media playback to `ovos-media` (`enable_old_audioservice: false`) turns off
     subsystem 2 only. TTS and sound playback (subsystem 1) keep working exactly as before.
@@ -144,4 +146,4 @@ deprecated media path. See the **Two independent subsystems** note above.
 
 ---
 **Read next:** [Media Service (ovos-media)](ovos-media.md) · [Screens on OVOS Today](gui-status.md)
-**Related:** [Bus Events Reference](bus-events.md#tts-audio-playback) · [TTS Plugins](tts-plugins.md) · [Speech Service](speech-service.md) · [Bus Service](bus-service.md)
+**Related:** [Bus Events Reference](bus-events.md#tts-audio-playback) · [TTS Plugins](tts-plugins.md) · [Speech Service](speech-service.md) · [Bus Service](bus-service.md) · [ovos-media Legacy Compatibility](ovos-media-compat.md)

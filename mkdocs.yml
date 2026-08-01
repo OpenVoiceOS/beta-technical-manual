@@ -102,7 +102,9 @@ nav:
   - Get Started:
       - Start Here: start-here.md
       - Install with ovos-installer: ovos-installer.md
+      - Installer Wizard Walkthrough: ovos-installer-scenarios.md
       - Manual & Advanced Install: release-channels.md
+      - Rolling Back an Upgrade: release-rollback.md
       - RaspOVOS image:
           - RaspOVOS: install-raspovos.md
           - RaspOVOS Troubleshooting: raspovos-troubleshooting.md
@@ -120,6 +122,8 @@ nav:
       - Help & Troubleshooting:
           - It's not behaving: everyday-help.md
           - Troubleshooting & Debugging: troubleshooting.md
+          - Watching the Bus (ovos-busmon): troubleshooting-bus.md
+          - Media & Playback Problems: troubleshooting-audio.md
   - Concepts:
       - Concepts Overview: concepts-overview.md
       - High-level Overview: architecture-overview.md
@@ -139,6 +143,7 @@ nav:
       - Configuration:
           - Overview: config.md
           - Reference: config-reference.md
+          - All Configuration Keys: config-all-keys.md
           - Locations: locations-ref.md
       - ovos-core Internals:
           - Overview: core.md
@@ -149,12 +154,15 @@ nav:
           - Speech Service: speech-service.md
           - Audio Service: audio-service.md
           - Media Service (ovos-media): ovos-media.md
+          - ovos-media MPRIS Integration: ovos-media-mpris.md
+          - ovos-media Legacy Compatibility: ovos-media-compat.md
           - Screens on OVOS Today: gui-status.md
           - GUI Service (legacy): gui-service.md
           - PHAL (Hardware Abstraction): phal.md
           - Writing PHAL Plugins: phal-authoring.md
   - Pipeline:
       - Overview & Reference: pipelines-overview.md
+      - Writing a Pipeline Plugin: pipeline-plugin-authoring.md
       - Building Your Pipeline: building-your-pipeline.md
       - Debugging Intent Matching: debugging-intent-matching.md
       - Flow Stages:
@@ -176,6 +184,7 @@ nav:
           - Persona (extra): persona-pipeline.md
       - Transformers:
           - Overview: transformer-plugins.md
+          - Transformer Plugin Development: transformer-plugin-development.md
           - Utterance: utterance-transformers.md
           - Intent: intent-transformers.md
           - Dialog: dialog-transformers.md
@@ -183,6 +192,7 @@ nav:
           - TTS: tts-transformers.md
   - Language:
       - Overview: lang-support.md
+      - Language Support Tables: lang-support-tables.md
       - Language Selection (internals): lang-selection.md
       - Customizing Resources: lang-customization.md
       - Bidirectional Translation: bidirectional-translation.md
@@ -229,8 +239,10 @@ nav:
       - Skill APIs:
           - ovos-workshop Overview: workshop-overview.md
           - OVOSSkill API: ovos-skill.md
+          - Skill API (Inter-Skill RPC): skill-api.md
           - Skill Base Classes: skill-classes.md
           - Decorators: decorators.md
+          - Advanced Decorators: decorators-advanced.md
           - Skill Settings: skill-settings.md
           - Meta Settings: skill-settings-meta.md
           - Filesystem: skill-filesystem.md
@@ -264,11 +276,15 @@ nav:
       - Media Playback:
           - OCP Audio Plugin (legacy default): ocp-audio-plugin.md
           - OCP Extractors: ocp-plugins.md
+          - OCP Plugin Development: ocp-plugin-development.md
           - Media Playback Plugins: media-plugins.md
+          - Media Plugin Development: media-plugin-development.md
       - GUI (legacy & upcoming):
           - GUI Protocol (legacy): gui-protocol.md
+          - GUI Protocol Messages: gui-protocol-messages.md
           - OVOS Shell (legacy): ovos-shell.md
           - Qt5 GUI (legacy): qt5-gui.md
+          - QML Worked Examples: qt5-gui-examples.md
           - Home Screen (legacy): homescreen.md
           - GUI Adapters (upcoming): gui-adapters.md
   - Agents:
@@ -292,6 +308,7 @@ nav:
       - Production Overview: production-overview.md
       - Privacy & Security: privacy-security.md
       - Production Operations: production-operations.md
+      - Production Hardening: production-hardening.md
       - Satellites (one brain, many speakers): satellites.md
       - Running OVOS in Containers: docker-deployment.md
       - Updating from Older OVOS:

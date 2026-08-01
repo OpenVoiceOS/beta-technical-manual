@@ -131,7 +131,7 @@ private bridge network and no inter-container DNS: a container reaches the bus a
     With `network_mode: host`, `127.0.0.1` inside a container is the **host's** loopback, not
     a container-private one. Any process on that host, containerized or not, can reach a bus
     bound to `127.0.0.1`. Treat the whole host as the trust boundary, not the individual
-    container. See [Production Operations](production-operations.md#thin-clients-a-shared-speech-backend)
+    container. See [Satellites](satellites.md#thin-clients-a-shared-speech-backend)
     for the same warning applied to a thin-client fleet.
 
 The bus listens on port `8181`. The GUI service listens on a separate port, `18181` by
@@ -244,7 +244,7 @@ have no bus dependency, so they work as a shared backend for bare-metal or thin-
 satellites that only run the bus, listener, and audio locally. See
 [Self-hosted STT Server](stt-server.md) and [Self-hosted TTS Server](tts-server.md) for the
 HTTP contract and plugin-side config keys, and
-[Production Operations: thin clients + a shared speech backend](production-operations.md#thin-clients-a-shared-speech-backend)
+[Satellites: thin clients + a shared speech backend](satellites.md#thin-clients-a-shared-speech-backend)
 for a worked compose example splitting the speech backend from the thin client.
 
 ## Containerized HiveMind

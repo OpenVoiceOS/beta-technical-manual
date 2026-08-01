@@ -123,7 +123,7 @@ install, what gets written to disk, and a concrete checklist, see
 [Privacy & Security](privacy-security.md).
 
 For the operational checklist, ports, binds, and firewall rules, see
-[Production Operations: Network hardening](production-operations.md#network-hardening).
+[Production Hardening: Network hardening](production-hardening.md#network-hardening).
 
 ---
 **Read next:** [Plugin Manager](plugin-manager.md) · [Concepts Overview](concepts-overview.md)

@@ -128,7 +128,7 @@ plugin uses `urls` (a list), the TTS plugin uses `host`.
 After saving the file, restart the client (`ovos-restart` on raspOVOS, or
 `systemctl --user restart ovos.service` elsewhere) and check the voice/audio logs to
 confirm requests go to `192.168.1.50`, not a public server. See
-[production-operations: thin clients + a shared speech backend](production-operations.md#thin-clients-a-shared-speech-backend)
+[satellites: thin clients + a shared speech backend](satellites.md#thin-clients-a-shared-speech-backend)
 for the server-side Docker Compose setup.
 
 ---
@@ -144,7 +144,7 @@ same thing:
   channel/profile, and which features were enabled. It is sent once, during
   installation, to a metrics endpoint run by the community, and nothing about
   this is ongoing. See the field table on the
-  [installer page](ovos-installer.md#anonymous-telemetry) for the exact list.
+  [installer page](ovos-installer-scenarios.md#anonymous-telemetry) for the exact list.
 - **Ongoing usage telemetry** (`share_usage_telemetry`) is different. Saying
   yes here adds an `open_data.intent_urls` entry to your installed
   `mycroft.conf`, which makes the **running assistant** report intent-matching
@@ -170,7 +170,7 @@ recordings. This is exclusively opt-in and off by default: nothing is ever
 uploaded unless `open_data.ww_urls` or `open_data.stt_urls` is explicitly
 configured with at least one server, and there is no default server. Uploads run
 in a background thread and never block the listener. Failures are logged and
-otherwise ignored. See [`open_data.ww_urls` / `open_data.stt_urls`](config-reference.md#all-keys-generated) for the exact config keys.
+otherwise ignored. See [`open_data.ww_urls` / `open_data.stt_urls`](config-all-keys.md#all-keys-generated) for the exact config keys.
 
 ---
 
@@ -288,7 +288,7 @@ There is no secrets manager or encryption layer.
 - [ ] Protect `mycroft.conf`'s file permissions and keep it out of shared
       dotfile repositories.
 - [ ] Decide independently on install-time telemetry and ongoing usage
-      telemetry. They are separate opt-ins ([installer telemetry](ovos-installer.md#anonymous-telemetry)).
+      telemetry. They are separate opt-ins ([installer telemetry](ovos-installer-scenarios.md#anonymous-telemetry)).
 - [ ] For remote/multi-room setups, use [HiveMind](hivemind-agents.md) instead
       of exposing the bus directly.
 
