@@ -2512,7 +2512,7 @@ before late 2024, check it against this table.</p>
 </tr>
 <tr>
 <td><code>gui.GUITracker</code>, <code>.GUIPlaybackStatus</code></td>
-<td>removed, no verified successor</td>
+<td>removed without replacement (<code>ovos-utils</code> <code>3a77617</code>, 2023-12-29)</td>
 </tr>
 </tbody>
 </table>
@@ -3673,41 +3673,45 @@ safe to build against yet.</p>
 </ul>
 <hr />
 <h2 id="verification-gaps">Verification gaps<a class="headerlink" href="#verification-gaps" title="Permanent link">&para;</a></h2>
-<p>The following lifecycle phases could not be confirmed against the commit
-history this page is built from. Treat the corresponding table cells as
-"unverified" and re-check against the named repository's release history
-before relying on them:</p>
+<p><code>ovos-core</code> is a fork of <code>mycroft-core</code> and carries that project's full
+history (6119 commits on <code>origin/dev</code>, back to the initial commit). The
+items below were pinned against that combined history and against the
+named sibling repositories directly. The one former policy question is
+settled by the project's current status:</p>
 <ul>
-<li><strong>ovos-utils</strong>: whether <code>ovos_utils.gui.GUITracker</code> has a real successor
-  anywhere. A search of <code>ovos-gui</code>'s current history found no
-  <code>GUITracker</code>/<code>GUIPlaybackStatus</code> symbol anywhere in that repo, so this
-  still reads as "no successor," but a positive absence is weaker proof
-  than a located replacement. The exact mycroft-core commit that performed
-  the original <code>mycroft.* → ovos_*</code> rename predates <code>ovos-utils</code>'s own
-  history: it requires the <code>mycroft-core</code> repository's own history, which
-  is not cloned in this workspace.</li>
-<li><strong>ovos-config</strong>: exact key path that STT-embedded language preferences
-  moved to in <code>ede6243</code>. The commit's own <code>autoconfigure</code> CLI command
-  writes the standardized language tag to the top-level <code>lang</code> config key
-  (config root, not nested under <code>stt</code>), which is consistent with the PR's
-  "split prefs from stt into base config" description, but no dedicated
-  migration diff moving an existing nested key was found to confirm this
-  covers every prior STT-embedded language setting.</li>
-<li><strong>ovos-media</strong>: full symbol-level API diff of the <code>d249e89</code> <code>player.py</code>
-  rewrite beyond what the <code>f1d152c</code> regression fix incidentally revealed.
-  The exact point at which <code>ovos-media</code> became production-recommended over
-  <code>ovos-audio</code>'s classic <code>AudioService</code>: that call is a project
-  announcement/roadmap decision, not a single commit, so it requires the
-  release notes and blog history rather than <code>git log</code>.</li>
-<li><strong>ovos-audio</strong>: the exact mycroft-core commit/version that <code>047a0a1</code>
-  extracted <code>ovos_audio</code> from. <code>047a0a1</code> is the first substantive commit
-  in <code>ovos-audio</code>'s own history (no shared ancestor commit exists in this
-  repo), so pinning the mycroft-core side requires the <code>mycroft-core</code>
-  repository's own history, which is not cloned in this workspace.</li>
-<li><strong>ovos-bus-client</strong>: no <code>mycroft.conf</code> semantics change was found to
-  originate in this repo (it does not own config parsing). No explicit
-  "MycroftSkill → OVOSSkill" commit exists in this repo either (that
-  rename lives in <code>ovos-core</code>/<code>ovos-workshop</code>).</li>
+<li><strong>ovos-media</strong>: it has never become production-recommended. As of this
+  page's last update, <code>ovos-media</code> is alpha and not officially released.
+  <code>ovos-audio</code> remains the production audio service, and stock installs
+  keep <code>enable_old_audioservice: true</code> (the default). See
+  <a href="../ovos-media/">Media Service (ovos-media)</a> for its maturity status.</li>
+</ul>
+<p>The following items were previously listed here as gaps. They are now
+resolved and pinned in the tables above:</p>
+<ul>
+<li><strong>mycroft.* → ovos_* rename</strong>: <code>ovos-core</code> <code>5f36bc31b5</code> ("refactor/
+  ovos-core!! (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/313" title="GitHub Issue: TigreGotico/ovos-technical-manual #313">#313</a>)", 2023-05-02) is where core logic began moving out of
+  <code>mycroft/</code> into the new <code>ovos_core</code> package. The <code>mycroft/</code> compatibility
+  package itself was fully deleted in <code>2a10fa9c1c</code> ("remove mycroft (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/439" title="GitHub Issue: TigreGotico/ovos-technical-manual #439">#439</a>)",
+  2025-03-04).</li>
+<li><strong>ovos-utils GUITracker/GUIPlaybackStatus</strong>: removed without replacement.
+  <code>ovos-utils</code> <code>3a77617</code> ("0.1.0 alpha 3 (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/204" title="GitHub Issue: TigreGotico/ovos-technical-manual #204">#204</a>)", 2023-12-29) deletes both
+  <code>GUITracker</code> and <code>GUIPlaybackStatus</code> from <code>ovos_utils/gui.py</code>. No
+  successor symbol exists anywhere in <code>ovos-core</code> or <code>ovos-gui</code> history.</li>
+<li><strong>ovos-config <code>ede6243</code> lang key</strong>: the <code>autoconfigure</code> command writes
+  the standardized language tag to the top-level <code>lang</code> config key
+  (<code>config["lang"] = stdlang</code>), not nested under <code>stt</code>.</li>
+<li><strong>ovos-media <code>d249e89</code> symbol diff</strong>: <code>OCPMediaPlayer</code> stopped subclassing
+  <code>OVOSAbstractApplication</code> and became a plain class; <code>bind()</code> was removed;
+  <code>_update_gui</code>, <code>_merged_queue</code>, <code>_queue_index</code>, <code>_resolve_preferred_service</code>,
+  <code>handle_record_end</code>, <code>handle_utterance_handled</code>, and <code>handle_mycroft_stop</code>
+  were added; <code>handle_player_state_update</code> was removed in favor of the new
+  handlers. The commit also adds a large adversarial unit-test suite
+  (queue navigation, duck/uncork, player-state transitions).</li>
+<li><strong>ovos-audio extraction point</strong>: <code>ovos-audio</code> <code>047a0a1</code> ("Feat/audio from
+  core (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/1" title="GitHub Issue: TigreGotico/ovos-technical-manual #1">#1</a>)", 2023-03-03) is the extraction commit. <code>ovos-core</code> <code>7f0c0ab22a</code>
+  ("refactor/ovos_audio (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/304" title="GitHub Issue: TigreGotico/ovos-technical-manual #304">#304</a>)", 2023-04-28) is the corresponding commit on
+  the <code>ovos-core</code> side: it guts <code>mycroft/audio/*</code> down to thin re-exports of
+  the new <code>ovos_audio</code> package.</li>
 </ul>
 
 
