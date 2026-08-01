@@ -156,6 +156,10 @@ Detect a text's language and translate. See the [Translation catalog](translatio
 ## Media playback
 
 Backend players for [ovos-media](ovos-media.md). See the [Media catalog](media-plugins.md).
+Note: the `ovos-media` service itself is alpha and not officially released. Stock installs
+play audio through `ovos-audio` (`enable_old_audioservice: true`, the default), so these
+backends only apply once you opt in to `ovos-media`. The maturity column below rates each
+backend plugin, not the service.
 
 | Plugin | Maturity | Runs | Choose this if |
 |---|---|---|---|
