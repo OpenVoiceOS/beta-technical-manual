@@ -1,8 +1,22 @@
 # Maturity Scale
 
-Many pages in this manual carry a **maturity** badge. It tells you how much weight a
-component can bear in a real deployment. A component can be a rock-solid dependency, a
-usable-but-moving target, or an early experiment that may change under you.
+!!! abstract "In a nutshell"
+    Many pages in this manual carry a **maturity** badge. It tells you how much weight a
+    component can bear in a real deployment: a rock-solid dependency, a usable-but-moving
+    target, or an early experiment that may change under you. The rating comes from the
+    health of the component's source repository, not its version number. See the levels
+    below, then read [How maturity is judged](#how-maturity-is-judged) for the detail.
+
+## The levels
+
+| Badge | Level | What it means for you |
+|---|---|---|
+| ⬤⬤⬤⬤⬤ | **Mature** | Long-lived, well-proven, widely deployed, actively maintained. Depend on it freely. |
+| ⬤⬤⬤⬤◯ | **Stable** | Established and production-ready, maintained, with real docs. Safe for production; API changes are rare and announced. |
+| ⬤⬤⬤◯◯ | **Beta** | Works and is in real use, but younger or still settling — expect the occasional breaking change. Fine to build on with an eye on releases. |
+| ⬤⬤◯◯◯ | **Alpha** | Functional but early: the API churns, coverage is thin, and it may change substantially. Try it, pin it, don't build a product on it yet. |
+| ⬤◯◯◯◯ | **Proof-of-concept** | A spike or reference implementation. It may work, but it is not maintained as a product and may disappear. For exploration only. |
+| ⚠️ | **Deprecated** | The repository is archived or no longer maintained. Avoid it for new work; the page notes what replaces it where a replacement exists. |
 
 !!! info "How maturity is judged"
     A component's rating comes from the **health of its source repository**, not its version
@@ -19,17 +33,6 @@ usable-but-moving target, or an early experiment that may change under you.
     and still be the wrong tool for a given job. A page may recommend against broad use of
     something whose code is perfectly stable. Always read the page's own recommendation alongside
     the badge.
-
-## The levels
-
-| Badge | Level | What it means for you |
-|---|---|---|
-| ⬤⬤⬤⬤⬤ | **Mature** | Long-lived, well-proven, widely deployed, actively maintained. Depend on it freely. |
-| ⬤⬤⬤⬤◯ | **Stable** | Established and production-ready, maintained, with real docs. Safe for production; API changes are rare and announced. |
-| ⬤⬤⬤◯◯ | **Beta** | Works and is in real use, but younger or still settling — expect the occasional breaking change. Fine to build on with an eye on releases. |
-| ⬤⬤◯◯◯ | **Alpha** | Functional but early: the API churns, coverage is thin, and it may change substantially. Try it, pin it, don't build a product on it yet. |
-| ⬤◯◯◯◯ | **Proof-of-concept** | A spike or reference implementation. It may work, but it is not maintained as a product and may disappear. For exploration only. |
-| ⚠️ | **Deprecated** | The repository is archived or no longer maintained. Avoid it for new work; the page notes what replaces it where a replacement exists. |
 
 ## Why it's not the version number
 

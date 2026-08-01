@@ -221,6 +221,20 @@ graph LR
 
 *Diagram: an example four-host topology where the listener, audio, core, skill, PHAL, GUI, and hivemind-core services on Hosts A-D all connect to one shared messagebus on Host A, while a remote hivemind-mic-satellite reaches hivemind-core over the separate HiveMind protocol.*
 
+!!! danger "Two instances of one service on one bus is not failover"
+    `ovos-core`, `ovos-audio`, and `ovos-dinkum-listener` are each written assuming they are
+    the only instance of that service talking to a given bus. The bus is pure fan-out with no
+    leader election or ownership concept, so it cannot tell two `ovos-core` processes apart.
+    Running two instances of the same service against one bus does not give you redundancy.
+    It gives you duplicate handling of every message and double-emitted lifecycle events. See
+    [Services are implicit singletons per bus](#services-are-implicit-singletons-per-bus)
+    below. Scale horizontally with [HiveMind](hivemind-agents.md) satellites instead.
+
+    Version skew across a split deployment is a related risk: there is no central version
+    negotiation, so mismatched major versions of `ovos-bus-client`, `ovos-core`, `ovos-audio`,
+    and `ovos-dinkum-listener` can produce message shapes one side doesn't expect. See
+    [Version skew is a real risk](#version-skew-is-a-real-risk) below.
+
 !!! warning "Trust boundary: the bus and HIVE links are localhost/LAN only"
     Every `<-- websocket.host=A -->` link in the diagram above (including the `HIVE` connection)
     is a direct connection to the raw messagebus and must stay on a trusted localhost/LAN network.
@@ -268,10 +282,11 @@ loudly.
 
 ### Version skew is a real risk
 
-Every process talks over the same bus protocol independently. There is no central version
-negotiation. Mismatched major versions across `ovos-bus-client`, `ovos-core`, `ovos-audio`, and
-`ovos-dinkum-listener` can produce message shapes one side doesn't expect. Keep versions aligned
-across a deployment, and check each package's changelog before upgrading only one service.
+See the [danger box above](#example-topology) for the short version. Every process talks over
+the same bus protocol independently. There is no central version negotiation. Mismatched major
+versions across `ovos-bus-client`, `ovos-core`, `ovos-audio`, and `ovos-dinkum-listener` can
+produce message shapes one side doesn't expect. Keep versions aligned across a deployment, and
+check each package's changelog before upgrading only one service.
 
 ### Latency and network reality
 
@@ -283,10 +298,10 @@ as an error message.
 
 ### Services are implicit singletons per bus
 
-`ovos-core`, `ovos-audio`, and `ovos-dinkum-listener` are each written assuming they are the
-only instance of that service talking to a given bus. The bus itself is pure fan-out with no
-leader election or ownership concept. It has no way to tell two `ovos-core` processes apart
-or arbitrate between them.
+See the [danger box above](#example-topology) for the short version. `ovos-core`, `ovos-audio`,
+and `ovos-dinkum-listener` are each written assuming they are the only instance of that service
+talking to a given bus. The bus itself is pure fan-out with no leader election or ownership
+concept. It has no way to tell two `ovos-core` processes apart or arbitrate between them.
 
 Running two instances of the same service against one bus does not
 give you redundancy or failover. It gives you duplicate handling of every message and

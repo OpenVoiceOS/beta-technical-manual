@@ -19,6 +19,7 @@ This tab is for developers building or maintaining an OVOS skill, the add-ons th
 - [Best Practices](skill-best-practices.md): patterns that hold up in real deployments.
 - [Migrating from Mycroft](migrating-from-mycroft.md): porting an existing `mycroft-core` skill.
 - [Version-Compatible Skills & Plugins](version-compat-guide.md): supporting multiple OVOS versions at once.
+- [For Skill Maintainers](updating-skills.md) and [Updating from Older OVOS](updating-from-older-ovos.md): keeping an existing skill current.
 
 ## Logic & Intents
 

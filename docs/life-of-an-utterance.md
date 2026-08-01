@@ -129,7 +129,16 @@ The (potentially modified) utterance is now evaluated against the **Intent Pipel
 
 (Other matchers such as [Model2Vec](m2v-pipeline.md) and, if installed, [Common Query](cq-pipeline.md) for general-knowledge questions, slot into this order too — see [Pipelines](pipelines-overview.md) for the full default and how to customize it.)
 
-Each `match` call is invoked directly inside a `try/except`. If a matcher **raises**, the orchestrator logs it and moves on to the next matcher as a no-match. There is **no per-match timeout**. A matcher that merely *hangs* (never returns, never raises) blocks the pipeline. Because `ovos-core` runs on a single shared bus connection by default (`websocket.shared_connection: true`), that same thread is the one servicing the bus. A hung matcher stalls the whole service until it returns. Keep matchers fast. (The only timeout in this path is the **handler** timeout, default 5 minutes, `intents.handler_timeout`. It bounds the *skill handler* invoked after a match, not the match calls themselves.) One result of the single shared connection: a matcher that does its own bus round-trip inside `match()` (e.g. a stop plugin gathering `stop.pong` replies) is self-blocking. The thread waiting for the replies is the same thread that would deliver them. So such gather windows (e.g. the stop pipeline's ~0.5 s pong wait) are best-effort. They typically time out rather than complete a live, serviced round trip. Only `websocket.shared_connection: false` gives skills their own connections and threads, and even then the orchestrator and pipeline plugins stay on the one shared bus.
+Each `match` call is invoked directly inside a `try/except`. If a matcher **raises**, the orchestrator logs it and moves on to the next matcher as a no-match. A matcher that merely *hangs* (never returns, never raises) is a different story: keep matchers fast.
+
+!!! warning "Operational limits"
+    | Limit | Detail |
+    |---|---|
+    | Default pipeline order | See [Pipelines Overview](pipelines-overview.md) for the full default and how to customize it |
+    | Per-match timeout | **None.** A hung matcher blocks the pipeline until it returns |
+    | Handler timeout | 5 minutes by default (`intents.handler_timeout`). Bounds the *skill handler* invoked after a match, not the match calls themselves |
+    | `websocket.shared_connection: true` (default) | `ovos-core` runs on a single shared bus connection, and that same thread services the bus. A hung matcher stalls the whole service |
+    | Self-blocking `match()` calls | A matcher that does its own bus round-trip inside `match()` (e.g. a stop plugin gathering `stop.pong` replies) waits on the same thread that would deliver the replies. Such gather windows (e.g. the stop pipeline's ~0.5 s pong wait) are best-effort and typically time out rather than complete a live, serviced round trip. Only `websocket.shared_connection: false` gives skills their own connections and threads, and even then the orchestrator and pipeline plugins stay on the one shared bus |
 
 ---
 

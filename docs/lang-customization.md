@@ -147,11 +147,17 @@ is normative.
 The technical parsers for numbers, dates, and spoken language names are separate libraries, not skill resources:
 
 - **Language names**: `ovos-lang-parser` maps BCP-47 codes to spoken names.
-- **Numbers**: `ovos-number-parser` (e.g. if "22nd" doesn't parse in your language).
-- **Dates**: `ovos-date-parser`.
+- **Numbers**: [`ovos-number-parser`](https://github.com/OpenVoiceOS/ovos-number-parser) (e.g. if "22nd" doesn't parse in your language).
+- **Dates**: [`ovos-date-parser`](https://github.com/OpenVoiceOS/ovos-date-parser).
 
 These are rule-driven per language. Contribute fixes upstream to the respective repository so
 every install benefits. Local edits to an installed package do not persist across upgrades.
+Each language gets its own module, named `numbers_<code>.py` in `ovos-number-parser`
+(for example `numbers_pt.py`) and `dates_<code>.py` in `ovos-date-parser`
+(for example `dates_pt.py`); adding one is how you give a new language cardinal/ordinal
+pronunciation, number extraction, or date/time parsing instead of falling back to the generic
+implementation. See [Adding a New Language](lang-support.md#adding-a-new-language) for the
+full path from a missing language to a released one.
 
 ---
 **Read next:** [Bidirectional Translation](bidirectional-translation.md)

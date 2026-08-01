@@ -78,6 +78,15 @@ Every function takes an explicit `lang` (a BCP-47 code such as `"en"` or `"pt-br
 
 > This table is a curated subset. `pronounce_number` and `extract_number` dispatch cover ~41 languages in total (including `an`, `ar`, `ast`, `bg`, `el`, `et`, `fi`, `fy`, `he`, `hr`, `id`, `ms`, `nb`, `nn`, `no`, `oc`, `ro`, `sk`, and `tr`). See [`docs/languages.md`](https://github.com/OpenVoiceOS/ovos-number-parser/blob/dev/docs/languages.md) in the repo for the full per-language matrix.
 
+### If your language is not listed
+
+`pronounce_number` and `pronounce_ordinal` fall back to [unicode-rbnf](https://github.com/rhasspy/unicode-rbnf)
+for a language with no hand-written module, so those two functions usually still work.
+`extract_number` and `is_fractional` have no fallback: an unsupported language raises
+`NotImplementedError`. `numbers_to_digits` never raises; an unsupported language is left
+unchanged. See the [Supported languages](https://github.com/OpenVoiceOS/ovos-number-parser#supported-languages)
+section of the repo README for the current full list.
+
 !!! note
     Several Romance languages (`ast`, `an`, `oc`, `fr`, `it`, `ca`, `es`, `gl`, `pt`, `mwl`, `ro`) share a common `RomanceNumberExtractor`/`NumberVocabulary` engine internally, so their extraction logic stays consistent across languages that inflect numbers similarly.
 

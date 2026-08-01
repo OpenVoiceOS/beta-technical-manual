@@ -204,5 +204,5 @@ if not fs.exists("config.json"):
 *Source code: [OpenVoiceOS/ovos-workshop](https://github.com/OpenVoiceOS/ovos-workshop).*
 
 ---
-**Read next:** [Resource Files](resource-files.md)
-**Related:** [settingsmeta.json](skill-settings-meta.md) · [Skill Settings](skill-settings.md) · [Locations](locations-ref.md) · [Skill Metadata File](skill-json.md)
+**Read next:** [Testing Your Skill](testing-your-skill.md)
+**Related:** [Resource Files](resource-files.md) · [settingsmeta.json](skill-settings-meta.md) · [Skill Settings](skill-settings.md) · [Locations](locations-ref.md)

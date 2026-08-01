@@ -304,11 +304,24 @@ Each pipeline plugin has its own manual page with full configuration details:
 
 | Plugin | Description | Manual page |
 |--------|-------------|-------------|
-| `ovos-common-query-pipeline-plugin` | Answer questions by gathering answers from several skills | [Common Query](common-query.md) |
+| `ovos-common-query-pipeline-plugin` | Answer questions by gathering answers from several skills | [Common Query Pipeline](cq-pipeline.md) |
 | `ovos-m2v-pipeline` | Intent matching powered by the Model2Vec model | [M2V Pipeline](m2v-pipeline.md) |
 | `ovos-padatious-pipeline-plugin` | Neural network intent-matching pipeline plugin | [Padatious Pipeline](padatious-pipeline.md) |
 | `ovos-adapt-pipeline-plugin` | Adapt Intent Parser | [Adapt Pipeline](adapt-pipeline.md) |
 | `ovos-ocp-pipeline-plugin` | Specialized media handling | [OCP Pipeline](ocp-pipeline.md) |
+| `ovos-persona-pipeline-plugin` | Route conversation to a persona (LLM or other agent) | [Persona Pipeline](persona-pipeline.md) |
+| `ovos-converse-pipeline-plugin` | Give active skills first claim on follow-up utterances | [Converse Pipeline](converse-pipeline.md) |
+| `ovos-stop-pipeline-plugin` | Match "stop" and interrupt commands | [Stop Pipeline](stop-pipeline.md) |
+| `ovos-fallback-pipeline-plugin` | Last-resort handlers when nothing matched | [Fallback Pipeline](fallback-pipeline.md) |
+
+The [Common Query *skill* API](common-query.md) (how a skill answers queries) is a
+different page from the pipeline plugin above.
+
+Utterances and replies also pass through ordered transformer chains before and after
+matching: [overview](transformer-plugins.md), with one page per chain type:
+[utterance](utterance-transformers.md), [intent](intent-transformers.md),
+[dialog](dialog-transformers.md), [audio](audio-transformers.md), and
+[TTS](tts-transformers.md) transformers.
 
 ---
 **Read next:** [Building Your Pipeline](building-your-pipeline.md)

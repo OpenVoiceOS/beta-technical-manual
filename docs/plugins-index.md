@@ -43,6 +43,9 @@ their config, and install commands.
 
 ## Speech & Audio
 
+About 48 plugins in the catalog, across microphone, VAD, wake word, wake-word verification, STT,
+TTS, and G2P.
+
 !!! tip "Recommended offline defaults"
     For a fully offline, on-device speech stack: TTS → [phoonnx](tts-plugins.md) · STT →
     [onnx-asr](stt-plugins.md) · VAD → [silero](vad-plugins.md) · Wake word →
@@ -63,12 +66,18 @@ their config, and install commands.
 
 ## Language
 
+About 5 plugins in the catalog for translation and language detection.
+
 | Type | Entry point | What it does |
 |---|---|---|
 | [Translation & Language Detection](translation-plugins.md) | `opm.lang.translate` / `opm.lang.detect` | Detect a text's language and translate between languages |
 | [Utterance Transformers](utterance-transformers.md) | `opm.transformer.text` | Modify the recognized text before intent matching |
 
 ## Intent & Dialog Pipeline
+
+About 15 pipeline matchers in the catalog, across the built-in stop/converse/OCP/padatious/adapt/
+fallback tiers, `ovos-common-query-pipeline-plugin`, `ovos-m2v-pipeline`, and the alternative
+matchers (Padacioso, Nebulento, Palavreado, Hierarchical KNN, Markov, HiveMind).
 
 | Type | Entry point | What it does |
 |---|---|---|
@@ -77,14 +86,23 @@ their config, and install commands.
 
 ## Media & GUI
 
+About 17 plugins in the catalog, across OCP stream extractors and media playback backends. OCP
+Media Classifiers and GUI Adapters exist as specs, not yet as shipped plugins.
+
 | Type | Entry point | What it does |
 |---|---|---|
 | [OCP Stream Extractors](ocp-plugins.md) | `opm.ocp.extractor` | Resolve a playable stream from a URL (YouTube, RSS, …) |
-| [OCP Media Classifiers](media-plugins.md#ovos-media-classifier) | none yet **(experimental)** | Recognize media intent + entities (artist, title, station, …) in an utterance. Not yet built or released as an OPM entry-point group. See the [Media Playback](media-plugins.md#ovos-media-classifier) page. |
+| [OCP Media Classifiers](media-plugins.md#ovos-media-classifier) | none yet **(experimental)** | *(unreleased)* Recognize media intent + entities (artist, title, station, …) in an utterance. Not yet built or released as an OPM entry-point group. See the [Media Playback](media-plugins.md#ovos-media-classifier) page. |
 | [Media Playback](media-plugins.md) | `opm.media.audio` / `.video` / `.web` | Backend players for [ovos-media](ovos-media.md) |
-| [GUI Adapters](gui-adapters.md) | `opm.gui_adapter` **(unreleased)** | Render backends for the GUI. Not yet built or released. See the [GUI Adapters](gui-adapters.md) page. |
+| [OCP Audio Plugin](ocp-audio-plugin.md) | legacy audio backend | The current default playback engine inside ovos-audio |
+| [Stream Extractors](ocp-plugins.md) | `opm.ocp.extractor` | Resolve a stream URL before playback (YouTube, RSS, ...) |
+| [GUI Extensions](gui-service.md) | `opm.gui` | Legacy GUI service extensions. See [GUI status](gui-status.md) for the state of the GUI stack, [the GUI protocol](gui-protocol.md), [ovos-shell](ovos-shell.md), [Qt5 GUI](qt5-gui.md), and [homescreens](homescreen.md) |
+| [GUI Adapters](gui-adapters.md) | `opm.gui_adapter` **(unreleased)** | *(unreleased)* Render backends for the GUI. Not yet built or released. See the [GUI Adapters](gui-adapters.md) page. |
 
 ## AI Agents & Personas
+
+About 34 plugins in the catalog, across agent engines, persona-memory backends, agent tools, and
+bundled personas.
 
 | Type | Entry point | What it does |
 |---|---|---|
@@ -94,6 +112,8 @@ their config, and install commands.
 | [Personas](personas.md) | `opm.plugin.persona` | Bundle engines into a conversational identity |
 
 ## System & Hardware
+
+About 21 PHAL plugins in the catalog.
 
 | Type | Entry point | What it does |
 |---|---|---|

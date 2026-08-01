@@ -147,6 +147,15 @@ time expressions.
 | tr       | yes                                                                                                                        | yes           | WIP                   | yes               |
 | uk       | yes                                                                                                                        | yes           | WIP                   | yes               |
 
+### If your language is not listed
+
+`extract_datetime` falls back to the [dateparser](https://dateparser.readthedocs.io/en/latest/)
+library for a language with no dedicated implementation, so it still returns a result rather
+than raising. The `nice_*` formatters (`nice_time`, `nice_date`, `nice_relative_time`, ...) fall
+back to a generic, English-style implementation when no language-specific one exists. See the
+[Languages Supported](https://github.com/OpenVoiceOS/ovos-date-parser#languages-supported)
+section of the repo README for the current full list.
+
 ## Usage
 
 ### Date and Time Extraction

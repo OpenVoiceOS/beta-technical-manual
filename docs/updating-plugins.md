@@ -20,9 +20,13 @@ Direct mutation of `TTS.queue` used a 6-tuple
 
 - Migration: push `(data, visemes, listen, tts_id, message)` tuples onto
   `PlaybackThread`'s queue.
-- Lifecycle: active before `931784a`. Deprecated but functional (logs via
-  `log_deprecation(..., "0.1.0")`) from `931784a` (2023-10-25). Dropped
-  target was `0.1.0`: exact drop commit unverified (ovos-audio `931784a`, #37).
+Lifecycle:
+
+| Phase | Version | Notes |
+|---|---|---|
+| Active | before `931784a` | |
+| Deprecated but functional | from `931784a` (2023-10-25) | logs via `log_deprecation(..., "0.1.0")` |
+| Dropped | target was `0.1.0`, exact drop commit unverified | (ovos-audio `931784a`, #37) |
 
 ### Audio-backend template methods became abstract
 
@@ -33,8 +37,13 @@ dependency on the old `common_play` base class (OCP's predecessor).
 - Migration: implement every required method on your `AudioBackend`
   subclass or instantiation raises `TypeError: Can't instantiate abstract
   class`.
-- Lifecycle: active before `77c66a3`. Unverified deprecation window.
-  dropped `77c66a3` (2024-05-11), (ovos-plugin-manager `77c66a3`, #226).
+Lifecycle:
+
+| Phase | Version | Notes |
+|---|---|---|
+| Active | before `77c66a3` | |
+| Deprecated but functional | unverified | |
+| Dropped | `77c66a3` (2024-05-11) | (ovos-plugin-manager `77c66a3`, #226) |
 
 ### STT legacy helper classes deprecated
 
@@ -46,9 +55,13 @@ first via logging (`ff342fe`, #233, 2024-06-03) and later as a real Python
 
 - Migration: move off `StreamingSTT`/`StreamThread` to the current STT
   template contract.
-- Lifecycle: active before `ff342fe`. Deprecated but functional from
-  `ff342fe` (2024-06-03), warning strength increased in `dfbac90`
-  (2025-01-04). Drop date unverified (ovos-plugin-manager `ff342fe`, #233).
+Lifecycle:
+
+| Phase | Version | Notes |
+|---|---|---|
+| Active | before `ff342fe` | |
+| Deprecated but functional | from `ff342fe` (2024-06-03) | warning strength increased in `dfbac90` (2025-01-04) |
+| Dropped | drop date unverified | (ovos-plugin-manager `ff342fe`, #233) |
 
 ### Dialect matching switched to `tag_distance`
 
@@ -61,11 +74,18 @@ resolution.
   `get_plugin_config` family. Re-verify locale resolution after upgrading
   if you pinned plugin configs to exact locale strings, since dialect
   fallback selection can differ.
-- Lifecycle: behavior-only change, no removal. Landed `08ad348` (2024-10-12),
-  (ovos-plugin-manager `08ad348`, #267). Later replaced again by
-  `ovos_spec_tools.lang_distance` in `35919b7` (#391, 2026-05-22), same
-  `< 10` threshold preserved. Requires the `ovos-spec-tools[langcodes]`
-  extra or region codes silently strip (`en-US` → `en`).
+Lifecycle:
+
+| Phase | Version | Notes |
+|---|---|---|
+| Active | behavior-only change, no removal | |
+| Deprecated but functional | n/a | |
+| Dropped | landed `08ad348` (2024-10-12) | (ovos-plugin-manager `08ad348`, #267) |
+
+Later replaced again by `ovos_spec_tools.lang_distance` in `35919b7`
+(#391, 2026-05-22), same `< 10` threshold preserved. Requires the
+`ovos-spec-tools[langcodes]` extra or region codes silently strip
+(`en-US` → `en`).
 
 ### G2P deprecated, moved toward ovos-audio
 
@@ -75,8 +95,13 @@ deprecated in `ovos-plugin-manager`. The companion work moves it toward
 
 - Migration: no functional removal yet in `ovos-plugin-manager`. Expect
   deprecation warnings on every access.
-- Lifecycle: active before `c102889`. Deprecated but functional from
-  `c102889` (2024-10-23). Drop version unverified (ovos-plugin-manager `c102889`, #277).
+Lifecycle:
+
+| Phase | Version | Notes |
+|---|---|---|
+| Active | before `c102889` | |
+| Deprecated but functional | from `c102889` (2024-10-23) | |
+| Dropped | drop version unverified | (ovos-plugin-manager `c102889`, #277) |
 
 ### `EmbeddingsDB` gains required collection methods
 
@@ -85,8 +110,13 @@ deprecated in `ovos-plugin-manager`. The companion work moves it toward
 
 - Migration: implement all four on your `EmbeddingsDB` subclass.
   single-collection plugins can wrap a fixed default collection name.
-- Lifecycle: active before `15beb84`. No deprecation window (no deprecation window, added
-  directly as abstract). Landed `15beb84` (2025-07-22), (ovos-plugin-manager `15beb84`, #333).
+Lifecycle:
+
+| Phase | Version | Notes |
+|---|---|---|
+| Active | before `15beb84` | |
+| Deprecated but functional | none | added directly as abstract |
+| Dropped | landed `15beb84` (2025-07-22) | (ovos-plugin-manager `15beb84`, #333) |
 
 ### `opm.*` canonical entry-point rename
 
@@ -118,13 +148,18 @@ old literal string breaks.
   work via the alias table. Code comparing enum values as raw strings
   should compare against `PluginTypes.STT` (the enum member), not the
   literal old string.
-- Lifecycle: active before `15beb84`. Deprecated but functional
-  (aliased, with a warning) from `15beb84` (2025-07-22). No stated removal
-  version as of the sweep, so treat as indefinitely deprecated
-  (ovos-plugin-manager `15beb84`, #333). A case-sensitivity bug in the
-  alias table (`ovos.plugin.VAD` mapped to lowercase `opm.vad` instead of
-  `opm.VAD`) silently broke discovery of un-migrated VAD plugins for about
-  eleven months, fixed in `3a7a330` (#401, 2026-06-16).
+Lifecycle:
+
+| Phase | Version | Notes |
+|---|---|---|
+| Active | before `15beb84` | |
+| Deprecated but functional | from `15beb84` (2025-07-22) | aliased, with a warning |
+| Dropped | no stated removal version as of the sweep | treat as indefinitely deprecated (ovos-plugin-manager `15beb84`, #333) |
+
+A case-sensitivity bug in the alias table (`ovos.plugin.VAD` mapped to
+lowercase `opm.vad` instead of `opm.VAD`) silently broke discovery of
+un-migrated VAD plugins for about eleven months, fixed in `3a7a330`
+(#401, 2026-06-16).
 
 ### Solver plugin family deprecated in favor of agent engines
 
@@ -143,13 +178,17 @@ is deprecated with a stated removal target of the next major version.
 
 - Migration: move to the matching `templates/agents.py` engine class
   before the removal version ships.
-- Lifecycle: active before `53564ce`. Deprecated but functional from
-  `53564ce` (2026-01-29), `opm.solver.*` entry points still discoverable.
-  removal target is the current major version plus one: not yet shipped
-  as of `53564ce` (ovos-plugin-manager, #365).
-  `ovos-bus-client`'s parallel `opm.py` (`neon.plugin.solver`-based chat
-  class) was already removed outright in `d526e99` (#207, 2026-05-18,
-  `2.0.0`): migrate to `ovos-messagebus-chat-plugin`.
+Lifecycle:
+
+| Phase | Version | Notes |
+|---|---|---|
+| Active | before `53564ce` | |
+| Deprecated but functional | from `53564ce` (2026-01-29) | `opm.solver.*` entry points still discoverable |
+| Dropped | removal target is the current major version plus one, not yet shipped as of `53564ce` | (ovos-plugin-manager, #365) |
+
+`ovos-bus-client`'s parallel `opm.py` (`neon.plugin.solver`-based chat
+class) was already removed outright in `d526e99` (#207, 2026-05-18,
+`2.0.0`): migrate to `ovos-messagebus-chat-plugin`.
 
 ### GUI adapter plugin handler signature gains `session_id`
 
@@ -169,9 +208,13 @@ def handle_show_text(self, skill_id, data, session_id="default", site_id="defaul
 - Migration: switch any positional `site_id` call sites to keyword
   arguments, or insert `session_id="default"` explicitly before the old
   third positional argument.
-- Lifecycle: active before `34a0f13`. No deprecation window (explicit `BREAKING CHANGE:` in
-  the commit body, no deprecation window). Dropped/landed `34a0f13`
-  (2026-03-12), (ovos-plugin-manager `34a0f13`).
+Lifecycle:
+
+| Phase | Version | Notes |
+|---|---|---|
+| Active | before `34a0f13` | |
+| Deprecated but functional | none | explicit `BREAKING CHANGE:` in the commit body |
+| Dropped | landed `34a0f13` (2026-03-12) | (ovos-plugin-manager `34a0f13`) |
 
 ### PHAL enclosure abstraction dropped
 
@@ -185,9 +228,13 @@ bare background thread with no bus events wired by the base class at all.
   `ovos-ui-enclosure-protocol` package for both the enclosure commands and
   `register_core_events()`. The `EnclosureAPI` producer moved to
   `ovos-gui-api-client`.
-- Lifecycle: active before `eac52a4`. No deprecation window (no deprecation window, both
-  commits landed same day). Dropped `eac52a4` and `f7c613b`
-  (2026-06-25), (ovos-plugin-manager `eac52a4`, `f7c613b`).
+Lifecycle:
+
+| Phase | Version | Notes |
+|---|---|---|
+| Active | before `eac52a4` | |
+| Deprecated but functional | none | both commits landed same day |
+| Dropped | `eac52a4` and `f7c613b` (2026-06-25) | (ovos-plugin-manager `eac52a4`, `f7c613b`) |
 
 ### `MediaProvider` template collapsed to `search()`
 
@@ -213,10 +260,13 @@ class MyProvider(MediaProvider):
 - Migration: implement the single `search(signals, lang='en-us',
   **context)` method. Read routing/availability info from `**context`
   instead of the removed `QueryContext` helper methods.
-- Lifecycle: active before `8a03351`. No deprecation window (fast in-place redesign of a
-  still-fresh API: `opm.media.provider` type was only introduced days
-  earlier in `83ade15`, #405). Dropped `8a03351` and `1741181`, both
-  2026-06-25 (ovos-plugin-manager `8a03351`, `1741181`).
+Lifecycle:
+
+| Phase | Version | Notes |
+|---|---|---|
+| Active | before `8a03351` | |
+| Deprecated but functional | none | fast in-place redesign of a still-fresh API: `opm.media.provider` type was only introduced days earlier in `83ade15`, #405 |
+| Dropped | `8a03351` and `1741181`, both 2026-06-25 | (ovos-plugin-manager `8a03351`, `1741181`) |
 
 ---
 

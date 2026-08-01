@@ -345,9 +345,10 @@ regressed rather than the whole stack.
 
 !!! warning "Check the breaking-change reference before any version jump"
     An upgrade that crosses release eras can hit renamed config keys, changed skill
-    APIs, and removed bus topics. Before upgrading, find your current era in
-    [Updating from Older OVOS](updating-from-older-ovos.md) and read forward. If you
-    maintain custom skills or plugins, see
+    APIs, and removed bus topics. Before upgrading, go straight to
+    [For Device & Fleet Operators](updating-deployers.md), the deployer page of the
+    [Updating from Older OVOS](updating-from-older-ovos.md) hub, and read forward from
+    your current era. If you maintain custom skills or plugins, see
     [Version-Compatible Skills & Plugins](version-compat-guide.md).
 
 ## Staged upgrades and rollback

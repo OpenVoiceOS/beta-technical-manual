@@ -235,10 +235,10 @@ Personas are loaded from the XDG persona config directory (typically `~/.config/
 {
   "name": "Remote Llama",
   "handlers": [
-    "ovos-solver-openai-plugin",
+    "ovos-chat-openai-plugin",
     "ovos-solver-failure-plugin"
   ],
-  "ovos-solver-openai-plugin": {
+  "ovos-chat-openai-plugin": {
     "api_url": "https://llama.smartgic.io/v1",
     "key": "sk-xxx",
     "persona": "friendly and concise assistant"
@@ -255,7 +255,7 @@ Each persona defines a `handlers` list (the older key `solvers` is still accepte
 - The first handler to return a valid result ends the search.
 
 
-- Include a `"ovos-solver-failure-plugin"` as a final fallback for graceful error handling.
+- Include a `"ovos-solver-failure-plugin"` as a final fallback for graceful error handling. It is a terminal handler that always answers with an error dialog, so the persona never goes silent.
 
 ---
 

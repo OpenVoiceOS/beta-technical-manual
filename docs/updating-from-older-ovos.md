@@ -102,8 +102,8 @@ subsections themselves are grouped by theme, not by date).
 ### The ovos-utils 0.1.0 gutting (2024-09)
 
 A decade of accumulated helpers, inherited all the way back from the
-Mycroft era, disappeared in a single release: `ovos-utils` 0.1.0 cut
-10,709 lines under the stated goal of removing "ALL dead code." From the
+Mycroft era, disappeared in a single release: `ovos-utils` 0.1.0 cut the
+bulk of the package under the stated goal of removing "ALL dead code." From the
 outside this meant imports breaking across the ecosystem the moment a
 project bumped past the alpha stream, with no single traceback pointing at
 the cause since the deleted symbols were scattered across messagebus,
@@ -253,7 +253,7 @@ Lifecycle:
 ### CommonQuerySkill removal
 
 `CommonQuerySkill` sat deprecation-flagged for the better part of two
-years before it was finally cut, 259 lines gone in one commit with no
+years before it was finally cut in one commit, with no
 direct successor class left in `ovos-workshop`. The removal only
 completed a migration that had already happened underneath it: the
 matching hardcoded common-query wiring inside `ovos-core` itself had been
@@ -540,42 +540,16 @@ safe to build against yet.
 `ovos-core` is a fork of `mycroft-core` and carries that project's full
 history (6119 commits on `origin/dev`, back to the initial commit). The
 items below were pinned against that combined history and against the
-named sibling repositories directly. The one former policy question is
-settled by the project's current status:
+named sibling repositories directly.
 
-- **ovos-media**: it has never become production-recommended. `ovos-media`
-  is alpha and not officially released.
-  `ovos-audio` remains the production audio service, and stock installs
-  keep `enable_old_audioservice: true` (the default). See
-  [Media Service (ovos-media)](ovos-media.md) for its maturity status.
-
-The following items were previously listed here as gaps. They are now
-resolved and pinned in the tables above:
-
-- **mycroft.\* → ovos_\* rename**: `ovos-core` `5f36bc31b5` ("refactor/
-  ovos-core!! (#313)", 2023-05-02) is where core logic began moving out of
-  `mycroft/` into the new `ovos_core` package. The `mycroft/` compatibility
-  package itself was fully deleted in `2a10fa9c1c` ("remove mycroft (#439)",
-  2025-03-04).
-- **ovos-utils GUITracker/GUIPlaybackStatus**: removed without replacement.
-  `ovos-utils` `3a77617` ("0.1.0 alpha 3 (#204)", 2023-12-29) deletes both
-  `GUITracker` and `GUIPlaybackStatus` from `ovos_utils/gui.py`. No
-  successor symbol exists anywhere in `ovos-core` or `ovos-gui` history.
-- **ovos-config `ede6243` lang key**: the `autoconfigure` command writes
-  the standardized language tag to the top-level `lang` config key
-  (`config["lang"] = stdlang`), not nested under `stt`.
-- **ovos-media `d249e89` symbol diff**: `OCPMediaPlayer` stopped subclassing
-  `OVOSAbstractApplication` and became a plain class; `bind()` was removed;
-  `_update_gui`, `_merged_queue`, `_queue_index`, `_resolve_preferred_service`,
-  `handle_record_end`, `handle_utterance_handled`, and `handle_mycroft_stop`
-  were added; `handle_player_state_update` was removed in favor of the new
-  handlers. The commit also adds a large adversarial unit-test suite
-  (queue navigation, duck/uncork, player-state transitions).
-- **ovos-audio extraction point**: `ovos-audio` `047a0a1` ("Feat/audio from
-  core (#1)", 2023-03-03) is the extraction commit. `ovos-core` `7f0c0ab22a`
-  ("refactor/ovos_audio (#304)", 2023-04-28) is the corresponding commit on
-  the `ovos-core` side: it guts `mycroft/audio/*` down to thin re-exports of
-  the new `ovos_audio` package.
+| Gap | Status | Where the answer lives |
+|---|---|---|
+| ovos-media production-readiness policy | pinned | `ovos-media` is alpha and not officially released. `ovos-audio` remains the production audio service, and stock installs keep `enable_old_audioservice: true` (the default). See [Media Service (ovos-media)](ovos-media.md) for its maturity status. |
+| mycroft.\* → ovos_\* rename | pinned | `ovos-core` `5f36bc31b5` ("refactor/ovos-core!! (#313)", 2023-05-02) is where core logic began moving out of `mycroft/` into the new `ovos_core` package. The `mycroft/` compatibility package itself was fully deleted in `2a10fa9c1c` ("remove mycroft (#439)", 2025-03-04). |
+| ovos-utils GUITracker/GUIPlaybackStatus | pinned | Removed without replacement. `ovos-utils` `3a77617` ("0.1.0 alpha 3 (#204)", 2023-12-29) deletes both `GUITracker` and `GUIPlaybackStatus` from `ovos_utils/gui.py`. No successor symbol exists anywhere in `ovos-core` or `ovos-gui` history. |
+| ovos-config `ede6243` lang key | pinned | The `autoconfigure` command writes the standardized language tag to the top-level `lang` config key (`config["lang"] = stdlang`), not nested under `stt`. |
+| ovos-media `d249e89` symbol diff | pinned | `OCPMediaPlayer` stopped subclassing `OVOSAbstractApplication` and became a plain class; `bind()` was removed; `_update_gui`, `_merged_queue`, `_queue_index`, `_resolve_preferred_service`, `handle_record_end`, `handle_utterance_handled`, and `handle_mycroft_stop` were added; `handle_player_state_update` was removed in favor of the new handlers. The commit also adds a large adversarial unit-test suite (queue navigation, duck/uncork, player-state transitions). |
+| ovos-audio extraction point | pinned | `ovos-audio` `047a0a1` ("Feat/audio from core (#1)", 2023-03-03) is the extraction commit. `ovos-core` `7f0c0ab22a` ("refactor/ovos_audio (#304)", 2023-04-28) is the corresponding commit on the `ovos-core` side: it guts `mycroft/audio/*` down to thin re-exports of the new `ovos_audio` package. |
 
 ---
 **Read next:** [For Skill Maintainers](updating-skills.md) · [For Device & Fleet Operators](updating-deployers.md)

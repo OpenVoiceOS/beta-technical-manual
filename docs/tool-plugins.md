@@ -71,6 +71,78 @@ registers the messagebus handlers described below. The full authoring guide with
 `AgentTool`, `ToolArguments`, and `ToolOutput` examples is embedded in the
 [Plugin Manager reference](plugin-manager.md).
 
+### Walkthrough: your own tool, wired in
+
+This mirrors the [Personas](personas.md) 3-step pattern, applied to a tool instead of a
+persona. A skeleton toolbox with one tool, a script call, and a persona entry are enough.
+
+**1. Define the ToolBox.** One tool, `check_disk_space`, shells out to a home script:
+
+```python
+# my_ops_tools/toolbox.py
+import subprocess
+from typing import List
+from ovos_plugin_manager.templates.agent_tools import ToolBox, AgentTool, ToolArguments, ToolOutput
+
+class DiskSpaceArgs(ToolArguments):
+    path: str = "/"
+
+class DiskSpaceResult(ToolOutput):
+    output: str
+
+def check_disk_space(args: DiskSpaceArgs) -> DiskSpaceResult:
+    result = subprocess.run(
+        ["/home/user/scripts/disk_report.sh", args.path],
+        capture_output=True, text=True, timeout=10
+    )
+    return DiskSpaceResult(output=result.stdout.strip())
+
+class OpsToolBox(ToolBox):
+    def __init__(self, config=None, bus=None):
+        super().__init__(toolbox_id="my-ops-tools", config=config, bus=bus)
+
+    def discover_tools(self) -> List[AgentTool]:
+        return [
+            AgentTool(
+                name="check_disk_space",
+                description="Report free disk space for a given path by running a local script.",
+                argument_schema=DiskSpaceArgs,
+                output_schema=DiskSpaceResult,
+                tool_call=check_disk_space,
+            )
+        ]
+```
+
+**2. Register the entry point:**
+
+```toml
+# pyproject.toml
+[project.entry-points."opm.agents.toolbox"]
+my-ops-tools = "my_ops_tools.toolbox:OpsToolBox"
+```
+
+**3. Wire it into a persona** alongside an LLM handler that can call it:
+
+```json
+{
+  "name": "OpsAssistant",
+  "handlers": ["ovos-react-loop"],
+  "ovos-react-loop": {
+    "brain": "ovos-chat-openai-plugin",
+    "ovos-chat-openai-plugin": {
+      "api_url": "http://localhost:11434/v1"
+    },
+    "toolboxes": ["my-ops-tools"]
+  }
+}
+```
+
+The persona names the loop as its handler, the loop's `brain` does the reasoning, and
+`toolboxes` lists the entry-point name from step 2 so the loop loads `OpsToolBox` and
+offers `check_disk_space` to the brain.
+
+---
+
 ### Static vs instance members
 
 | Member | Kind | Why |

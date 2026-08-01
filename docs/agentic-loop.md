@@ -91,7 +91,7 @@ All loop engines accept the same config envelope:
   "ovos-react-loop": {
     "brain": "ovos-chat-openai-plugin",
     "ovos-chat-openai-plugin": {
-      "api_url": "http://localhost:11434/v1/chat/completions"
+      "api_url": "http://localhost:11434/v1"
     },
     "toolboxes": ["ovos-math-tools", "ovos-web-search-tools", "ovos-clock-tools"],
     "max_iterations": 10
@@ -99,11 +99,15 @@ All loop engines accept the same config envelope:
 }
 ```
 
+`api_url` is the `/v1` base of the endpoint; the plugin appends `/chat/completions` itself, so do not include that suffix.
+
 | Key | Description |
 |-----|-------------|
 | `brain` | OPM entry point of the inner `ChatEngine` |
 | `toolboxes` | List of OPM `ToolBox` entry points to load |
 | `max_iterations` | Maximum reasoning steps before forced conclusion |
+
+The `brain`'s own plugin config (here `ovos-chat-openai-plugin`) is nested *inside* the loop's own block (`ovos-react-loop`), not at the persona root: the loop engine loads it with `config.get(brain_id, {})` read from its own config, so the brain is a sub-plugin resolved in the loop's namespace rather than the persona's.
 
 ### Per-loop limits
 

@@ -13,7 +13,10 @@ This tab is for anyone running OVOS beyond a single test device: fleets, servers
 
 Keeping a production deployment current means reading these together:
 
-- [Updating from Older OVOS](updating-from-older-ovos.md): the upgrade path from an older install.
+- [Updating from Older OVOS](updating-from-older-ovos.md): a hub with four audience pages.
+  Deployers go straight to [For Device & Fleet Operators](updating-deployers.md). The others:
+  [Skill Maintainers](updating-skills.md), [Plugin Maintainers](updating-plugins.md),
+  [Remote Bus Clients](updating-remote-clients.md).
 - [Upcoming Changes](upcoming-changes.md): what's changing next, so upgrades don't surprise you.
 - [Server Compatibility Layers](server-compat-layers.md): keeping self-hosted servers working across versions.
 

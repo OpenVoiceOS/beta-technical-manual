@@ -86,14 +86,16 @@ plugins are disabled unless explicitly turned on with `"enabled": true` in
 `PHAL.admin` config, which stops an installed-but-unconfigured admin plugin from running by
 accident.
 
-Once enabled, though, an AdminPHAL plugin receives the same unauthenticated bus client as
-every other service, with no separate credential check. A plugin like
-`ovos-PHAL-plugin-system` exposes reboot, shutdown and factory-reset over the bus.
+!!! warning "Opt-in, but once enabled, bus access is root access"
+    AdminPHAL is opt-in (`"enabled": true`), but once enabled, an AdminPHAL plugin receives
+    the same unauthenticated bus client as every other service, with no separate credential
+    check. A plugin like `ovos-PHAL-plugin-system` exposes reboot, shutdown and factory-reset
+    over the bus. If the bus is reachable, anyone who can emit bus messages can trigger those
+    actions with root privilege. This is a stronger consequence of the bus's lack of
+    authentication than "skills aren't sandboxed": it is root-equivalent remote control, not
+    just assistant control.
 
-If the bus is reachable, anyone who can emit bus messages can trigger those actions with root
-privilege. This is a stronger consequence of the bus's lack of authentication than "skills
-aren't sandboxed": it is root-equivalent remote control, not just assistant control. See
-[PHAL: Security model](phal.md#security-model) for the full mechanism.
+See [PHAL: Security model](phal.md#security-model) for the full mechanism.
 
 ## HiveMind is the sanctioned way out
 

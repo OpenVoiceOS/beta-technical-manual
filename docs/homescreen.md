@@ -42,6 +42,8 @@ sequenceDiagram
     Shell->>Shell: render idle/resting page (clock, weather, widgets)
 ```
 
+*Diagram: the homescreen skill registers with the HomescreenManager in ovos-gui, which shows the resting screen when no other page is active and returns to it when a skill releases the display.*
+
 ## Configuration
 
 Select a homescreen skill in `mycroft.conf` (or via [ovos-shell](ovos-shell.md)):

@@ -68,7 +68,7 @@ class IceCreamSkill(ConversationalSkill):
     def handle_request_icecream(self, message):
         self.speak_dialog('welcome')
         selection = self.ask_selection(self.flavors, 'what.flavor')
-        self.speak_dialog('coming-right-up', {'flavor': selection})
+        self.speak_dialog('coming_right_up', {'flavor': selection})
 
     def converse(self, message):
         if self.voc_match(message.data['utterances'][0], 'Thankyou'):

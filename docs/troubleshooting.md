@@ -5,9 +5,9 @@
     why. It follows the same journey as [The Life of an Utterance](life-of-an-utterance.md): mic,
     wake word, speech-to-text, intent matching, skill, text-to-speech. At each stop it shows where
     the evidence lives (which log file, which bus message), what a healthy result looks like, and
-    the exact command to check it yourself. No programming background is required to follow along.
-    Deeper technical detail is layered in as the page goes. New to the words here? See the
-    [Glossary](glossary.md).
+    the exact command to check it yourself. The first stages need only copy-paste: no programming
+    background is required there. Later stages read log files and run command-line tools, so they
+    ask more of you as the page goes. New to the words here? See the [Glossary](glossary.md).
 
 Every stage below can be checked two ways: **tail a log file** (works everywhere, including headless
 boxes over SSH), or **watch the bus live** with `ovos-busmon` (works anywhere a browser can reach the
@@ -39,6 +39,11 @@ flowchart TD
 
 Each stage below cites the exact log line and bus message shown in this diagram, plus the
 command to check it directly.
+
+!!! note "This is where it turns technical"
+    From here on, the page reads log files and runs command-line tools. If that is more than
+    you want to deal with, try [everyday-help.md](everyday-help.md) instead — it covers common
+    problems with no terminal needed.
 
 ## Where the logs live
 

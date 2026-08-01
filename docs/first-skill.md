@@ -32,6 +32,10 @@ every other skill is just more of the same idea.
         J --> F
     ```
 
+    *Diagram:* The flow runs from creating the folder layout through the pip install step to
+    restarting ovos-core, then checks whether saying "hello" gets a reply, looping back to
+    the pip install step on failure.
+
 ## What a skill is made of
 
 A skill is a small folder with three kinds of files:

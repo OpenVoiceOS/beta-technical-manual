@@ -69,6 +69,13 @@ category you're extending, and use an existing plugin in that category as a temp
 base classes referenced throughout this manual (for example, the [TTS plugin template](tts-plugins.md#plugin-template))
 are the contract your plugin's entry point needs to satisfy.
 
+## Contributing to language support
+
+Want to help a language rather than fix code? Translating skill text is a separate path from
+adding parser/STT/TTS support: see [Contributing Translations](ovos-localize-tutorial.md) for
+translation work, and [Adding a New Language](lang-support.md#adding-a-new-language) for the
+full path to full language support.
+
 ## Where to ask
 
 - **[Skills channel on OVOS Chat](https://matrix.to/#/#openvoiceos-skills:matrix.org)**: quick

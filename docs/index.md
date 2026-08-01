@@ -14,10 +14,13 @@
 
 ## What is OpenVoiceOS?
 
-**OpenVoiceOS (OVOS)** is a free, open-source, privacy-respecting **voice assistant**.
-Think of it as an open alternative to Alexa or Google Assistant that *you* control. It
-listens for a wake word, understands what you ask, and responds with speech, and
-optionally a screen.
+**OpenVoiceOS (OVOS)** is a free, open-source, [privacy-respecting](privacy-security.md)
+**voice assistant**. Think of it as an open alternative to Alexa or Google Assistant that
+*you* control. It listens for a wake word, understands what you ask, and responds with
+speech, and optionally a screen.
+
+OVOS code follows a universal donor policy, predominantly Apache-2.0/BSD; exceptions are
+listed on [License](license.md).
 
 You can run it on a Raspberry Pi, a desktop, or a server. It is **modular**, built from
 many small, swappable pieces called *plugins* and *skills*. You can change how it hears,

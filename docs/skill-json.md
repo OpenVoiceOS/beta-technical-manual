@@ -195,4 +195,4 @@ whatever happens to already be installed in your dev environment.
 
 ---
 **Read next:** [ovos-workshop Documentation](workshop-overview.md)
-**Related:** [Customization](customization.md) · [Skill Structure](skill-structure.md) · [settingsmeta.json](skill-settings-meta.md) · [Writing Version-Compatible Skills and Plugins](version-compat-guide.md)
+**Related:** [Customization](customization.md) · [Skill Structure](skill-structure.md) · [settingsmeta.json](skill-settings-meta.md) · [For Skill Maintainers](updating-skills.md)

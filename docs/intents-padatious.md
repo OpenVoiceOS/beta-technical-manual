@@ -311,5 +311,5 @@ per-skill intent enable/disable state and [Permissions & Activation Control](per
 the coarser skill-level gates.
 
 ---
-**Read next:** [Context](context.md) · [Intent Layers](layers.md)
+**Read next:** [Context](context.md) · [Intent Layers](layers.md) · [Asking the User](prompts.md)
 **Related:** [Intent Design](intents.md) · [Adapt Intents (Keyword Intents)](intents-adapt.md) · [Padatious Pipeline](padatious-pipeline.md) · [Test Your Skill](testing-your-skill.md)

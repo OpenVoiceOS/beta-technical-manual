@@ -158,6 +158,8 @@ fully local, privacy-preserving conversational agents:
 
 ```
 
+`ovos-solver-failure-plugin` is a terminal handler that always answers with an error dialog, so the persona never goes silent.
+
 ---
 
 ## PersonaService — Pipeline Plugin

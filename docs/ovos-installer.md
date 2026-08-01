@@ -36,8 +36,10 @@ flowchart TD
 
     **Looking for a no-terminal option?** The **[raspOVOS](install-raspovos.md)** image is the
     flash-and-boot alternative: no terminal, no SSH. Its images are in a maintenance pause, so
-    check its status before choosing it. This installer is the recommended path on the Pi and
-    everywhere else.
+    check its [release status](https://github.com/OpenVoiceOS/raspOVOS/releases) before choosing
+    it: existing images still flash and boot but are not receiving updates, and a refreshed image
+    is on the roadmap. This installer is the supported route meanwhile, and the recommended path
+    on the Pi and everywhere else.
 
     **This runs over SSH in a terminal, not an app.** There's no phone app or setup wizard with a
     graphical pairing flow. You type commands into a terminal, usually over SSH into a headless
@@ -53,7 +55,7 @@ flowchart TD
 
 ## Step-by-step Installation
 
-### ✅ 1. Connect to Your Device *(if remote)*
+### 1. Connect to Your Device *(if remote)*
 
 If you're installing on a headless device (like a Raspberry Pi), you first need its IP address
 or hostname. Try `raspberrypi.local` (the default mDNS hostname on a fresh Raspberry Pi OS
@@ -67,7 +69,7 @@ ssh -l your-username <your-device-ip-or-raspberrypi.local>
 
 ---
 
-### 🔄 2. Update Package Metadata
+### 2. Update Package Metadata
 
 Make sure your package manager is up to date:
 
@@ -78,7 +80,7 @@ sudo apt update
 
 ---
 
-### 📦 3. Install Prerequisites
+### 3. Install Prerequisites
 
 Install `git` and `curl`. These are required to run the installer:
 
@@ -89,7 +91,7 @@ sudo apt install -y git curl
 
 ---
 
-### 📥 4. Run the OVOS Installer
+### 4. Run the OVOS Installer
 
 Now you're ready to start the installation process:
 
@@ -163,7 +165,7 @@ Navigation:
 
 ---
 
-### 🌍 Language Selection
+### Language Selection
 
 The first screen lets you select your preferred language for the installer's own text, not
 the assistant's spoken language. See [Language Support](lang-support.md) for how the
@@ -179,7 +181,7 @@ Follow the on-screen instructions. Use arrow keys and space to pick.
 
 ---
 
-### 🧠 Environment Summary
+### Environment Summary
 
 An informational screen. No action needed. It reports what the installer auto-detected about the machine, including:
 
@@ -212,7 +214,7 @@ Some generic HATs expose the same signal without being real Mark II hardware.
 
 ---
 
-### 🧰 Choose Installation Method
+### Choose Installation Method
 
 A radio-button list with up to two options:
 
@@ -229,7 +231,7 @@ already in use is offered (you can't switch method in place).
 
 ---
 
-### 🌱 Choose Channel
+### Choose Channel
 
 `testing`
 :   Recommended for most users. The stable release channel.
@@ -241,7 +243,7 @@ already in use is offered (you can't switch method in place).
 
 ---
 
-### 🧪 Choose Profile
+### Choose Profile
 
 A radio-button list of installation profiles:
 
@@ -261,7 +263,7 @@ A radio-button list of installation profiles:
 
 ---
 
-### 🛠️ Feature Selection
+### Feature Selection
 
 A checklist (only shown for the `ovos`/`listener`/`server` profiles, not `satellite`):
 
@@ -286,7 +288,7 @@ A checklist (only shown for the `ovos`/`listener`/`server` profiles, not `satell
 
 ---
 
-### 🍓 Raspberry Pi Tuning *(if applicable)*
+### Raspberry Pi Tuning *(if applicable)*
 
 On Raspberry Pi boards only, a yes/no prompt offers system performance tweaks
 (including an overclock option on supported boards). It's highly recommended
@@ -296,7 +298,7 @@ to enable this on a Pi.
 
 ---
 
-### 🧾 Summary
+### Summary
 
 Before the installation begins, you'll see a summary of every option you
 selected on the previous screens (method, channel, profile, features, tuning).
@@ -306,7 +308,7 @@ This is your last chance to cancel the process.
 
 ---
 
-### 📊 Anonymous Telemetry
+### Anonymous Telemetry
 
 !!! tip "If you're unsure, decline both"
     Declining both prompts changes nothing about how OVOS works. It only stops these two
@@ -328,6 +330,9 @@ completes. Nothing else about this specific report is collected afterwards.
 Below is the field list. Every one of these is always included in the report
 whenever you opt in. None of them is something you type in yourself _(see the
 [Ansible task](https://github.com/OpenVoiceOS/ovos-installer/blob/main/ansible/roles/ovos_telemetry/tasks/main.yml) that builds it)_.
+
+In short: system and hardware facts, plus which components you chose during install. No
+audio and no personal identifiers are in this report.
 
 | Data                   | Description                                              |
 | ---------------------- | -------------------------------------------------------- |
@@ -369,7 +374,7 @@ by hand editing the `open_data` key in `mycroft.conf`.
 
 ---
 
-### 🧙‍♂️ Sit Back and Relax
+### Sit Back and Relax
 
 The installation begins. This can take some time. Take a short break while it runs.
 

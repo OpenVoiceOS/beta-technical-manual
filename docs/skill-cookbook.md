@@ -17,6 +17,7 @@
 | 8 | Ambient bus-event behavior | `OVOSSkill` | `add_event`, `recognizer_loop:*` |
 | 9 | Converse-driven game loop | `ConversationalGameSkill` | `on_play_game`, `on_game_command`, `converse` |
 | 10 | Validated slot collection | `OVOSSkill` | `get_response(validator=..., on_fail=..., num_retries=...)` |
+| 11 | Control an external device (MQTT) | `OVOSSkill` | `paho.mqtt.client.Client`, `connect`, `publish`, `disconnect` |
 
 Each recipe below is a **complete skill module** (or a clearly-marked excerpt of one), followed by notes on the moving parts and links to the reference page that documents each API in full. None of these recipes invent new methods: every class, method signature, and bus event name was checked against the installed `ovos-workshop`, `ovos-bus-client`, and `ovos-utils` packages.
 
@@ -656,6 +657,67 @@ class ThermostatSkill(OVOSSkill):
 
 !!! tip "Full production example"
     [`ovos-skill-mark1-ctrl`](https://github.com/OpenVoiceOS/ovos-skill-mark1-ctrl)'s `handle_custom_eye_color` chains three validated `get_response` calls back to back, one each for red, green, and blue (0-255), each with its own `on_fail` dialog and `num_retries=2`, then falls through to `ask_yesno` to offer saving the result as the default eye color.
+
+---
+
+## 11. Control an external device: publish to an MQTT broker
+
+**When you'd want this:** a device on the network, such as a smart plug or a relay board, listens for commands on an MQTT topic. The skill publishes to that topic on a voice command. It uses the same timeout-plus-spoken-error pattern as Recipe 3, applied to a broker connection instead of an HTTP call.
+
+```python
+import paho.mqtt.client as mqtt
+from ovos_workshop.skills import OVOSSkill
+from ovos_workshop.decorators import intent_handler
+
+BROKER_HOST = "192.168.1.50"
+BROKER_PORT = 1883
+TOPIC = "home/office/plug1/set"
+CONNECT_TIMEOUT = 5
+
+
+class MqttPlugSkill(OVOSSkill):
+    def initialize(self):
+        self.client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2,
+                                  client_id="ovos-mqtt-plug-skill")
+        try:
+            self.client.connect(BROKER_HOST, BROKER_PORT, keepalive=CONNECT_TIMEOUT)
+            self.client.loop_start()
+        except (OSError, TimeoutError) as e:
+            self.log.warning(f"MQTT broker unreachable at init: {e}")
+
+    @intent_handler("turn_on_plug.intent")
+    def handle_turn_on(self, message):
+        self._publish("ON", "plug_turned_on", "plug_unreachable")
+
+    @intent_handler("turn_off_plug.intent")
+    def handle_turn_off(self, message):
+        self._publish("OFF", "plug_turned_off", "plug_unreachable")
+
+    def _publish(self, payload, ok_dialog, fail_dialog):
+        try:
+            info = self.client.publish(TOPIC, payload, qos=1)
+            info.wait_for_publish(timeout=CONNECT_TIMEOUT)
+            if not info.is_published():
+                raise TimeoutError("publish did not confirm in time")
+        except (OSError, TimeoutError, ValueError, RuntimeError) as e:
+            self.log.warning(f"MQTT publish failed: {e}")
+            self.speak_dialog(fail_dialog)
+            return
+        self.speak_dialog(ok_dialog)
+
+    def shutdown(self):
+        self.client.loop_stop()
+        self.client.disconnect()
+```
+
+### Moving parts
+
+- `mqtt.Client(mqtt.CallbackAPIVersion.VERSION2, client_id=...)` is the current, non-deprecated way to construct a client; `client_id` should be unique per device to avoid the broker dropping a duplicate session.
+- `connect(host, port, keepalive=...)` is a blocking call, so wrap it (and any use of the client) in a `try`/`except` for `OSError`/`TimeoutError` and speak a dialog instead of letting the exception surface, the same safety pattern as [Recipe 3](#3-calling-an-external-api-safely-timeouts-spoken-errors-and-a-cache).
+- `loop_start()` runs the client's network loop on a background thread so `publish()` calls don't block waiting on broker I/O. Call `loop_stop()` in `shutdown()` to clean it up.
+- `publish(topic, payload, qos=...)` returns an `MQTTMessageInfo`. `wait_for_publish(timeout=...)` blocks until the broker acknowledges it, or the timeout elapses. `is_published()` confirms it went through, so a network drop mid-call is caught instead of silently swallowed.
+- `disconnect()` closes the connection cleanly. Pair it with `loop_stop()` in `shutdown()` so the skill doesn't leave a background thread or an open socket behind when unloaded.
+- If the hardware is attached to the OVOS device itself, a [PHAL plugin](phal.md) is the intended home for device control; a skill and broker like this one suits a device reachable over the network instead.
 
 ---
 

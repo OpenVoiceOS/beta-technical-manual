@@ -18,9 +18,9 @@ single voice-assistant program. A voice assistant is a *product* that answers
 questions. A voice OS is a *platform*: it defines the boundary between what you
 say and what runs, arbitrates which application handles each utterance, and
 carries conversation state across turns. The orchestrator's
-`match(utterances, lang, message) → Match` contract is, in effect, the
-system-call ABI that lets third-party skills and plugins build against a
-stable interface without knowing about each other. See the
+`match(utterances, lang, message) → Match` contract is the stable integration
+surface that lets third-party skills and plugins build against OVOS without
+knowing about each other. See the
 [Formal Specifications](architecture-specs.md).
 
 ## High-Level Flow
@@ -63,26 +63,21 @@ flowchart TD
 
 *Diagram: the messagebus sits at the center, with ovos-core (and its SkillManager, IntentService, transformer chains, and pipeline plugins), ovos-dinkum-listener, ovos-audio, ovos-media, ovos-gui, and ovos-phal each connected to it as independent clients.*
 
-Of the six [transformer chains](transformer-plugins.md), only utterance, metadata, and intent
-run inside `IntentService` above. The other three run elsewhere in the pipeline: audio
-transformers run in `ovos-dinkum-listener` before STT, and dialog and TTS transformers run in
-`ovos-audio` (or `ovos-media`, where installed) when a response is rendered.
+`ovos-messagebus` is the hub; every other box is a client connected to it, not a node in a
+hierarchy. The five services besides `ovos-core`, the listener, audio, media, GUI, and PHAL, are
+separate processes and could in principle run on separate machines, each responsible for one
+stage of the [utterance lifecycle](life-of-an-utterance.md).
 
-In words: `ovos-messagebus` is the hub. `ovos-core` connects to it and contains the
-`SkillManager` and `IntentService`. `ovos-dinkum-listener`, `ovos-audio`, `ovos-media`,
-`ovos-gui`, and `ovos-PHAL` are siblings that each connect to the bus independently, alongside
-`ovos-core`.
+The [six transformer chains](transformer-plugins.md) don't all run in the same place:
 
-`ovos-messagebus` sits at the top because every other box connects to it as a client. It is the
-one shared channel, not a hierarchy.
-
-`ovos-core` bundles the services most people mean by "the
-brain": `SkillManager` loading skill code, `IntentService` running the utterance through its
-sub-services and the pipeline plugins, and a couple of smaller helpers alongside them.
-
-The remaining five boxes, the listener, audio, media, GUI, and PHAL services, are separate
-processes. They could in principle run on separate machines, each responsible for one stage of
-the [utterance lifecycle](life-of-an-utterance.md).
+| Chain | Runs in |
+|---|---|
+| Utterance | `ovos-core` (`IntentService`) |
+| Metadata | `ovos-core` (`IntentService`) |
+| Intent | `ovos-core` (`IntentService`) |
+| Audio | `ovos-dinkum-listener`, before STT |
+| Dialog | `ovos-audio` (or `ovos-media`, where installed) |
+| TTS | `ovos-audio` (or `ovos-media`, where installed) |
 
 ## Key Services
 

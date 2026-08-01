@@ -214,5 +214,5 @@ export OVOS_CONFIG_PASSWORD=mypassword
 *Source code: [OpenVoiceOS/ovos-workshop](https://github.com/OpenVoiceOS/ovos-workshop).*
 
 ---
-**Read next:** [settingsmeta.json](skill-settings-meta.md)
+**Read next:** [Skill Filesystem](skill-filesystem.md)
 **Related:** [Decorators](decorators.md) · [Filesystem Access](skill-filesystem.md) · [Configuration Management](config.md) · [Session Aware Skills](session.md)

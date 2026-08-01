@@ -23,12 +23,18 @@ package-level ancestor of the topic-level migration above.
 - Migration: `pip install ovos-bus-client`. `from mycroft_bus_client
   import Message` → `from ovos_bus_client.message import Message` (or
   `from ovos_bus_client import MessageBusClient`).
-- Lifecycle: active before 2023-04. Dropped (isinstance compat kept
-  briefly, `04def5d`) starting `9396c71` (2023-04-05, ovos-bus-client's
-  own extraction). The ecosystem-wide dependency swap landed at
-  `b1a9d39e16` (2023-04-11) in `ovos-core`, and matching one-line swaps in
-  `ovos-audio` (`426a48b`), `ovos-media` (`426a48b`), and
-  `ovos-messagebus` (`a1bc1c1`), all within the same week.
+Lifecycle:
+
+| Phase | Version | Notes |
+|---|---|---|
+| Active | before 2023-04 | |
+| Deprecated but functional | isinstance compat kept briefly, `04def5d` | |
+| Dropped | starting `9396c71` (2023-04-05) | ovos-bus-client's own extraction |
+
+The ecosystem-wide dependency swap landed at `b1a9d39e16` (2023-04-11) in
+`ovos-core`, and matching one-line swaps in `ovos-audio` (`426a48b`),
+`ovos-media` (`426a48b`), and `ovos-messagebus` (`a1bc1c1`), all within
+the same week.
 
 ### GUI wire protocol moved to template-based `GUIInterface`
 
@@ -43,10 +49,13 @@ favor of `GUIInterface` for visual output.
   output off `EnclosureAPI` onto `GUIInterface`. Both `GUIInterface` and
   `EnclosureAPI` are themselves deprecated in favor of
   `ovos-gui-api-client`.
-- Lifecycle: active before `0d145d3`. Deprecated but functional through a
-  series of `refactor!:` commits from `59ee94e` (2026-03-12) through
-  `0d145d3` (2026-06-25). Classic API becomes private at `0d145d3`
-  (ovos-bus-client `0d145d3`).
+Lifecycle:
+
+| Phase | Version | Notes |
+|---|---|---|
+| Active | before `0d145d3` | |
+| Deprecated but functional | through a series of `refactor!:` commits from `59ee94e` (2026-03-12) through `0d145d3` (2026-06-25) | |
+| Dropped | `0d145d3` | classic API becomes private (ovos-bus-client `0d145d3`) |
 
 ### HiveMind agent protocol and messagebus-solver removed from ovos-bus-client
 
@@ -61,8 +70,13 @@ deleted, along with the `hivemind.agent.protocol` entry point.
   `ovos-messagebus-chat-plugin` (implements `ChatEngine`, uses
   `SessionManager` for multi-turn state). See
   JarbasHiveMind/HiveMind-core#85.
-- Lifecycle: active before `d526e99`. Unverified deprecation window.
-  dropped `2.0.0` (ovos-bus-client `d526e99`, #207, 2026-05-18).
+Lifecycle:
+
+| Phase | Version | Notes |
+|---|---|---|
+| Active | before `d526e99` | |
+| Deprecated but functional | unverified | |
+| Dropped | `2.0.0` | (ovos-bus-client `d526e99`, #207, 2026-05-18) |
 
 ### Per-service legacy topic migrations (spec-bus adoption, 2026-06)
 
@@ -89,16 +103,18 @@ out-of-the-box wire behavior is initially unchanged):
   `ovos_spec_tools.SpecMessage.*` constants over hardcoded topic strings
   going forward, since their literal values are not always the same as
   the legacy strings they replace.
-- Lifecycle: active (legacy-only) before mid-2026. Deprecated but
-  functional (dual-emit or `legacy_namespace`-gated) from mid-2026
-  onward. No hard drop has shipped: `ovos-bus-client`'s bridge removal is
-  the unmerged kill-switch
-  [PR #272](https://github.com/OpenVoiceOS/ovos-bus-client/pull/272)
-  (commit `f1a481d` on its branch). `legacy_namespace` gating in `ovos-core`
-  itself (`f4c00d90b2`/`f9862a760e`, "gate bus topics by
-  legacy_namespace") lives only on unmerged feature branches, not on
-  `dev`: the default has not flipped because the flag has not shipped to
-  a stable release yet.
+Lifecycle:
+
+| Phase | Version | Notes |
+|---|---|---|
+| Active | legacy-only, before mid-2026 | |
+| Deprecated but functional | from mid-2026 onward | dual-emit or `legacy_namespace`-gated |
+| Dropped | no hard drop has shipped | `ovos-bus-client`'s bridge removal is the unmerged kill-switch [PR #272](https://github.com/OpenVoiceOS/ovos-bus-client/pull/272) (commit `f1a481d` on its branch) |
+
+`legacy_namespace` gating in `ovos-core` itself (`f4c00d90b2`/`f9862a760e`,
+"gate bus topics by legacy_namespace") lives only on unmerged feature
+branches, not on `dev`: the default has not flipped because the flag has
+not shipped to a stable release yet.
 
 ### SESSION-1 spec adoption changes session wire semantics
 
@@ -126,11 +142,13 @@ out-of-the-box wire behavior is initially unchanged):
   class, not by indexing the raw wire dict. Stop relying on
   `prune_sessions`/session TTL expiry. Treat the default session id like
   any other session id.
-- Lifecycle: active before `b54269c`. The list-omission wire change is
-  deprecated-in-spirit only (no prior wire shape to preserve, this is a
-  new spec adoption) landing directly at `47b0e4a` (2026-07-09). Session
-  expiry deprecated but functional from `b54269c` (2026-06-29), drop
-  version unverified.
+Lifecycle:
+
+| Phase | Version | Notes |
+|---|---|---|
+| Active | before `b54269c` | |
+| Deprecated but functional | session expiry, from `b54269c` (2026-06-29) | drop version unverified |
+| Dropped | list-omission wire change landed directly at `47b0e4a` (2026-07-09) | deprecated-in-spirit only: no prior wire shape to preserve, this is a new spec adoption |
 
 ### Legacy `mycroft.*`/`recognizer_loop:*` topic bridge scheduled for removal
 
