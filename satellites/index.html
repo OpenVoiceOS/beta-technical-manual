@@ -11,7 +11,7 @@
         <link rel="canonical" href="https://tigregotico.github.io/ovos-technical-manual/satellites/">
       
       
-        <link rel="prev" href="../production-operations/">
+        <link rel="prev" href="../production-hardening/">
       
       
         <link rel="next" href="../docker-deployment/">
@@ -894,6 +894,27 @@
                 
   
   
+  
+  
+    <li class="md-nav__item">
+      <a href="../production-hardening/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Production Hardening
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
     
   
   
@@ -997,6 +1018,15 @@
   <a href="#build-walkthrough-b-hivemind" class="md-nav__link">
     <span class="md-ellipsis">
       Build walkthrough B: HiveMind
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#thin-clients-a-shared-speech-backend" class="md-nav__link">
+    <span class="md-ellipsis">
+      Thin clients + a shared speech backend
     </span>
   </a>
   
@@ -1348,6 +1378,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#thin-clients-a-shared-speech-backend" class="md-nav__link">
+    <span class="md-ellipsis">
+      Thin clients + a shared speech backend
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#troubleshooting" class="md-nav__link">
     <span class="md-ellipsis">
       Troubleshooting
@@ -1434,7 +1473,8 @@ listener and an audio service, and both connect back to the server's messagebus.
 Use HiveMind for anything off your own network, or when you need to tell satellites apart.</p>
 <p>Both paths on this page share one <code>ovos-core</code> brain across every satellite. If you instead
 want each device to run its own independent <code>ovos-core</code> and only share the heavy STT/TTS
-inference, see <a href="../production-operations/#thin-clients-a-shared-speech-backend">Production Operations: thin clients + a shared speech backend</a>.</p>
+inference, see <a href="#thin-clients-a-shared-speech-backend">Thin clients + a shared speech backend</a>
+below.</p>
 <hr />
 <h2 id="build-walkthrough-a-raw-shared-bus">Build walkthrough A: raw shared bus<a class="headerlink" href="#build-walkthrough-a-raw-shared-bus" title="Permanent link">&para;</a></h2>
 <p>Run this only on a network you fully trust. Every service that joins this bus gets full
@@ -1527,6 +1567,113 @@ satellite.</p>
 <a href="../hivemind-agents/">Remote Agents with HiveMind</a>. Wire-level protocol details live in the
 upstream <a href="https://jarbashivemind.github.io/HiveMind-community-docs/">HiveMind community docs</a>,
 not in this manual.</p>
+<hr />
+<h2 id="thin-clients-a-shared-speech-backend">Thin clients + a shared speech backend<a class="headerlink" href="#thin-clients-a-shared-speech-backend" title="Permanent link">&para;</a></h2>
+<p>A common fleet topology is several low-power "thin" devices that each run a full
+<code>ovos-core</code> (with the bus, listener and audio services), all pointed at one shared, more
+capable machine that does the actual speech-to-text and text-to-speech work over HTTP (see
+<a href="../stt-server/">STT server</a> and <a href="../tts-server/">TTS server</a>). Only the heavy STT/TTS
+inference is centralized: each device keeps its own core, session, and skills. A sketch,
+based on the real container images published by
+<a href="https://github.com/OpenVoiceOS/ovos-docker"><code>ovos-docker</code></a>. For the client-side config keys
+and a worked example on a single LAN IP, see
+<a href="../privacy-security/#point-a-device-at-your-own-lan-servers">privacy-security: point a device at your own LAN servers</a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Not the shared-brain pattern</p>
+<p>This is not the shared-brain pattern described above. Every device here keeps its own
+<code>ovos-core</code>, so each room is an independent assistant that shares only speech inference.
+For one shared brain and session, use the raw shared bus or HiveMind walkthroughs above
+instead.</p>
+</div>
+<div class="admonition danger">
+<p class="admonition-title">These ports are unauthenticated plain HTTP</p>
+<p><code>8080</code> and <code>9666</code> below serve unauthenticated plain HTTP by default. Never expose them
+to untrusted networks. Add API keys and/or put a reverse proxy in front of them before
+they leave localhost. See <a href="../tts-server/#tips-caveats">tts-server: Tips &amp; Caveats</a> for
+how.</p>
+</div>
+<div class="language-yaml highlight"><span class="filename">docker-compose.yml — central speech backend</span><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nt">services</span><span class="p">:</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">  </span><span class="nt">ovos_stt_server</span><span class="p">:</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">docker.io/smartgic/ovos-stt-server-onnx-asr:${VERSION}</span><span class="w">   </span><span class="c1"># or your own build, see stt-server.md</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">    </span><span class="nt">ports</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;8080:8080&quot;</span><span class="p p-Indicator">]</span><span class="w">  </span><span class="c1"># UNAUTHENTICATED — do not expose beyond localhost/VPN</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">  </span><span class="nt">ovos_tts_server</span><span class="p">:</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">docker.io/smartgic/ovos-tts-server-piper:${VERSION}</span><span class="w">      </span><span class="c1"># or your own build, see tts-server.md</span>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">    </span><span class="nt">ports</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;9666:9666&quot;</span><span class="p p-Indicator">]</span><span class="w">  </span><span class="c1"># UNAUTHENTICATED — do not expose beyond localhost/VPN</span>
+</span></code></pre></div>
+<p>The speech-server image name encodes the engine baked into it: <code>ovos-stt-server-onnx-asr</code>,
+<code>ovos-stt-server-onnx-asr-cuda</code>, <code>ovos-tts-server-piper</code>, <code>ovos-tts-server-kokoro</code>,
+<code>ovos-tts-server-phoonnx</code> and so on. Pick the variant carrying the plugin you want. There is
+no generic image that loads an arbitrary engine at runtime.</p>
+<div class="language-yaml highlight"><span class="filename">docker-compose.yml — thin client (per device)</span><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nt">services</span><span class="p">:</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">  </span><span class="nt">ovos_messagebus</span><span class="p">:</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">docker.io/smartgic/ovos-messagebus:${VERSION}</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">    </span><span class="nt">network_mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">host</span><span class="w">  </span><span class="c1"># shares host loopback AND LAN interfaces with every container on this host</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">  </span><span class="nt">ovos_listener</span><span class="p">:</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">docker.io/smartgic/ovos-listener:${VERSION}</span>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="w">    </span><span class="nt">network_mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">host</span>
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="w">    </span><span class="nt">depends_on</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">ovos_messagebus</span><span class="p p-Indicator">]</span>
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="w">    </span><span class="nt">devices</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;/dev/snd&quot;</span><span class="p p-Indicator">]</span><span class="w">                      </span><span class="c1"># microphone passthrough</span>
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="w">    </span><span class="nt">volumes</span><span class="p">:</span>
+</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${XDG_RUNTIME_DIR}/pulse:${XDG_RUNTIME_DIR}/pulse:ro</span>
+</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">~/.config/pulse/cookie:/home/${OVOS_USER}/.config/pulse/cookie:ro</span>
+</span><span id="__span-3-14"><a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">~/.config/mycroft:/home/${OVOS_USER}/.config/mycroft</span>
+</span><span id="__span-3-15"><a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a><span class="w">    </span><span class="c1"># set stt.module = ovos-stt-plugin-server and stt.ovos-stt-plugin-server.urls to the</span>
+</span><span id="__span-3-16"><a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a><span class="w">    </span><span class="c1"># central STT server above, in the mounted /home/${OVOS_USER}/.config/mycroft/mycroft.conf</span>
+</span><span id="__span-3-17"><a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a>
+</span><span id="__span-3-18"><a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a><span class="w">  </span><span class="nt">ovos_audio</span><span class="p">:</span>
+</span><span id="__span-3-19"><a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a><span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">docker.io/smartgic/ovos-audio:${VERSION}</span>
+</span><span id="__span-3-20"><a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a><span class="w">    </span><span class="nt">network_mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">host</span>
+</span><span id="__span-3-21"><a id="__codelineno-3-21" name="__codelineno-3-21" href="#__codelineno-3-21"></a><span class="w">    </span><span class="nt">depends_on</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">ovos_messagebus</span><span class="p p-Indicator">]</span>
+</span><span id="__span-3-22"><a id="__codelineno-3-22" name="__codelineno-3-22" href="#__codelineno-3-22"></a><span class="w">    </span><span class="nt">devices</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;/dev/snd&quot;</span><span class="p p-Indicator">]</span><span class="w">                      </span><span class="c1"># speaker passthrough</span>
+</span><span id="__span-3-23"><a id="__codelineno-3-23" name="__codelineno-3-23" href="#__codelineno-3-23"></a><span class="w">    </span><span class="nt">volumes</span><span class="p">:</span>
+</span><span id="__span-3-24"><a id="__codelineno-3-24" name="__codelineno-3-24" href="#__codelineno-3-24"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${XDG_RUNTIME_DIR}/pulse:${XDG_RUNTIME_DIR}/pulse:ro</span>
+</span><span id="__span-3-25"><a id="__codelineno-3-25" name="__codelineno-3-25" href="#__codelineno-3-25"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">~/.config/pulse/cookie:/home/${OVOS_USER}/.config/pulse/cookie:ro</span>
+</span><span id="__span-3-26"><a id="__codelineno-3-26" name="__codelineno-3-26" href="#__codelineno-3-26"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">~/.config/mycroft:/home/${OVOS_USER}/.config/mycroft</span>
+</span><span id="__span-3-27"><a id="__codelineno-3-27" name="__codelineno-3-27" href="#__codelineno-3-27"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ovos_tts_cache:/home/${OVOS_USER}/.cache/mycroft/tts</span>
+</span><span id="__span-3-28"><a id="__codelineno-3-28" name="__codelineno-3-28" href="#__codelineno-3-28"></a><span class="w">    </span><span class="c1"># set tts.module = ovos-tts-plugin-server and tts.ovos-tts-plugin-server.host to the</span>
+</span><span id="__span-3-29"><a id="__codelineno-3-29" name="__codelineno-3-29" href="#__codelineno-3-29"></a><span class="w">    </span><span class="c1"># central TTS server above, in the mounted /home/${OVOS_USER}/.config/mycroft/mycroft.conf</span>
+</span><span id="__span-3-30"><a id="__codelineno-3-30" name="__codelineno-3-30" href="#__codelineno-3-30"></a>
+</span><span id="__span-3-31"><a id="__codelineno-3-31" name="__codelineno-3-31" href="#__codelineno-3-31"></a><span class="w">  </span><span class="nt">ovos_core</span><span class="p">:</span>
+</span><span id="__span-3-32"><a id="__codelineno-3-32" name="__codelineno-3-32" href="#__codelineno-3-32"></a><span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">docker.io/smartgic/ovos-core:${VERSION}</span>
+</span><span id="__span-3-33"><a id="__codelineno-3-33" name="__codelineno-3-33" href="#__codelineno-3-33"></a><span class="w">    </span><span class="nt">network_mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">host</span>
+</span><span id="__span-3-34"><a id="__codelineno-3-34" name="__codelineno-3-34" href="#__codelineno-3-34"></a><span class="w">    </span><span class="nt">depends_on</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">ovos_messagebus</span><span class="p p-Indicator">]</span>
+</span></code></pre></div>
+<p><code>depends_on</code> here only orders <strong>container start</strong>. It starts <code>ovos_messagebus</code> first, but does
+not wait for it to actually accept WebSocket connections before starting the services listed
+after it. Use the <a href="../production-operations/#knowing-when-the-assistant-is-actually-ready">readiness probe</a>
+(or Compose's own <code>depends_on: condition: service_healthy</code> against a healthcheck that runs it)
+as the real gate if a dependent service needs the bus to be live, not just the container to
+exist.</p>
+<p>Audio devices and sockets have to be handed to the containers that touch them: the listener
+needs the microphone, the audio service needs the speaker, and both need the host's PulseAudio
+or PipeWire socket. Anything you want to survive a container rebuild (downloaded models, the
+TTS cache, listener recordings, local state) belongs in a named volume rather than the
+container filesystem. The
+<a href="https://github.com/OpenVoiceOS/ovos-docker/blob/dev/compose/docker-compose.yml">reference compose file</a>
+in <code>ovos-docker</code> is the fuller version of the sketch above, with every volume, device,
+resource limit and healthcheck spelled out.</p>
+<div class="admonition danger">
+<p class="admonition-title"><code>network_mode: host</code> shares the loopback across every container on that host</p>
+<p>With <code>network_mode: host</code>, <code>127.0.0.1</code> is the <strong>host's</strong> loopback, not a container-private
+one. Every container and process on that host shares it. A bus bound to <code>127.0.0.1</code> is
+reachable by any of them, not just <code>ovos_messagebus</code>.</p>
+<p>"Bound to localhost" no longer means "only reachable by this one process" once host
+networking is in play. Treat the whole host as the trust boundary, not the individual
+container.</p>
+<p>Host networking also exposes any service that binds <code>0.0.0.0</code> straight onto the LAN, not
+just the host's own loopback. <code>gui_websocket.host</code> ships as <code>0.0.0.0</code> (all interfaces), so
+with <code>network_mode: host</code> the GUI WebSocket lands on the LAN, not just the device. Set
+<code>gui_websocket.host</code> to <code>127.0.0.1</code> unless a remote display client genuinely needs LAN
+access.</p>
+</div>
+<p>Each thin client still runs its own bus, listener, audio and core. Only the heavy STT/TTS
+inference is centralized. This is the same pattern as
+<a href="../wyoming-bridges/">Wyoming bridges</a> and <a href="../hivemind-agents/">HiveMind</a>, just wired directly
+through the companion server plugins instead of a satellite protocol. See
+<a href="../composable-deployments/">Composable Deployments</a> for the general principle of splitting
+OVOS across machines.</p>
 <hr />
 <h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h2>
 <p><strong>Satellite can't connect to the server.</strong></p>

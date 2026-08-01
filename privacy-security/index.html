@@ -1048,6 +1048,27 @@
   
   
     <li class="md-nav__item">
+      <a href="../production-hardening/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Production Hardening
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../satellites/" class="md-nav__link">
         
   
@@ -1634,7 +1655,7 @@ plugin uses <code>urls</code> (a list), the TTS plugin uses <code>host</code>.</
 <p>After saving the file, restart the client (<code>ovos-restart</code> on raspOVOS, or
 <code>systemctl --user restart ovos.service</code> elsewhere) and check the voice/audio logs to
 confirm requests go to <code>192.168.1.50</code>, not a public server. See
-<a href="../production-operations/#thin-clients-a-shared-speech-backend">production-operations: thin clients + a shared speech backend</a>
+<a href="../satellites/#thin-clients-a-shared-speech-backend">satellites: thin clients + a shared speech backend</a>
 for the server-side Docker Compose setup.</p>
 <hr />
 <h2 id="install-time-telemetry-vs-ongoing-usage-telemetry">Install-time telemetry vs. ongoing usage telemetry<a class="headerlink" href="#install-time-telemetry-vs-ongoing-usage-telemetry" title="Permanent link">&para;</a></h2>
@@ -1647,7 +1668,7 @@ same thing:</p>
   channel/profile, and which features were enabled. It is sent once, during
   installation, to a metrics endpoint run by the community, and nothing about
   this is ongoing. See the field table on the
-  <a href="../ovos-installer/#anonymous-telemetry">installer page</a> for the exact list.</li>
+  <a href="../ovos-installer-scenarios/#anonymous-telemetry">installer page</a> for the exact list.</li>
 <li><strong>Ongoing usage telemetry</strong> (<code>share_usage_telemetry</code>) is different. Saying
   yes here adds an <code>open_data.intent_urls</code> entry to your installed
   <code>mycroft.conf</code>, which makes the <strong>running assistant</strong> report intent-matching
@@ -1670,7 +1691,7 @@ recordings. This is exclusively opt-in and off by default: nothing is ever
 uploaded unless <code>open_data.ww_urls</code> or <code>open_data.stt_urls</code> is explicitly
 configured with at least one server, and there is no default server. Uploads run
 in a background thread and never block the listener. Failures are logged and
-otherwise ignored. See <a href="../config-reference/#all-keys-generated"><code>open_data.ww_urls</code> / <code>open_data.stt_urls</code></a> for the exact config keys.</p>
+otherwise ignored. See <a href="../config-all-keys/#all-keys-generated"><code>open_data.ww_urls</code> / <code>open_data.stt_urls</code></a> for the exact config keys.</p>
 <hr />
 <h2 id="what-is-written-to-disk">What is written to disk<a class="headerlink" href="#what-is-written-to-disk" title="Permanent link">&para;</a></h2>
 <p>Separate from what goes over the network, the listener can write captured audio to
@@ -1793,7 +1814,7 @@ There is no secrets manager or encryption layer.</p>
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Protect <code>mycroft.conf</code>'s file permissions and keep it out of shared
       dotfile repositories.</li>
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Decide independently on install-time telemetry and ongoing usage
-      telemetry. They are separate opt-ins (<a href="../ovos-installer/#anonymous-telemetry">installer telemetry</a>).</li>
+      telemetry. They are separate opt-ins (<a href="../ovos-installer-scenarios/#anonymous-telemetry">installer telemetry</a>).</li>
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> For remote/multi-room setups, use <a href="../hivemind-agents/">HiveMind</a> instead
       of exposing the bus directly.</li>
 </ul>

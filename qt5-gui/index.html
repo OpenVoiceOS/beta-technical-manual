@@ -14,7 +14,7 @@
         <link rel="prev" href="../ovos-shell/">
       
       
-        <link rel="next" href="../homescreen/">
+        <link rel="next" href="../qt5-gui-examples/">
       
       
       <link rel="icon" href="https://github.com/OpenVoiceOS/ovos_assets/blob/master/Logo/ovos-logo-512.png?raw=true">
@@ -962,6 +962,27 @@
   
   
     <li class="md-nav__item">
+      <a href="../gui-protocol-messages/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    GUI Protocol Messages
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../ovos-shell/" class="md-nav__link">
         
   
@@ -1143,36 +1164,33 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Advanced skill displays using QML">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#event-handling" class="md-nav__link">
-    <span class="md-ellipsis">
-      Event Handling
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#resting-faces" class="md-nav__link">
-    <span class="md-ellipsis">
-      Resting Faces
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
     </ul>
   
 </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../qt5-gui-examples/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    QML Worked Examples
+  </span>
+  
+
+      </a>
     </li>
   
 
@@ -1502,30 +1520,6 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Advanced skill displays using QML">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#event-handling" class="md-nav__link">
-    <span class="md-ellipsis">
-      Event Handling
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#resting-faces" class="md-nav__link">
-    <span class="md-ellipsis">
-      Resting Faces
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
     </ul>
@@ -1822,285 +1816,12 @@ keep a screen.</p>
 </span><span id="__span-5-44"><a id="__codelineno-5-44" name="__codelineno-5-44" href="#__codelineno-5-44"></a><span class="p">}</span>
 </span></code></pre></div>
 <h2 id="advanced-skill-displays-using-qml">Advanced skill displays using QML<a class="headerlink" href="#advanced-skill-displays-using-qml" title="Permanent link">&para;</a></h2>
-<p><strong>Display Lottie Animations</strong>:</p>
-<p>You can use the <code>LottieAnimation</code> item just like any other <code>QtQuick</code> element, such as an <code>Image</code> and place it in your scene any way you please.</p>
-<p><strong>QML Example</strong></p>
-<div class="language-qml highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1">// standard imports (QtQuick, QtQuick.Controls, QtQuick.Layouts, Kirigami, Mycroft — see the imports block above)</span>
-</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="kr">import</span> <span class="nx">org</span><span class="p">.</span><span class="nx">kde</span><span class="p">.</span><span class="nx">lottie</span> <span class="mf">1.0</span>
-</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>
-</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="nx">Mycroft</span><span class="p">.</span><span class="nx">Delegate</span> <span class="p">{</span>
-</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>    <span class="nx">LottieAnimation</span> <span class="p">{</span>     
-</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>        <span class="kd">id: fancyAnimation</span> 
-</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>        <span class="k">anchors.fill:</span> <span class="nx">parent</span>
-</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>        <span class="k">source:</span> <span class="nx">Qt</span><span class="p">.</span><span class="nx">resolvedUrl</span><span class="p">(</span><span class="s2">&quot;animations/fancy_animation.json&quot;</span><span class="p">)</span>
-</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>        <span class="k">loops:</span> <span class="nx">Animation</span><span class="p">.</span><span class="nx">Infinite</span>
-</span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a>        <span class="k">fillMode:</span> <span class="nx">Image</span><span class="p">.</span><span class="nx">PreserveAspectFit</span>    
-</span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a>        <span class="k">running:</span> <span class="kc">true</span>
-</span><span id="__span-6-12"><a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a>    <span class="p">}</span>    
-</span><span id="__span-6-13"><a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a><span class="p">}</span>
-</span></code></pre></div>
-<p><strong>Display Sliding Images</strong></p>
-<p>Contains an image that scrolls slowly so it can be shown completely.</p>
-<p><strong>QML Example</strong></p>
-<div class="language-qml highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1">// standard imports (QtQuick, QtQuick.Controls, QtQuick.Layouts, Kirigami, Mycroft — see the imports block above)</span>
-</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>
-</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="nx">Mycroft</span><span class="p">.</span><span class="nx">Delegate</span> <span class="p">{</span>
-</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>     <span class="k">background:</span> <span class="nx">Mycroft</span><span class="p">.</span><span class="nx">SlidingImage</span> <span class="p">{</span>
-</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>     <span class="k">source:</span> <span class="s2">&quot;foo.jpg&quot;</span> 
-</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>     <span class="k">running:</span> <span class="nx">bool</span>    <span class="c1">//If true the sliding animation is active</span>
-</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>     <span class="k">speed:</span> <span class="mi">1</span>         <span class="c1">//Animation speed in Kirigami.Units.gridUnit / second</span>
-</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>   <span class="p">}</span>
-</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="p">}</span>
-</span></code></pre></div>
-<p><strong>Display Paginated Text</strong></p>
-<p>Takes a long text and breaks it down into pages that can be horizontally swiped</p>
-<p><strong>QML Example</strong></p>
-<div class="language-qml highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c1">// standard imports (QtQuick, QtQuick.Controls, QtQuick.Layouts, Kirigami, Mycroft — see the imports block above)</span>
-</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>
-</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="nx">Mycroft</span><span class="p">.</span><span class="nx">Delegate</span> <span class="p">{</span>
-</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>     <span class="nx">Mycroft</span><span class="p">.</span><span class="nx">PaginatedText</span> <span class="p">{</span>
-</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>         <span class="k">text:</span> <span class="nx">string</span>      <span class="c1">//The text that should be displayed</span>
-</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>         <span class="k">currentIndex:</span> <span class="mi">0</span>   <span class="c1">//The currently visible page number (starting from 0)</span>
-</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>     <span class="p">}</span>
-</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="p">}</span>
-</span></code></pre></div>
-<p><strong>Display A Vertical ListView With Information Cards</strong></p>
-<p>Kirigami CardsListView is a ListView that can have AbstractCard as its delegate. It automatically assigns the proper spacing and margins around the cards, following the design guidelines.</p>
-<p><strong>Python Skill Example</strong></p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="o">...</span>
-</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="k">def</span> <span class="nf">handle_food_places</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
-</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="o">...</span>
-</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="bp">self</span><span class="o">.</span><span class="n">gui</span><span class="p">[</span><span class="s2">&quot;foodPlacesBlob&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">json</span>
-</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="bp">self</span><span class="o">.</span><span class="n">gui</span><span class="o">.</span><span class="n">show_page</span><span class="p">(</span><span class="s2">&quot;foodplaces.qml&quot;</span><span class="p">)</span>
-</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="o">...</span>
-</span></code></pre></div>
-<p><strong>QML Example</strong></p>
-<div class="language-qml highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="c1">// standard imports (QtQuick, QtQuick.Controls, QtQuick.Layouts, Kirigami, Mycroft — see the imports block above)</span>
-</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>
-</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="nx">Mycroft</span><span class="p">.</span><span class="nx">Delegate</span><span class="p">{</span>
-</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>    <span class="kd">id: root</span>
-</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>    <span class="nx">property</span> <span class="kd">var</span> <span class="k">foodPlacesModel:</span> <span class="nx">sessionData</span><span class="p">.</span><span class="nx">foodPlacesBlob</span>
-</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>
-</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>    <span class="nx">Kirigami</span><span class="p">.</span><span class="nx">CardsListView</span> <span class="p">{</span>
-</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>        <span class="kd">id: restaurantsListView</span>
-</span><span id="__span-10-9"><a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a>        <span class="k">Layout.fillWidth:</span> <span class="kc">true</span>
-</span><span id="__span-10-10"><a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a>        <span class="k">Layout.fillHeight:</span> <span class="kc">true</span>
-</span><span id="__span-10-11"><a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a>        <span class="k">model:</span> <span class="nx">foodPlacesModel</span>
-</span><span id="__span-10-12"><a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a>        <span class="k">delegate:</span> <span class="nx">Kirigami</span><span class="p">.</span><span class="nx">AbstractCard</span> <span class="p">{</span>
-</span><span id="__span-10-13"><a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a>            <span class="kd">id: rootCard</span>
-</span><span id="__span-10-14"><a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a>            <span class="k">implicitHeight:</span> <span class="nx">delegateItem</span><span class="p">.</span><span class="nx">implicitHeight</span> <span class="o">+</span> <span class="nx">Kirigami</span><span class="p">.</span><span class="nx">Units</span><span class="p">.</span><span class="nx">largeSpacing</span>
-</span><span id="__span-10-15"><a id="__codelineno-10-15" name="__codelineno-10-15" href="#__codelineno-10-15"></a>            <span class="k">contentItem:</span> <span class="nx">Item</span> <span class="p">{</span>
-</span><span id="__span-10-16"><a id="__codelineno-10-16" name="__codelineno-10-16" href="#__codelineno-10-16"></a>                <span class="k">implicitWidth:</span> <span class="nx">parent</span><span class="p">.</span><span class="nx">implicitWidth</span>
-</span><span id="__span-10-17"><a id="__codelineno-10-17" name="__codelineno-10-17" href="#__codelineno-10-17"></a>                <span class="k">implicitHeight:</span> <span class="nx">parent</span><span class="p">.</span><span class="nx">implicitHeight</span>
-</span><span id="__span-10-18"><a id="__codelineno-10-18" name="__codelineno-10-18" href="#__codelineno-10-18"></a>                <span class="nx">ColumnLayout</span> <span class="p">{</span>
-</span><span id="__span-10-19"><a id="__codelineno-10-19" name="__codelineno-10-19" href="#__codelineno-10-19"></a>                    <span class="kd">id: delegateItem</span>
-</span><span id="__span-10-20"><a id="__codelineno-10-20" name="__codelineno-10-20" href="#__codelineno-10-20"></a>                    <span class="k">anchors.left:</span> <span class="nx">parent</span><span class="p">.</span><span class="nx">left</span>
-</span><span id="__span-10-21"><a id="__codelineno-10-21" name="__codelineno-10-21" href="#__codelineno-10-21"></a>                    <span class="k">anchors.right:</span> <span class="nx">parent</span><span class="p">.</span><span class="nx">right</span>
-</span><span id="__span-10-22"><a id="__codelineno-10-22" name="__codelineno-10-22" href="#__codelineno-10-22"></a>                    <span class="k">anchors.top:</span> <span class="nx">parent</span><span class="p">.</span><span class="nx">top</span>
-</span><span id="__span-10-23"><a id="__codelineno-10-23" name="__codelineno-10-23" href="#__codelineno-10-23"></a>                    <span class="k">spacing:</span> <span class="nx">Kirigami</span><span class="p">.</span><span class="nx">Units</span><span class="p">.</span><span class="nx">smallSpacing</span>
-</span><span id="__span-10-24"><a id="__codelineno-10-24" name="__codelineno-10-24" href="#__codelineno-10-24"></a>                    <span class="nx">Kirigami</span><span class="p">.</span><span class="nx">Heading</span> <span class="p">{</span>
-</span><span id="__span-10-25"><a id="__codelineno-10-25" name="__codelineno-10-25" href="#__codelineno-10-25"></a>                        <span class="kd">id: restaurantNameLabel</span>
-</span><span id="__span-10-26"><a id="__codelineno-10-26" name="__codelineno-10-26" href="#__codelineno-10-26"></a>                        <span class="k">Layout.fillWidth:</span> <span class="kc">true</span>
-</span><span id="__span-10-27"><a id="__codelineno-10-27" name="__codelineno-10-27" href="#__codelineno-10-27"></a>                        <span class="k">text:</span> <span class="nx">modelData</span><span class="p">.</span><span class="nx">name</span>
-</span><span id="__span-10-28"><a id="__codelineno-10-28" name="__codelineno-10-28" href="#__codelineno-10-28"></a>                        <span class="k">level:</span> <span class="mi">3</span>
-</span><span id="__span-10-29"><a id="__codelineno-10-29" name="__codelineno-10-29" href="#__codelineno-10-29"></a>                        <span class="k">wrapMode:</span> <span class="nx">Text</span><span class="p">.</span><span class="nx">WordWrap</span>
-</span><span id="__span-10-30"><a id="__codelineno-10-30" name="__codelineno-10-30" href="#__codelineno-10-30"></a>                    <span class="p">}</span>
-</span><span id="__span-10-31"><a id="__codelineno-10-31" name="__codelineno-10-31" href="#__codelineno-10-31"></a>                    <span class="nx">Kirigami</span><span class="p">.</span><span class="nx">Separator</span> <span class="p">{</span>
-</span><span id="__span-10-32"><a id="__codelineno-10-32" name="__codelineno-10-32" href="#__codelineno-10-32"></a>                        <span class="k">Layout.fillWidth:</span> <span class="kc">true</span>
-</span><span id="__span-10-33"><a id="__codelineno-10-33" name="__codelineno-10-33" href="#__codelineno-10-33"></a>                    <span class="p">}</span>
-</span><span id="__span-10-34"><a id="__codelineno-10-34" name="__codelineno-10-34" href="#__codelineno-10-34"></a>                    <span class="nx">RowLayout</span> <span class="p">{</span>
-</span><span id="__span-10-35"><a id="__codelineno-10-35" name="__codelineno-10-35" href="#__codelineno-10-35"></a>                        <span class="k">Layout.fillWidth:</span> <span class="kc">true</span>
-</span><span id="__span-10-36"><a id="__codelineno-10-36" name="__codelineno-10-36" href="#__codelineno-10-36"></a>                        <span class="k">Layout.preferredHeight:</span> <span class="nx">form</span><span class="p">.</span><span class="nx">implicitHeight</span>
-</span><span id="__span-10-37"><a id="__codelineno-10-37" name="__codelineno-10-37" href="#__codelineno-10-37"></a>                        <span class="nx">Image</span> <span class="p">{</span>
-</span><span id="__span-10-38"><a id="__codelineno-10-38" name="__codelineno-10-38" href="#__codelineno-10-38"></a>                            <span class="kd">id: placeImage</span>
-</span><span id="__span-10-39"><a id="__codelineno-10-39" name="__codelineno-10-39" href="#__codelineno-10-39"></a>                            <span class="k">source:</span> <span class="nx">modelData</span><span class="p">.</span><span class="nx">image</span>
-</span><span id="__span-10-40"><a id="__codelineno-10-40" name="__codelineno-10-40" href="#__codelineno-10-40"></a>                            <span class="k">Layout.fillHeight:</span> <span class="kc">true</span>
-</span><span id="__span-10-41"><a id="__codelineno-10-41" name="__codelineno-10-41" href="#__codelineno-10-41"></a>                            <span class="k">Layout.preferredWidth:</span> <span class="nx">placeImage</span><span class="p">.</span><span class="nx">implicitHeight</span> <span class="o">+</span> <span class="nx">Kirigami</span><span class="p">.</span><span class="nx">Units</span><span class="p">.</span><span class="nx">gridUnit</span> <span class="o">*</span> <span class="mi">2</span>
-</span><span id="__span-10-42"><a id="__codelineno-10-42" name="__codelineno-10-42" href="#__codelineno-10-42"></a>                            <span class="k">fillMode:</span> <span class="nx">Image</span><span class="p">.</span><span class="nx">PreserveAspectFit</span>
-</span><span id="__span-10-43"><a id="__codelineno-10-43" name="__codelineno-10-43" href="#__codelineno-10-43"></a>                        <span class="p">}</span>
-</span><span id="__span-10-44"><a id="__codelineno-10-44" name="__codelineno-10-44" href="#__codelineno-10-44"></a>                        <span class="nx">Kirigami</span><span class="p">.</span><span class="nx">Separator</span> <span class="p">{</span>
-</span><span id="__span-10-45"><a id="__codelineno-10-45" name="__codelineno-10-45" href="#__codelineno-10-45"></a>                            <span class="k">Layout.fillHeight:</span> <span class="kc">true</span>
-</span><span id="__span-10-46"><a id="__codelineno-10-46" name="__codelineno-10-46" href="#__codelineno-10-46"></a>                        <span class="p">}</span>
-</span><span id="__span-10-47"><a id="__codelineno-10-47" name="__codelineno-10-47" href="#__codelineno-10-47"></a>                        <span class="nx">Kirigami</span><span class="p">.</span><span class="nx">FormLayout</span> <span class="p">{</span>
-</span><span id="__span-10-48"><a id="__codelineno-10-48" name="__codelineno-10-48" href="#__codelineno-10-48"></a>                            <span class="kd">id: form</span>
-</span><span id="__span-10-49"><a id="__codelineno-10-49" name="__codelineno-10-49" href="#__codelineno-10-49"></a>                            <span class="k">Layout.fillWidth:</span> <span class="kc">true</span>
-</span><span id="__span-10-50"><a id="__codelineno-10-50" name="__codelineno-10-50" href="#__codelineno-10-50"></a>                            <span class="k">Layout.minimumWidth:</span> <span class="nx">aCard</span><span class="p">.</span><span class="nx">implicitWidth</span>
-</span><span id="__span-10-51"><a id="__codelineno-10-51" name="__codelineno-10-51" href="#__codelineno-10-51"></a>                            <span class="k">Layout.alignment:</span> <span class="nx">Qt</span><span class="p">.</span><span class="nx">AlignLeft</span> <span class="o">|</span> <span class="nx">Qt</span><span class="p">.</span><span class="nx">AlignBottom</span>
-</span><span id="__span-10-52"><a id="__codelineno-10-52" name="__codelineno-10-52" href="#__codelineno-10-52"></a>                            <span class="nx">Label</span> <span class="p">{</span>
-</span><span id="__span-10-53"><a id="__codelineno-10-53" name="__codelineno-10-53" href="#__codelineno-10-53"></a>                                <span class="k">Kirigami.FormData.label:</span> <span class="s2">&quot;Description:&quot;</span>
-</span><span id="__span-10-54"><a id="__codelineno-10-54" name="__codelineno-10-54" href="#__codelineno-10-54"></a>                                <span class="k">Layout.fillWidth:</span> <span class="kc">true</span>
-</span><span id="__span-10-55"><a id="__codelineno-10-55" name="__codelineno-10-55" href="#__codelineno-10-55"></a>                                <span class="k">wrapMode:</span> <span class="nx">Text</span><span class="p">.</span><span class="nx">WordWrap</span>
-</span><span id="__span-10-56"><a id="__codelineno-10-56" name="__codelineno-10-56" href="#__codelineno-10-56"></a>                                <span class="k">elide:</span> <span class="nx">Text</span><span class="p">.</span><span class="nx">ElideRight</span>
-</span><span id="__span-10-57"><a id="__codelineno-10-57" name="__codelineno-10-57" href="#__codelineno-10-57"></a>                                <span class="k">text:</span> <span class="nx">modelData</span><span class="p">.</span><span class="nx">restaurantDescription</span>
-</span><span id="__span-10-58"><a id="__codelineno-10-58" name="__codelineno-10-58" href="#__codelineno-10-58"></a>                            <span class="p">}</span>
-</span><span id="__span-10-59"><a id="__codelineno-10-59" name="__codelineno-10-59" href="#__codelineno-10-59"></a>                            <span class="nx">Label</span> <span class="p">{</span>
-</span><span id="__span-10-60"><a id="__codelineno-10-60" name="__codelineno-10-60" href="#__codelineno-10-60"></a>                                <span class="k">Kirigami.FormData.label:</span> <span class="s2">&quot;Phone:&quot;</span>
-</span><span id="__span-10-61"><a id="__codelineno-10-61" name="__codelineno-10-61" href="#__codelineno-10-61"></a>                                <span class="k">Layout.fillWidth:</span> <span class="kc">true</span>
-</span><span id="__span-10-62"><a id="__codelineno-10-62" name="__codelineno-10-62" href="#__codelineno-10-62"></a>                                <span class="k">wrapMode:</span> <span class="nx">Text</span><span class="p">.</span><span class="nx">WordWrap</span>
-</span><span id="__span-10-63"><a id="__codelineno-10-63" name="__codelineno-10-63" href="#__codelineno-10-63"></a>                                <span class="k">elide:</span> <span class="nx">Text</span><span class="p">.</span><span class="nx">ElideRight</span>
-</span><span id="__span-10-64"><a id="__codelineno-10-64" name="__codelineno-10-64" href="#__codelineno-10-64"></a>                                <span class="k">text:</span> <span class="nx">modelData</span><span class="p">.</span><span class="nx">phone</span>
-</span><span id="__span-10-65"><a id="__codelineno-10-65" name="__codelineno-10-65" href="#__codelineno-10-65"></a>                            <span class="p">}</span>
-</span><span id="__span-10-66"><a id="__codelineno-10-66" name="__codelineno-10-66" href="#__codelineno-10-66"></a>                        <span class="p">}</span>
-</span><span id="__span-10-67"><a id="__codelineno-10-67" name="__codelineno-10-67" href="#__codelineno-10-67"></a>                    <span class="p">}</span>
-</span><span id="__span-10-68"><a id="__codelineno-10-68" name="__codelineno-10-68" href="#__codelineno-10-68"></a>                <span class="p">}</span>
-</span><span id="__span-10-69"><a id="__codelineno-10-69" name="__codelineno-10-69" href="#__codelineno-10-69"></a>            <span class="p">}</span>
-</span><span id="__span-10-70"><a id="__codelineno-10-70" name="__codelineno-10-70" href="#__codelineno-10-70"></a>        <span class="p">}</span>
-</span><span id="__span-10-71"><a id="__codelineno-10-71" name="__codelineno-10-71" href="#__codelineno-10-71"></a>    <span class="p">}</span>
-</span><span id="__span-10-72"><a id="__codelineno-10-72" name="__codelineno-10-72" href="#__codelineno-10-72"></a><span class="p">}</span>
-</span></code></pre></div>
-<p><strong>Using Proportional Delegate For Simple Display Skills &amp; Auto Layout</strong></p>
-<p><strong>ProportionalDelegate</strong> is a delegate which has proportional padding and a columnlayout as mainItem. The delegate supports a <code>proportionalGridUnit</code>, based on its size. Contents should scale proportionally to the delegate size, either directly or by using the <code>proportionalGridUnit</code>.</p>
-<p><strong>AutoFitLabel</strong> is a label that will always scale its text size according to the item size rather than the other way around</p>
-<p><strong>QML Example</strong></p>
-<div class="language-qml highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="c1">// standard imports (QtQuick, QtQuick.Controls, QtQuick.Layouts, Kirigami, Mycroft — see the imports block above)</span>
-</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>
-</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="nx">Mycroft</span><span class="p">.</span><span class="nx">ProportionalDelegate</span> <span class="p">{</span>
-</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>    <span class="kd">id: root</span>
-</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>
-</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>    <span class="nx">Mycroft</span><span class="p">.</span><span class="nx">AutoFitLabel</span> <span class="p">{</span>
-</span><span id="__span-11-7"><a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a>        <span class="kd">id: monthLabel</span>
-</span><span id="__span-11-8"><a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a>        <span class="k">font.weight:</span> <span class="nx">Font</span><span class="p">.</span><span class="nx">Bold</span>
-</span><span id="__span-11-9"><a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a>        <span class="k">Layout.fillWidth:</span> <span class="kc">true</span>
-</span><span id="__span-11-10"><a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a>        <span class="k">Layout.preferredHeight:</span> <span class="nx">proportionalGridUnit</span> <span class="o">*</span> <span class="mi">40</span>
-</span><span id="__span-11-11"><a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a>        <span class="k">text:</span> <span class="nx">sessionData</span><span class="p">.</span><span class="nx">month</span>
-</span><span id="__span-11-12"><a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a>    <span class="p">}</span>
-</span><span id="__span-11-13"><a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a>
-</span><span id="__span-11-14"><a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a>    <span class="nx">Mycroft</span><span class="p">.</span><span class="nx">AutoFitLabel</span> <span class="p">{</span>
-</span><span id="__span-11-15"><a id="__codelineno-11-15" name="__codelineno-11-15" href="#__codelineno-11-15"></a>        <span class="kd">id: dayLabel</span>
-</span><span id="__span-11-16"><a id="__codelineno-11-16" name="__codelineno-11-16" href="#__codelineno-11-16"></a>        <span class="k">font.weight:</span> <span class="nx">Font</span><span class="p">.</span><span class="nx">Bold</span>
-</span><span id="__span-11-17"><a id="__codelineno-11-17" name="__codelineno-11-17" href="#__codelineno-11-17"></a>        <span class="k">Layout.fillWidth:</span> <span class="kc">true</span>
-</span><span id="__span-11-18"><a id="__codelineno-11-18" name="__codelineno-11-18" href="#__codelineno-11-18"></a>        <span class="k">Layout.preferredHeight:</span> <span class="nx">proportionalGridUnit</span> <span class="o">*</span> <span class="mi">40</span>
-</span><span id="__span-11-19"><a id="__codelineno-11-19" name="__codelineno-11-19" href="#__codelineno-11-19"></a>        <span class="k">text:</span> <span class="nx">sessionData</span><span class="p">.</span><span class="nx">day</span>
-</span><span id="__span-11-20"><a id="__codelineno-11-20" name="__codelineno-11-20" href="#__codelineno-11-20"></a>    <span class="p">}</span>
-</span><span id="__span-11-21"><a id="__codelineno-11-21" name="__codelineno-11-21" href="#__codelineno-11-21"></a><span class="p">}</span>
-</span></code></pre></div>
-<p><strong>Using Slideshow Component To Show Cards Slideshow</strong></p>
-<p>The Slideshow component lets you insert a slideshow with your custom delegate in any skill display. It can be tuned to autoplay and loop, and can also be scrolled or flicked manually by the user.</p>
-<p><strong>QML Example</strong></p>
-<div class="language-qml highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="c1">// standard imports (QtQuick, QtQuick.Controls, QtQuick.Layouts, Kirigami, Mycroft — see the imports block above)</span>
-</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>
-</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="nx">Mycroft</span><span class="p">.</span><span class="nx">Delegate</span> <span class="p">{</span>
-</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>    <span class="kd">id: root</span>
-</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>
-</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>    <span class="nx">Mycroft</span><span class="p">.</span><span class="nx">SlideShow</span> <span class="p">{</span>
-</span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a>        <span class="kd">id: simpleSlideShow</span> 
-</span><span id="__span-12-8"><a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a>        <span class="k">model:</span> <span class="nx">sessionData</span><span class="p">.</span><span class="nx">exampleModel</span> <span class="c1">// model with slideshow data</span>
-</span><span id="__span-12-9"><a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a>        <span class="k">anchors.fill:</span> <span class="nx">parent</span>
-</span><span id="__span-12-10"><a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a>        <span class="k">interval:</span> <span class="mi">5000</span> <span class="c1">// time to switch between slides </span>
-</span><span id="__span-12-11"><a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a>        <span class="k">running:</span> <span class="kc">true</span> <span class="c1">// can be set to false if one wants to swipe manually</span>
-</span><span id="__span-12-12"><a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a>        <span class="k">loop:</span> <span class="kc">true</span> <span class="c1">// can be set to play through continously or just once</span>
-</span><span id="__span-12-13"><a id="__codelineno-12-13" name="__codelineno-12-13" href="#__codelineno-12-13"></a>        <span class="k">delegate:</span> <span class="nx">Kirigami</span><span class="p">.</span><span class="nx">AbstractCard</span> <span class="p">{</span> 
-</span><span id="__span-12-14"><a id="__codelineno-12-14" name="__codelineno-12-14" href="#__codelineno-12-14"></a>            <span class="k">width:</span> <span class="nx">rootItem</span><span class="p">.</span><span class="nx">width</span>
-</span><span id="__span-12-15"><a id="__codelineno-12-15" name="__codelineno-12-15" href="#__codelineno-12-15"></a>            <span class="k">height:</span> <span class="nx">rootItem</span><span class="p">.</span><span class="nx">height</span>
-</span><span id="__span-12-16"><a id="__codelineno-12-16" name="__codelineno-12-16" href="#__codelineno-12-16"></a>            <span class="k">contentItem:</span> <span class="nx">ColumnLayout</span> <span class="p">{</span>
-</span><span id="__span-12-17"><a id="__codelineno-12-17" name="__codelineno-12-17" href="#__codelineno-12-17"></a>                <span class="k">anchors.fill:</span> <span class="nx">parent</span>
-</span><span id="__span-12-18"><a id="__codelineno-12-18" name="__codelineno-12-18" href="#__codelineno-12-18"></a>                <span class="nx">Kirigami</span><span class="p">.</span><span class="nx">Heading</span> <span class="p">{</span>
-</span><span id="__span-12-19"><a id="__codelineno-12-19" name="__codelineno-12-19" href="#__codelineno-12-19"></a>                    <span class="k">Layout.fillWidth:</span> <span class="kc">true</span>
-</span><span id="__span-12-20"><a id="__codelineno-12-20" name="__codelineno-12-20" href="#__codelineno-12-20"></a>                    <span class="k">wrapMode:</span> <span class="nx">Text</span><span class="p">.</span><span class="nx">WordWrap</span>
-</span><span id="__span-12-21"><a id="__codelineno-12-21" name="__codelineno-12-21" href="#__codelineno-12-21"></a>                    <span class="k">level:</span> <span class="mi">3</span>
-</span><span id="__span-12-22"><a id="__codelineno-12-22" name="__codelineno-12-22" href="#__codelineno-12-22"></a>                    <span class="k">text:</span> <span class="nx">modelData</span><span class="p">.</span><span class="nx">Title</span>
-</span><span id="__span-12-23"><a id="__codelineno-12-23" name="__codelineno-12-23" href="#__codelineno-12-23"></a>                <span class="p">}</span>
-</span><span id="__span-12-24"><a id="__codelineno-12-24" name="__codelineno-12-24" href="#__codelineno-12-24"></a>                <span class="nx">Kirigami</span><span class="p">.</span><span class="nx">Separator</span> <span class="p">{</span>
-</span><span id="__span-12-25"><a id="__codelineno-12-25" name="__codelineno-12-25" href="#__codelineno-12-25"></a>                        <span class="k">Layout.fillWidth:</span> <span class="kc">true</span>
-</span><span id="__span-12-26"><a id="__codelineno-12-26" name="__codelineno-12-26" href="#__codelineno-12-26"></a>                        <span class="k">Layout.preferredHeight:</span> <span class="mi">1</span>
-</span><span id="__span-12-27"><a id="__codelineno-12-27" name="__codelineno-12-27" href="#__codelineno-12-27"></a>                <span class="p">}</span>
-</span><span id="__span-12-28"><a id="__codelineno-12-28" name="__codelineno-12-28" href="#__codelineno-12-28"></a>                <span class="nx">Image</span> <span class="p">{</span>
-</span><span id="__span-12-29"><a id="__codelineno-12-29" name="__codelineno-12-29" href="#__codelineno-12-29"></a>                    <span class="k">Layout.fillWidth:</span> <span class="kc">true</span>
-</span><span id="__span-12-30"><a id="__codelineno-12-30" name="__codelineno-12-30" href="#__codelineno-12-30"></a>                    <span class="k">Layout.preferredHeight:</span> <span class="nx">rootItem</span><span class="p">.</span><span class="nx">height</span> <span class="o">/</span> <span class="mi">4</span>
-</span><span id="__span-12-31"><a id="__codelineno-12-31" name="__codelineno-12-31" href="#__codelineno-12-31"></a>                    <span class="k">source:</span> <span class="nx">modelData</span><span class="p">.</span><span class="nx">Image</span>
-</span><span id="__span-12-32"><a id="__codelineno-12-32" name="__codelineno-12-32" href="#__codelineno-12-32"></a>                    <span class="k">fillMode:</span> <span class="nx">Image</span><span class="p">.</span><span class="nx">PreserveAspectCrop</span>
-</span><span id="__span-12-33"><a id="__codelineno-12-33" name="__codelineno-12-33" href="#__codelineno-12-33"></a>                <span class="p">}</span>
-</span><span id="__span-12-34"><a id="__codelineno-12-34" name="__codelineno-12-34" href="#__codelineno-12-34"></a>            <span class="p">}</span>
-</span><span id="__span-12-35"><a id="__codelineno-12-35" name="__codelineno-12-35" href="#__codelineno-12-35"></a>        <span class="p">}</span>
-</span><span id="__span-12-36"><a id="__codelineno-12-36" name="__codelineno-12-36" href="#__codelineno-12-36"></a>    <span class="p">}</span>
-</span><span id="__span-12-37"><a id="__codelineno-12-37" name="__codelineno-12-37" href="#__codelineno-12-37"></a><span class="p">}</span>
-</span></code></pre></div>
-<h4 id="event-handling">Event Handling<a class="headerlink" href="#event-handling" title="Permanent link">&para;</a></h4>
-<p>Mycroft GUI API provides an Event Handling Protocol between the skill and QML display. It lets skill authors forward events in either direction to an event consumer. Skill authors can create any number of custom events. Event names that start with "system." are available to all skills, like previous/next/pick.</p>
-<p><strong>Simple Event Trigger Example From QML Display To Skill</strong></p>
-<p><strong>Python Skill Example</strong></p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>    <span class="c1"># Initialize...</span>
-</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">gui</span><span class="o">.</span><span class="n">register_handler</span><span class="p">(</span><span class="s1">&#39;skill.foo.event&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">handle_foo_event</span><span class="p">)</span>
-</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="o">...</span>
-</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>    <span class="k">def</span> <span class="nf">handle_foo_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
-</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">speak</span><span class="p">(</span><span class="n">message</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;string&quot;</span><span class="p">])</span>
-</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a><span class="o">...</span>
-</span><span id="__span-13-8"><a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a><span class="o">...</span>
-</span></code></pre></div>
-<p><strong>QML Example</strong></p>
-<div class="language-qml highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="c1">// standard imports (QtQuick, QtQuick.Controls, QtQuick.Layouts, Kirigami, Mycroft — see the imports block above)</span>
-</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>
-</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="nx">Mycroft</span><span class="p">.</span><span class="nx">Delegate</span> <span class="p">{</span>
-</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>    <span class="kd">id: root</span>
-</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>
-</span><span id="__span-14-6"><a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a>    <span class="nx">Button</span> <span class="p">{</span>
-</span><span id="__span-14-7"><a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a>        <span class="k">anchors.fill:</span> <span class="nx">parent</span>
-</span><span id="__span-14-8"><a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a>        <span class="k">text:</span> <span class="s2">&quot;Click Me&quot;</span>
-</span><span id="__span-14-9"><a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a>        <span class="k">onClicked:</span> <span class="p">{</span>
-</span><span id="__span-14-10"><a id="__codelineno-14-10" name="__codelineno-14-10" href="#__codelineno-14-10"></a>            <span class="nx">triggerGuiEvent</span><span class="p">(</span><span class="s2">&quot;skill.foo.event&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;string&quot;</span><span class="o">:</span> <span class="s2">&quot;Lorem ipsum dolor sit amet&quot;</span><span class="p">})</span>
-</span><span id="__span-14-11"><a id="__codelineno-14-11" name="__codelineno-14-11" href="#__codelineno-14-11"></a>        <span class="p">}</span>
-</span><span id="__span-14-12"><a id="__codelineno-14-12" name="__codelineno-14-12" href="#__codelineno-14-12"></a>    <span class="p">}</span>
-</span><span id="__span-14-13"><a id="__codelineno-14-13" name="__codelineno-14-13" href="#__codelineno-14-13"></a><span class="p">}</span>
-</span></code></pre></div>
-<p><strong>Simple Event Trigger Example From Skill To QML Display</strong></p>
-<p><strong>Python Skill Example</strong></p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="o">...</span>
-</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>    <span class="k">def</span> <span class="nf">handle_foo_intent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
-</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">gui</span><span class="p">[</span><span class="s1">&#39;foobar&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">message</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;utterance&quot;</span><span class="p">)</span>
-</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">gui</span><span class="p">[</span><span class="s1">&#39;color&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;blue&quot;</span>
-</span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">gui</span><span class="o">.</span><span class="n">show_page</span><span class="p">(</span><span class="s2">&quot;foo&quot;</span><span class="p">)</span>
-</span><span id="__span-15-6"><a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a><span class="o">...</span>
-</span><span id="__span-15-7"><a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a><span class="o">...</span>
-</span></code></pre></div>
-<p><strong>QML Example</strong></p>
-<div class="language-qml highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="c1">// standard imports (QtQuick, QtQuick.Controls, QtQuick.Layouts, Kirigami, Mycroft — see the imports block above)</span>
-</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>
-</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="nx">Mycroft</span><span class="p">.</span><span class="nx">Delegate</span> <span class="p">{</span>
-</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a>    <span class="kd">id: root</span>
-</span><span id="__span-16-5"><a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>    <span class="nx">property</span> <span class="kd">var</span> <span class="k">fooString:</span> <span class="nx">sessionData</span><span class="p">.</span><span class="nx">foobar</span>
-</span><span id="__span-16-6"><a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a>
-</span><span id="__span-16-7"><a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a>    <span class="k">onFooStringChanged:</span> <span class="p">{</span>
-</span><span id="__span-16-8"><a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a>        <span class="nx">fooRect</span><span class="p">.</span><span class="nx">color</span> <span class="o">=</span> <span class="nx">sessionData</span><span class="p">.</span><span class="nx">color</span> 
-</span><span id="__span-16-9"><a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a>    <span class="p">}</span>
-</span><span id="__span-16-10"><a id="__codelineno-16-10" name="__codelineno-16-10" href="#__codelineno-16-10"></a>
-</span><span id="__span-16-11"><a id="__codelineno-16-11" name="__codelineno-16-11" href="#__codelineno-16-11"></a>    <span class="nx">Rectangle</span> <span class="p">{</span>
-</span><span id="__span-16-12"><a id="__codelineno-16-12" name="__codelineno-16-12" href="#__codelineno-16-12"></a>        <span class="kd">id: fooRect</span>
-</span><span id="__span-16-13"><a id="__codelineno-16-13" name="__codelineno-16-13" href="#__codelineno-16-13"></a>        <span class="k">anchors.fill:</span> <span class="nx">parent</span>
-</span><span id="__span-16-14"><a id="__codelineno-16-14" name="__codelineno-16-14" href="#__codelineno-16-14"></a>        <span class="k">color:</span> <span class="s2">&quot;#fff&quot;</span>
-</span><span id="__span-16-15"><a id="__codelineno-16-15" name="__codelineno-16-15" href="#__codelineno-16-15"></a>    <span class="p">}</span>
-</span><span id="__span-16-16"><a id="__codelineno-16-16" name="__codelineno-16-16" href="#__codelineno-16-16"></a><span class="p">}</span>
-</span></code></pre></div>
-<h4 id="resting-faces">Resting Faces<a class="headerlink" href="#resting-faces" title="Permanent link">&para;</a></h4>
-<p>The resting face API lets skill authors extend their skills to supply their own custom IDLE screens, displayed when there is no activity on the screen.</p>
-<p><strong>Simple Idle Screen Example</strong></p>
-<p><strong>Python Skill Example</strong></p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="kn">from</span> <span class="nn">ovos_workshop.decorators</span> <span class="kn">import</span> <span class="n">resting_screen_handler</span>
-</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="o">...</span>
-</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="nd">@resting_screen_handler</span><span class="p">(</span><span class="s1">&#39;NameOfIdleScreen&#39;</span><span class="p">)</span>
-</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a><span class="k">def</span> <span class="nf">handle_idle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
-</span><span id="__span-17-5"><a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">gui</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
-</span><span id="__span-17-6"><a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Activating foo/bar resting page&#39;</span><span class="p">)</span>
-</span><span id="__span-17-7"><a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">gui</span><span class="p">[</span><span class="s2">&quot;exampleText&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;This Is A Idle Screen&quot;</span>
-</span><span id="__span-17-8"><a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">gui</span><span class="o">.</span><span class="n">show_page</span><span class="p">(</span><span class="s1">&#39;idle.qml&#39;</span><span class="p">)</span>
-</span></code></pre></div>
-<p><strong>QML Example</strong></p>
-<div class="language-qml highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="c1">// standard imports (QtQuick, QtQuick.Controls, QtQuick.Layouts, Kirigami, Mycroft — see the imports block above)</span>
-</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>
-</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="nx">Mycroft</span><span class="p">.</span><span class="nx">Delegate</span> <span class="p">{</span>
-</span><span id="__span-18-4"><a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a>    <span class="kd">id: root</span>
-</span><span id="__span-18-5"><a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a>    <span class="nx">property</span> <span class="kd">var</span> <span class="k">fooString:</span> <span class="nx">sessionData</span><span class="p">.</span><span class="nx">exampleText</span>
-</span><span id="__span-18-6"><a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a>
-</span><span id="__span-18-7"><a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a>    <span class="nx">Kirigami</span><span class="p">.</span><span class="nx">Heading</span> <span class="p">{</span>
-</span><span id="__span-18-8"><a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a>        <span class="kd">id: headerExample</span>
-</span><span id="__span-18-9"><a id="__codelineno-18-9" name="__codelineno-18-9" href="#__codelineno-18-9"></a>        <span class="k">anchors.centerIn:</span> <span class="nx">parent</span>
-</span><span id="__span-18-10"><a id="__codelineno-18-10" name="__codelineno-18-10" href="#__codelineno-18-10"></a>        <span class="k">text:</span> <span class="nx">fooString</span> 
-</span><span id="__span-18-11"><a id="__codelineno-18-11" name="__codelineno-18-11" href="#__codelineno-18-11"></a>    <span class="p">}</span>
-</span><span id="__span-18-12"><a id="__codelineno-18-12" name="__codelineno-18-12" href="#__codelineno-18-12"></a><span class="p">}</span>
-</span></code></pre></div>
+<p>Worked examples of Lottie animations, sliding images, paginated text, card list views,
+proportional/auto-fit layouts, slideshows, event handling, and resting (idle) faces have
+moved to their own page: <strong><a href="../qt5-gui-examples/">QML Worked Examples</a></strong>.</p>
 <hr />
 <p><strong>Read next:</strong> <a href="../homescreen/">Home Screen</a>
-<strong>Related:</strong> <a href="../ovos-shell/">OVOS Shell</a> · <a href="../gui-protocol/">GUI Protocol</a> · <a href="../gui-status/">Screens on OVOS Today</a> · <a href="../gui-service/">GUI Service</a></p>
+<strong>Related:</strong> <a href="../qt5-gui-examples/">QML Worked Examples</a> · <a href="../ovos-shell/">OVOS Shell</a> · <a href="../gui-protocol/">GUI Protocol</a> · <a href="../gui-status/">Screens on OVOS Today</a> · <a href="../gui-service/">GUI Service</a></p>
 
 
 

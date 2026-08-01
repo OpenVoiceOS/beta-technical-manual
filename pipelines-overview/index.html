@@ -14,7 +14,7 @@
         <link rel="prev" href="../phal-authoring/">
       
       
-        <link rel="next" href="../building-your-pipeline/">
+        <link rel="next" href="../pipeline-plugin-authoring/">
       
       
       <link rel="icon" href="https://github.com/OpenVoiceOS/ovos_assets/blob/master/Logo/ovos-logo-512.png?raw=true">
@@ -778,66 +778,6 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Writing a Pipeline Plugin">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#the-confidencematcherpipeline-contract" class="md-nav__link">
-    <span class="md-ellipsis">
-      The ConfidenceMatcherPipeline contract
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#minimal-example" class="md-nav__link">
-    <span class="md-ellipsis">
-      Minimal example
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#packaging" class="md-nav__link">
-    <span class="md-ellipsis">
-      Packaging
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#test-it-without-ovos" class="md-nav__link">
-    <span class="md-ellipsis">
-      Test it without OVOS
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#verify-discovery" class="md-nav__link">
-    <span class="md-ellipsis">
-      Verify discovery
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#related-pages" class="md-nav__link">
-    <span class="md-ellipsis">
-      Related pages
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
         <li class="md-nav__item">
@@ -895,6 +835,27 @@
   
 </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pipeline-plugin-authoring/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Writing a Pipeline Plugin
+  </span>
+  
+
+      </a>
     </li>
   
 
@@ -1551,66 +1512,6 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Writing a Pipeline Plugin">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#the-confidencematcherpipeline-contract" class="md-nav__link">
-    <span class="md-ellipsis">
-      The ConfidenceMatcherPipeline contract
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#minimal-example" class="md-nav__link">
-    <span class="md-ellipsis">
-      Minimal example
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#packaging" class="md-nav__link">
-    <span class="md-ellipsis">
-      Packaging
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#test-it-without-ovos" class="md-nav__link">
-    <span class="md-ellipsis">
-      Test it without OVOS
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#verify-discovery" class="md-nav__link">
-    <span class="md-ellipsis">
-      Verify discovery
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#related-pages" class="md-nav__link">
-    <span class="md-ellipsis">
-      Related pages
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
         <li class="md-nav__item">
@@ -2016,97 +1917,10 @@ pipeline. They expose the same high/medium/low confidence tiers as Adapt/Padatio
 </span></code></pre></div>
 <hr />
 <h2 id="writing-a-pipeline-plugin">Writing a Pipeline Plugin<a class="headerlink" href="#writing-a-pipeline-plugin" title="Permanent link">&para;</a></h2>
-<p>A pipeline plugin implements one <code>match(utterances, lang, message)</code> call. Pick your base class by shape:</p>
-<ul>
-<li><strong><code>PipelinePlugin</code></strong> — a single-tier plugin. It exposes one bare pipeline ID and implements <code>match()</code> directly. Use this for stages like converse or stop-exact.</li>
-<li><strong><code>ConfidenceMatcherPipeline</code></strong> — a <code>PipelinePlugin</code> subclass for plugins with high/medium/low tiers, like Adapt and Padatious. OVOS derives the <code>-high</code>/<code>-medium</code>/<code>-low</code> pipeline IDs from your single registered plugin at runtime (see <a href="#pipeline-ids-vs-plugins">Pipeline IDs vs. plugins</a> above).</li>
-</ul>
-<p>Both classes come from <code>ovos_plugin_manager.templates.pipeline</code>. Register your plugin under the <code>opm.pipeline</code> entry-point group, with an optional matching <code>opm.pipeline.config</code> group for config metadata, the same pattern used by <a href="../building-agent-plugins/">transformer and agent plugins</a>.</p>
-<h3 id="the-confidencematcherpipeline-contract">The <code>ConfidenceMatcherPipeline</code> contract<a class="headerlink" href="#the-confidencematcherpipeline-contract" title="Permanent link">&para;</a></h3>
-<p>Don't override <code>match()</code> on <code>ConfidenceMatcherPipeline</code>. The base class already implements it: it tries <code>match_high</code>, then <code>match_medium</code>, then <code>match_low</code>, and returns the first non-<code>None</code> result. You implement the three tier methods instead. All three, and <code>match()</code> on a plain <code>PipelinePlugin</code>, share one signature:</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">def</span> <span class="nf">match_high</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">utterances</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">lang</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="n">Message</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">IntentHandlerMatch</span><span class="p">]:</span>
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>    <span class="o">...</span>
-</span></code></pre></div>
-<p>Return <code>None</code> when your plugin does not want to claim the utterance. Return an <code>IntentHandlerMatch</code> when it does.</p>
-<p><code>IntentHandlerMatch</code> fields:</p>
-<ul>
-<li><code>match_type</code> — name of the matching service.</li>
-<li><code>match_data</code> — extra data for the intent handler.</li>
-<li><code>skill_id</code> and <code>utterance</code> — route the dispatch to the right skill.</li>
-<li><code>updated_session</code> — lets a plugin mutate session state as part of matching.</li>
-<li><code>suppress_activation</code> — set this for a termination or continuation of an already-active skill, such as stop. It tells the orchestrator to dispatch without sending a fresh <code>{skill_id}.activate</code>.</li>
-</ul>
-<p>The constructor is <code>__init__(self, bus=None, config=None)</code>. This differs from the transformer templates: there is no <code>name</code> or <code>priority</code> argument. <code>self.bus</code> defaults to a <code>FakeBus()</code> when you pass none. A <code>FakeBus</code> needs no running message bus, so you can unit test a plugin standalone.</p>
-<p>Pipeline plugins have no numeric priority field. Their order comes entirely from the deployer's <code>intents.pipeline</code> config list (see <a href="#pipeline-structure">Pipeline Structure</a> above); first match wins.</p>
-<h3 id="minimal-example">Minimal example<a class="headerlink" href="#minimal-example" title="Permanent link">&para;</a></h3>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span>
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="kn">from</span> <span class="nn">ovos_bus_client.message</span> <span class="kn">import</span> <span class="n">Message</span>
-</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="kn">from</span> <span class="nn">ovos_plugin_manager.templates.pipeline</span> <span class="kn">import</span> <span class="n">ConfidenceMatcherPipeline</span><span class="p">,</span> <span class="n">IntentHandlerMatch</span>
-</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>
-</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="c1"># toy heuristic: exact phrase at high confidence, substring at medium, never at low</span>
-</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="n">PHRASES</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;turn off the lights&quot;</span><span class="p">:</span> <span class="s2">&quot;lights.skill&quot;</span><span class="p">}</span>
-</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="n">KEYWORDS</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;lights&quot;</span><span class="p">:</span> <span class="s2">&quot;lights.skill&quot;</span><span class="p">}</span>
-</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>
-</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>
-</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="k">class</span> <span class="nc">DemoPipeline</span><span class="p">(</span><span class="n">ConfidenceMatcherPipeline</span><span class="p">):</span>
-</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>    <span class="k">def</span> <span class="nf">match_high</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">utterances</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">lang</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="n">Message</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">IntentHandlerMatch</span><span class="p">]:</span>
-</span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>        <span class="k">for</span> <span class="n">utt</span> <span class="ow">in</span> <span class="n">utterances</span><span class="p">:</span>
-</span><span id="__span-2-14"><a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>            <span class="n">skill_id</span> <span class="o">=</span> <span class="n">PHRASES</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">utt</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span>
-</span><span id="__span-2-15"><a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a>            <span class="k">if</span> <span class="n">skill_id</span><span class="p">:</span>
-</span><span id="__span-2-16"><a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a>                <span class="k">return</span> <span class="n">IntentHandlerMatch</span><span class="p">(</span><span class="n">match_type</span><span class="o">=</span><span class="s2">&quot;demo:exact&quot;</span><span class="p">,</span> <span class="n">skill_id</span><span class="o">=</span><span class="n">skill_id</span><span class="p">,</span> <span class="n">utterance</span><span class="o">=</span><span class="n">utt</span><span class="p">)</span>
-</span><span id="__span-2-17"><a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a>        <span class="k">return</span> <span class="kc">None</span>
-</span><span id="__span-2-18"><a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a>
-</span><span id="__span-2-19"><a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a>    <span class="k">def</span> <span class="nf">match_medium</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">utterances</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">lang</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="n">Message</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">IntentHandlerMatch</span><span class="p">]:</span>
-</span><span id="__span-2-20"><a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a>        <span class="k">for</span> <span class="n">utt</span> <span class="ow">in</span> <span class="n">utterances</span><span class="p">:</span>
-</span><span id="__span-2-21"><a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a>            <span class="k">for</span> <span class="n">keyword</span><span class="p">,</span> <span class="n">skill_id</span> <span class="ow">in</span> <span class="n">KEYWORDS</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-</span><span id="__span-2-22"><a id="__codelineno-2-22" name="__codelineno-2-22" href="#__codelineno-2-22"></a>                <span class="k">if</span> <span class="n">keyword</span> <span class="ow">in</span> <span class="n">utt</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
-</span><span id="__span-2-23"><a id="__codelineno-2-23" name="__codelineno-2-23" href="#__codelineno-2-23"></a>                    <span class="k">return</span> <span class="n">IntentHandlerMatch</span><span class="p">(</span><span class="n">match_type</span><span class="o">=</span><span class="s2">&quot;demo:keyword&quot;</span><span class="p">,</span> <span class="n">skill_id</span><span class="o">=</span><span class="n">skill_id</span><span class="p">,</span> <span class="n">utterance</span><span class="o">=</span><span class="n">utt</span><span class="p">)</span>
-</span><span id="__span-2-24"><a id="__codelineno-2-24" name="__codelineno-2-24" href="#__codelineno-2-24"></a>        <span class="k">return</span> <span class="kc">None</span>
-</span><span id="__span-2-25"><a id="__codelineno-2-25" name="__codelineno-2-25" href="#__codelineno-2-25"></a>
-</span><span id="__span-2-26"><a id="__codelineno-2-26" name="__codelineno-2-26" href="#__codelineno-2-26"></a>    <span class="k">def</span> <span class="nf">match_low</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">utterances</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">lang</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="n">Message</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">IntentHandlerMatch</span><span class="p">]:</span>
-</span><span id="__span-2-27"><a id="__codelineno-2-27" name="__codelineno-2-27" href="#__codelineno-2-27"></a>        <span class="k">return</span> <span class="kc">None</span>
-</span></code></pre></div>
-<p>A single-tier <code>PipelinePlugin</code> looks the same, minus the three tiers: you implement <code>match()</code> directly instead of <code>match_high</code>/<code>match_medium</code>/<code>match_low</code>.</p>
-<h3 id="packaging">Packaging<a class="headerlink" href="#packaging" title="Permanent link">&para;</a></h3>
-<div class="language-toml highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">[project]</span>
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;ovos-demo-pipeline-plugin&quot;</span>
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="n">version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;0.0.1&quot;</span>
-</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="n">dependencies</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;ovos-plugin-manager&quot;</span><span class="p">]</span><span class="w">  </span><span class="c1"># match your installed ovos-plugin-manager version</span>
-</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>
-</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="k">[project.entry-points.</span><span class="s2">&quot;opm.pipeline&quot;</span><span class="k">]</span>
-</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="n">ovos-demo-pipeline-plugin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;ovos_demo_pipeline_plugin:DemoPipeline&quot;</span>
-</span></code></pre></div>
-<h3 id="test-it-without-ovos">Test it without OVOS<a class="headerlink" href="#test-it-without-ovos" title="Permanent link">&para;</a></h3>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kn">from</span> <span class="nn">ovos_bus_client.message</span> <span class="kn">import</span> <span class="n">Message</span>
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="k">def</span> <span class="nf">test_demo_pipeline_matches_exact_phrase</span><span class="p">():</span>
-</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>    <span class="n">plugin</span> <span class="o">=</span> <span class="n">DemoPipeline</span><span class="p">()</span>  <span class="c1"># no bus argument -&gt; uses a default FakeBus()</span>
-</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>    <span class="n">result</span> <span class="o">=</span> <span class="n">plugin</span><span class="o">.</span><span class="n">match_high</span><span class="p">([</span><span class="s2">&quot;turn off the lights&quot;</span><span class="p">],</span> <span class="s2">&quot;en-us&quot;</span><span class="p">,</span> <span class="n">Message</span><span class="p">(</span><span class="s2">&quot;recognizer_loop:utterance&quot;</span><span class="p">))</span>
-</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>    <span class="k">assert</span> <span class="n">result</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
-</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>    <span class="k">assert</span> <span class="n">result</span><span class="o">.</span><span class="n">skill_id</span> <span class="o">==</span> <span class="s2">&quot;lights.skill&quot;</span>
-</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>
-</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="k">def</span> <span class="nf">test_demo_pipeline_falls_through_to_medium</span><span class="p">():</span>
-</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>    <span class="n">plugin</span> <span class="o">=</span> <span class="n">DemoPipeline</span><span class="p">()</span>
-</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>    <span class="n">msg</span> <span class="o">=</span> <span class="n">Message</span><span class="p">(</span><span class="s2">&quot;recognizer_loop:utterance&quot;</span><span class="p">)</span>
-</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>    <span class="k">assert</span> <span class="n">plugin</span><span class="o">.</span><span class="n">match_high</span><span class="p">([</span><span class="s2">&quot;check the lights&quot;</span><span class="p">],</span> <span class="s2">&quot;en-us&quot;</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span>
-</span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>    <span class="n">result</span> <span class="o">=</span> <span class="n">plugin</span><span class="o">.</span><span class="n">match</span><span class="p">([</span><span class="s2">&quot;check the lights&quot;</span><span class="p">],</span> <span class="s2">&quot;en-us&quot;</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
-</span><span id="__span-4-14"><a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a>    <span class="k">assert</span> <span class="n">result</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
-</span><span id="__span-4-15"><a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a>    <span class="k">assert</span> <span class="n">result</span><span class="o">.</span><span class="n">match_type</span> <span class="o">==</span> <span class="s2">&quot;demo:keyword&quot;</span>
-</span></code></pre></div>
-<p>No running OVOS instance, bus, or skill is needed for either test.</p>
-<h3 id="verify-discovery">Verify discovery<a class="headerlink" href="#verify-discovery" title="Permanent link">&para;</a></h3>
-<p><code>ovos_plugin_manager.pipeline.find_pipeline_plugins()</code> wraps the general <code>find_plugins(PluginTypes.PIPELINE)</code> helper. Confirm your entry point resolves after installing your package:</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kn">from</span> <span class="nn">ovos_plugin_manager.pipeline</span> <span class="kn">import</span> <span class="n">find_pipeline_plugins</span>
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>
-</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="k">assert</span> <span class="s2">&quot;ovos-demo-pipeline-plugin&quot;</span> <span class="ow">in</span> <span class="n">find_pipeline_plugins</span><span class="p">()</span>
-</span></code></pre></div>
-<h3 id="related-pages">Related pages<a class="headerlink" href="#related-pages" title="Permanent link">&para;</a></h3>
-<p>Worked examples already in this manual:</p>
-<ul>
-<li>Tiered <code>ConfidenceMatcherPipeline</code> plugins: <a href="../adapt-pipeline/">Adapt Pipeline</a>, <a href="../padatious-pipeline/">Padatious Pipeline</a></li>
-<li>Single-tier <code>PipelinePlugin</code> plugins: <a href="../converse-pipeline/">Converse Pipeline</a>, <a href="../stop-pipeline/">Stop Pipeline</a></li>
-</ul>
+<p>Want to build your own matcher stage instead of just configuring the bundled
+ones? The full walkthrough — base classes, the <code>ConfidenceMatcherPipeline</code>
+contract, a minimal worked example, packaging, and testing without a running
+OVOS instance — is on <a href="../pipeline-plugin-authoring/">Writing a Pipeline Plugin</a>.</p>
 <hr />
 <h2 id="pipeline-plugins-reference">Pipeline Plugins Reference<a class="headerlink" href="#pipeline-plugins-reference" title="Permanent link">&para;</a></h2>
 <p>Each pipeline plugin has its own manual page with full configuration details, grouped
@@ -2249,8 +2063,8 @@ matching: <a href="../transformer-plugins/">overview</a>, with one page per chai
 <a href="../dialog-transformers/">dialog</a>, <a href="../audio-transformers/">audio</a>, and
 <a href="../tts-transformers/">TTS</a> transformers.</p>
 <hr />
-<p><strong>Read next:</strong> <a href="../building-your-pipeline/">Building Your Pipeline</a>
-<strong>Related:</strong> <a href="../adapt-pipeline/">Adapt Pipeline</a> · <a href="../padatious-pipeline/">Padatious Pipeline</a> · <a href="../transformer-plugins/">Transformers Overview</a> · <a href="../debugging-intent-matching/">Debugging Intent Matching</a></p>
+<p><strong>Read next:</strong> <a href="../pipeline-plugin-authoring/">Writing a Pipeline Plugin</a>
+<strong>Related:</strong> <a href="../building-your-pipeline/">Building Your Pipeline</a> · <a href="../adapt-pipeline/">Adapt Pipeline</a> · <a href="../padatious-pipeline/">Padatious Pipeline</a> · <a href="../transformer-plugins/">Transformers Overview</a> · <a href="../debugging-intent-matching/">Debugging Intent Matching</a></p>
 
 
 

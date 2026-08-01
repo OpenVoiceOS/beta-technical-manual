@@ -11,10 +11,10 @@
         <link rel="canonical" href="https://tigregotico.github.io/ovos-technical-manual/release-channels/">
       
       
-        <link rel="prev" href="../ovos-installer/">
+        <link rel="prev" href="../ovos-installer-scenarios/">
       
       
-        <link rel="next" href="../install-raspovos/">
+        <link rel="next" href="../release-rollback/">
       
       
       <link rel="icon" href="https://github.com/OpenVoiceOS/ovos_assets/blob/master/Logo/ovos-logo-512.png?raw=true">
@@ -579,6 +579,27 @@
                 
   
   
+  
+  
+    <li class="md-nav__item">
+      <a href="../ovos-installer-scenarios/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Installer Wizard Walkthrough
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
     
   
   
@@ -688,9 +709,9 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#pinning-or-rolling-back-a-single-package" class="md-nav__link">
+  <a href="#rolling-back-an-upgrade" class="md-nav__link">
     <span class="md-ellipsis">
-      Pinning or rolling back a single package
+      Rolling back an upgrade
     </span>
   </a>
   
@@ -799,15 +820,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#rolling-back" class="md-nav__link">
-    <span class="md-ellipsis">
-      Rolling Back
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#tips-caveats" class="md-nav__link">
     <span class="md-ellipsis">
       ⚠️ Tips &amp; Caveats
@@ -820,6 +832,27 @@
   
 </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../release-rollback/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Rolling Back an Upgrade
+  </span>
+  
+
+      </a>
     </li>
   
 
@@ -1489,9 +1522,9 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#pinning-or-rolling-back-a-single-package" class="md-nav__link">
+  <a href="#rolling-back-an-upgrade" class="md-nav__link">
     <span class="md-ellipsis">
-      Pinning or rolling back a single package
+      Rolling back an upgrade
     </span>
   </a>
   
@@ -1600,15 +1633,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#rolling-back" class="md-nav__link">
-    <span class="md-ellipsis">
-      Rolling Back
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#tips-caveats" class="md-nav__link">
     <span class="md-ellipsis">
       ⚠️ Tips &amp; Caveats
@@ -1684,34 +1708,10 @@ read this page, any number here would already be stale. Before upgrading, check 
 <li>Its <code>CHANGELOG.md</code>, where the repository keeps one (generated from conventional
   commits — see <a href="https://semver.org/">Semantic Versioning</a>).</li>
 </ul>
-<h2 id="pinning-or-rolling-back-a-single-package">Pinning or rolling back a single package<a class="headerlink" href="#pinning-or-rolling-back-a-single-package" title="Permanent link">&para;</a></h2>
-<p>The <a href="#rolling-back">freeze/force-reinstall pattern</a> below rolls back your <em>entire</em>
-environment. If only one package regressed, you don't need the sledgehammer. Pin
-just that package instead:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>pip<span class="w"> </span>install<span class="w"> </span><span class="s2">&quot;ovos-stt-plugin-whisper==&lt;old-version&gt;&quot;</span>
-</span></code></pre></div>
-<p>Or, if you're using a local constraints file (see
-<a href="#offline-and-mirrored-installs">Offline and mirrored installs</a>), append an exact pin
-for that one package to it:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>ovos-stt-plugin-whisper==&lt;old-version&gt;
-</span></code></pre></div>
-<p>so the pin survives the next time you reinstall from that constraints file, instead of
-being silently overwritten by the channel's range.</p>
-<p>Either way, you need to know what the old, working version was. Get it from your frozen
-snapshot with <code>grep ovos-stt-plugin-whisper known-good.txt</code> (see <a href="#rolling-back">Rolling Back</a>
-below), or, if you didn't freeze one, from <code>pip show ovos-stt-plugin-whisper</code> run <em>before</em>
-you upgraded.</p>
-<p>Pinning the package alone isn't enough. The process that already loaded the old, broken
-version keeps running it in memory until it restarts. Restart whichever service loads that
-package (e.g. <code>systemctl --user restart ovos-dinkum-listener.service</code> for an STT plugin)
-before you consider the rollback complete.</p>
-<div class="admonition note">
-<p class="admonition-title">A release channel isn't a maturity guarantee</p>
-<p>Picking the <code>stable</code> channel bounds <em>versions</em>, not the maturity of every plugin that
-channel resolves. See <a href="../maturity/">Maturity Scale: a release channel is not a maturity
-guarantee</a> for what "stable
-channel" does and doesn't promise.</p>
-</div>
+<h2 id="rolling-back-an-upgrade">Rolling back an upgrade<a class="headerlink" href="#rolling-back-an-upgrade" title="Permanent link">&para;</a></h2>
+<p>Freezing a known-good package set before an upgrade, rolling the whole stack back if it
+misbehaves, and pinning or rolling back just one regressed package instead of the whole
+environment: see <a href="../release-rollback/">Rolling Back an OVOS Upgrade</a>.</p>
 <hr />
 <h2 id="choosing-a-release-channel">Choosing a Release Channel<a class="headerlink" href="#choosing-a-release-channel" title="Permanent link">&para;</a></h2>
 <p>OVOS follows <a href="https://semver.org/"><strong>semantic versioning</strong></a> (SemVer) with a <strong>rolling release model</strong>. It supports three release channels: <strong>stable</strong>, <strong>testing</strong>, and <strong>alpha</strong>. Pick the right balance between newer features and system reliability.</p>
@@ -1740,7 +1740,7 @@ exact pins. Until the next codename release ships, use <strong>Testing</strong> 
 channel for most distros and users. This matches upstream guidance in
 <a href="https://github.com/OpenVoiceOS/ovos-releases">ovos-releases</a>.</p>
 </div>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>ovos-core<span class="o">[</span>mycroft<span class="o">]</span><span class="w"> </span>-c<span class="w"> </span>https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-stable.txt
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>ovos-core<span class="o">[</span>mycroft<span class="o">]</span><span class="w"> </span>-c<span class="w"> </span>https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-stable.txt
 </span></code></pre></div>
 <h3 id="2-testing-channel-feature-updates">2. Testing Channel (Feature Updates)<a class="headerlink" href="#2-testing-channel-feature-updates" title="Permanent link">&para;</a></h3>
 <ul>
@@ -1748,7 +1748,7 @@ channel for most distros and users. This matches upstream guidance in
 <li>⚠️ Not as thoroughly tested as stable</li>
 <li>🧪 Best for early adopters or development environments</li>
 </ul>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>ovos-core<span class="o">[</span>mycroft<span class="o">]</span><span class="w"> </span>-c<span class="w"> </span>https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-testing.txt
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>ovos-core<span class="o">[</span>mycroft<span class="o">]</span><span class="w"> </span>-c<span class="w"> </span>https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-testing.txt
 </span></code></pre></div>
 <h3 id="3-alpha-channel-bleeding-edge">3. Alpha Channel (Bleeding Edge)<a class="headerlink" href="#3-alpha-channel-bleeding-edge" title="Permanent link">&para;</a></h3>
 <ul>
@@ -1762,27 +1762,27 @@ channel for most distros and users. This matches upstream guidance in
 resolves, not just the <code>ovos-*</code> packages. A transitive dependency you didn't expect
 can also jump to a pre-release. Use a dedicated virtual environment for alpha testing.</p>
 </div>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>ovos-core<span class="o">[</span>mycroft<span class="o">]</span><span class="w"> </span>--pre<span class="w"> </span>-c<span class="w"> </span>https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-alpha.txt
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>ovos-core<span class="o">[</span>mycroft<span class="o">]</span><span class="w"> </span>--pre<span class="w"> </span>-c<span class="w"> </span>https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-alpha.txt
 </span></code></pre></div>
 <hr />
 <div class="admonition example">
 <p class="admonition-title">A minimal lab-ready manual install, start to finish</p>
 <p>Everything below assumes a Python virtual environment is already active and gets you from
 nothing to a talking assistant on one machine, no installer wizard involved:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1"># 1. Install the core services on the stable channel</span>
-</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span><span class="s2">&quot;ovos-core[mycroft]&quot;</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">    </span>-c<span class="w"> </span>https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-stable.txt
-</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>
-</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="c1"># 2. Launch each service (one terminal/tmux pane each, or use the systemd units</span>
-</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="c1">#    in Production Operations for anything long-lived)</span>
-</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>ovos-messagebus<span class="w"> </span><span class="p">&amp;</span>
-</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>ovos_PHAL<span class="w"> </span><span class="p">&amp;</span>
-</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>ovos-dinkum-listener<span class="w"> </span><span class="p">&amp;</span>
-</span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a>ovos-audio<span class="w"> </span><span class="p">&amp;</span>
-</span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a>ovos-core<span class="w"> </span><span class="p">&amp;</span>
-</span><span id="__span-6-12"><a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a>
-</span><span id="__span-6-13"><a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a><span class="c1"># 3. Confirm the bus is up and services are talking to each other</span>
-</span><span id="__span-6-14"><a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a>ovos-busmon
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1"># 1. Install the core services on the stable channel</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span><span class="s2">&quot;ovos-core[mycroft]&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">    </span>-c<span class="w"> </span>https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-stable.txt
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="c1"># 2. Launch each service (one terminal/tmux pane each, or use the systemd units</span>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="c1">#    in Production Operations for anything long-lived)</span>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>ovos-messagebus<span class="w"> </span><span class="p">&amp;</span>
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>ovos_PHAL<span class="w"> </span><span class="p">&amp;</span>
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>ovos-dinkum-listener<span class="w"> </span><span class="p">&amp;</span>
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>ovos-audio<span class="w"> </span><span class="p">&amp;</span>
+</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>ovos-core<span class="w"> </span><span class="p">&amp;</span>
+</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>
+</span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="c1"># 3. Confirm the bus is up and services are talking to each other</span>
+</span><span id="__span-4-14"><a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a>ovos-busmon
 </span></code></pre></div>
 <p>Say "Hey Mycroft, what time is it" once everything above has settled. If you get a spoken
 answer, the install is working end to end. See
@@ -1860,16 +1860,16 @@ adding both the bracketed extras and a <code>-c</code> constraints file:</p>
 <p>The <code>lgpl</code> extra pulls in <code>fann2</code>, which is published as a source distribution only. There are
 no wheels, so pip/uv compiles it during install. On Debian/Ubuntu, install its build
 prerequisites first:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>swig<span class="w"> </span>libfann-dev
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>swig<span class="w"> </span>libfann-dev
 </span></code></pre></div>
 <p>Without them the install below fails while building <code>fann2</code>. Omit the <code>lgpl</code> extra if you do not
 need the Padatious pipeline. <a href="../padatious-pipeline/">padacioso</a> is the pure-Python alternative.</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span><span class="s2">&quot;ovos-core[mycroft,lgpl,plugins,skills-essential,skills-audio,skills-gui,skills-internet,skills-media,skills-desktop]&quot;</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">    </span>-c<span class="w"> </span>https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-stable.txt
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span><span class="s2">&quot;ovos-core[mycroft,lgpl,plugins,skills-essential,skills-audio,skills-gui,skills-internet,skills-media,skills-desktop]&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">    </span>-c<span class="w"> </span>https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-stable.txt
 </span></code></pre></div>
 <h3 id="minimal-installation-example">Minimal Installation Example<a class="headerlink" href="#minimal-installation-example" title="Permanent link">&para;</a></h3>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span><span class="s2">&quot;ovos-core[mycroft,plugins,skills-essential]&quot;</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="w">    </span>-c<span class="w"> </span>https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-stable.txt
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span><span class="s2">&quot;ovos-core[mycroft,plugins,skills-essential]&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">    </span>-c<span class="w"> </span>https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-stable.txt
 </span></code></pre></div>
 <hr />
 <h2 id="offline-and-mirrored-installs">Offline and mirrored installs<a class="headerlink" href="#offline-and-mirrored-installs" title="Permanent link">&para;</a></h2>
@@ -1877,25 +1877,25 @@ need the Padatious pipeline. <a href="../padatious-pipeline/">padacioso</a> is t
 time. On an isolated or bandwidth-constrained network, keep local copies instead.</p>
 <p><strong>1. Use a local constraints file.</strong> Download the channel file once on a connected machine, copy
 it across, and point <code>-c</code> at the path:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span><span class="s2">&quot;ovos-core[mycroft]&quot;</span><span class="w"> </span>-c<span class="w"> </span>/srv/ovos/constraints-stable.txt
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span><span class="s2">&quot;ovos-core[mycroft]&quot;</span><span class="w"> </span>-c<span class="w"> </span>/srv/ovos/constraints-stable.txt
 </span></code></pre></div>
 <p><strong>2. Install from a local wheelhouse.</strong> Populate a directory of wheels on a connected machine,
 then install with the index disabled:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="c1"># connected machine (uv has no download subcommand, use pip here)</span>
-</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>pip<span class="w"> </span>download<span class="w"> </span><span class="s2">&quot;ovos-core[mycroft]&quot;</span><span class="w"> </span>-c<span class="w"> </span>constraints-stable.txt<span class="w"> </span>-d<span class="w"> </span>./wheels
-</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="c1"># isolated machine</span>
-</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>--no-index<span class="w"> </span>--find-links<span class="w"> </span>./wheels<span class="w"> </span><span class="s2">&quot;ovos-core[mycroft]&quot;</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="c1"># connected machine (uv has no download subcommand, use pip here)</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>pip<span class="w"> </span>download<span class="w"> </span><span class="s2">&quot;ovos-core[mycroft]&quot;</span><span class="w"> </span>-c<span class="w"> </span>constraints-stable.txt<span class="w"> </span>-d<span class="w"> </span>./wheels
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="c1"># isolated machine</span>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>--no-index<span class="w"> </span>--find-links<span class="w"> </span>./wheels<span class="w"> </span><span class="s2">&quot;ovos-core[mycroft]&quot;</span>
 </span></code></pre></div>
 <p><strong>3. Point the runtime skill installer at a local constraints file.</strong> Set
 <code>skills.installer.constraints</code> in <code>mycroft.conf</code> to a filesystem path so it does not try to
 fetch the channel file on every operation:</p>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="p">{</span>
-</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w">  </span><span class="nt">&quot;skills&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="w">    </span><span class="nt">&quot;installer&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="w">      </span><span class="nt">&quot;constraints&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/srv/ovos/constraints-stable.txt&quot;</span>
-</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="w">    </span><span class="p">}</span>
-</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="w">  </span><span class="p">}</span>
-</span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="p">}</span>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="p">{</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">  </span><span class="nt">&quot;skills&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="w">    </span><span class="nt">&quot;installer&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="w">      </span><span class="nt">&quot;constraints&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/srv/ovos/constraints-stable.txt&quot;</span>
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="w">  </span><span class="p">}</span>
+</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="p">}</span>
 </span></code></pre></div>
 <div class="admonition note">
 <p class="admonition-title">The runtime skill installer still needs GitHub</p>
@@ -1920,40 +1920,12 @@ instead. See <a href="../skill-installer/">Skill Installer</a>.</p>
 versions, not identical ones: installing the same channel on two machines, or on the same
 machine a month apart, can resolve to different versions.</p>
 <p>For a genuinely reproducible build, resolve once and install from your own frozen output:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span><span class="s2">&quot;ovos-core[mycroft]&quot;</span><span class="w"> </span>-c<span class="w"> </span>https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-stable.txt
-</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>uv<span class="w"> </span>pip<span class="w"> </span>freeze<span class="w"> </span>&gt;<span class="w"> </span>my-constraints.txt
-</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="c1"># every later install, on every machine:</span>
-</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span><span class="s2">&quot;ovos-core[mycroft]&quot;</span><span class="w"> </span>-c<span class="w"> </span>my-constraints.txt
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span><span class="s2">&quot;ovos-core[mycroft]&quot;</span><span class="w"> </span>-c<span class="w"> </span>https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-stable.txt
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>uv<span class="w"> </span>pip<span class="w"> </span>freeze<span class="w"> </span>&gt;<span class="w"> </span>my-constraints.txt
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="c1"># every later install, on every machine:</span>
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span><span class="s2">&quot;ovos-core[mycroft]&quot;</span><span class="w"> </span>-c<span class="w"> </span>my-constraints.txt
 </span></code></pre></div>
 </div>
-<hr />
-<h2 id="rolling-back">Rolling Back<a class="headerlink" href="#rolling-back" title="Permanent link">&para;</a></h2>
-<p>Constraints files bound a channel's versions, but they don't record what <em>you</em> actually had
-installed before an upgrade. Before upgrading anything you care about, freeze what's currently working:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>uv<span class="w"> </span>pip<span class="w"> </span>freeze<span class="w"> </span>&gt;<span class="w"> </span>known-good.txt
-</span></code></pre></div>
-<p>This plain <code>known-good.txt</code> in the current directory is the single-machine form of the same
-convention <a href="../production-operations/#staged-upgrades-and-rollback">Production Operations</a> uses
-for a fleet: a dated, absolute path like <code>/etc/ovos/known-good-2026-07-01.txt</code>. Same pattern,
-just scaled from one machine to many.</p>
-<p>If an upgrade misbehaves, <code>pip</code>/<code>uv</code> won't downgrade a package on their own just because a
-newer constraints file changed. An ordinary <code>install</code> call treats an already-satisfied
-requirement as nothing to do. Force the reinstall of the exact frozen versions instead:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>--force-reinstall<span class="w"> </span>-r<span class="w"> </span>known-good.txt
-</span></code></pre></div>
-<p>See <a href="../production-operations/#staged-upgrades-and-rollback">Production Operations: staged upgrades and rollback</a>
-for the same pattern applied across a fleet of devices rather than one machine. If the
-rollback needs more than package versions, for example your device's <code>mycroft.conf</code> or a
-skill's <code>settings.json</code> was also damaged, see the <a href="../production-operations/#backup-recipe">backup and restore
-recipe</a> instead.</p>
-<div class="admonition tip">
-<p class="admonition-title">Moving to a newer OS image</p>
-<p>Flashing a fresh OS image (a new raspOVOS release, a new Raspberry Pi OS build) wipes
-the disk. Back up <code>mycroft.conf</code> and each skill's <code>settings.json</code> first, following the
-<a href="../production-operations/#backup-recipe">backup and restore recipe</a>, then restore them
-onto the new image the same way.</p>
-</div>
-<hr />
 <h2 id="tips-caveats">⚠️ Tips &amp; Caveats<a class="headerlink" href="#tips-caveats" title="Permanent link">&para;</a></h2>
 <ul>
 <li>Using <code>--pre</code> installs pre-releases across all dependencies, not just OVOS-specific ones. Use it with caution.</li>
@@ -1962,9 +1934,8 @@ onto the new image the same way.</p>
 <li>After installing you need to launch the individual ovos services, either manually or by creating a systemd service</li>
 </ul>
 <hr />
-<hr />
 <p><strong>Read next:</strong> <a href="../personalize/">Make it yours</a>
-<strong>Related:</strong> <a href="https://github.com/OpenVoiceOS/ovos-releases">OVOS Releases repo</a> · <a href="https://pip.pypa.io/en/stable/user_guide/#constraints-files">Constraints files explanation (pip docs)</a> · <a href="https://semver.org/">Semantic Versioning</a> · <a href="../ovos-installer/">ovos-installer</a></p>
+<strong>Related:</strong> <a href="../release-rollback/">Rolling Back an OVOS Upgrade</a> · <a href="https://github.com/OpenVoiceOS/ovos-releases">OVOS Releases repo</a> · <a href="https://pip.pypa.io/en/stable/user_guide/#constraints-files">Constraints files explanation (pip docs)</a> · <a href="https://semver.org/">Semantic Versioning</a> · <a href="../ovos-installer/">ovos-installer</a></p>
 
 
 

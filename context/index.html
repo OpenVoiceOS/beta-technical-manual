@@ -1820,14 +1820,9 @@ gates.</p>
 </span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">milk</span> <span class="o">=</span> <span class="kc">False</span>
 </span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">speak</span><span class="p">(</span><span class="s1">&#39;Of course, would you like Milk with that?&#39;</span><span class="p">,</span>
 </span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a>                   <span class="n">expect_response</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a>
-</span><span id="__span-6-12"><a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a>    <span class="nd">@intent_handler</span><span class="p">(</span><span class="n">IntentBuilder</span><span class="p">(</span><span class="s1">&#39;NoMilkIntent&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">require</span><span class="p">(</span><span class="s2">&quot;NoKeyword&quot;</span><span class="p">)</span><span class="o">.</span>
-</span><span id="__span-6-13"><a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a>                                  <span class="n">require</span><span class="p">(</span><span class="s1">&#39;MilkContext&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">build</span><span class="p">())</span>
-</span><span id="__span-6-14"><a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a>    <span class="nd">@removes_context</span><span class="p">(</span><span class="s1">&#39;MilkContext&#39;</span><span class="p">)</span>
-</span><span id="__span-6-15"><a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a>    <span class="nd">@adds_context</span><span class="p">(</span><span class="s1">&#39;HoneyContext&#39;</span><span class="p">)</span>
-</span><span id="__span-6-16"><a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a>    <span class="k">def</span> <span class="nf">handle_no_milk_intent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
-</span><span id="__span-6-17"><a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">speak</span><span class="p">(</span><span class="s1">&#39;all right, any Honey?&#39;</span><span class="p">,</span> <span class="n">expect_response</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </span></code></pre></div>
+<p>The full, worked-through version of this <code>TeaSkill</code>, with every handler, is in
+<a href="#using-context-to-enable-intents">Using context to enable Intents</a> below.</p>
 <blockquote>
 <p><strong>NOTE</strong>: cross skill context is not yet exposed via decorators</p>
 </blockquote>

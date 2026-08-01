@@ -14,7 +14,7 @@
         <link rel="prev" href="../tts-transformers/">
       
       
-        <link rel="next" href="../lang-selection/">
+        <link rel="next" href="../lang-support-tables/">
       
       
       <link rel="icon" href="https://github.com/OpenVoiceOS/ovos_assets/blob/master/Logo/ovos-logo-512.png?raw=true">
@@ -832,15 +832,6 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#per-language-status-matrix" class="md-nav__link">
-    <span class="md-ellipsis">
-      Per-language status matrix
-    </span>
-  </a>
-  
-</li>
-        
       </ul>
     </nav>
   
@@ -910,6 +901,27 @@
   
 </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lang-support-tables/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Language Support Tables
+  </span>
+  
+
+      </a>
     </li>
   
 
@@ -1384,15 +1396,6 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#per-language-status-matrix" class="md-nav__link">
-    <span class="md-ellipsis">
-      Per-language status matrix
-    </span>
-  </a>
-  
-</li>
-        
       </ul>
     </nav>
   
@@ -1738,283 +1741,19 @@ lighter Conformer). <code>--gpu</code> needs a CUDA-capable GPU and implies <cod
   combined with <code>--online</code> or <code>--hybrid</code>, and it is rejected on the Raspberry Pi platforms.</li>
 </ul>
 <h3 id="supported-languages">Supported Languages<a class="headerlink" href="#supported-languages" title="Permanent link">&para;</a></h3>
-<blockquote>
-<p>The table below is a snapshot of the bundled recommendations. The authoritative list is whatever <code>recommends/offline_stt/*.conf</code>, <code>recommends/offline_female/*.conf</code>, and <code>recommends/offline_male/*.conf</code> files ship in your installed <code>ovos-config</code>. It grows as new models are added to the OVOS Hugging Face collections.</p>
-</blockquote>
-<p>Offline STT is <a href="../stt-plugins-reference/#ovos-stt-plugin-onnx-asr"><code>ovos-stt-plugin-onnx-asr</code></a> everywhere
-it's listed. Where the table shows an offline TTS entry, it is always
-<a href="../tts-plugins/#ovos-tts-plugin-phoonnx"><code>ovos-tts-plugin-phoonnx</code></a>, pinned to a specific male
-and/or female voice. <code>int8</code> next to a model means a quantized CPU build is available and used
-by default.</p>
-<p><code>--gpu</code> switches to the full-precision model with <code>use_cuda: true</code>. For the most
-widely-spoken languages (English, French, German, Italian, Dutch) it swaps in a larger model
-entirely (<code>nemo-canary-1b-v2</code>) instead of just requantizing.</p>
-<div class="admonition note">
-<p class="admonition-title">A TTS recommend needs a voice with a known gender</p>
-<p>A bundled offline TTS recommendation pins one male voice and one female voice per
-language, wherever one is known. A single-speaker Facebook MMS voice counts as male.
-<code>autoconfigure</code> adds a language only once a phoonnx voice of known gender exists for it.
-A language without one is STT-only until such a voice appears; you can still point
-<code>ovos-tts-plugin-phoonnx</code> at any voice ID yourself, but it won't be auto-selected.</p>
-</div>
-<p>Several regional variants still have gaps. <strong>EN-GB</strong>, <strong>PT-BR</strong>, <strong>AR-SA</strong>, and the four
-Catalan variants (<strong>CA-BA</strong>, <strong>CA-NW</strong>, <strong>CA-VA</strong>, plus the already-covered <strong>CA-ES</strong>) ship a
-TTS voice but no bundled offline STT recommendation. Configure an online STT plugin, or a
-multilingual offline model (Whisper, MMS) by hand, until a dedicated recommendation lands for
-these.</p>
-<table>
-<thead>
-<tr>
-<th>Language</th>
-<th>Offline STT model</th>
-<th style="text-align: center;">Offline TTS</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>AR-SA</strong></td>
-<td>—</td>
-<td style="text-align: center;">yes</td>
-</tr>
-<tr>
-<td><strong>CA-BA</strong></td>
-<td>—</td>
-<td style="text-align: center;">yes</td>
-</tr>
-<tr>
-<td><strong>CA-ES</strong></td>
-<td><code>OpenVoiceOS/stt-ca-es-conformer-transducer-large-onnx</code></td>
-<td style="text-align: center;">yes</td>
-</tr>
-<tr>
-<td><strong>CA-NW</strong></td>
-<td>—</td>
-<td style="text-align: center;">yes</td>
-</tr>
-<tr>
-<td><strong>CA-VA</strong></td>
-<td>—</td>
-<td style="text-align: center;">yes</td>
-</tr>
-<tr>
-<td><strong>DA-DK</strong></td>
-<td><code>nemo-parakeet-tdt-0.6b-v3</code> (int8)</td>
-<td style="text-align: center;">yes (male only)</td>
-</tr>
-<tr>
-<td><strong>DE-DE</strong></td>
-<td><code>nemo-parakeet-tdt-0.6b-v3</code> (int8)</td>
-<td style="text-align: center;">yes</td>
-</tr>
-<tr>
-<td><strong>EN-GB</strong></td>
-<td>—</td>
-<td style="text-align: center;">yes</td>
-</tr>
-<tr>
-<td><strong>EN-US</strong></td>
-<td><code>nemo-parakeet-tdt-0.6b-v3</code> (int8)</td>
-<td style="text-align: center;">yes</td>
-</tr>
-<tr>
-<td><strong>ES-ES</strong></td>
-<td><code>OpenVoiceOS/parakeet-rnnt-1.1b-cv17-es-ep18-1270h-onnx</code></td>
-<td style="text-align: center;">yes</td>
-</tr>
-<tr>
-<td><strong>EU-ES</strong></td>
-<td><code>OpenVoiceOS/stt-eu-conformer-transducer-large-onnx</code></td>
-<td style="text-align: center;">yes</td>
-</tr>
-<tr>
-<td><strong>FR-FR</strong></td>
-<td><code>nemo-parakeet-tdt-0.6b-v3</code> (int8)</td>
-<td style="text-align: center;">yes</td>
-</tr>
-<tr>
-<td><strong>GL-ES</strong></td>
-<td><code>onnx-community/whisper-large-v3-turbo</code> (int8)</td>
-<td style="text-align: center;">yes</td>
-</tr>
-<tr>
-<td><strong>IT-IT</strong></td>
-<td><code>nemo-parakeet-tdt-0.6b-v3</code> (int8)</td>
-<td style="text-align: center;">yes</td>
-</tr>
-<tr>
-<td><strong>NL-NL</strong></td>
-<td><code>nemo-parakeet-tdt-0.6b-v3</code> (int8)</td>
-<td style="text-align: center;">yes</td>
-</tr>
-<tr>
-<td><strong>PT-BR</strong></td>
-<td>—</td>
-<td style="text-align: center;">yes</td>
-</tr>
-<tr>
-<td><strong>PT-PT</strong></td>
-<td><code>OpenVoiceOS/whisper-medium-pt-onnx</code></td>
-<td style="text-align: center;">yes</td>
-</tr>
-</tbody>
-</table>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Where the STT column shows "—", the bundled recommendations don't cover offline speech
-recognition for that language yet. <code>autoconfigure</code> will skip that part of the
-configuration and tell you so. Use an online STT plugin instead. Every other language has
-no bundled offline STT or TTS recommendation at all yet: check the <code>recommends/</code> directories
-in your installed <code>ovos-config</code> for the current list before relying on <code>autoconfigure</code>.</p>
-</div>
-<div class="admonition note">
-<p class="admonition-title">Some TTS recommends cover only one gender</p>
-<p><strong>DA-DK</strong> ships only a male voice; the female slot falls back to no TTS configuration
-until a voice with that gender is confirmed. Pass the matching <code>--male</code>/<code>--female</code> flag
-per language; every other language listed here has both genders bundled.</p>
-</div>
-<p>A language that does not appear in this table has no bundled STT/TTS recommendation yet,
-not a deliberate exclusion; it just means nobody has added a <code>recommends/*.conf</code> file for it
-so far. Japanese is a widely requested example: <code>ovos-config</code> ships no <code>ja-jp</code> (or any other
-<code>ja-*</code>) recommends file as of this writing, so <code>autoconfigure -l ja-jp</code> has nothing to select
-and Japanese support must be configured by hand until a recommendation is contributed.</p>
-<h3 id="per-language-status-matrix">Per-language status matrix<a class="headerlink" href="#per-language-status-matrix" title="Permanent link">&para;</a></h3>
-<p>STT/TTS columns summarize the auto-configuration table above (yes = a bundled offline
-recommendation exists for at least one voice/gender, partial = only online/partial, no = no bundled
-offline recommendation).</p>
-<p>Number and date parsing come from the language modules actually
-shipped in the installed <code>ovos-number-parser</code> / <code>ovos-date-parser</code>. A yes here means a
-dedicated language module exists (<code>numbers_&lt;code&gt;.py</code> / <code>dates_&lt;code&gt;.py</code>), not that every
-phrasing is covered.</p>
-<p>This matrix tracks the original, longest-supported languages. See the
-<a href="#supported-languages">Supported Languages</a> table above for the full, larger set of
-languages with a bundled offline STT and/or TTS recommendation.</p>
-<table>
-<thead>
-<tr>
-<th>Language</th>
-<th style="text-align: center;">Offline STT</th>
-<th style="text-align: center;">Offline TTS</th>
-<th style="text-align: center;">Number parser</th>
-<th style="text-align: center;">Date parser</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>en-US</td>
-<td style="text-align: center;">yes</td>
-<td style="text-align: center;">yes</td>
-<td style="text-align: center;">yes</td>
-<td style="text-align: center;">yes</td>
-</tr>
-<tr>
-<td>en-GB</td>
-<td style="text-align: center;">no</td>
-<td style="text-align: center;">yes</td>
-<td style="text-align: center;">yes</td>
-<td style="text-align: center;">yes</td>
-</tr>
-<tr>
-<td>en-AU</td>
-<td style="text-align: center;">no</td>
-<td style="text-align: center;">no</td>
-<td style="text-align: center;">yes</td>
-<td style="text-align: center;">yes</td>
-</tr>
-<tr>
-<td>de-DE</td>
-<td style="text-align: center;">yes</td>
-<td style="text-align: center;">yes</td>
-<td style="text-align: center;">yes</td>
-<td style="text-align: center;">yes</td>
-</tr>
-<tr>
-<td>fr-FR</td>
-<td style="text-align: center;">yes</td>
-<td style="text-align: center;">yes</td>
-<td style="text-align: center;">yes</td>
-<td style="text-align: center;">yes</td>
-</tr>
-<tr>
-<td>es-ES</td>
-<td style="text-align: center;">yes</td>
-<td style="text-align: center;">yes</td>
-<td style="text-align: center;">yes</td>
-<td style="text-align: center;">yes</td>
-</tr>
-<tr>
-<td>it-IT</td>
-<td style="text-align: center;">yes</td>
-<td style="text-align: center;">yes</td>
-<td style="text-align: center;">yes</td>
-<td style="text-align: center;">yes</td>
-</tr>
-<tr>
-<td>nl-NL</td>
-<td style="text-align: center;">yes</td>
-<td style="text-align: center;">yes</td>
-<td style="text-align: center;">yes</td>
-<td style="text-align: center;">yes</td>
-</tr>
-<tr>
-<td>pt-PT</td>
-<td style="text-align: center;">yes</td>
-<td style="text-align: center;">yes</td>
-<td style="text-align: center;">yes</td>
-<td style="text-align: center;">yes</td>
-</tr>
-<tr>
-<td>pt-BR</td>
-<td style="text-align: center;">no</td>
-<td style="text-align: center;">yes</td>
-<td style="text-align: center;">yes</td>
-<td style="text-align: center;">yes</td>
-</tr>
-<tr>
-<td>ca-ES</td>
-<td style="text-align: center;">yes</td>
-<td style="text-align: center;">yes</td>
-<td style="text-align: center;">yes</td>
-<td style="text-align: center;">yes</td>
-</tr>
-<tr>
-<td>gl-ES</td>
-<td style="text-align: center;">yes</td>
-<td style="text-align: center;">yes</td>
-<td style="text-align: center;">yes</td>
-<td style="text-align: center;">yes</td>
-</tr>
-<tr>
-<td>eu-ES</td>
-<td style="text-align: center;">yes</td>
-<td style="text-align: center;">yes</td>
-<td style="text-align: center;">yes</td>
-<td style="text-align: center;">yes</td>
-</tr>
-<tr>
-<td>da-DK</td>
-<td style="text-align: center;">yes</td>
-<td style="text-align: center;">partial (male only)</td>
-<td style="text-align: center;">yes</td>
-<td style="text-align: center;">yes</td>
-</tr>
-</tbody>
-</table>
-<p>Both the number and date parsers already cover far more languages than this original matrix,
-including several with no offline STT/TTS recommendation at all (e.g. Arabic, Hebrew, Turkish,
-Ukrainian, and more). Adding a language module for parsing text is much cheaper than shipping
-a full speech model, so this column tends to run ahead of STT/TTS.</p>
-<div class="admonition warning">
-<p class="admonition-title">pt-BR has no bundled offline STT</p>
-<p>Brazilian Portuguese is a widely-spoken variant with <strong>no bundled offline speech-to-text
-recommendation</strong> at all. <code>ovos-config autoconfigure -l pt-br --offline</code> will skip STT
-entirely. Use an online STT plugin, or configure a multilingual offline model (such as
-Whisper) by hand until a dedicated recommendation is added.</p>
-</div>
-<p>A language absent from this matrix, like both tables above, has no bundled recommendation or
-verified STT/TTS/parser coverage yet. Japanese is again a case in point: it has neither a
-<code>recommends/</code> entry in <code>ovos-config</code> nor a <code>numbers_ja.py</code>/<code>dates_ja.py</code> module in
-<code>ovos-number-parser</code>/<code>ovos-date-parser</code> today. That is an honest gap to fill, not a sign
-Japanese was overlooked or excluded on purpose.</p>
+<p><strong>The full per-language STT/TTS/parser coverage tables live on their own page: see
+<a href="../lang-support-tables/">Language Support Tables</a>.</strong> It has the bundled-recommendation
+table (which offline STT model and TTS voice each language code gets from
+<code>autoconfigure</code>) and the per-language status matrix (STT, TTS, number parser, date
+parser, side by side for the original, longest-supported languages).</p>
+<p>Briefly: offline STT comes from <a href="../stt-plugins-reference/#ovos-stt-plugin-onnx-asr"><code>ovos-stt-plugin-onnx-asr</code></a>
+and offline TTS from <a href="../tts-plugins/#ovos-tts-plugin-phoonnx"><code>ovos-tts-plugin-phoonnx</code></a>
+wherever a recommendation is bundled. Several regional variants, including <strong>EN-GB</strong>,
+<strong>PT-BR</strong>, <strong>AR-SA</strong>, and three of the four Catalan variants, ship a TTS voice but no
+bundled offline STT recommendation yet. A language absent from both tables, such as
+Japanese, has no bundled recommendation at all: that is an honest gap to fill, not a
+deliberate exclusion. See <a href="../lang-support-tables/">Language Support Tables</a> for the
+exact per-language breakdown.</p>
 <hr />
 <h2 id="how-to-improve-language-support">How to Improve Language Support<a class="headerlink" href="#how-to-improve-language-support" title="Permanent link">&para;</a></h2>
 <h3 id="1-contribute-translations">1. <strong>Contribute Translations</strong><a class="headerlink" href="#1-contribute-translations" title="Permanent link">&para;</a></h3>
@@ -2092,7 +1831,7 @@ Japanese was overlooked or excluded on purpose.</p>
 <li><a href="https://blog.openvoiceos.org/posts/2025-12-14-barranquenho">Introducing the First Phonemizer for Barranquenho</a>: OVOS blog</li>
 </ul>
 <hr />
-<p><strong>Read next:</strong> <a href="../lang-selection/">Language Selection (internals)</a>
+<p><strong>Read next:</strong> <a href="../lang-support-tables/">Language Support Tables</a> · <a href="../lang-selection/">Language Selection (internals)</a>
 <strong>Related:</strong> <a href="../lang-customization/">Customizing Language Resources</a> · <a href="../translation-plugins/">Translation Plugins</a> · <a href="../ovos-localize-tutorial/">Contributing Translations</a> · <a href="../transformer-plugins/">Transformers Overview</a></p>
 
 

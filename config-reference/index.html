@@ -14,7 +14,7 @@
         <link rel="prev" href="../config/">
       
       
-        <link rel="next" href="../locations-ref/">
+        <link rel="next" href="../config-all-keys/">
       
       
       <link rel="icon" href="https://github.com/OpenVoiceOS/ovos_assets/blob/master/Logo/ovos-logo-512.png?raw=true">
@@ -1186,9 +1186,9 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#all-keys-generated" class="md-nav__link">
+  <a href="#all-keys" class="md-nav__link">
     <span class="md-ellipsis">
-      All Keys (Generated)
+      All Keys
     </span>
   </a>
   
@@ -1198,6 +1198,27 @@
   
 </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../config-all-keys/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    All Configuration Keys
+  </span>
+  
+
+      </a>
     </li>
   
 
@@ -1826,9 +1847,9 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#all-keys-generated" class="md-nav__link">
+  <a href="#all-keys" class="md-nav__link">
     <span class="md-ellipsis">
-      All Keys (Generated)
+      All Keys
     </span>
   </a>
   
@@ -2130,7 +2151,7 @@ It's a different config subtree from the same-named <code>listener.VAD</code> se
 </tr>
 <tr>
 <td><code>logging.&lt;service_name&gt;</code></td>
-<td>—</td>
+<td>(none)</td>
 <td>A section named after a service (for example <code>logging.audio</code>) overrides the global <code>log_level</code> and <code>logs</code> settings for that service only.</td>
 </tr>
 </tbody>
@@ -2195,10 +2216,10 @@ It's a different config subtree from the same-named <code>listener.VAD</code> se
 <code>"127.0.0.1"</code>. Any device on the network can reach it unless you narrow it or
 firewall the port.</p>
 </div>
-<p>Source: <code>mycroft.conf</code> lines 356–361 (<code>gui_websocket</code>) and lines 609–627 (<code>gui</code>) in <a href="https://github.com/OpenVoiceOS/ovos-config">OpenVoiceOS/ovos-config</a>.</p>
+<p>Source: <code>mycroft.conf</code> lines 356 to 361 (<code>gui_websocket</code>) and lines 609 to 627 (<code>gui</code>) in <a href="https://github.com/OpenVoiceOS/ovos-config">OpenVoiceOS/ovos-config</a>.</p>
 <hr />
 <h2 id="9-phal-hardware-abstraction-layer">9. PHAL (Hardware Abstraction Layer)<a class="headerlink" href="#9-phal-hardware-abstraction-layer" title="Permanent link">&para;</a></h2>
-<p>PHAL plugins read their settings from the top-level <code>PHAL</code> key, and PHAL admin plugins from <code>PHAL.admin</code>. Neither key has a default block in the shipped <code>mycroft.conf</code>: with no <code>PHAL</code> key present, every PHAL plugin loads with an empty config and its own internal defaults.</p>
+<p>PHAL plugins read their settings from the top-level <code>PHAL</code> key, and PHAL admin plugins from <code>PHAL.admin</code>. Neither key has a default block in the shipped <code>mycroft.conf</code>. With no <code>PHAL</code> key present, every PHAL plugin loads with an empty config and its own internal defaults.</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>&quot;PHAL&quot;: {
 </span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>  &quot;some-phal-plugin-id&quot;: {
 </span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>    &quot;enabled&quot;: true
@@ -2211,7 +2232,7 @@ firewall the port.</p>
 </span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>}
 </span></code></pre></div>
 <p>A PHAL plugin is disabled by setting <code>"enabled": false</code> under its plugin ID. Admin plugins run with elevated privileges and are read from a nested <code>admin</code> block, not the top level.</p>
-<p>Source: <code>Configuration().get("PHAL")</code> in <code>ovos_PHAL/service.py</code> line 59 and the <code>PHAL.admin</code> docstring in <code>ovos_PHAL/admin.py</code> lines 32–46, <a href="https://github.com/OpenVoiceOS/ovos-PHAL">OpenVoiceOS/ovos-PHAL</a>. No <code>PHAL</code> block appears in the shipped <code>mycroft.conf</code>.</p>
+<p>Source: <code>Configuration().get("PHAL")</code> in <code>ovos_PHAL/service.py</code> line 59 and the <code>PHAL.admin</code> docstring in <code>ovos_PHAL/admin.py</code> lines 32 to 46, <a href="https://github.com/OpenVoiceOS/ovos-PHAL">OpenVoiceOS/ovos-PHAL</a>. No <code>PHAL</code> block appears in the shipped <code>mycroft.conf</code>.</p>
 <hr />
 <h2 id="10-ocp-media">10. OCP / Media<a class="headerlink" href="#10-ocp-media" title="Permanent link">&para;</a></h2>
 <p><code>intents.OCP</code> tunes the OCP intent pipeline plugin. <code>Audio</code> selects the legacy audio service backend, which OCP still uses for actual playback.</p>
@@ -2285,7 +2306,7 @@ firewall the port.</p>
 <tr>
 <td><code>Audio.backends.OCP.type</code></td>
 <td><code>"ovos_common_play"</code></td>
-<td>Backend type for the OCP entry. Do not set this to the string <code>"OCP"</code>; that name is only valid as the key under <code>backends</code>.</td>
+<td>Backend type for the OCP entry. Do not set this to the string <code>"OCP"</code>. That name is only valid as the key under <code>backends</code>.</td>
 </tr>
 <tr>
 <td><code>Audio.backends.OCP.preferred_audio_services</code></td>
@@ -2299,7 +2320,7 @@ firewall the port.</p>
 </tr>
 </tbody>
 </table>
-<p>Source: <code>mycroft.conf</code> lines 188–203 (<code>intents.OCP</code>) and lines 705–726 (<code>Audio</code>) in <a href="https://github.com/OpenVoiceOS/ovos-config">OpenVoiceOS/ovos-config</a>.</p>
+<p>Source: <code>mycroft.conf</code> lines 188 to 203 (<code>intents.OCP</code>) and lines 705 to 726 (<code>Audio</code>) in <a href="https://github.com/OpenVoiceOS/ovos-config">OpenVoiceOS/ovos-config</a>.</p>
 <hr />
 <h2 id="11-skills">11. Skills<a class="headerlink" href="#11-skills" title="Permanent link">&para;</a></h2>
 <p>All of these live under the top-level <code>skills</code> key.</p>
@@ -2365,7 +2386,7 @@ firewall the port.</p>
 <tr>
 <td><code>skills.converse.max_activations</code></td>
 <td><code>-1</code></td>
-<td>Times per minute a skill may self-activate. <code>-1</code> means no limit; <code>0</code> disables self-activation.</td>
+<td>Times per minute a skill may self-activate. <code>-1</code> means no limit. <code>0</code> disables self-activation.</td>
 </tr>
 <tr>
 <td><code>skills.converse.cross_activation</code></td>
@@ -2379,7 +2400,7 @@ firewall the port.</p>
 </tr>
 </tbody>
 </table>
-<p>Source: <code>mycroft.conf</code> lines 235–304 (<code>skills</code>) in <a href="https://github.com/OpenVoiceOS/ovos-config">OpenVoiceOS/ovos-config</a>.</p>
+<p>Source: <code>mycroft.conf</code> lines 235 to 304 (<code>skills</code>) in <a href="https://github.com/OpenVoiceOS/ovos-config">OpenVoiceOS/ovos-config</a>.</p>
 <hr />
 <h2 id="12-session">12. Session<a class="headerlink" href="#12-session" title="Permanent link">&para;</a></h2>
 <table>
@@ -2398,1191 +2419,18 @@ firewall the port.</p>
 </tr>
 </tbody>
 </table>
-<p>Source: <code>mycroft.conf</code> lines 643–646 (<code>session</code>) in <a href="https://github.com/OpenVoiceOS/ovos-config">OpenVoiceOS/ovos-config</a>.</p>
+<p>Source: <code>mycroft.conf</code> lines 643 to 646 (<code>session</code>) in <a href="https://github.com/OpenVoiceOS/ovos-config">OpenVoiceOS/ovos-config</a>.</p>
 <hr />
 <h2 id="13-personas-agents">13. Personas / Agents<a class="headerlink" href="#13-personas-agents" title="Permanent link">&para;</a></h2>
 <p>The shipped <code>mycroft.conf</code> has no <code>persona</code> key and no default persona values. Persona and LLM-agent settings are read from the persona service's own config file, not from <code>mycroft.conf</code>. See <a href="../personas/">Personas</a> for that service's settings and file location.</p>
 <hr />
-<h2 id="all-keys-generated">All Keys (Generated)<a class="headerlink" href="#all-keys-generated" title="Permanent link">&para;</a></h2>
-<div class="admonition note">
-<p class="admonition-title">Blank Description cells</p>
-<p>A blank cell in the table below means the generator could not pull a description for that
-key from the upstream source, usually because the shipped default config has no accompanying
-comment there. It does not mean the key is unsupported. Most of these are self-explanatory
-from the key path and default value (for example, <code>sounds.error</code>, <code>location.city.name</code>). For anything
-non-obvious, check the linked source or grep the relevant repo for where the key is read.</p>
-</div>
-<div class="admonition note">
-<p class="admonition-title">Telemetry keys are intentionally absent</p>
-<p><code>share_telemetry</code> and <code>share_usage_telemetry</code> do not appear below because they are
-installer-time prompts, not <code>mycroft.conf</code> keys. See
-<a href="../ovos-installer/#anonymous-telemetry">ovos-installer.md's telemetry section</a> for what
-each one does and where it's actually stored.</p>
-</div>
-<!-- BEGIN GENERATED: mycroft-conf-keys -->
-<!-- This section is auto-generated by tools/gen_reference.py from the upstream source of truth. Do not hand-edit. Re-run the script instead. -->
-<table>
-<thead>
-<tr>
-<th>Key</th>
-<th>Default</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>lang</code></td>
-<td><code>"en-US"</code></td>
-<td>Primary BCP-47 language code for STT and TTS.</td>
-</tr>
-<tr>
-<td><code>secondary_langs</code></td>
-<td><code>[]</code></td>
-<td>Extra languages whose resource files are loaded. Intents are only matched when the utterance is tagged with that lang at STT.</td>
-</tr>
-<tr>
-<td><code>system_unit</code></td>
-<td><code>"metric"</code></td>
-<td>Measurement units (<code>metric</code> or <code>imperial</code>).</td>
-</tr>
-<tr>
-<td><code>temperature_unit</code></td>
-<td><code>"celsius"</code></td>
-<td>Temperature units (<code>celsius</code> or <code>fahrenheit</code>).</td>
-</tr>
-<tr>
-<td><code>windspeed_unit</code></td>
-<td><code>"m/s"</code></td>
-<td>Windspeed units, either 'km/h', 'm/s', 'mph' or 'kn' (knots)</td>
-</tr>
-<tr>
-<td><code>precipitation_unit</code></td>
-<td><code>"mm"</code></td>
-<td>Precipitation units, either 'mm' or 'inch'</td>
-</tr>
-<tr>
-<td><code>time_format</code></td>
-<td><code>"half"</code></td>
-<td>Clock format for display (<code>half</code> = 12-hour, <code>full</code> = 24-hour).</td>
-</tr>
-<tr>
-<td><code>spoken_time_format</code></td>
-<td><code>"full"</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>date_format</code></td>
-<td><code>"MDY"</code></td>
-<td>Date format for display and parsing.</td>
-</tr>
-<tr>
-<td><code>confirm_listening</code></td>
-<td><code>true</code></td>
-<td>Play a beep when the system starts listening.</td>
-</tr>
-<tr>
-<td><code>open_data.intent_urls</code></td>
-<td><code>[]</code></td>
-<td>Opt-in list of open-data servers to help improve the intent pipeline by sharing anonymized match data. A dashboard for contributed data is at <a href="https://opendata.tigregotico.pt">opendata.tigregotico.pt</a>.</td>
-</tr>
-<tr>
-<td><code>open_data.ww_urls</code></td>
-<td><code>[]</code></td>
-<td>Opt-in list of open-data servers that receive wake-word audio samples captured by the listener, to help improve wake-word detection.</td>
-</tr>
-<tr>
-<td><code>open_data.stt_urls</code></td>
-<td><code>[]</code></td>
-<td>Opt-in list of open-data servers that receive transcribed utterance audio samples, to help improve STT accuracy.</td>
-</tr>
-<tr>
-<td><code>open_data.user_agent</code></td>
-<td>(none)</td>
-<td>Optional <code>User-Agent</code> string sent with open-data uploads.</td>
-</tr>
-<tr>
-<td><code>open_data.api_key</code></td>
-<td><code>null</code></td>
-<td>Optional API key, sent as an <code>X-API-Key</code> header, for open-data servers that require one.</td>
-</tr>
-<tr>
-<td><code>sounds.start_listening</code></td>
-<td><code>"snd/start_listening.wav"</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>sounds.end_listening</code></td>
-<td><code>"snd/end_listening.wav"</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>sounds.acknowledge</code></td>
-<td><code>"snd/acknowledge.mp3"</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>sounds.error</code></td>
-<td><code>"snd/error.mp3"</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>location.city.code</code></td>
-<td><code>"Lawrence"</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>location.city.name</code></td>
-<td><code>"Lawrence"</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>location.city.state.code</code></td>
-<td><code>"KS"</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>location.city.state.name</code></td>
-<td><code>"Kansas"</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>location.city.state.country.code</code></td>
-<td><code>"US"</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>location.city.state.country.name</code></td>
-<td><code>"United States"</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>location.coordinate.latitude</code></td>
-<td><code>38.971669</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>location.coordinate.longitude</code></td>
-<td><code>-95.23525</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>location.timezone.code</code></td>
-<td><code>"America/Chicago"</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>location.timezone.name</code></td>
-<td><code>"Central Standard Time"</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>location.timezone.dstOffset</code></td>
-<td><code>3600000</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>location.timezone.offset</code></td>
-<td><code>-21600000</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>utterance_transformers.ovos-utterance-normalizer</code></td>
-<td><code>{}</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>utterance_transformers.ovos-utterance-plugin-cancel</code></td>
-<td><code>{}</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>utterance_transformers.ovos-utterance-corrections-plugin</code></td>
-<td><code>{}</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>metadata_transformers</code></td>
-<td><code>{}</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>intent_transformers.ovos-keyword-template-matcher</code></td>
-<td><code>{}</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>intent_transformers.ovos-ahocorasick-ner-plugin</code></td>
-<td><code>{}</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>intents.adapt.conf_high</code></td>
-<td><code>0.65</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>intents.adapt.conf_med</code></td>
-<td><code>0.45</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>intents.adapt.conf_low</code></td>
-<td><code>0.25</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>intents.padatious.conf_high</code></td>
-<td><code>0.95</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>intents.padatious.conf_med</code></td>
-<td><code>0.8</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>intents.padatious.conf_low</code></td>
-<td><code>0.5</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>intents.padatious.stem</code></td>
-<td><code>false</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>intents.padatious.cast_to_ascii</code></td>
-<td><code>false</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>intents.padatious.disable_padaos</code></td>
-<td><code>false</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>intents.padatious.domain_engine</code></td>
-<td><code>false</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>intents.padatious.single_thread</code></td>
-<td><code>true</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>intents.common_query.max_response_wait</code></td>
-<td><code>6</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>intents.common_query.extension_time</code></td>
-<td><code>3</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>intents.common_query.reranker</code></td>
-<td><code>"ovos-flashrank-reranker-plugin"</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>intents.OCP.legacy</code></td>
-<td><code>false</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>intents.OCP.min_score</code></td>
-<td><code>40</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>intents.OCP.filter_media</code></td>
-<td><code>true</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>intents.OCP.filter_SEI</code></td>
-<td><code>true</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>intents.OCP.playback_mode</code></td>
-<td><code>0</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>intents.OCP.search_fallback</code></td>
-<td><code>true</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>intents.pipeline</code></td>
-<td><code>["ovos-stop-pipeline-plugin-high", "ovos-converse-pipeline-plugin", "ovos-ocp-pipeline-plugin-high", "ovos-padatious-pipeline-plugin-high", "ovos-adapt-pipeline-plugin-high", "ovos-m2v-pipeline-high", "ovos-ocp-pipeline-plugin-medium", "ovos-fallback-pipeline-plugin-high", "ovos-stop-pipeline-plugin-medium", "ovos-adapt-pipeline-plugin-medium", "ovos-fallback-pipeline-plugin-medium", "ovos-fallback-pipeline-plugin-low"]</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>skills.directory</code></td>
-<td><code>"skills"</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>skills.blacklisted_skills</code></td>
-<td><code>["skill-ovos-stop.openvoiceos"]</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>skills.fallbacks.fallback_priorities</code></td>
-<td><code>{}</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>skills.fallbacks.fallback_mode</code></td>
-<td><code>"accept_all"</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>skills.fallbacks.fallback_whitelist</code></td>
-<td><code>[]</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>skills.fallbacks.fallback_blacklist</code></td>
-<td><code>[]</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>skills.converse.timeout</code></td>
-<td><code>300</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>skills.converse.skill_timeouts</code></td>
-<td><code>{}</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>skills.converse.converse_mode</code></td>
-<td><code>"accept_all"</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>skills.converse.converse_whitelist</code></td>
-<td><code>[]</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>skills.converse.converse_blacklist</code></td>
-<td><code>[]</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>skills.converse.converse_activation</code></td>
-<td><code>"accept_all"</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>skills.converse.max_activations</code></td>
-<td><code>-1</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>skills.converse.skill_activations</code></td>
-<td><code>{}</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>skills.converse.cross_activation</code></td>
-<td><code>true</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>skills.converse.cross_deactivation</code></td>
-<td><code>true</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>skills.converse.converse_priorities</code></td>
-<td><code>{}</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>system.disable_user_config</code></td>
-<td><code>false</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>system.protected_keys.user</code></td>
-<td><code>[]</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>websocket.host</code></td>
-<td><code>"127.0.0.1"</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>websocket.port</code></td>
-<td><code>8181</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>websocket.route</code></td>
-<td><code>"/core"</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>websocket.ssl</code></td>
-<td><code>false</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>websocket.shared_connection</code></td>
-<td><code>true</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>websocket.max_msg_size</code></td>
-<td><code>25</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>gui_websocket.host</code></td>
-<td><code>"0.0.0.0"</code></td>
-<td>Listens on all interfaces by default. Set it to <code>127.0.0.1</code> unless a remote display needs network access. See <a href="../bus-service/">Bus Service</a> for network-exposure guidance.</td>
-</tr>
-<tr>
-<td><code>gui_websocket.base_port</code></td>
-<td><code>18181</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>gui_websocket.route</code></td>
-<td><code>"/gui"</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>gui_websocket.ssl</code></td>
-<td><code>false</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>network_tests.ip_url</code></td>
-<td><code>"https://api.ipify.org"</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>network_tests.dns_primary</code></td>
-<td><code>"1.1.1.1"</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>network_tests.dns_secondary</code></td>
-<td><code>"8.8.8.8"</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>network_tests.web_url</code></td>
-<td><code>"http://nmcheck.gnome.org/check_network_status.txt"</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>network_tests.web_url_secondary</code></td>
-<td><code>"https://checkonline.home-assistant.io/online.txt"</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>network_tests.captive_portal_url</code></td>
-<td><code>"http://nmcheck.gnome.org/check_network_status.txt"</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>network_tests.captive_portal_text</code></td>
-<td><code>"NetworkManager is online"</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>listener.sample_rate</code></td>
-<td><code>16000</code></td>
-<td>Audio sampling rate in Hz.</td>
-</tr>
-<tr>
-<td><code>listener.fake_barge_in</code></td>
-<td><code>true</code></td>
-<td>Mute output during recording.</td>
-</tr>
-<tr>
-<td><code>listener.speech_begin</code></td>
-<td><code>0.3</code></td>
-<td>Seconds of detected speech before a command is considered started.</td>
-</tr>
-<tr>
-<td><code>listener.silence_end</code></td>
-<td><code>0.7</code></td>
-<td>Seconds of silence before a command is considered ended.</td>
-</tr>
-<tr>
-<td><code>listener.recording_timeout</code></td>
-<td><code>10.0</code></td>
-<td>Max seconds for a single recording.</td>
-</tr>
-<tr>
-<td><code>listener.utterance_chunks_to_rewind</code></td>
-<td><code>2</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>listener.wakeword_chunks_to_save</code></td>
-<td><code>15</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>listener.record_wake_words</code></td>
-<td><code>false</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>listener.save_utterances</code></td>
-<td><code>false</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>listener.utterance_filename</code></td>
-<td><code>"{md5}-{uuid4}"</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>listener.wake_word_upload.disable</code></td>
-<td><code>true</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>listener.wake_word_upload.url</code></td>
-<td><code>""</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>listener.microphone.module</code></td>
-<td><code>"ovos-microphone-plugin-alsa"</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>listener.microphone.ovos-microphone-plugin-alsa.fallback_module</code></td>
-<td><code>"ovos-microphone-plugin-sounddevice"</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>listener.microphone.ovos-microphone-plugin-sounddevice.fallback_module</code></td>
-<td><code>"ovos-microphone-plugin-pyaudio"</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>listener.remove_silence</code></td>
-<td><code>true</code></td>
-<td>Strip leading/trailing silence before sending audio to STT.</td>
-</tr>
-<tr>
-<td><code>listener.VAD.silence_method</code></td>
-<td><code>"vad_and_ratio"</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>listener.VAD.speech_seconds</code></td>
-<td><code>0.1</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>listener.VAD.silence_seconds</code></td>
-<td><code>0.5</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>listener.VAD.before_seconds</code></td>
-<td><code>0.5</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>listener.VAD.min_seconds</code></td>
-<td><code>1</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>listener.VAD.max_current_ratio_threshold</code></td>
-<td><code>2</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>listener.VAD.initial_energy_threshold</code></td>
-<td><code>1000.0</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>listener.VAD.module</code></td>
-<td><code>"ovos-vad-plugin-silero"</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>listener.VAD.ovos-vad-plugin-silero.threshold</code></td>
-<td><code>0.2</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>listener.VAD.ovos-vad-plugin-silero.fallback_module</code></td>
-<td><code>"ovos-vad-plugin-precise"</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>listener.VAD.ovos-vad-plugin-precise.fallback_module</code></td>
-<td><code>"ovos-vad-plugin-webrtcvad"</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>listener.VAD.ovos-vad-plugin-webrtcvad.vad_mode</code></td>
-<td><code>3</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>listener.VAD.ovos-vad-plugin-webrtcvad.fallback_module</code></td>
-<td><code>"ovos-vad-plugin-noise"</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>listener.VAD.ovos-vad-plugin-noise.method</code></td>
-<td><code>"all"</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>listener.VAD.ovos-vad-plugin-noise.max_current_ratio_threshold</code></td>
-<td><code>2.0</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>listener.VAD.ovos-vad-plugin-noise.energy_threshold</code></td>
-<td><code>1000.0</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>listener.retry_mic_init</code></td>
-<td><code>true</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>listener.mute_during_output</code></td>
-<td><code>false</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>listener.phoneme_duration</code></td>
-<td><code>120</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>listener.multiplier</code></td>
-<td><code>1.0</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>listener.energy_ratio</code></td>
-<td><code>1.5</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>listener.wake_word</code></td>
-<td><code>"hey_mycroft"</code></td>
-<td>Default wake word (matches an entry under <code>hotwords</code>).</td>
-</tr>
-<tr>
-<td><code>listener.stand_up_word</code></td>
-<td><code>"wake_up"</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>listener.recording_timeout_with_silence</code></td>
-<td><code>3.0</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>listener.instant_listen</code></td>
-<td><code>true</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>listener.continuous_listen</code></td>
-<td><code>false</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>listener.hybrid_listen</code></td>
-<td><code>false</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>listener.listen_timeout</code></td>
-<td><code>45</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>hotwords.hey_mycroft.module</code></td>
-<td><code>"ovos-ww-plugin-precise-lite"</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>hotwords.hey_mycroft.model</code></td>
-<td><code>"https://github.com/OpenVoiceOS/precise-lite-models/raw/master/wakewords/en/hey_mycroft.tflite"</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>hotwords.hey_mycroft.expected_duration</code></td>
-<td><code>3</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>hotwords.hey_mycroft.trigger_level</code></td>
-<td><code>3</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>hotwords.hey_mycroft.sensitivity</code></td>
-<td><code>0.5</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>hotwords.hey_mycroft.listen</code></td>
-<td><code>true</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>hotwords.hey_mycroft.fallback_ww</code></td>
-<td><code>"hey_mycroft_precise"</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>hotwords.hey_mycroft_precise.module</code></td>
-<td><code>"ovos-ww-plugin-precise"</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>hotwords.hey_mycroft_precise.version</code></td>
-<td><code>"0.3"</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>hotwords.hey_mycroft_precise.model</code></td>
-<td><code>"https://github.com/MycroftAI/precise-data/raw/models-dev/hey-mycroft.tar.gz"</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>hotwords.hey_mycroft_precise.expected_duration</code></td>
-<td><code>3</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>hotwords.hey_mycroft_precise.trigger_level</code></td>
-<td><code>3</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>hotwords.hey_mycroft_precise.sensitivity</code></td>
-<td><code>0.5</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>hotwords.hey_mycroft_precise.listen</code></td>
-<td><code>true</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>hotwords.hey_mycroft_precise.fallback_ww</code></td>
-<td><code>"hey_mycroft_vosk"</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>hotwords.hey_mycroft_vosk.module</code></td>
-<td><code>"ovos-ww-plugin-vosk"</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>hotwords.hey_mycroft_vosk.samples</code></td>
-<td><code>["hey mycroft", "hey microsoft", "hey mike roft", "hey minecraft"]</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>hotwords.hey_mycroft_vosk.rule</code></td>
-<td><code>"fuzzy"</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>hotwords.hey_mycroft_vosk.listen</code></td>
-<td><code>true</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>hotwords.hey_mycroft_vosk.fallback_ww</code></td>
-<td><code>"hey_mycroft_pocketsphinx"</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>hotwords.hey_mycroft_pocketsphinx.module</code></td>
-<td><code>"ovos-ww-plugin-pocketsphinx"</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>hotwords.hey_mycroft_pocketsphinx.phonemes</code></td>
-<td><code>"HH EY . M AY K R AO F T"</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>hotwords.hey_mycroft_pocketsphinx.threshold</code></td>
-<td><code>1e-90</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>hotwords.hey_mycroft_pocketsphinx.lang</code></td>
-<td><code>"en-US"</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>hotwords.hey_mycroft_pocketsphinx.listen</code></td>
-<td><code>true</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>hotwords.wake_up.module</code></td>
-<td><code>"ovos-ww-plugin-vosk"</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>hotwords.wake_up.rule</code></td>
-<td><code>"fuzzy"</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>hotwords.wake_up.samples</code></td>
-<td><code>["wake up"]</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>hotwords.wake_up.lang</code></td>
-<td><code>"en-US"</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>hotwords.wake_up.wakeup</code></td>
-<td><code>true</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>hotwords.wake_up.fallback_ww</code></td>
-<td><code>"wake_up_pocketsphinx"</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>hotwords.wake_up_pocketsphinx.module</code></td>
-<td><code>"ovos-ww-plugin-pocketsphinx"</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>hotwords.wake_up_pocketsphinx.phonemes</code></td>
-<td><code>"W EY K . AH P"</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>hotwords.wake_up_pocketsphinx.threshold</code></td>
-<td><code>1e-20</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>hotwords.wake_up_pocketsphinx.lang</code></td>
-<td><code>"en-US"</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>hotwords.wake_up_pocketsphinx.wakeup</code></td>
-<td><code>true</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>gui.idle_display_skill</code></td>
-<td><code>"skill-ovos-homescreen.openvoiceos"</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>gui.extension</code></td>
-<td><code>"generic"</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>gui.generic.homescreen_supported</code></td>
-<td><code>true</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>gui.disable_gui</code></td>
-<td><code>false</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>ignore_logs</code></td>
-<td><code>["enclosure.mouth.viseme", "enclosure.mouth.display"]</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>session.ttl</code></td>
-<td><code>-1</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>stt.module</code></td>
-<td><code>"ovos-stt-plugin-server"</code></td>
-<td>Stock default is <code>ovos-stt-plugin-server</code>, which routes voice audio to a public community server for speech-to-text. See <a href="../privacy-security/">Privacy &amp; Security</a>.</td>
-</tr>
-<tr>
-<td><code>stt.fallback_module</code></td>
-<td><code>""</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>tts.pulse_duck</code></td>
-<td><code>false</code></td>
-<td>If true, ducking uses OS-level PulseAudio instead of <code>ovos.common_play.duck</code>/<code>.unduck</code> bus events.</td>
-</tr>
-<tr>
-<td><code>tts.ocp_cork</code></td>
-<td><code>false</code></td>
-<td>If true, <code>PlaybackThread</code> emits <code>ovos.common_play.cork</code> before speech and <code>ovos.common_play.uncork</code> after.</td>
-</tr>
-<tr>
-<td><code>tts.ocp_duck</code></td>
-<td><code>false</code></td>
-<td>If true, <code>PlaybackThread</code> emits <code>ovos.common_play.duck</code> before speech and <code>ovos.common_play.unduck</code> after.</td>
-</tr>
-<tr>
-<td><code>tts.module</code></td>
-<td><code>"ovos-tts-plugin-server"</code></td>
-<td>Stock default is <code>ovos-tts-plugin-server</code>, which routes text to a public community server for text-to-speech. See <a href="../privacy-security/">Privacy &amp; Security</a>.</td>
-</tr>
-<tr>
-<td><code>tts.fallback_module</code></td>
-<td><code>""</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>tts.ovos-tts-plugin-mimic.voice</code></td>
-<td><code>"ap"</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>tts.ovos-tts-plugin-mimic.persist_cache</code></td>
-<td><code>false</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>tts.ovos-tts-plugin-mimic.preloaded_cache</code></td>
-<td><code>""</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>tts.ovos-tts-plugin-mimic.min_free_percent</code></td>
-<td><code>75</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>tts.ovos-tts-plugin-mimic.persist_thresh</code></td>
-<td><code>1</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>tokenization.module</code></td>
-<td><code>"ovos-tokenization-plugin-quebrafrases"</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>segmentation.module</code></td>
-<td><code>"ovos-segmentation-plugin-quebrafrases"</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>keyword_extract.module</code></td>
-<td><code>"ovos-keyword-extractor-heuristic"</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>coref.module</code></td>
-<td><code>"ovos-coref-solver-heuristic"</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>postag.module</code></td>
-<td><code>"ovos-classifiers-postag-plugin"</code></td>
-<td>Ships from <code>ovos-classifiers</code>. <strong>Warning: archived.</strong> The shipped default still works, but the repo is no longer maintained.</td>
-</tr>
-<tr>
-<td><code>g2p.module</code></td>
-<td><code>""</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>padatious.regex_only</code></td>
-<td><code>false</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>padatious.fuzz</code></td>
-<td><code>true</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>language.detection_module</code></td>
-<td><code>"ovos-lang-detector-plugin-server"</code></td>
-<td>Stock default is <code>ovos-lang-detector-plugin-server</code>, which routes text to a public community server for language detection. See <a href="../privacy-security/">Privacy &amp; Security</a>.</td>
-</tr>
-<tr>
-<td><code>language.translation_module</code></td>
-<td><code>"ovos-translate-plugin-server"</code></td>
-<td>Stock default is <code>ovos-translate-plugin-server</code>, which routes text to a public community server for translation. See <a href="../privacy-security/">Privacy &amp; Security</a>.</td>
-</tr>
-<tr>
-<td><code>language.ovos-translate-plugin-server.fallback_module</code></td>
-<td><code>"ovos-google-translate-plugin"</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>language.ovos-lang-detector-plugin-server.fallback_module</code></td>
-<td><code>"ovos-google-lang-detector-plugin"</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>language.ovos-google-lang-detector-plugin.fallback_module</code></td>
-<td><code>"ovos-lang-detector-plugin-cld3"</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>language.ovos-lang-detector-plugin-cld3.fallback_module</code></td>
-<td><code>"ovos-lang-detector-plugin-cld2"</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>language.ovos-lang-detector-plugin-cld2.fallback_module</code></td>
-<td><code>"ovos-lang-detector-plugin-langdetect"</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>language.ovos-lang-detector-plugin-langdetect.fallback_module</code></td>
-<td><code>"ovos-lang-detector-plugin-fastlang"</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>language.ovos-lang-detector-plugin-fastlang.fallback_module</code></td>
-<td><code>"ovos-lang-detect-ngram-lm"</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>enable_old_audioservice</code></td>
-<td><code>true</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>Audio.native_sources</code></td>
-<td><code>["debug_cli", "audio", "mycroft-gui"]</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>Audio.default-backend</code></td>
-<td><code>"mpv"</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>Audio.backends.OCP.type</code></td>
-<td><code>"ovos_common_play"</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>Audio.backends.OCP.preferred_audio_services</code></td>
-<td><code>["mpv", "vlc", "simple"]</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>Audio.backends.OCP.disable_mpris</code></td>
-<td><code>true</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>Audio.backends.OCP.dbus_type</code></td>
-<td><code>"session"</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>Audio.backends.OCP.manage_external_players</code></td>
-<td><code>false</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>Audio.backends.OCP.active</code></td>
-<td><code>true</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>Audio.backends.simple.type</code></td>
-<td><code>"ovos_audio_simple"</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>Audio.backends.simple.active</code></td>
-<td><code>true</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>Audio.backends.vlc.type</code></td>
-<td><code>"ovos_vlc"</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>Audio.backends.vlc.active</code></td>
-<td><code>true</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>Audio.backends.vlc.initial_volume</code></td>
-<td><code>100</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>Audio.backends.vlc.low_volume</code></td>
-<td><code>50</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>Audio.backends.mpv.type</code></td>
-<td><code>"ovos_mpv"</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>Audio.backends.mpv.active</code></td>
-<td><code>true</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>Audio.backends.mpv.initial_volume</code></td>
-<td><code>100</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>Audio.backends.mpv.low_volume</code></td>
-<td><code>50</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>debug</code></td>
-<td><code>false</code></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<!-- END GENERATED -->
-
+<h2 id="all-keys">All Keys<a class="headerlink" href="#all-keys" title="Permanent link">&para;</a></h2>
+<p>The curated sections above cover the settings you're most likely to touch. <code>mycroft.conf</code>
+has many more keys than that, most of them defaults you never need to change.</p>
+<p><strong>See <a href="../config-all-keys/">All Configuration Keys</a> for the full, auto-generated table of
+every key in the shipped <code>mycroft.conf</code>, with defaults and descriptions where available.</strong></p>
 <hr />
-<p><em>Source code: <a href="https://github.com/OpenVoiceOS/ovos-config">OpenVoiceOS/ovos-config</a>.</em></p>
-<hr />
-<p><strong>Read next:</strong> <a href="../locations-ref/">Locations</a> · <a href="../config/">Configuration Overview</a>
+<p><strong>Read next:</strong> <a href="../config-all-keys/">All Configuration Keys</a> · <a href="../locations-ref/">Locations</a> · <a href="../config/">Configuration Overview</a>
 <strong>Related:</strong> <a href="../bus-events/">Bus Events Reference</a> · <a href="../intent-service/">Intent Service</a> · <a href="../audio-service/">Audio Service</a></p>
 
 

@@ -1001,36 +1001,9 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#plugins-must-be-installed-where-they-load" class="md-nav__link">
-    <span class="md-ellipsis">
-      Plugins must be installed where they load
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#configuration-is-per-process-not-shared" class="md-nav__link">
-    <span class="md-ellipsis">
-      Configuration is per-process, not shared
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#version-skew-is-a-real-risk" class="md-nav__link">
     <span class="md-ellipsis">
       Version skew is a real risk
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#latency-and-network-reality" class="md-nav__link">
-    <span class="md-ellipsis">
-      Latency and network reality
     </span>
   </a>
   
@@ -1604,36 +1577,9 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#plugins-must-be-installed-where-they-load" class="md-nav__link">
-    <span class="md-ellipsis">
-      Plugins must be installed where they load
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#configuration-is-per-process-not-shared" class="md-nav__link">
-    <span class="md-ellipsis">
-      Configuration is per-process, not shared
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#version-skew-is-a-real-risk" class="md-nav__link">
     <span class="md-ellipsis">
       Version skew is a real risk
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#latency-and-network-reality" class="md-nav__link">
-    <span class="md-ellipsis">
-      Latency and network reality
     </span>
   </a>
   
@@ -1980,8 +1926,11 @@ to run a satellite from a network you don't otherwise trust.</p>
 </div>
 <h2 id="caveats">Caveats<a class="headerlink" href="#caveats" title="Permanent link">&para;</a></h2>
 <p>Splitting services this way is fully supported, but it moves responsibilities that a single-host
-install hides for you. These are the most common sources of confusion.</p>
-<h3 id="plugins-must-be-installed-where-they-load">Plugins must be installed where they load<a class="headerlink" href="#plugins-must-be-installed-where-they-load" title="Permanent link">&para;</a></h3>
+install hides for you. These are the most common sources of confusion; expand any one that bites
+you.</p>
+<p><a id="plugins-must-be-installed-where-they-load"></a></p>
+<details class="warning">
+<summary>Plugins must be installed where they load</summary>
 <p>A plugin is only usable by the process that imports it. Installing an STT plugin next to
 <code>ovos-core</code> does nothing if <code>ovos-dinkum-listener</code> is the process that needs it.</p>
 <table>
@@ -2032,34 +1981,43 @@ install hides for you. These are the most common sources of confusion.</p>
 </table>
 <p>There is no cross-process plugin discovery. Each service resolves plugins from its <strong>own</strong>
 Python environment's entry points at startup.</p>
-<h3 id="configuration-is-per-process-not-shared">Configuration is per-process, not shared<a class="headerlink" href="#configuration-is-per-process-not-shared" title="Permanent link">&para;</a></h3>
+</details>
+<p><a id="configuration-is-per-process-not-shared"></a></p>
+<details class="warning">
+<summary>Configuration is per-process, not shared</summary>
 <p>Each process reads its own <code>mycroft.conf</code> from its own <a href="../config/">XDG config path</a>
 (<code>$XDG_CONFIG_HOME/mycroft</code>; inside a container, that is the container's filesystem, not the
-host's). Splitting services means keeping the relevant keys <strong>consistent by hand</strong> across every
-process's configuration. A <code>websocket.host</code> mismatch, or a listener that doesn't know which STT
-module <code>ovos-core</code> expects it to have already run, will silently misbehave rather than error
-loudly.</p>
+host's). Splitting services means keeping the relevant keys <strong>consistent by hand</strong> across
+every process's configuration. A <code>websocket.host</code> mismatch, or a listener that doesn't know
+which STT module <code>ovos-core</code> expects it to have already run, will silently misbehave rather
+than error loudly.</p>
+</details>
 <h3 id="version-skew-is-a-real-risk">Version skew is a real risk<a class="headerlink" href="#version-skew-is-a-real-risk" title="Permanent link">&para;</a></h3>
 <p>See the <a href="#example-topology">danger box above</a> for the short version. Every process talks over
-the same bus protocol independently. There is no central version negotiation. Mismatched major
-versions across <code>ovos-bus-client</code>, <code>ovos-core</code>, <code>ovos-audio</code>, and <code>ovos-dinkum-listener</code> can
-produce message shapes one side doesn't expect. Keep versions aligned across a deployment, and
-check each package's changelog before upgrading only one service.</p>
-<h3 id="latency-and-network-reality">Latency and network reality<a class="headerlink" href="#latency-and-network-reality" title="Permanent link">&para;</a></h3>
+the same bus protocol independently. There is no central version negotiation. Mismatched
+major versions across <code>ovos-bus-client</code>, <code>ovos-core</code>, <code>ovos-audio</code>, and
+<code>ovos-dinkum-listener</code> can produce message shapes one side doesn't expect. Keep versions
+aligned across a deployment, and check each package's changelog before upgrading only one
+service.</p>
+<p><a id="latency-and-network-reality"></a></p>
+<details class="warning">
+<summary>Latency and network reality</summary>
 <p>A single-host install exchanges messages over loopback, effectively free. Splitting services
-across hosts puts real network latency and reliability on the critical path of every utterance.
-Wake-word detection, STT, intent matching, and TTS all round-trip through the bus. A slow or
-lossy link between the listener and the bus is felt as sluggish or dropped voice interactions, not
-as an error message.</p>
+across hosts puts real network latency and reliability on the critical path of every
+utterance. Wake-word detection, STT, intent matching, and TTS all round-trip through the bus.
+A slow or lossy link between the listener and the bus is felt as sluggish or dropped voice
+interactions, not as an error message.</p>
+</details>
 <h3 id="services-are-implicit-singletons-per-bus">Services are implicit singletons per bus<a class="headerlink" href="#services-are-implicit-singletons-per-bus" title="Permanent link">&para;</a></h3>
-<p>See the <a href="#example-topology">danger box above</a> for the short version. <code>ovos-core</code>, <code>ovos-audio</code>,
-and <code>ovos-dinkum-listener</code> are each written assuming they are the only instance of that service
-talking to a given bus. The bus itself is pure fan-out with no leader election or ownership
-concept. It has no way to tell two <code>ovos-core</code> processes apart or arbitrate between them.</p>
+<p>See the <a href="#example-topology">danger box above</a> for the short version. <code>ovos-core</code>,
+<code>ovos-audio</code>, and <code>ovos-dinkum-listener</code> are each written assuming they are the only
+instance of that service talking to a given bus. The bus itself is pure fan-out with no
+leader election or ownership concept. It has no way to tell two <code>ovos-core</code> processes apart
+or arbitrate between them.</p>
 <p>Running two instances of the same service against one bus does not
 give you redundancy or failover. It gives you duplicate handling of every message and
-double-emitted lifecycle events (for example, two <code>ovos.intent.handler.start</code>/<code>.complete</code> pairs for
-one utterance), since both instances react to the same broadcast independently.</p>
+double-emitted lifecycle events (for example, two <code>ovos.intent.handler.start</code>/<code>.complete</code>
+pairs for one utterance), since both instances react to the same broadcast independently.</p>
 <p>For a step-by-step build, see <a href="../satellites/">Satellites</a>.</p>
 <p>There is no supported skill-level or bus-level workaround for this. Filtering handlers by
 <code>session_id</code> inside a skill does not make it safe to run two instances of a singleton
@@ -2071,10 +2029,10 @@ concern, not a duplicate-singleton one. It is done with <a href="../hivemind-age
 satellites talking to a single HiveMind server, not by running two copies of <code>ovos-core</code>,
 <code>ovos-audio</code>, or <code>ovos-dinkum-listener</code> against one bus.</p>
 <h3 id="defaults-assume-localhost">Defaults assume localhost<a class="headerlink" href="#defaults-assume-localhost" title="Permanent link">&para;</a></h3>
-<p><code>websocket.host</code> (<code>127.0.0.1</code>), and most PHAL device-integration plugins, assume everything they
-talk to is on the same machine. Treat every default as loopback-only until you have explicitly
-verified the config for a given deployment. The services start and look healthy on separate
-hosts with the defaults untouched, but they simply cannot reach each other.</p>
+<p><code>websocket.host</code> (<code>127.0.0.1</code>), and most PHAL device-integration plugins, assume everything
+they talk to is on the same machine. Treat every default as loopback-only until you have
+explicitly verified the config for a given deployment. The services start and look healthy
+on separate hosts with the defaults untouched, but they simply cannot reach each other.</p>
 <p>For a step-by-step build, see <a href="../satellites/">Satellites</a>.</p>
 <hr />
 <p><strong>Read next:</strong> <a href="../config/">Configuration Overview</a> · <a href="../concepts-overview/">Concepts Overview</a>

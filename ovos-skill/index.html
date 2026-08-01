@@ -14,7 +14,7 @@
         <link rel="prev" href="../workshop-overview/">
       
       
-        <link rel="next" href="../skill-classes/">
+        <link rel="next" href="../skill-api/">
       
       
       <link rel="icon" href="https://github.com/OpenVoiceOS/ovos_assets/blob/master/Logo/ovos-logo-512.png?raw=true">
@@ -1102,6 +1102,27 @@
   
   
     <li class="md-nav__item">
+      <a href="../skill-api/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Skill API (Inter-Skill RPC)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../skill-classes/" class="md-nav__link">
         
   
@@ -1128,6 +1149,27 @@
   
   <span class="md-ellipsis">
     Decorators
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../decorators-advanced/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Advanced Decorators
   </span>
   
 
@@ -1957,7 +1999,7 @@ once or repeatedly:</p>
   <code>ovos-core</code> restart. They are not tied to the skill instance staying in memory.</li>
 </ul>
 <h2 id="public-skill-api">Public Skill API<a class="headerlink" href="#public-skill-api" title="Permanent link">&para;</a></h2>
-<p>Decorate a method with <code>@skill_api_method</code> to expose it over the bus. Other skills or tools can call it via <code>SkillApi</code>.</p>
+<p>Decorate a method with <code>@skill_api_method</code> to expose it over the bus. Other skills or tools can call it via <code>SkillApi</code>. The full RPC mechanism — discovery, call protocol, the <code>SkillApi</code> proxy class, and a worked client/server example — is documented on <a href="../skill-api/">Skill API: Inter-Skill RPC</a>.</p>
 <h2 id="runtimerequirements">RuntimeRequirements<a class="headerlink" href="#runtimerequirements" title="Permanent link">&para;</a></h2>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -2065,147 +2107,8 @@ targeted dispatch that ceases only its own stoppable activity for the inbound se
 <code>ovos.stop</code>, the universal broadcast that ceases everything for that session. A duplicate
 arrival on either topic while the skill is already stopping is a no-op. See the
 <a href="../stop-pipeline/">Stop Pipeline</a>.</p>
-<h1 id="skill-api-inter-skill-rpc">Skill API: Inter-Skill RPC<a class="headerlink" href="#skill-api-inter-skill-rpc" title="Permanent link">&para;</a></h1>
-<p><code>SkillApi</code> provides a <a href="../bus-service/">messagebus</a>-based remote procedure call (RPC) mechanism. Methods decorated with <code>@skill_api_method</code> are exposed on the bus. Any other skill (or application) can call them by fetching a <code>SkillApi</code> proxy object.</p>
-<p><strong>Source:</strong> <code>ovos_workshop/skills/api.py</code></p>
 <hr />
-<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
-<p>The bus message protocol for <code>SkillApi</code> has two phases:</p>
-<ol>
-<li>
-<p><strong>Discovery</strong>: the caller emits <code>&lt;skill_id&gt;.public_api</code> on the bus. The target skill responds with a dict mapping method names to their bus message type and docstring.</p>
-</li>
-<li>
-<p><strong>Call</strong>: the caller emits a <code>Message</code> of the method's registered type with <code>{"args": [...], "kwargs": {...}}</code>. The target skill responds with <code>{"result": &lt;return value&gt;}</code>.</p>
-</li>
-</ol>
-<p>Return values must be JSON-serializable. Standard Python builtins (<code>str</code>, <code>int</code>, <code>list</code>, <code>dict</code>, <code>None</code>, <code>bool</code>) work. Custom classes are not supported.</p>
-<hr />
-<h2 id="skill_api_method-decorator"><code>@skill_api_method</code> Decorator<a class="headerlink" href="#skill_api_method-decorator" title="Permanent link">&para;</a></h2>
-<p><code>skill_api_method</code>, defined in <code>ovos_workshop/decorators/__init__.py</code></p>
-<p>Tag a skill method as part of the public API. The decorator sets <code>func.api_method = True</code>. During skill initialization <code>OVOSSkill</code> discovers all methods with this attribute and registers a bus listener for each one at <code>&lt;skill_id&gt;.&lt;method_name&gt;</code>.</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kn">from</span> <span class="nn">ovos_workshop.decorators</span> <span class="kn">import</span> <span class="n">skill_api_method</span>
-</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>
-</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="k">class</span> <span class="nc">MySkill</span><span class="p">(</span><span class="n">OVOSSkill</span><span class="p">):</span>
-</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>
-</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>    <span class="nd">@skill_api_method</span>
-</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>    <span class="k">def</span> <span class="nf">get_temperature</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">city</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the current temperature for the given city.&quot;&quot;&quot;</span>
-</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fetch_temperature</span><span class="p">(</span><span class="n">city</span><span class="p">)</span>
-</span></code></pre></div>
-<hr />
-<h2 id="skillapi-class"><code>SkillApi</code> Class<a class="headerlink" href="#skillapi-class" title="Permanent link">&para;</a></h2>
-<p><code>SkillApi</code>, defined in <code>ovos_workshop/skills/api.py</code></p>
-<h3 id="setup">Setup<a class="headerlink" href="#setup" title="Permanent link">&para;</a></h3>
-<p>Before calling <code>SkillApi.get()</code>, register the bus client once during skill initialization:</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kn">from</span> <span class="nn">ovos_workshop.skills.api</span> <span class="kn">import</span> <span class="n">SkillApi</span>
-</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>
-</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="n">SkillApi</span><span class="o">.</span><span class="n">connect_bus</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bus</span><span class="p">)</span>
-</span></code></pre></div>
-<h3 id="skillapigetskill-api_timeout3"><code>SkillApi.get(skill, api_timeout=3)</code><a class="headerlink" href="#skillapigetskill-api_timeout3" title="Permanent link">&para;</a></h3>
-<p>Fetches the public API for the given skill and returns a proxy object.</p>
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>skill</code></td>
-<td>The <code>skill_id</code> of the target skill</td>
-</tr>
-<tr>
-<td><code>api_timeout</code></td>
-<td>Seconds to wait for each remote method call (default <code>3</code>)</td>
-</tr>
-</tbody>
-</table>
-<p>Returns <code>None</code> if the skill is not running or exposes no API methods. Raises <code>RuntimeError</code> if <code>SkillApi.bus</code> has not been set.</p>
-<p>The proxy object has one attribute per exposed method. Calling <code>proxy.method_name(*args, **kwargs)</code> emits the corresponding bus message and returns the <code>result</code> field of the response. Returns <code>None</code> on timeout.</p>
-<hr />
-<h2 id="bus-message-protocol">Bus Message Protocol<a class="headerlink" href="#bus-message-protocol" title="Permanent link">&para;</a></h2>
-<h3 id="discovery">Discovery<a class="headerlink" href="#discovery" title="Permanent link">&para;</a></h3>
-<p><strong>Request:</strong> <code>&lt;skill_id&gt;.public_api</code> (no data)</p>
-<p><strong>Response:</strong> <code>&lt;skill_id&gt;.public_api</code> with data:</p>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="p">{</span>
-</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">  </span><span class="nt">&quot;get_temperature&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">    </span><span class="nt">&quot;help&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Return the current temperature for the given city.&quot;</span><span class="p">,</span>
-</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="w">    </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;my-weather-skill.get_temperature&quot;</span>
-</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="w">  </span><span class="p">}</span>
-</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="p">}</span>
-</span></code></pre></div>
-<h3 id="method-call">Method Call<a class="headerlink" href="#method-call" title="Permanent link">&para;</a></h3>
-<p><strong>Request:</strong> <code>my-weather-skill.get_temperature</code> with data:</p>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="p">{</span><span class="nt">&quot;args&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;London&quot;</span><span class="p">],</span><span class="w"> </span><span class="nt">&quot;kwargs&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{}}</span>
-</span></code></pre></div>
-<p><strong>Response:</strong> same message type with data:</p>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="p">{</span><span class="nt">&quot;result&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">18.5</span><span class="p">}</span>
-</span></code></pre></div>
-<hr />
-<h2 id="full-example">Full Example<a class="headerlink" href="#full-example" title="Permanent link">&para;</a></h2>
-<h3 id="exposing-methods-server-skill">Exposing methods (server skill)<a class="headerlink" href="#exposing-methods-server-skill" title="Permanent link">&para;</a></h3>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="kn">from</span> <span class="nn">ovos_workshop.skills.ovos</span> <span class="kn">import</span> <span class="n">OVOSSkill</span>
-</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="kn">from</span> <span class="nn">ovos_workshop.decorators</span> <span class="kn">import</span> <span class="n">skill_api_method</span>
-</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>
-</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>
-</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="k">class</span> <span class="nc">WeatherSkill</span><span class="p">(</span><span class="n">OVOSSkill</span><span class="p">):</span>
-</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>
-</span><span id="__span-11-7"><a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a>    <span class="nd">@skill_api_method</span>
-</span><span id="__span-11-8"><a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a>    <span class="k">def</span> <span class="nf">get_temperature</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">city</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-</span><span id="__span-11-9"><a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the current temperature in Celsius for the given city.&quot;&quot;&quot;</span>
-</span><span id="__span-11-10"><a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a>        <span class="c1"># … real implementation …</span>
-</span><span id="__span-11-11"><a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a>        <span class="k">return</span> <span class="mf">18.5</span>
-</span><span id="__span-11-12"><a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a>
-</span><span id="__span-11-13"><a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a>    <span class="nd">@skill_api_method</span>
-</span><span id="__span-11-14"><a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a>    <span class="k">def</span> <span class="nf">get_forecast</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">city</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">days</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
-</span><span id="__span-11-15"><a id="__codelineno-11-15" name="__codelineno-11-15" href="#__codelineno-11-15"></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Return a weather forecast list for the given city.&quot;&quot;&quot;</span>
-</span><span id="__span-11-16"><a id="__codelineno-11-16" name="__codelineno-11-16" href="#__codelineno-11-16"></a>        <span class="k">return</span> <span class="p">[{</span><span class="s2">&quot;day&quot;</span><span class="p">:</span> <span class="n">i</span><span class="p">,</span> <span class="s2">&quot;condition&quot;</span><span class="p">:</span> <span class="s2">&quot;sunny&quot;</span><span class="p">}</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">days</span><span class="p">)]</span>
-</span></code></pre></div>
-<h3 id="calling-methods-client-skill">Calling methods (client skill)<a class="headerlink" href="#calling-methods-client-skill" title="Permanent link">&para;</a></h3>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="kn">from</span> <span class="nn">ovos_workshop.skills.ovos</span> <span class="kn">import</span> <span class="n">OVOSSkill</span>
-</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="kn">from</span> <span class="nn">ovos_workshop.skills.api</span> <span class="kn">import</span> <span class="n">SkillApi</span>
-</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>
-</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>
-</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="k">class</span> <span class="nc">MyClientSkill</span><span class="p">(</span><span class="n">OVOSSkill</span><span class="p">):</span>
-</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>
-</span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a>    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="__span-12-8"><a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a>        <span class="n">SkillApi</span><span class="o">.</span><span class="n">connect_bus</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bus</span><span class="p">)</span>
-</span><span id="__span-12-9"><a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a>
-</span><span id="__span-12-10"><a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a>    <span class="k">def</span> <span class="nf">handle_ask_weather</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
-</span><span id="__span-12-11"><a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a>        <span class="n">weather_api</span> <span class="o">=</span> <span class="n">SkillApi</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;my-weather-skill.author&quot;</span><span class="p">)</span>
-</span><span id="__span-12-12"><a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a>        <span class="k">if</span> <span class="n">weather_api</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="__span-12-13"><a id="__codelineno-12-13" name="__codelineno-12-13" href="#__codelineno-12-13"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">speak</span><span class="p">(</span><span class="s2">&quot;Weather skill is not available.&quot;</span><span class="p">)</span>
-</span><span id="__span-12-14"><a id="__codelineno-12-14" name="__codelineno-12-14" href="#__codelineno-12-14"></a>            <span class="k">return</span>
-</span><span id="__span-12-15"><a id="__codelineno-12-15" name="__codelineno-12-15" href="#__codelineno-12-15"></a>
-</span><span id="__span-12-16"><a id="__codelineno-12-16" name="__codelineno-12-16" href="#__codelineno-12-16"></a>        <span class="n">temp</span> <span class="o">=</span> <span class="n">weather_api</span><span class="o">.</span><span class="n">get_temperature</span><span class="p">(</span><span class="s2">&quot;London&quot;</span><span class="p">)</span>
-</span><span id="__span-12-17"><a id="__codelineno-12-17" name="__codelineno-12-17" href="#__codelineno-12-17"></a>        <span class="k">if</span> <span class="n">temp</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="__span-12-18"><a id="__codelineno-12-18" name="__codelineno-12-18" href="#__codelineno-12-18"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">speak</span><span class="p">(</span><span class="s2">&quot;No response from weather skill.&quot;</span><span class="p">)</span>
-</span><span id="__span-12-19"><a id="__codelineno-12-19" name="__codelineno-12-19" href="#__codelineno-12-19"></a>            <span class="k">return</span>
-</span><span id="__span-12-20"><a id="__codelineno-12-20" name="__codelineno-12-20" href="#__codelineno-12-20"></a>
-</span><span id="__span-12-21"><a id="__codelineno-12-21" name="__codelineno-12-21" href="#__codelineno-12-21"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">speak</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;It is </span><span class="si">{</span><span class="n">temp</span><span class="si">}</span><span class="s2"> degrees in London.&quot;</span><span class="p">)</span>
-</span></code></pre></div>
-<hr />
-<h2 id="limitations">Limitations<a class="headerlink" href="#limitations" title="Permanent link">&para;</a></h2>
-<ul>
-<li>
-<p>Return values must be JSON-serializable.</p>
-</li>
-<li>
-<p>The target skill must be running when <code>SkillApi.get()</code> is called. It emits a live bus message.</p>
-</li>
-<li>
-<p>Method calls time out after <code>api_timeout</code> seconds (default <code>3</code>). The caller receives <code>None</code> on timeout.</p>
-</li>
-<li>
-<p><code>SkillApi.get()</code> returns <code>None</code> (not an exception) if the target skill is absent or unresponsive.</p>
-</li>
-</ul>
-<hr />
-<p><em>Source code: <a href="https://github.com/OpenVoiceOS/ovos-workshop">OpenVoiceOS/ovos-workshop</a>.</em></p>
-<hr />
-<p><strong>Read next:</strong> <a href="../skill-classes/">Skill Classes</a>
+<p><strong>Read next:</strong> <a href="../skill-api/">Skill API: Inter-Skill RPC</a>
 <strong>Related:</strong> <a href="../workshop-overview/">ovos-workshop Documentation</a> · <a href="../decorators/">Decorators</a> · <a href="../skill-settings/">Skill Settings</a> · <a href="../session/">Session Aware Skills</a></p>
 
 

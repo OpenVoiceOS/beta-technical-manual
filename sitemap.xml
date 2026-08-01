@@ -109,6 +109,10 @@
          <lastmod>2026-08-01</lastmod>
     </url>
     <url>
+         <loc>https://tigregotico.github.io/ovos-technical-manual/config-all-keys/</loc>
+         <lastmod>2026-08-01</lastmod>
+    </url>
+    <url>
          <loc>https://tigregotico.github.io/ovos-technical-manual/config-reference/</loc>
          <lastmod>2026-08-01</lastmod>
     </url>
@@ -154,6 +158,10 @@
     </url>
     <url>
          <loc>https://tigregotico.github.io/ovos-technical-manual/debugging-intent-matching/</loc>
+         <lastmod>2026-08-01</lastmod>
+    </url>
+    <url>
+         <loc>https://tigregotico.github.io/ovos-technical-manual/decorators-advanced/</loc>
          <lastmod>2026-08-01</lastmod>
     </url>
     <url>
@@ -253,6 +261,10 @@
          <lastmod>2026-08-01</lastmod>
     </url>
     <url>
+         <loc>https://tigregotico.github.io/ovos-technical-manual/gui-protocol-messages/</loc>
+         <lastmod>2026-08-01</lastmod>
+    </url>
+    <url>
          <loc>https://tigregotico.github.io/ovos-technical-manual/gui-protocol/</loc>
          <lastmod>2026-08-01</lastmod>
     </url>
@@ -325,6 +337,10 @@
          <lastmod>2026-08-01</lastmod>
     </url>
     <url>
+         <loc>https://tigregotico.github.io/ovos-technical-manual/lang-support-tables/</loc>
+         <lastmod>2026-08-01</lastmod>
+    </url>
+    <url>
          <loc>https://tigregotico.github.io/ovos-technical-manual/lang-support/</loc>
          <lastmod>2026-08-01</lastmod>
     </url>
@@ -362,6 +378,10 @@
     </url>
     <url>
          <loc>https://tigregotico.github.io/ovos-technical-manual/maturity/</loc>
+         <lastmod>2026-08-01</lastmod>
+    </url>
+    <url>
+         <loc>https://tigregotico.github.io/ovos-technical-manual/media-plugin-development/</loc>
          <lastmod>2026-08-01</lastmod>
     </url>
     <url>
@@ -425,6 +445,10 @@
          <lastmod>2026-08-01</lastmod>
     </url>
     <url>
+         <loc>https://tigregotico.github.io/ovos-technical-manual/ocp-plugin-development/</loc>
+         <lastmod>2026-08-01</lastmod>
+    </url>
+    <url>
          <loc>https://tigregotico.github.io/ovos-technical-manual/ocp-plugins/</loc>
          <lastmod>2026-08-01</lastmod>
     </url>
@@ -437,11 +461,23 @@
          <lastmod>2026-08-01</lastmod>
     </url>
     <url>
+         <loc>https://tigregotico.github.io/ovos-technical-manual/ovos-installer-scenarios/</loc>
+         <lastmod>2026-08-01</lastmod>
+    </url>
+    <url>
          <loc>https://tigregotico.github.io/ovos-technical-manual/ovos-installer/</loc>
          <lastmod>2026-08-01</lastmod>
     </url>
     <url>
          <loc>https://tigregotico.github.io/ovos-technical-manual/ovos-localize-tutorial/</loc>
+         <lastmod>2026-08-01</lastmod>
+    </url>
+    <url>
+         <loc>https://tigregotico.github.io/ovos-technical-manual/ovos-media-compat/</loc>
+         <lastmod>2026-08-01</lastmod>
+    </url>
+    <url>
+         <loc>https://tigregotico.github.io/ovos-technical-manual/ovos-media-mpris/</loc>
          <lastmod>2026-08-01</lastmod>
     </url>
     <url>
@@ -505,6 +541,10 @@
          <lastmod>2026-08-01</lastmod>
     </url>
     <url>
+         <loc>https://tigregotico.github.io/ovos-technical-manual/pipeline-plugin-authoring/</loc>
+         <lastmod>2026-08-01</lastmod>
+    </url>
+    <url>
          <loc>https://tigregotico.github.io/ovos-technical-manual/pipelines-overview/</loc>
          <lastmod>2026-08-01</lastmod>
     </url>
@@ -525,6 +565,10 @@
          <lastmod>2026-08-01</lastmod>
     </url>
     <url>
+         <loc>https://tigregotico.github.io/ovos-technical-manual/production-hardening/</loc>
+         <lastmod>2026-08-01</lastmod>
+    </url>
+    <url>
          <loc>https://tigregotico.github.io/ovos-technical-manual/production-operations/</loc>
          <lastmod>2026-08-01</lastmod>
     </url>
@@ -534,6 +578,10 @@
     </url>
     <url>
          <loc>https://tigregotico.github.io/ovos-technical-manual/prompts/</loc>
+         <lastmod>2026-08-01</lastmod>
+    </url>
+    <url>
+         <loc>https://tigregotico.github.io/ovos-technical-manual/qt5-gui-examples/</loc>
          <lastmod>2026-08-01</lastmod>
     </url>
     <url>
@@ -605,6 +653,10 @@
          <lastmod>2026-08-01</lastmod>
     </url>
     <url>
+         <loc>https://tigregotico.github.io/ovos-technical-manual/release-rollback/</loc>
+         <lastmod>2026-08-01</lastmod>
+    </url>
+    <url>
          <loc>https://tigregotico.github.io/ovos-technical-manual/resource-files/</loc>
          <lastmod>2026-08-01</lastmod>
     </url>
@@ -626,6 +678,10 @@
     </url>
     <url>
          <loc>https://tigregotico.github.io/ovos-technical-manual/showcase/</loc>
+         <lastmod>2026-08-01</lastmod>
+    </url>
+    <url>
+         <loc>https://tigregotico.github.io/ovos-technical-manual/skill-api/</loc>
          <lastmod>2026-08-01</lastmod>
     </url>
     <url>
@@ -769,6 +825,10 @@
          <lastmod>2026-08-01</lastmod>
     </url>
     <url>
+         <loc>https://tigregotico.github.io/ovos-technical-manual/transformer-plugin-development/</loc>
+         <lastmod>2026-08-01</lastmod>
+    </url>
+    <url>
          <loc>https://tigregotico.github.io/ovos-technical-manual/transformer-plugins/</loc>
          <lastmod>2026-08-01</lastmod>
     </url>
@@ -778,6 +838,14 @@
     </url>
     <url>
          <loc>https://tigregotico.github.io/ovos-technical-manual/translation-plugins/</loc>
+         <lastmod>2026-08-01</lastmod>
+    </url>
+    <url>
+         <loc>https://tigregotico.github.io/ovos-technical-manual/troubleshooting-audio/</loc>
+         <lastmod>2026-08-01</lastmod>
+    </url>
+    <url>
+         <loc>https://tigregotico.github.io/ovos-technical-manual/troubleshooting-bus/</loc>
          <lastmod>2026-08-01</lastmod>
     </url>
     <url>
