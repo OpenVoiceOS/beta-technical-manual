@@ -126,7 +126,7 @@ device starts listening.
 
 **What an unreachable bus looks like** depends on your version:
 
-- `ovos-bus-client` 2.6.4 and later print the address that was tried and exit non-zero:
+- `ovos-bus-client` 2.7.3 and later print the address that was tried and exit non-zero:
 
     ```text
     ERROR: could not reach the messagebus at ws://127.0.0.1:8181 after 10 seconds.

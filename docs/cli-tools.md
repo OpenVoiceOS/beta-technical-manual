@@ -14,7 +14,7 @@ version-correct list of options.
 
 !!! warning "`--help` is not safe on older bus clients"
     `ovos-speak`, `ovos-say-to`, `ovos-listen` and `ovos-simple-cli` gained `--help` in
-    `ovos-bus-client` 2.6.4. Before that they read the first argument as the utterance, so
+    `ovos-bus-client` 2.7.3. Before that they read the first argument as the utterance, so
     `ovos-speak --help` made the device **say "--help" out loud**, and `ovos-say-to --help` injected
     it as if you had spoken it
     ([ovos-bus-client#274](https://github.com/OpenVoiceOS/ovos-bus-client/pull/274)). On an older
