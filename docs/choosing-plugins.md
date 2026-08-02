@@ -80,8 +80,8 @@ Listens for the activation phrase. See the [Wake word catalog](wake-word-plugins
 | ovos-ww-plugin-openWakeWord | Stable | offline | Better accuracy than Vosk from open pre-trained models, no training |
 | ovos-ww-plugin-vosk | Stable | offline | Fastest setup for an arbitrary phrase, no model training (good for dev) |
 | ovos-ww-plugin-wakewordlab | Alpha | offline | Very compact (~240 KB) models with a Silero pre-filter (install from source) |
-| ovos-ww-plugin-wakeforge | Alpha | offline | Train a custom detector from a single phrase (install from source) |
-| ovos-ww-plugin-server | Alpha | hybrid | Thin satellite offloading detection to a self-hosted ww-server |
+| ovos-ww-plugin-wakeforge | Alpha | offline | Train a custom detector from a single phrase |
+| ovos-ww-plugin-server | Alpha | hybrid | Thin satellite offloading detection to a self-hosted ww-server. **Not available yet** — repos still private |
 
 *`ovos-ww-plugin-precise-lite` is **deprecated**. It is the TFLite predecessor of precise-onnx,
 kept working as a fallback but not a pick for new setups.*
@@ -97,7 +97,7 @@ Transcribes speech to text. See the [STT catalog](stt-plugins.md) (15 plugins, t
 | ovos-stt-plugin-whispercpp | Stable | offline | Lightweight Whisper via whisper.cpp (tiny/small models) on modest CPUs |
 | ovos-stt-plugin-nemo | Stable | offline | NVIDIA NeMo Conformer models, GPU strongly recommended |
 | ovos-stt-plugin-vosk | Stable | offline | Long-established lightweight engine from a local model folder |
-| ovos-stt-server-plugin | Stable | hybrid | Offload STT to your own self-hosted OVOS STT server |
+| ovos-stt-plugin-server | Stable | hybrid | Offload STT to an OVOS STT server. **Set `urls`** — unset, it sends audio to public community servers |
 | ovos-stt-plugin-azure | Stable | online | No on-device compute budget; accept cloud STT (Microsoft terms) |
 
 ---
@@ -114,7 +114,7 @@ Turns replies into speech. See the [TTS catalog](tts-plugins.md) (17 plugins, to
 | ovos-tts-plugin-coqui | Stable | offline | Higher-quality neural synthesis, heavier local compute |
 | ovos-tts-plugin-espeakNG | Mature | offline | Very broad language coverage, tiny footprint, robotic voice |
 | ovos-tts-plugin-pico | Mature | offline | Lightest possible offline voice on constrained hardware |
-| ovos-tts-plugin-server | Mature | hybrid | Offload synthesis to a self-hosted/community OVOS/Piper server |
+| ovos-tts-plugin-server | Mature | hybrid | Offload synthesis to an OVOS/Piper server. **Set `host`** — unset, it uses public community servers |
 | ovos-tts-plugin-edge-tts | Stable | online | Free high-quality Microsoft Edge cloud voices, no subscription |
 | ovos-tts-plugin-polly | Mature | online | A specific commercial cloud voice (Amazon Polly) |
 
@@ -253,8 +253,10 @@ Hook into the text / audio / dialog / TTS stages. See the [Transformers catalog]
 - **Best accuracy, GPU available:** STT **onnx-asr** with `use_cuda: true` (`ovos-config
   autoconfigure --gpu` picks a larger model per language automatically), **fasterwhisper**
   (large model), or **nemo**. TTS **coqui**. Still fully offline.
-- **Thin satellite / shared backend:** offload with the `*-server` plugins (STT server, TTS
-  server, ww-server) so the heavy models live on one machine.
+- **Thin satellite / shared backend:** offload with the `*-server` plugins so the heavy models
+  live on one machine. STT and TTS are available today (`ovos-stt-plugin-server`,
+  `ovos-tts-plugin-server` — set `urls`/`host`, or they use public community servers); the
+  wake-word one is not released yet, so keep wake-word detection on the satellite.
 - **Cloud is acceptable (coverage/quality first):** STT **azure**, TTS **edge-tts**/**polly**,
   translation **google**. Each adds the vendor's separate terms.
 

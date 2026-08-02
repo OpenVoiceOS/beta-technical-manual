@@ -3,10 +3,16 @@
 !!! abstract "In a nutshell"
     `ovos-media` can register on the D-Bus session bus as an MPRIS player (so tools like `playerctl` and desktop media widgets can control it) and, opt-in, can also reflect and take over other MPRIS players already running on the machine. For the core `ovos-media` service this extends, see [ovos-media](ovos-media.md).
 
-!!! note "This is `ovos-media`'s support, not the stock-install default"
-    MPRIS integration only exists when you're running `ovos-media` as the playback backend
-    (`enable_old_audioservice: false`). The default `ovos-audio` old-audioservice backend does
-    not provide it.
+!!! note "The legacy stack has MPRIS too, but it ships disabled"
+    This page documents `ovos-media`'s implementation. The default legacy stack
+    (`ovos-ocp-audio-plugin` inside `ovos-audio`) also registers an MPRIS player, but the
+    shipped `mycroft.conf` sets `Audio.backends.OCP.disable_mpris: true`, so it is off until
+    you turn it on. You do not have to migrate to `ovos-media` to get MPRIS — see [OCP Audio
+    Plugin](ocp-audio-plugin.md).
+
+    Note the two stacks spell the setting differently and with opposite polarity: legacy
+    `disable_mpris` (shipped `true`) versus `ovos-media`'s `media.enable_mpris` (default
+    `false`).
 
 ---
 

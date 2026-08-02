@@ -175,13 +175,24 @@ For example, "next song" does nothing when no player is active.
 | `search_fallback` | bool | `true` | Run a generic search when no type-specific results are found. |
 | `entity_csvs` | list | `[]` | User-supplied keyword CSVs feeding the entity matcher. |
 
-The config block is read from `intents.ovos-ocp-pipeline-plugin` (the plugin's
-entry-point ID), falling back to the older `intents.OCP` key.
+The config block is read from `intents.ovos-ocp-pipeline-plugin`, the plugin's entry-point ID.
 
-!!! note "Shipped defaults differ slightly"
-    The bundled `mycroft.conf` ships an `intents.ovos-ocp-pipeline-plugin` section
-    with `min_score: 40` (not the library's own fallback of `50`). The other keys
-    above match the library defaults.
+!!! danger "The shipped `intents.OCP` block is dead config"
+    `load_pipeline_plugin()` resolves a plugin's config with a single lookup —
+    `Configuration()["intents"][<pipeline_id>]` — and there is **no fallback to
+    `intents.OCP`**. The bundled `mycroft.conf` ships an `intents.OCP` block
+    (`min_score: 40`, `legacy`, `filter_media`, `filter_SEI`, `playback_mode`,
+    `search_fallback`) and **no** `intents.ovos-ocp-pipeline-plugin` section, so none of those
+    shipped values reach the plugin.
+
+    Two consequences. The effective `min_score` today is the code default **50**, not the 40
+    the config file shows. And editing `intents.OCP` changes nothing — put your keys under
+    `intents.ovos-ocp-pipeline-plugin` instead:
+
+    ```json
+    {"intents": {"ovos-ocp-pipeline-plugin": {"min_score": 40}}}
+    ```
+
 
 ---
 

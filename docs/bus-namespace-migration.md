@@ -84,4 +84,4 @@ the legacy delivery, and disable `modernize` once no legacy producers remain.
 
 ---
 **Read next:** [messagebus Service](bus-service.md)
-**Related:** [Bus Events Reference](bus-events.md) · [Spec Tooling](spec-tooling.md) · [Upcoming Changes](upcoming-changes.md)
+**Related:** [Bus Events Reference](bus-events.md) · [Bus-Client Dual-Emit Bridge (migration checklist)](migration-bus-dual-emit.md) · [Spec Tooling](spec-tooling.md) · [Upcoming Changes](upcoming-changes.md)

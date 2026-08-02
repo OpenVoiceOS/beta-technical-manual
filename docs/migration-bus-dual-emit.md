@@ -3,9 +3,19 @@
 !!! abstract "In a nutshell"
     Remote/HiveMind operators and anyone producing or consuming bus
     messages are affected. `ovos-bus-client` 2.x added a transitional
-    bridge that dual-emits legacy and spec topics, and it is on a path to
+    bridge that accepts both legacy and spec topics, and it is on a path to
     removal. Fix it by moving every producer and consumer to `ovos.*` spec
     topics now, while both spellings still work.
+
+    This page is the migration checklist. For how the bridge works, its
+    flags, and why it is not a second copy on the wire, see [Bus Namespace
+    Migration](bus-namespace-migration.md).
+
+!!! warning ""Dual-emit" names the history, not the mechanism"
+    The bridge translates on the **receive** side: a client re-dispatches an incoming message
+    to local listeners under the other spelling. One `emit()` is still exactly one websocket
+    message. The name stuck from the original opt-in commit and is kept here because the
+    commits and PRs use it.
 
 ### The bus-client legacy-topic dual-emit and its removal
 

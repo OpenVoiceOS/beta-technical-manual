@@ -188,7 +188,10 @@ account current player state):
 - `"stop"`: requires media loaded
 
 
-- `"I like that song"`: requires music playing
+- `"I like that song"`: **not matchable today** — `like_song.intent` and
+  `play_favorites.intent` are commented out of the pipeline's intent list, so their files are
+  never loaded, on either stack. The `ocp:like_song` / `ocp:play_favorites` handlers exist and
+  the bus messages work; only the voice route is disabled.
 
 ---
 
@@ -269,8 +272,11 @@ available).
 
 ### Service-level bus messages
 
-Beyond the per-player `ovos.audio.service.*` / `ovos.video.service.*` API, the
-`MediaService` daemon itself handles these bus messages directly:
+Beyond the per-player `ovos.audio.service.*` / `ovos.video.service.*` API, these bus messages
+are handled inside the `ovos-media` process.
+
+Four are on the `MediaService` daemon itself. `ovos.common_play.ping` is the one to use for a
+liveness probe — the rest are on the player, so they answer only once a player exists:
 
 | Bus message | Purpose |
 |---|---|
@@ -278,6 +284,11 @@ Beyond the per-player `ovos.audio.service.*` / `ovos.video.service.*` API, the
 | `ovos.common_play.ping` | Liveness probe. Lets callers detect a running `ovos-media` |
 | `ovos.common_play.search.start` / `ovos.common_play.search.end` | Bracket an in-progress OCP search |
 | `opm.audio.query` | OPM plugin-discovery compatibility with the legacy `PlaybackService` handler |
+
+The rest are registered by `OCPMediaPlayer`:
+
+| Bus message | Purpose |
+|---|---|
 | `ovos.common_play.seek` | Seek within the current track |
 | `ovos.common_play.playlist.set` / `.queue` / `.clear` | Replace, append to, or empty the playlist |
 | `ovos.common_play.shuffle.toggle` / `.set` / `.unset` | Toggle or explicitly set/unset shuffle mode |
@@ -286,7 +297,7 @@ Beyond the per-player `ovos.audio.service.*` / `ovos.video.service.*` API, the
 | `ovos.common_play.cork` / `.uncork` | Pause/resume playback for a competing sound, without ducking |
 | `ovos.common_play.like` / `.unlike` | Mark or unmark the current track as a liked song |
 | `ovos.common_play.status` | Report full current player status |
-| `SEI.get` | Report the stream extractor identifiers `ovos-media` supports |
+| `ovos.common_play.SEI.get` | Report the stream extractor identifiers `ovos-media` supports |
 
 These live alongside the legacy ducking/cork aliases kept for backward compatibility. The full
 ~30-entry `OCPMediaPlayer` handler list, including exact legacy alias names, is in
@@ -333,8 +344,11 @@ device's player state.
 
 ### Liked Songs
 
-Like a currently playing song via GUI or the intent "I like that song". Liked songs can be played
-via the intent "play my favorite songs" or through the GUI.
+Like a currently playing song through the GUI, or over the bus with `ovos.common_play.like`.
+
+The voice route is **disabled today**: `like_song.intent` and `play_favorites.intent` are
+commented out of the OCP pipeline's intent list, so "I like that song" and "play my favorite
+songs" never match. Use the GUI or the bus messages until they are re-enabled.
 
 ### Skills Browse / Featured Media
 

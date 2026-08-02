@@ -118,8 +118,7 @@ Skills must NOT handle playback. They must NOT have intents for play/pause/stop/
 |---|---|
 | `ovos.common_play.query.response` | OCP skill returning search results |
 | `ovos.common_play.announce` | OCP skill announcing presence |
-| `ovos.common_play.player.state` | Player state update |
-| `ovos.common_play.media.state` | Media state update |
+| `ovos.common_play.status.response` | Player and media state, in `player_state` / `media_state` |
 | `ovos.common_play.track.state` | Track state update |
 
 #### Outbound (from pipeline to skills / player)
@@ -132,7 +131,7 @@ Skills must NOT handle playback. They must NOT have intents for play/pause/stop/
 | `ovos.common_play.resume` | Resume |
 | `ovos.common_play.stop` | Stop |
 | `ovos.common_play.next` | Next track |
-| `ovos.common_play.prev` | Previous track |
+| `ovos.common_play.previous` | Previous track |
 
 ---
 **Read next:** [ovos-media](ovos-media.md)
