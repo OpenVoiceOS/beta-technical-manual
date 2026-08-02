@@ -87,14 +87,16 @@ flowchart TD
 
 The XDG user layer is actually a list of configs, one per XDG config dir.
 
-!!! warning "`/etc/xdg` wins over `~/.config`, not the other way round"
-    `get_xdg_config_locations()` returns `[~/.config/mycroft/mycroft.conf,
-    /etc/xdg/mycroft/mycroft.conf]`, and the layers merge left to right, so the **last** one
-    wins. A key set in `/etc/xdg/mycroft/mycroft.conf` overrides the same key in the user's
-    own file.
+The layers merge left to right, so the last one wins. `$XDG_CONFIG_HOME`
+(`~/.config/mycroft/mycroft.conf`) is last, and therefore overrides a system-wide
+`/etc/xdg/mycroft/mycroft.conf`, as the XDG base-directory spec requires.
 
-    That inverts the XDG base-directory spec, where `XDG_CONFIG_HOME` has the highest
-    precedence. Verify what your device does before relying on either order:
+!!! warning "Older versions had this backwards"
+    Before `ovos-config` 2.3.7, `get_xdg_config_locations()` returned the list reversed, so
+    `/etc/xdg/mycroft/mycroft.conf` silently overrode the user's own file
+    ([ovos-config#284](https://github.com/OpenVoiceOS/ovos-config/pull/284)). If you deploy to
+    devices that may still run an older release, check which order they use before relying on
+    either:
 
     ```bash
     python3 -c "from ovos_config.locations import get_xdg_config_locations as f; print(f())"
@@ -328,9 +330,7 @@ ovos-config telemetry --disable   # opt out
 
 ## Tips
 
-- Edit `~/.config/mycroft/mycroft.conf` (user layer). Never edit system or default files. If
-  the device also has `/etc/xdg/mycroft/mycroft.conf`, check that it does not set the same key
-  — it wins over yours.
+- Edit `~/.config/mycroft/mycroft.conf` (user layer). Never edit system or default files.
 
 
 - JSON files support C-style `//` comments.
