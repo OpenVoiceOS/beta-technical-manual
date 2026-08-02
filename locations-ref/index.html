@@ -1743,9 +1743,8 @@ configuration. See the <a href="../glossary/">Glossary</a>.</p>
 </tbody>
 </table>
 <p>In addition to <code>USER_CONFIG</code>, every XDG config dir is scanned, so a system-wide
-<code>/etc/xdg/mycroft/mycroft.conf</code> is also merged at the user layer — <strong>above</strong> your
-<code>~/.config</code> file, not below it. It is last in the merge, so it wins. See <a href="../config/#config-layer-stack">Configuration:
-Config Layer Stack</a>. File formats are JSON (<code>.json</code> or <code>.conf</code>, with C-style <code>//</code> comments supported) or
+<code>/etc/xdg/mycroft/mycroft.conf</code> is also merged at the user layer, below your <code>~/.config</code>
+file. See <a href="../config/#config-layer-stack">Configuration: Config Layer Stack</a>. File formats are JSON (<code>.json</code> or <code>.conf</code>, with C-style <code>//</code> comments supported) or
 YAML (<code>.yml</code> or <code>.yaml</code>).</p>
 <hr />
 <h2 id="xdg-path-helpers">XDG Path Helpers<a class="headerlink" href="#xdg-path-helpers" title="Permanent link">&para;</a></h2>

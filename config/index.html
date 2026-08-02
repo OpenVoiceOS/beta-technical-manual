@@ -1881,14 +1881,16 @@ the full picture.</p>
     F --&gt; W["Wins: highest&lt;br/&gt;priority"]</code></pre>
 <p><em>Diagram:</em> The merge order starts at the bundled default config and ends at the in-memory patch, which wins as the highest priority over remote, distribution, system, and user layers.</p>
 <p>The XDG user layer is actually a list of configs, one per XDG config dir.</p>
+<p>The layers merge left to right, so the last one wins. <code>$XDG_CONFIG_HOME</code>
+(<code>~/.config/mycroft/mycroft.conf</code>) is last, and therefore overrides a system-wide
+<code>/etc/xdg/mycroft/mycroft.conf</code>, as the XDG base-directory spec requires.</p>
 <div class="admonition warning">
-<p class="admonition-title"><code>/etc/xdg</code> wins over <code>~/.config</code>, not the other way round</p>
-<p><code>get_xdg_config_locations()</code> returns <code>[~/.config/mycroft/mycroft.conf,
-/etc/xdg/mycroft/mycroft.conf]</code>, and the layers merge left to right, so the <strong>last</strong> one
-wins. A key set in <code>/etc/xdg/mycroft/mycroft.conf</code> overrides the same key in the user's
-own file.</p>
-<p>That inverts the XDG base-directory spec, where <code>XDG_CONFIG_HOME</code> has the highest
-precedence. Verify what your device does before relying on either order:</p>
+<p class="admonition-title">Older versions had this backwards</p>
+<p>Before <code>ovos-config</code> 2.3.7, <code>get_xdg_config_locations()</code> returned the list reversed, so
+<code>/etc/xdg/mycroft/mycroft.conf</code> silently overrode the user's own file
+(<a href="https://github.com/OpenVoiceOS/ovos-config/pull/284">ovos-config#284</a>). If you deploy to
+devices that may still run an older release, check which order they use before relying on
+either:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>python3<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;from ovos_config.locations import get_xdg_config_locations as f; print(f())&quot;</span>
 </span></code></pre></div>
 <p>The last path printed is the one that wins. All layers are <code>LocalConf</code> dict subclasses backed by a file. Only the user</p>
@@ -2097,9 +2099,7 @@ and XDG path helpers are covered on the
 <h2 id="tips">Tips<a class="headerlink" href="#tips" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
-<p>Edit <code>~/.config/mycroft/mycroft.conf</code> (user layer). Never edit system or default files. If
-  the device also has <code>/etc/xdg/mycroft/mycroft.conf</code>, check that it does not set the same key
-  — it wins over yours.</p>
+<p>Edit <code>~/.config/mycroft/mycroft.conf</code> (user layer). Never edit system or default files.</p>
 </li>
 <li>
 <p>JSON files support C-style <code>//</code> comments.</p>
