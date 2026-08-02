@@ -1658,13 +1658,13 @@ page for its config.</p>
 <td>ovos-ww-plugin-wakeforge</td>
 <td>Alpha</td>
 <td>offline</td>
-<td>Train a custom detector from a single phrase (install from source)</td>
+<td>Train a custom detector from a single phrase</td>
 </tr>
 <tr>
 <td>ovos-ww-plugin-server</td>
 <td>Alpha</td>
 <td>hybrid</td>
-<td>Thin satellite offloading detection to a self-hosted ww-server</td>
+<td>Thin satellite offloading detection to a self-hosted ww-server. <strong>Not available yet</strong> — repos still private</td>
 </tr>
 </tbody>
 </table>
@@ -1713,10 +1713,10 @@ kept working as a fallback but not a pick for new setups.</em></p>
 <td>Long-established lightweight engine from a local model folder</td>
 </tr>
 <tr>
-<td>ovos-stt-server-plugin</td>
+<td>ovos-stt-plugin-server</td>
 <td>Stable</td>
 <td>hybrid</td>
-<td>Offload STT to your own self-hosted OVOS STT server</td>
+<td>Offload STT to an OVOS STT server. <strong>Set <code>urls</code></strong> — unset, it sends audio to public community servers</td>
 </tr>
 <tr>
 <td>ovos-stt-plugin-azure</td>
@@ -1768,7 +1768,7 @@ kept working as a fallback but not a pick for new setups.</em></p>
 <td>ovos-tts-plugin-server</td>
 <td>Mature</td>
 <td>hybrid</td>
-<td>Offload synthesis to a self-hosted/community OVOS/Piper server</td>
+<td>Offload synthesis to an OVOS/Piper server. <strong>Set <code>host</code></strong> — unset, it uses public community servers</td>
 </tr>
 <tr>
 <td>ovos-tts-plugin-edge-tts</td>
@@ -2136,8 +2136,10 @@ server. For privacy, point <code>api_url</code> at your own server, or use <code
 <li><strong>Best accuracy, GPU available:</strong> STT <strong>onnx-asr</strong> with <code>use_cuda: true</code> (<code>ovos-config
   autoconfigure --gpu</code> picks a larger model per language automatically), <strong>fasterwhisper</strong>
   (large model), or <strong>nemo</strong>. TTS <strong>coqui</strong>. Still fully offline.</li>
-<li><strong>Thin satellite / shared backend:</strong> offload with the <code>*-server</code> plugins (STT server, TTS
-  server, ww-server) so the heavy models live on one machine.</li>
+<li><strong>Thin satellite / shared backend:</strong> offload with the <code>*-server</code> plugins so the heavy models
+  live on one machine. STT and TTS are available today (<code>ovos-stt-plugin-server</code>,
+  <code>ovos-tts-plugin-server</code> — set <code>urls</code>/<code>host</code>, or they use public community servers); the
+  wake-word one is not released yet, so keep wake-word detection on the satellite.</li>
 <li><strong>Cloud is acceptable (coverage/quality first):</strong> STT <strong>azure</strong>, TTS <strong>edge-tts</strong>/<strong>polly</strong>,
   translation <strong>google</strong>. Each adds the vendor's separate terms.</li>
 </ul>

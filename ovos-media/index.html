@@ -2184,7 +2184,10 @@ account current player state):</p>
 <p><code>"stop"</code>: requires media loaded</p>
 </li>
 <li>
-<p><code>"I like that song"</code>: requires music playing</p>
+<p><code>"I like that song"</code>: <strong>not matchable today</strong> — <code>like_song.intent</code> and
+  <code>play_favorites.intent</code> are commented out of the pipeline's intent list, so their files are
+  never loaded, on either stack. The <code>ocp:like_song</code> / <code>ocp:play_favorites</code> handlers exist and
+  the bus messages work; only the voice route is disabled.</p>
 </li>
 </ul>
 <hr />
@@ -2255,8 +2258,10 @@ search results into the active playlist vs. replacing it), and
 <code>force_audioservice</code> (route audio through the audio backend even when a GUI is
 available).</p>
 <h3 id="service-level-bus-messages">Service-level bus messages<a class="headerlink" href="#service-level-bus-messages" title="Permanent link">&para;</a></h3>
-<p>Beyond the per-player <code>ovos.audio.service.*</code> / <code>ovos.video.service.*</code> API, the
-<code>MediaService</code> daemon itself handles these bus messages directly:</p>
+<p>Beyond the per-player <code>ovos.audio.service.*</code> / <code>ovos.video.service.*</code> API, these bus messages
+are handled inside the <code>ovos-media</code> process.</p>
+<p>Four are on the <code>MediaService</code> daemon itself. <code>ovos.common_play.ping</code> is the one to use for a
+liveness probe — the rest are on the player, so they answer only once a player exists:</p>
 <table>
 <thead>
 <tr>
@@ -2281,6 +2286,17 @@ available).</p>
 <td><code>opm.audio.query</code></td>
 <td>OPM plugin-discovery compatibility with the legacy <code>PlaybackService</code> handler</td>
 </tr>
+</tbody>
+</table>
+<p>The rest are registered by <code>OCPMediaPlayer</code>:</p>
+<table>
+<thead>
+<tr>
+<th>Bus message</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
 <tr>
 <td><code>ovos.common_play.seek</code></td>
 <td>Seek within the current track</td>
@@ -2314,7 +2330,7 @@ available).</p>
 <td>Report full current player status</td>
 </tr>
 <tr>
-<td><code>SEI.get</code></td>
+<td><code>ovos.common_play.SEI.get</code></td>
 <td>Report the stream extractor identifiers <code>ovos-media</code> supports</td>
 </tr>
 </tbody>
@@ -2353,8 +2369,10 @@ device's player state.</p>
 <hr />
 <h2 id="features">Features<a class="headerlink" href="#features" title="Permanent link">&para;</a></h2>
 <h3 id="liked-songs">Liked Songs<a class="headerlink" href="#liked-songs" title="Permanent link">&para;</a></h3>
-<p>Like a currently playing song via GUI or the intent "I like that song". Liked songs can be played
-via the intent "play my favorite songs" or through the GUI.</p>
+<p>Like a currently playing song through the GUI, or over the bus with <code>ovos.common_play.like</code>.</p>
+<p>The voice route is <strong>disabled today</strong>: <code>like_song.intent</code> and <code>play_favorites.intent</code> are
+commented out of the OCP pipeline's intent list, so "I like that song" and "play my favorite
+songs" never match. Use the GUI or the bus messages until they are re-enabled.</p>
 <h3 id="skills-browse-featured-media">Skills Browse / Featured Media<a class="headerlink" href="#skills-browse-featured-media" title="Permanent link">&para;</a></h3>
 <p>Some skills provide <code>@ocp_featured_media()</code>. These are accessible from the OCP skills menu in the GUI.</p>
 <h3 id="file-browser-integration">File Browser Integration<a class="headerlink" href="#file-browser-integration" title="Permanent link">&para;</a></h3>

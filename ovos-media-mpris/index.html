@@ -1684,10 +1684,15 @@
 <p><code>ovos-media</code> can register on the D-Bus session bus as an MPRIS player (so tools like <code>playerctl</code> and desktop media widgets can control it) and, opt-in, can also reflect and take over other MPRIS players already running on the machine. For the core <code>ovos-media</code> service this extends, see <a href="../ovos-media/">ovos-media</a>.</p>
 </div>
 <div class="admonition note">
-<p class="admonition-title">This is <code>ovos-media</code>'s support, not the stock-install default</p>
-<p>MPRIS integration only exists when you're running <code>ovos-media</code> as the playback backend
-(<code>enable_old_audioservice: false</code>). The default <code>ovos-audio</code> old-audioservice backend does
-not provide it.</p>
+<p class="admonition-title">The legacy stack has MPRIS too, but it ships disabled</p>
+<p>This page documents <code>ovos-media</code>'s implementation. The default legacy stack
+(<code>ovos-ocp-audio-plugin</code> inside <code>ovos-audio</code>) also registers an MPRIS player, but the
+shipped <code>mycroft.conf</code> sets <code>Audio.backends.OCP.disable_mpris: true</code>, so it is off until
+you turn it on. You do not have to migrate to <code>ovos-media</code> to get MPRIS — see <a href="../ocp-audio-plugin/">OCP Audio
+Plugin</a>.</p>
+<p>Note the two stacks spell the setting differently and with opposite polarity: legacy
+<code>disable_mpris</code> (shipped <code>true</code>) versus <code>ovos-media</code>'s <code>media.enable_mpris</code> (default
+<code>false</code>).</p>
 </div>
 <hr />
 <h2 id="mpris-integration">MPRIS Integration<a class="headerlink" href="#mpris-integration" title="Permanent link">&para;</a></h2>

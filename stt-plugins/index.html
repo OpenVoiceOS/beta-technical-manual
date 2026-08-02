@@ -1567,13 +1567,13 @@ separately-licensed model, that is called out under "model".</p>
 </tr>
 <tr>
 <td><a href="../stt-plugins-reference/#ovos-stt-plugin-mms">ovos-stt-plugin-mms</a></td>
-<td>OVOS plugin for <a href="https://huggingface.co/docs/transformers/main/en/model_doc/mms">The Massively Multilingual Speech (MMS) project</a>. Warning: archived. MMS models also run under <a href="https://github.com/OpenVoiceOS/ovos-stt-plugin-wav2vec2">ovos-stt-plugin-wav2vec2</a>.</td>
+<td>OVOS plugin for <a href="https://huggingface.co/docs/transformers/main/en/model_doc/mms">The Massively Multilingual Speech (MMS) project</a>. Warning: archived. MMS models also run under <a href="https://github.com/OpenVoiceOS/ovos-stt-plugin-wav2vec2">ovos-stt-plugin-wav2vec2</a>, which is not on PyPI yet — install it from source, or use <a href="../stt-plugins-reference/#ovos-stt-plugin-onnx-asr">onnx-asr</a>, which covers the same wav2vec2 families.</td>
 <td>Apache-2.0 (model: see model card)</td>
 <td>Deprecated</td>
 </tr>
 <tr>
-<td><a href="../stt-plugins-reference/#ovos-stt-server-plugin">ovos-stt-server-plugin</a></td>
-<td>OpenVoiceOS companion plugin for <a href="https://github.com/OpenVoiceOS/ovos-stt-http-server">OpenVoiceOS STT Server</a></td>
+<td><a href="../stt-plugins-reference/#ovos-stt-server-plugin">ovos-stt-plugin-server</a></td>
+<td>Companion plugin for an <a href="https://github.com/OpenVoiceOS/ovos-stt-http-server">OVOS STT Server</a>. Install name is <code>ovos-stt-plugin-server</code>; the repo is <code>ovos-stt-server-plugin</code> (words swapped). <strong>Sends audio to public community servers unless you set <code>urls</code></strong></td>
 <td>Apache-2.0</td>
 <td>Stable</td>
 </tr>
@@ -1585,7 +1585,7 @@ separately-licensed model, that is called out under "model".</p>
 </tr>
 <tr>
 <td><a href="../stt-plugins-reference/#ovos-stt-plugin-whisper">ovos-stt-plugin-whisper</a></td>
-<td>OpenVoiceOS STT plugin for <a href="https://github.com/guillaumekln/faster-whisper">Whisper</a>, using transformers library</td>
+<td>OpenVoiceOS STT plugin for <a href="https://github.com/openai/whisper">Whisper</a>, using the transformers library</td>
 <td>Apache-2.0 (code default model: <code>base</code>. Configure a larger model such as <a href="https://huggingface.co/openai/whisper-large-v3">openai/whisper-large-v3</a> for higher accuracy)</td>
 <td>Beta</td>
 </tr>
@@ -1621,7 +1621,7 @@ separately-licensed model, that is called out under "model".</p>
 </tr>
 <tr>
 <td><a href="../stt-plugins-reference/#ovos-stt-plugin-nos">ovos-stt-plugin-nos</a></td>
-<td>Galician STT using Proxecto Nós wav2vec2 models. Warning: archived, superseded by <a href="https://github.com/OpenVoiceOS/ovos-stt-plugin-wav2vec2">ovos-stt-plugin-wav2vec2</a>.</td>
+<td>Galician STT using Proxecto Nós wav2vec2 models. Warning: archived, superseded by <a href="https://github.com/OpenVoiceOS/ovos-stt-plugin-wav2vec2">ovos-stt-plugin-wav2vec2</a>, which is not on PyPI yet — install it from source, or use <a href="../stt-plugins-reference/#ovos-stt-plugin-onnx-asr">onnx-asr</a>, which covers the same wav2vec2 families.</td>
 <td>Apache-2.0 (model: see model card)</td>
 <td>Deprecated</td>
 </tr>

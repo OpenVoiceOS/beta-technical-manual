@@ -1662,13 +1662,20 @@ For example, "next song" does nothing when no player is active.</p>
 </tr>
 </tbody>
 </table>
-<p>The config block is read from <code>intents.ovos-ocp-pipeline-plugin</code> (the plugin's
-entry-point ID), falling back to the older <code>intents.OCP</code> key.</p>
-<div class="admonition note">
-<p class="admonition-title">Shipped defaults differ slightly</p>
-<p>The bundled <code>mycroft.conf</code> ships an <code>intents.ovos-ocp-pipeline-plugin</code> section
-with <code>min_score: 40</code> (not the library's own fallback of <code>50</code>). The other keys
-above match the library defaults.</p>
+<p>The config block is read from <code>intents.ovos-ocp-pipeline-plugin</code>, the plugin's entry-point ID.</p>
+<div class="admonition danger">
+<p class="admonition-title">The shipped <code>intents.OCP</code> block is dead config</p>
+<p><code>load_pipeline_plugin()</code> resolves a plugin's config with a single lookup —
+<code>Configuration()["intents"][&lt;pipeline_id&gt;]</code> — and there is <strong>no fallback to
+<code>intents.OCP</code></strong>. The bundled <code>mycroft.conf</code> ships an <code>intents.OCP</code> block
+(<code>min_score: 40</code>, <code>legacy</code>, <code>filter_media</code>, <code>filter_SEI</code>, <code>playback_mode</code>,
+<code>search_fallback</code>) and <strong>no</strong> <code>intents.ovos-ocp-pipeline-plugin</code> section, so none of those
+shipped values reach the plugin.</p>
+<p>Two consequences. The effective <code>min_score</code> today is the code default <strong>50</strong>, not the 40
+the config file shows. And editing <code>intents.OCP</code> changes nothing — put your keys under
+<code>intents.ovos-ocp-pipeline-plugin</code> instead:</p>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="p">{</span><span class="nt">&quot;intents&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;ovos-ocp-pipeline-plugin&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;min_score&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">40</span><span class="p">}}}</span>
+</span></code></pre></div>
 </div>
 <hr />
 <h2 id="gotcha-legacy-vs-ocp-playback">Gotcha: legacy vs. OCP playback<a class="headerlink" href="#gotcha-legacy-vs-ocp-playback" title="Permanent link">&para;</a></h2>
