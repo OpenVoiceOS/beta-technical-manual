@@ -265,7 +265,18 @@ OVOS is a community-driven project, maintained by volunteers. Feedback, bug repo
 !!! tip "Check the install without reading logs"
     Run `systemctl --user status ovos.service` to see whether each unit came up cleanly; it
     cascades to the individual OVOS services (`PartOf=ovos.service`). Check that before digging
-    through logs. See
+    through logs.
+
+    A healthy unit reads:
+
+    ```text
+    ● ovos.service - OVOS
+         Loaded: loaded (/home/ovos/.config/systemd/user/ovos.service; enabled; preset: enabled)
+         Active: active (running) since ...
+    ```
+
+    `Active: failed`, `activating (auto-restart)`, or a `Loaded: ... disabled` line each mean
+    something is wrong. `active (running)` is the only pass. See
     [Production Operations](production-operations.md#knowing-when-the-assistant-is-actually-ready)
     for the readiness pattern and the full unit list.
 

@@ -47,6 +47,9 @@ To easily debug intent parsing, open a terminal and run `ologs | grep intent`. T
     !!! note "`ologs` is a raspOVOS shortcut"
         `ologs` is a raspOVOS-only shell alias (`tail -f` over the log files, see [raspOVOS commands](raspovos-commands-reference.md#helpful-commands)). It is **not** the portable [`ovos-logs`](cli-tools.md#reading-the-logs-ovos-logs) CLI. On a non-raspOVOS install use `ovos-logs` (or `tail -f` on the [log files](troubleshooting.md)) instead.
 
+        It also **excludes `bus.log`**, so a messagebus problem never shows up in `ologs` output.
+        Tail that one on its own: `tail -f ~/.local/state/mycroft/bus.log`.
+
     then in another terminal send commands with `ovos-say-to "sentence to test"`  (or use your voice)
 
     The `Session pipeline` line in the log below shows the [default pipeline order](pipelines-overview.md#available-pipeline-components):

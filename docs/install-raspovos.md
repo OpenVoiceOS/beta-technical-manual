@@ -252,6 +252,8 @@ A Pi 3 user should pick `lite`. A Pi 5 user who wants to stay fully offline shou
 4. **Check System Status:**
 
     - Use the `ologs` command to monitor logs and confirm that the system has fully initialized.
+      Note that `ologs` excludes `bus.log`, so if the device never speaks and `ologs` shows
+      nothing useful, tail the messagebus log too: `tail -f ~/.local/state/mycroft/bus.log`.
 
 ---
 

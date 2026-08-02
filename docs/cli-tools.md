@@ -9,8 +9,16 @@
     the [Glossary](glossary.md) for unfamiliar terms.
 
 Each command below is a console-script entry point declared by a core OVOS package, so it lands on
-your `PATH` when that package is installed. Run any of them with `--help` for the authoritative,
-version-correct options.
+your `PATH` when that package is installed. Most take `--help`, which is the authoritative,
+version-correct list of options.
+
+!!! warning "`--help` is not safe on older bus clients"
+    `ovos-speak`, `ovos-say-to`, `ovos-listen` and `ovos-simple-cli` gained `--help` in
+    `ovos-bus-client` 2.6.4. Before that they read the first argument as the utterance, so
+    `ovos-speak --help` made the device **say "--help" out loud**, and `ovos-say-to --help` injected
+    it as if you had spoken it
+    ([ovos-bus-client#274](https://github.com/OpenVoiceOS/ovos-bus-client/pull/274)). On an older
+    install, use the usage lines documented on this page instead.
 
 ---
 

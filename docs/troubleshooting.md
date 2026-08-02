@@ -119,15 +119,26 @@ OVOS is a client of it, so if it is down nothing downstream can work.
 ovos-listen
 ```
 
-`ovos-listen` is the simplest possible probe. It just emits `mycroft.mic.listen` and exits. If the
-bus isn't reachable, the client itself logs the failure to the terminal:
+`ovos-listen` is the simplest possible probe. It emits `mycroft.mic.listen` and exits.
 
-```text
-WARNING - Connection Refused. Is Messagebus Service running?
-WARNING - Message Bus Client will reconnect in 5.0 seconds.
-```
+**What a working bus looks like:** the command returns to the shell within a second or so, and the
+device starts listening.
 
-If you see that, start (or restart) `ovos-messagebus`, then `ovos-core` and `ovos-dinkum-listener`,
+**What an unreachable bus looks like** depends on your version:
+
+- `ovos-bus-client` 2.6.4 and later print the address that was tried and exit non-zero:
+
+    ```text
+    ERROR: could not reach the messagebus at ws://127.0.0.1:8181 after 10 seconds.
+    Is it running? Check with: systemctl --user status ovos-messagebus.service
+    ```
+
+- Earlier versions **hang indefinitely and print nothing at all**
+  ([ovos-bus-client#274](https://github.com/OpenVoiceOS/ovos-bus-client/pull/274)). A terminal that
+  just sits there is the symptom. Press `Ctrl+C` and read `bus.log`, or check the service directly
+  with `systemctl --user status ovos-messagebus.service`. Do not read the silence as success.
+
+Either way, start (or restart) `ovos-messagebus`, then `ovos-core` and `ovos-dinkum-listener`,
 and check `bus.log` for a clean startup (no repeated `Connection Refused` lines). Clients
 reconnect on their own with a backing-off retry (5 s → 60 s cap), so a bus restart does **not**
 require restarting every client by hand. See [Bus restart / reconnect

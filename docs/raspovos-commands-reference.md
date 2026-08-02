@@ -47,7 +47,9 @@
 
 **Logs and status:**
 
-- `ologs`: view all logs in real time.
+- `ologs`: follow the logs in real time — **except `bus.log`**, which the alias excludes
+  (`tail -f ~/.local/state/mycroft/!(bus.log)`). For messagebus traffic, tail that file directly:
+  `tail -f ~/.local/state/mycroft/bus.log`.
 - `ovos-logs [COMMAND] --help`: a small tool to help navigate the logs.
 - `ovos-status`: list OVOS-related systemd services.
 - `ovos-restart`: restart all OVOS-related systemd services.
