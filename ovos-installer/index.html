@@ -1749,7 +1749,14 @@ available. <strong>macOS</strong> is supported with <code>launchd</code> service
 <p class="admonition-title">Check the install without reading logs</p>
 <p>Run <code>systemctl --user status ovos.service</code> to see whether each unit came up cleanly; it
 cascades to the individual OVOS services (<code>PartOf=ovos.service</code>). Check that before digging
-through logs. See
+through logs.</p>
+<p>A healthy unit reads:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>● ovos.service - OVOS
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>     Loaded: loaded (/home/ovos/.config/systemd/user/ovos.service; enabled; preset: enabled)
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>     Active: active (running) since ...
+</span></code></pre></div>
+<p><code>Active: failed</code>, <code>activating (auto-restart)</code>, or a <code>Loaded: ... disabled</code> line each mean
+something is wrong. <code>active (running)</code> is the only pass. See
 <a href="../production-operations/#knowing-when-the-assistant-is-actually-ready">Production Operations</a>
 for the readiness pattern and the full unit list.</p>
 </div>

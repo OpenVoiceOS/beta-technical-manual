@@ -1778,6 +1778,8 @@ problems in plain language before you dig into the technical steps below.</p>
 <div class="admonition note">
 <p class="admonition-title"><code>ologs</code> is a raspOVOS shortcut</p>
 <p><code>ologs</code> is a raspOVOS-only shell alias (<code>tail -f</code> over the log files, see <a href="../raspovos-commands-reference/#helpful-commands">raspOVOS commands</a>). It is <strong>not</strong> the portable <a href="../cli-tools/#reading-the-logs-ovos-logs"><code>ovos-logs</code></a> CLI. On a non-raspOVOS install use <code>ovos-logs</code> (or <code>tail -f</code> on the <a href="../troubleshooting/">log files</a>) instead.</p>
+<p>It also <strong>excludes <code>bus.log</code></strong>, so a messagebus problem never shows up in <code>ologs</code> output.
+Tail that one on its own: <code>tail -f ~/.local/state/mycroft/bus.log</code>.</p>
 </div>
 <p>then in another terminal send commands with <code>ovos-say-to "sentence to test"</code>  (or use your voice)</p>
 <p>The <code>Session pipeline</code> line in the log below shows the <a href="../pipelines-overview/#available-pipeline-components">default pipeline order</a>:</p>

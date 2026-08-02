@@ -1821,12 +1821,25 @@ reference, the security warning in detail, and a step-by-step walkthrough.</p>
 OVOS is a client of it, so if it is down nothing downstream can work.</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>ovos-listen
 </span></code></pre></div>
-<p><code>ovos-listen</code> is the simplest possible probe. It just emits <code>mycroft.mic.listen</code> and exits. If the
-bus isn't reachable, the client itself logs the failure to the terminal:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>WARNING - Connection Refused. Is Messagebus Service running?
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>WARNING - Message Bus Client will reconnect in 5.0 seconds.
+<p><code>ovos-listen</code> is the simplest possible probe. It emits <code>mycroft.mic.listen</code> and exits.</p>
+<p><strong>What a working bus looks like:</strong> the command returns to the shell within a second or so, and the
+device starts listening.</p>
+<p><strong>What an unreachable bus looks like</strong> depends on your version:</p>
+<ul>
+<li>
+<p><code>ovos-bus-client</code> 2.6.4 and later print the address that was tried and exit non-zero:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>ERROR: could not reach the messagebus at ws://127.0.0.1:8181 after 10 seconds.
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>Is it running? Check with: systemctl --user status ovos-messagebus.service
 </span></code></pre></div>
-<p>If you see that, start (or restart) <code>ovos-messagebus</code>, then <code>ovos-core</code> and <code>ovos-dinkum-listener</code>,
+</li>
+<li>
+<p>Earlier versions <strong>hang indefinitely and print nothing at all</strong>
+  (<a href="https://github.com/OpenVoiceOS/ovos-bus-client/pull/274">ovos-bus-client#274</a>). A terminal that
+  just sits there is the symptom. Press <code>Ctrl+C</code> and read <code>bus.log</code>, or check the service directly
+  with <code>systemctl --user status ovos-messagebus.service</code>. Do not read the silence as success.</p>
+</li>
+</ul>
+<p>Either way, start (or restart) <code>ovos-messagebus</code>, then <code>ovos-core</code> and <code>ovos-dinkum-listener</code>,
 and check <code>bus.log</code> for a clean startup (no repeated <code>Connection Refused</code> lines). Clients
 reconnect on their own with a backing-off retry (5 s → 60 s cap), so a bus restart does <strong>not</strong>
 require restarting every client by hand. See <a href="../bus-reconnect/#bus-restart-reconnect-behavior">Bus restart / reconnect

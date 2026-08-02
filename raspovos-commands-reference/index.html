@@ -1452,7 +1452,9 @@
 </ul>
 <p><strong>Logs and status:</strong></p>
 <ul>
-<li><code>ologs</code>: view all logs in real time.</li>
+<li><code>ologs</code>: follow the logs in real time — <strong>except <code>bus.log</code></strong>, which the alias excludes
+  (<code>tail -f ~/.local/state/mycroft/!(bus.log)</code>). For messagebus traffic, tail that file directly:
+  <code>tail -f ~/.local/state/mycroft/bus.log</code>.</li>
 <li><code>ovos-logs [COMMAND] --help</code>: a small tool to help navigate the logs.</li>
 <li><code>ovos-status</code>: list OVOS-related systemd services.</li>
 <li><code>ovos-restart</code>: restart all OVOS-related systemd services.</li>

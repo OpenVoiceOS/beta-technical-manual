@@ -2011,7 +2011,9 @@ change it at first boot, if the device will be reachable on a network you don't 
 <li>
 <p><strong>Check System Status:</strong></p>
 <ul>
-<li>Use the <code>ologs</code> command to monitor logs and confirm that the system has fully initialized.</li>
+<li>Use the <code>ologs</code> command to monitor logs and confirm that the system has fully initialized.
+  Note that <code>ologs</code> excludes <code>bus.log</code>, so if the device never speaks and <code>ologs</code> shows
+  nothing useful, tail the messagebus log too: <code>tail -f ~/.local/state/mycroft/bus.log</code>.</li>
 </ul>
 </li>
 </ol>
