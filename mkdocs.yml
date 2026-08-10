@@ -202,6 +202,7 @@ nav:
       - Bidirectional Translation: bidirectional-translation.md
       - Contributing Translations: ovos-localize-tutorial.md
       - Translation Plugins: translation-plugins.md
+      - linguonnx Language Plugins: linguonnx-plugins.md
   - Skills:
       - Skill Development Overview: skills-overview.md
       - Tutorials:
