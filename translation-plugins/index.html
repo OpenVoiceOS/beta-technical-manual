@@ -945,6 +945,27 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../linguonnx-plugins.md" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    linguonnx Language Plugins
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -1379,6 +1400,24 @@ compute budget to run NLLB locally.</p>
 <td>no license file</td>
 <td>A <em>voter</em> (<code>ovos-lang-detector-plugin-voter</code>) that averages classic detectors. By default it uses cld2, langdetect and fastlang. cld3 is also available as a separate sub-plugin.</td>
 <td>Stable</td>
+</tr>
+<tr>
+<td><code>ovos-translate-plugin-linguonnx</code> (<a href="https://github.com/OpenVoiceOS/ovos-plugin-linguonnx">repo</a>)</td>
+<td>no</td>
+<td>yes</td>
+<td>FOSS (Offline)</td>
+<td>Apache-2.0</td>
+<td>ONNX routing over a graph of translation models, no torch. Reaches 586 languages. See <a href="linguonnx-plugins.md">linguonnx Language Plugins</a>.</td>
+<td>Alpha</td>
+</tr>
+<tr>
+<td><code>ovos-lang-detect-plugin-linguonnx</code> (<a href="https://github.com/OpenVoiceOS/ovos-plugin-linguonnx">repo</a>)</td>
+<td>yes</td>
+<td>no</td>
+<td>FOSS (Offline)</td>
+<td>Apache-2.0</td>
+<td>GlotLID on ONNX. Same package as <code>ovos-translate-plugin-linguonnx</code>. See <a href="linguonnx-plugins.md">linguonnx Language Plugins</a>.</td>
+<td>Alpha</td>
 </tr>
 <tr>
 <td><code>ovos-google-translate-plugin</code> (<a href="https://github.com/OpenVoiceOS/ovos-google-translate-plugin">repo</a>)</td>
