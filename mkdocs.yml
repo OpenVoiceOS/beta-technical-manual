@@ -339,6 +339,7 @@ nav:
           - For Remote Bus Clients: updating-remote-clients.md
       - Upcoming Changes: upcoming-changes.md
       - Self-hosting Servers:
+          - Public Server Stack: public-server-stack.md
           - STT Server: stt-server.md
           - TTS Server: tts-server.md
           - TTS Server Deployment: tts-server-deployment.md
