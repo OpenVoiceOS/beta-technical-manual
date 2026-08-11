@@ -14,9 +14,6 @@ Developer-oriented docs (this repo) publish automatically at [openvoiceos.github
 
 ## Credits
 
-Developed by [TigreGótico](https://tigregotico.pt) for
-[OpenVoiceOS](https://openvoiceos.org).
-
 [![NGI0 Commons Fund](./ngi.png)](https://nlnet.nl/project/OpenVoiceOS)
 
 This project was funded through the [NGI0 Commons Fund](https://nlnet.nl/commonsfund),
