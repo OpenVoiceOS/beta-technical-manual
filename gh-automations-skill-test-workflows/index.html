@@ -1934,7 +1934,7 @@
 <td><code>require_padatious</code></td>
 <td>boolean</td>
 <td><code>false</code></td>
-<td>Auto-install ovos-padatious (PyPI name) and fail CI if installation fails. Automatically adds 'swig' to system_deps for building the C extension (fann2). When false, Padatious pipeline tests are skipped if the plugin is absent.</td>
+<td>Auto-install ovos-padatious (PyPI name) and fail CI if installation fails. When false, Padatious pipeline tests are skipped if the plugin is absent.</td>
 </tr>
 <tr>
 <td><code>require_m2v</code></td>
@@ -2077,12 +2077,11 @@
 </span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="w">      </span><span class="nt">test_path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;test/end2end/&quot;</span>
 </span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="w">      </span><span class="nt">require_adapt</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 </span></code></pre></div>
-<p>To require Padatious (C extension, add <code>swig</code> to system_deps):</p>
+<p>To require Padatious:</p>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="w">    </span><span class="nt">with</span><span class="p">:</span>
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">      </span><span class="nt">test_path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;test/end2end/&quot;</span>
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">      </span><span class="nt">system_deps</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;swig&quot;</span>
-</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">      </span><span class="nt">require_adapt</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">      </span><span class="nt">require_padatious</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">      </span><span class="nt">require_adapt</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">      </span><span class="nt">require_padatious</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 </span></code></pre></div>
 <h3 id="notes">Notes<a class="headerlink" href="#notes" title="Permanent link">&para;</a></h3>
 <ul>

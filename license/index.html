@@ -1397,6 +1397,8 @@ specific plugin, or a plugin repository that never shipped a <code>LICENSE</code
 <p>Individual plugins or skills may carry their own license when they wrap a dependency that requires it. For example, a TTS plugin that wraps an AGPL-licensed engine cannot itself be relicensed under a more permissive term. Core components are kept fully free. Any code whose license cannot be controlled lives in an optional plugin instead, flagged as such.</p>
 <p>This also means avoiding LGPL code, for the reasons explained in
 <a href="https://softwareengineering.stackexchange.com/questions/119436/what-does-gpl-with-classpath-exception-mean-in-practice/326325#326325">this discussion of the GPL classpath exception</a>.</p>
+<p>Padatious used to be listed here. It was ported from libfann to pure numpy, so
+it is Apache-2.0 with no reservations and is no longer an exception.</p>
 <h2 id="policy-properties">Policy properties<a class="headerlink" href="#policy-properties" title="Permanent link">&para;</a></h2>
 <p>The license policy has the following properties:</p>
 <ul>
@@ -1426,11 +1428,6 @@ own project.</p>
 </tr>
 </thead>
 <tbody>
-<tr>
-<td><code>ovos-core[lgpl]</code> extra</td>
-<td>Apache-2.0 code, LGPL dependency</td>
-<td>The extra pulls in <a href="https://pypi.org/project/fann2/">fann2</a>, the Python binding for <a href="https://github.com/libfann/fann">libfann</a>. Both are LGPL-2.1-or-later. <a href="https://github.com/OpenVoiceOS/ovos-padatious-pipeline-plugin">ovos-padatious</a> itself is Apache-2.0: the LGPL obligation comes from fann2/libfann. If LGPL is unacceptable for your product, omit the extra and use <a href="https://github.com/OpenVoiceOS/padacioso">padacioso</a> instead</td>
-</tr>
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/ovos-tts-plugin-mimic3">ovos-tts-plugin-mimic3</a></td>
 <td>AGPL</td>
