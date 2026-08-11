@@ -14,6 +14,9 @@ Individual plugins or skills may carry their own license when they wrap a depend
 This also means avoiding LGPL code, for the reasons explained in
 [this discussion of the GPL classpath exception](https://softwareengineering.stackexchange.com/questions/119436/what-does-gpl-with-classpath-exception-mean-in-practice/326325#326325).
 
+Padatious used to be listed here. It was ported from libfann to pure numpy, so
+it is Apache-2.0 with no reservations and is no longer an exception.
+
 ## Policy properties
 
 The license policy has the following properties:
@@ -39,7 +42,6 @@ The repositories below do not follow the universal donor policy. Check their lic
 
 | Repository | License | Reason |
 |---|---|---|
-| `ovos-core[lgpl]` extra | Apache-2.0 code, LGPL dependency | The extra pulls in [fann2](https://pypi.org/project/fann2/), the Python binding for [libfann](https://github.com/libfann/fann). Both are LGPL-2.1-or-later. [ovos-padatious](https://github.com/OpenVoiceOS/ovos-padatious-pipeline-plugin) itself is Apache-2.0: the LGPL obligation comes from fann2/libfann. If LGPL is unacceptable for your product, omit the extra and use [padacioso](https://github.com/OpenVoiceOS/padacioso) instead |
 | [ovos-tts-plugin-mimic3](https://github.com/OpenVoiceOS/ovos-tts-plugin-mimic3) | AGPL | depends on [mimic3](https://github.com/MycroftAI/mimic3) ([AGPL-3.0](https://github.com/MycroftAI/mimic3/blob/master/LICENSE)). This plugin is **archived**. See [Deprecated & Archived Repositories](deprecated-repos.md) for the current replacement |
 | [ovos-tts-plugin-espeakNG](https://github.com/OpenVoiceOS/ovos-tts-plugin-espeakNG) | GPL | depends on [espeak-ng](https://github.com/espeak-ng/espeak-ng) ([GPL-3.0](https://github.com/espeak-ng/espeak-ng/blob/master/COPYING)) |
 | [ovos-tts-plugin-SAM](https://github.com/OpenVoiceOS/ovos-tts-plugin-SAM) | see repo (no license file) | the package self-declares Apache-2.0 in its `pyproject.toml`. The repository ships no `LICENSE` file. The underlying S.A.M. engine is reverse-engineered abandonware with no clear upstream license |

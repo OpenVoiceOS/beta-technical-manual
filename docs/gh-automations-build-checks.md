@@ -99,7 +99,7 @@ comment.
 | `runner` | string | `ubuntu-latest` | Runner label |
 | `test_path` | string | `test/` | Path passed to pytest. |
 | `python_version` | string | `3.11` | Python version to use. |
-| `system_deps` | string | `""` | Extra apt packages to install before testing (space-separated). ovos-padatious needs 'swig libfann-dev'. |
+| `system_deps` | string | `""` | Extra apt packages to install before testing (space-separated). |
 | `pre_install_pip` | string | `""` | Optional space-separated pip requirement specs installed BEFORE the repo under test, under the channel constraints. Use for test-only siblings the channel does not name. Named to match the same input on build-tests.yml and ovoscope.yml. |
 | `install_extras` | string | `test` | pip extras used when installing the repo under test, e.g. 'test' or 'dev,test'. Set to '' to install the package with no extras. |
 | `pytest_args` | string | `-v --tb=short -rxX` | Extra arguments appended to the pytest invocation. |
