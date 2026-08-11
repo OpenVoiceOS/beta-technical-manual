@@ -199,7 +199,7 @@ jobs:
     uses: OpenVoiceOS/gh-automations/.github/workflows/license-check.yml@dev
     with:
       install_extras: '[extras]'
-      system_deps: 'swig libfann-dev'
+      system_deps: ''
       exclude_packages: '^(tqdm|some-gpl-package).*'
 
 ```

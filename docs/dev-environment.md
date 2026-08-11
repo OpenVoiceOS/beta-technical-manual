@@ -36,7 +36,7 @@ in the repo takes effect the next time that module is imported, without reinstal
 | `mycroft` | The rest of a runnable stack: `ovos_PHAL[extras]`, `ovos-audio[extras]`, `ovos-gui`, `ovos-messagebus`, `ovos-dinkum-listener[extras]`. |
 | `plugins` | A default set of pipeline/utterance plugins (adapt, OCP, persona, number/date parsers, and others). |
 | `skills-essential` / `skills-extra` | Default skills bundles. |
-| `lgpl` | `ovos_padatious` and `fann2` (kept separate for licensing reasons). |
+| `padatious` | `ovos_padatious`. Apache-2.0. The old name for this extra was `lgpl`, which still works as an alias. |
 | `test` | `pytest` and the fixtures the repo's own test suite needs (see [Running tests](#running-tests)). |
 
 Install the combination you need. To hack on `ovos-core` itself with a full local stack:

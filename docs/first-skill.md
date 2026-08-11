@@ -201,8 +201,7 @@ pip install -e .
 ```
 
 Your skill matches with a `.intent` file, which is handled by **Padatious**. Padatious is an
-optional install, because its neural-network backend is LGPL — a plain OVOS install may not
-have it. Check, and add it if it is missing:
+optional install, so a plain OVOS install may not have it. Check, and add it if it is missing:
 
 ```bash
 pip show ovos-padatious || pip install ovos-padatious

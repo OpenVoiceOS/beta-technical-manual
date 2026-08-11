@@ -185,7 +185,7 @@ OVOS uses Python extras (e.g., `[mycroft]`) to let you install predefined groups
 | Extra Name           | Purpose                                                                 |
 |----------------------|-------------------------------------------------------------------------|
 | `mycroft`            | Core services for full voice assistant experience                      |
-| `lgpl`               | Adds [Padatious](padatious-pipeline.md) and its neural-network backend `fann2` (LGPL). Needs system build tools, see below |
+| `padatious`          | Adds the [Padatious](padatious-pipeline.md) intent pipeline. Apache-2.0, pure Python. The old name `lgpl` still works as an alias |
 | `plugins`            | Includes various plugin interfaces                                     |
 | `skills-essential`   | Must-have skills (like system control, clock, weather)                 |
 | `skills-audio`       | Audio I/O-based skills                                                  |
@@ -199,19 +199,8 @@ adding both the bracketed extras and a `-c` constraints file:
 
 ### Full Installation Example
 
-The `lgpl` extra pulls in `fann2`, which is published as a source distribution only. There are
-no wheels, so pip/uv compiles it during install. On Debian/Ubuntu, install its build
-prerequisites first:
-
 ```bash
-sudo apt install -y swig libfann-dev
-```
-
-Without them the install below fails while building `fann2`. Omit the `lgpl` extra if you do not
-need the Padatious pipeline. [padacioso](padatious-pipeline.md) is the pure-Python alternative.
-
-```bash
-uv pip install "ovos-core[mycroft,lgpl,plugins,skills-essential,skills-audio,skills-gui,skills-internet,skills-media,skills-desktop]" \
+uv pip install "ovos-core[mycroft,padatious,plugins,skills-essential,skills-audio,skills-gui,skills-internet,skills-media,skills-desktop]" \
     -c https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-stable.txt
 ```
 

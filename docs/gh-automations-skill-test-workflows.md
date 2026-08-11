@@ -43,7 +43,7 @@ Runs [ovoscope](ovoscope-overview.md) end-to-end skill tests on a **single Pytho
 | `post_install_pip` | string | `""` | Optional space-separated pip requirement specs installed AFTER the package + test-extras install, with --force-reinstall --no-deps so the dependency resolver cannot revert them. Use to pin an unreleased prerelease (e.g. a sibling at the same version as a published wheel) that the test-extras resolution would otherwise downgrade. |
 | `test_path` | string | `test/end2end/` | Path passed to pytest — should point at the end2end directory |
 | `require_adapt` | boolean | `false` | Auto-install ovos-adapt-pipeline-plugin and fail CI if installation fails. When false, Adapt pipeline tests are skipped if the plugin is absent. |
-| `require_padatious` | boolean | `false` | Auto-install ovos-padatious (PyPI name) and fail CI if installation fails. Automatically adds 'swig' to system_deps for building the C extension (fann2). When false, Padatious pipeline tests are skipped if the plugin is absent. |
+| `require_padatious` | boolean | `false` | Auto-install ovos-padatious (PyPI name) and fail CI if installation fails. When false, Padatious pipeline tests are skipped if the plugin is absent. |
 | `require_m2v` | boolean | `false` | Auto-install ovos-m2v-pipeline and fail CI if installation fails. When false, M2V pipeline tests are skipped if the plugin is absent. |
 | `require_nebulento` | boolean | `false` | Auto-install nebulento and fail CI if installation fails. When false, nebulento pipeline tests are skipped if the plugin is absent. |
 | `require_palavreado` | boolean | `false` | Auto-install palavreado and fail CI if installation fails. When false, palavreado pipeline tests are skipped if the plugin is absent. |
@@ -107,12 +107,11 @@ jobs:
 
 ```
 
-To require Padatious (C extension, add `swig` to system_deps):
+To require Padatious:
 
 ```yaml
     with:
       test_path: "test/end2end/"
-      system_deps: "swig"
       require_adapt: true
       require_padatious: true
 
