@@ -1481,11 +1481,11 @@ a question.</p>
 <td>discovery handshake (same names)</td>
 </tr>
 <tr>
-<td><code>&lt;skill_id&gt;.common_query.request</code>: full-answer request to a claiming skill (dotted, non-dispatch)</td>
+<td><code>ovos.common_query.request</code>: full-answer request — a static broadcast topic, with the target skill named in <code>data.skill_id</code>, never in the topic</td>
 <td><code>question:query</code> broadcast</td>
 </tr>
 <tr>
-<td><code>&lt;skill_id&gt;.common_query.response</code>: a skill's answer plus <code>conf</code></td>
+<td><code>ovos.common_query.response</code>: a skill's answer plus <code>conf</code>, responder identity in <code>data.skill_id</code></td>
 <td><code>question:query.response</code></td>
 </tr>
 <tr>
