@@ -2152,13 +2152,13 @@ client at construction, and may listen to or emit any bus event.</p>
 <summary>Technical Reference</summary>
 <ul>
 <li>
-<p><code>PHAL.start()</code> (<a href="https://github.com/OpenVoiceOS/ovos-PHAL/blob/dev/ovos_PHAL/service.py"><code>ovos_PHAL/service.py:97</code></a>): loads user-level plugins and reports <code>ProcessStatus</code> ready. <code>PHAL</code> is a plain object, not a thread.</p>
+<p><code>PHAL.start()</code> (<a href="https://github.com/OpenVoiceOS/ovos-PHAL/blob/dev/ovos_PHAL/service.py"><code>ovos_PHAL/service.py:107</code></a>): loads user-level plugins and reports <code>ProcessStatus</code> ready. <code>PHAL</code> is a plain object, not a thread.</p>
 </li>
 <li>
 <p><code>AdminPHAL.load_plugins()</code> (<a href="https://github.com/OpenVoiceOS/ovos-PHAL/blob/dev/ovos_PHAL/admin.py"><code>ovos_PHAL/admin.py:45</code></a>): discovery/validation for privileged/root-level plugins (<code>find_admin_plugins</code>).</p>
 </li>
 <li>
-<p><code>PHAL.load_plugins()</code> (<a href="https://github.com/OpenVoiceOS/ovos-PHAL/blob/dev/ovos_PHAL/service.py"><code>ovos_PHAL/service.py:67</code></a>): discovery and validation of user plugins via OPM (<code>find_phal_plugins</code>).</p>
+<p><code>PHAL.load_plugins()</code> (<a href="https://github.com/OpenVoiceOS/ovos-PHAL/blob/dev/ovos_PHAL/service.py"><code>ovos_PHAL/service.py:77</code></a>): discovery and validation of user plugins via OPM (<code>find_phal_plugins</code>).</p>
 </li>
 </ul>
 <hr />

@@ -1444,9 +1444,15 @@
 </span><span id="__span-0-25"><a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a><span class="c1"># {&#39;name&#39;: &#39;say&#39;, &#39;entities&#39;: {}, &#39;conf&#39;: 0.85}</span>
 </span></code></pre></div>
 <p>Slot names follow the OVOS sentence-template grammar (<code>{lowercase_with_underscores}</code>).
-The colon-typed <code>simplematch</code> syntax such as <code>{number:int}</code> is <strong>not</strong> supported.
-Templates are expanded and normalized through <code>ovos_spec_tools</code>, which rejects it.</p>
-<p>A wildcard (<code>*</code>) carries a confidence penalty proportional to how much of the template it covers. For example, <code>"say *"</code> is one wildcard out of two tokens, so the score drops from <code>1.0</code> to <code>0.85</code>. Entity placeholders like <code>{number}</code> are not wildcards and carry no penalty. An entity whose name was never registered with <code>add_entity</code> still matches, but at a slightly reduced confidence (a small <code>0.04</code> penalty, e.g. <code>0.96</code>).</p>
+The colon-typed <code>simplematch</code> syntax such as <code>{number:int}</code> is <strong>not</strong> supported: the
+normalizer passes it through untouched, so the braces are matched literally instead of
+being interpreted as a typed slot.</p>
+<p>A template containing a wildcard (<code>*</code>) carries a flat <code>0.15</code> confidence penalty, regardless
+of how much of the template the wildcard covers — <code>"say *"</code> scores <code>0.85</code> instead of <code>1.0</code>.
+Entity placeholders like <code>{number}</code> are not wildcards and carry no penalty of their own. An
+entity whose name was never registered with <code>add_entity</code> still matches, at a small <code>0.04</code>
+penalty (e.g. <code>0.96</code>); a registered entity whose parsed value is not among the registered
+samples is penalized <code>0.1</code>.</p>
 <h2 id="context-and-keyword-gating">Context and keyword gating<a class="headerlink" href="#context-and-keyword-gating" title="Permanent link">&para;</a></h2>
 <p>Intents can be gated at runtime by session context or suppressed by keyword:</p>
 <ul>

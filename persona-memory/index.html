@@ -1609,7 +1609,9 @@
 <li>Conversation history is tracked per session, not globally.</li>
 <li>Enables: different persona per wake word, different TTS voice per persona, distinct persona for each HiveMind satellite.</li>
 </ul>
-<p>Configure via the session <code>active_persona</code> field or the <code>ovos.persona.set</code> bus message.</p>
+<p>The active persona travels in the session's <code>persona_id</code> field; it is switched through the
+pipeline's <code>persona:summon</code> / <code>persona:release</code> matches, or queried over the bus with
+<code>ovos.persona.query</code>.</p>
 <hr />
 <h2 id="plugin-wiring">Plugin Wiring<a class="headerlink" href="#plugin-wiring" title="Permanent link">&para;</a></h2>
 <p>In a persona JSON or YAML file, set <code>memory_module</code> to the plugin entry point, and give that entry point its own config block:</p>

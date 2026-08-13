@@ -2123,9 +2123,9 @@ available.</p>
 </tr>
 </tbody>
 </table>
-<p>A skill subscribes to <strong>both</strong> stop topics (OVOS-STOP-1 §9): <code>&lt;own_skill_id&gt;:stop</code>, the
+<p>A skill subscribes to <strong>both</strong> stop topics (OVOS-STOP-1 §9): <code>{skill_id}.stop</code>, the
 targeted dispatch that ceases only its own stoppable activity for the inbound session, and
-<code>ovos.stop</code>, the universal broadcast that ceases everything for that session. A duplicate
+<code>mycroft.stop</code>, the universal broadcast that ceases everything for that session. A duplicate
 arrival on either topic while the skill is already stopping is a no-op. See the
 <a href="../stop-pipeline/">Stop Pipeline</a>.</p>
 <hr />
