@@ -39,12 +39,14 @@ music while it talks.
     the legacy audioservice, on the same install, no reinstall needed.
 
 !!! warning "Upcoming breaking change"
-    The legacy media audioservice and standalone `ovos-media` currently run **side by side**:
-    which one plays media is a deployer's choice, made with `enable_old_audioservice`. The
-    legacy media audioservice subsystem (subsystem 2 above, including the
-    [OCP audioservice backend](ocp-audio-plugin.md)) is planned to stop being the default,
-    with media playback moving wholly to [`ovos-media`](ovos-media.md); opt in today by
-    setting `enable_old_audioservice: false`. The TTS / sound playback queue (subsystem 1) is
+    The legacy media audioservice and standalone `ovos-media` currently coexist as
+    **mutually exclusive alternatives**: which one plays media is a deployer's choice —
+    don't run both at once. The legacy media audioservice subsystem (subsystem 2 above,
+    including the [OCP audioservice backend](ocp-audio-plugin.md)) is planned to stop being
+    the default, with media playback moving wholly to [`ovos-media`](ovos-media.md). Opting
+    in today takes **two** steps: set `enable_old_audioservice: false` **and** install and
+    run the separate `ovos-media` daemon — the flag only turns the legacy half off, it does
+    not start `ovos-media` for you. The TTS / sound playback queue (subsystem 1) is
     unaffected either way.
 
 ---
