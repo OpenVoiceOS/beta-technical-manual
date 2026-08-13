@@ -23,7 +23,7 @@
 
 Downloaded sources are cached on disk. Later launches skip re-downloading (with an
 `already cached, skipping` message), except for `live-status`, which is always refreshed.
-Pass `--refresh` to wipe and re-download before launching.
+Pass `--refresh` to wipe and re-download the selected set before launching.
 
 !!! note "The first launch of *any* key downloads *every* source"
     Regardless of which key you pass, `Documentation.__init__` calls `download_docs()`,
