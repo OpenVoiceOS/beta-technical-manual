@@ -92,9 +92,11 @@ volumes:
 reaches all of them. `TMP_FOLDER` mounts a shared host directory to `/tmp/mycroft` in every
 container: this is how the listener hands recorded audio to the rest of the pipeline. Named
 volumes (`ovos_local_state`, `ovos_tts_cache`, and in the full reference file also
-`ovos_models`, `ovos_vosk`, `ovos_listener_records`, `ovos_nltk`, `ovos_persona`,
-`ovos_plugin_ggwave`) hold anything that must
+`ovos_models`, `ovos_vosk`, `ovos_listener_records`, `ovos_nltk`) hold anything that must
 survive a container rebuild: downloaded models, the TTS cache, and local runtime state.
+Persona definitions are different: the full reference file bind-mounts a host directory
+(`${OVOS_PERSONA_FOLDER}`) rather than using a named volume, so that data persists only as
+the host path you manage yourself.
 
 The [full reference file](https://github.com/OpenVoiceOS/ovos-docker/blob/dev/compose/docker-compose.yml)
 also runs `ovos_phal` and `ovos_phal_admin` with `privileged: true` and `cap_add: [SYS_ADMIN,
