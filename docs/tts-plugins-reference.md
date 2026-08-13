@@ -79,7 +79,7 @@
 
 - **GitHub**: [https://github.com/OpenVoiceOS/ovos-tts-plugin-piper](https://github.com/OpenVoiceOS/ovos-tts-plugin-piper)
 
-- **Description**: Offline neural TTS using the [Piper](https://github.com/rhasspy/piper) engine (ONNX voices). Warning: archived. [phoonnx](https://github.com/TigreGotico/phoonnx) runs Piper ONNX voices (including the `kusal` voice) and is the maintained successor.
+- **Description**: Offline neural TTS using the [Piper](https://github.com/rhasspy/piper) engine (ONNX voices). This is the default TTS on the raspOVOS `hybrid` and `offline` images. Warning: archived. [phoonnx](https://github.com/TigreGotico/phoonnx) runs Piper ONNX voices (including the `kusal` voice) and is the maintained successor.
 
 - **Config**: set `"module": "ovos-tts-plugin-piper"` in the `tts` block. A `"voice"` key selects a specific Piper voice model, without it the plugin picks a voice for the configured language.
 
