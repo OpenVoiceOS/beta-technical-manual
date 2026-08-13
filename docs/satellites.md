@@ -148,8 +148,9 @@ separate project with its own protocol and docs.
     hivemind-client set-identity --key <access_key> --password <password> --host <server>
     ```
 
-    `set-identity` with no arguments raises: it needs at least one of `--key`, `--password`,
-    `--siteid` or `--host`.
+    `set-identity` with no arguments raises: it needs at least one of `--key`, `--password`
+    or `--siteid` (the error message also mentions host, but `--host` alone does not
+    satisfy the check).
 
 4. Verify with `hivemind-client test-identity` before trusting the link.
 5. For a mic-only satellite that leaves STT/TTS to the server, use
