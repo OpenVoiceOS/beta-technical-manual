@@ -110,7 +110,8 @@ def pronounce_number(number: Union[int, float], lang: str, places: int = 3, shor
                      scientific: bool = False, ordinals: bool = False,
                      digits: Optional[DigitPronunciation] = None,
                      gender: GrammaticalGender = GrammaticalGender.MASCULINE,
-                     scale: Optional[Scale] = None) -> str:
+                     scale: Optional[Scale] = None,
+                     case: Optional[str] = None) -> str:
     """
     Convert a number to its spoken equivalent.
 

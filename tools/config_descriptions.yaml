@@ -1,7 +1,10 @@
 confirm_listening: Play a beep when the system starts listening.
+open_data.intent_urls: URLs of opt-in open-data collection servers to send anonymized
+  intent matches to. Empty by default; see [Privacy & Security](privacy-security.md).
 date_format: Date format for display and parsing.
-gui_websocket.host: Bound to all interfaces by default — see [Bus Service](bus-service.md)
-  for network-exposure guidance.
+gui_websocket.host: Bound to `127.0.0.1` by default; remote display clients require
+  widening this to `0.0.0.0`, which exposes the socket to the whole network — see
+  [Bus Service](bus-service.md) for network-exposure guidance.
 lang: Primary BCP-47 language code for STT and TTS.
 language.detection_module: Stock default is `ovos-lang-detector-plugin-server`, which
   routes text to a public community server for language detection — see

@@ -100,8 +100,9 @@ instead of tailing six log files.
 `http://127.0.0.1:8005`. Filter by `recognizer_loop:*` to see the raw utterance leave the
 listener, `ovos.intent.matched` / `ovos.utterance.handled` to see which pipeline stage claimed
 it, and `ovos.utterance.speak` to see whether TTS fired. Keep it bound to `127.0.0.1`/your LAN,
-never expose it to the internet: it mirrors every message on the bus, including STT transcripts,
-and ships with default credentials (`ovos`/`ovos`).
+never expose it to the internet: it mirrors every message on the bus, including STT transcripts.
+Authentication is off by default; a non-loopback bind refuses to start until you set
+`BUSMON_TOKEN` or `BUSMON_USERNAME`/`BUSMON_PASSWORD`.
 
 See **[Watching the Bus: `ovos-busmon`](troubleshooting-bus.md)** for the full install/config
 reference, the security warning in detail, and a step-by-step walkthrough.

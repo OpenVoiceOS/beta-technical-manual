@@ -177,17 +177,13 @@ For example, "next song" does nothing when no player is active.
 
 The config block is read from `intents.ovos-ocp-pipeline-plugin`, the plugin's entry-point ID.
 
-!!! danger "The shipped `intents.OCP` block is dead config"
-    `load_pipeline_plugin()` resolves a plugin's config with a single lookup —
-    `Configuration()["intents"][<pipeline_id>]` — and there is **no fallback to
-    `intents.OCP`**. The bundled `mycroft.conf` ships an `intents.OCP` block
-    (`min_score: 40`, `legacy`, `filter_media`, `filter_SEI`, `playback_mode`,
-    `search_fallback`) and **no** `intents.ovos-ocp-pipeline-plugin` section, so none of those
-    shipped values reach the plugin.
-
-    Two consequences. The effective `min_score` today is the code default **50**, not the 40
-    the config file shows. And editing `intents.OCP` changes nothing — put your keys under
-    `intents.ovos-ocp-pipeline-plugin` instead:
+!!! warning "Key your config by the plugin ID, not `OCP`"
+    `OVOSPipelineFactory.load_plugin()` resolves a pipeline plugin's config with a single
+    lookup — `Configuration()["intents"][<pipeline_id>]` — and there is **no fallback to
+    `intents.OCP`**. The bundled `mycroft.conf` correctly ships its values (including
+    `min_score: 40`) under `intents.ovos-ocp-pipeline-plugin`; an `OCP` key exists only
+    under `Audio.backends`, which configures the legacy audio-service backend, not this
+    pipeline. Keys added under `intents.OCP` change nothing — put yours under the plugin ID:
 
     ```json
     {"intents": {"ovos-ocp-pipeline-plugin": {"min_score": 40}}}

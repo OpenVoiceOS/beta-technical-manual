@@ -73,7 +73,8 @@ where you run it):
 |---|---|---|
 | `OVOS_BUS_HOST` / `OVOS_BUS_PORT` | `localhost` / `8181` | Where the *target* OVOS messagebus is. |
 | `BUSMON_HOST` / `BUSMON_PORT` | `127.0.0.1` / `8005` | Where busmon's own web UI listens. |
-| `BUSMON_USERNAME` / `BUSMON_PASSWORD` | `ovos` / `ovos` | HTTP Basic auth for the web UI. |
+| `BUSMON_USERNAME` / `BUSMON_PASSWORD` | *(unset)* | HTTP Basic auth for the web UI. Auth is off unless set. |
+| `BUSMON_TOKEN` | *(unset)* | Shared-secret token auth (works with the live SSE UI, unlike HTTP Basic). |
 | `BUFFER_SIZE` | `2000` | How many messages the ring buffer keeps. |
 
 A Docker route is also available (`docker compose up --build` from the repo), using the image
@@ -82,11 +83,11 @@ and sets `OVOS_BUS_HOST=host.docker.internal` so it can reach a bus running on t
 
 !!! warning "Local debugging only: never expose this to the internet"
     `ovos-busmon` mirrors **every** message on the bus, including STT transcripts, intent matches,
-    and skill responses. It ships with a default username/password (`ovos` / `ovos`) that most
-    people never change. Its message-injection feature also lets anyone who can reach it emit
-    arbitrary commands onto your assistant's bus. Keep it bound to `127.0.0.1` or your local LAN,
-    change the default credentials before leaving it running, and never port-forward it to the
-    public internet.
+    and skill responses. Authentication is off by default; a non-loopback bind refuses to start
+    unless `BUSMON_TOKEN` or `BUSMON_USERNAME`/`BUSMON_PASSWORD` is set. Its message-injection
+    feature also lets anyone who can reach it emit arbitrary commands onto your assistant's bus.
+    Keep it bound to `127.0.0.1` or your local LAN, set a strong token or password before binding
+    wider, and never port-forward it to the public internet.
 
 ---
 

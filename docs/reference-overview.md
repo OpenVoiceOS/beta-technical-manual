@@ -3,8 +3,6 @@
 !!! abstract "In a nutshell"
     This tab is for looking up a specific fact: an event name, a CLI command, a repository, a parser library, or a hardware detail, without reading a tutorial. It also holds the pages contributors need: how to submit a change and how the CI workflows work.
 
-This tab is for looking up a specific fact: an event name, a CLI command, a repository, or a hardware detail, without reading a tutorial.
-
 ## Start here
 
 1. [OVOS Repository Index](ecosystem-index.md): every repository in the ecosystem and what it does.

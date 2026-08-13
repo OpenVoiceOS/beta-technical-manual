@@ -25,9 +25,9 @@ There are roughly **280** public, non-archived repositories in the [`OpenVoiceOS
     | [mycroft-mark1-firmware](https://github.com/OpenVoiceOS/mycroft-mark1-firmware) | This repository holds the code run on the Arduino within a Mycroft unit. It manages the... | [Hardware / OS images](#hardware-os-images-10) |
     | [nebulento](https://github.com/OpenVoiceOS/nebulento) | A lightweight fuzzy-matching intent parser built on rapidfuzz. Available as an... | [Meta & infrastructure / other components](#meta-infrastructure-other-components-46) |
     | [OpenVoiceOS](https://github.com/OpenVoiceOS/OpenVoiceOS) | The organization's release tracker - high-level release notes across the ecosystem's many... | [Meta & infrastructure / other components](#meta-infrastructure-other-components-46) |
-    | [ovos-a2a-agent-plugin](https://github.com/OpenVoiceOS/ovos-a2a-agent-plugin) | An OVOS ChatEngine plugin that lets an ovos-persona delegate its reasoning to any... | [Solver / Agent plugins](#solver-agent-plugins-8) |
+    | [ovos-a2a-agent-plugin](https://github.com/OpenVoiceOS/ovos-a2a-agent-plugin) | An OVOS ChatEngine plugin that lets an ovos-persona delegate its reasoning to any... | [Agent Engine plugins](#agent-engine-plugins-8) |
     | [ovos-adapt-pipeline-plugin](https://github.com/OpenVoiceOS/ovos-adapt-pipeline-plugin) | The Adapt Intent Parser is a flexible and extensible intent definition and determination... | [Pipeline / Intent plugins](#pipeline-intent-plugins-10) |
-    | [ovos-agentic-loop](https://github.com/OpenVoiceOS/ovos-agentic-loop) | Agent-loop ChatEngine plugins for OVOS. Implements seven agentic reasoning patterns... | [Solver / Agent plugins](#solver-agent-plugins-8) |
+    | [ovos-agentic-loop](https://github.com/OpenVoiceOS/ovos-agentic-loop) | Agent-loop ChatEngine plugins for OVOS. Implements seven agentic reasoning patterns... | [Agent Engine plugins](#agent-engine-plugins-8) |
     | [ovos-audio](https://github.com/OpenVoiceOS/ovos-audio) | The "mouth" of the OVOS assistant: it handles text-to-speech generation and audio... | [Core services & libraries](#core-services-libraries-18) |
     | [ovos-audio-plugin-mpv](https://github.com/OpenVoiceOS/ovos-audio-plugin-mpv) | An MPV-based audio backend for the legacy `ovos-audio` playback service (predates the... | [Meta & infrastructure / other components](#meta-infrastructure-other-components-46) |
     | [ovos-audio-transformer-plugin-bandpass](https://github.com/OpenVoiceOS/ovos-audio-transformer-plugin-bandpass) | An audio transformer that band-pass filters captured speech before STT, attenuating... | [Transformer plugins](#transformer-plugins-6) |
@@ -82,7 +82,7 @@ There are roughly **280** public, non-archived repositories in the [`OpenVoiceOS
     | [ovos-media-plugin-mpv](https://github.com/OpenVoiceOS/ovos-media-plugin-mpv) | An audio/video backend plugin that drives the MPV media player, with play/pause/stop/seek... | [Media / OCP plugins](#media-ocp-plugins-17) |
     | [ovos-media-plugin-spotify](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify) | spotify plugin for ovos-audio and ovos-media. | [Media / OCP plugins](#media-ocp-plugins-17) |
     | [ovos-media-plugin-vlc](https://github.com/OpenVoiceOS/ovos-media-plugin-vlc) | vlc plugin for ovos-media. | [Media / OCP plugins](#media-ocp-plugins-17) |
-    | [ovos-memory-plugins](https://github.com/OpenVoiceOS/ovos-memory-plugins) | Give your OpenVoiceOS persona a memory. Used by ovos-persona and the Common... | [Solver / Agent plugins](#solver-agent-plugins-8) |
+    | [ovos-memory-plugins](https://github.com/OpenVoiceOS/ovos-memory-plugins) | Give your OpenVoiceOS persona a memory. Used by ovos-persona and the Common... | [Agent Engine plugins](#agent-engine-plugins-8) |
     | [ovos-messagebus](https://github.com/OpenVoiceOS/ovos-messagebus) | messagebus service, the nervous system of OpenVoiceOS. Core runtime component of the OVOS... | [Core services & libraries](#core-services-libraries-18) |
     | [ovos-messagebus-chat-plugin](https://github.com/OpenVoiceOS/ovos-messagebus-chat-plugin) | A ChatEngine agent plugin (`opm.agents.chat`) that proxies chat turns through a connected... | [Meta & infrastructure / other components](#meta-infrastructure-other-components-46) |
     | [ovos-microphone-plugin-alsa](https://github.com/OpenVoiceOS/ovos-microphone-plugin-alsa) | OpenVoiceOS Microphone plugin. Registers under `opm.microphone`; loaded by... | [Microphone plugins](#microphone-plugins-4) |
@@ -103,8 +103,8 @@ There are roughly **280** public, non-archived repositories in the [`OpenVoiceOS
     | [ovos-option-matcher-fuzzy-plugin](https://github.com/OpenVoiceOS/ovos-option-matcher-fuzzy-plugin) | A fuzzy-matching `OptionMatcherEngine` plugin, used to pick the closest matching item... | [Meta & infrastructure / other components](#meta-infrastructure-other-components-46) |
     | [ovos-org-website](https://github.com/OpenVoiceOS/ovos-org-website) | Test repo for ovos webpage. | [Project infrastructure (web/blog)](#project-infrastructure-webblog-4) |
     | [ovos-padatious-pipeline-plugin](https://github.com/OpenVoiceOS/ovos-padatious-pipeline-plugin) | An efficient and agile neural network intent parser, implemented in pure numpy with a... | [Pipeline / Intent plugins](#pipeline-intent-plugins-10) |
-    | [ovos-persona](https://github.com/OpenVoiceOS/ovos-persona) | The PersonaPipeline brings multi-persona management to OpenVoiceOS (OVOS), enabling... | [Solver / Agent plugins](#solver-agent-plugins-8) |
-    | [ovos-persona-server](https://github.com/OpenVoiceOS/ovos-persona-server) | A single HTTP server that exposes one OVOS Persona as eight concurrent API surfaces - so... | [Solver / Agent plugins](#solver-agent-plugins-8) |
+    | [ovos-persona](https://github.com/OpenVoiceOS/ovos-persona) | The PersonaPipeline brings multi-persona management to OpenVoiceOS (OVOS), enabling... | [Agent Engine plugins](#agent-engine-plugins-8) |
+    | [ovos-persona-server](https://github.com/OpenVoiceOS/ovos-persona-server) | A single HTTP server that exposes one OVOS Persona as eight concurrent API surfaces - so... | [Agent Engine plugins](#agent-engine-plugins-8) |
     | [ovos-PHAL](https://github.com/OpenVoiceOS/ovos-PHAL) | Plugin based Hardware Abstraction Layer. | [PHAL plugins](#phal-plugins-18) |
     | [ovos-PHAL-plugin-alsa](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-alsa) | controls system volume with alsa. | [PHAL plugins](#phal-plugins-18) |
     | [ovos-PHAL-plugin-app-launcher](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-app-launcher) | PHAL plugin for OpenVoiceOS that handles OS-level desktop application management on... | [PHAL plugins](#phal-plugins-18) |
@@ -180,9 +180,9 @@ There are roughly **280** public, non-archived repositories in the [`OpenVoiceOS
     | [ovos-skill-youtube](https://github.com/OpenVoiceOS/ovos-skill-youtube) | simple youtube skill for better-cps. | [Skills](#skills-53) |
     | [ovos-skill-youtube-music](https://github.com/OpenVoiceOS/ovos-skill-youtube-music) | Youtube Music OCP Skill. | [Skills](#skills-53) |
     | [OVOS-skills-store](https://github.com/OpenVoiceOS/OVOS-skills-store) | The community skill store: a curated list where OVOS developers submit and discover... | [Meta & infrastructure / other components](#meta-infrastructure-other-components-46) |
-    | [ovos-solver-failure-plugin](https://github.com/OpenVoiceOS/ovos-solver-failure-plugin) | Extreme fallback, just complains it does not have a brain. Used by ovos-persona and the... | [Solver / Agent plugins](#solver-agent-plugins-8) |
-    | [ovos-solver-plugin-aiml](https://github.com/OpenVoiceOS/ovos-solver-plugin-aiml) | A rule-based chatbot answer engine for OVOS, using AIML pattern matching. Used by... | [Solver / Agent plugins](#solver-agent-plugins-8) |
-    | [ovos-solver-plugin-rivescript](https://github.com/OpenVoiceOS/ovos-solver-plugin-rivescript) | A rule-based chatbot answer engine for OVOS, using RiveScript pattern matching. Used by... | [Solver / Agent plugins](#solver-agent-plugins-8) |
+    | [ovos-solver-failure-plugin](https://github.com/OpenVoiceOS/ovos-solver-failure-plugin) | Extreme fallback, just complains it does not have a brain. Used by ovos-persona and the... | [Agent Engine plugins](#agent-engine-plugins-8) |
+    | [ovos-solver-plugin-aiml](https://github.com/OpenVoiceOS/ovos-solver-plugin-aiml) | A rule-based chatbot answer engine for OVOS, using AIML pattern matching. Used by... | [Agent Engine plugins](#agent-engine-plugins-8) |
+    | [ovos-solver-plugin-rivescript](https://github.com/OpenVoiceOS/ovos-solver-plugin-rivescript) | A rule-based chatbot answer engine for OVOS, using RiveScript pattern matching. Used by... | [Agent Engine plugins](#agent-engine-plugins-8) |
     | [ovos-spec-tools](https://github.com/OpenVoiceOS/ovos-spec-tools) | Reference implementation of the OVOS [formal specifications](architecture-specs.md) - the... | [Tooling & CI](#tooling-ci-14) |
     | [ovos-stt-plugin-azure](https://github.com/OpenVoiceOS/ovos-stt-plugin-azure) | OpenVoiceOS plugin for Microsoft Azure. | [STT plugins](#stt-plugins-11) |
     | [ovos-stt-plugin-chromium](https://github.com/OpenVoiceOS/ovos-stt-plugin-chromium) | A stt plugin for mycroft using the google chrome browser api. | [STT plugins](#stt-plugins-11) |
@@ -637,7 +637,7 @@ Most register under the `opm.tts` entry-point group and are loaded by ovos-audio
 :   Open Voice OS microphone plugin for python-sounddevice library. Registers under `opm.microphone`; loaded by ovos-dinkum-listener as the audio input source.
 
 
-## Solver / Agent plugins (8)
+## Agent Engine plugins (8)
 
 **[ovos-a2a-agent-plugin](https://github.com/OpenVoiceOS/ovos-a2a-agent-plugin)**
 :   An OVOS ChatEngine plugin that lets an ovos-persona delegate its reasoning to any external agent that speaks the Agent2Agent (A2A) protocol. Used by ovos-persona and the Common Query/fallback pipelines (via Agent Engines) to answer free-form questions or drive agentic behavior.
