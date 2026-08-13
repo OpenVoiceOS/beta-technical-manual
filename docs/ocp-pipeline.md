@@ -206,4 +206,4 @@ Leave both off unless you specifically need to support pre-OCP skills.
 
 ---
 **Read next:** [Common Query Pipeline](cq-pipeline.md)
-**Related:** [Media Skills (OCP)](ocp-skills.md) · [OCP Audio Plugin](ocp-audio-plugin.md) · [Stop Pipeline](stop-pipeline.md)
+**Related:** [Media Skills (OCP)](ocp-skills.md) · [ovos-media OCP Pipeline Plugin](ovos-media-pipeline.md) · [OCP Audio Plugin](ocp-audio-plugin.md) · [Stop Pipeline](stop-pipeline.md)

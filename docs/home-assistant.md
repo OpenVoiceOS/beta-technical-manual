@@ -34,6 +34,15 @@ from running a second, separately configured set of speech engines just for HA.
 See [Wyoming Bridges](wyoming-bridges.md) for installation, configuration, and the exact HA-side
 setup (adding a Wyoming integration pointed at the bridge's host and port).
 
+!!! warning "Pick one brain, not both"
+    The two directions correspond to two different architectures. With the Wyoming
+    bridges, **Home Assistant is the brain**: HA's Assist pipeline runs the wake word
+    and intents, borrowing OVOS's speech engines. With OVOS satellites
+    ([HiveMind](satellites.md)), **OVOS is the brain** and controls HA as one of its
+    skills. Do not combine a Wyoming wake-word bridge with a HiveMind mic satellite on
+    the same device — you would run two competing wake-word pipelines. Decide which
+    system owns the conversation first, then follow only that direction's pages.
+
 ---
 
 ## Direction 2: OVOS controls Home Assistant devices

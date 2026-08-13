@@ -18,7 +18,11 @@ to use OVOS engines without knowing anything about the OVOS plugin system.
 | `wyoming-ovos-tts` | `wyoming-ovos-tts` | 7892 | `opm.tts` |
 | `wyoming-ovos-wakeword` | `wyoming-ovos-wakeword` | 7893 | `opm.wake_word` |
 
-> The port is not a built-in default. You set it with the `--uri` flag. The values above are the conventional ports used in this manual's examples (the upstream READMEs use overlapping values). `wyoming-ovos-stt` requires `--uri`. `wyoming-ovos-tts` and `wyoming-ovos-wakeword` default to `stdio://`.
+!!! warning "The ports are conventions, not built-in defaults"
+    You set the port with the `--uri` flag. The values above are the conventional ports used
+    in this manual's examples (the upstream READMEs use overlapping values). `wyoming-ovos-stt`
+    **requires** `--uri`; `wyoming-ovos-tts` and `wyoming-ovos-wakeword` default to `stdio://`,
+    which Home Assistant cannot reach — pass a `tcp://` URI for HA use.
 
 These three are standalone Wyoming **servers** (console-script entry points), not
 OVOS plugins themselves. Each loads an installed OVOS plugin from the matching OPM
@@ -263,6 +267,23 @@ architecture, running instructions, configuration and message-flow reference now
 their own page: [Wyoming Wake-word Bridge](wyoming-wakeword-bridge.md).
 
 ---
+
+## On the Home Assistant side
+
+Once a bridge is running with a `tcp://` URI, register it in Home Assistant through the
+**Wyoming Protocol** integration: **Settings → Devices & Services → Add Integration**, search
+for "Wyoming Protocol", and enter the bridge machine's host and the port from your `--uri`.
+Repeat once per bridge (STT, TTS, and wake word are three separate Wyoming services). The new
+entities then become selectable in **Settings → Voice assistants** when building an Assist
+pipeline. For the HA side in more depth, see the
+[Home Assistant Wyoming integration docs](https://www.home-assistant.io/integrations/wyoming/).
+
+## Keeping the bridges running
+
+The commands on this page run in the foreground and die with the terminal. For a permanent
+setup, wrap each bridge in a systemd unit (or your init system's equivalent) so it starts on
+boot and restarts on failure — the same pattern [Production Operations](production-operations.md)
+uses for the OVOS services themselves.
 
 ## OVOS Plugin Types Used
 

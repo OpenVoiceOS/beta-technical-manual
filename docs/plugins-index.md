@@ -39,7 +39,7 @@ their config, and install commands.
 - I want the assistant to remember earlier turns → [Persona Memory](persona-memory.md).
 - I want an agent to call external functions (weather, search, …) → [Agent
   Tools](tool-plugins.md).
-- I want hardware or platform integration (LEDs, buttons, displays) → [PHAL](phal.md).
+- I want hardware or platform integration (LEDs, buttons, displays) → [PHAL](phal.md); to write one, see [Writing PHAL Plugins](phal-authoring.md).
 
 ## Speech & Audio
 

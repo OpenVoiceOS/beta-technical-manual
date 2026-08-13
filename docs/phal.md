@@ -257,161 +257,26 @@ skill as a voice frontend.
 
 | Plugin | Description |
 |--------|-------------|
-| [ovos-PHAL-plugin-alsa](#ovos-phal-plugin-alsa) | Controls system volume with ALSA |
-| [ovos-PHAL-plugin-pulseaudio](#ovos-phal-plugin-pulseaudio) | Controls system volume with PulseAudio |
-| [ovos-PHAL-plugin-system](#ovos-phal-plugin-system) | Reboot, shutdown, factory reset, and other system commands (admin) |
-| [ovos-PHAL-plugin-mk1](#ovos-phal-plugin-mk1) | Mycroft Mark 1 hardware integration |
-| [ovos-PHAL-plugin-mk2-v6-fan-control](#ovos-phal-plugin-mk2-v6-fan-control) | Fan control for the Mycroft Mark 2 dev kit |
-| [ovos-PHAL-plugin-dotstar](#ovos-phal-plugin-dotstar) | Dotstar/APA102 LED ring driver for Respeaker mic HATs and the Adafruit Voice Bonnet |
+| [ovos-PHAL-plugin-alsa](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-alsa) | Controls system volume with ALSA |
+| [ovos-PHAL-plugin-pulseaudio](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-pulseaudio) | Controls system volume with PulseAudio |
+| [ovos-PHAL-plugin-system](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system) | Reboot, shutdown, factory reset, and other system commands (admin) |
+| [ovos-PHAL-plugin-mk1](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-mk1) | Mycroft Mark 1 hardware integration |
+| [ovos-PHAL-plugin-mk2-v6-fan-control](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-mk2-v6-fan-control) | Fan control for the Mycroft Mark 2 dev kit |
+| [ovos-PHAL-plugin-dotstar](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-dotstar) | Dotstar/APA102 LED ring driver for Respeaker mic HATs and the Adafruit Voice Bonnet |
 | [ovos-PHAL-plugin-respeaker-2mic](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-respeaker-2mic) | ReSpeaker 2-mic HAT support |
 | [ovos-PHAL-plugin-respeaker-4mic](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-respeaker-4mic) | ReSpeaker 4-mic HAT support |
-| [ovos-PHAL-plugin-wifi-setup](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-wifi-setup) | Central Wi-Fi setup. Warning: archived, deprecated. See [ovos-PHAL-plugin-network-manager](#ovos-phal-plugin-network-manager) |
-| [ovos-PHAL-plugin-gui-network-client](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-gui-network-client) | GUI-based Wi-Fi setup. Warning: archived, deprecated. See [ovos-PHAL-plugin-network-manager](#ovos-phal-plugin-network-manager) |
-| [ovos-PHAL-plugin-balena-wifi](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-balena-wifi) | Wi-Fi hotspot setup. Warning: archived, deprecated. See [ovos-PHAL-plugin-network-manager](#ovos-phal-plugin-network-manager) |
-| [ovos-PHAL-plugin-network-manager](#ovos-phal-plugin-network-manager) | Provides the network manager interface for NetworkManager-based plugins |
-| [ovos-PHAL-plugin-connectivity-events](#ovos-phal-plugin-connectivity-events) | Reports network connectivity changes to the messagebus |
-| [ovos-PHAL-plugin-ipgeo](#ovos-phal-plugin-ipgeo) | Autoconfigure default location based on IP address via [ip-api.com](https://ip-api.com) |
-| [ovos-PHAL-plugin-gpsd](#ovos-phal-plugin-gpsd) | Provides GPS location to OVOS via gpsd |
-| [ovos-PHAL-plugin-camera](#ovos-phal-plugin-camera) | Interact with cameras using OpenCV or libcamera: snapshots, video streams over HTTP, and messagebus control |
-| [ovos-PHAL-plugin-wallpaper-manager](#ovos-phal-plugin-wallpaper-manager) | Central wallpaper management interface for homescreens and other desktops |
-| [ovos-PHAL-plugin-oauth](#ovos-phal-plugin-oauth) | Handles OAuth authentication flows for OVOS skills and services |
-| [ovos-PHAL-plugin-hotkeys](#ovos-phal-plugin-hotkeys) | Keyboard hotkeys: define key combos to trigger bus events |
-| [ovos-PHAL-sensors](#ovos-phal-sensors) | Exposes the OVOS device and its sensors to Home Assistant |
-
-## ovos-PHAL-plugin-network-manager
-
-- **GitHub**: [https://github.com/OpenVoiceOS/ovos-PHAL-plugin-network-manager](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-network-manager)
-
-
-- **Description**: Provides the network manager interface for NetworkManager based plugins.
-
----
-
-## ovos-PHAL-plugin-dotstar
-
-- **GitHub**: [https://github.com/OpenVoiceOS/ovos-PHAL-plugin-dotstar](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-dotstar)
-
-
-- **Description**: Dotstar/APA102 LED ring driver, compatible with the Respeaker 2/4/6/8-mic i2c HATs and the Adafruit Voice Bonnet
-
----
-
-## ovos-PHAL-plugin-wallpaper-manager
-
-- **GitHub**: [https://github.com/OpenVoiceOS/ovos-PHAL-plugin-wallpaper-manager](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-wallpaper-manager)
-
-
-- **Description**: This PHAL plugin provides a central wallpaper management interface for homescreens and other desktops
-
----
-
-## ovos-PHAL-plugin-ipgeo
-
-- **GitHub**: [https://github.com/OpenVoiceOS/ovos-PHAL-plugin-ipgeo](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-ipgeo)
-
-
-- **Description**: Autoconfigure default location based on ip address via [ip-api.com](https://ip-api.com)
-
----
-
-## ovos-PHAL-sensors
-
-- **GitHub**: [https://github.com/OpenVoiceOS/ovos-PHAL-sensors](https://github.com/OpenVoiceOS/ovos-PHAL-sensors)
-
-
-- **Description**: Exposes the OVOS device and its sensors to Home Assistant.
-
----
-
-## ovos-PHAL-plugin-alsa
-
-- **GitHub**: [https://github.com/OpenVoiceOS/ovos-PHAL-plugin-alsa](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-alsa)
-
-
-- **Description**: controls system volume with alsa
-
----
-
-## ovos-PHAL-plugin-mk2-v6-fan-control
-
-- **GitHub**: [https://github.com/OpenVoiceOS/ovos-PHAL-plugin-mk2-v6-fan-control](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-mk2-v6-fan-control)
-
-
-- **Description**: Fan control for the Mycroft Mark 2 dev kit
-
----
-
-## ovos-PHAL-plugin-gpsd
-
-- **GitHub**: [https://github.com/OpenVoiceOS/ovos-PHAL-plugin-gpsd](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-gpsd)
-
-
-- **Description**: Provides GPS location to OVOS via gpsd.
-
----
-
-## ovos-PHAL-plugin-mk1
-
-- **GitHub**: [https://github.com/OpenVoiceOS/ovos-PHAL-plugin-mk1](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-mk1)
-
-
-- **Description**: handles integration with the Mycroft Mark1 hardware
-
----
-
-## ovos-PHAL-plugin-connectivity-events
-
-- **GitHub**: [https://github.com/OpenVoiceOS/ovos-PHAL-plugin-connectivity-events](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-connectivity-events)
-
-
-- **Description**: Reports network connectivity changes to the messagebus.
-
----
-
-## ovos-PHAL-plugin-camera
-
-- **GitHub**: [https://github.com/OpenVoiceOS/ovos-PHAL-plugin-camera](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-camera)
-
-
-- **Description**: This plugin allows users to interact with cameras using OpenCV or libcamera, take snapshots, and serve video streams over HTTP. It also provides methods for handling camera operations via messagebus events.
-
----
-
-## ovos-PHAL-plugin-pulseaudio
-
-- **GitHub**: [https://github.com/OpenVoiceOS/ovos-PHAL-plugin-pulseaudio](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-pulseaudio)
-
-
-- **Description**: controls system volume with pulseaudio
-
----
-
-## ovos-PHAL-plugin-oauth
-
-- **GitHub**: [https://github.com/OpenVoiceOS/ovos-PHAL-plugin-oauth](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-oauth)
-
-
-- **Description**: Handles OAuth authentication flows for OVOS skills and services.
-
----
-
-## ovos-PHAL-plugin-system
-
-- **GitHub**: [https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system)
-
-
-- **Description**: Provides system specific commands to OVOS.
-
----
-
-## ovos-PHAL-plugin-hotkeys
-
-- **GitHub**: [https://github.com/OpenVoiceOS/ovos-PHAL-plugin-hotkeys](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-hotkeys)
-
-
-- **Description**: plugin for Keyboard hotkeys, define key combos to trigger bus events
-
----
+| [ovos-PHAL-plugin-wifi-setup](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-wifi-setup) | Central Wi-Fi setup. Warning: archived, deprecated. See [ovos-PHAL-plugin-network-manager](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-network-manager) |
+| [ovos-PHAL-plugin-gui-network-client](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-gui-network-client) | GUI-based Wi-Fi setup. Warning: archived, deprecated. See [ovos-PHAL-plugin-network-manager](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-network-manager) |
+| [ovos-PHAL-plugin-balena-wifi](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-balena-wifi) | Wi-Fi hotspot setup. Warning: archived, deprecated. See [ovos-PHAL-plugin-network-manager](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-network-manager) |
+| [ovos-PHAL-plugin-network-manager](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-network-manager) | Provides the network manager interface for NetworkManager-based plugins |
+| [ovos-PHAL-plugin-connectivity-events](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-connectivity-events) | Reports network connectivity changes to the messagebus |
+| [ovos-PHAL-plugin-ipgeo](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-ipgeo) | Autoconfigure default location based on IP address via [ip-api.com](https://ip-api.com) |
+| [ovos-PHAL-plugin-gpsd](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-gpsd) | Provides GPS location to OVOS via gpsd |
+| [ovos-PHAL-plugin-camera](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-camera) | Interact with cameras using OpenCV or libcamera: snapshots, video streams over HTTP, and messagebus control |
+| [ovos-PHAL-plugin-wallpaper-manager](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-wallpaper-manager) | Central wallpaper management interface for homescreens and other desktops |
+| [ovos-PHAL-plugin-oauth](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-oauth) | Handles OAuth authentication flows for OVOS skills and services |
+| [ovos-PHAL-plugin-hotkeys](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-hotkeys) | Keyboard hotkeys: define key combos to trigger bus events |
+| [ovos-PHAL-sensors](https://github.com/OpenVoiceOS/ovos-PHAL-sensors) | Exposes the OVOS device and its sensors to Home Assistant |
 
 **Read next:** [Writing PHAL Plugins](phal-authoring.md) · [Concepts Overview](concepts-overview.md) · [Hardware Integrators](hardware-integrators.md)
 **Related:** [Security & Trust Model](security-model.md) · [MessageBus Service](bus-service.md) · [Mark 2](mark2.md)

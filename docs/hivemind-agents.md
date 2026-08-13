@@ -83,6 +83,10 @@ This writes the client to the server's credentials database (under
 hivemind-core listen           # start listening for HiveMind connections
 ```
 
+By default this listens on `0.0.0.0:5678` (websocket) and `0.0.0.0:5679` (HTTP) — all
+interfaces, so firewall those ports if the machine faces an untrusted network. Connections
+still require the per-client access key and password.
+
 By default it serves the local `ovos-core` via `hivemind-ovos-agent-plugin` (configured under
 `agent_protocol` in `server.json`).
 

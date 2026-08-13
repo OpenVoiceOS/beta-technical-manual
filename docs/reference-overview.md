@@ -9,6 +9,7 @@
 2. [Bus Events Reference](bus-events.md): the messagebus events skills and services send and listen for.
 3. [Command-line Tools](cli-tools.md): the CLI commands installed with OVOS.
 4. [Core Libraries](core-libraries.md): the shared libraries most components depend on.
+5. [All Configuration Keys](config-all-keys.md): every `mycroft.conf` key with its default, for pure key lookups.
 
 ## NLP Libraries (parsers)
 

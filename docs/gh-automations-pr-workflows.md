@@ -13,19 +13,14 @@ uses: OpenVoiceOS/gh-automations/.github/workflows/<name>.yml@dev
 
 > **Ref:** Always use `@dev`.
 
-| Workflow / topic | What it does | Page |
-|---|---|---|
-| `build-tests.yml` | Build, install, and optionally test across a Python version matrix. | [Build Checks](gh-automations-build-checks.md#build-testsyml) |
-| `python-support.yml` *(deprecated)* | Legacy install matrix across Python versions and install modes. | [Build Checks](gh-automations-build-checks.md#python-supportyml-deprecated) |
-| `opm-check.yml` | OPM (OVOS Plugin Manager) plugin detection, interface validation, and import timing. | [Plugin, License, and Repo Checks](gh-automations-plugin-repo-checks.md#opm-checkyml) |
-| `license-check.yml` | Scans dependencies for licenses incompatible with the OVOS universal donor policy. | [Plugin, License, and Repo Checks](gh-automations-plugin-repo-checks.md#license-checkyml) |
-| `repo-health.yml` | Checks for required repo files and greets first-time contributors. | [Plugin, License, and Repo Checks](gh-automations-plugin-repo-checks.md#repo-healthyml) |
-| `skill-check.yml` | Locale structure, language coverage, and `skill.json` validity for OVOS skills. | [Skill and Locale Checks](gh-automations-repo-skill-checks.md#skill-checkyml) |
-| `locale-check.yml` | Verifies locale folders are correctly included in the package build. | [Skill and Locale Checks](gh-automations-repo-skill-checks.md#locale-checkyml) |
-| `spec-lint.yml` | Runs `ovos-spec-lint` against a skill's locale folder (OVOS-INTENT-1 / OVOS-INTENT-2). | [Skill and Locale Checks](gh-automations-repo-skill-checks.md#spec-lintyml) |
-| `ovoscope.yml` | Runs [ovoscope](ovoscope-overview.md) end-to-end skill tests. | [Skill Test Workflows](gh-automations-skill-test-workflows.md#ovoscopeyml) |
-| `intent-case-tests.yml` | Runs the file-based ovoscope intent-routing accuracy matrix, sharded by language. | [Skill Test Workflows](gh-automations-skill-test-workflows.md#intent-case-testsyml) |
-| `tts-intelligibility.yml` | Synthesises speech, transcribes it back with reference STT, and scores WER/CER. | [Skill Test Workflows](gh-automations-skill-test-workflows.md#tts-intelligibilityyml) |
+The individual workflows are listed once, in the
+[Workflow Reference index](gh-automations-workflows.md). The PR-gate ones are
+specified in detail on four topic pages:
+
+- [Build Checks](gh-automations-build-checks.md): `build-tests.yml`, `channel-compat.yml`, and the deprecated `python-support.yml`.
+- [Plugin, License, and Repo Checks](gh-automations-plugin-repo-checks.md): `opm-check.yml`, `license-check.yml`, `repo-health.yml`.
+- [Skill and Locale Checks](gh-automations-repo-skill-checks.md): `skill-check.yml`, `locale-check.yml`, `spec-lint.yml`.
+- [Skill Test Workflows](gh-automations-skill-test-workflows.md): `ovoscope.yml`, `intent-case-tests.yml`, `tts-intelligibility.yml`.
 
 ---
 **Read next:** [Build Checks](gh-automations-build-checks.md)

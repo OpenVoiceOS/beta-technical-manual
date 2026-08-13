@@ -63,7 +63,8 @@ most voices:
 ```python
 from ovos_utils.ssml import SSMLBuilder
 
-ssml_text = SSMLBuilder(speak_tag=True).say_slow("Here is the reminder you asked for.").build()
+builder = SSMLBuilder(speak_tag=True)
+ssml_text = builder.say_slow("Here is the reminder you asked for.").build()
 self.speak(ssml_text)
 ```
 

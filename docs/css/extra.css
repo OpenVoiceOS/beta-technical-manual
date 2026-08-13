@@ -1,17 +1,29 @@
 /* Custom OVOS Branding - Strict Black and Red Theme */
 
-:root {
+/* Scheme-scoped so these beat Material's palette rules, which are keyed on
+   [data-md-color-scheme] and otherwise win the cascade over :root. Text/link
+   red is darkened to pass WCAG AA contrast (#c62828 on white = 5.7:1); the
+   bright #ff0000 stays for large decorative surfaces only. */
+:root,
+[data-md-color-scheme="default"],
+[data-md-color-scheme="slate"] {
   /* Override Material Primary Colors to Black */
   --md-primary-fg-color:        #000000 !important;
   --md-primary-fg-color--light: #222222 !important;
   --md-primary-fg-color--dark:  #000000 !important;
 
-  /* Accent color - OVOS Red */
-  --md-accent-fg-color:         #ff0000 !important;
-  --md-accent-fg-color--transparent: rgba(255, 0, 0, 0.1) !important;
-  
+  /* Accent color - OVOS Red (AA-safe for text) */
+  --md-accent-fg-color:         #c62828 !important;
+  --md-accent-fg-color--transparent: rgba(198, 40, 40, 0.1) !important;
+
   /* Link and UI highlight colors */
-  --md-typeset-a-color:         #ff0000 !important;
+  --md-typeset-a-color:         #c62828 !important;
+}
+
+/* Dark scheme needs a lighter red for contrast against the slate background */
+[data-md-color-scheme="slate"] {
+  --md-accent-fg-color:         #ef5350 !important;
+  --md-typeset-a-color:         #ef5350 !important;
 }
 
 /* Ensure the header is always black even in light mode */

@@ -13,18 +13,13 @@ uses: OpenVoiceOS/gh-automations/.github/workflows/<name>.yml@dev
 
 > **Ref:** Always use `@dev`.
 
-| Workflow / topic | What it does | Page |
-|---|---|---|
-| `coverage.yml` | Runs `pytest --cov`, posts a coverage report, and optionally deploys HTML to `gh-pages`. | [Coverage and Security Workflows](gh-automations-coverage-security.md#coverageyml) |
-| `coverage-pages.yml` *(deprecated)* | Legacy coverage-to-`gh-pages` deployment, replaced by `coverage.yml`. | [Coverage and Security Workflows](gh-automations-coverage-security.md#coverage-pagesyml-deprecated) |
-| `pip-audit.yml` | Scans dependencies for known CVEs and optionally uploads a SARIF report. | [Coverage and Security Workflows](gh-automations-coverage-security.md#pip-audityml) |
-| `downstream-check.yml` | Reports which packages depend on a given package, using `pipdeptree`. | [Coverage and Security Workflows](gh-automations-coverage-security.md#downstream-checkyml) |
-| `lint.yml` | Runs `ruff` and/or `pre-commit`. | [Lint and Docs Workflows](gh-automations-lint-docs.md#lintyml) |
-| `type-check.yml` | Runs `mypy`, informational only unless `fail_on_errors: true`. | [Lint and Docs Workflows](gh-automations-lint-docs.md#type-checkyml) |
-| `docs-check.yml` | Verifies required documentation files exist and optionally lints Markdown. | [Lint and Docs Workflows](gh-automations-lint-docs.md#docs-checkyml) |
-| `notify-matrix.yml` | Sends a message to the OVOS Matrix channel. | [Lint and Docs Workflows](gh-automations-lint-docs.md#notify-matrixyml) |
-| PR Checks Comment Pattern | How workflows post a named section into the single shared OVOS PR Checks comment. | [PR Comment Pattern and Scripts](gh-automations-pr-comment-scripts.md#pr-checks-comment-pattern) |
-| Scripts Reference | The Python scripts every workflow above checks out at run time. | [PR Comment Pattern and Scripts](gh-automations-pr-comment-scripts.md#scripts-reference) |
+The individual workflows are listed once, in the
+[Workflow Reference index](gh-automations-workflows.md). The quality and
+housekeeping ones are specified in detail on three topic pages:
+
+- [Coverage and Security Workflows](gh-automations-coverage-security.md): `coverage.yml`, `pip-audit.yml`, `downstream-check.yml`, and the deprecated `coverage-pages.yml`.
+- [Lint and Docs Workflows](gh-automations-lint-docs.md): `lint.yml`, `type-check.yml`, `docs-check.yml`, `notify-matrix.yml`.
+- [PR Comment Pattern and Scripts](gh-automations-pr-comment-scripts.md): the shared OVOS PR Checks comment mechanism and the Python scripts the workflows check out at run time.
 
 ---
 **Read next:** [gh-automations Coverage and Security Workflows](gh-automations-coverage-security.md)

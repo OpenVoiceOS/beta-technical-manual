@@ -238,6 +238,16 @@ OVOS is built for a global community:
 
 ---
 
+## Who is behind OVOS?
+
+OVOS is a community project stewarded by the **OpenVoiceOS V.z.w.**, a Belgian nonprofit
+formed in 2023 (see the [project timeline](timeline.md)). Development happens in the open on
+[GitHub](https://github.com/OpenVoiceOS). There is no commercial support contract to buy;
+support is community-based — the [OVOS Chat on Matrix](https://matrix.to/#/#openvoiceos-skills:matrix.org)
+for quick questions and the [Open Conversational AI forum](https://community.openconversational.ai/)
+for longer discussions. Vendors embedding OVOS should read [Maturity](maturity.md) and the
+[project timeline](timeline.md) to judge activity for themselves.
+
 !!! info "Help improve these docs"
     This manual is maintained by the OVOS community. Every page is cross-checked against
     the real source code. If you find an error or something unclear, please

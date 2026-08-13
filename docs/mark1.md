@@ -43,7 +43,7 @@ self.enclosure.mouth_display(img_code="HIAAAAAAAAAAAAAA", refresh=False)
 You can also display 32x8 PNG images.
 
 ```python
-self.enclosure.mouth_display_png('/path/to/image.png', threshold=70, invert=False, x=0, y=0, refresh=True)
+self.enclosure.mouth_display_png('/path/to/image.png', invert=False, x=0, y=0, refresh=True)
 
 ```
 

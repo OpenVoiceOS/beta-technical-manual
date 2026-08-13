@@ -61,10 +61,10 @@ flowchart TD
     BUS --- PHAL["ovos-phal<br/>hardware/platform plugins"]
 ```
 
-*Diagram: the messagebus sits at the center, with ovos-core (and its SkillManager, IntentService, transformer chains, and pipeline plugins), ovos-dinkum-listener, ovos-audio, ovos-media, ovos-gui, and ovos-phal each connected to it as independent clients.*
+*Diagram: the messagebus sits at the center, with ovos-core (and its SkillManager, IntentService, transformer chains, and pipeline plugins), ovos-dinkum-listener, ovos-audio, ovos-media, ovos-gui, and ovos-phal each connected to it as independent clients. Note that [ovos-media](ovos-media.md) is an opt-in proof of concept, not a default component — see its page for the full status warning.*
 
 `ovos-messagebus` is the hub; every other box is a client connected to it, not a node in a
-hierarchy. The five services besides `ovos-core`, the listener, audio, media, GUI, and PHAL, are
+hierarchy. Besides `ovos-core`, five services — the listener, audio, media, GUI, and PHAL — are
 separate processes and could in principle run on separate machines, each responsible for one
 stage of the [utterance lifecycle](life-of-an-utterance.md).
 

@@ -135,7 +135,8 @@ A skill is just a Python package that advertises itself to OVOS through an **ent
 `pyproject.toml`:
 
 !!! note "You don't need to understand this file yet"
-    Replace the two `name` placeholders and your username, and copy the rest as-is.
+    Replace `ovos-skill-my-first` (the project name), the `ovos_skill_my_first` package
+    folder wherever it appears, and `youruser` (your username) — and copy the rest as-is.
 
 ```toml
 [build-system]
