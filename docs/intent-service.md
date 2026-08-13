@@ -111,8 +111,11 @@ in the primary language only.
 
 Each utterance is associated with a `Session`.
 
-- The per-session `intent_context` (`session.intent_context`) decays on a `timeout` (config
-  `timeout`, default 2 minutes). This is what "expires," not the session itself. The
+- The per-session `intent_context` (`session.intent_context`) decays — spec-shaped entries
+  via their own `expires_at` / `turns_remaining`, legacy keyword frames via the
+  `context.timeout` config (minutes, default 2). Entries written through `set_context`
+  currently never decay at all: the core write path drops the expiry stamp (see the caveats
+  on [Conversational Context](context.md)). This is what "expires," not the session itself. The
   `"default"` session is persisted in-process by the orchestrator, not destroyed. See
   [Session Aware Skills](session.md).
 
