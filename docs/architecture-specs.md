@@ -159,4 +159,4 @@ ecosystem adopt the new `ovos.*` topics without a flag day.
 
 ---
 **Read next:** [Specification Tooling](spec-tooling.md) · [Maturity Scale](maturity.md)
-**Related:** [High-level Overview](architecture-overview.md) · [MessageBus Service](bus-service.md) · [Intent Service](intent-service.md) · [Plugin Manager](plugin-manager.md)
+**Related:** [High-level Overview](architecture-overview.md) · [MessageBus Service](bus-service.md) · [Intent Service](intent-service.md) · [Plugin Manager](plugin-manager.md) · [Read the specs in your terminal](docs-viewer.md) (`ovos-docs-viewer architecture`)
