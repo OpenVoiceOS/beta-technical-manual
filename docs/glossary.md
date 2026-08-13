@@ -9,6 +9,12 @@ This glossary defines common terms, acronyms, and concepts used throughout the O
     **[spec index](architecture-specs.md)**. You can safely skip those links on a first read.
     They matter once you are checking a component for spec conformance, not for everyday use.
 
+!!! tip "Day-one terms"
+    Brand new and just following [Your First Skill](first-skill.md)? The entries you actually
+    need first are: *terminal / shell*, *pip*, *virtual environment (venv)*, *skill*,
+    *intent*, *utterance*, *wake word*, *STT*, *TTS*, *messagebus*, and *skill_id*. Everything
+    else here is reference material you can meet when a page links to it.
+
 ## A
 
 **[Adapt](adapt-pipeline.md)**

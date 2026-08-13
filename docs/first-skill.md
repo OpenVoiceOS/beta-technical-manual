@@ -51,7 +51,12 @@ translated. That's the whole model. [Anatomy of a Skill](skill-structure.md) cov
 
 ## Step 1 — Create the folder layout
 
-Make this structure (replace `youruser` with your name/handle later):
+Make this structure — and actually replace `youruser` with your own name/handle (and pick
+your own skill name) **before** installing, not later: the folder and `pyproject.toml` names
+become the package name and `skill_id`, and two skills with the same `skill_id` installed on
+one machine shadow each other. On your own single machine the literal names work, which is
+exactly why the collision goes unnoticed until a second copy shows up (a shared computer, a
+classroom, a copied repo):
 
 ```text
 ovos-skill-my-first/
@@ -117,6 +122,13 @@ hi there
 say hello
 greet me
 ```
+
+!!! note "Three file formats, don't mix them up"
+    A skill uses three different formats side by side: `pyproject.toml` is **TOML**,
+    `.intent` and `.dialog` files are **plain text** (one phrase per line — no quotes, no
+    commas, no brackets), and only `skill.json` is **JSON**. The classic mistake is decorating
+    an `.intent` file with JSON punctuation; every stray quote or comma becomes part of the
+    phrase to match.
 
 ## Step 4 — Write what OVOS says back
 
@@ -186,6 +198,9 @@ and container installs each put it somewhere different.
 
 - Check where your particular install created its environment, for example the installer's
   summary screen (see [ovos-installer](ovos-installer-scenarios.md#environment-summary)).
+  On a fleet of identically-imaged machines (a classroom set, a batch of satellites) the
+  path is the same everywhere — find it once and share it, rather than having every person
+  hunt for it separately.
 - Advanced: if you installed via [systemd](glossary.md), its unit file's
   `Environment=`/`ExecStart=` lines show the path.
 - Still stuck? See [Troubleshooting](troubleshooting.md).
@@ -235,10 +250,17 @@ OVOS replies with one of your dialog lines. You just wrote a skill.
     anything to load. [Test Your Skill](testing-your-skill.md) hits the same requirement in
     the automated test.
 
-!!! tip "No microphone handy, or want to test without talking?"
+!!! tip "Prefer `ovos-say-to` for repeatable tests (and know the spoken-test failure mode)"
     You can send the utterance straight onto the bus as text, skipping the wake word and mic
-    entirely: `ovos-say-to "hello"`. See [Troubleshooting](troubleshooting.md#stage-3-did-stt-produce-text)
-    for more on this and other text-based ways to test a skill.
+    entirely: `ovos-say-to "hello"`. This is the **recommended** way to test while iterating —
+    it is deterministic and works with no microphone. It is also the way to go when many
+    machines test at once (a workshop, a classroom): the default spoken path sends your audio
+    to a shared **public community STT server** (see
+    [Privacy & Security](privacy-security.md)), so a room full of devices testing
+    simultaneously can see recognition turn slow or flaky from server load — a failure that
+    looks like "OVOS didn't reply" but has nothing to do with your skill. See
+    [Troubleshooting](troubleshooting.md#stage-3-did-stt-produce-text)
+    for more text-based ways to test a skill.
 
 ## Adding a file later? Know which install you have
 
