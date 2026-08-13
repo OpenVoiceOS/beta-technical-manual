@@ -71,19 +71,19 @@ public repository.
 ### Restore onto a fresh install
 
 1. [Install OVOS](ovos-installer.md) normally on the new machine, and confirm the stock
-   assistant works before restoring anything, so a restore problem is not confused with an
-   install problem.
+    assistant works before restoring anything, so a restore problem is not confused with an
+    install problem.
 2. Stop the services: `systemctl --user stop ovos.service`.
 3. Copy the backed-up directories back into place, overwriting the freshly-installed defaults:
 
-   ```bash
-   cp -a "$BACKUP_DIR/config/." ~/.config/mycroft/
-   cp -a "$BACKUP_DIR/data/." ~/.local/share/mycroft/
-   ```
+    ```bash
+    cp -a "$BACKUP_DIR/config/." ~/.config/mycroft/
+    cp -a "$BACKUP_DIR/data/." ~/.local/share/mycroft/
+    ```
 
 4. Restart: `systemctl --user start ovos.service`, then re-run the
-   [readiness probe](production-operations.md#knowing-when-the-assistant-is-actually-ready)
-   before relying on the device.
+    [readiness probe](production-operations.md#knowing-when-the-assistant-is-actually-ready)
+    before relying on the device.
 
 ### Across a fleet
 

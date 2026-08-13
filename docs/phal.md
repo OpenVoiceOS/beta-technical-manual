@@ -93,26 +93,20 @@ phal.shutdown()  # set ProcessStatus to stopping
 point group `opm.phal`) and applies these rules in order:
 
 1. **Admin-only check**: if the plugin name appears in `admin_config`, skip it (it will
-   be loaded by `AdminPHAL` instead).
+    be loaded by `AdminPHAL` instead).
 
 2. **Explicit disable**: if `config.get("enabled") is False`, skip.
 
-
 3. **Validator**: if the plugin class has a `validator` attribute, call
-   `plug.validator.validate(config)`:
+    `plug.validator.validate(config)`:
 
-   - Returns `True` → load
-
-
-   - Returns `False` → silently skip (hardware not present)
-
-
-   - Raises exception → skip, log error
-
+    - Returns `True` → load
+    - Returns `False` → silently skip (hardware not present)
+    - Raises exception → skip, log error
 
 4. **No validator**: defaults to enabled. Only `enabled: false` can disable.
-   Note: the `PHALPlugin` base sets `validator = PHALValidator` by default, so most
-   plugins do take the validator path. The default validator just returns
+    Note: the `PHALPlugin` base sets `validator = PHALValidator` by default, so most
+    plugins do take the validator path. The default validator just returns
    `config.get("enabled", True) is True`. A subclass overrides `validate()` to add a
    real hardware probe.
 
