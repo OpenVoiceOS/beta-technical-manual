@@ -95,8 +95,12 @@ issued in step 1. This step makes everything else work:
 
 ```bash
 pip install hivemind-bus-client   # repo name is hivemind-websocket-client
-hivemind-client set-identity      # stores the access key / host for this node
+hivemind-client set-identity --key <access_key> --password <password> --host <server>
 ```
+
+Bare `hivemind-client set-identity` with no flags raises a `ValueError` — it needs at least
+one of `--key`, `--password`, `--siteid` or `--host`. Use the access key and password printed
+by `add-client` in step 1.
 
 After `set-identity`, clients (and the [solver](#using-hivemind-as-a-solver) below) can connect
 without being handed connection details each time.

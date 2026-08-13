@@ -5,7 +5,9 @@
     devices around the house. The server runs the messagebus, `ovos-core`, and skills.
     Each satellite only listens and speaks. This page is the build guide. It has two
     paths: a raw shared bus for a trusted LAN, and HiveMind for anything that needs
-    auth or crosses an untrusted network.
+    auth or crosses an untrusted network. Terminology: this page says *satellite*;
+    HiveMind pages say *client* or *node* for the same thing — the device that
+    connects to the central server.
 
 ```mermaid
 flowchart TD
@@ -102,6 +104,25 @@ for matching server and satellite `docker-compose.yml` files.
     `session_id` filtering in a skill. It is a property of the shared bus. See
     [Composable Deployments: services are implicit singletons per bus](composable-deployments.md#services-are-implicit-singletons-per-bus).
 
+    Language is the exception: it is **not** part of the shared state. Each satellite's own
+    listener/STT configuration decides the `stt_lang` that rides its utterances (see
+    [Per-satellite language](#per-satellite-language) below), so two rooms can listen in two
+    languages while still sharing one `ovos-core`.
+
+### Per-satellite language
+
+To make one satellite listen and answer in a different language, change **that satellite's**
+config, not the server's: set `lang` in the satellite's own `mycroft.conf` (its listener and
+STT plugin follow it), or use a per-wake-word `stt_lang` override to bind a language to a
+specific wake word — say "ok computer" for English, "olá computador" for Portuguese, on the
+same box (see [Wake Word Plugins](wake-word-plugins.md)). The language then rides each
+utterance as `stt_lang` / `request_lang`, which sit above the server's configured default in
+the resolution order (see [Language Selection](lang-selection.md)) — so the server answers in
+the language the satellite heard, and a satellite that answers in the wrong language almost
+always means its own config fell through to the server's default. For HiveMind mic-satellites
+(`hivemind-mic-satellite`), the per-connection language knobs live in that project's own
+documentation — this manual covers only the OVOS-side integration.
+
 !!! warning "Defaults assume localhost"
     `websocket.host` defaults to `127.0.0.1` everywhere. A satellite left on the default
     will start and look healthy, then never reach the server. Set the host explicitly on
@@ -127,8 +148,8 @@ separate project with its own protocol and docs.
     hivemind-client set-identity --key <access_key> --password <password> --host <server>
     ```
 
-    `set-identity` with no arguments raises: it needs at least one of `--key`, `--password` or
-    `--siteid`.
+    `set-identity` with no arguments raises: it needs at least one of `--key`, `--password`,
+    `--siteid` or `--host`.
 
 4. Verify with `hivemind-client test-identity` before trusting the link.
 5. For a mic-only satellite that leaves STT/TTS to the server, use

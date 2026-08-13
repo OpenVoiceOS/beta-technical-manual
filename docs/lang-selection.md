@@ -56,7 +56,7 @@ is present *and* resolves to a valid language:
 | Priority | Context Key | Source |
 |---|---|---|
 | **1** | `stt_lang` | Set by the STT engine that transcribed the speech. |
-| **2** | `request_lang` | Volunteered by the source (e.g., a specific wake word or remote client). |
+| **2** | `request_lang` | Volunteered by the source (e.g., a per-wake-word `stt_lang` override — see [Wake Word Plugins](wake-word-plugins.md) — or a remote client). |
 | **3** | `detected_lang` | Set by a [Transformer](transformer-plugins.md) plugin (e.g., a language classifier). |
 
 The message language itself is resolved by `get_message_lang()`, which checks `message.data["lang"]` first and then `message.context["lang"]`. If neither is present, it falls back to the system `lang` from `mycroft.conf`.

@@ -37,6 +37,10 @@ Related pages:
     *recommended* plugins/voices for a language (offline/online, gender). It optionally
     swaps in better defaults. It is not required just to switch languages.
 
+    This describes a single-box install. In a multi-satellite deployment each satellite's
+    *own* `lang` / STT config decides the language of what it hears, independent of the
+    shared server — see [Satellites: Per-satellite language](satellites.md#per-satellite-language).
+
 Language codes are case-insensitive: OVOS normalizes them internally (e.g. `en-us`, `EN-US`,
 and `en_US` all become `en-US`), so it doesn't matter which case you type them in on the
 command line or in `mycroft.conf`. This manual writes codes in lower-case (`en-us`) by
