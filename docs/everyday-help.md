@@ -50,8 +50,10 @@ flowchart TD
   default *"Hey Mycroft"*) before it pays attention to anything else. Say the wake word, wait
   about one second, then say your request, for example "Hey Mycroft... what's the weather", instead of running the two
   together.
-- **Check you're not muted.** If a light or on-screen icon shows the microphone is muted, say
-  *"unmute microphone"* or use the physical mute switch or button, if your device has one.
+- **Check you're not muted.** If a light or on-screen icon shows the microphone is muted, use
+  the physical mute switch or button, or the on-screen control, if your device has one. A
+  muted microphone cannot hear a voice command, so unmuting is always a button or screen
+  action, never a spoken one.
 - **Move closer, or reduce background noise.** Wake-word detection is a local audio match. A TV,
   music, or a fan next to the microphone can make it too loud for the wake word to be heard.
 - **If it never hears you at all, check the microphone itself works.** See

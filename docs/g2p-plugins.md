@@ -82,8 +82,9 @@ only member the base class marks with `@abc.abstractmethod` is `available_langua
 exception both methods raise for a word the engine cannot phonemize, unless the caller passes
 `ignore_oov=True`, in which case they return `None` instead. The `utterance2arpa`,
 `utterance2ipa`, and `utterance2visemes` helpers split an utterance on whitespace, call
-`get_arpa`/`get_ipa` per word, and join the results with a `"."` separator between words. They
-propagate `OutOfVocabulary` the same way, unless `ignore_oov=True`.
+`get_arpa`/`get_ipa` per word, and join the results with a `"."` separator between words.
+`utterance2arpa` and `utterance2ipa` propagate `OutOfVocabulary` the same way, unless
+`ignore_oov=True`; `utterance2visemes` has no `ignore_oov` parameter and always propagates.
 
 `PhonemeAlphabet` (a `str` enum with members `ARPA` and `IPA`, same module) is a small
 convenience type some plugins use to declare which alphabet they emit — it is not required by
