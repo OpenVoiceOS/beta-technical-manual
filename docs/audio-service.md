@@ -73,7 +73,10 @@ chain**, sends it to a [TTS](tts-plugins.md) engine, runs the resulting audio th
 **tts-transformer chain**, and plays it through its playback queue (OVOS-AUDIO-1 §3).
 
 The same queue also plays sound effects (`ovos.audio.queue` / `ovos.audio.play_sound`, legacy:
-`mycroft.audio.queue` / `mycroft.audio.play_sound`). Separately, and only when
+`mycroft.audio.queue` / `mycroft.audio.play_sound`). A remote client can instead ask for the
+synthesized audio **back over the bus** — base64 in the reply, nothing played locally — via
+`ovos.utterance.speak.b64` / `ovos.audio.speech`; see the
+[JSON round trip](bus-recipes.md#from-a-non-python-client-the-json-round-trip). Separately, and only when
 `enable_old_audioservice` is on, it also hosts the legacy media audioservice for music, news, and
 streams. See the **Two independent subsystems** note at the top of this page.
 

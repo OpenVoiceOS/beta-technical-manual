@@ -55,8 +55,11 @@ If the message originated in the device itself, the `session_id` is always equal
     already holds for a given `session_id`; a `session_id` this process never folded a full
     session for is carried through untouched, with none of the previous turn's state. To keep
     multi-turn continuity — `intent_context`, `lang`, presentation preferences, and the rest —
-    a client must send the **complete serialized session** (`Session.serialize()`) back on
-    each message, not just the bare `session_id` string. Losing that round trip is
+    a client must send the **complete serialized session** back on each message, not just the
+    bare `session_id` string — from Python that is `Session.serialize()`; from any other
+    language it is the same JSON object echoed back from `context.session` of the frames
+    the server sends you (its exact field list is normative in the OVOS-SESSION-1 spec, not
+    this manual; see the [JSON round trip](bus-recipes.md#from-a-non-python-client-the-json-round-trip)). Losing that round trip is
     indistinguishable from starting a brand new session every turn — a `session_id` this
     process has never folded a full session for gets a **fresh** session by design, not an
     error and not a reconstruction from history.

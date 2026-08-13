@@ -68,6 +68,50 @@ browser as it is broadcast. Install it with `pip install ovos-busmon`.
     threaded `MessageBusClient` used in the recipes above, for callers already running an
     asyncio event loop (e.g. FastAPI servers) that would rather avoid a background thread.
 
+## From a non-Python client: the JSON round trip
+
+The bus speaks plain JSON frames over a WebSocket, so any language works — Dart, Kotlin,
+JavaScript, anything with a WebSocket client. This is the full loop a companion app needs.
+(Reminder: the raw bus has no auth — on anything beyond localhost, connect through
+[HiveMind](hivemind-agents.md) instead; the frames below stay the same, HiveMind wraps them.)
+
+Send an utterance (text in — as if the user had spoken it):
+
+```json
+{"type": "ovos.utterance.handle",
+ "data": {"utterances": ["what time is it"], "lang": "en-US"},
+ "context": {"session": {"session_id": "my-app"}}}
+```
+
+The reply arrives as a `speak` frame (spec topic `ovos.utterance.speak`):
+
+```json
+{"type": "ovos.utterance.speak",
+ "data": {"utterance": "It is quarter past six", "lang": "en-US"},
+ "context": {"session": {"session_id": "my-app"}}}
+```
+
+To receive the synthesized **audio** over the same channel — instead of the server playing
+it on its own speakers — use the remote-rendering request (spec topic
+`ovos.utterance.speak.b64`, legacy `speak:b64_audio`):
+
+```json
+{"type": "ovos.utterance.speak.b64",
+ "data": {"utterance": "It is quarter past six", "listen": false},
+ "context": {"session": {"session_id": "my-app"}}}
+```
+
+`ovos-audio` answers with `ovos.audio.speech`: `data.audio` is the base64-encoded audio
+file, alongside `tts_id` and the echoed `utterance`. With `"listen": true` the service also
+emits `ovos.mic.listen` afterwards, re-opening the client's input channel.
+
+Two things to keep straight for multi-turn state: the session travels **per message** —
+carry the full serialized session object in `context.session` on every frame and replay
+what the server sends back, not just the `session_id` (see
+[Session Aware Skills](session.md)); its exact field list is defined by the OVOS-SESSION-1
+spec rather than this manual. And filter incoming frames by your own `session_id`, since
+the bus broadcasts every frame to every client.
+
 ---
 **Read next:** [messagebus Service](bus-service.md)
 **Related:** [CLI Tools](cli-tools.md) · [Bus Events Reference](bus-events.md)
