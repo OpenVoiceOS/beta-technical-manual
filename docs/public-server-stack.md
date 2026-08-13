@@ -84,8 +84,7 @@ server's own page before assuming `mycroft.conf` applies:
   audio/utterance transformer chains and default `lang` still come from
   `mycroft.conf` ([STT Server](stt-server.md)).
 - The **translate server** likewise takes its engines from CLI flags and ignores
-  `mycroft.conf` — except the published `0.0.2` release, which still reads the
-  `language` section ([Translate Server](translate-server.md)).
+  `mycroft.conf` ([Translate Server](translate-server.md)).
 
 A settings block placed in a section a service does not read is ignored
 silently — the service starts, answers requests, and runs on defaults while
