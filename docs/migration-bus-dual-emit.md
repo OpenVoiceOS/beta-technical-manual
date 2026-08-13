@@ -31,11 +31,7 @@ the fleet already being upgraded, so operators are meant to move onto
 `ovos.*` topics now, while both spellings still work, rather than wait for
 the kill switch to force the issue.
 
-This is the change every remote/HiveMind operator needs to plan for.
-`ovos-bus-client` `2.x` introduced a transitional bridge so a mixed fleet
-(core upgraded, satellites not yet upgraded) keeps working while topics
-migrate from legacy `mycroft.*`/`recognizer_loop:*` spellings to the
-`ovos.*` spec namespace:
+The commit-level history of that bridge:
 
 1. `679f120` (#228, 2026-06-25): opt-in (default OFF) dual-emit + dedup bridge.
 2. `e25ab12` (#230, 2026-06-25): split into two flags, **both default ON**

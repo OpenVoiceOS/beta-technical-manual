@@ -27,7 +27,7 @@ There are roughly **280** public, non-archived repositories in the [`OpenVoiceOS
     | [OpenVoiceOS](https://github.com/OpenVoiceOS/OpenVoiceOS) | The organization's release tracker - high-level release notes across the ecosystem's many... | [Meta & infrastructure / other components](#meta-infrastructure-other-components-46) |
     | [ovos-a2a-agent-plugin](https://github.com/OpenVoiceOS/ovos-a2a-agent-plugin) | An OVOS ChatEngine plugin that lets an ovos-persona delegate its reasoning to any... | [Agent Engine plugins](#agent-engine-plugins-8) |
     | [ovos-adapt-pipeline-plugin](https://github.com/OpenVoiceOS/ovos-adapt-pipeline-plugin) | The Adapt Intent Parser is a flexible and extensible intent definition and determination... | [Pipeline / Intent plugins](#pipeline-intent-plugins-10) |
-    | [ovos-agentic-loop](https://github.com/OpenVoiceOS/ovos-agentic-loop) | Agent-loop ChatEngine plugins for OVOS. Implements seven agentic reasoning patterns... | [Agent Engine plugins](#agent-engine-plugins-8) |
+    | [ovos-agentic-loop](https://github.com/OpenVoiceOS/ovos-agentic-loop) | Agent-loop ChatEngine plugins for OVOS. Implements eight agentic reasoning patterns... | [Agent Engine plugins](#agent-engine-plugins-8) |
     | [ovos-audio](https://github.com/OpenVoiceOS/ovos-audio) | The "mouth" of the OVOS assistant: it handles text-to-speech generation and audio... | [Core services & libraries](#core-services-libraries-18) |
     | [ovos-audio-plugin-mpv](https://github.com/OpenVoiceOS/ovos-audio-plugin-mpv) | An MPV-based audio backend for the legacy `ovos-audio` playback service (predates the... | [Meta & infrastructure / other components](#meta-infrastructure-other-components-46) |
     | [ovos-audio-transformer-plugin-bandpass](https://github.com/OpenVoiceOS/ovos-audio-transformer-plugin-bandpass) | An audio transformer that band-pass filters captured speech before STT, attenuating... | [Transformer plugins](#transformer-plugins-6) |
@@ -653,7 +653,7 @@ Most register under the `opm.tts` entry-point group and are loaded by ovos-audio
 :   An OVOS ChatEngine plugin that lets an ovos-persona delegate its reasoning to any external agent that speaks the Agent2Agent (A2A) protocol. Used by ovos-persona and the Common Query/fallback pipelines (via Agent Engines) to answer free-form questions or drive agentic behavior.
 
 **[ovos-agentic-loop](https://github.com/OpenVoiceOS/ovos-agentic-loop)**
-:   Agent-loop ChatEngine plugins for OVOS. Implements seven agentic reasoning patterns (ReAct, Plan-and-Execute, Reflexion, Self-Ask, Chain-of-Thought, CRITIC, Tree-of-Thoughts), five built-in toolboxes, SKILL.md integration, and AGENTS.md context management — all as standard OPM plugins. Used by ovos-persona and the Common Query/fallback pipelines (via Agent Engines) to answer free-form questions or drive agentic behavior.
+:   Agent-loop ChatEngine plugins for OVOS. Implements eight agentic reasoning patterns (ReAct, Native-ToolCall, Plan-and-Execute, Reflexion, Self-Ask, Chain-of-Thought, CRITIC, Tree-of-Thoughts), six built-in toolboxes, SKILL.md integration, and AGENTS.md context management — all as standard OPM plugins. Used by ovos-persona and the Common Query/fallback pipelines (via Agent Engines) to answer free-form questions or drive agentic behavior.
 
 **[ovos-memory-plugins](https://github.com/OpenVoiceOS/ovos-memory-plugins)**
 :   Give your OpenVoiceOS persona a memory. Used by ovos-persona and the Common Query/fallback pipelines (via Agent Engines) to answer free-form questions or drive agentic behavior.
