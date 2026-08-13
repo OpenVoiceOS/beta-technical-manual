@@ -20,7 +20,7 @@ each one before you open a port on a shared network.
 | Service | Port | Default bind | Auth? | TLS? |
 |---|---|---|---|---|
 | [Messagebus](bus-service.md) | 8181 | `127.0.0.1` | None | Optional (`websocket.ssl`) |
-| [GUI WebSocket](gui-service.md#configuration) | 18181 | `0.0.0.0` (all interfaces) | None | None |
+| [GUI WebSocket](gui-service.md#configuration) | 18181 | `127.0.0.1` (older configs may carry `0.0.0.0`) | None | None |
 | [Skill Settings web UI](skill-settings.md) | 8000 | `0.0.0.0` (all interfaces) | Basic auth, default `ovos`/`ovos` | None (put a proxy in front for TLS) |
 | [STT server](stt-server.md) | 8080 | `0.0.0.0` | None | None (put a proxy in front for TLS) |
 | [TTS server](tts-server.md) | 9666 | `0.0.0.0` | None | None (put a proxy in front for TLS) |

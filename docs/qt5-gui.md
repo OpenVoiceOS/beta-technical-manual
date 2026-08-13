@@ -313,7 +313,7 @@ Mycroft.Delegate {
             // own delegate item (e.g. a custom Rectangle/Item defined in the same file).
             Repeater {
                 model: examplesModel
-                delegates: ExamplesDelegate {
+                delegate: ExamplesDelegate {
                     ...
                 }
             }

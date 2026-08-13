@@ -156,7 +156,7 @@ The GUI WebSocket server is configured under `gui_websocket` in `mycroft.conf`:
 ```jsonc
 {
   "gui_websocket": {
-    "host": "0.0.0.0", // ships bound to all interfaces — set to 127.0.0.1 to restrict to localhost
+    "host": "127.0.0.1", // loopback-only by default — widen to 0.0.0.0 only for a remote display
     "base_port": 18181,
     "route": "/gui"
   }
@@ -165,7 +165,7 @@ The GUI WebSocket server is configured under `gui_websocket` in `mycroft.conf`:
 
 | Key | Description |
 |---|---|
-| `host` | Interface the Tornado WebSocket server binds to (default: `0.0.0.0`, **all interfaces**) |
+| `host` | Interface the Tornado WebSocket server binds to (default: `127.0.0.1`, loopback only) |
 | `base_port` | TCP port Qt clients connect to (default: `18181`) |
 | `route` | WebSocket route path (default: `/gui`) |
 
@@ -179,8 +179,9 @@ The GUI WebSocket server is configured under `gui_websocket` in `mycroft.conf`:
     in `ovos_gui/bus.py` reads only `route`, `base_port`, and `host`, so nothing turns this
     socket into `wss://`.
 
-    It ships bound to `0.0.0.0` (all interfaces). Set `gui_websocket.host` to `127.0.0.1`
-    unless a remote display genuinely needs network access. Never leave `0.0.0.0` on an
+    It ships bound to `127.0.0.1` (loopback only). Widen `gui_websocket.host` to `0.0.0.0`
+    only if a remote display genuinely needs network access — and check configs from older
+    installs, which may still carry `0.0.0.0`. Never leave `0.0.0.0` on an
     untrusted network, and never expose port `18181` beyond a trusted network. If a display
     really must run on another machine, put it behind a VPN or a reverse proxy that
     authenticates and terminates TLS. Or use

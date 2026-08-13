@@ -160,17 +160,20 @@ connection is at that moment.
 
 ---
 
-## Opt-in wake-word and STT sample donation
+## Wake-word and STT sample capture
 
-Beyond intent-matching metrics, `ovos-dinkum-listener` can optionally upload the
-audio samples it captures (wake-word detections and transcribed utterances) to
-an [ovos-opendata-server](https://github.com/OpenVoiceOS/ovos-opendata-server)
-instance, so contributors can help improve wake word and STT plugins with real
-recordings. This is exclusively opt-in and off by default: nothing is ever
-uploaded unless `open_data.ww_urls` or `open_data.stt_urls` is explicitly
-configured with at least one server, and there is no default server. Uploads run
-in a background thread and never block the listener. Failures are logged and
-otherwise ignored. See [`open_data.ww_urls` / `open_data.stt_urls`](config-all-keys.md#all-keys-generated) for the exact config keys.
+`ovos-dinkum-listener` can capture the audio samples it hears — wake-word
+detections and transcribed utterances — but only to **local disk**, gated by the
+`listener.record_wake_words` and `listener.save_utterances` config keys (both
+off by default). No upload path exists: nothing recorded ever leaves the device.
+
+!!! note "Upcoming"
+    An opt-in donation mechanism that uploads captured samples to an
+    [ovos-opendata-server](https://github.com/OpenVoiceOS/ovos-opendata-server)
+    instance (config keys `open_data.ww_urls` / `open_data.stt_urls`, no default
+    server) is proposed in
+    [ovos-config#278](https://github.com/OpenVoiceOS/ovos-config/pull/278) but
+    not yet merged. See [Upcoming Changes](upcoming-changes.md).
 
 ---
 
