@@ -120,7 +120,7 @@ Each variation is a **slot**.
 
 ## Where this fits in OVOS
 
-OVOS Localize is the front door for translators. Under the hood it reads the same locale
+OVOS Localize is the entry point for translators. Internally it reads the same locale
 files described in **[Customizing Language Resources](lang-customization.md)** and
 feeds the broader **[Language Support](lang-support.md)** effort. Developers who want to
 validate locale files in CI can use its `ovos-localize-cli` tool; translators never need it.

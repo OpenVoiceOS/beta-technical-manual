@@ -211,6 +211,7 @@ The fastest way to get a working setup for your language is `ovos-config autocon
 
 ```bash
 ovos-config autoconfigure -l en-us --offline --female
+ovos-config autoconfigure -l pt-pt --offline --female
 ovos-config autoconfigure -l de-de --offline --male
 ovos-config autoconfigure -l fr-fr --hybrid --female
 ```

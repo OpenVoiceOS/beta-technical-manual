@@ -42,7 +42,7 @@ Something not working? Start with the quick-fix page. Move to the decision tree 
 - [Troubleshooting & Debugging](troubleshooting.md): a deeper decision tree for tracking down why a command failed.
 - [RaspOVOS Troubleshooting](raspovos-troubleshooting.md): fixes specific to the Raspberry Pi image: power, sound, wake word, STT.
 
-Want to understand how OVOS works under the hood rather than just use it? That's the Concepts tab. Ready to build a skill of your own? That's the Skills tab.
+Want to understand how OVOS works internally rather than just use it? That's the Concepts tab. Ready to build a skill of your own? That's the Skills tab.
 
 ---
 **Read next:** [Install with ovos-installer](ovos-installer.md)
