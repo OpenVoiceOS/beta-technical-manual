@@ -82,7 +82,18 @@ Then select it in your audio/media backend config. See [Media playback: legacy v
 pip install ovos-media-plugin-vlc
 ```
 
-Then select it in your audio/media backend config. See [Media playback: legacy vs. ovos-media](ovos-media.md).
+!!! warning "Needs the native `libvlc` system library"
+    `ovos-media-plugin-vlc` wraps `python-vlc`, which needs the native `libvlc` system library
+    to actually load. `pip install` alone will not error if `libvlc` is missing — the plugin
+    just silently fails to load, and no audio backend is available. Install the system package
+    too, e.g. `apt install vlc` (Debian/Ubuntu) or `libvlc-dev`/`libvlc5` on distros that split
+    the runtime from the dev headers. If you want a backend with no native binding to install,
+    see [ovos-media-plugin-ffplay](#ovos-media-plugin-ffplay) below.
+
+Then select it in your audio/media backend config, using the **entry-point name**
+(`ovos-media-audio-plugin-vlc` for audio, `ovos-media-video-plugin-vlc` for video) as the
+`module` value — this differs from the pip package name (`ovos-media-plugin-vlc`). See [Media
+playback: legacy vs. ovos-media](ovos-media.md).
 
 ---
 
@@ -173,6 +184,11 @@ Then select it in your audio/media backend config. See [Media playback: legacy v
 ```bash
 pip install ovos-media-plugin-ffplay
 ```
+
+A good default for a headless box: it only needs `ffmpeg`/`ffplay` on the `PATH`, which most
+systems already have or can install with a single package (`apt install ffmpeg`), with no
+separate native binding to install (unlike [ovos-media-plugin-vlc](#ovos-media-plugin-vlc)
+above).
 
 Then select it in your audio/media backend config. See [Media playback: legacy vs. ovos-media](ovos-media.md).
 

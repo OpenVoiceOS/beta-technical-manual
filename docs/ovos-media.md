@@ -212,6 +212,26 @@ account current player state):
   never loaded, on either stack. The `ocp:like_song` / `ocp:play_favorites` handlers exist and
   the bus messages work; only the voice route is disabled.
 
+### Now-Playing Intents
+
+`OCPMediaCatalog` (the built-in `ovos-media` skill described under [ovos-media
+Player](#ovos-media-player)) registers five regular padatious intents (en-us) about the
+currently playing track: `WhatSong`, `WhatArtist`, `WhatAlbum`, `ShuffleOn`, and `ShuffleOff`.
+
+`WhatSong` and `WhatArtist` answer from the player's global status
+(`ovos.common_play.status`), the same read-only state every session gets back from a status
+query — so these two intents answer on **any** session, not just the local device. `WhatAlbum`
+always reports it has no album information: `MediaEntry` (the player's now-playing model) has
+no album field to report, an upstream data-model limitation rather than a missing lookup.
+
+`ShuffleOn` and `ShuffleOff` are different: they act on the player (`shuffle.set` /
+`shuffle.unset`), so they follow the same session gating as any other playback-affecting
+command — only the local/"default" session may trigger them, unless the owning `ovos-media`
+was configured with `media.validate_source: false` (see [HiveMind: multi-session
+gating](#hivemind-multi-session-gating)). On a non-default session the intent handler itself
+declines before emitting anything, and speaks a dialog saying the device cannot be controlled
+from here, rather than reporting success for a shuffle change that never happened.
+
 ---
 
 ## MPRIS Integration
@@ -289,6 +309,38 @@ search results into the active playlist vs. replacing it), and
 `force_audioservice` (route audio through the audio backend even when a GUI is
 available).
 
+### First playback
+
+`ovos-media` listens for `ovos.common_play.play` and expects a `media` dict plus an optional
+`playlist` list:
+
+```json
+{
+  "media": {
+    "uri": "https://example.com/song.mp3",
+    "title": "Some Jazz",
+    "media_type": 2,
+    "playback": 2
+  },
+  "playlist": [{"uri": "https://example.com/song.mp3", "title": "Some Jazz",
+                "media_type": 2, "playback": 2}]
+}
+```
+
+`media` is required — `handle_play_request` logs a warning and ignores the message without it.
+If `playlist` is omitted, `ovos-media` builds a single-track playlist containing only `media`.
+Either way, playing then **replaces** the player's current playlist outright: an
+`ovos.common_play.play` message always overwrites whatever was set by an earlier
+`ovos.common_play.playlist.set` message, whether or not it includes a `playlist` key, and
+next/previous navigation after a bare `play` (no `playlist` key) only ever has the one track to
+work with. To play a track as part of a larger playlist, include the full track list under
+`playlist` in the same `ovos.common_play.play` message.
+
+Query-style bus messages follow a `.response` suffix convention: the reply to `<msg_type>` is
+emitted as `<msg_type>.response`. For example, `ovos.common_play.status` is answered on
+`ovos.common_play.status.response`, and `ovos.common_play.track_info` on
+`ovos.common_play.track_info.response`.
+
 ### Service-level bus messages
 
 Beyond the per-player `ovos.audio.service.*` / `ovos.video.service.*` API, these bus messages
@@ -321,6 +373,32 @@ The rest are registered by `OCPMediaPlayer`:
 These live alongside the legacy ducking/cork aliases kept for backward compatibility. The full
 ~30-entry `OCPMediaPlayer` handler list, including exact legacy alias names, is in
 `ovos_media/player.py`.
+
+---
+
+## Stop & Error Semantics
+
+A few guarantees hold for `OCPMediaPlayer` regardless of which backend is active:
+
+- **Stop never advances the queue.** Whether it comes from the bus API, a legacy stop topic, or
+  an MPRIS `Stop` command — including while a bad-stream retry is still pending — an explicit
+  stop always ends on `PlayerState.STOPPED` with the queue position unchanged. Advancing to the
+  next track only ever happens through the normal end-of-track / `next` paths.
+- **Unplayable tracks are skipped, not fatal.** A track a backend cannot load emits
+  `MediaState.INVALID_MEDIA` and the player schedules a delayed retry that moves on to the next
+  track in the queue, rather than failing the whole playback request outright.
+- **A queue that is entirely broken stops instead of looping forever.** If every track in the
+  current queue has already failed to load since the last successful one, `ovos-media` stops
+  playback (`PlayerState.STOPPED`) instead of retrying indefinitely — this applies both to
+  `LoopState.REPEAT_TRACK` on a single failed track and to `LoopState.REPEAT` restarting a
+  wholly-failed queue.
+- **End of queue emits `PlayerState.STOPPED`.** Reaching the end of the queue with repeat off
+  updates the player state (and notifies the GUI/MPRIS/bus) rather than leaving it at `PLAYING`
+  with nothing left to play.
+- **Duplicate URIs in a playlist advance by position, not first match.** A playlist like
+  `[a, b, a]` tracks the currently-playing entry by object identity, falling back to playlist
+  position and then to URI lookup only if identity is unavailable — so playback moves through
+  the queue in order instead of ping-ponging back to the first track sharing a URI.
 
 ---
 

@@ -42,6 +42,14 @@ dbus-send --session --dest=org.freedesktop.DBus --type=method_call --print-reply
 
 ```
 
+!!! note "Position units differ between the OCP bus and MPRIS"
+    Every position/length value on the OCP bus and in the media-backend contract
+    (`seekValue`, `set_track_position`, `get_track_position`, `get_track_length`, and the GUI's
+    `position`/`duration` fields) is **milliseconds**. MPRIS itself uses **microseconds** for its
+    `Position` property, so `ovos-media` converts when exporting it (multiplying the millisecond
+    value by 1000). This conversion is internal to the MPRIS exporter; nothing else in
+    `ovos-media` deals in microseconds.
+
 ---
 
 ## External Player Reflection & Takeover

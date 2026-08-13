@@ -7,6 +7,13 @@
     toggle's polarity. Fix it by moving `OCP` to `media` and setting
     `enable_mpris` explicitly if you want MPRIS on.
 
+!!! note "Legacy audioservice and ovos-media run side by side"
+    Moving to `ovos-media` is an opt-in choice today, made with the
+    `enable_old_audioservice` [switch](audio-service.md); the legacy
+    audioservice stays installed and functional either way, and the switch
+    works in both directions. See [Audio Service](audio-service.md) for the
+    coexistence model this migration guide assumes.
+
 ### OCP → ovos-media config split
 
 Splitting audio-service responsibility out of `ovos-audio` into a

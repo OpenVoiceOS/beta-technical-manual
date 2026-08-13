@@ -51,7 +51,11 @@ Writing a plugin instead of choosing one? See [Writing an OCP Stream Extractor P
   also recognizes a hardcoded table of known news-provider URLs directly (`URL_MAPPINGS`) so
   skills can hand it a raw provider URL without the `news//` prefix. At playback time it looks
   the URL up in that table and calls the matching extractor function to resolve the real,
-  playable stream.
+  playable stream. The TSF (Portugal) source resolves the current bulletin by scraping it from
+  TSF's listing page rather than guessing a predictable URL, since TSF now hosts bulletins on a
+  CDN with unpredictable per-bulletin filenames. The GR1 (Italy) source resolves Rai's relinker
+  URL server-side with a browser-like User-Agent before handing back the final stream, since the
+  relinker rejects requests without one.
 
 ---
 
@@ -62,8 +66,9 @@ Writing a plugin instead of choosing one? See [Writing an OCP Stream Extractor P
 
 - **Description**: A stream extractor for [Bandcamp](https://bandcamp.com) pages, registering
   the SEI `bandcamp`. It recognizes both `bandcamp//<url>` results and any bare URL containing
-  `bandcamp.`, then delegates the actual page scraping to the `py-bandcamp` library
-  (`get_stream_data`) to pull out the real audio stream URL and track metadata.
+  `bandcamp.`, then strips the `bandcamp//` SEI prefix (if present) before delegating the actual
+  page scraping to the `py-bandcamp` library (`get_stream_data`) to pull out the real audio
+  stream URL and track metadata.
 
 ---
 
@@ -90,7 +95,10 @@ Writing a plugin instead of choosing one? See [Writing an OCP Stream Extractor P
   `youtube-dl`/`yt-dlp`, `pytube`, an Invidious mirror, or a webview fallback, selectable via
   the `youtube_backend` / `ydl_backend` / `invidious_host` settings, since any single scraping
   approach tends to break whenever YouTube changes its page format. It also has a dedicated path
-  for resolving a channel's current live stream.
+  for resolving a channel's current live stream. The `pytube` backend depends on
+  `tutubo.pytube`, which only exists on `tutubo<3.0.0`; a newer `tutubo` is tolerated (the other
+  backends keep working), but selecting the `pytube` backend against `tutubo>=3.0.0` raises a
+  clear error telling you to pin `tutubo<3.0.0` or use the default `youtube-dl` backend instead.
 
 ---
 

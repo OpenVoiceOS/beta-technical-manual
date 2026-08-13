@@ -35,12 +35,17 @@ music while it talks.
 
     Switching media playback to `ovos-media` (`enable_old_audioservice: false`) turns off
     subsystem 2 only. TTS and sound playback (subsystem 1) keep working exactly as before.
+    `enable_old_audioservice` works in both directions: flip it back to `true` to return to
+    the legacy audioservice, on the same install, no reinstall needed.
 
 !!! warning "Upcoming breaking change"
-    The legacy media audioservice subsystem (subsystem 2 above, including the
-    [OCP audioservice backend](ocp-audio-plugin.md)) is planned for removal from
-    `ovos-audio` entirely. Media playback will then live wholly in [`ovos-media`](ovos-media.md).
-    The TTS / sound playback queue (subsystem 1) is unaffected.
+    The legacy media audioservice and standalone `ovos-media` currently run **side by side**:
+    which one plays media is a deployer's choice, made with `enable_old_audioservice`. The
+    legacy media audioservice subsystem (subsystem 2 above, including the
+    [OCP audioservice backend](ocp-audio-plugin.md)) is planned to stop being the default,
+    with media playback moving wholly to [`ovos-media`](ovos-media.md); opt in today by
+    setting `enable_old_audioservice: false`. The TTS / sound playback queue (subsystem 1) is
+    unaffected either way.
 
 ---
 

@@ -38,6 +38,28 @@ All base classes live in `ovos_plugin_manager.templates.transformers` and share 
 
 A `"priority"` key in a plugin's `mycroft.conf` block is not applied automatically. The plugin must read it back out of `self.config` itself if it wants deployments to override priority (see [Utterance Transformers: Config-driven priority](utterance-transformers.md#config-driven-priority)).
 
+### Config shape (all six chains)
+
+Every chain's `mycroft.conf` section follows the same rules (`TransformersService.load_plugins()` in `ovos_plugin_manager.transformer_services`):
+
+- Each **key** in the section is an enabled plugin's entry-point name, except the two
+  reserved keys `order` and `blacklisted_skills`, which are not plugin entries.
+- A plugin block with `"active": false` is still loaded but skipped when the chain runs.
+- An `"order"` key, if present, is a **list of plugin names** giving the run order
+  explicitly. It wins over ascending-priority sorting; a loaded plugin absent from the
+  list is not run. Plugins named in `order` are treated as enabled even with no config
+  block of their own.
+
+```json
+{
+  "utterance_transformers": {
+    "order": ["ovos-utterance-plugin-cancel", "ovos-utterance-normalizer"],
+    "ovos-utterance-plugin-cancel": {},
+    "ovos-utterance-normalizer": {}
+  }
+}
+```
+
 | Type | Stage | Base Class | Entry-point group |
 |------|-------|------------|-------------------|
 | **Audio** | Before STT | `AudioTransformer` | `opm.transformer.audio` |
@@ -46,6 +68,12 @@ A `"priority"` key in a plugin's `mycroft.conf` block is not applied automatical
 | **Intent** | After Intent match, before Skill | `IntentTransformer` | `opm.transformer.intent` |
 | **Dialog** | Before TTS | `DialogTransformer` | `opm.transformer.dialog` |
 | **TTS** | After TTS, before Playback | `TTSTransformer` | `opm.transformer.tts` |
+
+`ovos-plugin-manager` also honors the deprecated Neon entry-point groups `neon.plugin.text`,
+`neon.plugin.metadata` and `neon.plugin.audio` as aliases for `opm.transformer.text`,
+`opm.transformer.metadata` and `opm.transformer.audio` (with a deprecation warning). There is
+no such alias for the intent, dialog or TTS chains — a plugin registered only under a legacy
+name for those three groups is not discovered.
 
 The runner classes that load and chain these plugins live in `ovos-plugin-manager` (`ovos_plugin_manager.transformer_services`): `UtteranceTransformersService`, `MetadataTransformersService`, `IntentTransformersService`, `AudioTransformersService`, `DialogTransformersService`, `TTSTransformersService`. Each consumer imports the one it needs. `ovos-core` runs the utterance/metadata/intent chains, the listener runs the audio chain, and the audio/TTS stacks run the dialog/TTS chains.
 
