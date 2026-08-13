@@ -1586,10 +1586,11 @@ container. See <a href="../satellites/#thin-clients-a-shared-speech-backend">Sat
 for the same warning applied to a thin-client fleet.</p>
 </div>
 <p>The bus listens on port <code>8181</code>. The GUI service listens on a separate port, <code>18181</code> by
-default (config key <code>gui_websocket.base_port</code>, see <a href="../bus-service/">Bus Service</a>). The bus
-binds <code>127.0.0.1</code> by default, but the GUI socket ships bound to <code>0.0.0.0</code>. Combined with host
-networking, that puts the unauthenticated GUI socket on the whole LAN, not just the device.
-Set <code>gui_websocket.host</code> to <code>127.0.0.1</code> unless a remote display client needs it.</p>
+default (config key <code>gui_websocket.base_port</code>, see <a href="../bus-service/">Bus Service</a>). Both the
+bus and the GUI socket ship bound to <code>127.0.0.1</code>. Widening <code>gui_websocket.host</code> to <code>0.0.0.0</code>
+(required for remote display clients) combined with host networking puts the unauthenticated
+GUI socket on the whole LAN, not just the device — keep the default unless a remote display
+client needs it, and check upgraded configs that may carry an old <code>0.0.0.0</code> value.</p>
 <p>If you ever run these images with a non-host network driver instead (a private bridge
 network), point <code>websocket.host</code> in each container's <code>mycroft.conf</code> at the messagebus
 container's name or hostname, the way any other split-host OVOS deployment does (see
