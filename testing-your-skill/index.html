@@ -1514,6 +1514,17 @@ this (trimmed of the framework's own deprecation-warning noise):</p>
 others you have), not just the one your test needs. On a machine with only the pipeline
 plugins your skill actually depends on, startup is much faster.</p>
 </div>
+<div class="admonition warning">
+<p class="admonition-title">Intent matched, handler dispatched, but nothing spoken?</p>
+<p>If the capture times out waiting for <code>ovos.utterance.handled</code> even though the log shows
+<code>ovos.intent.matched</code> and your <code>&lt;skill_id&gt;:&lt;IntentName&gt;</code> dispatch message, the tutorial code
+is usually not the culprit — a crowded Python environment is. A venv with many co-installed
+skills and plugins can carry version skew or broken entry points that stall handler
+execution without a traceback. Scan the startup log for <code>Failed to load plugin entry point</code>
+errors, check <code>pip list | grep ovos</code> for mismatched <code>ovos-core</code>/<code>ovos-workshop</code> versions,
+and re-run the test in a fresh venv containing only your skill and its <code>[test]</code> extras
+before debugging the skill itself.</p>
+</div>
 <h2 id="step-4-test-the-failure-path">Step 4: Test the failure path<a class="headerlink" href="#step-4-test-the-failure-path" title="Permanent link">&para;</a></h2>
 <p>A test that only ever sends utterances your skill <em>should</em> match doesn't tell you much. Add a
 second test that sends something unrelated and checks the skill stays silent. This is what
