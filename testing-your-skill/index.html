@@ -1512,7 +1512,9 @@ this (trimmed of the framework's own deprecation-warning noise):</p>
 <p>The bulk of that ~70s is <code>ovoscope</code> spinning up a full in-process <code>SkillManager</code> and loading
 <strong>every</strong> intent-pipeline plugin installed on the machine (Adapt, Padatious, Padacioso, and any
 others you have), not just the one your test needs. On a machine with only the pipeline
-plugins your skill actually depends on, startup is much faster.</p>
+plugins your skill actually depends on, startup is much faster. On a shared box where
+several people run tests at once (a classroom, a CI runner), the runs compete for CPU —
+stagger them, or budget a couple of minutes per person.</p>
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Intent matched, handler dispatched, but nothing spoken?</p>

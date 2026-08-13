@@ -1745,7 +1745,11 @@ service you're changing, and reloading your changes while you work.</p>
 <ol>
 <li><strong>Branch</strong>: fork the repo on GitHub, clone your fork, and cut a feature branch <strong>from
    <code>dev</code></strong>, never from <code>master</code> and never directly on <code>dev</code>. Name the branch after its
-   conventional-commit type: <code>fix/&lt;topic&gt;</code>, <code>feat/&lt;topic&gt;</code>, or <code>docs/&lt;topic&gt;</code>.</li>
+   conventional-commit type: <code>fix/&lt;topic&gt;</code>, <code>feat/&lt;topic&gt;</code>, or <code>docs/&lt;topic&gt;</code>. The <strong>PR
+   title</strong> (not the branch name) must also carry the conventional-commit prefix
+   (<code>fix:</code>, <code>feat:</code>, …) — a per-repo labeller reads the title to apply the label that
+   decides the version bump on merge. See
+   <a href="../gh-automations-release/#version-bump-rules">Version bump rules</a>.</li>
 <li><strong>Pull request into <code>dev</code></strong>: opening a PR against <code>dev</code> triggers the shared <strong>OVOS PR
    Checks</strong>: build/install/test, license and dependency scanning, plugin-manifest detection
    (for plugin repos), coverage, and a version-bump preview. These checks post their results

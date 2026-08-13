@@ -1706,6 +1706,9 @@ release pipeline a change goes through after it leaves your machine, see
 <h2 id="clone-and-install-editable">Clone and install editable<a class="headerlink" href="#clone-and-install-editable" title="Permanent link">&para;</a></h2>
 <p>Fork the repo you want to fix on GitHub first. You need the fork to push your branch, since
 only maintainers can push to <a href="https://github.com/OpenVoiceOS/ovos-core"><code>ovos-core</code></a> itself.
+The worked examples below all use <code>ovos-core</code>; for any other repo, substitute its name in the
+clone URL, extras, and console scripts — the pattern is identical, but check that repo's own
+<code>pyproject.toml</code> for its exact extras (some use <code>tests</code> instead of <code>test</code>).
 Then clone your fork and create an isolated virtual environment for it. <code>uv</code> is faster than
 plain <code>venv</code>/<code>pip</code> and works the same way:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/&lt;your-user&gt;/ovos-core.git

@@ -1687,9 +1687,10 @@ optional install, so a plain OVOS install may not have it. Check, and add it if 
 <code>ovos-padatious</code> — <code>pip install ovos-padatious-pipeline-plugin</code> fails, there is no such
 package. See <a href="../pipelines-overview/#pipeline-ids-vs-plugins">Pipeline IDs vs.
 plugins</a>.</p>
-<p>Restart <code>ovos-core</code> (or it will pick the skill up on its next scan). See
+<p>Restart <code>ovos-core</code> (or it will pick the skill up on its next scan) — on an
+<code>ovos-installer</code> setup that is <code>systemctl --user restart ovos-core.service</code>. See
 <a href="../troubleshooting/#stage-1-is-the-service-even-running-and-is-the-bus-reachable">Stage 1 of Troubleshooting</a>
-for exactly how to start/restart the OVOS services. Then say your configured wake word first
+for other setups and how to check the services. Then say your configured wake word first
 (default <strong>"Hey Mycroft"</strong>), wait for the listening chime, and then say:</p>
 <blockquote>
 <p>"<strong>hello</strong>"</p>
