@@ -117,37 +117,38 @@ be told apart from one another. This manual covers only the OVOS side. HiveMind 
 separate project with its own protocol and docs.
 
 1. Install and run the server: `pip install hivemind-core`, then `hivemind-core listen`.
-   By default it bridges to a local `ovos-core` through `hivemind-ovos-agent-plugin`.
+    By default it bridges to a local `ovos-core` through `hivemind-ovos-agent-plugin`.
 2. Provision each satellite with its own access key: `hivemind-core add-client`.
 3. On each satellite, install the client — the distribution is `hivemind-bus-client`, the
-   repository is `hivemind-websocket-client` — and store the key:
+    repository is `hivemind-websocket-client` — and store the key:
 
-   ```bash
-   pip install hivemind-bus-client
-   hivemind-client set-identity --key <access_key> --password <password> --host <server>
-   ```
+    ```bash
+    pip install hivemind-bus-client
+    hivemind-client set-identity --key <access_key> --password <password> --host <server>
+    ```
 
-   `set-identity` with no arguments raises: it needs at least one of `--key`, `--password` or
-   `--siteid`.
+    `set-identity` with no arguments raises: it needs at least one of `--key`, `--password` or
+    `--siteid`.
+
 4. Verify with `hivemind-client test-identity` before trusting the link.
 5. For a mic-only satellite that leaves STT/TTS to the server, use
-   [`hivemind-mic-satellite`](https://github.com/JarbasHiveMind/hivemind-mic-satellite)
-   instead of running a full listener/audio pair locally. Two things the package name
-   does not tell you:
+    [`hivemind-mic-satellite`](https://github.com/JarbasHiveMind/hivemind-mic-satellite)
+    instead of running a full listener/audio pair locally. Two things the package name
+    does not tell you:
 
-   - The **server** needs `pip install hivemind-audio-binary-protocol` — plain
-     `hivemind-core` does no audio processing, so without it the satellite streams
-     audio into a void.
-   - The satellite's run command is **`hivemind-mic-sat`** (after the same
-     `set-identity` step as above, or pass `--key/--password/--host` directly).
+    - The **server** needs `pip install hivemind-audio-binary-protocol` — plain
+      `hivemind-core` does no audio processing, so without it the satellite streams
+      audio into a void.
+    - The satellite's run command is **`hivemind-mic-sat`** (after the same
+      `set-identity` step as above, or pass `--key/--password/--host` directly).
 
-   The device runs only a microphone and VAD plugin — cheap hardware like a Pi Zero
-   works — while wake word, STT and TTS all happen server-side. The trade-off: with no
-   local wake word, every VAD-detected voice segment streams upstream, costing
-   bandwidth and putting the full STT load on the server. Fine for a homelab with a
-   handful of devices; for a local wake word on slightly stronger hardware, use
-   [HiveMind-voice-relay](https://github.com/JarbasHiveMind/HiveMind-voice-relay)
-   instead.
+    The device runs only a microphone and VAD plugin — cheap hardware like a Pi Zero
+    works — while wake word, STT and TTS all happen server-side. The trade-off: with no
+    local wake word, every VAD-detected voice segment streams upstream, costing
+    bandwidth and putting the full STT load on the server. Fine for a homelab with a
+    handful of devices; for a local wake word on slightly stronger hardware, use
+    [HiveMind-voice-relay](https://github.com/JarbasHiveMind/HiveMind-voice-relay)
+    instead.
 
 By default `hivemind-core listen` starts **two** listeners, both on `0.0.0.0`: the websocket
 protocol plugin on `5678` and the HTTP protocol plugin on `5679`. Both are in the default

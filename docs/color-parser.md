@@ -258,7 +258,7 @@ Each language directory may contain:
 | `object_colors.json` | Map of `"#RRGGBB"` → `"object name"` (e.g. sky, grass, ocean) |
 | `color_descriptors.json` | Adjective lists keyed by `very_high_saturation`, `high_saturation`, `low_saturation`, `very_low_saturation`, `very_high_brightness`, `high_brightness`, `low_brightness`, `very_low_brightness`, `very_high_opacity`, `high_opacity`, `low_opacity`, `very_low_opacity`, `very_high_temperature`, `high_temperature`, `low_temperature`, `very_low_temperature` |
 
-English (`en`) ships over 15 000 hex-to-name entries across its bundled catalogs. The primary word list alone (`colors.json`) has about 6 200 entries, joined by X11/web colors, Crayola, XKCD, Wikipedia's color list, Pantone, RAL, and other named color standards.
+English (`en`) ships nearly 15 000 hex-to-name entries across its bundled catalogs. The primary word list alone (`colors.json`) has about 6 200 entries, joined by X11/web colors, Crayola, XKCD, Wikipedia's color list, Pantone, RAL, and other named color standards.
 
 ---
 
