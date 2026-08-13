@@ -1625,20 +1625,20 @@ separate project with its own protocol and docs.</p>
    <a href="https://github.com/JarbasHiveMind/hivemind-mic-satellite"><code>hivemind-mic-satellite</code></a>
    instead of running a full listener/audio pair locally. Two things the package name
    does not tell you:</p>
-<div class="language-text highlight"><pre><span></span><code>- The **server** needs `pip install hivemind-audio-binary-protocol` — plain
-  `hivemind-core` does no audio processing, so without it the satellite streams
-  audio into a void.
-- The satellite&#39;s run command is **`hivemind-mic-sat`** (after the same
-  `set-identity` step as above, or pass `--key/--password/--host` directly).
-
-The device runs only a microphone and VAD plugin — cheap hardware like a Pi Zero
-works — while wake word, STT and TTS all happen server-side. The trade-off: with no
-local wake word, every VAD-detected voice segment streams upstream, costing
-bandwidth and putting the full STT load on the server. Fine for a homelab with a
-handful of devices; for a local wake word on slightly stronger hardware, use
-[HiveMind-voice-relay](https://github.com/JarbasHiveMind/HiveMind-voice-relay)
-instead.
-</code></pre></div>
+<ul>
+<li>The <strong>server</strong> needs <code>pip install hivemind-audio-binary-protocol</code> — plain
+     <code>hivemind-core</code> does no audio processing, so without it the satellite streams
+     audio into a void.</li>
+<li>The satellite's run command is <strong><code>hivemind-mic-sat</code></strong> (after the same
+     <code>set-identity</code> step as above, or pass <code>--key/--password/--host</code> directly).</li>
+</ul>
+<p>The device runs only a microphone and VAD plugin — cheap hardware like a Pi Zero
+   works — while wake word, STT and TTS all happen server-side. The trade-off: with no
+   local wake word, every VAD-detected voice segment streams upstream, costing
+   bandwidth and putting the full STT load on the server. Fine for a homelab with a
+   handful of devices; for a local wake word on slightly stronger hardware, use
+   <a href="https://github.com/JarbasHiveMind/HiveMind-voice-relay">HiveMind-voice-relay</a>
+   instead.</p>
 <p>By default <code>hivemind-core listen</code> starts <strong>two</strong> listeners, both on <code>0.0.0.0</code>: the websocket
 protocol plugin on <code>5678</code> and the HTTP protocol plugin on <code>5679</code>. Both are in the default
 <code>network_protocol</code> config and both start, so a firewall rule that only covers 5678 leaves the
