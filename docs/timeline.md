@@ -371,13 +371,10 @@
 - May 2026 - [architecture](https://github.com/OpenVoiceOS/architecture) repo introduced: formal written specifications for the OVOS protocols, with [ovos-spec-tools](https://github.com/OpenVoiceOS/ovos-spec-tools) as their dependency-free reference implementation
 - Jun 2026 - **MediaProvider plugin family** introduced (bandcamp, youtube, tunein, somafm, pyradios, soundcloud, spotify, news, mass), superseding the legacy OCP media skills
 - Jun 2026 - **GUI refactor**: `ovos-gui` moves to a template-based `GUIInterface` and the `opm.gui_adapter` plugin system, decoupling the GUI layer from the legacy QML/page model.
-- Jun 2026 - [ovos-test-harness](https://github.com/OpenVoiceOS/ovos-test-harness) introduced (scaffolded 2026-06-27): an executable cross-repo conformance suite for the architecture specs — it now covers all 21 specs with 21 suites
+- Jun 2026 - [ovos-test-harness](https://github.com/OpenVoiceOS/ovos-test-harness) introduced: an executable conformance suite proving the running stack against the formal specs, now covering all 21
 - Jul 2026 - OVOS speech servers gain [UTCP/MCP endpoints](https://blog.openvoiceos.org/posts/2026-07-15-mcp-utcp-speech-servers), callable from any AI agent
-- Jul 2026 - Bus topics migrate to the `ovos.*` spec namespace: `ovos-bus-client` 2.6.3a1 bridges legacy names on the receive side (one frame on the wire, both spellings delivered locally) — see [Bus namespace migration](bus-namespace-migration.md)
-- Aug 2026 - [ovos-spec-lint](https://github.com/OpenVoiceOS/gh-automations) wired into every skill repo's shared CI (gh-automations #85, 2026-08-11), so the whole skill fleet gets spec linting without per-repo changes
-- Aug 2026 - Intent dispatch topics drop the legacy `.intent` filename suffix (`ovos-workshop` #500) with a two-rule compat bridge in `ovos-bus-client` 2.8 (#271, both 2026-08-13) — see [the migration note](bus-namespace-migration.md#intent-dispatch-topics-the-intent-suffix-is-gone)
-- Aug 2026 - OVOS-CONTEXT-1 intent context becomes orchestrator-resident in `ovos-core` (#786, 2026-08-13): decay, `session.sync` merge and context slot-fill move into the intent service
-- Aug 2026 - The **MediaProvider** plugin repositories go public, with the first three PyPI alphas (`ovos-media-provider-spotify`, `-soundcloud`, `-youtube-music`)
+- Jul 2026 - Bus topics migrate to the canonical `ovos.*` spec namespace, with transparent bridging so legacy and spec components interoperate during the transition — see [Bus namespace migration](bus-namespace-migration.md)
+- Aug 2026 - The formal specifications start landing in the shipped stack: canonical intent dispatch topics and orchestrator-resident intent context (OVOS-CONTEXT-1) arrive in `ovos-core` and `ovos-workshop`
 
 ---
 
