@@ -1848,7 +1848,12 @@ Precise model.</p>
 </div>
 <h2 id="wake-word-configuration">Wake-word Configuration<a class="headerlink" href="#wake-word-configuration" title="Permanent link">&para;</a></h2>
 <div class="admonition tip">
-<p class="admonition-title">Too many false alarms, or not hearing you at all?</p>
+<p class="admonition-title">Too many false alarms, or not hearing you at all? (Precise-family engines)</p>
+<p>These two knobs apply to the <strong>Precise-family</strong> plugins (<code>precise-onnx</code>,
+<code>precise-lite</code>, classic <code>precise</code>) — the default setup. Other engines tune
+differently: Vosk ignores <code>sensitivity</code>/<code>trigger_level</code> entirely (it matches
+words, not model scores), so check your plugin's own entry in the
+<a href="#ww-plugins-reference">reference table</a> if you switched engines.</p>
 <ul>
 <li><strong>It wakes up on its own too often (false alarms)?</strong> Raise <code>trigger_level</code>. This gives
   fewer false positives, but needs a longer, more sustained match. Or lower <code>sensitivity</code>.</li>
