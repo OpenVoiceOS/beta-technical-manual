@@ -37,10 +37,10 @@ Related pages:
     *recommended* plugins/voices for a language (offline/online, gender). It optionally
     swaps in better defaults. It is not required just to switch languages.
 
-!!! note "Language codes are case-insensitive"
-    OVOS normalizes language codes internally (e.g. `en-us`, `EN-US`, and `en_US` all become
-    `en-US`), so it doesn't matter which case you type them in on the command line or in
-    `mycroft.conf`. This manual writes codes in lower-case (`en-us`) by convention.
+Language codes are case-insensitive: OVOS normalizes them internally (e.g. `en-us`, `EN-US`,
+and `en_US` all become `en-US`), so it doesn't matter which case you type them in on the
+command line or in `mycroft.conf`. This manual writes codes in lower-case (`en-us`) by
+convention.
 
 ---
 

@@ -10,14 +10,13 @@ The OpenVoiceOS (OVOS) Intent Pipeline is a modular, extensible system that inte
 
 When the entry utterance carries no authoritative language tag, the orchestrator resolves the language **once**, from session evidence. It passes that same resolved tag into every plugin's `match` call for the utterance. A plugin may refine it locally but must not silently re-derive its own answer. Otherwise different stages could match the same utterance in different languages depending on ordering.
 
-!!! note "Spec vocabulary in one paragraph"
-    In OVOS-PIPELINE-1 terms, every stage on this page is a **pipeline plugin** identified by an opaque `pipeline_id`. Each one exposes exactly one operation to the **orchestrator**: `match(utterances, lang, message) → Match | None` (the third argument is the utterance `Message`. A plugin that needs the session reads it from `message.context["session"]`).
+---
 
-    The orchestrator iterates the plugins in the order given by `session.pipeline` and stops at the **first** one that returns a `Match`. **First match wins.** There is *no* cross-plugin confidence comparison. The per-stage `conf_high/medium/low` thresholds below are each plugin's *own* internal accept/reject gate, not a score the orchestrator ranks between plugins.
+## What is an Intent Pipeline?
 
-    On a match the orchestrator dispatches the handler on the topic `<skill_id>:<intent_name>` (PIPELINE-1 §7) and emits the handler-lifecycle trio. If no plugin claims, it emits `ovos.intent.unmatched`.
+An intent pipeline in OVOS is a sequence of processing stages that analyze user input to determine the user's intent. Each stage uses a different strategy, ranging from high-confidence pipeline plugins to fallback mechanisms.
 
-    Several stages here (converse, stop, common-query, fallback) are pipeline plugins that claim via **reserved `intent_name` values** (`converse`, `response`, `stop`, `common_query`, `fallback`) leased in PIPELINE-1 §7.3. Skills may not register those names.
+This layered approach lets OVOS handle a wide range of user queries at varying levels of specificity and complexity.
 
 ---
 
@@ -39,11 +38,14 @@ yourself.
 
 ---
 
-## What is an Intent Pipeline?
+!!! note "Spec vocabulary in one paragraph"
+    In OVOS-PIPELINE-1 terms, every stage on this page is a **pipeline plugin** identified by an opaque `pipeline_id`. Each one exposes exactly one operation to the **orchestrator**: `match(utterances, lang, message) → Match | None` (the third argument is the utterance `Message`. A plugin that needs the session reads it from `message.context["session"]`).
 
-An intent pipeline in OVOS is a sequence of processing stages that analyze user input to determine the user's intent. Each stage uses a different strategy, ranging from high-confidence pipeline plugins to fallback mechanisms.
+    The orchestrator iterates the plugins in the order given by `session.pipeline` and stops at the **first** one that returns a `Match`. **First match wins.** There is *no* cross-plugin confidence comparison. The per-stage `conf_high/medium/low` thresholds below are each plugin's *own* internal accept/reject gate, not a score the orchestrator ranks between plugins.
 
-This layered approach lets OVOS handle a wide range of user queries at varying levels of specificity and complexity.
+    On a match the orchestrator dispatches the handler on the topic `<skill_id>:<intent_name>` (PIPELINE-1 §7) and emits the handler-lifecycle trio. If no plugin claims, it emits `ovos.intent.unmatched`.
+
+    Several stages here (converse, stop, common-query, fallback) are pipeline plugins that claim via **reserved `intent_name` values** (`converse`, `response`, `stop`, `common_query`, `fallback`) leased in PIPELINE-1 §7.3. Skills may not register those names.
 
 ---
 
