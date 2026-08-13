@@ -2199,6 +2199,31 @@ full diagram of this same pipeline.</p>
 <td><code>check_opm(plugin_type, entry_point, ...)</code></td>
 <td>OPM plugin detection, interface validation, import timing</td>
 </tr>
+<tr>
+<td><code>check_locale_build.py</code></td>
+<td><code>find_locale_dirs(repo_root)</code></td>
+<td>Verify locale folders are included in the package build (backs <code>locale-check.yml</code>)</td>
+</tr>
+<tr>
+<td><code>check_repo_health.py</code></td>
+<td><code>check_required_files(repo_root, ...)</code></td>
+<td>Repository health: required files, contributor status, breaking changes (backs <code>repo-health.yml</code>)</td>
+</tr>
+<tr>
+<td><code>format_tts_intel.py</code></td>
+<td><code>_parse_marker</code> + report formatter</td>
+<td>Format a TTS-intelligibility pytest json-report into a markdown table (backs <code>tts-intelligibility.yml</code>)</td>
+</tr>
+<tr>
+<td><code>check_release_channels.py</code></td>
+<td><code>normalize_package_name</code> + channel check</td>
+<td>Check a predicted version against the ovos-releases channel constraints (backs <code>release-preview.yml</code>)</td>
+</tr>
+<tr>
+<td><code>aggregate_python_results.py</code></td>
+<td><code>main()</code></td>
+<td>Aggregate Python version compatibility results across matrix jobs (backs <code>python-support.yml</code>)</td>
+</tr>
 </tbody>
 </table>
 <p>All version scripts share the <code>version.py</code> block format:</p>
