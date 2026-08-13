@@ -1482,8 +1482,9 @@ build a themed assistant for a party or a kid's room.</p>
 <h2 id="change-its-voice">Change its voice<a class="headerlink" href="#change-its-voice" title="Permanent link">&para;</a></h2>
 <p>Swapping which <a href="../tts-plugins/">TTS plugin</a> OVOS uses changes what it sounds like. Some plugins
 also expose several distinct voices through their own <code>voice</code> config key. For example,
-<a href="../tts-plugins-reference/#ovos-tts-plugin-matxa-multispeaker-cat"><code>ovos-tts-plugin-matxa-multispeaker-cat</code></a>
-picks a specific speaker/dialect with <code>"voice": "valencia/gina"</code>, and
+<a href="../tts-plugins-reference/#ovos-tts-plugin-phoonnx"><code>ovos-tts-plugin-phoonnx</code></a>
+picks a specific model and speaker with <code>"voice": "OpenVoiceOS/matxa-cat-multiaccent-wavenext"</code>
+plus a <code>speaker_id</code> (each Catalan dialect is a different speaker of that one model), and
 <a href="../tts-plugins-reference/#ovos-tts-plugin-edge-tts"><code>ovos-tts-plugin-edge-tts</code></a> offers dozens of
 cloud voices across many languages and accents. Set the plugin (and, where supported, its <code>voice</code>)
 under the <code>tts</code> section of <code>mycroft.conf</code> and restart to hear the change:</p>

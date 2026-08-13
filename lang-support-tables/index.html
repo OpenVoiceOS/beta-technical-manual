@@ -1193,9 +1193,12 @@ A language without one is STT-only until such a voice appears; you can still poi
 </div>
 <p>Several regional variants still have gaps. <strong>EN-GB</strong>, <strong>PT-BR</strong>, <strong>AR-SA</strong>, and the four
 Catalan variants (<strong>CA-BA</strong>, <strong>CA-NW</strong>, <strong>CA-VA</strong>, plus the already-covered <strong>CA-ES</strong>) ship a
-TTS voice but no bundled offline STT recommendation. Configure an online STT plugin, or a
-multilingual offline model (Whisper, MMS) by hand, until a dedicated recommendation lands for
-these.</p>
+TTS voice but no bundled offline STT recommendation. Configure a multilingual model by
+hand until a dedicated recommendation lands: the practical picks are
+<a href="../stt-plugins-reference/#ovos-stt-plugin-fasterwhisper"><code>ovos-stt-plugin-fasterwhisper</code></a>
+(Whisper handles Catalan) locally, or
+<a href="../stt-plugins-reference/#ovos-stt-plugin-server"><code>ovos-stt-plugin-server</code></a> pointed at a
+<a href="../stt-server/">self-hosted STT server</a> running one of those models.</p>
 <table>
 <thead>
 <tr>
