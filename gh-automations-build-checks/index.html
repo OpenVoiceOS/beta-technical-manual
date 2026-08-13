@@ -1931,6 +1931,18 @@
 <td>If set, run pytest against this path after installing the package. Leave empty to skip test execution (build/install verification only).</td>
 </tr>
 <tr>
+<td><code>pytest_args</code></td>
+<td>string</td>
+<td><code>""</code></td>
+<td>Extra arguments appended to the pytest invocation, e.g. '--capture=tee-sys' to keep a crashing test's output visible when pytest's default fd-level capture would otherwise swallow it (native crashes, SIGABRT). Same name and meaning as on channel-compat.yml. Empty by default: no change to the command line.</td>
+</tr>
+<tr>
+<td><code>test_env</code></td>
+<td>string</td>
+<td><code>""</code></td>
+<td>Extra environment variables for the test step, as newline-separated KEY=value pairs, e.g. 'PYTHONFAULTHANDLER=1\nRUST_BACKTRACE=full' to get a traceback/panic message out of a native crash instead of just "Fatal Python error: Aborted". Appended to $GITHUB_ENV before the Run Tests step. Empty by default: no vars are added.</td>
+</tr>
+<tr>
 <td><code>pr_comment</code></td>
 <td>boolean</td>
 <td><code>true</code></td>
@@ -2040,7 +2052,7 @@ comment.</p>
 <td><code>system_deps</code></td>
 <td>string</td>
 <td><code>""</code></td>
-<td>Extra apt packages to install before testing (space-separated).</td>
+<td>Extra apt packages to install before testing (space-separated). Extra apt packages, if the tested tree needs any.</td>
 </tr>
 <tr>
 <td><code>pre_install_pip</code></td>
@@ -2121,9 +2133,6 @@ workflow sets.</p>
 <p>Call it once per channel. <code>channel_name</code> defaults to the constraints filename with the
 <code>constraints-</code> prefix and <code>.txt</code> suffix removed, so the two jobs above label themselves
 <code>stable</code> and <code>testing</code> on their own.</p>
-<!-- BEGIN GENERATED: workflow-io:channel-compat.yml -->
-<!-- END GENERATED -->
-
 <hr />
 <h2 id="python-supportyml-deprecated"><code>python-support.yml</code> <em>(deprecated)</em><a class="headerlink" href="#python-supportyml-deprecated" title="Permanent link">&para;</a></h2>
 <blockquote>

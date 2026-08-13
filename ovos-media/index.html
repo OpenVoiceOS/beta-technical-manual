@@ -1260,6 +1260,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#upcoming-mediaprovider-plugins-replace-ocp-skills" class="md-nav__link">
+    <span class="md-ellipsis">
+      Upcoming: MediaProvider plugins replace OCP skills
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#legacy-compatibility-known-coupling-issues" class="md-nav__link">
     <span class="md-ellipsis">
       Legacy Compatibility &amp; Known Coupling Issues
@@ -1937,6 +1946,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#upcoming-mediaprovider-plugins-replace-ocp-skills" class="md-nav__link">
+    <span class="md-ellipsis">
+      Upcoming: MediaProvider plugins replace OCP skills
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#legacy-compatibility-known-coupling-issues" class="md-nav__link">
     <span class="md-ellipsis">
       Legacy Compatibility &amp; Known Coupling Issues
@@ -2061,6 +2079,10 @@
 <p class="admonition-title">In a nutshell</p>
 <p><code>ovos-media</code> is the planned future replacement for how OVOS plays music, podcasts and videos. Today, stock installs still use the older audio backend. <code>ovos-media</code> is an opt-in, work-in-progress rewrite meant to handle audio, video and web playback more cleanly and to support several players at once. If you are not deliberately trying it out, you are not using it yet. This page describes where things are heading. See the <a href="../ocp-pipeline/">OCP Pipeline</a> for how playback requests are recognized, or the <a href="../glossary/">Glossary</a> for terms.</p>
 </div>
+<p><code>ovos-media</code> is the standalone audio/video daemon for OpenVoiceOS. It is the <strong>upcoming
+replacement</strong> for the legacy audio service, and it provides a more capable and modular media player
+built on the OpenVoiceOS <a href="../ocp-pipeline/">Common Play</a> (<a href="../ocp-pipeline/">OCP</a>) framework.</p>
+<p><strong>In plain terms:</strong> the old audio service could only play one kind of stream through a thin wrapper. <code>ovos-media</code> is a proper media daemon. It has separate audio/video/web players you pick per request. It supports MPRIS, so your phone's media controls work, and it keeps per-session state so multiple devices can each play their own thing.</p>
 <details class="info">
 <summary>📐 Formal specification</summary>
 <p>Media playback is specified by two architecture documents:
@@ -2075,74 +2097,6 @@ speaker is a backend concern. <code>ovos-media</code> is the implementation movi
 toward that contract. For the full set see the
 <strong><a href="../architecture-specs/">spec index</a></strong>.</p>
 </details>
-<div class="admonition info">
-<p class="admonition-title">Upcoming — MediaProvider plugins replace OCP skills</p>
-<p>Media catalogs are moving <strong>out of skills and into plugins</strong>. A new <strong>MediaProvider</strong> plugin
-type (<code>opm.media.provider</code> / <code>PluginTypes.MEDIA_PROVIDER</code>) that the OCP pipeline loads
-<strong>in-process</strong> and calls <code>search()</code> on directly, in place of today's
-<a href="../ocp-skills/">OCP skills</a>. This first ships in <strong><code>ovos-plugin-manager 2.8.0a1</code></strong>
-(Phase 1 of the <code>ovos-media</code> migration). OCP skills remain the way to provide media for now.
-Tracked in <a href="https://github.com/OpenVoiceOS/ovos-workshop/pull/423">ovos-workshop#423</a>.</p>
-<p>A first batch of MediaProvider plugins is in development — none of them is published
-yet (no public repository, nothing on PyPI), so there is nothing to install today.
-Each one supersedes the catalog/search half of an older OCP skill:</p>
-<table>
-<thead>
-<tr>
-<th>MediaProvider plugin</th>
-<th>Supersedes</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>ovos-media-provider-bandcamp</code></td>
-<td><a href="https://github.com/OpenVoiceOS/ovos-skill-bandcamp">ovos-skill-bandcamp</a></td>
-</tr>
-<tr>
-<td><code>ovos-media-provider-pyradios</code></td>
-<td><a href="https://github.com/OpenVoiceOS/ovos-skill-pyradios">ovos-skill-pyradios</a></td>
-</tr>
-<tr>
-<td><code>ovos-media-provider-somafm</code></td>
-<td><a href="https://github.com/OpenVoiceOS/ovos-skill-somafm">ovos-skill-somafm</a></td>
-</tr>
-<tr>
-<td><code>ovos-media-provider-soundcloud</code></td>
-<td><a href="https://github.com/OpenVoiceOS/ovos-skill-soundcloud">ovos-skill-soundcloud</a></td>
-</tr>
-<tr>
-<td><code>ovos-media-provider-tunein</code></td>
-<td><a href="https://github.com/OpenVoiceOS/ovos-skill-tunein">ovos-skill-tunein</a></td>
-</tr>
-<tr>
-<td><code>ovos-media-provider-youtube</code></td>
-<td><a href="https://github.com/OpenVoiceOS/ovos-skill-youtube">ovos-skill-youtube</a></td>
-</tr>
-<tr>
-<td><code>ovos-media-provider-youtube-music</code></td>
-<td><a href="https://github.com/OpenVoiceOS/ovos-skill-youtube-music">ovos-skill-youtube-music</a></td>
-</tr>
-<tr>
-<td><code>ovos-media-provider-mass</code></td>
-<td><code>ovos-skill-music-assistant</code> (playback via the companion <code>ovos-media-plugin-mass</code> backend)</td>
-</tr>
-<tr>
-<td><code>ovos-media-provider-news</code></td>
-<td><a href="https://github.com/OpenVoiceOS/ovos-skill-news">ovos-skill-news</a></td>
-</tr>
-<tr>
-<td><code>ovos-media-provider-spotify</code></td>
-<td><a href="https://github.com/OpenVoiceOS/ovos-skill-spotify">ovos-skill-spotify</a> (playback via the companion <a href="https://github.com/OpenVoiceOS/ovos-media-plugin-spotify">ovos-media-plugin-spotify</a> backend)</td>
-</tr>
-</tbody>
-</table>
-<p>The old OCP skills keep working; a MediaProvider plugin only takes over once the
-<code>opm.media.provider</code> plugin type ships on a released <code>ovos-plugin-manager</code>.</p>
-</div>
-<p><code>ovos-media</code> is the standalone audio/video daemon for OpenVoiceOS. It is the <strong>upcoming
-replacement</strong> for the legacy audio service, and it provides a more capable and modular media player
-built on the OpenVoiceOS <a href="../ocp-pipeline/">Common Play</a> (<a href="../ocp-pipeline/">OCP</a>) framework.</p>
-<p><strong>In plain terms:</strong> the old audio service could only play one kind of stream through a thin wrapper. <code>ovos-media</code> is a proper media daemon. It has separate audio/video/web players you pick per request. It supports MPRIS, so your phone's media controls work, and it keeps per-session state so multiple devices can each play their own thing.</p>
 <p>To use <code>ovos-media</code> you need to disable the old audio service and enable the OCP pipeline in <code>ovos-core</code>:</p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="p">{</span>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span><span class="nt">&quot;enable_old_audioservice&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
@@ -2422,7 +2376,9 @@ emitted as <code>&lt;msg_type&gt;.response</code>. For example, <code>ovos.commo
 <code>ovos.common_play.track_info.response</code>.</p>
 <h3 id="service-level-bus-messages">Service-level bus messages<a class="headerlink" href="#service-level-bus-messages" title="Permanent link">&para;</a></h3>
 <p>Beyond the per-player <code>ovos.audio.service.*</code> / <code>ovos.video.service.*</code> API, these bus messages
-are handled inside the <code>ovos-media</code> process.</p>
+are handled inside the <code>ovos-media</code> process. The canonical reference for the full
+<code>ovos.common_play.*</code> namespace is <a href="../bus-events/#ocp-media-playback">Bus Events Reference: OCP / media playback</a>;
+this section covers only the service-level subset with <code>ovos-media</code>-specific behavior notes.</p>
 <p>Four are on the <code>MediaService</code> daemon itself. <code>ovos.common_play.ping</code> is the one to use for a
 liveness probe — the rest are on the player, so they answer only once a player exists:</p>
 <table>
@@ -2526,6 +2482,71 @@ liveness probe — the rest are on the player, so they answer only once a player
   the queue in order instead of ping-ponging back to the first track sharing a URI.</li>
 </ul>
 <hr />
+<h2 id="upcoming-mediaprovider-plugins-replace-ocp-skills">Upcoming: MediaProvider plugins replace OCP skills<a class="headerlink" href="#upcoming-mediaprovider-plugins-replace-ocp-skills" title="Permanent link">&para;</a></h2>
+<div class="admonition info">
+<p class="admonition-title">Upcoming — MediaProvider plugins replace OCP skills</p>
+<p>Media catalogs are moving <strong>out of skills and into plugins</strong>. A new <strong>MediaProvider</strong> plugin
+type (<code>opm.media.provider</code> / <code>PluginTypes.MEDIA_PROVIDER</code>) that the OCP pipeline loads
+<strong>in-process</strong> and calls <code>search()</code> on directly, in place of today's
+<a href="../ocp-skills/">OCP skills</a>. This first ships in <strong><code>ovos-plugin-manager 2.8.0a1</code></strong>
+(Phase 1 of the <code>ovos-media</code> migration). OCP skills remain the way to provide media for now.
+Tracked in <a href="https://github.com/OpenVoiceOS/ovos-workshop/pull/423">ovos-workshop#423</a>.</p>
+<p>A first batch of MediaProvider plugins is in development — none of them is published
+yet (no public repository, nothing on PyPI), so there is nothing to install today.
+Each one supersedes the catalog/search half of an older OCP skill:</p>
+<table>
+<thead>
+<tr>
+<th>MediaProvider plugin</th>
+<th>Supersedes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ovos-media-provider-bandcamp</code></td>
+<td><a href="https://github.com/OpenVoiceOS/ovos-skill-bandcamp">ovos-skill-bandcamp</a></td>
+</tr>
+<tr>
+<td><code>ovos-media-provider-pyradios</code></td>
+<td><a href="https://github.com/OpenVoiceOS/ovos-skill-pyradios">ovos-skill-pyradios</a></td>
+</tr>
+<tr>
+<td><code>ovos-media-provider-somafm</code></td>
+<td><a href="https://github.com/OpenVoiceOS/ovos-skill-somafm">ovos-skill-somafm</a></td>
+</tr>
+<tr>
+<td><code>ovos-media-provider-soundcloud</code></td>
+<td><a href="https://github.com/OpenVoiceOS/ovos-skill-soundcloud">ovos-skill-soundcloud</a></td>
+</tr>
+<tr>
+<td><code>ovos-media-provider-tunein</code></td>
+<td><a href="https://github.com/OpenVoiceOS/ovos-skill-tunein">ovos-skill-tunein</a></td>
+</tr>
+<tr>
+<td><code>ovos-media-provider-youtube</code></td>
+<td><a href="https://github.com/OpenVoiceOS/ovos-skill-youtube">ovos-skill-youtube</a></td>
+</tr>
+<tr>
+<td><code>ovos-media-provider-youtube-music</code></td>
+<td><a href="https://github.com/OpenVoiceOS/ovos-skill-youtube-music">ovos-skill-youtube-music</a></td>
+</tr>
+<tr>
+<td><code>ovos-media-provider-mass</code></td>
+<td><code>ovos-skill-music-assistant</code> (playback via the companion <code>ovos-media-plugin-mass</code> backend)</td>
+</tr>
+<tr>
+<td><code>ovos-media-provider-news</code></td>
+<td><a href="https://github.com/OpenVoiceOS/ovos-skill-news">ovos-skill-news</a></td>
+</tr>
+<tr>
+<td><code>ovos-media-provider-spotify</code></td>
+<td><a href="https://github.com/OpenVoiceOS/ovos-skill-spotify">ovos-skill-spotify</a> (playback via the companion <a href="https://github.com/OpenVoiceOS/ovos-media-plugin-spotify">ovos-media-plugin-spotify</a> backend)</td>
+</tr>
+</tbody>
+</table>
+<p>The old OCP skills keep working; a MediaProvider plugin only takes over once the
+<code>opm.media.provider</code> plugin type ships on a released <code>ovos-plugin-manager</code>.</p>
+</div>
 <h2 id="legacy-compatibility-known-coupling-issues">Legacy Compatibility &amp; Known Coupling Issues<a class="headerlink" href="#legacy-compatibility-known-coupling-issues" title="Permanent link">&para;</a></h2>
 <p><code>ovos-media</code>'s pipeline plugin falls back to the classic <code>mycroft.audio.service.*</code> bus messages
 when <code>ovos-media</code> is not running, and bridges old pre-OCP <code>CommonPlaySkill</code> skills via <code>play:query</code>

@@ -1912,6 +1912,18 @@
 <td><code>true</code></td>
 <td>Post a '🎙️ Skill' section in the shared 'OVOS PR Checks' comment on the PR. Only runs when the workflow is triggered by a pull_request event.</td>
 </tr>
+<tr>
+<td><code>spec_lint</code></td>
+<td>boolean</td>
+<td><code>true</code></td>
+<td>Also run ovos-spec-lint (spec-lint.yml) against the skill's locale folder. Every ovos-skill-* repo already calls this workflow, so this is how spec-lint reaches the fleet without a per-repo caller PR. Set to false to opt a repo out.</td>
+</tr>
+<tr>
+<td><code>spec_lint_locale_path</code></td>
+<td>string</td>
+<td><code>locale</code></td>
+<td>Path passed to spec-lint.yml's locale_path input.</td>
+</tr>
 </tbody>
 </table>
 <!-- END GENERATED -->
@@ -1966,6 +1978,13 @@
 </tr>
 </tbody>
 </table>
+<p>Since the <code>spec_lint</code> input landed (default <code>true</code>), the workflow also runs a <strong>second job</strong>
+that calls <a href="#spec-lintyml"><code>spec-lint.yml</code></a> as a nested reusable workflow against the skill's
+locale folder (<code>spec_lint_locale_path</code>, default <code>locale</code>). Calling <code>skill-check.yml</code> therefore
+gets you spec-lint too — its own check, its own PR-comment section, and its own failure gate —
+unless the repo opts out with <code>spec_lint: false</code>. This is deliberate: every <code>ovos-skill-*</code>
+repo already calls <code>skill-check.yml</code>, so the nested call is how spec-lint reaches the whole
+fleet without a per-repo caller PR.</p>
 <h3 id="pr-comment-content">PR comment content<a class="headerlink" href="#pr-comment-content" title="Permanent link">&para;</a></h3>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>🎙️ **ovos-skill-hello-world.openvoiceos** — 14 languages
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>

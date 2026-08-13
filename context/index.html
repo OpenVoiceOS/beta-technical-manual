@@ -22,7 +22,7 @@
     
     
       
-        <title>Context - OpenVoiceOS Technical Manual</title>
+        <title>Intent Context (gating) - OpenVoiceOS Technical Manual</title>
       
     
     
@@ -111,7 +111,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Context
+              Intent Context (gating)
             
           </span>
         </div>
@@ -954,7 +954,7 @@
           
   
   <span class="md-ellipsis">
-    Context
+    Intent Context (gating)
   </span>
   
 
@@ -965,7 +965,7 @@
         
   
   <span class="md-ellipsis">
-    Context
+    Intent Context (gating)
   </span>
   
 
@@ -1129,7 +1129,7 @@
         
   
   <span class="md-ellipsis">
-    Context & Sessions
+    Sessions (multi-user state)
   </span>
   
 
@@ -1703,6 +1703,12 @@
 <p>This page is about the third (and the field that holds it). It is not <code>Message.context</code>, and a context entry is not a <code>Match.slot</code>. CONTEXT-1 §7's context-supplied-slot rule is the bridge: when a <code>requires_context</code> key also names a slot, its value fills that slot if the utterance did not. This is exactly the "remember which person" mechanism below.</p>
 </details>
 <p>Conversational context makes voice interactions feel more natural. The assistant keeps track of the subject you are discussing, so you do not have to repeat it.</p>
+<p><strong>What works in a skill today</strong>: gate a follow-up with a blocking prompt — <code>ask_yesno()</code> /
+<code>get_response()</code>, see <a href="../prompts/">Statements and Prompts</a> — keep the skill in the
+conversation with <a href="../converse/"><code>converse()</code></a>, or use the legacy Adapt path:
+<code>self.set_context()</code> plus <code>IntentBuilder().require()</code> (the <a href="#using-context-to-enable-intents">TeaSkill example</a>
+below). The declarative spec mechanism described next is evaluated by the pipelines but is
+<strong>not yet reachable from a skill</strong> — details in the warning under the example.</p>
 <p><code>requires_context</code> and <code>excludes_context</code> gate matching in both the
 <a href="../adapt-pipeline/">Adapt</a> and <a href="../padatious-pipeline/">Padatious</a> pipelines, as CONTEXT-1 §6
 requires of every intent engine. Adapt gates keyword intents. Padatious gates template intents,
