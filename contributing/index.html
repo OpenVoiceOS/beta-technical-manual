@@ -1774,6 +1774,12 @@ isn't just asserted in prose. <a href="https://github.com/OpenVoiceOS/ovos-test-
 is an executable conformance suite that exercises a running OVOS instance against the spec's
 observable behavior. See <a href="../spec-tooling/">Specs &amp; Tooling</a> for how the specs, the harness, and
 the message-spec definitions fit together.</p>
+<p>The harness also runs a <strong>mixed-version back-compat matrix</strong>: two package sets alive at once
+(a skill container and a core in separate venvs, talking through a real <code>ovos-messagebus</code>),
+covering old/new version boundaries and cells pinned to the live release channels' constraints
+files. Heavier tiers run on a schedule rather than blocking every PR. If your change touches a
+wire surface (bus topics, session fields, registration payloads), expect it to land as a matrix
+cell — see <a href="../spec-test-harness/">ovos-test-harness</a> for the full grid and what each cell pins.</p>
 <h2 id="testing-your-change-locally">Testing your change locally<a class="headerlink" href="#testing-your-change-locally" title="Permanent link">&para;</a></h2>
 <p>The shared <strong>OVOS PR Checks</strong> above catch a broken change, but waiting for CI to tell you is the
 slow way to find out. Run the same kind of check locally first:</p>
