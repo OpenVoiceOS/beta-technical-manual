@@ -88,6 +88,13 @@ translation/language-detection, all running on-device:
 }
 ```
 
+!!! warning "'Offline' means no network at inference time — first run still downloads models"
+    `ovos-stt-plugin-onnx-asr`, `phoonnx`, the NLLB translation plugin, and the fastText
+    language detector all fetch their model weights from the network **once, on first
+    use**, then cache them locally — the same pattern the wake-word note above discloses.
+    Provision the device online first (trigger each plugin once), and only then take it
+    fully offline; a first run on an airgapped machine fails or hangs instead of working.
+
 LLM-backed solvers and personas are not part of this table because they're not configured
 by default at all. See [LLM transformers](llm-transformers.md) and [personas](personas.md).
 If you do want one, it's still possible to keep the whole stack offline: point it at a

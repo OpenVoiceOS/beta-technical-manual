@@ -135,19 +135,19 @@ separate project with its own protocol and docs.
    instead of running a full listener/audio pair locally. Two things the package name
    does not tell you:
 
-    - The **server** needs `pip install hivemind-audio-binary-protocol` — plain
-      `hivemind-core` does no audio processing, so without it the satellite streams
-      audio into a void.
-    - The satellite's run command is **`hivemind-mic-sat`** (after the same
-      `set-identity` step as above, or pass `--key/--password/--host` directly).
+   - The **server** needs `pip install hivemind-audio-binary-protocol` — plain
+     `hivemind-core` does no audio processing, so without it the satellite streams
+     audio into a void.
+   - The satellite's run command is **`hivemind-mic-sat`** (after the same
+     `set-identity` step as above, or pass `--key/--password/--host` directly).
 
-    The device runs only a microphone and VAD plugin — cheap hardware like a Pi Zero
-    works — while wake word, STT and TTS all happen server-side. The trade-off: with no
-    local wake word, every VAD-detected voice segment streams upstream, costing
-    bandwidth and putting the full STT load on the server. Fine for a homelab with a
-    handful of devices; for a local wake word on slightly stronger hardware, use
-    [HiveMind-voice-relay](https://github.com/JarbasHiveMind/HiveMind-voice-relay)
-    instead.
+   The device runs only a microphone and VAD plugin — cheap hardware like a Pi Zero
+   works — while wake word, STT and TTS all happen server-side. The trade-off: with no
+   local wake word, every VAD-detected voice segment streams upstream, costing
+   bandwidth and putting the full STT load on the server. Fine for a homelab with a
+   handful of devices; for a local wake word on slightly stronger hardware, use
+   [HiveMind-voice-relay](https://github.com/JarbasHiveMind/HiveMind-voice-relay)
+   instead.
 
 By default `hivemind-core listen` starts **two** listeners, both on `0.0.0.0`: the websocket
 protocol plugin on `5678` and the HTTP protocol plugin on `5679`. Both are in the default
