@@ -129,6 +129,16 @@ test/test_hello.py::test_hello_matches_and_speaks PASSED                [100%]
     others you have), not just the one your test needs. On a machine with only the pipeline
     plugins your skill actually depends on, startup is much faster.
 
+!!! warning "Intent matched, handler dispatched, but nothing spoken?"
+    If the capture times out waiting for `ovos.utterance.handled` even though the log shows
+    `ovos.intent.matched` and your `<skill_id>:<IntentName>` dispatch message, the tutorial code
+    is usually not the culprit — a crowded Python environment is. A venv with many co-installed
+    skills and plugins can carry version skew or broken entry points that stall handler
+    execution without a traceback. Scan the startup log for `Failed to load plugin entry point`
+    errors, check `pip list | grep ovos` for mismatched `ovos-core`/`ovos-workshop` versions,
+    and re-run the test in a fresh venv containing only your skill and its `[test]` extras
+    before debugging the skill itself.
+
 ## Step 4: Test the failure path
 
 A test that only ever sends utterances your skill *should* match doesn't tell you much. Add a
