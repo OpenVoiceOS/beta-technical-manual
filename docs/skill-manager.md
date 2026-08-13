@@ -84,8 +84,10 @@ ERROR - Skill <skill_id> failed to load
 ERROR - Load of skill <skill_id> failed!                 # skill_manager, traceback follows
 ```
 
-On the bus, a failed load emits `mycroft.skills.loading_failure` (a healthy one emits
-`mycroft.skill.loaded`). "Installed but never matches" reports should check for these before
+On the bus, a failed load emits `mycroft.skills.loading_failure`; its true complement is
+`mycroft.skills.loaded` (plural), fired on **every** successful load path — the singular
+`mycroft.skill.loaded` below is an extra emission specific to the Skill Manager's
+plugin-skill path, with no failure counterpart. "Installed but never matches" reports should check for these before
 anything else — see the [Troubleshooting](troubleshooting.md#stage-4-which-pipeline-stage-matched-or-didnt)
 funnel.
 
@@ -104,8 +106,10 @@ re-training:
 mycroft.skills.train  →  (pipeline plugins that need it train, e.g. padatious)
 ```
 
-The manager emits `mycroft.skills.train` and moves on. It is fire-and-forget: no reply
-topic is part of the spec, and the manager waits for nothing.
+The manager emits `mycroft.skills.train` and moves on — it waits for nothing. The
+Padatious pipeline plugin does announce `mycroft.skills.trained` when its training round
+completes (on both the trained and nothing-new-to-train paths), so tooling that needs a
+deterministic "training done" signal can watch for that; the manager itself never does.
 
 Do not implement a `mycroft.skills.trained` reply. Nothing listens for one. An earlier
 version blocked on `wait_for_response(..., "mycroft.skills.trained", timeout=60)`, which

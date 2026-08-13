@@ -383,15 +383,17 @@ Before blaming the skill's vocabulary, rule out the two upstream causes of
 1. **Did the skill load at all?** A skill that failed to load registers no intents, so it
    can never match — check `skills.log` for `Failed to load skill: <skill_id>` /
    `Load of skill <skill_id> failed!` (a traceback follows), or watch for the
-   `mycroft.skills.loading_failure` bus event; a healthy load announces
-   `mycroft.skill.loaded` instead. See [Skill Manager](skill-manager.md). Note the
+   `mycroft.skills.loading_failure` bus event; every healthy load announces
+   `mycroft.skills.loaded` (plural) instead — plugin-skill loads via the Skill Manager
+   additionally emit a singular `mycroft.skill.loaded`. See [Skill Manager](skill-manager.md). Note the
    connectivity/`RuntimeRequirements` gate is **off by default** — on a stock install every
    installed skill loads unconditionally, so don't chase network-requirement theories unless
    `use_deferred_loading` was deliberately enabled.
 2. **Has the matcher retrained since the install?** Registering intents fires an
-   asynchronous `mycroft.skills.train` — fire-and-forget, with **no completion event** to
-   watch for — so a skill installed seconds ago may simply not be trained yet. Wait a
-   moment and retry before concluding anything.
+   asynchronous `mycroft.skills.train`, so a skill installed seconds ago may simply not be
+   trained yet. The Padatious pipeline answers with `mycroft.skills.trained` when its
+   training round finishes — that is the deterministic signal to watch in `ovos-busmon`
+   (other pipeline plugins, like Adapt, don't need training and emit nothing).
 
 Only after both check out is a persistent no-match usually a vocabulary/training-data problem
 in the target skill, not a bug. See [Intent Layers](layers.md) and the
