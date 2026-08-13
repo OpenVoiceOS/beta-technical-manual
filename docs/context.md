@@ -42,6 +42,17 @@ The private/shared scoping rules are identical on both sides: a bare key gates p
 against the registering `skill_id`, and reading a shared key needs the explicit
 `{"key": "person", "scope": "shared"}` form.
 
+!!! warning "The gate exists at match time, but skills cannot reach it yet"
+    Both pipelines evaluate this gate today, but neither half of the skill-facing surface
+    has landed: `@intent_handler` has no `requires_context=` / `excludes_context=`
+    parameters to put the declarations on the registration payload, and `set_context`
+    does not write entries the gate can find (see the warning near the end of this
+    page). **To gate a yes/no follow-up in a skill
+    today**, use a blocking prompt — `ask_yesno()` / `get_response()`, see
+    [Statements and Prompts](prompts.md) — or keep the skill in the conversation with
+    [`converse()`](converse.md). The legacy Adapt `.require()` keyword path (the TeaSkill
+    example below) also works.
+
 Context lives on the per-conversation [Session](session.md), in `Session.intent_context`. It
 is **session-scoped**, not a single global store, so concurrent users and devices keep
 separate context.
@@ -302,7 +313,11 @@ CONTEXT-1's declarative `requires_context` / `excludes_context` gate (above) exp
 
 !!! note "Writing a key replaces it wholesale; there is no read-back"
     Writing an entry under a key that already exists **replaces the whole entry**, value and
-    decay timer both — it does not merge onto the old one. There is no API to read a
+    decay timer both — it does not merge onto the old one. (Spec-shaped entries carry their
+    own explicit `expires_at` / `turns_remaining`; the legacy keyword-context manager instead
+    ages whole frames out after the `context.timeout` config value — minutes, default `2` —
+    which is where [Session](session.md)'s "~2 minutes" figure comes from.) There is no API
+    to read a
     context entry's current value or remaining decay back out — a skill that wants to know
     "what did I set this to, and how long ago" must keep that in its own state, not rely on
     reading it back from context. A flag-style call with no explicit value —
