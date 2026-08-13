@@ -73,6 +73,22 @@ flowchart LR
 
 Each skill gets its own bus connection when `websocket.shared_connection` is `false` in config (see `_get_internal_skill_bus()`), providing isolation from "BusBricker" style attacks.
 
+### What a load failure looks like
+
+A skill whose class raises during instantiation is logged loudly in `skills.log` and skipped —
+it registers no intents and can never match. The signatures to grep for:
+
+```text
+ERROR - Failed to load skill: <skill_id> (<exception>)   # skill_launcher, traceback follows
+ERROR - Skill <skill_id> failed to load
+ERROR - Load of skill <skill_id> failed!                 # skill_manager, traceback follows
+```
+
+On the bus, a failed load emits `mycroft.skills.loading_failure` (a healthy one emits
+`mycroft.skill.loaded`). "Installed but never matches" reports should check for these before
+anything else — see the [Troubleshooting](troubleshooting.md#stage-4-which-pipeline-stage-matched-or-didnt)
+funnel.
+
 ## Blacklisting
 
 Skills listed in `skills.blacklisted_skills` in `mycroft.conf` are skipped at load time. The recommended approach is to uninstall unwanted skills rather than blacklist them.

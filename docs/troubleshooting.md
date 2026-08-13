@@ -372,10 +372,32 @@ ovos-say-to "some phrase that does nothing" && ovos-logs show -l skills
 ```
 
 Every request ends with exactly one `ovos.utterance.handled` event, whether an intent matched or
-not. Its absence means the intent service itself crashed or hung. Its presence with no matched
-intent means every pipeline plugin genuinely rejected the utterance (usually a vocabulary/training
-data problem in the target skill, not a bug). See [Intent Layers](layers.md) and the
-[Pipelines Overview](pipelines-overview.md) for how to add or reorder matchers.
+not. Its absence means the intent service itself crashed or hung — jump back to
+[Stage 1](#stage-1-is-the-service-even-running-and-is-the-bus-reachable)'s `systemctl --user status` check to confirm
+`ovos-core` is even alive before digging further. Its presence with no matched
+intent means every pipeline plugin genuinely rejected the utterance.
+
+Before blaming the skill's vocabulary, rule out the two upstream causes of
+"installed but never matches":
+
+1. **Did the skill load at all?** A skill that failed to load registers no intents, so it
+   can never match — check `skills.log` for `Failed to load skill: <skill_id>` /
+   `Load of skill <skill_id> failed!` (a traceback follows), or watch for the
+   `mycroft.skills.loading_failure` bus event; a healthy load announces
+   `mycroft.skill.loaded` instead. See [Skill Manager](skill-manager.md). Note the
+   connectivity/`RuntimeRequirements` gate is **off by default** — on a stock install every
+   installed skill loads unconditionally, so don't chase network-requirement theories unless
+   `use_deferred_loading` was deliberately enabled.
+2. **Has the matcher retrained since the install?** Registering intents fires an
+   asynchronous `mycroft.skills.train` — fire-and-forget, with **no completion event** to
+   watch for — so a skill installed seconds ago may simply not be trained yet. Wait a
+   moment and retry before concluding anything.
+
+Only after both check out is a persistent no-match usually a vocabulary/training-data problem
+in the target skill, not a bug. See [Intent Layers](layers.md) and the
+[Pipelines Overview](pipelines-overview.md) for how to add or reorder matchers. And if the
+user reports a *beep* rather than silence, that is the `sounds.error` earcon confirming a
+complete intent failure — see [Audio feedback cues](audio-service.md#audio-feedback-cues-earcons).
 
 In `ovos-busmon`, filter by `ovos.intent.matched` (see which skill/intent name claimed it) or by
 `ovos.utterance.handled` (confirm the lifecycle closed at all). This reproduces the same
