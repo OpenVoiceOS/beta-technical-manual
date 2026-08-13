@@ -6,6 +6,14 @@
     known-good package set before you upgrade, rolling the whole stack back if an upgrade
     misbehaves, and pinning or rolling back just one package instead of the whole environment.
 
+!!! warning "Installed with `ovos-installer`? Know your method first"
+    The `pip`/`uv pip` commands here apply to the **`virtualenv`** install method, run inside
+    that venv (activate it first — `systemctl --user cat ovos.service` reveals its path from
+    the unit's `ExecStart`). On a **`containers`** install, roll back by pinning the previous
+    image tag and re-running `docker compose up -d`, or
+    [re-run the installer](ovos-installer-scenarios.md) — it detects the existing install and
+    offers only your current method.
+
 ---
 
 ## Pinning or rolling back a single package

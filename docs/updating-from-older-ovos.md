@@ -15,8 +15,9 @@ Use it like this:
    device or fleet operator, or remote bus client (HiveMind and similar),
    and open that audience page.
 2. On that page, read from the top. Entries are in date order. Start at
-   the version you are currently running and read forward to your target
-   version.
+   the version you are currently running — not sure what that is? See
+   [Checking what you have installed](release-channels.md#checking-what-you-have-installed) —
+   and read forward to your target version.
 3. For the largest breaks, open the linked migration page in the
    [Big-ticket migrations](#big-ticket-migrations) table below. Each page
    is a standalone deep dive: symbol/config/bus-message tables, code

@@ -1,6 +1,6 @@
 # Project Timeline & History
 
-> Entries marked `???` have dates that could not be confirmed from a public source; they are left explicit rather than guessed.
+> Entries marked `???` (or with a partial year like `202?`) have dates that could not be confirmed from a public source; they are left explicit rather than guessed.
 
 !!! abstract "In a nutshell"
     OVOS did not appear out of nowhere; it grew out of an earlier voice assistant called Mycroft, and other projects branched off along the way. This page is the family tree showing where everything came from and how the pieces relate. It is background reading for anyone curious about the project's history. See the [Glossary](glossary.md).
@@ -325,7 +325,7 @@
 - Apr 2024 - [ovos-installer](https://github.com/OpenVoiceOS/ovos-installer) second release, codename `Doom` supports Mark II device, maintained by community member @goldyfruit
 - Apr 2024 - [Mark 2 demo](https://community.openconversational.ai/t/open-voice-os-running-on-a-mark-ii-with-its-local-ai-running-mistral/14572) running OpenVoiceOS connected to a local A.I.
 - Apr 2024 - First successful run of [HiveMind Satellite](https://github.com/JarbasHiveMind/HiveMind-voice-sat) on Mark 1 device
-- Jun 2024 - [First successful run of OpenVoiceOS natively on Windows](https://github.com/mikejgray/ovos-windows): https://drive.google.com/file/d/171801mbhbpG79BvlOlUCxVyMPcDGgnbM/view?usp=sharing
+- Jun 2024 - [First successful run of OpenVoiceOS natively on Windows](https://github.com/mikejgray/ovos-windows) ([video](https://drive.google.com/file/d/171801mbhbpG79BvlOlUCxVyMPcDGgnbM/view?usp=sharing))
 - Jul 2024 - Introduction of [ovos-gguf-plugin](https://github.com/OpenVoiceOS/ovos-gguf-plugin), enabling local LLM inference.
 - Jul 2024 - [ovos-tts-plugin-matxa-multispeaker-cat](https://github.com/OpenVoiceOS/ovos-tts-plugin-matxa-multispeaker-cat) Catalan TTS released in collaboration with the [ILENIA project](https://proyectoilenia.es/) (BSC / projecte AINA)
 - Jul 2024 - [ovos-adapt-pipeline-plugin](https://github.com/OpenVoiceOS/ovos-adapt-pipeline-plugin) and [ovos-padatious-pipeline-plugin](https://github.com/OpenVoiceOS/ovos-padatious-pipeline-plugin) split out of ovos-core as standalone pipeline plugins
@@ -334,8 +334,8 @@
 - Sep 2024 - [gh-automations](https://github.com/OpenVoiceOS/gh-automations) introduced: shared, reusable CI/CD workflows for every repo in the org
 - Sep 2024 - `ovos-core` version **0.1.0** released, hitting the first major feature milestone after adopting Semantic Versioning.
 - Oct 2024 - `ovos-core` version **0.2.0** released, introducing refined pipeline routing.
-- Oct 2024 - **Pipeline Stability Milestone**: Core pipeline plugins (`adapt`, `padatious`, `ocp`) reached version **1.0.0**, marking the stability of the modular intent pipeline architecture.
-- Nov 2024 - **1.0.0 wave**: `ovos-workshop` (Oct), `ovos-bus-client`, `ovos-gui`, and `ovos-config` all reach version **1.0.0**
+- Oct 2024 - Core pipeline plugins (`adapt`, `padatious`, `ocp`) reach version 1.0.0, marking the stability of the modular intent pipeline architecture
+- Nov 2024 - `ovos-workshop` (Oct), `ovos-bus-client`, `ovos-gui`, and `ovos-config` all reach version 1.0.0
 - Nov 2024 - Parser primitives split into standalone libraries: [ovos-number-parser](https://github.com/OpenVoiceOS/ovos-number-parser), [ovos-date-parser](https://github.com/OpenVoiceOS/ovos-date-parser), [ovos-color-parser](https://github.com/OpenVoiceOS/ovos-color-parser), [ovos-lang-parser](https://github.com/OpenVoiceOS/ovos-lang-parser)
 - Dec 2024 - [hivemind-core](https://github.com/JarbasHiveMind/hivemind-core) sprints through versions **1.0.0**, **2.0.0**, and **3.0.0** in a single week
 
@@ -346,7 +346,7 @@
 - Apr 2025 - [ovos-busmon](https://github.com/OpenVoiceOS/ovos-busmon) introduced: web-based live messagebus monitor and debugging tool
 - Jun 2025 - Introduction of [ovoscope](https://github.com/OpenVoiceOS/ovoscope), the formal end-to-end testing framework for OVOS skills and core components.
 - Jun 2025 - `ovos-utils` version **0.8.0** released, standardizing cross-platform utilities.
-- Jun 2025 - **Consolidation majors**: `ovos-workshop` walks 4.0.0 → 7.0.0 in one day, `ovos-plugin-manager` reaches **1.0.0**, `ovos-config` **2.0.0**
+- Jun 2025 - `ovos-workshop` walks 4.0.0 → 7.0.0 in one day of breaking cleanups; `ovos-plugin-manager` reaches 1.0.0 and `ovos-config` 2.0.0
 - Jul 2025 - [Transcription Validator](https://blog.openvoiceos.org/posts/2025-07-22-ovos-transcription-validator-plugin) utterance plugin introduced, filtering STT nonsense before intent matching
 - Oct 2025 - `ovos-core` reaches the **2.x** line (`2.1.0`), a major release formalizing the multi-intent-pipeline architecture.
 - Oct 2025 - [phoonnx](https://blog.openvoiceos.org/posts/2025-10-06-phoonnx) introduced: OVOS's own ONNX-based multilingual neural TTS engine and the recommended on-device voice

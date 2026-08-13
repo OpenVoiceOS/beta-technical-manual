@@ -11,6 +11,17 @@ The [staged-upgrade recipe](#staged-upgrades-and-rollback) below is written for 
 the same steps apply to a single, standalone device with the fleet-specific parts dropped:
 back up the config, freeze the current package set, upgrade, and verify.
 
+!!! warning "Installed with `ovos-installer`? Know your method first"
+    Every `pip`/`uv pip` command on this page assumes the **`virtualenv`** install method,
+    run **inside that venv** — activate it first (its path is shown on the installer's
+    environment-summary screen; after the fact, `systemctl --user cat ovos.service` reveals
+    it from the unit's `ExecStart`). If you installed with the **`containers`** method
+    (Docker/Podman), pip on the host changes nothing: update by pulling newer images
+    (`docker compose pull && docker compose up -d`) or by
+    [re-running the installer](ovos-installer-scenarios.md), which detects an existing
+    install and offers only your current method. To check what you currently have installed,
+    see [Checking what you have installed](release-channels.md#checking-what-you-have-installed).
+
 ```bash
 # 1. Back up config and freeze the current package set, in case you need to go back
 sudo install -d -o "$USER" /etc/ovos          # once per device

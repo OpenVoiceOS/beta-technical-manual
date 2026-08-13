@@ -100,7 +100,9 @@ already in use is offered (you can't switch method in place).
 ## Choose Channel
 
 `testing`
-:   Recommended for most users. The stable release channel.
+:   Recommended for most users. Generally stable with newer features, but may
+    occasionally contain regressions — distinct from the `stable` channel, which
+    pins an older snapshot (see [Release Channels](release-channels.md)).
 
 `alpha`
 :   Bleeding-edge/pre-release packages. **Required** (and the only option offered) on macOS and on Mark II/DevKit hardware.
