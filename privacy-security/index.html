@@ -1589,8 +1589,8 @@ to a network you don't control, or install a skill whose source you haven't vett
 <td><strong>No</strong>. Text to be translated or language-detected leaves the device. Self-host <a href="https://github.com/OpenVoiceOS/ovos-translate-server">ovos-translate-server</a> and point the plugins at it, or pick an offline plugin</td>
 </tr>
 <tr>
-<td>LLM / persona solvers</td>
-<td>Not configured by default, but as soon as an LLM-backed solver or persona plugin is configured (e.g. an OpenAI-compatible <code>llm.module</code>), the user's query and/or conversation text is sent to whichever third-party cloud LLM provider that plugin points at. This includes the pre-built <code>Remote Llama</code> demo persona shipped with <a href="../openai-plugin/"><code>ovos-openai-plugin</code></a>, which is pointed at a public ollama/LLama server by default</td>
+<td>LLM / persona agent engines</td>
+<td>Not configured by default, but as soon as an LLM-backed agent engine or persona plugin is configured (e.g. an OpenAI-compatible <code>llm.module</code>), the user's query and/or conversation text is sent to whichever third-party cloud LLM provider that plugin points at. This includes the pre-built <code>Remote Llama</code> demo persona shipped with <a href="../openai-plugin/"><code>ovos-openai-plugin</code></a>, which is pointed at a public ollama/LLama server by default</td>
 <td>Depends on the plugin. See the <a href="../llm-transformers/">LLM transformers</a>, <a href="../personas/">personas</a> and <a href="../openai-plugin/">OpenAI plugin</a> pages for offline vs. cloud options</td>
 </tr>
 <tr>
@@ -1682,6 +1682,13 @@ translation/language-detection, all running on-device:</p>
 </span><span id="__span-0-23"><a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>  }
 </span><span id="__span-0-24"><a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>}
 </span></code></pre></div>
+<p>Install the five plugins first — note the one naming trap: the TTS module
+<code>ovos-tts-plugin-phoonnx</code> ships in the pip package <strong><code>phoonnx</code></strong>, not under its
+module name (every other entry's pip name matches its module name):</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>pip<span class="w"> </span>install<span class="w"> </span>--pre<span class="w"> </span>phoonnx<span class="w"> </span>ovos-stt-plugin-onnx-asr<span class="w"> </span>ovos-vad-plugin-silero<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">            </span>ovos-ww-plugin-precise-onnx<span class="w"> </span>ovos-translate-plugin-nllb<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">            </span>ovos-lang-detector-fasttext-plugin
+</span></code></pre></div>
 <div class="admonition warning">
 <p class="admonition-title">'Offline' means no network at inference time — first run still downloads models</p>
 <p><code>ovos-stt-plugin-onnx-asr</code>, <code>phoonnx</code>, the NLLB translation plugin, and the fastText
@@ -1707,21 +1714,21 @@ machine on your local network (say <code>192.168.1.50</code>), keep your voice a
 internet without giving up the server model. Both companion plugins go in the same
 <code>~/.config/mycroft/mycroft.conf</code>, but note the client-side config keys differ: the STT
 plugin uses <code>urls</code> (a list), the TTS plugin uses <code>host</code>.</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>// ~/.config/mycroft/mycroft.conf: LAN speech backend at 192.168.1.50
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>{
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>  &quot;stt&quot;: {
-</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>    &quot;module&quot;: &quot;ovos-stt-plugin-server&quot;,
-</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>    &quot;ovos-stt-plugin-server&quot;: {
-</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>      &quot;urls&quot;: [&quot;http://192.168.1.50:8080/stt&quot;]
-</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>    }
-</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>  },
-</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>  &quot;tts&quot;: {
-</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>    &quot;module&quot;: &quot;ovos-tts-plugin-server&quot;,
-</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>    &quot;ovos-tts-plugin-server&quot;: {
-</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>      &quot;host&quot;: &quot;http://192.168.1.50:9666&quot;
-</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>    }
-</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>  }
-</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>}
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>// ~/.config/mycroft/mycroft.conf: LAN speech backend at 192.168.1.50
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>{
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>  &quot;stt&quot;: {
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>    &quot;module&quot;: &quot;ovos-stt-plugin-server&quot;,
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>    &quot;ovos-stt-plugin-server&quot;: {
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>      &quot;urls&quot;: [&quot;http://192.168.1.50:8080/stt&quot;]
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>    }
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>  },
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>  &quot;tts&quot;: {
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>    &quot;module&quot;: &quot;ovos-tts-plugin-server&quot;,
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>    &quot;ovos-tts-plugin-server&quot;: {
+</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>      &quot;host&quot;: &quot;http://192.168.1.50:9666&quot;
+</span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>    }
+</span><span id="__span-2-14"><a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>  }
+</span><span id="__span-2-15"><a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a>}
 </span></code></pre></div>
 <p>After saving the file, restart the client (<code>ovos-restart</code> on raspOVOS, or
 <code>systemctl --user restart ovos.service</code> elsewhere) and check the voice/audio logs to
