@@ -2118,7 +2118,7 @@ Text-to-Speech API. Google can change or revoke access to this endpoint at any t
 <p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-tts-plugin-matxa-multispeaker-cat">OpenVoiceOS/ovos-tts-plugin-matxa-multispeaker-cat</a></p>
 </li>
 <li>
-<p><strong>Description</strong>: <a href="https://huggingface.co/projecte-aina/matxa-tts-cat-multiaccent">Matxa-TTS</a>, the multispeaker, multidialectal neural TTS model. It works together with the vocoder model <a href="https://huggingface.co/projecte-aina/alvocat-vocos-22khz">alVoCat</a> to generate speech in four Catalan dialects.</p>
+<p><strong>Description</strong>: <a href="https://huggingface.co/projecte-aina/matxa-tts-cat-multiaccent">Matxa-TTS</a>, the multispeaker, multidialectal neural TTS model. It works together with the vocoder model <a href="https://huggingface.co/projecte-aina/alvocat-vocos-22khz">alVoCat</a> to generate speech in four Catalan dialects. Warning: archived, deprecated.</p>
 </li>
 </ul>
 <h3 id="default-configuration_1">Default Configuration<a class="headerlink" href="#default-configuration_1" title="Permanent link">&para;</a></h3>
@@ -2136,7 +2136,7 @@ Text-to-Speech API. Google can change or revoke access to this endpoint at any t
 <p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-tts-plugin-piper">https://github.com/OpenVoiceOS/ovos-tts-plugin-piper</a></p>
 </li>
 <li>
-<p><strong>Description</strong>: Offline neural TTS using the <a href="https://github.com/rhasspy/piper">Piper</a> engine (ONNX voices). This is the default TTS on the raspOVOS <code>hybrid</code> and <code>offline</code> images.</p>
+<p><strong>Description</strong>: Offline neural TTS using the <a href="https://github.com/rhasspy/piper">Piper</a> engine (ONNX voices). This is the default TTS on the raspOVOS <code>hybrid</code> and <code>offline</code> images. Warning: archived. <a href="https://github.com/TigreGotico/phoonnx">phoonnx</a> runs Piper ONNX voices (including the <code>kusal</code> voice) and is the maintained successor.</p>
 </li>
 <li>
 <p><strong>Config</strong>: set <code>"module": "ovos-tts-plugin-piper"</code> in the <code>tts</code> block. A <code>"voice"</code> key selects a specific Piper voice model, without it the plugin picks a voice for the configured language.</p>

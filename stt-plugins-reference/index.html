@@ -2173,7 +2173,7 @@ API with an API key. Google can change or revoke access to this endpoint at any 
 <p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-stt-plugin-mms">OpenVoiceOS/ovos-stt-plugin-mms</a></p>
 </li>
 <li>
-<p><strong>Description</strong>: OVOS plugin for <a href="https://huggingface.co/docs/transformers/main/en/model_doc/mms">The Massively Multilingual Speech (MMS) project</a></p>
+<p><strong>Description</strong>: OVOS plugin for <a href="https://huggingface.co/docs/transformers/main/en/model_doc/mms">The Massively Multilingual Speech (MMS) project</a>. Warning: archived. MMS models also run under <a href="https://github.com/OpenVoiceOS/ovos-stt-plugin-wav2vec2">ovos-stt-plugin-wav2vec2</a>, which is not on PyPI yet — install it from source, or use <a href="#ovos-stt-plugin-onnx-asr">onnx-asr</a>, which covers the same wav2vec2 families.</p>
 </li>
 </ul>
 <h3 id="default-configuration_1">Default Configuration<a class="headerlink" href="#default-configuration_1" title="Permanent link">&para;</a></h3>
@@ -2372,7 +2372,7 @@ servers entirely: fully offline plugins exist for everything.</p>
 <p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-stt-plugin-HiTZ">OpenVoiceOS/ovos-stt-plugin-HiTZ</a></p>
 </li>
 <li>
-<p><strong>Description</strong>: OpenVoiceOS STT plugin for <strong>Basque</strong> models trained by <a href="https://huggingface.co/HiTZ">HiTZ</a></p>
+<p><strong>Description</strong>: OpenVoiceOS STT plugin for <strong>Basque</strong> models trained by <a href="https://huggingface.co/HiTZ">HiTZ</a>. Warning: archived, deprecated.</p>
 </li>
 </ul>
 <h3 id="default-configuration_10">Default Configuration<a class="headerlink" href="#default-configuration_10" title="Permanent link">&para;</a></h3>
@@ -2456,6 +2456,7 @@ servers entirely: fully offline plugins exist for everything.</p>
 <p>The configured/utterance language is only passed to the ASR call for <strong>Whisper</strong> and <strong>Canary</strong> (NeMo Conformer AED) families. Other families (Parakeet, GigaAM, Vosk, wav2vec2, T-one) ignore <code>lang</code>. For those, pick a language-specific model instead of relying on a <code>lang</code> setting to steer a multilingual one.</p>
 </div>
 <p>Besides the built-in aliases and the <code>onnx-asr</code> repository's own model hub, the plugin loads any repo id from the <a href="https://huggingface.co/collections/OpenVoiceOS/stt-asr-onnx">OpenVoiceOS/stt-asr-onnx</a> collection. This collection holds curated single-language and regional ONNX conversions of NeMo Conformer/Parakeet and Whisper checkpoints, grouped roughly by family: AI4Bharat/Vaani models for Indian languages, NVIDIA Conformer/Parakeet models for major European languages (plus Kabyle, Belarusian, Esperanto, Kinyarwanda), Iberian-language Conformer models, and per-language Whisper finetunes. Most ship both fp32 and int8 weights (<code>quantization: "int8"</code> works). A few large models are fp32-only. See the collection itself for the exhaustive, current list. It grows independently of this plugin's release cycle.</p>
+<p>Comparing plugins instead of picking one? <a href="https://github.com/OpenVoiceOS/ovos-plugin-bench">ovos-plugin-bench</a> runs STT plugins over Hugging Face audio datasets and scores them on WER, CER, MER, WIL, and WIP.</p>
 <hr />
 <hr />
 <p><strong>Read next:</strong> <a href="../stt-plugins/">STT Plugins</a>

@@ -2017,6 +2017,60 @@ type (<code>opm.media.provider</code> / <code>PluginTypes.MEDIA_PROVIDER</code>)
 <a href="../ocp-skills/">OCP skills</a>. This first ships in <strong><code>ovos-plugin-manager 2.8.0a1</code></strong>
 (Phase 1 of the <code>ovos-media</code> migration). OCP skills remain the way to provide media for now.
 Tracked in <a href="https://github.com/OpenVoiceOS/ovos-workshop/pull/423">ovos-workshop#423</a>.</p>
+<p>A first batch of MediaProvider plugins already exists, each superseding the catalog/search
+half of an older OCP skill:</p>
+<table>
+<thead>
+<tr>
+<th>MediaProvider plugin</th>
+<th>Supersedes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/OpenVoiceOS/ovos-media-provider-bandcamp">ovos-media-provider-bandcamp</a></td>
+<td><a href="https://github.com/OpenVoiceOS/ovos-skill-bandcamp">ovos-skill-bandcamp</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/OpenVoiceOS/ovos-media-provider-pyradios">ovos-media-provider-pyradios</a></td>
+<td><a href="https://github.com/OpenVoiceOS/ovos-skill-pyradios">ovos-skill-pyradios</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/OpenVoiceOS/ovos-media-provider-somafm">ovos-media-provider-somafm</a></td>
+<td><a href="https://github.com/OpenVoiceOS/ovos-skill-somafm">ovos-skill-somafm</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/OpenVoiceOS/ovos-media-provider-soundcloud">ovos-media-provider-soundcloud</a></td>
+<td><a href="https://github.com/OpenVoiceOS/ovos-skill-soundcloud">ovos-skill-soundcloud</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/OpenVoiceOS/ovos-media-provider-tunein">ovos-media-provider-tunein</a></td>
+<td><a href="https://github.com/OpenVoiceOS/ovos-skill-tunein">ovos-skill-tunein</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/OpenVoiceOS/ovos-media-provider-youtube">ovos-media-provider-youtube</a></td>
+<td><a href="https://github.com/OpenVoiceOS/ovos-skill-youtube">ovos-skill-youtube</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/OpenVoiceOS/ovos-media-provider-youtube-music">ovos-media-provider-youtube-music</a></td>
+<td><a href="https://github.com/OpenVoiceOS/ovos-skill-youtube-music">ovos-skill-youtube-music</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/OpenVoiceOS/ovos-media-provider-mass">ovos-media-provider-mass</a></td>
+<td><a href="https://github.com/OpenVoiceOS/ovos-skill-music-assistant">ovos-skill-music-assistant</a> (playback via the companion <a href="https://github.com/OpenVoiceOS/ovos-media-plugin-mass">ovos-media-plugin-mass</a> backend)</td>
+</tr>
+<tr>
+<td><a href="https://github.com/OpenVoiceOS/ovos-media-provider-news">ovos-media-provider-news</a></td>
+<td><a href="https://github.com/OpenVoiceOS/ovos-skill-news">ovos-skill-news</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/OpenVoiceOS/ovos-media-provider-spotify">ovos-media-provider-spotify</a></td>
+<td><a href="https://github.com/OpenVoiceOS/ovos-skill-spotify">ovos-skill-spotify</a> (playback via the companion <a href="https://github.com/OpenVoiceOS/ovos-media-plugin-spotify">ovos-media-plugin-spotify</a> backend)</td>
+</tr>
+</tbody>
+</table>
+<p>The old OCP skills keep working; a MediaProvider plugin only takes over once the
+<code>opm.media.provider</code> plugin type ships on a released <code>ovos-plugin-manager</code>.</p>
 </div>
 <p><code>ovos-media</code> is the standalone audio/video daemon for OpenVoiceOS. It is the <strong>upcoming
 replacement</strong> for the legacy audio service, and it provides a more capable and modular media player
