@@ -193,11 +193,11 @@ Then select it in your audio/media backend config. See [Media playback: legacy v
   `ovos_cli`).
 
 ```bash
-pip install git+https://github.com/OpenVoiceOS/ovos-media-plugin-cli
+pip install --pre ovos-media-plugin-cli
 ```
 
-There is no PyPI release yet, matching its Alpha rating above — install it from git until
-there is one.
+Only alpha releases exist on PyPI so far, matching its Alpha rating above — hence the
+`--pre` flag.
 
 Then select it in your audio/media backend config, optionally setting the `command` to
 a specific CLI player. See [Media playback: legacy vs. ovos-media](ovos-media.md).
