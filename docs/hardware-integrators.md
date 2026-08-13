@@ -163,8 +163,9 @@ There is no published, current benchmark of OVOS's CPU/RAM footprint across hard
 Treat any specific number you see elsewhere with suspicion. The real cost depends entirely on
 which STT, TTS, and wake-word plugins you pick. As a sizing anchor, the
 [raspOVOS images](install-raspovos.md) run the full stack with cloud speech on a Pi 3
-(barely) or Pi 4, and fully on-device speech (local STT and TTS) on a Pi 4/5 with 4 GB+
-RAM — those tiers are the closest thing to a documented reference deployment. A tiny wake-word model and a cloud STT server
+(barely), cloud STT with on-device TTS on a Pi 4, and fully on-device speech (local STT
+and TTS) on a Pi 4/5 with 4 GB+ RAM — those tiers are the closest thing to a documented
+reference deployment. A tiny wake-word model and a cloud STT server
 cost almost nothing locally. A local Whisper model needs real CPU or a GPU. Measure the
 footprint on your own target hardware instead of relying on an unverified number:
 
