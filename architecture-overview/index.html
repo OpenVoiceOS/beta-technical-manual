@@ -1690,9 +1690,9 @@ knowing about each other. See the
     BUS --- MEDIA["ovos-media&lt;br/&gt;standalone media-playback (opt-in, PoC)"]
     BUS --- GUI["ovos-gui&lt;br/&gt;GUI layer"]
     BUS --- PHAL["ovos-phal&lt;br/&gt;hardware/platform plugins"]</code></pre>
-<p><em>Diagram: the messagebus sits at the center, with ovos-core (and its SkillManager, IntentService, transformer chains, and pipeline plugins), ovos-dinkum-listener, ovos-audio, ovos-media, ovos-gui, and ovos-phal each connected to it as independent clients.</em></p>
+<p><em>Diagram: the messagebus sits at the center, with ovos-core (and its SkillManager, IntentService, transformer chains, and pipeline plugins), ovos-dinkum-listener, ovos-audio, ovos-media, ovos-gui, and ovos-phal each connected to it as independent clients. Note that <a href="../ovos-media/">ovos-media</a> is an opt-in proof of concept, not a default component — see its page for the full status warning.</em></p>
 <p><code>ovos-messagebus</code> is the hub; every other box is a client connected to it, not a node in a
-hierarchy. The five services besides <code>ovos-core</code>, the listener, audio, media, GUI, and PHAL, are
+hierarchy. Besides <code>ovos-core</code>, five services — the listener, audio, media, GUI, and PHAL — are
 separate processes and could in principle run on separate machines, each responsible for one
 stage of the <a href="../life-of-an-utterance/">utterance lifecycle</a>.</p>
 <p>The <a href="../transformer-plugins/">six transformer chains</a> don't all run in the same place:</p>

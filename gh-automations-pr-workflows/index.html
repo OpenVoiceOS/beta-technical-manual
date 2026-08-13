@@ -1575,72 +1575,15 @@
 <blockquote>
 <p><strong>Ref:</strong> Always use <code>@dev</code>.</p>
 </blockquote>
-<table>
-<thead>
-<tr>
-<th>Workflow / topic</th>
-<th>What it does</th>
-<th>Page</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>build-tests.yml</code></td>
-<td>Build, install, and optionally test across a Python version matrix.</td>
-<td><a href="../gh-automations-build-checks/#build-testsyml">Build Checks</a></td>
-</tr>
-<tr>
-<td><code>python-support.yml</code> <em>(deprecated)</em></td>
-<td>Legacy install matrix across Python versions and install modes.</td>
-<td><a href="../gh-automations-build-checks/#python-supportyml-deprecated">Build Checks</a></td>
-</tr>
-<tr>
-<td><code>opm-check.yml</code></td>
-<td>OPM (OVOS Plugin Manager) plugin detection, interface validation, and import timing.</td>
-<td><a href="../gh-automations-plugin-repo-checks/#opm-checkyml">Plugin, License, and Repo Checks</a></td>
-</tr>
-<tr>
-<td><code>license-check.yml</code></td>
-<td>Scans dependencies for licenses incompatible with the OVOS universal donor policy.</td>
-<td><a href="../gh-automations-plugin-repo-checks/#license-checkyml">Plugin, License, and Repo Checks</a></td>
-</tr>
-<tr>
-<td><code>repo-health.yml</code></td>
-<td>Checks for required repo files and greets first-time contributors.</td>
-<td><a href="../gh-automations-plugin-repo-checks/#repo-healthyml">Plugin, License, and Repo Checks</a></td>
-</tr>
-<tr>
-<td><code>skill-check.yml</code></td>
-<td>Locale structure, language coverage, and <code>skill.json</code> validity for OVOS skills.</td>
-<td><a href="../gh-automations-repo-skill-checks/#skill-checkyml">Skill and Locale Checks</a></td>
-</tr>
-<tr>
-<td><code>locale-check.yml</code></td>
-<td>Verifies locale folders are correctly included in the package build.</td>
-<td><a href="../gh-automations-repo-skill-checks/#locale-checkyml">Skill and Locale Checks</a></td>
-</tr>
-<tr>
-<td><code>spec-lint.yml</code></td>
-<td>Runs <code>ovos-spec-lint</code> against a skill's locale folder (OVOS-INTENT-1 / OVOS-INTENT-2).</td>
-<td><a href="../gh-automations-repo-skill-checks/#spec-lintyml">Skill and Locale Checks</a></td>
-</tr>
-<tr>
-<td><code>ovoscope.yml</code></td>
-<td>Runs <a href="../ovoscope-overview/">ovoscope</a> end-to-end skill tests.</td>
-<td><a href="../gh-automations-skill-test-workflows/#ovoscopeyml">Skill Test Workflows</a></td>
-</tr>
-<tr>
-<td><code>intent-case-tests.yml</code></td>
-<td>Runs the file-based ovoscope intent-routing accuracy matrix, sharded by language.</td>
-<td><a href="../gh-automations-skill-test-workflows/#intent-case-testsyml">Skill Test Workflows</a></td>
-</tr>
-<tr>
-<td><code>tts-intelligibility.yml</code></td>
-<td>Synthesises speech, transcribes it back with reference STT, and scores WER/CER.</td>
-<td><a href="../gh-automations-skill-test-workflows/#tts-intelligibilityyml">Skill Test Workflows</a></td>
-</tr>
-</tbody>
-</table>
+<p>The individual workflows are listed once, in the
+<a href="../gh-automations-workflows/">Workflow Reference index</a>. The PR-gate ones are
+specified in detail on four topic pages:</p>
+<ul>
+<li><a href="../gh-automations-build-checks/">Build Checks</a>: <code>build-tests.yml</code>, <code>channel-compat.yml</code>, and the deprecated <code>python-support.yml</code>.</li>
+<li><a href="../gh-automations-plugin-repo-checks/">Plugin, License, and Repo Checks</a>: <code>opm-check.yml</code>, <code>license-check.yml</code>, <code>repo-health.yml</code>.</li>
+<li><a href="../gh-automations-repo-skill-checks/">Skill and Locale Checks</a>: <code>skill-check.yml</code>, <code>locale-check.yml</code>, <code>spec-lint.yml</code>.</li>
+<li><a href="../gh-automations-skill-test-workflows/">Skill Test Workflows</a>: <code>ovoscope.yml</code>, <code>intent-case-tests.yml</code>, <code>tts-intelligibility.yml</code>.</li>
+</ul>
 <hr />
 <p><strong>Read next:</strong> <a href="../gh-automations-build-checks/">Build Checks</a>
 <strong>Related:</strong> <a href="../gh-automations-overview/">gh-automations Overview</a> · <a href="../gh-automations-plugin-repo-checks/">Plugin, License, and Repo Checks</a> · <a href="../gh-automations-repo-skill-checks/">Skill and Locale Checks</a> · <a href="../gh-automations-skill-test-workflows/">Skill Test Workflows</a> · <a href="../gh-automations-workflows/">Workflow Reference</a> · <a href="../gh-automations-quality-workflows/">Quality Workflows</a> · <a href="../gh-automations-release-workflows/">Release Workflows</a></p>

@@ -1581,6 +1581,11 @@ know. Only a handful of import paths and class/decorator names changed.</p>
 <td>Skills are ordinary Python packages installed with <code>pip</code>. Discovery goes through <a href="../plugin-manager/">OPM</a>, not a separate skill manager.</td>
 </tr>
 <tr>
+<td><code>settingsmeta.json</code> / <code>settingsmeta.yaml</code></td>
+<td>Still read, no backend to sync to</td>
+<td>The legacy settings-UI descriptor still works for tools that read it, but nothing uploads it anywhere. See <a href="../skill-settings-meta/">Settings Meta</a> and <a href="../skill-settings/">Skill Settings</a>.</td>
+</tr>
+<tr>
 <td><code>GUITracker</code></td>
 <td><code>can_display()</code> / <code>is_gui_installed()</code> / <code>is_gui_connected(bus)</code> in <code>ovos_utils.gui</code></td>
 <td>See <a href="../skill-dev-faq/">Developer FAQ</a>. GUI-heavy skills should also read <a href="../mark1/">Mark 1</a>: <code>self.enclosure</code> and <code>self.gui</code> are being removed from the <code>OVOSSkill</code> base class.</td>

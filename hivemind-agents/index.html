@@ -1623,6 +1623,9 @@ You can swap implementations without touching the rest:</p>
 <p><strong>2. Start the server:</strong></p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>hivemind-core<span class="w"> </span>listen<span class="w">           </span><span class="c1"># start listening for HiveMind connections</span>
 </span></code></pre></div>
+<p>By default this listens on <code>0.0.0.0:5678</code> (websocket) and <code>0.0.0.0:5679</code> (HTTP) — all
+interfaces, so firewall those ports if the machine faces an untrusted network. Connections
+still require the per-client access key and password.</p>
 <p>By default it serves the local <code>ovos-core</code> via <code>hivemind-ovos-agent-plugin</code> (configured under
 <code>agent_protocol</code> in <code>server.json</code>).</p>
 <p><strong>3. Give a client its identity, then connect.</strong> On the <em>client</em> device, save the access key

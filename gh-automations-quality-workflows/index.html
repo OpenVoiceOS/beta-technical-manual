@@ -1575,67 +1575,14 @@
 <blockquote>
 <p><strong>Ref:</strong> Always use <code>@dev</code>.</p>
 </blockquote>
-<table>
-<thead>
-<tr>
-<th>Workflow / topic</th>
-<th>What it does</th>
-<th>Page</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>coverage.yml</code></td>
-<td>Runs <code>pytest --cov</code>, posts a coverage report, and optionally deploys HTML to <code>gh-pages</code>.</td>
-<td><a href="../gh-automations-coverage-security/#coverageyml">Coverage and Security Workflows</a></td>
-</tr>
-<tr>
-<td><code>coverage-pages.yml</code> <em>(deprecated)</em></td>
-<td>Legacy coverage-to-<code>gh-pages</code> deployment, replaced by <code>coverage.yml</code>.</td>
-<td><a href="../gh-automations-coverage-security/#coverage-pagesyml-deprecated">Coverage and Security Workflows</a></td>
-</tr>
-<tr>
-<td><code>pip-audit.yml</code></td>
-<td>Scans dependencies for known CVEs and optionally uploads a SARIF report.</td>
-<td><a href="../gh-automations-coverage-security/#pip-audityml">Coverage and Security Workflows</a></td>
-</tr>
-<tr>
-<td><code>downstream-check.yml</code></td>
-<td>Reports which packages depend on a given package, using <code>pipdeptree</code>.</td>
-<td><a href="../gh-automations-coverage-security/#downstream-checkyml">Coverage and Security Workflows</a></td>
-</tr>
-<tr>
-<td><code>lint.yml</code></td>
-<td>Runs <code>ruff</code> and/or <code>pre-commit</code>.</td>
-<td><a href="../gh-automations-lint-docs/#lintyml">Lint and Docs Workflows</a></td>
-</tr>
-<tr>
-<td><code>type-check.yml</code></td>
-<td>Runs <code>mypy</code>, informational only unless <code>fail_on_errors: true</code>.</td>
-<td><a href="../gh-automations-lint-docs/#type-checkyml">Lint and Docs Workflows</a></td>
-</tr>
-<tr>
-<td><code>docs-check.yml</code></td>
-<td>Verifies required documentation files exist and optionally lints Markdown.</td>
-<td><a href="../gh-automations-lint-docs/#docs-checkyml">Lint and Docs Workflows</a></td>
-</tr>
-<tr>
-<td><code>notify-matrix.yml</code></td>
-<td>Sends a message to the OVOS Matrix channel.</td>
-<td><a href="../gh-automations-lint-docs/#notify-matrixyml">Lint and Docs Workflows</a></td>
-</tr>
-<tr>
-<td>PR Checks Comment Pattern</td>
-<td>How workflows post a named section into the single shared OVOS PR Checks comment.</td>
-<td><a href="../gh-automations-pr-comment-scripts/#pr-checks-comment-pattern">PR Comment Pattern and Scripts</a></td>
-</tr>
-<tr>
-<td>Scripts Reference</td>
-<td>The Python scripts every workflow above checks out at run time.</td>
-<td><a href="../gh-automations-pr-comment-scripts/#scripts-reference">PR Comment Pattern and Scripts</a></td>
-</tr>
-</tbody>
-</table>
+<p>The individual workflows are listed once, in the
+<a href="../gh-automations-workflows/">Workflow Reference index</a>. The quality and
+housekeeping ones are specified in detail on three topic pages:</p>
+<ul>
+<li><a href="../gh-automations-coverage-security/">Coverage and Security Workflows</a>: <code>coverage.yml</code>, <code>pip-audit.yml</code>, <code>downstream-check.yml</code>, and the deprecated <code>coverage-pages.yml</code>.</li>
+<li><a href="../gh-automations-lint-docs/">Lint and Docs Workflows</a>: <code>lint.yml</code>, <code>type-check.yml</code>, <code>docs-check.yml</code>, <code>notify-matrix.yml</code>.</li>
+<li><a href="../gh-automations-pr-comment-scripts/">PR Comment Pattern and Scripts</a>: the shared OVOS PR Checks comment mechanism and the Python scripts the workflows check out at run time.</li>
+</ul>
 <hr />
 <p><strong>Read next:</strong> <a href="../gh-automations-coverage-security/">gh-automations Coverage and Security Workflows</a>
 <strong>Related:</strong> <a href="../gh-automations-overview/">gh-automations Overview</a> · <a href="../gh-automations-pr-comment-scripts/">PR Comment Pattern and Scripts</a> · <a href="../gh-automations-workflows/">Workflow Reference</a> · <a href="../gh-automations-pr-workflows/">PR Check Workflows</a> · <a href="../gh-automations-release-workflows/">Release Workflows</a></p>

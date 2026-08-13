@@ -1523,6 +1523,16 @@ model or TTS voice, and want Home Assistant's own Assist pipeline to use them. I
 from running a second, separately configured set of speech engines just for HA.</p>
 <p>See <a href="../wyoming-bridges/">Wyoming Bridges</a> for installation, configuration, and the exact HA-side
 setup (adding a Wyoming integration pointed at the bridge's host and port).</p>
+<div class="admonition warning">
+<p class="admonition-title">Pick one brain, not both</p>
+<p>The two directions correspond to two different architectures. With the Wyoming
+bridges, <strong>Home Assistant is the brain</strong>: HA's Assist pipeline runs the wake word
+and intents, borrowing OVOS's speech engines. With OVOS satellites
+(<a href="../satellites/">HiveMind</a>), <strong>OVOS is the brain</strong> and controls HA as one of its
+skills. Do not combine a Wyoming wake-word bridge with a HiveMind mic satellite on
+the same device — you would run two competing wake-word pipelines. Decide which
+system owns the conversation first, then follow only that direction's pages.</p>
+</div>
 <hr />
 <h2 id="direction-2-ovos-controls-home-assistant-devices">Direction 2: OVOS controls Home Assistant devices<a class="headerlink" href="#direction-2-ovos-controls-home-assistant-devices" title="Permanent link">&para;</a></h2>
 <p>To have your OVOS assistant turn on lights, adjust a thermostat, or run a scene, you install a
