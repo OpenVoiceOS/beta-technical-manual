@@ -94,7 +94,7 @@ Set `collapse_varieties: false` when the caller reads the dialect itself, for ex
 
 ## Public Instance
 
-A community instance of [`ovos-translate-server`](translate-server.md) runs these plugins at `https://translate.openvoiceos.pt/status`. Point [`ovos-translate-plugin-server`](translation-plugins.md#configuring-ovos-translate-plugin-server) at it with `host`.
+A community instance of [`ovos-translate-server`](translate-server.md) runs these plugins at `https://translate.openvoiceos.pt`. Point [`ovos-translate-plugin-server`](translation-plugins.md#configuring-ovos-translate-plugin-server) at that bare base URL with `host` (the server's root path serves no page of its own — check it is up via [`/status`](https://translate.openvoiceos.pt/status)).
 
 --8<-- "snippets/community-servers.md"
 
