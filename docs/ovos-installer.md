@@ -15,7 +15,7 @@ This is the quick-start guide for installing Open Voice OS (OVOS) using the offi
 ```mermaid
 flowchart TD
     A[Choosing how to install OVOS] --> B{Raspberry Pi?}
-    B -- yes, want flash-and-boot --> C[raspOVOS image<br/>maintenance pause: check status first]
+    B -- yes, want flash-and-boot --> C[raspOVOS image<br/>stable images unmaintained: check status first]
     B -- yes, existing Raspberry Pi OS --> D[ovos-installer]
     B -- no, other Linux/macOS --> D
     A --> E{Scripting a fleet or CI?}

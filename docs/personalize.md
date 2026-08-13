@@ -62,10 +62,13 @@ for the full CLI). Once the file parses cleanly, apply the change:
 ```
 
 As with voices below, the plugin must be installed into the same environment OVOS runs in
-before the config can use it (`pip install ovos-ww-plugin-vosk` for this example) — a wake
-word whose module fails to load is logged loudly (an `ERROR` with a traceback in the
-listener log) and simply dropped, so the assistant stops responding to that wake word
-rather than substituting a default. Full walkthrough,
+before the config can use it (`pip install ovos-ww-plugin-vosk` for this example). For a
+custom hotword like this one — with no `fallback_ww` configured — a module that fails to
+load is logged loudly (an `ERROR` with a traceback in the listener log) and simply dropped,
+so the assistant stops responding to that wake word. The shipped default `hey_mycroft`
+behaves differently: its config chains through `fallback_ww` entries (tflite → precise →
+vosk → pocketsphinx), so a failed primary engine there falls back to the next engine
+silently (see [Wake-word Plugins](wake-word-plugins.md)). Full walkthrough,
 plugin choices, and tuning: [Wake-word Plugins](wake-word-plugins.md#change-your-wake-word).
 
 ## Change your voice
