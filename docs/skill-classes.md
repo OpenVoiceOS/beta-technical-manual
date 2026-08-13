@@ -15,6 +15,7 @@
 OVOSSkill                             ovos_workshop/skills/ovos.py
 ├── ConversationalSkill               ovos_workshop/skills/converse.py
 │   └── ActiveSkill                   ovos_workshop/skills/active.py
+│       └── PassiveSkill              ovos_workshop/skills/passive.py
 ├── FallbackSkill                     ovos_workshop/skills/fallback.py
 ├── IdleDisplaySkill                  ovos_workshop/skills/idle_display_skill.py
 ├── OVOSCommonPlaybackSkill           ovos_workshop/skills/common_play.py
@@ -242,6 +243,7 @@ implement, lives on **[Skill Classes Reference](skill-classes-reference.md)**.
 | A plain intent-driven skill | `OVOSSkill` (this page) | — |
 | Explicit converse control (`activate()`/`deactivate()`) | [ConversationalSkill](skill-classes-reference.md#conversationalskill) | `OVOSSkill` |
 | A skill that's always in the converse active-skills list | [ActiveSkill](skill-classes-reference.md#activeskill) | `ConversationalSkill` |
+| A skill that passively hears every utterance without claiming any (e.g. metrics) | `PassiveSkill` | `ActiveSkill` |
 | To catch utterances that matched no intent | [FallbackSkill](skill-classes-reference.md#fallbackskill) | `OVOSSkill` |
 | To answer natural-language questions with a confidence score | [`@common_query`](skill-classes-reference.md#commonquery-common_query-on-ovosskill) decorator | `OVOSSkill` |
 | To play audio/video and appear in the OCP media browser | [OVOSCommonPlaybackSkill](skill-classes-reference.md#ovoscommonplaybackskill) | `OVOSSkill` |
