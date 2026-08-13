@@ -131,7 +131,23 @@ separate project with its own protocol and docs.
    `--siteid`.
 4. Verify with `hivemind-client test-identity` before trusting the link.
 5. For a mic-only satellite that leaves STT/TTS to the server, use
-   `hivemind-mic-satellite` instead of running a full listener/audio pair locally.
+   [`hivemind-mic-satellite`](https://github.com/JarbasHiveMind/hivemind-mic-satellite)
+   instead of running a full listener/audio pair locally. Two things the package name
+   does not tell you:
+
+    - The **server** needs `pip install hivemind-audio-binary-protocol` — plain
+      `hivemind-core` does no audio processing, so without it the satellite streams
+      audio into a void.
+    - The satellite's run command is **`hivemind-mic-sat`** (after the same
+      `set-identity` step as above, or pass `--key/--password/--host` directly).
+
+    The device runs only a microphone and VAD plugin — cheap hardware like a Pi Zero
+    works — while wake word, STT and TTS all happen server-side. The trade-off: with no
+    local wake word, every VAD-detected voice segment streams upstream, costing
+    bandwidth and putting the full STT load on the server. Fine for a homelab with a
+    handful of devices; for a local wake word on slightly stronger hardware, use
+    [HiveMind-voice-relay](https://github.com/JarbasHiveMind/HiveMind-voice-relay)
+    instead.
 
 By default `hivemind-core listen` starts **two** listeners, both on `0.0.0.0`: the websocket
 protocol plugin on `5678` and the HTTP protocol plugin on `5679`. Both are in the default
@@ -275,8 +291,9 @@ OVOS across machines.
 
 **Satellite can't connect to the server.**
 
-- Check the server's firewall allows inbound traffic on port `8181` (raw bus) or port
-  `5678` (HiveMind listener, default bind `0.0.0.0`) from the satellite's address.
+- Check the server's firewall allows inbound traffic on port `8181` (raw bus) or ports
+  `5678` **and** `5679` (HiveMind websocket + HTTP listeners, both default bind
+  `0.0.0.0` — see the warning above) from the satellite's address.
 - Confirm `websocket.host` on the satellite points at the server's real LAN address, not
   `127.0.0.1`.
 - For HiveMind, run `hivemind-client test-identity` on the satellite. A hang or error
