@@ -68,30 +68,27 @@ first request.
 
 ## Configuration
 
-Every OVOS plugin reads its settings from `mycroft.conf`, mounted read-only:
+The three servers differ in where their plugin settings come from — check each
+server's own page before assuming `mycroft.conf` applies:
 
-```yaml
-volumes:
-  - ./mycroft.conf:/home/ovos/.config/mycroft/mycroft.conf:ro
-```
+- The **TTS server** reads the `tts` section of `mycroft.conf`, keyed by plugin
+  id — mount the file read-only:
 
-Language plugins live under the `language` section, keyed by plugin id:
+    ```yaml
+    volumes:
+      - ./mycroft.conf:/home/ovos/.config/mycroft/mycroft.conf:ro
+    ```
 
-```json
-{
-  "language": {
-    "translation_module": "ovos-translate-plugin-linguonnx",
-    "detection_module": "ovos-lang-detect-plugin-linguonnx",
-    "ovos-translate-plugin-linguonnx": {},
-    "ovos-lang-detect-plugin-linguonnx": {}
-  }
-}
-```
+- The **STT server** ignores `mycroft.conf` entirely; the plugin is selected and
+  configured through CLI flags alone ([STT Server](stt-server.md)).
+- The **translate server** likewise takes its engines from CLI flags and ignores
+  `mycroft.conf` — except the published `0.0.2` release, which still reads the
+  `language` section ([Translate Server](translate-server.md)).
 
-A settings block placed under any other section is ignored silently — the
-service starts, answers requests, and runs on defaults while appearing
-configured. See [All Configuration Keys](config-all-keys.md) for the section
-each plugin type reads.
+A settings block placed in a section a service does not read is ignored
+silently — the service starts, answers requests, and runs on defaults while
+appearing configured. See [All Configuration Keys](config-all-keys.md) for the
+section each plugin type reads.
 
 Verify a config applied by observing behaviour, not by reading the file back.
 Pick a request whose answer differs between your settings and the defaults, and
