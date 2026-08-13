@@ -121,8 +121,11 @@ these signals into the language it matches an utterance in.
 A session also carries `intent_context`: a per-key decaying context store that gates which
 intents may match across turns (e.g. "book a flight" setting context so a follow-up "to
 Paris" is understood without repeating "flight"). It is a session field claimed into the
-SESSION-1 registry by **OVOS-CONTEXT-1**, holding `{value, expires_at}` per key. Each entry
-decays after a `timeout` (default ~2 minutes) unless refreshed. See
+SESSION-1 registry by **OVOS-CONTEXT-1**, holding `{value, expires_at}` per key. In the spec
+model each entry decays via its `expires_at` / `turns_remaining`; the legacy keyword-context
+manager ages whole frames out after the `context.timeout` config value (minutes, default `2`).
+Note that entries written through `set_context` currently never decay at all — the core write
+path drops the expiry stamp (see the caveats on [Conversational Context](context.md)). See
 [Intent Service](intent-service.md) for how context is set, read, and consumed during
 pipeline matching.
 
