@@ -18,7 +18,7 @@
 
     The split also changes what OCP *skills* are for. Once MediaProvider plugins own
     catalog search, an OCP skill is for the case where **the skill itself is the playable
-    media**: a voice game (see [ovos-skill-moon-game](https://github.com/JarbasSkills/skill-moon-game)),
+    media**: a voice game (see `ovos-skill-moon-game`, a VoiceGamez title not currently public),
     an ebook reader, any experience the player can start, pause, and resume like a track.
     If your skill is only a searchable catalog of external media (a station list, a
     podcast feed), plan to ship it as a MediaProvider plugin when that lands. If the

@@ -36,7 +36,7 @@ Every pattern in this cookbook also runs in a real, installable skill. Read the 
 | `FallbackSkill` + `@common_query` | [`ovos-skill-wolfie`](https://github.com/OpenVoiceOS/ovos-skill-wolfie), [`ovos-skill-ddg`](https://github.com/OpenVoiceOS/ovos-skill-ddg), [`ovos-skill-wordnet`](https://github.com/OpenVoiceOS/ovos-skill-wordnet) |
 | `@common_query` on a plain `OVOSSkill` | [`ovos-skill-wikipedia`](https://github.com/OpenVoiceOS/ovos-skill-wikipedia) |
 | Minimal `converse` | [`ovos-skill-parrot`](https://github.com/OpenVoiceOS/ovos-skill-parrot) |
-| Converse-driven game (`ConversationalGameSkill`) | [`skill-moon-game`](https://github.com/JarbasSkills/skill-moon-game) |
+| Converse-driven game (`ConversationalGameSkill`) | `skill-moon-game` (a VoiceGamez title, not currently public) |
 | GUI sequencing (`show_text` then `show_image`) | [`ovos-skill-camera`](https://github.com/OpenVoiceOS/ovos-skill-camera) |
 | GUI ownership handoff (`gui.release()`) | [`ovos-skill-wallpapers`](https://github.com/OpenVoiceOS/ovos-skill-wallpapers) |
 | Validated `get_response` slot collection | [`ovos-skill-mark1-ctrl`](https://github.com/OpenVoiceOS/ovos-skill-mark1-ctrl) |
