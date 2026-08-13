@@ -1487,7 +1487,7 @@ runs one process. This mirrors the split described in
 <a href="../composable-deployments/">Composable Deployments</a>: scale, restart, or relocate any one
 service without touching the rest.</p>
 <p><code>ovos-docker</code> builds its images with Docker Buildx Bake for <code>linux/amd64</code> and <code>linux/arm64</code>
-(the default <code>PLATFORMS</code> in its <code>docker-bake.hcl</code>), which covers a 64-bit Raspberry Pi OS
+(the hardcoded <code>platforms</code> list in <code>docker-bake.hcl</code>'s common target), which covers a 64-bit Raspberry Pi OS
 install. Check the actual tags on Docker Hub for the image and version you plan to run before
 deploying to a Pi: not every image or channel is guaranteed to carry both architectures.</p>
 <h2 id="a-working-compose-file">A working compose file<a class="headerlink" href="#a-working-compose-file" title="Permanent link">&para;</a></h2>
