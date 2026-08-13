@@ -1452,8 +1452,9 @@ custom hotword like this one — with no <code>fallback_ww</code> configured —
 load is logged loudly (an <code>ERROR</code> with a traceback in the listener log) and simply dropped,
 so the assistant stops responding to that wake word. The shipped default <code>hey_mycroft</code>
 behaves differently: its config chains through <code>fallback_ww</code> entries (tflite → precise →
-vosk → pocketsphinx), so a failed primary engine there falls back to the next engine
-silently (see <a href="../wake-word-plugins/">Wake-word Plugins</a>). Full walkthrough,
+vosk → pocketsphinx), so a failed primary engine there falls back to the next engine —
+the assistant keeps listening, though each failed engine still logs its own <code>ERROR</code>
+(see <a href="../wake-word-plugins/">Wake-word Plugins</a>). Full walkthrough,
 plugin choices, and tuning: <a href="../wake-word-plugins/#change-your-wake-word">Wake-word Plugins</a>.</p>
 <h2 id="change-your-voice">Change your voice<a class="headerlink" href="#change-your-voice" title="Permanent link">&para;</a></h2>
 <p>Install the plugin's package first — unlike most tweaks on this page, this one does

@@ -1785,6 +1785,17 @@ does not exist. You do not need to fork a skill to change what it says or what l
 speaks.</p>
 <hr />
 <h3 id="customizing-dialogs">Customizing Dialogs<a class="headerlink" href="#customizing-dialogs" title="Permanent link">&para;</a></h3>
+<div class="admonition warning">
+<p class="admonition-title"><code>.dialog</code> user overrides are not honored yet</p>
+<p>The user-resources override tier currently works for <code>.intent</code>, <code>.voc</code>, <code>.entity</code> and
+<code>.regex</code> files, but the dialog renderer in <code>ovos-workshop</code> still loads <code>.dialog</code> files
+only from the skill's own directory (a known gap, marked for a deliberate follow-up in
+the source — see <a href="../lang-customization/">Customizing Language Resources</a>). Until that
+lands, the override procedure below will <strong>not</strong> change what you hear; to reword a
+reply today, edit the <code>.dialog</code> file inside the skill's own <code>locale/</code> directory
+instead. The steps stay documented because they are the intended mechanism once the
+gap closes, and they already work for the other resource types.</p>
+</div>
 <p>Replace one dialog file of an installed <a href="../skill-design-guidelines/">skill</a> with your own
 wording. This example replaces <code>time.current.dialog</code> in <code>skill-ovos-date-time.openvoiceos</code>.</p>
 <ol>
@@ -1803,9 +1814,10 @@ wording. This example replaces <code>time.current.dialog</code> in <code>skill-o
 <p>Restart OpenVoiceOS so the skill reloads its resources, then ask for the current time.</p>
 </li>
 </ol>
-<p><strong>You should hear</strong> your own wording instead of the skill's built-in text. If you still hear the
-original, check that the path, the file name, the <code>.dialog</code> extension, and the language folder
-casing all match exactly.</p>
+<p>Once <code>.dialog</code> overrides are honored (see the warning above), you will hear your own wording
+instead of the skill's built-in text. For the resource types where overrides already work, a
+non-effective override usually means the path, the file name, the extension, or the language
+folder casing doesn't match exactly.</p>
 <div class="admonition warning">
 <p class="admonition-title">Your file REPLACES the original, it does not merge with it</p>
 <p>The user-specific file is used instead of the skill's own <code>time.current.dialog</code>, line for
@@ -1827,7 +1839,8 @@ This example adds Spanish (<code>es-es</code>) to the same skill.</p>
 </li>
 <li>
 <p>Copy the resource files from an existing language folder, such as <code>en-us</code>, into it. This
-   covers dialogs, vocabularies, and regex files, depending on what the skill uses. Keep the
+   covers vocabularies and regex files, depending on what the skill uses (translated
+   <code>.dialog</code> files placed here are ignored for now — see the warning above). Keep the
    same subdirectory structure.</p>
 </li>
 <li>Translate the copied files.</li>
