@@ -1447,12 +1447,13 @@
 The colon-typed <code>simplematch</code> syntax such as <code>{number:int}</code> is <strong>not</strong> supported: the
 normalizer passes it through untouched, so the braces are matched literally instead of
 being interpreted as a typed slot.</p>
-<p>A template containing a wildcard (<code>*</code>) carries a flat <code>0.15</code> confidence penalty, regardless
-of how much of the template the wildcard covers — <code>"say *"</code> scores <code>0.85</code> instead of <code>1.0</code>.
-Entity placeholders like <code>{number}</code> are not wildcards and carry no penalty of their own. An
-entity whose name was never registered with <code>add_entity</code> still matches, at a small <code>0.04</code>
-penalty (e.g. <code>0.96</code>); a registered entity whose parsed value is not among the registered
-samples is penalized <code>0.1</code>.</p>
+<p>A wildcard (<code>*</code>) carries a confidence penalty proportional to how much of the template it
+covers: <code>0.05 + 0.20 × (wildcard tokens / total tokens)</code>, so any wildcard costs between
+<code>0.05</code> and <code>0.25</code>. For example, <code>"say *"</code> is one wildcard out of two tokens, dropping the
+score from <code>1.0</code> to <code>0.85</code>. Entity placeholders like <code>{number}</code> are not wildcards and carry
+no wildcard penalty. An entity whose name was never registered with <code>add_entity</code> still
+matches, at a small <code>0.04</code> penalty (e.g. <code>0.96</code>); a registered entity whose parsed value is
+not among the registered samples is penalized <code>0.1</code>.</p>
 <h2 id="context-and-keyword-gating">Context and keyword gating<a class="headerlink" href="#context-and-keyword-gating" title="Permanent link">&para;</a></h2>
 <p>Intents can be gated at runtime by session context or suppressed by keyword:</p>
 <ul>
