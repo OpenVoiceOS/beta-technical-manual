@@ -224,6 +224,11 @@ service from an editable checkout of its own repo while fixing a bug in it, see
     ╰──────────────────────────────────────────────────────────────────────────────╯
     ```
 
+    The block above is the tool's own output, reproduced verbatim. Note that the
+    opendata dashboard domain it mentions no longer resolves; the telemetry
+    upload endpoints themselves are whatever `open_data.intent_urls` is set to
+    (see [Privacy & Security](privacy-security.md)).
+
 ??? example "`ovos-logs --help`"
 
     ```text

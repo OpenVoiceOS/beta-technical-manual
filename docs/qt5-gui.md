@@ -66,7 +66,7 @@ QtQuick Layouts are a set of QML types used to arrange items in a user interface
 
 **Kirigami Module:**
 
-[Kirigami](https://api.kde.org/frameworks/kirigami/html/index.html) is a set of QtQuick components for mobile and convergent applications. These high-level components help you build applications that look and feel great on mobile and desktop devices alike, and that follow the [Kirigami Human Interface Guidelines](https://community.kde.org/KDE\_Visual\_Design\_Group/KirigamiHIG).
+[Kirigami](https://develop.kde.org/frameworks/kirigami/) is a set of QtQuick components for mobile and convergent applications. These high-level components help you build applications that look and feel great on mobile and desktop devices alike, and that follow the [Kirigami Human Interface Guidelines](https://community.kde.org/KDE\_Visual\_Design\_Group/KirigamiHIG).
 
 **Mycroft Module:**
 
@@ -95,7 +95,7 @@ Mycroft.Delegate {
             id: imageId
             Layout.fillWidth: true
             Layout.preferredHeight: Kirigami.Units.gridUnit * 2
-            source: "https://source.unsplash.com/1920x1080/?+autumn"
+            source: "https://picsum.photos/1920/1080"
          }
          Label {
             id: labelId
@@ -186,7 +186,7 @@ height: Mycroft.Units.gridUnit // 16px Tall
 
 OVOS Shell uses a custom Kirigami Platform Theme plugin to provide global theming to all skills and user interfaces. This also lets OVOS GUIs stay fully compatible with the system themes on platforms not running OVOS Shell.
 
-The Kirigami Theme and Color Scheme guide is extensive and can be found on the [Kirigami style and colors page](https://develop.kde.org/docs/use/kirigami/style-colors/)
+The Kirigami Theme and Color Scheme guide is extensive and can be found on the [Kirigami style and colors page](https://develop.kde.org/docs/getting-started/kirigami/)
 
 OVOS GUI's developed to follow the color scheme depend on only a subset of available colors, mainly:
 

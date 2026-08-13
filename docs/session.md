@@ -26,7 +26,7 @@
 
 If you want your skills to handle simultaneous users, make them **Session** aware.
 
-Each remote client, usually a [voice satellite](https://jarbashivemind.github.io/HiveMind-community-docs/07_voicesat/), sends a `Session` with the `Message`.
+Each remote client, usually a [voice satellite](https://jarbashivemind.github.io/HiveMind-community-docs/satellites/), sends a `Session` with the `Message`.
 
 Your skill should keep track of any session-specific state separately, for example a chat history.
 

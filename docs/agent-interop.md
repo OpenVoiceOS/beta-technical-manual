@@ -132,7 +132,7 @@ ovos-persona-server --persona my_persona.json
 
 ## A2A (Agent-to-Agent Protocol)
 
-A2A is the [Google A2A open protocol](https://google.github.io/A2A/). An A2A server publishes a discovery document (agent card) and accepts tasks via JSON-RPC 2.0.
+A2A is the [Google A2A open protocol](https://a2aproject.github.io/A2A/). An A2A server publishes a discovery document (agent card) and accepts tasks via JSON-RPC 2.0.
 
 ### Persona Server as A2A Server
 

@@ -41,7 +41,7 @@ ovos-persona-server --persona my_persona.json --host 0.0.0.0 --port 8337
 | `--persona` | `None` | Path to the persona `.json` file to load |
 | `--host` | `0.0.0.0` | Host to bind |
 | `--port` | `8337` | TCP port |
-| `--a2a-base-url` | `None` | Mounts an [A2A](https://google.github.io/A2A/)-compatible endpoint at `/a2a`, using this URL as the public base URL in the Agent Card (e.g. `http://myhost:8337/a2a`). Requires the `a2a` extra (`pip install 'ovos-persona-server[a2a]'`) |
+| `--a2a-base-url` | `None` | Mounts an [A2A](https://a2aproject.github.io/A2A/)-compatible endpoint at `/a2a`, using this URL as the public base URL in the Agent Card (e.g. `http://myhost:8337/a2a`). Requires the `a2a` extra (`pip install 'ovos-persona-server[a2a]'`) |
 
 The console script is `ovos-persona-server` (module `ovos_persona_server.__main__:main`).
 

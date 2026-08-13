@@ -165,7 +165,7 @@ game implemented this way.
 
 Here is an excerpt from the game to illustrate usage of `IntentLayer` decorators:
 
-> **NOTE**: `IntentLayers` are **per-session**, gated via [intent context](context.md) ([OVOS-CONTEXT-1](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-context.md)), so each [voice satellite](https://jarbashivemind.github.io/HiveMind-community-docs/07_voicesat/) keeps its own layer state instead of all joining the same game.
+> **NOTE**: `IntentLayers` are **per-session**, gated via [intent context](context.md) ([OVOS-CONTEXT-1](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-context.md)), so each [voice satellite](https://jarbashivemind.github.io/HiveMind-community-docs/satellites/) keeps its own layer state instead of all joining the same game.
 
 ```python
 from ovos_workshop.decorators.layers import layer_intent, enables_layer, \
@@ -255,7 +255,7 @@ the skill id). Every intent registered under that layer is set to *require* the 
   detach/re-attach churn.
 
 Because layer state rides on intent context, and intent context is per-session, each
-[voice satellite](https://jarbashivemind.github.io/HiveMind-community-docs/07_voicesat/)
+[voice satellite](https://jarbashivemind.github.io/HiveMind-community-docs/satellites/)
 talking to a shared skill keeps its own independent set of active layers.
 
 ---

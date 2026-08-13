@@ -128,7 +128,7 @@
 - **GitHub**: [OpenVoiceOS/ovos-tts-plugin-cotovia](https://github.com/OpenVoiceOS/ovos-tts-plugin-cotovia)
 
 
-- **Description**: OVOS TTS plugin for [Cotovia TTS](http://gtm.uvigo.es/cotovia)
+- **Description**: OVOS TTS plugin for [Cotovia TTS](https://web.archive.org/web/2023/http://gtm.uvigo.es/cotovia)
 
 ### Default Configuration
 

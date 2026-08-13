@@ -233,7 +233,7 @@
 - Mar 2023 - [Fundraiser to form OpenVoiceOS](https://www.gofundme.com/f/openvoiceos) V.z.w. (Dutch: "Vereninging zonder winstoogmerk") completed in a couple days
 - Mar 2023 - First stretch goal of [fundraiser](https://www.gofundme.com/f/openvoiceos) reached and second stretch goal announced
 - Mar 2023 - [raspbian-ovos](https://github.com/OpenVoiceOS/raspbian-ovos) images start being released, maintained by community member @builderjer
-- Mar 2023 - [community docs](https://openvoiceos.github.io/community-docs/) start being maintained by community members
+- Mar 2023 - [community docs](https://jarbashivemind.github.io/HiveMind-community-docs/) start being maintained by community members
 - Mar 2023 - [ovos-ww-plugin-openWakeWord](https://github.com/OpenVoiceOS/ovos-ww-plugin-openWakeWord) released, maintained by author @dscripka
 - Mar 2023 - [skill-ovos-icanhazdadjokes](https://github.com/OpenVoiceOS/skill-ovos-icanhazdadjokes) transferred from @JarbasAl to OVOS
 - Mar 2023 - [ovos-skill-alerts](https://github.com/OpenVoiceOS/ovos-skill-alerts) forked from Neon, maintained by community member @sgee
