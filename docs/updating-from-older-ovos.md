@@ -79,6 +79,23 @@ release date after the commit is given instead.
 
 ---
 
+## Upgrade in place, or start fresh?
+
+Before working through anything below, decide which path you are on. As a rule of thumb:
+
+- **Upgrade in place** when your install is within roughly the current stable window — none
+  or one of the big-ticket migrations below happened after your install date. Read your
+  audience page forward from your version and you are done.
+- **Back up and reinstall** when two or more big-ticket migrations have landed since your
+  install (in practice: anything older than about a year, e.g. a `0.0.x`-era install —
+  `0.0.8`, the last pre-SemVer release, dates to September 2024). Working through years of
+  stacked per-repo breaks in place is slower and more error-prone than a clean
+  [ovos-installer](ovos-installer.md) run. Back up first ([Backup & Restore](backup-restore.md)),
+  reinstall, then restore your `mycroft.conf` **selectively** — re-add your customizations to
+  the fresh file rather than copying the old file wholesale, since several old keys are
+  silently ignored now (see [Updating Deployers](updating-deployers.md)) — and reinstall your
+  skills from PyPI rather than restoring old checkouts.
+
 ## Big-ticket migrations
 
 These changes affect the largest number of installs. Each row links a

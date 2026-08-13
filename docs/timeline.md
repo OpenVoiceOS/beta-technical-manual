@@ -332,6 +332,7 @@
 - Aug 2024 - The OVOS Foundation (*Stichting OVOS*) is declared in the Netherlands, registered at the Dutch Chamber of Commerce under number 94609292, to support the project in legal and financial matters
 - Sep 2024 - [ovos-tts-plugin-nos](https://github.com/OpenVoiceOS/ovos-tts-plugin-nos) Galician TTS released in collaboration with the [ILENIA project](https://proyectoilenia.es/) (Proxecto Nós, USC)
 - Sep 2024 - [gh-automations](https://github.com/OpenVoiceOS/gh-automations) introduced: shared, reusable CI/CD workflows for every repo in the org
+- Sep 2024 - `ovos-core` version **0.0.8** released (tagged 2024-09-17), the last of the pre-SemVer `0.0.x` line
 - Sep 2024 - `ovos-core` version **0.1.0** released, hitting the first major feature milestone after adopting Semantic Versioning.
 - Oct 2024 - `ovos-core` version **0.2.0** released, introducing refined pipeline routing.
 - Oct 2024 - Core pipeline plugins (`adapt`, `padatious`, `ocp`) reach version 1.0.0, marking the stability of the modular intent pipeline architecture
