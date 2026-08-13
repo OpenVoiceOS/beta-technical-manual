@@ -1698,7 +1698,7 @@ not-yet-populated volume into a container.</p>
 mounted as deprecated aliases of <code>/openai/v1/...</code> and <code>/ollama/api/...</code>. Responses on these
 legacy paths carry <code>Deprecation</code> and <code>Link</code> headers pointing at the canonical path.</p>
 <p>There is no authentication. Put the server behind a reverse proxy if it is exposed.</p>
-<p>Every vendor router accepts the usual auth header for that vendor, but silently ignores it: an invalid or missing key does not get rejected with a 401, it is simply not checked. With a <strong>single</strong> loaded persona, every router also accepts a <code>model</code> field in the request body but ignores its value: the loaded persona's own <code>name</code> is always the model identifier returned in the response, regardless of what the client asked for. With <strong>several</strong> personas loaded (<code>--personas-dir</code> or repeated <code>--persona</code> flags), <code>model</code> is authoritative instead — it selects the persona, and an unknown name is rejected with a 404 (see <a href="#serving-multiple-personas-from-one-process">Serving multiple personas</a>).</p>
+<p>Every vendor router accepts the usual auth header for that vendor, but silently ignores it: an invalid or missing key does not get rejected with a 401, it is simply not checked. With a <strong>single</strong> loaded persona, every router also accepts a <code>model</code> field in the request body but ignores its value: the loaded persona's own <code>name</code> is always the model identifier returned in the response, regardless of what the client asked for. With <strong>several</strong> personas loaded (<code>--personas-dir</code> or repeated <code>--persona</code> flags), <code>model</code> is authoritative instead — it selects the persona, and on every router except AWS Bedrock an unknown name is rejected with a 404 (see <a href="#serving-multiple-personas-from-one-process">Serving multiple personas</a>). Bedrock is the exception even in multi-persona mode: because a real vendor <code>model_id</code> (like <code>anthropic.claude...</code>) must not be an error there, an unknown name silently falls back to the default persona instead of a 404.</p>
 <table>
 <thead>
 <tr>
@@ -1718,8 +1718,8 @@ legacy paths carry <code>Deprecation</code> and <code>Link</code> headers pointi
 <tr>
 <td>AWS Bedrock</td>
 <td><code>Authorization</code>, <code>x-api-key</code>, or <code>?key=</code> query param</td>
-<td>Ignored for identity; the <code>model_id</code> prefix (<code>anthropic.claude</code>, <code>meta.llama</code>, <code>amazon.titan</code>, <code>cohere.command</code>) also selects the request/response wire shape, so the endpoint speaks a different format depending on that string</td>
-<td>Set <code>model_id</code> to match the wire format your client expects, even though the persona still answers</td>
+<td>The <code>model_id</code> prefix (<code>anthropic.claude</code>, <code>meta.llama</code>, <code>amazon.titan</code>, <code>cohere.command</code>) selects the request/response wire shape. Multiple personas: a <code>model_id</code> matching a persona name selects it, but an unknown name falls back to the default persona — never a 404</td>
+<td>Set <code>model_id</code> to match the wire format your client expects; name a loaded persona in it only if you want a non-default persona to answer</td>
 </tr>
 </tbody>
 </table>
