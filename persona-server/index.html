@@ -1698,7 +1698,7 @@ not-yet-populated volume into a container.</p>
 mounted as deprecated aliases of <code>/openai/v1/...</code> and <code>/ollama/api/...</code>. Responses on these
 legacy paths carry <code>Deprecation</code> and <code>Link</code> headers pointing at the canonical path.</p>
 <p>There is no authentication. Put the server behind a reverse proxy if it is exposed.</p>
-<p>Every vendor router accepts the usual auth header for that vendor, but silently ignores it: an invalid or missing key does not get rejected with a 401, it is simply not checked. Every router also accepts a <code>model</code> field in the request body but ignores its value: the loaded persona's own <code>name</code> is always the model identifier returned in the response, regardless of what the client asked for.</p>
+<p>Every vendor router accepts the usual auth header for that vendor, but silently ignores it: an invalid or missing key does not get rejected with a 401, it is simply not checked. With a <strong>single</strong> loaded persona, every router also accepts a <code>model</code> field in the request body but ignores its value: the loaded persona's own <code>name</code> is always the model identifier returned in the response, regardless of what the client asked for. With <strong>several</strong> personas loaded (<code>--personas-dir</code> or repeated <code>--persona</code> flags), <code>model</code> is authoritative instead — it selects the persona, and an unknown name is rejected with a 404 (see <a href="#serving-multiple-personas-from-one-process">Serving multiple personas</a>).</p>
 <table>
 <thead>
 <tr>
@@ -1712,8 +1712,8 @@ legacy paths carry <code>Deprecation</code> and <code>Link</code> headers pointi
 <tr>
 <td>OpenAI, Ollama, Anthropic, Gemini, Cohere, HuggingFace TGI</td>
 <td><code>Authorization</code>, <code>x-api-key</code>, or <code>?key=</code> query param</td>
-<td>Ignored; response always reports the persona's own <code>name</code></td>
-<td>Send any value, or omit it; it has no effect</td>
+<td>Single persona: ignored; response always reports the persona's own <code>name</code>. Multiple personas: selects the persona, unknown name → 404</td>
+<td>Single persona: send any value or omit it. Multiple personas: send a loaded persona's <code>name</code></td>
 </tr>
 <tr>
 <td>AWS Bedrock</td>
