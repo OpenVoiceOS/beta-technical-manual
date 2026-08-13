@@ -11,6 +11,16 @@ the `ovos-workshop` 4.0.0 → 7.0.0 release train), see
 
 ## If you maintain skills
 
+### Intent dispatch topics dropped the `.intent` suffix (2026-08, workshop 9.3.11a2)
+
+Per-intent dispatch topics are now the canonical `<skill_id>:<intent_name>` — the filename-leaked
+`.intent` suffix is gone from the wire. Nothing breaks: the `ovos-bus-client` 2.8 bridge (and
+`FakeBus` in current `ovos-utils` alphas, for tests) keeps literal `.intent` listeners working
+in both directions. New code should compute the topic with
+`ovos_spec_tools.intent_topics.canonical_intent_topic` instead of hard-coding either spelling.
+Details and the either-side-modernizes rule:
+[Bus namespace migration](bus-namespace-migration.md#intent-dispatch-topics-the-intent-suffix-is-gone).
+
 ### Skill-settings file-store rewritten
 
 [Skill settings](skill-settings.md) moved to `json_database`-backed XDG-default storage,

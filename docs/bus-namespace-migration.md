@@ -81,6 +81,29 @@ the legacy delivery, and disable `modernize` once no legacy producers remain.
     topics — treat the default `true` as the safe choice everywhere except a deployment that has
     fully verified every producer speaks `ovos.*`.
 
+### Intent dispatch topics: the `.intent` suffix is gone
+
+A related, separately-bridged rename: per-intent dispatch topics are now the canonical
+`<skill_id>:<intent_name>` with **no `.intent` suffix**. Old `ovos-workshop` releases built
+the topic from the Padatious resource *filename*, so the extension leaked onto the wire — a
+skill with `food.order.intent` listened on `<skill_id>:food.order.intent`; current workshop
+registers `<skill_id>:food.order` (OVOS-MSG-1 §2.1.1).
+
+`ovos-bus-client` 2.8 bridges the skew with two stateless rules: every canonical intent topic
+emitted also goes out as its `.intent`-suffixed twin (marked as a twin, so nothing double-fires),
+and every *unmarked* suffixed topic received is locally re-dispatched under its canonical
+spelling. Config-gated, on by default. Test rigs get the same behavior from `FakeBus` as of the
+`ovos-utils` alpha released 2026-08-14.
+
+Two practical rules for authors:
+
+- New code and tests should **compute** the canonical topic —
+  `ovos_spec_tools.intent_topics.canonical_intent_topic(...)` — rather than hard-coding either
+  spelling. Literal `.intent` listeners are deprecated but not broken.
+- The spelling goes canonical when **either** side modernizes: the skill registers canonical
+  (workshop ≥ 9.3.11a2) **or** the matcher canonicalizes (padatious 2.x / adapt 1.x alphas).
+  Pinning one side back does **not** restore the old spelling.
+
 !!! warning "The bridge is scheduled for removal"
     [ovos-bus-client#272](https://github.com/OpenVoiceOS/ovos-bus-client/pull/272) is an
     open kill-switch pull request that deletes the bridge entirely: after it merges,
