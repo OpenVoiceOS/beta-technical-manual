@@ -1414,7 +1414,7 @@
 </div>
 <h3 id="bounding-memory">Bounding memory<a class="headerlink" href="#bounding-memory" title="Permanent link">&para;</a></h3>
 <p><code>max_concurrent_translations</code> is the only setting that bounds peak memory. A model that a thread is decoding with is resident because that thread holds it, not because the cache kept it, so no cache setting can reach it. Translation endpoints are commonly served from a threadpool, so peak memory otherwise scales with whatever that pool admits. Requests over the limit wait for a slot.</p>
-<p><code>model_cache_size</code> and <code>max_loaded_mb</code> bound what the cache <em>retains</em>. Four Marian models are about 1.4 GB. Four MADLAD-400-3B models are about 20 GB, so a count alone is a poor bound on a mixed graph. For the per-model sizes, see the <a href="https://github.com/OpenVoiceOS/linguonnx/blob/dev/docs/models.md"><code>linguonnx</code> model list</a>.</p>
+<p><code>model_cache_size</code> and <code>max_loaded_mb</code> bound what the cache <em>retains</em>. Four Marian models are about 1.4 GB. Four MADLAD-400-3B models are about 20 GB, so a count alone is a poor bound on a mixed graph. For the per-model sizes, see the <a href="https://github.com/TigreGotico/linguonnx/blob/dev/docs/models.md"><code>linguonnx</code> model list</a>.</p>
 <h2 id="detection-settings">Detection Settings<a class="headerlink" href="#detection-settings" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -1457,7 +1457,7 @@ servers entirely: fully offline plugins exist for everything.</p>
 <p>The plugin repository documents detection, translation, routing and error handling in full:</p>
 <ul>
 <li><a href="https://github.com/OpenVoiceOS/ovos-plugin-linguonnx"><code>ovos-plugin-linguonnx</code></a> — the plugins.</li>
-<li><a href="https://github.com/OpenVoiceOS/linguonnx"><code>linguonnx</code></a> — the engine, the model list, and the routing rules.</li>
+<li><a href="https://github.com/TigreGotico/linguonnx"><code>linguonnx</code></a> — the engine, the model list, and the routing rules.</li>
 </ul>
 <hr />
 <p><strong>Read next:</strong> <a href="../translation-plugins/">Translation Plugins</a>
