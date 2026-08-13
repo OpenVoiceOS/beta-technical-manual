@@ -294,7 +294,7 @@ All of these live under the top-level `skills` key.
 | `skills.converse.converse_activation` | `"accept_all"` | How a skill may activate itself: `accept_all`, `priority`, `whitelist`, or `blacklist`. |
 | `skills.converse.max_activations` | `-1` | Times per minute a skill may self-activate. `-1` means no limit. `0` disables self-activation. |
 | `skills.converse.cross_activation` | `true` | If `true`, any skill may activate any other skill, not only itself. |
-| `skills.converse.cross_deactivation` | `true` | If `true`, any skill may deactivate any other skill, not only itself. |
+| `skills.converse.cross_deactivation` | `true` | **Currently unused** — nothing in `ovos-core` reads this key (the shipped `mycroft.conf` comment says skill deactivation is not yet implemented); in practice cross-skill *deactivation* permission is gated by the same `cross_activation` flag above. |
 
 Source: `mycroft.conf` lines 235 to 304 (`skills`) in [OpenVoiceOS/ovos-config](https://github.com/OpenVoiceOS/ovos-config).
 
