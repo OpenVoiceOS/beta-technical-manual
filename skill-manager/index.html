@@ -1759,8 +1759,10 @@ it registers no intents and can never match. The signatures to grep for:</p>
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>ERROR - Skill &lt;skill_id&gt; failed to load
 </span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>ERROR - Load of skill &lt;skill_id&gt; failed!                 # skill_manager, traceback follows
 </span></code></pre></div>
-<p>On the bus, a failed load emits <code>mycroft.skills.loading_failure</code> (a healthy one emits
-<code>mycroft.skill.loaded</code>). "Installed but never matches" reports should check for these before
+<p>On the bus, a failed load emits <code>mycroft.skills.loading_failure</code>; its true complement is
+<code>mycroft.skills.loaded</code> (plural), fired on <strong>every</strong> successful load path — the singular
+<code>mycroft.skill.loaded</code> below is an extra emission specific to the Skill Manager's
+plugin-skill path, with no failure counterpart. "Installed but never matches" reports should check for these before
 anything else — see the <a href="../troubleshooting/#stage-4-which-pipeline-stage-matched-or-didnt">Troubleshooting</a>
 funnel.</p>
 <h2 id="blacklisting">Blacklisting<a class="headerlink" href="#blacklisting" title="Permanent link">&para;</a></h2>
@@ -1772,8 +1774,10 @@ become available. After new skills are loaded, the manager requests pipeline
 re-training:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>mycroft.skills.train  →  (pipeline plugins that need it train, e.g. padatious)
 </span></code></pre></div>
-<p>The manager emits <code>mycroft.skills.train</code> and moves on. It is fire-and-forget: no reply
-topic is part of the spec, and the manager waits for nothing.</p>
+<p>The manager emits <code>mycroft.skills.train</code> and moves on — it waits for nothing. The
+Padatious pipeline plugin does announce <code>mycroft.skills.trained</code> when its training round
+completes (on both the trained and nothing-new-to-train paths), so tooling that needs a
+deterministic "training done" signal can watch for that; the manager itself never does.</p>
 <p>Do not implement a <code>mycroft.skills.trained</code> reply. Nothing listens for one. An earlier
 version blocked on <code>wait_for_response(..., "mycroft.skills.trained", timeout=60)</code>, which
 stalled boot for a full minute on every install without a deferred-training engine, since
