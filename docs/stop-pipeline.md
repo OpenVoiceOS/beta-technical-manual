@@ -87,7 +87,7 @@ The plugin:
 1. Collects the session's **active skills** (skipping session-blacklisted ones).
 
 
-2. Pings them via `ovos.stop.ping` (legacy: `{skill_id}.stop.ping`) and waits up to `0.5s` for `ovos.stop.pong` (legacy: `skill.stop.pong`) replies carrying `can_handle`.
+2. Pings each of them on its per-skill topic `{skill_id}.stop.ping` — the spec name `ovos.stop.ping` exists in STOP-1 but is **not emitted** today, because per-skill placeholder topics cannot be auto-bridged (a deliberate exclusion in `ovos-spec-tools`); skills subscribe only to the per-skill form. It then waits up to `0.5s` for `ovos.stop.pong` (legacy: `skill.stop.pong` — this direction *is* bridged) replies carrying `can_handle`.
 
 
 3. Dispatches `<skill_id>:stop` (legacy: `{skill_id}.stop`) to the most recently activated positive responder.
@@ -108,7 +108,7 @@ flowchart TD
     U[Utterance] --> V{Matches stop /\nglobal_stop vocab?}
     V -->|no| N[No match]
     V -->|global_stop or\nno active skills| G[Global stop\nbroadcast ovos.stop]
-    V -->|yes, skills active| P[Ping active skills\novos.stop.ping]
+    V -->|yes, skills active| P[Ping active skills\n{skill_id}.stop.ping]
     P --> W{Any skill replies\ncan_handle?}
     W -->|yes| D[Dispatch stop to\nmost recent responder]
     W -->|no, timeout| G
@@ -157,7 +157,7 @@ The stop plugin interfaces with the OVOS session system:
 |---|---|---|
 | `<pipeline_id>:global_stop` (legacy: `stop:global`) | in | Global-stop dispatch — its handler emits the `ovos.stop` broadcast (and `ovos.utterance.handled`) |
 | `<skill_id>:stop` (legacy: `stop:skill` → `{skill_id}.stop`) | out | Targeted stop dispatch to one skill |
-| `ovos.stop.ping` (legacy: `{skill_id}.stop.ping`) | out | Asks the active handlers whether they can stop |
+| `{skill_id}.stop.ping` | out | Asks one active handler whether it can stop. Emitted only in this per-skill form — the STOP-1 spec name `ovos.stop.ping` is not on the wire (per-skill placeholders are excluded from the bridge map) |
 | `ovos.stop.pong` (legacy: `skill.stop.pong`) | in | Handler's `can_handle` reply |
 | `ovos.stop` (legacy: `mycroft.stop`) | out | Universal stop broadcast |
 

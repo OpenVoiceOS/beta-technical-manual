@@ -52,10 +52,10 @@ ovos-stt-server --engine ovos-stt-plugin-whisper --port 9666
 | Endpoint | Method | Description |
 |----------|--------|-------------|
 | `/utcp` | GET | UTCP manifest (always on, no extra package required) |
-| `/mcp` | Streamable HTTP | MCP server (mounted automatically when the `[mcp]` extra is installed) |
+| `/mcp` | Streamable HTTP | MCP server (opt-in: start with `--mcp`, requires the `[mcp]` extra) |
 
-There is no `--mcp` flag — passing one aborts the process on an unrecognized argument. The
-server mounts `/mcp` when the extra's imports succeed, and skips it when they do not.
+MCP is opt-in: pass `--mcp` at startup (the flag exists on all the OVOS servers now). With
+the flag set but the extra missing, the server logs a warning and runs without the endpoint.
 
 UTCP tools exposed: `stt`, `lang_detect`, `status`.
 

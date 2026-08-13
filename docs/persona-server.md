@@ -120,7 +120,7 @@ Solvers are tried in order. The first that returns an answer wins. Some solvers 
 | `/tgi/...` | POST/GET | HuggingFace TGI-compatible API |
 | `/tools/manual` | GET | UTCP tool-discovery manual |
 | `/tools/{name}` | POST | UTCP tool invocation |
-| `/mcp` | * | MCP streamable-HTTP transport (mounted when the `mcp` extra is installed) |
+| `/mcp` | * | MCP streamable-HTTP transport (opt-in: start with `--mcp`, requires the `mcp` extra) |
 | `/a2a` | * | A2A agent endpoint (mounted when `--a2a-base-url` is set and the `a2a` extra is installed) |
 | `/openai/v1/files` | POST/GET/DELETE | OpenAI **Files** API (`{id}`, `{id}/content`) — mounted when the `rag` extra is installed |
 | `/openai/v1/vector_stores` | POST/GET/DELETE | OpenAI **Vector Stores** API (`{id}`, `{id}/files`, `{id}/search`) — mounted when the `rag` extra is installed |

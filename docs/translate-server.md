@@ -196,9 +196,10 @@ pip install 'ovos-translate-server[mcp]'
     server (like `ovos-mcp-toolbox`, see [Agent Tool Plugins](tool-plugins.md)) uses the official
     `mcp` SDK instead.
 
-With the extra installed, the HTTP server auto-mounts MCP at `/mcp` on its own port
-(`0.0.0.0:9686` by default) — no separate flag or process needed, and no action if the extra is
-missing beyond a log line. A standalone MCP-only process is also available, useful for running
+With the extra installed **and** the `--mcp` flag passed at startup, the HTTP server mounts
+MCP at `/mcp` on its own port (`0.0.0.0:9686` by default). The flag is required — installing
+the extra alone no longer auto-mounts the endpoint; `--mcp` without the extra logs a warning
+and runs without it. A standalone MCP-only process is also available, useful for running
 MCP on its own host/port without exposing the HTTP API:
 
 ```bash
