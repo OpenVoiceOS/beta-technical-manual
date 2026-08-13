@@ -69,9 +69,9 @@ See [TTS plugins](tts-plugins.md) for fully offline voices if you'd rather not d
 
 ## MCP
 
-Unlike the STT, translate, and persona servers, which mount their MCP endpoint automatically
-whenever the `mcp` extra is importable, `ovos-tts-server` mounts it only when started with the
-`--mcp` flag:
+Like the STT, translate, and persona servers — all four moved to explicit opt-in —
+`ovos-tts-server` mounts its MCP endpoint only when started with the `--mcp` flag (installing
+the `mcp` extra alone is not enough):
 
 ```bash
 pip install 'ovos-tts-server[mcp]'
