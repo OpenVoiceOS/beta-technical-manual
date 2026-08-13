@@ -1447,10 +1447,13 @@ restart them depends on how OVOS was installed:</p>
 </span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="p">}</span>
 </span></code></pre></div>
 <p>As with voices below, the plugin must be installed into the same environment OVOS runs in
-before the config can use it (<code>pip install ovos-ww-plugin-vosk</code> for this example) — a wake
-word whose module fails to load is logged loudly (an <code>ERROR</code> with a traceback in the
-listener log) and simply dropped, so the assistant stops responding to that wake word
-rather than substituting a default. Full walkthrough,
+before the config can use it (<code>pip install ovos-ww-plugin-vosk</code> for this example). For a
+custom hotword like this one — with no <code>fallback_ww</code> configured — a module that fails to
+load is logged loudly (an <code>ERROR</code> with a traceback in the listener log) and simply dropped,
+so the assistant stops responding to that wake word. The shipped default <code>hey_mycroft</code>
+behaves differently: its config chains through <code>fallback_ww</code> entries (tflite → precise →
+vosk → pocketsphinx), so a failed primary engine there falls back to the next engine
+silently (see <a href="../wake-word-plugins/">Wake-word Plugins</a>). Full walkthrough,
 plugin choices, and tuning: <a href="../wake-word-plugins/#change-your-wake-word">Wake-word Plugins</a>.</p>
 <h2 id="change-your-voice">Change your voice<a class="headerlink" href="#change-your-voice" title="Permanent link">&para;</a></h2>
 <p>Install the plugin's package first — unlike most tweaks on this page, this one does
