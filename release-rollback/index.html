@@ -1343,6 +1343,15 @@ remember what you actually had installed before an upgrade. This page covers fre
 known-good package set before you upgrade, rolling the whole stack back if an upgrade
 misbehaves, and pinning or rolling back just one package instead of the whole environment.</p>
 </div>
+<div class="admonition warning">
+<p class="admonition-title">Installed with <code>ovos-installer</code>? Know your method first</p>
+<p>The <code>pip</code>/<code>uv pip</code> commands here apply to the <strong><code>virtualenv</code></strong> install method, run inside
+that venv (activate it first — <code>systemctl --user cat ovos.service</code> reveals its path from
+the unit's <code>ExecStart</code>). On a <strong><code>containers</code></strong> install, roll back by pinning the previous
+image tag and re-running <code>docker compose up -d</code>, or
+<a href="../ovos-installer-scenarios/">re-run the installer</a> — it detects the existing install and
+offers only your current method.</p>
+</div>
 <hr />
 <h2 id="pinning-or-rolling-back-a-single-package">Pinning or rolling back a single package<a class="headerlink" href="#pinning-or-rolling-back-a-single-package" title="Permanent link">&para;</a></h2>
 <p>The <a href="#rolling-back">freeze/force-reinstall pattern</a> below rolls back your <em>entire</em>

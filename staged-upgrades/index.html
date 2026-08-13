@@ -1367,6 +1367,18 @@ device and for a fleet, plus the fleet-wide canary pattern.</p>
 <p>The <a href="#staged-upgrades-and-rollback">staged-upgrade recipe</a> below is written for a fleet, but
 the same steps apply to a single, standalone device with the fleet-specific parts dropped:
 back up the config, freeze the current package set, upgrade, and verify.</p>
+<div class="admonition warning">
+<p class="admonition-title">Installed with <code>ovos-installer</code>? Know your method first</p>
+<p>Every <code>pip</code>/<code>uv pip</code> command on this page assumes the <strong><code>virtualenv</code></strong> install method,
+run <strong>inside that venv</strong> — activate it first (its path is shown on the installer's
+environment-summary screen; after the fact, <code>systemctl --user cat ovos.service</code> reveals
+it from the unit's <code>ExecStart</code>). If you installed with the <strong><code>containers</code></strong> method
+(Docker/Podman), pip on the host changes nothing: update by pulling newer images
+(<code>docker compose pull &amp;&amp; docker compose up -d</code>) or by
+<a href="../ovos-installer-scenarios/">re-running the installer</a>, which detects an existing
+install and offers only your current method. To check what you currently have installed,
+see <a href="../release-channels/#checking-what-you-have-installed">Checking what you have installed</a>.</p>
+</div>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># 1. Back up config and freeze the current package set, in case you need to go back</span>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>sudo<span class="w"> </span>install<span class="w"> </span>-d<span class="w"> </span>-o<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$USER</span><span class="s2">&quot;</span><span class="w"> </span>/etc/ovos<span class="w">          </span><span class="c1"># once per device</span>
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>cp<span class="w"> </span>~/.config/mycroft/mycroft.conf<span class="w"> </span>~/.config/mycroft/mycroft.conf.bak-<span class="k">$(</span>date<span class="w"> </span>+%F<span class="k">)</span>
