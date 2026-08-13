@@ -1860,8 +1860,10 @@ game implemented this way.</p>
 </span></code></pre></div>
 <h3 id="under-the-hood">Under the hood<a class="headerlink" href="#under-the-hood" title="Permanent link">&para;</a></h3>
 <p><code>self.intent_layers</code> is an instance of <code>IntentLayers</code>
-(<code>ovos_workshop.decorators.layers.IntentLayers</code>), created lazily the first time a layer
-decorator or <code>layer_intent</code> runs and bound to the skill instance.</p>
+(<code>ovos_workshop.decorators.layers.IntentLayers</code>), created in <code>OVOSSkill.__init__</code> and bound
+to the skill during <code>bind()</code> — so it is always available by the time your skill code runs,
+decorator or not (which is why the "Manual way" above can call it directly from
+<code>initialize()</code>).</p>
 <p>A layer is <strong>not</strong> a separate matching mechanism. It's a named group of intents mapped to a
 single synthetic <a href="../context/">intent context</a> token (<code>layer_&lt;name&gt;</code>, prefixed internally with
 the skill id). Every intent registered under that layer is set to <em>require</em> the token, so:</p>

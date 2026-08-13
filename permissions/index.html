@@ -1066,6 +1066,15 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#per-session-exclusions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Per-session exclusions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#utility-functions" class="md-nav__link">
     <span class="md-ellipsis">
       Utility Functions
@@ -1610,6 +1619,15 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#per-session-exclusions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Per-session exclusions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#utility-functions" class="md-nav__link">
     <span class="md-ellipsis">
       Utility Functions
@@ -1793,6 +1811,17 @@ activation-specific list:</p>
 </span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="w">  </span><span class="p">}</span>
 </span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="p">}</span>
 </span></code></pre></div>
+<h3 id="per-session-exclusions">Per-session exclusions<a class="headerlink" href="#per-session-exclusions" title="Permanent link">&para;</a></h3>
+<p>Everything above is deployment-wide configuration. The <a href="../session/">Session</a> carries its own,
+finer-grained exclusion surface: <code>session.blacklisted_skills</code>, <code>session.blacklisted_intents</code>
+and <code>session.blacklisted_pipelines</code>. Each session initializes them from the same
+<code>skills.blacklisted_skills</code> config default, but they are per-session and mutable at runtime —
+a remote client (for example a HiveMind node declaring its own session) can exclude skills,
+individual intents, or whole pipeline stages for <em>its</em> requests without touching the server's
+config. The gates are enforced across the whole match path: general intent matching, converse,
+fallback, and stop all check the session's lists before dispatching. This is the mechanism to
+reach for when different satellites should have different skill sets against one shared core;
+see <a href="../updating-remote-clients/">Updating Remote Clients</a> for the version notes.</p>
 <h3 id="utility-functions">Utility Functions<a class="headerlink" href="#utility-functions" title="Permanent link">&para;</a></h3>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kn">from</span> <span class="nn">ovos_workshop.permissions</span> <span class="kn">import</span> <span class="n">blacklist_skill</span><span class="p">,</span> <span class="n">whitelist_skill</span>
 </span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>
