@@ -277,9 +277,9 @@ There are roughly **280** public, non-archived repositories in the [`OpenVoiceOS
     | [voices_demo](https://github.com/OpenVoiceOS/voices_demo) | Audio samples demonstrating available TTS voices, for comparing options before... | [Datasets & Models](#datasets-models-3) |
     | [wallpaper_changer](https://github.com/OpenVoiceOS/wallpaper_changer) | A Python library that changes the desktop wallpaper programmatically across several Linux... | [Meta & infrastructure / other components](#meta-infrastructure-other-components-46) |
     | [ww-benchmarks](https://github.com/OpenVoiceOS/ww-benchmarks) | A benchmark harness for wake-word engines, measuring False Negative Rate and False... | [Tooling & CI](#tooling-ci-18) |
-    | [wyoming-ovos-stt](https://github.com/OpenVoiceOS/wyoming-ovos-stt) | expose OVOS STT plugins via wyoming for usage with the voice pee. | [Tooling & CI](#tooling-ci-18) |
-    | [wyoming-ovos-tts](https://github.com/OpenVoiceOS/wyoming-ovos-tts) | expose OVOS TTS plugins via wyoming for usage with the voice pee. | [Tooling & CI](#tooling-ci-18) |
-    | [wyoming-ovos-wakeword](https://github.com/OpenVoiceOS/wyoming-ovos-wakeword) | expose OVOS wake-word plugins via wyoming for usage with the voice pee. Registers under... | [Wake-word plugins](#wake-word-plugins-7) |
+    | [wyoming-ovos-stt](https://github.com/OpenVoiceOS/wyoming-ovos-stt) | expose OVOS STT plugins via wyoming for usage with the Home Assistant Voice PE. | [Tooling & CI](#tooling-ci-18) |
+    | [wyoming-ovos-tts](https://github.com/OpenVoiceOS/wyoming-ovos-tts) | expose OVOS TTS plugins via wyoming for usage with the Home Assistant Voice PE. | [Tooling & CI](#tooling-ci-18) |
+    | [wyoming-ovos-wakeword](https://github.com/OpenVoiceOS/wyoming-ovos-wakeword) | expose OVOS wake-word plugins via wyoming for usage with the Home Assistant Voice PE. Registers under... | [Wake-word plugins](#wake-word-plugins-7) |
 
 ## Core services & libraries (18)
 
@@ -621,7 +621,7 @@ Most register under the `opm.tts` entry-point group and are loaded by ovos-audio
 :   Free models for usage with precise-lite. Registers under `opm.wake_word`; loaded by ovos-dinkum-listener when configured as the active wake-word engine.
 
 **[wyoming-ovos-wakeword](https://github.com/OpenVoiceOS/wyoming-ovos-wakeword)**
-:   expose OVOS wake-word plugins via wyoming for usage with the voice pee. Registers under `opm.wake_word`; loaded by ovos-dinkum-listener when configured as the active wake-word engine.
+:   expose OVOS wake-word plugins via wyoming for usage with the Home Assistant Voice PE. Registers under `opm.wake_word`; loaded by ovos-dinkum-listener when configured as the active wake-word engine.
 
 
 ## VAD plugins (3)
@@ -1003,10 +1003,10 @@ Unless noted otherwise, these are standalone developer or operator tools, not a 
 :   The OpenVoiceOS Config Editor is a web-based application for managing and editing the configuration files of OpenVoiceOS, supporting YAML and JSON formats. It provides an easy-to-use interface for modifying and saving configuration data, making it simple for users to adjust system settings.
 
 **[wyoming-ovos-stt](https://github.com/OpenVoiceOS/wyoming-ovos-stt)**
-:   expose OVOS STT plugins via wyoming for usage with the voice pee.
+:   expose OVOS STT plugins via wyoming for usage with the Home Assistant Voice PE.
 
 **[wyoming-ovos-tts](https://github.com/OpenVoiceOS/wyoming-ovos-tts)**
-:   expose OVOS TTS plugins via wyoming for usage with the voice pee.
+:   expose OVOS TTS plugins via wyoming for usage with the Home Assistant Voice PE.
 
 
 ## Datasets & Models (3)

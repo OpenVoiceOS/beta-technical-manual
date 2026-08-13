@@ -317,7 +317,7 @@ Maturity reflects repository health (age, activity, open issues/PRs, in-repo doc
 ```
 
 !!! tip "Donating wake word samples"
-    The listener can optionally upload wake-word audio samples to an open-data server to help improve detection accuracy. This is opt-in and off by default. See [Privacy & Security](privacy-security.md#opt-in-wake-word-and-stt-sample-donation).
+    The listener can save wake-word audio samples to local disk (`listener.record_wake_words`, off by default); an opt-in upload mechanism to an open-data server is proposed but not yet merged. See [Privacy & Security](privacy-security.md#wake-word-and-stt-sample-capture).
 
 ---
 
