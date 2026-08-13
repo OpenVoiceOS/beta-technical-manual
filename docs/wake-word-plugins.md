@@ -63,7 +63,13 @@ separate from the recommendation.
 
 ## Wake-word Configuration
 
-!!! tip "Too many false alarms, or not hearing you at all?"
+!!! tip "Too many false alarms, or not hearing you at all? (Precise-family engines)"
+    These two knobs apply to the **Precise-family** plugins (`precise-onnx`,
+    `precise-lite`, classic `precise`) — the default setup. Other engines tune
+    differently: Vosk ignores `sensitivity`/`trigger_level` entirely (it matches
+    words, not model scores), so check your plugin's own entry in the
+    [reference table](#ww-plugins-reference) if you switched engines.
+
     - **It wakes up on its own too often (false alarms)?** Raise `trigger_level`. This gives
       fewer false positives, but needs a longer, more sustained match. Or lower `sensitivity`.
     - **It doesn't hear you when you say the wake word?** Raise `sensitivity`, so each chunk of

@@ -2,7 +2,11 @@
 
 !!! abstract "In a nutshell"
     This page tracks open pull requests across the OVOS repositories that will
-    change behavior once merged. Everything on this page is **unreleased and
+    change behavior once merged. It is written for **skill, plugin, and fleet
+    maintainers** planning ahead. Just curious what shipped recently? The
+    [project timeline](timeline.md) is the readable what's-new list, and
+    [checking what you have installed](release-channels.md#checking-what-you-have-installed)
+    tells you which of it is already on your machine. Everything on this page is **unreleased and
     subject to change**: PR scope, target version, and even whether a PR lands
     at all can shift before release. Once a PR merges or closes, its content
     graduates to [Updating from Older OVOS](updating-from-older-ovos.md), which

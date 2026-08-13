@@ -65,7 +65,9 @@ Full walkthrough, plugin choices, and tuning: [Wake-word Plugins](wake-word-plug
 
 ## Change your voice
 
-Install the plugin's package first. `phoonnx` ships the `ovos-tts-plugin-phoonnx` plugin,
+Install the plugin's package first — unlike most tweaks on this page, this one does
+require a terminal today; there is no on-device UI for installing plugins yet. `phoonnx`
+ships the `ovos-tts-plugin-phoonnx` plugin,
 so without it OVOS has nothing to load and the voice won't actually change. Activate the
 same Python [virtual environment](glossary.md) OVOS runs in
 *before* running this, or the plugin installs somewhere OVOS never looks. On raspOVOS
