@@ -2058,7 +2058,7 @@ from that list are not run. A plugin can cancel the rest of the chain by returni
 </tbody>
 </table>
 <h3 id="intent-pipeline-plugins">Intent Pipeline Plugins<a class="headerlink" href="#intent-pipeline-plugins" title="Permanent link">&para;</a></h3>
-<p>A pipeline plugin is a matcher exposing <code>match(utterances, lang, message) → Match | None</code>. The orchestrator runs the configured set in order, <strong>first-match-wins</strong>, with no cross-plugin scoring (<a href="https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md">OVOS-PIPELINE-1</a>).</p>
+<p>A pipeline plugin is a matcher exposing <code>match(utterances, lang, session) → Match | None</code>. The orchestrator runs the configured set in order, <strong>first-match-wins</strong>, with no cross-plugin scoring (<a href="https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md">OVOS-PIPELINE-1</a>).</p>
 <table>
 <thead>
 <tr>

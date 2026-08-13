@@ -1677,7 +1677,7 @@ terms? See the <a href="../glossary/">Glossary</a>.</p>
 <p><strong>Module:</strong> <code>ovos_core.intent_services.service.IntentService</code>: <a href="https://github.com/OpenVoiceOS/ovos-core/blob/dev/ovos_core/intent_services/service.py"><code>ovos_core/intent_services/service.py</code></a></p>
 <details class="info">
 <summary>📐 Formal specification</summary>
-<p>The utterance lifecycle, the <code>match(utterances, lang, message) → Match</code> contract (the third
+<p>The utterance lifecycle, the <code>match(utterances, lang, session) → Match</code> contract (the third
 argument is the utterance <code>Message</code>, from which a plugin reads the session via
 <code>message.context["session"]</code>), <strong>first-match-wins</strong> ordering, and the
 dispatch/handler-lifecycle events are specified by
@@ -1716,7 +1716,7 @@ padatious, and adapt, and stops at the first one confident enough to handle the 
     UT --&gt; MT["MetadataTransformersService.transform()&lt;br/&gt;metadata-transformer chain, TRANSFORM-1 §3.3"]
     MT --&gt; LANG["disambiguate_lang()&lt;br/&gt;pick the best language"]
     LANG --&gt; SESS["_validate_session()&lt;br/&gt;get/create Session"]
-    SESS --&gt; MATCH{"for each pipeline plugin, in order&lt;br/&gt;match(utterances, lang, message) §4, §6.2"}
+    SESS --&gt; MATCH{"for each pipeline plugin, in order&lt;br/&gt;match(utterances, lang, session) §4, §6.2"}
     MATCH --&gt;|match found| MATCHED["ovos.intent.matched (§9.2) → dispatch → handler trio (§8)"]
     MATCH --&gt;|no match| MATCH
     MATCH --&gt;|no plugin matched| UNMATCHED["ovos.intent.unmatched (§9.3,&lt;br/&gt;legacy: complete_intent_failure)"]</code></pre>

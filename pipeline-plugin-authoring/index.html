@@ -1372,7 +1372,7 @@
 <p class="admonition-title">In a nutshell</p>
 <p>A pipeline plugin is a checkpoint you write yourself: a small class with one job, deciding whether it understands an utterance and, if so, handing back a match. This page walks through building one, from the base classes to packaging and testing it without a running OVOS instance. For the built-in stages and how to order them, see <a href="../pipelines-overview/">Pipelines Overview</a>.</p>
 </div>
-<p>A pipeline plugin implements one <code>match(utterances, lang, message)</code> call. Pick your base class by shape:</p>
+<p>A pipeline plugin implements one <code>match(utterances, lang, message)</code> call. (The shipped base classes pass the full utterance <code>Message</code> as the third argument; the <a href="https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md">PIPELINE-1 spec</a> prescribes the extracted <code>session</code> carrier there instead — a known divergence, so read the session from <code>message.context["session"]</code> for now.) Pick your base class by shape:</p>
 <ul>
 <li><strong><code>PipelinePlugin</code></strong>: a single-tier plugin. It exposes one bare pipeline ID and implements <code>match()</code> directly. Use this for stages like converse or stop-exact.</li>
 <li><strong><code>ConfidenceMatcherPipeline</code></strong>: a <code>PipelinePlugin</code> subclass for plugins with high/medium/low tiers, like Adapt and Padatious. OVOS derives the <code>-high</code>/<code>-medium</code>/<code>-low</code> pipeline IDs from your single registered plugin at runtime. See <a href="../pipelines-overview/#pipeline-ids-vs-plugins">Pipeline IDs vs. plugins</a> on the overview page.</li>
