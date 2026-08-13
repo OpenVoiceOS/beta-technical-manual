@@ -207,6 +207,11 @@ Located in `scripts/`. Checked out by the reusable workflows at run time, not in
 | `check_skill.py` | `run_checks(repo_root, ...)` | Skill locale / `skill.json` analysis |
 | `check_release.py` | `run_checks(version_file, ...)` | Predict next version from PR labels/title |
 | `check_opm.py` | `check_opm(plugin_type, entry_point, ...)` | OPM plugin detection, interface validation, import timing |
+| `check_locale_build.py` | `find_locale_dirs(repo_root)` | Verify locale folders are included in the package build (backs `locale-check.yml`) |
+| `check_repo_health.py` | `check_required_files(repo_root, ...)` | Repository health: required files, contributor status, breaking changes (backs `repo-health.yml`) |
+| `format_tts_intel.py` | `_parse_marker` + report formatter | Format a TTS-intelligibility pytest json-report into a markdown table (backs `tts-intelligibility.yml`) |
+| `check_release_channels.py` | `normalize_package_name` + channel check | Check a predicted version against the ovos-releases channel constraints (backs `release-preview.yml`) |
+| `aggregate_python_results.py` | `main()` | Aggregate Python version compatibility results across matrix jobs (backs `python-support.yml`) |
 
 All version scripts share the `version.py` block format:
 

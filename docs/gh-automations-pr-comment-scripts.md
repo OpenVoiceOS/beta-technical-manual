@@ -207,7 +207,7 @@ Output example: `1.2.3a4` or `1.2.3`
 
 ### `scripts/check_downstream.py`
 
-Reports which installed packages depend on a given package, using `pipdeptree`. Output is sorted deterministically so repeated runs only generate a git commit when the actual dependency tree changes.
+Reports which installed packages depend on a given package, using `pipdeptree`. Output is sorted deterministically and uploaded as a workflow artifact (the older commit-to-repo behavior is gone; the `commit_branch` input is deprecated and ignored).
 
 **Key function:** `get_downstream(package_name: str) -> str`
 
@@ -317,7 +317,7 @@ Uses only Python stdlib (`urllib`, `json`, `re`), no extra dependencies.
 
 **Key logic:**
 
-- `find_ovos_comment(repo, pr_number)`, paginates the PR comments API to find the marker
+- `find_ovos_comments(repo, pr_number)`, paginates the PR comments API and returns the list of comments carrying the marker
 
 
 - `insert_or_replace_section(body, section_id, title, content)`, regex replace within `<!-- section:X --> … <!-- /section:X -->` delimiters

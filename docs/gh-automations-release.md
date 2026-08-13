@@ -15,7 +15,7 @@ Every OVOS package repo uses the following branch structure:
 | Branch | Purpose |
 |--------|---------|
 | `dev` | Active development. Receives PRs. Publishes alpha releases automatically on merge. |
-| `release-X.Y.ZaN` | Short-lived. Auto-created on each PR merge to `dev`. Used to propose a stable release. Deleted after PR to `master` is opened. |
+| `release-X.Y.ZaN` | Short-lived. Auto-created on each PR merge to `dev`. Used to propose a stable release. Deleted by the `cleanup` job once the release tag is created on merge to `master`. |
 | `master` | Stable. Receives only reviewed release PRs opened by automation. |
 
 ---
@@ -144,6 +144,9 @@ your-repo workflow  (e.g. publish_stable.yml)
                 ├─ [publish_pypi job]   if: publish_pypi
                 │   uv build
                 │   pypa/gh-action-pypi-publish@release/v1 → PyPI as 1.3.0 (uses PYPI_TOKEN)
+                │
+                ├─ [cleanup job]   if: tag_release succeeded
+                │   deletes the short-lived release-X.Y.ZaN branch
                 │
                 ├─ [sync_dev job]   if: sync_dev
                 │   ad-m/github-push-action → push master → dev

@@ -212,7 +212,7 @@ jobs:
 
 ## `downstream-check.yml`
 
-Reports which packages in the ovos-releases alpha constraints depend on a given package. Uses `pipdeptree` and commits the sorted report to the repo, so repeated runs only generate a new commit when the actual dependency tree changes.
+Reports which packages in the ovos-releases alpha constraints depend on a given package. Uses `pipdeptree` and uploads the sorted report as a workflow artifact — the report is no longer committed to the repo (the `commit_branch` input below is deprecated and ignored).
 
 **Source:** `.github/workflows/downstream-check.yml`
 
