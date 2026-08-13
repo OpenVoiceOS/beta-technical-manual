@@ -2443,7 +2443,7 @@ stock install keys placed under <code>intents.OCP</code> change nothing (see
 <tr>
 <td><code>skills.converse.cross_deactivation</code></td>
 <td><code>true</code></td>
-<td>If <code>true</code>, any skill may deactivate any other skill, not only itself.</td>
+<td><strong>Currently unused</strong> — nothing in <code>ovos-core</code> reads this key (the shipped <code>mycroft.conf</code> comment says skill deactivation is not yet implemented); in practice cross-skill <em>deactivation</em> permission is gated by the same <code>cross_activation</code> flag above.</td>
 </tr>
 </tbody>
 </table>
