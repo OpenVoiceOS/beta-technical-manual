@@ -52,14 +52,14 @@ class Grapheme2PhonemePlugin:
 
     def get_arpa(self, word: str, lang: str, ignore_oov: bool = False):
         """Return phonemes in Arpabet format."""
-        # default implementation: converts get_ipa() output via arpabet2ipa,
+        # default implementation: converts get_ipa() output via ipa2arpabet,
         # if get_ipa() is implemented. Raises OutOfVocabulary otherwise
         # (or returns None when ignore_oov=True).
         ...
 
     def get_ipa(self, word: str, lang: str, ignore_oov: bool = False):
         """Return phonemes in IPA format."""
-        # default implementation: converts get_arpa() output via ipa2arpabet,
+        # default implementation: converts get_arpa() output via arpabet2ipa,
         # if get_arpa() is implemented. Raises OutOfVocabulary otherwise
         # (or returns None when ignore_oov=True).
         ...
