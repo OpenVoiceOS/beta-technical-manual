@@ -328,6 +328,7 @@
 - Jan 2024 - [ovos-media](https://github.com/OpenVoiceOS/ovos-media) introduced, centralizing media state and playback control.
 - Jun 2024 - [First successful run of OpenVoiceOS natively on Windows](https://github.com/mikejgray/ovos-windows): https://drive.google.com/file/d/171801mbhbpG79BvlOlUCxVyMPcDGgnbM/view?usp=sharing
 - Jul 2024 - Introduction of [ovos-gguf-plugin](https://github.com/OpenVoiceOS/ovos-gguf-plugin), enabling local LLM inference.
+- Aug 2024 - The [OVOS Foundation](https://github.com/OpenVoiceOS/ovos-foundation) (*Stichting OVOS*) is declared in the Netherlands, registered at the Dutch Chamber of Commerce under number 94609292, to support the project in legal and financial matters
 - Sep 2024 - `ovos-core` version **0.1.0** released, hitting the first major feature milestone after adopting Semantic Versioning.
 - Oct 2024 - `ovos-core` version **0.2.0** released, introducing refined pipeline routing.
 - Oct 2024 - **Pipeline Stability Milestone**: Core pipeline plugins (`adapt`, `padatious`, `ocp`) reached version **1.0.0**, marking the stability of the modular intent pipeline architecture.
