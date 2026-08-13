@@ -118,7 +118,10 @@ Handled by every `OVOSSkill` instance. See [OVOSSkill API](ovos-skill.md#system-
 | `ovos.stop` (legacy: `mycroft.stop`) | Global stop broadcast: every skill subscribes and ceases activity for the inbound session (see below). Only this pair is translator-bridged |
 | `{skill_id}.stop` | Skill-directed stop dispatch. Per-skill topics are **not** translator-bridged, because the `{skill_id}.*` shape cannot be a static map key, and the base class subscribes to this form only |
 | `{skill_id}.stop.ping` | Check whether this skill can stop. Same as above: this exact form, not bridged, no spec-namespaced alias |
-| `mycroft.skill.loaded` | Emitted by the [Skill Manager](skill-manager.md) after a skill finishes loading, with `{"skill_id": ...}` |
+| `mycroft.skills.loaded` | Emitted on **every** successful skill load (any loading path), with the skill id — the general-case loaded event |
+| `mycroft.skills.loading_failure` | Emitted when a skill fails to load (`{"path", "id"}`); see [Skill Manager](skill-manager.md#what-a-load-failure-looks-like) |
+| `mycroft.skill.loaded` | Additional singular event the [Skill Manager](skill-manager.md) emits for plugin-skill loads only, with `{"skill_id": ...}`; no failure counterpart |
+| `mycroft.skills.train` / `mycroft.skills.trained` | Pipeline retrain request (fire-and-forget from the manager) and the Padatious pipeline's completion announcement |
 | `mycroft.skill.enable_intent` / `mycroft.skill.disable_intent` | Enable/disable one of the skill's intents |
 | `mycroft.skill.set_cross_context` / `mycroft.skill.remove_cross_context` | Manage cross-skill context |
 | `mycroft.skills.settings.changed` | Remote settings update: see [Skill Settings](skill-settings.md#change-callback) for the full change-notification flow |

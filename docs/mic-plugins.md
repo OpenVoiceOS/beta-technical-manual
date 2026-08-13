@@ -52,7 +52,10 @@ Maturity reflects repository health (age, activity, open issues/PRs, in-repo doc
 
 ## Configuration Notes
 
-Most plugins in the table above need no extra configuration beyond `module`. One exception:
+Most plugins in the table above need no extra configuration beyond `module`. When you do
+need to override something — for example pinning a specific input device on
+`ovos-microphone-plugin-sounddevice` — the plugin's settings go in a nested block keyed by
+the plugin name (omit the block entirely when you have nothing to override):
 
 ### ovos-microphone-plugin-sounddevice
 
@@ -61,7 +64,7 @@ Most plugins in the table above need no extra configuration beyond `module`. One
   "listener": {
     "microphone": {
       "module": "ovos-microphone-plugin-sounddevice",
-      "ovos-microphone-plugin-sounddevice": {}
+      "ovos-microphone-plugin-sounddevice": {"device": "hw:1,0"}
     }
   }
 }

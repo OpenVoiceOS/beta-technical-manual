@@ -97,9 +97,10 @@ Skills listed in `skills.blacklisted_skills` in `mycroft.conf` are skipped at lo
 
 ## Intent Training
 
-Each successfully loaded skill is announced on the bus as `mycroft.skill.loaded`
-with `{"skill_id": ...}` — useful for tooling that waits for a specific skill to
-become available. After new skills are loaded, the manager requests pipeline
+Each successfully loaded skill is announced on the bus as `mycroft.skills.loaded`
+(plural) with the skill id — the event that fires on every load path; plugin-skill
+loads through the manager additionally emit a singular `mycroft.skill.loaded`. Both
+are useful for tooling that waits for a specific skill to become available. After new skills are loaded, the manager requests pipeline
 re-training:
 
 ```text
@@ -111,7 +112,8 @@ Padatious pipeline plugin does announce `mycroft.skills.trained` when its traini
 completes (on both the trained and nothing-new-to-train paths), so tooling that needs a
 deterministic "training done" signal can watch for that; the manager itself never does.
 
-Do not implement a `mycroft.skills.trained` reply. Nothing listens for one. An earlier
+The manager itself never blocks on `mycroft.skills.trained` — the event exists (see
+above) but nothing in core does a `wait_for_response` on it. An earlier
 version blocked on `wait_for_response(..., "mycroft.skills.trained", timeout=60)`, which
 stalled boot for a full minute on every install without a deferred-training engine, since
 no such engine was there to answer. A single responder could not speak for every loaded

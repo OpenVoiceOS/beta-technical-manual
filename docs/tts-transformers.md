@@ -123,6 +123,11 @@ Replace `"plugin_name"` with the identifier of the desired plugin and provide an
 
 ### **OVOS AudioSR TTS Transformer**
 
+!!! warning "Not yet on PyPI"
+    Like FlashSR and NovaSR above, `ovos-tts-transformer-audiosr` has no PyPI release yet
+    (only prerelease tags on GitHub) — the config below is for when it ships, or a
+    from-source install.
+
 Engine-agnostic ONNX audio super-resolution transformer (`opm.transformer.tts`). It upscales
 **any** TTS engine's output to 48 kHz just before playback, rather than being tied to one voice
 or engine. It wraps [`audiosronnx`](https://github.com/TigreGotico/audiosronnx) (pure ONNX, no
