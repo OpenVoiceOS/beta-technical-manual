@@ -1823,10 +1823,10 @@ are driven by the bus handlers below rather than called directly.</p>
 </tr>
 </tbody>
 </table>
-<p><code>configuration.updated</code> does not reload the distribution layer. <code>reload()</code> covers default,
-system, remote and the XDG configs only. A script that edits
-<code>/usr/share/mycroft/mycroft.conf</code> and then emits this event sees no change. The file watcher
-still picks the edit up on its own.</p>
+<p><code>configuration.updated</code> reloads <strong>every</strong> layer: <code>reload()</code> re-reads default, distribution,
+system, remote and all the XDG configs from disk (the read-only layers included — their
+<code>reload()</code> does a real, mtime-checked re-read). A script that edits any layer's file and then
+emits this event sees the change immediately, without waiting for the file watcher.</p>
 <p><code>Configuration.set_config_watcher()</code> uses <code>ovos-utils</code>' <code>FileWatcher</code> (watchdog) to monitor
 config files on disk, and reloads when a watched file changes.</p>
 <p>The watch list is built once, from the files that exist at that moment

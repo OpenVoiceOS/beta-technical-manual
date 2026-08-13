@@ -1689,7 +1689,11 @@ HTTP contract and plugin-side config keys, and
 <a href="../satellites/#thin-clients-a-shared-speech-backend">Satellites: thin clients + a shared speech backend</a>
 for a worked compose example splitting the speech backend from the thin client.</p>
 <h2 id="containerized-hivemind">Containerized HiveMind<a class="headerlink" href="#containerized-hivemind" title="Permanent link">&para;</a></h2>
-<p><code>ovos-docker</code> does not publish a HiveMind image. HiveMind has its own separate project,
+<p><code>ovos-docker</code> does not build or push a HiveMind image itself, but its own
+<code>compose/docker-compose.hivemind.yml</code> already ships a ready-made stack: <code>hivemind_listener</code>
+and <code>hivemind_cli</code> services (pulling the <code>docker.io/smartgic</code> images) wired to the
+<code>ovos_core</code> dependency chain — start there before reaching for the separate project.
+The images themselves come from HiveMind's own project,
 <a href="https://github.com/JarbasHiveMind/hivemind-docker">HiveMind-Docker</a>, with its own images
 (published under <code>docker.io/smartgic</code>, built with Docker Buildx Bake for <code>linux/amd64</code> and
 <code>linux/arm64</code>) and compose files for a HiveMind hub and its satellite/listener/chatroom
