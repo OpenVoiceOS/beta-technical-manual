@@ -958,6 +958,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Run">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#serving-multiple-personas-from-one-process" class="md-nav__link">
+    <span class="md-ellipsis">
+      Serving multiple personas from one process
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -997,6 +1012,15 @@
   <a href="#streaming" class="md-nav__link">
     <span class="md-ellipsis">
       Streaming
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#function-calling-who-executes-what" class="md-nav__link">
+    <span class="md-ellipsis">
+      Function Calling: Who Executes What
     </span>
   </a>
   
@@ -1329,6 +1353,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Run">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#serving-multiple-personas-from-one-process" class="md-nav__link">
+    <span class="md-ellipsis">
+      Serving multiple personas from one process
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1368,6 +1407,15 @@
   <a href="#streaming" class="md-nav__link">
     <span class="md-ellipsis">
       Streaming
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#function-calling-who-executes-what" class="md-nav__link">
+    <span class="md-ellipsis">
+      Function Calling: Who Executes What
     </span>
   </a>
   
@@ -1436,8 +1484,19 @@ endpoints, a UTCP tool surface, and vendor-compatible routers for <strong>Anthro
 <p>Install the agent-engine plugin(s) your persona references, e.g.:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>pip<span class="w"> </span>install<span class="w"> </span>ovos-openai-plugin
 </span></code></pre></div>
-<p>Optional extras: <code>rag</code> (file/vector-store endpoints), <code>mcp</code> (MCP transport), and <code>a2a</code>
-(Agent-to-Agent endpoint), e.g. <code>pip install 'ovos-persona-server[a2a]'</code>.</p>
+<p>Optional extras: <code>rag</code> (file/vector-store endpoints), <code>mcp</code> (pulls in <code>fastmcp&gt;=3,&lt;4</code> to
+serve the <code>/mcp</code> endpoint below), and <code>a2a</code> (Agent-to-Agent endpoint), e.g.
+<code>pip install 'ovos-persona-server[a2a]'</code>.</p>
+<div class="admonition note">
+<p class="admonition-title">The <code>mcp</code> extra installs <code>fastmcp</code>, not the <code>mcp</code> SDK</p>
+<p>The extra is still called <code>mcp</code>, so <code>pip install 'ovos-persona-server[mcp]'</code> is unchanged,
+but it resolves the third-party <code>fastmcp</code> package (<code>fastmcp&gt;=3,&lt;4</code>), not the official <code>mcp</code>
+SDK. The split is deliberate: this server <em>serves</em> MCP with <code>fastmcp</code>, while a client
+consuming another MCP server (like <a href="../tool-plugins/"><code>ovos-mcp-toolbox</code></a>) uses the official
+<code>mcp</code> SDK instead. The two packages diverged because MCP SDK 2.0 removed
+<code>mcp.server.fastmcp.FastMCP</code>, so a server still importing that symbol fails to start on the
+2.x SDK; <code>fastmcp</code> is the maintained standalone project that symbol used to alias.</p>
+</div>
 <hr />
 <h2 id="run">Run<a class="headerlink" href="#run" title="Permanent link">&para;</a></h2>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>ovos-persona-server<span class="w"> </span>--persona<span class="w"> </span>my_persona.json<span class="w"> </span>--host<span class="w"> </span><span class="m">0</span>.0.0.0<span class="w"> </span>--port<span class="w"> </span><span class="m">8337</span>
@@ -1454,7 +1513,17 @@ endpoints, a UTCP tool surface, and vendor-compatible routers for <strong>Anthro
 <tr>
 <td><code>--persona</code></td>
 <td><code>None</code></td>
-<td>Path to the persona <code>.json</code> file to load</td>
+<td>Path to a single persona <code>.json</code> file to load</td>
+</tr>
+<tr>
+<td><code>--personas-dir</code></td>
+<td><code>None</code></td>
+<td>Directory whose <code>*.json</code> files are all loaded as personas, one process serving all of them</td>
+</tr>
+<tr>
+<td><code>--default-persona</code></td>
+<td><code>None</code></td>
+<td>Name of the persona that answers requests which do not select one; only meaningful with <code>--personas-dir</code></td>
 </tr>
 <tr>
 <td><code>--host</code></td>
@@ -1474,18 +1543,28 @@ endpoints, a UTCP tool surface, and vendor-compatible routers for <strong>Anthro
 </tbody>
 </table>
 <p>The console script is <code>ovos-persona-server</code> (module <code>ovos_persona_server.__main__:main</code>).</p>
+<h3 id="serving-multiple-personas-from-one-process">Serving multiple personas from one process<a class="headerlink" href="#serving-multiple-personas-from-one-process" title="Permanent link">&para;</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>ovos-persona-server<span class="w"> </span>--personas-dir<span class="w"> </span>/etc/ovos/personas<span class="w"> </span>--default-persona<span class="w"> </span>assistant<span class="w"> </span>--host<span class="w"> </span><span class="m">0</span>.0.0.0<span class="w"> </span>--port<span class="w"> </span><span class="m">8337</span>
+</span></code></pre></div>
+<p>Every <code>*.json</code> file in the directory loads as its own persona, keyed by its <code>name</code>. A client
+selects which one to talk to with the <code>model</code> field; a request that omits it falls back to
+<code>--default-persona</code> (or the first persona loaded, if that flag is unset). Serving more than one
+persona is what makes <code>model</code> authoritative: a name that matches none of them is rejected with a
+404, not silently redirected. Both <code>/v1/models</code> (OpenAI-compatible) and <code>/api/tags</code>
+(Ollama-compatible) enumerate the loaded personas, so a client can discover the available names
+before picking one.</p>
 <hr />
 <h2 id="the-persona-file">The Persona File<a class="headerlink" href="#the-persona-file" title="Permanent link">&para;</a></h2>
 <p>A persona is a JSON object whose <code>handlers</code> list names the plugins that answer queries. Per-plugin config is keyed by the plugin name. Example pointing at an OpenAI-compatible LLM:</p>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="p">{</span>
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;kb-assistant&quot;</span><span class="p">,</span>
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">  </span><span class="nt">&quot;handlers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;ovos-chat-openai-plugin&quot;</span><span class="p">],</span>
-</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">  </span><span class="nt">&quot;ovos-chat-openai-plugin&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">    </span><span class="nt">&quot;api_url&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://llama.smartgic.io/v1&quot;</span><span class="p">,</span>
-</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">    </span><span class="nt">&quot;model&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;llama3.1:8b&quot;</span><span class="p">,</span>
-</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="w">    </span><span class="nt">&quot;key&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;sk-xxx&quot;</span>
-</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="w">  </span><span class="p">}</span>
-</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="p">}</span>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="p">{</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;kb-assistant&quot;</span><span class="p">,</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">  </span><span class="nt">&quot;handlers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;ovos-chat-openai-plugin&quot;</span><span class="p">],</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">  </span><span class="nt">&quot;ovos-chat-openai-plugin&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">    </span><span class="nt">&quot;api_url&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://llama.smartgic.io/v1&quot;</span><span class="p">,</span>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">    </span><span class="nt">&quot;model&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;llama3.1:8b&quot;</span><span class="p">,</span>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="w">    </span><span class="nt">&quot;key&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;sk-xxx&quot;</span>
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="w">  </span><span class="p">}</span>
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="p">}</span>
 </span></code></pre></div>
 <p>Solvers are tried in order. The first that returns an answer wins. Some solvers are <strong>not</strong> LLMs and keep no chat history. In that case only the last user message is processed.</p>
 <hr />
@@ -1762,25 +1841,52 @@ configured via environment variables:</p>
 </table>
 <p>Tool calling is only supported with <code>stream=false</code>, regardless of vendor.</p>
 <hr />
+<h2 id="function-calling-who-executes-what">Function Calling: Who Executes What<a class="headerlink" href="#function-calling-who-executes-what" title="Permanent link">&para;</a></h2>
+<p>A chat request can carry two independent kinds of tools, and they are executed by different
+sides of the connection:</p>
+<ul>
+<li><strong>Client-side tools</strong> arrive in the request's OpenAI-shaped <code>tools</code> field. The server never
+  runs these: it relays the model's <code>tool_calls</code> back with <code>finish_reason: "tool_calls"</code>, and the
+  caller is expected to execute the call itself and reply with a <code>role: "tool"</code> message on the
+  next turn — the normal OpenAI function-calling contract.</li>
+<li><strong>Server-side tools</strong> are the persona's own <a href="../tool-plugins/"><code>ToolBox</code> plugins</a>. The server
+  executes these itself, in a bounded agentic loop: when the model calls one, the server runs it,
+  appends the result as a <code>role: "tool"</code> message, and re-invokes the engine, up to
+  <code>MAX_TOOL_ITERS</code> (5) rounds before it gives up and returns whatever the last response was.
+  <code>tool_calls</code> for a server-side tool never reach the client — the client was never offered that
+  tool, so it could not run it anyway.</li>
+</ul>
+<p>Both kinds can appear in the same request; the server merges client-supplied specs with the
+persona's own tool specs before offering them to the model.</p>
+<div class="admonition warning">
+<p class="admonition-title">A name collision is decided in the persona's favor</p>
+<p>Nothing deduplicates the merged tool list by name. If a client sends a tool whose name
+matches one of the persona's <code>ToolBox</code> tools — a generic name like <code>search</code> is enough — the
+persona's tool wins: only one copy of that name is offered to the model, and a call to it
+always runs server-side, even though the client believes it owns that tool. The model never
+sees a duplicate name, but the client also never gets a <code>tool_calls</code> response it can act on
+for that name. Give tools specific names to avoid this.</p>
+</div>
+<hr />
 <h2 id="openai-compatible-example">OpenAI-Compatible Example<a class="headerlink" href="#openai-compatible-example" title="Permanent link">&para;</a></h2>
 <p>Point the <code>openai</code> SDK at the <code>/openai/v1</code> path:</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kn">from</span> <span class="nn">openai</span> <span class="kn">import</span> <span class="n">OpenAI</span>
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="n">client</span> <span class="o">=</span> <span class="n">OpenAI</span><span class="p">(</span>
-</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>    <span class="n">api_key</span><span class="o">=</span><span class="s2">&quot;not-needed&quot;</span><span class="p">,</span>                       <span class="c1"># no key required for local use</span>
-</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>    <span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;http://localhost:8337/openai/v1&quot;</span><span class="p">,</span>
-</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="p">)</span>
-</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>
-</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="n">resp</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">completions</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
-</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>                                    <span class="c1"># ignored; the persona decides</span>
-</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>    <span class="n">messages</span><span class="o">=</span><span class="p">[{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;tell me a joke&quot;</span><span class="p">}],</span>
-</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="p">)</span>
-</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="nb">print</span><span class="p">(</span><span class="n">resp</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kn">from</span> <span class="nn">openai</span> <span class="kn">import</span> <span class="n">OpenAI</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="n">client</span> <span class="o">=</span> <span class="n">OpenAI</span><span class="p">(</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>    <span class="n">api_key</span><span class="o">=</span><span class="s2">&quot;not-needed&quot;</span><span class="p">,</span>                       <span class="c1"># no key required for local use</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>    <span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;http://localhost:8337/openai/v1&quot;</span><span class="p">,</span>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="p">)</span>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="n">resp</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">completions</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>                                    <span class="c1"># ignored; the persona decides</span>
+</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>    <span class="n">messages</span><span class="o">=</span><span class="p">[{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;tell me a joke&quot;</span><span class="p">}],</span>
+</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="p">)</span>
+</span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="nb">print</span><span class="p">(</span><span class="n">resp</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
 </span></code></pre></div>
 <div class="admonition tip">
 <p class="admonition-title">Verify it worked</p>
 <p>A working call prints a punchline-shaped string, e.g.:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>Why don&#39;t scientists trust atoms? Because they make up everything!
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>Why don&#39;t scientists trust atoms? Because they make up everything!
 </span></code></pre></div>
 <p>If instead you get a connection error, double-check the server is actually running on that
 host/port (<code>ovos-persona-server --persona ... --port 8337</code>) and that the URL includes the
@@ -1813,6 +1919,15 @@ name(s) from the persona's solver config.</p>
 <p>For production, secure the endpoint (reverse proxy, rate limits). The server itself is unauthenticated.</p>
 </li>
 </ul>
+<div class="admonition tip">
+<p class="admonition-title">Why remote MCP only became practical recently</p>
+<p>The official <code>mcp</code> SDK's <code>FastMCP</code> (1.x) enforces DNS-rebinding protection by default: it
+only accepts a <code>Host</code> header of <code>127.0.0.1</code> or <code>localhost</code>, so a mounted MCP endpoint answers
+normally on the loopback address and <strong>421 Misdirected Request</strong> through any other domain
+name — no reverse-proxy configuration works around it, because the check runs before the
+proxy's headers are trusted. <code>fastmcp</code>, the package this server actually serves MCP with,
+does not impose that restriction, which is why proxying <code>/mcp</code> to a real hostname works here.</p>
+</div>
 <hr />
 <p><em>Source code: <a href="https://github.com/OpenVoiceOS/ovos-persona-server">OpenVoiceOS/ovos-persona-server</a>.</em></p>
 <hr />

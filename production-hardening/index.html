@@ -1024,6 +1024,15 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#reverse-proxying-the-http-servers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reverse-proxying the HTTP servers
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1345,6 +1354,15 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#reverse-proxying-the-http-servers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reverse-proxying the HTTP servers
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1487,6 +1505,32 @@ VPN/reverse-proxy alternative.</p>
   satellite fits into a wider topology.
 - Serving the bus itself over TLS (for the cases above where it does need to leave localhost)
   is covered in <a href="../bus-reconnect/#bus-restart-reconnect-behavior">Bus restart / reconnect behavior: Serving the bus over TLS</a>.</p>
+<h3 id="reverse-proxying-the-http-servers">Reverse-proxying the HTTP servers<a class="headerlink" href="#reverse-proxying-the-http-servers" title="Permanent link">&para;</a></h3>
+<p>The <a href="../stt-server/">STT</a>, <a href="../tts-server-deployment/">TTS</a>, <a href="../translate-server/">translate</a>, and
+<a href="../persona-server/">persona</a> servers are all plain <code>uvicorn</code> apps with no built-in TLS, so
+fronting them with a reverse proxy for HTTPS is the normal deployment shape. Doing that has one
+sharp edge: <code>uvicorn</code> only honors the proxy's <code>X-Forwarded-Proto</code> header from an address it
+already trusts, and by default that's <code>127.0.0.1</code> alone. A proxy running anywhere else — another
+container, another host — is untrusted, so <code>uvicorn</code> ignores the header and reports the request as
+plain <code>http://</code>. If the app or the proxy then redirects based on that (a common HTTPS-enforcement
+pattern), the redirect's <code>Location</code> comes back <code>http://</code> instead of <code>https://</code>, and a client that
+follows redirects turns its next request into a <code>GET</code> with no body — silently dropping whatever
+the original <code>POST</code> was carrying.</p>
+<p>The symptom is an opaque <code>400</code> partway through a request sequence, and it shows up only with
+clients that follow redirects; driving the same endpoint directly with <code>curl</code> succeeds, which
+sends the search in the wrong direction (the proxy, not <code>uvicorn</code>'s trust list).</p>
+<p>Fix it by telling <code>uvicorn</code> which address to trust, via the <code>FORWARDED_ALLOW_IPS</code> environment
+variable (none of these four servers exposes a CLI flag for it; only <code>--host</code> and <code>--port</code> are
+their own). Scope it to the actual proxy address — for a proxy running as another container on
+the Docker bridge network, that's the bridge gateway IP (commonly <code>172.17.0.1</code>), not a wildcard:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nv">FORWARDED_ALLOW_IPS</span><span class="o">=</span><span class="m">172</span>.17.0.1<span class="w"> </span>ovos-tts-server<span class="w"> </span>--engine<span class="w"> </span><span class="o">{</span>YOUR_TTS_PLUGIN<span class="o">}</span>
+</span></code></pre></div>
+<p>A wildcard (<code>FORWARDED_ALLOW_IPS=*</code>) makes <code>uvicorn</code> trust the header from any source, which
+defeats the point of the check on a server reachable from more than one network.</p>
+<p>To confirm this is the bug rather than something else, compare the <code>Location</code> header of a
+redirect hit directly against the container versus through the proxy: a scheme change
+(<code>https://</code> direct, <code>http://</code> through the proxy) is the whole fault, and confirms the proxy's
+address needs adding to <code>FORWARDED_ALLOW_IPS</code>.</p>
 <hr />
 <p><strong>Read next:</strong> <a href="../production-operations/">Production Operations</a>
 <strong>Related:</strong> <a href="../security-model/">Security Model</a> · <a href="../satellites/">Satellites</a> · <a href="../hivemind-agents/">HiveMind Agents</a></p>

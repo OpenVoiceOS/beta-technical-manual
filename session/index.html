@@ -1689,6 +1689,30 @@
 </span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>        <span class="nb">print</span><span class="p">(</span><span class="n">sess</span><span class="o">.</span><span class="n">session_id</span><span class="p">)</span>
 </span></code></pre></div>
 <p>If the message originated in the device itself, the <code>session_id</code> is always equal to the reserved value <code>"default"</code>. If it comes from an external client, it will be a unique uuid. The <code>"default"</code> session is special: it is the device-local session whose state the orchestrator holds and persists in-process, rather than receiving it from a client on every message (OVOS-SESSION-2 §5).</p>
+<div class="admonition warning">
+<p class="admonition-title">A bare <code>session_id</code> does not carry state — replay the whole session</p>
+<p>An external client (a HiveMind satellite, any non-<code>"default"</code> session) is not tracked
+in-process the way the device-local session is. <code>ovos-core</code> only refreshes what it
+already holds for a given <code>session_id</code>; a <code>session_id</code> this process never folded a full
+session for is carried through untouched, with none of the previous turn's state. To keep
+multi-turn continuity — <code>intent_context</code>, <code>lang</code>, presentation preferences, and the rest —
+a client must send the <strong>complete serialized session</strong> (<code>Session.serialize()</code>) back on
+each message, not just the bare <code>session_id</code> string. Losing that round trip is
+indistinguishable from starting a brand new session every turn — a <code>session_id</code> this
+process has never folded a full session for gets a <strong>fresh</strong> session by design, not an
+error and not a reconstruction from history.</p>
+<p>There is no topic that <em>pushes</em> an updated session from the orchestrator down to a
+client to keep it current. <code>ovos.session.sync</code> is the closest thing, and it runs the
+other way: a client emits it carrying its <em>own</em> snapshot, and the receiver merges that
+snapshot's <code>intent_context</code> onto whatever it already holds for that <code>session_id</code>
+(OVOS-CONTEXT-1 §5.3) — a pull-shaped merge triggered by the sender, not a broadcast.
+A bare <code>ovos.session.sync</code> with no session carrier is handled differently again: it is
+read as a legacy request for the current <strong>default</strong> session and answered with a
+<code>ovos.session.update_default</code> echo, which only ever concerns the device-local
+<code>"default"</code> session, never an external client's. Multiple clients each carrying their
+own full session converge on consistent state by every one of them adopting this
+same discipline, not by any message that reconciles them from the server side.</p>
+</div>
 <div class="admonition note">
 <p class="admonition-title">A present-but-malformed session never crashes the bus client</p>
 <p><code>Session.from_message</code> treats an <em>absent</em> <code>session</code> key (or an explicit

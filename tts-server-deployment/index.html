@@ -1247,6 +1247,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#mcp" class="md-nav__link">
+    <span class="md-ellipsis">
+      MCP
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#docker-deployment" class="md-nav__link">
     <span class="md-ellipsis">
       Docker Deployment
@@ -1463,6 +1472,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#mcp" class="md-nav__link">
+    <span class="md-ellipsis">
+      MCP
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#docker-deployment" class="md-nav__link">
     <span class="md-ellipsis">
       Docker Deployment
@@ -1550,6 +1568,25 @@ and unreliable if you rely on them. The official recommendation is to self-host 
 servers entirely: fully offline plugins exist for everything.</p>
 </div>
 <p>See <a href="../tts-plugins/">TTS plugins</a> for fully offline voices if you'd rather not depend on any server.</p>
+<h2 id="mcp">MCP<a class="headerlink" href="#mcp" title="Permanent link">&para;</a></h2>
+<p>Unlike the STT, translate, and persona servers, which mount their MCP endpoint automatically
+whenever the <code>mcp</code> extra is importable, <code>ovos-tts-server</code> mounts it only when started with the
+<code>--mcp</code> flag:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>pip<span class="w"> </span>install<span class="w"> </span><span class="s1">&#39;ovos-tts-server[mcp]&#39;</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>ovos-tts-server<span class="w"> </span>--engine<span class="w"> </span><span class="o">{</span>YOUR_TTS_PLUGIN<span class="o">}</span><span class="w"> </span>--mcp
+</span></code></pre></div>
+<p>The endpoint lands at <code>/mcp</code>, on the same host and port as the HTTP API. Installing the extra
+without the flag does nothing observable at startup — the server starts and the HTTP API works
+normally — but <code>/mcp</code> returns <code>404</code>, which looks like a routing problem rather than a missing
+flag. If MCP tool calls 404, check that <code>--mcp</code> was actually passed.</p>
+<div class="admonition note">
+<p class="admonition-title">The <code>mcp</code> extra installs <code>fastmcp</code>, not the <code>mcp</code> SDK</p>
+<p>The extra keeps the name <code>mcp</code>, but it resolves the third-party <code>fastmcp&gt;=3,&lt;4</code> package, not
+the official <code>mcp</code> SDK — MCP SDK 2.0 removed <code>mcp.server.fastmcp.FastMCP</code>, so a server still
+importing that symbol fails to start on the 2.x SDK. This server <em>serves</em> MCP with <code>fastmcp</code>;
+a client consuming a different MCP server (like <code>ovos-mcp-toolbox</code>, see
+<a href="../tool-plugins/">Agent Tool Plugins</a>) uses the official <code>mcp</code> SDK instead.</p>
+</div>
 <p>Config keys:</p>
 <table>
 <thead>
@@ -1603,14 +1640,14 @@ container serving that engine behind <code>ovos-tts-server</code>. Until the com
 lands, check a plugin's own repository for a Dockerfile before building one by hand.</p>
 </div>
 <p><strong>Create a Dockerfile</strong></p>
-<div class="language-dockerfile highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">FROM</span><span class="w"> </span><span class="s">python:3.11-slim</span>
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="k">RUN</span><span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>ovos-tts-server
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="k">RUN</span><span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span><span class="o">{</span>YOUR_TTS_PLUGIN<span class="o">}</span>
-</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="k">ENTRYPOINT</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;ovos-tts-server&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;--engine&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;{YOUR_TTS_PLUGIN}&quot;</span><span class="p">]</span>
+<div class="language-dockerfile highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="k">FROM</span><span class="w"> </span><span class="s">python:3.11-slim</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="k">RUN</span><span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>ovos-tts-server
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="k">RUN</span><span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span><span class="o">{</span>YOUR_TTS_PLUGIN<span class="o">}</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="k">ENTRYPOINT</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;ovos-tts-server&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;--engine&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;{YOUR_TTS_PLUGIN}&quot;</span><span class="p">]</span>
 </span></code></pre></div>
 <p><strong>Build &amp; Run</strong></p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>my-ovos-tts<span class="w"> </span>.
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>docker<span class="w"> </span>run<span class="w"> </span>-p<span class="w"> </span><span class="m">9666</span>:9666<span class="w"> </span>my-ovos-tts
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>my-ovos-tts<span class="w"> </span>.
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>docker<span class="w"> </span>run<span class="w"> </span>-p<span class="w"> </span><span class="m">9666</span>:9666<span class="w"> </span>my-ovos-tts
 </span></code></pre></div>
 <p>Pre-built containers are also available via the <a href="https://github.com/OpenVoiceOS/ovos-docker-tts">ovos-docker-tts</a>
 repository.</p>

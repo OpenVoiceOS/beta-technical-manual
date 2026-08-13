@@ -1107,6 +1107,30 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Exposing Tools over MCP / UTCP">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#function-calling-client-side-vs-server-side-tools" class="md-nav__link">
+    <span class="md-ellipsis">
+      Function calling: client-side vs server-side tools
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#consuming-an-external-mcp-or-utcp-server-as-a-toolbox" class="md-nav__link">
+    <span class="md-ellipsis">
+      Consuming an external MCP or UTCP server as a ToolBox
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1122,6 +1146,15 @@
   <a href="#available-chat-engines" class="md-nav__link">
     <span class="md-ellipsis">
       Available Chat Engines
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#testing-tool-calling-without-a-gpu" class="md-nav__link">
+    <span class="md-ellipsis">
+      Testing Tool Calling Without a GPU
     </span>
   </a>
   
@@ -1425,6 +1458,30 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Exposing Tools over MCP / UTCP">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#function-calling-client-side-vs-server-side-tools" class="md-nav__link">
+    <span class="md-ellipsis">
+      Function calling: client-side vs server-side tools
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#consuming-an-external-mcp-or-utcp-server-as-a-toolbox" class="md-nav__link">
+    <span class="md-ellipsis">
+      Consuming an external MCP or UTCP server as a ToolBox
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1440,6 +1497,15 @@
   <a href="#available-chat-engines" class="md-nav__link">
     <span class="md-ellipsis">
       Available Chat Engines
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#testing-tool-calling-without-a-gpu" class="md-nav__link">
+    <span class="md-ellipsis">
+      Testing Tool Calling Without a GPU
     </span>
   </a>
   
@@ -1747,6 +1813,69 @@ come back as an <code>error</code> field. The plugin never stays silent.</p>
 <hr />
 <h2 id="exposing-tools-over-mcp-utcp">Exposing Tools over MCP / UTCP<a class="headerlink" href="#exposing-tools-over-mcp-utcp" title="Permanent link">&para;</a></h2>
 <p>The Persona Server can bridge any installed ToolBox plugin to MCP and UTCP clients. See <a href="../agent-interop/#persona-server-tool-plugins-via-mcp-utcp">agent-interop.md#persona-server-tool-plugins-via-mcp-utcp</a>.</p>
+<h3 id="function-calling-client-side-vs-server-side-tools">Function calling: client-side vs server-side tools<a class="headerlink" href="#function-calling-client-side-vs-server-side-tools" title="Permanent link">&para;</a></h3>
+<p>The <a href="../persona-server/#function-calling-who-executes-what">Persona Server</a> can offer a model two
+different kinds of tools in the same request, and only one of them is a <code>ToolBox</code>:</p>
+<ul>
+<li><strong>Client-side tools</strong> are whatever the API caller put in the request's <code>tools</code> field. The
+  caller executes them itself; the server only relays the model's <code>tool_calls</code>.</li>
+<li><strong>Server-side tools</strong> are the persona's own <code>ToolBox</code> plugins (documented on this page). The
+  server executes these in a bounded agentic loop and the client never sees the call.</li>
+</ul>
+<p>If a client tool shares a name with one of the persona's <code>ToolBox</code> tools, the persona's tool
+wins — the duplicate is dropped before the model ever sees it. Give tools specific names
+(<code>search_local_docs</code>, not <code>search</code>) to avoid the collision.</p>
+<h3 id="consuming-an-external-mcp-or-utcp-server-as-a-toolbox">Consuming an external MCP or UTCP server as a ToolBox<a class="headerlink" href="#consuming-an-external-mcp-or-utcp-server-as-a-toolbox" title="Permanent link">&para;</a></h3>
+<p><code>ovos-tool-adapters</code> ships two <code>opm.agents.toolbox</code> plugins that bridge an <em>external</em> tool server
+into the <code>ToolBox</code> interface, so a persona can call it like any native toolbox:</p>
+<table>
+<thead>
+<tr>
+<th>Plugin ID</th>
+<th>Package</th>
+<th>Bridges</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ovos-mcp-toolbox</code></td>
+<td><code>ovos-tool-adapters</code></td>
+<td>An MCP server, over the <code>stdio</code>, <code>sse</code>, or <code>http</code> transport</td>
+</tr>
+<tr>
+<td><code>ovos-utcp-toolbox</code></td>
+<td><code>ovos-tool-adapters</code></td>
+<td>A UTCP-manual-advertising HTTP server</td>
+</tr>
+</tbody>
+</table>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>pip<span class="w"> </span>install<span class="w"> </span>ovos-tool-adapters
+</span></code></pre></div>
+<p>Each takes its own config section, keyed by plugin name in the persona JSON exactly like a
+handler plugin. For <code>ovos-mcp-toolbox</code>, <code>transport</code> selects the connection kind: <code>stdio</code> needs
+<code>command</code> (and <code>args</code>), <code>sse</code> and <code>http</code> need a <code>url</code>:</p>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="p">{</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;researcher&quot;</span><span class="p">,</span>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="w">  </span><span class="nt">&quot;handlers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;ovos-react-loop&quot;</span><span class="p">],</span>
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="w">  </span><span class="nt">&quot;ovos-react-loop&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="w">    </span><span class="nt">&quot;brain&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ovos-chat-openai-plugin&quot;</span><span class="p">,</span>
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="w">    </span><span class="nt">&quot;toolboxes&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;ovos-mcp-toolbox&quot;</span><span class="p">]</span>
+</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="w">  </span><span class="p">},</span>
+</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a><span class="w">  </span><span class="nt">&quot;ovos-mcp-toolbox&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-10-9"><a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a><span class="w">    </span><span class="nt">&quot;transport&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;stdio&quot;</span><span class="p">,</span>
+</span><span id="__span-10-10"><a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a><span class="w">    </span><span class="nt">&quot;command&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;uvx&quot;</span><span class="p">,</span>
+</span><span id="__span-10-11"><a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a><span class="w">    </span><span class="nt">&quot;args&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;mcp-server-fetch&quot;</span><span class="p">]</span>
+</span><span id="__span-10-12"><a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a><span class="w">  </span><span class="p">}</span>
+</span><span id="__span-10-13"><a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a><span class="p">}</span>
+</span></code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title">A ToolBox that fails to connect serves zero tools, silently</p>
+<p>If the bridged server cannot be reached, or its config is wrong, the failure surfaces during
+plugin discovery as a logged warning, not an error the caller sees. The persona keeps
+running and answers normally — it just offers no tools at all. If a persona that should have
+tools behaves as if it has none, check the server log for a <code>ToolBox</code> warning before assuming
+the model is refusing to call anything.</p>
+</div>
 <hr />
 <h2 id="available-toolboxes">Available ToolBoxes<a class="headerlink" href="#available-toolboxes" title="Permanent link">&para;</a></h2>
 <p>These <code>opm.agents.toolbox</code> plugins each wrap one external service as a set of callable
@@ -1800,6 +1929,34 @@ See that page for those.</p>
 <p><code>opm.agents.chat</code> plugins beyond the ones documented in the <a href="../agent-plugins/#plugin-catalog">Agent Plugins catalog</a>
 (<code>ovos-openai-plugin</code>, <code>ovos-gguf-plugin</code>) are not currently shipped by an OpenVoiceOS-org
 repository. This manual only documents plugins backed by an OpenVoiceOS-org repo.</p>
+<h2 id="testing-tool-calling-without-a-gpu">Testing Tool Calling Without a GPU<a class="headerlink" href="#testing-tool-calling-without-a-gpu" title="Permanent link">&para;</a></h2>
+<p>Reviewing tool-calling code needs a model that reliably <em>emits</em> tool calls, not necessarily a
+smart one. A small CPU-only model under <a href="https://github.com/ggml-org/llama.cpp">llama.cpp</a>'s
+own OpenAI-compatible server is enough to exercise the whole path — server discovers tools,
+model requests one, caller or server executes it — without a GPU:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>llama-server<span class="w"> </span>-m<span class="w"> </span>Qwen3-0.6B-Q4_K_M.gguf<span class="w"> </span>--jinja<span class="w"> </span>-c<span class="w"> </span><span class="m">8192</span>
+</span></code></pre></div>
+<p>Qwen3-0.6B at Q4_K_M quantization is a roughly 380 MB download. The <code>--jinja</code> flag is not
+optional: without it, <code>llama.cpp</code> skips the chat template that actually produces <code>tool_calls</code>,
+and every tool-calling test silently degrades into an ordinary plain-text conversation instead
+of failing loudly.</p>
+<p>Point a persona at the running server with the OpenAI-compatible chat engine:</p>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="p">{</span>
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;tool-test&quot;</span><span class="p">,</span>
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="w">  </span><span class="nt">&quot;handlers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;ovos-chat-openai-plugin&quot;</span><span class="p">],</span>
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="w">  </span><span class="nt">&quot;ovos-chat-openai-plugin&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="w">    </span><span class="nt">&quot;api_url&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;http://localhost:8080/v1&quot;</span>
+</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="w">  </span><span class="p">}</span>
+</span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="p">}</span>
+</span></code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title">Entry-point name vs. package name</p>
+<p>The entry point is <strong><code>ovos-chat-openai-plugin</code></strong>, not the package name
+(<code>ovos-openai-plugin</code>, <code>pip install ovos-openai-plugin</code>). Writing the package name into
+<code>handlers</code> instead of the entry-point name raises <code>ImportError: 'ovos-openai-plugin' not
+installed</code> — which reads like the package genuinely isn't installed, when the actual problem
+is the wrong key.</p>
+</div>
 <hr />
 <p><strong>Read next:</strong> <a href="../agent-interop/">Interoperability (MCP/UTCP/A2A)</a>
 <strong>Related:</strong> <a href="../agentic-loop/">Agentic Loop Architectures</a> · <a href="../agent-plugins/">Agent Engine Types</a></p>

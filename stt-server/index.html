@@ -1770,7 +1770,15 @@ with the plugin's <strong>built-in defaults</strong>. It does <strong>not</stron
 </li>
 <li>
 <p><strong>Compatibility routers</strong><br />
-  Beyond the native endpoints, the app mounts drop-in compatible routers so existing cloud-STT clients work unchanged. Examples are Wit.ai (<code>POST /wit/speech</code>, override the SDK host with the <code>WIT_URL</code> env var), Chromium speech-api (<code>POST /speech-api/v2/recognize</code>), and routers for OpenAI Whisper, Whisper.cpp server, Deepgram, Google, AssemblyAI, Azure, IBM Watson, AWS Transcribe, Vosk, Speechmatics, Gladia, ElevenLabs Scribe, Groq, and Kaldi GStreamer. See <code>/docs</code> for the authoritative set. A <code>GET /utcp</code> manual advertises the endpoints to UTCP agents. An MCP server mounts when <code>pip install 'ovos-stt-http-server[mcp]'</code> is present.</p>
+  Beyond the native endpoints, the app mounts drop-in compatible routers so existing cloud-STT clients work unchanged. Examples are Wit.ai (<code>POST /wit/speech</code>, override the SDK host with the <code>WIT_URL</code> env var), Chromium speech-api (<code>POST /speech-api/v2/recognize</code>), and routers for OpenAI Whisper, Whisper.cpp server, Deepgram, Google, AssemblyAI, Azure, IBM Watson, AWS Transcribe, Vosk, Speechmatics, Gladia, ElevenLabs Scribe, Groq, and Kaldi GStreamer. See <code>/docs</code> for the authoritative set. A <code>GET /utcp</code> manual advertises the endpoints to UTCP agents. An MCP endpoint auto-mounts at <code>/mcp</code> on the same port whenever <code>pip install 'ovos-stt-http-server[mcp]'</code> is present — no extra flag needed.</p>
+<div class="admonition note">
+<p class="admonition-title">The <code>mcp</code> extra installs <code>fastmcp</code>, not the <code>mcp</code> SDK</p>
+<p>The extra keeps the name <code>mcp</code>, but it resolves the third-party <code>fastmcp&gt;=3,&lt;4</code> package,
+not the official <code>mcp</code> SDK (MCP SDK 2.0 removed <code>mcp.server.fastmcp.FastMCP</code>, so a server
+still importing that symbol fails on the 2.x SDK). This server <em>serves</em> MCP with
+<code>fastmcp</code>; a client consuming a different MCP server (like <code>ovos-mcp-toolbox</code>, see
+<a href="../tool-plugins/">Agent Tool Plugins</a>) uses the official <code>mcp</code> SDK instead.</p>
+</div>
 </li>
 <li>
 <p><strong>Scalability</strong><br />

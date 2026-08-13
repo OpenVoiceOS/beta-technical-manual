@@ -1818,6 +1818,12 @@ that share one canonical value, the first, with the rest registered as its alias
 canonical/alias relationship exists only inside the line that produced it. Separate plain lines
 are independent keywords with no aliasing between them, so write alternatives on one line if you
 want them collapsed into a single canonical form plus aliases:</p>
+<div class="admonition warning">
+<p class="admonition-title">A bare <code>a|b</code> is not alternation</p>
+<p>The parentheses are load-bearing. A <code>|</code> outside a <code>(...)</code> group is not split at all — it is
+kept as a literal character in a single keyword line, almost never what you want. Either
+wrap it, <code>(a|b)</code>, or drop the <code>|</code> and put each alternative on its own line.</p>
+</div>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a># hello.voc
 </span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>(hello|hi|hey there|good morning)
 </span></code></pre></div>

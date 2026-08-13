@@ -1417,6 +1417,15 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#bounding-the-voice-cache" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bounding the voice cache
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -2033,6 +2042,15 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#bounding-the-voice-cache" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bounding the voice cache
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -2354,6 +2372,51 @@ servers entirely: fully offline plugins exist for everything.</p>
 <blockquote>
 <p>If <code>"voice"</code> is omitted, the plugin picks the first bundled model that supports the configured language.</p>
 </blockquote>
+<h3 id="bounding-the-voice-cache">Bounding the voice cache<a class="headerlink" href="#bounding-the-voice-cache" title="Permanent link">&para;</a></h3>
+<p>Loaded voice models stay resident in an in-process cache. Two settings bound it, and they are
+not equivalent:</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Bounds by</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>max_loaded_bytes</code></td>
+<td>Total size in memory, LRU-evicted. Accepts a plain byte count or a human size like <code>"3GB"</code>, <code>"512MB"</code>, <code>"1.5GiB"</code> (<code>KB/MB/GB/TB</code> are powers of 1000, <code>KiB/MiB/GiB/TiB</code> powers of 1024).</td>
+<td>unset (no budget)</td>
+</tr>
+<tr>
+<td><code>max_loaded_voices</code></td>
+<td>Count of resident voices, LRU-evicted.</td>
+<td>unset (no limit)</td>
+</tr>
+</tbody>
+</table>
+<p><code>max_loaded_voices</code> is the older setting and a poor bound on this catalog: a Piper voice is
+around 60 MB while an omnivoice voice is around 2.2 GB, roughly a 40x spread, so a count that is
+safe for small voices is fatal for large ones. <code>max_loaded_bytes</code> bounds by the actual resident
+size instead, and is the one to reach for on a mixed catalog. (Mirrors <code>max_loaded_mb</code> on the
+<a href="../linguonnx-plugins/#configuration">linguonnx plugins</a>.)</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>  &quot;tts&quot;: {
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>    &quot;module&quot;: &quot;ovos-tts-plugin-phoonnx&quot;,
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>    &quot;ovos-tts-plugin-phoonnx&quot;: {
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>      &quot;voice&quot;: &quot;OpenVoiceOS/phoonnx_pt-PT_miro_tugaphone&quot;,
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>      &quot;pinned_voices&quot;: [&quot;OpenVoiceOS/phoonnx_pt-PT_miro_tugaphone&quot;],
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>      &quot;max_loaded_bytes&quot;: &quot;3GB&quot;
+</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>    }
+</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>  }
+</span></code></pre></div>
+<p><code>pinned_voices</code> (a string or a list) names voices that are loaded at startup and never evicted.
+If the pins alone need more memory than <code>max_loaded_bytes</code> allows, the budget is raised to fit
+them — a pin is a promise the cache honors even over its own configured ceiling — and a warning
+is logged so the mismatch isn't silent.</p>
+<p>Size the budget for the actual peak, not just the steady state: peak resident memory is the
+cached models plus whatever is loading in flight at that moment, and a request that arrives
+mid-load can tip a box over even when the cache's own ceiling looks safe.</p>
 <hr />
 <p><strong>Read next:</strong> <a href="../tts-plugins/">TTS Plugins</a>
 <strong>Related:</strong> <a href="../tts-plugin-development/">Writing a TTS Plugin</a> · <a href="../tts-server/">TTS Server</a> · <a href="../ssml/">SSML</a></p>
