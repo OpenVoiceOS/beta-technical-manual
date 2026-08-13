@@ -79,8 +79,10 @@ server's own page before assuming `mycroft.conf` applies:
       - ./mycroft.conf:/home/ovos/.config/mycroft/mycroft.conf:ro
     ```
 
-- The **STT server** ignores `mycroft.conf` entirely; the plugin is selected and
-  configured through CLI flags alone ([STT Server](stt-server.md)).
+- The **STT server** selects and configures its STT plugin through CLI flags
+  alone — the `stt` section of `mycroft.conf` is not read — but its
+  audio/utterance transformer chains and default `lang` still come from
+  `mycroft.conf` ([STT Server](stt-server.md)).
 - The **translate server** likewise takes its engines from CLI flags and ignores
   `mycroft.conf` — except the published `0.0.2` release, which still reads the
   `language` section ([Translate Server](translate-server.md)).
