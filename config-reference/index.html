@@ -2232,8 +2232,8 @@ It's a different config subtree from the same-named <code>listener.VAD</code> se
 </tr>
 <tr>
 <td><code>gui_websocket.host</code></td>
-<td><code>"0.0.0.0"</code></td>
-<td>Host the GUI websocket binds to. It listens on all interfaces by default, not just localhost. Restrict it to <code>127.0.0.1</code> if no client needs network access. See <a href="../bus-service/">Bus Service</a> for network-exposure guidance.</td>
+<td><code>"127.0.0.1"</code></td>
+<td>Host the GUI websocket binds to. Loopback-only by default, matching the core bus. Widen to <code>0.0.0.0</code> only when a display client runs on another machine. See <a href="../bus-service/">Bus Service</a> for network-exposure guidance.</td>
 </tr>
 <tr>
 <td><code>gui_websocket.base_port</code></td>
@@ -2253,10 +2253,11 @@ It's a different config subtree from the same-named <code>listener.VAD</code> se
 </tbody>
 </table>
 <div class="admonition warning">
-<p class="admonition-title"><code>gui_websocket.host</code> binds to all interfaces by default</p>
-<p>Unlike the core <code>websocket</code> key, <code>gui_websocket.host</code> ships as <code>"0.0.0.0"</code>, not
-<code>"127.0.0.1"</code>. Any device on the network can reach it unless you narrow it or
-firewall the port.</p>
+<p class="admonition-title">Widening <code>gui_websocket.host</code> exposes an unauthenticated socket</p>
+<p>The GUI websocket is unauthenticated. Setting <code>gui_websocket.host</code> to <code>"0.0.0.0"</code>
+(needed for a remote display) makes it reachable by any device on the network unless
+you firewall the port. Configs written before the loopback default may still carry
+<code>"0.0.0.0"</code> — check after upgrades.</p>
 </div>
 <p>Source: <code>mycroft.conf</code> lines 356 to 361 (<code>gui_websocket</code>) and lines 609 to 627 (<code>gui</code>) in <a href="https://github.com/OpenVoiceOS/ovos-config">OpenVoiceOS/ovos-config</a>.</p>
 <hr />

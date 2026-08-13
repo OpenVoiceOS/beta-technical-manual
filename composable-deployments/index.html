@@ -1790,9 +1790,9 @@ display clients connect over a second WebSocket.</p>
 <p><code>websocket.host</code> (bus) and most PHAL plugin bindings default to loopback or same-host
 assumptions. Distributing those services is a deliberate config change, not the
 out-of-the-box behavior. See <a href="#caveats">Caveats</a> below.</p>
-<p><code>gui_websocket.host</code> is the exception: it ships as <code>0.0.0.0</code>, which exposes the GUI
-protocol socket to the LAN. Set it to <code>127.0.0.1</code> unless a display client genuinely runs
-on another machine.</p>
+<p><code>gui_websocket.host</code> ships as <code>127.0.0.1</code>, like the bus. Widen it to <code>0.0.0.0</code> only
+when a display client genuinely runs on another machine — doing so exposes the
+unauthenticated GUI protocol socket to the LAN.</p>
 </div>
 <h2 id="standalone-skills">Standalone skills<a class="headerlink" href="#standalone-skills" title="Permanent link">&para;</a></h2>
 <p>A skill does not need a running <code>ovos-core</code> to execute. <code>ovos-workshop</code> ships a launcher that
