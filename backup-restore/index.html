@@ -1488,18 +1488,20 @@ public repository.</p>
 <h3 id="restore-onto-a-fresh-install">Restore onto a fresh install<a class="headerlink" href="#restore-onto-a-fresh-install" title="Permanent link">&para;</a></h3>
 <ol>
 <li><a href="../ovos-installer/">Install OVOS</a> normally on the new machine, and confirm the stock
-   assistant works before restoring anything, so a restore problem is not confused with an
-   install problem.</li>
+    assistant works before restoring anything, so a restore problem is not confused with an
+    install problem.</li>
 <li>Stop the services: <code>systemctl --user stop ovos.service</code>.</li>
-<li>Copy the backed-up directories back into place, overwriting the freshly-installed defaults:</li>
-</ol>
+<li>
+<p>Copy the backed-up directories back into place, overwriting the freshly-installed defaults:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>cp<span class="w"> </span>-a<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$BACKUP_DIR</span><span class="s2">/config/.&quot;</span><span class="w"> </span>~/.config/mycroft/
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>cp<span class="w"> </span>-a<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$BACKUP_DIR</span><span class="s2">/data/.&quot;</span><span class="w"> </span>~/.local/share/mycroft/
 </span></code></pre></div>
-<ol>
-<li>Restart: <code>systemctl --user start ovos.service</code>, then re-run the
-   <a href="../production-operations/#knowing-when-the-assistant-is-actually-ready">readiness probe</a>
-   before relying on the device.</li>
+</li>
+<li>
+<p>Restart: <code>systemctl --user start ovos.service</code>, then re-run the
+    <a href="../production-operations/#knowing-when-the-assistant-is-actually-ready">readiness probe</a>
+    before relying on the device.</p>
+</li>
 </ol>
 <h3 id="across-a-fleet">Across a fleet<a class="headerlink" href="#across-a-fleet" title="Permanent link">&para;</a></h3>
 <p>The recipe above is per device, and it takes each device down for the length of a copy. Run

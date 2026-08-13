@@ -1975,28 +1975,24 @@ point group <code>opm.phal</code>) and applies these rules in order:</p>
 <ol>
 <li>
 <p><strong>Admin-only check</strong>: if the plugin name appears in <code>admin_config</code>, skip it (it will
-   be loaded by <code>AdminPHAL</code> instead).</p>
+    be loaded by <code>AdminPHAL</code> instead).</p>
 </li>
 <li>
 <p><strong>Explicit disable</strong>: if <code>config.get("enabled") is False</code>, skip.</p>
 </li>
 <li>
 <p><strong>Validator</strong>: if the plugin class has a <code>validator</code> attribute, call
-   <code>plug.validator.validate(config)</code>:</p>
-</li>
-<li>
-<p>Returns <code>True</code> → load</p>
-</li>
-<li>
-<p>Returns <code>False</code> → silently skip (hardware not present)</p>
-</li>
-<li>
-<p>Raises exception → skip, log error</p>
+    <code>plug.validator.validate(config)</code>:</p>
+<ul>
+<li>Returns <code>True</code> → load</li>
+<li>Returns <code>False</code> → silently skip (hardware not present)</li>
+<li>Raises exception → skip, log error</li>
+</ul>
 </li>
 <li>
 <p><strong>No validator</strong>: defaults to enabled. Only <code>enabled: false</code> can disable.
-   Note: the <code>PHALPlugin</code> base sets <code>validator = PHALValidator</code> by default, so most
-   plugins do take the validator path. The default validator just returns
+    Note: the <code>PHALPlugin</code> base sets <code>validator = PHALValidator</code> by default, so most
+    plugins do take the validator path. The default validator just returns
    <code>config.get("enabled", True) is True</code>. A subclass overrides <code>validate()</code> to add a
    real hardware probe.</p>
 </li>
