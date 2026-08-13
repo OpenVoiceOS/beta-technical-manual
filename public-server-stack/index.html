@@ -1660,8 +1660,10 @@ server's own page before assuming <code>mycroft.conf</code> applies:</p>
 </span></code></pre></div>
 </li>
 <li>
-<p>The <strong>STT server</strong> ignores <code>mycroft.conf</code> entirely; the plugin is selected and
-  configured through CLI flags alone (<a href="../stt-server/">STT Server</a>).</p>
+<p>The <strong>STT server</strong> selects and configures its STT plugin through CLI flags
+  alone — the <code>stt</code> section of <code>mycroft.conf</code> is not read — but its
+  audio/utterance transformer chains and default <code>lang</code> still come from
+  <code>mycroft.conf</code> (<a href="../stt-server/">STT Server</a>).</p>
 </li>
 <li>The <strong>translate server</strong> likewise takes its engines from CLI flags and ignores
   <code>mycroft.conf</code> — except the published <code>0.0.2</code> release, which still reads the
