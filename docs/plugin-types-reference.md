@@ -112,7 +112,7 @@ from that list are not run. A plugin can cancel the rest of the chain by returni
 
 ### Intent Pipeline Plugins
 
-A pipeline plugin is a matcher exposing `match(utterances, lang, message) → Match | None`. The orchestrator runs the configured set in order, **first-match-wins**, with no cross-plugin scoring ([OVOS-PIPELINE-1](https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md)).
+A pipeline plugin is a matcher exposing `match(utterances, lang, session) → Match | None`. The orchestrator runs the configured set in order, **first-match-wins**, with no cross-plugin scoring ([OVOS-PIPELINE-1](https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md)).
 
 | Plugin type | Entry point group | Template base class |
 |---|---|---|

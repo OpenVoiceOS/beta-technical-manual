@@ -39,7 +39,7 @@ yourself.
 ---
 
 !!! note "Spec vocabulary in one paragraph"
-    In OVOS-PIPELINE-1 terms, every stage on this page is a **pipeline plugin** identified by an opaque `pipeline_id`. Each one exposes exactly one operation to the **orchestrator**: `match(utterances, lang, message) → Match | None` (the third argument is the utterance `Message`. A plugin that needs the session reads it from `message.context["session"]`).
+    In OVOS-PIPELINE-1 terms, every stage on this page is a **pipeline plugin** identified by an opaque `pipeline_id`. Each one exposes exactly one operation to the **orchestrator**: `match(utterances, lang, session) → Match | None`, where `session` is the session carrier the orchestrator extracts from the utterance's `context.session` (PIPELINE-1 §4). Note a known spec/implementation divergence: the shipped `ovos-plugin-manager` base classes currently pass the full `Message` as the third argument, and plugins read the session from `message.context["session"]` themselves.
 
     The orchestrator iterates the plugins in the order given by `session.pipeline` and stops at the **first** one that returns a `Match`. **First match wins.** There is *no* cross-plugin confidence comparison. The per-stage `conf_high/medium/low` thresholds below are each plugin's *own* internal accept/reject gate, not a score the orchestrator ranks between plugins.
 

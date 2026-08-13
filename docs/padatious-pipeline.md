@@ -15,7 +15,7 @@ The rest of this page is for people deploying or customizing OVOS. If you only w
 
 The **Padatious Pipeline Plugin** brings example-based intent recognition to the **OpenVoiceOS (OVOS)** pipeline. You define each intent by listing a few example sentences in a plain-text `.intent` file. Padatious trains a small neural network (numpy backend) on those examples and scores incoming utterances against them.
 
-In OVOS-PIPELINE-1 terms Padatious is a pipeline plugin exposing `match(utterances, lang, message) → Match | None`. The orchestrator iterates `session.pipeline` and takes the first match. The `conf_high/medium/low` thresholds are Padatious's own per-stage accept gate, not a cross-plugin ranking. INTENT-1 §4 and INTENT-3 §1.1 leave generalization and scoring entirely engine-specific. This is exactly why a capable engine recognizes phrasings beyond its training samples.
+In OVOS-PIPELINE-1 terms Padatious is a pipeline plugin exposing `match(utterances, lang, session) → Match | None`. The orchestrator iterates `session.pipeline` and takes the first match. The `conf_high/medium/low` thresholds are Padatious's own per-stage accept gate, not a cross-plugin ranking. INTENT-1 §4 and INTENT-3 §1.1 leave generalization and scoring entirely engine-specific. This is exactly why a capable engine recognizes phrasings beyond its training samples.
 
 **When it runs:** Padatious sits early in the pipeline. Its high-confidence stage runs before Adapt, so a strong example match wins over a keyword rule. The medium and low stages run later, as the pipeline relaxes its confidence requirements.
 

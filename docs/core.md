@@ -60,7 +60,7 @@ For more detail on each subsystem:
 
 - **[Skill Manager](skill-manager.md)**: finds, loads, and manages skill lifecycles, including connectivity gating (skills only load once requirements like internet access are met).
 - **[Intent Service](intent-service.md)**: the utterance handling flow, language disambiguation, and the query API.
-- **Intent Pipeline**: the ordered sequence of **pipeline plugins** that decide what the user wants. Each exposes a single `match(utterances, lang, message) → Match | None` contract, and they run **first-match-wins**, with no cross-plugin confidence scoring (OVOS-PIPELINE-1 §4, §6.2). See [Adapt](adapt-pipeline.md), [Padatious](padatious-pipeline.md), and [Common Query](cq-pipeline.md).
+- **Intent Pipeline**: the ordered sequence of **pipeline plugins** that decide what the user wants. Each exposes a single `match(utterances, lang, session) → Match | None` contract, and they run **first-match-wins**, with no cross-plugin confidence scoring (OVOS-PIPELINE-1 §4, §6.2). See [Adapt](adapt-pipeline.md), [Padatious](padatious-pipeline.md), and [Common Query](cq-pipeline.md).
 - **Transformer Plugins**: modify utterances, metadata, or intent matches as they move through the pipeline.
 - **[Skill Installer](skill-installer.md)**: installs and manages skills and Python packages dynamically at runtime.
 

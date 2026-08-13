@@ -14,7 +14,7 @@
 **Module:** `ovos_core.intent_services.service.IntentService`: [`ovos_core/intent_services/service.py`](https://github.com/OpenVoiceOS/ovos-core/blob/dev/ovos_core/intent_services/service.py)
 
 ??? info "📐 Formal specification"
-    The utterance lifecycle, the `match(utterances, lang, message) → Match` contract (the third
+    The utterance lifecycle, the `match(utterances, lang, session) → Match` contract (the third
     argument is the utterance `Message`, from which a plugin reads the session via
     `message.context["session"]`), **first-match-wins** ordering, and the
     dispatch/handler-lifecycle events are specified by
@@ -56,7 +56,7 @@ flowchart TD
     UT --> MT["MetadataTransformersService.transform()<br/>metadata-transformer chain, TRANSFORM-1 §3.3"]
     MT --> LANG["disambiguate_lang()<br/>pick the best language"]
     LANG --> SESS["_validate_session()<br/>get/create Session"]
-    SESS --> MATCH{"for each pipeline plugin, in order<br/>match(utterances, lang, message) §4, §6.2"}
+    SESS --> MATCH{"for each pipeline plugin, in order<br/>match(utterances, lang, session) §4, §6.2"}
     MATCH -->|match found| MATCHED["ovos.intent.matched (§9.2) → dispatch → handler trio (§8)"]
     MATCH -->|no match| MATCH
     MATCH -->|no plugin matched| UNMATCHED["ovos.intent.unmatched (§9.3,<br/>legacy: complete_intent_failure)"]

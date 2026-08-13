@@ -130,7 +130,7 @@ This glossary defines common terms, acronyms, and concepts used throughout the O
 :   Mycroft's reference hardware devices. The Mark 1 is a faceplate-only speaker. The Mark 2 is a Raspberry Pi 4 device with a touchscreen running the full OVOS GUI stack. Both are still supported.
 
 **Match Contract**
-:   The single method every **pipeline plugin** exposes: `match(utterances, lang, message) → Match \| None`. It is the "system-call ABI" of the voice OS: the orchestrator knows nothing about a plugin except this signature. Returning a `Match` claims the utterance. Returning `None` declines it. [OVOS-PIPELINE-1](https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md).
+:   The single method every **pipeline plugin** exposes: `match(utterances, lang, session) → Match \| None`. It is the "system-call ABI" of the voice OS: the orchestrator knows nothing about a plugin except this signature. Returning a `Match` claims the utterance. Returning `None` declines it. [OVOS-PIPELINE-1](https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md).
 
 **Message**
 :   A JSON object sent over the messagebus, containing a `type`, `data`, and `context`.
@@ -179,7 +179,7 @@ This glossary defines common terms, acronyms, and concepts used throughout the O
 :   Python's package installer: the command you run (`pip install ...`) to add a library or skill to a Python environment. See **virtual environment (venv)** below for *which* environment it installs into.
 
 **Pipeline Plugin**
-:   A matcher that exposes the **match contract**: `match(utterances, lang, message) → Match \| None`. The **orchestrator** iterates the installed pipeline plugins in `session.pipeline` order, **first-match-wins**. A plugin returns a `Match` to claim the utterance, or `None` to pass. [Adapt](adapt-pipeline.md), [Padatious](padatious-pipeline.md), [Converse](converse-pipeline.md), [Fallback](fallback-pipeline.md), [OCP](ocp-pipeline.md) and [Persona](personas.md) are all pipeline plugins. [OVOS-PIPELINE-1](https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md).
+:   A matcher that exposes the **match contract**: `match(utterances, lang, session) → Match \| None`. The **orchestrator** iterates the installed pipeline plugins in `session.pipeline` order, **first-match-wins**. A plugin returns a `Match` to claim the utterance, or `None` to pass. [Adapt](adapt-pipeline.md), [Padatious](padatious-pipeline.md), [Converse](converse-pipeline.md), [Fallback](fallback-pipeline.md), [OCP](ocp-pipeline.md) and [Persona](personas.md) are all pipeline plugins. [OVOS-PIPELINE-1](https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md).
 
 **Plugin**
 :   A swappable building block (a [STT](stt-plugins.md), [TTS](tts-plugins.md), [wake word](wake-word-plugins.md), [VAD](vad-plugins.md)… engine). Plugins change *how* OVOS works. [Skills](skill-design-guidelines.md) add *what* it can do.

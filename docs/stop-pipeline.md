@@ -20,7 +20,7 @@ Because stopping is a **fundamental feature of a voice assistant**, it is implem
 !!! note "Spec model and topic names"
     STOP-1 distinguishes two outcomes, both via reserved `intent_name`s. A generic **stop** cascades to the *most recently active* handler: the plugin reads `session.active_handlers` (the recency record, PIPELINE-1 §7.1), pings them with `ovos.stop.ping`, collects `ovos.stop.pong` (`can_handle`) within a recommended 0.5s ceiling, and returns a `Match` on the reserved `stop` name targeting the highest-`activated_at` positive responder — dispatched on `<skill_id>:stop`. A handler that does not answer within the timeout counts as `can_handle: false`.
 
-    `global_stop` covers the three cases where there is nothing to target (STOP-1 §5.1): explicit "stop everything" vocabulary, an empty `active_handlers` list, or a ping round that produced **no positive responder**. Its `Match` clears `active_handlers`, `converse_handlers` and `response_mode` atomically, and its handler broadcasts `ovos.stop`, which every active component subscribes to.
+    `global_stop` covers the two cases where there is nothing to target (STOP-1 §5.1): explicit "stop everything" vocabulary, or a generic stop with `active_handlers` empty (or containing only the stop plugin itself). A ping round that produced **no positive responder** does *not* escalate to `global_stop` — it falls back to the most recently activated handler anyway (§4.1 step 5). Its `Match` clears `active_handlers`, `converse_handlers` and `response_mode` atomically, and its handler broadcasts `ovos.stop`, which every active component subscribes to.
 
     | Spec topic (STOP-1 §8) | Legacy name |
     |---|---|
