@@ -193,7 +193,7 @@ make the rest of the manual easier to follow:
 | **Listener** | Hears the wake word and records your speech | [Speech Service](speech-service.md) |
 | **STT** | Turns your speech into text | [STT plugins](stt-plugins.md) |
 | **ovos-core** | The "brain": decides which skill should answer | [ovos-core](core.md) |
-| **Skills** | The abilities (weather, timers, music…) | [Skill development](skill-design-guidelines.md) |
+| **Skills** | The abilities (weather, timers, music…) | [Skill development](skills-overview.md) |
 | **TTS** | Turns the reply text back into speech | [TTS plugins](tts-plugins.md) |
 | **GUI** | Shows an optional screen or visuals (*legacy/deprecated, [current status](gui-status.md)*) | [GUI Service](gui-service.md) |
 | **messagebus** | The shared channel they all talk over | [messagebus Service](bus-service.md) |
@@ -222,7 +222,7 @@ Understand the "brain" and "nervous system" of the platform:
 
 Ready to build your own plugins or skills?
 
-*   **[Skill Development](skill-design-guidelines.md)**: Learn how to write your first voice skill.
+*   **[Skill Development](skills-overview.md)**: Learn how to write your first voice skill.
 *   **[Plugin Ecosystem](plugins-index.md)**: Explore and create plugins for STT, TTS, VAD, and more.
 *   **[Intent Pipelines](pipelines-overview.md)**: Understand how OVOS parses natural language.
 *   **[Skill Testing](ovoscope-overview.md)**: Test your skills with `ovoscope`.

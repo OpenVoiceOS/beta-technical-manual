@@ -71,7 +71,7 @@ app, engine = start_translate_server(
 uvicorn.run(app, host="0.0.0.0", port=9686)
 ```
 
-`start_translate_server()` loads the plugins and returns `(app, engine)` where `app` is a FastAPI application. You run it with `uvicorn` (the `ovos-translate-server` CLI does exactly this). The translate and detect plugins are instantiated with an empty config (`config={}`). The server does not read plugin configuration from `mycroft.conf`.
+`start_translate_server()` loads the plugins and returns `(app, engine)` where `app` is a FastAPI application. You run it with `uvicorn` (the `ovos-translate-server` CLI does exactly this). The translate and detect plugins are instantiated with their settings from the `language` section of `mycroft.conf` (keyed by plugin name); a plugin with no entry there falls back to its built-in defaults.
 
 ---
 
@@ -222,11 +222,12 @@ from ovos_plugin_manager.language import load_lang_detect_plugin, load_tx_plugin
 - `load_tx_plugin(name)`: looks up the `opm.lang.translate` entry-point group for the named plugin
 - `load_lang_detect_plugin(name)`: looks up the `opm.lang.detect` entry-point group
 
-Both return the plugin class. Each class is instantiated with an empty config:
+Both return the plugin class. Each class is instantiated with its own entry from the `language` section of `mycroft.conf`:
 
 ```python
-self.tx = tx_cls(config={})
-self.detect = detect_cls(config={})   # only when --detect-engine is given
+cfg = Configuration().get("language", {})
+TX = tx_cls(config=cfg.get(tx_engine, {}))
+DETECT = detect_cls(config=cfg.get(detect_engine, {}))   # only when --detect-engine is given
 ```
 
 The translator (`engine.tx`) and optional detector (`engine.detect`) are held on a `TranslateEngineWrapper`. All FastAPI route handlers use them. When no detection plugin is configured, `/detect` and `/classify` call the translator's own `detect()` / `detect_probs()`.

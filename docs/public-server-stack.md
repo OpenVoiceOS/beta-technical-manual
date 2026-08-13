@@ -116,3 +116,7 @@ also exists as a plugin that runs directly on the device with no network at all:
 `phoonnx` for TTS, `onnx-asr` for STT, and `linguonnx` for translation are the
 same code the servers wrap. A server is worth running when several devices
 should share one machine's CPU and one copy of the models — not by default.
+
+**Read next:** [Server Compatibility Layers](server-compat-layers.md)
+
+**Related:** [STT Server](stt-server.md) · [TTS Server](tts-server.md) · [Translate Server](translate-server.md) · [Production Overview](production-overview.md)

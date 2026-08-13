@@ -185,8 +185,7 @@ OVOS uses Python extras (e.g., `[mycroft]`) to let you install predefined groups
 | Extra Name           | Purpose                                                                 |
 |----------------------|-------------------------------------------------------------------------|
 | `mycroft`            | Core services for full voice assistant experience                      |
-| `padatious`          | Adds the [Padatious](padatious-pipeline.md) intent pipeline. Apache-2.0, pure Python. The old name `lgpl` still works as an alias |
-| `plugins`            | Includes various plugin interfaces                                     |
+| `plugins`            | Includes various plugin interfaces and the [Padatious](padatious-pipeline.md) intent pipeline |
 | `skills-essential`   | Must-have skills (like system control, clock, weather)                 |
 | `skills-audio`       | Audio I/O-based skills                                                  |
 | `skills-gui`         | GUI-dependent skills                                                    |
@@ -200,7 +199,7 @@ adding both the bracketed extras and a `-c` constraints file:
 ### Full Installation Example
 
 ```bash
-uv pip install "ovos-core[mycroft,padatious,plugins,skills-essential,skills-audio,skills-gui,skills-internet,skills-media,skills-desktop]" \
+uv pip install "ovos-core[mycroft,plugins,skills-essential,skills-audio,skills-gui,skills-internet,skills-media,skills-desktop]" \
     -c https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-stable.txt
 ```
 
