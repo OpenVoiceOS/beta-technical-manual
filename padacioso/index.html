@@ -941,6 +941,15 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#pipeline-config" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pipeline config
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1389,6 +1398,15 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#pipeline-config" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pipeline config
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1472,6 +1490,61 @@ confidence penalty. For a dedicated fuzzy parser, use <a href="../nebulento/">Ne
 matching, use <a href="../palavreado/">Palavreado</a>. For the full neural version, use
 <a href="../padatious-pipeline/">Padatious</a>.</p>
 </div>
+<h2 id="pipeline-config">Pipeline config<a class="headerlink" href="#pipeline-config" title="Permanent link">&para;</a></h2>
+<p>Beyond the standalone library, the same package ships an intent-pipeline plugin:</p>
+<table>
+<thead>
+<tr>
+<th>Entry point (<code>opm.pipeline</code>)</th>
+<th>Class</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ovos-padacioso-pipeline-plugin</code></td>
+<td><code>padacioso.opm:PadaciosoPipeline</code></td>
+</tr>
+</tbody>
+</table>
+<p>Configure it under <code>intents.ovos-padacioso-pipeline-plugin</code>:</p>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="p">{</span><span class="nt">&quot;intents&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;ovos-padacioso-pipeline-plugin&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;conf_high&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.95</span><span class="p">}}}</span>
+</span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>conf_high</code></td>
+<td><code>0.95</code></td>
+<td>Threshold for the high-confidence stage.</td>
+</tr>
+<tr>
+<td><code>conf_med</code></td>
+<td><code>0.8</code></td>
+<td>Threshold for the medium-confidence stage.</td>
+</tr>
+<tr>
+<td><code>conf_low</code></td>
+<td><code>0.5</code></td>
+<td>Threshold for the low-confidence stage.</td>
+</tr>
+<tr>
+<td><code>workers</code></td>
+<td><code>4</code></td>
+<td>Worker processes for parallel intent matching.</td>
+</tr>
+<tr>
+<td><code>fuzz</code></td>
+<td>unset</td>
+<td>Fuzzy-matching setting passed through to <code>IntentContainer</code>.</td>
+</tr>
+</tbody>
+</table>
 <hr />
 <p><em>Source code: <a href="https://github.com/OpenVoiceOS/padacioso">OpenVoiceOS/padacioso</a>.</em></p>
 <hr />

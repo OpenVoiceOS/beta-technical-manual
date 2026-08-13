@@ -1652,10 +1652,46 @@ plugin so it can run alongside the classifier one. It reads its config from
 <td><code>false</code></td>
 <td>Classifier mode: renormalize probabilities over the surviving (registered) labels.</td>
 </tr>
+<tr>
+<td><code>timeout</code></td>
+<td><code>1</code></td>
+<td>Seconds to wait for the Adapt/Padatious manifest sync at startup.</td>
+</tr>
 </tbody>
 </table>
-<p>Prototype mode adds <code>prototype_k</code>, <code>prototype_strategy</code>, <code>prototype_top_k</code> and
-<code>prototype_tau</code> to control how prototype embeddings are selected per label.</p>
+<p>Prototype mode adds four more keys controlling how prototype embeddings are
+selected per label:</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>prototype_k</code></td>
+<td>unlimited</td>
+<td>Cap on stored prototype embeddings per label (subsample/cluster via <code>prototype_strategy</code>).</td>
+</tr>
+<tr>
+<td><code>prototype_strategy</code></td>
+<td><code>max_over_all</code></td>
+<td>How utterance embeddings are reduced to per-label prototypes.</td>
+</tr>
+<tr>
+<td><code>prototype_top_k</code></td>
+<td><code>3</code></td>
+<td>Number of best prototype matches aggregated per label.</td>
+</tr>
+<tr>
+<td><code>prototype_tau</code></td>
+<td><code>0.1</code></td>
+<td>Softmax temperature for prototype score aggregation.</td>
+</tr>
+</tbody>
+</table>
 <blockquote>
 <p>The model is <strong>pretrained</strong>. It does not learn new skills at runtime. The
 registered-intent filter just decides which of the model's known labels are

@@ -2275,7 +2275,7 @@ you firewall the port. Configs written before the loopback default may still car
 </span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>}
 </span></code></pre></div>
 <p>A PHAL plugin is disabled by setting <code>"enabled": false</code> under its plugin ID. Admin plugins run with elevated privileges and are read from a nested <code>admin</code> block, not the top level.</p>
-<p>Source: <code>Configuration().get("PHAL")</code> in <code>ovos_PHAL/service.py</code> line 59 and the <code>PHAL.admin</code> docstring in <code>ovos_PHAL/admin.py</code> lines 32 to 46, <a href="https://github.com/OpenVoiceOS/ovos-PHAL">OpenVoiceOS/ovos-PHAL</a>. No <code>PHAL</code> block appears in the shipped <code>mycroft.conf</code>.</p>
+<p>Source: <code>Configuration().get("PHAL")</code> in <code>ovos_PHAL/service.py</code> line 60 and the <code>PHAL.admin</code> docstring in <code>ovos_PHAL/admin.py</code> lines 32 to 46, <a href="https://github.com/OpenVoiceOS/ovos-PHAL">OpenVoiceOS/ovos-PHAL</a>. No <code>PHAL</code> block appears in the shipped <code>mycroft.conf</code>.</p>
 <hr />
 <h2 id="10-ocp-media">10. OCP / Media<a class="headerlink" href="#10-ocp-media" title="Permanent link">&para;</a></h2>
 <p><code>intents.OCP</code> tunes the OCP intent pipeline plugin. <code>Audio</code> selects the legacy audio service backend, which OCP still uses for actual playback.</p>

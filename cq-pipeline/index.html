@@ -1599,6 +1599,11 @@ back to the older <code>intents.common_query</code> key.</p>
 <td><code>1</code></td>
 <td>Extra seconds granted when a skill reports it is still searching.</td>
 </tr>
+<tr>
+<td><code>min_conf</code></td>
+<td><code>0.01</code></td>
+<td>Final confidence gate applied to the selected answer after reranking (distinct from <code>min_self_confidence</code>, which filters before selection).</td>
+</tr>
 </tbody>
 </table>
 <p>The reranker is optional. Without one, selection falls back to the skills'

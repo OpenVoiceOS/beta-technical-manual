@@ -1725,7 +1725,10 @@ are met:</p>
 <h2 id="blacklisting">Blacklisting<a class="headerlink" href="#blacklisting" title="Permanent link">&para;</a></h2>
 <p>Skills listed in <code>skills.blacklisted_skills</code> in <code>mycroft.conf</code> are skipped at load time. The recommended approach is to uninstall unwanted skills rather than blacklist them.</p>
 <h2 id="intent-training">Intent Training<a class="headerlink" href="#intent-training" title="Permanent link">&para;</a></h2>
-<p>After new skills are loaded, the manager requests pipeline re-training:</p>
+<p>Each successfully loaded skill is announced on the bus as <code>mycroft.skill.loaded</code>
+with <code>{"skill_id": ...}</code> — useful for tooling that waits for a specific skill to
+become available. After new skills are loaded, the manager requests pipeline
+re-training:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>mycroft.skills.train  →  (pipeline plugins that need it train, e.g. padatious)
 </span></code></pre></div>
 <p>The manager emits <code>mycroft.skills.train</code> and moves on. It is fire-and-forget: no reply

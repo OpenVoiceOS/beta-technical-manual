@@ -1660,6 +1660,12 @@ For example, "next song" does nothing when no player is active.</p>
 <td><code>[]</code></td>
 <td>User-supplied keyword CSVs feeding the entity matcher.</td>
 </tr>
+<tr>
+<td><code>legacy_cps</code></td>
+<td>bool</td>
+<td><code>true</code></td>
+<td>Only read by the <code>ovos-ocp-pipeline-plugin-legacy</code> matcher: set <code>false</code> to disable the legacy Mycroft CommonPlay stage entirely.</td>
+</tr>
 </tbody>
 </table>
 <p>The config block is read from <code>intents.ovos-ocp-pipeline-plugin</code>, the plugin's entry-point ID.</p>
