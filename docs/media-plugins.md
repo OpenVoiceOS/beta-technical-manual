@@ -36,8 +36,8 @@ both families. See the table below for what each currently supports.
 | [ovos-media-plugin-ffplay](#ovos-media-plugin-ffplay) | ffplay (audio) | yes: both | Apache-2.0 | Stable |
 | [ovos-media-plugin-cli](#ovos-media-plugin-cli) | generic CLI-command player (audio) | yes: both | Apache-2.0 | Alpha |
 | [ovos-plugin-vlc](#ovos-plugin-vlc) | VLC | old audio service only (legacy). Use ovos-media-plugin-vlc for ovos-media | Apache-2.0 | Stable |
-| ovos-media-plugin-mass | Music Assistant server (audio) | ovos-media only | — | — |
-| ovos-media-plugin-mpris | external MPRIS player (audio + video) | ovos-media only | — | — |
+| ovos-media-plugin-mass | Music Assistant server (audio) | ovos-media only | — | Not yet published |
+| ovos-media-plugin-mpris | external MPRIS player (audio + video) | ovos-media only | — | Not yet published |
 
 Maturity reflects repository health (age, activity, open issues/PRs, in-repo docs), not version. See the [Maturity Scale](maturity.md).
 
@@ -222,6 +222,8 @@ a specific CLI player. See [Media playback: legacy vs. ovos-media](ovos-media.md
 
 ## ovos-media-plugin-mass
 
+- **Status**: not yet published — no public repository or PyPI package exists, so it cannot be
+  installed today.
 - **Description**: Hands playback off to a [Music Assistant](https://music-assistant.io/) server
   instead of playing the stream directly. `opm.media.audio` only, `ovos-media` only — there is
   no old-audio-service equivalent. Does not implement `next()`/`previous()` through the legacy
@@ -234,6 +236,8 @@ ovos-media](ovos-media.md).
 
 ## ovos-media-plugin-mpris
 
+- **Status**: not yet published — no public repository or PyPI package exists, so it cannot be
+  installed today.
 - **Description**: Drives an already-running external MPRIS player (e.g. a desktop media app)
   rather than playing the stream itself. `opm.media.audio` and `opm.media.video`, `ovos-media`
   only. Complements (but is separate from) `ovos-media`'s own MPRIS exporter/reflector — see

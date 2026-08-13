@@ -364,6 +364,10 @@ Point a persona at the running server with the OpenAI-compatible chat engine:
 }
 ```
 
+Port `8080` here is `llama-server`'s default, which is also the documented default port of
+[`ovos-stt-server`](stt-server.md) — if both run on the same host, start one of them on a
+different port (`llama-server --port 8081` and adjust `api_url` to match).
+
 !!! warning "Entry-point name vs. package name"
     The entry point is **`ovos-chat-openai-plugin`**, not the package name
     (`ovos-openai-plugin`, `pip install ovos-openai-plugin`). Writing the package name into

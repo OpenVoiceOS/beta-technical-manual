@@ -71,6 +71,11 @@ persona is what makes `model` authoritative: a name that matches none of them is
 (Ollama-compatible) enumerate the loaded personas, so a client can discover the available names
 before picking one.
 
+The directory must yield at least one persona: startup fails fast with a `ValueError` rather
+than serving nothing — `--personas-dir is not a directory` when the path is missing, `no *.json
+persona files found` when it exists but is empty. Worth knowing before mounting a
+not-yet-populated volume into a container.
+
 ---
 
 ## The Persona File

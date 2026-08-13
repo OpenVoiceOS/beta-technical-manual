@@ -108,7 +108,8 @@ Config keys:
 
 ## Docker Deployment
 
-**Upcoming**: a ready-made Docker Compose proxy setup for this server is in progress.
+Plain Docker works today — a working `Dockerfile` follows below. What is still **upcoming** is
+only a ready-made Docker *Compose* proxy setup for this server.
 
 !!! tip "An interim path: some TTS plugins ship their own Docker image"
     A few TTS plugin repositories (for example the eSpeak NG, S.A.M., and Mimic engines)

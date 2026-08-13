@@ -39,8 +39,9 @@
     (Phase 1 of the `ovos-media` migration). OCP skills remain the way to provide media for now.
     Tracked in [ovos-workshop#423](https://github.com/OpenVoiceOS/ovos-workshop/pull/423).
 
-    A first batch of MediaProvider plugins already exists, each superseding the catalog/search
-    half of an older OCP skill:
+    A first batch of MediaProvider plugins is in development — none of them is published
+    yet (no public repository, nothing on PyPI), so there is nothing to install today.
+    Each one supersedes the catalog/search half of an older OCP skill:
 
     | MediaProvider plugin | Supersedes |
     |---|---|
@@ -163,8 +164,8 @@ the player by its entry-point name.
 | [`ovos-media-plugin-spotify`](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify) | audio | Spotify Connect |
 | [`ovos-media-plugin-chromecast`](https://github.com/OpenVoiceOS/ovos-media-plugin-chromecast) | audio, video | Cast to a Chromecast device |
 | [`ovos-media-plugin-qt5`](https://github.com/OpenVoiceOS/ovos-media-plugin-qt5) | audio, video, web | Hand off to the [GUI](gui-service.md) player. **Legacy**, depends on the deprecated [ovos-shell](ovos-shell.md) (see [GUI status](gui-status.md)) |
-| `ovos-media-plugin-mass` | audio | Hands playback off to a [Music Assistant](https://music-assistant.io/) server. Does not implement `next()`/`previous()` through the legacy `AudioBackend` interface — only through the Music Assistant queue API (see Known Coupling Issues below) |
-| `ovos-media-plugin-mpris` | audio, video | Drives an external MPRIS player (e.g. an already-running desktop media app) instead of playing the stream itself |
+| `ovos-media-plugin-mass` | audio | **Not yet published** (no public repo or PyPI package). Hands playback off to a [Music Assistant](https://music-assistant.io/) server. Does not implement `next()`/`previous()` through the legacy `AudioBackend` interface — only through the Music Assistant queue API (see Known Coupling Issues below) |
+| `ovos-media-plugin-mpris` | audio, video | **Not yet published** (no public repo or PyPI package). Drives an external MPRIS player (e.g. an already-running desktop media app) instead of playing the stream itself |
 
 ### Stream Extractor Plugins
 
