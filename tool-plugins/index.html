@@ -1949,6 +1949,9 @@ of failing loudly.</p>
 </span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="w">  </span><span class="p">}</span>
 </span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="p">}</span>
 </span></code></pre></div>
+<p>Port <code>8080</code> here is <code>llama-server</code>'s default, which is also the documented default port of
+<a href="../stt-server/"><code>ovos-stt-server</code></a> — if both run on the same host, start one of them on a
+different port (<code>llama-server --port 8081</code> and adjust <code>api_url</code> to match).</p>
 <div class="admonition warning">
 <p class="admonition-title">Entry-point name vs. package name</p>
 <p>The entry point is <strong><code>ovos-chat-openai-plugin</code></strong>, not the package name

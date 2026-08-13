@@ -1553,6 +1553,10 @@ persona is what makes <code>model</code> authoritative: a name that matches none
 404, not silently redirected. Both <code>/v1/models</code> (OpenAI-compatible) and <code>/api/tags</code>
 (Ollama-compatible) enumerate the loaded personas, so a client can discover the available names
 before picking one.</p>
+<p>The directory must yield at least one persona: startup fails fast with a <code>ValueError</code> rather
+than serving nothing — <code>--personas-dir is not a directory</code> when the path is missing, <code>no *.json
+persona files found</code> when it exists but is empty. Worth knowing before mounting a
+not-yet-populated volume into a container.</p>
 <hr />
 <h2 id="the-persona-file">The Persona File<a class="headerlink" href="#the-persona-file" title="Permanent link">&para;</a></h2>
 <p>A persona is a JSON object whose <code>handlers</code> list names the plugins that answer queries. Per-plugin config is keyed by the plugin name. Example pointing at an OpenAI-compatible LLM:</p>
