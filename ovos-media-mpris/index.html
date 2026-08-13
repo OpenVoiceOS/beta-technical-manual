@@ -1712,6 +1712,15 @@ in connected devices.</p>
 </span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
 </span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="c1"># Should show: &quot;org.mpris.MediaPlayer2.OCP&quot;</span>
 </span></code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Position units differ between the OCP bus and MPRIS</p>
+<p>Every position/length value on the OCP bus and in the media-backend contract
+(<code>seekValue</code>, <code>set_track_position</code>, <code>get_track_position</code>, <code>get_track_length</code>, and the GUI's
+<code>position</code>/<code>duration</code> fields) is <strong>milliseconds</strong>. MPRIS itself uses <strong>microseconds</strong> for its
+<code>Position</code> property, so <code>ovos-media</code> converts when exporting it (multiplying the millisecond
+value by 1000). This conversion is internal to the MPRIS exporter; nothing else in
+<code>ovos-media</code> deals in microseconds.</p>
+</div>
 <hr />
 <h2 id="external-player-reflection-takeover">External Player Reflection &amp; Takeover<a class="headerlink" href="#external-player-reflection-takeover" title="Permanent link">&para;</a></h2>
 <p><code>OcpMprisExporter</code> (<code>ovos_media/mpris.py</code>) has two roles, referred to as <strong>Role A</strong> and

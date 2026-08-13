@@ -1496,7 +1496,11 @@ unrated, not unmature.</p>
   also recognizes a hardcoded table of known news-provider URLs directly (<code>URL_MAPPINGS</code>) so
   skills can hand it a raw provider URL without the <code>news//</code> prefix. At playback time it looks
   the URL up in that table and calls the matching extractor function to resolve the real,
-  playable stream.</p>
+  playable stream. The TSF (Portugal) source resolves the current bulletin by scraping it from
+  TSF's listing page rather than guessing a predictable URL, since TSF now hosts bulletins on a
+  CDN with unpredictable per-bulletin filenames. The GR1 (Italy) source resolves Rai's relinker
+  URL server-side with a browser-like User-Agent before handing back the final stream, since the
+  relinker rejects requests without one.</p>
 </li>
 </ul>
 <hr />
@@ -1508,8 +1512,9 @@ unrated, not unmature.</p>
 <li>
 <p><strong>Description</strong>: A stream extractor for <a href="https://bandcamp.com">Bandcamp</a> pages, registering
   the SEI <code>bandcamp</code>. It recognizes both <code>bandcamp//&lt;url&gt;</code> results and any bare URL containing
-  <code>bandcamp.</code>, then delegates the actual page scraping to the <code>py-bandcamp</code> library
-  (<code>get_stream_data</code>) to pull out the real audio stream URL and track metadata.</p>
+  <code>bandcamp.</code>, then strips the <code>bandcamp//</code> SEI prefix (if present) before delegating the actual
+  page scraping to the <code>py-bandcamp</code> library (<code>get_stream_data</code>) to pull out the real audio
+  stream URL and track metadata.</p>
 </li>
 </ul>
 <hr />
@@ -1538,7 +1543,10 @@ unrated, not unmature.</p>
   <code>youtube-dl</code>/<code>yt-dlp</code>, <code>pytube</code>, an Invidious mirror, or a webview fallback, selectable via
   the <code>youtube_backend</code> / <code>ydl_backend</code> / <code>invidious_host</code> settings, since any single scraping
   approach tends to break whenever YouTube changes its page format. It also has a dedicated path
-  for resolving a channel's current live stream.</p>
+  for resolving a channel's current live stream. The <code>pytube</code> backend depends on
+  <code>tutubo.pytube</code>, which only exists on <code>tutubo&lt;3.0.0</code>; a newer <code>tutubo</code> is tolerated (the other
+  backends keep working), but selecting the <code>pytube</code> backend against <code>tutubo&gt;=3.0.0</code> raises a
+  clear error telling you to pin <code>tutubo&lt;3.0.0</code> or use the default <code>youtube-dl</code> backend instead.</p>
 </li>
 </ul>
 <hr />

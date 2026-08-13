@@ -1811,14 +1811,19 @@ music while it talks.</p>
    see <a href="../ovos-media-compat/">ovos-media Legacy Compatibility</a>.</li>
 </ol>
 <p>Switching media playback to <code>ovos-media</code> (<code>enable_old_audioservice: false</code>) turns off
-subsystem 2 only. TTS and sound playback (subsystem 1) keep working exactly as before.</p>
+subsystem 2 only. TTS and sound playback (subsystem 1) keep working exactly as before.
+<code>enable_old_audioservice</code> works in both directions: flip it back to <code>true</code> to return to
+the legacy audioservice, on the same install, no reinstall needed.</p>
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Upcoming breaking change</p>
-<p>The legacy media audioservice subsystem (subsystem 2 above, including the
-<a href="../ocp-audio-plugin/">OCP audioservice backend</a>) is planned for removal from
-<code>ovos-audio</code> entirely. Media playback will then live wholly in <a href="../ovos-media/"><code>ovos-media</code></a>.
-The TTS / sound playback queue (subsystem 1) is unaffected.</p>
+<p>The legacy media audioservice and standalone <code>ovos-media</code> currently run <strong>side by side</strong>:
+which one plays media is a deployer's choice, made with <code>enable_old_audioservice</code>. The
+legacy media audioservice subsystem (subsystem 2 above, including the
+<a href="../ocp-audio-plugin/">OCP audioservice backend</a>) is planned to stop being the default,
+with media playback moving wholly to <a href="../ovos-media/"><code>ovos-media</code></a>; opt in today by
+setting <code>enable_old_audioservice: false</code>. The TTS / sound playback queue (subsystem 1) is
+unaffected either way.</p>
 </div>
 <hr />
 <details class="abstract">

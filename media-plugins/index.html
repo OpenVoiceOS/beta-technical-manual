@@ -1644,7 +1644,19 @@ thin docs. Don't read one column as implying the other.</p>
 </ul>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>pip<span class="w"> </span>install<span class="w"> </span>ovos-media-plugin-vlc
 </span></code></pre></div>
-<p>Then select it in your audio/media backend config. See <a href="../ovos-media/">Media playback: legacy vs. ovos-media</a>.</p>
+<div class="admonition warning">
+<p class="admonition-title">Needs the native <code>libvlc</code> system library</p>
+<p><code>ovos-media-plugin-vlc</code> wraps <code>python-vlc</code>, which needs the native <code>libvlc</code> system library
+to actually load. <code>pip install</code> alone will not error if <code>libvlc</code> is missing — the plugin
+just silently fails to load, and no audio backend is available. Install the system package
+too, e.g. <code>apt install vlc</code> (Debian/Ubuntu) or <code>libvlc-dev</code>/<code>libvlc5</code> on distros that split
+the runtime from the dev headers. If you want a backend with no native binding to install,
+see <a href="#ovos-media-plugin-ffplay">ovos-media-plugin-ffplay</a> below.</p>
+</div>
+<p>Then select it in your audio/media backend config, using the <strong>entry-point name</strong>
+(<code>ovos-media-audio-plugin-vlc</code> for audio, <code>ovos-media-video-plugin-vlc</code> for video) as the
+<code>module</code> value — this differs from the pip package name (<code>ovos-media-plugin-vlc</code>). See <a href="../ovos-media/">Media
+playback: legacy vs. ovos-media</a>.</p>
 <hr />
 <h2 id="ovos-media-plugin-chromecast">ovos-media-plugin-chromecast<a class="headerlink" href="#ovos-media-plugin-chromecast" title="Permanent link">&para;</a></h2>
 <ul>
@@ -1727,6 +1739,10 @@ thin docs. Don't read one column as implying the other.</p>
 </ul>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>pip<span class="w"> </span>install<span class="w"> </span>ovos-media-plugin-ffplay
 </span></code></pre></div>
+<p>A good default for a headless box: it only needs <code>ffmpeg</code>/<code>ffplay</code> on the <code>PATH</code>, which most
+systems already have or can install with a single package (<code>apt install ffmpeg</code>), with no
+separate native binding to install (unlike <a href="#ovos-media-plugin-vlc">ovos-media-plugin-vlc</a>
+above).</p>
 <p>Then select it in your audio/media backend config. See <a href="../ovos-media/">Media playback: legacy vs. ovos-media</a>.</p>
 <hr />
 <h2 id="ovos-media-plugin-cli">ovos-media-plugin-cli<a class="headerlink" href="#ovos-media-plugin-cli" title="Permanent link">&para;</a></h2>

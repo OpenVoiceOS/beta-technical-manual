@@ -974,6 +974,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Transformer Types">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#config-shape-all-six-chains" class="md-nav__link">
+    <span class="md-ellipsis">
+      Config shape (all six chains)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1504,6 +1519,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Transformer Types">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#config-shape-all-six-chains" class="md-nav__link">
+    <span class="md-ellipsis">
+      Config shape (all six chains)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1652,6 +1682,25 @@ the background job finishing.</p>
 <h2 id="transformer-types">Transformer Types<a class="headerlink" href="#transformer-types" title="Permanent link">&para;</a></h2>
 <p>All base classes live in <code>ovos_plugin_manager.templates.transformers</code> and share the same constructor: <code>__init__(self, name, priority=50, config=None)</code>, plus <code>bind(bus)</code> and <code>initialize()</code>. The loader (<code>TransformersService.load_plugins()</code> in <code>ovos_plugin_manager.transformer_services</code>) only ever instantiates a plugin as <code>plug(config=plugin_config)</code>. It does not pass <code>name</code> or <code>priority</code>. Since the base class has no default for <code>name</code>, every plugin must override <code>__init__</code> to supply its own <code>name</code> (and usually a default <code>priority</code>). Each plugin must call <code>super().__init__(name, priority, config)</code> so the base class still gets them.</p>
 <p>A <code>"priority"</code> key in a plugin's <code>mycroft.conf</code> block is not applied automatically. The plugin must read it back out of <code>self.config</code> itself if it wants deployments to override priority (see <a href="../utterance-transformers/#config-driven-priority">Utterance Transformers: Config-driven priority</a>).</p>
+<h3 id="config-shape-all-six-chains">Config shape (all six chains)<a class="headerlink" href="#config-shape-all-six-chains" title="Permanent link">&para;</a></h3>
+<p>Every chain's <code>mycroft.conf</code> section follows the same rules (<code>TransformersService.load_plugins()</code> in <code>ovos_plugin_manager.transformer_services</code>):</p>
+<ul>
+<li>Each <strong>key</strong> in the section is an enabled plugin's entry-point name, except the two
+  reserved keys <code>order</code> and <code>blacklisted_skills</code>, which are not plugin entries.</li>
+<li>A plugin block with <code>"active": false</code> is still loaded but skipped when the chain runs.</li>
+<li>An <code>"order"</code> key, if present, is a <strong>list of plugin names</strong> giving the run order
+  explicitly. It wins over ascending-priority sorting; a loaded plugin absent from the
+  list is not run. Plugins named in <code>order</code> are treated as enabled even with no config
+  block of their own.</li>
+</ul>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="p">{</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span><span class="nt">&quot;utterance_transformers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">    </span><span class="nt">&quot;order&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;ovos-utterance-plugin-cancel&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;ovos-utterance-normalizer&quot;</span><span class="p">],</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">    </span><span class="nt">&quot;ovos-utterance-plugin-cancel&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">    </span><span class="nt">&quot;ovos-utterance-normalizer&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">  </span><span class="p">}</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="p">}</span>
+</span></code></pre></div>
 <table>
 <thead>
 <tr>
@@ -1700,39 +1749,44 @@ the background job finishing.</p>
 </tr>
 </tbody>
 </table>
+<p><code>ovos-plugin-manager</code> also honors the deprecated Neon entry-point groups <code>neon.plugin.text</code>,
+<code>neon.plugin.metadata</code> and <code>neon.plugin.audio</code> as aliases for <code>opm.transformer.text</code>,
+<code>opm.transformer.metadata</code> and <code>opm.transformer.audio</code> (with a deprecation warning). There is
+no such alias for the intent, dialog or TTS chains — a plugin registered only under a legacy
+name for those three groups is not discovered.</p>
 <p>The runner classes that load and chain these plugins live in <code>ovos-plugin-manager</code> (<code>ovos_plugin_manager.transformer_services</code>): <code>UtteranceTransformersService</code>, <code>MetadataTransformersService</code>, <code>IntentTransformersService</code>, <code>AudioTransformersService</code>, <code>DialogTransformersService</code>, <code>TTSTransformersService</code>. Each consumer imports the one it needs. <code>ovos-core</code> runs the utterance/metadata/intent chains, the listener runs the audio chain, and the audio/TTS stacks run the dialog/TTS chains.</p>
 <hr />
 <h2 id="1-audio-transformers">1. Audio Transformers<a class="headerlink" href="#1-audio-transformers" title="Permanent link">&para;</a></h2>
 <p><strong>Entry point:</strong> <code>opm.transformer.audio</code></p>
 <p>Used to process or transform raw audio before it reaches the STT engine. Common use cases include noise reduction, volume normalization, or streaming language detection.</p>
 <h3 id="template">Template<a class="headerlink" href="#template" title="Permanent link">&para;</a></h3>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span> <span class="nn">ovos_plugin_manager.templates.transformers</span> <span class="kn">import</span> <span class="n">AudioTransformer</span>
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="k">class</span> <span class="nc">MyAudioTransformer</span><span class="p">(</span><span class="n">AudioTransformer</span><span class="p">):</span>
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>    <span class="k">def</span> <span class="nf">on_audio</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">audio_data</span><span class="p">):</span>
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>        <span class="c1"># Process non-speech chunks</span>
-</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>        <span class="k">return</span> <span class="n">audio_data</span>
-</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>
-</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>    <span class="k">def</span> <span class="nf">on_speech</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">audio_data</span><span class="p">):</span>
-</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>        <span class="c1"># Process speech chunks during recording</span>
-</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>        <span class="k">return</span> <span class="n">audio_data</span>
-</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>
-</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>    <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">audio_data</span><span class="p">):</span>
-</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>        <span class="c1"># Final transformation and optional context injection</span>
-</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>        <span class="k">return</span> <span class="n">audio_data</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;extra_metadata&quot;</span><span class="p">:</span> <span class="s2">&quot;value&quot;</span><span class="p">}</span>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">from</span> <span class="nn">ovos_plugin_manager.templates.transformers</span> <span class="kn">import</span> <span class="n">AudioTransformer</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="k">class</span> <span class="nc">MyAudioTransformer</span><span class="p">(</span><span class="n">AudioTransformer</span><span class="p">):</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>    <span class="k">def</span> <span class="nf">on_audio</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">audio_data</span><span class="p">):</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>        <span class="c1"># Process non-speech chunks</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>        <span class="k">return</span> <span class="n">audio_data</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>    <span class="k">def</span> <span class="nf">on_speech</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">audio_data</span><span class="p">):</span>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>        <span class="c1"># Process speech chunks during recording</span>
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>        <span class="k">return</span> <span class="n">audio_data</span>
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>    <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">audio_data</span><span class="p">):</span>
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>        <span class="c1"># Final transformation and optional context injection</span>
+</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>        <span class="k">return</span> <span class="n">audio_data</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;extra_metadata&quot;</span><span class="p">:</span> <span class="s2">&quot;value&quot;</span><span class="p">}</span>
 </span></code></pre></div>
 <hr />
 <h2 id="2-utterance-transformers">2. Utterance Transformers<a class="headerlink" href="#2-utterance-transformers" title="Permanent link">&para;</a></h2>
 <p><strong>Entry point:</strong> <code>opm.transformer.text</code></p>
 <p>Used to modify the transcribed text (utterances) before they are sent to the intent service. Common use cases include spelling correction, filtering, or expansion. See <a href="../utterance-transformers/">Utterance Transformers</a> for details.</p>
 <h3 id="template_1">Template<a class="headerlink" href="#template_1" title="Permanent link">&para;</a></h3>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">from</span> <span class="nn">ovos_plugin_manager.templates.transformers</span> <span class="kn">import</span> <span class="n">UtteranceTransformer</span>
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="k">class</span> <span class="nc">MyUtteranceTransformer</span><span class="p">(</span><span class="n">UtteranceTransformer</span><span class="p">):</span>
-</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>    <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">utterances</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>        <span class="c1"># utterances is a list of strings</span>
-</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>        <span class="n">transformed</span> <span class="o">=</span> <span class="p">[</span><span class="n">u</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="k">for</span> <span class="n">u</span> <span class="ow">in</span> <span class="n">utterances</span><span class="p">]</span>
-</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>        <span class="k">return</span> <span class="n">transformed</span><span class="p">,</span> <span class="n">context</span>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">from</span> <span class="nn">ovos_plugin_manager.templates.transformers</span> <span class="kn">import</span> <span class="n">UtteranceTransformer</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="k">class</span> <span class="nc">MyUtteranceTransformer</span><span class="p">(</span><span class="n">UtteranceTransformer</span><span class="p">):</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>    <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">utterances</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>        <span class="c1"># utterances is a list of strings</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>        <span class="n">transformed</span> <span class="o">=</span> <span class="p">[</span><span class="n">u</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="k">for</span> <span class="n">u</span> <span class="ow">in</span> <span class="n">utterances</span><span class="p">]</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>        <span class="k">return</span> <span class="n">transformed</span><span class="p">,</span> <span class="n">context</span>
 </span></code></pre></div>
 <hr />
 <h2 id="3-metadata-transformers">3. Metadata Transformers<a class="headerlink" href="#3-metadata-transformers" title="Permanent link">&para;</a></h2>
@@ -1753,17 +1807,17 @@ the background job finishing.</p>
 <hr />
 <h2 id="standalone-usage">Standalone Usage<a class="headerlink" href="#standalone-usage" title="Permanent link">&para;</a></h2>
 <p>You can use transformers independently of the full OVOS stack. Here is an example with an <code>UtteranceTransformer</code>:</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">from</span> <span class="nn">ovos_plugin_manager.text_transformers</span> <span class="kn">import</span> <span class="n">find_utterance_transformer_plugins</span>
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="c1"># Find and load the plugin (returns {plugin_name: class})</span>
-</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="n">plugins</span> <span class="o">=</span> <span class="n">find_utterance_transformer_plugins</span><span class="p">()</span>
-</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="n">transformer_class</span> <span class="o">=</span> <span class="n">plugins</span><span class="p">[</span><span class="s2">&quot;ovos-utterance-normalizer&quot;</span><span class="p">]</span>
-</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="n">transformer</span> <span class="o">=</span> <span class="n">transformer_class</span><span class="p">()</span>  <span class="c1"># base __init__ supplies the name</span>
-</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>
-</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="c1"># Transform an utterance (utterances is a list of strings)</span>
-</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="n">utterances</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;hello world&quot;</span><span class="p">]</span>
-</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="n">transformed</span><span class="p">,</span> <span class="n">context</span> <span class="o">=</span> <span class="n">transformer</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">utterances</span><span class="p">)</span>
-</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Transformed: </span><span class="si">{</span><span class="n">transformed</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kn">from</span> <span class="nn">ovos_plugin_manager.text_transformers</span> <span class="kn">import</span> <span class="n">find_utterance_transformer_plugins</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="c1"># Find and load the plugin (returns {plugin_name: class})</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="n">plugins</span> <span class="o">=</span> <span class="n">find_utterance_transformer_plugins</span><span class="p">()</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="n">transformer_class</span> <span class="o">=</span> <span class="n">plugins</span><span class="p">[</span><span class="s2">&quot;ovos-utterance-normalizer&quot;</span><span class="p">]</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="n">transformer</span> <span class="o">=</span> <span class="n">transformer_class</span><span class="p">()</span>  <span class="c1"># base __init__ supplies the name</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="c1"># Transform an utterance (utterances is a list of strings)</span>
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="n">utterances</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;hello world&quot;</span><span class="p">]</span>
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="n">transformed</span><span class="p">,</span> <span class="n">context</span> <span class="o">=</span> <span class="n">transformer</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">utterances</span><span class="p">)</span>
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Transformed: </span><span class="si">{</span><span class="n">transformed</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </span></code></pre></div>
 <p>The discovery helpers (<code>find_*_transformer_plugins</code>, <code>load_*_transformer_plugin</code>) live in
 <code>ovos_plugin_manager.text_transformers</code>, <code>.intent_transformers</code>, <code>.metadata_transformers</code>,

@@ -1483,6 +1483,14 @@ notification sounds are played.</p>
 <p>So unless you have explicitly switched to <code>ovos-media</code>, your OVOS device is playing media through
 this plugin.</p>
 <div class="admonition warning">
+<p class="admonition-title">Legacy: bug fixes only, no new features</p>
+<p><code>ovos-ocp-audio-plugin</code> still receives bug fixes, but no new functionality — active
+development goes into <a href="../ovos-media/"><code>ovos-media</code></a>. Recent fixes worth knowing about if
+you rely on this plugin: skipping backwards through a shuffled queue no longer re-shuffles
+the remaining tracks, and stream URLs carrying an auth token are redacted before they are
+written to the log.</p>
+</div>
+<div class="admonition warning">
 <p class="admonition-title">Upcoming: breaking</p>
 <p>This legacy audioservice subsystem, including the OCP backend described on this page,
 is planned for removal from <code>ovos-audio</code> entirely. Media playback will then live wholly

@@ -1191,6 +1191,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Media Intents">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#now-playing-intents" class="md-nav__link">
+    <span class="md-ellipsis">
+      Now-Playing Intents
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1213,6 +1228,15 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#first-playback" class="md-nav__link">
+    <span class="md-ellipsis">
+      First playback
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#service-level-bus-messages" class="md-nav__link">
     <span class="md-ellipsis">
       Service-level bus messages
@@ -1223,6 +1247,15 @@
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stop-error-semantics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Stop &amp; Error Semantics
+    </span>
+  </a>
   
 </li>
       
@@ -1835,6 +1868,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Media Intents">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#now-playing-intents" class="md-nav__link">
+    <span class="md-ellipsis">
+      Now-Playing Intents
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1857,6 +1905,15 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#first-playback" class="md-nav__link">
+    <span class="md-ellipsis">
+      First playback
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#service-level-bus-messages" class="md-nav__link">
     <span class="md-ellipsis">
       Service-level bus messages
@@ -1867,6 +1924,15 @@
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stop-error-semantics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Stop &amp; Error Semantics
+    </span>
+  </a>
   
 </li>
       
@@ -2244,6 +2310,22 @@ account current player state):</p>
   the bus messages work; only the voice route is disabled.</p>
 </li>
 </ul>
+<h3 id="now-playing-intents">Now-Playing Intents<a class="headerlink" href="#now-playing-intents" title="Permanent link">&para;</a></h3>
+<p><code>OCPMediaCatalog</code> (the built-in <code>ovos-media</code> skill described under <a href="#ovos-media-player">ovos-media
+Player</a>) registers five regular padatious intents (en-us) about the
+currently playing track: <code>WhatSong</code>, <code>WhatArtist</code>, <code>WhatAlbum</code>, <code>ShuffleOn</code>, and <code>ShuffleOff</code>.</p>
+<p><code>WhatSong</code> and <code>WhatArtist</code> answer from the player's global status
+(<code>ovos.common_play.status</code>), the same read-only state every session gets back from a status
+query — so these two intents answer on <strong>any</strong> session, not just the local device. <code>WhatAlbum</code>
+always reports it has no album information: <code>MediaEntry</code> (the player's now-playing model) has
+no album field to report, an upstream data-model limitation rather than a missing lookup.</p>
+<p><code>ShuffleOn</code> and <code>ShuffleOff</code> are different: they act on the player (<code>shuffle.set</code> /
+<code>shuffle.unset</code>), so they follow the same session gating as any other playback-affecting
+command — only the local/"default" session may trigger them, unless the owning <code>ovos-media</code>
+was configured with <code>media.validate_source: false</code> (see <a href="#hivemind-multi-session-gating">HiveMind: multi-session
+gating</a>). On a non-default session the intent handler itself
+declines before emitting anything, and speaks a dialog saying the device cannot be controlled
+from here, rather than reporting success for a shuffle change that never happened.</p>
 <hr />
 <h2 id="mpris-integration">MPRIS Integration<a class="headerlink" href="#mpris-integration" title="Permanent link">&para;</a></h2>
 <p><code>ovos-media</code> can register itself on D-Bus as an MPRIS player, so tools like <code>playerctl</code> and
@@ -2311,6 +2393,32 @@ backend is legacy and needs the deprecated <a href="../ovos-shell/">ovos-shell</
 search results into the active playlist vs. replacing it), and
 <code>force_audioservice</code> (route audio through the audio backend even when a GUI is
 available).</p>
+<h3 id="first-playback">First playback<a class="headerlink" href="#first-playback" title="Permanent link">&para;</a></h3>
+<p><code>ovos-media</code> listens for <code>ovos.common_play.play</code> and expects a <code>media</code> dict plus an optional
+<code>playlist</code> list:</p>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="p">{</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">  </span><span class="nt">&quot;media&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">    </span><span class="nt">&quot;uri&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://example.com/song.mp3&quot;</span><span class="p">,</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">    </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Some Jazz&quot;</span><span class="p">,</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">    </span><span class="nt">&quot;media_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">    </span><span class="nt">&quot;playback&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="w">  </span><span class="p">},</span>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="w">  </span><span class="nt">&quot;playlist&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="nt">&quot;uri&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://example.com/song.mp3&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Some Jazz&quot;</span><span class="p">,</span>
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="w">                </span><span class="nt">&quot;media_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;playback&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">}]</span>
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><code>media</code> is required — <code>handle_play_request</code> logs a warning and ignores the message without it.
+If <code>playlist</code> is omitted, <code>ovos-media</code> builds a single-track playlist containing only <code>media</code>.
+Either way, playing then <strong>replaces</strong> the player's current playlist outright: an
+<code>ovos.common_play.play</code> message always overwrites whatever was set by an earlier
+<code>ovos.common_play.playlist.set</code> message, whether or not it includes a <code>playlist</code> key, and
+next/previous navigation after a bare <code>play</code> (no <code>playlist</code> key) only ever has the one track to
+work with. To play a track as part of a larger playlist, include the full track list under
+<code>playlist</code> in the same <code>ovos.common_play.play</code> message.</p>
+<p>Query-style bus messages follow a <code>.response</code> suffix convention: the reply to <code>&lt;msg_type&gt;</code> is
+emitted as <code>&lt;msg_type&gt;.response</code>. For example, <code>ovos.common_play.status</code> is answered on
+<code>ovos.common_play.status.response</code>, and <code>ovos.common_play.track_info</code> on
+<code>ovos.common_play.track_info.response</code>.</p>
 <h3 id="service-level-bus-messages">Service-level bus messages<a class="headerlink" href="#service-level-bus-messages" title="Permanent link">&para;</a></h3>
 <p>Beyond the per-player <code>ovos.audio.service.*</code> / <code>ovos.video.service.*</code> API, these bus messages
 are handled inside the <code>ovos-media</code> process.</p>
@@ -2392,6 +2500,30 @@ liveness probe — the rest are on the player, so they answer only once a player
 <p>These live alongside the legacy ducking/cork aliases kept for backward compatibility. The full
 ~30-entry <code>OCPMediaPlayer</code> handler list, including exact legacy alias names, is in
 <code>ovos_media/player.py</code>.</p>
+<hr />
+<h2 id="stop-error-semantics">Stop &amp; Error Semantics<a class="headerlink" href="#stop-error-semantics" title="Permanent link">&para;</a></h2>
+<p>A few guarantees hold for <code>OCPMediaPlayer</code> regardless of which backend is active:</p>
+<ul>
+<li><strong>Stop never advances the queue.</strong> Whether it comes from the bus API, a legacy stop topic, or
+  an MPRIS <code>Stop</code> command — including while a bad-stream retry is still pending — an explicit
+  stop always ends on <code>PlayerState.STOPPED</code> with the queue position unchanged. Advancing to the
+  next track only ever happens through the normal end-of-track / <code>next</code> paths.</li>
+<li><strong>Unplayable tracks are skipped, not fatal.</strong> A track a backend cannot load emits
+  <code>MediaState.INVALID_MEDIA</code> and the player schedules a delayed retry that moves on to the next
+  track in the queue, rather than failing the whole playback request outright.</li>
+<li><strong>A queue that is entirely broken stops instead of looping forever.</strong> If every track in the
+  current queue has already failed to load since the last successful one, <code>ovos-media</code> stops
+  playback (<code>PlayerState.STOPPED</code>) instead of retrying indefinitely — this applies both to
+  <code>LoopState.REPEAT_TRACK</code> on a single failed track and to <code>LoopState.REPEAT</code> restarting a
+  wholly-failed queue.</li>
+<li><strong>End of queue emits <code>PlayerState.STOPPED</code>.</strong> Reaching the end of the queue with repeat off
+  updates the player state (and notifies the GUI/MPRIS/bus) rather than leaving it at <code>PLAYING</code>
+  with nothing left to play.</li>
+<li><strong>Duplicate URIs in a playlist advance by position, not first match.</strong> A playlist like
+  <code>[a, b, a]</code> tracks the currently-playing entry by object identity, falling back to playlist
+  position and then to URI lookup only if identity is unavailable — so playback moves through
+  the queue in order instead of ping-ponging back to the first track sharing a URI.</li>
+</ul>
 <hr />
 <h2 id="legacy-compatibility-known-coupling-issues">Legacy Compatibility &amp; Known Coupling Issues<a class="headerlink" href="#legacy-compatibility-known-coupling-issues" title="Permanent link">&para;</a></h2>
 <p><code>ovos-media</code>'s pipeline plugin falls back to the classic <code>mycroft.audio.service.*</code> bus messages
