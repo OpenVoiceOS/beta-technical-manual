@@ -83,9 +83,9 @@ display clients connect over a second WebSocket.
     assumptions. Distributing those services is a deliberate config change, not the
     out-of-the-box behavior. See [Caveats](#caveats) below.
 
-    `gui_websocket.host` is the exception: it ships as `0.0.0.0`, which exposes the GUI
-    protocol socket to the LAN. Set it to `127.0.0.1` unless a display client genuinely runs
-    on another machine.
+    `gui_websocket.host` ships as `127.0.0.1`, like the bus. Widen it to `0.0.0.0` only
+    when a display client genuinely runs on another machine — doing so exposes the
+    unauthenticated GUI protocol socket to the LAN.
 
 ## Standalone skills
 

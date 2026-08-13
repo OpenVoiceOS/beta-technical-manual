@@ -196,15 +196,16 @@ The `gui` key controls the on-screen interface. The `gui_websocket` key controls
 | `gui.extension` | `"generic"` | GUI platform extension. Enclosures can set a different one for their own screen. |
 | `gui.generic.homescreen_supported` | `true` | Whether the `generic` extension shows a homescreen. |
 | `gui.disable_gui` | `false` | On a headless device, set to `true` to stop all GUI bus messages. |
-| `gui_websocket.host` | `"0.0.0.0"` | Host the GUI websocket binds to. It listens on all interfaces by default, not just localhost. Restrict it to `127.0.0.1` if no client needs network access. See [Bus Service](bus-service.md) for network-exposure guidance. |
+| `gui_websocket.host` | `"127.0.0.1"` | Host the GUI websocket binds to. Loopback-only by default, matching the core bus. Widen to `0.0.0.0` only when a display client runs on another machine. See [Bus Service](bus-service.md) for network-exposure guidance. |
 | `gui_websocket.base_port` | `18181` | Base port for the GUI websocket. Each connected GUI client gets its own port from this point up. |
 | `gui_websocket.route` | `"/gui"` | URL route for the GUI websocket. |
 | `gui_websocket.ssl` | `false` | Enable TLS on the GUI websocket. |
 
-!!! warning "`gui_websocket.host` binds to all interfaces by default"
-    Unlike the core `websocket` key, `gui_websocket.host` ships as `"0.0.0.0"`, not
-    `"127.0.0.1"`. Any device on the network can reach it unless you narrow it or
-    firewall the port.
+!!! warning "Widening `gui_websocket.host` exposes an unauthenticated socket"
+    The GUI websocket is unauthenticated. Setting `gui_websocket.host` to `"0.0.0.0"`
+    (needed for a remote display) makes it reachable by any device on the network unless
+    you firewall the port. Configs written before the loopback default may still carry
+    `"0.0.0.0"` — check after upgrades.
 
 Source: `mycroft.conf` lines 356 to 361 (`gui_websocket`) and lines 609 to 627 (`gui`) in [OpenVoiceOS/ovos-config](https://github.com/OpenVoiceOS/ovos-config).
 
