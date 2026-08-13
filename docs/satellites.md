@@ -257,10 +257,10 @@ resource limit and healthcheck spelled out.
     container.
 
     Host networking also exposes any service that binds `0.0.0.0` straight onto the LAN, not
-    just the host's own loopback. `gui_websocket.host` ships as `0.0.0.0` (all interfaces), so
-    with `network_mode: host` the GUI WebSocket lands on the LAN, not just the device. Set
-    `gui_websocket.host` to `127.0.0.1` unless a remote display client genuinely needs LAN
-    access.
+    just the host's own loopback. `gui_websocket.host` ships as `127.0.0.1`, but if you widen
+    it to `0.0.0.0` for a remote display — or an older config still carries that value — then
+    with `network_mode: host` the GUI WebSocket lands on the LAN, not just the device. Keep
+    the loopback default unless a remote display client genuinely needs LAN access.
 
 Each thin client still runs its own bus, listener, audio and core. Only the heavy STT/TTS
 inference is centralized. This is the same pattern as

@@ -276,10 +276,10 @@ There is no secrets manager or encryption layer.
       [TTS plugins](tts-plugins.md)).
 - [ ] Keep the messagebus bound to `127.0.0.1`. Never expose port `8181`
       directly to the internet ([Bus Service](bus-service.md)).
-- [ ] Set `gui_websocket.host` to `127.0.0.1`. It ships bound to `0.0.0.0` (all
-      interfaces). Leave it wide only behind a VPN or an authenticating proxy. That
-      socket carries the same authority as the bus
-      ([GUI Service](gui-service.md)).
+- [ ] Keep `gui_websocket.host` at `127.0.0.1` (the shipped default) and re-check
+      configs from older installs, which may still carry `0.0.0.0`. Widen it only
+      behind a VPN or an authenticating proxy. That socket carries the same
+      authority as the bus ([GUI Service](gui-service.md)).
 - [ ] Point `network_tests` at your own infrastructure if the default connectivity
       probes are not acceptable.
 - [ ] Audit and clear `~/.local/share/mycroft/listener/recordings/` on shared

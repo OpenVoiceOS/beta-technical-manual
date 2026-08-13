@@ -218,13 +218,13 @@ exact key path is not yet fixed by any released code. Treat it as illustrative:
 
 The shipped legacy adapter, however, reads concrete config today rather than the
 `gui.adapters.*` path. It consumes the top-level `[gui_websocket]` section via `ovos_config`
-(`host` default `0.0.0.0`, `base_port` default `18181`, `route` default `/gui`) and
+(`host` default `127.0.0.1`, `base_port` default `18181`, `route` default `/gui`) and
 `gui.default_qt_version` (default `5`):
 
 ```json
 {
   "gui_websocket": {
-    "host": "0.0.0.0",
+    "host": "127.0.0.1",
     "base_port": 18181,
     "route": "/gui"
   },

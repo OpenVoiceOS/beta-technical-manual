@@ -28,12 +28,14 @@ each one before you open a port on a shared network.
 | [Translate server](translate-server.md) MCP endpoint | 9687 | `127.0.0.1` | None | None |
 | [HiveMind](hivemind-agents.md) listener | 5678 | `0.0.0.0` | Access key + password (Noise handshake) | Optional (`ssl` + `cert_dir`/`cert_name` in server config) |
 
-!!! warning "The GUI WebSocket binds to all interfaces by default"
-    Unlike the bus, the GUI WebSocket ships bound to `0.0.0.0`. It has no authentication, no
-    origin check, and no TLS option, and anything it receives is forwarded straight onto the
-    core bus. Set `gui_websocket.host` to `127.0.0.1` unless a remote display genuinely needs
-    network access. See [GUI Service: Configuration](gui-service.md#configuration) for the
-    full warning and the VPN/reverse-proxy alternative.
+!!! warning "The GUI WebSocket has no authentication, origin check, or TLS"
+    Like the bus, the GUI WebSocket ships bound to `127.0.0.1` — but it has no
+    authentication, no origin check, and no TLS option at all, and anything it receives is
+    forwarded straight onto the core bus. Widen `gui_websocket.host` to `0.0.0.0` only if a
+    remote display genuinely needs network access, and re-check configs from before the
+    loopback default, which may still carry `0.0.0.0`. See
+    [GUI Service: Configuration](gui-service.md#configuration) for the full warning and the
+    VPN/reverse-proxy alternative.
 
 ### Rules to follow
 
