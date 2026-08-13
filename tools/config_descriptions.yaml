@@ -1,3 +1,4 @@
+skills.converse.cross_deactivation: Currently unused — nothing in ovos-core reads this key (deactivation permission is gated by `cross_activation`; skill deactivation is marked not-yet-implemented in the shipped config).
 sounds.start_listening: Earcon confirming the wake word was heard and recording started. Only plays when `confirm_listening` is true.
 sounds.end_listening: Earcon confirming recording stopped and the utterance was captured.
 sounds.acknowledge: Earcon a skill plays via `self.acknowledge()` to confirm a request that produces no spoken reply. Also the default for the skill installer's `pip_success`.

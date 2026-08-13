@@ -136,7 +136,7 @@
 | `skills.converse.max_activations` | `-1` |  |
 | `skills.converse.skill_activations` | `{}` |  |
 | `skills.converse.cross_activation` | `true` |  |
-| `skills.converse.cross_deactivation` | `true` |  |
+| `skills.converse.cross_deactivation` | `true` | Currently unused — nothing in ovos-core reads this key (deactivation permission is gated by `cross_activation`; skill deactivation is marked not-yet-implemented in the shipped config). |
 | `skills.converse.converse_priorities` | `{}` |  |
 
 ### `system`
