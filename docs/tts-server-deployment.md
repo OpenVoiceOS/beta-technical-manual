@@ -67,6 +67,29 @@ receiving the request, not a public fallback.
 
 See [TTS plugins](tts-plugins.md) for fully offline voices if you'd rather not depend on any server.
 
+## MCP
+
+Unlike the STT, translate, and persona servers, which mount their MCP endpoint automatically
+whenever the `mcp` extra is importable, `ovos-tts-server` mounts it only when started with the
+`--mcp` flag:
+
+```bash
+pip install 'ovos-tts-server[mcp]'
+ovos-tts-server --engine {YOUR_TTS_PLUGIN} --mcp
+```
+
+The endpoint lands at `/mcp`, on the same host and port as the HTTP API. Installing the extra
+without the flag does nothing observable at startup — the server starts and the HTTP API works
+normally — but `/mcp` returns `404`, which looks like a routing problem rather than a missing
+flag. If MCP tool calls 404, check that `--mcp` was actually passed.
+
+!!! note "The `mcp` extra installs `fastmcp`, not the `mcp` SDK"
+    The extra keeps the name `mcp`, but it resolves the third-party `fastmcp>=3,<4` package, not
+    the official `mcp` SDK — MCP SDK 2.0 removed `mcp.server.fastmcp.FastMCP`, so a server still
+    importing that symbol fails to start on the 2.x SDK. This server *serves* MCP with `fastmcp`;
+    a client consuming a different MCP server (like `ovos-mcp-toolbox`, see
+    [Agent Tool Plugins](tool-plugins.md)) uses the official `mcp` SDK instead.
+
 Config keys:
 
 | Key | Default | Description |

@@ -81,13 +81,13 @@ The first non-`None` response wins.
 
 `opm.plugin.persona` plugins ship a ready-made persona as a static dict, which `ovos-persona`
 loads directly instead of reading a hand-written JSON file. The dict is the same shape as the
-JSON file: a `name`, a `solvers` list naming the plugins to try in order, and one config block
+JSON file: a `name`, a `handlers` list naming the plugins to try in order, and one config block
 per named plugin.
 
 ```python
 LLAMA_DEMO = {
     "name": "Remote LLama",
-    "solvers": ["ovos-chat-openai-plugin"],
+    "handlers": ["ovos-chat-openai-plugin"],
     "ovos-chat-openai-plugin": {
         "api_url": "https://llama.smartgic.io/v1",
         "key": "sk-xxxx",
@@ -96,9 +96,9 @@ LLAMA_DEMO = {
 }
 ```
 
-`Persona.__init__` reads `handlers`, falling back to `solvers`, and raises `ValueError` if it
-finds neither. There is no `chat_engine` key and no `system_prompt` key at this level — a
-persona that names one is not loadable.
+`Persona.__init__` reads `handlers`, falling back to the legacy `"solvers"` key if `handlers` is
+absent, and raises `ValueError` if it finds neither. There is no `chat_engine` key and no
+`system_prompt` key at this level — a persona that names one is not loadable.
 
 This manual only covers plugins backed by an OpenVoiceOS-org repository:
 

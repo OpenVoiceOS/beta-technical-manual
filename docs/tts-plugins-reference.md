@@ -309,6 +309,43 @@ table on the [TTS Plugins](tts-plugins.md) page.
 
 > If `"voice"` is omitted, the plugin picks the first bundled model that supports the configured language.
 
+### Bounding the voice cache
+
+Loaded voice models stay resident in an in-process cache. Two settings bound it, and they are
+not equivalent:
+
+| Key | Bounds by | Default |
+|---|---|---|
+| `max_loaded_bytes` | Total size in memory, LRU-evicted. Accepts a plain byte count or a human size like `"3GB"`, `"512MB"`, `"1.5GiB"` (`KB/MB/GB/TB` are powers of 1000, `KiB/MiB/GiB/TiB` powers of 1024). | unset (no budget) |
+| `max_loaded_voices` | Count of resident voices, LRU-evicted. | unset (no limit) |
+
+`max_loaded_voices` is the older setting and a poor bound on this catalog: a Piper voice is
+around 60 MB while an omnivoice voice is around 2.2 GB, roughly a 40x spread, so a count that is
+safe for small voices is fatal for large ones. `max_loaded_bytes` bounds by the actual resident
+size instead, and is the one to reach for on a mixed catalog. (Mirrors `max_loaded_mb` on the
+[linguonnx plugins](linguonnx-plugins.md#configuration).)
+
+```jsonc
+  "tts": {
+    "module": "ovos-tts-plugin-phoonnx",
+    "ovos-tts-plugin-phoonnx": {
+      "voice": "OpenVoiceOS/phoonnx_pt-PT_miro_tugaphone",
+      "pinned_voices": ["OpenVoiceOS/phoonnx_pt-PT_miro_tugaphone"],
+      "max_loaded_bytes": "3GB"
+    }
+  }
+
+```
+
+`pinned_voices` (a string or a list) names voices that are loaded at startup and never evicted.
+If the pins alone need more memory than `max_loaded_bytes` allows, the budget is raised to fit
+them — a pin is a promise the cache honors even over its own configured ceiling — and a warning
+is logged so the mismatch isn't silent.
+
+Size the budget for the actual peak, not just the steady state: peak resident memory is the
+cached models plus whatever is loading in flight at that moment, and a request that arrives
+mid-load can tip a box over even when the cache's own ceiling looks safe.
+
 ---
 **Read next:** [TTS Plugins](tts-plugins.md)
 **Related:** [Writing a TTS Plugin](tts-plugin-development.md) · [TTS Server](tts-server.md) · [SSML](ssml.md)

@@ -99,7 +99,14 @@ options:
   `--multi` loads one engine instance per language on demand (one model per `lang`), instead of a single shared model.
 
 - **Compatibility routers**  
-  Beyond the native endpoints, the app mounts drop-in compatible routers so existing cloud-STT clients work unchanged. Examples are Wit.ai (`POST /wit/speech`, override the SDK host with the `WIT_URL` env var), Chromium speech-api (`POST /speech-api/v2/recognize`), and routers for OpenAI Whisper, Whisper.cpp server, Deepgram, Google, AssemblyAI, Azure, IBM Watson, AWS Transcribe, Vosk, Speechmatics, Gladia, ElevenLabs Scribe, Groq, and Kaldi GStreamer. See `/docs` for the authoritative set. A `GET /utcp` manual advertises the endpoints to UTCP agents. An MCP server mounts when `pip install 'ovos-stt-http-server[mcp]'` is present.
+  Beyond the native endpoints, the app mounts drop-in compatible routers so existing cloud-STT clients work unchanged. Examples are Wit.ai (`POST /wit/speech`, override the SDK host with the `WIT_URL` env var), Chromium speech-api (`POST /speech-api/v2/recognize`), and routers for OpenAI Whisper, Whisper.cpp server, Deepgram, Google, AssemblyAI, Azure, IBM Watson, AWS Transcribe, Vosk, Speechmatics, Gladia, ElevenLabs Scribe, Groq, and Kaldi GStreamer. See `/docs` for the authoritative set. A `GET /utcp` manual advertises the endpoints to UTCP agents. An MCP endpoint auto-mounts at `/mcp` on the same port whenever `pip install 'ovos-stt-http-server[mcp]'` is present — no extra flag needed.
+
+    !!! note "The `mcp` extra installs `fastmcp`, not the `mcp` SDK"
+        The extra keeps the name `mcp`, but it resolves the third-party `fastmcp>=3,<4` package,
+        not the official `mcp` SDK (MCP SDK 2.0 removed `mcp.server.fastmcp.FastMCP`, so a server
+        still importing that symbol fails on the 2.x SDK). This server *serves* MCP with
+        `fastmcp`; a client consuming a different MCP server (like `ovos-mcp-toolbox`, see
+        [Agent Tool Plugins](tool-plugins.md)) uses the official `mcp` SDK instead.
 
 - **Scalability**  
   Stateless design lets you run multiple instances behind a load balancer or in Kubernetes.

@@ -49,6 +49,30 @@ class MySkill(OVOSSkill):
 
 If the message originated in the device itself, the `session_id` is always equal to the reserved value `"default"`. If it comes from an external client, it will be a unique uuid. The `"default"` session is special: it is the device-local session whose state the orchestrator holds and persists in-process, rather than receiving it from a client on every message (OVOS-SESSION-2 §5).
 
+!!! warning "A bare `session_id` does not carry state — replay the whole session"
+    An external client (a HiveMind satellite, any non-`"default"` session) is not tracked
+    in-process the way the device-local session is. `ovos-core` only refreshes what it
+    already holds for a given `session_id`; a `session_id` this process never folded a full
+    session for is carried through untouched, with none of the previous turn's state. To keep
+    multi-turn continuity — `intent_context`, `lang`, presentation preferences, and the rest —
+    a client must send the **complete serialized session** (`Session.serialize()`) back on
+    each message, not just the bare `session_id` string. Losing that round trip is
+    indistinguishable from starting a brand new session every turn — a `session_id` this
+    process has never folded a full session for gets a **fresh** session by design, not an
+    error and not a reconstruction from history.
+
+    There is no topic that *pushes* an updated session from the orchestrator down to a
+    client to keep it current. `ovos.session.sync` is the closest thing, and it runs the
+    other way: a client emits it carrying its *own* snapshot, and the receiver merges that
+    snapshot's `intent_context` onto whatever it already holds for that `session_id`
+    (OVOS-CONTEXT-1 §5.3) — a pull-shaped merge triggered by the sender, not a broadcast.
+    A bare `ovos.session.sync` with no session carrier is handled differently again: it is
+    read as a legacy request for the current **default** session and answered with a
+    `ovos.session.update_default` echo, which only ever concerns the device-local
+    `"default"` session, never an external client's. Multiple clients each carrying their
+    own full session converge on consistent state by every one of them adopting this
+    same discipline, not by any message that reconciles them from the server side.
+
 !!! note "A present-but-malformed session never crashes the bus client"
     `Session.from_message` treats an *absent* `session` key (or an explicit
     `null`) as "use the default session," which is completely normal. A `session`

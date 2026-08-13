@@ -92,6 +92,11 @@ canonical/alias relationship exists only inside the line that produced it. Separ
 are independent keywords with no aliasing between them, so write alternatives on one line if you
 want them collapsed into a single canonical form plus aliases:
 
+!!! warning "A bare `a|b` is not alternation"
+    The parentheses are load-bearing. A `|` outside a `(...)` group is not split at all — it is
+    kept as a literal character in a single keyword line, almost never what you want. Either
+    wrap it, `(a|b)`, or drop the `|` and put each alternative on its own line.
+
 ```text
 
 # hello.voc

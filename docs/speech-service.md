@@ -122,11 +122,16 @@ STT/loop values):
 !!! note "Sleep is device-scoped, not session-scoped"
 
     `ovos.listener.sleep` rides a session like every other message, but sleep mode is a
-    **physical device state**: a sleeping listener captures nothing, for any session
-    (AUDIO-IN-1 §6.3). Entering or leaving sleep therefore affects the whole device, not
-    only the session that carried the request. Sleep entry is unacknowledged by design.
-    The only sleep-related emission is `ovos.listener.awoken` on the sleep→awake
-    transition.
+    **physical device state** (AUDIO-IN-1 §6.3). Entering or leaving sleep therefore
+    affects the whole device, not only the session that carried the request. Sleep entry
+    is unacknowledged by design. The only sleep-related emission is `ovos.listener.awoken`
+    on the sleep→awake transition.
+
+    A sleeping listener still feeds audio to the [wake word](wake-word-plugins.md) engines
+    flagged `wakeup: true` (or matching `listener.stand_up_word`) — that is the only way it
+    can hear a spoken "wake up" and leave sleep. No audio reaches STT or the intent
+    pipeline while asleep: a wake-up word only exits sleep mode, it is never transcribed or
+    matched as an intent.
 
 !!! note "Gotcha — utterance namespace"
 

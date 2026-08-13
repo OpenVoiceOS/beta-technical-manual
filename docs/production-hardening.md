@@ -63,6 +63,40 @@ each one before you open a port on a shared network.
 - Serving the bus itself over TLS (for the cases above where it does need to leave localhost)
   is covered in [Bus restart / reconnect behavior: Serving the bus over TLS](bus-reconnect.md#bus-restart-reconnect-behavior).
 
+### Reverse-proxying the HTTP servers
+
+The [STT](stt-server.md), [TTS](tts-server-deployment.md), [translate](translate-server.md), and
+[persona](persona-server.md) servers are all plain `uvicorn` apps with no built-in TLS, so
+fronting them with a reverse proxy for HTTPS is the normal deployment shape. Doing that has one
+sharp edge: `uvicorn` only honors the proxy's `X-Forwarded-Proto` header from an address it
+already trusts, and by default that's `127.0.0.1` alone. A proxy running anywhere else — another
+container, another host — is untrusted, so `uvicorn` ignores the header and reports the request as
+plain `http://`. If the app or the proxy then redirects based on that (a common HTTPS-enforcement
+pattern), the redirect's `Location` comes back `http://` instead of `https://`, and a client that
+follows redirects turns its next request into a `GET` with no body — silently dropping whatever
+the original `POST` was carrying.
+
+The symptom is an opaque `400` partway through a request sequence, and it shows up only with
+clients that follow redirects; driving the same endpoint directly with `curl` succeeds, which
+sends the search in the wrong direction (the proxy, not `uvicorn`'s trust list).
+
+Fix it by telling `uvicorn` which address to trust, via the `FORWARDED_ALLOW_IPS` environment
+variable (none of these four servers exposes a CLI flag for it; only `--host` and `--port` are
+their own). Scope it to the actual proxy address — for a proxy running as another container on
+the Docker bridge network, that's the bridge gateway IP (commonly `172.17.0.1`), not a wildcard:
+
+```bash
+FORWARDED_ALLOW_IPS=172.17.0.1 ovos-tts-server --engine {YOUR_TTS_PLUGIN}
+```
+
+A wildcard (`FORWARDED_ALLOW_IPS=*`) makes `uvicorn` trust the header from any source, which
+defeats the point of the check on a server reachable from more than one network.
+
+To confirm this is the bug rather than something else, compare the `Location` header of a
+redirect hit directly against the container versus through the proxy: a scheme change
+(`https://` direct, `http://` through the proxy) is the whole fault, and confirms the proxy's
+address needs adding to `FORWARDED_ALLOW_IPS`.
+
 ---
 **Read next:** [Production Operations](production-operations.md)
 **Related:** [Security Model](security-model.md) · [Satellites](satellites.md) · [HiveMind Agents](hivemind-agents.md)

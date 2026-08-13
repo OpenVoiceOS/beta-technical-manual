@@ -68,6 +68,17 @@ process from locally delivering the counterpart to its own handlers. A deploymen
 components all speak `ovos.*` can set `emit_legacy=false` once no local handler still needs
 the legacy delivery, and disable `modernize` once no legacy producers remain.
 
+!!! warning "`modernize` is load-bearing, not cosmetic, on a canonical-only skill container"
+    A skill container that only registers `ovos.*` handlers is not automatically safe from an
+    older producer still emitting legacy topics — the wire frame it receives may be legacy-only.
+    That skill hears it at all *because* its own `MessageBusClient` (`ovos-bus-client` ≥ 2.8.0a1)
+    re-dispatches the legacy arrival under its `ovos.*` counterpart on receive, per `modernize`
+    being on. Disabling `modernize` on such a container does not just drop a redundant delivery;
+    it silently stops that container from ever hearing a legacy producer again. Never disable
+    `modernize` on a skill container while any producer in the fleet may still be on legacy
+    topics — treat the default `true` as the safe choice everywhere except a deployment that has
+    fully verified every producer speaks `ovos.*`.
+
 !!! warning "The bridge is scheduled for removal"
     [ovos-bus-client#272](https://github.com/OpenVoiceOS/ovos-bus-client/pull/272) is an
     open kill-switch pull request that deletes the bridge entirely: after it merges,

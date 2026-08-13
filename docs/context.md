@@ -152,6 +152,17 @@ gates.
 ```
 
 
+!!! warning "Generic shared names are effectively global"
+    A shared-scope context entry is stored under its bare, un-namespaced key. A plain,
+    generic name — `prev_dialog`, `date`, `person`, `sleeping_state` — can satisfy any
+    other legacy skill's `require()`/`requires_context` gate of that same name, because
+    the legacy (pre-CONTEXT-1) Adapt lookup also probes the plain, un-munged keyword
+    alongside its own skill-munged one. Nothing stops a different skill from writing the
+    same generic name for an unrelated purpose. Prefer a distinctive, skill-specific
+    keyword (`WhereFromLocation` rather than `Location`) for anything you don't
+    deliberately intend to share, or use the declarative `{"key": ..., "scope": "shared"}`
+    form only when cross-skill visibility is exactly what you want.
+
 In this example `Location` keyword is shared with the WeatherSkill
 
 ```text
@@ -167,6 +178,11 @@ OVOS: Raining and 14 degrees...
 Context does not need a value. Its presence alone can indicate a previous interaction happened.
 
 In this case, context can also be implemented with decorators instead of calling `self.set_context`.
+
+`.require('MilkContext')` below needs no matching `MilkContext.voc` file. A `require()`
+keyword with no backing vocabulary is not matched against the utterance at all — it can
+only ever be satisfied by a context entry of the same name, so it behaves as a pure
+context gate: present in the current context, or the intent does not match.
 
 ```python
 from ovos_workshop.decorators import adds_context, removes_context
@@ -259,13 +275,34 @@ As you can see, Conversational Context lends itself well to implementing a [dial
 ## Under the hood
 
 `set_context` / `remove_context` are thin wrappers. They prefix the keyword with the
-skill id and emit bus messages that `ovos-core` handles on the active Session:
+skill id (the legacy Adapt dialect: `alphanumeric_skill_id + context`, no separator)
+and emit bus messages that `ovos-core` handles on the active Session:
 
 | Message | Effect |
 |---|---|
 | `add_context` | inject a keyword (and optional value) into `Session.context` |
 | `remove_context` | drop a single keyword |
 | `clear_context` | wipe all context for the session |
+
+Alongside the legacy munged `context` field, `add_context` / `remove_context` also
+carry the original, unmunged keyword as an additive `key` field on the message data.
+This lets a consumer resolve the same call under either spelling: the legacy
+Adapt dialect (`context`) or the colon-separated `<skill_id>:<key>` shape that
+CONTEXT-1's declarative `requires_context` / `excludes_context` gate (above) expects.
+`set_cross_skill_context` and the deprecated `set_adapt_context` /
+`remove_adapt_context` shortcuts carry the same additive `key`.
+
+!!! note "Writing a key replaces it wholesale; there is no read-back"
+    Writing an entry under a key that already exists **replaces the whole entry**, value and
+    decay timer both — it does not merge onto the old one. Calling `set_context` again with
+    the same keyword refreshes its decay window, which is the mechanism naptime-style
+    "keep this alive while we're still talking" flows rely on. There is no API to read a
+    context entry's current value or remaining decay back out — a skill that wants to know
+    "what did I set this to, and how long ago" must keep that in its own state, not rely on
+    reading it back from context. A flag-style call with no explicit value —
+    `self.set_context('MilkContext')` — still needs something to store: the underlying wire
+    message stores the keyword name itself as the value (`{"value": word or context}`), not
+    an empty or null value.
 
 The decorators are equivalent to calling these methods:
 

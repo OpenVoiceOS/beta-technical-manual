@@ -25,8 +25,18 @@ Install the agent-engine plugin(s) your persona references, e.g.:
 pip install ovos-openai-plugin
 ```
 
-Optional extras: `rag` (file/vector-store endpoints), `mcp` (MCP transport), and `a2a`
-(Agent-to-Agent endpoint), e.g. `pip install 'ovos-persona-server[a2a]'`.
+Optional extras: `rag` (file/vector-store endpoints), `mcp` (pulls in `fastmcp>=3,<4` to
+serve the `/mcp` endpoint below), and `a2a` (Agent-to-Agent endpoint), e.g.
+`pip install 'ovos-persona-server[a2a]'`.
+
+!!! note "The `mcp` extra installs `fastmcp`, not the `mcp` SDK"
+    The extra is still called `mcp`, so `pip install 'ovos-persona-server[mcp]'` is unchanged,
+    but it resolves the third-party `fastmcp` package (`fastmcp>=3,<4`), not the official `mcp`
+    SDK. The split is deliberate: this server *serves* MCP with `fastmcp`, while a client
+    consuming another MCP server (like [`ovos-mcp-toolbox`](tool-plugins.md)) uses the official
+    `mcp` SDK instead. The two packages diverged because MCP SDK 2.0 removed
+    `mcp.server.fastmcp.FastMCP`, so a server still importing that symbol fails to start on the
+    2.x SDK; `fastmcp` is the maintained standalone project that symbol used to alias.
 
 ---
 
@@ -38,12 +48,28 @@ ovos-persona-server --persona my_persona.json --host 0.0.0.0 --port 8337
 
 | Argument | Default | Description |
 |----------|---------|-------------|
-| `--persona` | `None` | Path to the persona `.json` file to load |
+| `--persona` | `None` | Path to a single persona `.json` file to load |
+| `--personas-dir` | `None` | Directory whose `*.json` files are all loaded as personas, one process serving all of them |
+| `--default-persona` | `None` | Name of the persona that answers requests which do not select one; only meaningful with `--personas-dir` |
 | `--host` | `0.0.0.0` | Host to bind |
 | `--port` | `8337` | TCP port |
 | `--a2a-base-url` | `None` | Mounts an [A2A](https://a2aproject.github.io/A2A/)-compatible endpoint at `/a2a`, using this URL as the public base URL in the Agent Card (e.g. `http://myhost:8337/a2a`). Requires the `a2a` extra (`pip install 'ovos-persona-server[a2a]'`) |
 
 The console script is `ovos-persona-server` (module `ovos_persona_server.__main__:main`).
+
+### Serving multiple personas from one process
+
+```bash
+ovos-persona-server --personas-dir /etc/ovos/personas --default-persona assistant --host 0.0.0.0 --port 8337
+```
+
+Every `*.json` file in the directory loads as its own persona, keyed by its `name`. A client
+selects which one to talk to with the `model` field; a request that omits it falls back to
+`--default-persona` (or the first persona loaded, if that flag is unset). Serving more than one
+persona is what makes `model` authoritative: a name that matches none of them is rejected with a
+404, not silently redirected. Both `/v1/models` (OpenAI-compatible) and `/api/tags`
+(Ollama-compatible) enumerate the loaded personas, so a client can discover the available names
+before picking one.
 
 ---
 
@@ -156,6 +182,35 @@ Tool calling is only supported with `stream=false`, regardless of vendor.
 
 ---
 
+## Function Calling: Who Executes What
+
+A chat request can carry two independent kinds of tools, and they are executed by different
+sides of the connection:
+
+- **Client-side tools** arrive in the request's OpenAI-shaped `tools` field. The server never
+  runs these: it relays the model's `tool_calls` back with `finish_reason: "tool_calls"`, and the
+  caller is expected to execute the call itself and reply with a `role: "tool"` message on the
+  next turn — the normal OpenAI function-calling contract.
+- **Server-side tools** are the persona's own [`ToolBox` plugins](tool-plugins.md). The server
+  executes these itself, in a bounded agentic loop: when the model calls one, the server runs it,
+  appends the result as a `role: "tool"` message, and re-invokes the engine, up to
+  `MAX_TOOL_ITERS` (5) rounds before it gives up and returns whatever the last response was.
+  `tool_calls` for a server-side tool never reach the client — the client was never offered that
+  tool, so it could not run it anyway.
+
+Both kinds can appear in the same request; the server merges client-supplied specs with the
+persona's own tool specs before offering them to the model.
+
+!!! warning "A name collision is decided in the persona's favor"
+    Nothing deduplicates the merged tool list by name. If a client sends a tool whose name
+    matches one of the persona's `ToolBox` tools — a generic name like `search` is enough — the
+    persona's tool wins: only one copy of that name is offered to the model, and a call to it
+    always runs server-side, even though the client believes it owns that tool. The model never
+    sees a duplicate name, but the client also never gets a `tool_calls` response it can act on
+    for that name. Give tools specific names to avoid this.
+
+---
+
 ## OpenAI-Compatible Example
 
 Point the `openai` SDK at the `/openai/v1` path:
@@ -211,6 +266,14 @@ name(s) from the persona's solver config.
 - Capabilities (chat history, tool use, embeddings) depend entirely on the chosen solver plugins, so behavior varies by persona.
 
 - For production, secure the endpoint (reverse proxy, rate limits). The server itself is unauthenticated.
+
+!!! tip "Why remote MCP only became practical recently"
+    The official `mcp` SDK's `FastMCP` (1.x) enforces DNS-rebinding protection by default: it
+    only accepts a `Host` header of `127.0.0.1` or `localhost`, so a mounted MCP endpoint answers
+    normally on the loopback address and **421 Misdirected Request** through any other domain
+    name — no reverse-proxy configuration works around it, because the check runs before the
+    proxy's headers are trusted. `fastmcp`, the package this server actually serves MCP with,
+    does not impose that restriction, which is why proxying `/mcp` to a real hostname works here.
 
 ---
 

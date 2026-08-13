@@ -119,6 +119,16 @@ Now, we can say things like "do you like greenish tomatoes?" and it will tag typ
 `"greenish"`. However, if we say "do you like eating tomatoes?", the phrase will not match,
 since `"eating"` is not included in our `type.entity` file.
 
+!!! tip "An open `{slot}` is a wildcard surface, not a closed set"
+    Even backed by an `.entity` file, `{type}` trains Padatious's neural matcher on those
+    samples — it does not validate the match against them at request time the way an Adapt
+    `.voc` keyword does. An unread, wide-open `{slot}` still generalizes to nearby wording the
+    file never listed. If what you actually want is a small, fixed, closed set of surface
+    words — a strict "must be exactly one of these" — write them as inline alternation instead
+    of a slot: `(red | green | yellow)` rather than `{type}`. Reserve `{slot}` for values you
+    intend to *read* out of `message.data` in the handler; if the handler never consumes the
+    captured value, it should probably not be a slot at all.
+
 ### Number matching
 
 > **Engine-specific:** the `#` digit token and the `:0` unknown-token shown below are **Padatious extensions**. They are **not** part of the [OVOS-INTENT-1](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-1.md) Sentence Template Grammar (which has no digit token and no wildcard), so they are not portable to other pipeline plugins. Use them only when you know your skill targets Padatious.

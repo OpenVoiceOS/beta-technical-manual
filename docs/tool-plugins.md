@@ -249,6 +249,61 @@ Wire them into a persona:
 
 The Persona Server can bridge any installed ToolBox plugin to MCP and UTCP clients. See [agent-interop.md#persona-server-tool-plugins-via-mcp-utcp](agent-interop.md#persona-server-tool-plugins-via-mcp-utcp).
 
+### Function calling: client-side vs server-side tools
+
+The [Persona Server](persona-server.md#function-calling-who-executes-what) can offer a model two
+different kinds of tools in the same request, and only one of them is a `ToolBox`:
+
+- **Client-side tools** are whatever the API caller put in the request's `tools` field. The
+  caller executes them itself; the server only relays the model's `tool_calls`.
+- **Server-side tools** are the persona's own `ToolBox` plugins (documented on this page). The
+  server executes these in a bounded agentic loop and the client never sees the call.
+
+If a client tool shares a name with one of the persona's `ToolBox` tools, the persona's tool
+wins — the duplicate is dropped before the model ever sees it. Give tools specific names
+(`search_local_docs`, not `search`) to avoid the collision.
+
+### Consuming an external MCP or UTCP server as a ToolBox
+
+`ovos-tool-adapters` ships two `opm.agents.toolbox` plugins that bridge an *external* tool server
+into the `ToolBox` interface, so a persona can call it like any native toolbox:
+
+| Plugin ID | Package | Bridges |
+|---|---|---|
+| `ovos-mcp-toolbox` | `ovos-tool-adapters` | An MCP server, over the `stdio`, `sse`, or `http` transport |
+| `ovos-utcp-toolbox` | `ovos-tool-adapters` | A UTCP-manual-advertising HTTP server |
+
+```bash
+pip install ovos-tool-adapters
+```
+
+Each takes its own config section, keyed by plugin name in the persona JSON exactly like a
+handler plugin. For `ovos-mcp-toolbox`, `transport` selects the connection kind: `stdio` needs
+`command` (and `args`), `sse` and `http` need a `url`:
+
+```json
+{
+  "name": "researcher",
+  "handlers": ["ovos-react-loop"],
+  "ovos-react-loop": {
+    "brain": "ovos-chat-openai-plugin",
+    "toolboxes": ["ovos-mcp-toolbox"]
+  },
+  "ovos-mcp-toolbox": {
+    "transport": "stdio",
+    "command": "uvx",
+    "args": ["mcp-server-fetch"]
+  }
+}
+```
+
+!!! warning "A ToolBox that fails to connect serves zero tools, silently"
+    If the bridged server cannot be reached, or its config is wrong, the failure surfaces during
+    plugin discovery as a logged warning, not an error the caller sees. The persona keeps
+    running and answers normally — it just offers no tools at all. If a persona that should have
+    tools behaves as if it has none, check the server log for a `ToolBox` warning before assuming
+    the model is refusing to call anything.
+
 ---
 
 ## Available ToolBoxes
@@ -280,6 +335,41 @@ See that page for those.
 `opm.agents.chat` plugins beyond the ones documented in the [Agent Plugins catalog](agent-plugins.md#plugin-catalog)
 (`ovos-openai-plugin`, `ovos-gguf-plugin`) are not currently shipped by an OpenVoiceOS-org
 repository. This manual only documents plugins backed by an OpenVoiceOS-org repo.
+
+## Testing Tool Calling Without a GPU
+
+Reviewing tool-calling code needs a model that reliably *emits* tool calls, not necessarily a
+smart one. A small CPU-only model under [llama.cpp](https://github.com/ggml-org/llama.cpp)'s
+own OpenAI-compatible server is enough to exercise the whole path — server discovers tools,
+model requests one, caller or server executes it — without a GPU:
+
+```bash
+llama-server -m Qwen3-0.6B-Q4_K_M.gguf --jinja -c 8192
+```
+
+Qwen3-0.6B at Q4_K_M quantization is a roughly 380 MB download. The `--jinja` flag is not
+optional: without it, `llama.cpp` skips the chat template that actually produces `tool_calls`,
+and every tool-calling test silently degrades into an ordinary plain-text conversation instead
+of failing loudly.
+
+Point a persona at the running server with the OpenAI-compatible chat engine:
+
+```json
+{
+  "name": "tool-test",
+  "handlers": ["ovos-chat-openai-plugin"],
+  "ovos-chat-openai-plugin": {
+    "api_url": "http://localhost:8080/v1"
+  }
+}
+```
+
+!!! warning "Entry-point name vs. package name"
+    The entry point is **`ovos-chat-openai-plugin`**, not the package name
+    (`ovos-openai-plugin`, `pip install ovos-openai-plugin`). Writing the package name into
+    `handlers` instead of the entry-point name raises `ImportError: 'ovos-openai-plugin' not
+    installed` — which reads like the package genuinely isn't installed, when the actual problem
+    is the wrong key.
 
 ---
 **Read next:** [Interoperability (MCP/UTCP/A2A)](agent-interop.md)
