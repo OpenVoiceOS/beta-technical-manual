@@ -5,6 +5,8 @@
 
 **When you'd want this:** "play the office playlist" should hand back a short, fixed list of local audio files without any external search or streaming service.
 
+**Prerequisite:** the base class and decorator ship with `ovos-workshop`, but matching "play …" requests requires the OCP pipeline stage — check it is installed (`pip show ovos-ocp-pipeline-plugin`) and in your `intents.pipeline`, the same way [Your First Skill](first-skill.md) checks for Padatious. See [OCP Pipeline](ocp-pipeline.md).
+
 ```python
 from ovos_utils.ocp import MediaType, PlaybackType
 from ovos_workshop.decorators.ocp import ocp_search

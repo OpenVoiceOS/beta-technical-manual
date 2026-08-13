@@ -213,9 +213,10 @@ The pipeline ID is `ovos-padatious-pipeline-plugin`, but the package you install
 package. See [Pipeline IDs vs.
 plugins](pipelines-overview.md#pipeline-ids-vs-plugins).
 
-Restart `ovos-core` (or it will pick the skill up on its next scan). See
+Restart `ovos-core` (or it will pick the skill up on its next scan) — on an
+`ovos-installer` setup that is `systemctl --user restart ovos-core.service`. See
 [Stage 1 of Troubleshooting](troubleshooting.md#stage-1-is-the-service-even-running-and-is-the-bus-reachable)
-for exactly how to start/restart the OVOS services. Then say your configured wake word first
+for other setups and how to check the services. Then say your configured wake word first
 (default **"Hey Mycroft"**), wait for the listening chime, and then say:
 
 > "**hello**"

@@ -291,12 +291,12 @@ HiveMind setups allow distributing which plugins run server-side or satellite-si
 **Skills Server**: HiveMind server runs core services and skills. Satellites handle their
 own STT/TTS locally:
 
-![Server Profile](https://github.com/OpenVoiceOS/ovos-technical-manual/assets/33701864/55694b82-69c9-4288-9a89-1d9716eb3c57)
+![Diagram of the skills-server profile: the HiveMind server box runs ovos-core with its skill, pipeline, and transformer plugins, while each satellite box runs its own microphone, VAD, wake-word, STT, and TTS plugins locally and exchanges only text with the server](https://github.com/OpenVoiceOS/ovos-technical-manual/assets/33701864/55694b82-69c9-4288-9a89-1d9716eb3c57)
 
 **Audio Server**: HiveMind server runs a full OVOS core and handles STT/TTS for all
 satellites:
 
-![Listener Profile](https://github.com/OpenVoiceOS/ovos-technical-manual/assets/33701864/1455a488-af0f-44b4-a5e6-0418a7cd1f96)
+![Diagram of the audio-server profile: the HiveMind server box runs the full OVOS core plus the STT and TTS plugins for everyone, while each satellite box keeps only its microphone, VAD, and wake-word plugins and streams audio to the server](https://github.com/OpenVoiceOS/ovos-technical-manual/assets/33701864/1455a488-af0f-44b4-a5e6-0418a7cd1f96)
 
 ---
 

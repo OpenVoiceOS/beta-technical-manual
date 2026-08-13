@@ -127,7 +127,9 @@ test/test_hello.py::test_hello_matches_and_speaks PASSED                [100%]
     The bulk of that ~70s is `ovoscope` spinning up a full in-process `SkillManager` and loading
     **every** intent-pipeline plugin installed on the machine (Adapt, Padatious, Padacioso, and any
     others you have), not just the one your test needs. On a machine with only the pipeline
-    plugins your skill actually depends on, startup is much faster.
+    plugins your skill actually depends on, startup is much faster. On a shared box where
+    several people run tests at once (a classroom, a CI runner), the runs compete for CPU —
+    stagger them, or budget a couple of minutes per person.
 
 !!! warning "Intent matched, handler dispatched, but nothing spoken?"
     If the capture times out waiting for `ovos.utterance.handled` even though the log shows

@@ -247,9 +247,13 @@ The installation begins. This can take some time. Take a short break while it ru
 Here is a demo of how the process should go if everything works as intended.
 The recording shows a full run of the wizard on a fresh machine, from launching
 `installer.sh` through the summary screen to the final "installation complete"
-message.
+message — in order: the language screen, installation method, release channel,
+profile, feature selection, Raspberry Pi tuning, the two telemetry prompts, the
+summary confirmation, and then the unattended install itself. Each of those screens
+is described with a screenshot earlier on this page, so the recording adds pacing,
+not information.
 
-[![asciicast](https://asciinema.org/a/710286.svg)](https://asciinema.org/a/710286)
+[![Terminal recording of the full installer wizard run described above](https://asciinema.org/a/710286.svg)](https://asciinema.org/a/710286)
 
 ---
 **Read next:** [How to Install Open Voice OS](ovos-installer.md)

@@ -13,6 +13,9 @@
 
 Fork the repo you want to fix on GitHub first. You need the fork to push your branch, since
 only maintainers can push to [`ovos-core`](https://github.com/OpenVoiceOS/ovos-core) itself.
+The worked examples below all use `ovos-core`; for any other repo, substitute its name in the
+clone URL, extras, and console scripts — the pattern is identical, but check that repo's own
+`pyproject.toml` for its exact extras (some use `tests` instead of `test`).
 Then clone your fork and create an isolated virtual environment for it. `uv` is faster than
 plain `venv`/`pip` and works the same way:
 

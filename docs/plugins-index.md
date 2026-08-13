@@ -113,7 +113,7 @@ bundled personas.
 
 ## System & Hardware
 
-About 21 PHAL plugins in the catalog.
+About 20 PHAL plugins in the catalog.
 
 | Type | Entry point | What it does |
 |---|---|---|

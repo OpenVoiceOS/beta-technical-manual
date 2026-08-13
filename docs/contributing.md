@@ -17,7 +17,11 @@ Every OVOS repository publishes through the same shared pipeline, described in f
 
 1. **Branch**: fork the repo on GitHub, clone your fork, and cut a feature branch **from
    `dev`**, never from `master` and never directly on `dev`. Name the branch after its
-   conventional-commit type: `fix/<topic>`, `feat/<topic>`, or `docs/<topic>`.
+   conventional-commit type: `fix/<topic>`, `feat/<topic>`, or `docs/<topic>`. The **PR
+   title** (not the branch name) must also carry the conventional-commit prefix
+   (`fix:`, `feat:`, …) — a per-repo labeller reads the title to apply the label that
+   decides the version bump on merge. See
+   [Version bump rules](gh-automations-release.md#version-bump-rules).
 2. **Pull request into `dev`**: opening a PR against `dev` triggers the shared **OVOS PR
    Checks**: build/install/test, license and dependency scanning, plugin-manifest detection
    (for plugin repos), coverage, and a version-bump preview. These checks post their results
