@@ -44,7 +44,7 @@ CI never re-resolves and never downgrades a component. Each test then:
 
 ## Coverage
 
-All 20 specs on the architecture `dev` branch currently have
+All 21 specs on the architecture `dev` branch currently have
 conformance suites (SESSION-1 and SESSION-2 share one suite. INTENT-4 has both an
 orchestrator suite and a per-plugin registration-compliance suite). The
 authoritative spec→suite traceability matrix lives in the repo's

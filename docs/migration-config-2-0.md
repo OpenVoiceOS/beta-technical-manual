@@ -38,10 +38,10 @@ New `core.pipeline`, `2.0.0` and later:
 ```json
 ["ovos-stop-pipeline-plugin-high", "ovos-converse-pipeline-plugin",
  "ovos-ocp-pipeline-plugin-high", "ovos-padatious-pipeline-plugin-high",
- "ovos-adapt-pipeline-plugin-high", "ovos-ocp-pipeline-plugin-medium",
- "ovos-fallback-pipeline-plugin-high", "ovos-stop-pipeline-plugin-medium",
- "ovos-adapt-pipeline-plugin-medium", "ovos-fallback-pipeline-plugin-medium",
- "ovos-m2v-pipeline-high", "ovos-fallback-pipeline-plugin-low"]
+ "ovos-adapt-pipeline-plugin-high", "ovos-m2v-pipeline-high",
+ "ovos-ocp-pipeline-plugin-medium", "ovos-fallback-pipeline-plugin-high",
+ "ovos-stop-pipeline-plugin-medium", "ovos-adapt-pipeline-plugin-medium",
+ "ovos-fallback-pipeline-plugin-medium", "ovos-fallback-pipeline-plugin-low"]
 ```
 
 `adapt_low` and `common_qa` are dropped from the default list entirely — they

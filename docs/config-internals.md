@@ -189,14 +189,11 @@ ovos_config/
 
 `ovos-config` registers no plugin entry points of its own. Every other OVOS component consumes it as a dependency.
 
-The CLI is registered via `setup.py`:
+The CLI is registered in `pyproject.toml`:
 
-```python
-entry_points={
-    "console_scripts": [
-        "ovos-config=ovos_config.__main__:config"
-    ]
-}
+```toml
+[project.scripts]
+ovos-config = "ovos_config.__main__:config"
 ```
 
 ---
