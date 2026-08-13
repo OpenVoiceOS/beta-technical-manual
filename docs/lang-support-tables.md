@@ -33,7 +33,7 @@ TTS voice but no bundled offline STT recommendation. Configure a multilingual mo
 hand until a dedicated recommendation lands: the practical picks are
 [`ovos-stt-plugin-fasterwhisper`](stt-plugins-reference.md#ovos-stt-plugin-fasterwhisper)
 (Whisper handles Catalan) locally, or
-[`ovos-stt-plugin-server`](stt-plugins-reference.md#ovos-stt-plugin-server) pointed at a
+[`ovos-stt-plugin-server`](stt-plugins-reference.md#ovos-stt-server-plugin) pointed at a
 [self-hosted STT server](stt-server.md) running one of those models.
 
 | Language | Offline STT model | Offline TTS |
