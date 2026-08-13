@@ -279,9 +279,10 @@ The `[ner]` extra adds `AhocorasickMediaClassifier` (in `ovos_media_classifier.a
     library: artists, titles, stations) into an Aho-Corasick automaton and matches verbatim. No
     model guesses spans.
 
-The keyword backend self-registers under the `opm.media.classifier` entry-point group this
-package defines, so it doubles as the reference plugin exercising both OPM discovery and the
-external-plugin path.
+The package *defines* the `opm.media.classifier` entry-point group as the contract for
+**third-party** classifiers — its own keyword backend is loaded by direct import inside the
+package, not through that group, so writing an external classifier means registering your
+package under the group per the docstring in `ovos_media_classifier/plugins.py`.
 
 ---
 **Read next:** [GUI Protocol](gui-protocol.md)
