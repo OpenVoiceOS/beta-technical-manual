@@ -107,7 +107,7 @@ direct successor class in `ovos-workshop`. Common-query matching now lives
 in whatever pipeline plugin currently owns it (check `ovos-core`'s
 common-query pipeline plugin). On `ovos-core` itself, the equivalent
 hardcoded common-query wiring was removed from `ovos_core.intent_services`
-in `62024dbf98` (#690, 2025-06-10, first stable release `1.3.0`) when the
+in `62024dbf98` (#690, 2025-06-10, first stable release `2.1.0`) when the
 whole intent-service module became a config-driven OPM pipeline factory.
 
 Lifecycle:
@@ -115,7 +115,7 @@ Lifecycle:
 | Change | Active | Deprecated but functional | Dropped |
 |---|---|---|---|
 | `ovos_workshop.skills.common_query_skill.CommonQuerySkill` | before `4.0.0` | `4.0.0` to pre-`8.0.0` | `6382d0a` (2026-04-08, pre-`8.0.0`) |
-| `ovos-core` hardcoded common-query wiring | before `62024dbf98` | unverified | `62024dbf98` (`1.3.0`, 2025-06-10) |
+| `ovos-core` hardcoded common-query wiring | before `62024dbf98` | unverified | `62024dbf98` (`2.1.0`, 2025-06-10) |
 
 ---
 **Read next:** [Updating From Older OVOS](updating-from-older-ovos.md)
