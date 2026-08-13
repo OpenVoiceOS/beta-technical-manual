@@ -40,6 +40,8 @@ Analyses an OVOS skill repository for locale structure, language coverage, and `
 | `fail_on_missing_en_us` | boolean | `true` | Fail if en-US locale directory is absent |
 | `fail_on_invalid_skill_json` | boolean | `false` | Fail if en-US skill.json is missing or invalid |
 | `pr_comment` | boolean | `true` | Post a '🎙️ Skill' section in the shared 'OVOS PR Checks' comment on the PR. Only runs when the workflow is triggered by a pull_request event. |
+| `spec_lint` | boolean | `true` | Also run ovos-spec-lint (spec-lint.yml) against the skill's locale folder. Every ovos-skill-* repo already calls this workflow, so this is how spec-lint reaches the fleet without a per-repo caller PR. Set to false to opt a repo out. |
+| `spec_lint_locale_path` | string | `locale` | Path passed to spec-lint.yml's locale_path input. |
 <!-- END GENERATED -->
 
 ### Permissions
@@ -61,6 +63,14 @@ Follows the canonical 3-phase pattern (`continue-on-error` → format → post �
 | Fail if en-us locale is missing | Exits 1 if `has_en_us: false` and `fail_on_missing_en_us: true` |
 | Fail if skill.json is invalid | Exits 1 if JSON malformed or required fields missing and `fail_on_invalid_skill_json: true` |
 | Fail job if skill check failed | Re-raises error after comment is posted |
+
+Since the `spec_lint` input landed (default `true`), the workflow also runs a **second job**
+that calls [`spec-lint.yml`](#spec-lintyml) as a nested reusable workflow against the skill's
+locale folder (`spec_lint_locale_path`, default `locale`). Calling `skill-check.yml` therefore
+gets you spec-lint too — its own check, its own PR-comment section, and its own failure gate —
+unless the repo opts out with `spec_lint: false`. This is deliberate: every `ovos-skill-*`
+repo already calls `skill-check.yml`, so the nested call is how spec-lint reaches the whole
+fleet without a per-repo caller PR.
 
 ### PR comment content
 

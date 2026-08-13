@@ -21,6 +21,13 @@
 
 Conversational context makes voice interactions feel more natural. The assistant keeps track of the subject you are discussing, so you do not have to repeat it.
 
+**What works in a skill today**: gate a follow-up with a blocking prompt — `ask_yesno()` /
+`get_response()`, see [Statements and Prompts](prompts.md) — keep the skill in the
+conversation with [`converse()`](converse.md), or use the legacy Adapt path:
+`self.set_context()` plus `IntentBuilder().require()` (the [TeaSkill example](#using-context-to-enable-intents)
+below). The declarative spec mechanism described next is evaluated by the pipelines but is
+**not yet reachable from a skill** — details in the warning under the example.
+
 `requires_context` and `excludes_context` gate matching in both the
 [Adapt](adapt-pipeline.md) and [Padatious](padatious-pipeline.md) pipelines, as CONTEXT-1 §6
 requires of every intent engine. Adapt gates keyword intents. Padatious gates template intents,

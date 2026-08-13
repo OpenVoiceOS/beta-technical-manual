@@ -232,11 +232,11 @@ nav:
           - Adapt Intents: intents-adapt.md
           - Padatious Intents: intents-padatious.md
           - Asking the User: prompts.md
-          - Context: context.md
+          - Intent Context (gating): context.md
           - Intent Layers: layers.md
           - Permissions & Activation Control: permissions.md
           - Continuous Conversation: converse.md
-          - Context & Sessions: session.md
+          - Sessions (multi-user state): session.md
           - Dialog & Statements: statements.md
           - SSML: ssml.md
           - Customization: customization.md

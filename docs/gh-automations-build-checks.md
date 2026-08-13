@@ -39,6 +39,8 @@ Runs build, install, and optionally tests across a configurable matrix of Python
 | `install_extras` | string | `""` | pip extras appended to the install command, e.g. 'test' or 'dev,test'. Applied when installing the built wheel. |
 | `pre_install_pip` | string | `""` | Optional space-separated pip requirement specs to install BEFORE the package build/install step. Use this to override transitive deps with git URLs (e.g. for testing against an unreleased version of a sibling package). Each whitespace-separated item is passed as a single argument to `pip install`, so quoted git URLs are supported. |
 | `test_path` | string | `""` | If set, run pytest against this path after installing the package. Leave empty to skip test execution (build/install verification only). |
+| `pytest_args` | string | `""` | Extra arguments appended to the pytest invocation, e.g. '--capture=tee-sys' to keep a crashing test's output visible when pytest's default fd-level capture would otherwise swallow it (native crashes, SIGABRT). Same name and meaning as on channel-compat.yml. Empty by default: no change to the command line. |
+| `test_env` | string | `""` | Extra environment variables for the test step, as newline-separated KEY=value pairs, e.g. 'PYTHONFAULTHANDLER=1\nRUST_BACKTRACE=full' to get a traceback/panic message out of a native crash instead of just "Fatal Python error: Aborted". Appended to $GITHUB_ENV before the Run Tests step. Empty by default: no vars are added. |
 | `pr_comment` | boolean | `true` | Post a '🔨 Build Tests' section in the OVOS PR Checks comment. Only runs on pull_request events. |
 <!-- END GENERATED -->
 
@@ -99,7 +101,7 @@ comment.
 | `runner` | string | `ubuntu-latest` | Runner label |
 | `test_path` | string | `test/` | Path passed to pytest. |
 | `python_version` | string | `3.11` | Python version to use. |
-| `system_deps` | string | `""` | Extra apt packages to install before testing (space-separated). |
+| `system_deps` | string | `""` | Extra apt packages to install before testing (space-separated). Extra apt packages, if the tested tree needs any. |
 | `pre_install_pip` | string | `""` | Optional space-separated pip requirement specs installed BEFORE the repo under test, under the channel constraints. Use for test-only siblings the channel does not name. Named to match the same input on build-tests.yml and ovoscope.yml. |
 | `install_extras` | string | `test` | pip extras used when installing the repo under test, e.g. 'test' or 'dev,test'. Set to '' to install the package with no extras. |
 | `pytest_args` | string | `-v --tb=short -rxX` | Extra arguments appended to the pytest invocation. |
@@ -157,8 +159,6 @@ Call it once per channel. `channel_name` defaults to the constraints filename wi
 `constraints-` prefix and `.txt` suffix removed, so the two jobs above label themselves
 `stable` and `testing` on their own.
 
-<!-- BEGIN GENERATED: workflow-io:channel-compat.yml -->
-<!-- END GENERATED -->
 
 ---
 

@@ -175,7 +175,9 @@ Handled by `ovos-gui`. See [GUI Service](gui-service.md).
 
 Handled by `ovos-media`'s `MediaService`/`OCPPlayer` and the `ovos-ocp-pipeline-plugin`
 intent pipeline. All topics live under the `ovos.common_play.*` namespace, there is no
-legacy alias for this surface.
+legacy alias for this surface. For behavior notes on the service-level subset (ping,
+status, SEI queries), see
+[ovos-media: Service-level bus messages](ovos-media.md#service-level-bus-messages).
 
 | Event | Direction | Meaning |
 |---|---|---|
