@@ -1741,8 +1741,9 @@ only member the base class marks with <code>@abc.abstractmethod</code> is <code>
 exception both methods raise for a word the engine cannot phonemize, unless the caller passes
 <code>ignore_oov=True</code>, in which case they return <code>None</code> instead. The <code>utterance2arpa</code>,
 <code>utterance2ipa</code>, and <code>utterance2visemes</code> helpers split an utterance on whitespace, call
-<code>get_arpa</code>/<code>get_ipa</code> per word, and join the results with a <code>"."</code> separator between words. They
-propagate <code>OutOfVocabulary</code> the same way, unless <code>ignore_oov=True</code>.</p>
+<code>get_arpa</code>/<code>get_ipa</code> per word, and join the results with a <code>"."</code> separator between words.
+<code>utterance2arpa</code> and <code>utterance2ipa</code> propagate <code>OutOfVocabulary</code> the same way, unless
+<code>ignore_oov=True</code>; <code>utterance2visemes</code> has no <code>ignore_oov</code> parameter and always propagates.</p>
 <p><code>PhonemeAlphabet</code> (a <code>str</code> enum with members <code>ARPA</code> and <code>IPA</code>, same module) is a small
 convenience type some plugins use to declare which alphabet they emit — it is not required by
 the base class, which never inspects it.</p>
