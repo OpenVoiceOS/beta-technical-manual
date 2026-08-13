@@ -1402,6 +1402,14 @@ resolves it in this order (<strong>first match wins</strong>):</p>
 <p>Overrides apply at <strong>whole-file granularity</strong>: an override file replaces the corresponding
 lower-precedence file entirely. You do <strong>not</strong> merge line-by-line, and you do <strong>not</strong> need to
 copy files you aren't changing.</p>
+<div class="admonition warning">
+<p class="admonition-title"><code>.dialog</code> files: user overrides not honored yet</p>
+<p>The user-override tier currently applies to <code>.intent</code>, <code>.voc</code>, <code>.entity</code>, <code>.regex</code> and
+the other resource roles, but <strong>not</strong> to <code>.dialog</code> files: the dialog renderer in
+<code>ovos-workshop</code> still loads dialog only from the skill's own directory (a known gap,
+marked for a deliberate follow-up migration in the source). Until that lands, rewording
+a reply requires editing the skill's bundled <code>.dialog</code> file rather than an override.</p>
+</div>
 <h3 id="where-the-user-override-folder-lives">Where the user override folder lives<a class="headerlink" href="#where-the-user-override-folder-lives" title="Permanent link">&para;</a></h3>
 <p>The user override base is <code>&lt;xdg_data&gt;/resources/&lt;skill_id&gt;/</code>, where <code>&lt;xdg_data&gt;</code> is the XDG
 data path, by default <code>~/.local/share/mycroft</code>. A typical override file path is:</p>
@@ -1421,7 +1429,9 @@ data path, by default <code>~/.local/share/mycroft</code>. A typical override fi
 <h3 id="language-fallback">Language fallback<a class="headerlink" href="#language-fallback" title="Permanent link">&para;</a></h3>
 <p>If the requested language has no directory, the loader prefers an exact match but <strong>may</strong> fall
 back to the nearest available language. OVOS uses the <code>langcodes</code> <code>tag_distance()</code> function and
-treats a distance below <code>10</code> as a usable regional match (e.g. <code>en-au</code> resolving to <code>en-us</code>).
+treats a distance of <code>10</code> or less as a usable regional match (the bound is inclusive —
+<code>10</code> is exactly the distance of a language against its macrolanguage tag), e.g. <code>en-au</code>
+resolving to <code>en-us</code>.
 Per the spec this fallback is an implementation choice, not a guarantee. Ship the exact
 language directory you need.</p>
 <hr />
