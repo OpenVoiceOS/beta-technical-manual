@@ -375,7 +375,6 @@
 - Jul 2026 - OVOS speech servers gain [UTCP/MCP endpoints](https://blog.openvoiceos.org/posts/2026-07-15-mcp-utcp-speech-servers), callable from any AI agent
 - Jul 2026 - Bus topics migrate to the `ovos.*` spec namespace: `ovos-bus-client` 2.6.3a1 bridges legacy names on the receive side (one frame on the wire, both spellings delivered locally) — see [Bus namespace migration](bus-namespace-migration.md)
 - Aug 2026 - [ovos-spec-lint](https://github.com/OpenVoiceOS/gh-automations) wired into every skill repo's shared CI (gh-automations #85, 2026-08-11), so the whole skill fleet gets spec linting without per-repo changes
-- Aug 2026 - [phoonnx](https://github.com/TigreGotico/phoonnx) gains an Apache-2.0 license (#374, 2026-08-11), settling the code-license question for the recommended offline TTS engine
 - Aug 2026 - Intent dispatch topics drop the legacy `.intent` filename suffix (`ovos-workshop` #500) with a two-rule compat bridge in `ovos-bus-client` 2.8 (#271, both 2026-08-13) — see [the migration note](bus-namespace-migration.md#intent-dispatch-topics-the-intent-suffix-is-gone)
 - Aug 2026 - OVOS-CONTEXT-1 intent context becomes orchestrator-resident in `ovos-core` (#786, 2026-08-13): decay, `session.sync` merge and context slot-fill move into the intent service
 - Aug 2026 - The **MediaProvider** plugin repositories go public, with the first three PyPI alphas (`ovos-media-provider-spotify`, `-soundcloud`, `-youtube-music`)
