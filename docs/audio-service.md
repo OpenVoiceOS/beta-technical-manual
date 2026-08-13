@@ -134,7 +134,7 @@ user would read off a display. They are configured under the top-level `sounds` 
 | `sounds.end_listening` | Recording stopped; the utterance was captured and is on its way to STT |
 | `sounds.acknowledge` | A skill called `self.acknowledge()` to confirm a request that produces no spoken reply (also the skill installer's default success sound) |
 | `sounds.error` | Nothing could handle the utterance — complete intent failure (also the skill installer's default error sound) |
-| `sounds.cancel` | The utterance was aborted by a cancel word before matching |
+| `sounds.cancel` | The utterance was aborted by a cancel word before matching. Unlike the four keys above, this one has **no entry in the shipped `mycroft.conf`** (so it is absent from the [generated key table](config-all-keys.md)) — the code default `snd/cancel.mp3` applies until you set it |
 
 Point any key at your own audio file to swap a cue for something more distinguishable. So
 "I heard the error beep" means the request reached the intent stage and nothing matched;

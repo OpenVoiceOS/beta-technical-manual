@@ -272,7 +272,7 @@ stock install keys placed under `intents.OCP` change nothing (see
 | `Audio.backends.OCP.preferred_audio_services` | `["mpv", "vlc", "simple"]` | Order in which OCP tries local media players. |
 | `Audio.backends.OCP.active` | `true` | Whether the OCP backend is available for selection. |
 
-Source: `mycroft.conf` lines 188 to 203 (`intents.ovos-ocp-pipeline-plugin`) and lines 705 to 726 (`Audio`) in [OpenVoiceOS/ovos-config](https://github.com/OpenVoiceOS/ovos-config).
+Source: `mycroft.conf` lines 188 to 203 (`intents.ovos-ocp-pipeline-plugin`) and lines 707 to 755 (`Audio`) in [OpenVoiceOS/ovos-config](https://github.com/OpenVoiceOS/ovos-config).
 
 ---
 
