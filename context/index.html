@@ -1720,6 +1720,18 @@ whose gate is not satisfied against <code>session.intent_context</code> at match
 <p>The private/shared scoping rules are identical on both sides: a bare key gates privately
 against the registering <code>skill_id</code>, and reading a shared key needs the explicit
 <code>{"key": "person", "scope": "shared"}</code> form.</p>
+<div class="admonition warning">
+<p class="admonition-title">The gate exists at match time, but skills cannot reach it yet</p>
+<p>Both pipelines evaluate this gate today, but neither half of the skill-facing surface
+has landed: <code>@intent_handler</code> has no <code>requires_context=</code> / <code>excludes_context=</code>
+parameters to put the declarations on the registration payload, and <code>set_context</code>
+does not write entries the gate can find (see the warning near the end of this
+page). <strong>To gate a yes/no follow-up in a skill
+today</strong>, use a blocking prompt — <code>ask_yesno()</code> / <code>get_response()</code>, see
+<a href="../prompts/">Statements and Prompts</a> — or keep the skill in the conversation with
+<a href="../converse/"><code>converse()</code></a>. The legacy Adapt <code>.require()</code> keyword path (the TeaSkill
+example below) also works.</p>
+</div>
 <p>Context lives on the per-conversation <a href="../session/">Session</a>, in <code>Session.intent_context</code>. It
 is <strong>session-scoped</strong>, not a single global store, so concurrent users and devices keep
 separate context.</p>
@@ -1947,7 +1959,11 @@ works today.</p>
 <div class="admonition note">
 <p class="admonition-title">Writing a key replaces it wholesale; there is no read-back</p>
 <p>Writing an entry under a key that already exists <strong>replaces the whole entry</strong>, value and
-decay timer both — it does not merge onto the old one. There is no API to read a
+decay timer both — it does not merge onto the old one. (Spec-shaped entries carry their
+own explicit <code>expires_at</code> / <code>turns_remaining</code>; the legacy keyword-context manager instead
+ages whole frames out after the <code>context.timeout</code> config value — minutes, default <code>2</code> —
+which is where <a href="../session/">Session</a>'s "~2 minutes" figure comes from.) There is no API
+to read a
 context entry's current value or remaining decay back out — a skill that wants to know
 "what did I set this to, and how long ago" must keep that in its own state, not rely on
 reading it back from context. A flag-style call with no explicit value —
