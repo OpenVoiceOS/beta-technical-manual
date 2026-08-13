@@ -208,7 +208,7 @@ The full, worked-through version of this `TeaSkill`, with every handler, is in
 
 Context can create "bubbles" of available intent handlers, so certain **intents** can't trigger unless some previous stage in a conversation has occurred.
 
-> This is the **`requires_context`** gate of CONTEXT-1 §6 in action. `MilkContext` is a private flag (the `@adds_context` decorator stores it under the skill's own prefix). An intent that `.require('MilkContext')` declares it as a precondition, so the `yes`/`no` intents are invisible except in the narrow window between the question and the reply, with no skill-side state machine. The complementary `excludes_context` gate (CONTEXT-1 §6.1) handles fire-once intents (for example, "greet only once per session").
+> This is the *idea* behind the **`requires_context`** gate of CONTEXT-1 §6, expressed through the legacy mechanism that works today: `MilkContext` is a private flag (the `@adds_context` decorator stores it under the skill's own prefix), and an intent that `.require('MilkContext')` declares it as an Adapt keyword precondition, so the `yes`/`no` intents are invisible except in the narrow window between the question and the reply, with no skill-side state machine. Note that `.require()` keyword matching and the declarative `requires_context=` / `excludes_context=` intent kwargs are **different code paths**: the declarative gate looks entries up under the resolved `<skill_id>:<key>` shape, which `set_context` / `@adds_context` do not write yet (see the note below). The complementary `excludes_context` gate (CONTEXT-1 §6.1) handles fire-once intents (for example, "greet only once per session").
 
 ```text
 User: Hey Mycroft, bring me some Tea
@@ -292,11 +292,17 @@ CONTEXT-1's declarative `requires_context` / `excludes_context` gate (above) exp
 `set_cross_skill_context` and the deprecated `set_adapt_context` /
 `remove_adapt_context` shortcuts carry the same additive `key`.
 
+!!! warning "The declarative gate is not reachable via `set_context` yet"
+    The `key` field is on the wire, but `ovos-core` does not yet mirror it into the
+    resolved `<skill_id>:<key>` entry the declarative gate looks up — it still stores
+    only the legacy munged spelling. Until that mirror lands in core, intents declared
+    with `requires_context=` / `excludes_context=` cannot be satisfied by
+    `set_context` / `@adds_context`; only the legacy `.require()` keyword path (above)
+    works today.
+
 !!! note "Writing a key replaces it wholesale; there is no read-back"
     Writing an entry under a key that already exists **replaces the whole entry**, value and
-    decay timer both — it does not merge onto the old one. Calling `set_context` again with
-    the same keyword refreshes its decay window, which is the mechanism naptime-style
-    "keep this alive while we're still talking" flows rely on. There is no API to read a
+    decay timer both — it does not merge onto the old one. There is no API to read a
     context entry's current value or remaining decay back out — a skill that wants to know
     "what did I set this to, and how long ago" must keep that in its own state, not rely on
     reading it back from context. A flag-style call with no explicit value —
