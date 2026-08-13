@@ -9,13 +9,12 @@
     languages just by asking. See the [Glossary](glossary.md) for terms, or
     [Language Selection](lang-selection.md) for how OVOS decides which language to use.
 
-!!! warning "This page describes the `dev` branch — the PyPI release lags behind"
-    The published `ovos-lang-parser` (0.0.2) predates most of what follows: it fuzzy-matches
-    in a single pass, ships 11 UI languages, and depends on `ovos-utils` rather than
-    `ovos-spec-tools`. The tiered `extract_langcode`, the CLDR fallbacks, and the
-    21-language set land with the next release. `pip install --pre` once it ships, or
-    read this page against the [dev branch](https://github.com/OpenVoiceOS/ovos-lang-parser)
-    until then.
+!!! warning "The stable PyPI release lags this page — install the prerelease"
+    The last *stable* `ovos-lang-parser` (0.0.2) predates most of what follows: it
+    fuzzy-matches in a single pass, ships 11 UI languages, and depends on `ovos-utils`
+    rather than `ovos-spec-tools`. Everything on this page — the tiered
+    `extract_langcode`, the CLDR fallbacks, the 21-language set — is already published
+    as a prerelease: `pip install --pre ovos-lang-parser` gets it today.
 
 OpenVoiceOS's multilingual language-name parsing and pronouncing library. It converts spoken language names ("Spanish", "Espagnol") to BCP-47 codes (`"es"`) and vice versa, so skills and components can handle language-selection commands in natural speech.
 
