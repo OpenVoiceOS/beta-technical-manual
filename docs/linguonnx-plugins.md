@@ -78,7 +78,7 @@ With `max_model_mb: 500` and `count_cached_as_free: false`, `en -> ca` routes th
 
 `max_concurrent_translations` is the only setting that bounds peak memory. A model that a thread is decoding with is resident because that thread holds it, not because the cache kept it, so no cache setting can reach it. Translation endpoints are commonly served from a threadpool, so peak memory otherwise scales with whatever that pool admits. Requests over the limit wait for a slot.
 
-`model_cache_size` and `max_loaded_mb` bound what the cache *retains*. Four Marian models are about 1.4 GB. Four MADLAD-400-3B models are about 20 GB, so a count alone is a poor bound on a mixed graph. For the per-model sizes, see the [`linguonnx` model list](https://github.com/OpenVoiceOS/linguonnx/blob/dev/docs/models.md).
+`model_cache_size` and `max_loaded_mb` bound what the cache *retains*. Four Marian models are about 1.4 GB. Four MADLAD-400-3B models are about 20 GB, so a count alone is a poor bound on a mixed graph. For the per-model sizes, see the [`linguonnx` model list](https://github.com/TigreGotico/linguonnx/blob/dev/docs/models.md).
 
 ## Detection Settings
 
@@ -103,7 +103,7 @@ A community instance of [`ovos-translate-server`](translate-server.md) runs thes
 The plugin repository documents detection, translation, routing and error handling in full:
 
 - [`ovos-plugin-linguonnx`](https://github.com/OpenVoiceOS/ovos-plugin-linguonnx) — the plugins.
-- [`linguonnx`](https://github.com/OpenVoiceOS/linguonnx) — the engine, the model list, and the routing rules.
+- [`linguonnx`](https://github.com/TigreGotico/linguonnx) — the engine, the model list, and the routing rules.
 
 ---
 **Read next:** [Translation Plugins](translation-plugins.md)
