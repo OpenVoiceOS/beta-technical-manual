@@ -123,6 +123,7 @@ harness), not `ovoscope`.
 | Pydantic integration | Typed message assertions | [pydantic-integration.md](https://github.com/OpenVoiceOS/ovoscope/blob/dev/docs/pydantic-integration.md) |
 | Bus coverage | Which message types your test exercised | [bus-coverage.md](https://github.com/OpenVoiceOS/ovoscope/blob/dev/docs/bus-coverage.md) |
 | CLI | The `ovoscope` command-line runner | [cli.md](https://github.com/OpenVoiceOS/ovoscope/blob/dev/docs/cli.md) |
+| `ovoscope-setup` | Companion command that installs the ovoscope skill for AI coding assistants (`--claude`, `--gemini`) | [repo docs](https://github.com/OpenVoiceOS/ovoscope/tree/dev/docs) |
 
 The low-level `FakeBus` it builds on lives in `ovos-utils` (`ovos_utils.fakebus`).
 

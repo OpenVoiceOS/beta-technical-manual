@@ -45,12 +45,15 @@ pip install ovos-spec-tools[langcodes] # adds smart language fallback
 ```
 
 ```python
-from ovos_spec_tools import expand, LocaleResources, render, closest_lang, Message
+from ovos_spec_tools import expand, LocaleResources, render, render_prompt, closest_lang, Message
 
 expand("(turn|switch) [the] light")             # every sentence the template denotes
 res = LocaleResources("my-skill/locale")
 render(res.load_dialog("weather", "en-US"),     # a spoken response
        slots={"temperature": 21})
+render_prompt("Summarize: {{text}}",            # a .prompt string — whole text is
+              slots={"text": "..."})            # the prompt, {{name}} slots filled
+                                                # (PromptRenderer is the stateful form)
 closest_lang("en-AU", ["pt-BR", "en-US"])       # -> 'en-US'
 m = Message("ovos.intent.list", {}, {"source": "skill.id"})
 m.response({"intents": ["..."]}).serialize()    # -> the 'ovos.intent.list.response' JSON

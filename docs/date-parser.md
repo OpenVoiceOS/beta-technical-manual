@@ -239,6 +239,28 @@ print(relative_time)  # "twenty four hours"
 
 > The generic implementation speaks the rounded difference as words, such as `"two hours"`, `"twenty four hours"`, or `"seven days"`, using `pronounce_number` internally (it does not produce words like "tomorrow"). Basque (`eu`) is the only language with a dedicated `nice_relative_time` implementation. Everything else uses the generic one.
 
+### Format a date for speech
+
+Beyond `nice_time` and `nice_relative_time`, the library exports a family of
+formatters that turn a `datetime` into speakable text:
+
+```python
+def nice_date(dt, lang, now=None, include_weekday=True): ...
+def nice_date_time(dt, lang, now=None, use_24hour=False, ...): ...
+def nice_day(dt, lang, date_format='DMY', include_month=True): ...
+def nice_weekday(dt, lang): ...
+def nice_month(dt, lang, date_format='MDY'): ...
+def nice_year(dt, lang, bc=False, ad=False): ...
+def nice_duration(duration, lang, ...): ...
+def get_date_strings(dt, lang, date_format=None, time_format="full"): ...
+```
+
+`nice_date` speaks a full date (relative to `now` when given, e.g. "tomorrow");
+`nice_date_time` appends the spoken time; `nice_duration` speaks a
+`timedelta`/seconds value; `get_date_strings` returns a dict of display strings
+(for GUIs) rather than speakable prose. Per-language support for these is the
+`nice_date` family column in the tables above.
+
 !!! note "Upcoming"
     Span extraction (`DateSpan`) and astronomical or era-based dates are in
     development. This work lives on feature branches of
