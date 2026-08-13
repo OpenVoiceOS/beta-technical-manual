@@ -23,7 +23,7 @@ runs one process. This mirrors the split described in
 service without touching the rest.
 
 `ovos-docker` builds its images with Docker Buildx Bake for `linux/amd64` and `linux/arm64`
-(the default `PLATFORMS` in its `docker-bake.hcl`), which covers a 64-bit Raspberry Pi OS
+(the hardcoded `platforms` list in `docker-bake.hcl`'s common target), which covers a 64-bit Raspberry Pi OS
 install. Check the actual tags on Docker Hub for the image and version you plan to run before
 deploying to a Pi: not every image or channel is guaranteed to carry both architectures.
 

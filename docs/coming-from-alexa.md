@@ -74,9 +74,9 @@ Some Echo habits have no equivalent. It is better to know that before you unplug
   a system-level solution such as [Snapcast](https://github.com/badaix/snapcast), which
   neither OVOS nor the [RaspOVOS](install-raspovos.md) image ships. You wire it up yourself,
   and it is not driven by voice.
-- **Shopping and to-do lists.** There is no bundled list skill, and nothing syncs to a phone
-  app. Adding items by voice means installing a community skill or writing one. The
-  [Skill Cookbook](skill-cookbook.md) has the pattern.
+- **Shopping and to-do lists.** [ovos-skill-alerts](skill-examples-alerts-time.md) manages
+  todos and lists by voice ("add milk to the shopping list"), locally — but nothing syncs
+  to a phone app the way Alexa's list does.
 - **Voice shopping, calling, and messaging.** OVOS has no purchasing, no drop-in, no
   announcements between devices, and no calls.
 - **A phone app.** Configuration is a file you edit, not an app screen.

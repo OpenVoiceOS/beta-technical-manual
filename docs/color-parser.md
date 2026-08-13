@@ -171,11 +171,11 @@ from ovos_color_parser import color_from_description
 
 # Averaged across all "red" entries in the database
 averaged = color_from_description("Red")
-print(averaged.hex_str)   # "#B63143"
+print(averaged.hex_str)   # e.g. "#B84D54" — averaged over the catalogs, drifts as they grow
 
 # Snapped to the nearest exact palette entry
 snapped = color_from_description("Red", cast_to_palette=True)
-print(snapped.hex_str)    # "#B92843"
+print(snapped.hex_str)    # e.g. "#B9484E" — snapped to the nearest palette entry
 ```
 
 ### Perceptual distance
