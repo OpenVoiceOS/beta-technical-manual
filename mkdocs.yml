@@ -215,7 +215,7 @@ nav:
               - Multi-turn Conversation: recipe-multi-turn-conversation.md
               - Local Media Playlist: recipe-local-media-playlist.md
               - GUI + Voice Together: recipe-gui-plus-voice.md
-              - Fallback to an LLM Solver: recipe-llm-fallback.md
+              - Fallback to an LLM Agent Engine: recipe-llm-fallback.md
               - Ambient Bus-Event Behavior: recipe-ambient-bus-events.md
               - Converse-Driven Game Loop: recipe-conversational-game.md
               - Validated Slot Collection: recipe-validated-get-response.md

@@ -1,4 +1,4 @@
-# Fallback + LLM: delegating unmatched utterances to a solver plugin
+# Fallback + LLM: delegating unmatched utterances to an agent engine
 
 !!! abstract "In a nutshell"
     You build a `FallbackSkill` that hands an unmatched utterance to a `QuestionSolver` plugin as a last resort, using `register_fallback` at a deliberately low priority.

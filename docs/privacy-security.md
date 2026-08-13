@@ -29,7 +29,7 @@ to a network you don't control, or install a skill whose source you haven't vett
 | Speech-to-text (STT) | `ovos-stt-plugin-server`, which by default talks to a **public whisper server** run by the OVOS community | **No**, your voice audio leaves the device |
 | Text-to-speech (TTS) | `ovos-tts-plugin-server`, which by default talks to a **public Piper server** (the "Alan Pope" voice) | **No**, the text you want spoken leaves the device |
 | Translation / language detection | `language.translation_module` defaults to `ovos-translate-plugin-server` and `language.detection_module` to `ovos-lang-detector-plugin-server`, both pointed at **public servers** run by the OVOS community. The declared fallbacks are `ovos-google-translate-plugin` / `ovos-google-lang-detector-plugin` | **No**. Text to be translated or language-detected leaves the device. Self-host [ovos-translate-server](https://github.com/OpenVoiceOS/ovos-translate-server) and point the plugins at it, or pick an offline plugin |
-| LLM / persona solvers | Not configured by default, but as soon as an LLM-backed solver or persona plugin is configured (e.g. an OpenAI-compatible `llm.module`), the user's query and/or conversation text is sent to whichever third-party cloud LLM provider that plugin points at. This includes the pre-built `Remote Llama` demo persona shipped with [`ovos-openai-plugin`](openai-plugin.md), which is pointed at a public ollama/LLama server by default | Depends on the plugin. See the [LLM transformers](llm-transformers.md), [personas](personas.md) and [OpenAI plugin](openai-plugin.md) pages for offline vs. cloud options |
+| LLM / persona agent engines | Not configured by default, but as soon as an LLM-backed agent engine or persona plugin is configured (e.g. an OpenAI-compatible `llm.module`), the user's query and/or conversation text is sent to whichever third-party cloud LLM provider that plugin points at. This includes the pre-built `Remote Llama` demo persona shipped with [`ovos-openai-plugin`](openai-plugin.md), which is pointed at a public ollama/LLama server by default | Depends on the plugin. See the [LLM transformers](llm-transformers.md), [personas](personas.md) and [OpenAI plugin](openai-plugin.md) pages for offline vs. cloud options |
 | Wake word | `ovos-ww-plugin-precise-onnx` (or `precise-lite`), running fully on-device | **Yes**, once the model file is downloaded on first run |
 | Connectivity checks | `network_tests` polls `https://api.ipify.org`, `1.1.1.1`, `8.8.8.8`, `http://nmcheck.gnome.org/check_network_status.txt` and `https://checkonline.home-assistant.io/online.txt` to decide whether the device is online and behind a captive portal | **No**, but every URL is a config key. Point `network_tests` at your own infrastructure |
 | Backend / pairing | OVOS is **backendless** by default. There is no backend key in the shipped `mycroft.conf` at all, nothing is paired, and no account exists unless you add one yourself | **Yes** |
@@ -86,6 +86,16 @@ translation/language-detection, all running on-device:
     "detection_module": "ovos-lang-detector-fasttext-plugin"
   }
 }
+```
+
+Install the five plugins first — note the one naming trap: the TTS module
+`ovos-tts-plugin-phoonnx` ships in the pip package **`phoonnx`**, not under its
+module name (every other entry's pip name matches its module name):
+
+```bash
+pip install --pre phoonnx ovos-stt-plugin-onnx-asr ovos-vad-plugin-silero \
+            ovos-ww-plugin-precise-onnx ovos-translate-plugin-nllb \
+            ovos-lang-detector-fasttext-plugin
 ```
 
 !!! warning "'Offline' means no network at inference time — first run still downloads models"

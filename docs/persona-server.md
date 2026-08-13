@@ -19,7 +19,7 @@ It is a FastAPI app served by `uvicorn`. The server loads a persona from a JSON 
 pip install ovos-persona-server
 ```
 
-Install the solver plugin(s) your persona references, e.g.:
+Install the agent-engine plugin(s) your persona references, e.g.:
 
 ```bash
 pip install ovos-openai-plugin
