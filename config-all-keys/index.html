@@ -2085,22 +2085,22 @@ each one does and where it's actually stored.</p>
 <tr>
 <td><code>sounds.start_listening</code></td>
 <td><code>"snd/start_listening.wav"</code></td>
-<td></td>
+<td>Earcon confirming the wake word was heard and recording started. Only plays when <code>confirm_listening</code> is true.</td>
 </tr>
 <tr>
 <td><code>sounds.end_listening</code></td>
 <td><code>"snd/end_listening.wav"</code></td>
-<td></td>
+<td>Earcon confirming recording stopped and the utterance was captured.</td>
 </tr>
 <tr>
 <td><code>sounds.acknowledge</code></td>
 <td><code>"snd/acknowledge.mp3"</code></td>
-<td></td>
+<td>Earcon a skill plays via <code>self.acknowledge()</code> to confirm a request that produces no spoken reply. Also the default for the skill installer's <code>pip_success</code>.</td>
 </tr>
 <tr>
 <td><code>sounds.error</code></td>
 <td><code>"snd/error.mp3"</code></td>
-<td></td>
+<td>Earcon played when no skill or pipeline could handle the utterance (complete intent failure). Also the default for the skill installer's <code>pip_error</code>.</td>
 </tr>
 </tbody>
 </table>

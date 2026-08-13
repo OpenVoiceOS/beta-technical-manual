@@ -1170,6 +1170,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#audio-feedback-cues-earcons" class="md-nav__link">
+    <span class="md-ellipsis">
+      Audio feedback cues (earcons)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#configuration" class="md-nav__link">
     <span class="md-ellipsis">
       Configuration
@@ -1748,6 +1757,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#audio-feedback-cues-earcons" class="md-nav__link">
+    <span class="md-ellipsis">
+      Audio feedback cues (earcons)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#configuration" class="md-nav__link">
     <span class="md-ellipsis">
       Configuration
@@ -1887,6 +1905,47 @@ streams. See the <strong>Two independent subsystems</strong> note at the top of 
     Bus2[MessageBus] --&gt;|mycroft.audio.service.play| AS[AudioService]
     AS --&gt; Backend["audioservice backend: OCP / mpv / vlc"]</code></pre>
 <p><em>Diagram:</em> The flow starts at the message bus and ends at the audioservice backend, and it routes the mycroft.audio.service.play event through the AudioService to one of OCP, mpv, or vlc.</p>
+<h2 id="audio-feedback-cues-earcons">Audio feedback cues (earcons)<a class="headerlink" href="#audio-feedback-cues-earcons" title="Permanent link">&para;</a></h2>
+<p>Short status sounds are the assistant's non-verbal feedback channel — for an eyes-free or
+screen-reader user they are the <em>only</em> status channel, standing in for whatever a sighted
+user would read off a display. They are configured under the top-level <code>sounds</code> section of
+<code>mycroft.conf</code> and delivered as instant sounds over <code>ovos.audio.play_sound</code> (legacy alias
+<code>mycroft.audio.play_sound</code>):</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>When it plays</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>sounds.start_listening</code></td>
+<td>The wake word was heard and recording started. Gated by the separate <code>confirm_listening</code> boolean — turning that off silences only this cue</td>
+</tr>
+<tr>
+<td><code>sounds.end_listening</code></td>
+<td>Recording stopped; the utterance was captured and is on its way to STT</td>
+</tr>
+<tr>
+<td><code>sounds.acknowledge</code></td>
+<td>A skill called <code>self.acknowledge()</code> to confirm a request that produces no spoken reply (also the skill installer's default success sound)</td>
+</tr>
+<tr>
+<td><code>sounds.error</code></td>
+<td>Nothing could handle the utterance — complete intent failure (also the skill installer's default error sound)</td>
+</tr>
+<tr>
+<td><code>sounds.cancel</code></td>
+<td>The utterance was aborted by a cancel word before matching</td>
+</tr>
+</tbody>
+</table>
+<p>Point any key at your own audio file to swap a cue for something more distinguishable. So
+"I heard the error beep" means the request reached the intent stage and nothing matched;
+error beeps at <em>install</em> time come from the skill installer's <code>pip_error</code> (which defaults to
+the same file). See <a href="../accessibility/">Accessibility</a> for the eyes-free interaction picture
+and <a href="../bus-events/">Bus Events Reference</a> for the <code>play_sound</code> topics.</p>
 <h2 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">&para;</a></h2>
 <p>Settings for the audio service are located in the <code>tts</code> and <code>Audio</code> sections of <code>mycroft.conf</code>,
 plus two <strong>top-level</strong> toggles (<code>enable_old_audioservice</code>, <code>disable_ocp</code>) that gate the
