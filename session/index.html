@@ -1696,8 +1696,11 @@ in-process the way the device-local session is. <code>ovos-core</code> only refr
 already holds for a given <code>session_id</code>; a <code>session_id</code> this process never folded a full
 session for is carried through untouched, with none of the previous turn's state. To keep
 multi-turn continuity — <code>intent_context</code>, <code>lang</code>, presentation preferences, and the rest —
-a client must send the <strong>complete serialized session</strong> (<code>Session.serialize()</code>) back on
-each message, not just the bare <code>session_id</code> string. Losing that round trip is
+a client must send the <strong>complete serialized session</strong> back on each message, not just the
+bare <code>session_id</code> string — from Python that is <code>Session.serialize()</code>; from any other
+language it is the same JSON object echoed back from <code>context.session</code> of the frames
+the server sends you (its exact field list is normative in the OVOS-SESSION-1 spec, not
+this manual; see the <a href="../bus-recipes/#from-a-non-python-client-the-json-round-trip">JSON round trip</a>). Losing that round trip is
 indistinguishable from starting a brand new session every turn — a <code>session_id</code> this
 process has never folded a full session for gets a <strong>fresh</strong> session by design, not an
 error and not a reconstruction from history.</p>

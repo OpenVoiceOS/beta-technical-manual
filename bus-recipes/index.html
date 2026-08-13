@@ -900,6 +900,15 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#from-a-non-python-client-the-json-round-trip" class="md-nav__link">
+    <span class="md-ellipsis">
+      From a non-Python client: the JSON round trip
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1491,6 +1500,15 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#from-a-non-python-client-the-json-round-trip" class="md-nav__link">
+    <span class="md-ellipsis">
+      From a non-Python client: the JSON round trip
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1572,6 +1590,37 @@ browser as it is broadcast. Install it with <code>pip install ovos-busmon</code>
 threaded <code>MessageBusClient</code> used in the recipes above, for callers already running an
 asyncio event loop (e.g. FastAPI servers) that would rather avoid a background thread.</p>
 </div>
+<h2 id="from-a-non-python-client-the-json-round-trip">From a non-Python client: the JSON round trip<a class="headerlink" href="#from-a-non-python-client-the-json-round-trip" title="Permanent link">&para;</a></h2>
+<p>The bus speaks plain JSON frames over a WebSocket, so any language works — Dart, Kotlin,
+JavaScript, anything with a WebSocket client. This is the full loop a companion app needs.
+(Reminder: the raw bus has no auth — on anything beyond localhost, connect through
+<a href="../hivemind-agents/">HiveMind</a> instead; the frames below stay the same, HiveMind wraps them.)</p>
+<p>Send an utterance (text in — as if the user had spoken it):</p>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="p">{</span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ovos.utterance.handle&quot;</span><span class="p">,</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w"> </span><span class="nt">&quot;data&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;utterances&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;what time is it&quot;</span><span class="p">],</span><span class="w"> </span><span class="nt">&quot;lang&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;en-US&quot;</span><span class="p">},</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w"> </span><span class="nt">&quot;context&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;session&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;session_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;my-app&quot;</span><span class="p">}}}</span>
+</span></code></pre></div>
+<p>The reply arrives as a <code>speak</code> frame (spec topic <code>ovos.utterance.speak</code>):</p>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="p">{</span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ovos.utterance.speak&quot;</span><span class="p">,</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w"> </span><span class="nt">&quot;data&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;utterance&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;It is quarter past six&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;lang&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;en-US&quot;</span><span class="p">},</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w"> </span><span class="nt">&quot;context&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;session&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;session_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;my-app&quot;</span><span class="p">}}}</span>
+</span></code></pre></div>
+<p>To receive the synthesized <strong>audio</strong> over the same channel — instead of the server playing
+it on its own speakers — use the remote-rendering request (spec topic
+<code>ovos.utterance.speak.b64</code>, legacy <code>speak:b64_audio</code>):</p>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="p">{</span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ovos.utterance.speak.b64&quot;</span><span class="p">,</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w"> </span><span class="nt">&quot;data&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;utterance&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;It is quarter past six&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;listen&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">},</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w"> </span><span class="nt">&quot;context&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;session&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;session_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;my-app&quot;</span><span class="p">}}}</span>
+</span></code></pre></div>
+<p><code>ovos-audio</code> answers with <code>ovos.audio.speech</code>: <code>data.audio</code> is the base64-encoded audio
+file, alongside <code>tts_id</code> and the echoed <code>utterance</code>. With <code>"listen": true</code> the service also
+emits <code>ovos.mic.listen</code> afterwards, re-opening the client's input channel.</p>
+<p>Two things to keep straight for multi-turn state: the session travels <strong>per message</strong> —
+carry the full serialized session object in <code>context.session</code> on every frame and replay
+what the server sends back, not just the <code>session_id</code> (see
+<a href="../session/">Session Aware Skills</a>); its exact field list is defined by the OVOS-SESSION-1
+spec rather than this manual. And filter incoming frames by your own <code>session_id</code>, since
+the bus broadcasts every frame to every client.</p>
 <hr />
 <p><strong>Read next:</strong> <a href="../bus-service/">messagebus Service</a>
 <strong>Related:</strong> <a href="../cli-tools/">CLI Tools</a> · <a href="../bus-events/">Bus Events Reference</a></p>
