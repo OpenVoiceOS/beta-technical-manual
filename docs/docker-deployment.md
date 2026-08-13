@@ -253,7 +253,11 @@ for a worked compose example splitting the speech backend from the thin client.
 
 ## Containerized HiveMind
 
-`ovos-docker` does not publish a HiveMind image. HiveMind has its own separate project,
+`ovos-docker` does not build or push a HiveMind image itself, but its own
+`compose/docker-compose.hivemind.yml` already ships a ready-made stack: `hivemind_listener`
+and `hivemind_cli` services (pulling the `docker.io/smartgic` images) wired to the
+`ovos_core` dependency chain — start there before reaching for the separate project.
+The images themselves come from HiveMind's own project,
 [HiveMind-Docker](https://github.com/JarbasHiveMind/hivemind-docker), with its own images
 (published under `docker.io/smartgic`, built with Docker Buildx Bake for `linux/amd64` and
 `linux/arm64`) and compose files for a HiveMind hub and its satellite/listener/chatroom

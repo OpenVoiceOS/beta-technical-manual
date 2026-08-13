@@ -39,10 +39,10 @@ are driven by the bus handlers below rather than called directly.
 | `mycroft.paired` | `Configuration.handle_remote_update` | Reload the remote/backend config layer |
 | `mycroft.internet.connected` | `Configuration.handle_remote_update` | Reload the remote/backend config layer |
 
-`configuration.updated` does not reload the distribution layer. `reload()` covers default,
-system, remote and the XDG configs only. A script that edits
-`/usr/share/mycroft/mycroft.conf` and then emits this event sees no change. The file watcher
-still picks the edit up on its own.
+`configuration.updated` reloads **every** layer: `reload()` re-reads default, distribution,
+system, remote and all the XDG configs from disk (the read-only layers included — their
+`reload()` does a real, mtime-checked re-read). A script that edits any layer's file and then
+emits this event sees the change immediately, without waiting for the file watcher.
 
 `Configuration.set_config_watcher()` uses `ovos-utils`' `FileWatcher` (watchdog) to monitor
 config files on disk, and reloads when a watched file changes.
