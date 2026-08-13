@@ -145,8 +145,9 @@ Server → Detection(name="hey_mycroft")   ← if detected
 
 ### Zeroconf / mDNS Discovery
 
-When `--zeroconf` is passed, the bridge calls
-`wyoming.zeroconf.register_server(name, port, host)` to announce itself on the local
+When `--zeroconf` is passed, the bridge instantiates
+`wyoming.zeroconf.HomeAssistantZeroconf(name=..., port=..., host=...)` and awaits its
+`register_server()` method to announce itself on the local
 network. Home Assistant and other Wyoming clients can discover the service automatically
 without manual IP configuration.
 
