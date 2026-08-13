@@ -1129,6 +1129,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#upgrade-in-place-or-start-fresh" class="md-nav__link">
+    <span class="md-ellipsis">
+      Upgrade in place, or start fresh?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#big-ticket-migrations" class="md-nav__link">
     <span class="md-ellipsis">
       Big-ticket migrations
@@ -1625,6 +1634,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#upgrade-in-place-or-start-fresh" class="md-nav__link">
+    <span class="md-ellipsis">
+      Upgrade in place, or start fresh?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#big-ticket-migrations" class="md-nav__link">
     <span class="md-ellipsis">
       Big-ticket migrations
@@ -1769,6 +1787,22 @@ entry below says "nearest release," it means the change could not be
 tied to an exact tag, so the closest
 release date after the commit is given instead.</p>
 <hr />
+<h2 id="upgrade-in-place-or-start-fresh">Upgrade in place, or start fresh?<a class="headerlink" href="#upgrade-in-place-or-start-fresh" title="Permanent link">&para;</a></h2>
+<p>Before working through anything below, decide which path you are on. As a rule of thumb:</p>
+<ul>
+<li><strong>Upgrade in place</strong> when your install is within roughly the current stable window — none
+  or one of the big-ticket migrations below happened after your install date. Read your
+  audience page forward from your version and you are done.</li>
+<li><strong>Back up and reinstall</strong> when two or more big-ticket migrations have landed since your
+  install (in practice: anything older than about a year, e.g. a <code>0.0.x</code>-era install —
+  <code>0.0.8</code>, the last pre-SemVer release, dates to September 2024). Working through years of
+  stacked per-repo breaks in place is slower and more error-prone than a clean
+  <a href="../ovos-installer/">ovos-installer</a> run. Back up first (<a href="../backup-restore/">Backup &amp; Restore</a>),
+  reinstall, then restore your <code>mycroft.conf</code> <strong>selectively</strong> — re-add your customizations to
+  the fresh file rather than copying the old file wholesale, since several old keys are
+  silently ignored now (see <a href="../updating-deployers/">Updating Deployers</a>) — and reinstall your
+  skills from PyPI rather than restoring old checkouts.</li>
+</ul>
 <h2 id="big-ticket-migrations">Big-ticket migrations<a class="headerlink" href="#big-ticket-migrations" title="Permanent link">&para;</a></h2>
 <p>These changes affect the largest number of installs. Each row links a
 standalone deep-dive page: symbol/config/bus-message tables, code
