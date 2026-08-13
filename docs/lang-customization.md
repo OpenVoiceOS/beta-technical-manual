@@ -161,4 +161,4 @@ full path from a missing language to a released one.
 
 ---
 **Read next:** [Bidirectional Translation](bidirectional-translation.md)
-**Related:** [Language Selection](lang-selection.md) · [Resource Files](resource-files.md) · [Language Support Overview](lang-support.md)
+**Related:** [Language Selection](lang-selection.md) · [Resource Files](resource-files.md) · [Language Support Overview](lang-support.md) (incl. [switching an install's language](lang-support.md#auto-configuration))

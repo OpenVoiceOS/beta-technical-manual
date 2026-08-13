@@ -43,8 +43,8 @@ rate, and a voice that stays intelligible at that rate. There is no single globa
 setting shared by every voice. OVOS supports many [TTS plugins](tts-plugins.md), and any rate or
 voice key a given engine accepts lives in that plugin's own configuration block. It is keyed by
 the plugin's module name, under `tts` in `mycroft.conf`, following the pattern
-`tts.<module-name>.<key>` (for example, `tts.ovos-tts-plugin-matxa-multispeaker-cat.voice`).
-[`ovos-tts-plugin-matxa-multispeaker-cat`](tts-plugins-reference.md#ovos-tts-plugin-matxa-multispeaker-cat)
+`tts.<module-name>.<key>` (for example, `tts.ovos-tts-plugin-phoonnx.voice`).
+[`ovos-tts-plugin-phoonnx`](tts-plugins-reference.md#ovos-tts-plugin-phoonnx)
 and [`ovos-tts-plugin-edge-tts`](tts-plugins-reference.md#ovos-tts-plugin-edge-tts) each expose their own
 `voice` key for picking a specific speaker. This manual's [TTS Plugins](tts-plugins.md) reference
 does not currently document a dedicated rate or speed key for any individual plugin. Check that

@@ -29,9 +29,12 @@ CPU recommendation.
 
 Several regional variants still have gaps. **EN-GB**, **PT-BR**, **AR-SA**, and the four
 Catalan variants (**CA-BA**, **CA-NW**, **CA-VA**, plus the already-covered **CA-ES**) ship a
-TTS voice but no bundled offline STT recommendation. Configure an online STT plugin, or a
-multilingual offline model (Whisper, MMS) by hand, until a dedicated recommendation lands for
-these.
+TTS voice but no bundled offline STT recommendation. Configure a multilingual model by
+hand until a dedicated recommendation lands: the practical picks are
+[`ovos-stt-plugin-fasterwhisper`](stt-plugins-reference.md#ovos-stt-plugin-fasterwhisper)
+(Whisper handles Catalan) locally, or
+[`ovos-stt-plugin-server`](stt-plugins-reference.md#ovos-stt-plugin-server) pointed at a
+[self-hosted STT server](stt-server.md) running one of those models.
 
 | Language | Offline STT model | Offline TTS |
 |----------|--------------------|:---:|
