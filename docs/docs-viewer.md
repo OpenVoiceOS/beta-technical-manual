@@ -107,7 +107,8 @@ Zip-archive sources (`technical`, `messages`, `hivemind`) keep their full `docs/
 
 !!! tip "Seeing stale docs? Use `--refresh`"
     Cached sources are never re-fetched on their own (except `live-status`). If a page
-    looks out of date, re-download the selected source before launching:
+    looks out of date, `--refresh` wipes and re-downloads the **selected** source only —
+    other sets keep their cache:
 
     ```bash
     ovos-docs-viewer --refresh technical
