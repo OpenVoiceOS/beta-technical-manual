@@ -1789,7 +1789,7 @@ intent execution, enabling different intent groups depending on previous interac
 game implemented this way.</p>
 <p>Here is an excerpt from the game to illustrate usage of <code>IntentLayer</code> decorators:</p>
 <blockquote>
-<p><strong>NOTE</strong>: <code>IntentLayers</code> are <strong>per-session</strong>, gated via <a href="../context/">intent context</a> (<a href="https://github.com/OpenVoiceOS/architecture/blob/dev/intent-context.md">OVOS-CONTEXT-1</a>), so each <a href="https://jarbashivemind.github.io/HiveMind-community-docs/07_voicesat/">voice satellite</a> keeps its own layer state instead of all joining the same game.</p>
+<p><strong>NOTE</strong>: <code>IntentLayers</code> are <strong>per-session</strong>, gated via <a href="../context/">intent context</a> (<a href="https://github.com/OpenVoiceOS/architecture/blob/dev/intent-context.md">OVOS-CONTEXT-1</a>), so each <a href="https://jarbashivemind.github.io/HiveMind-community-docs/satellites/">voice satellite</a> keeps its own layer state instead of all joining the same game.</p>
 </blockquote>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">from</span> <span class="nn">ovos_workshop.decorators.layers</span> <span class="kn">import</span> <span class="n">layer_intent</span><span class="p">,</span> <span class="n">enables_layer</span><span class="p">,</span> \
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>    <span class="n">disables_layer</span><span class="p">,</span> <span class="n">resets_layers</span>
@@ -1874,7 +1874,7 @@ the skill id). Every intent registered under that layer is set to <em>require</e
   detach/re-attach churn.</li>
 </ul>
 <p>Because layer state rides on intent context, and intent context is per-session, each
-<a href="https://jarbashivemind.github.io/HiveMind-community-docs/07_voicesat/">voice satellite</a>
+<a href="https://jarbashivemind.github.io/HiveMind-community-docs/satellites/">voice satellite</a>
 talking to a shared skill keeps its own independent set of active layers.</p>
 <hr />
 <p><strong>Read next:</strong> <a href="../permissions/">Permissions &amp; Activation Control</a>
