@@ -131,11 +131,11 @@ legacy paths carry `Deprecation` and `Link` headers pointing at the canonical pa
 
 There is no authentication. Put the server behind a reverse proxy if it is exposed.
 
-Every vendor router accepts the usual auth header for that vendor, but silently ignores it: an invalid or missing key does not get rejected with a 401, it is simply not checked. Every router also accepts a `model` field in the request body but ignores its value: the loaded persona's own `name` is always the model identifier returned in the response, regardless of what the client asked for.
+Every vendor router accepts the usual auth header for that vendor, but silently ignores it: an invalid or missing key does not get rejected with a 401, it is simply not checked. With a **single** loaded persona, every router also accepts a `model` field in the request body but ignores its value: the loaded persona's own `name` is always the model identifier returned in the response, regardless of what the client asked for. With **several** personas loaded (`--personas-dir` or repeated `--persona` flags), `model` is authoritative instead — it selects the persona, and an unknown name is rejected with a 404 (see [Serving multiple personas](#serving-multiple-personas-from-one-process)).
 
 | Vendor | Auth header accepted (and ignored) | `model` field quirk | What to do |
 |---|---|---|---|
-| OpenAI, Ollama, Anthropic, Gemini, Cohere, HuggingFace TGI | `Authorization`, `x-api-key`, or `?key=` query param | Ignored; response always reports the persona's own `name` | Send any value, or omit it; it has no effect |
+| OpenAI, Ollama, Anthropic, Gemini, Cohere, HuggingFace TGI | `Authorization`, `x-api-key`, or `?key=` query param | Single persona: ignored; response always reports the persona's own `name`. Multiple personas: selects the persona, unknown name → 404 | Single persona: send any value or omit it. Multiple personas: send a loaded persona's `name` |
 | AWS Bedrock | `Authorization`, `x-api-key`, or `?key=` query param | Ignored for identity; the `model_id` prefix (`anthropic.claude`, `meta.llama`, `amazon.titan`, `cohere.command`) also selects the request/response wire shape, so the endpoint speaks a different format depending on that string | Set `model_id` to match the wire format your client expects, even though the persona still answers |
 
 ### Memory, RAG & embeddings
