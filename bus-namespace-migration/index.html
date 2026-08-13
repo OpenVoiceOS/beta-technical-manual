@@ -856,6 +856,15 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#intent-dispatch-topics-the-intent-suffix-is-gone" class="md-nav__link">
+    <span class="md-ellipsis">
+      Intent dispatch topics: the .intent suffix is gone
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1450,6 +1459,15 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#intent-dispatch-topics-the-intent-suffix-is-gone" class="md-nav__link">
+    <span class="md-ellipsis">
+      Intent dispatch topics: the .intent suffix is gone
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1566,6 +1584,26 @@ it silently stops that container from ever hearing a legacy producer again. Neve
 topics — treat the default <code>true</code> as the safe choice everywhere except a deployment that has
 fully verified every producer speaks <code>ovos.*</code>.</p>
 </div>
+<h3 id="intent-dispatch-topics-the-intent-suffix-is-gone">Intent dispatch topics: the <code>.intent</code> suffix is gone<a class="headerlink" href="#intent-dispatch-topics-the-intent-suffix-is-gone" title="Permanent link">&para;</a></h3>
+<p>A related, separately-bridged rename: per-intent dispatch topics are now the canonical
+<code>&lt;skill_id&gt;:&lt;intent_name&gt;</code> with <strong>no <code>.intent</code> suffix</strong>. Old <code>ovos-workshop</code> releases built
+the topic from the Padatious resource <em>filename</em>, so the extension leaked onto the wire — a
+skill with <code>food.order.intent</code> listened on <code>&lt;skill_id&gt;:food.order.intent</code>; current workshop
+registers <code>&lt;skill_id&gt;:food.order</code> (OVOS-MSG-1 §2.1.1).</p>
+<p><code>ovos-bus-client</code> 2.8 bridges the skew with two stateless rules: every canonical intent topic
+emitted also goes out as its <code>.intent</code>-suffixed twin (marked as a twin, so nothing double-fires),
+and every <em>unmarked</em> suffixed topic received is locally re-dispatched under its canonical
+spelling. Config-gated, on by default. Test rigs get the same behavior from <code>FakeBus</code> as of the
+<code>ovos-utils</code> alpha released 2026-08-14.</p>
+<p>Two practical rules for authors:</p>
+<ul>
+<li>New code and tests should <strong>compute</strong> the canonical topic —
+  <code>ovos_spec_tools.intent_topics.canonical_intent_topic(...)</code> — rather than hard-coding either
+  spelling. Literal <code>.intent</code> listeners are deprecated but not broken.</li>
+<li>The spelling goes canonical when <strong>either</strong> side modernizes: the skill registers canonical
+  (workshop ≥ 9.3.11a2) <strong>or</strong> the matcher canonicalizes (padatious 2.x / adapt 1.x alphas).
+  Pinning one side back does <strong>not</strong> restore the old spelling.</li>
+</ul>
 <div class="admonition warning">
 <p class="admonition-title">The bridge is scheduled for removal</p>
 <p><a href="https://github.com/OpenVoiceOS/ovos-bus-client/pull/272">ovos-bus-client#272</a> is an

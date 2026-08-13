@@ -1298,6 +1298,15 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#intent-dispatch-topics-dropped-the-intent-suffix-2026-08-workshop-9311a2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Intent dispatch topics dropped the .intent suffix (2026-08, workshop 9.3.11a2)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#skill-settings-file-store-rewritten" class="md-nav__link">
     <span class="md-ellipsis">
       Skill-settings file-store rewritten
@@ -1695,6 +1704,15 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#intent-dispatch-topics-dropped-the-intent-suffix-2026-08-workshop-9311a2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Intent dispatch topics dropped the .intent suffix (2026-08, workshop 9.3.11a2)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#skill-settings-file-store-rewritten" class="md-nav__link">
     <span class="md-ellipsis">
       Skill-settings file-store rewritten
@@ -1816,6 +1834,14 @@ Big-ticket migrations (the changes with the widest blast radius, including
 the <code>ovos-workshop</code> 4.0.0 → 7.0.0 release train), see
 <a href="../updating-from-older-ovos/#big-ticket-migrations">Updating from Older OVOS</a>.</p>
 <h2 id="if-you-maintain-skills">If you maintain skills<a class="headerlink" href="#if-you-maintain-skills" title="Permanent link">&para;</a></h2>
+<h3 id="intent-dispatch-topics-dropped-the-intent-suffix-2026-08-workshop-9311a2">Intent dispatch topics dropped the <code>.intent</code> suffix (2026-08, workshop 9.3.11a2)<a class="headerlink" href="#intent-dispatch-topics-dropped-the-intent-suffix-2026-08-workshop-9311a2" title="Permanent link">&para;</a></h3>
+<p>Per-intent dispatch topics are now the canonical <code>&lt;skill_id&gt;:&lt;intent_name&gt;</code> — the filename-leaked
+<code>.intent</code> suffix is gone from the wire. Nothing breaks: the <code>ovos-bus-client</code> 2.8 bridge (and
+<code>FakeBus</code> in current <code>ovos-utils</code> alphas, for tests) keeps literal <code>.intent</code> listeners working
+in both directions. New code should compute the topic with
+<code>ovos_spec_tools.intent_topics.canonical_intent_topic</code> instead of hard-coding either spelling.
+Details and the either-side-modernizes rule:
+<a href="../bus-namespace-migration/#intent-dispatch-topics-the-intent-suffix-is-gone">Bus namespace migration</a>.</p>
 <h3 id="skill-settings-file-store-rewritten">Skill-settings file-store rewritten<a class="headerlink" href="#skill-settings-file-store-rewritten" title="Permanent link">&para;</a></h3>
 <p><a href="../skill-settings/">Skill settings</a> moved to <code>json_database</code>-backed XDG-default storage,
 replacing the old ad-hoc file kludge, with a one-time auto-migration.</p>
