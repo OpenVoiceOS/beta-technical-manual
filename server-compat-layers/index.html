@@ -1782,7 +1782,7 @@ underlying plugin's capabilities before assuming parity beyond the wire format.<
 <p><code>pip install ovos-persona-server</code>. <code>create_persona_app()</code> mounts the routes below.
 It mounts a chat router at prefix <code>/openai/v1</code> (<code>POST /openai/v1/chat/completions</code>,
 OpenAI-compatible), an Ollama router at prefix <code>/ollama/api</code>, and a UTCP router at <code>/tools</code>.
-It also mounts <code>/mcp</code> when the <code>mcp</code> extra is installed.</p>
+It also mounts <code>/mcp</code> when started with the <code>--mcp</code> flag (which requires the <code>mcp</code> extra — the extra alone no longer exposes the endpoint).</p>
 <table>
 <thead>
 <tr>

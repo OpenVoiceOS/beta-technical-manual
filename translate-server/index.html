@@ -2014,9 +2014,10 @@ start on the 2.x SDK. This server serves with <code>fastmcp</code>; a client con
 server (like <code>ovos-mcp-toolbox</code>, see <a href="../tool-plugins/">Agent Tool Plugins</a>) uses the official
 <code>mcp</code> SDK instead.</p>
 </div>
-<p>With the extra installed, the HTTP server auto-mounts MCP at <code>/mcp</code> on its own port
-(<code>0.0.0.0:9686</code> by default) — no separate flag or process needed, and no action if the extra is
-missing beyond a log line. A standalone MCP-only process is also available, useful for running
+<p>With the extra installed <strong>and</strong> the <code>--mcp</code> flag passed at startup, the HTTP server mounts
+MCP at <code>/mcp</code> on its own port (<code>0.0.0.0:9686</code> by default). The flag is required — installing
+the extra alone no longer auto-mounts the endpoint; <code>--mcp</code> without the extra logs a warning
+and runs without it. A standalone MCP-only process is also available, useful for running
 MCP on its own host/port without exposing the HTTP API:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>python<span class="w"> </span>-m<span class="w"> </span>ovos_translate_server.mcp_server<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">  </span>--tx-engine<span class="w"> </span>ovos-translate-plugin-nllb<span class="w"> </span><span class="se">\</span>

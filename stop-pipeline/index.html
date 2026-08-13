@@ -1658,7 +1658,7 @@
 <p>Collects the session's <strong>active skills</strong> (skipping session-blacklisted ones).</p>
 </li>
 <li>
-<p>Pings them via <code>ovos.stop.ping</code> (legacy: <code>{skill_id}.stop.ping</code>) and waits up to <code>0.5s</code> for <code>ovos.stop.pong</code> (legacy: <code>skill.stop.pong</code>) replies carrying <code>can_handle</code>.</p>
+<p>Pings each of them on its per-skill topic <code>{skill_id}.stop.ping</code> — the spec name <code>ovos.stop.ping</code> exists in STOP-1 but is <strong>not emitted</strong> today, because per-skill placeholder topics cannot be auto-bridged (a deliberate exclusion in <code>ovos-spec-tools</code>); skills subscribe only to the per-skill form. It then waits up to <code>0.5s</code> for <code>ovos.stop.pong</code> (legacy: <code>skill.stop.pong</code> — this direction <em>is</em> bridged) replies carrying <code>can_handle</code>.</p>
 </li>
 <li>
 <p>Dispatches <code>&lt;skill_id&gt;:stop</code> (legacy: <code>{skill_id}.stop</code>) to the most recently activated positive responder.</p>
@@ -1675,7 +1675,7 @@
     U[Utterance] --&gt; V{Matches stop /\nglobal_stop vocab?}
     V --&gt;|no| N[No match]
     V --&gt;|global_stop or\nno active skills| G[Global stop\nbroadcast ovos.stop]
-    V --&gt;|yes, skills active| P[Ping active skills\novos.stop.ping]
+    V --&gt;|yes, skills active| P[Ping active skills\n{skill_id}.stop.ping]
     P --&gt; W{Any skill replies\ncan_handle?}
     W --&gt;|yes| D[Dispatch stop to\nmost recent responder]
     W --&gt;|no, timeout| G</code></pre>
@@ -1728,9 +1728,9 @@
 <td>Targeted stop dispatch to one skill</td>
 </tr>
 <tr>
-<td><code>ovos.stop.ping</code> (legacy: <code>{skill_id}.stop.ping</code>)</td>
+<td><code>{skill_id}.stop.ping</code></td>
 <td>out</td>
-<td>Asks the active handlers whether they can stop</td>
+<td>Asks one active handler whether it can stop. Emitted only in this per-skill form — the STOP-1 spec name <code>ovos.stop.ping</code> is not on the wire (per-skill placeholders are excluded from the bridge map)</td>
 </tr>
 <tr>
 <td><code>ovos.stop.pong</code> (legacy: <code>skill.stop.pong</code>)</td>

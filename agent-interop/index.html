@@ -1556,12 +1556,12 @@ satellite or a remote voice client instead, see <a href="../hivemind-agents/">Hi
 <tr>
 <td><code>/mcp</code></td>
 <td>Streamable HTTP</td>
-<td>MCP server (mounted automatically when the <code>[mcp]</code> extra is installed)</td>
+<td>MCP server (opt-in: start with <code>--mcp</code>, requires the <code>[mcp]</code> extra)</td>
 </tr>
 </tbody>
 </table>
-<p>There is no <code>--mcp</code> flag — passing one aborts the process on an unrecognized argument. The
-server mounts <code>/mcp</code> when the extra's imports succeed, and skips it when they do not.</p>
+<p>MCP is opt-in: pass <code>--mcp</code> at startup (the flag exists on all the OVOS servers now). With
+the flag set but the extra missing, the server logs a warning and runs without the endpoint.</p>
 <p>UTCP tools exposed: <code>stt</code>, <code>lang_detect</code>, <code>status</code>.</p>
 <p>Claude Desktop config:</p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="p">{</span>
