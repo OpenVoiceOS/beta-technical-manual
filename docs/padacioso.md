@@ -73,6 +73,28 @@ These let a container activate or hide intents based on conversational state wit
     matching, use [Palavreado](palavreado.md). For the full neural version, use
     [Padatious](padatious-pipeline.md).
 
+## Pipeline config
+
+Beyond the standalone library, the same package ships an intent-pipeline plugin:
+
+| Entry point (`opm.pipeline`) | Class |
+|---|---|
+| `ovos-padacioso-pipeline-plugin` | `padacioso.opm:PadaciosoPipeline` |
+
+Configure it under `intents.ovos-padacioso-pipeline-plugin`:
+
+```json
+{"intents": {"ovos-padacioso-pipeline-plugin": {"conf_high": 0.95}}}
+```
+
+| Key | Default | Description |
+|-----|---------|-------------|
+| `conf_high` | `0.95` | Threshold for the high-confidence stage. |
+| `conf_med` | `0.8` | Threshold for the medium-confidence stage. |
+| `conf_low` | `0.5` | Threshold for the low-confidence stage. |
+| `workers` | `4` | Worker processes for parallel intent matching. |
+| `fuzz` | unset | Fuzzy-matching setting passed through to `IntentContainer`. |
+
 ---
 
 *Source code: [OpenVoiceOS/padacioso](https://github.com/OpenVoiceOS/padacioso).*

@@ -87,6 +87,7 @@ Insert the tier IDs you need into your `mycroft.conf` under the `intents.pipelin
 | `personas_path`          | Directory to load persona JSON files from (defaults to the XDG persona dir) |
 | `persona_blacklist`      | Persona names to exclude                                                     |
 | `ignore_plugin_personas` | When `true`, skip personas provided by installed plugins                     |
+| `intent_cache`           | Cache directory for the persona-control intent matcher (defaults to `intent_cache/` under the XDG data dir) |
 
 > Conversation memory is configured **per persona** (the `memory_module` / `max_history` keys inside each persona's JSON), not in this pipeline section.
 

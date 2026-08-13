@@ -174,6 +174,7 @@ For example, "next song" does nothing when no player is active.
 | `playback_mode` | int | `0` | `0` = auto, `10` = audio-only, `20` = video-only (`PlaybackMode`). |
 | `search_fallback` | bool | `true` | Run a generic search when no type-specific results are found. |
 | `entity_csvs` | list | `[]` | User-supplied keyword CSVs feeding the entity matcher. |
+| `legacy_cps` | bool | `true` | Only read by the `ovos-ocp-pipeline-plugin-legacy` matcher: set `false` to disable the legacy Mycroft CommonPlay stage entirely. |
 
 The config block is read from `intents.ovos-ocp-pipeline-plugin`, the plugin's entry-point ID.
 

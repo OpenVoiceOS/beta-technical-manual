@@ -144,9 +144,17 @@ plugin so it can run alongside the classifier one. It reads its config from
 | `conf_low` | `0.15` | Threshold for `match_low`. |
 | `ignore_intents` | `[]` | Intent labels to never match. |
 | `renormalize` | `false` | Classifier mode: renormalize probabilities over the surviving (registered) labels. |
+| `timeout` | `1` | Seconds to wait for the Adapt/Padatious manifest sync at startup. |
 
-Prototype mode adds `prototype_k`, `prototype_strategy`, `prototype_top_k` and
-`prototype_tau` to control how prototype embeddings are selected per label.
+Prototype mode adds four more keys controlling how prototype embeddings are
+selected per label:
+
+| Key | Default | Description |
+|-----|---------|-------------|
+| `prototype_k` | unlimited | Cap on stored prototype embeddings per label (subsample/cluster via `prototype_strategy`). |
+| `prototype_strategy` | `max_over_all` | How utterance embeddings are reduced to per-label prototypes. |
+| `prototype_top_k` | `3` | Number of best prototype matches aggregated per label. |
+| `prototype_tau` | `0.1` | Softmax temperature for prototype score aggregation. |
 
 > The model is **pretrained**. It does not learn new skills at runtime. The
 > registered-intent filter just decides which of the model's known labels are

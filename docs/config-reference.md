@@ -230,7 +230,7 @@ PHAL plugins read their settings from the top-level `PHAL` key, and PHAL admin p
 
 A PHAL plugin is disabled by setting `"enabled": false` under its plugin ID. Admin plugins run with elevated privileges and are read from a nested `admin` block, not the top level.
 
-Source: `Configuration().get("PHAL")` in `ovos_PHAL/service.py` line 59 and the `PHAL.admin` docstring in `ovos_PHAL/admin.py` lines 32 to 46, [OpenVoiceOS/ovos-PHAL](https://github.com/OpenVoiceOS/ovos-PHAL). No `PHAL` block appears in the shipped `mycroft.conf`.
+Source: `Configuration().get("PHAL")` in `ovos_PHAL/service.py` line 60 and the `PHAL.admin` docstring in `ovos_PHAL/admin.py` lines 32 to 46, [OpenVoiceOS/ovos-PHAL](https://github.com/OpenVoiceOS/ovos-PHAL). No `PHAL` block appears in the shipped `mycroft.conf`.
 
 ---
 

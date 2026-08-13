@@ -118,6 +118,7 @@ Handled by every `OVOSSkill` instance. See [OVOSSkill API](ovos-skill.md#system-
 | `ovos.stop` (legacy: `mycroft.stop`) | Global stop broadcast: every skill subscribes and ceases activity for the inbound session (see below). Only this pair is translator-bridged |
 | `{skill_id}.stop` | Skill-directed stop dispatch. Per-skill topics are **not** translator-bridged, because the `{skill_id}.*` shape cannot be a static map key, and the base class subscribes to this form only |
 | `{skill_id}.stop.ping` | Check whether this skill can stop. Same as above: this exact form, not bridged, no spec-namespaced alias |
+| `mycroft.skill.loaded` | Emitted by the [Skill Manager](skill-manager.md) after a skill finishes loading, with `{"skill_id": ...}` |
 | `mycroft.skill.enable_intent` / `mycroft.skill.disable_intent` | Enable/disable one of the skill's intents |
 | `mycroft.skill.set_cross_context` / `mycroft.skill.remove_cross_context` | Manage cross-skill context |
 | `mycroft.skills.settings.changed` | Remote settings update: see [Skill Settings](skill-settings.md#change-callback) for the full change-notification flow |

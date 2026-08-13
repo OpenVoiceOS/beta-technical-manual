@@ -141,6 +141,7 @@ back to the older `intents.common_query` key.
 | `min_response_wait` | `1` | Seconds to wait before evaluating responses. |
 | `max_response_wait` | `4` | Hard cap (seconds) on gathering responses, regardless of extensions. |
 | `extension_time` | `1` | Extra seconds granted when a skill reports it is still searching. |
+| `min_conf` | `0.01` | Final confidence gate applied to the selected answer after reranking (distinct from `min_self_confidence`, which filters before selection). |
 
 The reranker is optional. Without one, selection falls back to the skills'
 self-reported confidences.

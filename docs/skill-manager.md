@@ -79,7 +79,10 @@ Skills listed in `skills.blacklisted_skills` in `mycroft.conf` are skipped at lo
 
 ## Intent Training
 
-After new skills are loaded, the manager requests pipeline re-training:
+Each successfully loaded skill is announced on the bus as `mycroft.skill.loaded`
+with `{"skill_id": ...}` — useful for tooling that waits for a specific skill to
+become available. After new skills are loaded, the manager requests pipeline
+re-training:
 
 ```text
 mycroft.skills.train  →  (pipeline plugins that need it train, e.g. padatious)
