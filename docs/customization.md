@@ -36,8 +36,8 @@ speaks.
 !!! warning "`.dialog` user overrides are not honored yet"
     The user-resources override tier currently works for `.intent`, `.voc`, `.entity` and
     `.regex` files, but the dialog renderer in `ovos-workshop` still loads `.dialog` files
-    only from the skill's own directory (a known gap, marked for a deliberate follow-up in
-    the source — see [Customizing Language Resources](lang-customization.md)). Until that
+    only from the skill's own directory (a known gap; the dialog-renderer code path is pending a
+    deliberate migration in the source — see [Customizing Language Resources](lang-customization.md)). Until that
     lands, the override procedure below will **not** change what you hear; to reword a
     reply today, edit the `.dialog` file inside the skill's own `locale/` directory
     instead. The steps stay documented because they are the intended mechanism once the

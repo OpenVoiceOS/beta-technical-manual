@@ -236,16 +236,18 @@ Source: `Configuration().get("PHAL")` in `ovos_PHAL/service.py` line 60 and the 
 
 ## 10. OCP / Media
 
-`intents.OCP` tunes the OCP intent pipeline plugin. `Audio` selects the legacy audio service backend, which OCP still uses for actual playback.
+The OCP intent pipeline plugin reads its config from `intents.ovos-ocp-pipeline-plugin`
+(the plugin ID) — keys placed under `intents.OCP` are **ignored** (see
+[OCP Pipeline](ocp-pipeline.md#configuration)). `Audio` selects the legacy audio service backend, which OCP still uses for actual playback.
 
 | Key | Default | Description |
 |---|---|---|
-| `intents.OCP.legacy` | `false` | Force the old audio-service bus API instead of OCP. |
-| `intents.OCP.min_score` | `40` | Minimum confidence score, 0-100, for OCP to accept an utterance as a media request. |
-| `intents.OCP.filter_media` | `true` | Filter out results OCP judges not to be playable media. |
-| `intents.OCP.filter_SEI` | `true` | Filter results by Search Engine Index compatibility. |
-| `intents.OCP.playback_mode` | `0` | Playback mode passed to the audio backend. |
-| `intents.OCP.search_fallback` | `true` | Fall back to a general media search when no skill claims the request. |
+| `intents.ovos-ocp-pipeline-plugin.legacy` | `false` | Force the old audio-service bus API instead of OCP. |
+| `intents.ovos-ocp-pipeline-plugin.min_score` | `40` | Minimum confidence score, 0-100, for OCP to accept an utterance as a media request. |
+| `intents.ovos-ocp-pipeline-plugin.filter_media` | `true` | Filter out results OCP judges not to be playable media. |
+| `intents.ovos-ocp-pipeline-plugin.filter_SEI` | `true` | Filter results by Search Engine Index compatibility. |
+| `intents.ovos-ocp-pipeline-plugin.playback_mode` | `0` | Playback mode passed to the audio backend. |
+| `intents.ovos-ocp-pipeline-plugin.search_fallback` | `true` | Fall back to a general media search when no skill claims the request. |
 
 ```jsonc
 "Audio": {
