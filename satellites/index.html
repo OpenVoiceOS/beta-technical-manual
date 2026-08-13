@@ -1610,35 +1610,41 @@ be told apart from one another. This manual covers only the OVOS side. HiveMind 
 separate project with its own protocol and docs.</p>
 <ol>
 <li>Install and run the server: <code>pip install hivemind-core</code>, then <code>hivemind-core listen</code>.
-   By default it bridges to a local <code>ovos-core</code> through <code>hivemind-ovos-agent-plugin</code>.</li>
+    By default it bridges to a local <code>ovos-core</code> through <code>hivemind-ovos-agent-plugin</code>.</li>
 <li>Provision each satellite with its own access key: <code>hivemind-core add-client</code>.</li>
-<li>On each satellite, install the client — the distribution is <code>hivemind-bus-client</code>, the
-   repository is <code>hivemind-websocket-client</code> — and store the key:</li>
-</ol>
+<li>
+<p>On each satellite, install the client — the distribution is <code>hivemind-bus-client</code>, the
+    repository is <code>hivemind-websocket-client</code> — and store the key:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>pip<span class="w"> </span>install<span class="w"> </span>hivemind-bus-client
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>hivemind-client<span class="w"> </span>set-identity<span class="w"> </span>--key<span class="w"> </span>&lt;access_key&gt;<span class="w"> </span>--password<span class="w"> </span>&lt;password&gt;<span class="w"> </span>--host<span class="w"> </span>&lt;server&gt;
 </span></code></pre></div>
 <p><code>set-identity</code> with no arguments raises: it needs at least one of <code>--key</code>, <code>--password</code> or
-   <code>--siteid</code>.
-4. Verify with <code>hivemind-client test-identity</code> before trusting the link.
-5. For a mic-only satellite that leaves STT/TTS to the server, use
-   <a href="https://github.com/JarbasHiveMind/hivemind-mic-satellite"><code>hivemind-mic-satellite</code></a>
-   instead of running a full listener/audio pair locally. Two things the package name
-   does not tell you:</p>
+<code>--siteid</code>.</p>
+</li>
+<li>
+<p>Verify with <code>hivemind-client test-identity</code> before trusting the link.</p>
+</li>
+<li>
+<p>For a mic-only satellite that leaves STT/TTS to the server, use
+    <a href="https://github.com/JarbasHiveMind/hivemind-mic-satellite"><code>hivemind-mic-satellite</code></a>
+    instead of running a full listener/audio pair locally. Two things the package name
+    does not tell you:</p>
 <ul>
 <li>The <strong>server</strong> needs <code>pip install hivemind-audio-binary-protocol</code> — plain
-     <code>hivemind-core</code> does no audio processing, so without it the satellite streams
-     audio into a void.</li>
+  <code>hivemind-core</code> does no audio processing, so without it the satellite streams
+  audio into a void.</li>
 <li>The satellite's run command is <strong><code>hivemind-mic-sat</code></strong> (after the same
-     <code>set-identity</code> step as above, or pass <code>--key/--password/--host</code> directly).</li>
+  <code>set-identity</code> step as above, or pass <code>--key/--password/--host</code> directly).</li>
 </ul>
 <p>The device runs only a microphone and VAD plugin — cheap hardware like a Pi Zero
-   works — while wake word, STT and TTS all happen server-side. The trade-off: with no
-   local wake word, every VAD-detected voice segment streams upstream, costing
-   bandwidth and putting the full STT load on the server. Fine for a homelab with a
-   handful of devices; for a local wake word on slightly stronger hardware, use
-   <a href="https://github.com/JarbasHiveMind/HiveMind-voice-relay">HiveMind-voice-relay</a>
-   instead.</p>
+works — while wake word, STT and TTS all happen server-side. The trade-off: with no
+local wake word, every VAD-detected voice segment streams upstream, costing
+bandwidth and putting the full STT load on the server. Fine for a homelab with a
+handful of devices; for a local wake word on slightly stronger hardware, use
+<a href="https://github.com/JarbasHiveMind/HiveMind-voice-relay">HiveMind-voice-relay</a>
+instead.</p>
+</li>
+</ol>
 <p>By default <code>hivemind-core listen</code> starts <strong>two</strong> listeners, both on <code>0.0.0.0</code>: the websocket
 protocol plugin on <code>5678</code> and the HTTP protocol plugin on <code>5679</code>. Both are in the default
 <code>network_protocol</code> config and both start, so a firewall rule that only covers 5678 leaves the
