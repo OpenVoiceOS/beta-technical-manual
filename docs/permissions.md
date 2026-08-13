@@ -126,6 +126,19 @@ Configure in `mycroft.conf`:
 
 ```
 
+### Per-session exclusions
+
+Everything above is deployment-wide configuration. The [Session](session.md) carries its own,
+finer-grained exclusion surface: `session.blacklisted_skills`, `session.blacklisted_intents`
+and `session.blacklisted_pipelines`. Each session initializes them from the same
+`skills.blacklisted_skills` config default, but they are per-session and mutable at runtime —
+a remote client (for example a HiveMind node declaring its own session) can exclude skills,
+individual intents, or whole pipeline stages for *its* requests without touching the server's
+config. The gates are enforced across the whole match path: general intent matching, converse,
+fallback, and stop all check the session's lists before dispatching. This is the mechanism to
+reach for when different satellites should have different skill sets against one shared core;
+see [Updating Remote Clients](updating-remote-clients.md) for the version notes.
+
 ### Utility Functions
 
 ```python

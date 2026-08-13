@@ -240,8 +240,10 @@ class Apollo11GameSkill(OVOSSkill):
 ### Under the hood
 
 `self.intent_layers` is an instance of `IntentLayers`
-(`ovos_workshop.decorators.layers.IntentLayers`), created lazily the first time a layer
-decorator or `layer_intent` runs and bound to the skill instance.
+(`ovos_workshop.decorators.layers.IntentLayers`), created in `OVOSSkill.__init__` and bound
+to the skill during `bind()` — so it is always available by the time your skill code runs,
+decorator or not (which is why the "Manual way" above can call it directly from
+`initialize()`).
 
 A layer is **not** a separate matching mechanism. It's a named group of intents mapped to a
 single synthetic [intent context](context.md) token (`layer_<name>`, prefixed internally with
