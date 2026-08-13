@@ -21,11 +21,13 @@
 
 4. Press `q` to quit.
 
-Downloaded sources are cached on disk. Later launches skip re-downloading, except for `live-status`, which is always refreshed. There is **no `--force` CLI flag**. To force a re-download, call `download_docs(force=True)` from Python, or delete the cache directory before launching.
+Downloaded sources are cached on disk. Later launches skip re-downloading (with an
+`already cached, skipping` message), except for `live-status`, which is always refreshed.
+Pass `--refresh` to wipe and re-download before launching.
 
 !!! note "The first launch of *any* key downloads *every* source"
     Regardless of which key you pass, `Documentation.__init__` calls `download_docs()`,
-    which loops over **all** sources. This includes the three zip archives (`technical`, `messages`,
+    which loops over **all** sources. This includes the four zip archives (`technical`, `messages`, `architecture`,
     `hivemind`), the `live-status`/`raspOVOS`/`installer` READMEs, and all ~49 skill
     READMEs via `download_skills()`. It downloads each one that is not already cached.
     So `ovos-docs-viewer technical` on a clean machine populates the entire `ovos_docs/`
@@ -51,7 +53,7 @@ ovos-docs-viewer DOCS
 
 ```
 
-The console script `ovos-docs-viewer` maps to `ovos_docs_viewer.ovos_docs:launch`. `DOCS` is a single required argument. It must be one of the string keys below. An unknown key fails with an `AssertionError` before the TUI opens.
+The console script `ovos-docs-viewer` maps to `ovos_docs_viewer.ovos_docs:launch`. `DOCS` is a single required argument. It must be one of the string keys below; an unknown key fails with a clean one-line error (exit code 2) before the TUI opens. `--help` describes every choice and the cache location.
 
 | Key | Source |
 |---|---|
@@ -62,6 +64,7 @@ The console script `ovos-docs-viewer` maps to `ovos_docs_viewer.ovos_docs:launch
 | `raspOVOS` | the raspOVOS image README |
 | `installer` | [ovos-installer](https://github.com/OpenVoiceOS/ovos-installer) README (`main` branch) |
 | `skills` | `dev`-branch README files for ~49 official OVOS skills, one `.md` file per skill |
+| `architecture` | [architecture](https://github.com/OpenVoiceOS/architecture) formal specifications (zip archive of `dev`; the markdown lives at the repo root, with the non-normative notes under `appendix/`) |
 
 ## Usage Examples
 
@@ -100,16 +103,14 @@ $XDG_DATA_HOME/ovos_docs/
 
 ```
 
-Zip-archive sources (`technical`, `messages`, `hivemind`) keep their full `docs/` tree. Single-README sources (`live-status`, `raspOVOS`, `installer`) are written as `<key>/docs/<key>.md`. `$XDG_DATA_HOME` resolves via `ovos_utils.xdg_utils.xdg_data_home`, typically `~/.local/share`.
+Zip-archive sources (`technical`, `messages`, `hivemind`) keep their full `docs/` tree; `architecture` keeps its repo-root markdown tree directly under `<key>/`. Single-README sources (`live-status`, `raspOVOS`, `installer`) are written as `<key>/docs/<key>.md`. `$XDG_DATA_HOME` resolves via `ovos_utils.xdg_utils.xdg_data_home`, typically `~/.local/share`.
 
-!!! tip "Seeing stale docs? Delete the cache"
-    There is no `--force` CLI flag to refresh a source once it's cached. If a page looks
-    out of date, the reliable fix is to delete that source's cache directory and relaunch.
-    It will download again automatically:
+!!! tip "Seeing stale docs? Use `--refresh`"
+    Cached sources are never re-fetched on their own (except `live-status`). If a page
+    looks out of date, re-download the selected source before launching:
 
     ```bash
-    rm -rf "$XDG_DATA_HOME/ovos_docs/technical"
-    ovos-docs-viewer technical
+    ovos-docs-viewer --refresh technical
     ```
 
     Substitute the relevant key (`messages`, `hivemind`, `skills`, …) for `technical`, or
