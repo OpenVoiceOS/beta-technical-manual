@@ -1607,12 +1607,16 @@ toggle's polarity. Fix it by moving <code>OCP</code> to <code>media</code> and s
 <code>enable_mpris</code> explicitly if you want MPRIS on.</p>
 </div>
 <div class="admonition note">
-<p class="admonition-title">Legacy audioservice and ovos-media run side by side</p>
-<p>Moving to <code>ovos-media</code> is an opt-in choice today, made with the
-<code>enable_old_audioservice</code> <a href="../audio-service/">switch</a>; the legacy
-audioservice stays installed and functional either way, and the switch
-works in both directions. See <a href="../audio-service/">Audio Service</a> for the
-coexistence model this migration guide assumes.</p>
+<p class="admonition-title">Legacy audioservice and ovos-media are alternatives — pick one</p>
+<p>Moving to <code>ovos-media</code> is an opt-in choice today, and it takes two steps:
+set <code>enable_old_audioservice: false</code> (the <a href="../audio-service/">switch</a> that
+turns the legacy half off) <strong>and</strong> install and run the separate
+<code>ovos-media</code> daemon — the flag alone leaves you with no media playback at
+all. The legacy audioservice stays installed either way, so the switch
+works in both directions (switching back means <code>true</code> + stopping
+<code>ovos-media</code>). Don't run both at once. See
+<a href="../audio-service/">Audio Service</a> for the coexistence model this
+migration guide assumes.</p>
 </div>
 <h3 id="ocp-ovos-media-config-split">OCP → ovos-media config split<a class="headerlink" href="#ocp-ovos-media-config-split" title="Permanent link">&para;</a></h3>
 <p>Splitting audio-service responsibility out of <code>ovos-audio</code> into a
