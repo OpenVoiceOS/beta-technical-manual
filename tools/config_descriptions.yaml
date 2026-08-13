@@ -1,3 +1,7 @@
+sounds.start_listening: Earcon confirming the wake word was heard and recording started. Only plays when `confirm_listening` is true.
+sounds.end_listening: Earcon confirming recording stopped and the utterance was captured.
+sounds.acknowledge: Earcon a skill plays via `self.acknowledge()` to confirm a request that produces no spoken reply. Also the default for the skill installer's `pip_success`.
+sounds.error: Earcon played when no skill or pipeline could handle the utterance (complete intent failure). Also the default for the skill installer's `pip_error`.
 confirm_listening: Play a beep when the system starts listening.
 open_data.intent_urls: URLs of opt-in open-data collection servers to send anonymized
   intent matches to. Empty by default; see [Privacy & Security](privacy-security.md).

@@ -120,6 +120,28 @@ flowchart LR
 
 *Diagram:* The flow starts at the message bus and ends at the audioservice backend, and it routes the mycroft.audio.service.play event through the AudioService to one of OCP, mpv, or vlc.
 
+## Audio feedback cues (earcons)
+
+Short status sounds are the assistant's non-verbal feedback channel — for an eyes-free or
+screen-reader user they are the *only* status channel, standing in for whatever a sighted
+user would read off a display. They are configured under the top-level `sounds` section of
+`mycroft.conf` and delivered as instant sounds over `ovos.audio.play_sound` (legacy alias
+`mycroft.audio.play_sound`):
+
+| Key | When it plays |
+|---|---|
+| `sounds.start_listening` | The wake word was heard and recording started. Gated by the separate `confirm_listening` boolean — turning that off silences only this cue |
+| `sounds.end_listening` | Recording stopped; the utterance was captured and is on its way to STT |
+| `sounds.acknowledge` | A skill called `self.acknowledge()` to confirm a request that produces no spoken reply (also the skill installer's default success sound) |
+| `sounds.error` | Nothing could handle the utterance — complete intent failure (also the skill installer's default error sound) |
+| `sounds.cancel` | The utterance was aborted by a cancel word before matching |
+
+Point any key at your own audio file to swap a cue for something more distinguishable. So
+"I heard the error beep" means the request reached the intent stage and nothing matched;
+error beeps at *install* time come from the skill installer's `pip_error` (which defaults to
+the same file). See [Accessibility](accessibility.md) for the eyes-free interaction picture
+and [Bus Events Reference](bus-events.md) for the `play_sound` topics.
+
 ## Configuration
 
 Settings for the audio service are located in the `tts` and `Audio` sections of `mycroft.conf`,

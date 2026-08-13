@@ -98,6 +98,14 @@ tuning specifically for this:
   an interactive typed chat with the running assistant. You type instead of speaking and get the
   same responses.
 
+## Know your earcons
+
+The short status sounds (wake confirmed, capture finished, request acknowledged, nothing
+matched, cancelled) are the assistant's whole status display when you can't see a screen.
+Each one is a configurable file, so you can swap any of them for sounds you tell apart more
+easily. The full trigger table lives at
+[Audio Service: Audio feedback cues](audio-service.md#audio-feedback-cues-earcons).
+
 ## Where support is thin
 
 - **Typed input is terminal-only.** `ovos-simple-cli` gives a text alternative to speech, but

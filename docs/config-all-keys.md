@@ -55,10 +55,10 @@
 
 | Key | Default | Description |
 |---|---|---|
-| `sounds.start_listening` | `"snd/start_listening.wav"` |  |
-| `sounds.end_listening` | `"snd/end_listening.wav"` |  |
-| `sounds.acknowledge` | `"snd/acknowledge.mp3"` |  |
-| `sounds.error` | `"snd/error.mp3"` |  |
+| `sounds.start_listening` | `"snd/start_listening.wav"` | Earcon confirming the wake word was heard and recording started. Only plays when `confirm_listening` is true. |
+| `sounds.end_listening` | `"snd/end_listening.wav"` | Earcon confirming recording stopped and the utterance was captured. |
+| `sounds.acknowledge` | `"snd/acknowledge.mp3"` | Earcon a skill plays via `self.acknowledge()` to confirm a request that produces no spoken reply. Also the default for the skill installer's `pip_success`. |
+| `sounds.error` | `"snd/error.mp3"` | Earcon played when no skill or pipeline could handle the utterance (complete intent failure). Also the default for the skill installer's `pip_error`. |
 
 ### `location`
 
