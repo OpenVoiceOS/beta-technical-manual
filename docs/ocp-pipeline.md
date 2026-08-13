@@ -179,12 +179,13 @@ For example, "next song" does nothing when no player is active.
 The config block is read from `intents.ovos-ocp-pipeline-plugin`, the plugin's entry-point ID.
 
 !!! warning "Key your config by the plugin ID, not `OCP`"
-    `OVOSPipelineFactory.load_plugin()` resolves a pipeline plugin's config with a single
-    lookup — `Configuration()["intents"][<pipeline_id>]` — and there is **no fallback to
-    `intents.OCP`**. The bundled `mycroft.conf` correctly ships its values (including
-    `min_score: 40`) under `intents.ovos-ocp-pipeline-plugin`; an `OCP` key exists only
-    under `Audio.backends`, which configures the legacy audio-service backend, not this
-    pipeline. Keys added under `intents.OCP` change nothing — put yours under the plugin ID:
+    The plugin-ID key wins: the plugin resolves its config as
+    `intents["ovos-ocp-pipeline-plugin"] or intents["OCP"]`, so anything you set under
+    `intents.OCP` is **shadowed** the moment the plugin-ID key exists — and the bundled
+    `mycroft.conf` always ships that key (including `min_score: 40`), so in practice
+    `intents.OCP` entries change nothing on a stock install. `intents.OCP` survives only
+    as a back-compat fallback for configs that define nothing under the plugin ID. Put
+    yours under the plugin ID:
 
     ```json
     {"intents": {"ovos-ocp-pipeline-plugin": {"min_score": 40}}}

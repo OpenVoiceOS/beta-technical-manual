@@ -72,7 +72,8 @@ the legacy delivery, and disable `modernize` once no legacy producers remain.
     A skill container that only registers `ovos.*` handlers is not automatically safe from an
     older producer still emitting legacy topics — the wire frame it receives may be legacy-only.
     That skill hears it at all *because* its own `MessageBusClient` (any `ovos-bus-client`
-    since 2.2.0a1, where the bridge shipped)
+    since 2.6.3a1, where the bridge became receive-side — commit 0f0a241, PR #258; before
+    that the counterpart was a second wire message)
     re-dispatches the legacy arrival under its `ovos.*` counterpart on receive, per `modernize`
     being on. Disabling `modernize` on such a container does not just drop a redundant delivery;
     it silently stops that container from ever hearing a legacy producer again. Never disable

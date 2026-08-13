@@ -237,7 +237,9 @@ Source: `Configuration().get("PHAL")` in `ovos_PHAL/service.py` line 60 and the 
 ## 10. OCP / Media
 
 The OCP intent pipeline plugin reads its config from `intents.ovos-ocp-pipeline-plugin`
-(the plugin ID) — keys placed under `intents.OCP` are **ignored** (see
+(the plugin ID). `intents.OCP` survives only as a back-compat fallback that is shadowed
+whenever the plugin-ID key exists — and the shipped `mycroft.conf` always ships it, so on a
+stock install keys placed under `intents.OCP` change nothing (see
 [OCP Pipeline](ocp-pipeline.md#configuration)). `Audio` selects the legacy audio service backend, which OCP still uses for actual playback.
 
 | Key | Default | Description |
@@ -270,7 +272,7 @@ The OCP intent pipeline plugin reads its config from `intents.ovos-ocp-pipeline-
 | `Audio.backends.OCP.preferred_audio_services` | `["mpv", "vlc", "simple"]` | Order in which OCP tries local media players. |
 | `Audio.backends.OCP.active` | `true` | Whether the OCP backend is available for selection. |
 
-Source: `mycroft.conf` lines 188 to 203 (`intents.OCP`) and lines 705 to 726 (`Audio`) in [OpenVoiceOS/ovos-config](https://github.com/OpenVoiceOS/ovos-config).
+Source: `mycroft.conf` lines 188 to 203 (`intents.ovos-ocp-pipeline-plugin`) and lines 705 to 726 (`Audio`) in [OpenVoiceOS/ovos-config](https://github.com/OpenVoiceOS/ovos-config).
 
 ---
 

@@ -110,7 +110,8 @@ General steps to create a skill:
   - Results below the `min_score` threshold are filtered out before OCP picks a winner across
     all responding skills. The plugin reads `intents.ovos-ocp-pipeline-plugin.min_score`, and
     the shipped `mycroft.conf` sets exactly that key to **40** — so `40` is the threshold in
-    force by default (keys placed under `intents.OCP` change nothing; see
+    force by default (the plugin's code default of 50 applies only if the key is absent, and
+    `intents.OCP` is a shadowed back-compat fallback; see
     [OCP Pipeline](ocp-pipeline.md#configuration)). No confidence value short-circuits the
     search or cancels other skills
     early. A higher score only makes your result more likely to win the cross-skill comparison
