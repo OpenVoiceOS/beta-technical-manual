@@ -77,6 +77,13 @@ Overrides apply at **whole-file granularity**: an override file replaces the cor
 lower-precedence file entirely. You do **not** merge line-by-line, and you do **not** need to
 copy files you aren't changing.
 
+!!! warning "`.dialog` files: user overrides not honored yet"
+    The user-override tier currently applies to `.intent`, `.voc`, `.entity`, `.regex` and
+    the other resource roles, but **not** to `.dialog` files: the dialog renderer in
+    `ovos-workshop` still loads dialog only from the skill's own directory (a known gap,
+    marked for a deliberate follow-up migration in the source). Until that lands, rewording
+    a reply requires editing the skill's bundled `.dialog` file rather than an override.
+
 ### Where the user override folder lives
 
 The user override base is `<xdg_data>/resources/<skill_id>/`, where `<xdg_data>` is the XDG
@@ -100,7 +107,9 @@ data path, by default `~/.local/share/mycroft`. A typical override file path is:
 
 If the requested language has no directory, the loader prefers an exact match but **may** fall
 back to the nearest available language. OVOS uses the `langcodes` `tag_distance()` function and
-treats a distance below `10` as a usable regional match (e.g. `en-au` resolving to `en-us`).
+treats a distance of `10` or less as a usable regional match (the bound is inclusive —
+`10` is exactly the distance of a language against its macrolanguage tag), e.g. `en-au`
+resolving to `en-us`.
 Per the spec this fallback is an implementation choice, not a guarantee. Ship the exact
 language directory you need.
 
