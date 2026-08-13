@@ -1591,7 +1591,7 @@ few pieces are tied to specific Raspberry-Pi/Mycroft hardware:</p>
 <tr>
 <td>Wake word / STT / TTS / VAD plugins</td>
 <td><strong>Any Linux SBC / PC</strong></td>
-<td>CPU (or GPU) inference; heavier models just need more RAM/CPU</td>
+<td>CPU (or GPU) inference; heavier models just need more RAM/CPU. For concrete sizing, use the <a href="../install-raspovos/#step-1-prepare-your-hardware">Raspberry Pi tiers</a> as a baseline: a Pi 3-class board handles wake word + cloud speech only, Pi 4-class (4 GB) runs local ONNX STT/TTS comfortably, Pi 5-class adds headroom for Whisper-class models</td>
 </tr>
 <tr>
 <td><a href="../i2c-sound/"><code>ovos-i2csound</code></a></td>
