@@ -1541,10 +1541,9 @@ on synthesis.</p>
 ONNX Runtime is built to run efficiently on-device, unlike the heavier general-purpose
 engines further down this page (Coqui, Whisper-class transformers, etc.). Exact size varies
 per voice, since each one is a separate model fetched on first use.</p>
-<p><strong>Licensing:</strong> the phoonnx repository currently ships <strong>no license file</strong>, and individual
-voices carry their own model-card terms. For personal use this rarely matters; for a
-commercial or redistributed product, treat "no license file" as more restrictive than any
-permissive license and check with the author first — see <a href="../license/">Licensing</a>.</p>
+<p><strong>Licensing:</strong> the phoonnx code is <strong>Apache-2.0</strong>, but individual voices carry their
+own model-card terms — for a commercial or redistributed product, check the model card of
+every voice you ship, not just the code license. See <a href="../license/">Licensing</a>.</p>
 </div>
 <h2 id="change-your-voice">Change your voice<a class="headerlink" href="#change-your-voice" title="Permanent link">&para;</a></h2>
 <ol>
@@ -1703,7 +1702,7 @@ separately-licensed model or a paid cloud service, that is called out under "mod
 <tr>
 <td><a href="../tts-plugins-reference/#ovos-tts-plugin-phoonnx">ovos-tts-plugin-phoonnx</a></td>
 <td>Built into <a href="https://pypi.org/project/phoonnx">phoonnx</a>, OVOS's own ONNX-based multilingual neural TTS engine. It is the default choice for fully offline synthesis, with automatic model fetching.</td>
-<td>see repo (no license file, models: see model card)</td>
+<td>Apache-2.0 (code); models: see model card</td>
 <td>Stable</td>
 </tr>
 <tr>
