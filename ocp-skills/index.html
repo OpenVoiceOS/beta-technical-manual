@@ -1621,7 +1621,8 @@ The title and skill ID show as text. Duration shows as the elapsed-time readout.
 <p>Results below the <code>min_score</code> threshold are filtered out before OCP picks a winner across
     all responding skills. The plugin reads <code>intents.ovos-ocp-pipeline-plugin.min_score</code>, and
     the shipped <code>mycroft.conf</code> sets exactly that key to <strong>40</strong> — so <code>40</code> is the threshold in
-    force by default (keys placed under <code>intents.OCP</code> change nothing; see
+    force by default (the plugin's code default of 50 applies only if the key is absent, and
+    <code>intents.OCP</code> is a shadowed back-compat fallback; see
     <a href="../ocp-pipeline/#configuration">OCP Pipeline</a>). No confidence value short-circuits the
     search or cancels other skills
     early. A higher score only makes your result more likely to win the cross-skill comparison</p>

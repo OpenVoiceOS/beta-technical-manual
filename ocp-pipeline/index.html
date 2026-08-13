@@ -1671,12 +1671,13 @@ For example, "next song" does nothing when no player is active.</p>
 <p>The config block is read from <code>intents.ovos-ocp-pipeline-plugin</code>, the plugin's entry-point ID.</p>
 <div class="admonition warning">
 <p class="admonition-title">Key your config by the plugin ID, not <code>OCP</code></p>
-<p><code>OVOSPipelineFactory.load_plugin()</code> resolves a pipeline plugin's config with a single
-lookup — <code>Configuration()["intents"][&lt;pipeline_id&gt;]</code> — and there is <strong>no fallback to
-<code>intents.OCP</code></strong>. The bundled <code>mycroft.conf</code> correctly ships its values (including
-<code>min_score: 40</code>) under <code>intents.ovos-ocp-pipeline-plugin</code>; an <code>OCP</code> key exists only
-under <code>Audio.backends</code>, which configures the legacy audio-service backend, not this
-pipeline. Keys added under <code>intents.OCP</code> change nothing — put yours under the plugin ID:</p>
+<p>The plugin-ID key wins: the plugin resolves its config as
+<code>intents["ovos-ocp-pipeline-plugin"] or intents["OCP"]</code>, so anything you set under
+<code>intents.OCP</code> is <strong>shadowed</strong> the moment the plugin-ID key exists — and the bundled
+<code>mycroft.conf</code> always ships that key (including <code>min_score: 40</code>), so in practice
+<code>intents.OCP</code> entries change nothing on a stock install. <code>intents.OCP</code> survives only
+as a back-compat fallback for configs that define nothing under the plugin ID. Put
+yours under the plugin ID:</p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="p">{</span><span class="nt">&quot;intents&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;ovos-ocp-pipeline-plugin&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;min_score&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">40</span><span class="p">}}}</span>
 </span></code></pre></div>
 </div>
