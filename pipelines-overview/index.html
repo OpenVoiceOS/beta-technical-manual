@@ -670,18 +670,18 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#matcher-taxonomy" class="md-nav__link">
+  <a href="#what-is-an-intent-pipeline" class="md-nav__link">
     <span class="md-ellipsis">
-      Matcher taxonomy
+      What is an Intent Pipeline?
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#what-is-an-intent-pipeline" class="md-nav__link">
+  <a href="#matcher-taxonomy" class="md-nav__link">
     <span class="md-ellipsis">
-      What is an Intent Pipeline?
+      Matcher taxonomy
     </span>
   </a>
   
@@ -1419,18 +1419,18 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#matcher-taxonomy" class="md-nav__link">
+  <a href="#what-is-an-intent-pipeline" class="md-nav__link">
     <span class="md-ellipsis">
-      Matcher taxonomy
+      What is an Intent Pipeline?
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#what-is-an-intent-pipeline" class="md-nav__link">
+  <a href="#matcher-taxonomy" class="md-nav__link">
     <span class="md-ellipsis">
-      What is an Intent Pipeline?
+      Matcher taxonomy
     </span>
   </a>
   
@@ -1624,13 +1624,10 @@
 </details>
 <p>The OpenVoiceOS (OVOS) Intent Pipeline is a modular, extensible system that interprets user utterances and maps them to actions or responses. It orchestrates pipeline plugins and fallback mechanisms to produce accurate, contextually relevant responses. This layered, rule-based approach tries plain keyword and template matchers before any statistical or LLM-backed stage. This is a deliberate design choice. See the <a href="https://blog.openvoiceos.org/posts/2025-11-25-gofai">blog post</a> for why classic Adapt/Padatious matching still earns the first checkpoints.</p>
 <p>When the entry utterance carries no authoritative language tag, the orchestrator resolves the language <strong>once</strong>, from session evidence. It passes that same resolved tag into every plugin's <code>match</code> call for the utterance. A plugin may refine it locally but must not silently re-derive its own answer. Otherwise different stages could match the same utterance in different languages depending on ordering.</p>
-<div class="admonition note">
-<p class="admonition-title">Spec vocabulary in one paragraph</p>
-<p>In OVOS-PIPELINE-1 terms, every stage on this page is a <strong>pipeline plugin</strong> identified by an opaque <code>pipeline_id</code>. Each one exposes exactly one operation to the <strong>orchestrator</strong>: <code>match(utterances, lang, message) → Match | None</code> (the third argument is the utterance <code>Message</code>. A plugin that needs the session reads it from <code>message.context["session"]</code>).</p>
-<p>The orchestrator iterates the plugins in the order given by <code>session.pipeline</code> and stops at the <strong>first</strong> one that returns a <code>Match</code>. <strong>First match wins.</strong> There is <em>no</em> cross-plugin confidence comparison. The per-stage <code>conf_high/medium/low</code> thresholds below are each plugin's <em>own</em> internal accept/reject gate, not a score the orchestrator ranks between plugins.</p>
-<p>On a match the orchestrator dispatches the handler on the topic <code>&lt;skill_id&gt;:&lt;intent_name&gt;</code> (PIPELINE-1 §7) and emits the handler-lifecycle trio. If no plugin claims, it emits <code>ovos.intent.unmatched</code>.</p>
-<p>Several stages here (converse, stop, common-query, fallback) are pipeline plugins that claim via <strong>reserved <code>intent_name</code> values</strong> (<code>converse</code>, <code>response</code>, <code>stop</code>, <code>common_query</code>, <code>fallback</code>) leased in PIPELINE-1 §7.3. Skills may not register those names.</p>
-</div>
+<hr />
+<h2 id="what-is-an-intent-pipeline">What is an Intent Pipeline?<a class="headerlink" href="#what-is-an-intent-pipeline" title="Permanent link">&para;</a></h2>
+<p>An intent pipeline in OVOS is a sequence of processing stages that analyze user input to determine the user's intent. Each stage uses a different strategy, ranging from high-confidence pipeline plugins to fallback mechanisms.</p>
+<p>This layered approach lets OVOS handle a wide range of user queries at varying levels of specificity and complexity.</p>
 <hr />
 <h2 id="matcher-taxonomy">Matcher taxonomy<a class="headerlink" href="#matcher-taxonomy" title="Permanent link">&para;</a></h2>
 <p>The manual groups pipeline plugins into four kinds. The first is always-on pipeline
@@ -1675,9 +1672,13 @@ furniture; the other three are matchers you pick between:</p>
 list (see below). "Extra" means you install the plugin and add its stage IDs
 yourself.</p>
 <hr />
-<h2 id="what-is-an-intent-pipeline">What is an Intent Pipeline?<a class="headerlink" href="#what-is-an-intent-pipeline" title="Permanent link">&para;</a></h2>
-<p>An intent pipeline in OVOS is a sequence of processing stages that analyze user input to determine the user's intent. Each stage uses a different strategy, ranging from high-confidence pipeline plugins to fallback mechanisms.</p>
-<p>This layered approach lets OVOS handle a wide range of user queries at varying levels of specificity and complexity.</p>
+<div class="admonition note">
+<p class="admonition-title">Spec vocabulary in one paragraph</p>
+<p>In OVOS-PIPELINE-1 terms, every stage on this page is a <strong>pipeline plugin</strong> identified by an opaque <code>pipeline_id</code>. Each one exposes exactly one operation to the <strong>orchestrator</strong>: <code>match(utterances, lang, message) → Match | None</code> (the third argument is the utterance <code>Message</code>. A plugin that needs the session reads it from <code>message.context["session"]</code>).</p>
+<p>The orchestrator iterates the plugins in the order given by <code>session.pipeline</code> and stops at the <strong>first</strong> one that returns a <code>Match</code>. <strong>First match wins.</strong> There is <em>no</em> cross-plugin confidence comparison. The per-stage <code>conf_high/medium/low</code> thresholds below are each plugin's <em>own</em> internal accept/reject gate, not a score the orchestrator ranks between plugins.</p>
+<p>On a match the orchestrator dispatches the handler on the topic <code>&lt;skill_id&gt;:&lt;intent_name&gt;</code> (PIPELINE-1 §7) and emits the handler-lifecycle trio. If no plugin claims, it emits <code>ovos.intent.unmatched</code>.</p>
+<p>Several stages here (converse, stop, common-query, fallback) are pipeline plugins that claim via <strong>reserved <code>intent_name</code> values</strong> (<code>converse</code>, <code>response</code>, <code>stop</code>, <code>common_query</code>, <code>fallback</code>) leased in PIPELINE-1 §7.3. Skills may not register those names.</p>
+</div>
 <hr />
 <h2 id="pipeline-structure">Pipeline Structure<a class="headerlink" href="#pipeline-structure" title="Permanent link">&para;</a></h2>
 <p>When an utterance arrives, OVOS walks the pipeline in order and hands the utterance to each stage until one claims it. Stages are tried from most to least confident:</p>
