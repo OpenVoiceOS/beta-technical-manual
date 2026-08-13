@@ -1622,7 +1622,23 @@ separate project with its own protocol and docs.</p>
    <code>--siteid</code>.
 4. Verify with <code>hivemind-client test-identity</code> before trusting the link.
 5. For a mic-only satellite that leaves STT/TTS to the server, use
-   <code>hivemind-mic-satellite</code> instead of running a full listener/audio pair locally.</p>
+   <a href="https://github.com/JarbasHiveMind/hivemind-mic-satellite"><code>hivemind-mic-satellite</code></a>
+   instead of running a full listener/audio pair locally. Two things the package name
+   does not tell you:</p>
+<div class="language-text highlight"><pre><span></span><code>- The **server** needs `pip install hivemind-audio-binary-protocol` — plain
+  `hivemind-core` does no audio processing, so without it the satellite streams
+  audio into a void.
+- The satellite&#39;s run command is **`hivemind-mic-sat`** (after the same
+  `set-identity` step as above, or pass `--key/--password/--host` directly).
+
+The device runs only a microphone and VAD plugin — cheap hardware like a Pi Zero
+works — while wake word, STT and TTS all happen server-side. The trade-off: with no
+local wake word, every VAD-detected voice segment streams upstream, costing
+bandwidth and putting the full STT load on the server. Fine for a homelab with a
+handful of devices; for a local wake word on slightly stronger hardware, use
+[HiveMind-voice-relay](https://github.com/JarbasHiveMind/HiveMind-voice-relay)
+instead.
+</code></pre></div>
 <p>By default <code>hivemind-core listen</code> starts <strong>two</strong> listeners, both on <code>0.0.0.0</code>: the websocket
 protocol plugin on <code>5678</code> and the HTTP protocol plugin on <code>5679</code>. Both are in the default
 <code>network_protocol</code> config and both start, so a firewall rule that only covers 5678 leaves the
@@ -1750,8 +1766,9 @@ OVOS across machines.</p>
 <h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h2>
 <p><strong>Satellite can't connect to the server.</strong></p>
 <ul>
-<li>Check the server's firewall allows inbound traffic on port <code>8181</code> (raw bus) or port
-  <code>5678</code> (HiveMind listener, default bind <code>0.0.0.0</code>) from the satellite's address.</li>
+<li>Check the server's firewall allows inbound traffic on port <code>8181</code> (raw bus) or ports
+  <code>5678</code> <strong>and</strong> <code>5679</code> (HiveMind websocket + HTTP listeners, both default bind
+  <code>0.0.0.0</code> — see the warning above) from the satellite's address.</li>
 <li>Confirm <code>websocket.host</code> on the satellite points at the server's real LAN address, not
   <code>127.0.0.1</code>.</li>
 <li>For HiveMind, run <code>hivemind-client test-identity</code> on the satellite. A hang or error

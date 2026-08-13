@@ -1680,8 +1680,8 @@ key holding its config.</p>
 <p>A server is only useful once something connects to it. On the client side:</p>
 <ul>
 <li><strong><a href="https://github.com/JarbasHiveMind/hivemind-websocket-client"><code>hivemind-websocket-client</code></a></strong>: the client library and the <code>hivemind-client</code> CLI (<code>set-identity</code>, send utterances, and more). Installs as <code>hivemind-bus-client</code> — the repository and the distribution have different names.</li>
-<li><strong><a href="https://github.com/JarbasHiveMind/hivemind-mic-satellite"><code>hivemind-mic-satellite</code></a></strong>: a thin device that only does wake word and microphone capture. STT and TTS run server-side.</li>
-<li><strong><a href="https://github.com/JarbasHiveMind/hivemind-listener"><code>hivemind-listener</code></a></strong>: the server-side audio entry point that performs STT/TTS for audio satellites, with binary audio moving over the mesh.</li>
+<li><strong><a href="https://github.com/JarbasHiveMind/hivemind-mic-satellite"><code>hivemind-mic-satellite</code></a></strong>: the thinnest device — only microphone and VAD run locally; wake word, STT and TTS all run server-side. Run it with the <code>hivemind-mic-sat</code> command, and note the server must have <code>hivemind-audio-binary-protocol</code> installed (see below).</li>
+<li><strong><a href="https://github.com/JarbasHiveMind/hivemind-audio-binary-protocol"><code>hivemind-audio-binary-protocol</code></a></strong>: the server-side audio entry point that performs wake word/STT/TTS for audio satellites, with binary audio moving over the mesh. Plain <code>hivemind-core</code> does no audio processing without it. (Formerly named <code>hivemind-listener</code>; the old PyPI package name still exists.)</li>
 </ul>
 <p>This split is the real "voice satellite" story: cheap devices listen and speak, and the server thinks.</p>
 <hr />
