@@ -64,26 +64,27 @@ flowchart TD
 ## Change your voice
 
 1. Browse [voices_demo](https://github.com/OpenVoiceOS/voices_demo) for audio samples of the
-   available TTS voices, or check a plugin's own catalog entry below for what it offers.
+    available TTS voices, or check a plugin's own catalog entry below for what it offers.
 2. Open `~/.config/mycroft/mycroft.conf` (create it if it doesn't exist) and set the `tts`
-   section's `module` to the plugin you want, plus any plugin-specific settings (voice name,
-   speaker id, etc.):
-   ```json
-   {
+    section's `module` to the plugin you want, plus any plugin-specific settings (voice name,
+    speaker id, etc.):
+    ```json
+    {
      "tts": {
        "module": "ovos-tts-plugin-phoonnx"
      }
-   }
-   ```
-   Leaving out a `"voice"` key like this is a valid, minimal config. The plugin picks the
-   first bundled model that supports the configured language. See the
-   [ovos-tts-plugin-phoonnx](tts-plugins-reference.md#ovos-tts-plugin-phoonnx) entry for how to pin a
-   specific voice.
+    }
+    ```
+    Leaving out a `"voice"` key like this is a valid, minimal config. The plugin picks the
+    first bundled model that supports the configured language. See the
+    [ovos-tts-plugin-phoonnx](tts-plugins-reference.md#ovos-tts-plugin-phoonnx) entry for how to pin a
+    specific voice.
 
-   Installing a plugin's package (like `pip install phoonnx`) only makes it available to
-   OVOS if it lands in the same Python environment OVOS itself runs in. Activate that venv
-   or container first, the same way [Your First Skill](first-skill.md) does before installing
-   a skill.
+    Installing a plugin's package (like `pip install phoonnx`) only makes it available to
+    OVOS if it lands in the same Python environment OVOS itself runs in. Activate that venv
+    or container first, the same way [Your First Skill](first-skill.md) does before installing
+    a skill.
+
 3. Save the file. It's JSONC (comments allowed). Restart OVOS for the change to take effect.
 
 !!! tip

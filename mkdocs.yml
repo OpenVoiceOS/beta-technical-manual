@@ -392,3 +392,8 @@ nav:
 
 extra_css:
   - css/extra.css
+
+# Vendored so diagrams render offline (ovos-docs-viewer, blocked CDNs);
+# mkdocs-material only fetches mermaid from unpkg when no global exists.
+extra_javascript:
+  - js/mermaid.min.js
