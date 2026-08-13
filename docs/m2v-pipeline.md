@@ -43,9 +43,9 @@ Add a matcher to your pipeline in `mycroft.conf`:
     },
     "pipeline": [
       "ovos-converse-pipeline-plugin",
-      "ovos-m2v-pipeline-high",
       "ovos-padatious-pipeline-plugin-high",
       "ovos-adapt-pipeline-plugin-high",
+      "ovos-m2v-pipeline-high",
       "ovos-fallback-pipeline-plugin-low"
     ]
   }

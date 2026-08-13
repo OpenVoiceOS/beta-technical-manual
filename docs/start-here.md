@@ -12,7 +12,7 @@ Pick one of the two install routes below, then move on to the three pages that f
 First, pick your install route:
 
 - **[Install with ovos-installer](ovos-installer.md)** (recommended): the guided path for most hardware, including an existing Raspberry Pi OS setup.
-- **[RaspOVOS image](install-raspovos.md)** (alternative): a flash-and-boot SD card image for a spare Raspberry Pi. Its images are in a maintenance pause — check the [release status](https://github.com/OpenVoiceOS/raspOVOS/releases) first. Existing images still flash and boot but are not receiving updates; a refreshed image is on the roadmap. The installer is the supported route meanwhile.
+- **[RaspOVOS image](install-raspovos.md)** (alternative): a flash-and-boot SD card image for a spare Raspberry Pi. Its **stable** images date from mid-2025 and are not receiving updates (newer DEV builds on the [releases page](https://github.com/OpenVoiceOS/raspOVOS/releases) are untested work toward a refreshed image), so check status first. The installer is the supported route meanwhile.
 
 Once the assistant is installed:
 
