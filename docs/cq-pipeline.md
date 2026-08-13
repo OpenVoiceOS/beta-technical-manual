@@ -64,8 +64,8 @@ a question.
     | OVOS-COMMON-QUERY-1 (canonical) | Current code |
     |---|---|
     | `ovos.common_query.ping` / `.pong`: wants-to-answer poll | discovery handshake (same names) |
-    | `<skill_id>.common_query.request`: full-answer request to a claiming skill (dotted, non-dispatch) | `question:query` broadcast |
-    | `<skill_id>.common_query.response`: a skill's answer plus `conf` | `question:query.response` |
+    | `ovos.common_query.request`: full-answer request — a static broadcast topic, with the target skill named in `data.skill_id`, never in the topic | `question:query` broadcast |
+    | `ovos.common_query.response`: a skill's answer plus `conf`, responder identity in `data.skill_id` | `question:query.response` |
     | `<pipeline_id>:common_query`: reserved-name handler dispatch (the one genuine colon/dispatch topic in this family) | `question:action.<skill_id>` |
 
 ## How it works
