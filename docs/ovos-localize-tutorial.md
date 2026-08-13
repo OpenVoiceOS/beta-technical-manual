@@ -140,3 +140,11 @@ Every translation makes OVOS usable for more people around the world.
 ---
 **Read next:** [Translation Plugins](translation-plugins.md)
 **Related:** [Bidirectional Translation](bidirectional-translation.md) · [Customizing Language Resources](lang-customization.md) · [Contributing](contributing.md)
+
+!!! note "Making your own skill translatable"
+    This page is for *translators*. If you are a skill **author** adding languages to your
+    own skill, the workflow is different: ship a `locale/<lang>/` folder per language
+    ([Customizing Language Resources](lang-customization.md) covers the file formats),
+    describe per-locale metadata in [`skill.json`](skill-json.md#language-support), and
+    lint the result in CI with
+    [`spec-lint.yml`](gh-automations-repo-skill-checks.md#spec-lintyml).

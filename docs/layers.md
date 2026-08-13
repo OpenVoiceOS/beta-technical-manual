@@ -160,7 +160,7 @@ layer is a named group of intents that you can manage at once.
 Slightly more complex than the previous example, we may want to offer several "forks" on the
 intent execution, enabling different intent groups depending on previous interactions.
 
-[skill-moon-game](https://github.com/JarbasSkills/skill-moon-game/) is an example full voice
+`skill-moon-game` (a VoiceGamez title, not currently public) is an example full voice
 game implemented this way.
 
 Here is an excerpt from the game to illustrate usage of `IntentLayer` decorators:

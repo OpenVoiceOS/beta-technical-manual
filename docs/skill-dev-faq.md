@@ -180,7 +180,7 @@ voice, a G2P engine) your skill expects to be present but doesn't import as a Py
 Push it to a GitHub repository (`source` in `skill.json` should point there). Optionally publish it
 to PyPI too and set `package_name` so people can `pip install` it directly. A skill without a PyPI
 release is still installable straight from git via `pip_spec`. From there, list it on the
-[OVOS Skill store](https://store.openvoiceos.org). The store reads `name`, `description`,
+[OVOS Skill store](https://openvoiceos.github.io/OVOS-skills-store). The store reads `name`, `description`,
 `examples`, `tags`, `icon`, and `images` from `skill.json` to build the listing card.
 
 → full story: [Skill Metadata File: Sharing your skill](skill-json.md#sharing-your-skill)

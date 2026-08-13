@@ -132,7 +132,7 @@ The entry-point name is the `skill_id` and the value points at the skill class. 
 - `extra_plugins` allows for declaring companion plugins your skill may require, but that aren't direct Python dependencies.
 
 
-- The [Skill store](https://store.openvoiceos.org) and GUI tools like `ovos-shell` use `icon`, `images`, `examples`, and `description` to present the skill visually.
+- The [Skill store](https://openvoiceos.github.io/OVOS-skills-store) and GUI tools like `ovos-shell` use `icon`, `images`, `examples`, and `description` to present the skill visually.
 
 ---
 
@@ -142,7 +142,11 @@ Once your skill works, publishing it is the same as publishing any Python packag
 
 1. **Push it to a GitHub repository** under your own account (or the `OpenVoiceOS` org if you're contributing an official skill). The `source` field in `skill.json` should point at it.
 2. **Optionally publish it to PyPI** so it can be installed with a plain `pip install`, and set `package_name` in `skill.json` to that PyPI name. Skills without a PyPI release are still installable directly from git via `pip_spec` (see the [PEP 508](https://peps.python.org/pep-0508/) spec syntax used there).
-3. **List it on the [OVOS Skill store](https://store.openvoiceos.org)**. See [OVOS-skills-store](https://github.com/OpenVoiceOS/OVOS-skills-store) for how skills get added. The store reads the `skill.json` fields above (`name`, `description`, `examples`, `tags`, `icon`, `images`) to build the listing card, and `source`/`pip_spec`/`package_name` to know how to install it.
+3. **List it on the [OVOS Skill store](https://openvoiceos.github.io/OVOS-skills-store)**. Two submission paths, both feeding the same catalog: fill in the guided **Submit Skill** form on the store site, or open a
+   [skill-submission issue](https://github.com/OpenVoiceOS/OVOS-skills-store/issues/new?template=skill_submission.yml)
+   on the [OVOS-skills-store](https://github.com/OpenVoiceOS/OVOS-skills-store) repo — the
+   issue form's fields mirror `skill.json` and generate the store's catalog entry on merge.
+   The store reads the `skill.json` fields above (`name`, `description`, `examples`, `tags`, `icon`, `images`) to build the listing card, and `source`/`pip_spec`/`package_name` to know how to install it.
 
 !!! tip
     A complete, accurate `skill.json` is what makes the difference between a bare repository link
