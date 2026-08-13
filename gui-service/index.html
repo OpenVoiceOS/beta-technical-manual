@@ -1952,7 +1952,7 @@ share one global display stack.</p>
 <p>The GUI WebSocket server is configured under <code>gui_websocket</code> in <code>mycroft.conf</code>:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>{
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>  &quot;gui_websocket&quot;: {
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>    &quot;host&quot;: &quot;0.0.0.0&quot;, // ships bound to all interfaces — set to 127.0.0.1 to restrict to localhost
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>    &quot;host&quot;: &quot;127.0.0.1&quot;, // loopback-only by default — widen to 0.0.0.0 only for a remote display
 </span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>    &quot;base_port&quot;: 18181,
 </span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>    &quot;route&quot;: &quot;/gui&quot;
 </span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>  }
@@ -1968,7 +1968,7 @@ share one global display stack.</p>
 <tbody>
 <tr>
 <td><code>host</code></td>
-<td>Interface the Tornado WebSocket server binds to (default: <code>0.0.0.0</code>, <strong>all interfaces</strong>)</td>
+<td>Interface the Tornado WebSocket server binds to (default: <code>127.0.0.1</code>, loopback only)</td>
 </tr>
 <tr>
 <td><code>base_port</code></td>
@@ -1990,8 +1990,9 @@ WebSocket server has no working <code>gui_websocket.ssl</code> server path. The 
 key does exist in the default config (value <code>false</code>), but it is a no-op. <code>create_gui_service</code>
 in <code>ovos_gui/bus.py</code> reads only <code>route</code>, <code>base_port</code>, and <code>host</code>, so nothing turns this
 socket into <code>wss://</code>.</p>
-<p>It ships bound to <code>0.0.0.0</code> (all interfaces). Set <code>gui_websocket.host</code> to <code>127.0.0.1</code>
-unless a remote display genuinely needs network access. Never leave <code>0.0.0.0</code> on an
+<p>It ships bound to <code>127.0.0.1</code> (loopback only). Widen <code>gui_websocket.host</code> to <code>0.0.0.0</code>
+only if a remote display genuinely needs network access — and check configs from older
+installs, which may still carry <code>0.0.0.0</code>. Never leave <code>0.0.0.0</code> on an
 untrusted network, and never expose port <code>18181</code> beyond a trusted network. If a display
 really must run on another machine, put it behind a VPN or a reverse proxy that
 authenticates and terminates TLS. Or use
