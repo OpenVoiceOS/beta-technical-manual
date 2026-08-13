@@ -1556,7 +1556,12 @@ the pip install step on failure.</p>
 <p>The intent and dialog files live in a <code>locale/&lt;language&gt;/</code> folder, so the same skill can be
 translated. That's the whole model. <a href="../skill-structure/">Anatomy of a Skill</a> covers it in depth.</p>
 <h2 id="step-1-create-the-folder-layout">Step 1 — Create the folder layout<a class="headerlink" href="#step-1-create-the-folder-layout" title="Permanent link">&para;</a></h2>
-<p>Make this structure (replace <code>youruser</code> with your name/handle later):</p>
+<p>Make this structure — and actually replace <code>youruser</code> with your own name/handle (and pick
+your own skill name) <strong>before</strong> installing, not later: the folder and <code>pyproject.toml</code> names
+become the package name and <code>skill_id</code>, and two skills with the same <code>skill_id</code> installed on
+one machine shadow each other. On your own single machine the literal names work, which is
+exactly why the collision goes unnoticed until a second copy shows up (a shared computer, a
+classroom, a copied repo):</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>ovos-skill-my-first/
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>├── pyproject.toml
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>└── ovos_skill_my_first/
@@ -1611,6 +1616,14 @@ learns the <em>pattern</em> from these, so you don't have to list every wording:
 </span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>say hello
 </span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>greet me
 </span></code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Three file formats, don't mix them up</p>
+<p>A skill uses three different formats side by side: <code>pyproject.toml</code> is <strong>TOML</strong>,
+<code>.intent</code> and <code>.dialog</code> files are <strong>plain text</strong> (one phrase per line — no quotes, no
+commas, no brackets), and only <code>skill.json</code> is <strong>JSON</strong>. The classic mistake is decorating
+an <code>.intent</code> file with JSON punctuation; every stray quote or comma becomes part of the
+phrase to match.</p>
+</div>
 <h2 id="step-4-write-what-ovos-says-back">Step 4 — Write what OVOS says back<a class="headerlink" href="#step-4-write-what-ovos-says-back" title="Permanent link">&para;</a></h2>
 <p><code>ovos_skill_my_first/locale/en-us/dialog/hello.dialog</code>: one option per line. OVOS picks one at
 random so the assistant doesn't sound robotic:</p>
@@ -1667,7 +1680,10 @@ into the one OVOS actually uses, instead of somewhere else. See the
 and container installs each put it somewhere different.</p>
 <ul>
 <li>Check where your particular install created its environment, for example the installer's
-  summary screen (see <a href="../ovos-installer-scenarios/#environment-summary">ovos-installer</a>).</li>
+  summary screen (see <a href="../ovos-installer-scenarios/#environment-summary">ovos-installer</a>).
+  On a fleet of identically-imaged machines (a classroom set, a batch of satellites) the
+  path is the same everywhere — find it once and share it, rather than having every person
+  hunt for it separately.</li>
 <li>Advanced: if you installed via <a href="../glossary/">systemd</a>, its unit file's
   <code>Environment=</code>/<code>ExecStart=</code> lines show the path.</li>
 <li>Still stuck? See <a href="../troubleshooting/">Troubleshooting</a>.</li>
@@ -1708,10 +1724,17 @@ anything to load. <a href="../testing-your-skill/">Test Your Skill</a> hits the 
 the automated test.</p>
 </div>
 <div class="admonition tip">
-<p class="admonition-title">No microphone handy, or want to test without talking?</p>
+<p class="admonition-title">Prefer <code>ovos-say-to</code> for repeatable tests (and know the spoken-test failure mode)</p>
 <p>You can send the utterance straight onto the bus as text, skipping the wake word and mic
-entirely: <code>ovos-say-to "hello"</code>. See <a href="../troubleshooting/#stage-3-did-stt-produce-text">Troubleshooting</a>
-for more on this and other text-based ways to test a skill.</p>
+entirely: <code>ovos-say-to "hello"</code>. This is the <strong>recommended</strong> way to test while iterating —
+it is deterministic and works with no microphone. It is also the way to go when many
+machines test at once (a workshop, a classroom): the default spoken path sends your audio
+to a shared <strong>public community STT server</strong> (see
+<a href="../privacy-security/">Privacy &amp; Security</a>), so a room full of devices testing
+simultaneously can see recognition turn slow or flaky from server load — a failure that
+looks like "OVOS didn't reply" but has nothing to do with your skill. See
+<a href="../troubleshooting/#stage-3-did-stt-produce-text">Troubleshooting</a>
+for more text-based ways to test a skill.</p>
 </div>
 <h2 id="adding-a-file-later-know-which-install-you-have">Adding a file later? Know which install you have<a class="headerlink" href="#adding-a-file-later-know-which-install-you-have" title="Permanent link">&para;</a></h2>
 <p>If you add a new <code>.intent</code> or <code>.dialog</code> file after this walkthrough, what you do next depends on
