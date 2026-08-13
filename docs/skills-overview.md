@@ -33,7 +33,7 @@ Longer-form guidance on design, deployment-tested practice, and keeping a skill 
 The mechanics of matching an utterance to a skill and handling it once matched: the two intent styles, session and context state, and how a skill talks back to the user.
 
 - [Adapt Intents](intents-adapt.md) and [Padatious Intents](intents-padatious.md): the two intent styles.
-- [Asking the User](prompts.md), [Context](context.md), [Intent Layers](layers.md), [Permissions & Activation Control](permissions.md), [Continuous Conversation](converse.md), [Context & Sessions](session.md).
+- [Asking the User](prompts.md), [Intent Context (gating)](context.md), [Intent Layers](layers.md), [Permissions & Activation Control](permissions.md), [Continuous Conversation](converse.md), [Sessions (multi-user state)](session.md).
 - [Dialog & Statements](statements.md), [SSML](ssml.md), [Customization](customization.md), [skill.json](skill-json.md).
 
 ## Skill APIs

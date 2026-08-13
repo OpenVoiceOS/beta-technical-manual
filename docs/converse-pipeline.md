@@ -311,4 +311,4 @@ Protections include:
 
 ---
 **Read next:** [Stop Pipeline](stop-pipeline.md)
-**Related:** [Converse](converse.md) · [Context & Sessions](session.md) · [Skill Classes](skill-classes.md) · [Fallback Pipeline](fallback-pipeline.md)
+**Related:** [Converse](converse.md) · [Sessions (multi-user state)](session.md) · [Skill Classes](skill-classes.md) · [Fallback Pipeline](fallback-pipeline.md)

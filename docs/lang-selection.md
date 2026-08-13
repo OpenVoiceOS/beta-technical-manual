@@ -124,4 +124,4 @@ This allows switching between languages without manual reconfiguration, at the c
 
 ---
 **Read next:** [Customizing Language Resources](lang-customization.md)
-**Related:** [Language Support Overview](lang-support.md) (incl. [switching an install's language](lang-support.md#auto-configuration)) · [Context & Sessions](session.md) · [Intent Service](intent-service.md)
+**Related:** [Language Support Overview](lang-support.md) (incl. [switching an install's language](lang-support.md#auto-configuration)) · [Sessions (multi-user state)](session.md) · [Intent Service](intent-service.md)

@@ -35,11 +35,12 @@ flowchart TD
     depends on them.
 
     **Looking for a no-terminal option?** The **[raspOVOS](install-raspovos.md)** image is the
-    flash-and-boot alternative: no terminal, no SSH. Its images are in a maintenance pause, so
-    check its [release status](https://github.com/OpenVoiceOS/raspOVOS/releases) before choosing
-    it: existing images still flash and boot but are not receiving updates, and a refreshed image
-    is on the roadmap. This installer is the supported route meanwhile, and the recommended path
-    on the Pi and everywhere else.
+    flash-and-boot alternative: no terminal, no SSH. Its **stable** images date from mid-2025
+    and are not receiving updates (the newer DEV builds on its
+    [releases page](https://github.com/OpenVoiceOS/raspOVOS/releases) are untested
+    work-in-progress toward a refreshed image), so check status before choosing it. This
+    installer is the supported route meanwhile, and the recommended path on the Pi and
+    everywhere else.
 
     **This runs over SSH in a terminal, not an app.** There's no phone app or setup wizard with a
     graphical pairing flow. You type commands into a terminal, usually over SSH into a headless

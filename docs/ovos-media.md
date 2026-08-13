@@ -379,7 +379,7 @@ A few guarantees hold for `OCPMediaPlayer` regardless of which backend is active
 
 ## Upcoming: MediaProvider plugins replace OCP skills
 
-!!! info "Upcoming — MediaProvider plugins replace OCP skills"
+!!! info "What changes, and when"
     Media catalogs are moving **out of skills and into plugins**. A new **MediaProvider** plugin
     type (`opm.media.provider` / `PluginTypes.MEDIA_PROVIDER`) that the OCP pipeline loads
     **in-process** and calls `search()` on directly, in place of today's

@@ -3,13 +3,15 @@
 !!! abstract "In a nutshell"
     This is a step-by-step guide to turning a Raspberry Pi (a small, inexpensive computer) into a working OVOS voice assistant by flashing a ready-made "raspOVOS" image onto an SD card or USB drive. It walks you through hardware choices, writing the image, first boot, connecting to Wi-Fi, and the handy commands you'll use afterward. raspOVOS is a ready-made OpenVoiceOS image for the Raspberry Pi: flash it and boot into a working assistant. Read the status warning below before choosing it for a new setup. See the [Glossary](glossary.md) for unfamiliar terms.
 
-!!! warning "Project status: maintenance pause"
-    The raspOVOS images are in a maintenance pause and are not the recommended install
-    path. The project roadmap plans a refreshed image. Check the
-    [raspOVOS repository](https://github.com/OpenVoiceOS/raspOVOS) for status before
-    flashing. For a supported setup on a Raspberry Pi, install Raspberry Pi OS and use
-    the [ovos-installer](ovos-installer.md). This guide stays for people running an
-    existing raspOVOS image.
+!!! warning "Project status: stable images paused, development active"
+    The last **stable** raspOVOS images date from mid-2025 and are not receiving updates,
+    so they are not the recommended install path for a new setup. The repository itself is
+    actively developed — CI work continues and newer **DEV** images appear on the
+    [releases page](https://github.com/OpenVoiceOS/raspOVOS/releases) — but DEV images are
+    untested builds toward the refreshed image on the roadmap, not something to hand a
+    newcomer. Check the repository for status before flashing. For a supported setup on a
+    Raspberry Pi, install Raspberry Pi OS and use the [ovos-installer](ovos-installer.md).
+    This guide stays for people running an existing raspOVOS image.
 
 This tutorial is designed for users new to Raspberry Pi and raspOVOS. Follow these steps to set up your device.
 

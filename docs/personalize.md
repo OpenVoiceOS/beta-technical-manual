@@ -61,7 +61,10 @@ for the full CLI). Once the file parses cleanly, apply the change:
 }
 ```
 
-Full walkthrough, plugin choices, and tuning: [Wake-word Plugins](wake-word-plugins.md#change-your-wake-word).
+As with voices below, the plugin must be installed into the same environment OVOS runs in
+before the config can use it (`pip install ovos-ww-plugin-vosk` for this example) — a wake
+word whose module isn't installed silently falls back to the default. Full walkthrough,
+plugin choices, and tuning: [Wake-word Plugins](wake-word-plugins.md#change-your-wake-word).
 
 ## Change your voice
 
