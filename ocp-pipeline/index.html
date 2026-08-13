@@ -1663,17 +1663,14 @@ For example, "next song" does nothing when no player is active.</p>
 </tbody>
 </table>
 <p>The config block is read from <code>intents.ovos-ocp-pipeline-plugin</code>, the plugin's entry-point ID.</p>
-<div class="admonition danger">
-<p class="admonition-title">The shipped <code>intents.OCP</code> block is dead config</p>
-<p><code>load_pipeline_plugin()</code> resolves a plugin's config with a single lookup —
-<code>Configuration()["intents"][&lt;pipeline_id&gt;]</code> — and there is <strong>no fallback to
-<code>intents.OCP</code></strong>. The bundled <code>mycroft.conf</code> ships an <code>intents.OCP</code> block
-(<code>min_score: 40</code>, <code>legacy</code>, <code>filter_media</code>, <code>filter_SEI</code>, <code>playback_mode</code>,
-<code>search_fallback</code>) and <strong>no</strong> <code>intents.ovos-ocp-pipeline-plugin</code> section, so none of those
-shipped values reach the plugin.</p>
-<p>Two consequences. The effective <code>min_score</code> today is the code default <strong>50</strong>, not the 40
-the config file shows. And editing <code>intents.OCP</code> changes nothing — put your keys under
-<code>intents.ovos-ocp-pipeline-plugin</code> instead:</p>
+<div class="admonition warning">
+<p class="admonition-title">Key your config by the plugin ID, not <code>OCP</code></p>
+<p><code>OVOSPipelineFactory.load_plugin()</code> resolves a pipeline plugin's config with a single
+lookup — <code>Configuration()["intents"][&lt;pipeline_id&gt;]</code> — and there is <strong>no fallback to
+<code>intents.OCP</code></strong>. The bundled <code>mycroft.conf</code> correctly ships its values (including
+<code>min_score: 40</code>) under <code>intents.ovos-ocp-pipeline-plugin</code>; an <code>OCP</code> key exists only
+under <code>Audio.backends</code>, which configures the legacy audio-service backend, not this
+pipeline. Keys added under <code>intents.OCP</code> change nothing — put yours under the plugin ID:</p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="p">{</span><span class="nt">&quot;intents&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;ovos-ocp-pipeline-plugin&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;min_score&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">40</span><span class="p">}}}</span>
 </span></code></pre></div>
 </div>

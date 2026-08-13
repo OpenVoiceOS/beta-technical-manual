@@ -1510,8 +1510,13 @@ where you run it):</p>
 </tr>
 <tr>
 <td><code>BUSMON_USERNAME</code> / <code>BUSMON_PASSWORD</code></td>
-<td><code>ovos</code> / <code>ovos</code></td>
-<td>HTTP Basic auth for the web UI.</td>
+<td><em>(unset)</em></td>
+<td>HTTP Basic auth for the web UI. Auth is off unless set.</td>
+</tr>
+<tr>
+<td><code>BUSMON_TOKEN</code></td>
+<td><em>(unset)</em></td>
+<td>Shared-secret token auth (works with the live SSE UI, unlike HTTP Basic).</td>
 </tr>
 <tr>
 <td><code>BUFFER_SIZE</code></td>
@@ -1526,11 +1531,11 @@ and sets <code>OVOS_BUS_HOST=host.docker.internal</code> so it can reach a bus r
 <div class="admonition warning">
 <p class="admonition-title">Local debugging only: never expose this to the internet</p>
 <p><code>ovos-busmon</code> mirrors <strong>every</strong> message on the bus, including STT transcripts, intent matches,
-and skill responses. It ships with a default username/password (<code>ovos</code> / <code>ovos</code>) that most
-people never change. Its message-injection feature also lets anyone who can reach it emit
-arbitrary commands onto your assistant's bus. Keep it bound to <code>127.0.0.1</code> or your local LAN,
-change the default credentials before leaving it running, and never port-forward it to the
-public internet.</p>
+and skill responses. Authentication is off by default; a non-loopback bind refuses to start
+unless <code>BUSMON_TOKEN</code> or <code>BUSMON_USERNAME</code>/<code>BUSMON_PASSWORD</code> is set. Its message-injection
+feature also lets anyone who can reach it emit arbitrary commands onto your assistant's bus.
+Keep it bound to <code>127.0.0.1</code> or your local LAN, set a strong token or password before binding
+wider, and never port-forward it to the public internet.</p>
 </div>
 <hr />
 <h2 id="a-concrete-walkthrough">A concrete walkthrough<a class="headerlink" href="#a-concrete-walkthrough" title="Permanent link">&para;</a></h2>
