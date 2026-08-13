@@ -1448,7 +1448,9 @@ restart them depends on how OVOS was installed:</p>
 </span></code></pre></div>
 <p>As with voices below, the plugin must be installed into the same environment OVOS runs in
 before the config can use it (<code>pip install ovos-ww-plugin-vosk</code> for this example) — a wake
-word whose module isn't installed silently falls back to the default. Full walkthrough,
+word whose module fails to load is logged loudly (an <code>ERROR</code> with a traceback in the
+listener log) and simply dropped, so the assistant stops responding to that wake word
+rather than substituting a default. Full walkthrough,
 plugin choices, and tuning: <a href="../wake-word-plugins/#change-your-wake-word">Wake-word Plugins</a>.</p>
 <h2 id="change-your-voice">Change your voice<a class="headerlink" href="#change-your-voice" title="Permanent link">&para;</a></h2>
 <p>Install the plugin's package first — unlike most tweaks on this page, this one does
