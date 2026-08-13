@@ -250,9 +250,10 @@ Hook into the text / audio / dialog / TTS stages. See the [Transformers catalog]
   precise-onnx wake word, onnx-asr STT, phoonnx TTS. Everything runs on-device.
 - **Lowest-power / tiny device:** swap TTS to **pico** or **espeakNG**, VAD to **webrtcvad**,
   STT to **vosk** (small model). Accept lower accuracy for a smaller footprint.
-- **Best accuracy, GPU available:** STT **onnx-asr** with `use_cuda: true` (`ovos-config
-  autoconfigure --gpu` picks a larger model per language automatically), **fasterwhisper**
-  (large model), or **nemo**. TTS **coqui**. Still fully offline.
+- **Best accuracy, GPU available:** STT **fasterwhisper** with `whisper-large-v3-turbo` and
+  `use_cuda: true` — which is exactly what `ovos-config autoconfigure --gpu` configures for
+  the languages that have a GPU recommendation — or **nemo**. TTS **coqui**. Still fully
+  offline.
 - **Thin satellite / shared backend:** offload with the `*-server` plugins so the heavy models
   live on one machine. STT and TTS are available today (`ovos-stt-plugin-server`,
   `ovos-tts-plugin-server` — set `urls`/`host`, or they use public community servers); the

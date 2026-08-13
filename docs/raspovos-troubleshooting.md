@@ -292,8 +292,10 @@ Wake-word detection can misfire or fail to trigger depending on your microphone,
     Wake-word detection in raspOVOS offers several options, each with its advantages and limitations. Understanding these
     can help resolve potential issues and improve performance.
 
-    By default, raspOVOS uses the `precise-lite` model with the wake word "hey mycroft." This model was trained by MycroftAI
-    for their Mark2 device. However, there are a few things to consider:
+    By default, raspOVOS uses the `precise-onnx` engine with the wake word "hey mycroft"
+    (with `precise-lite` configured only as a fallback when precise-onnx is not installed).
+    The underlying model was trained by MycroftAI for their Mark2 device. However, there are
+    a few things to consider:
 
     - **Microphone Compatibility:** The performance of precise models can be impacted if the specific properties of your
       microphone (e.g., sensitivity, frequency response) do not match the data used to train the model. While the default

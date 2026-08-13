@@ -15,9 +15,10 @@ it's listed. Where the table shows an offline TTS entry, it is always
 and/or female voice. `int8` next to a model means a quantized CPU build is available and used
 by default.
 
-`--gpu` switches to the full-precision model with `use_cuda: true`. For the most
-widely-spoken languages (English, French, German, Italian, Dutch) it swaps in a larger model
-entirely (`nemo-canary-1b-v2`) instead of just requantizing.
+`--gpu` swaps the STT module entirely to `ovos-stt-plugin-fasterwhisper` with
+`whisper-large-v3-turbo` and `use_cuda: true`. Only the 12 languages with a
+`recommends/gpu/*.conf` in `ovos-config` have a GPU tier at all; the others keep their
+CPU recommendation.
 
 !!! note "A TTS recommend needs a voice with a known gender"
     A bundled offline TTS recommendation pins one male voice and one female voice per
