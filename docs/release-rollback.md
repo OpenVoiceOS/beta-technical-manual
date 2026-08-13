@@ -8,8 +8,8 @@
 
 !!! warning "Installed with `ovos-installer`? Know your method first"
     The `pip`/`uv pip` commands here apply to the **`virtualenv`** install method, run inside
-    that venv (activate it first — `systemctl --user cat ovos.service` reveals its path from
-    the unit's `ExecStart`). On a **`containers`** install, roll back by pinning the previous
+    that venv (activate it first — `systemctl --user cat ovos-core.service` reveals its path
+    from that unit's `ExecStart`; the umbrella `ovos.service` is a no-op meta unit). On a **`containers`** install, roll back by pinning the previous
     image tag and re-running `docker compose up -d`, or
     [re-run the installer](ovos-installer-scenarios.md) — it detects the existing install and
     offers only your current method.
