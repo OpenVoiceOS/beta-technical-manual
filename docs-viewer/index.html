@@ -1456,11 +1456,13 @@
 <p>Press <code>q</code> to quit.</p>
 </li>
 </ol>
-<p>Downloaded sources are cached on disk. Later launches skip re-downloading, except for <code>live-status</code>, which is always refreshed. There is <strong>no <code>--force</code> CLI flag</strong>. To force a re-download, call <code>download_docs(force=True)</code> from Python, or delete the cache directory before launching.</p>
+<p>Downloaded sources are cached on disk. Later launches skip re-downloading (with an
+<code>already cached, skipping</code> message), except for <code>live-status</code>, which is always refreshed.
+Pass <code>--refresh</code> to wipe and re-download before launching.</p>
 <div class="admonition note">
 <p class="admonition-title">The first launch of <em>any</em> key downloads <em>every</em> source</p>
 <p>Regardless of which key you pass, <code>Documentation.__init__</code> calls <code>download_docs()</code>,
-which loops over <strong>all</strong> sources. This includes the three zip archives (<code>technical</code>, <code>messages</code>,
+which loops over <strong>all</strong> sources. This includes the four zip archives (<code>technical</code>, <code>messages</code>, <code>architecture</code>,
 <code>hivemind</code>), the <code>live-status</code>/<code>raspOVOS</code>/<code>installer</code> READMEs, and all ~49 skill
 READMEs via <code>download_skills()</code>. It downloads each one that is not already cached.
 So <code>ovos-docs-viewer technical</code> on a clean machine populates the entire <code>ovos_docs/</code>
@@ -1478,7 +1480,7 @@ access to all sources. Later runs only re-fetch <code>live-status</code>.</p>
 <h2 id="entry-point">Entry Point<a class="headerlink" href="#entry-point" title="Permanent link">&para;</a></h2>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>ovos-docs-viewer<span class="w"> </span>DOCS
 </span></code></pre></div>
-<p>The console script <code>ovos-docs-viewer</code> maps to <code>ovos_docs_viewer.ovos_docs:launch</code>. <code>DOCS</code> is a single required argument. It must be one of the string keys below. An unknown key fails with an <code>AssertionError</code> before the TUI opens.</p>
+<p>The console script <code>ovos-docs-viewer</code> maps to <code>ovos_docs_viewer.ovos_docs:launch</code>. <code>DOCS</code> is a single required argument. It must be one of the string keys below; an unknown key fails with a clean one-line error (exit code 2) before the TUI opens. <code>--help</code> describes every choice and the cache location.</p>
 <table>
 <thead>
 <tr>
@@ -1515,6 +1517,10 @@ access to all sources. Later runs only re-fetch <code>live-status</code>.</p>
 <td><code>skills</code></td>
 <td><code>dev</code>-branch README files for ~49 official OVOS skills, one <code>.md</code> file per skill</td>
 </tr>
+<tr>
+<td><code>architecture</code></td>
+<td><a href="https://github.com/OpenVoiceOS/architecture">architecture</a> formal specifications (zip archive of <code>dev</code>; the markdown lives at the repo root, with the non-normative notes under <code>appendix/</code>)</td>
+</tr>
 </tbody>
 </table>
 <h2 id="usage-examples">Usage Examples<a class="headerlink" href="#usage-examples" title="Permanent link">&para;</a></h2>
@@ -1544,14 +1550,12 @@ access to all sources. Later runs only re-fetch <code>live-status</code>.</p>
 </span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>├── installer/docs/installer.md      ← single README
 </span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>└── skills/docs/                ← one .md per skill (e.g. ovos-skill-alerts.md)
 </span></code></pre></div>
-<p>Zip-archive sources (<code>technical</code>, <code>messages</code>, <code>hivemind</code>) keep their full <code>docs/</code> tree. Single-README sources (<code>live-status</code>, <code>raspOVOS</code>, <code>installer</code>) are written as <code>&lt;key&gt;/docs/&lt;key&gt;.md</code>. <code>$XDG_DATA_HOME</code> resolves via <code>ovos_utils.xdg_utils.xdg_data_home</code>, typically <code>~/.local/share</code>.</p>
+<p>Zip-archive sources (<code>technical</code>, <code>messages</code>, <code>hivemind</code>) keep their full <code>docs/</code> tree; <code>architecture</code> keeps its repo-root markdown tree directly under <code>&lt;key&gt;/</code>. Single-README sources (<code>live-status</code>, <code>raspOVOS</code>, <code>installer</code>) are written as <code>&lt;key&gt;/docs/&lt;key&gt;.md</code>. <code>$XDG_DATA_HOME</code> resolves via <code>ovos_utils.xdg_utils.xdg_data_home</code>, typically <code>~/.local/share</code>.</p>
 <div class="admonition tip">
-<p class="admonition-title">Seeing stale docs? Delete the cache</p>
-<p>There is no <code>--force</code> CLI flag to refresh a source once it's cached. If a page looks
-out of date, the reliable fix is to delete that source's cache directory and relaunch.
-It will download again automatically:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>rm<span class="w"> </span>-rf<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$XDG_DATA_HOME</span><span class="s2">/ovos_docs/technical&quot;</span>
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>ovos-docs-viewer<span class="w"> </span>technical
+<p class="admonition-title">Seeing stale docs? Use <code>--refresh</code></p>
+<p>Cached sources are never re-fetched on their own (except <code>live-status</code>). If a page
+looks out of date, re-download the selected source before launching:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>ovos-docs-viewer<span class="w"> </span>--refresh<span class="w"> </span>technical
 </span></code></pre></div>
 <p>Substitute the relevant key (<code>messages</code>, <code>hivemind</code>, <code>skills</code>, …) for <code>technical</code>, or
 remove the whole <code>ovos_docs/</code> directory to refresh everything at once.</p>
