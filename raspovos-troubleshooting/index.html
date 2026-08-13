@@ -2008,8 +2008,10 @@ Tail that one on its own: <code>tail -f ~/.local/state/mycroft/bus.log</code>.</
 <summary>Fix</summary>
 <p>Wake-word detection in raspOVOS offers several options, each with its advantages and limitations. Understanding these
 can help resolve potential issues and improve performance.</p>
-<p>By default, raspOVOS uses the <code>precise-lite</code> model with the wake word "hey mycroft." This model was trained by MycroftAI
-for their Mark2 device. However, there are a few things to consider:</p>
+<p>By default, raspOVOS uses the <code>precise-onnx</code> engine with the wake word "hey mycroft"
+(with <code>precise-lite</code> configured only as a fallback when precise-onnx is not installed).
+The underlying model was trained by MycroftAI for their Mark2 device. However, there are
+a few things to consider:</p>
 <ul>
 <li>
 <p><strong>Microphone Compatibility:</strong> The performance of precise models can be impacted if the specific properties of your

@@ -2133,9 +2133,10 @@ server. For privacy, point <code>api_url</code> at your own server, or use <code
   precise-onnx wake word, onnx-asr STT, phoonnx TTS. Everything runs on-device.</li>
 <li><strong>Lowest-power / tiny device:</strong> swap TTS to <strong>pico</strong> or <strong>espeakNG</strong>, VAD to <strong>webrtcvad</strong>,
   STT to <strong>vosk</strong> (small model). Accept lower accuracy for a smaller footprint.</li>
-<li><strong>Best accuracy, GPU available:</strong> STT <strong>onnx-asr</strong> with <code>use_cuda: true</code> (<code>ovos-config
-  autoconfigure --gpu</code> picks a larger model per language automatically), <strong>fasterwhisper</strong>
-  (large model), or <strong>nemo</strong>. TTS <strong>coqui</strong>. Still fully offline.</li>
+<li><strong>Best accuracy, GPU available:</strong> STT <strong>fasterwhisper</strong> with <code>whisper-large-v3-turbo</code> and
+  <code>use_cuda: true</code> — which is exactly what <code>ovos-config autoconfigure --gpu</code> configures for
+  the languages that have a GPU recommendation — or <strong>nemo</strong>. TTS <strong>coqui</strong>. Still fully
+  offline.</li>
 <li><strong>Thin satellite / shared backend:</strong> offload with the <code>*-server</code> plugins so the heavy models
   live on one machine. STT and TTS are available today (<code>ovos-stt-plugin-server</code>,
   <code>ovos-tts-plugin-server</code> — set <code>urls</code>/<code>host</code>, or they use public community servers); the

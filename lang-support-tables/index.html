@@ -1179,9 +1179,10 @@ it's listed. Where the table shows an offline TTS entry, it is always
 <a href="../tts-plugins-reference/#ovos-tts-plugin-phoonnx"><code>ovos-tts-plugin-phoonnx</code></a>, pinned to a specific male
 and/or female voice. <code>int8</code> next to a model means a quantized CPU build is available and used
 by default.</p>
-<p><code>--gpu</code> switches to the full-precision model with <code>use_cuda: true</code>. For the most
-widely-spoken languages (English, French, German, Italian, Dutch) it swaps in a larger model
-entirely (<code>nemo-canary-1b-v2</code>) instead of just requantizing.</p>
+<p><code>--gpu</code> swaps the STT module entirely to <code>ovos-stt-plugin-fasterwhisper</code> with
+<code>whisper-large-v3-turbo</code> and <code>use_cuda: true</code>. Only the 12 languages with a
+<code>recommends/gpu/*.conf</code> in <code>ovos-config</code> have a GPU tier at all; the others keep their
+CPU recommendation.</p>
 <div class="admonition note">
 <p class="admonition-title">A TTS recommend needs a voice with a known gender</p>
 <p>A bundled offline TTS recommendation pins one male voice and one female voice per
