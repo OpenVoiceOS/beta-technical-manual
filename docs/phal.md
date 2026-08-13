@@ -265,9 +265,9 @@ skill as a voice frontend.
 | [ovos-PHAL-plugin-dotstar](#ovos-phal-plugin-dotstar) | Dotstar/APA102 LED ring driver for Respeaker mic HATs and the Adafruit Voice Bonnet |
 | [ovos-PHAL-plugin-respeaker-2mic](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-respeaker-2mic) | ReSpeaker 2-mic HAT support |
 | [ovos-PHAL-plugin-respeaker-4mic](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-respeaker-4mic) | ReSpeaker 4-mic HAT support |
-| [ovos-PHAL-plugin-wifi-setup](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-wifi-setup) | Central Wi-Fi setup |
-| [ovos-PHAL-plugin-gui-network-client](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-gui-network-client) | GUI-based Wi-Fi setup |
-| [ovos-PHAL-plugin-balena-wifi](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-balena-wifi) | Wi-Fi hotspot setup |
+| [ovos-PHAL-plugin-wifi-setup](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-wifi-setup) | Central Wi-Fi setup. Warning: archived, deprecated. See [ovos-PHAL-plugin-network-manager](#ovos-phal-plugin-network-manager) |
+| [ovos-PHAL-plugin-gui-network-client](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-gui-network-client) | GUI-based Wi-Fi setup. Warning: archived, deprecated. See [ovos-PHAL-plugin-network-manager](#ovos-phal-plugin-network-manager) |
+| [ovos-PHAL-plugin-balena-wifi](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-balena-wifi) | Wi-Fi hotspot setup. Warning: archived, deprecated. See [ovos-PHAL-plugin-network-manager](#ovos-phal-plugin-network-manager) |
 | [ovos-PHAL-plugin-network-manager](#ovos-phal-plugin-network-manager) | Provides the network manager interface for NetworkManager-based plugins |
 | [ovos-PHAL-plugin-connectivity-events](#ovos-phal-plugin-connectivity-events) | Reports network connectivity changes to the messagebus |
 | [ovos-PHAL-plugin-ipgeo](#ovos-phal-plugin-ipgeo) | Autoconfigure default location based on IP address via [ip-api.com](https://ip-api.com) |

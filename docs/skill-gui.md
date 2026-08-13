@@ -48,7 +48,9 @@ skill's namespace.
     On a device or emulator with a GUI client connected, triggering `handle_hello` should pop
     up a text page reading "Hello from OVOS!". If nothing appears, confirm a GUI client (e.g.
     [ovos-gui](https://github.com/OpenVoiceOS/ovos-gui) or the browser-based
-    [ovos-gui-plugin-shell-companion](https://github.com/OpenVoiceOS/ovos-gui-plugin-shell-companion))
+    [ovos-gui-plugin-shell-companion](https://github.com/OpenVoiceOS/ovos-gui-plugin-shell-companion)
+    — warning: archived, deprecated; superseded by
+    [pyhtmx-gui-client](https://github.com/OpenVoiceOS/pyhtmx-gui-client))
     is connected to the same messagebus as the skill.
 
 ---
