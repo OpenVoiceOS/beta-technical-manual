@@ -1905,8 +1905,20 @@ names where applicable.</p>
 <td>Check whether this skill can stop. Same as above: this exact form, not bridged, no spec-namespaced alias</td>
 </tr>
 <tr>
+<td><code>mycroft.skills.loaded</code></td>
+<td>Emitted on <strong>every</strong> successful skill load (any loading path), with the skill id — the general-case loaded event</td>
+</tr>
+<tr>
+<td><code>mycroft.skills.loading_failure</code></td>
+<td>Emitted when a skill fails to load (<code>{"path", "id"}</code>); see <a href="../skill-manager/#what-a-load-failure-looks-like">Skill Manager</a></td>
+</tr>
+<tr>
 <td><code>mycroft.skill.loaded</code></td>
-<td>Emitted by the <a href="../skill-manager/">Skill Manager</a> after a skill finishes loading, with <code>{"skill_id": ...}</code></td>
+<td>Additional singular event the <a href="../skill-manager/">Skill Manager</a> emits for plugin-skill loads only, with <code>{"skill_id": ...}</code>; no failure counterpart</td>
+</tr>
+<tr>
+<td><code>mycroft.skills.train</code> / <code>mycroft.skills.trained</code></td>
+<td>Pipeline retrain request (fire-and-forget from the manager) and the Padatious pipeline's completion announcement</td>
 </tr>
 <tr>
 <td><code>mycroft.skill.enable_intent</code> / <code>mycroft.skill.disable_intent</code></td>
