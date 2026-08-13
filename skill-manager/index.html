@@ -1094,6 +1094,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Loading a Skill">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-a-load-failure-looks-like" class="md-nav__link">
+    <span class="md-ellipsis">
+      What a load failure looks like
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1586,6 +1601,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Loading a Skill">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-a-load-failure-looks-like" class="md-nav__link">
+    <span class="md-ellipsis">
+      What a load failure looks like
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1722,6 +1752,17 @@ are met:</p>
     C --&gt; D["_load_plugin_skill()&lt;br/&gt;instantiate &amp;&lt;br/&gt;start the skill"]</code></pre>
 <p><em>Diagram: skill loading runs left to right from load_plugin_skills, through find_skill_plugins and building a PluginSkillLoader, to _load_plugin_skill instantiating and starting the skill.</em></p>
 <p>Each skill gets its own bus connection when <code>websocket.shared_connection</code> is <code>false</code> in config (see <code>_get_internal_skill_bus()</code>), providing isolation from "BusBricker" style attacks.</p>
+<h3 id="what-a-load-failure-looks-like">What a load failure looks like<a class="headerlink" href="#what-a-load-failure-looks-like" title="Permanent link">&para;</a></h3>
+<p>A skill whose class raises during instantiation is logged loudly in <code>skills.log</code> and skipped —
+it registers no intents and can never match. The signatures to grep for:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>ERROR - Failed to load skill: &lt;skill_id&gt; (&lt;exception&gt;)   # skill_launcher, traceback follows
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>ERROR - Skill &lt;skill_id&gt; failed to load
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>ERROR - Load of skill &lt;skill_id&gt; failed!                 # skill_manager, traceback follows
+</span></code></pre></div>
+<p>On the bus, a failed load emits <code>mycroft.skills.loading_failure</code> (a healthy one emits
+<code>mycroft.skill.loaded</code>). "Installed but never matches" reports should check for these before
+anything else — see the <a href="../troubleshooting/#stage-4-which-pipeline-stage-matched-or-didnt">Troubleshooting</a>
+funnel.</p>
 <h2 id="blacklisting">Blacklisting<a class="headerlink" href="#blacklisting" title="Permanent link">&para;</a></h2>
 <p>Skills listed in <code>skills.blacklisted_skills</code> in <code>mycroft.conf</code> are skipped at load time. The recommended approach is to uninstall unwanted skills rather than blacklist them.</p>
 <h2 id="intent-training">Intent Training<a class="headerlink" href="#intent-training" title="Permanent link">&para;</a></h2>
@@ -1729,7 +1770,7 @@ are met:</p>
 with <code>{"skill_id": ...}</code> — useful for tooling that waits for a specific skill to
 become available. After new skills are loaded, the manager requests pipeline
 re-training:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>mycroft.skills.train  →  (pipeline plugins that need it train, e.g. padatious)
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>mycroft.skills.train  →  (pipeline plugins that need it train, e.g. padatious)
 </span></code></pre></div>
 <p>The manager emits <code>mycroft.skills.train</code> and moves on. It is fire-and-forget: no reply
 topic is part of the spec, and the manager waits for nothing.</p>
@@ -1740,7 +1781,7 @@ no such engine was there to answer. A single responder could not speak for every
 pipeline anyway.</p>
 <h2 id="settings-file-watcher">Settings File Watcher<a class="headerlink" href="#settings-file-watcher" title="Permanent link">&para;</a></h2>
 <p>When enabled, a <code>FileWatcher</code> monitors <code>~/.config/ovos/skills/*/settings.json</code>. Any change emits:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>ovos.skills.settings_changed  {skill_id: &quot;...&quot;}
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>ovos.skills.settings_changed  {skill_id: &quot;...&quot;}
 </span></code></pre></div>
 <h2 id="bus-events-handled">Bus Events Handled<a class="headerlink" href="#bus-events-handled" title="Permanent link">&para;</a></h2>
 <table>
