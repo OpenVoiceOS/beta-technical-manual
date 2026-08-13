@@ -2491,9 +2491,11 @@ type (<code>opm.media.provider</code> / <code>PluginTypes.MEDIA_PROVIDER</code>)
 <a href="../ocp-skills/">OCP skills</a>. This first ships in <strong><code>ovos-plugin-manager 2.8.0a1</code></strong>
 (Phase 1 of the <code>ovos-media</code> migration). OCP skills remain the way to provide media for now.
 Tracked in <a href="https://github.com/OpenVoiceOS/ovos-workshop/pull/423">ovos-workshop#423</a>.</p>
-<p>A first batch of MediaProvider plugins is in development — none of them is published
-yet (no public repository, nothing on PyPI), so there is nothing to install today.
-Each one supersedes the catalog/search half of an older OCP skill:</p>
+<p>A first batch of MediaProvider plugins now has <strong>public repositories</strong>, and three ship
+PyPI alpha releases already (<code>ovos-media-provider-spotify</code>, <code>-soundcloud</code>,
+<code>-youtube-music</code>); the rest are repo-only so far. Installing them does nothing yet —
+the in-process loading is not wired into <code>ovos-media</code> (see below). Each one supersedes
+the catalog/search half of an older OCP skill:</p>
 <table>
 <thead>
 <tr>
@@ -2503,43 +2505,43 @@ Each one supersedes the catalog/search half of an older OCP skill:</p>
 </thead>
 <tbody>
 <tr>
-<td><code>ovos-media-provider-bandcamp</code></td>
+<td><a href="https://github.com/OpenVoiceOS/ovos-media-provider-bandcamp"><code>ovos-media-provider-bandcamp</code></a></td>
 <td><a href="https://github.com/OpenVoiceOS/ovos-skill-bandcamp">ovos-skill-bandcamp</a></td>
 </tr>
 <tr>
-<td><code>ovos-media-provider-pyradios</code></td>
+<td><a href="https://github.com/OpenVoiceOS/ovos-media-provider-pyradios"><code>ovos-media-provider-pyradios</code></a></td>
 <td><a href="https://github.com/OpenVoiceOS/ovos-skill-pyradios">ovos-skill-pyradios</a></td>
 </tr>
 <tr>
-<td><code>ovos-media-provider-somafm</code></td>
+<td><a href="https://github.com/OpenVoiceOS/ovos-media-provider-somafm"><code>ovos-media-provider-somafm</code></a></td>
 <td><a href="https://github.com/OpenVoiceOS/ovos-skill-somafm">ovos-skill-somafm</a></td>
 </tr>
 <tr>
-<td><code>ovos-media-provider-soundcloud</code></td>
+<td><a href="https://github.com/OpenVoiceOS/ovos-media-provider-soundcloud"><code>ovos-media-provider-soundcloud</code></a></td>
 <td><a href="https://github.com/OpenVoiceOS/ovos-skill-soundcloud">ovos-skill-soundcloud</a></td>
 </tr>
 <tr>
-<td><code>ovos-media-provider-tunein</code></td>
+<td><a href="https://github.com/OpenVoiceOS/ovos-media-provider-tunein"><code>ovos-media-provider-tunein</code></a></td>
 <td><a href="https://github.com/OpenVoiceOS/ovos-skill-tunein">ovos-skill-tunein</a></td>
 </tr>
 <tr>
-<td><code>ovos-media-provider-youtube</code></td>
+<td><a href="https://github.com/OpenVoiceOS/ovos-media-provider-youtube"><code>ovos-media-provider-youtube</code></a></td>
 <td><a href="https://github.com/OpenVoiceOS/ovos-skill-youtube">ovos-skill-youtube</a></td>
 </tr>
 <tr>
-<td><code>ovos-media-provider-youtube-music</code></td>
+<td><a href="https://github.com/OpenVoiceOS/ovos-media-provider-youtube-music"><code>ovos-media-provider-youtube-music</code></a></td>
 <td><a href="https://github.com/OpenVoiceOS/ovos-skill-youtube-music">ovos-skill-youtube-music</a></td>
 </tr>
 <tr>
-<td><code>ovos-media-provider-mass</code></td>
+<td><a href="https://github.com/OpenVoiceOS/ovos-media-provider-mass"><code>ovos-media-provider-mass</code></a></td>
 <td><code>ovos-skill-music-assistant</code> (playback via the companion <code>ovos-media-plugin-mass</code> backend)</td>
 </tr>
 <tr>
-<td><code>ovos-media-provider-news</code></td>
+<td><a href="https://github.com/OpenVoiceOS/ovos-media-provider-news"><code>ovos-media-provider-news</code></a></td>
 <td><a href="https://github.com/OpenVoiceOS/ovos-skill-news">ovos-skill-news</a></td>
 </tr>
 <tr>
-<td><code>ovos-media-provider-spotify</code></td>
+<td><a href="https://github.com/OpenVoiceOS/ovos-media-provider-spotify"><code>ovos-media-provider-spotify</code></a></td>
 <td><a href="https://github.com/OpenVoiceOS/ovos-skill-spotify">ovos-skill-spotify</a> (playback via the companion <a href="https://github.com/OpenVoiceOS/ovos-media-plugin-spotify">ovos-media-plugin-spotify</a> backend)</td>
 </tr>
 </tbody>

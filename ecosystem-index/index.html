@@ -2034,52 +2034,52 @@
 </tr>
 <tr>
 <td><code>ovos-media-provider-bandcamp</code></td>
-<td>OVOS MediaProvider plugin for Bandcamp (replaces ovos-skill-bandcamp). <strong>Not yet published.</strong></td>
+<td>OVOS MediaProvider plugin for Bandcamp (replaces ovos-skill-bandcamp).</td>
 <td><a href="#media-ocp-plugins-27">Media / OCP plugins</a></td>
 </tr>
 <tr>
 <td><code>ovos-media-provider-mass</code></td>
-<td>OVOS MediaProvider plugin for Music Assistant (replaces ovos-skill-music-assistant). <strong>Not yet published.</strong></td>
+<td>OVOS MediaProvider plugin for Music Assistant (replaces ovos-skill-music-assistant).</td>
 <td><a href="#media-ocp-plugins-27">Media / OCP plugins</a></td>
 </tr>
 <tr>
 <td><code>ovos-media-provider-news</code></td>
-<td>OVOS MediaProvider plugin for broadcast news feeds (replaces ovos-skill-news). <strong>Not yet published.</strong></td>
+<td>OVOS MediaProvider plugin for broadcast news feeds (replaces ovos-skill-news).</td>
 <td><a href="#media-ocp-plugins-27">Media / OCP plugins</a></td>
 </tr>
 <tr>
 <td><code>ovos-media-provider-pyradios</code></td>
-<td>OVOS MediaProvider plugin for radio-browser/pyradios (replaces ovos-skill-pyradios). <strong>Not yet published.</strong></td>
+<td>OVOS MediaProvider plugin for radio-browser/pyradios (replaces ovos-skill-pyradios).</td>
 <td><a href="#media-ocp-plugins-27">Media / OCP plugins</a></td>
 </tr>
 <tr>
 <td><code>ovos-media-provider-somafm</code></td>
-<td>OVOS MediaProvider plugin for SomaFM (replaces ovos-skill-somafm). <strong>Not yet published.</strong></td>
+<td>OVOS MediaProvider plugin for SomaFM (replaces ovos-skill-somafm).</td>
 <td><a href="#media-ocp-plugins-27">Media / OCP plugins</a></td>
 </tr>
 <tr>
 <td><code>ovos-media-provider-soundcloud</code></td>
-<td>OVOS MediaProvider plugin for SoundCloud (replaces ovos-skill-soundcloud). <strong>Not yet published.</strong></td>
+<td>OVOS MediaProvider plugin for SoundCloud (replaces ovos-skill-soundcloud).</td>
 <td><a href="#media-ocp-plugins-27">Media / OCP plugins</a></td>
 </tr>
 <tr>
 <td><code>ovos-media-provider-spotify</code></td>
-<td>OVOS MediaProvider plugin for Spotify (replaces the search half of ovos-skill-spotify). <strong>Not yet published.</strong></td>
+<td>OVOS MediaProvider plugin for Spotify (replaces the search half of ovos-skill-spotify).</td>
 <td><a href="#media-ocp-plugins-27">Media / OCP plugins</a></td>
 </tr>
 <tr>
 <td><code>ovos-media-provider-tunein</code></td>
-<td>OVOS MediaProvider plugin for TuneIn (replaces ovos-skill-tunein). <strong>Not yet published.</strong></td>
+<td>OVOS MediaProvider plugin for TuneIn (replaces ovos-skill-tunein).</td>
 <td><a href="#media-ocp-plugins-27">Media / OCP plugins</a></td>
 </tr>
 <tr>
 <td><code>ovos-media-provider-youtube</code></td>
-<td>OVOS MediaProvider plugin for YouTube (replaces ovos-skill-youtube). <strong>Not yet published.</strong></td>
+<td>OVOS MediaProvider plugin for YouTube (replaces ovos-skill-youtube).</td>
 <td><a href="#media-ocp-plugins-27">Media / OCP plugins</a></td>
 </tr>
 <tr>
 <td><code>ovos-media-provider-youtube-music</code></td>
-<td>OVOS MediaProvider plugin for YouTube Music (replaces ovos-skill-youtube-music). <strong>Not yet published.</strong></td>
+<td>OVOS MediaProvider plugin for YouTube Music (replaces ovos-skill-youtube-music).</td>
 <td><a href="#media-ocp-plugins-27">Media / OCP plugins</a></td>
 </tr>
 <tr>
@@ -3321,11 +3321,12 @@ to by the intent service once installed on a device.</p>
 <p>Unless noted otherwise, these are part of the OVOS Common Play (OCP) media stack; loaded by ovos-media (or the legacy ovos-audio service) to resolve or play a given media type.</p>
 <h3 id="mediaprovider-plugins">MediaProvider plugins<a class="headerlink" href="#mediaprovider-plugins" title="Permanent link">&para;</a></h3>
 <p>These register under the upcoming <code>opm.media.provider</code> plugin type (see <a href="../ovos-media/">ovos-media</a>). The OCP pipeline calls <code>search()</code> on them directly, in-process, taking over the catalog/search half of the older OCP skill each one names.</p>
-<div class="admonition warning">
-<p class="admonition-title">None of these is published yet</p>
-<p>The whole MediaProvider batch is still in development: no public repository, nothing on
-PyPI — there is nothing to install today. They are listed here so the migration story is
-visible, not because you can use them.</p>
+<div class="admonition note">
+<p class="admonition-title">Early days: repos public, loading not wired up yet</p>
+<p>The MediaProvider repositories are now public, and three ship PyPI alphas
+(<code>ovos-media-provider-spotify</code>, <code>-soundcloud</code>, <code>-youtube-music</code>); the rest are repo-only.
+Installing one does nothing yet — <code>ovos-media</code> does not load <code>opm.media.provider</code>
+plugins in-process yet, so OCP skills remain the way to provide media today.</p>
 </div>
 <dl>
 <dt><strong><code>ovos-media-provider-bandcamp</code></strong></dt>
