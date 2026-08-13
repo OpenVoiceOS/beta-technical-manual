@@ -14,7 +14,7 @@ There are roughly **280** public, non-archived repositories in the [`OpenVoiceOS
     | [architecture](https://github.com/OpenVoiceOS/architecture) | Formal, implementation-agnostic specifications for the voice-OS application binary... | [Meta & infrastructure / other components](#meta-infrastructure-other-components-46) |
     | [buildroot](https://github.com/OpenVoiceOS/buildroot) | Buildroot is a simple, efficient and easy-to-use tool to generate embedded Linux systems... | [Hardware / OS images](#hardware-os-images-10) |
     | [DrQA](https://github.com/OpenVoiceOS/DrQA) | A PyTorch implementation of the "Reading Wikipedia to Answer Open-Domain Questions"... | [Meta & infrastructure / other components](#meta-infrastructure-other-components-46) |
-    | [gh-automations](https://github.com/OpenVoiceOS/gh-automations) | Reusable GitHub Actions workflows and Python scripts for the OpenVoiceOS ecosystem. | [Tooling & CI](#tooling-ci-18) |
+    | [gh-automations](https://github.com/OpenVoiceOS/gh-automations) | Reusable GitHub Actions workflows and Python scripts for the OpenVoiceOS ecosystem. | [Tooling & CI](#tooling-ci-14) |
     | [intent-test-set](https://github.com/OpenVoiceOS/intent-test-set) | A curated dataset of labeled utterances for benchmarking intent pipeline plugins against... | [Pipeline / Intent plugins](#pipeline-intent-plugins-10) |
     | [kw-template-matcher](https://github.com/OpenVoiceOS/kw-template-matcher) | A standalone template-expansion and fuzzy-matching utility: it expands templates with... | [Meta & infrastructure / other components](#meta-infrastructure-other-components-46) |
     | [linha-fina](https://github.com/OpenVoiceOS/linha-fina) | An SVM-based intent engine that can add or remove intents at runtime without retraining... | [Meta & infrastructure / other components](#meta-infrastructure-other-components-46) |
@@ -37,7 +37,7 @@ There are roughly **280** public, non-archived repositories in the [`OpenVoiceOS
     | [ovos-blogs](https://github.com/OpenVoiceOS/ovos-blogs) | This is the existing blog-starter plus TypeScript. | [Project infrastructure (web/blog)](#project-infrastructure-webblog-4) |
     | [ovos-buildroot](https://github.com/OpenVoiceOS/ovos-buildroot) | A minimalistic Linux OS bringing the open source voice assistant ovos-core to embedded,... | [Hardware / OS images](#hardware-os-images-10) |
     | [ovos-bus-client](https://github.com/OpenVoiceOS/ovos-bus-client) | A Python client for the OVOS messagebus. Connect to OVOS, emit messages, and react to... | [Core services & libraries](#core-services-libraries-18) |
-    | [ovos-busmon](https://github.com/OpenVoiceOS/ovos-busmon) | Live monitor, capture, and injection tool for the OpenVoiceOS messagebus. Stream every... | [Tooling & CI](#tooling-ci-18) |
+    | [ovos-busmon](https://github.com/OpenVoiceOS/ovos-busmon) | Live monitor, capture, and injection tool for the OpenVoiceOS messagebus. Stream every... | [Tooling & CI](#tooling-ci-14) |
     | [ovos-chromadb-embeddings-plugin](https://github.com/OpenVoiceOS/ovos-chromadb-embeddings-plugin) | A ChromaDB-backed vector-store plugin implementing the `EmbeddingsDB` interface. Loaded... | [Meta & infrastructure / other components](#meta-infrastructure-other-components-46) |
     | [ovos-color-parser](https://github.com/OpenVoiceOS/ovos-color-parser) | Turn natural-language color descriptions into color objects, and color objects back into... | [Core services & libraries](#core-services-libraries-18) |
     | [ovos-common-query-pipeline-plugin](https://github.com/OpenVoiceOS/ovos-common-query-pipeline-plugin) | The OVOS Common Query Framework is designed to answer questions by gathering answers from... | [Pipeline / Intent plugins](#pipeline-intent-plugins-10) |
@@ -48,11 +48,11 @@ There are roughly **280** public, non-archived repositories in the [`OpenVoiceOS
     | [ovos-ddg-plugin](https://github.com/OpenVoiceOS/ovos-ddg-plugin) | A DuckDuckGo Instant Answers solver plugin. Registers as a common-query / solver plugin,... | [Meta & infrastructure / other components](#meta-infrastructure-other-components-46) |
     | [ovos-dialog-normalizer-plugin](https://github.com/OpenVoiceOS/ovos-dialog-normalizer-plugin) | A dialog-transformer plugin that normalizes the text OVOS is about to speak (expanding... | [Meta & infrastructure / other components](#meta-infrastructure-other-components-46) |
     | [ovos-dinkum-listener](https://github.com/OpenVoiceOS/ovos-dinkum-listener) | The OVOS speech-recognition daemon: it owns the microphone, wake-word detection,... | [Core services & libraries](#core-services-libraries-18) |
-    | [ovos-docker](https://github.com/OpenVoiceOS/ovos-docker) | Please follow the dedicated documentation. | [Tooling & CI](#tooling-ci-18) |
-    | [ovos-docker-stt](https://github.com/OpenVoiceOS/ovos-docker-stt) | Docker/Podman compose files that run an OVOS STT plugin as a standalone speech-to-text... | [Tooling & CI](#tooling-ci-18) |
-    | [ovos-docker-tts](https://github.com/OpenVoiceOS/ovos-docker-tts) | Docker/Podman compose files that run an OVOS TTS plugin as a standalone text-to-speech... | [Tooling & CI](#tooling-ci-18) |
-    | [ovos-docker-tx](https://github.com/OpenVoiceOS/ovos-docker-tx) | Docker/Podman compose files that run an OVOS translation plugin as a standalone... | [Tooling & CI](#tooling-ci-18) |
-    | [ovos-docs-viewer](https://github.com/OpenVoiceOS/ovos-docs-viewer) | in terminal docs viewer. | [Tooling & CI](#tooling-ci-18) |
+    | [ovos-docker](https://github.com/OpenVoiceOS/ovos-docker) | Please follow the dedicated documentation. | [Tooling & CI](#tooling-ci-14) |
+    | [ovos-docker-stt](https://github.com/OpenVoiceOS/ovos-docker-stt) | Docker/Podman compose files that run an OVOS STT plugin as a standalone speech-to-text... | [Tooling & CI](#tooling-ci-14) |
+    | [ovos-docker-tts](https://github.com/OpenVoiceOS/ovos-docker-tts) | Docker/Podman compose files that run an OVOS TTS plugin as a standalone text-to-speech... | [Tooling & CI](#tooling-ci-14) |
+    | [ovos-docker-tx](https://github.com/OpenVoiceOS/ovos-docker-tx) | Docker/Podman compose files that run an OVOS translation plugin as a standalone... | [Tooling & CI](#tooling-ci-14) |
+    | [ovos-docs-viewer](https://github.com/OpenVoiceOS/ovos-docs-viewer) | in terminal docs viewer. | [Tooling & CI](#tooling-ci-14) |
     | [ovos-gguf-plugin](https://github.com/OpenVoiceOS/ovos-gguf-plugin) | A unified GGUF/llama-cpp-python wrapper providing chat, summarization, dialog rewriting,... | [Meta & infrastructure / other components](#meta-infrastructure-other-components-46) |
     | [ovos-google-translate-plugin](https://github.com/OpenVoiceOS/ovos-google-translate-plugin) | The plugin is used in a wider context to translate utterances/texts on demand (e.g. from... | [Translation plugins](#translation-plugins-6) |
     | [ovos-gui](https://github.com/OpenVoiceOS/ovos-gui) | GUI messagebus service, manages GUI state and implements the gui protocol. Core runtime... | [Core services & libraries](#core-services-libraries-18) |
@@ -62,8 +62,7 @@ There are roughly **280** public, non-archived repositories in the [`OpenVoiceOS
     | [ovos-hivemind-pipeline-plugin](https://github.com/OpenVoiceOS/ovos-hivemind-pipeline-plugin) | When in doubt, ask a smarter OVOS install. | [Pipeline / Intent plugins](#pipeline-intent-plugins-10) |
     | [ovos-i2c-detection](https://github.com/OpenVoiceOS/ovos-i2c-detection) | A small repo containing auto-detection scripts for i2c devices. | [Hardware / OS images](#hardware-os-images-10) |
     | [ovos-i2csound](https://github.com/OpenVoiceOS/ovos-i2csound) | Script for i2c HAT detection and configuration on a Raspberry Pi. | [Hardware / OS images](#hardware-os-images-10) |
-    | [ovos-installer](https://github.com/OpenVoiceOS/ovos-installer) | Installer for Open Voice OS (OVOS) and HiveMind on Linux and macOS. Supports interactive... | [Tooling & CI](#tooling-ci-18) |
-    | [ovos-judge](https://github.com/OpenVoiceOS/ovos-judge) | An LLM-driven QA testing tool for OVOS skills and personas, with a browser UI and a... | [Tooling & CI](#tooling-ci-18) |
+    | [ovos-installer](https://github.com/OpenVoiceOS/ovos-installer) | Installer for Open Voice OS (OVOS) and HiveMind on Linux and macOS. Supports interactive... | [Tooling & CI](#tooling-ci-14) |
     | [ovos-landing-page](https://github.com/OpenVoiceOS/ovos-landing-page) | A community-driven, open-source AI voice platform. | [Project infrastructure (web/blog)](#project-infrastructure-webblog-4) |
     | [ovos-lang-detector-classics-plugin](https://github.com/OpenVoiceOS/ovos-lang-detector-classics-plugin) | Provides plugins for the following packages:. | [Translation plugins](#translation-plugins-6) |
     | [ovos-lang-detector-fasttext-plugin](https://github.com/OpenVoiceOS/ovos-lang-detector-fasttext-plugin) | fasttext-language-identification is the companion language detector for the NLLB model. | [Translation plugins](#translation-plugins-6) |
@@ -134,7 +133,6 @@ There are roughly **280** public, non-archived repositories in the [`OpenVoiceOS
     | [ovos-PHAL-plugin-tools](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-tools) | A PHAL (Platform / Hardware Abstraction Layer) service provider that exposes all... | [PHAL plugins](#phal-plugins-18) |
     | [ovos-PHAL-plugin-wallpaper-manager](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-wallpaper-manager) | This PHAL plugin provides a central wallpaper management interface for homescreens and... | [PHAL plugins](#phal-plugins-18) |
     | [ovos-PHAL-sensors](https://github.com/OpenVoiceOS/ovos-PHAL-sensors) | Expose sensor data from your OVOS device to various systems. | [PHAL plugins](#phal-plugins-18) |
-    | [ovos-plugin-bench](https://github.com/OpenVoiceOS/ovos-plugin-bench) | A benchmarking harness for STT plugins: runs them over Hugging Face audio datasets and... | [Tooling & CI](#tooling-ci-18) |
     | [ovos-plugin-manager](https://github.com/OpenVoiceOS/ovos-plugin-manager) | OPM can be used to load and create plugins for the OpenVoiceOS ecosystem! Core runtime... | [Core services & libraries](#core-services-libraries-18) |
     | [ovos-pydantic-models](https://github.com/OpenVoiceOS/ovos-pydantic-models) | Typed Pydantic v2 models for every message that flows over the OVOS messagebus. Core... | [Core services & libraries](#core-services-libraries-18) |
     | [ovos-qdrant-embeddings-plugin](https://github.com/OpenVoiceOS/ovos-qdrant-embeddings-plugin) | A Qdrant-backed vector-store plugin implementing the `EmbeddingsDB` interface, an... | [Meta & infrastructure / other components](#meta-infrastructure-other-components-46) |
@@ -195,7 +193,7 @@ There are roughly **280** public, non-archived repositories in the [`OpenVoiceOS
     | [ovos-solver-failure-plugin](https://github.com/OpenVoiceOS/ovos-solver-failure-plugin) | Extreme fallback, just complains it does not have a brain. Used by ovos-persona and the... | [Agent Engine plugins](#agent-engine-plugins-8) |
     | [ovos-solver-plugin-aiml](https://github.com/OpenVoiceOS/ovos-solver-plugin-aiml) | A rule-based chatbot answer engine for OVOS, using AIML pattern matching. Used by... | [Agent Engine plugins](#agent-engine-plugins-8) |
     | [ovos-solver-plugin-rivescript](https://github.com/OpenVoiceOS/ovos-solver-plugin-rivescript) | A rule-based chatbot answer engine for OVOS, using RiveScript pattern matching. Used by... | [Agent Engine plugins](#agent-engine-plugins-8) |
-    | [ovos-spec-tools](https://github.com/OpenVoiceOS/ovos-spec-tools) | Reference implementation of the OVOS [formal specifications](architecture-specs.md) - the... | [Tooling & CI](#tooling-ci-18) |
+    | [ovos-spec-tools](https://github.com/OpenVoiceOS/ovos-spec-tools) | Reference implementation of the OVOS [formal specifications](architecture-specs.md) - the... | [Tooling & CI](#tooling-ci-14) |
     | [ovos-stt-plugin-azure](https://github.com/OpenVoiceOS/ovos-stt-plugin-azure) | OpenVoiceOS plugin for Microsoft Azure. | [STT plugins](#stt-plugins-11) |
     | [ovos-stt-plugin-chromium](https://github.com/OpenVoiceOS/ovos-stt-plugin-chromium) | A stt plugin for mycroft using the google chrome browser api. | [STT plugins](#stt-plugins-11) |
     | [ovos-stt-plugin-citrinet](https://github.com/OpenVoiceOS/ovos-stt-plugin-citrinet) | OpenVoiceOS STT plugin for Nemo Citrinet. | [STT plugins](#stt-plugins-11) |
@@ -210,7 +208,7 @@ There are roughly **280** public, non-archived repositories in the [`OpenVoiceOS
     | [ovos-systemd](https://github.com/OpenVoiceOS/ovos-systemd) | A legacy, unmaintained set of example systemd unit files written for the old... | [Hardware / OS images](#hardware-os-images-10) |
     | [ovos-technical-manual](https://github.com/OpenVoiceOS/ovos-technical-manual) | the OVOS project documentation is written and maintained by users just like you! | [Project infrastructure (web/blog)](#project-infrastructure-webblog-4) |
     | [ovos-tool-adapters](https://github.com/OpenVoiceOS/ovos-tool-adapters) | Bridges MCP (Model Context Protocol) and UTCP (Universal Tool Calling Protocol) servers... | [Pipeline / Intent plugins](#pipeline-intent-plugins-10) |
-    | [ovos-tools](https://github.com/OpenVoiceOS/ovos-tools) | A grab-bag of helper scripts for developing, testing, and administering OVOS devices. | [Tooling & CI](#tooling-ci-18) |
+    | [ovos-tools](https://github.com/OpenVoiceOS/ovos-tools) | A grab-bag of helper scripts for developing, testing, and administering OVOS devices. | [Tooling & CI](#tooling-ci-14) |
     | [ovos-translate-plugin-nllb](https://github.com/OpenVoiceOS/ovos-translate-plugin-nllb) | Language Plugin for NLLB200 language translator. | [Translation plugins](#translation-plugins-6) |
     | [ovos-translate-server](https://github.com/OpenVoiceOS/ovos-translate-server) | Wraps any OVOS translation/language-detection plugin as a standalone HTTP microservice.... | [Translation plugins](#translation-plugins-6) |
     | [ovos-translate-server-plugin](https://github.com/OpenVoiceOS/ovos-translate-server-plugin) | A client-side translation/language-detection plugin that forwards text to a remote... | [Translation plugins](#translation-plugins-6) |
@@ -243,7 +241,6 @@ There are roughly **280** public, non-archived repositories in the [`OpenVoiceOS
     | [ovos-vad-plugin-webrtcvad](https://github.com/OpenVoiceOS/ovos-vad-plugin-webrtcvad) | WebRTC VAD plugin for OpenVoiceOS. Registers under `opm.VAD`; loaded by... | [VAD plugins](#vad-plugins-3) |
     | [ovos-wikipedia-plugin](https://github.com/OpenVoiceOS/ovos-wikipedia-plugin) | Wikipedia integration exposing both a retrieval engine for RAG pipelines and a tool-use... | [Meta & infrastructure / other components](#meta-infrastructure-other-components-46) |
     | [ovos-wolfram-alpha-plugin](https://github.com/OpenVoiceOS/ovos-wolfram-alpha-plugin) | Marked alpha upstream - Wolfram Alpha integration providing a retrieval engine and an... | [Meta & infrastructure / other components](#meta-infrastructure-other-components-46) |
-    | [ovos-webui](https://github.com/OpenVoiceOS/ovos-webui) | A unified, local web UI for OVOS devices: configuration, device status, and other controls... | [Tooling & CI](#tooling-ci-18) |
     | [ovos-wordnet-plugin](https://github.com/OpenVoiceOS/ovos-wordnet-plugin) | Exposes WordNet as a retrieval engine and an agent toolbox with lookup tools... | [Meta & infrastructure / other components](#meta-infrastructure-other-components-46) |
     | [ovos-workshop](https://github.com/OpenVoiceOS/ovos-workshop) | Base classes, decorators, and helpers for building skills and applications for... | [Core services & libraries](#core-services-libraries-18) |
     | [ovos-ww-community-dataset](https://github.com/OpenVoiceOS/ovos-ww-community-dataset) | Wake-word training data provided by the OpenVoiceOS/Mycroft Community. | [Datasets & Models](#datasets-models-3) |
@@ -253,8 +250,8 @@ There are roughly **280** public, non-archived repositories in the [`OpenVoiceOS
     | [ovos-ww-plugin-vosk](https://github.com/OpenVoiceOS/ovos-ww-plugin-vosk) | Mycroft wake-word plugin for Vosk. Registers under `opm.wake_word`; loaded by... | [Wake-word plugins](#wake-word-plugins-7) |
     | [ovos-ww-plugin-wakewordlab](https://github.com/OpenVoiceOS/ovos-ww-plugin-wakewordlab) | OVOS wake-word plugin using wakewordlab - compact neural wake-word detection with Silero... | [Wake-word plugins](#wake-word-plugins-7) |
     | [ovos-ww-verifier-plugin-speaker](https://github.com/OpenVoiceOS/ovos-ww-verifier-plugin-speaker) | A wake-word verifier plugin that rejects wake-word triggers from voices that are not... | [Meta & infrastructure / other components](#meta-infrastructure-other-components-46) |
-    | [ovos-wyoming-docker](https://github.com/OpenVoiceOS/ovos-wyoming-docker) | A collection of Docker images for running OVOS services using the Wyoming Protocol. | [Tooling & CI](#tooling-ci-18) |
-    | [ovos-yaml-editor](https://github.com/OpenVoiceOS/ovos-yaml-editor) | The OpenVoiceOS Config Editor is a web-based application for managing and editing the... | [Tooling & CI](#tooling-ci-18) |
+    | [ovos-wyoming-docker](https://github.com/OpenVoiceOS/ovos-wyoming-docker) | A collection of Docker images for running OVOS services using the Wyoming Protocol. | [Tooling & CI](#tooling-ci-14) |
+    | [ovos-yaml-editor](https://github.com/OpenVoiceOS/ovos-yaml-editor) | The OpenVoiceOS Config Editor is a web-based application for managing and editing the... | [Tooling & CI](#tooling-ci-14) |
     | [ovos-YesNo-plugin](https://github.com/OpenVoiceOS/ovos-YesNo-plugin) | A heuristic yes/no answer classifier for OpenVoiceOS. Used by skills that need to... | [Meta & infrastructure / other components](#meta-infrastructure-other-components-46) |
     | [ovos_assets](https://github.com/OpenVoiceOS/ovos_assets) | Shared images, icons, and artwork used across OpenVoiceOS repositories and documentation.... | [Meta & infrastructure / other components](#meta-infrastructure-other-components-46) |
     | [ovos_tts_transformer_FlashSR](https://github.com/OpenVoiceOS/ovos_tts_transformer_FlashSR) | Audio super-resolution for OpenVoiceOS speech synthesis. FlashSR upsamples the audio... | [Transformer plugins](#transformer-plugins-6) |
@@ -276,9 +273,8 @@ There are roughly **280** public, non-archived repositories in the [`OpenVoiceOS
     | [VocalFusionDriver](https://github.com/OpenVoiceOS/VocalFusionDriver) | A Linux kernel driver for the XMOS VocalFusion microphone array, built for kernel 5.10.... | [Meta & infrastructure / other components](#meta-infrastructure-other-components-46) |
     | [voices_demo](https://github.com/OpenVoiceOS/voices_demo) | Audio samples demonstrating available TTS voices, for comparing options before... | [Datasets & Models](#datasets-models-3) |
     | [wallpaper_changer](https://github.com/OpenVoiceOS/wallpaper_changer) | A Python library that changes the desktop wallpaper programmatically across several Linux... | [Meta & infrastructure / other components](#meta-infrastructure-other-components-46) |
-    | [ww-benchmarks](https://github.com/OpenVoiceOS/ww-benchmarks) | A benchmark harness for wake-word engines, measuring False Negative Rate and False... | [Tooling & CI](#tooling-ci-18) |
-    | [wyoming-ovos-stt](https://github.com/OpenVoiceOS/wyoming-ovos-stt) | expose OVOS STT plugins via wyoming for usage with the Home Assistant Voice PE. | [Tooling & CI](#tooling-ci-18) |
-    | [wyoming-ovos-tts](https://github.com/OpenVoiceOS/wyoming-ovos-tts) | expose OVOS TTS plugins via wyoming for usage with the Home Assistant Voice PE. | [Tooling & CI](#tooling-ci-18) |
+    | [wyoming-ovos-stt](https://github.com/OpenVoiceOS/wyoming-ovos-stt) | expose OVOS STT plugins via wyoming for usage with the Home Assistant Voice PE. | [Tooling & CI](#tooling-ci-14) |
+    | [wyoming-ovos-tts](https://github.com/OpenVoiceOS/wyoming-ovos-tts) | expose OVOS TTS plugins via wyoming for usage with the Home Assistant Voice PE. | [Tooling & CI](#tooling-ci-14) |
     | [wyoming-ovos-wakeword](https://github.com/OpenVoiceOS/wyoming-ovos-wakeword) | expose OVOS wake-word plugins via wyoming for usage with the Home Assistant Voice PE. Registers under... | [Wake-word plugins](#wake-word-plugins-7) |
 
 ## Core services & libraries (18)
@@ -950,7 +946,7 @@ Unless noted otherwise, these are consumed by device images and build tooling (r
 :   Automatic audio configuration for Raspberry Pi devices running OpenVoiceOS.
 
 
-## Tooling & CI (18)
+## Tooling & CI (14)
 
 Unless noted otherwise, these are standalone developer or operator tools, not a runtime dependency of the OVOS stack.
 
@@ -959,18 +955,6 @@ Unless noted otherwise, these are standalone developer or operator tools, not a 
 
 **[ovos-busmon](https://github.com/OpenVoiceOS/ovos-busmon)**
 :   Live monitor, capture, and injection tool for the OpenVoiceOS messagebus. Stream every bus message to a browser, filter by type (glob), inspect payloads, export captures as JSONL, and inject messages directly from the UI.
-
-**[ovos-webui](https://github.com/OpenVoiceOS/ovos-webui)**
-:   A unified, local web UI for OVOS devices: one browser-based front end for configuration, device status, and the other controls that would otherwise mean SSHing in or editing `mycroft.conf` by hand.
-
-**[ovos-judge](https://github.com/OpenVoiceOS/ovos-judge)**
-:   An LLM-driven QA testing tool for OVOS skills and personas. A configurable chat LLM acts as judge: it generates test utterances, sends them to a running OVOS instance (or HiveMind satellite), captures the response plus messagebus events, and reports whether the skill under test behaved correctly. Ships both a real-time browser UI and a headless CLI/CI mode with a pass/fail exit code.
-
-**[ovos-plugin-bench](https://github.com/OpenVoiceOS/ovos-plugin-bench)**
-:   A benchmarking harness for STT plugins. It runs plugins (loaded locally through `ovos-plugin-manager`, or over the network through `ovos-stt-plugin-server`) against Hugging Face audio datasets, stores every transcription in a local SQLite database, and computes WER, CER, MER, WIL, and WIP against the ground truth. Ships curated dataset lists for European and Brazilian Portuguese, Castilian and Catalan and Galician Spanish, and Basque.
-
-**[ww-benchmarks](https://github.com/OpenVoiceOS/ww-benchmarks)**
-:   A benchmark harness for wake-word engines, covering precise-lite, openWakeWord, vosk, microwakeword, and WakeHuBERT. Measures False Negative Rate (missed real wake words) over positive audio and False Activations per Hour over long negative audio, the two axes a wake-word engine trades off against each other.
 
 **[ovos-docker](https://github.com/OpenVoiceOS/ovos-docker)**
 :   Please follow the dedicated documentation.

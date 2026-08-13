@@ -216,7 +216,6 @@ In short, `sensitivity` controls how easily *one* chunk counts as a hit. `trigge
     interface, its key methods, and a full step-by-step walkthrough live on the
     [Wake-word Plugin Development](wake-word-plugin-development.md) page.
 
-Comparing engines instead of tuning one? [ww-benchmarks](https://github.com/OpenVoiceOS/ww-benchmarks) measures False Negative Rate and False Activations per Hour across precise-lite, openWakeWord, vosk, microwakeword, and WakeHuBERT.
 
 ## WW Plugins Reference
 

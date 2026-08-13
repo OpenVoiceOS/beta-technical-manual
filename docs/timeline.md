@@ -360,19 +360,17 @@
 
 - Jan 2026 - `ovos-plugin-manager` version **2.2.0** released.
 - Jan 2026 - [hivemind-core](https://github.com/JarbasHiveMind/hivemind-core) version **4.0.0** released
-- Jan 2026 - Plugin benchmarking infrastructure introduced: [ovos-plugin-arena](https://github.com/OpenVoiceOS/ovos-plugin-arena) and [ovos-plugin-bench](https://github.com/OpenVoiceOS/ovos-plugin-bench)
+- Jan 2026 - [ovos-plugin-arena](https://github.com/OpenVoiceOS/ovos-plugin-arena) introduced: crowdsourced side-by-side plugin comparison arena
 - Feb 2026 - OpenVoiceOS presents at [Speechday 2026](https://blog.openvoiceos.org/posts/2026-02-05-OpenVoiceOS-Speechday-2026), the 4th Dutch Speech Tech Day
 - Feb 2026 - [Real-time offline speech recognition](https://blog.openvoiceos.org/posts/2026-02-16-onnx-asr) lands via ONNX STT plugins
 - Mar 2026 - [ovos-installer gains macOS support](https://blog.openvoiceos.org/posts/2026-03-05-ovos-installer-macos-intel-apple-silicon) (Intel and Apple Silicon)
-- Mar 2026 - [ovos-judge](https://github.com/OpenVoiceOS/ovos-judge) introduced: LLM-driven end-to-end QA testing against a live OVOS instance
 - Mar 2026 - [ovos-agentic-loop](https://github.com/OpenVoiceOS/ovos-agentic-loop) introduced: agentic reasoning patterns (ReAct, reflexion, tree-of-thoughts, …) as OVOS agent plugins
 - Mar 2026 - [ovos-pydantic-models](https://github.com/OpenVoiceOS/ovos-pydantic-models) introduced to standardize ecosystem-wide data structures.
 - Mar 2026 - `ovos-bus-client` version **1.5.0** released.
 - May 2026 - [architecture](https://github.com/OpenVoiceOS/architecture) repo introduced: formal written specifications for the OVOS protocols, with [ovos-spec-tools](https://github.com/OpenVoiceOS/ovos-spec-tools) as their dependency-free reference implementation
-- Jun 2026 - **MediaProvider plugin family** introduced (bandcamp, youtube, tunein, somafm, radio, soundcloud, spotify, news, music-assistant), superseding the legacy OCP media skills
+- Jun 2026 - **MediaProvider plugin family** introduced (bandcamp, youtube, tunein, somafm, pyradios, soundcloud, spotify, news, mass), superseding the legacy OCP media skills
 - Jun 2026 - **GUI refactor**: `ovos-gui` moves to a template-based `GUIInterface` and the `opm.gui_adapter` plugin system, decoupling the GUI layer from the legacy QML/page model.
 - Jul 2026 - OVOS speech servers gain [UTCP/MCP endpoints](https://blog.openvoiceos.org/posts/2026-07-15-mcp-utcp-speech-servers), callable from any AI agent
-- Aug 2026 - [ovos-webui](https://github.com/OpenVoiceOS/ovos-webui) introduced: unified local web UI for OpenVoiceOS devices
 
 ---
 
