@@ -1346,8 +1346,8 @@ misbehaves, and pinning or rolling back just one package instead of the whole en
 <div class="admonition warning">
 <p class="admonition-title">Installed with <code>ovos-installer</code>? Know your method first</p>
 <p>The <code>pip</code>/<code>uv pip</code> commands here apply to the <strong><code>virtualenv</code></strong> install method, run inside
-that venv (activate it first — <code>systemctl --user cat ovos.service</code> reveals its path from
-the unit's <code>ExecStart</code>). On a <strong><code>containers</code></strong> install, roll back by pinning the previous
+that venv (activate it first — <code>systemctl --user cat ovos-core.service</code> reveals its path
+from that unit's <code>ExecStart</code>; the umbrella <code>ovos.service</code> is a no-op meta unit). On a <strong><code>containers</code></strong> install, roll back by pinning the previous
 image tag and re-running <code>docker compose up -d</code>, or
 <a href="../ovos-installer-scenarios/">re-run the installer</a> — it detects the existing install and
 offers only your current method.</p>

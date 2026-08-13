@@ -1371,10 +1371,12 @@ back up the config, freeze the current package set, upgrade, and verify.</p>
 <p class="admonition-title">Installed with <code>ovos-installer</code>? Know your method first</p>
 <p>Every <code>pip</code>/<code>uv pip</code> command on this page assumes the <strong><code>virtualenv</code></strong> install method,
 run <strong>inside that venv</strong> — activate it first (its path is shown on the installer's
-environment-summary screen; after the fact, <code>systemctl --user cat ovos.service</code> reveals
-it from the unit's <code>ExecStart</code>). If you installed with the <strong><code>containers</code></strong> method
+environment-summary screen; after the fact, <code>systemctl --user cat ovos-core.service</code>
+reveals it from that unit's <code>ExecStart</code> — the umbrella <code>ovos.service</code> is a no-op meta
+unit, so check a component unit). If you installed with the <strong><code>containers</code></strong> method
 (Docker/Podman), pip on the host changes nothing: update by pulling newer images
-(<code>docker compose pull &amp;&amp; docker compose up -d</code>) or by
+(<code>docker compose pull &amp;&amp; docker compose up -d</code>, run from the installer's compose
+directory so the right project is targeted) or by
 <a href="../ovos-installer-scenarios/">re-running the installer</a>, which detects an existing
 install and offers only your current method. To check what you currently have installed,
 see <a href="../release-channels/#checking-what-you-have-installed">Checking what you have installed</a>.</p>
