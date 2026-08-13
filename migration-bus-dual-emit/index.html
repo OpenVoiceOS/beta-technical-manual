@@ -1628,11 +1628,7 @@ releases; its planned removal sits on an unmerged pull request gated on
 the fleet already being upgraded, so operators are meant to move onto
 <code>ovos.*</code> topics now, while both spellings still work, rather than wait for
 the kill switch to force the issue.</p>
-<p>This is the change every remote/HiveMind operator needs to plan for.
-<code>ovos-bus-client</code> <code>2.x</code> introduced a transitional bridge so a mixed fleet
-(core upgraded, satellites not yet upgraded) keeps working while topics
-migrate from legacy <code>mycroft.*</code>/<code>recognizer_loop:*</code> spellings to the
-<code>ovos.*</code> spec namespace:</p>
+<p>The commit-level history of that bridge:</p>
 <ol>
 <li><code>679f120</code> (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/228" title="GitHub Issue: TigreGotico/ovos-technical-manual #228">#228</a>, 2026-06-25): opt-in (default OFF) dual-emit + dedup bridge.</li>
 <li><code>e25ab12</code> (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/230" title="GitHub Issue: TigreGotico/ovos-technical-manual #230">#230</a>, 2026-06-25): split into two flags, <strong>both default ON</strong>
