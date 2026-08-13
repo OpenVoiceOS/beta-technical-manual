@@ -61,7 +61,7 @@ languages resolve to different pretrained models.
 - **GitHub**: [OpenVoiceOS/ovos-stt-plugin-mms](https://github.com/OpenVoiceOS/ovos-stt-plugin-mms)
 
 
-- **Description**: OVOS plugin for [The Massively Multilingual Speech (MMS) project](https://huggingface.co/docs/transformers/main/en/model_doc/mms)
+- **Description**: OVOS plugin for [The Massively Multilingual Speech (MMS) project](https://huggingface.co/docs/transformers/main/en/model_doc/mms). Warning: archived. MMS models also run under [ovos-stt-plugin-wav2vec2](https://github.com/OpenVoiceOS/ovos-stt-plugin-wav2vec2), which is not on PyPI yet — install it from source, or use [onnx-asr](#ovos-stt-plugin-onnx-asr), which covers the same wav2vec2 families.
 
 ### Default Configuration
 
@@ -284,7 +284,7 @@ CPU is the shipped default (`use_cuda: false`). Set `use_cuda: true` for accepta
 - **GitHub**: [OpenVoiceOS/ovos-stt-plugin-HiTZ](https://github.com/OpenVoiceOS/ovos-stt-plugin-HiTZ)
 
 
-- **Description**: OpenVoiceOS STT plugin for **Basque** models trained by [HiTZ](https://huggingface.co/HiTZ)
+- **Description**: OpenVoiceOS STT plugin for **Basque** models trained by [HiTZ](https://huggingface.co/HiTZ). Warning: archived, deprecated.
 
 ### Default Configuration
 
@@ -354,6 +354,8 @@ If `model` is omitted, the plugin loads its **built-in default `nemo-canary-1b-v
     The configured/utterance language is only passed to the ASR call for **Whisper** and **Canary** (NeMo Conformer AED) families. Other families (Parakeet, GigaAM, Vosk, wav2vec2, T-one) ignore `lang`. For those, pick a language-specific model instead of relying on a `lang` setting to steer a multilingual one.
 
 Besides the built-in aliases and the `onnx-asr` repository's own model hub, the plugin loads any repo id from the [OpenVoiceOS/stt-asr-onnx](https://huggingface.co/collections/OpenVoiceOS/stt-asr-onnx) collection. This collection holds curated single-language and regional ONNX conversions of NeMo Conformer/Parakeet and Whisper checkpoints, grouped roughly by family: AI4Bharat/Vaani models for Indian languages, NVIDIA Conformer/Parakeet models for major European languages (plus Kabyle, Belarusian, Esperanto, Kinyarwanda), Iberian-language Conformer models, and per-language Whisper finetunes. Most ship both fp32 and int8 weights (`quantization: "int8"` works). A few large models are fp32-only. See the collection itself for the exhaustive, current list. It grows independently of this plugin's release cycle.
+
+Comparing plugins instead of picking one? [ovos-plugin-bench](https://github.com/OpenVoiceOS/ovos-plugin-bench) runs STT plugins over Hugging Face audio datasets and scores them on WER, CER, MER, WIL, and WIP.
 
 ---
 
