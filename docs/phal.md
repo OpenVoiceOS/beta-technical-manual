@@ -15,13 +15,13 @@ client at construction, and may listen to or emit any bus event.
 
 ??? abstract "Technical Reference"
 
-    - `PHAL.start()` ([`ovos_PHAL/service.py:97`](https://github.com/OpenVoiceOS/ovos-PHAL/blob/dev/ovos_PHAL/service.py)): loads user-level plugins and reports `ProcessStatus` ready. `PHAL` is a plain object, not a thread.
+    - `PHAL.start()` ([`ovos_PHAL/service.py:107`](https://github.com/OpenVoiceOS/ovos-PHAL/blob/dev/ovos_PHAL/service.py)): loads user-level plugins and reports `ProcessStatus` ready. `PHAL` is a plain object, not a thread.
 
 
     - `AdminPHAL.load_plugins()` ([`ovos_PHAL/admin.py:45`](https://github.com/OpenVoiceOS/ovos-PHAL/blob/dev/ovos_PHAL/admin.py)): discovery/validation for privileged/root-level plugins (`find_admin_plugins`).
 
 
-    - `PHAL.load_plugins()` ([`ovos_PHAL/service.py:67`](https://github.com/OpenVoiceOS/ovos-PHAL/blob/dev/ovos_PHAL/service.py)): discovery and validation of user plugins via OPM (`find_phal_plugins`).
+    - `PHAL.load_plugins()` ([`ovos_PHAL/service.py:77`](https://github.com/OpenVoiceOS/ovos-PHAL/blob/dev/ovos_PHAL/service.py)): discovery and validation of user plugins via OPM (`find_phal_plugins`).
     
     ---
     

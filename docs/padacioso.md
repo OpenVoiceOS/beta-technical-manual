@@ -42,10 +42,16 @@ container.calc_intent('say something, whatever')
 ```
 
 Slot names follow the OVOS sentence-template grammar (`{lowercase_with_underscores}`).
-The colon-typed `simplematch` syntax such as `{number:int}` is **not** supported.
-Templates are expanded and normalized through `ovos_spec_tools`, which rejects it.
+The colon-typed `simplematch` syntax such as `{number:int}` is **not** supported: the
+normalizer passes it through untouched, so the braces are matched literally instead of
+being interpreted as a typed slot.
 
-A wildcard (`*`) carries a confidence penalty proportional to how much of the template it covers. For example, `"say *"` is one wildcard out of two tokens, so the score drops from `1.0` to `0.85`. Entity placeholders like `{number}` are not wildcards and carry no penalty. An entity whose name was never registered with `add_entity` still matches, but at a slightly reduced confidence (a small `0.04` penalty, e.g. `0.96`).
+A template containing a wildcard (`*`) carries a flat `0.15` confidence penalty, regardless
+of how much of the template the wildcard covers — `"say *"` scores `0.85` instead of `1.0`.
+Entity placeholders like `{number}` are not wildcards and carry no penalty of their own. An
+entity whose name was never registered with `add_entity` still matches, at a small `0.04`
+penalty (e.g. `0.96`); a registered entity whose parsed value is not among the registered
+samples is penalized `0.1`.
 
 ## Context and keyword gating
 

@@ -206,9 +206,9 @@ available.
 | `homescreen.metadata.get` | Homescreen requesting metadata |
 | `{skill_id}.public_api` | Skill API introspection |
 
-A skill subscribes to **both** stop topics (OVOS-STOP-1 §9): `<own_skill_id>:stop`, the
+A skill subscribes to **both** stop topics (OVOS-STOP-1 §9): `{skill_id}.stop`, the
 targeted dispatch that ceases only its own stoppable activity for the inbound session, and
-`ovos.stop`, the universal broadcast that ceases everything for that session. A duplicate
+`mycroft.stop`, the universal broadcast that ceases everything for that session. A duplicate
 arrival on either topic while the skill is already stopping is a no-op. See the
 [Stop Pipeline](stop-pipeline.md).
 

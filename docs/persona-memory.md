@@ -69,7 +69,9 @@ Persona management is session-isolated:
 - Conversation history is tracked per session, not globally.
 - Enables: different persona per wake word, different TTS voice per persona, distinct persona for each HiveMind satellite.
 
-Configure via the session `active_persona` field or the `ovos.persona.set` bus message.
+The active persona travels in the session's `persona_id` field; it is switched through the
+pipeline's `persona:summon` / `persona:release` matches, or queried over the bus with
+`ovos.persona.query`.
 
 ---
 
