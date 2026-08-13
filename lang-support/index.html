@@ -1536,6 +1536,9 @@ that default for one plugin (e.g. running a second voice in another language).
 <code>ovos-config autoconfigure</code> (below) is a convenience that additionally picks the
 <em>recommended</em> plugins/voices for a language (offline/online, gender). It optionally
 swaps in better defaults. It is not required just to switch languages.</p>
+<p>This describes a single-box install. In a multi-satellite deployment each satellite's
+<em>own</em> <code>lang</code> / STT config decides the language of what it hears, independent of the
+shared server — see <a href="../satellites/#per-satellite-language">Satellites: Per-satellite language</a>.</p>
 </div>
 <p>Language codes are case-insensitive: OVOS normalizes them internally (e.g. <code>en-us</code>, <code>EN-US</code>,
 and <code>en_US</code> all become <code>en-US</code>), so it doesn't matter which case you type them in on the

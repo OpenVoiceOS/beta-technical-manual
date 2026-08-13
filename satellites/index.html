@@ -1072,6 +1072,15 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#per-satellite-language" class="md-nav__link">
+    <span class="md-ellipsis">
+      Per-satellite language
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1426,6 +1435,15 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#per-satellite-language" class="md-nav__link">
+    <span class="md-ellipsis">
+      Per-satellite language
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1483,7 +1501,9 @@
 devices around the house. The server runs the messagebus, <code>ovos-core</code>, and skills.
 Each satellite only listens and speaks. This page is the build guide. It has two
 paths: a raw shared bus for a trusted LAN, and HiveMind for anything that needs
-auth or crosses an untrusted network.</p>
+auth or crosses an untrusted network. Terminology: this page says <em>satellite</em>;
+HiveMind pages say <em>client</em> or <em>node</em> for the same thing — the device that
+connects to the central server.</p>
 </div>
 <pre class="mermaid"><code>flowchart TD
     subgraph Server
@@ -1595,7 +1615,23 @@ instance of that service on the bus. Two listeners on two satellites share the s
 can carry into the bedroom's next utterance. This is not a bug to patch around with
 <code>session_id</code> filtering in a skill. It is a property of the shared bus. See
 <a href="../composable-deployments/#services-are-implicit-singletons-per-bus">Composable Deployments: services are implicit singletons per bus</a>.</p>
+<p>Language is the exception: it is <strong>not</strong> part of the shared state. Each satellite's own
+listener/STT configuration decides the <code>stt_lang</code> that rides its utterances (see
+<a href="#per-satellite-language">Per-satellite language</a> below), so two rooms can listen in two
+languages while still sharing one <code>ovos-core</code>.</p>
 </div>
+<h3 id="per-satellite-language">Per-satellite language<a class="headerlink" href="#per-satellite-language" title="Permanent link">&para;</a></h3>
+<p>To make one satellite listen and answer in a different language, change <strong>that satellite's</strong>
+config, not the server's: set <code>lang</code> in the satellite's own <code>mycroft.conf</code> (its listener and
+STT plugin follow it), or use a per-wake-word <code>stt_lang</code> override to bind a language to a
+specific wake word — say "ok computer" for English, "olá computador" for Portuguese, on the
+same box (see <a href="../wake-word-plugins/">Wake Word Plugins</a>). The language then rides each
+utterance as <code>stt_lang</code> / <code>request_lang</code>, which sit above the server's configured default in
+the resolution order (see <a href="../lang-selection/">Language Selection</a>) — so the server answers in
+the language the satellite heard, and a satellite that answers in the wrong language almost
+always means its own config fell through to the server's default. For HiveMind mic-satellites
+(<code>hivemind-mic-satellite</code>), the per-connection language knobs live in that project's own
+documentation — this manual covers only the OVOS-side integration.</p>
 <div class="admonition warning">
 <p class="admonition-title">Defaults assume localhost</p>
 <p><code>websocket.host</code> defaults to <code>127.0.0.1</code> everywhere. A satellite left on the default
@@ -1618,8 +1654,8 @@ separate project with its own protocol and docs.</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>pip<span class="w"> </span>install<span class="w"> </span>hivemind-bus-client
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>hivemind-client<span class="w"> </span>set-identity<span class="w"> </span>--key<span class="w"> </span>&lt;access_key&gt;<span class="w"> </span>--password<span class="w"> </span>&lt;password&gt;<span class="w"> </span>--host<span class="w"> </span>&lt;server&gt;
 </span></code></pre></div>
-<p><code>set-identity</code> with no arguments raises: it needs at least one of <code>--key</code>, <code>--password</code> or
-<code>--siteid</code>.</p>
+<p><code>set-identity</code> with no arguments raises: it needs at least one of <code>--key</code>, <code>--password</code>,
+<code>--siteid</code> or <code>--host</code>.</p>
 </li>
 <li>
 <p>Verify with <code>hivemind-client test-identity</code> before trusting the link.</p>
