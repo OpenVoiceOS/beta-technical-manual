@@ -1847,7 +1847,7 @@ context gate: present in the current context, or the intent does not match.</p>
 <h2 id="using-context-to-enable-intents">Using context to enable <strong>Intents</strong><a class="headerlink" href="#using-context-to-enable-intents" title="Permanent link">&para;</a></h2>
 <p>Context can create "bubbles" of available intent handlers, so certain <strong>intents</strong> can't trigger unless some previous stage in a conversation has occurred.</p>
 <blockquote>
-<p>This is the <strong><code>requires_context</code></strong> gate of CONTEXT-1 §6 in action. <code>MilkContext</code> is a private flag (the <code>@adds_context</code> decorator stores it under the skill's own prefix). An intent that <code>.require('MilkContext')</code> declares it as a precondition, so the <code>yes</code>/<code>no</code> intents are invisible except in the narrow window between the question and the reply, with no skill-side state machine. The complementary <code>excludes_context</code> gate (CONTEXT-1 §6.1) handles fire-once intents (for example, "greet only once per session").</p>
+<p>This is the <em>idea</em> behind the <strong><code>requires_context</code></strong> gate of CONTEXT-1 §6, expressed through the legacy mechanism that works today: <code>MilkContext</code> is a private flag (the <code>@adds_context</code> decorator stores it under the skill's own prefix), and an intent that <code>.require('MilkContext')</code> declares it as an Adapt keyword precondition, so the <code>yes</code>/<code>no</code> intents are invisible except in the narrow window between the question and the reply, with no skill-side state machine. Note that <code>.require()</code> keyword matching and the declarative <code>requires_context=</code> / <code>excludes_context=</code> intent kwargs are <strong>different code paths</strong>: the declarative gate looks entries up under the resolved <code>&lt;skill_id&gt;:&lt;key&gt;</code> shape, which <code>set_context</code> / <code>@adds_context</code> do not write yet (see the note below). The complementary <code>excludes_context</code> gate (CONTEXT-1 §6.1) handles fire-once intents (for example, "greet only once per session").</p>
 </blockquote>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>User: Hey Mycroft, bring me some Tea
 </span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>OVOS: Of course, would you like Milk with that?
@@ -1935,12 +1935,19 @@ Adapt dialect (<code>context</code>) or the colon-separated <code>&lt;skill_id&g
 CONTEXT-1's declarative <code>requires_context</code> / <code>excludes_context</code> gate (above) expects.
 <code>set_cross_skill_context</code> and the deprecated <code>set_adapt_context</code> /
 <code>remove_adapt_context</code> shortcuts carry the same additive <code>key</code>.</p>
+<div class="admonition warning">
+<p class="admonition-title">The declarative gate is not reachable via <code>set_context</code> yet</p>
+<p>The <code>key</code> field is on the wire, but <code>ovos-core</code> does not yet mirror it into the
+resolved <code>&lt;skill_id&gt;:&lt;key&gt;</code> entry the declarative gate looks up — it still stores
+only the legacy munged spelling. Until that mirror lands in core, intents declared
+with <code>requires_context=</code> / <code>excludes_context=</code> cannot be satisfied by
+<code>set_context</code> / <code>@adds_context</code>; only the legacy <code>.require()</code> keyword path (above)
+works today.</p>
+</div>
 <div class="admonition note">
 <p class="admonition-title">Writing a key replaces it wholesale; there is no read-back</p>
 <p>Writing an entry under a key that already exists <strong>replaces the whole entry</strong>, value and
-decay timer both — it does not merge onto the old one. Calling <code>set_context</code> again with
-the same keyword refreshes its decay window, which is the mechanism naptime-style
-"keep this alive while we're still talking" flows rely on. There is no API to read a
+decay timer both — it does not merge onto the old one. There is no API to read a
 context entry's current value or remaining decay back out — a skill that wants to know
 "what did I set this to, and how long ago" must keep that in its own state, not rely on
 reading it back from context. A flag-style call with no explicit value —
