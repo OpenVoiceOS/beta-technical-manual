@@ -51,6 +51,13 @@ is an executable conformance suite that exercises a running OVOS instance agains
 observable behavior. See [Specs & Tooling](spec-tooling.md) for how the specs, the harness, and
 the message-spec definitions fit together.
 
+The harness also runs a **mixed-version back-compat matrix**: two package sets alive at once
+(a skill container and a core in separate venvs, talking through a real `ovos-messagebus`),
+covering old/new version boundaries and cells pinned to the live release channels' constraints
+files. Heavier tiers run on a schedule rather than blocking every PR. If your change touches a
+wire surface (bus topics, session fields, registration payloads), expect it to land as a matrix
+cell — see [ovos-test-harness](spec-test-harness.md) for the full grid and what each cell pins.
+
 ## Testing your change locally
 
 The shared **OVOS PR Checks** above catch a broken change, but waiting for CI to tell you is the
