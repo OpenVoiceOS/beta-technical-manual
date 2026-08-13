@@ -67,9 +67,11 @@ tier (see [STT Plugins](stt-plugins.md), [TTS Plugins](tts-plugins.md),
 
 - **Pi 4:** a comfortable middle ground for local, on-device models. The `hybrid` and `offline`
   raspOVOS images actually ship [`ovos-tts-plugin-piper`](tts-plugins-reference.md#ovos-tts-plugin-piper)
-  as the default TTS for this tier, and this is what the config below uses. An optional swap is
-  [`ovos-tts-plugin-phoonnx`](tts-plugins-reference.md#ovos-tts-plugin-phoonnx), which is not what ships by
-  default but is a valid alternative if you install it yourself.
+  as the default TTS for this tier, and this is what the config below uses. Note the shipped
+  default lags the current recommendation: the piper plugin is archived/deprecated in the
+  [TTS catalog](tts-plugins.md), with [`ovos-tts-plugin-phoonnx`](tts-plugins-reference.md#ovos-tts-plugin-phoonnx)
+  as its maintained successor — the images predate that transition. The shipped piper still
+  works; phoonnx is the swap to make if you install anything yourself.
 
   ```jsonc
   // ~/.config/mycroft/mycroft.conf — Pi 4-class tier: local ONNX STT, shipped Piper TTS

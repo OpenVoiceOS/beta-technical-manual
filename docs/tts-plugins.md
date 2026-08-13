@@ -61,6 +61,11 @@ flowchart TD
     engines further down this page (Coqui, Whisper-class transformers, etc.). Exact size varies
     per voice, since each one is a separate model fetched on first use.
 
+    **Licensing:** the phoonnx repository currently ships **no license file**, and individual
+    voices carry their own model-card terms. For personal use this rarely matters; for a
+    commercial or redistributed product, treat "no license file" as more restrictive than any
+    permissive license and check with the author first — see [Licensing](license.md).
+
 ## Change your voice
 
 1. Browse [voices_demo](https://github.com/OpenVoiceOS/voices_demo) for audio samples of the
