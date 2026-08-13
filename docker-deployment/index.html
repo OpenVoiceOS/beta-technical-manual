@@ -1551,7 +1551,8 @@ IPC volume mounts the upstream file uses.</p>
 reaches all of them. <code>TMP_FOLDER</code> mounts a shared host directory to <code>/tmp/mycroft</code> in every
 container: this is how the listener hands recorded audio to the rest of the pipeline. Named
 volumes (<code>ovos_local_state</code>, <code>ovos_tts_cache</code>, and in the full reference file also
-<code>ovos_models</code>, <code>ovos_vosk</code>, <code>ovos_listener_records</code>, <code>ovos_nltk</code>) hold anything that must
+<code>ovos_models</code>, <code>ovos_vosk</code>, <code>ovos_listener_records</code>, <code>ovos_nltk</code>, <code>ovos_persona</code>,
+<code>ovos_plugin_ggwave</code>) hold anything that must
 survive a container rebuild: downloaded models, the TTS cache, and local runtime state.</p>
 <p>The <a href="https://github.com/OpenVoiceOS/ovos-docker/blob/dev/compose/docker-compose.yml">full reference file</a>
 also runs <code>ovos_phal</code> and <code>ovos_phal_admin</code> with <code>privileged: true</code> and <code>cap_add: [SYS_ADMIN,

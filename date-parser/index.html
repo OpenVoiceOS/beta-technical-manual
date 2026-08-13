@@ -1198,6 +1198,15 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#format-a-date-for-speech" class="md-nav__link">
+    <span class="md-ellipsis">
+      Format a date for speech
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1550,6 +1559,15 @@
   <a href="#relative-time-descriptions" class="md-nav__link">
     <span class="md-ellipsis">
       Relative Time Descriptions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#format-a-date-for-speech" class="md-nav__link">
+    <span class="md-ellipsis">
+      Format a date for speech
     </span>
   </a>
   
@@ -2196,6 +2214,23 @@ speech or written text.</p>
 <blockquote>
 <p>The generic implementation speaks the rounded difference as words, such as <code>"two hours"</code>, <code>"twenty four hours"</code>, or <code>"seven days"</code>, using <code>pronounce_number</code> internally (it does not produce words like "tomorrow"). Basque (<code>eu</code>) is the only language with a dedicated <code>nice_relative_time</code> implementation. Everything else uses the generic one.</p>
 </blockquote>
+<h3 id="format-a-date-for-speech">Format a date for speech<a class="headerlink" href="#format-a-date-for-speech" title="Permanent link">&para;</a></h3>
+<p>Beyond <code>nice_time</code> and <code>nice_relative_time</code>, the library exports a family of
+formatters that turn a <code>datetime</code> into speakable text:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="k">def</span> <span class="nf">nice_date</span><span class="p">(</span><span class="n">dt</span><span class="p">,</span> <span class="n">lang</span><span class="p">,</span> <span class="n">now</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">include_weekday</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span> <span class="o">...</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="k">def</span> <span class="nf">nice_date_time</span><span class="p">(</span><span class="n">dt</span><span class="p">,</span> <span class="n">lang</span><span class="p">,</span> <span class="n">now</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">use_24hour</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">...</span><span class="p">):</span> <span class="o">...</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="k">def</span> <span class="nf">nice_day</span><span class="p">(</span><span class="n">dt</span><span class="p">,</span> <span class="n">lang</span><span class="p">,</span> <span class="n">date_format</span><span class="o">=</span><span class="s1">&#39;DMY&#39;</span><span class="p">,</span> <span class="n">include_month</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span> <span class="o">...</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="k">def</span> <span class="nf">nice_weekday</span><span class="p">(</span><span class="n">dt</span><span class="p">,</span> <span class="n">lang</span><span class="p">):</span> <span class="o">...</span>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="k">def</span> <span class="nf">nice_month</span><span class="p">(</span><span class="n">dt</span><span class="p">,</span> <span class="n">lang</span><span class="p">,</span> <span class="n">date_format</span><span class="o">=</span><span class="s1">&#39;MDY&#39;</span><span class="p">):</span> <span class="o">...</span>
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="k">def</span> <span class="nf">nice_year</span><span class="p">(</span><span class="n">dt</span><span class="p">,</span> <span class="n">lang</span><span class="p">,</span> <span class="n">bc</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ad</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span> <span class="o">...</span>
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="k">def</span> <span class="nf">nice_duration</span><span class="p">(</span><span class="n">duration</span><span class="p">,</span> <span class="n">lang</span><span class="p">,</span> <span class="o">...</span><span class="p">):</span> <span class="o">...</span>
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="k">def</span> <span class="nf">get_date_strings</span><span class="p">(</span><span class="n">dt</span><span class="p">,</span> <span class="n">lang</span><span class="p">,</span> <span class="n">date_format</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">time_format</span><span class="o">=</span><span class="s2">&quot;full&quot;</span><span class="p">):</span> <span class="o">...</span>
+</span></code></pre></div>
+<p><code>nice_date</code> speaks a full date (relative to <code>now</code> when given, e.g. "tomorrow");
+<code>nice_date_time</code> appends the spoken time; <code>nice_duration</code> speaks a
+<code>timedelta</code>/seconds value; <code>get_date_strings</code> returns a dict of display strings
+(for GUIs) rather than speakable prose. Per-language support for these is the
+<code>nice_date</code> family column in the tables above.</p>
 <div class="admonition note">
 <p class="admonition-title">Upcoming</p>
 <p>Span extraction (<code>DateSpan</code>) and astronomical or era-based dates are in
