@@ -1455,12 +1455,14 @@ each one before you open a port on a shared network.</p>
 </tbody>
 </table>
 <div class="admonition warning">
-<p class="admonition-title">The GUI WebSocket binds to all interfaces by default</p>
-<p>Unlike the bus, the GUI WebSocket ships bound to <code>0.0.0.0</code>. It has no authentication, no
-origin check, and no TLS option, and anything it receives is forwarded straight onto the
-core bus. Set <code>gui_websocket.host</code> to <code>127.0.0.1</code> unless a remote display genuinely needs
-network access. See <a href="../gui-service/#configuration">GUI Service: Configuration</a> for the
-full warning and the VPN/reverse-proxy alternative.</p>
+<p class="admonition-title">The GUI WebSocket has no authentication, origin check, or TLS</p>
+<p>Like the bus, the GUI WebSocket ships bound to <code>127.0.0.1</code> — but it has no
+authentication, no origin check, and no TLS option at all, and anything it receives is
+forwarded straight onto the core bus. Widen <code>gui_websocket.host</code> to <code>0.0.0.0</code> only if a
+remote display genuinely needs network access, and re-check configs from before the
+loopback default, which may still carry <code>0.0.0.0</code>. See
+<a href="../gui-service/#configuration">GUI Service: Configuration</a> for the full warning and the
+VPN/reverse-proxy alternative.</p>
 </div>
 <h3 id="rules-to-follow">Rules to follow<a class="headerlink" href="#rules-to-follow" title="Permanent link">&para;</a></h3>
 <ul>

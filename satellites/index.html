@@ -1735,10 +1735,10 @@ reachable by any of them, not just <code>ovos_messagebus</code>.</p>
 networking is in play. Treat the whole host as the trust boundary, not the individual
 container.</p>
 <p>Host networking also exposes any service that binds <code>0.0.0.0</code> straight onto the LAN, not
-just the host's own loopback. <code>gui_websocket.host</code> ships as <code>0.0.0.0</code> (all interfaces), so
-with <code>network_mode: host</code> the GUI WebSocket lands on the LAN, not just the device. Set
-<code>gui_websocket.host</code> to <code>127.0.0.1</code> unless a remote display client genuinely needs LAN
-access.</p>
+just the host's own loopback. <code>gui_websocket.host</code> ships as <code>127.0.0.1</code>, but if you widen
+it to <code>0.0.0.0</code> for a remote display — or an older config still carries that value — then
+with <code>network_mode: host</code> the GUI WebSocket lands on the LAN, not just the device. Keep
+the loopback default unless a remote display client genuinely needs LAN access.</p>
 </div>
 <p>Each thin client still runs its own bus, listener, audio and core. Only the heavy STT/TTS
 inference is centralized. This is the same pattern as
