@@ -242,8 +242,7 @@ OVOS is built for a global community:
 
 OVOS is a community project supported by the **OVOS Foundation** (officially *Stichting
 OVOS*), a nonprofit registered in the Netherlands (Dutch Chamber of Commerce nr. 94609292,
-founded August 2024) that handles the project's legal and financial matters — see the
-[foundation's articles and registry documents](https://github.com/OpenVoiceOS/ovos-foundation).
+founded August 2024) that handles the project's legal and financial matters.
 Development happens in the open on
 [GitHub](https://github.com/OpenVoiceOS). There is no commercial entity behind the project;
 day-to-day support is community-based — the [OVOS Chat on Matrix](https://matrix.to/#/#openvoiceos-skills:matrix.org)

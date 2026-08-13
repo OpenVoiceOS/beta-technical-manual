@@ -44,16 +44,16 @@
 
     | MediaProvider plugin | Supersedes |
     |---|---|
-    | [ovos-media-provider-bandcamp](https://github.com/OpenVoiceOS/ovos-media-provider-bandcamp) | [ovos-skill-bandcamp](https://github.com/OpenVoiceOS/ovos-skill-bandcamp) |
-    | [ovos-media-provider-pyradios](https://github.com/OpenVoiceOS/ovos-media-provider-pyradios) | [ovos-skill-pyradios](https://github.com/OpenVoiceOS/ovos-skill-pyradios) |
-    | [ovos-media-provider-somafm](https://github.com/OpenVoiceOS/ovos-media-provider-somafm) | [ovos-skill-somafm](https://github.com/OpenVoiceOS/ovos-skill-somafm) |
-    | [ovos-media-provider-soundcloud](https://github.com/OpenVoiceOS/ovos-media-provider-soundcloud) | [ovos-skill-soundcloud](https://github.com/OpenVoiceOS/ovos-skill-soundcloud) |
-    | [ovos-media-provider-tunein](https://github.com/OpenVoiceOS/ovos-media-provider-tunein) | [ovos-skill-tunein](https://github.com/OpenVoiceOS/ovos-skill-tunein) |
-    | [ovos-media-provider-youtube](https://github.com/OpenVoiceOS/ovos-media-provider-youtube) | [ovos-skill-youtube](https://github.com/OpenVoiceOS/ovos-skill-youtube) |
-    | [ovos-media-provider-youtube-music](https://github.com/OpenVoiceOS/ovos-media-provider-youtube-music) | [ovos-skill-youtube-music](https://github.com/OpenVoiceOS/ovos-skill-youtube-music) |
-    | [ovos-media-provider-mass](https://github.com/OpenVoiceOS/ovos-media-provider-mass) | [ovos-skill-music-assistant](https://github.com/OpenVoiceOS/ovos-skill-music-assistant) (playback via the companion [ovos-media-plugin-mass](https://github.com/OpenVoiceOS/ovos-media-plugin-mass) backend) |
-    | [ovos-media-provider-news](https://github.com/OpenVoiceOS/ovos-media-provider-news) | [ovos-skill-news](https://github.com/OpenVoiceOS/ovos-skill-news) |
-    | [ovos-media-provider-spotify](https://github.com/OpenVoiceOS/ovos-media-provider-spotify) | [ovos-skill-spotify](https://github.com/OpenVoiceOS/ovos-skill-spotify) (playback via the companion [ovos-media-plugin-spotify](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify) backend) |
+    | `ovos-media-provider-bandcamp` | [ovos-skill-bandcamp](https://github.com/OpenVoiceOS/ovos-skill-bandcamp) |
+    | `ovos-media-provider-pyradios` | [ovos-skill-pyradios](https://github.com/OpenVoiceOS/ovos-skill-pyradios) |
+    | `ovos-media-provider-somafm` | [ovos-skill-somafm](https://github.com/OpenVoiceOS/ovos-skill-somafm) |
+    | `ovos-media-provider-soundcloud` | [ovos-skill-soundcloud](https://github.com/OpenVoiceOS/ovos-skill-soundcloud) |
+    | `ovos-media-provider-tunein` | [ovos-skill-tunein](https://github.com/OpenVoiceOS/ovos-skill-tunein) |
+    | `ovos-media-provider-youtube` | [ovos-skill-youtube](https://github.com/OpenVoiceOS/ovos-skill-youtube) |
+    | `ovos-media-provider-youtube-music` | [ovos-skill-youtube-music](https://github.com/OpenVoiceOS/ovos-skill-youtube-music) |
+    | `ovos-media-provider-mass` | `ovos-skill-music-assistant` (playback via the companion `ovos-media-plugin-mass` backend) |
+    | `ovos-media-provider-news` | [ovos-skill-news](https://github.com/OpenVoiceOS/ovos-skill-news) |
+    | `ovos-media-provider-spotify` | [ovos-skill-spotify](https://github.com/OpenVoiceOS/ovos-skill-spotify) (playback via the companion [ovos-media-plugin-spotify](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify) backend) |
 
     The old OCP skills keep working; a MediaProvider plugin only takes over once the
     `opm.media.provider` plugin type ships on a released `ovos-plugin-manager`.

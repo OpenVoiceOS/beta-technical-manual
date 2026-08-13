@@ -87,7 +87,7 @@
 - Oct 2020 - Kivy has been dropped in support for QT Mycroft-GUI
 - Oct 2020 - @JarbasAI, @AIX and @j1nx form OpenVoiceOS community project around `mycroft-core`
 - Oct 2020 - MycroftOS renamed to OpenVoiceOS - Mycroft Edition due to trademark issues
-- Nov 2020 - @Jarbas gives a talk about [translating mycroft](https://collectivat.cat/blog/2020-11-06-jornades-de-tecnologies-lliures-de-la-parla/) for [collectivat](https://collectivat.cat) Jornades de tecnologies lingüístiques lliures en català
+- Nov 2020 - @Jarbas gives a talk about [translating mycroft](https://web.archive.org/web/2021/https://collectivat.cat/blog/2020-11-06-jornades-de-tecnologies-lliures-de-la-parla/) for collectivat Jornades de tecnologies lingüístiques lliures en català
 - Dec 2020 - [ovos-ww-plugin-snowboy](https://github.com/OpenVoiceOS/ovos-ww-plugin-snowboy) released
 - Dec 2020 - [ovos-stt-plugin-vosk](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk) released
 - Dec 2020 - [ovos-stt-plugin-chromium](https://github.com/OpenVoiceOS/ovos-stt-plugin-chromium) released
@@ -325,11 +325,11 @@
 - Apr 2024 - [ovos-installer](https://github.com/OpenVoiceOS/ovos-installer) second release, codename `Doom` supports Mark II device, maintained by community member @goldyfruit
 - Apr 2024 - [Mark 2 demo](https://community.openconversational.ai/t/open-voice-os-running-on-a-mark-ii-with-its-local-ai-running-mistral/14572) running OpenVoiceOS connected to a local A.I.
 - Apr 2024 - First successful run of [HiveMind Satellite](https://github.com/JarbasHiveMind/HiveMind-voice-sat) on Mark 1 device
-- Jun 2024 - [First successful run of OpenVoiceOS natively on Windows](https://github.com/mikejgray/ovos-windows) ([video](https://drive.google.com/file/d/171801mbhbpG79BvlOlUCxVyMPcDGgnbM/view?usp=sharing))
+- Jun 2024 - [First successful run of OpenVoiceOS natively on Windows](https://github.com/mikejgray/ovos-windows)
 - Jul 2024 - Introduction of [ovos-gguf-plugin](https://github.com/OpenVoiceOS/ovos-gguf-plugin), enabling local LLM inference.
 - Jul 2024 - [ovos-tts-plugin-matxa-multispeaker-cat](https://github.com/OpenVoiceOS/ovos-tts-plugin-matxa-multispeaker-cat) Catalan TTS released in collaboration with the [ILENIA project](https://proyectoilenia.es/) (BSC / projecte AINA)
 - Jul 2024 - [ovos-adapt-pipeline-plugin](https://github.com/OpenVoiceOS/ovos-adapt-pipeline-plugin) and [ovos-padatious-pipeline-plugin](https://github.com/OpenVoiceOS/ovos-padatious-pipeline-plugin) split out of ovos-core as standalone pipeline plugins
-- Aug 2024 - The [OVOS Foundation](https://github.com/OpenVoiceOS/ovos-foundation) (*Stichting OVOS*) is declared in the Netherlands, registered at the Dutch Chamber of Commerce under number 94609292, to support the project in legal and financial matters
+- Aug 2024 - The OVOS Foundation (*Stichting OVOS*) is declared in the Netherlands, registered at the Dutch Chamber of Commerce under number 94609292, to support the project in legal and financial matters
 - Sep 2024 - [ovos-tts-plugin-nos](https://github.com/OpenVoiceOS/ovos-tts-plugin-nos) Galician TTS released in collaboration with the [ILENIA project](https://proyectoilenia.es/) (Proxecto Nós, USC)
 - Sep 2024 - [gh-automations](https://github.com/OpenVoiceOS/gh-automations) introduced: shared, reusable CI/CD workflows for every repo in the org
 - Sep 2024 - `ovos-core` version **0.1.0** released, hitting the first major feature milestone after adopting Semantic Versioning.
