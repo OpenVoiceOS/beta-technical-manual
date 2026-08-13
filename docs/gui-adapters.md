@@ -113,6 +113,11 @@ id, default `"default"`). All default to no-ops, so partial implementations are 
 | `handle_show_ocp_search` | `SYSTEM_ocp_search` | search-result fields |
 | `handle_show_ocp_playlist` | `SYSTEM_ocp_playlist` | playlist fields |
 
+The three `SYSTEM_ocp_*` rows are a **legacy-adapter extension**, not part of OVOS-GUI-1's
+closed vocabulary of 22 templates (see [GUI Service](gui-service.md)): the legacy
+mycroft-gui adapter implements them, the ag-ui adapter implements only the spec's 22, and a
+new spec-conformant adapter is not required to handle them.
+
 ### Lifecycle hooks
 
 ```python
