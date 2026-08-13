@@ -1821,9 +1821,10 @@ recognition: <code>AhocorasickMediaClassifier</code> compiles the configured ent
 library: artists, titles, stations) into an Aho-Corasick automaton and matches verbatim. No
 model guesses spans.</p>
 </div>
-<p>The keyword backend self-registers under the <code>opm.media.classifier</code> entry-point group this
-package defines, so it doubles as the reference plugin exercising both OPM discovery and the
-external-plugin path.</p>
+<p>The package <em>defines</em> the <code>opm.media.classifier</code> entry-point group as the contract for
+<strong>third-party</strong> classifiers — its own keyword backend is loaded by direct import inside the
+package, not through that group, so writing an external classifier means registering your
+package under the group per the docstring in <code>ovos_media_classifier/plugins.py</code>.</p>
 <hr />
 <p><strong>Read next:</strong> <a href="../gui-protocol/">GUI Protocol</a>
 <strong>Related:</strong> <a href="../ocp-plugins/">OCP Extractors</a> · <a href="../ovos-media/">Media Service (ovos-media)</a> · <a href="../choosing-plugins/">Choosing Plugins</a></p>
