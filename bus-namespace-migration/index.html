@@ -1556,7 +1556,8 @@ the legacy delivery, and disable <code>modernize</code> once no legacy producers
 <p class="admonition-title"><code>modernize</code> is load-bearing, not cosmetic, on a canonical-only skill container</p>
 <p>A skill container that only registers <code>ovos.*</code> handlers is not automatically safe from an
 older producer still emitting legacy topics — the wire frame it receives may be legacy-only.
-That skill hears it at all <em>because</em> its own <code>MessageBusClient</code> (<code>ovos-bus-client</code> ≥ 2.8.0a1)
+That skill hears it at all <em>because</em> its own <code>MessageBusClient</code> (any <code>ovos-bus-client</code>
+since 2.2.0a1, where the bridge shipped)
 re-dispatches the legacy arrival under its <code>ovos.*</code> counterpart on receive, per <code>modernize</code>
 being on. Disabling <code>modernize</code> on such a container does not just drop a redundant delivery;
 it silently stops that container from ever hearing a legacy producer again. Never disable

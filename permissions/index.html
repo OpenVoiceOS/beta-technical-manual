@@ -1814,8 +1814,10 @@ activation-specific list:</p>
 <h3 id="per-session-exclusions">Per-session exclusions<a class="headerlink" href="#per-session-exclusions" title="Permanent link">&para;</a></h3>
 <p>Everything above is deployment-wide configuration. The <a href="../session/">Session</a> carries its own,
 finer-grained exclusion surface: <code>session.blacklisted_skills</code>, <code>session.blacklisted_intents</code>
-and <code>session.blacklisted_pipelines</code>. Each session initializes them from the same
-<code>skills.blacklisted_skills</code> config default, but they are per-session and mutable at runtime —
+and <code>session.blacklisted_pipelines</code>. Each field initializes from its own config default —
+<code>blacklisted_skills</code> from <code>skills.blacklisted_skills</code>, <code>blacklisted_intents</code> from
+<code>intents.blacklisted_intents</code>, and <code>blacklisted_pipelines</code> from
+<code>intents.blacklisted_pipelines</code> — but all three are per-session and mutable at runtime:
 a remote client (for example a HiveMind node declaring its own session) can exclude skills,
 individual intents, or whole pipeline stages for <em>its</em> requests without touching the server's
 config. The gates are enforced across the whole match path: general intent matching, converse,

@@ -2278,7 +2278,9 @@ you firewall the port. Configs written before the loopback default may still car
 <p>Source: <code>Configuration().get("PHAL")</code> in <code>ovos_PHAL/service.py</code> line 60 and the <code>PHAL.admin</code> docstring in <code>ovos_PHAL/admin.py</code> lines 32 to 46, <a href="https://github.com/OpenVoiceOS/ovos-PHAL">OpenVoiceOS/ovos-PHAL</a>. No <code>PHAL</code> block appears in the shipped <code>mycroft.conf</code>.</p>
 <hr />
 <h2 id="10-ocp-media">10. OCP / Media<a class="headerlink" href="#10-ocp-media" title="Permanent link">&para;</a></h2>
-<p><code>intents.OCP</code> tunes the OCP intent pipeline plugin. <code>Audio</code> selects the legacy audio service backend, which OCP still uses for actual playback.</p>
+<p>The OCP intent pipeline plugin reads its config from <code>intents.ovos-ocp-pipeline-plugin</code>
+(the plugin ID) — keys placed under <code>intents.OCP</code> are <strong>ignored</strong> (see
+<a href="../ocp-pipeline/#configuration">OCP Pipeline</a>). <code>Audio</code> selects the legacy audio service backend, which OCP still uses for actual playback.</p>
 <table>
 <thead>
 <tr>
@@ -2289,32 +2291,32 @@ you firewall the port. Configs written before the loopback default may still car
 </thead>
 <tbody>
 <tr>
-<td><code>intents.OCP.legacy</code></td>
+<td><code>intents.ovos-ocp-pipeline-plugin.legacy</code></td>
 <td><code>false</code></td>
 <td>Force the old audio-service bus API instead of OCP.</td>
 </tr>
 <tr>
-<td><code>intents.OCP.min_score</code></td>
+<td><code>intents.ovos-ocp-pipeline-plugin.min_score</code></td>
 <td><code>40</code></td>
 <td>Minimum confidence score, 0-100, for OCP to accept an utterance as a media request.</td>
 </tr>
 <tr>
-<td><code>intents.OCP.filter_media</code></td>
+<td><code>intents.ovos-ocp-pipeline-plugin.filter_media</code></td>
 <td><code>true</code></td>
 <td>Filter out results OCP judges not to be playable media.</td>
 </tr>
 <tr>
-<td><code>intents.OCP.filter_SEI</code></td>
+<td><code>intents.ovos-ocp-pipeline-plugin.filter_SEI</code></td>
 <td><code>true</code></td>
 <td>Filter results by Search Engine Index compatibility.</td>
 </tr>
 <tr>
-<td><code>intents.OCP.playback_mode</code></td>
+<td><code>intents.ovos-ocp-pipeline-plugin.playback_mode</code></td>
 <td><code>0</code></td>
 <td>Playback mode passed to the audio backend.</td>
 </tr>
 <tr>
-<td><code>intents.OCP.search_fallback</code></td>
+<td><code>intents.ovos-ocp-pipeline-plugin.search_fallback</code></td>
 <td><code>true</code></td>
 <td>Fall back to a general media search when no skill claims the request.</td>
 </tr>

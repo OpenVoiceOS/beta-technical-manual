@@ -1789,8 +1789,8 @@ speaks.</p>
 <p class="admonition-title"><code>.dialog</code> user overrides are not honored yet</p>
 <p>The user-resources override tier currently works for <code>.intent</code>, <code>.voc</code>, <code>.entity</code> and
 <code>.regex</code> files, but the dialog renderer in <code>ovos-workshop</code> still loads <code>.dialog</code> files
-only from the skill's own directory (a known gap, marked for a deliberate follow-up in
-the source — see <a href="../lang-customization/">Customizing Language Resources</a>). Until that
+only from the skill's own directory (a known gap; the dialog-renderer code path is pending a
+deliberate migration in the source — see <a href="../lang-customization/">Customizing Language Resources</a>). Until that
 lands, the override procedure below will <strong>not</strong> change what you hear; to reword a
 reply today, edit the <code>.dialog</code> file inside the skill's own <code>locale/</code> directory
 instead. The steps stay documented because they are the intended mechanism once the
