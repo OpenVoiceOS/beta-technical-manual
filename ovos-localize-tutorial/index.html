@@ -1479,6 +1479,15 @@ translation plugins, see the <strong><a href="../lang-support/">Language Support
 <hr />
 <p><strong>Read next:</strong> <a href="../translation-plugins/">Translation Plugins</a>
 <strong>Related:</strong> <a href="../bidirectional-translation/">Bidirectional Translation</a> · <a href="../lang-customization/">Customizing Language Resources</a> · <a href="../contributing/">Contributing</a></p>
+<div class="admonition note">
+<p class="admonition-title">Making your own skill translatable</p>
+<p>This page is for <em>translators</em>. If you are a skill <strong>author</strong> adding languages to your
+own skill, the workflow is different: ship a <code>locale/&lt;lang&gt;/</code> folder per language
+(<a href="../lang-customization/">Customizing Language Resources</a> covers the file formats),
+describe per-locale metadata in <a href="../skill-json/#language-support"><code>skill.json</code></a>, and
+lint the result in CI with
+<a href="../gh-automations-repo-skill-checks/#spec-lintyml"><code>spec-lint.yml</code></a>.</p>
+</div>
 
 
 
