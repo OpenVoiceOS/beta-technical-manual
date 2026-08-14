@@ -184,6 +184,10 @@ itself, a separate concern from the `speech_begin`/`silence_end` timing above.
 | `logging.logs.backup_count` | `3` | Number of rotated log files to keep. |
 | `logging.<service_name>` | (none) | A section named after a service (for example `logging.audio`) overrides the global `log_level` and `logs` settings for that service only. |
 
+Source: this namespace is read by `ovos-utils` (`ovos_utils/log.py`), not listed in
+`mycroft.conf` — the shipped default file carries only a commented-out top-level
+`log_level`, and the defaults above come from the code.
+
 ---
 
 ## 8. GUI
@@ -207,7 +211,7 @@ The `gui` key controls the on-screen interface. The `gui_websocket` key controls
     you firewall the port. Configs written before the loopback default may still carry
     `"0.0.0.0"` — check after upgrades.
 
-Source: `mycroft.conf` lines 356 to 361 (`gui_websocket`) and lines 609 to 627 (`gui`) in [OpenVoiceOS/ovos-config](https://github.com/OpenVoiceOS/ovos-config).
+Source: the `gui_websocket` and `gui` sections of `mycroft.conf` in [OpenVoiceOS/ovos-config](https://github.com/OpenVoiceOS/ovos-config).
 
 ---
 
@@ -272,7 +276,7 @@ stock install keys placed under `intents.OCP` change nothing (see
 | `Audio.backends.OCP.preferred_audio_services` | `["mpv", "vlc", "simple"]` | Order in which OCP tries local media players. |
 | `Audio.backends.OCP.active` | `true` | Whether the OCP backend is available for selection. |
 
-Source: `mycroft.conf` lines 188 to 203 (`intents.ovos-ocp-pipeline-plugin`) and lines 707 to 755 (`Audio`) in [OpenVoiceOS/ovos-config](https://github.com/OpenVoiceOS/ovos-config).
+Source: the `intents.ovos-ocp-pipeline-plugin` and `Audio` sections of `mycroft.conf` in [OpenVoiceOS/ovos-config](https://github.com/OpenVoiceOS/ovos-config).
 
 ---
 
@@ -296,7 +300,7 @@ All of these live under the top-level `skills` key.
 | `skills.converse.cross_activation` | `true` | If `true`, any skill may activate any other skill, not only itself. |
 | `skills.converse.cross_deactivation` | `true` | **Currently unused** — nothing in `ovos-core` reads this key (the shipped `mycroft.conf` comment says skill deactivation is not yet implemented); in practice cross-skill *deactivation* permission is gated by the same `cross_activation` flag above. |
 
-Source: `mycroft.conf` lines 235 to 304 (`skills`) in [OpenVoiceOS/ovos-config](https://github.com/OpenVoiceOS/ovos-config).
+Source: the `skills` section of `mycroft.conf` in [OpenVoiceOS/ovos-config](https://github.com/OpenVoiceOS/ovos-config).
 
 ---
 
@@ -306,7 +310,7 @@ Source: `mycroft.conf` lines 235 to 304 (`skills`) in [OpenVoiceOS/ovos-config](
 |---|---|---|
 | `session.ttl` | `-1` | Time to live, in seconds, for a remote session. `-1` means sessions do not expire. |
 
-Source: `mycroft.conf` lines 643 to 646 (`session`) in [OpenVoiceOS/ovos-config](https://github.com/OpenVoiceOS/ovos-config).
+Source: the `session` section of `mycroft.conf` in [OpenVoiceOS/ovos-config](https://github.com/OpenVoiceOS/ovos-config).
 
 ---
 
