@@ -2035,9 +2035,11 @@ the other.</p>
 <p>Where the authoritative detail lives, and the honest trade-offs:</p>
 <ul>
 <li><strong>Precise family</strong> (<a href="https://github.com/MycroftAI/mycroft-precise">MycroftAI/mycroft-precise</a>):
-  a per-phrase GRU network. The ONNX export is the shipped <code>hey_mycroft</code> default. Accurate
-  once a model exists for your phrase, but a new phrase means finding or training a model,
-  and <code>sensitivity</code>/<code>trigger_level</code> tuning is real work.</li>
+  a per-phrase GRU network from a now-defunct upstream. <strong>Legacy: do not train new Precise
+  models.</strong> The ONNX exports of the existing community models live on, and one of them is
+  still the shipped <code>hey_mycroft</code> default, but the training tooling is deprecated and
+  unmaintained. For a new phrase, train openWakeWord or microWakeWord instead.
+  <code>sensitivity</code>/<code>trigger_level</code> tuning of the existing models remains real work.</li>
 <li><strong>openWakeWord</strong> (<a href="https://github.com/dscripka/openWakeWord">dscripka/openWakeWord</a>):
   a frozen speech-embedding backbone plus a small per-phrase classifier, trained entirely
   on synthetic TTS speech. Its self-reported targets are under 0.5 false accepts per hour
