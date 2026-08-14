@@ -1721,8 +1721,8 @@ from-source install.</p>
 <p>Engine-agnostic ONNX audio super-resolution transformer (<code>opm.transformer.tts</code>). It upscales
 <strong>any</strong> TTS engine's output to 48 kHz just before playback, rather than being tied to one voice
 or engine. It wraps <a href="https://github.com/TigreGotico/audiosronnx"><code>audiosronnx</code></a> (pure ONNX, no
-Torch at runtime) and picks between <code>novasr</code> (default), <code>lavasr</code>, and <code>hifiganbwe</code> engines via
-config. If audio is already 48 kHz, or the model/weights are unavailable, it returns the
+Torch at runtime) and picks between <code>novasr</code> (default), <code>lavasr</code>, <code>hifiganbwe</code>, and <code>apbwe</code> engines
+via config. If audio is already 48 kHz, or the model/weights are unavailable, it returns the
 original audio unchanged so synthesis never breaks.</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>&quot;tts_transformers&quot;: {
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>  &quot;ovos-tts-transformer-audiosr&quot;: {&quot;engine&quot;: &quot;novasr&quot;}
