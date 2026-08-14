@@ -83,7 +83,10 @@ sends the search in the wrong direction (the proxy, not `uvicorn`'s trust list).
 Fix it by telling `uvicorn` which address to trust, via the `FORWARDED_ALLOW_IPS` environment
 variable (none of these four servers exposes a CLI flag for it; only `--host` and `--port` are
 their own). Scope it to the actual proxy address — for a proxy running as another container on
-the Docker bridge network, that's the bridge gateway IP (commonly `172.17.0.1`), not a wildcard:
+the Docker bridge network, that's the bridge gateway IP (commonly `172.17.0.1`), not a wildcard.
+Each compose stack's network has its **own** gateway, so a box running several stacks needs a
+different value per stack. Read the real one with `docker network inspect <network>` rather
+than assuming the default bridge:
 
 ```bash
 FORWARDED_ALLOW_IPS=172.17.0.1 ovos-tts-server --engine {YOUR_TTS_PLUGIN}
@@ -95,7 +98,9 @@ defeats the point of the check on a server reachable from more than one network.
 To confirm this is the bug rather than something else, compare the `Location` header of a
 redirect hit directly against the container versus through the proxy: a scheme change
 (`https://` direct, `http://` through the proxy) is the whole fault, and confirms the proxy's
-address needs adding to `FORWARDED_ALLOW_IPS`.
+address needs adding to `FORWARDED_ALLOW_IPS`. A convenient probe on servers with the MCP
+extra: `GET /mcp` always answers with a `307` to `/mcp/`, so through the proxy a `Location`
+starting `https://` means the trust list is right, and `http://` means it is not.
 
 ---
 **Read next:** [Production Operations](production-operations.md)

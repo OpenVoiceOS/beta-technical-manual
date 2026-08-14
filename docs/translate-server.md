@@ -23,8 +23,14 @@ The companion client plugin `ovos-translate-server-plugin` can point an OVOS dev
 ## Installation
 
 ```bash
-pip install ovos-translate-server
+pip install --pre "ovos-translate-server>=0.10.0a1"
 ```
+
+!!! warning "A bare `pip install ovos-translate-server` gets an unusable release"
+    Without `--pre` and a floor pin, pip resolves the name to the latest **stable** release,
+    `0.0.2`, which is years behind the `0.10.0a1` line this page documents. It looks
+    installed and serves nothing described here. After installing, confirm what you actually
+    got: `pip show ovos-translate-server`.
 
 Also install the translation plugin(s) you intend to serve:
 
@@ -186,7 +192,7 @@ A Model Context Protocol endpoint exposes the translate/detect tools to MCP clie
 the third-party `fastmcp` package (`fastmcp>=3,<4`). It requires the `mcp` extra:
 
 ```bash
-pip install 'ovos-translate-server[mcp]'
+pip install --pre 'ovos-translate-server[mcp]>=0.10.0a1'
 ```
 
 !!! note "The `mcp` extra installs `fastmcp`, not the `mcp` SDK"
@@ -279,8 +285,8 @@ A minimal Dockerfile for serving a single plugin:
 ```dockerfile
 FROM python:3.11
 
-RUN pip install ovos-translate-server
-RUN pip install <plugin-package>
+RUN pip install --pre "ovos-translate-server>=0.10.0a1"
+RUN pip install --pre <plugin-package>
 
 ENTRYPOINT ovos-translate-server --tx-engine <plugin-name>
 ```

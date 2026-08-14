@@ -70,18 +70,23 @@ curl http://localhost:8080/status
 
 ```bash
 $ ovos-stt-server --help
-usage: ovos-stt-server [-h] --engine ENGINE [--lang-engine LANG_ENGINE] [--port PORT] [--host HOST] [--multi]
+usage: ovos-stt-server [-h] --engine ENGINE [--lang-engine LANG_ENGINE] [--port PORT] [--host HOST] [--multi] [--mcp]
 
 options:
   -h, --help            show this help message and exit
-  --engine ENGINE       stt plugin to be used (required)
+  --engine ENGINE       stt plugin to be used
   --lang-engine LANG_ENGINE
                         audio language detection plugin to be used
-  --port PORT           port number (default: 8080)
-  --host HOST           host (default: 0.0.0.0)
+  --port PORT           port number
+  --host HOST           host
   --multi               Load a plugin instance per language (force lang support)
+  --mcp                 mount MCP server at /mcp (requires ovos-stt-http-server[mcp])
 
 ```
+
+The short help text leaves out the defaults: the port defaults to `8080` and the host to
+`0.0.0.0`, and `--engine` is the one required flag.
+
 ---
 
 ## Technical Explanation

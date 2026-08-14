@@ -254,6 +254,27 @@ HTTP contract and plugin-side config keys, and
 [Satellites: thin clients + a shared speech backend](satellites.md#thin-clients-a-shared-speech-backend)
 for a worked compose example splitting the speech backend from the thin client.
 
+### Memory limits and OOM kills
+
+Two traps when you cap a speech container's memory (`mem_limit` / `deploy.resources`):
+
+- **Size the limit above any application cache budget, with real headroom.** A model or
+  voice cache setting bounds what the application *tries* to keep, not what the process
+  actually holds; the only hard ceiling is the cgroup limit, which the kernel enforces by
+  killing the process. If a service is being OOM-killed, raising its cache budget keeps
+  *more* resident and makes the kills more frequent, not less.
+- **`docker inspect` cannot tell you it happened.** `State.ExitCode`, `State.OOMKilled`,
+  and `docker ps` all describe the currently running instance, so they read `0`/`false`/`Up`
+  no matter how many earlier instances died, and `RestartCount` misses worker-process kills
+  inside the container entirely. The truthful instrument is the kernel log on the host:
+
+```bash
+journalctl -k | grep -iE "oom-kill|Killed process"
+```
+
+A container that "keeps getting slow" while showing `Up` in `docker ps` is the classic
+presentation of this failure mode.
+
 ## Containerized HiveMind
 
 `ovos-docker` does not build or push a HiveMind image itself, but its own

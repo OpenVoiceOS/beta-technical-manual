@@ -238,11 +238,17 @@ client = OpenAI(
 )
 
 resp = client.chat.completions.create(
-    model="",                                    # ignored; the persona decides
+    model="",                                    # empty selects the default persona
     messages=[{"role": "user", "content": "tell me a joke"}],
 )
 print(resp.choices[0].message.content)
 ```
+
+An empty (or any) `model` maps to the default persona on a single-persona server. On a
+**multi-persona** server a non-empty `model` must name a loaded persona — a guessed name
+like `"default"` gets an OpenAI-shaped "model does not exist" error. List the real names
+first with `GET /openai/v1/models`, exactly as you would discover models on any
+OpenAI-compatible endpoint.
 
 !!! tip "Verify it worked"
     A working call prints a punchline-shaped string, e.g.:

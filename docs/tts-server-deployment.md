@@ -138,6 +138,10 @@ docker run -p 9666:9666 my-ovos-tts
 Pre-built containers are also available via the [ovos-docker-tts](https://github.com/OpenVoiceOS/ovos-docker-tts)
 repository.
 
+If you cap the container's memory, size the limit well above any voice-cache budget and read
+[Memory limits and OOM kills](docker-deployment.md#memory-limits-and-oom-kills) before
+debugging a server that keeps getting slow while showing `Up`.
+
 !!! note "Upcoming — Docker Compose"
     A default Docker Compose setup and custom-container documentation are **Upcoming**.
 

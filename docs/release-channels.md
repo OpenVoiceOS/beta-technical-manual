@@ -123,6 +123,15 @@ uv pip install ovos-core[mycroft] -c https://raw.githubusercontent.com/OpenVoice
     resolves, not just the `ovos-*` packages. A transitive dependency you didn't expect
     can also jump to a pre-release. Use a dedicated virtual environment for alpha testing.
 
+!!! warning "Omitting `--pre` silently downgrades transitive dependencies"
+    The reverse trap is worse. Installing without `--pre` still resolves a **top-level**
+    package to a pre-release when its requested version pin names one, but every
+    **transitive** dependency quietly falls back to its latest stable — so one service can
+    end up on `ovos-bus-client` from a stable line years behind its siblings, with no
+    warning at install time. After any alpha install, verify what you actually got, not
+    what you asked for: `pip list | grep ovos` (or `uv pip list`) and check the key
+    libraries carry the expected alpha suffix.
+
 ```bash
 uv pip install ovos-core[mycroft] --pre -c https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-alpha.txt
 
