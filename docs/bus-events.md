@@ -205,13 +205,13 @@ status, SEI queries), see
 | `ovos.common_play.media.state` | out | Low-level backend media state changed |
 | `ovos.common_play.home` | in | Request the OCP home/media browser view |
 | `ovos.common_play.ping` / `.pong` | in/out | OCP service discovery handshake |
-| `ovos.common_play.search.start` / `.search.end` | out | Marks the start/end of a search request |
+| `ovos.common_play.search.start` / `.search.end` | in | Pipeline plugin brackets a search request; the player uses them to gate busy state |
 | `ovos.common_play.announce` | in | A skill registers itself as an OCP media provider |
 | `ovos.common_play.register_keyword` / `.deregister_keyword` | in | A skill registers/removes its media-type keywords for the pipeline plugin |
 | `ovos.common_play.skills.detach` | in | Remove a skill from the OCP provider list |
 | `ovos.common_play.SEI.get` / `.SEI.get.response` | out/in | Query a client's available stream extractor plugins |
 | `ovos.common_play.like` / `.unlike` | in | Mark/unmark the current track as liked |
-| `ovos.common_play.liked_tracks.play` | out | Play the liked-tracks playlist |
+| `ovos.common_play.liked_tracks.play` | in | Emitted by the pipeline's favorites intent; no shipped consumer listens to it. Liked-songs playback actually happens through the player's internal liked-songs search provider |
 
 ## PHAL (hardware abstraction)
 
