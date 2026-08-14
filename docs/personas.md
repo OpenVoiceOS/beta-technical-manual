@@ -124,8 +124,8 @@ history across turns:
     "system_prompt": "You are a helpful assistant."
   },
   "ovos-memory-plugin-longterm": {
-    "max_history": 30,
-    "compress": true
+    "summarize_every": 6,
+    "recent_window": 4
   }
 }
 

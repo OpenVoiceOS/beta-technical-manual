@@ -126,13 +126,15 @@ offline engine from the table above.
 
 - **Description**: OpenVoiceOS STT plugin for [Whisper](https://github.com/guillaumekln/faster-whisper), using transformers library
 
-### Default Configuration
+### Recommended Configuration
+
+Defaults when unset: `model` is `openai/whisper-large-v3-turbo` and `use_cuda` is off (CPU).
 
 ```jsonc
   "stt": {
     "module": "ovos-stt-plugin-whisper",
     "ovos-stt-plugin-whisper": {
-        "model": "openai/whisper-large-v3",
+        "model": "openai/whisper-large-v3-turbo",
         "use_cuda": true
     }
   }
@@ -154,7 +156,7 @@ offline engine from the table above.
   "stt": {
     "module": "ovos-stt-plugin-whispercpp",
     "ovos-stt-plugin-whispercpp": {
-        "model": "tiny"
+        "model": "base"
     }
   }
  
@@ -172,13 +174,16 @@ offline engine from the table above.
 
 CTranslate2 also supports `int8` / `int8_float16` compute types for lower-RAM CPU deployments. Change `compute_type` to use them.
 
-### Default Configuration
+### Recommended Configuration
+
+Defaults when unset: `model` is `large-v3-turbo`, `compute_type` is `int8`, and `use_cuda`
+is `false`.
 
 ```jsonc
   "stt": {
     "module": "ovos-stt-plugin-fasterwhisper",
     "ovos-stt-plugin-fasterwhisper": {
-        "model": "large-v3",
+        "model": "large-v3-turbo",
         "use_cuda": true,
         "compute_type": "float16",
         "beam_size": 5,
