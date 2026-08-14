@@ -1490,7 +1490,7 @@ install, use the usage lines documented on this page instead.</p>
 </tr>
 <tr>
 <td><code>ovos-config autoconfigure -l &lt;lang&gt;</code></td>
-<td>Pick sensible default STT/TTS plugins for a language. <code>--lang</code>/<code>-l</code> is required. Select <code>--online</code>/<code>-on</code>, <code>--offline</code>/<code>-off</code>, or <code>--hybrid</code>/<code>-hy</code> (offline TTS + online STT: the default when none is given). Optionally add <code>--male</code>/<code>-m</code> or <code>--female</code>/<code>-f</code> for the TTS voice. TTS is left unconfigured if neither is passed.</td>
+<td>Pick sensible default STT/TTS plugins for a language. <code>--lang</code>/<code>-l</code> is required. Select <code>--online</code>/<code>-on</code>, <code>--offline</code>/<code>-off</code>, or <code>--hybrid</code>/<code>-hy</code> (offline TTS + online STT: the default when none is given). Optionally add <code>--male</code>/<code>-m</code> or <code>--female</code>/<code>-f</code> for the TTS voice (TTS is left unconfigured if neither is passed), <code>--platform</code>/<code>-p</code> to optimize for a device (<code>rpi3</code>/<code>rpi4</code>/<code>rpi5</code>/<code>linux</code>/<code>mac</code>/<code>termux</code>), or <code>--gpu</code>/<code>-g</code> for GPU plugin variants (offline only, not on Raspberry Pi).</td>
 </tr>
 <tr>
 <td><code>ovos-config telemetry --enable</code> / <code>--disable</code></td>
