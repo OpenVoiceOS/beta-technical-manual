@@ -2556,10 +2556,11 @@ directly.</p>
 <em>not</em> transparently receive the legacy traffic, or the other way around. These need real adoption
 in the producer and consumer, not a topic swap:</p>
 <ul>
-<li><strong>Handler-lifecycle trio.</strong> <code>mycroft.skill.handler.start</code> / <code>.complete</code> are orchestrator-vs-skill
-  private signals. The orchestrator emits the spec <code>ovos.intent.handler.start</code> / <code>.complete</code> /
-  <code>.error</code> directly. The two namespaces are kept separate by design (PIPELINE-1 §8/§11). The pair
-  is shape-changing, and bridging would double-emit.</li>
+<li><strong>Handler-lifecycle trio.</strong> <code>mycroft.skill.handler.start</code> / <code>.complete</code> / <code>.error</code> are
+  orchestrator-vs-skill private signals. The orchestrator emits the spec
+  <code>ovos.intent.handler.start</code> / <code>.complete</code> / <code>.error</code> directly. The two namespaces are kept
+  separate by design (PIPELINE-1 §8/§11). The trio is shape-changing, and bridging would
+  double-emit.</li>
 <li><strong>Intent/entity registration.</strong> <code>register_vocab</code> + <code>register_intent</code> (Adapt's N legacy messages)
   do not map 1:1 onto the single <code>ovos.intent.register.keyword</code> / <code>.register.template</code> /
   <code>ovos.entity.register</code> message (INTENT-4 §5), which inlines the vocab descriptors. This requires
