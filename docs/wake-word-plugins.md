@@ -58,8 +58,8 @@ separate from the recommendation.
 
 !!! tip "Alternative: openWakeWord"
     `ovos-ww-plugin-openWakeWord` runs open, pre-trained neural wake-word models and is a
-    strong alternative when you want better accuracy than Vosk without training your own
-    Precise model.
+    strong alternative when you want better accuracy than Vosk without touching the legacy
+    Precise training path.
 
 ## Wake-word Configuration
 
