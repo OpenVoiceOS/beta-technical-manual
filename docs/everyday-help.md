@@ -16,8 +16,9 @@
 Before anything else, check these four things. They cause most "it's just not working"
 moments and take seconds to check. No terminal, no config file needed.
 
-- **Is it muted?** Look for a mute light or icon, or ask *"are you muted?"* If it can't hear you
-  to answer, check the physical mute switch or button, if your device has one.
+- **Is it muted?** Look for a mute light or icon, and check the physical mute switch or
+  button, if your device has one. There is no spoken "are you muted?" check — a muted
+  microphone cannot hear the question anyway.
 - **Is the volume up?** Ask *"what's the volume?"* A spoken answer means the speaker path
   works.
 - **Is it powered on?** A dead device won't react to anything. Check the power light and cable

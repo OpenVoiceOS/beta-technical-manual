@@ -56,7 +56,7 @@ The installer can be configured in `mycroft.conf`. It is **disabled unless `allo
 Three more booleans in the same `skills.installer` section shape the pip call itself, all
 default `false`: `upgrade` passes `--upgrade` so re-installing an already-installed package
 actually updates it (without it, a repeat install is a silent no-op, since ovos-core
-2.6.0a1); `allow_alphas` permits pre-release versions; `break_system_packages` passes the
+2.6.1a1); `allow_alphas` permits pre-release versions; `break_system_packages` passes the
 matching pip flag for externally-managed environments.
 
 The `constraints` file bounds allowed versions — its entries are compatible **ranges**
