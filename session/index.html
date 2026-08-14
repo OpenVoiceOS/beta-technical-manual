@@ -1689,6 +1689,14 @@
 </span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>        <span class="nb">print</span><span class="p">(</span><span class="n">sess</span><span class="o">.</span><span class="n">session_id</span><span class="p">)</span>
 </span></code></pre></div>
 <p>If the message originated in the device itself, the <code>session_id</code> is always equal to the reserved value <code>"default"</code>. If it comes from an external client, it will be a unique uuid. The <code>"default"</code> session is special: it is the device-local session whose state the orchestrator holds and persists in-process, rather than receiving it from a client on every message (OVOS-SESSION-2 §5).</p>
+<div class="admonition info">
+<p class="admonition-title">One microphone, one conversation</p>
+<p>Because everything the on-device microphone hears lands in the single <code>"default"</code>
+session, two people in the same room cannot hold independent multi-turn conversations
+with the same device: their turns interleave in one shared context. Separate
+conversations require separate clients (a HiveMind satellite, a phone app), each of
+which gets its own <code>session_id</code>.</p>
+</div>
 <div class="admonition warning">
 <p class="admonition-title">A bare <code>session_id</code> does not carry state — replay the whole session</p>
 <p>An external client (a HiveMind satellite, any non-<code>"default"</code> session) is not tracked

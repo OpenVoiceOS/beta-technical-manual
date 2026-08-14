@@ -1633,6 +1633,14 @@
 </li>
 </ul>
 <p>The <code>stop</code> pipeline guarantees this behavior through a flexible plugin system and localized vocab matching.</p>
+<div class="admonition info">
+<p class="admonition-title">Saying \"stop\" still needs the wake word — there is no barge-in</p>
+<p>Nothing interrupts the assistant just because you start talking. A stop command is an
+ordinary utterance: wake word first, then <em>"stop"</em>. <code>listener.mute_during_output</code>
+(default <code>false</code>) only controls whether the microphone keeps listening for the wake word
+while audio plays, and <code>listener.fake_barge_in</code> only lowers playback volume while a
+recording is in progress. Neither cancels speech on its own.</p>
+</div>
 <hr />
 <h2 id="how-it-works">How it works<a class="headerlink" href="#how-it-works" title="Permanent link">&para;</a></h2>
 <p>The stop pipeline exposes three confidence tiers.</p>

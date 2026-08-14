@@ -1721,6 +1721,13 @@ only stop it from being offered a turn. See
 </span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="w">  </span><span class="p">}</span>
 </span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="p">}</span>
 </span></code></pre></div>
+<div class="admonition note">
+<p class="admonition-title"><code>intents.ovos-converse-pipeline-plugin</code> overrides this section</p>
+<p>The converse plugin reads <code>skills.converse</code> only when its own
+<code>intents.ovos-converse-pipeline-plugin</code> config section is empty. If you set any key
+under the <code>intents</code> path, that section wins and <code>skills.converse</code> is ignored entirely,
+so keep these settings in one place.</p>
+</div>
 <div class="admonition warning">
 <p class="admonition-title">What you should see in the log when a whitelist blocks converse</p>
 <p><code>ConverseService</code> returns <code>False</code> from this check silently. There is no dedicated log
@@ -1802,8 +1809,8 @@ activation-specific list:</p>
 </table>
 <p>Configure in <code>mycroft.conf</code>:</p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="p">{</span>
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">  </span><span class="nt">&quot;skills&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">    </span><span class="nt">&quot;fallbacks&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">  </span><span class="nt">&quot;intents&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">    </span><span class="nt">&quot;ovos-fallback-pipeline-plugin&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 </span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">      </span><span class="nt">&quot;fallback_mode&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;accept_all&quot;</span><span class="p">,</span>
 </span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">      </span><span class="nt">&quot;fallback_whitelist&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span>
 </span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="w">      </span><span class="nt">&quot;fallback_blacklist&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span>
@@ -1811,6 +1818,13 @@ activation-specific list:</p>
 </span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="w">  </span><span class="p">}</span>
 </span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="p">}</span>
 </span></code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title">The <code>skills.fallbacks</code> section in the shipped <code>mycroft.conf</code> is not read</p>
+<p>The shipped default config carries these same keys under <code>skills.fallbacks</code>, but the
+fallback pipeline plugin, when loaded by <code>ovos-core</code>, receives its config from
+<code>intents.ovos-fallback-pipeline-plugin</code> and never falls back to <code>skills.fallbacks</code>.
+Overrides placed under <code>skills.fallbacks</code> have no effect. Use the <code>intents</code> path above.</p>
+</div>
 <h3 id="per-session-exclusions">Per-session exclusions<a class="headerlink" href="#per-session-exclusions" title="Permanent link">&para;</a></h3>
 <p>Everything above is deployment-wide configuration. The <a href="../session/">Session</a> carries its own,
 finer-grained exclusion surface: <code>session.blacklisted_skills</code>, <code>session.blacklisted_intents</code>
@@ -1824,6 +1838,16 @@ config. The gates are enforced across the whole match path: general intent match
 fallback, and stop all check the session's lists before dispatching. This is the mechanism to
 reach for when different satellites should have different skill sets against one shared core;
 see <a href="../updating-remote-clients/">Updating Remote Clients</a> for the version notes.</p>
+<div class="admonition info">
+<p class="admonition-title">Per-speaker permissions are not possible</p>
+<p>Every control on this page applies to a device or a session, never to a <em>person</em>. The
+<a href="../ww-verifier/#speaker-verification">speaker-verification wake-word gate</a> can accept or
+reject an activation by voice, but it never tells the rest of the stack <em>who</em> spoke — no
+speaker identity reaches the session, the intent match, or a skill. There is no mechanism
+for "kid-safe mode for this voice" or per-user skill blacklists. If you need per-user
+gating, give each user their own client device or satellite and use the per-session
+exclusions above.</p>
+</div>
 <h3 id="utility-functions">Utility Functions<a class="headerlink" href="#utility-functions" title="Permanent link">&para;</a></h3>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kn">from</span> <span class="nn">ovos_workshop.permissions</span> <span class="kn">import</span> <span class="n">blacklist_skill</span><span class="p">,</span> <span class="n">whitelist_skill</span>
 </span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>

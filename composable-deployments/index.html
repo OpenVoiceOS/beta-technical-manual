@@ -1932,6 +1932,15 @@ negotiation, so mismatched major versions of <code>ovos-bus-client</code>, <code
 and <code>ovos-dinkum-listener</code> can produce message shapes one side doesn't expect. See
 <a href="#version-skew-is-a-real-risk">Version skew is a real risk</a> below.</p>
 </div>
+<div class="admonition info">
+<p class="admonition-title">Multi-tenant hosting is not a supported pattern</p>
+<p>One OVOS core serving several isolated households or accounts — separate skill sets,
+separate configs, separate data, one shared process — is not something the stack
+supports. Config, skill loading, and the <code>"default"</code> session are all singletons per
+core. The supported shape for serving many users is one core (or container stack) per
+tenant, with <a href="../hivemind-agents/">HiveMind</a> satellites connecting each household's thin
+clients to its own core.</p>
+</div>
 <div class="admonition warning">
 <p class="admonition-title">Trust boundary: the bus and HIVE links are localhost/LAN only</p>
 <p>Every <code>&lt;-- websocket.host=A --&gt;</code> link in the diagram above (including the <code>HIVE</code> connection)

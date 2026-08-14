@@ -1130,6 +1130,15 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#can-i-sell-my-skill-or-gate-features-behind-a-license-key" class="md-nav__link">
+    <span class="md-ellipsis">
+      Can I sell my skill, or gate features behind a license key?
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1605,6 +1614,15 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#can-i-sell-my-skill-or-gate-features-behind-a-license-key" class="md-nav__link">
+    <span class="md-ellipsis">
+      Can I sell my skill, or gate features behind a license key?
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1789,6 +1807,13 @@ release is still installable straight from git via <code>pip_spec</code>. From t
 <a href="https://openvoiceos.github.io/OVOS-skills-store">OVOS Skill store</a>. The store reads <code>name</code>, <code>description</code>,
 <code>examples</code>, <code>tags</code>, <code>icon</code>, and <code>images</code> from <code>skill.json</code> to build the listing card.</p>
 <p>→ full story: <a href="../skill-json/#sharing-your-skill">Skill Metadata File: Sharing your skill</a></p>
+<hr />
+<h3 id="can-i-sell-my-skill-or-gate-features-behind-a-license-key">Can I sell my skill, or gate features behind a license key?<a class="headerlink" href="#can-i-sell-my-skill-or-gate-features-behind-a-license-key" title="Permanent link">&para;</a></h3>
+<p>There is no monetization, DRM, or licensing mechanism anywhere in the stack: skills are
+plain Python packages, <code>skill.json</code>'s <code>license</code> field is SPDX open-source metadata, and
+nothing in skill loading checks entitlements. You can of course implement your own
+license-key check inside your skill's code, but the platform gives you no enforcement,
+store billing, or copy protection.</p>
 <hr />
 <h2 id="using-aillms-from-a-skill">Using AI/LLMs from a skill<a class="headerlink" href="#using-aillms-from-a-skill" title="Permanent link">&para;</a></h2>
 <h3 id="can-i-use-an-llm-inside-my-skill">Can I use an LLM inside my skill?<a class="headerlink" href="#can-i-use-an-llm-inside-my-skill" title="Permanent link">&para;</a></h3>

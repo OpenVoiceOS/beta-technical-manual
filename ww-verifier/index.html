@@ -1760,6 +1760,13 @@
 <p>The <code>threshold</code> does <strong>not</strong> transfer between models. Cosine-similarity scales differ greatly by architecture. The same enrolled-vs-guest pair scored ~0.95 on <code>titanet-small</code> but ~0.17 on <code>campplus</code>. The default <code>0.45</code> is calibrated only for <code>wespeaker-resnet34</code>. If you change <code>model</code>, you must re-tune <code>threshold</code>.</p>
 </div>
 <p>Use case: household authorization, a shared-wake-word deployment where each registered user's voice profile allows or denies activation.</p>
+<div class="admonition info">
+<p class="admonition-title">The verifier gates, it does not identify</p>
+<p><code>verify()</code> returns only a boolean. Which enrolled profile matched is never exposed (not
+on the bus, not in the session, not to skills), so the accept/reject gate is the whole
+feature: per-speaker personalization, per-speaker <a href="../permissions/">permissions</a>, and
+speaker-labelled logs cannot be built on top of it.</p>
+</div>
 <hr />
 <h2 id="precise-onnx-plugin">Precise-ONNX Plugin<a class="headerlink" href="#precise-onnx-plugin" title="Permanent link">&para;</a></h2>
 <p><code>ovos-ww-plugin-precise-onnx</code> provides high-accuracy wake-word detection from <code>.onnx</code> model files, without TensorFlow Lite dependency.</p>

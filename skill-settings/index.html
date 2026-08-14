@@ -1791,6 +1791,13 @@ syntax) and the greeting picks up the stored name automatically, even after a re
 <h2 id="storage-location">Storage Location<a class="headerlink" href="#storage-location" title="Permanent link">&para;</a></h2>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>$XDG_CONFIG_HOME/&lt;base_folder&gt;/skills/&lt;skill_id&gt;/settings.json
 </span></code></pre></div>
+<div class="admonition info">
+<p class="admonition-title">Settings are per skill, not per user</p>
+<p>There is one <code>settings.json</code> per <code>skill_id</code> and no built-in partitioning by user, voice,
+or session. "Each household member gets their own preferences" is not something the
+settings system can express — a skill that needs per-user preferences must key its own
+storage on something it can observe, such as the <code>session_id</code> of remote clients.</p>
+</div>
 <p><code>&lt;base_folder&gt;</code> defaults to <code>mycroft</code> for backwards compatibility. A
 system-wide <code>ovos.conf</code> (or the <code>OVOS_CONFIG_BASE_FOLDER</code> environment
 variable) can rename it, commonly to <code>OpenVoiceOS</code>. On most Linux

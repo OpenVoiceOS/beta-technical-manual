@@ -1805,6 +1805,11 @@ to <code>~/.local/share/mycroft/listener/</code>.</p>
 </tr>
 </tbody>
 </table>
+<p>There is no built-in "export all my data" or "delete all my data" command. Everything OVOS
+stores locally is plain files at the paths in this table plus the config and skill-settings
+directories, so a full export is a <code>tar</code> of those paths and a full erase is deleting them.
+You assemble that yourself: no skill, CLI verb, or bus message does it for you, and
+nothing distinguishes one household member's data from another's in these files.</p>
 <p>Because <code>record_wake_words</code> and <code>save_utterances</code> are both off by default, ordinary
 wake-word detections and spoken commands are <strong>not</strong> written to disk on a stock install.</p>
 <p>A <strong>recording session</strong>, the dictation-style listener state a skill enters to capture a

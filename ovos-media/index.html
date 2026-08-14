@@ -2310,20 +2310,22 @@ the Role A / Role B reflection-and-takeover behavior have moved to their own pag
 </span><span id="__span-2-16"><a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a>    &quot;preferred_web_services&quot;: [],
 </span><span id="__span-2-17"><a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a>
 </span><span id="__span-2-18"><a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a>    // force playback through the audio players even for video/web media, e.g. on headless setups
-</span><span id="__span-2-19"><a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a>    &quot;playback_mode&quot;: &quot;FORCE_AUDIO&quot;,
-</span><span id="__span-2-20"><a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a>
-</span><span id="__span-2-21"><a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a>    &quot;audio_players&quot;: {
-</span><span id="__span-2-22"><a id="__codelineno-2-22" name="__codelineno-2-22" href="#__codelineno-2-22"></a>      &quot;vlc&quot;: { &quot;module&quot;: &quot;ovos-media-audio-plugin-vlc&quot;, &quot;aliases&quot;: [&quot;VLC&quot;], &quot;active&quot;: true },
-</span><span id="__span-2-23"><a id="__codelineno-2-23" name="__codelineno-2-23" href="#__codelineno-2-23"></a>      &quot;cli&quot;: { &quot;module&quot;: &quot;ovos-media-audio-plugin-cli&quot;, &quot;aliases&quot;: [&quot;Command Line&quot;], &quot;active&quot;: true }
-</span><span id="__span-2-24"><a id="__codelineno-2-24" name="__codelineno-2-24" href="#__codelineno-2-24"></a>    },
-</span><span id="__span-2-25"><a id="__codelineno-2-25" name="__codelineno-2-25" href="#__codelineno-2-25"></a>    &quot;video_players&quot;: {
-</span><span id="__span-2-26"><a id="__codelineno-2-26" name="__codelineno-2-26" href="#__codelineno-2-26"></a>      &quot;vlc&quot;: { &quot;module&quot;: &quot;ovos-media-video-plugin-vlc&quot;, &quot;aliases&quot;: [&quot;VLC&quot;], &quot;active&quot;: true }
-</span><span id="__span-2-27"><a id="__codelineno-2-27" name="__codelineno-2-27" href="#__codelineno-2-27"></a>    },
-</span><span id="__span-2-28"><a id="__codelineno-2-28" name="__codelineno-2-28" href="#__codelineno-2-28"></a>    &quot;web_players&quot;: {
-</span><span id="__span-2-29"><a id="__codelineno-2-29" name="__codelineno-2-29" href="#__codelineno-2-29"></a>      &quot;mpv&quot;: { &quot;module&quot;: &quot;ovos-media-web-plugin-mpv&quot;, &quot;aliases&quot;: [&quot;mpv&quot;], &quot;active&quot;: true }
-</span><span id="__span-2-30"><a id="__codelineno-2-30" name="__codelineno-2-30" href="#__codelineno-2-30"></a>    }
-</span><span id="__span-2-31"><a id="__codelineno-2-31" name="__codelineno-2-31" href="#__codelineno-2-31"></a>  }
-</span><span id="__span-2-32"><a id="__codelineno-2-32" name="__codelineno-2-32" href="#__codelineno-2-32"></a>}
+</span><span id="__span-2-19"><a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a>    // numeric PlaybackMode value from ovos_utils.ocp (30 = FORCE_AUDIO); the enum NAME as a
+</span><span id="__span-2-20"><a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a>    // string is not recognized
+</span><span id="__span-2-21"><a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a>    &quot;playback_mode&quot;: 30,
+</span><span id="__span-2-22"><a id="__codelineno-2-22" name="__codelineno-2-22" href="#__codelineno-2-22"></a>
+</span><span id="__span-2-23"><a id="__codelineno-2-23" name="__codelineno-2-23" href="#__codelineno-2-23"></a>    &quot;audio_players&quot;: {
+</span><span id="__span-2-24"><a id="__codelineno-2-24" name="__codelineno-2-24" href="#__codelineno-2-24"></a>      &quot;vlc&quot;: { &quot;module&quot;: &quot;ovos-media-audio-plugin-vlc&quot;, &quot;aliases&quot;: [&quot;VLC&quot;], &quot;active&quot;: true },
+</span><span id="__span-2-25"><a id="__codelineno-2-25" name="__codelineno-2-25" href="#__codelineno-2-25"></a>      &quot;cli&quot;: { &quot;module&quot;: &quot;ovos-media-audio-plugin-cli&quot;, &quot;aliases&quot;: [&quot;Command Line&quot;], &quot;active&quot;: true }
+</span><span id="__span-2-26"><a id="__codelineno-2-26" name="__codelineno-2-26" href="#__codelineno-2-26"></a>    },
+</span><span id="__span-2-27"><a id="__codelineno-2-27" name="__codelineno-2-27" href="#__codelineno-2-27"></a>    &quot;video_players&quot;: {
+</span><span id="__span-2-28"><a id="__codelineno-2-28" name="__codelineno-2-28" href="#__codelineno-2-28"></a>      &quot;vlc&quot;: { &quot;module&quot;: &quot;ovos-media-video-plugin-vlc&quot;, &quot;aliases&quot;: [&quot;VLC&quot;], &quot;active&quot;: true }
+</span><span id="__span-2-29"><a id="__codelineno-2-29" name="__codelineno-2-29" href="#__codelineno-2-29"></a>    },
+</span><span id="__span-2-30"><a id="__codelineno-2-30" name="__codelineno-2-30" href="#__codelineno-2-30"></a>    &quot;web_players&quot;: {
+</span><span id="__span-2-31"><a id="__codelineno-2-31" name="__codelineno-2-31" href="#__codelineno-2-31"></a>      &quot;mpv&quot;: { &quot;module&quot;: &quot;ovos-media-web-plugin-mpv&quot;, &quot;aliases&quot;: [&quot;mpv&quot;], &quot;active&quot;: true }
+</span><span id="__span-2-32"><a id="__codelineno-2-32" name="__codelineno-2-32" href="#__codelineno-2-32"></a>    }
+</span><span id="__span-2-33"><a id="__codelineno-2-33" name="__codelineno-2-33" href="#__codelineno-2-33"></a>  }
+</span><span id="__span-2-34"><a id="__codelineno-2-34" name="__codelineno-2-34" href="#__codelineno-2-34"></a>}
 </span></code></pre></div>
 <p><code>dbus_type</code> picks which D-Bus the MPRIS integration registers and scans on: the per-user
 <strong>session</strong> bus (default) or the system-wide <strong>system</strong> bus. <code>playback_mode</code> forces media that
