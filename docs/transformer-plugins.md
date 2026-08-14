@@ -50,6 +50,19 @@ Every chain's `mycroft.conf` section follows the same rules (`TransformersServic
   list is not run. Plugins named in `order` are treated as enabled even with no config
   block of their own.
 
+Two runtime behaviors from OVOS-TRANSFORM-1 apply to the utterance, metadata, and intent
+chains (`transformer_services.py`):
+
+- **Provenance stamping (§1.3):** as each transformer runs, its name is appended to a
+  `<type>_transformer_ids` list in the message context (`utterance_transformer_ids`,
+  `metadata_transformer_ids`), so downstream consumers can see which plugins touched the
+  data and in what order.
+- **Wrong-shape rejection (§7):** a transformer that returns the wrong tuple shape or a
+  non-dict context is logged with a warning and its output **discarded** — the chain
+  continues with the previous output. An intent transformer that mutates `match_type` or
+  `skill_id` is discarded the same way (§3.4). If your transformer seems to have no
+  effect, check the service log for a "returned wrong shape" warning.
+
 ```json
 {
   "utterance_transformers": {
