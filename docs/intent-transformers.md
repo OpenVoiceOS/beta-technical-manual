@@ -201,7 +201,8 @@ print(find_intent_transformer_plugins())
 ### Checklist before you publish
 
 1. `transform()` accepts and returns an `IntentHandlerMatch`, without changing
-   `skill_id` or `intent_name`.
+   `skill_id` or `match_type` (the code field carrying the spec's `intent_name`) — the
+   orchestrator discards the whole result if either changes.
 2. `__init__` hardcodes the plugin `name` and forwards it, plus `priority` and
    `config`, to `super().__init__()`.
 3. The entry-point group in `pyproject.toml` is `opm.transformer.intent`.

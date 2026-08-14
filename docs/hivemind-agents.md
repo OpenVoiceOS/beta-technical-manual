@@ -291,6 +291,17 @@ satellites or untrusted networks.
 > ⚠️ The plain [`persona-server`](persona-server.md) is **HTTP only, not encrypted or
 > authenticated**. Keep it on a trusted local network. Use HiveMind for anything remote.
 
+### Store-and-forward mail between offline peers (rendezvous)
+
+A hivemind node can act as a dead drop for peers that are never online at the same time
+(`hivemind-core` 4.13.x): install the optional `hivemind-rendezvous` package and set
+`rendezvous.enabled: true` (default off — holding other nodes' mail is a role an operator
+opts into; `rendezvous.max_pending_per_mailbox` bounds each mailbox, default 256). Each
+mailbox is addressed by the access key the connection authenticated with, never by anything
+in the request, so only a client that proved an identity in the handshake can read that
+identity's mail. Nodes without the role answer `not_a_rendezvous_node` instead of dropping
+the frame, so a peer can tell "no mail" from "wrong node" and fail over.
+
 ---
 
 ## Further reading
