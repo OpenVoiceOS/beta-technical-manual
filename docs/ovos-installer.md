@@ -235,8 +235,11 @@ directory of the repository.
 > 💡 **LLM and Home Assistant features.** Setting `features.llm: true` enables the OVOS
 > Persona LLM fallback and requires the `llm.api_url`, `llm.key`, `llm.model`, and
 > `llm.persona` keys (an OpenAI-compatible endpoint). Three optional tuning keys,
-> `llm.max_tokens`, `llm.temperature`, and `llm.top_p`, are also accepted. A Home Assistant feature is also
-> available. **macOS** is supported with `launchd` service management, but only with the
+> `llm.max_tokens`, `llm.temperature`, and `llm.top_p`, are also accepted. A Home Assistant
+> feature also exists, but has no `homeassistant.*` scenario keys: set
+> `features.homeassistant: true` AND export the environment variables
+> `HOMEASSISTANT_URL` and `HOMEASSISTANT_API_KEY` before running the installer,
+> or the integration is enabled with empty settings. **macOS** is supported with `launchd` service management, but only with the
 > `virtualenv` method and the `alpha` channel.
 
 > 💡 **Satellite profile.** Deploying `profile: satellite` non-interactively requires a
