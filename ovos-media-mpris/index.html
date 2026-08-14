@@ -1748,6 +1748,9 @@ playing at a time. OCP's own transport controls (skip/pause/shuffle/repeat) are 
 through to whichever external player is currently active, letting one set of controls
 (voice, GUI, or a remote MPRIS client) drive both native OCP media and third-party
 players interchangeably.</p>
+<p>Not every external player reports an <code>xesam:url</code> in its metadata. When one does not, OCP
+synthesizes a <code>mpris://&lt;player-name&gt;</code> URI so the reflected now-playing entry can still be
+built.</p>
 <hr />
 <p><strong>Read next:</strong> <a href="../ovos-media/#configuration">ovos-media Configuration</a>
 <strong>Related:</strong> <a href="../ovos-media/">ovos-media</a> · <a href="../ovos-media-compat/">ovos-media Legacy Compatibility</a> · <a href="../audio-service/">Audio Service</a></p>

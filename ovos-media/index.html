@@ -2143,7 +2143,8 @@ detail (classification, per-session player state, pipeline configuration, OCP sk
 messages) has moved to its own page: <strong><a href="../ovos-media-pipeline/">ovos-media OCP Pipeline Plugin</a></strong>.</p>
 <hr />
 <h2 id="ovos-media-player">ovos-media Player<a class="headerlink" href="#ovos-media-player" title="Permanent link">&para;</a></h2>
-<p><strong>Entry point:</strong> <code>ovos-media</code> (runs <code>ovos_media.__main__:main</code>)</p>
+<p><strong>Entry point:</strong> <code>ovos-media</code> (runs <code>ovos_media.__main__:main</code>). The installed console script
+parses <code>--help</code> and <code>--version</code> and exits before starting the daemon or touching any socket.</p>
 <p>Key modules:</p>
 <ul>
 <li>
@@ -2457,6 +2458,10 @@ liveness probe — the rest are on the player, so they answer only once a player
 <p>These live alongside the legacy ducking/cork aliases kept for backward compatibility. The full
 ~30-entry <code>OCPMediaPlayer</code> handler list, including exact legacy alias names, is in
 <code>ovos_media/player.py</code>.</p>
+<p><code>ovos.common_play.playlist.set</code> validates the payload before touching the playlist. A
+non-list <code>tracks</code> value is ignored outright and the current playlist is kept. For a list
+payload, each entry is checked on its own: invalid entries are skipped with a warning,
+and the valid entries are applied.</p>
 <hr />
 <h2 id="stop-error-semantics">Stop &amp; Error Semantics<a class="headerlink" href="#stop-error-semantics" title="Permanent link">&para;</a></h2>
 <p>A few guarantees hold for <code>OCPMediaPlayer</code> regardless of which backend is active:</p>
@@ -2481,6 +2486,20 @@ liveness probe — the rest are on the player, so they answer only once a player
   position and then to URI lookup only if identity is unavailable — so playback moves through
   the queue in order instead of ping-ponging back to the first track sharing a URI.</li>
 </ul>
+<p><code>ovos-media</code> also speaks three failure dialogs, each guarded so it does not talk over itself:</p>
+<ul>
+<li><strong><code>no.playback.backend</code></strong> speaks once per daemon lifetime, at the first play attempt made
+  while zero audio, video, or web backends are loaded. An install with no backend plugin fails
+  every play request the same way, so the daemon does not repeat the warning on later attempts.</li>
+<li><strong><code>track.failed</code></strong> is rate-limited to once per queue, not once per skipped track, so a run of
+  several broken tracks in a row does not talk over itself.</li>
+<li><strong><code>queue.finished</code></strong> speaks only when the queue is genuinely exhausted: every track played
+  through in order and none remain. It does not fire when autoplay is off mid-queue, and it
+  does not fire when an external MPRIS player's track ends.</li>
+</ul>
+<p>The <code>track.failed</code> guard resets on real evidence of playback starting, not on a track merely
+loading, so a track that loads fine but fails to play does not reset the rate limit early. The
+<code>no.playback.backend</code> guard never resets: it is a once-per-lifetime warning, not a per-queue one.</p>
 <hr />
 <h2 id="upcoming-mediaprovider-plugins-replace-ocp-skills">Upcoming: MediaProvider plugins replace OCP skills<a class="headerlink" href="#upcoming-mediaprovider-plugins-replace-ocp-skills" title="Permanent link">&para;</a></h2>
 <div class="admonition info">
@@ -2583,6 +2602,8 @@ device's player state.</p>
 <p>The voice route is <strong>disabled today</strong>: <code>like_song.intent</code> and <code>play_favorites.intent</code> are
 commented out of the OCP pipeline's intent list, so "I like that song" and "play my favorite
 songs" never match. Use the GUI or the bus messages until they are re-enabled.</p>
+<p>A <code>like</code> request with nothing playing and no explicit <code>uri</code> is refused, with spoken
+feedback, instead of silently storing a junk entry with no way to remove it later.</p>
 <h3 id="skills-browse-featured-media">Skills Browse / Featured Media<a class="headerlink" href="#skills-browse-featured-media" title="Permanent link">&para;</a></h3>
 <p>Some skills provide <code>@ocp_featured_media()</code>. These are accessible from the OCP skills menu in the GUI.</p>
 <h3 id="file-browser-integration">File Browser Integration<a class="headerlink" href="#file-browser-integration" title="Permanent link">&para;</a></h3>
