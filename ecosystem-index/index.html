@@ -3308,8 +3308,9 @@ to by the intent service once installed on a device.</p>
 <p>These register under the upcoming <code>opm.media.provider</code> plugin type (see <a href="../ovos-media/">ovos-media</a>). The OCP pipeline calls <code>search()</code> on them directly, in-process, taking over the catalog/search half of the older OCP skill each one names.</p>
 <div class="admonition note">
 <p class="admonition-title">Early days: repos public, loading not wired up yet</p>
-<p>The MediaProvider repositories are now public, and three ship PyPI alphas
-(<code>ovos-media-provider-spotify</code>, <code>-soundcloud</code>, <code>-youtube-music</code>); the rest are repo-only.
+<p>The MediaProvider repositories are now public, and four ship PyPI alphas
+(<code>ovos-media-provider-spotify</code>, <code>-soundcloud</code>, <code>-somafm</code>, <code>-youtube-music</code>); the rest
+are repo-only.
 Installing one does nothing yet — <code>ovos-media</code> does not load <code>opm.media.provider</code>
 plugins in-process yet, so OCP skills remain the way to provide media today.</p>
 </div>
