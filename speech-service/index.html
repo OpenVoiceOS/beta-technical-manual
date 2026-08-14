@@ -1131,6 +1131,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Listening State Machine">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#how-usable-is-each-mode" class="md-nav__link">
+    <span class="md-ellipsis">
+      How usable is each mode?
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1739,6 +1754,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Listening State Machine">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#how-usable-is-each-mode" class="md-nav__link">
+    <span class="md-ellipsis">
+      How usable is each mode?
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1850,8 +1880,10 @@
 <p><em>Diagram:</em> The flow starts at the microphone and ends at the message bus, and it routes audio through the audio-transformer chain before the STT plugin converts it to text.</p>
 <h2 id="listening-state-machine">Listening State Machine<a class="headerlink" href="#listening-state-machine" title="Permanent link">&para;</a></h2>
 <p><code>DinkumVoiceLoop</code> is a per-chunk state machine, not a single "listen" call. It has a
-global <strong>mode</strong> (set in <code>listener.mode</code> / over the bus) and an internal <strong>state</strong> that
-advances chunk by chunk:</p>
+global <strong>mode</strong> and an internal <strong>state</strong> that advances chunk by chunk. The startup mode
+comes from two booleans: <code>listener.continuous_listen</code> (wins) or <code>listener.hybrid_listen</code>,
+both default <code>false</code>, which leaves the <code>wakeword</code> mode. At runtime any mode can be set
+over the bus with <code>recognizer_loop:state.set</code> and a <code>mode</code> field:</p>
 <ul>
 <li>
 <p><strong>Modes</strong> (<code>ListeningMode</code>): <code>wakeword</code> (default, wait for the wake word),
@@ -1867,6 +1899,24 @@ advances chunk by chunk:</p>
 </ul>
 <p>Source: <code>ovos_dinkum_listener/voice_loop/voice_loop.py:36</code> (<code>ListeningState</code>) and <code>:53</code>
 (<code>ListeningMode</code>).</p>
+<h3 id="how-usable-is-each-mode">How usable is each mode?<a class="headerlink" href="#how-usable-is-each-mode" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Wake word</strong> is the tested, supported path — everything else in this manual assumes it.</li>
+<li><strong>Sleep</strong> is stable: audio only feeds the wake-word engines checking the stand-up word
+  (<code>listener.stand_up_word</code>, default <code>"wake_up"</code>); nothing reaches STT until the device
+  wakes. Enter it by voice ("go to sleep") or <code>ovos.listener.sleep</code>.</li>
+<li><strong>Continuous</strong> is how you run without a wake word, and it is experimental in practice:
+  STT runs on every VAD-segmented stretch of speech, so any conversation, TV, or radio in
+  the room becomes an utterance, gated only by your VAD tuning and intent confidence
+  thresholds. Expect false activations and a constant CPU cost. Empty transcriptions are
+  silently dropped in this mode instead of producing an error sound.</li>
+<li><strong>Hybrid</strong> softens that trade-off: it transcribes continuously but only <em>acts</em> on what
+  follows a wake word. Same CPU cost as continuous, fewer false activations.</li>
+<li><strong>Recording mode</strong> is a niche listening <em>state</em>, not a mode: raw dictation capture to a
+  file under the recordings directory, started over the bus with a <code>recording_name</code>,
+  stopped by the stop hotword or after <code>listener.recording_mode_max_silence_seconds</code> of
+  silence (default <code>30</code>). Alpha quality; used by recording skills rather than end users.</li>
+</ul>
 <h2 id="bus-events">Bus Events<a class="headerlink" href="#bus-events" title="Permanent link">&para;</a></h2>
 <p>The listener emits its activity on the OVOS <a href="../bus-service/">messagebus</a>. The most
 useful events for downstream services:</p>
