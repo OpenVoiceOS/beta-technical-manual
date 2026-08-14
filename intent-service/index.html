@@ -1909,7 +1909,10 @@ orchestrator enforces today.
 A reservation is a namespace lease, not a dispatch change. Reserved-name dispatches fire
 context stamping, routing and the handler trio like any other, except that the
 <code>session.active_handlers</code> push is suppressed, since a reserved name continues or terminates
-an already-active skill's participation rather than starting a fresh one. See
+an already-active skill's participation rather than starting a fresh one. (Converse,
+fallback, and common-query are suppressed by pipeline identity; stop instead sets
+<code>IntentHandlerMatch.suppress_activation</code> on the match — see
+<a href="../life-of-an-utterance/">Life of an Utterance</a>.) See
 <a href="../converse/">Converse</a> for how reserved names interact with converse/context handling.</p>
 </div>
 <hr />

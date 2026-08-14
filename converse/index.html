@@ -1666,9 +1666,12 @@ the same handler? You don't need <code>converse()</code> at all — use <code>as
 <p class="admonition-title"><code>stop</code> is a reserved name too</p>
 <p><code>stop</code> is a reserved <code>intent_name</code> alongside <code>converse</code> and <code>response</code>
 (<a href="https://github.com/OpenVoiceOS/ovos-core/pull/778">ovos-core#778</a>, STOP-1 §4). A match
-produced by the stop pipeline plugin suppresses the <code>session.active_handlers</code> push, the
-same way a converse match does. See <a href="../intent-service/">Intent Service</a> for the
-pipeline-plugin side.</p>
+produced by the stop pipeline plugin also suppresses the <code>session.active_handlers</code> push,
+but through a different switch: converse, fallback, and common-query suppress it because
+the orchestrator knows those pipelines produce reserved names, while a stop match carries
+<code>IntentHandlerMatch.suppress_activation</code>, which additionally skips the <code>{skill_id}.activate</code>
+emit. See <a href="../life-of-an-utterance/">Life of an Utterance</a> for the two mechanisms and
+<a href="../intent-service/">Intent Service</a> for the pipeline-plugin side.</p>
 </div>
 <p><strong>What / why (beginners):</strong> <code>converse()</code> lets a skill keep listening after it has just spoken, without registering a new intent for every possible follow-up. Once your skill runs, it goes onto the <strong>Active Skills List</strong> for a few minutes. While it is there, every new utterance is offered to its <code>converse()</code> method before normal intent parsing. This is how you handle "yes / no / thanks / the red one" replies that only make sense right after your skill acted.</p>
 <p>Each <a href="../skill-design-guidelines/">Skill</a> may define a <code>converse()</code> method. This method is called any time the skill has been recently active and a new utterance is processed.</p>

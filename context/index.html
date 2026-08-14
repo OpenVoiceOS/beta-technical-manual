@@ -1701,10 +1701,12 @@
 </tbody>
 </table>
 <p>This page is about the third (and the field that holds it). It is not <code>Message.context</code>, and a context entry is not a <code>Match.slot</code>. CONTEXT-1 §7's context-supplied-slot rule is the bridge: when a <code>requires_context</code> key also names a slot, its value fills that slot if the utterance did not. This is exactly the "remember which person" mechanism below.</p>
-<p><strong>A capped store.</strong> The orchestrator SHOULD enforce a maximum live-entry count per session
-(CONTEXT-1 §2, <code>DEFAULT_MAX_ENTRIES = 1024</code> in <code>ovos-spec-tools</code>), evicting the entry
-closest to natural expiry when a write would exceed it. This is a safety bound, not a
-limit a skill author needs to plan around.</p>
+<p><strong>A capped store.</strong> CONTEXT-1 §2 says the orchestrator SHOULD enforce a maximum
+live-entry count per session, evicting the entry closest to natural expiry when a write
+would exceed it. <code>ovos-spec-tools</code> ships the eviction helper with
+<code>DEFAULT_MAX_ENTRIES = 1024</code>, but the shipped core does not call it yet — today the only
+bound on the store is entry expiry. Either way this is a safety bound, not a limit a
+skill author needs to plan around.</p>
 <p><strong>When context and the utterance both fill a slot, the utterance wins.</strong> CONTEXT-1 §7 only
 fills a slot from context when the utterance itself left it empty; a value the matcher
 already extracted from what the user said is never overridden by a stored context entry.</p>

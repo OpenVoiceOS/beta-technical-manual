@@ -1659,8 +1659,9 @@
 </span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>tell me the weather
 </span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>what&#39;s the weather like
 </span></code></pre></div>
-<p>Skills can also capture free-form values with <code>.entity</code> files, one accepted value per
-line, referenced from an <code>.intent</code> file with <code>{filename}</code> braces (the entity file's
+<p>Skills can also capture free-form values with <code>.entity</code> files, one example value per
+line — training hints that score a slot fill, not a closed vocabulary (see
+<a href="../intents-padatious/">Padatious Intents</a> for what happens to values outside the file) — referenced from an <code>.intent</code> file with <code>{filename}</code> braces (the entity file's
 basename becomes the placeholder name). For example, a <code>location.entity</code> file:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>london
 </span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>new york

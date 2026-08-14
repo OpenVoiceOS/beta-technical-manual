@@ -1679,7 +1679,10 @@ no inter-container DNS (see <a href="#networking">Networking</a> above). See
 to a bare-metal deployment, and the warnings there about the shared-session and
 localhost-default pitfalls.</p>
 <h2 id="headless-stttts-servers-as-containers">Headless: STT/TTS servers as containers<a class="headerlink" href="#headless-stttts-servers-as-containers" title="Permanent link">&para;</a></h2>
-<p><code>ovos-docker</code> also builds standalone STT and TTS server images, one per baked-in engine:
+<p>Two sibling repositories,
+<a href="https://github.com/OpenVoiceOS/ovos-docker-stt"><code>ovos-docker-stt</code></a> and
+<a href="https://github.com/OpenVoiceOS/ovos-docker-tts"><code>ovos-docker-tts</code></a>, build standalone STT
+and TTS server images, one per baked-in engine:
 <code>ovos-stt-server-onnx-asr</code>, <code>ovos-stt-server-onnx-asr-cuda</code>, <code>ovos-tts-server-piper</code>,
 <code>ovos-tts-server-kokoro</code>, <code>ovos-tts-server-phoonnx</code>, and others. These serve plain HTTP and
 have no bus dependency, so they work as a shared backend for bare-metal or thin-client
