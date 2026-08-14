@@ -1643,7 +1643,7 @@
 </tr>
 <tr>
 <td>poll round-trip <code>&lt;skill_id&gt;.converse.ping</code> / <code>.pong</code> (non-dispatch, dotted form)</td>
-<td><code>{skill_id}.converse.ping</code> / <code>skill.converse.pong</code>, dispatch via <code>converse:skill</code> → <code>{skill_id}.converse.request</code></td>
+<td>since ovos-core 3.0.5a1, a broadcast <code>ovos.converse.ping</code> (OVOS-CONVERSE-1 §4.2) is emitted alongside a legacy per-skill <code>{skill_id}.converse.ping</code>, and pongs are heard on both <code>ovos.converse.pong</code> and <code>skill.converse.pong</code>; dispatch via <code>converse:skill</code> → <code>{skill_id}.converse.request</code></td>
 </tr>
 <tr>
 <td>reserved-name dispatch <code>&lt;skill_id&gt;:converse</code> / <code>&lt;skill_id&gt;:response</code></td>
@@ -1747,14 +1747,16 @@
     participant S2 as Next active skill
 
     O-&gt;&gt;C: converse stage hit
-    C-&gt;&gt;S1: &lt;skill_id&gt;.converse.ping
-    S1--&gt;&gt;C: skill.converse.pong (can_handle)
-    C-&gt;&gt;S2: &lt;skill_id&gt;.converse.ping
-    S2--&gt;&gt;C: skill.converse.pong (can_handle)
+    C--&gt;&gt;S1: ovos.converse.ping (broadcast)
+    C--&gt;&gt;S2: ovos.converse.ping (broadcast)
+    C-&gt;&gt;S1: &lt;skill_id&gt;.converse.ping (legacy, per skill)
+    C-&gt;&gt;S2: &lt;skill_id&gt;.converse.ping (legacy, per skill)
+    S1--&gt;&gt;C: ovos.converse.pong (can_handle)
+    S2--&gt;&gt;C: ovos.converse.pong (can_handle)
     C-&gt;&gt;S1: {skill_id}.converse.request (first willing skill)
     S1--&gt;&gt;C: converse() returns True
     C--&gt;&gt;O: utterance consumed, skill reactivated</code></pre>
-<p><em>Diagram: the orchestrator hits the converse stage, ConverseService pings each active skill in priority order for a pong, then sends a converse request to the first willing skill, ending with the utterance consumed and that skill reactivated.</em></p>
+<p><em>Diagram: the orchestrator hits the converse stage, ConverseService polls the active skills (one broadcast ping plus a legacy per-skill ping each), collects pongs, then sends a converse request to the first willing skill, ending with the utterance consumed and that skill reactivated.</em></p>
 <ol>
 <li>
 <p><code>converse</code> stage is hit in the pipeline</p>
@@ -1763,7 +1765,7 @@
 <p><code>ConverseService.match()</code> iterates active skills in priority order</p>
 </li>
 <li>
-<p>It first pings each active skill via <code>{skill_id}.converse.ping</code> and waits up to <code>0.5s</code> for <code>skill.converse.pong</code> acknowledgements (<code>can_handle</code>) to learn which skills are willing to converse. Each poll round is correlated by <code>context.utterance_id</code> (a per-utterance uuid the orchestrator stamps per OVOS-PIPELINE-1 §9.1.1, propagated by <code>Message.reply</code>/<code>forward</code>): a pong carrying a different <code>utterance_id</code> belongs to an earlier round and is discarded, so a slow skill's stale answer can never decide the wrong round</p>
+<p>It first polls the active skills: since ovos-core 3.0.5a1 it emits one broadcast <code>ovos.converse.ping</code> (OVOS-CONVERSE-1 §4.2) plus a legacy per-skill <code>{skill_id}.converse.ping</code>, and waits up to <code>0.5s</code> for acknowledgements on <code>ovos.converse.pong</code> or the legacy <code>skill.converse.pong</code> (<code>can_handle</code>) to learn which skills are willing to converse. Each poll round is correlated by <code>context.utterance_id</code> (a per-utterance uuid the orchestrator stamps per OVOS-PIPELINE-1 §9.1.1, propagated by <code>Message.reply</code>/<code>forward</code>): a pong carrying a different <code>utterance_id</code> belongs to an earlier round and is discarded, so a slow skill's stale answer can never decide the wrong round</p>
 </li>
 <li>
 <p>The first willing skill (highest priority) is matched; the actual dispatch is sent as <code>{skill_id}.converse.request</code> (emitted by the <code>converse:skill</code> handler)</p>
