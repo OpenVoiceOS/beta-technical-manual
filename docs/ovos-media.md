@@ -102,7 +102,8 @@ messages) has moved to its own page: **[ovos-media OCP Pipeline Plugin](ovos-med
 
 ## ovos-media Player
 
-**Entry point:** `ovos-media` (runs `ovos_media.__main__:main`)
+**Entry point:** `ovos-media` (runs `ovos_media.__main__:main`). The installed console script
+parses `--help` and `--version` and exits before starting the daemon or touching any socket.
 
 Key modules:
 
@@ -349,6 +350,11 @@ These live alongside the legacy ducking/cork aliases kept for backward compatibi
 ~30-entry `OCPMediaPlayer` handler list, including exact legacy alias names, is in
 `ovos_media/player.py`.
 
+`ovos.common_play.playlist.set` validates the payload before touching the playlist. A
+non-list `tracks` value is ignored outright and the current playlist is kept. For a list
+payload, each entry is checked on its own: invalid entries are skipped with a warning,
+and the valid entries are applied.
+
 ---
 
 ## Stop & Error Semantics
@@ -374,6 +380,21 @@ A few guarantees hold for `OCPMediaPlayer` regardless of which backend is active
   `[a, b, a]` tracks the currently-playing entry by object identity, falling back to playlist
   position and then to URI lookup only if identity is unavailable — so playback moves through
   the queue in order instead of ping-ponging back to the first track sharing a URI.
+
+`ovos-media` also speaks three failure dialogs, each guarded so it does not talk over itself:
+
+- **`no.playback.backend`** speaks once per daemon lifetime, at the first play attempt made
+  while zero audio, video, or web backends are loaded. An install with no backend plugin fails
+  every play request the same way, so the daemon does not repeat the warning on later attempts.
+- **`track.failed`** is rate-limited to once per queue, not once per skipped track, so a run of
+  several broken tracks in a row does not talk over itself.
+- **`queue.finished`** speaks only when the queue is genuinely exhausted: every track played
+  through in order and none remain. It does not fire when autoplay is off mid-queue, and it
+  does not fire when an external MPRIS player's track ends.
+
+The `track.failed` guard resets on real evidence of playback starting, not on a track merely
+loading, so a track that loads fine but fails to play does not reset the rate limit early. The
+`no.playback.backend` guard never resets: it is a once-per-lifetime warning, not a per-queue one.
 
 ---
 
@@ -453,6 +474,9 @@ Like a currently playing song through the GUI, or over the bus with `ovos.common
 The voice route is **disabled today**: `like_song.intent` and `play_favorites.intent` are
 commented out of the OCP pipeline's intent list, so "I like that song" and "play my favorite
 songs" never match. Use the GUI or the bus messages until they are re-enabled.
+
+A `like` request with nothing playing and no explicit `uri` is refused, with spoken
+feedback, instead of silently storing a junk entry with no way to remove it later.
 
 ### Skills Browse / Featured Media
 

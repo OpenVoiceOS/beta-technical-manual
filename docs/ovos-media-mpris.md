@@ -87,6 +87,10 @@ through to whichever external player is currently active, letting one set of con
 (voice, GUI, or a remote MPRIS client) drive both native OCP media and third-party
 players interchangeably.
 
+Not every external player reports an `xesam:url` in its metadata. When one does not, OCP
+synthesizes a `mpris://<player-name>` URI so the reflected now-playing entry can still be
+built.
+
 ---
 **Read next:** [ovos-media Configuration](ovos-media.md#configuration)
 **Related:** [ovos-media](ovos-media.md) · [ovos-media Legacy Compatibility](ovos-media-compat.md) · [Audio Service](audio-service.md)
