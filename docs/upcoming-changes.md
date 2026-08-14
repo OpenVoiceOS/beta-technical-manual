@@ -75,21 +75,22 @@ effort, the legacy bus-namespace migration, has not removed anything yet:
 `emit_legacy` both defaulting to on, and its kill-switch
 ([ovos-bus-client#272](https://github.com/OpenVoiceOS/ovos-bus-client/pull/272)) is still an
 open draft. See [Bus Namespace Migration](bus-namespace-migration.md). The PRs below carry
-that migration the rest of the way: a set of coordinated kill-switches that
+that migration the rest of the way (rows marked **merged** have already landed
+and ship on current `dev` prereleases; the rest are still open): a set of coordinated kill-switches that
 drop the last hardcoded legacy topic literals from `ovos-core`, `ovos-workshop`,
 and the `ovos-utils` test double. Each is explicitly gated to merge only once
 fleets no longer run legacy-namespace consumers.
 
 | PR | What it changes | Audience | Breaking | Version |
 |---|---|---|---|---|
-| [ovos-core#802](https://github.com/OpenVoiceOS/ovos-core/pull/802) | Reworks stop dispatch onto one spec path (requires `opm>=2.9.0a1`, supersedes #777) | skill authors, deployers of legacy skills, remote/HiveMind stop consumers | Yes | 3.0.0 |
+| [ovos-core#802](https://github.com/OpenVoiceOS/ovos-core/pull/802) | Reworks stop dispatch onto one spec path (requires `opm>=2.9.0a1`, supersedes #777) | skill authors, deployers of legacy skills, remote/HiveMind stop consumers | Yes | 3.0.0a1 (merged, on `dev`) |
 | [ovos-core#777 (closed)](https://github.com/OpenVoiceOS/ovos-core/pull/777) | OVOS-STOP-1 bus surface bridged to legacy topics (superseded by #802) | n/a | No | 2.6.0 |
-| [ovos-core#786](https://github.com/OpenVoiceOS/ovos-core/pull/786) | Core-resident OVOS-CONTEXT-1 store, additive | skill authors declaring context, remote session-sync consumers | No | 2.6.0 |
-| [ovos-core#785](https://github.com/OpenVoiceOS/ovos-core/pull/785) | Conforms transformer chains to OVOS-TRANSFORM-1 (blocked on `opm#417`) | transformer plugin authors | No | 2.5.9 |
-| [ovos-workshop#500](https://github.com/OpenVoiceOS/ovos-workshop/pull/500) | Drops the `.intent`-topic dual-bind for canonical intent topics | skill authors on `.intent` topics, mixed-container deployers | Not marked breaking, but drops the dual bind | 9.4.0 |
+| [ovos-core#786](https://github.com/OpenVoiceOS/ovos-core/pull/786) | Core-resident OVOS-CONTEXT-1 store, additive | skill authors declaring context, remote session-sync consumers | No | 3.0.0a1 (merged, on `dev`) |
+| [ovos-core#785](https://github.com/OpenVoiceOS/ovos-core/pull/785) | Conforms transformer chains to OVOS-TRANSFORM-1 | transformer plugin authors | No | 2.5.10a1 (merged, on `dev`) |
+| [ovos-workshop#500](https://github.com/OpenVoiceOS/ovos-workshop/pull/500) | Drops the `.intent`-topic dual-bind for canonical intent topics | skill authors on `.intent` topics, mixed-container deployers | Not marked breaking, but drops the dual bind | 9.3.11a2 (merged, on `dev`) |
 | [ovos-workshop#414](https://github.com/OpenVoiceOS/ovos-workshop/pull/414) | Routes resource loading through `ovos-spec-tools`, back-compat mixin | skill authors on the legacy resource API | No | 9.3.3 |
 | [ovos-persona#192](https://github.com/OpenVoiceOS/ovos-persona/pull/192) | Fixes persona's PIPELINE-1 done-signal timing | skill/pipeline authors on `ovos-core>=2.3.0a1` | No | 0.9.1 |
-| [ovos-bus-client#271](https://github.com/OpenVoiceOS/ovos-bus-client/pull/271) | Adds a version-skew bridge for `.intent` topics (removed later by #272) | deployers running mixed-version fleets | No | 2.8.0 |
+| [ovos-bus-client#271](https://github.com/OpenVoiceOS/ovos-bus-client/pull/271) | Adds a version-skew bridge for `.intent` topics (removed later by #272) | deployers running mixed-version fleets | No | 2.8.0a1 (merged, on `dev`) |
 | [ovos-utils#411](https://github.com/OpenVoiceOS/ovos-utils/pull/411) | Mirrors the #271 bridge in `FakeBus`/`AsyncFakeBus` | test-harness authors (ovoscope, skill test suites) | No | 0.14.0 |
 | [ovos-bus-client#272](https://github.com/OpenVoiceOS/ovos-bus-client/pull/272) | Kill-switch: drops the namespace bridge from `MessageBusClient` (blocked on #271) | deployers with legacy-namespace consumers | Yes | 3.0.0 |
 | [ovos-core#837](https://github.com/OpenVoiceOS/ovos-core/pull/837) | Kill-switch: drops the last legacy-topic literals from `ovos-core` | deployers/plugin authors on legacy topic spellings | Yes | 3.0.0 |
