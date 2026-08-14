@@ -53,7 +53,8 @@ before late 2024, check it against this table.
 
 Migration action:
 
-Old, before `0.1.0` — none of these import paths exist any more:
+Old, before `0.1.0` — none of these imports work any more (the `ovos_utils.messagebus`
+module still exists as a deprecated shim, but it no longer exports these two functions):
 
 <!-- docs-check: skip-next -->
 ```python
@@ -78,11 +79,12 @@ Lifecycle:
 | Deprecated but functional | `80a2f7c` (2023-12-29) through the `0.1.0` alpha stream (`0.1.0a1`..`0.1.0a16`) | `@deprecated`/`log_deprecation` shims naming the replacement |
 | Dropped | `V0.1.0` (2024-09-10; the mass deletion landed earlier in `3a77617`, 2023-12-29) | (ovos-utils `3a77617`) |
 
-A follow-up removed the last messagebus shim module entirely: `ovos_utils.messagebus`
-(a 1-line re-export left behind after 0.1.0) was deleted in `9c1fd55` (#304,
-2024-11-21, between `0.5.0` and `0.6.0`), along with `mycroft_bus_client`
-isinstance/constructor compatibility inside `ovos_utils.fakebus`
-(ovos-utils `9c1fd55`).
+The `ovos_utils.messagebus` shim module itself had a bumpy exit: deleted in `9c1fd55`
+(#304), then restored the same day for backwards compatibility (#306, first shipped in
+`0.5.2`, with a follow-up in #308). It still ships as a deprecated re-export of
+`dig_for_message` / `Message` / `FakeMessage` / `FakeBus` from `ovos_utils.fakebus`,
+warning on import. The functions shown above (`get_mycroft_bus`, `wait_for_reply`) are
+**not** in it: those moved to `ovos_bus_client.util` for good.
 
 ---
 **Read next:** [Updating From Older OVOS](updating-from-older-ovos.md)

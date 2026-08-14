@@ -55,10 +55,10 @@ class MySkill(OVOSSkill):
     def converse(self, message=None):
         ...
 
-# new: subclass the mixin too
+# new: subclass ConversationalSkill (it already extends OVOSSkill)
 from ovos_workshop.skills.converse import ConversationalSkill
 
-class MySkill(OVOSSkill, ConversationalSkill):
+class MySkill(ConversationalSkill):
     def can_converse(self, message) -> bool:
         return True
     def converse(self, message=None):
