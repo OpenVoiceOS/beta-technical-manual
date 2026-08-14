@@ -44,9 +44,11 @@ CI never re-resolves and never downgrades a component. Each test then:
 
 ## Coverage
 
-All 21 specs on the architecture `dev` branch currently have
-conformance suites (SESSION-1 and SESSION-2 share one suite. INTENT-4 has both an
-orchestrator suite and a per-plugin registration-compliance suite). The
+Every spec document on the architecture `dev` branch has a conformance suite —
+the harness's own matrix counts 21 spec IDs with 21 suites, of which 20 map to
+architecture spec documents (SESSION-1 and SESSION-2 share one suite; INTENT-4 has both an
+orchestrator suite and a per-plugin registration-compliance suite; the 21st ID,
+OVOS-USER-ID-1, has a suite ahead of any published spec document). The
 authoritative spec→suite traceability matrix lives in the repo's
 [`docs/coverage.md`](https://github.com/OpenVoiceOS/ovos-test-harness/blob/dev/docs/coverage.md).
 Documented conformance gaps are recorded as `xfail` entries and catalogued in

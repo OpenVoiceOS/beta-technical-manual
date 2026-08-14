@@ -101,8 +101,10 @@ Two practical rules for authors:
   `ovos_spec_tools.intent_topics.canonical_intent_topic(...)` — rather than hard-coding either
   spelling. Literal `.intent` listeners are deprecated but not broken.
 - The spelling goes canonical when **either** side modernizes: the skill registers canonical
-  (workshop ≥ 9.3.11a2) **or** the matcher canonicalizes (padatious 2.x / adapt 1.x alphas).
-  Pinning one side back does **not** restore the old spelling.
+  (workshop ≥ 9.3.11a2) **or** the matcher canonicalizes (padatious 2.x strips the suffix at
+  registration; Adapt is unaffected — its intent names come from `IntentBuilder`, never from
+  filenames, so there was no suffix to strip). Pinning one side back does **not** restore the
+  old spelling.
 
 !!! warning "The bridge is scheduled for removal"
     [ovos-bus-client#272](https://github.com/OpenVoiceOS/ovos-bus-client/pull/272) is an
