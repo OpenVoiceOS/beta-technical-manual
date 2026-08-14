@@ -126,7 +126,7 @@ Turns replies into speech. See the [TTS catalog](tts-plugins.md) (17 plugins, to
 ### G2P (Grapheme-to-Phoneme)
 
 Converts text to phonemes to drive **mouth-movement / viseme animation** (e.g. a Mark 1
-face). This is a **Beta, Mark 1-era** capability. Most TTS voices don't emit phoneme timing,
+face). This is an **alpha-quality, Mark 1-era** capability. Most TTS voices don't emit phoneme timing,
 so a G2P plugin *estimates* it from the text. Only **Mimic 1** provides phoneme timing
 natively. For any other voice the G2P plugin simulates the timing. **If you don't drive a
 mouth/face, you don't need a G2P plugin at all.** See the [G2P catalog](g2p-plugins.md).

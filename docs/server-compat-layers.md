@@ -79,7 +79,7 @@ All compat routers are always loaded. No feature flag is needed.
 
 ## Translate Server Compat Routes
 
-`pip install ovos-translate-server`. Routers are implemented in `ovos_translate_server.routers`.
+`pip install --pre "ovos-translate-server>=0.10.0a1"`. Routers are implemented in `ovos_translate_server.routers`.
 
 | Prefix | Vendor |
 |--------|--------|
