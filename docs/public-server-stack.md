@@ -2,10 +2,10 @@
 
 !!! abstract "In a nutshell"
     This page describes how the community's public speech and translation servers
-    are put together, so you can build the same thing yourself. Three services —
-    text-to-speech, speech-to-text, and translation — each run as a small HTTP
+    are put together, so you can build the same thing yourself. Three services,
+    text-to-speech, speech-to-text, and translation, each run as a small HTTP
     server in its own container, sharing one machine and one model cache. It is a
-    reference deployment, not a product: everything here is ordinary Docker and
+    reference deployment, not a product. Everything here is ordinary Docker and
     ordinary OVOS plugins.
 
 --8<-- "snippets/community-servers.md"
@@ -21,10 +21,10 @@
 The pattern is the same in all three: a plugin does the work, a thin FastAPI
 server puts it on HTTP, and a client plugin on the device points at the URL. The
 device-side plugins are `ovos-tts-plugin-server`, `ovos-stt-plugin-server`, and
-`ovos-translate-server-plugin`; each is configured with a `url` and nothing else.
+`ovos-translate-server-plugin`. Each is configured with a `url` and nothing else.
 
 All three run ONNX models on CPU. There is no GPU in this deployment and none is
-required — the choice of ONNX runtimes throughout is what makes a single
+required. The choice of ONNX runtimes throughout is what makes a single
 modest server able to host the set.
 
 ## Machine Shape
@@ -36,11 +36,11 @@ A host that runs the three services together wants:
   service instead of OOM-killing the host. See
   [`linguonnx` deployment](https://github.com/OpenVoiceOS/ovos-plugin-linguonnx/blob/dev/docs/deployment.md)
   for how that number is derived and which settings hold it.
-- **Disk.** The translation model registry is roughly 109 GB at int8 precision;
-  speech models are a few GB. Put the cache on a volume that survives container
+- **Disk.** The translation model registry is roughly 109 GB at int8 precision.
+  Speech models are a few GB. Put the cache on a volume that survives container
   replacement, and do not put it on the same disk you need free.
 - **CPU.** Threads matter more than clock. `OMP_NUM_THREADS` bounds each
-  container's ONNX threadpool; leave headroom so one busy service does not
+  container's ONNX threadpool. Leave headroom so one busy service does not
   starve the others.
 
 ## Persist the Model Cache
@@ -48,7 +48,7 @@ A host that runs the three services together wants:
 None of the images bake models in. They download on first use, which means a
 container without a persistent cache re-downloads tens of gigabytes on every
 replacement, and its first request after each restart blocks on a real
-download — several minutes for a large translation model. Mount the whole cache
+download, several minutes for a large translation model. Mount the whole cache
 directory, not one subdirectory of it:
 
 ```yaml
@@ -68,11 +68,11 @@ first request.
 
 ## Configuration
 
-The three servers differ in where their plugin settings come from — check each
+The three servers differ in where their plugin settings come from. Check each
 server's own page before assuming `mycroft.conf` applies:
 
 - The **TTS server** reads the `tts` section of `mycroft.conf`, keyed by plugin
-  id — mount the file read-only:
+  id. Mount the file read-only:
 
     ```yaml
     volumes:
@@ -80,14 +80,14 @@ server's own page before assuming `mycroft.conf` applies:
     ```
 
 - The **STT server** selects and configures its STT plugin through CLI flags
-  alone — the `stt` section of `mycroft.conf` is not read — but its
+  alone. The `stt` section of `mycroft.conf` is not read. Its
   audio/utterance transformer chains and default `lang` still come from
   `mycroft.conf` ([STT Server](stt-server.md)).
 - The **translate server** likewise takes its engines from CLI flags and ignores
   `mycroft.conf` ([Translate Server](translate-server.md)).
 
 A settings block placed in a section a service does not read is ignored
-silently — the service starts, answers requests, and runs on defaults while
+silently. The service starts, answers requests, and runs on defaults while
 appearing configured. See [All Configuration Keys](config-all-keys.md) for the
 section each plugin type reads.
 
@@ -113,7 +113,7 @@ Running these services is one option, not a requirement. Every capability here
 also exists as a plugin that runs directly on the device with no network at all:
 `phoonnx` for TTS, `onnx-asr` for STT, and `linguonnx` for translation are the
 same code the servers wrap. A server is worth running when several devices
-should share one machine's CPU and one copy of the models — not by default.
+should share one machine's CPU and one copy of the models, not by default.
 
 **Read next:** [Server Compatibility Layers](server-compat-layers.md)
 

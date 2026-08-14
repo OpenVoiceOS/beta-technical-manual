@@ -207,7 +207,7 @@ Output example: `1.2.3a4` or `1.2.3`
 
 ### `scripts/check_downstream.py`
 
-Reports which installed packages depend on a given package, using `pipdeptree`. Output is sorted deterministically and uploaded as a workflow artifact (the older commit-to-repo behavior is gone; the `commit_branch` input is deprecated and ignored).
+Reports which installed packages depend on a given package, using `pipdeptree`. Output is sorted deterministically and uploaded as a workflow artifact. The older commit-to-repo behavior is gone. The `commit_branch` input is deprecated and ignored.
 
 **Key function:** `get_downstream(package_name: str) -> str`
 

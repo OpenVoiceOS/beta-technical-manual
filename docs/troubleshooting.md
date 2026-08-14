@@ -385,7 +385,7 @@ Before blaming the skill's vocabulary, rule out the two upstream causes of
    `Load of skill <skill_id> failed!` (a traceback follows), or watch for the
    `mycroft.skills.loading_failure` bus event; every healthy load announces
    `mycroft.skills.loaded` (plural) instead — plugin-skill loads via the Skill Manager
-   additionally emit a singular `mycroft.skill.loaded`. See [Skill Manager](skill-manager.md). Note the
+   also emit a singular `mycroft.skill.loaded`. See [Skill Manager](skill-manager.md). Note the
    connectivity/`RuntimeRequirements` gate is **off by default** — on a stock install every
    installed skill loads unconditionally, so don't chase network-requirement theories unless
    `use_deferred_loading` was deliberately enabled.

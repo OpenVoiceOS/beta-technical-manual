@@ -3,7 +3,7 @@
 !!! abstract "In a nutshell"
     The [Formal Specifications](architecture-specs.md) renamed many legacy bus topics into the
     `ovos.*` namespace. `ovos-bus-client` bridges old and new names automatically, so producers
-    and consumers can each switch at their own pace. The bridge is a pending removal — see the
+    and consumers can each switch at their own pace. The bridge is a pending removal. See the
     warning below.
 
 ## Namespace migration
@@ -70,23 +70,23 @@ the legacy delivery, and disable `modernize` once no legacy producers remain.
 
 !!! warning "`modernize` is load-bearing, not cosmetic, on a canonical-only skill container"
     A skill container that only registers `ovos.*` handlers is not automatically safe from an
-    older producer still emitting legacy topics — the wire frame it receives may be legacy-only.
+    older producer still emitting legacy topics. The wire frame it receives may be legacy-only.
     That skill hears it at all *because* its own `MessageBusClient` (any `ovos-bus-client`
-    since 2.6.3a1, where the bridge became receive-side — commit 0f0a241, PR #258; before
+    since 2.6.3a1, where the bridge became receive-side in commit 0f0a241, PR #258; before
     that the counterpart was a second wire message)
     re-dispatches the legacy arrival under its `ovos.*` counterpart on receive, per `modernize`
-    being on. Disabling `modernize` on such a container does not just drop a redundant delivery;
-    it silently stops that container from ever hearing a legacy producer again. Never disable
+    being on. Disabling `modernize` on such a container does not just drop a redundant delivery.
+    It silently stops that container from ever hearing a legacy producer again. Never disable
     `modernize` on a skill container while any producer in the fleet may still be on legacy
-    topics — treat the default `true` as the safe choice everywhere except a deployment that has
+    topics. Treat the default `true` as the safe choice everywhere except a deployment that has
     fully verified every producer speaks `ovos.*`.
 
 ### Intent dispatch topics: the `.intent` suffix is gone
 
 A related, separately-bridged rename: per-intent dispatch topics are now the canonical
 `<skill_id>:<intent_name>` with **no `.intent` suffix**. Old `ovos-workshop` releases built
-the topic from the Padatious resource *filename*, so the extension leaked onto the wire — a
-skill with `food.order.intent` listened on `<skill_id>:food.order.intent`; current workshop
+the topic from the Padatious resource *filename*, so the extension leaked onto the wire. A
+skill with `food.order.intent` listened on `<skill_id>:food.order.intent`. Current workshop
 registers `<skill_id>:food.order` (OVOS-MSG-1 §2.1.1).
 
 `ovos-bus-client` 2.8 bridges the skew with two stateless rules: every canonical intent topic
@@ -97,12 +97,12 @@ spelling. Config-gated, on by default. Test rigs get the same behavior from `Fak
 
 Two practical rules for authors:
 
-- New code and tests should **compute** the canonical topic —
-  `ovos_spec_tools.intent_topics.canonical_intent_topic(...)` — rather than hard-coding either
+- New code and tests should **compute** the canonical topic with
+  `ovos_spec_tools.intent_topics.canonical_intent_topic(...)`, rather than hard-coding either
   spelling. Literal `.intent` listeners are deprecated but not broken.
 - The spelling goes canonical when **either** side modernizes: the skill registers canonical
   (workshop ≥ 9.3.11a2) **or** the matcher canonicalizes (padatious ≥ 2.0.1a1 strips the suffix at
-  registration; Adapt is unaffected — its intent names come from `IntentBuilder`, never from
+  registration. Adapt is unaffected: its intent names come from `IntentBuilder`, never from
   filenames, so there was no suffix to strip). Pinning one side back does **not** restore the
   old spelling.
 

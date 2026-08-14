@@ -11,16 +11,16 @@ This is a flow stage: part of every standard pipeline rather than a matcher you 
 The rest of this page is for people deploying or customizing OVOS. If you only wanted to know what this stage does, you are done.
 
 ??? info "📐 Formal specification"
-    The stop plugin is specified by **[OVOS-STOP-1 — Stop Pipeline Plugin](https://github.com/OpenVoiceOS/architecture/blob/dev/stop-1.md)**, built on **[OVOS-PIPELINE-1](https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md)**. See the [spec index](architecture-specs.md).
+    The stop plugin is specified by **[OVOS-STOP-1: Stop Pipeline Plugin](https://github.com/OpenVoiceOS/architecture/blob/dev/stop-1.md)**, built on **[OVOS-PIPELINE-1](https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md)**. See the [spec index](architecture-specs.md).
 
 The **stop pipeline** is a core component of the OpenVoiceOS (OVOS) pipeline architecture. It defines the logic responsible for stopping ongoing interactions with active skills. This includes aborting responses, halting speech, and terminating background tasks that skills may be performing.
 
-Because stopping is a **fundamental feature of a voice assistant**, it is implemented as a **dedicated pipeline plugin**, rather than a fallback or intent handler. STOP-1 is emphatic that stop is a **pipeline plugin and not a skill**. `skill-ovos-stop` is superseded. Stop only works because PIPELINE-1's first-match-wins lets a high-confidence stop stage placed *first* in `session.pipeline` (STOP-1 §7) intercept "stop" before any other pipeline plugin claims the bare word.
+Because stopping is a **fundamental feature of a voice assistant**, it is implemented as a **dedicated pipeline plugin**, rather than a fallback or intent handler. STOP-1 is emphatic that stop is a **pipeline plugin and not a skill**. `skill-ovos-stop` is superseded. PIPELINE-1's first-match-wins rule places a high-confidence stop stage *first* in `session.pipeline` (STOP-1 §7). That placement is why stop works: the stage intercepts "stop" before any other pipeline plugin claims the bare word.
 
 !!! note "Spec model and topic names"
-    STOP-1 distinguishes two outcomes, both via reserved `intent_name`s. A generic **stop** cascades to the *most recently active* handler: the plugin reads `session.active_handlers` (the recency record, PIPELINE-1 §7.1), pings them with `ovos.stop.ping`, collects `ovos.stop.pong` (`can_handle`) within a recommended 0.5s ceiling, and returns a `Match` on the reserved `stop` name targeting the highest-`activated_at` positive responder — dispatched on `<skill_id>:stop`. A handler that does not answer within the timeout counts as `can_handle: false`.
+    STOP-1 distinguishes two outcomes, both via reserved `intent_name`s. A generic **stop** cascades to the *most recently active* handler: the plugin reads `session.active_handlers` (the recency record, PIPELINE-1 §7.1), pings them with `ovos.stop.ping`, collects `ovos.stop.pong` (`can_handle`) within a recommended 0.5s ceiling, and returns a `Match` on the reserved `stop` name targeting the highest-`activated_at` positive responder, dispatched on `<skill_id>:stop`. A handler that does not answer within the timeout counts as `can_handle: false`.
 
-    `global_stop` covers the two cases where there is nothing to target (STOP-1 §5.1): explicit "stop everything" vocabulary, or a generic stop with `active_handlers` empty (or containing only the stop plugin itself). A ping round that produced **no positive responder** does *not* escalate to `global_stop` — it falls back to the most recently activated handler anyway (§4.1 step 5). Its `Match` clears `active_handlers`, `converse_handlers` and `response_mode` atomically, and its handler broadcasts `ovos.stop`, which every active component subscribes to.
+    `global_stop` covers the two cases where there is nothing to target (STOP-1 §5.1): explicit "stop everything" vocabulary, or a generic stop with `active_handlers` empty (or containing only the stop plugin itself). A ping round that produced **no positive responder** does *not* escalate to `global_stop`. It falls back to the most recently activated handler anyway (§4.1 step 5). Its `Match` clears `active_handlers`, `converse_handlers` and `response_mode` atomically, and its handler broadcasts `ovos.stop`, which every active component subscribes to.
 
     | Spec topic (STOP-1 §8) | Legacy name |
     |---|---|
@@ -87,7 +87,7 @@ The plugin:
 1. Collects the session's **active skills** (skipping session-blacklisted ones).
 
 
-2. Pings each of them on its per-skill topic `{skill_id}.stop.ping` — the spec name `ovos.stop.ping` exists in STOP-1 but is **not emitted** today, because per-skill placeholder topics cannot be auto-bridged (a deliberate exclusion in `ovos-spec-tools`); skills subscribe only to the per-skill form. It then waits up to `0.5s` for `ovos.stop.pong` (legacy: `skill.stop.pong` — this direction *is* bridged) replies carrying `can_handle`.
+2. Pings each of them on its per-skill topic `{skill_id}.stop.ping`. The spec name `ovos.stop.ping` exists in STOP-1 but is **not emitted** today, because per-skill placeholder topics cannot be auto-bridged (a deliberate exclusion in `ovos-spec-tools`). Skills subscribe only to the per-skill form. It then waits up to `0.5s` for `ovos.stop.pong` (legacy: `skill.stop.pong`, this direction *is* bridged) replies carrying `can_handle`.
 
 
 3. Dispatches `<skill_id>:stop` (legacy: `{skill_id}.stop`) to the most recently activated positive responder.

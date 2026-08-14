@@ -99,7 +99,7 @@ options:
   `--multi` loads one engine instance per language on demand (one model per `lang`), instead of a single shared model.
 
 - **Compatibility routers**  
-  Beyond the native endpoints, the app mounts drop-in compatible routers so existing cloud-STT clients work unchanged. Examples are Wit.ai (`POST /wit/speech`, override the SDK host with the `WIT_URL` env var), Chromium speech-api (`POST /speech-api/v2/recognize`), and routers for OpenAI Whisper, Whisper.cpp server, Deepgram, Google, AssemblyAI, Azure, IBM Watson, AWS Transcribe, Vosk, Speechmatics, Gladia, ElevenLabs Scribe, Groq, and Kaldi GStreamer. See `/docs` for the authoritative set. A `GET /utcp` manual advertises the endpoints to UTCP agents. An MCP endpoint mounts at `/mcp` on the same port when the server is started with `--mcp` (requires `pip install 'ovos-stt-http-server[mcp]'` — the extra alone no longer auto-mounts it).
+  Beyond the native endpoints, the app mounts drop-in compatible routers so existing cloud-STT clients work unchanged. Examples are Wit.ai (`POST /wit/speech`, override the SDK host with the `WIT_URL` env var) and Chromium speech-api (`POST /speech-api/v2/recognize`). The app also routes for OpenAI Whisper, Whisper.cpp server, Deepgram, Google, AssemblyAI, Azure, IBM Watson, AWS Transcribe, Vosk, Speechmatics, Gladia, ElevenLabs Scribe, Groq, and Kaldi GStreamer. See `/docs` for the authoritative set. A `GET /utcp` manual advertises the endpoints to UTCP agents. An MCP endpoint mounts at `/mcp` on the same port when the server is started with `--mcp` (requires `pip install 'ovos-stt-http-server[mcp]'`). The extra alone no longer auto-mounts it.
 
     !!! note "The `mcp` extra installs `fastmcp`, not the `mcp` SDK"
         The extra keeps the name `mcp`, but it resolves the third-party `fastmcp>=3,<4` package,
@@ -150,7 +150,7 @@ the untranslated transcript instead of failing.
 
 The server can run OVOS transformer plugins around transcription. Both hooks live in the
 model containers, so **every** surface gets them: the native `/stt` endpoint, all
-vendor-compat routers, the websocket streaming routes, MCP, and UTCP.
+vendor-compat routers, the websocket streaming routes, MCP, and even UTCP.
 
 - **Audio transformers** run *before* the STT stage. When the chain includes an
   `AudioLanguageDetector` (like the `--lang-engine` mentioned above), its detected language
@@ -265,7 +265,7 @@ for audio language detection
     block only. A `listener.audio_transformers` block is read by the transformer *service*,
     which logs it as deprecated, but never reaches this plugin.
 
-    Put the block in the wrong place and `urls` is silently empty — so the plugin falls back to
+    Put the block in the wrong place and `urls` is silently empty. The plugin then falls back to
     its built-in default and posts your audio to a public server on the internet. There is no
     error to notice.
 
@@ -346,7 +346,7 @@ Pre-built containers are also available via the [ovos-docker-stt](https://github
 
 ## Tips & Caveats
 
-- **`/stt` takes raw audio bytes, not a multipart upload.** Send the PCM/WAV bytes as the request body (`curl --data-binary @audio.wav`), and pass `sample_rate`/`sample_width` as query params if they differ from the 16000/2 defaults. Those defaults are assumed when reading the raw body.
+- **`/stt` takes raw audio bytes, not a multipart upload.** Send the PCM/WAV bytes as the request body (`curl --data-binary @audio.wav`). Pass `sample_rate`/`sample_width` as query params if they differ from the 16000/2 defaults. Those defaults are assumed when reading the raw body.
 
 - **Audio Formats**: Ensure client sends PCM‑compatible formats (`.wav`, `.mp3` recommended).
 
@@ -376,16 +376,16 @@ Pre-built containers are also available via the [ovos-docker-stt](https://github
 
 ## Links & References
 
-- OVOS STT HTTP Server GitHub: https://github.com/OpenVoiceOS/ovos-stt-http-server
+- OVOS STT HTTP Server GitHub: [OpenVoiceOS/ovos-stt-http-server](https://github.com/OpenVoiceOS/ovos-stt-http-server)
 
 
-- Companion Plugin: https://github.com/OpenVoiceOS/ovos-stt-server-plugin
+- Companion Plugin: [OpenVoiceOS/ovos-stt-server-plugin](https://github.com/OpenVoiceOS/ovos-stt-server-plugin)
 
 
-- Docker Images: https://github.com/OpenVoiceOS/ovos-docker-stt
+- Docker Images: [OpenVoiceOS/ovos-docker-stt](https://github.com/OpenVoiceOS/ovos-docker-stt)
 
 
-- OVOS Plugin Manager: https://github.com/OpenVoiceOS/ovos-plugin-manager
+- OVOS Plugin Manager: [OpenVoiceOS/ovos-plugin-manager](https://github.com/OpenVoiceOS/ovos-plugin-manager)
 
 ---
 **Read next:** [TTS Server](tts-server.md)

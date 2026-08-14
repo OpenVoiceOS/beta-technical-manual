@@ -75,8 +75,8 @@ Each skill gets its own bus connection when `websocket.shared_connection` is `fa
 
 ### What a load failure looks like
 
-A skill whose class raises during instantiation is logged loudly in `skills.log` and skipped —
-it registers no intents and can never match. The signatures to grep for:
+A skill whose class raises during instantiation is logged loudly in `skills.log` and skipped.
+It registers no intents and can never match. The signatures to grep for:
 
 ```text
 ERROR - Failed to load skill: <skill_id> (<exception>)   # skill_launcher, traceback follows
@@ -84,11 +84,11 @@ ERROR - Skill <skill_id> failed to load
 ERROR - Load of skill <skill_id> failed!                 # skill_manager, traceback follows
 ```
 
-On the bus, a failed load emits `mycroft.skills.loading_failure`; its true complement is
-`mycroft.skills.loaded` (plural), fired on **every** successful load path — the singular
+On the bus, a failed load emits `mycroft.skills.loading_failure`. Its true complement is
+`mycroft.skills.loaded` (plural), fired on **every** successful load path. The singular
 `mycroft.skill.loaded` below is an extra emission specific to the Skill Manager's
 plugin-skill path, with no failure counterpart. "Installed but never matches" reports should check for these before
-anything else — see the [Troubleshooting](troubleshooting.md#stage-4-which-pipeline-stage-matched-or-didnt)
+anything else. See the [Troubleshooting](troubleshooting.md#stage-4-which-pipeline-stage-matched-or-didnt)
 funnel.
 
 ## Blacklisting
@@ -98,8 +98,8 @@ Skills listed in `skills.blacklisted_skills` in `mycroft.conf` are skipped at lo
 ## Intent Training
 
 Each successfully loaded skill is announced on the bus as `mycroft.skills.loaded`
-(plural) with the skill id — the event that fires on every load path; plugin-skill
-loads through the manager additionally emit a singular `mycroft.skill.loaded`. Both
+(plural) with the skill id. This event fires on every load path. Plugin-skill
+loads through the manager also emit a singular `mycroft.skill.loaded`. Both
 are useful for tooling that waits for a specific skill to become available. After new skills are loaded, the manager requests pipeline
 re-training:
 
@@ -107,12 +107,12 @@ re-training:
 mycroft.skills.train  →  (pipeline plugins that need it train, e.g. padatious)
 ```
 
-The manager emits `mycroft.skills.train` and moves on — it waits for nothing. The
+The manager emits `mycroft.skills.train` and moves on. It waits for nothing. The
 Padatious pipeline plugin does announce `mycroft.skills.trained` when its training round
 completes (on both the trained and nothing-new-to-train paths), so tooling that needs a
-deterministic "training done" signal can watch for that; the manager itself never does.
+deterministic "training done" signal can watch for that. The manager itself never does.
 
-The manager itself never blocks on `mycroft.skills.trained` — the event exists (see
+The manager itself never blocks on `mycroft.skills.trained`. The event exists (see
 above) but nothing in core does a `wait_for_response` on it. An earlier
 version blocked on `wait_for_response(..., "mycroft.skills.trained", timeout=60)`, which
 stalled boot for a full minute on every install without a deferred-training engine, since

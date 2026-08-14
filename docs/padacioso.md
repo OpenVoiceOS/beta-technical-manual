@@ -51,7 +51,7 @@ covers: `0.05 + 0.20 × (wildcard tokens / total tokens)`, so any wildcard costs
 `0.05` and `0.25`. For example, `"say *"` is one wildcard out of two tokens, dropping the
 score from `1.0` to `0.85`. Entity placeholders like `{number}` are not wildcards and carry
 no wildcard penalty. An entity whose name was never registered with `add_entity` still
-matches, at a small `0.04` penalty (e.g. `0.96`); a registered entity whose parsed value is
+matches, at a small `0.04` penalty (e.g. `0.96`). A registered entity whose parsed value is
 not among the registered samples is penalized `0.1`.
 
 ## Context and keyword gating

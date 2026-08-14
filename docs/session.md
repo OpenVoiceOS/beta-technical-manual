@@ -4,7 +4,7 @@
     Long-lived and actively maintained. Depend on it freely. Rated by [repository health](maturity.md), not version.
 
 !!! abstract "In a nutshell"
-    One OVOS device can talk to several people at once: your phone, a kitchen speaker, and other connected devices may all be asking it things at the same time. A *session* is simply the information that says who is asking and in what language. If your skill remembers anything between requests, like a running game or a chat history, it needs to keep each person's information separate so two users don't get each other's answers, much like separate tables at a restaurant — key that state by `session_id` instead of stashing it in a single instance variable. This page shows how to make a skill session aware. New terms are explained in the [Glossary](glossary.md).
+    One OVOS device can talk to several people at once: your phone, a kitchen speaker, and other connected devices may all be asking it things at the same time. A *session* is simply the information that says who is asking and in what language. If your skill remembers anything between requests, like a running game or a chat history, it needs to keep each person's information separate so two users don't get each other's answers, much like separate tables at a restaurant. Key that state by `session_id` instead of stashing it in a single instance variable. This page shows how to make a skill session aware. New terms are explained in the [Glossary](glossary.md).
 
 ??? info "Formal specification"
     **SESSION-1 is the field registry.** Other specs *claim* fields into it (e.g. `intent_context` → CONTEXT-1, the transformer-chain lists → OVOS-TRANSFORM-1). See also the [spec index](architecture-specs.md).
@@ -52,15 +52,15 @@ If the message originated in the device itself, the `session_id` is always equal
 !!! warning "A bare `session_id` does not carry state — replay the whole session"
     An external client (a HiveMind satellite, any non-`"default"` session) is not tracked
     in-process the way the device-local session is. `ovos-core` only refreshes what it
-    already holds for a given `session_id`; a `session_id` this process never folded a full
+    already holds for a given `session_id`. A `session_id` this process never folded a full
     session for is carried through untouched, with none of the previous turn's state. To keep
-    multi-turn continuity — `intent_context`, `lang`, presentation preferences, and the rest —
+    multi-turn continuity for `intent_context`, `lang`, presentation preferences, and the rest,
     a client must send the **complete serialized session** back on each message, not just the
-    bare `session_id` string — from Python that is `Session.serialize()`; from any other
+    bare `session_id` string. From Python that is `Session.serialize()`. From any other
     language it is the same JSON object echoed back from `context.session` of the frames
     the server sends you (its exact field list is normative in the OVOS-SESSION-1 spec, not
-    this manual; see the [JSON round trip](bus-recipes.md#from-a-non-python-client-the-json-round-trip)). Losing that round trip is
-    indistinguishable from starting a brand new session every turn — a `session_id` this
+    this manual, see the [JSON round trip](bus-recipes.md#from-a-non-python-client-the-json-round-trip)). Losing that round trip is
+    indistinguishable from starting a brand new session every turn. A `session_id` this
     process has never folded a full session for gets a **fresh** session by design, not an
     error and not a reconstruction from history.
 
@@ -68,7 +68,7 @@ If the message originated in the device itself, the `session_id` is always equal
     client to keep it current. `ovos.session.sync` is the closest thing, and it runs the
     other way: a client emits it carrying its *own* snapshot, and the receiver merges that
     snapshot's `intent_context` onto whatever it already holds for that `session_id`
-    (OVOS-CONTEXT-1 §5.3) — a pull-shaped merge triggered by the sender, not a broadcast.
+    (OVOS-CONTEXT-1 §5.3). This is a pull-shaped merge triggered by the sender, not a broadcast.
     A bare `ovos.session.sync` with no session carrier is handled differently again: it is
     read as a legacy request for the current **default** session and answered with a
     `ovos.session.update_default` echo, which only ever concerns the device-local
@@ -125,9 +125,9 @@ A session also carries `intent_context`: a per-key decaying context store that g
 intents may match across turns (e.g. "book a flight" setting context so a follow-up "to
 Paris" is understood without repeating "flight"). It is a session field claimed into the
 SESSION-1 registry by **OVOS-CONTEXT-1**, holding `{value, expires_at}` per key. In the spec
-model each entry decays via its `expires_at` / `turns_remaining`; the legacy keyword-context
+model each entry decays via its `expires_at` / `turns_remaining`. The legacy keyword-context
 manager ages whole frames out after the `context.timeout` config value (minutes, default `2`).
-Note that entries written through `set_context` currently never decay at all — the core write
+Note that entries written through `set_context` currently never decay at all. The core write
 path drops the expiry stamp (see the caveats on [Conversational Context](context.md)). See
 [Intent Service](intent-service.md) for how context is set, read, and consumed during
 pipeline matching.

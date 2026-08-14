@@ -17,14 +17,14 @@ by default.
 
 `--gpu` swaps the STT module entirely to `ovos-stt-plugin-fasterwhisper` with
 `whisper-large-v3-turbo` and `use_cuda: true`. Only the 12 languages with a
-`recommends/gpu/*.conf` in `ovos-config` have a GPU tier at all; the others keep their
+`recommends/gpu/*.conf` in `ovos-config` have a GPU tier at all. The others keep their
 CPU recommendation.
 
 !!! note "A TTS recommend needs a voice with a known gender"
     A bundled offline TTS recommendation pins one male voice and one female voice per
     language, wherever one is known. A single-speaker Facebook MMS voice counts as male.
     `autoconfigure` adds a language only once a phoonnx voice of known gender exists for it.
-    A language without one is STT-only until such a voice appears; you can still point
+    A language without one is STT-only until such a voice appears. You can still point
     `ovos-tts-plugin-phoonnx` at any voice ID yourself, but it won't be auto-selected.
 
 Several regional variants still have gaps. **EN-GB**, **PT-BR**, **AR-SA**, and the four
@@ -64,14 +64,14 @@ hand until a dedicated recommendation lands: the practical picks are
     in your installed `ovos-config` for the current list before relying on `autoconfigure`.
 
 !!! note "Some TTS recommends cover only one gender"
-    **DA-DK** ships only a male voice; the female slot falls back to no TTS configuration
+    **DA-DK** ships only a male voice. The female slot falls back to no TTS configuration
     until a voice with that gender is confirmed. Pass the matching `--male`/`--female` flag
-    per language; every other language listed here has both genders bundled.
+    per language. Every other language listed here has both genders bundled.
 
-A language that does not appear in this table has no bundled STT/TTS recommendation yet,
-not a deliberate exclusion; it just means nobody has added a `recommends/*.conf` file for it
-so far. Japanese is a widely requested example: `ovos-config` ships no `ja-jp` (or any other
-`ja-*`) recommends file as of this writing, so `autoconfigure -l ja-jp` has nothing to select
+A language that does not appear in this table has no bundled STT/TTS recommendation yet.
+This is not a deliberate exclusion. It just means nobody has added a `recommends/*.conf` file for it
+so far. Japanese is a widely requested example. `ovos-config` currently ships no `ja-jp` (or any other
+`ja-*`) recommends file, so `autoconfigure -l ja-jp` has nothing to select
 and Japanese support must be configured by hand until a recommendation is contributed.
 
 ---

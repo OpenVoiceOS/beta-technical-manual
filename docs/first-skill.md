@@ -49,9 +49,9 @@ A skill is a small folder with three kinds of files:
 The intent and dialog files live in a `locale/<language>/` folder, so the same skill can be
 translated. That's the whole model. [Anatomy of a Skill](skill-structure.md) covers it in depth.
 
-## Step 1 — Create the folder layout
+## Step 1: Create the folder layout
 
-Make this structure — and actually replace `youruser` with your own name/handle (and pick
+Make this structure, and actually replace `youruser` with your own name/handle (and pick
 your own skill name) **before** installing, not later: the folder and `pyproject.toml` names
 become the package name and `skill_id`, and two skills with the same `skill_id` installed on
 one machine shadow each other. On your own single machine the literal names work, which is
@@ -79,7 +79,7 @@ ovos-skill-my-first/
     folder to OVOS). See [Anatomy of a Skill](skill-structure.md) and
     [Intent Design](intents.md) for more on this layout.
 
-## Step 2 — Write the skill code
+## Step 2: Write the skill code
 
 Every skill is a Python class that subclasses [`OVOSSkill`](ovos-skill.md). A **decorator** (a
 line starting with `@` placed just above a function) tells OVOS what that function is for. Here
@@ -111,7 +111,7 @@ That's the entire skill. `initialize()` is optional. You only need it once you h
 that depends on the skill being fully wired up (reading [settings](skill-settings.md), registering
 extra event handlers, and so on).
 
-## Step 3 — Tell OVOS what the user might say
+## Step 3: Tell OVOS what the user might say
 
 `ovos_skill_my_first/locale/en-us/intents/Hello.intent`: one example phrase per line. OVOS
 learns the *pattern* from these, so you don't have to list every wording:
@@ -125,12 +125,12 @@ greet me
 
 !!! note "Three file formats, don't mix them up"
     A skill uses three different formats side by side: `pyproject.toml` is **TOML**,
-    `.intent` and `.dialog` files are **plain text** (one phrase per line — no quotes, no
+    `.intent` and `.dialog` files are **plain text** (one phrase per line, no quotes, no
     commas, no brackets), and only `skill.json` is **JSON**. The classic mistake is decorating
-    an `.intent` file with JSON punctuation; every stray quote or comma becomes part of the
+    an `.intent` file with JSON punctuation. Every stray quote or comma becomes part of the
     phrase to match.
 
-## Step 4 — Write what OVOS says back
+## Step 4: Write what OVOS says back
 
 `ovos_skill_my_first/locale/en-us/dialog/hello.dialog`: one option per line. OVOS picks one at
 random so the assistant doesn't sound robotic:
@@ -141,14 +141,14 @@ Hi there!
 Hey — how can I help?
 ```
 
-## Step 5 — Make it installable
+## Step 5: Make it installable
 
 A skill is just a Python package that advertises itself to OVOS through an **entry point**.
 `pyproject.toml`:
 
 !!! note "You don't need to understand this file yet"
     Replace `ovos-skill-my-first` (the project name), the `ovos_skill_my_first` package
-    folder wherever it appears, and `youruser` (your username) — and copy the rest as-is.
+    folder wherever it appears, and `youruser` (your username), then copy the rest as-is.
 
 ```toml
 [build-system]
@@ -184,7 +184,7 @@ how the [Plugin Manager](plugin-manager.md) discovers installed skills.
 For the full packaging reference (including GUI assets in package-data), see
 [Anatomy of a Skill](skill-structure.md).
 
-## Step 6 — Install it and talk to it
+## Step 6: Install it and talk to it
 
 First, activate the same Python environment OVOS runs in, so the skill installs into the
 interpreter `ovos-core` actually uses. For example, `source ~/.venvs/ovos/bin/activate` for
@@ -199,7 +199,7 @@ and container installs each put it somewhere different.
 - Check where your particular install created its environment, for example the installer's
   summary screen (see [ovos-installer](ovos-installer-scenarios.md#environment-summary)).
   On a fleet of identically-imaged machines (a classroom set, a batch of satellites) the
-  path is the same everywhere — find it once and share it, rather than having every person
+  path is the same everywhere. Find it once and share it, rather than having every person
   hunt for it separately.
 - Advanced: if you installed via [systemd](glossary.md), its unit file's
   `Environment=`/`ExecStart=` lines show the path.
@@ -224,11 +224,11 @@ pip show ovos-padatious || pip install ovos-padatious
 ```
 
 The pipeline ID is `ovos-padatious-pipeline-plugin`, but the package you install is
-`ovos-padatious` — `pip install ovos-padatious-pipeline-plugin` fails, there is no such
+`ovos-padatious`. `pip install ovos-padatious-pipeline-plugin` fails, since there is no such
 package. See [Pipeline IDs vs.
 plugins](pipelines-overview.md#pipeline-ids-vs-plugins).
 
-Restart `ovos-core` (or it will pick the skill up on its next scan) — on an
+Restart `ovos-core` (or it will pick the skill up on its next scan). On an
 `ovos-installer` setup that is `systemctl --user restart ovos-core.service`. See
 [Stage 1 of Troubleshooting](troubleshooting.md#stage-1-is-the-service-even-running-and-is-the-bus-reachable)
 for other setups and how to check the services. Then say your configured wake word first
@@ -246,18 +246,18 @@ OVOS replies with one of your dialog lines. You just wrote a skill.
     Padatious is an optional install. Re-run that check.
 
     You do not need to edit any pipeline config. The stage is in the shipped default
-    `intents.pipeline` already — the plugin just has to be installed for the default to have
+    `intents.pipeline` already. The plugin just has to be installed for the default to have
     anything to load. [Test Your Skill](testing-your-skill.md) hits the same requirement in
     the automated test.
 
 !!! tip "Prefer `ovos-say-to` for repeatable tests (and know the spoken-test failure mode)"
     You can send the utterance straight onto the bus as text, skipping the wake word and mic
-    entirely: `ovos-say-to "hello"`. This is the **recommended** way to test while iterating —
-    it is deterministic and works with no microphone. It is also the way to go when many
+    entirely: `ovos-say-to "hello"`. This is the **recommended** way to test while iterating.
+    It is deterministic and works with no microphone. It is also the way to go when many
     machines test at once (a workshop, a classroom): the default spoken path sends your audio
     to a shared **public community STT server** (see
     [Privacy & Security](privacy-security.md)), so a room full of devices testing
-    simultaneously can see recognition turn slow or flaky from server load — a failure that
+    simultaneously can see recognition turn slow or flaky from server load. That failure
     looks like "OVOS didn't reply" but has nothing to do with your skill. See
     [Troubleshooting](troubleshooting.md#stage-3-did-stt-produce-text)
     for more text-based ways to test a skill.

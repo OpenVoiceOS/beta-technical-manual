@@ -3,9 +3,13 @@
 !!! abstract "In a nutshell"
     You build an `OVOSCommonPlaybackSkill` that serves a short, fixed local playlist through OCP's `@ocp_search` provider mechanism.
 
-**When you'd want this:** "play the office playlist" should hand back a short, fixed list of local audio files without any external search or streaming service.
+**When you'd want this:** "play the office playlist" should hand back a short, fixed list of
+local audio files. It should need no external search or streaming service.
 
-**Prerequisite:** the base class and decorator ship with `ovos-workshop`, but matching "play …" requests requires the OCP pipeline stage — check it is installed (`pip show ovos-ocp-pipeline-plugin`) and in your `intents.pipeline`, the same way [Your First Skill](first-skill.md) checks for Padatious. See [OCP Pipeline](ocp-pipeline.md).
+**Prerequisite:** the base class and decorator ship with `ovos-workshop`. Matching "play …"
+requests requires the OCP pipeline stage. Check it is installed (`pip show
+ovos-ocp-pipeline-plugin`) and in your `intents.pipeline`, the same way
+[Your First Skill](first-skill.md) checks for Padatious. See [OCP Pipeline](ocp-pipeline.md).
 
 ```python
 from ovos_utils.ocp import MediaType, PlaybackType
@@ -61,7 +65,7 @@ lobby music
 - `@ocp_search()` (imported from `ovos_workshop.decorators.ocp`) marks a method as a search provider. OCP calls every registered provider's search method in parallel and keeps the best-confidence result across all installed OCP skills. A search method may `return` a list or `yield` results incrementally.
 - `supported_media` (passed to `super().__init__()`) tells OCP which `MediaType`s this skill should even be asked about.
 - `self.voc_match(phrase, "office_playlist")` reuses the same vocabulary mechanism as intents to give a confident match a high score, while still falling back to a loose substring check.
-- [OCP Skills](ocp-skills.md) also documents `self.extend_timeout()` (ask OCP to wait longer for a slow search) and notes that new integrations not needing the full skill lifecycle may prefer a `MediaProvider` plugin instead. See that page's opening warning.
+- [OCP Skills](ocp-skills.md) also documents `self.extend_timeout()` (ask OCP to wait longer for a slow search). It notes that new integrations not needing the full skill lifecycle may prefer a `MediaProvider` plugin instead. See that page's opening warning.
 
 !!! tip "Full production example"
     [`ovos-skill-somafm`](https://github.com/OpenVoiceOS/ovos-skill-somafm) is a full modern OCP skill: `@ocp_search`, `@ocp_featured_media`, `register_ocp_keyword`, and results built as `Playlist`/`MediaEntry` objects instead of plain dicts. [`ovos-skill-news`](https://github.com/OpenVoiceOS/ovos-skill-news) applies the same pattern for `MediaType.NEWS`.

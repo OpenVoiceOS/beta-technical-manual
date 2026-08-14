@@ -21,12 +21,12 @@
 
 Conversational context makes voice interactions feel more natural. The assistant keeps track of the subject you are discussing, so you do not have to repeat it.
 
-**What works in a skill today**: gate a follow-up with a blocking prompt — `ask_yesno()` /
-`get_response()`, see [Statements and Prompts](prompts.md) — keep the skill in the
+**What works in a skill today**: gate a follow-up with a blocking prompt, `ask_yesno()` /
+`get_response()` (see [Statements and Prompts](prompts.md)), keep the skill in the
 conversation with [`converse()`](converse.md), or use the legacy Adapt path:
 `self.set_context()` plus `IntentBuilder().require()` (the [TeaSkill example](#using-context-to-enable-intents)
 below). The declarative spec mechanism described next is evaluated by the pipelines but is
-**not yet reachable from a skill** — details in the warning under the example.
+**not yet reachable from a skill**. Details are in the warning under the example.
 
 `requires_context` and `excludes_context` gate matching in both the
 [Adapt](adapt-pipeline.md) and [Padatious](padatious-pipeline.md) pipelines, as CONTEXT-1 §6
@@ -55,8 +55,8 @@ against the registering `skill_id`, and reading a shared key needs the explicit
     parameters to put the declarations on the registration payload, and `set_context`
     does not write entries the gate can find (see the warning near the end of this
     page). **To gate a yes/no follow-up in a skill
-    today**, use a blocking prompt — `ask_yesno()` / `get_response()`, see
-    [Statements and Prompts](prompts.md) — or keep the skill in the conversation with
+    today**, use a blocking prompt, `ask_yesno()` / `get_response()` (see
+    [Statements and Prompts](prompts.md)), or keep the skill in the conversation with
     [`converse()`](converse.md). The legacy Adapt `.require()` keyword path (the TeaSkill
     example below) also works.
 
@@ -172,7 +172,7 @@ gates.
 
 !!! warning "Generic shared names are effectively global"
     A shared-scope context entry is stored under its bare, un-namespaced key. A plain,
-    generic name — `prev_dialog`, `date`, `person`, `sleeping_state` — can satisfy any
+    generic name (`prev_dialog`, `date`, `person`, `sleeping_state`) can satisfy any
     other legacy skill's `require()`/`requires_context` gate of that same name, because
     the legacy (pre-CONTEXT-1) Adapt lookup also probes the plain, un-munged keyword
     alongside its own skill-munged one. Nothing stops a different skill from writing the
@@ -198,7 +198,7 @@ Context does not need a value. Its presence alone can indicate a previous intera
 In this case, context can also be implemented with decorators instead of calling `self.set_context`.
 
 `.require('MilkContext')` below needs no matching `MilkContext.voc` file. A `require()`
-keyword with no backing vocabulary is not matched against the utterance at all — it can
+keyword with no backing vocabulary is not matched against the utterance at all. It can
 only ever be satisfied by a context entry of the same name, so it behaves as a pure
 context gate: present in the current context, or the intent does not match.
 
@@ -312,23 +312,23 @@ CONTEXT-1's declarative `requires_context` / `excludes_context` gate (above) exp
 
 !!! warning "The declarative gate is not reachable via `set_context` yet"
     The `key` field is on the wire, but `ovos-core` does not yet mirror it into the
-    resolved `<skill_id>:<key>` entry the declarative gate looks up — it still stores
+    resolved `<skill_id>:<key>` entry the declarative gate looks up. It still stores
     only the legacy munged spelling. Until that mirror lands in core, intents declared
     with `requires_context=` / `excludes_context=` cannot be satisfied by
-    `set_context` / `@adds_context`; only the legacy `.require()` keyword path (above)
+    `set_context` / `@adds_context`. Only the legacy `.require()` keyword path (above)
     works today.
 
 !!! note "Writing a key replaces it wholesale; there is no read-back"
     Writing an entry under a key that already exists **replaces the whole entry**, value and
-    decay timer both — it does not merge onto the old one. (Spec-shaped entries carry their
-    own explicit `expires_at` / `turns_remaining`; the legacy keyword-context manager instead
-    ages whole frames out after the `context.timeout` config value — minutes, default `2` —
+    decay timer both. It does not merge onto the old one. (Spec-shaped entries carry their
+    own explicit `expires_at` / `turns_remaining`. The legacy keyword-context manager instead
+    ages whole frames out after the `context.timeout` config value in minutes, default `2`,
     which is where [Session](session.md)'s "~2 minutes" figure comes from.) There is no API
     to read a
-    context entry's current value or remaining decay back out — a skill that wants to know
+    context entry's current value or remaining decay back out. A skill that wants to know
     "what did I set this to, and how long ago" must keep that in its own state, not rely on
-    reading it back from context. A flag-style call with no explicit value —
-    `self.set_context('MilkContext')` — still needs something to store: the underlying wire
+    reading it back from context. A flag-style call with no explicit value,
+    `self.set_context('MilkContext')`, still needs something to store: the underlying wire
     message stores the keyword name itself as the value (`{"value": word or context}`), not
     an empty or null value.
 

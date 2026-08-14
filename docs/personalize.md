@@ -4,7 +4,7 @@
     You just installed OVOS and it works. Now you want it to sound like *your* assistant: a
     different name to wake it up, a different voice answering you, or a different language
     altogether. All three are small edits to the same file, `~/.config/mycroft/mycroft.conf`.
-    This page is a quick-reference for all three; each section links to the full page with
+    This page is a quick-reference for all three. Each section links to the full page with
     more detail and more options.
 
 !!! tip "Want to do this by voice instead of editing files?"
@@ -62,20 +62,22 @@ for the full CLI). Once the file parses cleanly, apply the change:
 ```
 
 As with voices below, the plugin must be installed into the same environment OVOS runs in
-before the config can use it (`pip install ovos-ww-plugin-vosk` for this example). For a
-custom hotword like this one — with no `fallback_ww` configured — a module that fails to
+before the config can use it (`pip install ovos-ww-plugin-vosk` for this example). Take a
+custom hotword like this one, with no `fallback_ww` configured. A module that fails to
 load is logged loudly (an `ERROR` with a traceback in the listener log) and simply dropped,
-so the assistant stops responding to that wake word. The shipped default `hey_mycroft`
-behaves differently: its config chains through `fallback_ww` entries (tflite → precise →
-vosk → pocketsphinx), so a failed primary engine there falls back to the next engine —
-the assistant keeps listening, though each failed engine still logs its own `ERROR`
+so the assistant stops responding to that wake word.
+
+The shipped default `hey_mycroft`
+behaves differently. Its config chains through `fallback_ww` entries (tflite → precise →
+vosk → pocketsphinx), so a failed primary engine there falls back to the next engine.
+The assistant keeps listening, though each failed engine still logs its own `ERROR`
 (see [Wake-word Plugins](wake-word-plugins.md)). Full walkthrough,
 plugin choices, and tuning: [Wake-word Plugins](wake-word-plugins.md#change-your-wake-word).
 
 ## Change your voice
 
-Install the plugin's package first — unlike most tweaks on this page, this one does
-require a terminal today; there is no on-device UI for installing plugins yet. `phoonnx`
+Install the plugin's package first. Unlike most tweaks on this page, this one does
+require a terminal today. There is no on-device UI for installing plugins yet. `phoonnx`
 ships the `ovos-tts-plugin-phoonnx` plugin,
 so without it OVOS has nothing to load and the voice won't actually change. Activate the
 same Python [virtual environment](glossary.md) OVOS runs in

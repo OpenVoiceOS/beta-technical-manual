@@ -13,8 +13,8 @@
 
 Fork the repo you want to fix on GitHub first. You need the fork to push your branch, since
 only maintainers can push to [`ovos-core`](https://github.com/OpenVoiceOS/ovos-core) itself.
-The worked examples below all use `ovos-core`; for any other repo, substitute its name in the
-clone URL, extras, and console scripts — the pattern is identical, but check that repo's own
+The worked examples below all use `ovos-core`. For any other repo, substitute its name in the
+clone URL, extras, and console scripts. The pattern is identical, but check that repo's own
 `pyproject.toml` for its exact extras (some use `tests` instead of `test`).
 Then clone your fork and create an isolated virtual environment for it. `uv` is faster than
 plain `venv`/`pip` and works the same way:
@@ -84,7 +84,7 @@ ovos-core &
 To hack on just one piece, install only that repo editable and install the rest of the stack
 normally (from PyPI, in the same virtual environment or a separate one that shares the same
 messagebus host/port). Point every service at the same messagebus by giving them the same
-[configuration](config.md); the bus address is not hardcoded. For example, to debug a skill
+[configuration](config.md). The bus address is not hardcoded. For example, to debug a skill
 loading problem, run a normal `ovos-messagebus`, `ovos-audio`, and `ovos-dinkum-listener` from
 PyPI, and only `ovos-core` from your editable checkout.
 
@@ -97,7 +97,7 @@ in the [`ovos-workshop`](https://github.com/OpenVoiceOS/OVOS-workshop) repo:
   driven by `SkillManager.load_plugin_skills` in `ovos_core/skill_manager.py`) use
   `PluginSkillLoader`, whose `_load()` does **not** start a file watcher. Editing the skill's
   source while `ovos-core` is running does not reload it, because Python has already imported
-  the module. Restart `ovos-core` to pick up the change; it is fast, and `ovos-core` reloads
+  the module. Restart `ovos-core` to pick up the change. Restarting is fast, and `ovos-core` reloads
   every plugin skill on the next startup scan.
 - **A single skill run standalone** with the `ovos-skill-launcher` console script (from
   `ovos-workshop`, entry point `ovos_workshop.skill_launcher:_launch_script`) does get real
@@ -166,7 +166,7 @@ ovos-logs list --debug
 
 ## Running tests
 
-Install the repo's `test` extra (check the exact name; some repos use `tests`, see above) and
+Install the repo's `test` extra (check the exact name, since some repos use `tests`, see above) and
 run `pytest`:
 
 ```bash
@@ -177,9 +177,9 @@ pytest
 Test layout is consistent across the core repos: a top-level `test/` directory (not `tests/`)
 with a `unittests/` subdirectory, and `end2end/` for repos that ship end-to-end suites
 (`ovos-core`, `ovos-audio`). `ovos-dinkum-listener` configures `[tool.pytest.ini_options]` in
-its own `pyproject.toml`; check that section if `pytest` does not pick up its tests
+its own `pyproject.toml`. Check that section if `pytest` does not pick up its tests
 automatically. `ovoscope` (installed as part of most `test` extras) is the same in-process
-end-to-end tool used for skill and plugin testing; see [Test Your Skill](testing-your-skill.md)
+end-to-end tool used for skill and plugin testing. See [Test Your Skill](testing-your-skill.md)
 for how it works.
 
 ---

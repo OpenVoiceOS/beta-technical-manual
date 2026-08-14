@@ -69,7 +69,7 @@ See [TTS plugins](tts-plugins.md) for fully offline voices if you'd rather not d
 
 ## MCP
 
-Like the STT, translate, and persona servers — all four moved to explicit opt-in —
+The STT, translate, and persona servers all moved to explicit opt-in, and so did this one.
 `ovos-tts-server` mounts its MCP endpoint only when started with the `--mcp` flag (installing
 the `mcp` extra alone is not enough):
 
@@ -85,9 +85,9 @@ flag. If MCP tool calls 404, check that `--mcp` was actually passed.
 
 !!! note "The `mcp` extra installs `fastmcp`, not the `mcp` SDK"
     The extra keeps the name `mcp`, but it resolves the third-party `fastmcp>=3,<4` package, not
-    the official `mcp` SDK — MCP SDK 2.0 removed `mcp.server.fastmcp.FastMCP`, so a server still
-    importing that symbol fails to start on the 2.x SDK. This server *serves* MCP with `fastmcp`;
-    a client consuming a different MCP server (like `ovos-mcp-toolbox`, see
+    the official `mcp` SDK. MCP SDK 2.0 removed `mcp.server.fastmcp.FastMCP`, so a server still
+    importing that symbol fails to start on the 2.x SDK. This server *serves* MCP with `fastmcp`.
+    A client consuming a different MCP server (like `ovos-mcp-toolbox`, see
     [Agent Tool Plugins](tool-plugins.md)) uses the official `mcp` SDK instead.
 
 Config keys:
@@ -108,7 +108,7 @@ Config keys:
 
 ## Docker Deployment
 
-Plain Docker works today — a working `Dockerfile` follows below. What is still **upcoming** is
+Plain Docker works today. A working `Dockerfile` follows below. What is still **upcoming** is
 only a ready-made Docker *Compose* proxy setup for this server.
 
 !!! tip "An interim path: some TTS plugins ship their own Docker image"

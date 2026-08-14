@@ -70,12 +70,12 @@ browser as it is broadcast. Install it with `pip install ovos-busmon`.
 
 ## From a non-Python client: the JSON round trip
 
-The bus speaks plain JSON frames over a WebSocket, so any language works — Dart, Kotlin,
+The bus speaks plain JSON frames over a WebSocket, so any language works: Dart, Kotlin,
 JavaScript, anything with a WebSocket client. This is the full loop a companion app needs.
-(Reminder: the raw bus has no auth — on anything beyond localhost, connect through
-[HiveMind](hivemind-agents.md) instead; the frames below stay the same, HiveMind wraps them.)
+(Reminder: the raw bus has no auth. On anything beyond localhost, connect through
+[HiveMind](hivemind-agents.md) instead. The frames below stay the same, and HiveMind wraps them.)
 
-Send an utterance (text in — as if the user had spoken it):
+Send an utterance (text in, as if the user had spoken it):
 
 ```json
 {"type": "ovos.utterance.handle",
@@ -91,8 +91,8 @@ The reply arrives as a `speak` frame (spec topic `ovos.utterance.speak`):
  "context": {"session": {"session_id": "my-app"}}}
 ```
 
-To receive the synthesized **audio** over the same channel — instead of the server playing
-it on its own speakers — use the remote-rendering request (spec topic
+To receive the synthesized **audio** over the same channel, instead of the server playing
+it on its own speakers, use the remote-rendering request (spec topic
 `ovos.utterance.speak.b64`, legacy `speak:b64_audio`):
 
 ```json
@@ -105,11 +105,11 @@ it on its own speakers — use the remote-rendering request (spec topic
 file, alongside `tts_id` and the echoed `utterance`. With `"listen": true` the service also
 emits `ovos.mic.listen` afterwards, re-opening the client's input channel.
 
-Two things to keep straight for multi-turn state: the session travels **per message** —
-carry the full serialized session object in `context.session` on every frame and replay
+Two things to keep straight for multi-turn state: the session travels **per message**.
+Carry the full serialized session object in `context.session` on every frame and replay
 what the server sends back, not just the `session_id` (see
-[Session Aware Skills](session.md)); its exact field list is defined by the OVOS-SESSION-1
-spec rather than this manual. And filter incoming frames by your own `session_id`, since
+[Session Aware Skills](session.md)). Its exact field list is defined by the OVOS-SESSION-1
+spec rather than this manual. Also filter incoming frames by your own `session_id`, since
 the bus broadcasts every frame to every client.
 
 ---

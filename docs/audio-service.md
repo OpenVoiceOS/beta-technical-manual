@@ -40,12 +40,12 @@ music while it talks.
 
 !!! warning "Upcoming breaking change"
     The legacy media audioservice and standalone `ovos-media` currently coexist as
-    **mutually exclusive alternatives**: which one plays media is a deployer's choice —
-    don't run both at once. The legacy media audioservice subsystem (subsystem 2 above,
+    **mutually exclusive alternatives**: which one plays media is a deployer's choice.
+    Do not run both at once. The legacy media audioservice subsystem (subsystem 2 above,
     including the [OCP audioservice backend](ocp-audio-plugin.md)) is planned to stop being
     the default, with media playback moving wholly to [`ovos-media`](ovos-media.md). Opting
     in today takes **two** steps: set `enable_old_audioservice: false` **and** install and
-    run the separate `ovos-media` daemon — the flag only turns the legacy half off, it does
+    run the separate `ovos-media` daemon. The flag only turns the legacy half off. It does
     not start `ovos-media` for you. The TTS / sound playback queue (subsystem 1) is
     unaffected either way.
 
@@ -74,8 +74,8 @@ chain**, sends it to a [TTS](tts-plugins.md) engine, runs the resulting audio th
 
 The same queue also plays sound effects (`ovos.audio.queue` / `ovos.audio.play_sound`, legacy:
 `mycroft.audio.queue` / `mycroft.audio.play_sound`). A remote client can instead ask for the
-synthesized audio **back over the bus** — base64 in the reply, nothing played locally — via
-`ovos.utterance.speak.b64` / `ovos.audio.speech`; see the
+synthesized audio **back over the bus** (base64 in the reply, nothing played locally) via
+`ovos.utterance.speak.b64` / `ovos.audio.speech`. See the
 [JSON round trip](bus-recipes.md#from-a-non-python-client-the-json-round-trip). Separately, and only when
 `enable_old_audioservice` is on, it also hosts the legacy media audioservice for music, news, and
 streams. See the **Two independent subsystems** note at the top of this page.
@@ -98,7 +98,7 @@ streams. See the **Two independent subsystems** note at the top of this page.
 
 ## Architecture
 
-### Subsystem 1 — TTS / sound playback (always on, OVOS-AUDIO-1 §3)
+### Subsystem 1: TTS / sound playback (always on, OVOS-AUDIO-1 §3)
 
 ```mermaid
 flowchart TD
@@ -113,7 +113,7 @@ flowchart TD
 
 *Diagram:* The flow starts at the message bus and ends at the speakers, and it branches so that a play_sound event skips the dialog- and TTS-transformers and joins the queue directly.
 
-### Subsystem 2 — legacy media audioservice (only if `enable_old_audioservice`)
+### Subsystem 2: legacy media audioservice (only if `enable_old_audioservice`)
 
 ```mermaid
 flowchart LR
@@ -125,7 +125,7 @@ flowchart LR
 
 ## Audio feedback cues (earcons)
 
-Short status sounds are the assistant's non-verbal feedback channel — for an eyes-free or
+Short status sounds are the assistant's non-verbal feedback channel, and for an eyes-free or
 screen-reader user they are the *only* status channel, standing in for whatever a sighted
 user would read off a display. They are configured under the top-level `sounds` section of
 `mycroft.conf` and delivered as instant sounds over `ovos.audio.play_sound` (legacy alias
@@ -140,8 +140,8 @@ user would read off a display. They are configured under the top-level `sounds` 
 | `sounds.cancel` | The utterance was aborted by a cancel word before matching. Unlike the four keys above, this one has **no entry in the shipped `mycroft.conf`** (so it is absent from the [generated key table](config-all-keys.md)) — the code default `snd/cancel.mp3` applies until you set it |
 
 Point any key at your own audio file to swap a cue for something more distinguishable. So
-"I heard the error beep" means the request reached the intent stage and nothing matched;
-error beeps at *install* time come from the skill installer's `pip_error` (which defaults to
+"I heard the error beep" means the request reached the intent stage and nothing matched,
+while error beeps at *install* time come from the skill installer's `pip_error` (which defaults to
 the same file). See [Accessibility](accessibility.md) for the eyes-free interaction picture
 and [Bus Events Reference](bus-events.md) for the `play_sound` topics.
 
