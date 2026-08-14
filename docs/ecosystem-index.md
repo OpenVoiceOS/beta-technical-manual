@@ -223,7 +223,7 @@ There are roughly **260** public, non-archived repositories in the [`OpenVoiceOS
     | [ovos-tts-plugin-lux](https://github.com/OpenVoiceOS/ovos-tts-plugin-lux) | LuxTTS plugin for OpenVoiceOS voice assistant platform. | [TTS plugins](#tts-plugins-18) |
     | [ovos-tts-plugin-marytts](https://github.com/OpenVoiceOS/ovos-tts-plugin-marytts) | TTS Plugin for MaryTTS. | [TTS plugins](#tts-plugins-18) |
     | [ovos-tts-plugin-mimic](https://github.com/OpenVoiceOS/ovos-tts-plugin-mimic) | OVOS TTS plugin for Mimic. | [TTS plugins](#tts-plugins-18) |
-    | [ovos-tts-plugin-omnivoice](https://github.com/OpenVoiceOS/ovos-tts-plugin-omnivoice) | No packaged release yet - a TTS plugin wrapping OmniVoice, a massively multilingual (600+... | [TTS plugins](#tts-plugins-18) |
+    | [ovos-tts-plugin-omnivoice](https://github.com/OpenVoiceOS/ovos-tts-plugin-omnivoice) | A TTS plugin wrapping OmniVoice, a massively multilingual (600+... | [TTS plugins](#tts-plugins-18) |
     | [ovos-tts-plugin-pico](https://github.com/OpenVoiceOS/ovos-tts-plugin-pico) | OpenVoiceOS TTS plugin for PicoTTS. | [TTS plugins](#tts-plugins-18) |
     | [ovos-tts-plugin-polly](https://github.com/OpenVoiceOS/ovos-tts-plugin-polly) | Requires Amazon access key. | [TTS plugins](#tts-plugins-18) |
     | [ovos-tts-plugin-SAM](https://github.com/OpenVoiceOS/ovos-tts-plugin-SAM) | OpenVoiceOS TTS plugin for S.A.M - Software Automatic Mouth. | [TTS plugins](#tts-plugins-18) |
@@ -542,7 +542,7 @@ Each registers under the `opm.stt` entry-point group and is loaded by ovos-dinku
 Most register under the `opm.tts` entry-point group and are loaded by ovos-audio (or ovos-tts-server) when selected as the active text-to-speech engine, unless noted otherwise.
 
 **[ovos-tts-plugin-omnivoice](https://github.com/OpenVoiceOS/ovos-tts-plugin-omnivoice)**
-:   ⚠️ No packaged release yet — a TTS plugin wrapping OmniVoice, a massively multilingual (600+ language) zero-shot text-to-speech model with no fixed speaker catalog, supporting auto voice selection, free-text voice design, and short-clip voice cloning. Registers under `opm.tts`; loaded by ovos-audio when selected as the active TTS engine.
+:   A TTS plugin wrapping OmniVoice, a massively multilingual (600+ language) zero-shot text-to-speech model with no fixed speaker catalog, supporting auto voice selection, free-text voice design, and short-clip voice cloning. Registers under `opm.tts`; loaded by ovos-audio when selected as the active TTS engine.
 
 **[ovos-tts-plugin-SAM](https://github.com/OpenVoiceOS/ovos-tts-plugin-SAM)**
 :   OpenVoiceOS TTS plugin for S.A.M - Software Automatic Mouth.

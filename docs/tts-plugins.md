@@ -122,7 +122,7 @@ separately-licensed model or a paid cloud service, that is called out under "mod
 | [ovos-tts-plugin-pico](tts-plugins-reference.md#ovos-tts-plugin-pico) | SVOX Pico lightweight offline text-to-speech. | Apache-2.0 | Mature |
 | [ovos-tts-plugin-lux](https://github.com/OpenVoiceOS/ovos-tts-plugin-lux) | LuxTTS: zipvoice-based voice-cloning TTS (48 kHz, en-US). *(not yet packaged, no dedicated section, see repo)* | Apache-2.0 | Beta |
 | [ovos-tts-plugin-phoonnx](tts-plugins-reference.md#ovos-tts-plugin-phoonnx) | Built into [phoonnx](https://pypi.org/project/phoonnx), OVOS's own ONNX-based multilingual neural TTS engine. It is the default choice for fully offline synthesis, with automatic model fetching. | Apache-2.0 (code); models: see model card | Stable |
-| [ovos-tts-plugin-omnivoice](https://github.com/OpenVoiceOS/ovos-tts-plugin-omnivoice) | Wraps [OmniVoice](https://github.com/k2-fsa/OmniVoice), a massively multilingual (600+ languages) zero-shot TTS model with `auto`, voice-design (`instruct`), and voice-cloning (`ref_audio`) modes. Warning: no packaged release yet, install from source. *(not yet packaged, no dedicated section, see repo)* | Apache-2.0 (model: see model card) | Alpha |
+| [ovos-tts-plugin-omnivoice](https://github.com/OpenVoiceOS/ovos-tts-plugin-omnivoice) | Wraps [OmniVoice](https://github.com/k2-fsa/OmniVoice), a massively multilingual (600+ languages) zero-shot TTS model with `auto`, voice-design (`instruct`), and voice-cloning (`ref_audio`) modes. *(alpha on PyPI, no dedicated section, see repo)* | Apache-2.0 (model: see model card) | Alpha |
 
 --8<-- "snippets/maturity-disclaimer.md"
 
