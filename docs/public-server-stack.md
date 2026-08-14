@@ -21,7 +21,9 @@
 The pattern is the same in all three: a plugin does the work, a thin FastAPI
 server puts it on HTTP, and a client plugin on the device points at the URL. The
 device-side plugins are `ovos-tts-plugin-server`, `ovos-stt-plugin-server`, and
-`ovos-translate-server-plugin`. Each is configured with a `url` and nothing else.
+`ovos-translate-server-plugin`. Each is pointed at the server with one config key —
+`host` for the TTS and translate plugins, `urls` (a list) for the STT plugin — plus a
+few optional plugin-specific keys such as timeouts.
 
 All three run ONNX models on CPU. There is no GPU in this deployment and none is
 required. The choice of ONNX runtimes throughout is what makes a single
