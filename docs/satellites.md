@@ -149,7 +149,7 @@ separate project with its own protocol and docs.
     ```
 
     `set-identity` with no arguments raises: it needs at least one of `--key`, `--password`
-    or `--siteid` (the error message also mentions host, but `--host` alone does not
+    or `--siteid` (`--host` alone does not
     satisfy the check).
 
 4. Verify with `hivemind-client test-identity` before trusting the link.

@@ -75,9 +75,9 @@ hivemind-core add-client       # prints an access key + password for one client
 
 This writes the client to the server's credentials database (under
 `xdg_data_home()/hivemind-core`), separate from the server config at
-`~/.config/hivemind-core/server.json`. To rename a client later, run
-`hivemind-core rename-client <node_id> --name <new_name>`. `<node_id>` accepts either the
-numeric id or the access key, and `--name` is required.
+`~/.config/hivemind-core/server.json`. The
+[community docs](https://jarbashivemind.github.io/HiveMind-community-docs/) cover the rest
+of the admin CLI.
 
 **2. Start the server:**
 
@@ -100,10 +100,8 @@ pip install hivemind-bus-client   # repo name is hivemind-websocket-client
 hivemind-client set-identity --key <access_key> --password <password> --host <server>
 ```
 
-Bare `hivemind-client set-identity` with no flags raises a `ValueError`. It needs at least
-one of `--key`, `--password` or `--siteid` (`--host` alone does not satisfy the check, even
-though the error message mentions it). Use the access key and password printed by
-`add-client` in step 1.
+Use the access key and password printed by `add-client` in step 1 — `set-identity` needs at
+least one of `--key`, `--password` or `--siteid`.
 
 After `set-identity`, clients (and the [solver](#using-hivemind-as-a-solver) below) can connect
 without being handed connection details each time.
@@ -197,19 +195,14 @@ This split is the real "voice satellite" story: cheap devices listen and speak, 
 
 ## Permissions & access control
 
-HiveMind is **deny-by-default**: a client may only do what it has been explicitly granted.
-`hivemind-core` enforces this at the message-type level with a `PolicyChain` of pluggable
-`PolicyPlugin`s, including `MessageTypeACLPolicy`, that checks every inbound message. Its
-admin CLI manages this, including:
-
-- `add-client` / `list-clients` / `delete-client`: manage who may connect.
-- `allow-msg` / `blacklist-msg`: allow or block specific bus message types per client.
-- `make-admin` / `revoke-admin`, `allow-escalate` / `allow-propagate`: elevate or restrict a client.
-- `blacklist-skill` / `allow-skill`, `blacklist-intent` / `allow-intent`: stop or re-allow a
-  client from reaching specific skills or intents. These verbs only write `skill_blacklist` and
-  `intent_blacklist` client metadata. Enforcing them against skill or intent IDs requires the
-  `OVOSAgentPolicy` plugin (from `hivemind-ovos-agent-plugin`) to be present in the server's
-  policy chain. The CLI verbs alone block nothing without it.
+HiveMind is **deny-by-default**: a client may only do what it has been explicitly granted,
+enforced per message type. The
+[Security & Permissions community docs](https://jarbashivemind.github.io/HiveMind-community-docs/concepts/security/)
+cover the model and the admin CLI. One OVOS-side caveat: the skill/intent blacklist verbs
+(`blacklist-skill`, `blacklist-intent`, and their allow counterparts) only write client
+metadata — enforcing them requires the `OVOSAgentPolicy` plugin (from
+`hivemind-ovos-agent-plugin`) in the server's policy chain. The CLI verbs alone block
+nothing without it.
 
 This is what makes HiveMind safe to expose to satellites or other users, unlike the plain
 [persona-server](persona-server.md), which is HTTP with no auth.
@@ -290,17 +283,6 @@ satellites or untrusted networks.
 
 > ⚠️ The plain [`persona-server`](persona-server.md) is **HTTP only, not encrypted or
 > authenticated**. Keep it on a trusted local network. Use HiveMind for anything remote.
-
-### Store-and-forward mail between offline peers (rendezvous)
-
-A hivemind node can act as a dead drop for peers that are never online at the same time
-(`hivemind-core` 4.13.x): install the optional `hivemind-rendezvous` package and set
-`rendezvous.enabled: true` (default off — holding other nodes' mail is a role an operator
-opts into; `rendezvous.max_pending_per_mailbox` bounds each mailbox, default 256). Each
-mailbox is addressed by the access key the connection authenticated with, never by anything
-in the request, so only a client that proved an identity in the handshake can read that
-identity's mail. Nodes without the role answer `not_a_rendezvous_node` instead of dropping
-the frame, so a peer can tell "no mail" from "wrong node" and fail over.
 
 ---
 
