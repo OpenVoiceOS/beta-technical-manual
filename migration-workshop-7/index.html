@@ -1639,7 +1639,10 @@ once, not as separable steps.</p>
 (2025-06-07/08). Each is a separate breaking change to the <code>OVOSSkill</code>
 family. If you are jumping from a pre-2025-06 workshop version to anything
 after <code>7.0.0</code>, expect all four of these to apply at once.</p>
-<p><strong>v4.0.0: <code>FallbackSkill.can_answer</code> becomes abstract.</strong></p>
+<p><strong>v4.0.0: <code>FallbackSkill.can_answer</code> becomes mandatory.</strong> (At 4.0.0 the base
+implementation raised <code>NotImplementedError</code> at runtime; true <code>abc.ABCMeta</code> enforcement —
+the skill refusing to load without an implementation — arrived later, in 9.3.9a1. See
+<a href="../fallbacks/">Fallback Skills</a>.)</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># old: default True if any handler registered, no override needed</span>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="k">class</span> <span class="nc">MySkill</span><span class="p">(</span><span class="n">FallbackSkill</span><span class="p">):</span>
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>    <span class="k">def</span> <span class="nf">handle_fallback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>

@@ -1763,7 +1763,7 @@
 <p><code>ConverseService.match()</code> iterates active skills in priority order</p>
 </li>
 <li>
-<p>It first pings each active skill via <code>{skill_id}.converse.ping</code> and waits up to <code>0.5s</code> for <code>skill.converse.pong</code> acknowledgements (<code>can_handle</code>) to learn which skills are willing to converse</p>
+<p>It first pings each active skill via <code>{skill_id}.converse.ping</code> and waits up to <code>0.5s</code> for <code>skill.converse.pong</code> acknowledgements (<code>can_handle</code>) to learn which skills are willing to converse. Each poll round is correlated by <code>context.utterance_id</code> (a per-utterance uuid the orchestrator stamps per OVOS-PIPELINE-1 §9.1.1, propagated by <code>Message.reply</code>/<code>forward</code>): a pong carrying a different <code>utterance_id</code> belongs to an earlier round and is discarded, so a slow skill's stale answer can never decide the wrong round</p>
 </li>
 <li>
 <p>The first willing skill (highest priority) is matched; the actual dispatch is sent as <code>{skill_id}.converse.request</code> (emitted by the <code>converse:skill</code> handler)</p>
