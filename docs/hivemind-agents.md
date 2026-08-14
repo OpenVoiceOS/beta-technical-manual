@@ -35,7 +35,7 @@
 | Piece | Role |
 |---|---|
 | **`hivemind-core`** | The server. Listens for connections, authenticates clients, enforces permissions, and routes messages to an **agent**. |
-| **Agent** | What actually answers: either a full [ovos-core](core.md) install (`hivemind-ovos-agent-plugin`) or a single [persona](personas.md) (`hivemind-persona-agent-plugin`). |
+| **Agent** | What actually answers: a full [ovos-core](core.md) install (`hivemind-ovos-agent-plugin`), a single [persona](personas.md) (`hivemind-persona-agent-plugin`), or a remote media renderer (`hivemind-player-agent-plugin`). |
 | **Satellites / clients** | The devices and apps that connect to `hivemind-core` (mic satellites, CLI clients, your own code). |
 
 `hivemind-core` is **pluggable** via the **HiveMind Plugin Manager (HPM)** across four axes.
@@ -75,7 +75,9 @@ hivemind-core add-client       # prints an access key + password for one client
 
 This writes the client to the server's credentials database (under
 `xdg_data_home()/hivemind-core`), separate from the server config at
-`~/.config/hivemind-core/server.json`.
+`~/.config/hivemind-core/server.json`. To rename a client later, run
+`hivemind-core rename-client <node_id> --name <new_name>`. `<node_id>` accepts either the
+numeric id or the access key, and `--name` is required.
 
 **2. Start the server:**
 
@@ -124,7 +126,7 @@ on the configured host and port. Also check that the access key matches one prin
 
 ---
 
-## Choosing the agent: full OVOS vs a single persona
+## Choosing the agent: full OVOS, a single persona, or a media renderer
 
 The agent is selected by the `agent_protocol.module` key in `~/.config/hivemind-core/server.json`.
 
@@ -137,6 +139,12 @@ clients get the whole assistant: skills, pipelines, OCP, and more.
 
 Exposes just one [persona](personas.md), with no `ovos-core` and no messagebus, so the attack
 surface stays minimal. It answers straight from the configured persona.
+
+Pointing the persona at an OpenAI-compatible endpoint, as in the example below, is a working
+LLM-fallback deployment: the remote node just forwards chat to that endpoint. Pin
+`ovos-persona>=0.9.0a17`. Versions before that mixed up the `lang` and `system_unit` arguments
+in `Persona.chat`/`Persona.stream`, which could break a retrieval-backed persona or 500 the
+`/v1/chat/completions` endpoint.
 
 ```json
 {
@@ -161,6 +169,15 @@ The `persona` value may be an inline config dict, as above, or a path to an
 [ovos-persona](https://github.com/OpenVoiceOS/ovos-persona) JSON file (`~` is expanded). The
 `"module"` value must equal the plugin's entry-point name. That same string is reused as the
 key holding its config.
+
+### A remote media renderer: `hivemind-player-agent-plugin`
+
+Ships in the [`hivemind-media-player`](https://github.com/JarbasHiveMind/hivemind-media-player)
+repo, as the `hivemind-player-agent-plugin` entry point under the `hivemind.agent.protocol`
+group. Set `agent_protocol.module` to it and the node runs `ovos-audio` and OCP as a remote
+media renderer. Any OCP-speaking client can send it play/pause/seek commands over HiveMind. It
+answers no natural-language queries; a `natural_language_query` yields only the end-of-query
+sentinel.
 
 ---
 
