@@ -134,45 +134,39 @@ Qt client. Values may be strings, numbers, booleans, or lists.
 }
 ```
 
-**List operations** (for list-typed session values):
+**List operations.** The shipping service emits `mycroft.session.list.*` messages only for
+the reserved `mycroft.system.active_skills` namespace stack, always with a `data` key —
+there is no per-skill list-property protocol (and no `mycroft.session.list.update`
+producer at all). A namespace entering the active stack:
 
 ```json
 {
   "type": "mycroft.session.list.insert",
-  "namespace": "ovos-skill-weather",
-  "property": "forecast",
+  "namespace": "mycroft.system.active_skills",
   "position": 0,
-  "values": [{"date": "tomorrow", "temperature": 13}]
+  "data": [{"skill_id": "ovos-skill-weather.openvoiceos"}]
 }
 ```
 
-```json
-{
-  "type": "mycroft.session.list.update",
-  "namespace": "ovos-skill-weather",
-  "property": "forecast",
-  "position": 0,
-  "values": [{"date": "tomorrow", "temperature": 15}]
-}
-```
+An already-active namespace moving to the front:
 
 ```json
 {
   "type": "mycroft.session.list.move",
-  "namespace": "ovos-skill-weather",
-  "property": "forecast",
+  "namespace": "mycroft.system.active_skills",
   "from": 2,
   "to": 0,
   "items_number": 1
 }
 ```
 
+A namespace leaving the stack:
+
 ```json
 {
   "type": "mycroft.session.list.remove",
-  "namespace": "ovos-skill-weather",
-  "property": "forecast",
-  "position": 0,
+  "namespace": "mycroft.system.active_skills",
+  "position": 2,
   "items_number": 1
 }
 ```

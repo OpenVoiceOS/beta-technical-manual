@@ -226,8 +226,10 @@ section overrides the location and rotation:
     }
   }
 }
-``` Each service gets its own
-file named after it (`skills.log`, `bus.log`, `audio.log`, `voice.log`, `gui.log`, ...).
+```
+
+Each service gets its own file named after it (`skills.log`, `bus.log`, `audio.log`,
+`voice.log`, `gui.log`, ...).
 
 `ovos-utils` also ships a small CLI, `ovos-logs`, for navigating those files without hunting
 through each one by hand:

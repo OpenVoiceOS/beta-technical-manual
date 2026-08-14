@@ -22,7 +22,7 @@ The following workflows post their results as named sections in a **single share
 
 | Workflow | Section title | Tag emoji |
 |----------|---------------|-----------|
-| `ovoscope.yml` | `Skill Tests (ovoscope)` | plug |
+| `ovoscope.yml` | `Skill Tests (ovoscope)` (+ `Bus Coverage`) | plug (+ bus) |
 | `intent-case-tests.yml` | `Intent-Case Accuracy` | target |
 | `tts-intelligibility.yml` | `TTS Intelligibility` | speaking head |
 | `coverage.yml` | `Coverage` | bar chart |

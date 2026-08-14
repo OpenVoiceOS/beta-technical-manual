@@ -102,8 +102,8 @@ Returns a list of well-known config paths. Treat it as a rough guide, not as the
 
 - `~/.mycroft/mycroft.conf` is in the list but is never loaded. Only `find_user_config()`
   looks at it.
-- `/etc/xdg/mycroft/mycroft.conf` is **not** in the list, but it is loaded, and it wins over
-  the user config.
+- `/etc/xdg/mycroft/mycroft.conf` is **not** in the list, but it is loaded — merged just
+  before the user config, so the user's own file wins over it.
 - The order differs from the merge: here the remote layer sits fourth (after default, distribution, and system), while
   `load_all_configs()` merges it second, just above the bundled default.
 - The path environment variables below are ignored — the function rebuilds
