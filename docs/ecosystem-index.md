@@ -113,7 +113,7 @@ There are roughly **260** public, non-archived repositories in the [`OpenVoiceOS
     | [ovos-option-matcher-fuzzy-plugin](https://github.com/OpenVoiceOS/ovos-option-matcher-fuzzy-plugin) | A fuzzy-matching `OptionMatcherEngine` plugin, used to pick the closest matching item... | [Meta & infrastructure / other components](#meta-infrastructure-other-components-46) |
     | [ovos-org-website](https://github.com/OpenVoiceOS/ovos-org-website) | Test repo for ovos webpage. | [Project infrastructure (web/blog)](#project-infrastructure-webblog-4) |
     | [ovos-padatious-pipeline-plugin](https://github.com/OpenVoiceOS/ovos-padatious-pipeline-plugin) | An efficient and agile neural network intent parser, implemented in pure numpy with a... | [Pipeline / Intent plugins](#pipeline-intent-plugins-10) |
-    | [ovos-persona](https://github.com/OpenVoiceOS/ovos-persona) | The PersonaPipeline brings multi-persona management to OpenVoiceOS (OVOS), enabling... | [Agent Engine plugins](#agent-engine-plugins-8) |
+    | [ovos-persona](https://github.com/OpenVoiceOS/ovos-persona) | The persona pipeline (the `PersonaService` class) brings multi-persona management to OpenVoiceOS (OVOS), enabling... | [Agent Engine plugins](#agent-engine-plugins-8) |
     | [ovos-persona-server](https://github.com/OpenVoiceOS/ovos-persona-server) | A single HTTP server that exposes one OVOS Persona as eight concurrent API surfaces - so... | [Agent Engine plugins](#agent-engine-plugins-8) |
     | [ovos-PHAL](https://github.com/OpenVoiceOS/ovos-PHAL) | Plugin based Hardware Abstraction Layer. | [PHAL plugins](#phal-plugins-18) |
     | [ovos-PHAL-plugin-alsa](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-alsa) | controls system volume with alsa. | [PHAL plugins](#phal-plugins-18) |
@@ -659,7 +659,7 @@ Most register under the `opm.tts` entry-point group and are loaded by ovos-audio
 :   Give your OpenVoiceOS persona a memory. Used by ovos-persona and the Common Query/fallback pipelines (via Agent Engines) to answer free-form questions or drive agentic behavior.
 
 **[ovos-persona](https://github.com/OpenVoiceOS/ovos-persona)**
-:   The PersonaPipeline brings multi-persona management to OpenVoiceOS (OVOS), enabling interactive conversations with virtual assistants. 🎙️ With personas, you can customize how queries are handled by assigning specific solvers to each persona. Used by ovos-persona and the Common Query/fallback pipelines (via Agent Engines) to answer free-form questions or drive agentic behavior.
+:   The persona pipeline (the `PersonaService` class) brings multi-persona management to OpenVoiceOS (OVOS), enabling interactive conversations with virtual assistants. 🎙️ With personas, you can customize how queries are handled by assigning specific solvers to each persona. Used by ovos-persona and the Common Query/fallback pipelines (via Agent Engines) to answer free-form questions or drive agentic behavior.
 
 **[ovos-persona-server](https://github.com/OpenVoiceOS/ovos-persona-server)**
 :   A single HTTP server that exposes one OVOS Persona as eight concurrent API surfaces — so any LLM client (OpenAI SDK, LangChain, Ollama tools, Anthropic SDK, Google Gemini SDK, Cohere SDK, HuggingFace TGI client, AWS Bedrock client, or any A2A agent) can talk to your OVOS persona without changes. Used by ovos-persona and the Common Query/fallback pipelines (via Agent Engines) to answer free-form questions or drive agentic behavior.

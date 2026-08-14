@@ -40,7 +40,7 @@ There are **two SJ201 revisions**, and they need slightly different setup:
 |---|---|---|
 | SJ201 board | revision 6 | revision 10 |
 | Tell-tale | exposes an `attiny1614` micro-controller on the i2c bus | no `attiny1614` |
-| Fan control | needs the [`ovos-PHAL-plugin-mk2-v6-fan-control`](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-mk2-v6-fan-control) plugin | PWM fan handled by a device-tree overlay |
+| Fan control | needs the [`ovos-PHAL-plugin-mk2-v6-fan-control`](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-mk2-v6-fan-control) plugin (`pip install ovos-PHAL-plugin-mk2-fan-control` — the pip name has no `v6`) | PWM fan handled by a device-tree overlay |
 
 The [ovos-installer](ovos-installer.md) tells them apart automatically by probing the i2c bus: a
 Raspberry Pi 4 with the `tas5806` amplifier present is treated as the "Mark 2 family", and if an

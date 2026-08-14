@@ -42,7 +42,7 @@
 - **GitHub**: [OpenVoiceOS/ovos-persona](https://github.com/OpenVoiceOS/ovos-persona)
 
 
-- **Description**: The **`PersonaPipeline`** brings multi-persona management to OpenVoiceOS (OVOS), enabling interactive conversations with virtual assistants. With personas, you can customize how queries are handled by assigning specific solvers to each persona.
+- **Description**: The persona pipeline (the **`PersonaService`** class) brings multi-persona management to OpenVoiceOS (OVOS), enabling interactive conversations with virtual assistants. With personas, you can customize how queries are handled by assigning specific solvers to each persona.
 
 ---
 

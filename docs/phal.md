@@ -255,10 +255,10 @@ skill as a voice frontend.
 | [ovos-PHAL-plugin-pulseaudio](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-pulseaudio) | Controls system volume with PulseAudio |
 | [ovos-PHAL-plugin-system](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system) | Reboot, shutdown, factory reset, and other system commands (admin) |
 | [ovos-PHAL-plugin-mk1](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-mk1) | Mycroft Mark 1 hardware integration |
-| [ovos-PHAL-plugin-mk2-v6-fan-control](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-mk2-v6-fan-control) | Fan control for the Mycroft Mark 2 dev kit |
+| [ovos-PHAL-plugin-mk2-v6-fan-control](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-mk2-v6-fan-control) | Fan control for the Mycroft Mark 2 dev kit. The pip package is `ovos-PHAL-plugin-mk2-fan-control` (no `v6`) |
 | [ovos-PHAL-plugin-dotstar](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-dotstar) | Dotstar/APA102 LED ring driver for Respeaker mic HATs and the Adafruit Voice Bonnet |
-| [ovos-PHAL-plugin-respeaker-2mic](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-respeaker-2mic) | ReSpeaker 2-mic HAT support |
-| [ovos-PHAL-plugin-respeaker-4mic](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-respeaker-4mic) | ReSpeaker 4-mic HAT support |
+| [ovos-PHAL-plugin-respeaker-2mic](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-respeaker-2mic) | ReSpeaker 2-mic HAT support. **Warning**: archived, not on PyPI |
+| [ovos-PHAL-plugin-respeaker-4mic](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-respeaker-4mic) | ReSpeaker 4-mic HAT support. **Warning**: archived, not on PyPI |
 | [ovos-PHAL-plugin-wifi-setup](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-wifi-setup) | Central Wi-Fi setup. Warning: archived, deprecated. See [ovos-PHAL-plugin-network-manager](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-network-manager) |
 | [ovos-PHAL-plugin-gui-network-client](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-gui-network-client) | GUI-based Wi-Fi setup. Warning: archived, deprecated. See [ovos-PHAL-plugin-network-manager](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-network-manager) |
 | [ovos-PHAL-plugin-balena-wifi](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-balena-wifi) | Wi-Fi hotspot setup. Warning: archived, deprecated. See [ovos-PHAL-plugin-network-manager](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-network-manager) |
