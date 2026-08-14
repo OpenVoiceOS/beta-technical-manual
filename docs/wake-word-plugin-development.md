@@ -9,7 +9,9 @@ All wake-word plugins inherit from the `HotWordEngine` base class provided by
 
 ### The HotWordEngine Interface
 
-This is the actual base class shipped in `ovos_plugin_manager.templates.hotwords`:
+This is the core of the base class shipped in `ovos_plugin_manager.templates.hotwords`
+(the real class also carries a `runtime_requirements` classproperty and a `shutdown()`
+compatibility wrapper for `stop()`):
 
 ```python
 class HotWordEngine:
