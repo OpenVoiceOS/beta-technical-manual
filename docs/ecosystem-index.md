@@ -739,8 +739,9 @@ Unless noted otherwise, these are part of the OVOS Common Play (OCP) media stack
 These register under the upcoming `opm.media.provider` plugin type (see [ovos-media](ovos-media.md)). The OCP pipeline calls `search()` on them directly, in-process, taking over the catalog/search half of the older OCP skill each one names.
 
 !!! note "Early days: repos public, loading not wired up yet"
-    The MediaProvider repositories are now public, and three ship PyPI alphas
-    (`ovos-media-provider-spotify`, `-soundcloud`, `-youtube-music`); the rest are repo-only.
+    The MediaProvider repositories are now public, and four ship PyPI alphas
+    (`ovos-media-provider-spotify`, `-soundcloud`, `-somafm`, `-youtube-music`); the rest
+    are repo-only.
     Installing one does nothing yet — `ovos-media` does not load `opm.media.provider`
     plugins in-process yet, so OCP skills remain the way to provide media today.
 
