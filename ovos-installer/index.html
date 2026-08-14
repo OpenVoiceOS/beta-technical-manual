@@ -1724,8 +1724,11 @@ directory of the repository.</p>
 <p>💡 <strong>LLM and Home Assistant features.</strong> Setting <code>features.llm: true</code> enables the OVOS
 Persona LLM fallback and requires the <code>llm.api_url</code>, <code>llm.key</code>, <code>llm.model</code>, and
 <code>llm.persona</code> keys (an OpenAI-compatible endpoint). Three optional tuning keys,
-<code>llm.max_tokens</code>, <code>llm.temperature</code>, and <code>llm.top_p</code>, are also accepted. A Home Assistant feature is also
-available. <strong>macOS</strong> is supported with <code>launchd</code> service management, but only with the
+<code>llm.max_tokens</code>, <code>llm.temperature</code>, and <code>llm.top_p</code>, are also accepted. A Home Assistant
+feature also exists, but has no <code>homeassistant.*</code> scenario keys: set
+<code>features.homeassistant: true</code> AND export the environment variables
+<code>HOMEASSISTANT_URL</code> and <code>HOMEASSISTANT_API_KEY</code> before running the installer,
+or the integration is enabled with empty settings. <strong>macOS</strong> is supported with <code>launchd</code> service management, but only with the
 <code>virtualenv</code> method and the <code>alpha</code> channel.</p>
 <p>💡 <strong>Satellite profile.</strong> Deploying <code>profile: satellite</code> non-interactively requires a
 <code>hivemind:</code> block giving the connection details to the OVOS core it pairs with:
