@@ -67,8 +67,8 @@ Two runtime behaviors from OVOS-TRANSFORM-1 apply in the shared service bases
 ```json
 {
   "utterance_transformers": {
-    "order": ["ovos-utterance-plugin-cancel", "ovos-utterance-normalizer"],
-    "ovos-utterance-plugin-cancel": {},
+    "order": ["ovos-utterance-cancel-plugin", "ovos-utterance-normalizer"],
+    "ovos-utterance-cancel-plugin": {},
     "ovos-utterance-normalizer": {}
   }
 }

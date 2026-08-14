@@ -185,7 +185,7 @@ flowchart LR
 ```jsonc
 "listener": {
   "ww_verifiers": {
-    "ovos-ww-verifier-plugin-speaker": {"threshold": 0.1}
+    "ovos-ww-verifier-speaker": {"threshold": 0.1}
   }
 }
 ```
