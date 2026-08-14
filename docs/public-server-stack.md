@@ -81,11 +81,13 @@ server's own page before assuming `mycroft.conf` applies:
       - ./mycroft.conf:/home/ovos/.config/mycroft/mycroft.conf:ro
     ```
 
-- The **STT server** selects and configures its STT plugin through CLI flags
-  alone. The `stt` section of `mycroft.conf` is not read. Its
-  audio/utterance transformer chains and default `lang` still come from
-  `mycroft.conf` ([STT Server](stt-server.md)).
-- The **translate server** likewise takes its engines from CLI flags and ignores
+- The **STT server** selects its STT plugin via `--engine`; the plugin's own
+  settings come from the `stt` section of `mycroft.conf` (keyed by plugin id)
+  when no explicit config is passed. Its audio/utterance transformer chains and
+  default `lang` also come from `mycroft.conf` ([STT Server](stt-server.md)).
+- The **translate server** likewise selects its engines via CLI flags
+  (`--tx-engine`/`--detect-engine`), and each plugin's own settings come from
+  the `translation.<plugin>` / `language_detection.<plugin>` sections of
   `mycroft.conf` ([Translate Server](translate-server.md)).
 
 A settings block placed in a section a service does not read is ignored

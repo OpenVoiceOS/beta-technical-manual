@@ -90,7 +90,7 @@ options:
   The server is a FastAPI app served by `uvicorn`, exposing REST endpoints.
 
 - **Plugin wrapping**  
-  `--engine` names any `opm.stt` plugin entry point (Whisper, Deepgram, and so on). It is loaded dynamically via the OVOS Plugin Manager. The server instantiates it with an empty config (built-in defaults), not the `stt` section of `mycroft.conf`.
+  `--engine` names any `opm.stt` plugin entry point (Whisper, Deepgram, and so on). It is loaded dynamically via the OVOS Plugin Manager. When no explicit config is passed, the server reads the plugin's own section from `mycroft.conf` (`stt.<plugin-id>`), matching `OVOSSTTFactory` behavior, so a mounted config file can select model, device, and other plugin settings.
 
 - **Language detection**  
   `--lang-engine` names an `opm.transformer.audio` plugin implementing `AudioLanguageDetector`. When a `/stt` request passes `lang=auto`, audio is routed through it before transcription.
