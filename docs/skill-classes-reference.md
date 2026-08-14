@@ -34,7 +34,7 @@ class MySkill(ConversationalSkill):
 
 Additional bus events registered:
 
-- `{skill_id}.converse.ping`: capability advertisement
+- `{skill_id}.converse.ping`: capability advertisement (plus the broadcast `ovos.converse.ping`, answered only when the skill is named in the session's `active_handlers`, since ovos-workshop 9.4.0a1)
 
 
 - `{skill_id}.converse.request`: converse request from pipeline

@@ -21,8 +21,9 @@
         participant S as Skill (active)
         participant O as Orchestrator
         U->>P: new utterance
-        P->>S: <skill_id>.converse.ping
-        S-->>P: skill.converse.pong
+        P-->>S: ovos.converse.ping (broadcast)
+        P->>S: <skill_id>.converse.ping (legacy, per skill)
+        S-->>P: ovos.converse.pong (or legacy skill.converse.pong)
         alt skill claims
             P->>O: Match(intent_name=converse)
             O->>S: dispatch match_type=converse:skill
