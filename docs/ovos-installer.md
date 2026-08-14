@@ -261,7 +261,7 @@ directory of the repository.
 
 > Something went wrong?
 
-If the installer fails, it generates a log file and uploads it to [dpaste.com](https://dpaste.com). Share that link on **[OVOS Chat on Matrix](https://matrix.to/#/!XFpdtmgyCoPDxOMPpH:matrix.org?via=matrix.org)** so the community can help you.
+If the installer fails, it generates a log file and offers to upload it to [paste.uoi.io](https://paste.uoi.io) (it asks before uploading). Share that link on **[OVOS Chat on Matrix](https://matrix.to/#/!XFpdtmgyCoPDxOMPpH:matrix.org?via=matrix.org)** so the community can help you.
 
 OVOS is a community-driven project, maintained by volunteers. Feedback, bug reports, and patience are welcome.
 

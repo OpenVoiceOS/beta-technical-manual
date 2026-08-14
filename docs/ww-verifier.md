@@ -152,7 +152,7 @@ Use case: household authorization, a shared-wake-word deployment where each regi
 
 ## microWakeWord Plugin
 
-> **Status:** [OpenVoiceOS/ovos-ww-plugin-microwakeword](https://github.com/OpenVoiceOS/ovos-ww-plugin-microwakeword) is in development. It is not yet published to PyPI.
+> **Status:** [OpenVoiceOS/ovos-ww-plugin-microwakeword](https://github.com/OpenVoiceOS/ovos-ww-plugin-microwakeword) is published to PyPI as an early alpha (`pip install ovos-ww-plugin-microwakeword`) and still in active development.
 
 OVOS wake-word plugin wrapping [microWakeWord](https://github.com/kahrendt/microWakeWord) TFLite streaming models from the ESPHome ecosystem. Enables zero-cost sub-1 MB wake-word models originally designed for microcontrollers.
 
