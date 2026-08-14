@@ -2198,6 +2198,9 @@ It's a different config subtree from the same-named <code>listener.VAD</code> se
 </tr>
 </tbody>
 </table>
+<p>Source: this namespace is read by <code>ovos-utils</code> (<code>ovos_utils/log.py</code>), not listed in
+<code>mycroft.conf</code> — the shipped default file carries only a commented-out top-level
+<code>log_level</code>, and the defaults above come from the code.</p>
 <hr />
 <h2 id="8-gui">8. GUI<a class="headerlink" href="#8-gui" title="Permanent link">&para;</a></h2>
 <p>The <code>gui</code> key controls the on-screen interface. The <code>gui_websocket</code> key controls the separate socket that GUI clients connect to.</p>
@@ -2259,7 +2262,7 @@ It's a different config subtree from the same-named <code>listener.VAD</code> se
 you firewall the port. Configs written before the loopback default may still carry
 <code>"0.0.0.0"</code> — check after upgrades.</p>
 </div>
-<p>Source: <code>mycroft.conf</code> lines 356 to 361 (<code>gui_websocket</code>) and lines 609 to 627 (<code>gui</code>) in <a href="https://github.com/OpenVoiceOS/ovos-config">OpenVoiceOS/ovos-config</a>.</p>
+<p>Source: the <code>gui_websocket</code> and <code>gui</code> sections of <code>mycroft.conf</code> in <a href="https://github.com/OpenVoiceOS/ovos-config">OpenVoiceOS/ovos-config</a>.</p>
 <hr />
 <h2 id="9-phal-hardware-abstraction-layer">9. PHAL (Hardware Abstraction Layer)<a class="headerlink" href="#9-phal-hardware-abstraction-layer" title="Permanent link">&para;</a></h2>
 <p>PHAL plugins read their settings from the top-level <code>PHAL</code> key, and PHAL admin plugins from <code>PHAL.admin</code>. Neither key has a default block in the shipped <code>mycroft.conf</code>. With no <code>PHAL</code> key present, every PHAL plugin loads with an empty config and its own internal defaults.</p>
@@ -2367,7 +2370,7 @@ stock install keys placed under <code>intents.OCP</code> change nothing (see
 </tr>
 </tbody>
 </table>
-<p>Source: <code>mycroft.conf</code> lines 188 to 203 (<code>intents.ovos-ocp-pipeline-plugin</code>) and lines 707 to 755 (<code>Audio</code>) in <a href="https://github.com/OpenVoiceOS/ovos-config">OpenVoiceOS/ovos-config</a>.</p>
+<p>Source: the <code>intents.ovos-ocp-pipeline-plugin</code> and <code>Audio</code> sections of <code>mycroft.conf</code> in <a href="https://github.com/OpenVoiceOS/ovos-config">OpenVoiceOS/ovos-config</a>.</p>
 <hr />
 <h2 id="11-skills">11. Skills<a class="headerlink" href="#11-skills" title="Permanent link">&para;</a></h2>
 <p>All of these live under the top-level <code>skills</code> key.</p>
@@ -2447,7 +2450,7 @@ stock install keys placed under <code>intents.OCP</code> change nothing (see
 </tr>
 </tbody>
 </table>
-<p>Source: <code>mycroft.conf</code> lines 235 to 304 (<code>skills</code>) in <a href="https://github.com/OpenVoiceOS/ovos-config">OpenVoiceOS/ovos-config</a>.</p>
+<p>Source: the <code>skills</code> section of <code>mycroft.conf</code> in <a href="https://github.com/OpenVoiceOS/ovos-config">OpenVoiceOS/ovos-config</a>.</p>
 <hr />
 <h2 id="12-session">12. Session<a class="headerlink" href="#12-session" title="Permanent link">&para;</a></h2>
 <table>
@@ -2466,7 +2469,7 @@ stock install keys placed under <code>intents.OCP</code> change nothing (see
 </tr>
 </tbody>
 </table>
-<p>Source: <code>mycroft.conf</code> lines 643 to 646 (<code>session</code>) in <a href="https://github.com/OpenVoiceOS/ovos-config">OpenVoiceOS/ovos-config</a>.</p>
+<p>Source: the <code>session</code> section of <code>mycroft.conf</code> in <a href="https://github.com/OpenVoiceOS/ovos-config">OpenVoiceOS/ovos-config</a>.</p>
 <hr />
 <h2 id="13-personas-agents">13. Personas / Agents<a class="headerlink" href="#13-personas-agents" title="Permanent link">&para;</a></h2>
 <p>The shipped <code>mycroft.conf</code> has no <code>persona</code> key and no default persona values. Persona and LLM-agent settings are read from the persona service's own config file, not from <code>mycroft.conf</code>. See <a href="../personas/">Personas</a> for that service's settings and file location.</p>
