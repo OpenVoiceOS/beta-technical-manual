@@ -1840,7 +1840,8 @@ settings worth advertising.</p>
 <h3 id="checklist-before-you-publish">Checklist before you publish<a class="headerlink" href="#checklist-before-you-publish" title="Permanent link">&para;</a></h3>
 <ol>
 <li><code>transform()</code> accepts and returns an <code>IntentHandlerMatch</code>, without changing
-   <code>skill_id</code> or <code>intent_name</code>.</li>
+   <code>skill_id</code> or <code>match_type</code> (the code field carrying the spec's <code>intent_name</code>) — the
+   orchestrator discards the whole result if either changes.</li>
 <li><code>__init__</code> hardcodes the plugin <code>name</code> and forwards it, plus <code>priority</code> and
    <code>config</code>, to <code>super().__init__()</code>.</li>
 <li>The entry-point group in <code>pyproject.toml</code> is <code>opm.transformer.intent</code>.</li>

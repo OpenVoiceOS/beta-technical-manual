@@ -1284,6 +1284,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Deployment patterns">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#store-and-forward-mail-between-offline-peers-rendezvous" class="md-nav__link">
+    <span class="md-ellipsis">
+      Store-and-forward mail between offline peers (rendezvous)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1530,6 +1545,21 @@
       Deployment patterns
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Deployment patterns">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#store-and-forward-mail-between-offline-peers-rendezvous" class="md-nav__link">
+    <span class="md-ellipsis">
+      Store-and-forward mail between offline peers (rendezvous)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1834,6 +1864,15 @@ satellites or untrusted networks.</p>
 <p>⚠️ The plain <a href="../persona-server/"><code>persona-server</code></a> is <strong>HTTP only, not encrypted or
 authenticated</strong>. Keep it on a trusted local network. Use HiveMind for anything remote.</p>
 </blockquote>
+<h3 id="store-and-forward-mail-between-offline-peers-rendezvous">Store-and-forward mail between offline peers (rendezvous)<a class="headerlink" href="#store-and-forward-mail-between-offline-peers-rendezvous" title="Permanent link">&para;</a></h3>
+<p>A hivemind node can act as a dead drop for peers that are never online at the same time
+(<code>hivemind-core</code> 4.13.x): install the optional <code>hivemind-rendezvous</code> package and set
+<code>rendezvous.enabled: true</code> (default off — holding other nodes' mail is a role an operator
+opts into; <code>rendezvous.max_pending_per_mailbox</code> bounds each mailbox, default 256). Each
+mailbox is addressed by the access key the connection authenticated with, never by anything
+in the request, so only a client that proved an identity in the handshake can read that
+identity's mail. Nodes without the role answer <code>not_a_rendezvous_node</code> instead of dropping
+the frame, so a peer can tell "no mail" from "wrong node" and fail over.</p>
 <hr />
 <h2 id="further-reading">Further reading<a class="headerlink" href="#further-reading" title="Permanent link">&para;</a></h2>
 <ul>
