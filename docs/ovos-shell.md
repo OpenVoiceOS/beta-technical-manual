@@ -98,7 +98,7 @@ Image {
 - Displays the active namespace stack
 
 
-- Loads QML pages via `SYSTEM:` URI → local file resolution
+- Loads QML pages from the resolved `url` paths `ovos-gui` sends, falling back to local resolution by `namespace`/`page` name when `url` is unresolved
 
 
 - Manages namespace transitions and animations

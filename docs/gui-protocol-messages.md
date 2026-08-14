@@ -184,13 +184,15 @@ Each active skill is associated with a list of page URIs.
   "type": "mycroft.gui.list.insert",
   "namespace": "ovos-skill-weather",
   "position": 0,
-  "data": [{"url": "SYSTEM:TextFrame.qml", "page": "TextFrame.qml"}]
+  "data": [{"url": "/home/ovos/.cache/ovos_gui/system/qt5/SYSTEM_TextFrame.qml", "page": "SYSTEM_TextFrame"}]
 }
 ```
 
-The `SYSTEM:` URI scheme is resolved by the Qt client to the matching system-template QML
-file (see [OVOS Shell](ovos-shell.md) for the `OVOS_SYSTEM_TEMPLATES` override and
-resolution order). Skill-provided `.qml` pages are sent as ordinary file URIs.
+The `url` is an absolute path into the GUI resource cache, resolved server-side by
+`ovos-gui` (pages whose name starts with `SYSTEM` resolve under the shared `system`
+resource namespace instead of the skill's own). When the server cannot resolve a page,
+`url` is `null` and the client is responsible for resolving the page from `namespace`
+and `page` name.
 
 **Move pages:**
 
@@ -227,9 +229,12 @@ Events can be emitted by the GUI client (e.g. user tapped a button) or by the sk
   "type": "mycroft.events.triggered",
   "namespace": "ovos-skill-weather",
   "event_name": "my.gui.event",
-  "parameters": {"item": 3}
+  "data": {"item": 3}
 }
 ```
+
+In this core → client direction the payload key is `data`. The opposite direction (client →
+core) carries the payload under `parameters` instead.
 
 #### Page focus / interaction (client → core)
 
@@ -276,7 +281,7 @@ Skill call:   self.gui.show_text("Hello", title="Greeting")
   → bus:      gui.page.show            (SYSTEM_TextFrame)
   → ovos-gui: NamespaceManager records page + data on the namespace
   → WS:       mycroft.session.list.insert (namespace into active stack)
-  → WS:       mycroft.gui.list.insert     (SYSTEM:TextFrame.qml)
+  → WS:       mycroft.gui.list.insert     (page SYSTEM_TextFrame, resolved url)
   → WS:       mycroft.session.set         (sync data to Qt)
   → Qt client renders the page
 
