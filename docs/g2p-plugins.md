@@ -4,21 +4,61 @@
     These plugins work out *how a written word should sound*. A "grapheme" is a letter you see on the page. A "phoneme" is a unit of sound you hear when it's spoken. This is the part that figures out, for example, that "knight" sounds like "nite". The voice that reads text aloud uses this to pronounce words more correctly. On-screen avatars use it to move their lips in time with the speech. For unfamiliar terms, see the [Glossary](glossary.md); to learn about the voices that speak, see [TTS Plugins](tts-plugins.md).
 
 Grapheme-to-Phoneme (G2P) plugins convert written text (graphemes) into phonemes. In practice
-this is a **Beta, Mark 1-era capability used for mouth-movement / viseme animation**. Most
-[TTS](tts-plugins.md) voices don't emit phoneme timing, so a G2P plugin *estimates* it from the
-text to drive lip-sync. Only **Mimic 1** provides phoneme timing natively. For any other voice
-the G2P plugin simulates the timing. **If you don't drive an on-screen mouth or face, you don't
-need a G2P plugin.**
+this is an **alpha-quality, Mark 1-era capability used for mouth-movement / viseme animation**:
+the original consumer was the Mark 1 faceplate, and the [enclosure API](phal-authoring.md) that
+carries the mouth frames still exists. Most [TTS](tts-plugins.md) voices don't emit phoneme
+timing, so a G2P plugin *estimates* it from the text to drive lip-sync. Only **Mimic 1**
+provides phoneme timing natively. For any other voice the G2P plugin simulates the timing with
+placeholder durations. **If you don't drive an on-screen mouth or face, you don't need a G2P
+plugin.**
 
 ## How it works
 
 A G2P plugin takes a word or an utterance and returns a list of phonemes in a specific alphabet, such as **Arpabet** or **IPA**.
+
+At runtime the viseme path lives in `ovos-audio`'s playback thread and has two legs:
+
+1. **TTS-provided timing.** A TTS plugin may return phoneme data alongside the audio. Mimic 1
+   returns real `phoneme:duration` pairs, and the TTS base class maps them to viseme codes
+   (a phoneme without a duration gets a `0.2`s placeholder). No shipped neural voice returns
+   phoneme timing.
+2. **G2P fallback.** When the synthesized audio arrives with **no** phoneme timing and a G2P
+   plugin is configured, playback calls the plugin's `utterance2visemes(utterance, lang)`
+   instead. The base implementation phonemizes word-by-word and assigns every phoneme a flat
+   `0.4`s placeholder duration (real per-phoneme duration prediction is unimplemented). A word
+   the plugin returns no phonemes for falls back to the phoneme sequence for *"blah blah"*;
+   a plugin that raises `OutOfVocabulary` instead aborts viseme generation for that utterance,
+   and playback shows no mouth movement. The result is timing that roughly tracks speech, not
+   lip-sync you could read.
+
+Either way the `(viseme, duration)` pairs go out through the enclosure API as an
+`enclosure.mouth.viseme_list` bus message (`{"start": <timestamp>, "visemes": [...]}`), which a
+faceplate driver or avatar renders. The viseme codes are the Mark 1 mouth shapes: `0` (*y*/*aa*),
+`1` (*aw*), `2` (*uh*/*r*), `3` (*th*/*sh*), `4` (neutral / no sound), `5` (*f*/*v*),
+`6` (*oy*/*ao*).
+
+## Configuration
+
+G2P is **off by default**: the shipped `mycroft.conf` has `"g2p": {"module": ""}`, and
+`ovos-audio` only loads a plugin when a module is set. The reserved module name `dummy` loads
+the bare base class (useful only for testing), and an optional `fallback_module` names a second
+plugin to try when the first fails to load:
+
+```json
+{
+  "g2p": {
+    "module": "ovos-g2p-plugin-mimic",
+    "fallback_module": ""
+  }
+}
+```
 
 ## Available G2P Plugins
 
 | Plugin | Alphabet | Description | Maturity |
 |--------|----------|-------------|----------|
 | `ovos-g2p-plugin-mimic` | ARPA | Uses the Mimic 1 engine for G2P conversion. Shipped by [ovos-tts-plugin-mimic](https://github.com/OpenVoiceOS/ovos-tts-plugin-mimic) (the TTS plugin also registers an `opm.g2p` entry point). | Beta |
+| `ovos-scriptconv-g2p-plugin` | IPA | [45 phonemizer backends behind one config switch](https://github.com/TigreGotico/ovos-scriptconv-g2p-plugin), built on [`scriptconv`](https://github.com/TigreGotico/scriptconv). | Alpha |
 
 --8<-- "snippets/maturity-disclaimer.md"
 
@@ -225,7 +265,7 @@ calls; there is nothing analogous to `StreamingTTS`. Do not add one.
 3. **Publish to PyPI.** OVOS deployments install plugins from PyPI, not from a git checkout, so a
    plugin needs a PyPI release before it can be installed by `pip install <plugin-name>` on a
    real deployment.
-4. **Remember this is Beta, Mark 1-era territory.** As the top of this page explains, G2P only
+4. **Remember this is alpha, Mark 1-era territory.** As the top of this page explains, G2P only
    matters if something consumes its viseme output for lip-sync. Confirm that use case exists
    before investing in a new plugin; most new TTS voices need no G2P plugin at all.
 
