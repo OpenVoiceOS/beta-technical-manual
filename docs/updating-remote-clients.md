@@ -82,7 +82,7 @@ out-of-the-box wire behavior is initially unchanged):
 | `recognizer_loop:audio_output_start` / `_end` | `SpecMessage.AUDIO_OUTPUT_STARTED` / `_ENDED` | ovos-dinkum-listener `d9dc04e` · mycroft-classic-listener `4458a3f` |
 | `recognizer_loop:sleep` | `SpecMessage.LISTENER_SLEEP` | ovos-dinkum-listener `d9dc04e` · mycroft-classic-listener `4458a3f` |
 | `mycroft.stop`, per-skill stop pings, `complete_intent_failure` | `ovos.stop`, `ovos.stop.ping`, `ovos.intent.unmatched` | ovos-core `f4c00d90b2` (2026-06-05) |
-| `stop.openvoiceos.stop.response` | removed, not replaced | ovos-core `2b05201705` (2026-06-29): `StopService` no longer registers itself as a skill, do not count it as a participating skill in custom global-stop aggregation |
+| `stop.openvoiceos.stop.response` | removal pending, not replaced | ovos-core `2b05201705`, **unmerged** (feature branch): would stop `StopService` registering itself as a skill. On current `dev` the legacy stop service still registers as `stop.openvoiceos`; once this lands, do not count it as a participating skill in custom global-stop aggregation |
 
 - Migration: for any deployment that explicitly sets
   `legacy_namespace: false`, subscribe to the `ovos.*` spec topics instead
