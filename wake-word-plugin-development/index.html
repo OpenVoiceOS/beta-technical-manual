@@ -1566,7 +1566,9 @@
 <p>All wake-word plugins inherit from the <code>HotWordEngine</code> base class provided by
 <code>ovos-plugin-manager</code>.</p>
 <h3 id="the-hotwordengine-interface">The HotWordEngine Interface<a class="headerlink" href="#the-hotwordengine-interface" title="Permanent link">&para;</a></h3>
-<p>This is the actual base class shipped in <code>ovos_plugin_manager.templates.hotwords</code>:</p>
+<p>This is the core of the base class shipped in <code>ovos_plugin_manager.templates.hotwords</code>
+(the real class also carries a <code>runtime_requirements</code> classproperty and a <code>shutdown()</code>
+compatibility wrapper for <code>stop()</code>):</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">class</span> <span class="nc">HotWordEngine</span><span class="p">:</span>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key_phrase</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">key_phrase</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">key_phrase</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
