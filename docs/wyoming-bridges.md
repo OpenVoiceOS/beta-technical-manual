@@ -201,8 +201,6 @@ wyoming-ovos-tts --plugin-name <ovos-tts-plugin-name> --uri tcp://0.0.0.0:7892
 | `--no-streaming` | No | `False` | Disable streaming synthesis (`SynthesizeStart`/`SynthesizeChunk`/`SynthesizeStop`); only plain `Synthesize` is handled |
 | `--samples-per-chunk` | No | `1024` | Audio samples per Wyoming `AudioChunk` |
 | `--debug` | No | `False` | Enable DEBUG log level |
-| `--log-format` | No | `logging.BASIC_FORMAT` | Format string for log messages |
-| `--version` | No | — | Print the installed version and exit |
 
 Examples:
 

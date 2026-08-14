@@ -67,7 +67,6 @@ wyoming-ovos-wakeword --uri tcp://0.0.0.0:7893
 | `--zeroconf` | No | disabled | Enable mDNS/zeroconf service discovery (optional: service name) |
 | `--debug` | No | `False` | Enable DEBUG log level |
 | `--log-format` | No | `BASIC_FORMAT` | Format string for log messages |
-| `--version` | No | — | Print the installed version and exit |
 
 Examples:
 
