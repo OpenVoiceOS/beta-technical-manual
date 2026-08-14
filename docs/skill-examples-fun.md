@@ -126,6 +126,10 @@ movie with your voice.
 ??? note "Install"
     [:material-github: OpenVoiceOS/ovos-skill-moviemaster](https://github.com/OpenVoiceOS/ovos-skill-moviemaster) · `pip install ovos-skill-moviemaster` · Maturity: Stable
 
+    The skill needs your own free [TMDb API key](https://www.themoviedb.org/settings/api) in
+    its skill settings. Without one it speaks an error instead of answering. Recent alphas no
+    longer bundle a shared key.
+
 ### ISS Location
 
 **Manual install only**
