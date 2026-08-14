@@ -1099,6 +1099,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Headless: STT/TTS servers as containers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#memory-limits-and-oom-kills" class="md-nav__link">
+    <span class="md-ellipsis">
+      Memory limits and OOM kills
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1426,6 +1441,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Headless: STT/TTS servers as containers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#memory-limits-and-oom-kills" class="md-nav__link">
+    <span class="md-ellipsis">
+      Memory limits and OOM kills
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1691,6 +1721,23 @@ satellites that only run the bus, listener, and audio locally. See
 HTTP contract and plugin-side config keys, and
 <a href="../satellites/#thin-clients-a-shared-speech-backend">Satellites: thin clients + a shared speech backend</a>
 for a worked compose example splitting the speech backend from the thin client.</p>
+<h3 id="memory-limits-and-oom-kills">Memory limits and OOM kills<a class="headerlink" href="#memory-limits-and-oom-kills" title="Permanent link">&para;</a></h3>
+<p>Two traps when you cap a speech container's memory (<code>mem_limit</code> / <code>deploy.resources</code>):</p>
+<ul>
+<li><strong>Size the limit above any application cache budget, with real headroom.</strong> A model or
+  voice cache setting bounds what the application <em>tries</em> to keep, not what the process
+  actually holds; the only hard ceiling is the cgroup limit, which the kernel enforces by
+  killing the process. If a service is being OOM-killed, raising its cache budget keeps
+  <em>more</em> resident and makes the kills more frequent, not less.</li>
+<li><strong><code>docker inspect</code> cannot tell you it happened.</strong> <code>State.ExitCode</code>, <code>State.OOMKilled</code>,
+  and <code>docker ps</code> all describe the currently running instance, so they read <code>0</code>/<code>false</code>/<code>Up</code>
+  no matter how many earlier instances died, and <code>RestartCount</code> misses worker-process kills
+  inside the container entirely. The truthful instrument is the kernel log on the host:</li>
+</ul>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>journalctl<span class="w"> </span>-k<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-iE<span class="w"> </span><span class="s2">&quot;oom-kill|Killed process&quot;</span>
+</span></code></pre></div>
+<p>A container that "keeps getting slow" while showing <code>Up</code> in <code>docker ps</code> is the classic
+presentation of this failure mode.</p>
 <h2 id="containerized-hivemind">Containerized HiveMind<a class="headerlink" href="#containerized-hivemind" title="Permanent link">&para;</a></h2>
 <p><code>ovos-docker</code> does not build or push a HiveMind image itself, but its own
 <code>compose/docker-compose.hivemind.yml</code> already ships a ready-made stack: <code>hivemind_listener</code>

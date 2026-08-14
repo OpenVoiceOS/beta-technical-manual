@@ -1824,8 +1824,15 @@ servers entirely: fully offline plugins exist for everything.</p>
 </div>
 <hr />
 <h2 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">&para;</a></h2>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pip<span class="w"> </span>install<span class="w"> </span>ovos-translate-server
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pip<span class="w"> </span>install<span class="w"> </span>--pre<span class="w"> </span><span class="s2">&quot;ovos-translate-server&gt;=0.10.0a1&quot;</span>
 </span></code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title">A bare <code>pip install ovos-translate-server</code> gets an unusable release</p>
+<p>Without <code>--pre</code> and a floor pin, pip resolves the name to the latest <strong>stable</strong> release,
+<code>0.0.2</code>, which is years behind the <code>0.10.0a1</code> line this page documents. It looks
+installed and serves nothing described here. After installing, confirm what you actually
+got: <code>pip show ovos-translate-server</code>.</p>
+</div>
 <p>Also install the translation plugin(s) you intend to serve:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>pip<span class="w"> </span>install<span class="w"> </span>ovos-translate-plugin-nllb
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>pip<span class="w"> </span>install<span class="w"> </span>ovos-lang-detector-classics-plugin
@@ -2004,7 +2011,7 @@ servers entirely: fully offline plugins exist for everything.</p>
 <h2 id="mcp-server">MCP Server<a class="headerlink" href="#mcp-server" title="Permanent link">&para;</a></h2>
 <p>A Model Context Protocol endpoint exposes the translate/detect tools to MCP clients, served with
 the third-party <code>fastmcp</code> package (<code>fastmcp&gt;=3,&lt;4</code>). It requires the <code>mcp</code> extra:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>pip<span class="w"> </span>install<span class="w"> </span><span class="s1">&#39;ovos-translate-server[mcp]&#39;</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>pip<span class="w"> </span>install<span class="w"> </span>--pre<span class="w"> </span><span class="s1">&#39;ovos-translate-server[mcp]&gt;=0.10.0a1&#39;</span>
 </span></code></pre></div>
 <div class="admonition note">
 <p class="admonition-title">The <code>mcp</code> extra installs <code>fastmcp</code>, not the <code>mcp</code> SDK</p>
@@ -2069,8 +2076,8 @@ from <code>mycroft.conf</code> via <code>Configuration()</code>, empty when unse
 <p>A minimal Dockerfile for serving a single plugin:</p>
 <div class="language-dockerfile highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="k">FROM</span><span class="w"> </span><span class="s">python:3.11</span>
 </span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>
-</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="k">RUN</span><span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>ovos-translate-server
-</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="k">RUN</span><span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>&lt;plugin-package&gt;
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="k">RUN</span><span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>--pre<span class="w"> </span><span class="s2">&quot;ovos-translate-server&gt;=0.10.0a1&quot;</span>
+</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="k">RUN</span><span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>--pre<span class="w"> </span>&lt;plugin-package&gt;
 </span><span id="__span-16-5"><a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>
 </span><span id="__span-16-6"><a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a><span class="k">ENTRYPOINT</span><span class="w"> </span>ovos-translate-server<span class="w"> </span>--tx-engine<span class="w"> </span>&lt;plugin-name&gt;
 </span></code></pre></div>

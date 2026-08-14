@@ -1522,7 +1522,10 @@ sends the search in the wrong direction (the proxy, not <code>uvicorn</code>'s t
 <p>Fix it by telling <code>uvicorn</code> which address to trust, via the <code>FORWARDED_ALLOW_IPS</code> environment
 variable (none of these four servers exposes a CLI flag for it; only <code>--host</code> and <code>--port</code> are
 their own). Scope it to the actual proxy address — for a proxy running as another container on
-the Docker bridge network, that's the bridge gateway IP (commonly <code>172.17.0.1</code>), not a wildcard:</p>
+the Docker bridge network, that's the bridge gateway IP (commonly <code>172.17.0.1</code>), not a wildcard.
+Each compose stack's network has its <strong>own</strong> gateway, so a box running several stacks needs a
+different value per stack. Read the real one with <code>docker network inspect &lt;network&gt;</code> rather
+than assuming the default bridge:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nv">FORWARDED_ALLOW_IPS</span><span class="o">=</span><span class="m">172</span>.17.0.1<span class="w"> </span>ovos-tts-server<span class="w"> </span>--engine<span class="w"> </span><span class="o">{</span>YOUR_TTS_PLUGIN<span class="o">}</span>
 </span></code></pre></div>
 <p>A wildcard (<code>FORWARDED_ALLOW_IPS=*</code>) makes <code>uvicorn</code> trust the header from any source, which
@@ -1530,7 +1533,9 @@ defeats the point of the check on a server reachable from more than one network.
 <p>To confirm this is the bug rather than something else, compare the <code>Location</code> header of a
 redirect hit directly against the container versus through the proxy: a scheme change
 (<code>https://</code> direct, <code>http://</code> through the proxy) is the whole fault, and confirms the proxy's
-address needs adding to <code>FORWARDED_ALLOW_IPS</code>.</p>
+address needs adding to <code>FORWARDED_ALLOW_IPS</code>. A convenient probe on servers with the MCP
+extra: <code>GET /mcp</code> always answers with a <code>307</code> to <code>/mcp/</code>, so through the proxy a <code>Location</code>
+starting <code>https://</code> means the trust list is right, and <code>http://</code> means it is not.</p>
 <hr />
 <p><strong>Read next:</strong> <a href="../production-operations/">Production Operations</a>
 <strong>Related:</strong> <a href="../security-model/">Security Model</a> · <a href="../satellites/">Satellites</a> · <a href="../hivemind-agents/">HiveMind Agents</a></p>

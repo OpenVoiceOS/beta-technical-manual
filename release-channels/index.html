@@ -1762,6 +1762,16 @@ channel for most distros and users. This matches upstream guidance in
 resolves, not just the <code>ovos-*</code> packages. A transitive dependency you didn't expect
 can also jump to a pre-release. Use a dedicated virtual environment for alpha testing.</p>
 </div>
+<div class="admonition warning">
+<p class="admonition-title">Omitting <code>--pre</code> silently downgrades transitive dependencies</p>
+<p>The reverse trap is worse. Installing without <code>--pre</code> still resolves a <strong>top-level</strong>
+package to a pre-release when its requested version pin names one, but every
+<strong>transitive</strong> dependency quietly falls back to its latest stable — so one service can
+end up on <code>ovos-bus-client</code> from a stable line years behind its siblings, with no
+warning at install time. After any alpha install, verify what you actually got, not
+what you asked for: <code>pip list | grep ovos</code> (or <code>uv pip list</code>) and check the key
+libraries carry the expected alpha suffix.</p>
+</div>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>ovos-core<span class="o">[</span>mycroft<span class="o">]</span><span class="w"> </span>--pre<span class="w"> </span>-c<span class="w"> </span>https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-alpha.txt
 </span></code></pre></div>
 <hr />

@@ -1652,6 +1652,9 @@ lands, check a plugin's own repository for a Dockerfile before building one by h
 </span></code></pre></div>
 <p>Pre-built containers are also available via the <a href="https://github.com/OpenVoiceOS/ovos-docker-tts">ovos-docker-tts</a>
 repository.</p>
+<p>If you cap the container's memory, size the limit well above any voice-cache budget and read
+<a href="../docker-deployment/#memory-limits-and-oom-kills">Memory limits and OOM kills</a> before
+debugging a server that keeps getting slow while showing <code>Up</code>.</p>
 <div class="admonition note">
 <p class="admonition-title">Upcoming — Docker Compose</p>
 <p>A default Docker Compose setup and custom-container documentation are <strong>Upcoming</strong>.</p>

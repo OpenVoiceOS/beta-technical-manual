@@ -1891,11 +1891,16 @@ for that name. Give tools specific names to avoid this.</p>
 </span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="p">)</span>
 </span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>
 </span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="n">resp</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">completions</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
-</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>                                    <span class="c1"># ignored; the persona decides</span>
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>                                    <span class="c1"># empty selects the default persona</span>
 </span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>    <span class="n">messages</span><span class="o">=</span><span class="p">[{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;tell me a joke&quot;</span><span class="p">}],</span>
 </span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="p">)</span>
 </span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="nb">print</span><span class="p">(</span><span class="n">resp</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
 </span></code></pre></div>
+<p>An empty (or any) <code>model</code> maps to the default persona on a single-persona server. On a
+<strong>multi-persona</strong> server a non-empty <code>model</code> must name a loaded persona — a guessed name
+like <code>"default"</code> gets an OpenAI-shaped "model does not exist" error. List the real names
+first with <code>GET /openai/v1/models</code>, exactly as you would discover models on any
+OpenAI-compatible endpoint.</p>
 <div class="admonition tip">
 <p class="admonition-title">Verify it worked</p>
 <p>A working call prints a punchline-shaped string, e.g.:</p>
