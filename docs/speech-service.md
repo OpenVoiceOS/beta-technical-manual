@@ -61,8 +61,10 @@ flowchart TD
 ## Listening State Machine
 
 `DinkumVoiceLoop` is a per-chunk state machine, not a single "listen" call. It has a
-global **mode** (set in `listener.mode` / over the bus) and an internal **state** that
-advances chunk by chunk:
+global **mode** and an internal **state** that advances chunk by chunk. The startup mode
+comes from two booleans: `listener.continuous_listen` (wins) or `listener.hybrid_listen`,
+both default `false`, which leaves the `wakeword` mode. At runtime any mode can be set
+over the bus with `recognizer_loop:state.set` and a `mode` field:
 
 - **Modes** (`ListeningMode`): `wakeword` (default, wait for the wake word),
   `continuous` (always transcribe), `hybrid` (continuous but only act after the wake
@@ -76,6 +78,24 @@ advances chunk by chunk:
 
 Source: `ovos_dinkum_listener/voice_loop/voice_loop.py:36` (`ListeningState`) and `:53`
 (`ListeningMode`).
+
+### How usable is each mode?
+
+- **Wake word** is the tested, supported path — everything else in this manual assumes it.
+- **Sleep** is stable: audio only feeds the wake-word engines checking the stand-up word
+  (`listener.stand_up_word`, default `"wake_up"`); nothing reaches STT until the device
+  wakes. Enter it by voice ("go to sleep") or `ovos.listener.sleep`.
+- **Continuous** is how you run without a wake word, and it is experimental in practice:
+  STT runs on every VAD-segmented stretch of speech, so any conversation, TV, or radio in
+  the room becomes an utterance, gated only by your VAD tuning and intent confidence
+  thresholds. Expect false activations and a constant CPU cost. Empty transcriptions are
+  silently dropped in this mode instead of producing an error sound.
+- **Hybrid** softens that trade-off: it transcribes continuously but only *acts* on what
+  follows a wake word. Same CPU cost as continuous, fewer false activations.
+- **Recording mode** is a niche listening *state*, not a mode: raw dictation capture to a
+  file under the recordings directory, started over the bus with a `recording_name`,
+  stopped by the stop hotword or after `listener.recording_mode_max_silence_seconds` of
+  silence (default `30`). Alpha quality; used by recording skills rather than end users.
 
 ## Bus Events
 
