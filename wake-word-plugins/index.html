@@ -1015,6 +1015,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#choosing-a-wake-word-engine" class="md-nav__link">
+    <span class="md-ellipsis">
+      Choosing a wake-word engine
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#tips-and-caveats" class="md-nav__link">
     <span class="md-ellipsis">
       Tips and Caveats
@@ -1631,6 +1640,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#choosing-a-wake-word-engine" class="md-nav__link">
+    <span class="md-ellipsis">
+      Choosing a wake-word engine
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#tips-and-caveats" class="md-nav__link">
     <span class="md-ellipsis">
       Tips and Caveats
@@ -2013,6 +2031,27 @@ config with <code>"enabled": false</code>.</p>
 <code>"vad_pre_wake_enabled": true</code> applies Silero VAD twice on the same audio. Use one or
 the other.</p>
 </div>
+<h2 id="choosing-a-wake-word-engine">Choosing a wake-word engine<a class="headerlink" href="#choosing-a-wake-word-engine" title="Permanent link">&para;</a></h2>
+<p>Where the authoritative detail lives, and the honest trade-offs:</p>
+<ul>
+<li><strong>Precise family</strong> (<a href="https://github.com/MycroftAI/mycroft-precise">MycroftAI/mycroft-precise</a>):
+  a per-phrase GRU network. The ONNX export is the shipped <code>hey_mycroft</code> default. Accurate
+  once a model exists for your phrase, but a new phrase means finding or training a model,
+  and <code>sensitivity</code>/<code>trigger_level</code> tuning is real work.</li>
+<li><strong>openWakeWord</strong> (<a href="https://github.com/dscripka/openWakeWord">dscripka/openWakeWord</a>):
+  a frozen speech-embedding backbone plus a small per-phrase classifier, trained entirely
+  on synthetic TTS speech. Its self-reported targets are under 0.5 false accepts per hour
+  and under 5% false rejects, with many models running concurrently on a Pi 3 core.</li>
+<li><strong>microWakeWord</strong> (<a href="https://github.com/kahrendt/microWakeWord">kahrendt/microWakeWord</a>):
+  synthetic-sample training aimed at microcontrollers; the smallest-footprint neural
+  option.</li>
+<li><strong>Vosk</strong> (<a href="https://alphacephei.com/vosk/">project page</a>): general ASR repurposed for
+  keyword matching. Zero training for an arbitrary phrase, but heavier and worse at
+  false-accept suppression than the dedicated nets; it ignores <code>sensitivity</code> entirely.</li>
+<li><strong>pocketsphinx</strong> (<a href="https://github.com/cmusphinx/pocketsphinx">cmusphinx/pocketsphinx</a>):
+  decades-old HMM technology; upstream itself warns results "may not be wonderful". Last
+  resort by design.</li>
+</ul>
 <h2 id="tips-and-caveats">Tips and Caveats<a class="headerlink" href="#tips-and-caveats" title="Permanent link">&para;</a></h2>
 <ul>
 <li>

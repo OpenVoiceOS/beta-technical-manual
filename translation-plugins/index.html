@@ -862,6 +862,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#choosing-a-translation-language-id-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      Choosing a translation / language-ID model
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#technical-explanation" class="md-nav__link">
     <span class="md-ellipsis">
       Technical Explanation
@@ -1234,6 +1243,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#choosing-a-translation-language-id-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      Choosing a translation / language-ID model
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#technical-explanation" class="md-nav__link">
     <span class="md-ellipsis">
       Technical Explanation
@@ -1468,6 +1486,22 @@ with a permissive license but thin docs. Do not read one column as implying the 
 </li>
 </ul>
 <hr />
+<h2 id="choosing-a-translation-language-id-model">Choosing a translation / language-ID model<a class="headerlink" href="#choosing-a-translation-language-id-model" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>NLLB-200</strong> (<code>ovos-translate-plugin-nllb</code>): the offline quality pick, from Meta's
+  <a href="https://arxiv.org/abs/2207.04672">"No Language Left Behind"</a> program (200 languages,
+  mined low-resource data). Large; the trade-off is RAM and download size.</li>
+<li><strong>linguonnx</strong> (<a href="https://github.com/TigreGotico/linguonnx">TigreGotico/linguonnx</a>):
+  torch-free ONNX routing across Marian, M2M100, NLLB, and MADLAD models, reaching 586
+  languages by pivoting; broadest coverage, alpha maturity, and a routing graph to reason
+  about. Its detection side runs <a href="https://arxiv.org/abs/2310.16248">GlotLID</a>, a language
+  identifier purpose-built for low-resource languages (1,665 languages).</li>
+<li><strong>fastText detection</strong> (<code>ovos-lang-detector-fasttext-plugin</code>): the classic fast CPU
+  language ID, built on <a href="https://arxiv.org/abs/1607.01759">fastText</a>. Cheap and quick,
+  weaker at separating closely related languages than GlotLID.</li>
+<li><strong>Cloud plugins</strong> (Google, translate-server): best quality-per-effort when text may
+  leave the device; nothing to download, nothing authoritative to cite beyond the service.</li>
+</ul>
 <h2 id="technical-explanation">Technical Explanation<a class="headerlink" href="#technical-explanation" title="Permanent link">&para;</a></h2>
 <p>OVOS provides two base classes for language processing, both in <code>ovos_plugin_manager.templates.language</code>: <code>LanguageDetector</code> and <code>LanguageTranslator</code>. Each is constructed with a <code>config</code> dict (the plugin's section from <code>mycroft.conf</code>), exposed as <code>self.config</code>.</p>
 <h3 id="language-detector-interface">Language Detector Interface<a class="headerlink" href="#language-detector-interface" title="Permanent link">&para;</a></h3>

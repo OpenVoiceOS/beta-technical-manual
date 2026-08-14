@@ -970,6 +970,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#choosing-a-vad-engine" class="md-nav__link">
+    <span class="md-ellipsis">
+      Choosing a VAD engine
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#technical-explanation" class="md-nav__link">
     <span class="md-ellipsis">
       Technical Explanation
@@ -1562,6 +1571,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#choosing-a-vad-engine" class="md-nav__link">
+    <span class="md-ellipsis">
+      Choosing a VAD engine
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#technical-explanation" class="md-nav__link">
     <span class="md-ellipsis">
       Technical Explanation
@@ -1750,6 +1768,17 @@ VAD only has to classify one chunk as speech/silence, not decode it.</p>
 <p>Specification: audio capture and VAD are deployer-defined components feeding the listener. See <a href="https://github.com/OpenVoiceOS/architecture/blob/dev/audio-in.md">OVOS-AUDIO-IN-1</a> for the audio-input service that consumes their output.</p>
 </blockquote>
 <hr />
+<h2 id="choosing-a-vad-engine">Choosing a VAD engine<a class="headerlink" href="#choosing-a-vad-engine" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Silero VAD</strong> (<a href="https://github.com/snakers4/silero-vad">snakers4/silero-vad</a>): a ~2MB
+  neural model, under 1ms per 30ms chunk on one CPU thread, the accuracy pick in noisy
+  rooms and the recommended default.</li>
+<li><strong>WebRTC VAD</strong> (<a href="https://github.com/wiseman/py-webrtcvad">py-webrtcvad</a>): the classical
+  signal-processing VAD from Google's WebRTC stack. No model download, lighter, somewhat
+  less accurate.</li>
+<li><strong>Noise/energy threshold</strong> (<code>ovos-vad-plugin-noise</code>): a plain threshold heuristic, no ML
+  at all. Zero footprint, least accurate; for hardware where nothing else fits.</li>
+</ul>
 <h2 id="technical-explanation">Technical Explanation<a class="headerlink" href="#technical-explanation" title="Permanent link">&para;</a></h2>
 <p>All VAD plugins inherit from the <code>VADEngine</code> base class provided by <code>ovos-plugin-manager</code>.</p>
 <h3 id="the-vadengine-interface">The VADEngine Interface<a class="headerlink" href="#the-vadengine-interface" title="Permanent link">&para;</a></h3>

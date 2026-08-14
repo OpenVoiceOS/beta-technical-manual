@@ -1108,6 +1108,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#choosing-a-tts-engine-family" class="md-nav__link">
+    <span class="md-ellipsis">
+      Choosing a TTS engine family
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#learn-more" class="md-nav__link">
     <span class="md-ellipsis">
       Learn more
@@ -1460,6 +1469,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#choosing-a-tts-engine-family" class="md-nav__link">
+    <span class="md-ellipsis">
+      Choosing a TTS engine family
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#learn-more" class="md-nav__link">
     <span class="md-ellipsis">
       Learn more
@@ -1722,6 +1740,43 @@ The <strong>Maturity</strong> column reports repository health (age, activity, i
 A plugin can be <strong>Mature</strong> and still ship no license file. A plugin can be <strong>Stable</strong>
 with a permissive license but thin docs. Don't read one column as implying the other.</p>
 </div>
+<h2 id="choosing-a-tts-engine-family">Choosing a TTS engine family<a class="headerlink" href="#choosing-a-tts-engine-family" title="Permanent link">&para;</a></h2>
+<p>The engines behind the plugins fall into a few families with clear trade-offs. Links go
+to the architecture paper or the upstream project, where the authoritative training-data
+and licensing detail lives. <strong>Check the model card of every individual voice</strong>: code
+license and voice license routinely differ.</p>
+<p><strong>Piper / VITS voices</strong> (served through phoonnx; the standalone piper plugin is
+archived). Small per-voice ONNX models built on the
+<a href="https://arxiv.org/abs/2106.06103">VITS architecture</a>: fast on CPU, low RAM, one model
+per voice, limited expressiveness. Upstream:
+<a href="https://github.com/rhasspy/piper">rhasspy/piper</a>.</p>
+<p><strong>phoonnx</strong> (recommended default). Not one architecture but a multi-format ONNX loader
+(<a href="https://github.com/TigreGotico/phoonnx">TigreGotico/phoonnx</a>): native voices plus
+Piper, Mimic 3, Coqui, MMS, and zero-shot cloning backbones, spanning 1000+
+languages/voices with auto-fetch on first use. Naturalness and latency vary per
+underlying voice, and so does the voice license (the code is Apache-2.0; some bundled
+models are OpenRAIL-M).</p>
+<p><strong>Coqui</strong> (<a href="https://coqui-tts.readthedocs.io/en/latest">docs</a>). A multi-architecture
+toolkit (VITS, XTTS, YourTTS, Bark, and more) with top naturalness and voice cloning,
+but transformer/diffusion-class weights that prefer a GPU for real-time use. MPL-2.0
+code, per-model licenses vary.</p>
+<p><strong>Zero-shot cloning engines</strong> (lux/ZipVoice, omnivoice). Clone any voice from a few
+seconds of reference audio. OmniVoice
+(<a href="https://github.com/k2-fsa/OmniVoice">k2-fsa/OmniVoice</a>, Apache-2.0) claims 600+
+languages and ~40x real-time. LuxTTS is ZipVoice-based, English-only, GPU-oriented. Both
+are early-stage: promising, not proven for production.</p>
+<p><strong>Pre-neural engines</strong> (mimic, espeak-ng, pico, marytts). <a href="https://github.com/MycroftAI/mimic1">Mimic
+1</a> (Festival/Flite concatenative) and
+<a href="https://github.com/espeak-ng/espeak-ng">espeak-ng</a> (formant synthesis, 100+ languages,
+GPL-3.0) run on anything and start instantly, but sound unmistakably robotic. Mimic 1
+remains uniquely useful as the only engine returning real phoneme timing for <a href="../g2p-plugins/">mouth
+animation</a>, and espeak-ng is the accessibility/fallback pick.
+<a href="https://github.com/marytts/marytts">MaryTTS</a> is a Java server with HMM voices.</p>
+<p><strong>Cloud voices</strong> (polly, azure, edge-tts, google-tx). No local compute, high quality,
+but speech text leaves the device, an account or API key is usually needed, and
+<a href="https://github.com/pndurette/gTTS">gTTS</a> and
+<a href="https://github.com/rany2/edge-tts">edge-tts</a> ride <em>unofficial</em> endpoints that can break
+without notice.</p>
 <h2 id="learn-more">Learn more<a class="headerlink" href="#learn-more" title="Permanent link">&para;</a></h2>
 <p>Full technical detail per plugin (repository link, license notes, default configuration) lives on the <a href="../tts-plugins-reference/">TTS Plugins Reference</a> page linked from the table above. Writing a plugin instead of choosing one? See <a href="../tts-plugin-development/">Writing a TTS Plugin</a>.</p>
 <hr />
