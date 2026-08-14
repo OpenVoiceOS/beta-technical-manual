@@ -131,8 +131,8 @@ Replace `"plugin_name"` with the identifier of the desired plugin and provide an
 Engine-agnostic ONNX audio super-resolution transformer (`opm.transformer.tts`). It upscales
 **any** TTS engine's output to 48 kHz just before playback, rather than being tied to one voice
 or engine. It wraps [`audiosronnx`](https://github.com/TigreGotico/audiosronnx) (pure ONNX, no
-Torch at runtime) and picks between `novasr` (default), `lavasr`, and `hifiganbwe` engines via
-config. If audio is already 48 kHz, or the model/weights are unavailable, it returns the
+Torch at runtime) and picks between `novasr` (default), `lavasr`, `hifiganbwe`, and `apbwe` engines
+via config. If audio is already 48 kHz, or the model/weights are unavailable, it returns the
 original audio unchanged so synthesis never breaks.
 
 ```jsonc
