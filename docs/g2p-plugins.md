@@ -53,6 +53,12 @@ plugin to try when the first fails to load:
 }
 ```
 
+**Recommended module: `ovos-g2p-plugin-mimic`** (English only). It is the one plugin that
+escapes the placeholder-duration problem: it overrides `utterance2visemes` to run the text
+through the Mimic 1 binary and returns Mimic's own per-phoneme durations, so the mouth
+tracks real speech timing even when the *voice* you hear is a different TTS engine. Every
+other plugin inherits the flat `0.4`s placeholders.
+
 ## Available G2P Plugins
 
 | Plugin | Alphabet | Description | Maturity |
