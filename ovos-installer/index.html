@@ -1727,8 +1727,9 @@ Persona LLM fallback and requires the <code>llm.api_url</code>, <code>llm.key</c
 <code>llm.max_tokens</code>, <code>llm.temperature</code>, and <code>llm.top_p</code>, are also accepted. A Home Assistant
 feature also exists, but has no <code>homeassistant.*</code> scenario keys: set
 <code>features.homeassistant: true</code> AND export the environment variables
-<code>HOMEASSISTANT_URL</code> and <code>HOMEASSISTANT_API_KEY</code> before running the installer,
-or the integration is enabled with empty settings. <strong>macOS</strong> is supported with <code>launchd</code> service management, but only with the
+<code>HOMEASSISTANT_URL</code> and <code>HOMEASSISTANT_API_KEY</code> before running the installer.
+If either variable is empty, the installer silently skips the Home Assistant
+skill entirely, even with <code>features.homeassistant: true</code> set. <strong>macOS</strong> is supported with <code>launchd</code> service management, but only with the
 <code>virtualenv</code> method and the <code>alpha</code> channel.</p>
 <p>💡 <strong>Satellite profile.</strong> Deploying <code>profile: satellite</code> non-interactively requires a
 <code>hivemind:</code> block giving the connection details to the OVOS core it pairs with:
