@@ -133,6 +133,51 @@ separately-licensed model or a paid cloud service, that is called out under "mod
     A plugin can be **Mature** and still ship no license file. A plugin can be **Stable**
     with a permissive license but thin docs. Don't read one column as implying the other.
 
+## Choosing a TTS engine family
+
+The engines behind the plugins fall into a few families with clear trade-offs. Links go
+to the architecture paper or the upstream project, where the authoritative training-data
+and licensing detail lives. **Check the model card of every individual voice**: code
+license and voice license routinely differ.
+
+**Piper / VITS voices** (served through phoonnx; the standalone piper plugin is
+archived). Small per-voice ONNX models built on the
+[VITS architecture](https://arxiv.org/abs/2106.06103): fast on CPU, low RAM, one model
+per voice, limited expressiveness. Upstream:
+[rhasspy/piper](https://github.com/rhasspy/piper).
+
+**phoonnx** (recommended default). Not one architecture but a multi-format ONNX loader
+([TigreGotico/phoonnx](https://github.com/TigreGotico/phoonnx)): native voices plus
+Piper, Mimic 3, Coqui, MMS, and zero-shot cloning backbones, spanning 1000+
+languages/voices with auto-fetch on first use. Naturalness and latency vary per
+underlying voice, and so does the voice license (the code is Apache-2.0; some bundled
+models are OpenRAIL-M).
+
+**Coqui** ([docs](https://coqui-tts.readthedocs.io/en/latest)). A multi-architecture
+toolkit (VITS, XTTS, YourTTS, Bark, and more) with top naturalness and voice cloning,
+but transformer/diffusion-class weights that prefer a GPU for real-time use. MPL-2.0
+code, per-model licenses vary.
+
+**Zero-shot cloning engines** (lux/ZipVoice, omnivoice). Clone any voice from a few
+seconds of reference audio. OmniVoice
+([k2-fsa/OmniVoice](https://github.com/k2-fsa/OmniVoice), Apache-2.0) claims 600+
+languages and ~40x real-time. LuxTTS is ZipVoice-based, English-only, GPU-oriented. Both
+are early-stage: promising, not proven for production.
+
+**Pre-neural engines** (mimic, espeak-ng, pico, marytts). [Mimic
+1](https://github.com/MycroftAI/mimic1) (Festival/Flite concatenative) and
+[espeak-ng](https://github.com/espeak-ng/espeak-ng) (formant synthesis, 100+ languages,
+GPL-3.0) run on anything and start instantly, but sound unmistakably robotic. Mimic 1
+remains uniquely useful as the only engine returning real phoneme timing for [mouth
+animation](g2p-plugins.md), and espeak-ng is the accessibility/fallback pick.
+[MaryTTS](https://github.com/marytts/marytts) is a Java server with HMM voices.
+
+**Cloud voices** (polly, azure, edge-tts, google-tx). No local compute, high quality,
+but speech text leaves the device, an account or API key is usually needed, and
+[gTTS](https://github.com/pndurette/gTTS) and
+[edge-tts](https://github.com/rany2/edge-tts) ride *unofficial* endpoints that can break
+without notice.
+
 ## Learn more
 
 Full technical detail per plugin (repository link, license notes, default configuration) lives on the [TTS Plugins Reference](tts-plugins-reference.md) page linked from the table above. Writing a plugin instead of choosing one? See [Writing a TTS Plugin](tts-plugin-development.md).

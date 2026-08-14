@@ -89,6 +89,49 @@ separately-licensed model, that is called out under "model".
     with a permissive license but thin docs. Don't read one column as implying the other.
 
 
+## Choosing an ASR model family
+
+The plugins above wrap a handful of model families with very different trade-offs. Each
+entry links the architecture paper and a canonical model card, which is where the
+authoritative detail on training data and per-language accuracy lives.
+
+**Whisper** (plugins: whisper, whispercpp, fasterwhisper, whisper-lm; also via onnx-asr).
+The broadest language coverage and the best robustness to accents and noise, because it
+trains on 680k hours of weakly supervised web audio
+([Radford et al. 2022](https://arxiv.org/abs/2212.04356)). The `large-v3` checkpoint adds
+millions of pseudo-labeled hours
+([model card](https://huggingface.co/openai/whisper-large-v3)). The same weak supervision
+causes its signature failure: hallucinated phrases on silence, which is why the listener
+ships a [hallucination filter](speech-service.md). It is chunk-based, not streaming, and
+the large checkpoints are the heaviest option here. Prefer `large-v3-turbo` and int8
+quantization on CPU.
+
+**NVIDIA NeMo Conformer / Parakeet / Canary** (plugins: nemo, citrinet; also via
+onnx-asr). Best accuracy-per-parameter and much lower latency inside their trained
+language set ([Conformer](https://arxiv.org/abs/2005.08100),
+[Fast Conformer](https://arxiv.org/abs/2305.05084)). Parakeet checkpoints are single
+language and ignore `lang`
+([parakeet-tdt-0.6b-v2 card](https://huggingface.co/nvidia/parakeet-tdt-0.6b-v2), ~120k
+hours English). Canary is the multilingual branch
+([canary-1b-v2 card](https://huggingface.co/nvidia/canary-1b-v2), ~1.7M hours across 25
+European languages). [Citrinet](https://arxiv.org/abs/2104.01721) is the older CTC-only
+sibling, kept for specific languages such as the Catalan default.
+
+**wav2vec 2.0 / XLS-R / MMS** (plugins: wav2vec, mms, nos, HiTZ; also via onnx-asr).
+Self-supervised pretraining plus a thin fine-tune
+([Baevski et al. 2020](https://arxiv.org/abs/2006.11477)), which is why this family
+dominates low-resource languages. [XLS-R](https://arxiv.org/abs/2111.09296) pretrains on
+~500k hours across 128 languages, and [MMS](https://arxiv.org/abs/2305.13516) reaches
+1,100+ languages with per-language adapters
+([mms-1b-all card](https://huggingface.co/facebook/mms-1b-all)). Lighter than Whisper,
+but per-language quality tracks how much fine-tuning data that language got.
+
+**Vosk / Kaldi** (plugin: vosk). Classical HMM-hybrid decoding with ~50MB per-language
+models ([project page](https://alphacephei.com/vosk/),
+[repo](https://github.com/alphacep/vosk-api)). The lightest footprint and true streaming,
+at clearly lower accuracy than the neural families. The right choice for constrained
+hardware and the wrong one for noisy rooms.
+
 ## Learn more
 
 Full technical detail per plugin (repository link, license notes, default configuration) lives on the [STT Plugins Reference](stt-plugins-reference.md) page linked from the table above. Writing a plugin instead of choosing one? See [Writing an STT Plugin](stt-plugin-development.md).

@@ -72,6 +72,22 @@ If you don't set anything, the client shuffles through its built-in public-serve
 
 ---
 
+## Choosing a translation / language-ID model
+
+- **NLLB-200** (`ovos-translate-plugin-nllb`): the offline quality pick, from Meta's
+  ["No Language Left Behind"](https://arxiv.org/abs/2207.04672) program (200 languages,
+  mined low-resource data). Large; the trade-off is RAM and download size.
+- **linguonnx** ([TigreGotico/linguonnx](https://github.com/TigreGotico/linguonnx)):
+  torch-free ONNX routing across Marian, M2M100, NLLB, and MADLAD models, reaching 586
+  languages by pivoting; broadest coverage, alpha maturity, and a routing graph to reason
+  about. Its detection side runs [GlotLID](https://arxiv.org/abs/2310.16248), a language
+  identifier purpose-built for low-resource languages (1,665 languages).
+- **fastText detection** (`ovos-lang-detector-fasttext-plugin`): the classic fast CPU
+  language ID, built on [fastText](https://arxiv.org/abs/1607.01759). Cheap and quick,
+  weaker at separating closely related languages than GlotLID.
+- **Cloud plugins** (Google, translate-server): best quality-per-effort when text may
+  leave the device; nothing to download, nothing authoritative to cite beyond the service.
+
 ## Technical Explanation
 
 OVOS provides two base classes for language processing, both in `ovos_plugin_manager.templates.language`: `LanguageDetector` and `LanguageTranslator`. Each is constructed with a `config` dict (the plugin's section from `mycroft.conf`), exposed as `self.config`.

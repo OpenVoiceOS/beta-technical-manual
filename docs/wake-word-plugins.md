@@ -200,6 +200,28 @@ config with `"enabled": false`.
     `"vad_pre_wake_enabled": true` applies Silero VAD twice on the same audio. Use one or
     the other.
 
+## Choosing a wake-word engine
+
+Where the authoritative detail lives, and the honest trade-offs:
+
+- **Precise family** ([MycroftAI/mycroft-precise](https://github.com/MycroftAI/mycroft-precise)):
+  a per-phrase GRU network. The ONNX export is the shipped `hey_mycroft` default. Accurate
+  once a model exists for your phrase, but a new phrase means finding or training a model,
+  and `sensitivity`/`trigger_level` tuning is real work.
+- **openWakeWord** ([dscripka/openWakeWord](https://github.com/dscripka/openWakeWord)):
+  a frozen speech-embedding backbone plus a small per-phrase classifier, trained entirely
+  on synthetic TTS speech. Its self-reported targets are under 0.5 false accepts per hour
+  and under 5% false rejects, with many models running concurrently on a Pi 3 core.
+- **microWakeWord** ([kahrendt/microWakeWord](https://github.com/kahrendt/microWakeWord)):
+  synthetic-sample training aimed at microcontrollers; the smallest-footprint neural
+  option.
+- **Vosk** ([project page](https://alphacephei.com/vosk/)): general ASR repurposed for
+  keyword matching. Zero training for an arbitrary phrase, but heavier and worse at
+  false-accept suppression than the dedicated nets; it ignores `sensitivity` entirely.
+- **pocketsphinx** ([cmusphinx/pocketsphinx](https://github.com/cmusphinx/pocketsphinx)):
+  decades-old HMM technology; upstream itself warns results "may not be wonderful". Last
+  resort by design.
+
 ## Tips and Caveats
 
 - **Vosk Plugin**: The Vosk plugin is useful when you need a simple setup that doesn't require training a wake-word model. It's great for quickly gathering data during the development stage.

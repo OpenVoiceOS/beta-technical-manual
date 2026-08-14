@@ -62,6 +62,17 @@ You can configure the VAD plugin in your `mycroft.conf`. The example below uses
 
 ---
 
+## Choosing a VAD engine
+
+- **Silero VAD** ([snakers4/silero-vad](https://github.com/snakers4/silero-vad)): a ~2MB
+  neural model, under 1ms per 30ms chunk on one CPU thread, the accuracy pick in noisy
+  rooms and the recommended default.
+- **WebRTC VAD** ([py-webrtcvad](https://github.com/wiseman/py-webrtcvad)): the classical
+  signal-processing VAD from Google's WebRTC stack. No model download, lighter, somewhat
+  less accurate.
+- **Noise/energy threshold** (`ovos-vad-plugin-noise`): a plain threshold heuristic, no ML
+  at all. Zero footprint, least accurate; for hardware where nothing else fits.
+
 ## Technical Explanation
 
 All VAD plugins inherit from the `VADEngine` base class provided by `ovos-plugin-manager`.
