@@ -1758,7 +1758,7 @@ with the plugin's <strong>built-in defaults</strong>. It does <strong>not</stron
 </li>
 <li>
 <p><strong>Plugin wrapping</strong><br />
-<code>--engine</code> names any <code>opm.stt</code> plugin entry point (Whisper, Deepgram, and so on). It is loaded dynamically via the OVOS Plugin Manager. The server instantiates it with an empty config (built-in defaults), not the <code>stt</code> section of <code>mycroft.conf</code>.</p>
+<code>--engine</code> names any <code>opm.stt</code> plugin entry point (Whisper, Deepgram, and so on). It is loaded dynamically via the OVOS Plugin Manager. When no explicit config is passed, the server reads the plugin's own section from <code>mycroft.conf</code> (<code>stt.&lt;plugin-id&gt;</code>), matching <code>OVOSSTTFactory</code> behavior, so a mounted config file can select model, device, and other plugin settings.</p>
 </li>
 <li>
 <p><strong>Language detection</strong><br />

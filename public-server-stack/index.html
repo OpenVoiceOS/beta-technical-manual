@@ -1662,12 +1662,14 @@ server's own page before assuming <code>mycroft.conf</code> applies:</p>
 </span></code></pre></div>
 </li>
 <li>
-<p>The <strong>STT server</strong> selects and configures its STT plugin through CLI flags
-  alone. The <code>stt</code> section of <code>mycroft.conf</code> is not read. Its
-  audio/utterance transformer chains and default <code>lang</code> still come from
-  <code>mycroft.conf</code> (<a href="../stt-server/">STT Server</a>).</p>
+<p>The <strong>STT server</strong> selects its STT plugin via <code>--engine</code>; the plugin's own
+  settings come from the <code>stt</code> section of <code>mycroft.conf</code> (keyed by plugin id)
+  when no explicit config is passed. Its audio/utterance transformer chains and
+  default <code>lang</code> also come from <code>mycroft.conf</code> (<a href="../stt-server/">STT Server</a>).</p>
 </li>
-<li>The <strong>translate server</strong> likewise takes its engines from CLI flags and ignores
+<li>The <strong>translate server</strong> likewise selects its engines via CLI flags
+  (<code>--tx-engine</code>/<code>--detect-engine</code>), and each plugin's own settings come from
+  the <code>translation.&lt;plugin&gt;</code> / <code>language_detection.&lt;plugin&gt;</code> sections of
   <code>mycroft.conf</code> (<a href="../translate-server/">Translate Server</a>).</li>
 </ul>
 <p>A settings block placed in a section a service does not read is ignored
