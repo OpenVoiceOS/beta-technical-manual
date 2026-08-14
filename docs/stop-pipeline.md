@@ -61,6 +61,13 @@ A voice assistant must always be capable of responding to a "stop" command. Whet
 
 The `stop` pipeline guarantees this behavior through a flexible plugin system and localized vocab matching.
 
+!!! info "Saying \"stop\" still needs the wake word — there is no barge-in"
+    Nothing interrupts the assistant just because you start talking. A stop command is an
+    ordinary utterance: wake word first, then *"stop"*. `listener.mute_during_output`
+    (default `false`) only controls whether the microphone keeps listening for the wake word
+    while audio plays, and `listener.fake_barge_in` only lowers playback volume while a
+    recording is in progress. Neither cancels speech on its own.
+
 ---
 
 ## How it works

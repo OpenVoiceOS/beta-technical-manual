@@ -49,6 +49,13 @@ class MySkill(OVOSSkill):
 
 If the message originated in the device itself, the `session_id` is always equal to the reserved value `"default"`. If it comes from an external client, it will be a unique uuid. The `"default"` session is special: it is the device-local session whose state the orchestrator holds and persists in-process, rather than receiving it from a client on every message (OVOS-SESSION-2 §5).
 
+!!! info "One microphone, one conversation"
+    Because everything the on-device microphone hears lands in the single `"default"`
+    session, two people in the same room cannot hold independent multi-turn conversations
+    with the same device: their turns interleave in one shared context. Separate
+    conversations require separate clients (a HiveMind satellite, a phone app), each of
+    which gets its own `session_id`.
+
 !!! warning "A bare `session_id` does not carry state — replay the whole session"
     An external client (a HiveMind satellite, any non-`"default"` session) is not tracked
     in-process the way the device-local session is. `ovos-core` only refreshes what it

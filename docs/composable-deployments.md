@@ -236,6 +236,14 @@ graph LR
     and `ovos-dinkum-listener` can produce message shapes one side doesn't expect. See
     [Version skew is a real risk](#version-skew-is-a-real-risk) below.
 
+!!! info "Multi-tenant hosting is not a supported pattern"
+    One OVOS core serving several isolated households or accounts — separate skill sets,
+    separate configs, separate data, one shared process — is not something the stack
+    supports. Config, skill loading, and the `"default"` session are all singletons per
+    core. The supported shape for serving many users is one core (or container stack) per
+    tenant, with [HiveMind](hivemind-agents.md) satellites connecting each household's thin
+    clients to its own core.
+
 !!! warning "Trust boundary: the bus and HIVE links are localhost/LAN only"
     Every `<-- websocket.host=A -->` link in the diagram above (including the `HIVE` connection)
     is a direct connection to the raw messagebus and must stay on a trusted localhost/LAN network.

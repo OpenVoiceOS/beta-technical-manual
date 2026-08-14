@@ -63,6 +63,12 @@ $XDG_CONFIG_HOME/<base_folder>/skills/<skill_id>/settings.json
 
 ```
 
+!!! info "Settings are per skill, not per user"
+    There is one `settings.json` per `skill_id` and no built-in partitioning by user, voice,
+    or session. "Each household member gets their own preferences" is not something the
+    settings system can express — a skill that needs per-user preferences must key its own
+    storage on something it can observe, such as the `session_id` of remote clients.
+
 `<base_folder>` defaults to `mycroft` for backwards compatibility. A
 system-wide `ovos.conf` (or the `OVOS_CONFIG_BASE_FOLDER` environment
 variable) can rename it, commonly to `OpenVoiceOS`. On most Linux

@@ -240,7 +240,9 @@ the Role A / Role B reflection-and-takeover behavior have moved to their own pag
     "preferred_web_services": [],
 
     // force playback through the audio players even for video/web media, e.g. on headless setups
-    "playback_mode": "FORCE_AUDIO",
+    // numeric PlaybackMode value from ovos_utils.ocp (30 = FORCE_AUDIO); the enum NAME as a
+    // string is not recognized
+    "playback_mode": 30,
 
     "audio_players": {
       "vlc": { "module": "ovos-media-audio-plugin-vlc", "aliases": ["VLC"], "active": true },

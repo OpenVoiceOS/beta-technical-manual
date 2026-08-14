@@ -54,6 +54,12 @@ Configure in `mycroft.conf`:
 
 ```
 
+!!! note "`intents.ovos-converse-pipeline-plugin` overrides this section"
+    The converse plugin reads `skills.converse` only when its own
+    `intents.ovos-converse-pipeline-plugin` config section is empty. If you set any key
+    under the `intents` path, that section wins and `skills.converse` is ignored entirely,
+    so keep these settings in one place.
+
 !!! warning "What you should see in the log when a whitelist blocks converse"
     `ConverseService` returns `False` from this check silently. There is no dedicated log
     line announcing "skill X blocked by whitelist". The observable symptom instead: run
@@ -115,8 +121,8 @@ Configure in `mycroft.conf`:
 
 ```json
 {
-  "skills": {
-    "fallbacks": {
+  "intents": {
+    "ovos-fallback-pipeline-plugin": {
       "fallback_mode": "accept_all",
       "fallback_whitelist": [],
       "fallback_blacklist": []
@@ -125,6 +131,12 @@ Configure in `mycroft.conf`:
 }
 
 ```
+
+!!! warning "The `skills.fallbacks` section in the shipped `mycroft.conf` is not read"
+    The shipped default config carries these same keys under `skills.fallbacks`, but the
+    fallback pipeline plugin, when loaded by `ovos-core`, receives its config from
+    `intents.ovos-fallback-pipeline-plugin` and never falls back to `skills.fallbacks`.
+    Overrides placed under `skills.fallbacks` have no effect. Use the `intents` path above.
 
 ### Per-session exclusions
 
@@ -140,6 +152,15 @@ config. The gates are enforced across the whole match path: general intent match
 fallback, and stop all check the session's lists before dispatching. This is the mechanism to
 reach for when different satellites should have different skill sets against one shared core;
 see [Updating Remote Clients](updating-remote-clients.md) for the version notes.
+
+!!! info "Per-speaker permissions are not possible"
+    Every control on this page applies to a device or a session, never to a *person*. The
+    [speaker-verification wake-word gate](ww-verifier.md#speaker-verification) can accept or
+    reject an activation by voice, but it never tells the rest of the stack *who* spoke — no
+    speaker identity reaches the session, the intent match, or a skill. There is no mechanism
+    for "kid-safe mode for this voice" or per-user skill blacklists. If you need per-user
+    gating, give each user their own client device or satellite and use the per-session
+    exclusions above.
 
 ### Utility Functions
 

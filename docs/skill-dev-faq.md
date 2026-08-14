@@ -187,6 +187,16 @@ release is still installable straight from git via `pip_spec`. From there, list 
 
 ---
 
+### Can I sell my skill, or gate features behind a license key?
+
+There is no monetization, DRM, or licensing mechanism anywhere in the stack: skills are
+plain Python packages, `skill.json`'s `license` field is SPDX open-source metadata, and
+nothing in skill loading checks entitlements. You can of course implement your own
+license-key check inside your skill's code, but the platform gives you no enforcement,
+store billing, or copy protection.
+
+---
+
 ## Using AI/LLMs from a skill
 
 ### Can I use an LLM inside my skill?

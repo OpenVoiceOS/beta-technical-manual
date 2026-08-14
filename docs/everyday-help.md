@@ -103,6 +103,13 @@ browsable list of every skill that ships with (or can be added to) OVOS. Each sk
 examples from its own vocabulary, for example "tell me a joke", "what's the weather in
 Lisbon", "set a timer for five minutes".
 
+## "Can it be quiet at night?"
+
+There is no quiet-hours or do-not-disturb feature: no schedule lowers the volume, disables
+the wake word, or silences responses at certain times. The shell's "night mode" only dims
+the screen. What you can do is script it yourself, for example a nightly cron job that
+adjusts volume or stops the listener service, and restores things in the morning.
+
 ## Still broken?
 
 If none of the above fixes it, the problem needs more digging. You still don't need to

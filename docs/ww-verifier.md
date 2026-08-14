@@ -129,6 +129,12 @@ The `model` key accepts any alias from [`speakeronnx`](https://github.com/TigreG
 
 Use case: household authorization, a shared-wake-word deployment where each registered user's voice profile allows or denies activation.
 
+!!! info "The verifier gates, it does not identify"
+    `verify()` returns only a boolean. Which enrolled profile matched is never exposed (not
+    on the bus, not in the session, not to skills), so the accept/reject gate is the whole
+    feature: per-speaker personalization, per-speaker [permissions](permissions.md), and
+    speaker-labelled logs cannot be built on top of it.
+
 ---
 
 ## Precise-ONNX Plugin

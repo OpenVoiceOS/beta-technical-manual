@@ -206,6 +206,12 @@ to `~/.local/share/mycroft/listener/`.
 | `<save_path>/utterances/` | Only if `listener.save_utterances` is enabled | `listener.save_utterances` (off by default) |
 | `<save_path>/recordings/` | Whenever a recording session runs | none, always written |
 
+There is no built-in "export all my data" or "delete all my data" command. Everything OVOS
+stores locally is plain files at the paths in this table plus the config and skill-settings
+directories, so a full export is a `tar` of those paths and a full erase is deleting them.
+You assemble that yourself: no skill, CLI verb, or bus message does it for you, and
+nothing distinguishes one household member's data from another's in these files.
+
 Because `record_wake_words` and `save_utterances` are both off by default, ordinary
 wake-word detections and spoken commands are **not** written to disk on a stock install.
 
