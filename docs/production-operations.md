@@ -211,22 +211,22 @@ service exposing an OVOS `ProcessStatus` (including `PHAL`) can be named by its 
 
 ## Log locations and shipping them out
 
-OVOS logs to stdout by default. Every real deployment (systemd, raspOVOS, the installer) sets
-a `logging` section in `mycroft.conf` so each service writes its own rotating file instead:
+OVOS services write rotating log files under `$XDG_STATE_HOME/mycroft/<service>.log`
+(typically `~/.local/state/mycroft/`) by default — even with no `logging` section in
+`mycroft.conf`. Check that directory first if you can't find a log file. A `logging`
+section overrides the location and rotation:
 
 ```json
 {
   "logging": {
-    "path": "~/.local/state/mycroft/",
-    "max_bytes": 50000000,
-    "backup_count": 6
+    "logs": {
+      "path": "~/.local/state/mycroft/",
+      "max_bytes": 50000000,
+      "backup_count": 6
+    }
   }
 }
-```
-
-Without that section, `ovos-utils`' logger still defaults to a file under
-`$XDG_STATE_HOME/mycroft/<service>.log` (typically `~/.local/state/mycroft/`) rather than pure
-stdout. Check that directory first if you can't find a log file. Each service gets its own
+``` Each service gets its own
 file named after it (`skills.log`, `bus.log`, `audio.log`, `voice.log`, `gui.log`, ...).
 
 `ovos-utils` also ships a small CLI, `ovos-logs`, for navigating those files without hunting

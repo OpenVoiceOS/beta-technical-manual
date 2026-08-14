@@ -60,7 +60,7 @@ Follows the canonical 3-phase pattern (`continue-on-error` → format → post �
 | Format skill section | Inline Python reads `skill-report.json` → `skill-section.md` |
 | Post skill section to PR comment | Calls `update_pr_comment.py` with `--section-id skill` |
 | Skip if not an OVOS skill repo | Exits 0 if `is_skill: false` and `skip_if_not_skill: true` |
-| Fail if en-us locale is missing | Exits 1 if `has_en_us: false` and `fail_on_missing_en_us: true` |
+| Fail if en-US locale is missing | Exits 1 if `has_en_us: false` and `fail_on_missing_en_us: true` |
 | Fail if skill.json is invalid | Exits 1 if JSON malformed or required fields missing and `fail_on_invalid_skill_json: true` |
 | Fail job if skill check failed | Re-raises error after comment is posted |
 
