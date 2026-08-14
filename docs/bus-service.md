@@ -396,7 +396,7 @@ DEBUG: <msg_type> source: [...] destination: [...]
 
 Messages listed in `filter_logs` are excluded from the log to reduce noise (default: `["gui.status.request", "gui.page.upload"]`).
 
-When `filter` is off (the default), the bus never deserializes messages. It emits and re-broadcasts the raw frame as-is. Deserialization only happens in `filter` mode for the log line. If a frame fails to deserialize there, it is dropped (not logged, not re-broadcast).
+When `filter` is off (the default), the bus never deserializes messages. It emits and re-broadcasts the raw frame as-is. Deserialization only happens in `filter` mode for the log line. If a frame fails to deserialize there, only the per-message summary log line and the local re-emit are skipped (a "failed to deserialize" debug line appears instead). The raw frame is still broadcast to every client: deserialization failure never blocks fan-out.
 
 ---
 

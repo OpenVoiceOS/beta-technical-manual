@@ -71,7 +71,7 @@ Handled by `ovos-core`'s `IntentService`. See [Intent Service](intent-service.md
 | `{skill_id}.activate` | Mark the matched skill active in the session |
 | `ovos.intent.matched` | A pipeline plugin claimed the utterance (notification) |
 | `<skill_id>:<intent_name>` | The dispatch message that invokes the winning skill's intent handler |
-| `ovos.intent.handler.start` → `ovos.intent.handler.complete` / `ovos.intent.handler.error` | The orchestrator-owned handler-lifecycle trio around the invocation (§8, **not** translator-bridged, see [Legacy ↔ spec migration](#legacy-spec-migration)). The skill framework separately emits the legacy `mycroft.skill.handler.start` / `.complete` as a private done-signal. There is no legacy `.error`: the explicit error leg is spec-side only |
+| `ovos.intent.handler.start` → `ovos.intent.handler.complete` / `ovos.intent.handler.error` | The orchestrator-owned handler-lifecycle trio around the invocation (§8, **not** translator-bridged, see [Legacy ↔ spec migration](#legacy-spec-migration)). The skill framework separately emits the legacy `mycroft.skill.handler.start` / `.complete` / `.error` trio as a private done-signal, mirroring all three spec legs with the same non-bridged status |
 
 ### Converse
 
