@@ -2500,6 +2500,12 @@ and the valid entries are applied.</p>
 <p>The <code>track.failed</code> guard resets on real evidence of playback starting, not on a track merely
 loading, so a track that loads fine but fails to play does not reset the rate limit early. The
 <code>no.playback.backend</code> guard never resets: it is a once-per-lifetime warning, not a per-queue one.</p>
+<p>Shuffle mode honors the same failure bounds (0.4.13a1): a shuffled pick excludes tracks whose
+uri already failed this queue, and when nothing playable remains — every track failed, or the
+queue is empty and the current track failed — the player stops and speaks <code>queue.finished</code>,
+the same ending as sequential playback. Repeat mode with at least one good track keeps
+playing. A shut-down player also stops reacting to duck/unduck/cork on both the legacy and
+<code>ovos.common_play.*</code> spellings, so a dead daemon no longer adjusts system volume.</p>
 <hr />
 <h2 id="upcoming-mediaprovider-plugins-replace-ocp-skills">Upcoming: MediaProvider plugins replace OCP skills<a class="headerlink" href="#upcoming-mediaprovider-plugins-replace-ocp-skills" title="Permanent link">&para;</a></h2>
 <div class="admonition info">
