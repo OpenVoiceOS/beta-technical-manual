@@ -85,8 +85,11 @@ The layered configuration system (defaults → system → user → runtime). Cov
 A standalone template-expansion and fuzzy-matching utility for prototyping NLU grammars:
 expands templates with optional phrases (`[optional]`), alternatives (`(choice1|choice2)`), and
 slots (`{slot_name}`), then fuzzy-matches free text against the expansions (via `rapidfuzz` /
-`simplematch`) with slot extraction. It is not wired into an OPM entry point — use it as a
-library when hand-authoring or prototyping matching rules.
+`simplematch`) with slot extraction. It also ships an OPM plugin: `ovos-keyword-template-matcher`
+registers under the `opm.transformer.intent` group (`KeywordTemplateMatcher`, an intent
+transformer that hooks intent registration on the bus). Use the library directly when
+hand-authoring or prototyping matching rules. License note: the `setup.py` classifier says MIT,
+but the repository ships no `LICENSE` file (see [Licensing](license.md) for how to treat that).
 
 - Source: [OpenVoiceOS/kw-template-matcher](https://github.com/OpenVoiceOS/kw-template-matcher)
 
