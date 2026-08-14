@@ -34,12 +34,13 @@ before late 2024, check it against this table.
 | `enclosure.mark1.*` (Mark1 eyes/faceplate/animations) | removed, no replacement in this repo. `ovos-PHAL-plugin-mk1` carries the eyes/faceplate/mouth handling instead |
 | `configuration.*` (`get_default_lang`, `find_user_config`, `read_mycroft_config`, ...) | `ovos_config.config.*` / `ovos_config.locations` / `ovos_config.locale` |
 | `fingerprinting.*` (`detect_platform`, `is_mycroft_core`, ...) | removed, no direct successor |
-| `intents.*` (`IntentQueryApi`, `IntentServiceInterface`) | `ovos_workshop.intents` |
+| `intents.IntentServiceInterface` | `ovos_workshop.intents` |
+| `intents.IntentQueryApi` | removed, no replacement |
 | `intents.converse.ConverseTracker` | removed, no replacement |
 | `intents.layers.IntentLayers` | `ovos_workshop.decorators.layers.IntentLayers` |
 | `ovos_service_api.OVOSApiService` | `ovos_backend_client.api.BaseApi` |
 | `skills.blacklist_skill`, `.whitelist_skill` | `ovos_workshop.permissions.*` |
-| `skills.get_skills_folder` | `ovos_plugin_manager.skills.get_default_skill_dir` |
+| `skills.get_skills_folder` | `ovos_plugin_manager.skills.get_default_skills_directory` |
 | `skills.get_installed_skills` | `ovos_plugin_manager.skills.get_installed_skill_ids` |
 | `skills.api.SkillApi` | `ovos_workshop.skills.api.SkillApi` |
 | `skills.audioservice.AudioServiceInterface` | OCP (`OCPInterface`) |
