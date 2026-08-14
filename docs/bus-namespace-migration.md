@@ -20,8 +20,14 @@ So **`ovos-bus-client` migrates automatically and incrementally**. The legacy
 and the new names interoperate transparently while the ecosystem moves over.
 
 The canonical legacy to spec topic map lives in the `NamespaceTranslator` from
-[`ovos-spec-tools`](spec-tooling.md), and each `MessageBusClient` applies it on the
-**receive** side, not by putting a second copy on the wire:
+[`ovos-spec-tools`](spec-tooling.md), and each `MessageBusClient` applies it in two
+directions. On the **receive** side, an incoming message re-dispatches to local listeners
+under the other spelling (`modernize`). On the **emit** side, since bus-client 2.8.3a1 a
+canonical emit of any mapped topic also puts a real, marked legacy-spelled twin frame on
+the wire (gated on `emit_legacy`; escape hatch `OVOS_BUS_WIRE_LEGACY_TWINS` env var /
+`websocket.wire_legacy_twins` config key, default on, added in 2.8.4a1). Legacy-spelled
+emits are not twinned — their canonical counterpart is delivered receive-side only. Intent
+topics go through the separate intent bridge instead:
 
 ```mermaid
 sequenceDiagram
@@ -73,7 +79,8 @@ the legacy delivery, and disable `modernize` once no legacy producers remain.
     older producer still emitting legacy topics. The wire frame it receives may be legacy-only.
     That skill hears it at all *because* its own `MessageBusClient` (any `ovos-bus-client`
     since 2.6.3a1, where the bridge became receive-side in commit 0f0a241, PR #258; before
-    that the counterpart was a second wire message)
+    that the counterpart was a second wire message, and 2.8.3a1 re-added marked wire twins
+    for canonical emits — see above)
     re-dispatches the legacy arrival under its `ovos.*` counterpart on receive, per `modernize`
     being on. Disabling `modernize` on such a container does not just drop a redundant delivery.
     It silently stops that container from ever hearing a legacy producer again. Never disable

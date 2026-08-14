@@ -7,15 +7,17 @@
     removal. Fix it by moving every producer and consumer to `ovos.*` spec
     topics now, while both spellings still work.
 
-    This page is the migration checklist. For how the bridge works, its
-    flags, and why it is not a second copy on the wire, see [Bus Namespace
-    Migration](bus-namespace-migration.md).
+    This page is the migration checklist. For how the bridge works and its
+    flags, see [Bus Namespace Migration](bus-namespace-migration.md).
 
-!!! warning ""Dual-emit" names the history, not the mechanism"
-    The bridge translates on the **receive** side: a client re-dispatches an incoming message
-    to local listeners under the other spelling. One `emit()` is still exactly one websocket
-    message. The name stuck from the original opt-in commit and is kept here because the
-    commits and PRs use it.
+!!! warning ""Dual-emit" is literal again for canonical emits"
+    The bridge translates incoming messages on the **receive** side (`modernize`), and —
+    since bus-client 2.8.3a1 — a canonical emit of any mapped topic also puts a real,
+    marked legacy-spelled twin frame on the wire, so pre-spec wire listeners keep hearing
+    it. One canonical `emit()` is therefore **two** websocket messages by default; disable
+    with the `OVOS_BUS_WIRE_LEGACY_TWINS` env var or `websocket.wire_legacy_twins` config
+    key (added 2.8.4a1) only when no pre-spec listener is on the bus. Legacy-spelled emits
+    are not twinned; their canonical counterpart is receive-side only.
 
 ### The bus-client legacy-topic dual-emit and its removal
 

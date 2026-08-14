@@ -100,13 +100,13 @@ curl -s 'http://localhost:9666/v2/synthesize?utterance=hello%20world' -o out.wav
 
 ```bash
 pip install "ovos-translate-server[mcp]"
-python -m ovos_translate_server --tx-engine ovos-google-translate-plugin --port 9686
+python -m ovos_translate_server --tx-engine ovos-google-translate-plugin --port 9686 --mcp
 ```
 
 | Endpoint | Method | Description |
 |----------|--------|-------------|
 | `/utcp` | GET | UTCP manifest (always on) |
-| `/mcp` | Streamable HTTP | MCP server (requires `[mcp]` extra) |
+| `/mcp` | Streamable HTTP | MCP server (requires `[mcp]` extra **and** the `--mcp` flag) |
 
 UTCP tools: `ovos_translate.translate`, `ovos_translate.detect_language`, and the native HTTP REST endpoints.
 

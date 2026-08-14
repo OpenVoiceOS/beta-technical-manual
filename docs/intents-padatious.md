@@ -103,7 +103,10 @@ pale
 
 ```
 
-You must register this in the skill before use, most commonly in the `initialize()` method:
+Every `.entity` file shipped under the skill's locale resources auto-registers when the
+skill's resources load for a language (since ovos-workshop 9.5.0a1; opt out with
+`"skills": {"auto_register_entity_files": false}`). An explicit call is only needed for
+entity files outside the locale resources, and still works:
 
 ```python
 from ovos_workshop.skills import OVOSSkill

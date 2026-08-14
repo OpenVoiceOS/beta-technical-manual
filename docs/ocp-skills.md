@@ -91,8 +91,9 @@ General steps to create a skill:
 
 - `self.remove_voc(phrase, "skill_name")` to remove matched phrases from the search request.
   For example, `self.remove_voc("play some somafm radio", "somafm")` strips the `somafm` vocab
-  match and returns `"play some radio"`, so the rest of your matching logic scores against the
-  cleaned-up phrase instead of the raw one
+  match and returns `"play some  radio"` (the removed word's surrounding whitespace stays, so
+  a double space remains), and the rest of your matching logic scores against the cleaned-up
+  phrase instead of the raw one
 
 
 - Implement the `ocp_search` decorator, as many as you want (they run in parallel)
