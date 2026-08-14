@@ -1693,6 +1693,19 @@ the background job finishing.</p>
   list is not run. Plugins named in <code>order</code> are treated as enabled even with no config
   block of their own.</li>
 </ul>
+<p>Two runtime behaviors from OVOS-TRANSFORM-1 apply to the utterance, metadata, and intent
+chains (<code>transformer_services.py</code>):</p>
+<ul>
+<li><strong>Provenance stamping (§1.3):</strong> as each transformer runs, its name is appended to a
+  <code>&lt;type&gt;_transformer_ids</code> list in the message context (<code>utterance_transformer_ids</code>,
+  <code>metadata_transformer_ids</code>), so downstream consumers can see which plugins touched the
+  data and in what order.</li>
+<li><strong>Wrong-shape rejection (§7):</strong> a transformer that returns the wrong tuple shape or a
+  non-dict context is logged with a warning and its output <strong>discarded</strong> — the chain
+  continues with the previous output. An intent transformer that mutates <code>match_type</code> or
+  <code>skill_id</code> is discarded the same way (§3.4). If your transformer seems to have no
+  effect, check the service log for a "returned wrong shape" warning.</li>
+</ul>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="p">{</span>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span><span class="nt">&quot;utterance_transformers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">    </span><span class="nt">&quot;order&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;ovos-utterance-plugin-cancel&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;ovos-utterance-normalizer&quot;</span><span class="p">],</span>
