@@ -139,9 +139,12 @@ that means in practice.
     near-identity from `0.9` up. That floor lands squarely in the plugin's own
     **medium**-confidence band (`conf_med = 0.8`, `conf_high = 0.95` by default), well below
     `conf_high`. The stock `mycroft.conf` pipeline only enables
-    `ovos-padatious-pipeline-plugin-high`, not the medium or low stages, so on a default
-    install an out-of-list value simply produces no match at all — the medium-confidence
-    result exists internally but nothing in the default pipeline reads it. Enabling
+    `ovos-padatious-pipeline-plugin-high`, not the medium or low stages. The floor applies to
+    the per-slot entity contribution, not the final confidence, so the exact final score
+    varies with the rest of the match — but in practice an out-of-list value drags the match
+    below `conf_high`, and on a default install it then produces no match at all: the
+    medium-confidence result exists internally but nothing in the default pipeline reads it.
+    Enabling
     `ovos-padatious-pipeline-plugin-medium` in `pipeline` is what would make those matches
     visible. Whether the default pipeline should change to include it is an open decision,
     not something already shipped.

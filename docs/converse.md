@@ -36,9 +36,12 @@
 !!! note "`stop` is a reserved name too"
     `stop` is a reserved `intent_name` alongside `converse` and `response`
     ([ovos-core#778](https://github.com/OpenVoiceOS/ovos-core/pull/778), STOP-1 §4). A match
-    produced by the stop pipeline plugin suppresses the `session.active_handlers` push, the
-    same way a converse match does. See [Intent Service](intent-service.md) for the
-    pipeline-plugin side.
+    produced by the stop pipeline plugin also suppresses the `session.active_handlers` push,
+    but through a different switch: converse, fallback, and common-query suppress it because
+    the orchestrator knows those pipelines produce reserved names, while a stop match carries
+    `IntentHandlerMatch.suppress_activation`, which additionally skips the `{skill_id}.activate`
+    emit. See [Life of an Utterance](life-of-an-utterance.md) for the two mechanisms and
+    [Intent Service](intent-service.md) for the pipeline-plugin side.
 
 **What / why (beginners):** `converse()` lets a skill keep listening after it has just spoken, without registering a new intent for every possible follow-up. Once your skill runs, it goes onto the **Active Skills List** for a few minutes. While it is there, every new utterance is offered to its `converse()` method before normal intent parsing. This is how you handle "yes / no / thanks / the red one" replies that only make sense right after your skill acted.
 

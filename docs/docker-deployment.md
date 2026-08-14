@@ -241,7 +241,10 @@ localhost-default pitfalls.
 
 ## Headless: STT/TTS servers as containers
 
-`ovos-docker` also builds standalone STT and TTS server images, one per baked-in engine:
+Two sibling repositories,
+[`ovos-docker-stt`](https://github.com/OpenVoiceOS/ovos-docker-stt) and
+[`ovos-docker-tts`](https://github.com/OpenVoiceOS/ovos-docker-tts), build standalone STT
+and TTS server images, one per baked-in engine:
 `ovos-stt-server-onnx-asr`, `ovos-stt-server-onnx-asr-cuda`, `ovos-tts-server-piper`,
 `ovos-tts-server-kokoro`, `ovos-tts-server-phoonnx`, and others. These serve plain HTTP and
 have no bus dependency, so they work as a shared backend for bare-metal or thin-client

@@ -235,7 +235,10 @@ intent context (`session.intent_context`) specified by
     A reservation is a namespace lease, not a dispatch change. Reserved-name dispatches fire
     context stamping, routing and the handler trio like any other, except that the
     `session.active_handlers` push is suppressed, since a reserved name continues or terminates
-    an already-active skill's participation rather than starting a fresh one. See
+    an already-active skill's participation rather than starting a fresh one. (Converse,
+    fallback, and common-query are suppressed by pipeline identity; stop instead sets
+    `IntentHandlerMatch.suppress_activation` on the match — see
+    [Life of an Utterance](life-of-an-utterance.md).) See
     [Converse](converse.md) for how reserved names interact with converse/context handling.
 
 ---

@@ -124,8 +124,9 @@ what's the weather like
 
 ```
 
-Skills can also capture free-form values with `.entity` files, one accepted value per
-line, referenced from an `.intent` file with `{filename}` braces (the entity file's
+Skills can also capture free-form values with `.entity` files, one example value per
+line — training hints that score a slot fill, not a closed vocabulary (see
+[Padatious Intents](intents-padatious.md) for what happens to values outside the file) — referenced from an `.intent` file with `{filename}` braces (the entity file's
 basename becomes the placeholder name). For example, a `location.entity` file:
 
 ```text
