@@ -1951,6 +1951,14 @@
 <p>This is the full, auto-generated table of every key in the shipped <code>mycroft.conf</code>, with defaults and descriptions where available. Use this page to look up one specific key. For a curated, task-oriented walkthrough of the main settings, see <a href="../config-reference/">Configuration Reference</a>.</p>
 </div>
 <hr />
+<div class="admonition warning">
+<p class="admonition-title">Known wrong upstream description</p>
+<p>The descriptions below reproduce the shipped <code>mycroft.conf</code> comments, and one of those
+comments is wrong: <code>listener.fake_barge_in</code> <strong>lowers</strong> playback volume to
+<code>listener.barge_in_volume</code> (default <code>30</code>, not listed below because the shipped config
+omits it) and restores it afterwards. It never mutes. See
+<a href="../config-reference/">Configuration Reference</a> for the corrected wording.</p>
+</div>
 <h2 id="all-keys-generated">All Keys (Generated)<a class="headerlink" href="#all-keys-generated" title="Permanent link">&para;</a></h2>
 <!-- ste-lint: exempt. Every table below is emitted by tools/gen_reference.py from the
      shipped mycroft.conf. The Description cells reproduce upstream config comments

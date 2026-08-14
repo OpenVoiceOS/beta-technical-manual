@@ -1510,8 +1510,12 @@ your own skill, not every skill installed on the machine.</p>
 <div class="admonition tip">
 <p class="admonition-title">Skip the boilerplate with the <code>minicroft</code> fixture</p>
 <p>Once <code>ovoscope</code> is installed, it auto-registers a class-scoped <code>minicroft</code> pytest fixture
-through the <code>pytest11</code> entry point. Write your test as a normal <code>test_*(minicroft)</code> function
-and it hands you a ready <code>MiniCroft</code> instance, with no <code>setUp</code>/<code>tearDown</code> boilerplate to write.
+through the <code>pytest11</code> entry point. Put your tests in a class carrying a
+<code>skill_ids = ["your-skill.your-name"]</code> class attribute; each <code>test_*(self, minicroft)</code>
+method then receives a ready <code>MiniCroft</code> loaded with exactly those skills, started once
+per class, with no <code>setUp</code>/<code>tearDown</code> boilerplate. The fixture reads <code>skill_ids</code> from the
+test class, so a bare module-level <code>test_*(minicroft)</code> function silently gets a MiniCroft
+with <strong>zero</strong> skills loaded.
 The example above builds everything by hand so you can see what is actually happening; once
 you understand it, the fixture is the leaner way to write most tests.</p>
 </div>
