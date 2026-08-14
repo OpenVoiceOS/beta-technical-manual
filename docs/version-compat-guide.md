@@ -286,9 +286,11 @@ it merges, `MessageBusClient` speaks OVOS-MSG-1 spec topics only and passing
 `emit_legacy`, `modernize`, or `intent_reemit_blanket` to the constructor raises
 `RuntimeError`.
 
-The bridge translates on the **receive** side, re-dispatching to local listeners. It does not
-put a second copy on the wire, so one `emit()` is still one websocket message — see [Bus
-Namespace Migration](bus-namespace-migration.md). Do not size bus traffic as if it doubled.
+The bridge re-dispatches incoming messages on the **receive** side, and since bus-client
+2.8.3a1 a canonical emit of any mapped topic also puts a real, marked legacy twin frame on the
+wire by default (opt out with `OVOS_BUS_WIRE_LEGACY_TWINS` or `websocket.wire_legacy_twins`).
+One canonical `emit()` is therefore **two** websocket messages on current defaults. See [Bus
+Namespace Migration](bus-namespace-migration.md) and size bus traffic accordingly.
 
 There will be no client-side shim for this: migrate remote clients and
 satellites to `ovos.*` spec topics while the bridge still covers both spellings. Do

@@ -46,13 +46,15 @@ sequenceDiagram
 
 *Diagram: a producer emits the legacy recognizer_loop:utterance topic, the bus broadcasts it unchanged, and each receiving MessageBusClient uses the NamespaceTranslator to dispatch it to both the legacy handler and, re-dispatched locally, the spec ovos.utterance.handle handler.*
 
-- A single logical `emit()` sends exactly **one** message over the websocket: the topic the
-  caller actually chose.
-- When that message arrives back over the websocket (to every connected client, including the
+- A legacy-spelled or unmapped `emit()` sends exactly **one** message over the websocket: the
+  topic the caller chose. A canonical emit of a mapped topic sends **two** on current defaults:
+  the canonical frame plus its marked legacy twin (see above).
+- When a frame arrives back over the websocket (to every connected client, including the
   sender), each client's `on_message` handler locally re-dispatches it under its counterpart
-  topic(s) too, using the translator to reshape the payload where the shape changed. This is a
-  listener-delivery convenience *inside each process*, not a second bus message. The broadcast
-  server never sees or re-broadcasts a counterpart frame.
+  topic(s) too, using the translator to reshape the payload where the shape changed. This
+  re-dispatch is a listener-delivery convenience *inside each process*, not a wire frame. The
+  broadcast server itself never creates counterpart frames; any twin on the wire came from the
+  emitting client.
 - **listen**: subscribing to *either* name (`bus.on(...)`) also delivers the counterpart, with
   **de-duplication** so a handler that would match both fires exactly once.
 
