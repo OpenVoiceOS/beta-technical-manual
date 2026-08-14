@@ -90,7 +90,10 @@
 
 - **Description**: TTS Plugin for [MaryTTS](https://github.com/marytts/marytts)
 
-### Default Configuration
+### Recommended Configuration
+
+`url` is required (the plugin refuses to load without it); only `voice` has a default
+(`cmu-slt-hsmm`). Point `url` at your own MaryTTS server:
 
 ```jsonc
 "tts": {
@@ -194,7 +197,7 @@
     "module": "ovos-tts-plugin-azure",
     "ovos-tts-plugin-azure": {
         "api_key": "insert_your_key_here",
-        "voice": "en-US-JennyNeural",  // optional, default "en-US-Guy24kRUS"
+        "voice": "en-US-JennyNeural",  // optional, this is already the default
         "region": "westus" // optional, if your region is westus
     }
 }
@@ -236,7 +239,7 @@
     or guaranteed-available endpoint. Point it at your own self-hosted server (see
     [tts-server](tts-server-deployment.md#companion-plugin)) if you need privacy or reliability.
 
-### Default Configuration
+### Recommended Configuration
 
 ```jsonc
   "tts": {
@@ -251,7 +254,9 @@
 
 ```
 
-That default `host` is a public community-run Piper server, not an address on your network. See
+When `host` is omitted (the true default), the plugin shuffles the public community
+server list (`tts.openvoiceos.pt` and `tts.smartgic.io/piper`) and tries them in order.
+Either way these are public community-run servers, not addresses on your network. See
 [tts-server](tts-server-deployment.md#companion-plugin) to self-host, or pick a fully offline voice from the
 table on the [TTS Plugins](tts-plugins.md) page.
 
