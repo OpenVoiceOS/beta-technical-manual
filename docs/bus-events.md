@@ -318,10 +318,11 @@ A few areas are deliberately **not** in the translator, so subscribing on the sp
 *not* transparently receive the legacy traffic, or the other way around. These need real adoption
 in the producer and consumer, not a topic swap:
 
-- **Handler-lifecycle trio.** `mycroft.skill.handler.start` / `.complete` are orchestrator-vs-skill
-  private signals. The orchestrator emits the spec `ovos.intent.handler.start` / `.complete` /
-  `.error` directly. The two namespaces are kept separate by design (PIPELINE-1 §8/§11). The pair
-  is shape-changing, and bridging would double-emit.
+- **Handler-lifecycle trio.** `mycroft.skill.handler.start` / `.complete` / `.error` are
+  orchestrator-vs-skill private signals. The orchestrator emits the spec
+  `ovos.intent.handler.start` / `.complete` / `.error` directly. The two namespaces are kept
+  separate by design (PIPELINE-1 §8/§11). The trio is shape-changing, and bridging would
+  double-emit.
 - **Intent/entity registration.** `register_vocab` + `register_intent` (Adapt's N legacy messages)
   do not map 1:1 onto the single `ovos.intent.register.keyword` / `.register.template` /
   `ovos.entity.register` message (INTENT-4 §5), which inlines the vocab descriptors. This requires
