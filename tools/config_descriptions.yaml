@@ -1,26 +1,26 @@
-skills.converse.cross_deactivation: Currently unused — nothing in ovos-core reads this key (deactivation permission is gated by `cross_activation`; skill deactivation is marked not-yet-implemented in the shipped config).
+skills.converse.cross_deactivation: Unused. Nothing in ovos-core reads this key. Deactivation permission is gated by `cross_activation`, and the shipped config marks skill deactivation as not implemented.
 sounds.start_listening: Earcon confirming the wake word was heard and recording started. Only plays when `confirm_listening` is true.
 sounds.end_listening: Earcon confirming recording stopped and the utterance was captured.
 sounds.acknowledge: Earcon a skill plays via `self.acknowledge()` to confirm a request that produces no spoken reply. Also the default for the skill installer's `pip_success`.
 sounds.error: Earcon played when no skill or pipeline could handle the utterance (complete intent failure). Also the default for the skill installer's `pip_error`.
 confirm_listening: Play a beep when the system starts listening.
 open_data.intent_urls: URLs of opt-in open-data collection servers to send anonymized
-  intent matches to. Empty by default; see [Privacy & Security](privacy-security.md).
+  intent matches to. Empty by default. See [Privacy & Security](privacy-security.md).
 date_format: Date format for display and parsing.
-gui_websocket.host: Bound to `127.0.0.1` by default; remote display clients require
-  widening this to `0.0.0.0`, which exposes the socket to the whole network — see
+gui_websocket.host: Bound to `127.0.0.1` by default. Remote display clients require
+  widening this to `0.0.0.0`, which exposes the socket to the whole network. See
   [Bus Service](bus-service.md) for network-exposure guidance.
 lang: Primary BCP-47 language code for STT and TTS.
 language.detection_module: Stock default is `ovos-lang-detector-plugin-server`, which
-  routes text to a public community server for language detection — see
+  routes text to a public community server for language detection. See
   [Privacy & Security](privacy-security.md).
 language.translation_module: Stock default is `ovos-translate-plugin-server`, which
-  routes text to a public community server for translation — see
+  routes text to a public community server for translation. See
   [Privacy & Security](privacy-security.md).
 stt.module: Stock default is `ovos-stt-plugin-server`, which routes voice audio to a
-  public community server for speech-to-text — see [Privacy & Security](privacy-security.md).
+  public community server for speech-to-text. See [Privacy & Security](privacy-security.md).
 tts.module: Stock default is `ovos-tts-plugin-server`, which routes text to a public
-  community server for text-to-speech — see [Privacy & Security](privacy-security.md).
+  community server for text-to-speech. See [Privacy & Security](privacy-security.md).
 listener.fake_barge_in: Mute output during recording.
 listener.recording_timeout: Max seconds for a single recording.
 listener.remove_silence: Strip leading/trailing silence before sending audio to STT.
@@ -28,7 +28,7 @@ listener.sample_rate: Audio sampling rate in Hz.
 listener.silence_end: Seconds of silence before a command is considered ended.
 listener.speech_begin: Seconds of detected speech before a command is considered started.
 listener.wake_word: Default hotword (matches an entry under `hotwords`).
-secondary_langs: Extra languages whose resource files are loaded; intents are only
+secondary_langs: Extra languages whose resource files are loaded. Intents are only
   matched when the utterance is tagged with that lang at STT.
 system_unit: Measurement units (`metric` or `imperial`).
 temperature_unit: Temperature units (`celsius` or `fahrenheit`).
