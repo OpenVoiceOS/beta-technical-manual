@@ -49,6 +49,7 @@ The repositories below do not follow the universal donor policy. Check their lic
 | [ovos-tts-plugin-beepspeak](https://github.com/OpenVoiceOS/ovos-tts-plugin-beepspeak) | no license file | novelty R2-D2-style TTS plugin. The repository ships no `LICENSE` file |
 | [ovos-tts-plugin-lux](https://github.com/OpenVoiceOS/ovos-tts-plugin-lux) | see repo (no license file) | zipvoice-based voice-cloning TTS plugin. The package self-declares Apache-2.0 in its `setup.py` (with the OSI Apache classifier), but the repository ships no standalone `LICENSE` file |
 | [ovos-stt-plugin-HiTZ](https://github.com/OpenVoiceOS/ovos-stt-plugin-HiTZ) | no license file | archived/deprecated Basque STT plugin. The repository ships no `LICENSE` file |
+| [ovos-lang-detector-classics-plugin](https://github.com/OpenVoiceOS/ovos-lang-detector-classics-plugin) | see repo (no license file) | heuristic language-detector plugin. The `pyproject.toml` declares Apache-2.0, but the repository ships no `LICENSE` file |
 | [kw-template-matcher](https://github.com/OpenVoiceOS/kw-template-matcher) | see repo (no license file) | template-matching library + `opm.transformer.intent` plugin. The `setup.py` classifier says MIT, but the repository ships no `LICENSE` file |
 
 The rows above with **no license file** are not a rejection of the universal donor policy.

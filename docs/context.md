@@ -23,10 +23,12 @@ Conversational context makes voice interactions feel more natural. The assistant
 
 **What works in a skill today**: gate a follow-up with a blocking prompt, `ask_yesno()` /
 `get_response()` (see [Statements and Prompts](prompts.md)), keep the skill in the
-conversation with [`converse()`](converse.md), or use the legacy Adapt path:
+conversation with [`converse()`](converse.md), or use the Adapt path:
 `self.set_context()` plus `IntentBuilder().require()` (the [TeaSkill example](#using-context-to-enable-intents)
-below). The declarative spec mechanism described next is evaluated by the pipelines but is
-**not yet reachable from a skill**. Details are in the warning under the example.
+below). For the declarative spec mechanism described next, `set_context` now writes entries
+the gate can see. But the skill API still has no way to put `requires_context` /
+`excludes_context` declarations on an intent, so end-to-end declarative gating is not
+wired up yet. Details are in the warning under the example.
 
 `requires_context` and `excludes_context` gate matching in both the
 [Adapt](adapt-pipeline.md) and [Padatious](padatious-pipeline.md) pipelines, as CONTEXT-1 §6
@@ -49,16 +51,17 @@ The private/shared scoping rules are identical on both sides: a bare key gates p
 against the registering `skill_id`, and reading a shared key needs the explicit
 `{"key": "person", "scope": "shared"}` form.
 
-!!! warning "The gate exists at match time, but skills cannot reach it yet"
-    Both pipelines evaluate this gate today, but neither half of the skill-facing surface
-    has landed: `@intent_handler` has no `requires_context=` / `excludes_context=`
-    parameters to put the declarations on the registration payload, and `set_context`
-    does not write entries the gate can find (see the warning near the end of this
-    page). **To gate a yes/no follow-up in a skill
+!!! warning "Half the skill-facing surface is still missing"
+    Both pipelines evaluate this gate at match time, and the **entry** side now works:
+    `set_context` writes into the session under both the legacy munged spelling and the
+    resolved `<skill_id>:<key>` spelling the gate looks up, each with a decay stamp. What
+    is still missing is the **declaration** side: `@intent_handler` has no
+    `requires_context=` / `excludes_context=` parameters, so a skill cannot put the
+    declarations on its registration payload. **To gate a yes/no follow-up in a skill
     today**, use a blocking prompt, `ask_yesno()` / `get_response()` (see
-    [Statements and Prompts](prompts.md)), or keep the skill in the conversation with
-    [`converse()`](converse.md). The legacy Adapt `.require()` keyword path (the TeaSkill
-    example below) also works.
+    [Statements and Prompts](prompts.md)), keep the skill in the conversation with
+    [`converse()`](converse.md), or use the Adapt `.require()` keyword path (the TeaSkill
+    example below).
 
 Context lives on the per-conversation [Session](session.md), in `Session.intent_context`. It
 is **session-scoped**, not a single global store, so concurrent users and devices keep
@@ -310,20 +313,23 @@ CONTEXT-1's declarative `requires_context` / `excludes_context` gate (above) exp
 `set_cross_skill_context` and the deprecated `set_adapt_context` /
 `remove_adapt_context` shortcuts carry the same additive `key`.
 
-!!! warning "The declarative gate is not reachable via `set_context` yet"
-    The `key` field is on the wire, but `ovos-core` does not yet mirror it into the
-    resolved `<skill_id>:<key>` entry the declarative gate looks up. It still stores
-    only the legacy munged spelling. Until that mirror lands in core, intents declared
-    with `requires_context=` / `excludes_context=` cannot be satisfied by
-    `set_context` / `@adds_context`. Only the legacy `.require()` keyword path (above)
-    works today.
+!!! note "Both spellings are written, with one decay policy"
+    `set_context` writes into the session per CONTEXT-1 §5.0: the mutation lands on the
+    current handler's session directly, and the legacy `add_context` bus message is also
+    emitted as a compat dual-write for pre-§5.0 cores. The core writes **two** entries:
+    the legacy munged `skillidkey` spelling and the resolved `<skill_id>:<key>` spelling
+    the declarative gate looks up. One computed `expires_at` applies to both, so
+    `set_context` entries decay normally (`context.timeout`, minutes, default `2`) and a
+    re-set refreshes the expiry of both keys. The remaining gap is declaration-side only
+    (see the warning near the top of this page).
 
 !!! note "Writing a key replaces it wholesale; there is no read-back"
     Writing an entry under a key that already exists **replaces the whole entry**, value and
-    decay timer both. It does not merge onto the old one. (Spec-shaped entries carry their
-    own explicit `expires_at` / `turns_remaining`. The legacy keyword-context manager instead
-    ages whole frames out after the `context.timeout` config value in minutes, default `2`,
-    which is where [Session](session.md)'s "~2 minutes" figure comes from.) There is no API
+    decay timer both. It does not merge onto the old one. A re-set refreshes the decay
+    window, which is what naptime-style "keep this alive while we talk" flows rely on.
+    (Entries carry an explicit `expires_at` computed from the `context.timeout` config value
+    in minutes, default `2`, which is where [Session](session.md)'s "~2 minutes" figure
+    comes from; spec-shaped writes may instead carry `turns_remaining`.) There is no API
     to read a
     context entry's current value or remaining decay back out. A skill that wants to know
     "what did I set this to, and how long ago" must keep that in its own state, not rely on

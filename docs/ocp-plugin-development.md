@@ -34,13 +34,21 @@ class MyExtractor(OCPStreamExtractor):
         """
         return ["myservice"]
 
-    def extract_stream(self, uri: str, video: bool = True) -> Optional[str]:
-        """Resolve uri to the real, playable stream URI.
+    def extract_stream(self, uri: str, video: bool = True) -> Optional[dict]:
+        """Resolve uri to playable-stream metadata.
 
         Called with the full raw uri, "{sei}//{id}" prefix included when routed
         via supported_seis. Return None if uri cannot be resolved.
         """
 ```
+
+!!! warning "Return a metadata dict, not a bare string"
+    The base class in `ovos-plugin-manager` still type-hints `-> Optional[str]`, but the
+    real consumers (`StreamHandler.extract_stream` and the OCP media layer) call `.get()`
+    and `.items()` on the return value: return a **dict** with at least a `"uri"` key (plus
+    any metadata such as `title` or `image`). Every shipping extractor (bandcamp, youtube)
+    returns a dict. A bare string passes a direct unit test and then raises
+    `AttributeError` the first time OCP routes a URI through your plugin.
 
 `validate_uri(uri)` is implemented by the base class: it returns `True` when `uri`
 starts with `"{sei}//"` for one of `supported_seis`. Override it too if your plugin
@@ -85,12 +93,12 @@ class MyServiceExtractor(OCPStreamExtractor):
     def supported_seis(cls) -> List[str]:
         return ["myservice"]
 
-    def extract_stream(self, uri: str, video: bool = True) -> Optional[str]:
+    def extract_stream(self, uri: str, video: bool = True) -> Optional[dict]:
         # uri arrives as "myservice//<id>"; strip the sei prefix ourselves
         track_id = uri.split("//", 1)[-1]
         resp = requests.get(f"https://api.myservice.example/track/{track_id}")
         if resp.ok:
-            return resp.json()["stream_url"]
+            return {"uri": resp.json()["stream_url"]}
         return None
 ```
 
