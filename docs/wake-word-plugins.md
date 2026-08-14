@@ -217,6 +217,11 @@ Where the authoritative detail lives, and the honest trade-offs:
 - **microWakeWord** ([kahrendt/microWakeWord](https://github.com/kahrendt/microWakeWord)):
   synthetic-sample training aimed at microcontrollers; the smallest-footprint neural
   option.
+- **WakeForge** ([TigreGotico/wakeforge](https://github.com/TigreGotico/wakeforge)): the
+  ecosystem's own training framework, in prerelease. Train a detector from a single typed
+  phrase (synthetic data, no recording campaign) and run the exported two-file model with
+  `ovos-ww-plugin-wakeforge` (alpha, on PyPI). The intended long-term replacement for the
+  Precise training path; expect rough edges while it is alpha.
 - **Vosk** ([project page](https://alphacephei.com/vosk/)): general ASR repurposed for
   keyword matching. Zero training for an arbitrary phrase, but heavier and worse at
   false-accept suppression than the dedicated nets; it ignores `sensitivity` entirely.

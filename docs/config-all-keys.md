@@ -5,6 +5,13 @@
 
 ---
 
+!!! warning "Known wrong upstream description"
+    The descriptions below reproduce the shipped `mycroft.conf` comments, and one of those
+    comments is wrong: `listener.fake_barge_in` **lowers** playback volume to
+    `listener.barge_in_volume` (default `30`, not listed below because the shipped config
+    omits it) and restores it afterwards. It never mutes. See
+    [Configuration Reference](config-reference.md) for the corrected wording.
+
 ## All Keys (Generated)
 
 <!-- ste-lint: exempt. Every table below is emitted by tools/gen_reference.py from the

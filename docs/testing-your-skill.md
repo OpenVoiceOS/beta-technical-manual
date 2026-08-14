@@ -102,8 +102,12 @@ your own skill, not every skill installed on the machine.
 
 !!! tip "Skip the boilerplate with the `minicroft` fixture"
     Once `ovoscope` is installed, it auto-registers a class-scoped `minicroft` pytest fixture
-    through the `pytest11` entry point. Write your test as a normal `test_*(minicroft)` function
-    and it hands you a ready `MiniCroft` instance, with no `setUp`/`tearDown` boilerplate to write.
+    through the `pytest11` entry point. Put your tests in a class carrying a
+    `skill_ids = ["your-skill.your-name"]` class attribute; each `test_*(self, minicroft)`
+    method then receives a ready `MiniCroft` loaded with exactly those skills, started once
+    per class, with no `setUp`/`tearDown` boilerplate. The fixture reads `skill_ids` from the
+    test class, so a bare module-level `test_*(minicroft)` function silently gets a MiniCroft
+    with **zero** skills loaded.
     The example above builds everything by hand so you can see what is actually happening; once
     you understand it, the fixture is the leaner way to write most tests.
 

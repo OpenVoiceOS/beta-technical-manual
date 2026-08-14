@@ -313,7 +313,10 @@ Wake-word detection can misfire or fail to trigger depending on your microphone,
     ONNX exports of already-trained models live on. Train an
     [openWakeWord](https://github.com/dscripka/openWakeWord) or
     [microWakeWord](https://github.com/kahrendt/microWakeWord) model instead; both train on
-    synthetic speech, so no recording campaign is needed. Helpful resources:
+    synthetic speech, so no recording campaign is needed. The ecosystem's own
+    [WakeForge](https://github.com/TigreGotico/wakeforge) framework (prerelease, runs via
+    `ovos-ww-plugin-wakeforge`) trains a detector from a single typed phrase and is the
+    intended successor to the Precise path. Helpful resources:
 
     - [Helpful Wake-word Datasets on Hugging Face](https://huggingface.co/collections/Jarbas/wake-word-datasets-672cc275fa4bddff9cf69c39)
     - [Data Collection](https://github.com/secretsauceai/wakeword-data-collector)
