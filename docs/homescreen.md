@@ -166,7 +166,8 @@ class WebpageHomescreen(OVOSSkill):
         self.gui.show_url(url)
 
     @intent_handler("refresh-homepage.intent")
-    def refresh_homescreen(self, message: Message):
+    def refresh_homescreen(self, message: Message = None):
+        # default None: settings_change_callback invokes this with no arguments
         """Update refresh rate of homescreen and refresh screen.
 
         Defaults to 600 seconds / 10 minutes.
