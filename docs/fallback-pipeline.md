@@ -18,7 +18,7 @@ The **Fallback Pipeline** in **OpenVoiceOS (OVOS)** manages how fallback skills 
 !!! note "How the spec frames it"
     A **fallback skill** declares no intent patterns. Instead it receives the raw utterance at query time and decides for itself whether it can respond (FALLBACK-1 §2). This is the right pattern for open-domain QA, LLM completions, and any coverage that cannot be modelled as a grammar.
 
-    The plugin builds an ordered handler pool from each skill's registered `priority` and the session preference `session.fallback_handlers`. It queries pool members one at a time via `ovos.skills.fallback.ping` / `.pong`, and returns a `Match` on the **reserved `intent_name` `fallback`** (PIPELINE-1 §7.3) targeting the first willing skill, dispatched on `ovos.skills.fallback.{skill_id}.request`. If the pool is exhausted it returns `None`, and the orchestrator emits `ovos.intent.unmatched`.
+    The plugin builds an ordered handler pool from each skill's registered `priority` and the session preference `session.fallback_handlers` (FALLBACK-1 §4; current `ovos-core` orders purely by registered `priority` and does not yet consult `session.fallback_handlers`). It queries pool members one at a time via `ovos.skills.fallback.ping` / `.pong`, and returns a `Match` on the **reserved `intent_name` `fallback`** (PIPELINE-1 §7.3) targeting the first willing skill, dispatched on `ovos.skills.fallback.{skill_id}.request`. If the pool is exhausted it returns `None`, and the orchestrator emits `ovos.intent.unmatched`.
 
     The high/medium/low stages below are one fallback plugin loaded at several pipeline positions, each restricted to a `priority` range (FALLBACK-1 §8.2).
 

@@ -72,18 +72,21 @@ usage: ovos-tts-server [-h] [--engine ENGINE] [--port PORT] [--host HOST] [--cac
 options:
   -h, --help            show this help message and exit
   --engine ENGINE       tts plugin to be used
-  --port PORT           port number (default: 9666, not 8080 -- the companion plugin
-                        defaults to /v2/synthesize on this port; if you point an old
-                        client at the legacy /synthesize/{utterance} path, set
-                        "v2": false in its config)
-  --host HOST           host (default: 0.0.0.0)
+  --port PORT           port number
+  --host HOST           host
   --cache               save every synth to disk
-  --lang LANG           language code that overrides the plugin's configured language;
-                        if omitted, the plugin uses its own configured `lang`, then the
-                        top-level config `lang`, then falls back to "mul"
+  --lang LANG           language the plugin serves; selects its default voice when no
+                        voice is configured. Overrides the plugin's configured
+                        language.
   --mcp                 mount MCP server at /mcp (requires ovos-tts-server[mcp])
 
 ```
+
+Flag details the short help text leaves out: the port defaults to `9666` and the host to
+`0.0.0.0`. The companion plugin defaults to `/v2/synthesize` on that port; if you point an
+old client at the legacy `/synthesize/{utterance}` path, set `"v2": false` in its config.
+When `--lang` is omitted, the plugin uses its own configured `lang`, then the top-level
+config `lang`, then falls back to `"mul"`.
 
 !!! example "A worked multi-flag invocation"
     Serve a specific engine, override its language to European Portuguese, and cache every
