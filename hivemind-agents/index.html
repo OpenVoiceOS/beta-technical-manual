@@ -1194,13 +1194,13 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#choosing-the-agent-full-ovos-vs-a-single-persona" class="md-nav__link">
+  <a href="#choosing-the-agent-full-ovos-a-single-persona-or-a-media-renderer" class="md-nav__link">
     <span class="md-ellipsis">
-      Choosing the agent: full OVOS vs a single persona
+      Choosing the agent: full OVOS, a single persona, or a media renderer
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Choosing the agent: full OVOS vs a single persona">
+    <nav class="md-nav" aria-label="Choosing the agent: full OVOS, a single persona, or a media renderer">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1216,6 +1216,15 @@
   <a href="#a-single-persona-hivemind-persona-agent-plugin" class="md-nav__link">
     <span class="md-ellipsis">
       A single persona: hivemind-persona-agent-plugin
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a-remote-media-renderer-hivemind-player-agent-plugin" class="md-nav__link">
+    <span class="md-ellipsis">
+      A remote media renderer: hivemind-player-agent-plugin
     </span>
   </a>
   
@@ -1432,13 +1441,13 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#choosing-the-agent-full-ovos-vs-a-single-persona" class="md-nav__link">
+  <a href="#choosing-the-agent-full-ovos-a-single-persona-or-a-media-renderer" class="md-nav__link">
     <span class="md-ellipsis">
-      Choosing the agent: full OVOS vs a single persona
+      Choosing the agent: full OVOS, a single persona, or a media renderer
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Choosing the agent: full OVOS vs a single persona">
+    <nav class="md-nav" aria-label="Choosing the agent: full OVOS, a single persona, or a media renderer">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1454,6 +1463,15 @@
   <a href="#a-single-persona-hivemind-persona-agent-plugin" class="md-nav__link">
     <span class="md-ellipsis">
       A single persona: hivemind-persona-agent-plugin
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a-remote-media-renderer-hivemind-player-agent-plugin" class="md-nav__link">
+    <span class="md-ellipsis">
+      A remote media renderer: hivemind-player-agent-plugin
     </span>
   </a>
   
@@ -1586,7 +1604,7 @@ reconnect/backoff behavior a client must implement. That protocol is documented 
 </tr>
 <tr>
 <td><strong>Agent</strong></td>
-<td>What actually answers: either a full <a href="../core/">ovos-core</a> install (<code>hivemind-ovos-agent-plugin</code>) or a single <a href="../personas/">persona</a> (<code>hivemind-persona-agent-plugin</code>).</td>
+<td>What actually answers: a full <a href="../core/">ovos-core</a> install (<code>hivemind-ovos-agent-plugin</code>), a single <a href="../personas/">persona</a> (<code>hivemind-persona-agent-plugin</code>), or a remote media renderer (<code>hivemind-player-agent-plugin</code>).</td>
 </tr>
 <tr>
 <td><strong>Satellites / clients</strong></td>
@@ -1619,7 +1637,9 @@ You can swap implementations without touching the rest:</p>
 </span></code></pre></div>
 <p>This writes the client to the server's credentials database (under
 <code>xdg_data_home()/hivemind-core</code>), separate from the server config at
-<code>~/.config/hivemind-core/server.json</code>.</p>
+<code>~/.config/hivemind-core/server.json</code>. To rename a client later, run
+<code>hivemind-core rename-client &lt;node_id&gt; --name &lt;new_name&gt;</code>. <code>&lt;node_id&gt;</code> accepts either the
+numeric id or the access key, and <code>--name</code> is required.</p>
 <p><strong>2. Start the server:</strong></p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>hivemind-core<span class="w"> </span>listen<span class="w">           </span><span class="c1"># start listening for HiveMind connections</span>
 </span></code></pre></div>
@@ -1649,7 +1669,7 @@ without being handed connection details each time.</p>
 on the configured host and port. Also check that the access key matches one printed by
 <code>hivemind-core add-client</code>.</p>
 <hr />
-<h2 id="choosing-the-agent-full-ovos-vs-a-single-persona">Choosing the agent: full OVOS vs a single persona<a class="headerlink" href="#choosing-the-agent-full-ovos-vs-a-single-persona" title="Permanent link">&para;</a></h2>
+<h2 id="choosing-the-agent-full-ovos-a-single-persona-or-a-media-renderer">Choosing the agent: full OVOS, a single persona, or a media renderer<a class="headerlink" href="#choosing-the-agent-full-ovos-a-single-persona-or-a-media-renderer" title="Permanent link">&para;</a></h2>
 <p>The agent is selected by the <code>agent_protocol.module</code> key in <code>~/.config/hivemind-core/server.json</code>.</p>
 <h3 id="full-ovos-hivemind-ovos-agent-plugin">Full OVOS: <code>hivemind-ovos-agent-plugin</code><a class="headerlink" href="#full-ovos-hivemind-ovos-agent-plugin" title="Permanent link">&para;</a></h3>
 <p>The default. Bridges HiveMind to a running <a href="../core/">ovos-core</a> over its messagebus. Remote
@@ -1657,6 +1677,11 @@ clients get the whole assistant: skills, pipelines, OCP, and more.</p>
 <h3 id="a-single-persona-hivemind-persona-agent-plugin">A single persona: <code>hivemind-persona-agent-plugin</code><a class="headerlink" href="#a-single-persona-hivemind-persona-agent-plugin" title="Permanent link">&para;</a></h3>
 <p>Exposes just one <a href="../personas/">persona</a>, with no <code>ovos-core</code> and no messagebus, so the attack
 surface stays minimal. It answers straight from the configured persona.</p>
+<p>Pointing the persona at an OpenAI-compatible endpoint, as in the example below, is a working
+LLM-fallback deployment: the remote node just forwards chat to that endpoint. Pin
+<code>ovos-persona&gt;=0.9.0a17</code>. Versions before that mixed up the <code>lang</code> and <code>system_unit</code> arguments
+in <code>Persona.chat</code>/<code>Persona.stream</code>, which could break a retrieval-backed persona or 500 the
+<code>/v1/chat/completions</code> endpoint.</p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="p">{</span>
 </span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">  </span><span class="nt">&quot;agent_protocol&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 </span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">    </span><span class="nt">&quot;module&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;hivemind-persona-agent-plugin&quot;</span><span class="p">,</span>
@@ -1678,6 +1703,13 @@ surface stays minimal. It answers straight from the configured persona.</p>
 <a href="https://github.com/OpenVoiceOS/ovos-persona">ovos-persona</a> JSON file (<code>~</code> is expanded). The
 <code>"module"</code> value must equal the plugin's entry-point name. That same string is reused as the
 key holding its config.</p>
+<h3 id="a-remote-media-renderer-hivemind-player-agent-plugin">A remote media renderer: <code>hivemind-player-agent-plugin</code><a class="headerlink" href="#a-remote-media-renderer-hivemind-player-agent-plugin" title="Permanent link">&para;</a></h3>
+<p>Ships in the <a href="https://github.com/JarbasHiveMind/hivemind-media-player"><code>hivemind-media-player</code></a>
+repo, as the <code>hivemind-player-agent-plugin</code> entry point under the <code>hivemind.agent.protocol</code>
+group. Set <code>agent_protocol.module</code> to it and the node runs <code>ovos-audio</code> and OCP as a remote
+media renderer. Any OCP-speaking client can send it play/pause/seek commands over HiveMind. It
+answers no natural-language queries; a <code>natural_language_query</code> yields only the end-of-query
+sentinel.</p>
 <hr />
 <h2 id="satellites-clients">Satellites &amp; clients<a class="headerlink" href="#satellites-clients" title="Permanent link">&para;</a></h2>
 <p>For a step-by-step build of a server-plus-satellites deployment, see <a href="../satellites/">Satellites</a>.</p>
