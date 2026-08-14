@@ -1719,6 +1719,11 @@ plugin to try when the first fails to load:</p>
 </span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">  </span><span class="p">}</span>
 </span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="p">}</span>
 </span></code></pre></div>
+<p><strong>Recommended module: <code>ovos-g2p-plugin-mimic</code></strong> (English only). It is the one plugin that
+escapes the placeholder-duration problem: it overrides <code>utterance2visemes</code> to run the text
+through the Mimic 1 binary and returns Mimic's own per-phoneme durations, so the mouth
+tracks real speech timing even when the <em>voice</em> you hear is a different TTS engine. Every
+other plugin inherits the flat <code>0.4</code>s placeholders.</p>
 <h2 id="available-g2p-plugins">Available G2P Plugins<a class="headerlink" href="#available-g2p-plugins" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
