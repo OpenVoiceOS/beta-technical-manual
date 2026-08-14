@@ -1721,7 +1721,8 @@ effort, the legacy bus-namespace migration, has not removed anything yet:
 <code>emit_legacy</code> both defaulting to on, and its kill-switch
 (<a href="https://github.com/OpenVoiceOS/ovos-bus-client/pull/272">ovos-bus-client#272</a>) is still an
 open draft. See <a href="../bus-namespace-migration/">Bus Namespace Migration</a>. The PRs below carry
-that migration the rest of the way: a set of coordinated kill-switches that
+that migration the rest of the way (rows marked <strong>merged</strong> have already landed
+and ship on current <code>dev</code> prereleases; the rest are still open): a set of coordinated kill-switches that
 drop the last hardcoded legacy topic literals from <code>ovos-core</code>, <code>ovos-workshop</code>,
 and the <code>ovos-utils</code> test double. Each is explicitly gated to merge only once
 fleets no longer run legacy-namespace consumers.</p>
@@ -1741,7 +1742,7 @@ fleets no longer run legacy-namespace consumers.</p>
 <td>Reworks stop dispatch onto one spec path (requires <code>opm&gt;=2.9.0a1</code>, supersedes <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/777" title="GitHub Issue: TigreGotico/ovos-technical-manual #777">#777</a>)</td>
 <td>skill authors, deployers of legacy skills, remote/HiveMind stop consumers</td>
 <td>Yes</td>
-<td>3.0.0</td>
+<td>3.0.0a1 (merged, on <code>dev</code>)</td>
 </tr>
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/ovos-core/pull/777">ovos-core#777 (closed)</a></td>
@@ -1755,21 +1756,21 @@ fleets no longer run legacy-namespace consumers.</p>
 <td>Core-resident OVOS-CONTEXT-1 store, additive</td>
 <td>skill authors declaring context, remote session-sync consumers</td>
 <td>No</td>
-<td>2.6.0</td>
+<td>3.0.0a1 (merged, on <code>dev</code>)</td>
 </tr>
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/ovos-core/pull/785">ovos-core#785</a></td>
-<td>Conforms transformer chains to OVOS-TRANSFORM-1 (blocked on <code>opm#417</code>)</td>
+<td>Conforms transformer chains to OVOS-TRANSFORM-1</td>
 <td>transformer plugin authors</td>
 <td>No</td>
-<td>2.5.9</td>
+<td>2.5.10a1 (merged, on <code>dev</code>)</td>
 </tr>
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/ovos-workshop/pull/500">ovos-workshop#500</a></td>
 <td>Drops the <code>.intent</code>-topic dual-bind for canonical intent topics</td>
 <td>skill authors on <code>.intent</code> topics, mixed-container deployers</td>
 <td>Not marked breaking, but drops the dual bind</td>
-<td>9.4.0</td>
+<td>9.3.11a2 (merged, on <code>dev</code>)</td>
 </tr>
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/ovos-workshop/pull/414">ovos-workshop#414</a></td>
@@ -1790,7 +1791,7 @@ fleets no longer run legacy-namespace consumers.</p>
 <td>Adds a version-skew bridge for <code>.intent</code> topics (removed later by <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/272" title="GitHub Issue: TigreGotico/ovos-technical-manual #272">#272</a>)</td>
 <td>deployers running mixed-version fleets</td>
 <td>No</td>
-<td>2.8.0</td>
+<td>2.8.0a1 (merged, on <code>dev</code>)</td>
 </tr>
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/ovos-utils/pull/411">ovos-utils#411</a></td>
