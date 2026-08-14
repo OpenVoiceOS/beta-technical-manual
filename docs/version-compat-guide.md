@@ -45,11 +45,12 @@ silently never called by the pipeline (`ovos-workshop` `f725f5e`, #339):
 from ovos_workshop.skills import OVOSSkill
 
 try:
+    # ConversationalSkill already extends OVOSSkill; listing both bases in
+    # (OVOSSkill, ConversationalSkill) order raises an MRO TypeError
     from ovos_workshop.skills.converse import ConversationalSkill
-    _BASES = (OVOSSkill, ConversationalSkill)
+    _BASES = (ConversationalSkill,)
 except ImportError:
     # pre-5.0.0: converse() lived directly on OVOSSkill, no mixin exists
-    ConversationalSkill = object
     _BASES = (OVOSSkill,)
 
 
@@ -93,7 +94,7 @@ the method they expect:
 ```python
 from ovos_workshop.version import VERSION_MAJOR as WORKSHOP_MAJOR
 
-class MySkill(OVOSSkill, ConversationalSkill):
+class MySkill(ConversationalSkill):
     def can_converse(self, message) -> bool:
         return True
 
