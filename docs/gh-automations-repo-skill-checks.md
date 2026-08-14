@@ -75,20 +75,22 @@ This is deliberate. Every `ovos-skill-*` repo already calls `skill-check.yml`, s
 ```text
 🎙️ **ovos-skill-hello-world.openvoiceos** — 14 languages
 
-**en-us:** 2 intents · 4 dialogs · skill.json ✅
+**en-US:** 2 intents · 4 dialogs · skill.json ✅
 
-<details><summary>Translation coverage (13 languages)</summary>
+<details><summary>Translation coverage — 13 languages (12 complete, 1 partial)</summary>
 
-| Language | Coverage |
-|----------|----------|
-| ca-es | ✅ 100% (6/6) |
-| de-de | ⚠️ 83.3% (5/6) |
+| Language | Progress | Coverage |
+|----------|----------|----------|
+| ca-es | `██████████` | ✅ 100% (6/6) |
+| de-de | `████████░░` | ⚠️ 83.3% (5/6) |
 
 </details>
 
 ```
 
-Coverage icons: yes for 95% or more, partial for 50 to 94%, no for less than 50%. Non-skill repos: `ℹ️ Not an OVOS skill repo, check skipped.`
+Coverage icons: yes for 95% or more, partial for 50 to 94%, no for less than 50%. The
+summary line counts languages in each band. Non-skill repos:
+`ℹ️ Not an OVOS skill repo — check skipped.`
 
 ### Typical usage
 
