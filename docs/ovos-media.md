@@ -396,6 +396,13 @@ The `track.failed` guard resets on real evidence of playback starting, not on a 
 loading, so a track that loads fine but fails to play does not reset the rate limit early. The
 `no.playback.backend` guard never resets: it is a once-per-lifetime warning, not a per-queue one.
 
+Shuffle mode honors the same failure bounds (0.4.13a1): a shuffled pick excludes tracks whose
+uri already failed this queue, and when nothing playable remains — every track failed, or the
+queue is empty and the current track failed — the player stops and speaks `queue.finished`,
+the same ending as sequential playback. Repeat mode with at least one good track keeps
+playing. A shut-down player also stops reacting to duck/unduck/cork on both the legacy and
+`ovos.common_play.*` spellings, so a dead daemon no longer adjusts system volume.
+
 ---
 
 ## Upcoming: MediaProvider plugins replace OCP skills
