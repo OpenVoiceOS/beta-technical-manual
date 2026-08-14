@@ -1601,8 +1601,10 @@ spelling. Config-gated, on by default. Test rigs get the same behavior from <cod
   <code>ovos_spec_tools.intent_topics.canonical_intent_topic(...)</code> — rather than hard-coding either
   spelling. Literal <code>.intent</code> listeners are deprecated but not broken.</li>
 <li>The spelling goes canonical when <strong>either</strong> side modernizes: the skill registers canonical
-  (workshop ≥ 9.3.11a2) <strong>or</strong> the matcher canonicalizes (padatious 2.x / adapt 1.x alphas).
-  Pinning one side back does <strong>not</strong> restore the old spelling.</li>
+  (workshop ≥ 9.3.11a2) <strong>or</strong> the matcher canonicalizes (padatious 2.x strips the suffix at
+  registration; Adapt is unaffected — its intent names come from <code>IntentBuilder</code>, never from
+  filenames, so there was no suffix to strip). Pinning one side back does <strong>not</strong> restore the
+  old spelling.</li>
 </ul>
 <div class="admonition warning">
 <p class="admonition-title">The bridge is scheduled for removal</p>
