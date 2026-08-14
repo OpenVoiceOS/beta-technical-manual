@@ -97,6 +97,15 @@ The wake-word event (`recognizer_loop:wakeword`) is the exception: it has no spe
 | `recognizer_loop:speech.recognition.unknown` | none | STT returned nothing (silence / failure) |
 | `ovos.listener.awoken` (legacy: `mycroft.awoken`) | none | Listener woke from sleep (§6.4) |
 
+!!! note "Whisper-style hallucinations are filtered before emission"
+    Transcripts that exactly match a known hallucination list are dropped before
+    `ovos.utterance.handle` fires, because Whisper-family STT commonly invents phrases like
+    *"thanks for watching!"* on silent audio. Controlled by `listener.filter_hallucinations`
+    (default `true`) and the overridable `listener.hallucination_list`; when every transcript
+    is filtered out, the listener treats it as an empty transcription: it emits
+    `recognizer_loop:speech.recognition.unknown`, except in continuous listening mode,
+    where empty results are silently ignored.
+
 It also reacts to inbound commands:
 
 - `ovos.listener.sleep` (legacy: `recognizer_loop:sleep`) suspends capture.

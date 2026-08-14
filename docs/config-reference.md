@@ -79,7 +79,8 @@ All of these live under the top-level `listener` key:
 | Key | Default | Description |
 |---|---|---|
 | `listener.sample_rate` | `16000` | Audio sampling rate in Hz. |
-| `listener.fake_barge_in` | `true` | Mute output during recording. |
+| `listener.fake_barge_in` | `true` | Lower playback volume while a recording is in progress (restored afterwards). It does not mute and does not cancel speech. |
+| `listener.barge_in_volume` | `30` | Volume percentage `fake_barge_in` lowers to. |
 | `listener.recording_timeout`| `10.0` | Max seconds for a single recording. |
 | `listener.remove_silence` | `true` | Strip leading/trailing silence before sending audio to STT. |
 | `listener.wake_word` | `"hey_mycroft"` | Default wake word (matches an entry under `hotwords`). |
