@@ -118,10 +118,10 @@ Configuration.system        # MycroftSystemConfig
 Configuration.xdg_configs   # list[LocalConf] — the user/XDG layer(s)
 ```
 
-There is no `.user` attribute. The editable user config is the **first** entry in
-`Configuration.xdg_configs`. The list runs from `$XDG_CONFIG_HOME` outwards and the merge runs
-left to right, so the last entry wins. On most systems that last entry is
-`/etc/xdg/mycroft/mycroft.conf`, not the user's own file. See [Config Layer
+There is no `.user` attribute. The editable user config is the **last** entry in
+`Configuration.xdg_configs`. The list runs from lowest to highest precedence — system-wide
+XDG dirs such as `/etc/xdg/mycroft/mycroft.conf` first, then `$XDG_CONFIG_HOME` — and the
+merge runs left to right, so the last entry wins: the user's own file. See [Config Layer
 Stack](config.md#config-layer-stack). To write the user file directly, use `MycroftUserConfig()`
 (see Config Models above). Or call `update_mycroft_config()` to merge a change and emit the
 `configuration.patch` bus notification in one step.

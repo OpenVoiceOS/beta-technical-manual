@@ -172,24 +172,15 @@ separate project with its own protocol and docs.
     [HiveMind-voice-relay](https://github.com/JarbasHiveMind/HiveMind-voice-relay)
     instead.
 
-By default `hivemind-core listen` starts **two** listeners, both on `0.0.0.0`: the websocket
-protocol plugin on `5678` and the HTTP protocol plugin on `5679`. Both are in the default
-`network_protocol` config and both start, so a firewall rule that only covers 5678 leaves the
-second one open. Local-network presence is on by default too, so the node announces itself
-over mDNS.
-
-There is no `listen` flag to change host or port. Edit the server config instead
-(`network_protocol` -> `hivemind-websocket-plugin` / `hivemind-http-plugin` -> `host`/`port`),
-and set `presence.enabled` to `false` to stop the mDNS announcements.
-`hivemind-client set-identity` writes the access key, password, and server address to a
-JSON identity file at `~/.config/hivemind/_identity.json` (XDG config dir, `hivemind`
-subfolder). Point `--host`/`--port` at the server when running `set-identity` on the
-satellite.
+One firewall note for the OVOS host: by default `hivemind-core listen` starts **two**
+listeners on `0.0.0.0` — websocket on `5678` and HTTP on `5679` — so a firewall rule that
+only covers 5678 leaves the second one open. Changing hosts, ports, or the mDNS presence
+announcements is HiveMind server configuration, covered by the upstream
+[HiveMind community docs](https://jarbashivemind.github.io/HiveMind-community-docs/), along
+with the identity/credential setup on the satellite side.
 
 Full steps, permission model, and satellite/client packages: see
-[Remote Agents with HiveMind](hivemind-agents.md). Wire-level protocol details live in the
-upstream [HiveMind community docs](https://jarbashivemind.github.io/HiveMind-community-docs/),
-not in this manual.
+[Remote Agents with HiveMind](hivemind-agents.md).
 
 ---
 
