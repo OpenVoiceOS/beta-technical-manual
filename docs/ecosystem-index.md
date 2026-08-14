@@ -397,7 +397,7 @@ to by the intent service once installed on a device.
 :   Introductory Skill so that Skill Authors can see how an OVOS Skill is put together.
 
 **[ovos-skill-homescreen](https://github.com/OpenVoiceOS/ovos-skill-homescreen)**
-:   The home screen is the central place for all your tasks. It is the first thing you will see after completing the onboarding process. It supports a variety of pre-defined widgets which provide you with a quick overview of information you need to know like the current date, time and weather. ⚠️ The upstream repository was archived in August 2026, but the skill remains the shipped default `gui.idle_display_skill` in `mycroft.conf`.
+:   The home screen is the central place for all your tasks. It is the first thing you will see after completing the onboarding process. It supports a variety of pre-defined widgets which provide you with a quick overview of information you need to know like the current date, time and weather. ⚠️ The upstream repository is archived, but the skill remains the shipped default `gui.idle_display_skill` in `mycroft.conf`.
 
 **[ovos-skill-icanhazdadjokes](https://github.com/OpenVoiceOS/ovos-skill-icanhazdadjokes)**
 :   A skill that tells dad jokes on request, sourced from the icanhazdadjoke.com API.

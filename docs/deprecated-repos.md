@@ -127,8 +127,8 @@ There are roughly **84** archived repositories (the exact count drifts as more g
 | [ovos_skill_installer](https://github.com/OpenVoiceOS/ovos_skill_installer) | A package extraction tool for Python | ovos-core / ovos-workshop |
 | [ovos_skill_manager](https://github.com/OpenVoiceOS/ovos_skill_manager) | skill installer for OVOS | ovos-core / ovos-workshop |
 | [ovos-lingua-franca](https://github.com/OpenVoiceOS/ovos-lingua-franca) | Mycroft's multilingual text parsing and formatting library | Split into focused libraries: [ovos-date-parser](https://github.com/OpenVoiceOS/ovos-date-parser), [ovos-number-parser](https://github.com/OpenVoiceOS/ovos-number-parser), and the other `ovos-*-parser` packages |
-| [mycroft-legacy](https://github.com/OpenVoiceOS/mycroft-legacy) | Restored select deprecated mycroft-core functionality for installs that still depended on it | Archived August 2026, no replacement |
-| [scripts](https://github.com/OpenVoiceOS/scripts) | Grab-bag of small helper scripts for OVOS maintenance tasks | Archived August 2026; log tooling lives in ovos-utils (`ovos-logs`) |
+| [mycroft-legacy](https://github.com/OpenVoiceOS/mycroft-legacy) | Restored select deprecated mycroft-core functionality for installs that still depended on it | Archived, no replacement |
+| [scripts](https://github.com/OpenVoiceOS/scripts) | Grab-bag of small helper scripts for OVOS maintenance tasks | Archived; log tooling lives in ovos-utils (`ovos-logs`) |
 | [zzz-old-ovos-utils](https://github.com/OpenVoiceOS/zzz-old-ovos-utils) | collection of simple utilities for use across the mycroft ecosystem | [ovos-utils](https://github.com/OpenVoiceOS/ovos-utils) |
 
 ## Datasets, lists & images (8)
