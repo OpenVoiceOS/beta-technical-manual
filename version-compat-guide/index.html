@@ -1781,9 +1781,11 @@ scheduled for deletion by the open kill-switch
 it merges, <code>MessageBusClient</code> speaks OVOS-MSG-1 spec topics only and passing
 <code>emit_legacy</code>, <code>modernize</code>, or <code>intent_reemit_blanket</code> to the constructor raises
 <code>RuntimeError</code>.</p>
-<p>The bridge translates on the <strong>receive</strong> side, re-dispatching to local listeners. It does not
-put a second copy on the wire, so one <code>emit()</code> is still one websocket message — see <a href="../bus-namespace-migration/">Bus
-Namespace Migration</a>. Do not size bus traffic as if it doubled.</p>
+<p>The bridge re-dispatches incoming messages on the <strong>receive</strong> side, and since bus-client
+2.8.3a1 a canonical emit of any mapped topic also puts a real, marked legacy twin frame on the
+wire by default (opt out with <code>OVOS_BUS_WIRE_LEGACY_TWINS</code> or <code>websocket.wire_legacy_twins</code>).
+One canonical <code>emit()</code> is therefore <strong>two</strong> websocket messages on current defaults. See <a href="../bus-namespace-migration/">Bus
+Namespace Migration</a> and size bus traffic accordingly.</p>
 <p>There will be no client-side shim for this: migrate remote clients and
 satellites to <code>ovos.*</code> spec topics while the bridge still covers both spellings. Do
 not write new code that shims legacy topic names. See <a href="../migration-bus-dual-emit/">The bus-client

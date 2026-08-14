@@ -1533,13 +1533,15 @@ topics go through the separate intent bridge instead:</p>
     Client-&gt;&gt;SpecHandler: locally re-dispatch&lt;br/&gt;ovos.utterance.handle</code></pre>
 <p><em>Diagram: a producer emits the legacy recognizer_loop:utterance topic, the bus broadcasts it unchanged, and each receiving MessageBusClient uses the NamespaceTranslator to dispatch it to both the legacy handler and, re-dispatched locally, the spec ovos.utterance.handle handler.</em></p>
 <ul>
-<li>A single logical <code>emit()</code> sends exactly <strong>one</strong> message over the websocket: the topic the
-  caller actually chose.</li>
-<li>When that message arrives back over the websocket (to every connected client, including the
+<li>A legacy-spelled or unmapped <code>emit()</code> sends exactly <strong>one</strong> message over the websocket: the
+  topic the caller chose. A canonical emit of a mapped topic sends <strong>two</strong> on current defaults:
+  the canonical frame plus its marked legacy twin (see above).</li>
+<li>When a frame arrives back over the websocket (to every connected client, including the
   sender), each client's <code>on_message</code> handler locally re-dispatches it under its counterpart
-  topic(s) too, using the translator to reshape the payload where the shape changed. This is a
-  listener-delivery convenience <em>inside each process</em>, not a second bus message. The broadcast
-  server never sees or re-broadcasts a counterpart frame.</li>
+  topic(s) too, using the translator to reshape the payload where the shape changed. This
+  re-dispatch is a listener-delivery convenience <em>inside each process</em>, not a wire frame. The
+  broadcast server itself never creates counterpart frames; any twin on the wire came from the
+  emitting client.</li>
 <li><strong>listen</strong>: subscribing to <em>either</em> name (<code>bus.on(...)</code>) also delivers the counterpart, with
   <strong>de-duplication</strong> so a handler that would match both fires exactly once.</li>
 </ul>
