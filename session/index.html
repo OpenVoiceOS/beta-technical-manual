@@ -1793,11 +1793,10 @@ these signals into the language it matches an utterance in.</p>
 <p>A session also carries <code>intent_context</code>: a per-key decaying context store that gates which
 intents may match across turns (e.g. "book a flight" setting context so a follow-up "to
 Paris" is understood without repeating "flight"). It is a session field claimed into the
-SESSION-1 registry by <strong>OVOS-CONTEXT-1</strong>, holding <code>{value, expires_at}</code> per key. In the spec
-model each entry decays via its <code>expires_at</code> / <code>turns_remaining</code>. The legacy keyword-context
-manager ages whole frames out after the <code>context.timeout</code> config value (minutes, default <code>2</code>).
-Note that entries written through <code>set_context</code> currently never decay at all. The core write
-path drops the expiry stamp (see the caveats on <a href="../context/">Conversational Context</a>). See
+SESSION-1 registry by <strong>OVOS-CONTEXT-1</strong>, holding <code>{value, expires_at}</code> per key. Each entry
+decays via its <code>expires_at</code> (computed from the <code>context.timeout</code> config value, minutes,
+default <code>2</code>) or a <code>turns_remaining</code> budget, and a re-set refreshes the expiry. This includes
+entries written through <code>set_context</code> (see <a href="../context/">Conversational Context</a>). See
 <a href="../intent-service/">Intent Service</a> for how context is set, read, and consumed during
 pipeline matching.</p>
 <h2 id="presentation-preferences">Presentation preferences<a class="headerlink" href="#presentation-preferences" title="Permanent link">&para;</a></h2>

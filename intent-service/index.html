@@ -1765,11 +1765,11 @@ in the primary language only.</p>
 <p>Each utterance is associated with a <code>Session</code>.</p>
 <ul>
 <li>
-<p>The per-session <code>intent_context</code> (<code>session.intent_context</code>) decays — spec-shaped entries
-  via their own <code>expires_at</code> / <code>turns_remaining</code>, legacy keyword frames via the
-  <code>context.timeout</code> config (minutes, default 2). Entries written through <code>set_context</code>
-  currently never decay at all: the core write path drops the expiry stamp (see the caveats
-  on <a href="../context/">Conversational Context</a>). This is what "expires," not the session itself. The
+<p>The per-session <code>intent_context</code> (<code>session.intent_context</code>) decays: entries carry an
+  <code>expires_at</code> computed from the <code>context.timeout</code> config (minutes, default 2), or a
+  <code>turns_remaining</code> budget, and a re-set refreshes the expiry. This includes entries
+  written through <code>set_context</code> (see <a href="../context/">Conversational Context</a>). This is what
+  "expires," not the session itself. The
   <code>"default"</code> session is persisted in-process by the orchestrator, not destroyed. See
   <a href="../session/">Session Aware Skills</a>.</p>
 </li>

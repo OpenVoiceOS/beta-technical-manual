@@ -1705,10 +1705,12 @@
 <p>Conversational context makes voice interactions feel more natural. The assistant keeps track of the subject you are discussing, so you do not have to repeat it.</p>
 <p><strong>What works in a skill today</strong>: gate a follow-up with a blocking prompt, <code>ask_yesno()</code> /
 <code>get_response()</code> (see <a href="../prompts/">Statements and Prompts</a>), keep the skill in the
-conversation with <a href="../converse/"><code>converse()</code></a>, or use the legacy Adapt path:
+conversation with <a href="../converse/"><code>converse()</code></a>, or use the Adapt path:
 <code>self.set_context()</code> plus <code>IntentBuilder().require()</code> (the <a href="#using-context-to-enable-intents">TeaSkill example</a>
-below). The declarative spec mechanism described next is evaluated by the pipelines but is
-<strong>not yet reachable from a skill</strong>. Details are in the warning under the example.</p>
+below). For the declarative spec mechanism described next, <code>set_context</code> now writes entries
+the gate can see. But the skill API still has no way to put <code>requires_context</code> /
+<code>excludes_context</code> declarations on an intent, so end-to-end declarative gating is not
+wired up yet. Details are in the warning under the example.</p>
 <p><code>requires_context</code> and <code>excludes_context</code> gate matching in both the
 <a href="../adapt-pipeline/">Adapt</a> and <a href="../padatious-pipeline/">Padatious</a> pipelines, as CONTEXT-1 §6
 requires of every intent engine. Adapt gates keyword intents. Padatious gates template intents,
@@ -1727,16 +1729,17 @@ whose gate is not satisfied against <code>session.intent_context</code> at match
 against the registering <code>skill_id</code>, and reading a shared key needs the explicit
 <code>{"key": "person", "scope": "shared"}</code> form.</p>
 <div class="admonition warning">
-<p class="admonition-title">The gate exists at match time, but skills cannot reach it yet</p>
-<p>Both pipelines evaluate this gate today, but neither half of the skill-facing surface
-has landed: <code>@intent_handler</code> has no <code>requires_context=</code> / <code>excludes_context=</code>
-parameters to put the declarations on the registration payload, and <code>set_context</code>
-does not write entries the gate can find (see the warning near the end of this
-page). <strong>To gate a yes/no follow-up in a skill
+<p class="admonition-title">Half the skill-facing surface is still missing</p>
+<p>Both pipelines evaluate this gate at match time, and the <strong>entry</strong> side now works:
+<code>set_context</code> writes into the session under both the legacy munged spelling and the
+resolved <code>&lt;skill_id&gt;:&lt;key&gt;</code> spelling the gate looks up, each with a decay stamp. What
+is still missing is the <strong>declaration</strong> side: <code>@intent_handler</code> has no
+<code>requires_context=</code> / <code>excludes_context=</code> parameters, so a skill cannot put the
+declarations on its registration payload. <strong>To gate a yes/no follow-up in a skill
 today</strong>, use a blocking prompt, <code>ask_yesno()</code> / <code>get_response()</code> (see
-<a href="../prompts/">Statements and Prompts</a>), or keep the skill in the conversation with
-<a href="../converse/"><code>converse()</code></a>. The legacy Adapt <code>.require()</code> keyword path (the TeaSkill
-example below) also works.</p>
+<a href="../prompts/">Statements and Prompts</a>), keep the skill in the conversation with
+<a href="../converse/"><code>converse()</code></a>, or use the Adapt <code>.require()</code> keyword path (the TeaSkill
+example below).</p>
 </div>
 <p>Context lives on the per-conversation <a href="../session/">Session</a>, in <code>Session.intent_context</code>. It
 is <strong>session-scoped</strong>, not a single global store, so concurrent users and devices keep
@@ -1953,22 +1956,25 @@ Adapt dialect (<code>context</code>) or the colon-separated <code>&lt;skill_id&g
 CONTEXT-1's declarative <code>requires_context</code> / <code>excludes_context</code> gate (above) expects.
 <code>set_cross_skill_context</code> and the deprecated <code>set_adapt_context</code> /
 <code>remove_adapt_context</code> shortcuts carry the same additive <code>key</code>.</p>
-<div class="admonition warning">
-<p class="admonition-title">The declarative gate is not reachable via <code>set_context</code> yet</p>
-<p>The <code>key</code> field is on the wire, but <code>ovos-core</code> does not yet mirror it into the
-resolved <code>&lt;skill_id&gt;:&lt;key&gt;</code> entry the declarative gate looks up. It still stores
-only the legacy munged spelling. Until that mirror lands in core, intents declared
-with <code>requires_context=</code> / <code>excludes_context=</code> cannot be satisfied by
-<code>set_context</code> / <code>@adds_context</code>. Only the legacy <code>.require()</code> keyword path (above)
-works today.</p>
+<div class="admonition note">
+<p class="admonition-title">Both spellings are written, with one decay policy</p>
+<p><code>set_context</code> writes into the session per CONTEXT-1 §5.0: the mutation lands on the
+current handler's session directly, and the legacy <code>add_context</code> bus message is also
+emitted as a compat dual-write for pre-§5.0 cores. The core writes <strong>two</strong> entries:
+the legacy munged <code>skillidkey</code> spelling and the resolved <code>&lt;skill_id&gt;:&lt;key&gt;</code> spelling
+the declarative gate looks up. One computed <code>expires_at</code> applies to both, so
+<code>set_context</code> entries decay normally (<code>context.timeout</code>, minutes, default <code>2</code>) and a
+re-set refreshes the expiry of both keys. The remaining gap is declaration-side only
+(see the warning near the top of this page).</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Writing a key replaces it wholesale; there is no read-back</p>
 <p>Writing an entry under a key that already exists <strong>replaces the whole entry</strong>, value and
-decay timer both. It does not merge onto the old one. (Spec-shaped entries carry their
-own explicit <code>expires_at</code> / <code>turns_remaining</code>. The legacy keyword-context manager instead
-ages whole frames out after the <code>context.timeout</code> config value in minutes, default <code>2</code>,
-which is where <a href="../session/">Session</a>'s "~2 minutes" figure comes from.) There is no API
+decay timer both. It does not merge onto the old one. A re-set refreshes the decay
+window, which is what naptime-style "keep this alive while we talk" flows rely on.
+(Entries carry an explicit <code>expires_at</code> computed from the <code>context.timeout</code> config value
+in minutes, default <code>2</code>, which is where <a href="../session/">Session</a>'s "~2 minutes" figure
+comes from; spec-shaped writes may instead carry <code>turns_remaining</code>.) There is no API
 to read a
 context entry's current value or remaining decay back out. A skill that wants to know
 "what did I set this to, and how long ago" must keep that in its own state, not rely on
