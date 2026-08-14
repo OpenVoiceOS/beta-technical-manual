@@ -1770,7 +1770,7 @@ with the plugin's <strong>built-in defaults</strong>. It does <strong>not</stron
 </li>
 <li>
 <p><strong>Compatibility routers</strong><br />
-  Beyond the native endpoints, the app mounts drop-in compatible routers so existing cloud-STT clients work unchanged. Examples are Wit.ai (<code>POST /wit/speech</code>, override the SDK host with the <code>WIT_URL</code> env var), Chromium speech-api (<code>POST /speech-api/v2/recognize</code>), and routers for OpenAI Whisper, Whisper.cpp server, Deepgram, Google, AssemblyAI, Azure, IBM Watson, AWS Transcribe, Vosk, Speechmatics, Gladia, ElevenLabs Scribe, Groq, and Kaldi GStreamer. See <code>/docs</code> for the authoritative set. A <code>GET /utcp</code> manual advertises the endpoints to UTCP agents. An MCP endpoint mounts at <code>/mcp</code> on the same port when the server is started with <code>--mcp</code> (requires <code>pip install 'ovos-stt-http-server[mcp]'</code> — the extra alone no longer auto-mounts it).</p>
+  Beyond the native endpoints, the app mounts drop-in compatible routers so existing cloud-STT clients work unchanged. Examples are Wit.ai (<code>POST /wit/speech</code>, override the SDK host with the <code>WIT_URL</code> env var) and Chromium speech-api (<code>POST /speech-api/v2/recognize</code>). The app also routes for OpenAI Whisper, Whisper.cpp server, Deepgram, Google, AssemblyAI, Azure, IBM Watson, AWS Transcribe, Vosk, Speechmatics, Gladia, ElevenLabs Scribe, Groq, and Kaldi GStreamer. See <code>/docs</code> for the authoritative set. A <code>GET /utcp</code> manual advertises the endpoints to UTCP agents. An MCP endpoint mounts at <code>/mcp</code> on the same port when the server is started with <code>--mcp</code> (requires <code>pip install 'ovos-stt-http-server[mcp]'</code>). The extra alone no longer auto-mounts it.</p>
 <div class="admonition note">
 <p class="admonition-title">The <code>mcp</code> extra installs <code>fastmcp</code>, not the <code>mcp</code> SDK</p>
 <p>The extra keeps the name <code>mcp</code>, but it resolves the third-party <code>fastmcp&gt;=3,&lt;4</code> package,
@@ -1841,7 +1841,7 @@ the untranslated transcript instead of failing.</p>
 <h2 id="transformer-pipelines">Transformer Pipelines<a class="headerlink" href="#transformer-pipelines" title="Permanent link">&para;</a></h2>
 <p>The server can run OVOS transformer plugins around transcription. Both hooks live in the
 model containers, so <strong>every</strong> surface gets them: the native <code>/stt</code> endpoint, all
-vendor-compat routers, the websocket streaming routes, MCP, and UTCP.</p>
+vendor-compat routers, the websocket streaming routes, MCP, and even UTCP.</p>
 <ul>
 <li><strong>Audio transformers</strong> run <em>before</em> the STT stage. When the chain includes an
   <code>AudioLanguageDetector</code> (like the <code>--lang-engine</code> mentioned above), its detected language
@@ -1934,7 +1934,7 @@ receiving the request, not a public fallback.</p>
 <code>AudioTransformer._read_mycroft_conf()</code>, which reads the <strong>top-level</strong> <code>audio_transformers</code>
 block only. A <code>listener.audio_transformers</code> block is read by the transformer <em>service</em>,
 which logs it as deprecated, but never reaches this plugin.</p>
-<p>Put the block in the wrong place and <code>urls</code> is silently empty — so the plugin falls back to
+<p>Put the block in the wrong place and <code>urls</code> is silently empty. The plugin then falls back to
 its built-in default and posts your audio to a public server on the internet. There is no
 error to notice.</p>
 </div>
@@ -2001,7 +2001,7 @@ server-backed engine as the fallback for when the light one comes back empty.</p
 <h2 id="tips-caveats">Tips &amp; Caveats<a class="headerlink" href="#tips-caveats" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
-<p><strong><code>/stt</code> takes raw audio bytes, not a multipart upload.</strong> Send the PCM/WAV bytes as the request body (<code>curl --data-binary @audio.wav</code>), and pass <code>sample_rate</code>/<code>sample_width</code> as query params if they differ from the 16000/2 defaults. Those defaults are assumed when reading the raw body.</p>
+<p><strong><code>/stt</code> takes raw audio bytes, not a multipart upload.</strong> Send the PCM/WAV bytes as the request body (<code>curl --data-binary @audio.wav</code>). Pass <code>sample_rate</code>/<code>sample_width</code> as query params if they differ from the 16000/2 defaults. Those defaults are assumed when reading the raw body.</p>
 </li>
 <li>
 <p><strong>Audio Formats</strong>: Ensure client sends PCM‑compatible formats (<code>.wav</code>, <code>.mp3</code> recommended).</p>
@@ -2030,16 +2030,16 @@ server-backed engine as the fallback for when the light one comes back empty.</p
 <h2 id="links-references">Links &amp; References<a class="headerlink" href="#links-references" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
-<p>OVOS STT HTTP Server GitHub: <a href="https://github.com/OpenVoiceOS/ovos-stt-http-server">https://github.com/OpenVoiceOS/ovos-stt-http-server</a></p>
+<p>OVOS STT HTTP Server GitHub: <a href="https://github.com/OpenVoiceOS/ovos-stt-http-server">OpenVoiceOS/ovos-stt-http-server</a></p>
 </li>
 <li>
-<p>Companion Plugin: <a href="https://github.com/OpenVoiceOS/ovos-stt-server-plugin">https://github.com/OpenVoiceOS/ovos-stt-server-plugin</a></p>
+<p>Companion Plugin: <a href="https://github.com/OpenVoiceOS/ovos-stt-server-plugin">OpenVoiceOS/ovos-stt-server-plugin</a></p>
 </li>
 <li>
-<p>Docker Images: <a href="https://github.com/OpenVoiceOS/ovos-docker-stt">https://github.com/OpenVoiceOS/ovos-docker-stt</a></p>
+<p>Docker Images: <a href="https://github.com/OpenVoiceOS/ovos-docker-stt">OpenVoiceOS/ovos-docker-stt</a></p>
 </li>
 <li>
-<p>OVOS Plugin Manager: <a href="https://github.com/OpenVoiceOS/ovos-plugin-manager">https://github.com/OpenVoiceOS/ovos-plugin-manager</a></p>
+<p>OVOS Plugin Manager: <a href="https://github.com/OpenVoiceOS/ovos-plugin-manager">OpenVoiceOS/ovos-plugin-manager</a></p>
 </li>
 </ul>
 <hr />

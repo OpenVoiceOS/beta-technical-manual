@@ -1501,8 +1501,8 @@
 devices around the house. The server runs the messagebus, <code>ovos-core</code>, and skills.
 Each satellite only listens and speaks. This page is the build guide. It has two
 paths: a raw shared bus for a trusted LAN, and HiveMind for anything that needs
-auth or crosses an untrusted network. Terminology: this page says <em>satellite</em>;
-HiveMind pages say <em>client</em> or <em>node</em> for the same thing — the device that
+auth or crosses an untrusted network. Terminology: this page says <em>satellite</em>.
+HiveMind pages say <em>client</em> or <em>node</em> for the same thing: the device that
 connects to the central server.</p>
 </div>
 <pre class="mermaid"><code>flowchart TD
@@ -1622,16 +1622,16 @@ languages while still sharing one <code>ovos-core</code>.</p>
 </div>
 <h3 id="per-satellite-language">Per-satellite language<a class="headerlink" href="#per-satellite-language" title="Permanent link">&para;</a></h3>
 <p>To make one satellite listen and answer in a different language, change <strong>that satellite's</strong>
-config, not the server's: set <code>lang</code> in the satellite's own <code>mycroft.conf</code> (its listener and
+config, not the server's. Set <code>lang</code> in the satellite's own <code>mycroft.conf</code> (its listener and
 STT plugin follow it), or use a per-wake-word <code>stt_lang</code> override to bind a language to a
-specific wake word — say "ok computer" for English, "olá computador" for Portuguese, on the
+specific wake word: say "ok computer" for English, "olá computador" for Portuguese, on the
 same box (see <a href="../wake-word-plugins/">Wake Word Plugins</a>). The language then rides each
 utterance as <code>stt_lang</code> / <code>request_lang</code>, which sit above the server's configured default in
-the resolution order (see <a href="../lang-selection/">Language Selection</a>) — so the server answers in
-the language the satellite heard, and a satellite that answers in the wrong language almost
+the resolution order (see <a href="../lang-selection/">Language Selection</a>). So the server answers in
+the language the satellite heard. A satellite that answers in the wrong language almost
 always means its own config fell through to the server's default. For HiveMind mic-satellites
 (<code>hivemind-mic-satellite</code>), the per-connection language knobs live in that project's own
-documentation — this manual covers only the OVOS-side integration.</p>
+documentation. This manual covers only the OVOS-side integration.</p>
 <div class="admonition warning">
 <p class="admonition-title">Defaults assume localhost</p>
 <p><code>websocket.host</code> defaults to <code>127.0.0.1</code> everywhere. A satellite left on the default
@@ -1649,8 +1649,8 @@ separate project with its own protocol and docs.</p>
     By default it bridges to a local <code>ovos-core</code> through <code>hivemind-ovos-agent-plugin</code>.</li>
 <li>Provision each satellite with its own access key: <code>hivemind-core add-client</code>.</li>
 <li>
-<p>On each satellite, install the client — the distribution is <code>hivemind-bus-client</code>, the
-    repository is <code>hivemind-websocket-client</code> — and store the key:</p>
+<p>On each satellite, install the client and store the key. The distribution is
+    <code>hivemind-bus-client</code>. The repository is <code>hivemind-websocket-client</code>.</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>pip<span class="w"> </span>install<span class="w"> </span>hivemind-bus-client
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>hivemind-client<span class="w"> </span>set-identity<span class="w"> </span>--key<span class="w"> </span>&lt;access_key&gt;<span class="w"> </span>--password<span class="w"> </span>&lt;password&gt;<span class="w"> </span>--host<span class="w"> </span>&lt;server&gt;
 </span></code></pre></div>
@@ -1667,17 +1667,17 @@ satisfy the check).</p>
     instead of running a full listener/audio pair locally. Two things the package name
     does not tell you:</p>
 <ul>
-<li>The <strong>server</strong> needs <code>pip install hivemind-audio-binary-protocol</code> — plain
+<li>The <strong>server</strong> needs <code>pip install hivemind-audio-binary-protocol</code>. Plain
   <code>hivemind-core</code> does no audio processing, so without it the satellite streams
   audio into a void.</li>
 <li>The satellite's run command is <strong><code>hivemind-mic-sat</code></strong> (after the same
   <code>set-identity</code> step as above, or pass <code>--key/--password/--host</code> directly).</li>
 </ul>
-<p>The device runs only a microphone and VAD plugin — cheap hardware like a Pi Zero
-works — while wake word, STT and TTS all happen server-side. The trade-off: with no
+<p>The device runs only a microphone and VAD plugin. Cheap hardware like a Pi Zero
+works, while wake word, STT and TTS all happen server-side. The trade-off: with no
 local wake word, every VAD-detected voice segment streams upstream, costing
-bandwidth and putting the full STT load on the server. Fine for a homelab with a
-handful of devices; for a local wake word on slightly stronger hardware, use
+bandwidth and putting the full STT load on the server. This is fine for a homelab
+with a handful of devices. For a local wake word on slightly stronger hardware, use
 <a href="https://github.com/JarbasHiveMind/HiveMind-voice-relay">HiveMind-voice-relay</a>
 instead.</p>
 </li>
@@ -1704,8 +1704,8 @@ not in this manual.</p>
 <code>ovos-core</code> (with the bus, listener and audio services), all pointed at one shared, more
 capable machine that does the actual speech-to-text and text-to-speech work over HTTP (see
 <a href="../stt-server/">STT server</a> and <a href="../tts-server/">TTS server</a>). Only the heavy STT/TTS
-inference is centralized: each device keeps its own core, session, and skills. A sketch,
-based on the real container images published by
+inference is centralized. Each device keeps its own core, its own session, and its own skills.
+This is a sketch, based on the real container images published by
 <a href="https://github.com/OpenVoiceOS/ovos-docker"><code>ovos-docker</code></a>. For the client-side config keys
 and a worked example on a single LAN IP, see
 <a href="../privacy-security/#point-a-device-at-your-own-lan-servers">privacy-security: point a device at your own LAN servers</a>.</p>
@@ -1794,8 +1794,8 @@ reachable by any of them, not just <code>ovos_messagebus</code>.</p>
 networking is in play. Treat the whole host as the trust boundary, not the individual
 container.</p>
 <p>Host networking also exposes any service that binds <code>0.0.0.0</code> straight onto the LAN, not
-just the host's own loopback. <code>gui_websocket.host</code> ships as <code>127.0.0.1</code>, but if you widen
-it to <code>0.0.0.0</code> for a remote display — or an older config still carries that value — then
+just the host's own loopback. <code>gui_websocket.host</code> ships as <code>127.0.0.1</code>. If you widen
+it to <code>0.0.0.0</code> for a remote display, or an older config still carries that value, then
 with <code>network_mode: host</code> the GUI WebSocket lands on the LAN, not just the device. Keep
 the loopback default unless a remote display client genuinely needs LAN access.</p>
 </div>
@@ -1811,7 +1811,7 @@ OVOS across machines.</p>
 <ul>
 <li>Check the server's firewall allows inbound traffic on port <code>8181</code> (raw bus) or ports
   <code>5678</code> <strong>and</strong> <code>5679</code> (HiveMind websocket + HTTP listeners, both default bind
-  <code>0.0.0.0</code> — see the warning above) from the satellite's address.</li>
+  <code>0.0.0.0</code>, see the warning above) from the satellite's address.</li>
 <li>Confirm <code>websocket.host</code> on the satellite points at the server's real LAN address, not
   <code>127.0.0.1</code>.</li>
 <li>For HiveMind, run <code>hivemind-client test-identity</code> on the satellite. A hang or error

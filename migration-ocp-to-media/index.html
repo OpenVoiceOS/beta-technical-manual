@@ -1608,10 +1608,10 @@ toggle's polarity. Fix it by moving <code>OCP</code> to <code>media</code> and s
 </div>
 <div class="admonition note">
 <p class="admonition-title">Legacy audioservice and ovos-media are alternatives — pick one</p>
-<p>Moving to <code>ovos-media</code> is an opt-in choice today, and it takes two steps:
-set <code>enable_old_audioservice: false</code> (the <a href="../audio-service/">switch</a> that
-turns the legacy half off) <strong>and</strong> install and run the separate
-<code>ovos-media</code> daemon — the flag alone leaves you with no media playback at
+<p>Moving to <code>ovos-media</code> is an opt-in choice today. It takes two steps.
+Set <code>enable_old_audioservice: false</code> (the <a href="../audio-service/">switch</a> that
+turns the legacy half off). Also install and run the separate
+<code>ovos-media</code> daemon. The flag alone leaves you with no media playback at
 all. The legacy audioservice stays installed either way, so the switch
 works in both directions (switching back means <code>true</code> + stopping
 <code>ovos-media</code>). Don't run both at once. See
@@ -1620,27 +1620,28 @@ migration guide assumes.</p>
 </div>
 <h3 id="ocp-ovos-media-config-split">OCP → ovos-media config split<a class="headerlink" href="#ocp-ovos-media-config-split" title="Permanent link">&para;</a></h3>
 <p>Splitting audio-service responsibility out of <code>ovos-audio</code> into a
-dedicated <code>ovos-media</code> daemon meant its config moved with it, and the
-config root key changed name in the process: anything a deployer still
+dedicated <code>ovos-media</code> daemon moved its config with it. The config root
+key also changed name in the process. Anything a deployer still
 had under the old <code>"OCP"</code> key was silently ignored by the new service
-rather than flagged as invalid. The MPRIS toggle was renamed and its
-polarity flipped in the same commit, so a deployment that had never
-touched the key at all still felt the change, MPRIS integration turning
+rather than flagged as invalid.</p>
+<p>The MPRIS toggle was renamed and its
+polarity flipped in the same commit. A deployment that had never
+touched the key at all still felt the change: MPRIS integration turned
 itself off after the upgrade with no explicit setting to blame.</p>
 <p>Audio-service responsibility split out of <code>ovos-audio</code> into a dedicated
 <code>ovos-media</code> daemon starting January 2024. Two config changes to track:</p>
-<p>Old — <code>mycroft.conf</code>, read by <code>ovos-media</code> before <code>89a50c0</code>:</p>
+<p>Old, <code>mycroft.conf</code>, read by <code>ovos-media</code> before <code>89a50c0</code>:</p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="p">{</span><span class="nt">&quot;OCP&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;disable_mpris&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">}}</span>
 </span></code></pre></div>
-<p>New — <code>mycroft.conf</code>, <code>89a50c0</code> onward:</p>
+<p>New, <code>mycroft.conf</code>, <code>89a50c0</code> onward:</p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="p">{</span><span class="nt">&quot;media&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;enable_mpris&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">}}</span>
 </span></code></pre></div>
-<p>The config root key <code>OCP</code> was renamed to <code>media</code>: anything still under
+<p>The config root key <code>OCP</code> was renamed to <code>media</code>. Anything still under
 <code>"OCP"</code> is silently ignored by <code>ovos-media</code>. The MPRIS toggle was also
-polarity-flipped: <code>disable_mpris</code> (default off, meaning MPRIS was <strong>on</strong> by
+polarity-flipped. <code>disable_mpris</code> (default off, meaning MPRIS was <strong>on</strong> by
 default) became <code>enable_mpris</code> (default <code>False</code>, meaning MPRIS is <strong>off</strong>
 by default). A deployment that never touched this key gets a behavior
-change: MPRIS integration silently turns off after upgrading past
+change. MPRIS integration silently turns off after upgrading past
 <code>89a50c0</code> (ovos-media <code>89a50c0</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/19" title="GitHub Issue: TigreGotico/ovos-technical-manual #19">#19</a>, 2024-03-29), unless <code>media.enable_mpris: true</code>
 is set explicitly.</p>
 <p>On the <code>ovos-audio</code> side, <code>AudioService.find_ocp()</code> stopped

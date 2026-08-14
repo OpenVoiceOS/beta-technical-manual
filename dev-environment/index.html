@@ -1706,8 +1706,8 @@ release pipeline a change goes through after it leaves your machine, see
 <h2 id="clone-and-install-editable">Clone and install editable<a class="headerlink" href="#clone-and-install-editable" title="Permanent link">&para;</a></h2>
 <p>Fork the repo you want to fix on GitHub first. You need the fork to push your branch, since
 only maintainers can push to <a href="https://github.com/OpenVoiceOS/ovos-core"><code>ovos-core</code></a> itself.
-The worked examples below all use <code>ovos-core</code>; for any other repo, substitute its name in the
-clone URL, extras, and console scripts — the pattern is identical, but check that repo's own
+The worked examples below all use <code>ovos-core</code>. For any other repo, substitute its name in the
+clone URL, extras, and console scripts. The pattern is identical, but check that repo's own
 <code>pyproject.toml</code> for its exact extras (some use <code>tests</code> instead of <code>test</code>).
 Then clone your fork and create an isolated virtual environment for it. <code>uv</code> is faster than
 plain <code>venv</code>/<code>pip</code> and works the same way:</p>
@@ -1813,7 +1813,7 @@ services in any order, since they wait for the bus and for each other over bus m
 <p>To hack on just one piece, install only that repo editable and install the rest of the stack
 normally (from PyPI, in the same virtual environment or a separate one that shares the same
 messagebus host/port). Point every service at the same messagebus by giving them the same
-<a href="../config/">configuration</a>; the bus address is not hardcoded. For example, to debug a skill
+<a href="../config/">configuration</a>. The bus address is not hardcoded. For example, to debug a skill
 loading problem, run a normal <code>ovos-messagebus</code>, <code>ovos-audio</code>, and <code>ovos-dinkum-listener</code> from
 PyPI, and only <code>ovos-core</code> from your editable checkout.</p>
 <h2 id="hot-reloading-a-skill-while-you-edit-it">Hot-reloading a skill while you edit it<a class="headerlink" href="#hot-reloading-a-skill-while-you-edit-it" title="Permanent link">&para;</a></h2>
@@ -1824,7 +1824,7 @@ in the <a href="https://github.com/OpenVoiceOS/OVOS-workshop"><code>ovos-worksho
   driven by <code>SkillManager.load_plugin_skills</code> in <code>ovos_core/skill_manager.py</code>) use
   <code>PluginSkillLoader</code>, whose <code>_load()</code> does <strong>not</strong> start a file watcher. Editing the skill's
   source while <code>ovos-core</code> is running does not reload it, because Python has already imported
-  the module. Restart <code>ovos-core</code> to pick up the change; it is fast, and <code>ovos-core</code> reloads
+  the module. Restart <code>ovos-core</code> to pick up the change. Restarting is fast, and <code>ovos-core</code> reloads
   every plugin skill on the next startup scan.</li>
 <li><strong>A single skill run standalone</strong> with the <code>ovos-skill-launcher</code> console script (from
   <code>ovos-workshop</code>, entry point <code>ovos_workshop.skill_launcher:_launch_script</code>) does get real
@@ -1876,7 +1876,7 @@ the logger's default before any configuration is loaded.</p>
 </span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>ovos-logs<span class="w"> </span>list<span class="w"> </span>--debug
 </span></code></pre></div>
 <h2 id="running-tests">Running tests<a class="headerlink" href="#running-tests" title="Permanent link">&para;</a></h2>
-<p>Install the repo's <code>test</code> extra (check the exact name; some repos use <code>tests</code>, see above) and
+<p>Install the repo's <code>test</code> extra (check the exact name, since some repos use <code>tests</code>, see above) and
 run <code>pytest</code>:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;.[test]&quot;</span>
 </span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>pytest
@@ -1884,9 +1884,9 @@ run <code>pytest</code>:</p>
 <p>Test layout is consistent across the core repos: a top-level <code>test/</code> directory (not <code>tests/</code>)
 with a <code>unittests/</code> subdirectory, and <code>end2end/</code> for repos that ship end-to-end suites
 (<code>ovos-core</code>, <code>ovos-audio</code>). <code>ovos-dinkum-listener</code> configures <code>[tool.pytest.ini_options]</code> in
-its own <code>pyproject.toml</code>; check that section if <code>pytest</code> does not pick up its tests
+its own <code>pyproject.toml</code>. Check that section if <code>pytest</code> does not pick up its tests
 automatically. <code>ovoscope</code> (installed as part of most <code>test</code> extras) is the same in-process
-end-to-end tool used for skill and plugin testing; see <a href="../testing-your-skill/">Test Your Skill</a>
+end-to-end tool used for skill and plugin testing. See <a href="../testing-your-skill/">Test Your Skill</a>
 for how it works.</p>
 <hr />
 <p><strong>Read next:</strong> <a href="../contributing/">Contributing</a>

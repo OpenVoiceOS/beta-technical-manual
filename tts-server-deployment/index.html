@@ -1569,7 +1569,7 @@ servers entirely: fully offline plugins exist for everything.</p>
 </div>
 <p>See <a href="../tts-plugins/">TTS plugins</a> for fully offline voices if you'd rather not depend on any server.</p>
 <h2 id="mcp">MCP<a class="headerlink" href="#mcp" title="Permanent link">&para;</a></h2>
-<p>Like the STT, translate, and persona servers — all four moved to explicit opt-in —
+<p>The STT, translate, and persona servers all moved to explicit opt-in, and so did this one.
 <code>ovos-tts-server</code> mounts its MCP endpoint only when started with the <code>--mcp</code> flag (installing
 the <code>mcp</code> extra alone is not enough):</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>pip<span class="w"> </span>install<span class="w"> </span><span class="s1">&#39;ovos-tts-server[mcp]&#39;</span>
@@ -1582,9 +1582,9 @@ flag. If MCP tool calls 404, check that <code>--mcp</code> was actually passed.<
 <div class="admonition note">
 <p class="admonition-title">The <code>mcp</code> extra installs <code>fastmcp</code>, not the <code>mcp</code> SDK</p>
 <p>The extra keeps the name <code>mcp</code>, but it resolves the third-party <code>fastmcp&gt;=3,&lt;4</code> package, not
-the official <code>mcp</code> SDK — MCP SDK 2.0 removed <code>mcp.server.fastmcp.FastMCP</code>, so a server still
-importing that symbol fails to start on the 2.x SDK. This server <em>serves</em> MCP with <code>fastmcp</code>;
-a client consuming a different MCP server (like <code>ovos-mcp-toolbox</code>, see
+the official <code>mcp</code> SDK. MCP SDK 2.0 removed <code>mcp.server.fastmcp.FastMCP</code>, so a server still
+importing that symbol fails to start on the 2.x SDK. This server <em>serves</em> MCP with <code>fastmcp</code>.
+A client consuming a different MCP server (like <code>ovos-mcp-toolbox</code>, see
 <a href="../tool-plugins/">Agent Tool Plugins</a>) uses the official <code>mcp</code> SDK instead.</p>
 </div>
 <p>Config keys:</p>
@@ -1631,7 +1631,7 @@ plugin, so a single config shape can target different self-hosted or cloud TTS s
 without a dedicated plugin per vendor.</p>
 </div>
 <h2 id="docker-deployment">Docker Deployment<a class="headerlink" href="#docker-deployment" title="Permanent link">&para;</a></h2>
-<p>Plain Docker works today — a working <code>Dockerfile</code> follows below. What is still <strong>upcoming</strong> is
+<p>Plain Docker works today. A working <code>Dockerfile</code> follows below. What is still <strong>upcoming</strong> is
 only a ready-made Docker <em>Compose</em> proxy setup for this server.</p>
 <div class="admonition tip">
 <p class="admonition-title">An interim path: some TTS plugins ship their own Docker image</p>

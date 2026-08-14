@@ -828,7 +828,7 @@
         <li class="md-nav__item">
   <a href="#step-1-create-the-folder-layout" class="md-nav__link">
     <span class="md-ellipsis">
-      Step 1 — Create the folder layout
+      Step 1: Create the folder layout
     </span>
   </a>
   
@@ -837,7 +837,7 @@
         <li class="md-nav__item">
   <a href="#step-2-write-the-skill-code" class="md-nav__link">
     <span class="md-ellipsis">
-      Step 2 — Write the skill code
+      Step 2: Write the skill code
     </span>
   </a>
   
@@ -846,7 +846,7 @@
         <li class="md-nav__item">
   <a href="#step-3-tell-ovos-what-the-user-might-say" class="md-nav__link">
     <span class="md-ellipsis">
-      Step 3 — Tell OVOS what the user might say
+      Step 3: Tell OVOS what the user might say
     </span>
   </a>
   
@@ -855,7 +855,7 @@
         <li class="md-nav__item">
   <a href="#step-4-write-what-ovos-says-back" class="md-nav__link">
     <span class="md-ellipsis">
-      Step 4 — Write what OVOS says back
+      Step 4: Write what OVOS says back
     </span>
   </a>
   
@@ -864,7 +864,7 @@
         <li class="md-nav__item">
   <a href="#step-5-make-it-installable" class="md-nav__link">
     <span class="md-ellipsis">
-      Step 5 — Make it installable
+      Step 5: Make it installable
     </span>
   </a>
   
@@ -873,7 +873,7 @@
         <li class="md-nav__item">
   <a href="#step-6-install-it-and-talk-to-it" class="md-nav__link">
     <span class="md-ellipsis">
-      Step 6 — Install it and talk to it
+      Step 6: Install it and talk to it
     </span>
   </a>
   
@@ -1405,7 +1405,7 @@
         <li class="md-nav__item">
   <a href="#step-1-create-the-folder-layout" class="md-nav__link">
     <span class="md-ellipsis">
-      Step 1 — Create the folder layout
+      Step 1: Create the folder layout
     </span>
   </a>
   
@@ -1414,7 +1414,7 @@
         <li class="md-nav__item">
   <a href="#step-2-write-the-skill-code" class="md-nav__link">
     <span class="md-ellipsis">
-      Step 2 — Write the skill code
+      Step 2: Write the skill code
     </span>
   </a>
   
@@ -1423,7 +1423,7 @@
         <li class="md-nav__item">
   <a href="#step-3-tell-ovos-what-the-user-might-say" class="md-nav__link">
     <span class="md-ellipsis">
-      Step 3 — Tell OVOS what the user might say
+      Step 3: Tell OVOS what the user might say
     </span>
   </a>
   
@@ -1432,7 +1432,7 @@
         <li class="md-nav__item">
   <a href="#step-4-write-what-ovos-says-back" class="md-nav__link">
     <span class="md-ellipsis">
-      Step 4 — Write what OVOS says back
+      Step 4: Write what OVOS says back
     </span>
   </a>
   
@@ -1441,7 +1441,7 @@
         <li class="md-nav__item">
   <a href="#step-5-make-it-installable" class="md-nav__link">
     <span class="md-ellipsis">
-      Step 5 — Make it installable
+      Step 5: Make it installable
     </span>
   </a>
   
@@ -1450,7 +1450,7 @@
         <li class="md-nav__item">
   <a href="#step-6-install-it-and-talk-to-it" class="md-nav__link">
     <span class="md-ellipsis">
-      Step 6 — Install it and talk to it
+      Step 6: Install it and talk to it
     </span>
   </a>
   
@@ -1555,8 +1555,8 @@ the pip install step on failure.</p>
 </table>
 <p>The intent and dialog files live in a <code>locale/&lt;language&gt;/</code> folder, so the same skill can be
 translated. That's the whole model. <a href="../skill-structure/">Anatomy of a Skill</a> covers it in depth.</p>
-<h2 id="step-1-create-the-folder-layout">Step 1 — Create the folder layout<a class="headerlink" href="#step-1-create-the-folder-layout" title="Permanent link">&para;</a></h2>
-<p>Make this structure — and actually replace <code>youruser</code> with your own name/handle (and pick
+<h2 id="step-1-create-the-folder-layout">Step 1: Create the folder layout<a class="headerlink" href="#step-1-create-the-folder-layout" title="Permanent link">&para;</a></h2>
+<p>Make this structure, and actually replace <code>youruser</code> with your own name/handle (and pick
 your own skill name) <strong>before</strong> installing, not later: the folder and <code>pyproject.toml</code> names
 become the package name and <code>skill_id</code>, and two skills with the same <code>skill_id</code> installed on
 one machine shadow each other. On your own single machine the literal names work, which is
@@ -1582,7 +1582,7 @@ language folder name itself is also case-insensitive (<code>en-us</code> and <co
 folder to OVOS). See <a href="../skill-structure/">Anatomy of a Skill</a> and
 <a href="../intents/">Intent Design</a> for more on this layout.</p>
 </div>
-<h2 id="step-2-write-the-skill-code">Step 2 — Write the skill code<a class="headerlink" href="#step-2-write-the-skill-code" title="Permanent link">&para;</a></h2>
+<h2 id="step-2-write-the-skill-code">Step 2: Write the skill code<a class="headerlink" href="#step-2-write-the-skill-code" title="Permanent link">&para;</a></h2>
 <p>Every skill is a Python class that subclasses <a href="../ovos-skill/"><code>OVOSSkill</code></a>. A <strong>decorator</strong> (a
 line starting with <code>@</code> placed just above a function) tells OVOS what that function is for. Here
 <code>@intent_handler("Hello.intent")</code> means <em>"run this function when the user says something matching
@@ -1608,7 +1608,7 @@ then speaks a random line from <code>hello.dialog</code>.</p>
 <p>That's the entire skill. <code>initialize()</code> is optional. You only need it once you have setup work
 that depends on the skill being fully wired up (reading <a href="../skill-settings/">settings</a>, registering
 extra event handlers, and so on).</p>
-<h2 id="step-3-tell-ovos-what-the-user-might-say">Step 3 — Tell OVOS what the user might say<a class="headerlink" href="#step-3-tell-ovos-what-the-user-might-say" title="Permanent link">&para;</a></h2>
+<h2 id="step-3-tell-ovos-what-the-user-might-say">Step 3: Tell OVOS what the user might say<a class="headerlink" href="#step-3-tell-ovos-what-the-user-might-say" title="Permanent link">&para;</a></h2>
 <p><code>ovos_skill_my_first/locale/en-us/intents/Hello.intent</code>: one example phrase per line. OVOS
 learns the <em>pattern</em> from these, so you don't have to list every wording:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>hello
@@ -1619,25 +1619,25 @@ learns the <em>pattern</em> from these, so you don't have to list every wording:
 <div class="admonition note">
 <p class="admonition-title">Three file formats, don't mix them up</p>
 <p>A skill uses three different formats side by side: <code>pyproject.toml</code> is <strong>TOML</strong>,
-<code>.intent</code> and <code>.dialog</code> files are <strong>plain text</strong> (one phrase per line — no quotes, no
+<code>.intent</code> and <code>.dialog</code> files are <strong>plain text</strong> (one phrase per line, no quotes, no
 commas, no brackets), and only <code>skill.json</code> is <strong>JSON</strong>. The classic mistake is decorating
-an <code>.intent</code> file with JSON punctuation; every stray quote or comma becomes part of the
+an <code>.intent</code> file with JSON punctuation. Every stray quote or comma becomes part of the
 phrase to match.</p>
 </div>
-<h2 id="step-4-write-what-ovos-says-back">Step 4 — Write what OVOS says back<a class="headerlink" href="#step-4-write-what-ovos-says-back" title="Permanent link">&para;</a></h2>
+<h2 id="step-4-write-what-ovos-says-back">Step 4: Write what OVOS says back<a class="headerlink" href="#step-4-write-what-ovos-says-back" title="Permanent link">&para;</a></h2>
 <p><code>ovos_skill_my_first/locale/en-us/dialog/hello.dialog</code>: one option per line. OVOS picks one at
 random so the assistant doesn't sound robotic:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>Hello! Nice to meet you.
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>Hi there!
 </span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>Hey — how can I help?
 </span></code></pre></div>
-<h2 id="step-5-make-it-installable">Step 5 — Make it installable<a class="headerlink" href="#step-5-make-it-installable" title="Permanent link">&para;</a></h2>
+<h2 id="step-5-make-it-installable">Step 5: Make it installable<a class="headerlink" href="#step-5-make-it-installable" title="Permanent link">&para;</a></h2>
 <p>A skill is just a Python package that advertises itself to OVOS through an <strong>entry point</strong>.
 <code>pyproject.toml</code>:</p>
 <div class="admonition note">
 <p class="admonition-title">You don't need to understand this file yet</p>
 <p>Replace <code>ovos-skill-my-first</code> (the project name), the <code>ovos_skill_my_first</code> package
-folder wherever it appears, and <code>youruser</code> (your username) — and copy the rest as-is.</p>
+folder wherever it appears, and <code>youruser</code> (your username), then copy the rest as-is.</p>
 </div>
 <div class="language-toml highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="k">[build-system]</span>
 </span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="n">requires</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;setuptools&gt;=61&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;wheel&quot;</span><span class="p">]</span>
@@ -1669,7 +1669,7 @@ folder wherever it appears, and <code>youruser</code> (your username) — and co
 how the <a href="../plugin-manager/">Plugin Manager</a> discovers installed skills.</p>
 <p>For the full packaging reference (including GUI assets in package-data), see
 <a href="../skill-structure/">Anatomy of a Skill</a>.</p>
-<h2 id="step-6-install-it-and-talk-to-it">Step 6 — Install it and talk to it<a class="headerlink" href="#step-6-install-it-and-talk-to-it" title="Permanent link">&para;</a></h2>
+<h2 id="step-6-install-it-and-talk-to-it">Step 6: Install it and talk to it<a class="headerlink" href="#step-6-install-it-and-talk-to-it" title="Permanent link">&para;</a></h2>
 <p>First, activate the same Python environment OVOS runs in, so the skill installs into the
 interpreter <code>ovos-core</code> actually uses. For example, <code>source ~/.venvs/ovos/bin/activate</code> for
 a venv install. In plain English: a <strong><a href="../glossary/">virtual environment</a></strong> is an isolated
@@ -1682,7 +1682,7 @@ and container installs each put it somewhere different.</p>
 <li>Check where your particular install created its environment, for example the installer's
   summary screen (see <a href="../ovos-installer-scenarios/#environment-summary">ovos-installer</a>).
   On a fleet of identically-imaged machines (a classroom set, a batch of satellites) the
-  path is the same everywhere — find it once and share it, rather than having every person
+  path is the same everywhere. Find it once and share it, rather than having every person
   hunt for it separately.</li>
 <li>Advanced: if you installed via <a href="../glossary/">systemd</a>, its unit file's
   <code>Environment=</code>/<code>ExecStart=</code> lines show the path.</li>
@@ -1700,10 +1700,10 @@ optional install, so a plain OVOS install may not have it. Check, and add it if 
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>pip<span class="w"> </span>show<span class="w"> </span>ovos-padatious<span class="w"> </span><span class="o">||</span><span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>ovos-padatious
 </span></code></pre></div>
 <p>The pipeline ID is <code>ovos-padatious-pipeline-plugin</code>, but the package you install is
-<code>ovos-padatious</code> — <code>pip install ovos-padatious-pipeline-plugin</code> fails, there is no such
+<code>ovos-padatious</code>. <code>pip install ovos-padatious-pipeline-plugin</code> fails, since there is no such
 package. See <a href="../pipelines-overview/#pipeline-ids-vs-plugins">Pipeline IDs vs.
 plugins</a>.</p>
-<p>Restart <code>ovos-core</code> (or it will pick the skill up on its next scan) — on an
+<p>Restart <code>ovos-core</code> (or it will pick the skill up on its next scan). On an
 <code>ovos-installer</code> setup that is <code>systemctl --user restart ovos-core.service</code>. See
 <a href="../troubleshooting/#stage-1-is-the-service-even-running-and-is-the-bus-reachable">Stage 1 of Troubleshooting</a>
 for other setups and how to check the services. Then say your configured wake word first
@@ -1719,19 +1719,19 @@ for other setups and how to check the services. Then say your configured wake wo
 <p>The most common cause is the one in Step 6: <code>Hello.intent</code> is a Padatious intent, and
 Padatious is an optional install. Re-run that check.</p>
 <p>You do not need to edit any pipeline config. The stage is in the shipped default
-<code>intents.pipeline</code> already — the plugin just has to be installed for the default to have
+<code>intents.pipeline</code> already. The plugin just has to be installed for the default to have
 anything to load. <a href="../testing-your-skill/">Test Your Skill</a> hits the same requirement in
 the automated test.</p>
 </div>
 <div class="admonition tip">
 <p class="admonition-title">Prefer <code>ovos-say-to</code> for repeatable tests (and know the spoken-test failure mode)</p>
 <p>You can send the utterance straight onto the bus as text, skipping the wake word and mic
-entirely: <code>ovos-say-to "hello"</code>. This is the <strong>recommended</strong> way to test while iterating —
-it is deterministic and works with no microphone. It is also the way to go when many
+entirely: <code>ovos-say-to "hello"</code>. This is the <strong>recommended</strong> way to test while iterating.
+It is deterministic and works with no microphone. It is also the way to go when many
 machines test at once (a workshop, a classroom): the default spoken path sends your audio
 to a shared <strong>public community STT server</strong> (see
 <a href="../privacy-security/">Privacy &amp; Security</a>), so a room full of devices testing
-simultaneously can see recognition turn slow or flaky from server load — a failure that
+simultaneously can see recognition turn slow or flaky from server load. That failure
 looks like "OVOS didn't reply" but has nothing to do with your skill. See
 <a href="../troubleshooting/#stage-3-did-stt-produce-text">Troubleshooting</a>
 for more text-based ways to test a skill.</p>

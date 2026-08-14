@@ -2115,7 +2115,7 @@
 </span></code></pre></div>
 <p>Output example: <code>1.2.3a4</code> or <code>1.2.3</code></p>
 <h3 id="scriptscheck_downstreampy"><code>scripts/check_downstream.py</code><a class="headerlink" href="#scriptscheck_downstreampy" title="Permanent link">&para;</a></h3>
-<p>Reports which installed packages depend on a given package, using <code>pipdeptree</code>. Output is sorted deterministically and uploaded as a workflow artifact (the older commit-to-repo behavior is gone; the <code>commit_branch</code> input is deprecated and ignored).</p>
+<p>Reports which installed packages depend on a given package, using <code>pipdeptree</code>. Output is sorted deterministically and uploaded as a workflow artifact. The older commit-to-repo behavior is gone. The <code>commit_branch</code> input is deprecated and ignored.</p>
 <p><strong>Key function:</strong> <code>get_downstream(package_name: str) -&gt; str</code></p>
 <p><strong>Helper:</strong> <code>sort_pipdeptree_output(text: str) -&gt; str</code></p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>usage: check_downstream.py --package &lt;name&gt; --output &lt;file&gt;

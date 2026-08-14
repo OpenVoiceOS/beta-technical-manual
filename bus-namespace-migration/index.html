@@ -1496,7 +1496,7 @@
 <p class="admonition-title">In a nutshell</p>
 <p>The <a href="../architecture-specs/">Formal Specifications</a> renamed many legacy bus topics into the
 <code>ovos.*</code> namespace. <code>ovos-bus-client</code> bridges old and new names automatically, so producers
-and consumers can each switch at their own pace. The bridge is a pending removal — see the
+and consumers can each switch at their own pace. The bridge is a pending removal. See the
 warning below.</p>
 </div>
 <h2 id="namespace-migration">Namespace migration<a class="headerlink" href="#namespace-migration" title="Permanent link">&para;</a></h2>
@@ -1573,22 +1573,22 @@ the legacy delivery, and disable <code>modernize</code> once no legacy producers
 <div class="admonition warning">
 <p class="admonition-title"><code>modernize</code> is load-bearing, not cosmetic, on a canonical-only skill container</p>
 <p>A skill container that only registers <code>ovos.*</code> handlers is not automatically safe from an
-older producer still emitting legacy topics — the wire frame it receives may be legacy-only.
+older producer still emitting legacy topics. The wire frame it receives may be legacy-only.
 That skill hears it at all <em>because</em> its own <code>MessageBusClient</code> (any <code>ovos-bus-client</code>
-since 2.6.3a1, where the bridge became receive-side — commit 0f0a241, PR <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/258" title="GitHub Issue: TigreGotico/ovos-technical-manual #258">#258</a>; before
+since 2.6.3a1, where the bridge became receive-side in commit 0f0a241, PR <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/258" title="GitHub Issue: TigreGotico/ovos-technical-manual #258">#258</a>; before
 that the counterpart was a second wire message)
 re-dispatches the legacy arrival under its <code>ovos.*</code> counterpart on receive, per <code>modernize</code>
-being on. Disabling <code>modernize</code> on such a container does not just drop a redundant delivery;
-it silently stops that container from ever hearing a legacy producer again. Never disable
+being on. Disabling <code>modernize</code> on such a container does not just drop a redundant delivery.
+It silently stops that container from ever hearing a legacy producer again. Never disable
 <code>modernize</code> on a skill container while any producer in the fleet may still be on legacy
-topics — treat the default <code>true</code> as the safe choice everywhere except a deployment that has
+topics. Treat the default <code>true</code> as the safe choice everywhere except a deployment that has
 fully verified every producer speaks <code>ovos.*</code>.</p>
 </div>
 <h3 id="intent-dispatch-topics-the-intent-suffix-is-gone">Intent dispatch topics: the <code>.intent</code> suffix is gone<a class="headerlink" href="#intent-dispatch-topics-the-intent-suffix-is-gone" title="Permanent link">&para;</a></h3>
 <p>A related, separately-bridged rename: per-intent dispatch topics are now the canonical
 <code>&lt;skill_id&gt;:&lt;intent_name&gt;</code> with <strong>no <code>.intent</code> suffix</strong>. Old <code>ovos-workshop</code> releases built
-the topic from the Padatious resource <em>filename</em>, so the extension leaked onto the wire — a
-skill with <code>food.order.intent</code> listened on <code>&lt;skill_id&gt;:food.order.intent</code>; current workshop
+the topic from the Padatious resource <em>filename</em>, so the extension leaked onto the wire. A
+skill with <code>food.order.intent</code> listened on <code>&lt;skill_id&gt;:food.order.intent</code>. Current workshop
 registers <code>&lt;skill_id&gt;:food.order</code> (OVOS-MSG-1 §2.1.1).</p>
 <p><code>ovos-bus-client</code> 2.8 bridges the skew with two stateless rules: every canonical intent topic
 emitted also goes out as its <code>.intent</code>-suffixed twin (marked as a twin, so nothing double-fires),
@@ -1597,12 +1597,12 @@ spelling. Config-gated, on by default. Test rigs get the same behavior from <cod
 <code>ovos-utils</code> alpha released 2026-08-14.</p>
 <p>Two practical rules for authors:</p>
 <ul>
-<li>New code and tests should <strong>compute</strong> the canonical topic —
-  <code>ovos_spec_tools.intent_topics.canonical_intent_topic(...)</code> — rather than hard-coding either
+<li>New code and tests should <strong>compute</strong> the canonical topic with
+  <code>ovos_spec_tools.intent_topics.canonical_intent_topic(...)</code>, rather than hard-coding either
   spelling. Literal <code>.intent</code> listeners are deprecated but not broken.</li>
 <li>The spelling goes canonical when <strong>either</strong> side modernizes: the skill registers canonical
   (workshop ≥ 9.3.11a2) <strong>or</strong> the matcher canonicalizes (padatious ≥ 2.0.1a1 strips the suffix at
-  registration; Adapt is unaffected — its intent names come from <code>IntentBuilder</code>, never from
+  registration. Adapt is unaffected: its intent names come from <code>IntentBuilder</code>, never from
   filenames, so there was no suffix to strip). Pinning one side back does <strong>not</strong> restore the
   old spelling.</li>
 </ul>

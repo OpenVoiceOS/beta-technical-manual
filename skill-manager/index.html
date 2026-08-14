@@ -1753,33 +1753,33 @@ are met:</p>
 <p><em>Diagram: skill loading runs left to right from load_plugin_skills, through find_skill_plugins and building a PluginSkillLoader, to _load_plugin_skill instantiating and starting the skill.</em></p>
 <p>Each skill gets its own bus connection when <code>websocket.shared_connection</code> is <code>false</code> in config (see <code>_get_internal_skill_bus()</code>), providing isolation from "BusBricker" style attacks.</p>
 <h3 id="what-a-load-failure-looks-like">What a load failure looks like<a class="headerlink" href="#what-a-load-failure-looks-like" title="Permanent link">&para;</a></h3>
-<p>A skill whose class raises during instantiation is logged loudly in <code>skills.log</code> and skipped —
-it registers no intents and can never match. The signatures to grep for:</p>
+<p>A skill whose class raises during instantiation is logged loudly in <code>skills.log</code> and skipped.
+It registers no intents and can never match. The signatures to grep for:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>ERROR - Failed to load skill: &lt;skill_id&gt; (&lt;exception&gt;)   # skill_launcher, traceback follows
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>ERROR - Skill &lt;skill_id&gt; failed to load
 </span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>ERROR - Load of skill &lt;skill_id&gt; failed!                 # skill_manager, traceback follows
 </span></code></pre></div>
-<p>On the bus, a failed load emits <code>mycroft.skills.loading_failure</code>; its true complement is
-<code>mycroft.skills.loaded</code> (plural), fired on <strong>every</strong> successful load path — the singular
+<p>On the bus, a failed load emits <code>mycroft.skills.loading_failure</code>. Its true complement is
+<code>mycroft.skills.loaded</code> (plural), fired on <strong>every</strong> successful load path. The singular
 <code>mycroft.skill.loaded</code> below is an extra emission specific to the Skill Manager's
 plugin-skill path, with no failure counterpart. "Installed but never matches" reports should check for these before
-anything else — see the <a href="../troubleshooting/#stage-4-which-pipeline-stage-matched-or-didnt">Troubleshooting</a>
+anything else. See the <a href="../troubleshooting/#stage-4-which-pipeline-stage-matched-or-didnt">Troubleshooting</a>
 funnel.</p>
 <h2 id="blacklisting">Blacklisting<a class="headerlink" href="#blacklisting" title="Permanent link">&para;</a></h2>
 <p>Skills listed in <code>skills.blacklisted_skills</code> in <code>mycroft.conf</code> are skipped at load time. The recommended approach is to uninstall unwanted skills rather than blacklist them.</p>
 <h2 id="intent-training">Intent Training<a class="headerlink" href="#intent-training" title="Permanent link">&para;</a></h2>
 <p>Each successfully loaded skill is announced on the bus as <code>mycroft.skills.loaded</code>
-(plural) with the skill id — the event that fires on every load path; plugin-skill
-loads through the manager additionally emit a singular <code>mycroft.skill.loaded</code>. Both
+(plural) with the skill id. This event fires on every load path. Plugin-skill
+loads through the manager also emit a singular <code>mycroft.skill.loaded</code>. Both
 are useful for tooling that waits for a specific skill to become available. After new skills are loaded, the manager requests pipeline
 re-training:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>mycroft.skills.train  →  (pipeline plugins that need it train, e.g. padatious)
 </span></code></pre></div>
-<p>The manager emits <code>mycroft.skills.train</code> and moves on — it waits for nothing. The
+<p>The manager emits <code>mycroft.skills.train</code> and moves on. It waits for nothing. The
 Padatious pipeline plugin does announce <code>mycroft.skills.trained</code> when its training round
 completes (on both the trained and nothing-new-to-train paths), so tooling that needs a
-deterministic "training done" signal can watch for that; the manager itself never does.</p>
-<p>The manager itself never blocks on <code>mycroft.skills.trained</code> — the event exists (see
+deterministic "training done" signal can watch for that. The manager itself never does.</p>
+<p>The manager itself never blocks on <code>mycroft.skills.trained</code>. The event exists (see
 above) but nothing in core does a <code>wait_for_response</code> on it. An earlier
 version blocked on <code>wait_for_response(..., "mycroft.skills.trained", timeout=60)</code>, which
 stalled boot for a full minute on every install without a deferred-training engine, since

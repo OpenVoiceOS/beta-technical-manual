@@ -1654,7 +1654,7 @@
 </div>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>One OVOS device can talk to several people at once: your phone, a kitchen speaker, and other connected devices may all be asking it things at the same time. A <em>session</em> is simply the information that says who is asking and in what language. If your skill remembers anything between requests, like a running game or a chat history, it needs to keep each person's information separate so two users don't get each other's answers, much like separate tables at a restaurant — key that state by <code>session_id</code> instead of stashing it in a single instance variable. This page shows how to make a skill session aware. New terms are explained in the <a href="../glossary/">Glossary</a>.</p>
+<p>One OVOS device can talk to several people at once: your phone, a kitchen speaker, and other connected devices may all be asking it things at the same time. A <em>session</em> is simply the information that says who is asking and in what language. If your skill remembers anything between requests, like a running game or a chat history, it needs to keep each person's information separate so two users don't get each other's answers, much like separate tables at a restaurant. Key that state by <code>session_id</code> instead of stashing it in a single instance variable. This page shows how to make a skill session aware. New terms are explained in the <a href="../glossary/">Glossary</a>.</p>
 </div>
 <details class="info">
 <summary>Formal specification</summary>
@@ -1693,22 +1693,22 @@
 <p class="admonition-title">A bare <code>session_id</code> does not carry state — replay the whole session</p>
 <p>An external client (a HiveMind satellite, any non-<code>"default"</code> session) is not tracked
 in-process the way the device-local session is. <code>ovos-core</code> only refreshes what it
-already holds for a given <code>session_id</code>; a <code>session_id</code> this process never folded a full
+already holds for a given <code>session_id</code>. A <code>session_id</code> this process never folded a full
 session for is carried through untouched, with none of the previous turn's state. To keep
-multi-turn continuity — <code>intent_context</code>, <code>lang</code>, presentation preferences, and the rest —
+multi-turn continuity for <code>intent_context</code>, <code>lang</code>, presentation preferences, and the rest,
 a client must send the <strong>complete serialized session</strong> back on each message, not just the
-bare <code>session_id</code> string — from Python that is <code>Session.serialize()</code>; from any other
+bare <code>session_id</code> string. From Python that is <code>Session.serialize()</code>. From any other
 language it is the same JSON object echoed back from <code>context.session</code> of the frames
 the server sends you (its exact field list is normative in the OVOS-SESSION-1 spec, not
-this manual; see the <a href="../bus-recipes/#from-a-non-python-client-the-json-round-trip">JSON round trip</a>). Losing that round trip is
-indistinguishable from starting a brand new session every turn — a <code>session_id</code> this
+this manual, see the <a href="../bus-recipes/#from-a-non-python-client-the-json-round-trip">JSON round trip</a>). Losing that round trip is
+indistinguishable from starting a brand new session every turn. A <code>session_id</code> this
 process has never folded a full session for gets a <strong>fresh</strong> session by design, not an
 error and not a reconstruction from history.</p>
 <p>There is no topic that <em>pushes</em> an updated session from the orchestrator down to a
 client to keep it current. <code>ovos.session.sync</code> is the closest thing, and it runs the
 other way: a client emits it carrying its <em>own</em> snapshot, and the receiver merges that
 snapshot's <code>intent_context</code> onto whatever it already holds for that <code>session_id</code>
-(OVOS-CONTEXT-1 §5.3) — a pull-shaped merge triggered by the sender, not a broadcast.
+(OVOS-CONTEXT-1 §5.3). This is a pull-shaped merge triggered by the sender, not a broadcast.
 A bare <code>ovos.session.sync</code> with no session carrier is handled differently again: it is
 read as a legacy request for the current <strong>default</strong> session and answered with a
 <code>ovos.session.update_default</code> echo, which only ever concerns the device-local
@@ -1794,9 +1794,9 @@ these signals into the language it matches an utterance in.</p>
 intents may match across turns (e.g. "book a flight" setting context so a follow-up "to
 Paris" is understood without repeating "flight"). It is a session field claimed into the
 SESSION-1 registry by <strong>OVOS-CONTEXT-1</strong>, holding <code>{value, expires_at}</code> per key. In the spec
-model each entry decays via its <code>expires_at</code> / <code>turns_remaining</code>; the legacy keyword-context
+model each entry decays via its <code>expires_at</code> / <code>turns_remaining</code>. The legacy keyword-context
 manager ages whole frames out after the <code>context.timeout</code> config value (minutes, default <code>2</code>).
-Note that entries written through <code>set_context</code> currently never decay at all — the core write
+Note that entries written through <code>set_context</code> currently never decay at all. The core write
 path drops the expiry stamp (see the caveats on <a href="../context/">Conversational Context</a>). See
 <a href="../intent-service/">Intent Service</a> for how context is set, read, and consumed during
 pipeline matching.</p>

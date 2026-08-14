@@ -1703,12 +1703,12 @@
 <p>This page is about the third (and the field that holds it). It is not <code>Message.context</code>, and a context entry is not a <code>Match.slot</code>. CONTEXT-1 §7's context-supplied-slot rule is the bridge: when a <code>requires_context</code> key also names a slot, its value fills that slot if the utterance did not. This is exactly the "remember which person" mechanism below.</p>
 </details>
 <p>Conversational context makes voice interactions feel more natural. The assistant keeps track of the subject you are discussing, so you do not have to repeat it.</p>
-<p><strong>What works in a skill today</strong>: gate a follow-up with a blocking prompt — <code>ask_yesno()</code> /
-<code>get_response()</code>, see <a href="../prompts/">Statements and Prompts</a> — keep the skill in the
+<p><strong>What works in a skill today</strong>: gate a follow-up with a blocking prompt, <code>ask_yesno()</code> /
+<code>get_response()</code> (see <a href="../prompts/">Statements and Prompts</a>), keep the skill in the
 conversation with <a href="../converse/"><code>converse()</code></a>, or use the legacy Adapt path:
 <code>self.set_context()</code> plus <code>IntentBuilder().require()</code> (the <a href="#using-context-to-enable-intents">TeaSkill example</a>
 below). The declarative spec mechanism described next is evaluated by the pipelines but is
-<strong>not yet reachable from a skill</strong> — details in the warning under the example.</p>
+<strong>not yet reachable from a skill</strong>. Details are in the warning under the example.</p>
 <p><code>requires_context</code> and <code>excludes_context</code> gate matching in both the
 <a href="../adapt-pipeline/">Adapt</a> and <a href="../padatious-pipeline/">Padatious</a> pipelines, as CONTEXT-1 §6
 requires of every intent engine. Adapt gates keyword intents. Padatious gates template intents,
@@ -1733,8 +1733,8 @@ has landed: <code>@intent_handler</code> has no <code>requires_context=</code> /
 parameters to put the declarations on the registration payload, and <code>set_context</code>
 does not write entries the gate can find (see the warning near the end of this
 page). <strong>To gate a yes/no follow-up in a skill
-today</strong>, use a blocking prompt — <code>ask_yesno()</code> / <code>get_response()</code>, see
-<a href="../prompts/">Statements and Prompts</a> — or keep the skill in the conversation with
+today</strong>, use a blocking prompt, <code>ask_yesno()</code> / <code>get_response()</code> (see
+<a href="../prompts/">Statements and Prompts</a>), or keep the skill in the conversation with
 <a href="../converse/"><code>converse()</code></a>. The legacy Adapt <code>.require()</code> keyword path (the TeaSkill
 example below) also works.</p>
 </div>
@@ -1824,7 +1824,7 @@ gates.</p>
 <div class="admonition warning">
 <p class="admonition-title">Generic shared names are effectively global</p>
 <p>A shared-scope context entry is stored under its bare, un-namespaced key. A plain,
-generic name — <code>prev_dialog</code>, <code>date</code>, <code>person</code>, <code>sleeping_state</code> — can satisfy any
+generic name (<code>prev_dialog</code>, <code>date</code>, <code>person</code>, <code>sleeping_state</code>) can satisfy any
 other legacy skill's <code>require()</code>/<code>requires_context</code> gate of that same name, because
 the legacy (pre-CONTEXT-1) Adapt lookup also probes the plain, un-munged keyword
 alongside its own skill-munged one. Nothing stops a different skill from writing the
@@ -1843,7 +1843,7 @@ form only when cross-skill visibility is exactly what you want.</p>
 <p>Context does not need a value. Its presence alone can indicate a previous interaction happened.</p>
 <p>In this case, context can also be implemented with decorators instead of calling <code>self.set_context</code>.</p>
 <p><code>.require('MilkContext')</code> below needs no matching <code>MilkContext.voc</code> file. A <code>require()</code>
-keyword with no backing vocabulary is not matched against the utterance at all — it can
+keyword with no backing vocabulary is not matched against the utterance at all. It can
 only ever be satisfied by a context entry of the same name, so it behaves as a pure
 context gate: present in the current context, or the intent does not match.</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kn">from</span> <span class="nn">ovos_workshop.decorators</span> <span class="kn">import</span> <span class="n">adds_context</span><span class="p">,</span> <span class="n">removes_context</span>
@@ -1956,24 +1956,24 @@ CONTEXT-1's declarative <code>requires_context</code> / <code>excludes_context</
 <div class="admonition warning">
 <p class="admonition-title">The declarative gate is not reachable via <code>set_context</code> yet</p>
 <p>The <code>key</code> field is on the wire, but <code>ovos-core</code> does not yet mirror it into the
-resolved <code>&lt;skill_id&gt;:&lt;key&gt;</code> entry the declarative gate looks up — it still stores
+resolved <code>&lt;skill_id&gt;:&lt;key&gt;</code> entry the declarative gate looks up. It still stores
 only the legacy munged spelling. Until that mirror lands in core, intents declared
 with <code>requires_context=</code> / <code>excludes_context=</code> cannot be satisfied by
-<code>set_context</code> / <code>@adds_context</code>; only the legacy <code>.require()</code> keyword path (above)
+<code>set_context</code> / <code>@adds_context</code>. Only the legacy <code>.require()</code> keyword path (above)
 works today.</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Writing a key replaces it wholesale; there is no read-back</p>
 <p>Writing an entry under a key that already exists <strong>replaces the whole entry</strong>, value and
-decay timer both — it does not merge onto the old one. (Spec-shaped entries carry their
-own explicit <code>expires_at</code> / <code>turns_remaining</code>; the legacy keyword-context manager instead
-ages whole frames out after the <code>context.timeout</code> config value — minutes, default <code>2</code> —
+decay timer both. It does not merge onto the old one. (Spec-shaped entries carry their
+own explicit <code>expires_at</code> / <code>turns_remaining</code>. The legacy keyword-context manager instead
+ages whole frames out after the <code>context.timeout</code> config value in minutes, default <code>2</code>,
 which is where <a href="../session/">Session</a>'s "~2 minutes" figure comes from.) There is no API
 to read a
-context entry's current value or remaining decay back out — a skill that wants to know
+context entry's current value or remaining decay back out. A skill that wants to know
 "what did I set this to, and how long ago" must keep that in its own state, not rely on
-reading it back from context. A flag-style call with no explicit value —
-<code>self.set_context('MilkContext')</code> — still needs something to store: the underlying wire
+reading it back from context. A flag-style call with no explicit value,
+<code>self.set_context('MilkContext')</code>, still needs something to store: the underlying wire
 message stores the keyword name itself as the value (<code>{"value": word or context}</code>), not
 an empty or null value.</p>
 </div>

@@ -1377,7 +1377,7 @@
 <p>You just installed OVOS and it works. Now you want it to sound like <em>your</em> assistant: a
 different name to wake it up, a different voice answering you, or a different language
 altogether. All three are small edits to the same file, <code>~/.config/mycroft/mycroft.conf</code>.
-This page is a quick-reference for all three; each section links to the full page with
+This page is a quick-reference for all three. Each section links to the full page with
 more detail and more options.</p>
 </div>
 <div class="admonition tip">
@@ -1447,18 +1447,19 @@ restart them depends on how OVOS was installed:</p>
 </span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="p">}</span>
 </span></code></pre></div>
 <p>As with voices below, the plugin must be installed into the same environment OVOS runs in
-before the config can use it (<code>pip install ovos-ww-plugin-vosk</code> for this example). For a
-custom hotword like this one — with no <code>fallback_ww</code> configured — a module that fails to
+before the config can use it (<code>pip install ovos-ww-plugin-vosk</code> for this example). Take a
+custom hotword like this one, with no <code>fallback_ww</code> configured. A module that fails to
 load is logged loudly (an <code>ERROR</code> with a traceback in the listener log) and simply dropped,
-so the assistant stops responding to that wake word. The shipped default <code>hey_mycroft</code>
-behaves differently: its config chains through <code>fallback_ww</code> entries (tflite → precise →
-vosk → pocketsphinx), so a failed primary engine there falls back to the next engine —
-the assistant keeps listening, though each failed engine still logs its own <code>ERROR</code>
+so the assistant stops responding to that wake word.</p>
+<p>The shipped default <code>hey_mycroft</code>
+behaves differently. Its config chains through <code>fallback_ww</code> entries (tflite → precise →
+vosk → pocketsphinx), so a failed primary engine there falls back to the next engine.
+The assistant keeps listening, though each failed engine still logs its own <code>ERROR</code>
 (see <a href="../wake-word-plugins/">Wake-word Plugins</a>). Full walkthrough,
 plugin choices, and tuning: <a href="../wake-word-plugins/#change-your-wake-word">Wake-word Plugins</a>.</p>
 <h2 id="change-your-voice">Change your voice<a class="headerlink" href="#change-your-voice" title="Permanent link">&para;</a></h2>
-<p>Install the plugin's package first — unlike most tweaks on this page, this one does
-require a terminal today; there is no on-device UI for installing plugins yet. <code>phoonnx</code>
+<p>Install the plugin's package first. Unlike most tweaks on this page, this one does
+require a terminal today. There is no on-device UI for installing plugins yet. <code>phoonnx</code>
 ships the <code>ovos-tts-plugin-phoonnx</code> plugin,
 so without it OVOS has nothing to load and the voice won't actually change. Activate the
 same Python <a href="../glossary/">virtual environment</a> OVOS runs in

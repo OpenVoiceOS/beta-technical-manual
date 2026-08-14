@@ -1558,7 +1558,7 @@ GitHub organization (not <code>OpenVoiceOS</code>), with its own
 <a href="https://jarbashivemind.github.io/HiveMind-community-docs/">community docs</a>. The OVOS
 <a href="../maturity/">Maturity Scale</a>, which rates OVOS-org repository health, does not apply to
 it. This page covers only how HiveMind relates to OVOS.</p>
-<p>HiveMind has its own documentation site; this manual covers only the OVOS-side
+<p>HiveMind has its own documentation site. This manual covers only the OVOS-side
 integration. See the <a href="https://jarbashivemind.github.io/HiveMind-community-docs/">community docs</a>
 for HiveMind itself.</p>
 <p>HiveMind is the <strong>voice-satellite transport</strong>: how a mic/speaker device or remote client
@@ -1623,8 +1623,8 @@ You can swap implementations without touching the rest:</p>
 <p><strong>2. Start the server:</strong></p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>hivemind-core<span class="w"> </span>listen<span class="w">           </span><span class="c1"># start listening for HiveMind connections</span>
 </span></code></pre></div>
-<p>By default this listens on <code>0.0.0.0:5678</code> (websocket) and <code>0.0.0.0:5679</code> (HTTP) — all
-interfaces, so firewall those ports if the machine faces an untrusted network. Connections
+<p>By default this listens on <code>0.0.0.0:5678</code> (websocket) and <code>0.0.0.0:5679</code> (HTTP), on all
+interfaces. Firewall those ports if the machine faces an untrusted network. Connections
 still require the per-client access key and password.</p>
 <p>By default it serves the local <code>ovos-core</code> via <code>hivemind-ovos-agent-plugin</code> (configured under
 <code>agent_protocol</code> in <code>server.json</code>).</p>
@@ -1633,7 +1633,7 @@ issued in step 1. This step makes everything else work:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>pip<span class="w"> </span>install<span class="w"> </span>hivemind-bus-client<span class="w">   </span><span class="c1"># repo name is hivemind-websocket-client</span>
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>hivemind-client<span class="w"> </span>set-identity<span class="w"> </span>--key<span class="w"> </span>&lt;access_key&gt;<span class="w"> </span>--password<span class="w"> </span>&lt;password&gt;<span class="w"> </span>--host<span class="w"> </span>&lt;server&gt;
 </span></code></pre></div>
-<p>Bare <code>hivemind-client set-identity</code> with no flags raises a <code>ValueError</code> — it needs at least
+<p>Bare <code>hivemind-client set-identity</code> with no flags raises a <code>ValueError</code>. It needs at least
 one of <code>--key</code>, <code>--password</code> or <code>--siteid</code> (<code>--host</code> alone does not satisfy the check, even
 though the error message mentions it). Use the access key and password printed by
 <code>add-client</code> in step 1.</p>
@@ -1683,9 +1683,9 @@ key holding its config.</p>
 <p>For a step-by-step build of a server-plus-satellites deployment, see <a href="../satellites/">Satellites</a>.</p>
 <p>A server is only useful once something connects to it. On the client side:</p>
 <ul>
-<li><strong><a href="https://github.com/JarbasHiveMind/hivemind-websocket-client"><code>hivemind-websocket-client</code></a></strong>: the client library and the <code>hivemind-client</code> CLI (<code>set-identity</code>, send utterances, and more). Installs as <code>hivemind-bus-client</code> — the repository and the distribution have different names.</li>
-<li><strong><a href="https://github.com/JarbasHiveMind/hivemind-mic-satellite"><code>hivemind-mic-satellite</code></a></strong>: the thinnest device — only microphone and VAD run locally; wake word, STT and TTS all run server-side. Run it with the <code>hivemind-mic-sat</code> command, and note the server must have <code>hivemind-audio-binary-protocol</code> installed (see below).</li>
-<li><strong><a href="https://github.com/JarbasHiveMind/hivemind-audio-binary-protocol"><code>hivemind-audio-binary-protocol</code></a></strong>: the server-side audio entry point that performs wake word/STT/TTS for audio satellites, with binary audio moving over the mesh. Plain <code>hivemind-core</code> does no audio processing without it. (Formerly named <code>hivemind-listener</code>; the old PyPI package name still exists.)</li>
+<li><strong><a href="https://github.com/JarbasHiveMind/hivemind-websocket-client"><code>hivemind-websocket-client</code></a></strong>: the client library and the <code>hivemind-client</code> CLI (<code>set-identity</code>, send utterances, and more). It installs as <code>hivemind-bus-client</code>. The repository and the distribution have different names.</li>
+<li><strong><a href="https://github.com/JarbasHiveMind/hivemind-mic-satellite"><code>hivemind-mic-satellite</code></a></strong>: the thinnest device. Only microphone and VAD run locally. Wake word, STT and TTS all run server-side. Run it with the <code>hivemind-mic-sat</code> command, and note the server must have <code>hivemind-audio-binary-protocol</code> installed (see below).</li>
+<li><strong><a href="https://github.com/JarbasHiveMind/hivemind-audio-binary-protocol"><code>hivemind-audio-binary-protocol</code></a></strong>: the server-side audio entry point that performs wake word/STT/TTS for audio satellites, with binary audio moving over the mesh. Plain <code>hivemind-core</code> does no audio processing without it. (Formerly named <code>hivemind-listener</code>. The old PyPI package name still exists.)</li>
 </ul>
 <p>This split is the real "voice satellite" story: cheap devices listen and speak, and the server thinks.</p>
 <hr />

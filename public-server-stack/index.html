@@ -1565,10 +1565,10 @@
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
 <p>This page describes how the community's public speech and translation servers
-are put together, so you can build the same thing yourself. Three services —
-text-to-speech, speech-to-text, and translation — each run as a small HTTP
+are put together, so you can build the same thing yourself. Three services,
+text-to-speech, speech-to-text, and translation, each run as a small HTTP
 server in its own container, sharing one machine and one model cache. It is a
-reference deployment, not a product: everything here is ordinary Docker and
+reference deployment, not a product. Everything here is ordinary Docker and
 ordinary OVOS plugins.</p>
 </div>
 <div class="admonition warning">
@@ -1612,9 +1612,9 @@ servers entirely: fully offline plugins exist for everything.</p>
 <p>The pattern is the same in all three: a plugin does the work, a thin FastAPI
 server puts it on HTTP, and a client plugin on the device points at the URL. The
 device-side plugins are <code>ovos-tts-plugin-server</code>, <code>ovos-stt-plugin-server</code>, and
-<code>ovos-translate-server-plugin</code>; each is configured with a <code>url</code> and nothing else.</p>
+<code>ovos-translate-server-plugin</code>. Each is configured with a <code>url</code> and nothing else.</p>
 <p>All three run ONNX models on CPU. There is no GPU in this deployment and none is
-required — the choice of ONNX runtimes throughout is what makes a single
+required. The choice of ONNX runtimes throughout is what makes a single
 modest server able to host the set.</p>
 <h2 id="machine-shape">Machine Shape<a class="headerlink" href="#machine-shape" title="Permanent link">&para;</a></h2>
 <p>A host that runs the three services together wants:</p>
@@ -1624,18 +1624,18 @@ modest server able to host the set.</p>
   service instead of OOM-killing the host. See
   <a href="https://github.com/OpenVoiceOS/ovos-plugin-linguonnx/blob/dev/docs/deployment.md"><code>linguonnx</code> deployment</a>
   for how that number is derived and which settings hold it.</li>
-<li><strong>Disk.</strong> The translation model registry is roughly 109 GB at int8 precision;
-  speech models are a few GB. Put the cache on a volume that survives container
+<li><strong>Disk.</strong> The translation model registry is roughly 109 GB at int8 precision.
+  Speech models are a few GB. Put the cache on a volume that survives container
   replacement, and do not put it on the same disk you need free.</li>
 <li><strong>CPU.</strong> Threads matter more than clock. <code>OMP_NUM_THREADS</code> bounds each
-  container's ONNX threadpool; leave headroom so one busy service does not
+  container's ONNX threadpool. Leave headroom so one busy service does not
   starve the others.</li>
 </ul>
 <h2 id="persist-the-model-cache">Persist the Model Cache<a class="headerlink" href="#persist-the-model-cache" title="Permanent link">&para;</a></h2>
 <p>None of the images bake models in. They download on first use, which means a
 container without a persistent cache re-downloads tens of gigabytes on every
 replacement, and its first request after each restart blocks on a real
-download — several minutes for a large translation model. Mount the whole cache
+download, several minutes for a large translation model. Mount the whole cache
 directory, not one subdirectory of it:</p>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nt">volumes</span><span class="p">:</span>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">linguonnx-cache:/home/ovos/.cache</span>
@@ -1649,19 +1649,19 @@ public endpoint the two are indistinguishable to a user. Download the models you
 intend to serve as part of bringing the service up, not as a side effect of the
 first request.</p>
 <h2 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">&para;</a></h2>
-<p>The three servers differ in where their plugin settings come from — check each
+<p>The three servers differ in where their plugin settings come from. Check each
 server's own page before assuming <code>mycroft.conf</code> applies:</p>
 <ul>
 <li>
 <p>The <strong>TTS server</strong> reads the <code>tts</code> section of <code>mycroft.conf</code>, keyed by plugin
-  id — mount the file read-only:</p>
+  id. Mount the file read-only:</p>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nt">volumes</span><span class="p">:</span>
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./mycroft.conf:/home/ovos/.config/mycroft/mycroft.conf:ro</span>
 </span></code></pre></div>
 </li>
 <li>
 <p>The <strong>STT server</strong> selects and configures its STT plugin through CLI flags
-  alone — the <code>stt</code> section of <code>mycroft.conf</code> is not read — but its
+  alone. The <code>stt</code> section of <code>mycroft.conf</code> is not read. Its
   audio/utterance transformer chains and default <code>lang</code> still come from
   <code>mycroft.conf</code> (<a href="../stt-server/">STT Server</a>).</p>
 </li>
@@ -1669,7 +1669,7 @@ server's own page before assuming <code>mycroft.conf</code> applies:</p>
   <code>mycroft.conf</code> (<a href="../translate-server/">Translate Server</a>).</li>
 </ul>
 <p>A settings block placed in a section a service does not read is ignored
-silently — the service starts, answers requests, and runs on defaults while
+silently. The service starts, answers requests, and runs on defaults while
 appearing configured. See <a href="../config-all-keys/">All Configuration Keys</a> for the
 section each plugin type reads.</p>
 <p>Verify a config applied by observing behaviour, not by reading the file back.
@@ -1692,7 +1692,7 @@ are two different claims.</p>
 also exists as a plugin that runs directly on the device with no network at all:
 <code>phoonnx</code> for TTS, <code>onnx-asr</code> for STT, and <code>linguonnx</code> for translation are the
 same code the servers wrap. A server is worth running when several devices
-should share one machine's CPU and one copy of the models — not by default.</p>
+should share one machine's CPU and one copy of the models, not by default.</p>
 <p><strong>Read next:</strong> <a href="../server-compat-layers/">Server Compatibility Layers</a></p>
 <p><strong>Related:</strong> <a href="../stt-server/">STT Server</a> · <a href="../tts-server/">TTS Server</a> · <a href="../translate-server/">Translate Server</a> · <a href="../production-overview/">Production Overview</a></p>
 

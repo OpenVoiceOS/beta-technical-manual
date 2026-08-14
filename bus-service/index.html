@@ -1892,7 +1892,7 @@
 </div>
 <details class="info">
 <summary>📐 Formal specification</summary>
-<p>The <code>{type, data, context}</code> envelope, the <code>source</code>/<code>destination</code> routing keys, the <code>forward</code>/<code>reply</code>/<code>response</code> derivations, and the session carrier that rides in every message are all normative. See <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/msg-1.md">OVOS-MSG-1 — Bus Message</a></strong>, <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/session-1.md">OVOS-SESSION-1 — Session Carrier</a></strong>, <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/session-2.md">OVOS-SESSION-2 — Session Lifecycle</a></strong>, and <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/bridge-1.md">OVOS-BRIDGE-1 — Bus Bridge &amp; Opaque Relay</a></strong> (how satellites relay messages across a <a href="../hivemind-agents/">HiveMind</a> mesh), plus the <a href="../architecture-specs/">spec index</a>. This page describes the reference implementation; where it diverges from the spec, the spec wins.</p>
+<p>The <code>{type, data, context}</code> envelope, the <code>source</code>/<code>destination</code> routing keys, the <code>forward</code>/<code>reply</code>/<code>response</code> derivations, and the session carrier that rides in every message are all normative. See <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/msg-1.md">OVOS-MSG-1 — Bus Message</a></strong>, <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/session-1.md">OVOS-SESSION-1 — Session Carrier</a></strong>, <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/session-2.md">OVOS-SESSION-2 — Session Lifecycle</a></strong>, and <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/bridge-1.md">OVOS-BRIDGE-1 — Bus Bridge &amp; Opaque Relay</a></strong> (how satellites relay messages across a <a href="../hivemind-agents/">HiveMind</a> mesh), plus the <a href="../architecture-specs/">spec index</a>. This page describes the reference implementation. Where it diverges from the spec, the spec wins.</p>
 </details>
 <p>The <strong>messagebus</strong> is the central nervous system of the OVOS platform. All services communicate by publishing and subscribing to typed <code>Message</code> objects through this central WebSocket broker.</p>
 <p><strong>In plain terms:</strong> every OVOS service (core, audio, listener, GUI) connects to one shared WebSocket. Whatever any service emits, every other service receives. There is no central router deciding who gets what. Services just listen for the message types they care about and ignore the rest.</p>
@@ -1994,7 +1994,7 @@ connect and take part with the same permissions as any other client.</p>
 </tbody>
 </table>
 <p><code>filter</code> / <code>filter_logs</code> are also recognized (code-level defaults in the messagebus event
-handler — <code>filter</code> off, <code>filter_logs</code> <code>["gui.status.request", "gui.page.upload"]</code>) but are not
+handler are <code>filter</code> off, <code>filter_logs</code> <code>["gui.status.request", "gui.page.upload"]</code>) but are not
 part of the shipped <code>mycroft.conf</code> <code>websocket</code> section.</p>
 <div class="admonition danger">
 <p class="admonition-title">Security: the bus has no authentication, keep it local</p>
@@ -2007,7 +2007,7 @@ plugin such as <code>ovos-PHAL-plugin-system</code> is installed and enabled (se
 <li><strong>Keep it bound to localhost</strong> (<code>host: "127.0.0.1"</code>, the shipped default). Only set
   <code>"0.0.0.0"</code> if you fully control the network, and <strong>never port-forward 8181</strong> to the
   internet.</li>
-<li>For <strong>remote access</strong> (satellites, phones, other rooms), don't expose the bus — use
+<li>For <strong>remote access</strong> (satellites, phones, other rooms), do not expose the bus. Use
   <a href="../hivemind-agents/">HiveMind</a>, which adds authentication and encryption on top.</li>
 <li>This is also why the bus is a trust boundary: a malicious skill or plugin on the device
   already has full access, so only install software you trust.</li>
@@ -2015,7 +2015,7 @@ plugin such as <code>ovos-PHAL-plugin-system</code> is installed and enabled (se
   unauthenticated socket on port <code>18181</code>, and messages received there are translated into
   emits on this bus, so it carries the same authority. Like the bus, it ships bound to
   <code>127.0.0.1</code>. Widening <code>gui_websocket.host</code> to <code>0.0.0.0</code> (required for a remote
-  display) exposes that unauthenticated socket to the whole network — keep the loopback
+  display) exposes that unauthenticated socket to the whole network. Keep the loopback
   default unless a remote display needs it, and re-check configs from older installs
   that may still carry a <code>0.0.0.0</code> value.</li>
 </ul>
@@ -2107,7 +2107,7 @@ Tornado closes the connection when a message exceeds this size.</p>
 <p>See <a href="../session/">Bus Session</a> for full <code>Session</code> and <code>SessionManager</code> documentation.</p>
 <hr />
 <h2 id="message-targeting-and-routing">Message Targeting and Routing<a class="headerlink" href="#message-targeting-and-routing" title="Permanent link">&para;</a></h2>
-<p>The bus itself performs no routing — every client receives every message. However, <code>context["source"]</code> and <code>context["destination"]</code> allow applications (notably HiveMind) to implement their own routing logic.</p>
+<p>The bus itself performs no routing. Every client receives every message. However, <code>context["source"]</code> and <code>context["destination"]</code> allow applications (notably HiveMind) to implement their own routing logic.</p>
 <p>The <code>Message</code> object provides the three derivations defined in <a href="https://github.com/OpenVoiceOS/architecture/blob/dev/msg-1.md">OVOS-MSG-1 §5</a> (the spec mandates the resulting message <em>shape</em>, not the method names):</p>
 <ul>
 <li>
@@ -2124,7 +2124,7 @@ Tornado closes the connection when a message exceeds this size.</p>
 <hr />
 <h2 id="key-message-categories">Key Message Categories<a class="headerlink" href="#key-message-categories" title="Permanent link">&para;</a></h2>
 <h3 id="core-intent-pipeline">Core / Intent Pipeline<a class="headerlink" href="#core-intent-pipeline" title="Permanent link">&para;</a></h3>
-<p>Topic names below are the canonical spec names (<a href="https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md">OVOS-PIPELINE-1 §9</a>); the legacy name is shown where current code still emits it. Both names are usable on the wire — see <a href="#namespace-migration">Namespace migration</a> below for how <code>ovos-bus-client</code> bridges the two.</p>
+<p>Topic names below are the canonical spec names (<a href="https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md">OVOS-PIPELINE-1 §9</a>). The legacy name is shown where current code still emits it. Both names are usable on the wire. See <a href="#namespace-migration">Namespace migration</a> below for how <code>ovos-bus-client</code> bridges the two.</p>
 <table>
 <thead>
 <tr>
@@ -2282,7 +2282,7 @@ received a message.</p>
 <hr />
 <h2 id="bus-restart-reconnect-behavior">Bus restart / reconnect behavior<a class="headerlink" href="#bus-restart-reconnect-behavior" title="Permanent link">&para;</a></h2>
 <p>When <code>ovos-messagebus</code> restarts, every connected <code>MessageBusClient</code> detects the drop, backs off,
-and reconnects on its own; messages sent during the outage are lost, not queued. See
+and reconnects on its own. Messages sent during the outage are lost, not queued. See
 <a href="../bus-reconnect/">Bus restart / reconnect behavior</a> for the full mechanics and for how to serve
 the bus over TLS.</p>
 <hr />
@@ -2292,7 +2292,7 @@ the bus over TLS.</p>
 <ul>
 <li><a href="https://github.com/OscillateLabsLLC/ovos-rust-messagebus">OscillateLabsLLC/ovos-rust-messagebus</a>: speaks the same OVOS wire protocol. Build and run it in place of the Python server. See that project's README for build and configuration details.</li>
 </ul>
-<p><strong>In plain terms:</strong> on a stable install, run the default Python (Tornado) server; only reach for the Rust build if profiling shows the bus is a bottleneck.</p>
+<p><strong>In plain terms:</strong> on a stable install, run the default Python (Tornado) server. Only reach for the Rust build if profiling shows the bus is a bottleneck.</p>
 <div class="admonition info">
 <p class="admonition-title">Optional <code>webrockets</code> backend</p>
 <p><code>ovos-messagebus</code> also bundles an optional, higher-throughput <strong>webrockets</strong> backend
@@ -2306,9 +2306,9 @@ the bus over TLS.</p>
 <code>--compare</code>) that pits Tornado, webrockets, and the Rust server against each other. Early
 numbers put webrockets ahead at higher concurrency. On a stable install, stay on the
 default Tornado server unless profiling shows the bus is a bottleneck.</p>
-<p><strong>Known limitations of webrockets today:</strong> no TLS termination at all (see above);
+<p><strong>Known limitations of webrockets today:</strong> no TLS termination at all (see above).
 <code>max_msg_size</code> is silently ignored rather than enforced, so an oversized frame is not
-rejected the way it would be on the Tornado backend; and it does not implement the
+rejected the way it would be on the Tornado backend. It also does not implement the
 <code>MessageBusEventHandler.on()</code> emitter hook that the Tornado backend exposes for embedding
 custom server-side handlers. Treat webrockets as a throughput experiment, not a feature-equal
 drop-in, until these close.</p>
@@ -2323,8 +2323,8 @@ drop-in, until these close.</p>
 <p>When <code>filter</code> is off (the default), the bus never deserializes messages. It emits and re-broadcasts the raw frame as-is. Deserialization only happens in <code>filter</code> mode for the log line. If a frame fails to deserialize there, it is dropped (not logged, not re-broadcast).</p>
 <hr />
 <h2 id="bus-recipes">Bus recipes<a class="headerlink" href="#bus-recipes" title="Permanent link">&para;</a></h2>
-<p>For runnable patterns — connecting and waiting for a response, the <code>ovos-bus-client</code> CLI tools,
-and watching live traffic with <code>ovos-busmon</code> — see <a href="../bus-recipes/">Bus recipes</a>.</p>
+<p>For runnable patterns (connecting and waiting for a response, the <code>ovos-bus-client</code> CLI tools,
+and watching live traffic with <code>ovos-busmon</code>), see <a href="../bus-recipes/">Bus recipes</a>.</p>
 <hr />
 <p>Further reading: <a href="https://blog.openvoiceos.org/posts/2025-10-24-protocol_interoperability">protocol interoperability between OVOS and other assistant frameworks</a>.</p>
 <hr />

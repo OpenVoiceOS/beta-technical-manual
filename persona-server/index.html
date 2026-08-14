@@ -1495,7 +1495,7 @@ SDK. The split is deliberate: this server <em>serves</em> MCP with <code>fastmcp
 consuming another MCP server (like <a href="../tool-plugins/"><code>ovos-mcp-toolbox</code></a>) uses the official
 <code>mcp</code> SDK instead. The two packages diverged because MCP SDK 2.0 removed
 <code>mcp.server.fastmcp.FastMCP</code>, so a server still importing that symbol fails to start on the
-2.x SDK; <code>fastmcp</code> is the maintained standalone project that symbol used to alias.</p>
+2.x SDK. <code>fastmcp</code> is the maintained standalone project that symbol used to alias.</p>
 </div>
 <hr />
 <h2 id="run">Run<a class="headerlink" href="#run" title="Permanent link">&para;</a></h2>
@@ -1552,14 +1552,15 @@ consuming another MCP server (like <a href="../tool-plugins/"><code>ovos-mcp-too
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>ovos-persona-server<span class="w"> </span>--personas-dir<span class="w"> </span>/etc/ovos/personas<span class="w"> </span>--default-persona<span class="w"> </span>assistant<span class="w"> </span>--host<span class="w"> </span><span class="m">0</span>.0.0.0<span class="w"> </span>--port<span class="w"> </span><span class="m">8337</span>
 </span></code></pre></div>
 <p>Every <code>*.json</code> file in the directory loads as its own persona, keyed by its <code>name</code>. A client
-selects which one to talk to with the <code>model</code> field; a request that omits it falls back to
+selects which one to talk to with the <code>model</code> field. A request that omits it falls back to
 <code>--default-persona</code> (or the first persona loaded, if that flag is unset). Serving more than one
-persona is what makes <code>model</code> authoritative: a name that matches none of them is rejected with a
-404, not silently redirected. Both <code>/v1/models</code> (OpenAI-compatible) and <code>/api/tags</code>
+persona is what makes <code>model</code> authoritative. A name that matches none of them is rejected with a
+404, not silently redirected.</p>
+<p>Both <code>/v1/models</code> (OpenAI-compatible) and <code>/api/tags</code>
 (Ollama-compatible) enumerate the loaded personas, so a client can discover the available names
 before picking one.</p>
-<p>The directory must yield at least one persona: startup fails fast with a <code>ValueError</code> rather
-than serving nothing — <code>--personas-dir is not a directory</code> when the path is missing, <code>no *.json
+<p>The directory must yield at least one persona. Startup fails fast with a <code>ValueError</code> rather
+than serving nothing: <code>--personas-dir is not a directory</code> when the path is missing, <code>no *.json
 persona files found</code> when it exists but is empty. Worth knowing before mounting a
 not-yet-populated volume into a container.</p>
 <hr />
@@ -1703,7 +1704,10 @@ not-yet-populated volume into a container.</p>
 mounted as deprecated aliases of <code>/openai/v1/...</code> and <code>/ollama/api/...</code>. Responses on these
 legacy paths carry <code>Deprecation</code> and <code>Link</code> headers pointing at the canonical path.</p>
 <p>There is no authentication. Put the server behind a reverse proxy if it is exposed.</p>
-<p>Every vendor router accepts the usual auth header for that vendor, but silently ignores it: an invalid or missing key does not get rejected with a 401, it is simply not checked. With a <strong>single</strong> loaded persona, every router also accepts a <code>model</code> field in the request body but ignores its value: the loaded persona's own <code>name</code> is always the model identifier returned in the response, regardless of what the client asked for. With <strong>several</strong> personas loaded (<code>--personas-dir</code> or repeated <code>--persona</code> flags), <code>model</code> is authoritative instead — it selects the persona, and on every router except AWS Bedrock an unknown name is rejected with a 404 (see <a href="#serving-multiple-personas-from-one-process">Serving multiple personas</a>). Bedrock is the exception even in multi-persona mode: because a real vendor <code>model_id</code> (like <code>anthropic.claude...</code>) must not be an error there, an unknown name silently falls back to the default persona instead of a 404.</p>
+<p>Every vendor router accepts the usual auth header for that vendor, but silently ignores it. The server does not reject an invalid or missing key with a 401. It simply does not check it.</p>
+<p>With a <strong>single</strong> loaded persona, every router also accepts a <code>model</code> field in the request body but ignores its value. The loaded persona's own <code>name</code> is always the model identifier returned in the response, regardless of what the client asked for.</p>
+<p>With <strong>several</strong> personas loaded (<code>--personas-dir</code> or repeated <code>--persona</code> flags), <code>model</code> is authoritative instead. It selects the persona. On every router except AWS Bedrock, an unknown name is rejected with a 404 (see <a href="#serving-multiple-personas-from-one-process">Serving multiple personas</a>).</p>
+<p>Bedrock is the exception even in multi-persona mode. A real vendor <code>model_id</code> (like <code>anthropic.claude...</code>) must not be an error there, so an unknown name silently falls back to the default persona instead of a 404.</p>
 <table>
 <thead>
 <tr>
@@ -1855,23 +1859,23 @@ configured via environment variables:</p>
 sides of the connection:</p>
 <ul>
 <li><strong>Client-side tools</strong> arrive in the request's OpenAI-shaped <code>tools</code> field. The server never
-  runs these: it relays the model's <code>tool_calls</code> back with <code>finish_reason: "tool_calls"</code>, and the
+  runs these. It relays the model's <code>tool_calls</code> back with <code>finish_reason: "tool_calls"</code>. The
   caller is expected to execute the call itself and reply with a <code>role: "tool"</code> message on the
-  next turn — the normal OpenAI function-calling contract.</li>
+  next turn. This is the normal OpenAI function-calling contract.</li>
 <li><strong>Server-side tools</strong> are the persona's own <a href="../tool-plugins/"><code>ToolBox</code> plugins</a>. The server
-  executes these itself, in a bounded agentic loop: when the model calls one, the server runs it,
+  executes these itself, in a bounded agentic loop. When the model calls one, the server runs it,
   appends the result as a <code>role: "tool"</code> message, and re-invokes the engine, up to
   <code>MAX_TOOL_ITERS</code> (5) rounds before it gives up and returns whatever the last response was.
-  <code>tool_calls</code> for a server-side tool never reach the client — the client was never offered that
+  <code>tool_calls</code> for a server-side tool never reach the client. The client was never offered that
   tool, so it could not run it anyway.</li>
 </ul>
-<p>Both kinds can appear in the same request; the server merges client-supplied specs with the
+<p>Both kinds can appear in the same request. The server merges client-supplied specs with the
 persona's own tool specs before offering them to the model.</p>
 <div class="admonition warning">
 <p class="admonition-title">A name collision is decided in the persona's favor</p>
-<p>Nothing deduplicates the merged tool list by name. If a client sends a tool whose name
-matches one of the persona's <code>ToolBox</code> tools — a generic name like <code>search</code> is enough — the
-persona's tool wins: only one copy of that name is offered to the model, and a call to it
+<p>Nothing deduplicates the merged tool list by name. Take a client that sends a tool whose name
+matches one of the persona's <code>ToolBox</code> tools. A generic name like <code>search</code> is enough. The
+persona's tool wins. Only one copy of that name is offered to the model, and a call to it
 always runs server-side, even though the client believes it owns that tool. The model never
 sees a duplicate name, but the client also never gets a <code>tool_calls</code> response it can act on
 for that name. Give tools specific names to avoid this.</p>
@@ -1930,10 +1934,10 @@ name(s) from the persona's solver config.</p>
 </ul>
 <div class="admonition tip">
 <p class="admonition-title">Why remote MCP only became practical recently</p>
-<p>The official <code>mcp</code> SDK's <code>FastMCP</code> (1.x) enforces DNS-rebinding protection by default: it
+<p>The official <code>mcp</code> SDK's <code>FastMCP</code> (1.x) enforces DNS-rebinding protection by default. It
 only accepts a <code>Host</code> header of <code>127.0.0.1</code> or <code>localhost</code>, so a mounted MCP endpoint answers
-normally on the loopback address and <strong>421 Misdirected Request</strong> through any other domain
-name — no reverse-proxy configuration works around it, because the check runs before the
+normally on the loopback address and returns <strong>421 Misdirected Request</strong> through any other domain
+name. No reverse-proxy configuration works around it, because the check runs before the
 proxy's headers are trusted. <code>fastmcp</code>, the package this server actually serves MCP with,
 does not impose that restriction, which is why proxying <code>/mcp</code> to a real hostname works here.</p>
 </div>
