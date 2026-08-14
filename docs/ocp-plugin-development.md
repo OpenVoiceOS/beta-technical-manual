@@ -125,7 +125,7 @@ extractor = MyServiceExtractor()
 assert extractor.validate_uri("myservice//abc123")
 assert not extractor.validate_uri("https://open.spotify.com/track/xyz")
 stream = extractor.extract_stream("myservice//abc123")
-assert stream and stream.startswith("http")
+assert stream and stream.get("uri", "").startswith("http")
 ```
 
 ## Verify discovery
