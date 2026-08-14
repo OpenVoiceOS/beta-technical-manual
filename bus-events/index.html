@@ -2187,8 +2187,8 @@ status, SEI queries), see
 </tr>
 <tr>
 <td><code>ovos.common_play.search.start</code> / <code>.search.end</code></td>
-<td>out</td>
-<td>Marks the start/end of a search request</td>
+<td>in</td>
+<td>Pipeline plugin brackets a search request; the player uses them to gate busy state</td>
 </tr>
 <tr>
 <td><code>ovos.common_play.announce</code></td>
@@ -2217,8 +2217,8 @@ status, SEI queries), see
 </tr>
 <tr>
 <td><code>ovos.common_play.liked_tracks.play</code></td>
-<td>out</td>
-<td>Play the liked-tracks playlist</td>
+<td>in</td>
+<td>Emitted by the pipeline's favorites intent; no shipped consumer listens to it. Liked-songs playback actually happens through the player's internal liked-songs search provider</td>
 </tr>
 </tbody>
 </table>

@@ -1727,7 +1727,8 @@ before late 2024, check it against this table.</p>
 </tbody>
 </table>
 <p>Migration action:</p>
-<p>Old, before <code>0.1.0</code> — none of these import paths exist any more:</p>
+<p>Old, before <code>0.1.0</code> — none of these imports work any more (the <code>ovos_utils.messagebus</code>
+module still exists as a deprecated shim, but it no longer exports these two functions):</p>
 <!-- docs-check: skip-next -->
 <div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span> <span class="nn">ovos_utils.messagebus</span> <span class="kn">import</span> <span class="n">get_mycroft_bus</span><span class="p">,</span> <span class="n">wait_for_reply</span>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kn">from</span> <span class="nn">ovos_utils.configuration</span> <span class="kn">import</span> <span class="n">read_mycroft_config</span>
@@ -1765,11 +1766,12 @@ before late 2024, check it against this table.</p>
 </tr>
 </tbody>
 </table>
-<p>A follow-up removed the last messagebus shim module entirely: <code>ovos_utils.messagebus</code>
-(a 1-line re-export left behind after 0.1.0) was deleted in <code>9c1fd55</code> (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/304" title="GitHub Issue: TigreGotico/ovos-technical-manual #304">#304</a>,
-2024-11-21, between <code>0.5.0</code> and <code>0.6.0</code>), along with <code>mycroft_bus_client</code>
-isinstance/constructor compatibility inside <code>ovos_utils.fakebus</code>
-(ovos-utils <code>9c1fd55</code>).</p>
+<p>The <code>ovos_utils.messagebus</code> shim module itself had a bumpy exit: deleted in <code>9c1fd55</code>
+(<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/304" title="GitHub Issue: TigreGotico/ovos-technical-manual #304">#304</a>), then restored the same day for backwards compatibility (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/306" title="GitHub Issue: TigreGotico/ovos-technical-manual #306">#306</a>, first shipped in
+<code>0.5.2</code>, with a follow-up in <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/308" title="GitHub Issue: TigreGotico/ovos-technical-manual #308">#308</a>). It still ships as a deprecated re-export of
+<code>dig_for_message</code> / <code>Message</code> / <code>FakeMessage</code> / <code>FakeBus</code> from <code>ovos_utils.fakebus</code>,
+warning on import. The functions shown above (<code>get_mycroft_bus</code>, <code>wait_for_reply</code>) are
+<strong>not</strong> in it: those moved to <code>ovos_bus_client.util</code> for good.</p>
 <hr />
 <p><strong>Read next:</strong> <a href="../updating-from-older-ovos/">Updating From Older OVOS</a>
 <strong>Related:</strong> <a href="../updating-skills/">For Skill Maintainers</a> · <a href="../updating-plugins/">For Plugin Maintainers</a> · <a href="../version-compat-guide/">Version-Compatible Skills &amp; Plugins</a></p>
