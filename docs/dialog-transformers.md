@@ -28,7 +28,7 @@ Dialog transformers run inside the **ovos-audio** service, in the `speak` handli
 
 ## Configuration
 
-To enable dialog transformers, add them to your `mycroft.conf` file under the `dialog_transformers` section:
+To enable dialog transformers, add them to your `mycroft.conf` file under the `dialog_transformers` section. An optional `"order"` list of plugin names in the same section overrides priority ordering entirely: plugins listed there run in that exact order (and are enabled even without their own config entry), while any loaded plugin absent from the list is not run.
 
 ```jsonc
 "dialog_transformers": {
@@ -214,13 +214,14 @@ After installation, add your transformer to the `mycroft.conf`:
 
 ### Test it without OVOS
 
-`DialogTransformer` subclasses are plain classes, so a unit test needs no bus and no
-`Configuration`:
+`DialogTransformer` subclasses are plain classes, so a unit test needs no bus. Pass an
+explicit `config` though: when it is omitted, the base `__init__` reads the plugin's section
+from the `Configuration()` singleton, which touches the on-disk config layers:
 
 ```python
 from my_module import MyCustomTransformer
 
-transformer = MyCustomTransformer()
+transformer = MyCustomTransformer(config={})
 dialog, context = transformer.transform("hello world")
 assert dialog == "HELLO WORLD"
 ```

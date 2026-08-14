@@ -94,7 +94,7 @@ best = engine.select_answer("play bohemian rhapsody", candidates)
   "intents": {
     "ovos-common-query-pipeline-plugin": {
       "min_self_confidence": 0.5,
-      "min_reranker_score": 0.5,
+      "min_reranker_score": 0.2,
       "reranker": "<your-reranker-plugin>",
       "<your-reranker-plugin>": {}
     }

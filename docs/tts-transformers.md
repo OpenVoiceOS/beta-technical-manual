@@ -202,13 +202,14 @@ After installation, add your transformer to the `mycroft.conf`:
 
 ### Test it without OVOS
 
-`TTSTransformer` subclasses are plain classes, so a unit test needs no bus and no
-`Configuration`:
+`TTSTransformer` subclasses are plain classes, so a unit test needs no bus. Pass an
+explicit `config` though: when it is omitted, the base `__init__` reads the plugin's section
+from the `Configuration()` singleton, which touches the on-disk config layers:
 
 ```python
 from my_module import MyCustomTTSTransformer
 
-transformer = MyCustomTTSTransformer()
+transformer = MyCustomTTSTransformer(config={})
 wav_path, context = transformer.transform("/tmp/speech.wav")
 assert wav_path == "/tmp/speech.wav"
 ```

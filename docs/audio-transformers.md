@@ -276,13 +276,14 @@ Add your transformer to `mycroft.conf`:
 
 ### Test it without OVOS
 
-`AudioTransformer` subclasses are plain classes, so a unit test needs no bus and no
-`Configuration`:
+`AudioTransformer` subclasses are plain classes, so a unit test needs no bus. Pass an
+explicit `config` though: when it is omitted, the base `__init__` reads the plugin's section
+from the `Configuration()` singleton, which touches the on-disk config layers:
 
 ```python
 from my_module import MyCustomAudioTransformer
 
-transformer = MyCustomAudioTransformer()
+transformer = MyCustomAudioTransformer(config={"sample_rate": 16000})
 audio_data, context = transformer.transform(b"\x00\x01")
 assert audio_data == b"\x00\x01"
 ```

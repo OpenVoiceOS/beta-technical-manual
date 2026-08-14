@@ -173,14 +173,15 @@ Like other transformer types, intent transformers get the messagebus attached (`
 
 ### Test it without OVOS
 
-`IntentTransformer` subclasses are plain classes, so a unit test needs no bus and no
-`Configuration`:
+`IntentTransformer` subclasses are plain classes, so a unit test needs no bus. Pass an
+explicit `config` though: when it is omitted, the base `__init__` reads the plugin's section
+from the `Configuration()` singleton, which touches the on-disk config layers:
 
 ```python
 from my_module import MyCustomTransformer
 from ovos_plugin_manager.templates.pipeline import IntentHandlerMatch
 
-transformer = MyCustomTransformer()
+transformer = MyCustomTransformer(config={})
 match = IntentHandlerMatch(match_type="my_skill:intent", match_data={},
                            skill_id="my_skill", utterance="hello")
 result = transformer.transform(match)

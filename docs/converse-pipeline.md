@@ -24,7 +24,7 @@ The **Converse Pipeline** in **OpenVoiceOS (OVOS)** manages active conversationa
     |---|---|
     | `session.converse_handlers` — the recency-ordered eligibility list the plugin polls | `Session.active_skills` |
     | `session.response_mode` `{skill_id, expires_at}` — the single-shot response window for `get_response` | per-session `UtteranceState.RESPONSE` lock |
-    | poll round-trip `<skill_id>.converse.ping` / `.pong` (non-dispatch, dotted form) | `{skill_id}.converse.ping` / `skill.converse.pong`, dispatch via `converse:skill` → `{skill_id}.converse.request` |
+    | poll round-trip `<skill_id>.converse.ping` / `.pong` (non-dispatch, dotted form) | since ovos-core 3.0.5a1, a broadcast `ovos.converse.ping` (OVOS-CONVERSE-1 §4.2) is emitted alongside a legacy per-skill `{skill_id}.converse.ping`, and pongs are heard on both `ovos.converse.pong` and `skill.converse.pong`; dispatch via `converse:skill` → `{skill_id}.converse.request` |
     | reserved-name dispatch `<skill_id>:converse` / `<skill_id>:response` | `converse:skill` handler |
 
     The mechanics below describe the current code. The spec names are the target. Note that the two lists are distinct in the spec: `converse_handlers` (converse eligibility) is drained independently of `active_handlers` (the stop cascade's recency record, PIPELINE-1 §7.1).
@@ -125,16 +125,18 @@ sequenceDiagram
     participant S2 as Next active skill
 
     O->>C: converse stage hit
-    C->>S1: <skill_id>.converse.ping
-    S1-->>C: skill.converse.pong (can_handle)
-    C->>S2: <skill_id>.converse.ping
-    S2-->>C: skill.converse.pong (can_handle)
+    C-->>S1: ovos.converse.ping (broadcast)
+    C-->>S2: ovos.converse.ping (broadcast)
+    C->>S1: <skill_id>.converse.ping (legacy, per skill)
+    C->>S2: <skill_id>.converse.ping (legacy, per skill)
+    S1-->>C: ovos.converse.pong (can_handle)
+    S2-->>C: ovos.converse.pong (can_handle)
     C->>S1: {skill_id}.converse.request (first willing skill)
     S1-->>C: converse() returns True
     C-->>O: utterance consumed, skill reactivated
 ```
 
-*Diagram: the orchestrator hits the converse stage, ConverseService pings each active skill in priority order for a pong, then sends a converse request to the first willing skill, ending with the utterance consumed and that skill reactivated.*
+*Diagram: the orchestrator hits the converse stage, ConverseService polls the active skills (one broadcast ping plus a legacy per-skill ping each), collects pongs, then sends a converse request to the first willing skill, ending with the utterance consumed and that skill reactivated.*
 
 1. `converse` stage is hit in the pipeline
 
@@ -142,7 +144,7 @@ sequenceDiagram
 2. `ConverseService.match()` iterates active skills in priority order
 
 
-3. It first pings each active skill via `{skill_id}.converse.ping` and waits up to `0.5s` for `skill.converse.pong` acknowledgements (`can_handle`) to learn which skills are willing to converse. Each poll round is correlated by `context.utterance_id` (a per-utterance uuid the orchestrator stamps per OVOS-PIPELINE-1 §9.1.1, propagated by `Message.reply`/`forward`): a pong carrying a different `utterance_id` belongs to an earlier round and is discarded, so a slow skill's stale answer can never decide the wrong round
+3. It first polls the active skills: since ovos-core 3.0.5a1 it emits one broadcast `ovos.converse.ping` (OVOS-CONVERSE-1 §4.2) plus a legacy per-skill `{skill_id}.converse.ping`, and waits up to `0.5s` for acknowledgements on `ovos.converse.pong` or the legacy `skill.converse.pong` (`can_handle`) to learn which skills are willing to converse. Each poll round is correlated by `context.utterance_id` (a per-utterance uuid the orchestrator stamps per OVOS-PIPELINE-1 §9.1.1, propagated by `Message.reply`/`forward`): a pong carrying a different `utterance_id` belongs to an earlier round and is discarded, so a slow skill's stale answer can never decide the wrong round
 
 
 4. The first willing skill (highest priority) is matched; the actual dispatch is sent as `{skill_id}.converse.request` (emitted by the `converse:skill` handler)

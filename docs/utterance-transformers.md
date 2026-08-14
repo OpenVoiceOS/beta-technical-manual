@@ -28,7 +28,7 @@ Utterance transformers register under the `opm.transformer.text` entry-point gro
 
 ## Configuration
 
-A transformer is only loaded if its plugin name appears under the `utterance_transformers` section of your `mycroft.conf`; an empty `{}` is enough to enable it. Set `"active": false` to load-skip it. When several are active they run sorted by `priority` (lowest first), each operating on the output of the previous.
+A transformer is only loaded if its plugin name appears under the `utterance_transformers` section of your `mycroft.conf`; an empty `{}` is enough to enable it. Set `"active": false` to load-skip it. When several are active they run sorted by `priority` (lowest first), each operating on the output of the previous. An optional `"order"` list of plugin names in the same section overrides priority ordering entirely: plugins listed there run in that exact order (and are enabled even without their own config entry), while any loaded plugin absent from the list is not run.
 
 ```jsonc
 "utterance_transformers": {
@@ -328,13 +328,14 @@ After installation, add your transformer to the `mycroft.conf`:
 
 ### Test it without OVOS
 
-`UtteranceTransformer` subclasses are plain classes, so a unit test needs no bus and
-no `Configuration`:
+`UtteranceTransformer` subclasses are plain classes, so a unit test needs no bus. Pass an
+explicit `config` though: when it is omitted, the base `__init__` reads the plugin's section
+from the `Configuration()` singleton, which touches the on-disk config layers:
 
 ```python
 from my_module import MyCustomTransformer
 
-transformer = MyCustomTransformer()
+transformer = MyCustomTransformer(config={})
 utterances, context = transformer.transform(["Hello World"])
 assert utterances == ["hello world"]
 ```
