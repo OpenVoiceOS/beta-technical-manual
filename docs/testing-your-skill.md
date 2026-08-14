@@ -299,6 +299,21 @@ live = SessionManager.sessions[my_session.session_id]
 bus.emit(make_utterance_message("yes", session=live))
 ```
 
+## An observer on the skill's own FakeBus only hears one spelling
+
+!!! note "Subscribe to the canonical intent topic"
+    A `FakeBus` models **one** bus connection, the same as a single real
+    `MessageBusClient`. It carries the intent-topic bridge (the `.intent`-suffix
+    compatibility described in [Bus Namespace Migration](bus-namespace-migration.md#intent-dispatch-topics-the-intent-suffix-is-gone)),
+    so within one connection only one spelling of a dispatch topic is
+    delivered, never both. If your test attaches an observer to the same
+    `FakeBus` the skill under test uses, that observer is not a second
+    connection. It shares the guard with the skill's own subscriptions, so it
+    must subscribe to the canonical topic,
+    `ovos_spec_tools.intent_topics.canonical_intent_topic(...)`, rather than
+    assume it will see the legacy `.intent`-suffixed form as well. A separate
+    real bus connection would hear both spellings; a shared `FakeBus` does not.
+
 ## Step 6: Wire it into CI
 
 Add a workflow that runs the test suite on every pull request:

@@ -19,6 +19,15 @@
 
     This page is about the third (and the field that holds it). It is not `Message.context`, and a context entry is not a `Match.slot`. CONTEXT-1 §7's context-supplied-slot rule is the bridge: when a `requires_context` key also names a slot, its value fills that slot if the utterance did not. This is exactly the "remember which person" mechanism below.
 
+    **A capped store.** The orchestrator SHOULD enforce a maximum live-entry count per session
+    (CONTEXT-1 §2, `DEFAULT_MAX_ENTRIES = 1024` in `ovos-spec-tools`), evicting the entry
+    closest to natural expiry when a write would exceed it. This is a safety bound, not a
+    limit a skill author needs to plan around.
+
+    **When context and the utterance both fill a slot, the utterance wins.** CONTEXT-1 §7 only
+    fills a slot from context when the utterance itself left it empty; a value the matcher
+    already extracted from what the user said is never overridden by a stored context entry.
+
 Conversational context makes voice interactions feel more natural. The assistant keeps track of the subject you are discussing, so you do not have to repeat it.
 
 **What works in a skill today**: gate a follow-up with a blocking prompt, `ask_yesno()` /
@@ -316,7 +325,9 @@ CONTEXT-1's declarative `requires_context` / `excludes_context` gate (above) exp
 !!! note "Both spellings are written, with one decay policy"
     `set_context` writes into the session per CONTEXT-1 §5.0: the mutation lands on the
     current handler's session directly, and the legacy `add_context` bus message is also
-    emitted as a compat dual-write for pre-§5.0 cores. The core writes **two** entries:
+    emitted as a compat dual-write for pre-§5.0 cores. Because that write lands on the live
+    session first, context set inside a handler is visible to the dispatch that immediately
+    follows it, in the same handler invocation, with no race. The core writes **two** entries:
     the legacy munged `skillidkey` spelling and the resolved `<skill_id>:<key>` spelling
     the declarative gate looks up. One computed `expires_at` applies to both, so
     `set_context` entries decay normally (`context.timeout`, minutes, default `2`) and a

@@ -116,18 +116,35 @@ class TomatoSkill(OVOSSkill):
 ```
 
 Now, we can say things like "do you like greenish tomatoes?" and it will tag type as
-`"greenish"`. However, if we say "do you like eating tomatoes?", the phrase will not match,
-since `"eating"` is not included in our `type.entity` file.
+`"greenish"`. If we say "do you like eating tomatoes?" instead, `"eating"` is not in our
+`type.entity` file, so the match scores lower, not zero. See the warning below for what
+that means in practice.
 
-!!! tip "An open `{slot}` is a wildcard surface, not a closed set"
-    Even backed by an `.entity` file, `{type}` trains Padatious's neural matcher on those
-    samples — it does not validate the match against them at request time the way an Adapt
-    `.voc` keyword does. An unread, wide-open `{slot}` still generalizes to nearby wording the
-    file never listed. If what you actually want is a small, fixed, closed set of surface
-    words — a strict "must be exactly one of these" — write them as inline alternation instead
-    of a slot: `(red | green | yellow)` rather than `{type}`. Reserve `{slot}` for values you
-    intend to *read* out of `message.data` in the handler; if the handler never consumes the
-    captured value, it should probably not be a slot at all.
+!!! tip "An `.entity` file is a scoring hint, not a closed vocabulary"
+    Per [OVOS-INTENT-1 §5.4](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-1.md),
+    an `.entity` file is a set of training hints, not an allow-list. Padatious trains its
+    neural matcher on those example values and uses them to **score** a candidate slot fill:
+    a value in the file is treated as full confidence, and a value outside the file still
+    matches, only at a lower, floored confidence. An engine is required to keep out-of-list
+    candidates matchable; it must never treat the file as exhaustive. If what you actually
+    want is a small, fixed, closed set of surface words — a strict "must be exactly one of
+    these" — write them as inline alternation instead of a slot: `(red | green | yellow)`
+    rather than `{type}`. Reserve `{slot}` for values you intend to *read* out of
+    `message.data` in the handler; if the handler never consumes the captured value, it
+    should probably not be a slot at all.
+
+!!! warning "Out-of-list matches are invisible on a default install"
+    In `ovos-padatious-pipeline-plugin` (2.0.3a1+), an out-of-list value is floored at
+    `ENTITY_HINT_FLOOR = 0.8` rather than collapsing the candidate, and a listed value scores
+    near-identity from `0.9` up. That floor lands squarely in the plugin's own
+    **medium**-confidence band (`conf_med = 0.8`, `conf_high = 0.95` by default), well below
+    `conf_high`. The stock `mycroft.conf` pipeline only enables
+    `ovos-padatious-pipeline-plugin-high`, not the medium or low stages, so on a default
+    install an out-of-list value simply produces no match at all — the medium-confidence
+    result exists internally but nothing in the default pipeline reads it. Enabling
+    `ovos-padatious-pipeline-plugin-medium` in `pipeline` is what would make those matches
+    visible. Whether the default pipeline should change to include it is an open decision,
+    not something already shipped.
 
 ### Number matching
 
