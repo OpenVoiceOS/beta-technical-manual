@@ -1783,7 +1783,7 @@ and guidance on which class to pick, see <a href="../skill-classes/">Skill Class
 <p>Additional bus events registered:</p>
 <ul>
 <li>
-<p><code>{skill_id}.converse.ping</code>: capability advertisement</p>
+<p><code>{skill_id}.converse.ping</code>: capability advertisement (plus the broadcast <code>ovos.converse.ping</code>, answered only when the skill is named in the session's <code>active_handlers</code>, since ovos-workshop 9.4.0a1)</p>
 </li>
 <li>
 <p><code>{skill_id}.converse.request</code>: converse request from pipeline</p>

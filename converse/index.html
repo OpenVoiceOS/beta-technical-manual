@@ -1652,8 +1652,9 @@ the same handler? You don't need <code>converse()</code> at all — use <code>as
     participant S as Skill (active)
     participant O as Orchestrator
     U-&gt;&gt;P: new utterance
-    P-&gt;&gt;S: &lt;skill_id&gt;.converse.ping
-    S--&gt;&gt;P: skill.converse.pong
+    P--&gt;&gt;S: ovos.converse.ping (broadcast)
+    P-&gt;&gt;S: &lt;skill_id&gt;.converse.ping (legacy, per skill)
+    S--&gt;&gt;P: ovos.converse.pong (or legacy skill.converse.pong)
     alt skill claims
         P-&gt;&gt;O: Match(intent_name=converse)
         O-&gt;&gt;S: dispatch match_type=converse:skill
