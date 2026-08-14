@@ -100,7 +100,7 @@ pip install hivemind-bus-client   # repo name is hivemind-websocket-client
 hivemind-client set-identity --key <access_key> --password <password> --host <server>
 ```
 
-Use the access key and password printed by `add-client` in step 1 — `set-identity` needs at
+Use the access key and password printed by `add-client` in step 1. `set-identity` needs at
 least one of `--key`, `--password` or `--siteid`.
 
 After `set-identity`, clients (and the [solver](#using-hivemind-as-a-solver) below) can connect
@@ -200,7 +200,7 @@ enforced per message type. The
 [Security & Permissions community docs](https://jarbashivemind.github.io/HiveMind-community-docs/concepts/security/)
 cover the model and the admin CLI. One OVOS-side caveat: the skill/intent blacklist verbs
 (`blacklist-skill`, `blacklist-intent`, and their allow counterparts) only write client
-metadata — enforcing them requires the `OVOSAgentPolicy` plugin (from
+metadata. Enforcing them requires the `OVOSAgentPolicy` plugin (from
 `hivemind-ovos-agent-plugin`) in the server's policy chain. The CLI verbs alone block
 nothing without it.
 
