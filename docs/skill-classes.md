@@ -68,7 +68,7 @@ OVOSSkill(
     name: str = None,          # DEPRECATED, use skill_id
     bus: MessageBusClient = None,
     resources_dir: str = None,
-    settings: dict = None,     # initial default settings
+    settings: JsonStorage = None,  # settings object, else loaded from the skill config path
     gui: GUIInterface = None,
     skill_id: str = "",        # set by SkillLoader
 )

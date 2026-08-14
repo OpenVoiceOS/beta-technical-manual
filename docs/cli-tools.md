@@ -32,7 +32,7 @@ Shipped by **[`ovos-config`](config.md)**. Inspect and edit the layered
 | `ovos-config show` | Print the merged configuration as a table. |
 | `ovos-config get -k <key>` | Read the value(s) at a key or key path (e.g. `-k /tts/module`). A loose key name lists every match. |
 | `ovos-config set -k <key> -v <value>` | Write a value into the user configuration. Omit `-v` to be prompted (useful when the key is ambiguous). |
-| `ovos-config autoconfigure -l <lang>` | Pick sensible default STT/TTS plugins for a language. `--lang`/`-l` is required. Select `--online`/`-on`, `--offline`/`-off`, or `--hybrid`/`-hy` (offline TTS + online STT: the default when none is given). Optionally add `--male`/`-m` or `--female`/`-f` for the TTS voice. TTS is left unconfigured if neither is passed. |
+| `ovos-config autoconfigure -l <lang>` | Pick sensible default STT/TTS plugins for a language. `--lang`/`-l` is required. Select `--online`/`-on`, `--offline`/`-off`, or `--hybrid`/`-hy` (offline TTS + online STT: the default when none is given). Optionally add `--male`/`-m` or `--female`/`-f` for the TTS voice (TTS is left unconfigured if neither is passed), `--platform`/`-p` to optimize for a device (`rpi3`/`rpi4`/`rpi5`/`linux`/`mac`/`termux`), or `--gpu`/`-g` for GPU plugin variants (offline only, not on Raspberry Pi). |
 | `ovos-config telemetry --enable` / `--disable` | Opt in or out of anonymous intent telemetry. |
 
 `ovos-config autoconfigure --help` is the recommended first stop after an install to set
