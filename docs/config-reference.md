@@ -179,7 +179,7 @@ itself, a separate concern from the `speech_begin`/`silence_end` timing above.
 | Key | Default | Description |
 |---|---|---|
 | `logging.log_level` | `"INFO"` | Global log level. |
-| `logging.logs.path` | `"stdout"` | Log directory. Set to `"stdout"` to log to console only. |
+| `logging.logs.path` | `~/.local/state/mycroft/` | Log directory (the XDG state path when unset). Set to `"stdout"` to log to console only. |
 | `logging.logs.max_bytes` | `50000000` | Max log file size, in bytes, before rotation. |
 | `logging.logs.backup_count` | `3` | Number of rotated log files to keep. |
 | `logging.<service_name>` | (none) | A section named after a service (for example `logging.audio`) overrides the global `log_level` and `logs` settings for that service only. |
