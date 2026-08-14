@@ -1284,21 +1284,6 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Deployment patterns">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#store-and-forward-mail-between-offline-peers-rendezvous" class="md-nav__link">
-    <span class="md-ellipsis">
-      Store-and-forward mail between offline peers (rendezvous)
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
         <li class="md-nav__item">
@@ -1546,21 +1531,6 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Deployment patterns">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#store-and-forward-mail-between-offline-peers-rendezvous" class="md-nav__link">
-    <span class="md-ellipsis">
-      Store-and-forward mail between offline peers (rendezvous)
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
         <li class="md-nav__item">
@@ -1667,9 +1637,9 @@ You can swap implementations without touching the rest:</p>
 </span></code></pre></div>
 <p>This writes the client to the server's credentials database (under
 <code>xdg_data_home()/hivemind-core</code>), separate from the server config at
-<code>~/.config/hivemind-core/server.json</code>. To rename a client later, run
-<code>hivemind-core rename-client &lt;node_id&gt; --name &lt;new_name&gt;</code>. <code>&lt;node_id&gt;</code> accepts either the
-numeric id or the access key, and <code>--name</code> is required.</p>
+<code>~/.config/hivemind-core/server.json</code>. The
+<a href="https://jarbashivemind.github.io/HiveMind-community-docs/">community docs</a> cover the rest
+of the admin CLI.</p>
 <p><strong>2. Start the server:</strong></p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>hivemind-core<span class="w"> </span>listen<span class="w">           </span><span class="c1"># start listening for HiveMind connections</span>
 </span></code></pre></div>
@@ -1683,10 +1653,8 @@ issued in step 1. This step makes everything else work:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>pip<span class="w"> </span>install<span class="w"> </span>hivemind-bus-client<span class="w">   </span><span class="c1"># repo name is hivemind-websocket-client</span>
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>hivemind-client<span class="w"> </span>set-identity<span class="w"> </span>--key<span class="w"> </span>&lt;access_key&gt;<span class="w"> </span>--password<span class="w"> </span>&lt;password&gt;<span class="w"> </span>--host<span class="w"> </span>&lt;server&gt;
 </span></code></pre></div>
-<p>Bare <code>hivemind-client set-identity</code> with no flags raises a <code>ValueError</code>. It needs at least
-one of <code>--key</code>, <code>--password</code> or <code>--siteid</code> (<code>--host</code> alone does not satisfy the check, even
-though the error message mentions it). Use the access key and password printed by
-<code>add-client</code> in step 1.</p>
+<p>Use the access key and password printed by <code>add-client</code> in step 1 — <code>set-identity</code> needs at
+least one of <code>--key</code>, <code>--password</code> or <code>--siteid</code>.</p>
 <p>After <code>set-identity</code>, clients (and the <a href="#using-hivemind-as-a-solver">solver</a> below) can connect
 without being handed connection details each time.</p>
 <p><strong>4. Verify the satellite actually connected.</strong> Run this on the client after <code>set-identity</code>:</p>
@@ -1752,20 +1720,14 @@ sentinel.</p>
 <p>This split is the real "voice satellite" story: cheap devices listen and speak, and the server thinks.</p>
 <hr />
 <h2 id="permissions-access-control">Permissions &amp; access control<a class="headerlink" href="#permissions-access-control" title="Permanent link">&para;</a></h2>
-<p>HiveMind is <strong>deny-by-default</strong>: a client may only do what it has been explicitly granted.
-<code>hivemind-core</code> enforces this at the message-type level with a <code>PolicyChain</code> of pluggable
-<code>PolicyPlugin</code>s, including <code>MessageTypeACLPolicy</code>, that checks every inbound message. Its
-admin CLI manages this, including:</p>
-<ul>
-<li><code>add-client</code> / <code>list-clients</code> / <code>delete-client</code>: manage who may connect.</li>
-<li><code>allow-msg</code> / <code>blacklist-msg</code>: allow or block specific bus message types per client.</li>
-<li><code>make-admin</code> / <code>revoke-admin</code>, <code>allow-escalate</code> / <code>allow-propagate</code>: elevate or restrict a client.</li>
-<li><code>blacklist-skill</code> / <code>allow-skill</code>, <code>blacklist-intent</code> / <code>allow-intent</code>: stop or re-allow a
-  client from reaching specific skills or intents. These verbs only write <code>skill_blacklist</code> and
-  <code>intent_blacklist</code> client metadata. Enforcing them against skill or intent IDs requires the
-  <code>OVOSAgentPolicy</code> plugin (from <code>hivemind-ovos-agent-plugin</code>) to be present in the server's
-  policy chain. The CLI verbs alone block nothing without it.</li>
-</ul>
+<p>HiveMind is <strong>deny-by-default</strong>: a client may only do what it has been explicitly granted,
+enforced per message type. The
+<a href="https://jarbashivemind.github.io/HiveMind-community-docs/concepts/security/">Security &amp; Permissions community docs</a>
+cover the model and the admin CLI. One OVOS-side caveat: the skill/intent blacklist verbs
+(<code>blacklist-skill</code>, <code>blacklist-intent</code>, and their allow counterparts) only write client
+metadata — enforcing them requires the <code>OVOSAgentPolicy</code> plugin (from
+<code>hivemind-ovos-agent-plugin</code>) in the server's policy chain. The CLI verbs alone block
+nothing without it.</p>
 <p>This is what makes HiveMind safe to expose to satellites or other users, unlike the plain
 <a href="../persona-server/">persona-server</a>, which is HTTP with no auth.</p>
 <div class="admonition tip">
@@ -1864,15 +1826,6 @@ satellites or untrusted networks.</p>
 <p>⚠️ The plain <a href="../persona-server/"><code>persona-server</code></a> is <strong>HTTP only, not encrypted or
 authenticated</strong>. Keep it on a trusted local network. Use HiveMind for anything remote.</p>
 </blockquote>
-<h3 id="store-and-forward-mail-between-offline-peers-rendezvous">Store-and-forward mail between offline peers (rendezvous)<a class="headerlink" href="#store-and-forward-mail-between-offline-peers-rendezvous" title="Permanent link">&para;</a></h3>
-<p>A hivemind node can act as a dead drop for peers that are never online at the same time
-(<code>hivemind-core</code> 4.13.x): install the optional <code>hivemind-rendezvous</code> package and set
-<code>rendezvous.enabled: true</code> (default off — holding other nodes' mail is a role an operator
-opts into; <code>rendezvous.max_pending_per_mailbox</code> bounds each mailbox, default 256). Each
-mailbox is addressed by the access key the connection authenticated with, never by anything
-in the request, so only a client that proved an identity in the handshake can read that
-identity's mail. Nodes without the role answer <code>not_a_rendezvous_node</code> instead of dropping
-the frame, so a peer can tell "no mail" from "wrong node" and fail over.</p>
 <hr />
 <h2 id="further-reading">Further reading<a class="headerlink" href="#further-reading" title="Permanent link">&para;</a></h2>
 <ul>
