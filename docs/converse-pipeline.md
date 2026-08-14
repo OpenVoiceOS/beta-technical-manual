@@ -142,7 +142,7 @@ sequenceDiagram
 2. `ConverseService.match()` iterates active skills in priority order
 
 
-3. It first pings each active skill via `{skill_id}.converse.ping` and waits up to `0.5s` for `skill.converse.pong` acknowledgements (`can_handle`) to learn which skills are willing to converse
+3. It first pings each active skill via `{skill_id}.converse.ping` and waits up to `0.5s` for `skill.converse.pong` acknowledgements (`can_handle`) to learn which skills are willing to converse. Each poll round is correlated by `context.utterance_id` (a per-utterance uuid the orchestrator stamps per OVOS-PIPELINE-1 §9.1.1, propagated by `Message.reply`/`forward`): a pong carrying a different `utterance_id` belongs to an earlier round and is discarded, so a slow skill's stale answer can never decide the wrong round
 
 
 4. The first willing skill (highest priority) is matched; the actual dispatch is sent as `{skill_id}.converse.request` (emitted by the `converse:skill` handler)

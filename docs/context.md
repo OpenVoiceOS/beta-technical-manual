@@ -78,8 +78,11 @@ Context lives on the per-conversation [Session](session.md), in `Session.intent_
 is **session-scoped**, not a single global store, so concurrent users and devices keep
 separate context.
 
-`Session.context` still resolves, but it is a read-only projection over `intent_context` kept
-for older code, and touching it warns. Write to `intent_context`.
+`Session.context` still resolves as a read/write view projected over `intent_context`, kept
+for older code: reads project from the canonical map and legacy writes
+(`inject_context`, `update_context`, `remove_context`, `clear_context`) fold back into it,
+so old mutation calls still take effect. Touching it warns. New code writes to
+`intent_context` directly.
 
 ---
 

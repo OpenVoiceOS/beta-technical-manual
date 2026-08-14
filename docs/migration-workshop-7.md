@@ -25,7 +25,10 @@ Four major versions of `ovos-workshop` shipped on the same day
 family. If you are jumping from a pre-2025-06 workshop version to anything
 after `7.0.0`, expect all four of these to apply at once.
 
-**v4.0.0: `FallbackSkill.can_answer` becomes abstract.**
+**v4.0.0: `FallbackSkill.can_answer` becomes mandatory.** (At 4.0.0 the base
+implementation raised `NotImplementedError` at runtime; true `abc.ABCMeta` enforcement —
+the skill refusing to load without an implementation — arrived later, in 9.3.9a1. See
+[Fallback Skills](fallbacks.md).)
 
 ```python
 # old: default True if any handler registered, no override needed
