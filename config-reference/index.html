@@ -2039,7 +2039,12 @@ let it initialize.</p>
 <tr>
 <td><code>listener.fake_barge_in</code></td>
 <td><code>true</code></td>
-<td>Mute output during recording.</td>
+<td>Lower playback volume while a recording is in progress (restored afterwards). It does not mute and does not cancel speech.</td>
+</tr>
+<tr>
+<td><code>listener.barge_in_volume</code></td>
+<td><code>30</code></td>
+<td>Volume percentage <code>fake_barge_in</code> lowers to.</td>
 </tr>
 <tr>
 <td><code>listener.recording_timeout</code></td>

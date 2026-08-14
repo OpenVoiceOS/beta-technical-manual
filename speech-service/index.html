@@ -1914,6 +1914,16 @@ useful events for downstream services:</p>
 </tr>
 </tbody>
 </table>
+<div class="admonition note">
+<p class="admonition-title">Whisper-style hallucinations are filtered before emission</p>
+<p>Transcripts that exactly match a known hallucination list are dropped before
+<code>ovos.utterance.handle</code> fires, because Whisper-family STT commonly invents phrases like
+<em>"thanks for watching!"</em> on silent audio. Controlled by <code>listener.filter_hallucinations</code>
+(default <code>true</code>) and the overridable <code>listener.hallucination_list</code>; when every transcript
+is filtered out, the listener treats it as an empty transcription: it emits
+<code>recognizer_loop:speech.recognition.unknown</code>, except in continuous listening mode,
+where empty results are silently ignored.</p>
+</div>
 <p>It also reacts to inbound commands:</p>
 <ul>
 <li><code>ovos.listener.sleep</code> (legacy: <code>recognizer_loop:sleep</code>) suspends capture.</li>
