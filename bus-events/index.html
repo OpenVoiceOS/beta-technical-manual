@@ -1769,7 +1769,7 @@ names where applicable.</p>
 </tr>
 <tr>
 <td><code>ovos.intent.handler.start</code> → <code>ovos.intent.handler.complete</code> / <code>ovos.intent.handler.error</code></td>
-<td>The orchestrator-owned handler-lifecycle trio around the invocation (§8, <strong>not</strong> translator-bridged, see <a href="#legacy-spec-migration">Legacy ↔ spec migration</a>). The skill framework separately emits the legacy <code>mycroft.skill.handler.start</code> / <code>.complete</code> as a private done-signal. There is no legacy <code>.error</code>: the explicit error leg is spec-side only</td>
+<td>The orchestrator-owned handler-lifecycle trio around the invocation (§8, <strong>not</strong> translator-bridged, see <a href="#legacy-spec-migration">Legacy ↔ spec migration</a>). The skill framework separately emits the legacy <code>mycroft.skill.handler.start</code> / <code>.complete</code> / <code>.error</code> trio as a private done-signal, mirroring all three spec legs with the same non-bridged status</td>
 </tr>
 </tbody>
 </table>

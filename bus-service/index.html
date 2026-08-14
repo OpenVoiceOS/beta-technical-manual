@@ -2320,7 +2320,7 @@ drop-in, until these close.</p>
 </span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>       SESSION: {...}
 </span></code></pre></div>
 <p>Messages listed in <code>filter_logs</code> are excluded from the log to reduce noise (default: <code>["gui.status.request", "gui.page.upload"]</code>).</p>
-<p>When <code>filter</code> is off (the default), the bus never deserializes messages. It emits and re-broadcasts the raw frame as-is. Deserialization only happens in <code>filter</code> mode for the log line. If a frame fails to deserialize there, it is dropped (not logged, not re-broadcast).</p>
+<p>When <code>filter</code> is off (the default), the bus never deserializes messages. It emits and re-broadcasts the raw frame as-is. Deserialization only happens in <code>filter</code> mode for the log line. If a frame fails to deserialize there, only the per-message summary log line and the local re-emit are skipped (a "failed to deserialize" debug line appears instead). The raw frame is still broadcast to every client: deserialization failure never blocks fan-out.</p>
 <hr />
 <h2 id="bus-recipes">Bus recipes<a class="headerlink" href="#bus-recipes" title="Permanent link">&para;</a></h2>
 <p>For runnable patterns (connecting and waiting for a response, the <code>ovos-bus-client</code> CLI tools,
