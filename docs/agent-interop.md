@@ -46,7 +46,7 @@ flowchart TD
 
 ```bash
 pip install "ovos-stt-http-server[mcp]"
-ovos-stt-server --engine ovos-stt-plugin-whisper --port 9666
+ovos-stt-server --engine ovos-stt-plugin-whisper --port 8080
 ```
 
 | Endpoint | Method | Description |
@@ -66,7 +66,7 @@ Claude Desktop config:
   "mcpServers": {
     "ovos-stt": {
       "transport": "http",
-      "url": "http://localhost:9666/mcp"
+      "url": "http://localhost:8080/mcp"
     }
   }
 }
@@ -76,7 +76,7 @@ Claude Desktop config:
 
 ```bash
 pip install "ovos-tts-server[mcp]"
-ovos-tts-server --engine ovos-tts-plugin-piper --port 9667 --mcp
+ovos-tts-server --engine ovos-tts-plugin-piper --port 9666 --mcp
 ```
 
 | Endpoint | Method | Description |
@@ -90,17 +90,17 @@ MCP tool: `synthesize`. Parameters: `text` (str), `voice` (str, optional), `lang
 
 ```bash
 # Discover all TTS tools via UTCP
-curl -s http://localhost:9667/utcp | jq '.tools[].name'
+curl -s http://localhost:9666/utcp | jq '.tools[].name'
 
 # Synthesize via HTTP
-curl -s 'http://localhost:9667/v2/synthesize?utterance=hello%20world' -o out.wav
+curl -s 'http://localhost:9666/v2/synthesize?utterance=hello%20world' -o out.wav
 ```
 
 ### Translate Server
 
 ```bash
 pip install "ovos-translate-server[mcp]"
-python -m ovos_translate_server --tx-engine ovos-google-translate-plugin --port 9669
+python -m ovos_translate_server --tx-engine ovos-google-translate-plugin --port 9686
 ```
 
 | Endpoint | Method | Description |
@@ -236,7 +236,7 @@ multiple servers of the same type can run side by side, and a `timeout` (default
   "ovos-utcp-toolbox": {
     "utcp_config": {
       "tool_providers": [
-        {"name": "stt", "provider_type": "http", "url": "http://localhost:9666/utcp"}
+        {"name": "stt", "provider_type": "http", "url": "http://localhost:8080/utcp"}
       ]
     }
   }

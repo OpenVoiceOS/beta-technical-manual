@@ -238,8 +238,9 @@ directory of the repository.
 > `llm.max_tokens`, `llm.temperature`, and `llm.top_p`, are also accepted. A Home Assistant
 > feature also exists, but has no `homeassistant.*` scenario keys: set
 > `features.homeassistant: true` AND export the environment variables
-> `HOMEASSISTANT_URL` and `HOMEASSISTANT_API_KEY` before running the installer,
-> or the integration is enabled with empty settings. **macOS** is supported with `launchd` service management, but only with the
+> `HOMEASSISTANT_URL` and `HOMEASSISTANT_API_KEY` before running the installer.
+> If either variable is empty, the installer silently skips the Home Assistant
+> skill entirely, even with `features.homeassistant: true` set. **macOS** is supported with `launchd` service management, but only with the
 > `virtualenv` method and the `alpha` channel.
 
 > 💡 **Satellite profile.** Deploying `profile: satellite` non-interactively requires a
