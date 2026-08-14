@@ -308,13 +308,15 @@ Wake-word detection can misfire or fail to trigger depending on your microphone,
 
     ### Custom Models
 
-    If the default model is not working well for you, consider training your own precise model. Here are some helpful
-    resources for creating a more tailored solution:
+    If the default model is not working well for you, train your own — but **not a Precise
+    model**: the Precise training tooling is legacy from a defunct upstream, and only the
+    ONNX exports of already-trained models live on. Train an
+    [openWakeWord](https://github.com/dscripka/openWakeWord) or
+    [microWakeWord](https://github.com/kahrendt/microWakeWord) model instead; both train on
+    synthetic speech, so no recording campaign is needed. Helpful resources:
 
     - [Helpful Wake-word Datasets on Hugging Face](https://huggingface.co/collections/Jarbas/wake-word-datasets-672cc275fa4bddff9cf69c39)
     - [Data Collection](https://github.com/secretsauceai/wakeword-data-collector)
-    - [Wake-word Trainer](https://github.com/secretsauceai/precise-wakeword-model-maker)
-    - [precise-lite-trainer Code](https://github.com/OpenVoiceOS/precise-lite-trainer)
     - [Synthetic Data Creation for Wake words](https://github.com/OpenVoiceOS/ovos-ww-auto-synth-dataset)
 
     ### Alternative Wake-word Plugin: Vosk
