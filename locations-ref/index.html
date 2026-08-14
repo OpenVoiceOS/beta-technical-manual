@@ -1792,8 +1792,8 @@ not exist on disk, it falls back to the legacy pre-XDG location <code>~/.mycroft
 <ul>
 <li><code>~/.mycroft/mycroft.conf</code> is in the list but is never loaded. Only <code>find_user_config()</code>
   looks at it.</li>
-<li><code>/etc/xdg/mycroft/mycroft.conf</code> is <strong>not</strong> in the list, but it is loaded, and it wins over
-  the user config.</li>
+<li><code>/etc/xdg/mycroft/mycroft.conf</code> is <strong>not</strong> in the list, but it is loaded — merged just
+  before the user config, so the user's own file wins over it.</li>
 <li>The order differs from the merge: here the remote layer sits fourth (after default, distribution, and system), while
   <code>load_all_configs()</code> merges it second, just above the bundled default.</li>
 <li>The path environment variables below are ignored — the function rebuilds
