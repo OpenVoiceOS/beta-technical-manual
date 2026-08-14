@@ -32,30 +32,18 @@ Lifecycle:
 | Dropped | starting `9396c71` (2023-04-05) | ovos-bus-client's own extraction |
 
 The ecosystem-wide dependency swap landed at `b1a9d39e16` (2023-04-11) in
-`ovos-core`, and matching one-line swaps in `ovos-audio` (`426a48b`),
-`ovos-media` (`426a48b`), and `ovos-messagebus` (`a1bc1c1`), all within
-the same week.
+`ovos-core`, and matching one-line swaps in `ovos-audio` (`426a48b`) and
+`ovos-messagebus` (`a1bc1c1`), all within the same week.
 
-### GUI wire protocol moved to template-based `GUIInterface`
+### GUI wire protocol: template rework in development, nothing shipped
 
-The free-form page/`GUIWidgets` API is replaced by a template wire
-protocol: `gui.value.set` + `gui.page.show` (OVOS-GUI-1 §3-4), with a new
-`PageTemplates` enum and `show_text`/`show_image`/`show_face` helpers. The
-old page/remove primitives became private. `EnclosureAPI` is deprecated in
-favor of `GUIInterface` for visual output.
-
-- Migration: declare a `PageTemplates.*` template and call the matching
-  `show_*` helper instead of pushing a raw QML/page path. Move visual
-  output off `EnclosureAPI` onto `GUIInterface`. Both `GUIInterface` and
-  `EnclosureAPI` are themselves deprecated in favor of
-  `ovos-gui-api-client`.
-Lifecycle:
-
-| Phase | Version | Notes |
-|---|---|---|
-| Active | before `0d145d3` | |
-| Deprecated but functional | through a series of `refactor!:` commits from `59ee94e` (2026-03-12) through `0d145d3` (2026-06-25) | |
-| Dropped | `0d145d3` | classic API becomes private (ovos-bus-client `0d145d3`) |
+A template-based GUI wire protocol (OVOS-GUI-1 §3-4: `gui.value.set` +
+`gui.page.show` with a `PageTemplates` enum and `show_*` helpers) is being
+built on unmerged `ovos-bus-client` branches. None of it is on `dev`: the
+shipping `GUIInterface` and `EnclosureAPI` wire behavior is unchanged, and
+no migration is needed yet. Watch the `ovos-bus-client` release notes
+before depending on either the old primitives staying public or the new
+templates existing.
 
 ### HiveMind agent protocol and messagebus-solver removed from ovos-bus-client
 
@@ -76,7 +64,7 @@ Lifecycle:
 |---|---|---|
 | Active | before `d526e99` | |
 | Deprecated but functional | unverified | |
-| Dropped | `2.0.0` | (ovos-bus-client `d526e99`, #207, 2026-05-18) |
+| Dropped | `2.0.0a1` | (ovos-bus-client `d526e99`, #207, 2026-05-18) |
 
 ### Per-service legacy topic migrations (spec-bus adoption, 2026-06)
 
@@ -87,7 +75,7 @@ out-of-the-box wire behavior is initially unchanged):
 
 | Legacy topic | Spec topic | Landed in |
 |---|---|---|
-| `recognizer_loop:utterance` | `ovos.utterance.handle` (`SpecMessage.UTTERANCE`) | ovos-core `1672e35ed0` (#772/#775) · ovos-dinkum-listener `d9dc04e` (#232) · ovos-simple-listener `b8326fa` (#26) · mycroft-classic-listener `4458a3f` (#23, `1.0.0`) |
+| `recognizer_loop:utterance` | `ovos.utterance.handle` (`SpecMessage.UTTERANCE`) | ovos-core `1672e35ed0` (#772/#775) · ovos-dinkum-listener `d9dc04e` (#232) · ovos-simple-listener `b8326fa` (#26) · mycroft-classic-listener `4458a3f` (#23, `1.0.0a1`) |
 | `mycroft.awoken` | `SpecMessage.LISTENER_AWOKEN` | ovos-dinkum-listener `d9dc04e` · mycroft-classic-listener `4458a3f` |
 | `recognizer_loop:record_begin` / `record_end` | `SpecMessage.LISTENER_RECORD_STARTED` / `_ENDED` | ovos-dinkum-listener `d9dc04e` · mycroft-classic-listener `4458a3f` |
 | `mycroft.mic.listen` | `SpecMessage.MIC_LISTEN` | ovos-dinkum-listener `d9dc04e` · mycroft-classic-listener `4458a3f` |
@@ -116,39 +104,24 @@ Lifecycle:
 branches, not on `dev`: the default has not flipped because the flag has
 not shipped to a stable release yet.
 
-### SESSION-1 spec adoption changes session wire semantics
+### SESSION-1 spec adoption: one shipped change, more in review
 
-`SessionManager` was rebuilt on the `ovos-spec-tools` session registry
-(`b54269c`, 2026-06-29). Three concrete wire/behavior changes to know:
-
-- `get()` no longer reserves the default session id as owner-only: it
-  folds like any other session (SESSION-1 §4).
-- Session expiry (`Session.expired`/`touch_time`/`expiration_seconds`,
-  `prune_sessions`) is not part of SESSION-1 and is deprecation-warned.
-  Stop depending on session TTL/pruning behavior.
-- `SessionManager` now enforces one live `Session` object per id
-  (singleton, `7a2e39f`, #249). Code holding a stale `Session` reference
-  expecting it to stay independent from the manager's canonical instance
-  will observe shared-state changes it did not make.
-- An empty list on a list-valued override field (`pipeline`,
-  `blacklisted_skills`, `blacklisted_intents`) is now **omitted** from
-  `serialize()` output instead of round-tripped as `[]` (`47b0e4a`,
-  2026-07-09). Absence means "use the deployment default." Any bus
-  consumer indexing the raw wire dict (`session["pipeline"]`) instead of
-  going through `Session.deserialize()` must treat a missing key as
-  "deployment default," not as an error.
+Shipped: `SessionManager` enforces one live `Session` object per id
+(singleton, `7a2e39f`, #249). Code holding a stale `Session` reference
+expecting it to stay independent from the manager's canonical instance
+will observe shared-state changes it did not make.
 
 - Migration: read sessions through `Session.deserialize()`/the `Session`
-  class, not by indexing the raw wire dict. Stop relying on
-  `prune_sessions`/session TTL expiry. Treat the default session id like
-  any other session id.
-Lifecycle:
+  class, not by holding raw references or indexing the raw wire dict.
 
-| Phase | Version | Notes |
-|---|---|---|
-| Active | before `b54269c` | |
-| Deprecated but functional | session expiry, from `b54269c` (2026-06-29) | drop version unverified |
-| Dropped | list-omission wire change landed directly at `47b0e4a` (2026-07-09) | deprecated-in-spirit only: no prior wire shape to preserve, this is a new spec adoption |
+Still in review on unmerged `ovos-bus-client` branches (nothing on `dev`
+yet, no migration needed): a rebuild of `SessionManager` on the
+`ovos-spec-tools` session registry, deprecation of session TTL/pruning
+(`prune_sessions`, `Session.expired`), default-session folding per
+SESSION-1 §4, and omitting empty list-valued override fields from
+`serialize()` output. If those land, absence of a key like `pipeline`
+on the wire will mean "deployment default" — going through
+`Session.deserialize()` today keeps you compatible either way.
 
 ### Legacy `mycroft.*`/`recognizer_loop:*` topic bridge scheduled for removal
 
