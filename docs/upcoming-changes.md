@@ -104,8 +104,9 @@ package's first stable 1.0 release.
 
 ## Other changes by repository
 
-Entries here are open PRs that change behavior but don't fit the three
-headline efforts above.
+Entries here are PRs that change behavior but don't fit the three
+headline efforts above. Most are still open; rows marked **merged** have
+already landed on that repo's `dev`.
 
 ### ovos-audio
 
@@ -136,7 +137,7 @@ headline efforts above.
 
 | PR | What it changes | Audience | Breaking | Version |
 |---|---|---|---|---|
-| [#832](https://github.com/OpenVoiceOS/ovos-core/pull/832) | Adds pipeline blacklisting at load time and per session | deployers tuning boot cost and per-session policy | No | 2.6.0 |
+| [#832](https://github.com/OpenVoiceOS/ovos-core/pull/832) | Adds pipeline blacklisting at load time and per session | deployers tuning boot cost and per-session policy | No | 2.6.0a1 (merged, on `dev`) |
 | [#689](https://github.com/OpenVoiceOS/ovos-core/pull/689) | Adds pipeline id and core version to intent metrics | consumers of the intent-metrics telemetry event | No | 2.6.0 |
 
 ### ovos-dinkum-listener
@@ -157,7 +158,7 @@ headline efforts above.
 
 | PR | What it changes | Audience | Breaking | Version |
 |---|---|---|---|---|
-| [#60](https://github.com/OpenVoiceOS/ovos-persona-server/pull/60) | Fixes the `toolbox_id` loader, plugins own their id now | OPM `ToolBox` plugin authors | Framed as a fix, but breaks the constructor contract | 0.13.4 or 0.14.0 |
+| [#60](https://github.com/OpenVoiceOS/ovos-persona-server/pull/60) | Fixes the `toolbox_id` loader, plugins own their id now | OPM `ToolBox` plugin authors | Framed as a fix, but breaks the constructor contract | 0.13.4a1 (merged, on `dev`) |
 | [#38](https://github.com/OpenVoiceOS/ovos-persona-server/pull/38) | Adds an OpenAI-proxy Docker Compose config and docs | deployers wanting a containerized OpenAI-compatible endpoint | No | 0.14.0 |
 
 ### ovos-plugin-manager
