@@ -2175,11 +2175,14 @@ duration expressions like "30 minutes" or "two and a half hours."</p>
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
 </span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="n">duration</span><span class="p">,</span> <span class="n">remainder</span> <span class="o">=</span> <span class="n">extract_duration</span><span class="p">(</span><span class="s2">&quot;It will take about 2 hours and 30 minutes&quot;</span><span class="p">,</span> <span class="n">lang</span><span class="o">=</span><span class="s2">&quot;en&quot;</span><span class="p">)</span>
 </span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="nb">print</span><span class="p">(</span><span class="n">duration</span><span class="p">)</span>   <span class="c1"># timedelta(hours=2, minutes=30)</span>
-</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="nb">print</span><span class="p">(</span><span class="n">remainder</span><span class="p">)</span>  <span class="c1"># &quot;It will take about&quot;</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="nb">print</span><span class="p">(</span><span class="n">remainder</span><span class="p">)</span>  <span class="c1"># &quot;It will take about and&quot;</span>
 </span></code></pre></div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The remainder keeps whatever surrounds the extracted duration phrase verbatim, but a connective word ("and" in English, "y" in Spanish) or comma left stranded between two consumed number groups is stripped along with them. A connector that still joins unconsumed text on either side is left alone: <code>extract_duration("two hours and rest and relax", lang="en")</code> returns remainder <code>"and rest and relax"</code>.</p>
+<p>The remainder keeps whatever surrounds the extracted duration phrase verbatim. That
+includes a connective word ("and" in English, "y" in Spanish) or comma left stranded between two
+consumed number groups, as the example above shows (<code>"It will take about and"</code>). Clean up
+the remainder yourself before you display or re-parse it.</p>
 </div>
 <p><code>extract_duration</code> also accepts two keyword-only arguments, but only for languages on the shared lexicon engine (the yes <code>extract_duration</code> rows above except the standalone <code>ar</code>, <code>ast</code>, <code>kab</code>, <code>fa</code>, <code>sv</code> extractors). Passing them for any other language raises <code>NotImplementedError</code>:</p>
 <ul>
