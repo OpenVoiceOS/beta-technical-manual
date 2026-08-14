@@ -1653,7 +1653,7 @@ issued in step 1. This step makes everything else work:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>pip<span class="w"> </span>install<span class="w"> </span>hivemind-bus-client<span class="w">   </span><span class="c1"># repo name is hivemind-websocket-client</span>
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>hivemind-client<span class="w"> </span>set-identity<span class="w"> </span>--key<span class="w"> </span>&lt;access_key&gt;<span class="w"> </span>--password<span class="w"> </span>&lt;password&gt;<span class="w"> </span>--host<span class="w"> </span>&lt;server&gt;
 </span></code></pre></div>
-<p>Use the access key and password printed by <code>add-client</code> in step 1 — <code>set-identity</code> needs at
+<p>Use the access key and password printed by <code>add-client</code> in step 1. <code>set-identity</code> needs at
 least one of <code>--key</code>, <code>--password</code> or <code>--siteid</code>.</p>
 <p>After <code>set-identity</code>, clients (and the <a href="#using-hivemind-as-a-solver">solver</a> below) can connect
 without being handed connection details each time.</p>
@@ -1725,7 +1725,7 @@ enforced per message type. The
 <a href="https://jarbashivemind.github.io/HiveMind-community-docs/concepts/security/">Security &amp; Permissions community docs</a>
 cover the model and the admin CLI. One OVOS-side caveat: the skill/intent blacklist verbs
 (<code>blacklist-skill</code>, <code>blacklist-intent</code>, and their allow counterparts) only write client
-metadata — enforcing them requires the <code>OVOSAgentPolicy</code> plugin (from
+metadata. Enforcing them requires the <code>OVOSAgentPolicy</code> plugin (from
 <code>hivemind-ovos-agent-plugin</code>) in the server's policy chain. The CLI verbs alone block
 nothing without it.</p>
 <p>This is what makes HiveMind safe to expose to satellites or other users, unlike the plain
