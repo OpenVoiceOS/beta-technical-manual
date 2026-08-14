@@ -1370,9 +1370,9 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#gui-wire-protocol-moved-to-template-based-guiinterface" class="md-nav__link">
+  <a href="#gui-wire-protocol-template-rework-in-development-nothing-shipped" class="md-nav__link">
     <span class="md-ellipsis">
-      GUI wire protocol moved to template-based GUIInterface
+      GUI wire protocol: template rework in development, nothing shipped
     </span>
   </a>
   
@@ -1397,9 +1397,9 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#session-1-spec-adoption-changes-session-wire-semantics" class="md-nav__link">
+  <a href="#session-1-spec-adoption-one-shipped-change-more-in-review" class="md-nav__link">
     <span class="md-ellipsis">
-      SESSION-1 spec adoption changes session wire semantics
+      SESSION-1 spec adoption: one shipped change, more in review
     </span>
   </a>
   
@@ -1668,9 +1668,9 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#gui-wire-protocol-moved-to-template-based-guiinterface" class="md-nav__link">
+  <a href="#gui-wire-protocol-template-rework-in-development-nothing-shipped" class="md-nav__link">
     <span class="md-ellipsis">
-      GUI wire protocol moved to template-based GUIInterface
+      GUI wire protocol: template rework in development, nothing shipped
     </span>
   </a>
   
@@ -1695,9 +1695,9 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#session-1-spec-adoption-changes-session-wire-semantics" class="md-nav__link">
+  <a href="#session-1-spec-adoption-one-shipped-change-more-in-review" class="md-nav__link">
     <span class="md-ellipsis">
-      SESSION-1 spec adoption changes session wire semantics
+      SESSION-1 spec adoption: one shipped change, more in review
     </span>
   </a>
   
@@ -1784,49 +1784,16 @@ Lifecycle:</li>
 </tbody>
 </table>
 <p>The ecosystem-wide dependency swap landed at <code>b1a9d39e16</code> (2023-04-11) in
-<code>ovos-core</code>, and matching one-line swaps in <code>ovos-audio</code> (<code>426a48b</code>),
-<code>ovos-media</code> (<code>426a48b</code>), and <code>ovos-messagebus</code> (<code>a1bc1c1</code>), all within
-the same week.</p>
-<h3 id="gui-wire-protocol-moved-to-template-based-guiinterface">GUI wire protocol moved to template-based <code>GUIInterface</code><a class="headerlink" href="#gui-wire-protocol-moved-to-template-based-guiinterface" title="Permanent link">&para;</a></h3>
-<p>The free-form page/<code>GUIWidgets</code> API is replaced by a template wire
-protocol: <code>gui.value.set</code> + <code>gui.page.show</code> (OVOS-GUI-1 §3-4), with a new
-<code>PageTemplates</code> enum and <code>show_text</code>/<code>show_image</code>/<code>show_face</code> helpers. The
-old page/remove primitives became private. <code>EnclosureAPI</code> is deprecated in
-favor of <code>GUIInterface</code> for visual output.</p>
-<ul>
-<li>Migration: declare a <code>PageTemplates.*</code> template and call the matching
-  <code>show_*</code> helper instead of pushing a raw QML/page path. Move visual
-  output off <code>EnclosureAPI</code> onto <code>GUIInterface</code>. Both <code>GUIInterface</code> and
-  <code>EnclosureAPI</code> are themselves deprecated in favor of
-  <code>ovos-gui-api-client</code>.
-Lifecycle:</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th>Phase</th>
-<th>Version</th>
-<th>Notes</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Active</td>
-<td>before <code>0d145d3</code></td>
-<td></td>
-</tr>
-<tr>
-<td>Deprecated but functional</td>
-<td>through a series of <code>refactor!:</code> commits from <code>59ee94e</code> (2026-03-12) through <code>0d145d3</code> (2026-06-25)</td>
-<td></td>
-</tr>
-<tr>
-<td>Dropped</td>
-<td><code>0d145d3</code></td>
-<td>classic API becomes private (ovos-bus-client <code>0d145d3</code>)</td>
-</tr>
-</tbody>
-</table>
+<code>ovos-core</code>, and matching one-line swaps in <code>ovos-audio</code> (<code>426a48b</code>) and
+<code>ovos-messagebus</code> (<code>a1bc1c1</code>), all within the same week.</p>
+<h3 id="gui-wire-protocol-template-rework-in-development-nothing-shipped">GUI wire protocol: template rework in development, nothing shipped<a class="headerlink" href="#gui-wire-protocol-template-rework-in-development-nothing-shipped" title="Permanent link">&para;</a></h3>
+<p>A template-based GUI wire protocol (OVOS-GUI-1 §3-4: <code>gui.value.set</code> +
+<code>gui.page.show</code> with a <code>PageTemplates</code> enum and <code>show_*</code> helpers) is being
+built on unmerged <code>ovos-bus-client</code> branches. None of it is on <code>dev</code>: the
+shipping <code>GUIInterface</code> and <code>EnclosureAPI</code> wire behavior is unchanged, and
+no migration is needed yet. Watch the <code>ovos-bus-client</code> release notes
+before depending on either the old primitives staying public or the new
+templates existing.</p>
 <h3 id="hivemind-agent-protocol-and-messagebus-solver-removed-from-ovos-bus-client">HiveMind agent protocol and messagebus-solver removed from ovos-bus-client<a class="headerlink" href="#hivemind-agent-protocol-and-messagebus-solver-removed-from-ovos-bus-client" title="Permanent link">&para;</a></h3>
 <p><code>ovos_bus_client/hpm.py</code> (<code>OVOSAgentProtocol</code>/<code>OVOSProtocol</code>) and
 <code>ovos_bus_client/opm.py</code> (the <code>neon.plugin.solver</code>-based chat class) were
@@ -1862,7 +1829,7 @@ Lifecycle:</li>
 </tr>
 <tr>
 <td>Dropped</td>
-<td><code>2.0.0</code></td>
+<td><code>2.0.0a1</code></td>
 <td>(ovos-bus-client <code>d526e99</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/207" title="GitHub Issue: TigreGotico/ovos-technical-manual #207">#207</a>, 2026-05-18)</td>
 </tr>
 </tbody>
@@ -1884,7 +1851,7 @@ out-of-the-box wire behavior is initially unchanged):</p>
 <tr>
 <td><code>recognizer_loop:utterance</code></td>
 <td><code>ovos.utterance.handle</code> (<code>SpecMessage.UTTERANCE</code>)</td>
-<td>ovos-core <code>1672e35ed0</code> (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/772" title="GitHub Issue: TigreGotico/ovos-technical-manual #772">#772</a>/<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/775" title="GitHub Issue: TigreGotico/ovos-technical-manual #775">#775</a>) · ovos-dinkum-listener <code>d9dc04e</code> (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/232" title="GitHub Issue: TigreGotico/ovos-technical-manual #232">#232</a>) · ovos-simple-listener <code>b8326fa</code> (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/26" title="GitHub Issue: TigreGotico/ovos-technical-manual #26">#26</a>) · mycroft-classic-listener <code>4458a3f</code> (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/23" title="GitHub Issue: TigreGotico/ovos-technical-manual #23">#23</a>, <code>1.0.0</code>)</td>
+<td>ovos-core <code>1672e35ed0</code> (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/772" title="GitHub Issue: TigreGotico/ovos-technical-manual #772">#772</a>/<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/775" title="GitHub Issue: TigreGotico/ovos-technical-manual #775">#775</a>) · ovos-dinkum-listener <code>d9dc04e</code> (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/232" title="GitHub Issue: TigreGotico/ovos-technical-manual #232">#232</a>) · ovos-simple-listener <code>b8326fa</code> (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/26" title="GitHub Issue: TigreGotico/ovos-technical-manual #26">#26</a>) · mycroft-classic-listener <code>4458a3f</code> (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/23" title="GitHub Issue: TigreGotico/ovos-technical-manual #23">#23</a>, <code>1.0.0a1</code>)</td>
 </tr>
 <tr>
 <td><code>mycroft.awoken</code></td>
@@ -1963,62 +1930,23 @@ Lifecycle:</li>
 "gate bus topics by legacy_namespace") lives only on unmerged feature
 branches, not on <code>dev</code>: the default has not flipped because the flag has
 not shipped to a stable release yet.</p>
-<h3 id="session-1-spec-adoption-changes-session-wire-semantics">SESSION-1 spec adoption changes session wire semantics<a class="headerlink" href="#session-1-spec-adoption-changes-session-wire-semantics" title="Permanent link">&para;</a></h3>
-<p><code>SessionManager</code> was rebuilt on the <code>ovos-spec-tools</code> session registry
-(<code>b54269c</code>, 2026-06-29). Three concrete wire/behavior changes to know:</p>
+<h3 id="session-1-spec-adoption-one-shipped-change-more-in-review">SESSION-1 spec adoption: one shipped change, more in review<a class="headerlink" href="#session-1-spec-adoption-one-shipped-change-more-in-review" title="Permanent link">&para;</a></h3>
+<p>Shipped: <code>SessionManager</code> enforces one live <code>Session</code> object per id
+(singleton, <code>7a2e39f</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/249" title="GitHub Issue: TigreGotico/ovos-technical-manual #249">#249</a>). Code holding a stale <code>Session</code> reference
+expecting it to stay independent from the manager's canonical instance
+will observe shared-state changes it did not make.</p>
 <ul>
-<li><code>get()</code> no longer reserves the default session id as owner-only: it
-  folds like any other session (SESSION-1 §4).</li>
-<li>Session expiry (<code>Session.expired</code>/<code>touch_time</code>/<code>expiration_seconds</code>,
-  <code>prune_sessions</code>) is not part of SESSION-1 and is deprecation-warned.
-  Stop depending on session TTL/pruning behavior.</li>
-<li><code>SessionManager</code> now enforces one live <code>Session</code> object per id
-  (singleton, <code>7a2e39f</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/249" title="GitHub Issue: TigreGotico/ovos-technical-manual #249">#249</a>). Code holding a stale <code>Session</code> reference
-  expecting it to stay independent from the manager's canonical instance
-  will observe shared-state changes it did not make.</li>
-<li>
-<p>An empty list on a list-valued override field (<code>pipeline</code>,
-  <code>blacklisted_skills</code>, <code>blacklisted_intents</code>) is now <strong>omitted</strong> from
-  <code>serialize()</code> output instead of round-tripped as <code>[]</code> (<code>47b0e4a</code>,
-  2026-07-09). Absence means "use the deployment default." Any bus
-  consumer indexing the raw wire dict (<code>session["pipeline"]</code>) instead of
-  going through <code>Session.deserialize()</code> must treat a missing key as
-  "deployment default," not as an error.</p>
-</li>
-<li>
-<p>Migration: read sessions through <code>Session.deserialize()</code>/the <code>Session</code>
-  class, not by indexing the raw wire dict. Stop relying on
-  <code>prune_sessions</code>/session TTL expiry. Treat the default session id like
-  any other session id.
-Lifecycle:</p>
-</li>
+<li>Migration: read sessions through <code>Session.deserialize()</code>/the <code>Session</code>
+  class, not by holding raw references or indexing the raw wire dict.</li>
 </ul>
-<table>
-<thead>
-<tr>
-<th>Phase</th>
-<th>Version</th>
-<th>Notes</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Active</td>
-<td>before <code>b54269c</code></td>
-<td></td>
-</tr>
-<tr>
-<td>Deprecated but functional</td>
-<td>session expiry, from <code>b54269c</code> (2026-06-29)</td>
-<td>drop version unverified</td>
-</tr>
-<tr>
-<td>Dropped</td>
-<td>list-omission wire change landed directly at <code>47b0e4a</code> (2026-07-09)</td>
-<td>deprecated-in-spirit only: no prior wire shape to preserve, this is a new spec adoption</td>
-</tr>
-</tbody>
-</table>
+<p>Still in review on unmerged <code>ovos-bus-client</code> branches (nothing on <code>dev</code>
+yet, no migration needed): a rebuild of <code>SessionManager</code> on the
+<code>ovos-spec-tools</code> session registry, deprecation of session TTL/pruning
+(<code>prune_sessions</code>, <code>Session.expired</code>), default-session folding per
+SESSION-1 §4, and omitting empty list-valued override fields from
+<code>serialize()</code> output. If those land, absence of a key like <code>pipeline</code>
+on the wire will mean "deployment default" — going through
+<code>Session.deserialize()</code> today keeps you compatible either way.</p>
 <h3 id="legacy-mycroftrecognizer_loop-topic-bridge-scheduled-for-removal">Legacy <code>mycroft.*</code>/<code>recognizer_loop:*</code> topic bridge scheduled for removal<a class="headerlink" href="#legacy-mycroftrecognizer_loop-topic-bridge-scheduled-for-removal" title="Permanent link">&para;</a></h3>
 <p>See <a href="../migration-bus-dual-emit/">The bus-client legacy-topic dual-emit and its removal</a>
 for the full timeline. The short version for remote clients: the
