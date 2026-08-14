@@ -1682,22 +1682,14 @@ with a handful of devices. For a local wake word on slightly stronger hardware, 
 instead.</p>
 </li>
 </ol>
-<p>By default <code>hivemind-core listen</code> starts <strong>two</strong> listeners, both on <code>0.0.0.0</code>: the websocket
-protocol plugin on <code>5678</code> and the HTTP protocol plugin on <code>5679</code>. Both are in the default
-<code>network_protocol</code> config and both start, so a firewall rule that only covers 5678 leaves the
-second one open. Local-network presence is on by default too, so the node announces itself
-over mDNS.</p>
-<p>There is no <code>listen</code> flag to change host or port. Edit the server config instead
-(<code>network_protocol</code> -&gt; <code>hivemind-websocket-plugin</code> / <code>hivemind-http-plugin</code> -&gt; <code>host</code>/<code>port</code>),
-and set <code>presence.enabled</code> to <code>false</code> to stop the mDNS announcements.
-<code>hivemind-client set-identity</code> writes the access key, password, and server address to a
-JSON identity file at <code>~/.config/hivemind/_identity.json</code> (XDG config dir, <code>hivemind</code>
-subfolder). Point <code>--host</code>/<code>--port</code> at the server when running <code>set-identity</code> on the
-satellite.</p>
+<p>One firewall note for the OVOS host: by default <code>hivemind-core listen</code> starts <strong>two</strong>
+listeners on <code>0.0.0.0</code> — websocket on <code>5678</code> and HTTP on <code>5679</code> — so a firewall rule that
+only covers 5678 leaves the second one open. Changing hosts, ports, or the mDNS presence
+announcements is HiveMind server configuration, covered by the upstream
+<a href="https://jarbashivemind.github.io/HiveMind-community-docs/">HiveMind community docs</a>, along
+with the identity/credential setup on the satellite side.</p>
 <p>Full steps, permission model, and satellite/client packages: see
-<a href="../hivemind-agents/">Remote Agents with HiveMind</a>. Wire-level protocol details live in the
-upstream <a href="https://jarbashivemind.github.io/HiveMind-community-docs/">HiveMind community docs</a>,
-not in this manual.</p>
+<a href="../hivemind-agents/">Remote Agents with HiveMind</a>.</p>
 <hr />
 <h2 id="thin-clients-a-shared-speech-backend">Thin clients + a shared speech backend<a class="headerlink" href="#thin-clients-a-shared-speech-backend" title="Permanent link">&para;</a></h2>
 <p>A common fleet topology is several low-power "thin" devices that each run a full

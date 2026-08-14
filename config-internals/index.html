@@ -1942,10 +1942,10 @@ compatibility.</p>
 </span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="n">Configuration</span><span class="o">.</span><span class="n">system</span>        <span class="c1"># MycroftSystemConfig</span>
 </span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="n">Configuration</span><span class="o">.</span><span class="n">xdg_configs</span>   <span class="c1"># list[LocalConf] — the user/XDG layer(s)</span>
 </span></code></pre></div>
-<p>There is no <code>.user</code> attribute. The editable user config is the <strong>first</strong> entry in
-<code>Configuration.xdg_configs</code>. The list runs from <code>$XDG_CONFIG_HOME</code> outwards and the merge runs
-left to right, so the last entry wins. On most systems that last entry is
-<code>/etc/xdg/mycroft/mycroft.conf</code>, not the user's own file. See <a href="../config/#config-layer-stack">Config Layer
+<p>There is no <code>.user</code> attribute. The editable user config is the <strong>last</strong> entry in
+<code>Configuration.xdg_configs</code>. The list runs from lowest to highest precedence — system-wide
+XDG dirs such as <code>/etc/xdg/mycroft/mycroft.conf</code> first, then <code>$XDG_CONFIG_HOME</code> — and the
+merge runs left to right, so the last entry wins: the user's own file. See <a href="../config/#config-layer-stack">Config Layer
 Stack</a>. To write the user file directly, use <code>MycroftUserConfig()</code>
 (see Config Models above). Or call <code>update_mycroft_config()</code> to merge a change and emit the
 <code>configuration.patch</code> bus notification in one step.</p>
