@@ -1606,7 +1606,7 @@
 <p>Inheriting from <code>FallbackSkill</code> and decorating one or more handlers with <code>@fallback_handler(priority=...)</code> (lower number = higher priority; default <code>50</code>)</p>
 </li>
 <li>
-<p>Optionally overriding <code>can_answer(self, message)</code> to declare upfront whether the skill is willing to try (utterances are in <code>message.data["utterances"]</code>)</p>
+<p>Implementing <code>can_answer(self, message)</code> to declare upfront whether the skill is willing to try (utterances are in <code>message.data["utterances"]</code>) — this is mandatory, the method is abstract and a skill without it does not load</p>
 </li>
 <li>
 <p>On startup <code>ovos-workshop</code> registers the skill's lowest handler priority with the service via <code>ovos.skills.fallback.register</code></p>
