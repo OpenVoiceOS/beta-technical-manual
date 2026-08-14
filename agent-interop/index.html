@@ -1608,7 +1608,7 @@ the flag set but the extra missing, the server logs a warning and runs without t
 </span></code></pre></div>
 <h3 id="translate-server">Translate Server<a class="headerlink" href="#translate-server" title="Permanent link">&para;</a></h3>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>pip<span class="w"> </span>install<span class="w"> </span><span class="s2">&quot;ovos-translate-server[mcp]&quot;</span>
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>python<span class="w"> </span>-m<span class="w"> </span>ovos_translate_server<span class="w"> </span>--tx-engine<span class="w"> </span>ovos-google-translate-plugin<span class="w"> </span>--port<span class="w"> </span><span class="m">9686</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>python<span class="w"> </span>-m<span class="w"> </span>ovos_translate_server<span class="w"> </span>--tx-engine<span class="w"> </span>ovos-google-translate-plugin<span class="w"> </span>--port<span class="w"> </span><span class="m">9686</span><span class="w"> </span>--mcp
 </span></code></pre></div>
 <table>
 <thead>
@@ -1627,7 +1627,7 @@ the flag set but the extra missing, the server logs a warning and runs without t
 <tr>
 <td><code>/mcp</code></td>
 <td>Streamable HTTP</td>
-<td>MCP server (requires <code>[mcp]</code> extra)</td>
+<td>MCP server (requires <code>[mcp]</code> extra <strong>and</strong> the <code>--mcp</code> flag)</td>
 </tr>
 </tbody>
 </table>

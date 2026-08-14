@@ -1511,8 +1511,14 @@ ecosystem of independently-released repos cannot happen in one coordinated step.
 So <strong><code>ovos-bus-client</code> migrates automatically and incrementally</strong>. The legacy
 and the new names interoperate transparently while the ecosystem moves over.</p>
 <p>The canonical legacy to spec topic map lives in the <code>NamespaceTranslator</code> from
-<a href="../spec-tooling/"><code>ovos-spec-tools</code></a>, and each <code>MessageBusClient</code> applies it on the
-<strong>receive</strong> side, not by putting a second copy on the wire:</p>
+<a href="../spec-tooling/"><code>ovos-spec-tools</code></a>, and each <code>MessageBusClient</code> applies it in two
+directions. On the <strong>receive</strong> side, an incoming message re-dispatches to local listeners
+under the other spelling (<code>modernize</code>). On the <strong>emit</strong> side, since bus-client 2.8.3a1 a
+canonical emit of any mapped topic also puts a real, marked legacy-spelled twin frame on
+the wire (gated on <code>emit_legacy</code>; escape hatch <code>OVOS_BUS_WIRE_LEGACY_TWINS</code> env var /
+<code>websocket.wire_legacy_twins</code> config key, default on, added in 2.8.4a1). Legacy-spelled
+emits are not twinned — their canonical counterpart is delivered receive-side only. Intent
+topics go through the separate intent bridge instead:</p>
 <pre class="mermaid"><code>sequenceDiagram
     participant Producer
     participant Bus as ovos-messagebus
@@ -1576,7 +1582,8 @@ the legacy delivery, and disable <code>modernize</code> once no legacy producers
 older producer still emitting legacy topics. The wire frame it receives may be legacy-only.
 That skill hears it at all <em>because</em> its own <code>MessageBusClient</code> (any <code>ovos-bus-client</code>
 since 2.6.3a1, where the bridge became receive-side in commit 0f0a241, PR <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/258" title="GitHub Issue: TigreGotico/ovos-technical-manual #258">#258</a>; before
-that the counterpart was a second wire message)
+that the counterpart was a second wire message, and 2.8.3a1 re-added marked wire twins
+for canonical emits — see above)
 re-dispatches the legacy arrival under its <code>ovos.*</code> counterpart on receive, per <code>modernize</code>
 being on. Disabling <code>modernize</code> on such a container does not just drop a redundant delivery.
 It silently stops that container from ever hearing a legacy producer again. Never disable

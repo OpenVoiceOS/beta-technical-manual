@@ -1809,7 +1809,10 @@ things the <code>{type}</code> of tomato should be. We do this by defining the t
 </span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>unripe
 </span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>pale
 </span></code></pre></div>
-<p>You must register this in the skill before use, most commonly in the <code>initialize()</code> method:</p>
+<p>Every <code>.entity</code> file shipped under the skill's locale resources auto-registers when the
+skill's resources load for a language (since ovos-workshop 9.5.0a1; opt out with
+<code>"skills": {"auto_register_entity_files": false}</code>). An explicit call is only needed for
+entity files outside the locale resources, and still works:</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kn">from</span> <span class="nn">ovos_workshop.skills</span> <span class="kn">import</span> <span class="n">OVOSSkill</span>
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="kn">from</span> <span class="nn">ovos_workshop.decorators</span> <span class="kn">import</span> <span class="n">intent_handler</span>
 </span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>

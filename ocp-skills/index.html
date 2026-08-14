@@ -1599,8 +1599,9 @@ The title and skill ID show as text. Duration shows as the elapsed-time readout.
 <li>
 <p><code>self.remove_voc(phrase, "skill_name")</code> to remove matched phrases from the search request.
   For example, <code>self.remove_voc("play some somafm radio", "somafm")</code> strips the <code>somafm</code> vocab
-  match and returns <code>"play some radio"</code>, so the rest of your matching logic scores against the
-  cleaned-up phrase instead of the raw one</p>
+  match and returns <code>"play some  radio"</code> (the removed word's surrounding whitespace stays, so
+  a double space remains), and the rest of your matching logic scores against the cleaned-up
+  phrase instead of the raw one</p>
 </li>
 <li>
 <p>Implement the <code>ocp_search</code> decorator, as many as you want (they run in parallel)</p>
