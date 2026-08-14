@@ -291,7 +291,9 @@ generations freely during migration:
 
 The `"solvers"` key is itself legacy naming. Newer configs use `"handlers"`, and
 ovos-persona accepts both. One more back-compat layer sits below all this: with
-`ovos-plugin-manager` older than 2.3.0a1 the `opm.agents.*` registries do not exist, and
+an `ovos-plugin-manager` from before the early 2.2.x alphas the `opm.agents.*` registries
+do not exist (they landed piecemeal across 2.2.x; the example pin of `>=2.3.0a1` above is
+the safe floor that has all of them), and
 ovos-persona stubs them out so solver-only personas keep working. None of this
 back-compat is permanent. The solver classes stay loadable until the next major OPM
 release, and new plugins must not use them.
