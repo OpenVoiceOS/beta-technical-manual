@@ -92,7 +92,7 @@ Skills integrate as fallbacks by:
 * Inheriting from `FallbackSkill` and decorating one or more handlers with `@fallback_handler(priority=...)` (lower number = higher priority; default `50`)
 
 
-* Optionally overriding `can_answer(self, message)` to declare upfront whether the skill is willing to try (utterances are in `message.data["utterances"]`)
+* Implementing `can_answer(self, message)` to declare upfront whether the skill is willing to try (utterances are in `message.data["utterances"]`) — this is mandatory, the method is abstract and a skill without it does not load
 
 
 * On startup `ovos-workshop` registers the skill's lowest handler priority with the service via `ovos.skills.fallback.register`

@@ -97,7 +97,7 @@ class MeaningFallback(FallbackSkill):
 
 Fallback skills can report *whether* they would answer a question, without executing the action or speaking. This lets other OVOS components probe how an utterance will be handled with no side effects. It also lets the pipeline skip work when it isn't needed.
 
-This method is **not implemented by default**. The base implementation raises `NotImplementedError`. The skills service pings every fallback skill (`ovos.skills.fallback.ping` → `can_answer()`) to decide whether it is even worth invoking. Always override `can_answer` in a real `FallbackSkill`:
+This method is **abstract** (`FallbackSkill` uses `abc.ABCMeta`, since ovos-workshop 9.3.9a1): a subclass that does not implement `can_answer` fails to instantiate at all, so the skill refuses to load with a `TypeError` instead of failing silently at ping time. The skills service pings every fallback skill (`ovos.skills.fallback.ping` → `can_answer()`) to decide whether it is even worth invoking. Always implement `can_answer` in a real `FallbackSkill`:
 
 ```python
 from ovos_bus_client.session import SessionManager

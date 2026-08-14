@@ -53,6 +53,12 @@ The installer can be configured in `mycroft.conf`. It is **disabled unless `allo
 
 ```
 
+Three more booleans in the same `skills.installer` section shape the pip call itself, all
+default `false`: `upgrade` passes `--upgrade` so re-installing an already-installed package
+actually updates it (without it, a repeat install is a silent no-op, since ovos-core
+2.6.0a1); `allow_alphas` permits pre-release versions; `break_system_packages` passes the
+matching pip flag for externally-managed environments.
+
 The `constraints` file bounds allowed versions — its entries are compatible **ranges**
 (`>=x,<y`), not exact pins, so it constrains what may be installed rather than fixing it. The
 packages it lists are also treated as **protected**: `ovos.pip.uninstall` refuses to remove a
@@ -108,6 +114,14 @@ ovos.pip.install           data: {"packages": ["some-lib>=1.0"]}
 ovos.pip.uninstall         data: {"packages": ["some-lib"]}
 
 ```
+
+Services other than core can run their own `ServiceInstaller` (from `ovos-utils`), which
+listens on the broadcast topics above **and** on a targeted
+`ovos.pip.install.<service_name>` / `ovos.pip.uninstall.<service_name>` pair, so a package
+installs into the process that actually loads it. `ovos-audio` does this (since 2.2.0a1)
+under the service name `ovos_audio` — relevant when services run in separate venvs or
+containers, where a broadcast install into core's environment would not reach the audio
+process.
 
 ## Post-Install Discovery
 
