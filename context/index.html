@@ -1701,6 +1701,13 @@
 </tbody>
 </table>
 <p>This page is about the third (and the field that holds it). It is not <code>Message.context</code>, and a context entry is not a <code>Match.slot</code>. CONTEXT-1 §7's context-supplied-slot rule is the bridge: when a <code>requires_context</code> key also names a slot, its value fills that slot if the utterance did not. This is exactly the "remember which person" mechanism below.</p>
+<p><strong>A capped store.</strong> The orchestrator SHOULD enforce a maximum live-entry count per session
+(CONTEXT-1 §2, <code>DEFAULT_MAX_ENTRIES = 1024</code> in <code>ovos-spec-tools</code>), evicting the entry
+closest to natural expiry when a write would exceed it. This is a safety bound, not a
+limit a skill author needs to plan around.</p>
+<p><strong>When context and the utterance both fill a slot, the utterance wins.</strong> CONTEXT-1 §7 only
+fills a slot from context when the utterance itself left it empty; a value the matcher
+already extracted from what the user said is never overridden by a stored context entry.</p>
 </details>
 <p>Conversational context makes voice interactions feel more natural. The assistant keeps track of the subject you are discussing, so you do not have to repeat it.</p>
 <p><strong>What works in a skill today</strong>: gate a follow-up with a blocking prompt, <code>ask_yesno()</code> /
@@ -1960,7 +1967,9 @@ CONTEXT-1's declarative <code>requires_context</code> / <code>excludes_context</
 <p class="admonition-title">Both spellings are written, with one decay policy</p>
 <p><code>set_context</code> writes into the session per CONTEXT-1 §5.0: the mutation lands on the
 current handler's session directly, and the legacy <code>add_context</code> bus message is also
-emitted as a compat dual-write for pre-§5.0 cores. The core writes <strong>two</strong> entries:
+emitted as a compat dual-write for pre-§5.0 cores. Because that write lands on the live
+session first, context set inside a handler is visible to the dispatch that immediately
+follows it, in the same handler invocation, with no race. The core writes <strong>two</strong> entries:
 the legacy munged <code>skillidkey</code> spelling and the resolved <code>&lt;skill_id&gt;:&lt;key&gt;</code> spelling
 the declarative gate looks up. One computed <code>expires_at</code> applies to both, so
 <code>set_context</code> entries decay normally (<code>context.timeout</code>, minutes, default <code>2</code>) and a

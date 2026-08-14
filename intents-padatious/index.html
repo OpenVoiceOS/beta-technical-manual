@@ -1818,18 +1818,36 @@ things the <code>{type}</code> of tomato should be. We do this by defining the t
 </span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">register_entity_file</span><span class="p">(</span><span class="s1">&#39;type.entity&#39;</span><span class="p">)</span>
 </span></code></pre></div>
 <p>Now, we can say things like "do you like greenish tomatoes?" and it will tag type as
-<code>"greenish"</code>. However, if we say "do you like eating tomatoes?", the phrase will not match,
-since <code>"eating"</code> is not included in our <code>type.entity</code> file.</p>
+<code>"greenish"</code>. If we say "do you like eating tomatoes?" instead, <code>"eating"</code> is not in our
+<code>type.entity</code> file, so the match scores lower, not zero. See the warning below for what
+that means in practice.</p>
 <div class="admonition tip">
-<p class="admonition-title">An open <code>{slot}</code> is a wildcard surface, not a closed set</p>
-<p>Even backed by an <code>.entity</code> file, <code>{type}</code> trains Padatious's neural matcher on those
-samples — it does not validate the match against them at request time the way an Adapt
-<code>.voc</code> keyword does. An unread, wide-open <code>{slot}</code> still generalizes to nearby wording the
-file never listed. If what you actually want is a small, fixed, closed set of surface
-words — a strict "must be exactly one of these" — write them as inline alternation instead
-of a slot: <code>(red | green | yellow)</code> rather than <code>{type}</code>. Reserve <code>{slot}</code> for values you
-intend to <em>read</em> out of <code>message.data</code> in the handler; if the handler never consumes the
-captured value, it should probably not be a slot at all.</p>
+<p class="admonition-title">An <code>.entity</code> file is a scoring hint, not a closed vocabulary</p>
+<p>Per <a href="https://github.com/OpenVoiceOS/architecture/blob/dev/intent-1.md">OVOS-INTENT-1 §5.4</a>,
+an <code>.entity</code> file is a set of training hints, not an allow-list. Padatious trains its
+neural matcher on those example values and uses them to <strong>score</strong> a candidate slot fill:
+a value in the file is treated as full confidence, and a value outside the file still
+matches, only at a lower, floored confidence. An engine is required to keep out-of-list
+candidates matchable; it must never treat the file as exhaustive. If what you actually
+want is a small, fixed, closed set of surface words — a strict "must be exactly one of
+these" — write them as inline alternation instead of a slot: <code>(red | green | yellow)</code>
+rather than <code>{type}</code>. Reserve <code>{slot}</code> for values you intend to <em>read</em> out of
+<code>message.data</code> in the handler; if the handler never consumes the captured value, it
+should probably not be a slot at all.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Out-of-list matches are invisible on a default install</p>
+<p>In <code>ovos-padatious-pipeline-plugin</code> (2.0.3a1+), an out-of-list value is floored at
+<code>ENTITY_HINT_FLOOR = 0.8</code> rather than collapsing the candidate, and a listed value scores
+near-identity from <code>0.9</code> up. That floor lands squarely in the plugin's own
+<strong>medium</strong>-confidence band (<code>conf_med = 0.8</code>, <code>conf_high = 0.95</code> by default), well below
+<code>conf_high</code>. The stock <code>mycroft.conf</code> pipeline only enables
+<code>ovos-padatious-pipeline-plugin-high</code>, not the medium or low stages, so on a default
+install an out-of-list value simply produces no match at all — the medium-confidence
+result exists internally but nothing in the default pipeline reads it. Enabling
+<code>ovos-padatious-pipeline-plugin-medium</code> in <code>pipeline</code> is what would make those matches
+visible. Whether the default pipeline should change to include it is an open decision,
+not something already shipped.</p>
 </div>
 <h3 id="number-matching">Number matching<a class="headerlink" href="#number-matching" title="Permanent link">&para;</a></h3>
 <blockquote>

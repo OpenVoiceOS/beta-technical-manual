@@ -1010,6 +1010,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#an-observer-on-the-skills-own-fakebus-only-hears-one-spelling" class="md-nav__link">
+    <span class="md-ellipsis">
+      An observer on the skill's own FakeBus only hears one spelling
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#step-6-wire-it-into-ci" class="md-nav__link">
     <span class="md-ellipsis">
       Step 6: Wire it into CI
@@ -1377,6 +1386,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#an-observer-on-the-skills-own-fakebus-only-hears-one-spelling" class="md-nav__link">
+    <span class="md-ellipsis">
+      An observer on the skill's own FakeBus only hears one spelling
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#step-6-wire-it-into-ci" class="md-nav__link">
     <span class="md-ellipsis">
       Step 6: Wire it into CI
@@ -1685,6 +1703,21 @@ undoes whatever the previous turn changed: a skill activated in turn 1 will not 
 </span><span id="__span-13-8"><a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a><span class="n">live</span> <span class="o">=</span> <span class="n">SessionManager</span><span class="o">.</span><span class="n">sessions</span><span class="p">[</span><span class="n">my_session</span><span class="o">.</span><span class="n">session_id</span><span class="p">]</span>
 </span><span id="__span-13-9"><a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a><span class="n">bus</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">make_utterance_message</span><span class="p">(</span><span class="s2">&quot;yes&quot;</span><span class="p">,</span> <span class="n">session</span><span class="o">=</span><span class="n">live</span><span class="p">))</span>
 </span></code></pre></div>
+<h2 id="an-observer-on-the-skills-own-fakebus-only-hears-one-spelling">An observer on the skill's own FakeBus only hears one spelling<a class="headerlink" href="#an-observer-on-the-skills-own-fakebus-only-hears-one-spelling" title="Permanent link">&para;</a></h2>
+<div class="admonition note">
+<p class="admonition-title">Subscribe to the canonical intent topic</p>
+<p>A <code>FakeBus</code> models <strong>one</strong> bus connection, the same as a single real
+<code>MessageBusClient</code>. It carries the intent-topic bridge (the <code>.intent</code>-suffix
+compatibility described in <a href="../bus-namespace-migration/#intent-dispatch-topics-the-intent-suffix-is-gone">Bus Namespace Migration</a>),
+so within one connection only one spelling of a dispatch topic is
+delivered, never both. If your test attaches an observer to the same
+<code>FakeBus</code> the skill under test uses, that observer is not a second
+connection. It shares the guard with the skill's own subscriptions, so it
+must subscribe to the canonical topic,
+<code>ovos_spec_tools.intent_topics.canonical_intent_topic(...)</code>, rather than
+assume it will see the legacy <code>.intent</code>-suffixed form as well. A separate
+real bus connection would hear both spellings; a shared <code>FakeBus</code> does not.</p>
+</div>
 <h2 id="step-6-wire-it-into-ci">Step 6: Wire it into CI<a class="headerlink" href="#step-6-wire-it-into-ci" title="Permanent link">&para;</a></h2>
 <p>Add a workflow that runs the test suite on every pull request:</p>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Skill End-to-End Tests (ovoscope)</span>
