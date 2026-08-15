@@ -51,6 +51,11 @@ class MeaningFallback(FallbackSkill):
         # register the handler with priority 10
         self.register_fallback(self.handle_fallback, 10)
 
+    def can_answer(self, message):
+        # required abstract method, see the can_answer section below
+        utterance = message.data.get("utterances", [""])[0]
+        return "meaning" in utterance
+
     def handle_fallback(self, message):
         utterance = message.data.get("utterances", [""])[0]
         if ("what" in utterance and "meaning" in utterance and
@@ -77,6 +82,10 @@ from ovos_workshop.decorators import fallback_handler
 
 
 class MeaningFallback(FallbackSkill):
+
+    def can_answer(self, message):
+        utterance = message.data.get("utterances", [""])[0]
+        return "meaning" in utterance
 
     @fallback_handler(priority=10)
     def handle_fallback(self, message):
