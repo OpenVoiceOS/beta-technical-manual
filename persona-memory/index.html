@@ -1609,9 +1609,10 @@
 <li>Conversation history is tracked per session, not globally.</li>
 <li>Enables: different persona per wake word, different TTS voice per persona, distinct persona for each HiveMind satellite.</li>
 </ul>
-<p>The active persona travels in the session's <code>persona_id</code> field; it is switched through the
-pipeline's <code>persona:summon</code> / <code>persona:release</code> matches, or queried over the bus with
-<code>ovos.persona.query</code>.</p>
+<p>The active persona travels in the session's <code>persona_id</code> field and is switched through the
+pipeline's <code>persona:summon</code> / <code>persona:release</code> matches. Independently, <code>ovos.persona.query</code>
+lets any caller ask a <strong>named</strong> persona a one-off, stateless question without touching
+<code>session.persona_id</code>.</p>
 <hr />
 <h2 id="plugin-wiring">Plugin Wiring<a class="headerlink" href="#plugin-wiring" title="Permanent link">&para;</a></h2>
 <p>In a persona JSON or YAML file, set <code>memory_module</code> to the plugin entry point, and give that entry point its own config block:</p>
@@ -2155,7 +2156,9 @@ embeddings + <code>EmbeddingsDB</code> pair works (e.g. point <code>embeddings_d
 <p>The active persona is carried on the session as <code>Session.persona_id</code> (OVOS-PERSONA-1 §3), the
 same field <a href="../persona-pipeline/">Persona Pipeline</a> documents. There is no <code>active_persona</code>
 field and no <code>ovos.persona.set</code> message: the persona is switched through the pipeline's
-<code>persona:summon</code> / <code>persona:release</code> matches, or over the bus with <code>ovos.persona.query</code>.</p>
+<code>persona:summon</code> / <code>persona:release</code> matches only. The <code>ovos.persona.query</code> bus message is
+unrelated to switching: it is a stateless one-shot question to a named persona that never
+mutates <code>session.persona_id</code>.</p>
 <hr />
 <p><em>Source code: <a href="https://github.com/OpenVoiceOS/ovos-memory-plugins">OpenVoiceOS/ovos-memory-plugins</a>.</em></p>
 <hr />

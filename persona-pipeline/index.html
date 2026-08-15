@@ -2091,6 +2091,14 @@
 <td><code>speak</code></td>
 <td>Persona response delivered back to the user</td>
 </tr>
+<tr>
+<td><code>ovos.persona.query</code> → <code>ovos.persona.answer</code></td>
+<td>Out-of-band, stateless Q&amp;A to a <strong>named</strong> persona (OVOS-PERSONA-1 §8.5). Bypasses the pipeline and session; never touches <code>session.persona_id</code></td>
+</tr>
+<tr>
+<td><code>ovos.persona.list</code> → <code>ovos.persona.list.response</code></td>
+<td>Out-of-band persona discovery (§8.7)</td>
+</tr>
 </tbody>
 </table>
 <p>Responses use these dialog keys: <code>activated_persona</code>, <code>release_persona</code>, <code>active_persona</code>, <code>no_active_persona</code>, <code>unknown_persona</code>, <code>no_personas</code>, <code>list_personas</code>, <code>persona_error</code>.</p>
