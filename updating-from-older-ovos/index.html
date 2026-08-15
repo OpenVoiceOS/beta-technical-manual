@@ -1776,7 +1776,7 @@ the specific repository that owns the symbol or config key, not just
 <li><strong>Deprecated but functional</strong>: a new replacement exists, the old path
    still works, and calling it logs a deprecation warning (<code>log_deprecation</code>
    or <code>@deprecated(...)</code>) or is gated behind a compatibility flag (for
-   example <code>legacy_namespace</code>, <code>modernize</code>, <code>emit_legacy</code>).</li>
+   example <code>modernize</code>, <code>emit_legacy</code>, <code>wire_legacy_twins</code>).</li>
 <li><strong>Dropped</strong>: the old path is deleted. Calling it raises <code>ImportError</code>,
    <code>AttributeError</code>, <code>TypeError</code>, or the bus message is simply never sent
    or received again.</li>
@@ -1899,12 +1899,12 @@ safe to build against yet.</p>
   commits on the branch promise <code>Configuration().remote</code> and
   <code>load_config_stack(...)</code> keep working once this lands. Do not target
   <code>AssistantConfig</code> yet. Watch the <code>ovos-config</code> release notes.</li>
-<li><strong>OVOS-PIPELINE-1 / STOP-1 / INTENT-4 conformance</strong> (<code>ovos-core</code>,
-  active on <code>dev</code> through at least 2026-08-01): the orchestrator is
-  taking over emitting <code>ovos.intent.handler.{start,complete,error}</code> around
-  every skill dispatch, and <code>ovos.intent.matched</code> before every dispatch.
-  Still landing incrementally under <code>legacy_namespace</code> gating. Not yet in
-  a numbered stable release.</li>
+<li><strong>OVOS-PIPELINE-1 / STOP-1 conformance shipped</strong>: the orchestrator owns
+  <code>ovos.intent.handler.{start,complete,error}</code> around every skill dispatch and
+  <code>ovos.intent.matched</code> before it (ovos-core <code>2178788d</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/788" title="GitHub Issue: TigreGotico/ovos-technical-manual #788">#788</a>, first tag <code>2.3.0a1</code>),
+  with STOP-1 landing in <code>3.0.0a1</code> (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/802" title="GitHub Issue: TigreGotico/ovos-technical-manual #802">#802</a>). These emits are unconditional; the
+  once-proposed <code>legacy_namespace</code> gating never shipped (its branch was superseded),
+  and legacy interop rides the bus-client bridge instead.</li>
 <li>Unmerged <code>ovos-workshop</code> branches <code>feat/deprecate-ocp-skills</code>,
   <code>feat/remove-skill-homescreens</code>, <code>feat/gameskill-and-ocp-deprecation</code>:
   OCP-skill-base-class and skill-homescreen removal has not landed as of
