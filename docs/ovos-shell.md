@@ -125,7 +125,7 @@ Image {
 ## Homescreen (Idle Screen)
 
 The shell does not draw the idle screen itself. When the namespace stack is empty it shows
-a plain background image. A skill (default `skill-ovos-homescreen.openvoiceos`) provides the
+a plain background image. A skill (default `ovos-skill-homescreen.openvoiceos`) provides the
 actual homescreen, and its resting-screen page renders through
 `Mycroft.SkillView`. Skills register idle screens with `@resting_screen_handler`. See
 [Home Screen](homescreen.md) for the configuration and the resting-screen API.

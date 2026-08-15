@@ -51,7 +51,7 @@ Select a homescreen skill in `mycroft.conf` (or via [ovos-shell](ovos-shell.md))
 ```json
 {
   "gui": {
-    "idle_display_skill": "skill-ovos-homescreen.openvoiceos"
+    "idle_display_skill": "ovos-skill-homescreen.openvoiceos"
   }
 }
 
