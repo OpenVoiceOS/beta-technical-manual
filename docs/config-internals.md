@@ -138,14 +138,25 @@ Stack](config.md#config-layer-stack). To write the user file directly, use `Mycr
 | `OVOS_CONFIG_FILENAME` | `"mycroft.conf"` | Config filename inside the XDG config directory |
 | `OVOS_DEFAULT_CONFIG` | package `mycroft.conf` | Path to the bundled default config |
 
-The framework reads these at import time. Override at runtime:
+The framework reads these when `ovos_config.config` is first imported: the `Configuration`
+singleton resolves its layer paths (`default`, `distribution`, `system`, `xdg_configs`) as
+class attributes at that moment, and nothing later rebuilds them — `Configuration.reset()`
+and `reload()` re-read the existing file paths, they do not recompute the path list.
+
+Python setters exist (`set_xdg_base`, `set_config_filename`, `set_default_config` in
+`ovos_config.meta`), but they only affect code that later calls the dynamic path helpers
+(`get_xdg_config_save_path()`, `find_user_config()`, `get_xdg_config_dirs()`). To change
+where the `Configuration` singleton itself looks, call a setter **before** the first import
+of `ovos_config.config`, or, the only mechanism that works regardless of import order, set
+the environment variables before the process starts:
 
 ```python
 from ovos_config.meta import set_xdg_base, set_config_filename, set_default_config
 
-set_xdg_base("my_distro")                        # changes ~/.config/my_distro/
-set_config_filename("mycroft.conf")                  # changes filename
-set_default_config("/opt/my_distro/default.conf") # changes bundled defaults
+# effective only if ovos_config.config has not been imported yet
+set_xdg_base("my_distro")                         # ~/.config/my_distro/
+set_config_filename("mycroft.conf")               # filename inside the XDG dir
+set_default_config("/opt/my_distro/default.conf") # bundled defaults path
 ```
 
 ### Distribution Overrides
