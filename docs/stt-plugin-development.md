@@ -61,7 +61,7 @@ An STT plugin can be paired with an audio language detector. The audio service c
   detector, defaulting `valid_langs` to the plugin's own `available_languages`. With no detector
   bound it raises `NotImplementedError`. Language detection is opt-in per deployment.
 
-* `transcribe(audio, lang="auto")`. The `"auto"` sentinel runs `detect_language()` first and
+* `transcribe(audio, lang=None)` with `lang="auto"` passed explicitly. The `"auto"` sentinel runs `detect_language()` first and
   transcribes in whatever it returns. If detection fails, the plugin falls back to `self.lang`
   and transcribes anyway, so `"auto"` never turns a detector problem into a failed
   transcription.
@@ -105,7 +105,7 @@ manages, not inline in `stream_data()`.
 `StreamingSTT` runs the streaming work on a background thread, fed through a queue:
 
 - `stream_start(language=None)` creates a fresh `Queue`, builds a `StreamThread` via `create_streaming_thread()`, and starts it.
-- Each call to `stream_data(chunk)` puts one raw PCM `bytes` chunk (16 kHz/16-bit/mono, `chunk_size`-sized, see the audio format contract above) onto that queue.
+- Each call to `stream_data(chunk)` puts one raw PCM `bytes` chunk (16 kHz/16-bit/mono, `chunk_size`-sized; see [the microphone interface](mic-plugin-development.md#the-microphone-interface) for the audio-format contract) onto that queue.
 - The `StreamThread`'s `run()` calls your `handle_audio_stream(audio, language)` with `audio` as a **generator** that yields chunks off the queue until a `None` sentinel appears. Your implementation should loop over it (e.g. `for chunk in audio:`) and feed each chunk to the underlying engine, setting `self.text` as partial/final results arrive.
 - `stream_stop()` pushes the `None` sentinel, joins the thread, and calls `finalize()` on it to retrieve the stored `self.text` as the final transcript. This is also what `execute()` returns for a `StreamingSTT` plugin.
 

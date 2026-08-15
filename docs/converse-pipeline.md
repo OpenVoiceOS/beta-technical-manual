@@ -22,7 +22,7 @@ The **Converse Pipeline** in **OpenVoiceOS (OVOS)** manages active conversationa
 
     | OVOS-CONVERSE-1 (canonical) | Current `ovos-core` code |
     |---|---|
-    | `session.converse_handlers` — the recency-ordered eligibility list the plugin polls | `Session.active_skills` |
+    | `session.converse_handlers` — the recency-ordered eligibility list the plugin polls | `Session.active_handlers` (the deprecated `Session.active_skills` view is a legacy projection of it) |
     | `session.response_mode` `{skill_id, expires_at}` — the single-shot response window for `get_response` | per-session `UtteranceState.RESPONSE` lock |
     | poll round-trip `<skill_id>.converse.ping` / `.pong` (non-dispatch, dotted form) | since ovos-core 3.0.5a1, a broadcast `ovos.converse.ping` (OVOS-CONVERSE-1 §4.2) is emitted alongside a legacy per-skill `{skill_id}.converse.ping`, and pongs are heard on both `ovos.converse.pong` and `skill.converse.pong`; dispatch via `converse:skill` → `{skill_id}.converse.request` |
     | reserved-name dispatch `<skill_id>:converse` / `<skill_id>:response` | `converse:skill` handler |
@@ -101,9 +101,9 @@ Because the Weather Skill was called, it is now added to the front of the Active
 3. If converse **returns True** (to consume the utterance), the skill is **reactivated** right **after** converse.
 
 
-4. A skill can activate or deactivate itself at any time via `self.make_active()` / `self.deactivate()`.
+4. A skill can activate or deactivate itself at any time via `self.activate()` / `self.deactivate()`.
 
-Active skills are tracked in `Session.active_skills` (`ovos_bus_client.session.Session`). The converse service reads and updates this list via `session.activate_skill()` / `session.deactivate_skill()`, which also forward `intent.service.skills.activated` / `intent.service.skills.deactivated` on the bus.
+Active skills are tracked in `Session.active_handlers` (`ovos_bus_client.session.Session`; the deprecated `Session.active_skills` view logs a warning on every access). The converse service reads and updates this list via `session.activate_skill()` / `session.deactivate_skill()` (back-compat shims over `add_active_handler` / `remove_active_handler`), which also forward `intent.service.skills.activated` / `intent.service.skills.deactivated` on the bus.
 
 ---
 
@@ -249,7 +249,7 @@ Customize the pipeline via `mycroft.conf` under `skills.converse`:
 | `whitelist` | Only skills in `converse_whitelist` can activate themselves |
 | `blacklist` | Only skills NOT in `converse_blacklist` can activate themselves |
 
-> Note: `converse_activation` does not apply to regular skill activation, only to skill-initiated activation requests (for example, `self.make_active()`).
+> Note: `converse_activation` does not apply to regular skill activation, only to skill-initiated activation requests (for example, `self.activate()`).
 
 ---
 

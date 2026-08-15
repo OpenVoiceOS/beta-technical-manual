@@ -46,8 +46,9 @@ already resolved by the base `__init__` when a subclass doesn't pass its own `co
   detected, and resets any internal tracking of the wake-word state. It takes no audio
   argument: real-time audio only reaches the plugin through `update(chunk)`, on the
   current `dev` contract.
-- **`update(chunk)`**: Required (abstract). Processes one raw PCM audio chunk (see the
-  audio format contract near the top of this page) and updates the engine's internal
+- **`update(chunk)`**: Required (abstract). Processes one raw PCM audio chunk (16 kHz,
+  16-bit, mono; see [the microphone interface](mic-plugin-development.md#the-microphone-interface)
+  for the audio-format contract) and updates the engine's internal
   trigger state.
   Runs once per captured chunk on the mic thread, so it must stay well under the
   per-chunk time budget: do heavy inference work on a background thread and only feed
