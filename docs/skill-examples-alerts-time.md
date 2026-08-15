@@ -42,7 +42,7 @@ Get the current time, date, or information about specific calendar days.
 
 - What time is it?
 - Tell me the day of the week
-- What day is Memorial Day 2020?
+- What day was July 4th 2020?
 - What's the date?
 - Show me the time
 

@@ -76,7 +76,7 @@ class GuessNumberGameSkill(ConversationalGameSkill):
 - Set `self.settings["auto_save"] = True` and implement `on_save_game()` for autosave-before-stop behavior. `ConversationalGameSkill` then calls it for you on every `converse()` turn and on `stop()`, when both the setting and the override are present (checked via `save_is_implemented`).
 
 !!! tip "Full production example"
-    `skill-moon-game` (a VoiceGamez title, not currently public) is a full `ConversationalGameSkill`: a branching narrative driven entirely through `on_game_command`, with `IntentLayers` gating which branch-specific phrases are even considered at each story beat. `FrotzSkill` (from the [`pyfrotz`](https://github.com/JarbasAl/pyfrotz) package) shows the same hooks wrapping something entirely different: every utterance in `on_game_command` is piped as a raw command to an external Z-machine interpreter process, and its text output is what gets spoken.
+    `skill-moon-game` (a VoiceGamez title, not currently public) is a full `ConversationalGameSkill`: a branching narrative driven entirely through `on_game_command`, with `IntentLayers` gating which branch-specific phrases are even considered at each story beat. `FrotzSkill` (from the `pyfrotz` package, a VoiceGamez codebase that is not currently public) shows the same hooks wrapping something entirely different: every utterance in `on_game_command` is piped as a raw command to an external Z-machine interpreter process, and its text output is what gets spoken.
 
 ---
 **Read next:** [Skill Cookbook](skill-cookbook.md)

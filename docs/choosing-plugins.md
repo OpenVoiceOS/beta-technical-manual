@@ -106,7 +106,7 @@ Transcribes speech to text. See the [STT catalog](stt-plugins.md) (15 plugins, t
 
 ### TTS (Text-to-Speech)
 
-Turns replies into speech. See the [TTS catalog](tts-plugins.md) (17 plugins, top picks shown).
+Turns replies into speech. See the [TTS catalog](tts-plugins.md) (20 plugins, top picks shown).
 
 | Plugin | Maturity | Runs | Choose this if |
 |---|---|---|---|
@@ -218,7 +218,7 @@ those pages state a maturity rating for these plugins.
 | ⭐ **ovos-gguf-plugin** | not rated | offline | Recommended default: fully local GGUF model via `llama-cpp-python`, no account, no network, private |
 | ovos-openai-plugin | not rated | online | Pointing at OpenAI or any OpenAI-compatible endpoint (cloud, Ollama, vLLM, LocalAI, `ovos-persona-server`) |
 | ovos-messagebus-chat-plugin | not rated | offline | Answering through the existing skills/intent stack instead of an LLM |
-| ovos-solver-plugin-rivescript / ovos-solver-plugin-aiml | not rated | offline | A lightweight scripted chatbot, no model weights at all |
+| ovos-solver-plugin-rivescript / ovos-solver-plugin-aiml | not rated | offline | A lightweight scripted chatbot, no model weights at all. Install names swap the words: `pip install ovos-solver-rivescript-plugin` / `ovos-solver-aiml-plugin` |
 | ovos-wikipedia-solver | not rated | online | Factual questions answered from Wikipedia |
 | ovos-wolfram-alpha-solver | not rated | online | Computational/factual questions (math, unit conversion, …) |
 | ovos-ddg-solver-plugin | not rated | online | General web-search-style answers via DuckDuckGo |
