@@ -8,8 +8,10 @@
 
 Skills load localized resources from a structured directory layout. Resources are loaded automatically at startup for every language in `native_langs` (`core_lang` + `secondary_langs`).
 
-`.blacklist` is a spec-defined role under OVOS-INTENT-2. `ovos-workshop` has no built-in
-loader for it. A skill must read the file itself. The `voc_blacklist=` argument on
+`.blacklist` is a spec-defined role under OVOS-INTENT-2, and `ovos-workshop` loads it
+automatically since `9.1.0a1`: a sibling `<name>.blacklist` file (matching an intent,
+slot, or entity base name) is merged into the registration blacklist with no skill code
+needed (`SkillResources.load_blacklist_file`). The `voc_blacklist=` argument on
 `@intent_handler` is a different, unrelated mechanism. It takes `.voc` filenames, not
 `.blacklist` filenames.
 
@@ -45,7 +47,7 @@ Legacy skills may use separate `dialog/`, `vocab/`, `regex/` subdirectories. The
 | `.intent` | Intent | [Padatious](padatious-pipeline.md) training examples (OVOS-INTENT-2 role, slot-bearing) |
 | `.voc` | Vocabulary | [Adapt](adapt-pipeline.md) keyword definitions, one per line, first is canonical (OVOS-INTENT-2 role, slot-free) |
 | `.entity` | Entity | Example values for a `{slot}` (OVOS-INTENT-2 role, slot-free) |
-| `.blacklist` | Blacklist | Phrases that suppress a paired `.intent` (OVOS-INTENT-2 role, slot-free). No built-in `ovos-workshop` loader. Skills read this file themselves. Unrelated to `voc_blacklist=` on `@intent_handler`, which takes `.voc` filenames. |
+| `.blacklist` | Blacklist | Phrases that suppress a paired `.intent` (OVOS-INTENT-2 role, slot-free). Auto-loaded by `ovos-workshop` since `9.1.0a1` (`load_blacklist_file`). Unrelated to `voc_blacklist=` on `@intent_handler`, which takes `.voc` filenames. |
 | `.prompt` | Prompt | A whole-file language-model prompt with `{{name}}` substitution (OVOS-INTENT-2 role) |
 | `.rx` | Regex | Adapt regex patterns (**framework extension**, not an OVOS-INTENT-2 role) |
 | `.list` | List | A flat list resource (**framework extension**) |

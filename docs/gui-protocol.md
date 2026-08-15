@@ -208,7 +208,7 @@ namespace), so the UI can react to listening/speaking state:
 | `ovos.listener.record.started` | Microphone opened |
 | `ovos.listener.record.ended` | Microphone closed |
 | `recognizer_loop:utterance` | [Utterance](life-of-an-utterance.md) recognized |
-| `recognizer_loop:speech.recognition.unknown` | [STT](stt-plugins.md) gave no result |
+| `recognizer_loop:recognition_unknown` | Intended STT-empty forward; the listener actually emits `recognizer_loop:speech.recognition.unknown`, so this subscription never fires (topic-name mismatch in `ovos-gui`) |
 | `speak` | [TTS](tts-plugins.md) about to speak |
 | `recognizer_loop:audio_output_start` | Audio playback started |
 | `recognizer_loop:audio_output_end` | Audio playback ended |

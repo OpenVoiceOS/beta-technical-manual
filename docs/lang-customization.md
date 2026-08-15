@@ -106,7 +106,7 @@ data path, by default `~/.local/share/mycroft`. A typical override file path is:
 ### Language fallback
 
 If the requested language has no directory, the loader prefers an exact match but **may** fall
-back to the nearest available language. OVOS uses the `langcodes` `tag_distance()` function and
+back to the nearest available language. OVOS resolves this through `ovos-spec-tools`' language-matching helpers (`lang_matches`/`lang_distance`, built on `langcodes`) and
 treats a distance of `10` or less as a usable regional match (the bound is inclusive —
 `10` is exactly the distance of a language against its macrolanguage tag), e.g. `en-au`
 resolving to `en-us`.
