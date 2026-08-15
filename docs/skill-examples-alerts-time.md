@@ -8,9 +8,10 @@
 
 **Installer default**
 
-A skill to manage alarms, timers, reminders, events and todos and optionally sync them with a
-CalDAV service. Handy if you want a hands-free alarm clock, kitchen timer, or todo list that
-survives a reboot and can sync with an external calendar.
+A skill to manage alarms, timers, reminders, events and todos, with optional CalDAV sync for
+reminders, events, and todos (alarms and timers never sync). Handy if you want a hands-free
+alarm clock, kitchen timer, or todo list that survives a reboot and can sync with an
+external calendar.
 
 **Usage examples:**
 
