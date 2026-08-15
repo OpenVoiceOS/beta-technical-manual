@@ -2452,6 +2452,16 @@ is <code>false</code>.</p>
 <td>unset</td>
 <td>Explicit list of onnxruntime execution providers, takes precedence over <code>use_cuda</code></td>
 </tr>
+<tr>
+<td><code>lang2model</code></td>
+<td>unset</td>
+<td>Per-language routing map, e.g. <code>{"ru": "gigaam-v2-rnnt"}</code>. BCP-47 keys, full tags beat primary subtags. A language named here (or via an <code>ONNX_ASR_DEFAULT_&lt;LANG&gt;</code> env var) beats <code>model</code>; an unnamed language falls to the plugin's built-in best-model-per-language registry. Routed models load lazily on first request and stay cached</td>
+</tr>
+<tr>
+<td><code>max_loaded_models</code></td>
+<td>unset</td>
+<td>LRU cap on resident models (each is multi-GB when serving many languages). Unset keeps every loaded model forever; when set, the least-recently-used model is evicted as a new one would exceed the cap. Bounds cache retention, not peak memory: a model mid-transcription is held by its thread</td>
+</tr>
 </tbody>
 </table>
 <div class="admonition note">
