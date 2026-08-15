@@ -881,9 +881,9 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#slots-repeated-variations" class="md-nav__link">
+  <a href="#variants-repeated-phrasings" class="md-nav__link">
     <span class="md-ellipsis">
-      Slots (repeated variations)
+      Variants (repeated phrasings)
     </span>
   </a>
   
@@ -1280,9 +1280,9 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#slots-repeated-variations" class="md-nav__link">
+  <a href="#variants-repeated-phrasings" class="md-nav__link">
     <span class="md-ellipsis">
-      Slots (repeated variations)
+      Variants (repeated phrasings)
     </span>
   </a>
   
@@ -1398,8 +1398,8 @@ skill and which line of code each phrase comes from, so you always have context.
 <div class="admonition tip">
 <p class="admonition-title">Don't see your language?</p>
 <p>Languages are added on request. Ask in the
-<a href="https://matrix.to/#/#openvoiceos-languages:matrix.org">Matrix chat</a> or
-<a href="https://github.com/OpenVoiceOS/lang-support-tracker/issues">open an issue</a> and
+<a href="https://matrix.to/#/#OpenVoiceOS:matrix.org">OVOS Matrix chat</a> or
+<a href="https://github.com/OpenVoiceOS/ovos-localize/issues">open an issue on ovos-localize</a> and
 we'll enable it.</p>
 </div>
 <h2 id="step-2-translate">Step 2 — Translate<a class="headerlink" href="#step-2-translate" title="Permanent link">&para;</a></h2>
@@ -1444,13 +1444,14 @@ word optional.</p>
 <li>Alternatives: <code>I love (cats|dogs|birds)</code> → <code>Amo (gatos|perros|pájaros)</code></li>
 <li>Optional word: <code>I (really|) love it</code> → <code>(Realmente|) me encanta</code></li>
 </ul>
-<h3 id="slots-repeated-variations">Slots (repeated variations)<a class="headerlink" href="#slots-repeated-variations" title="Permanent link">&para;</a></h3>
-<p>Sometimes one phrase appears several times so OVOS can recognize different phrasings.
-Each variation is a <strong>slot</strong>.</p>
+<h3 id="variants-repeated-phrasings">Variants (repeated phrasings)<a class="headerlink" href="#variants-repeated-phrasings" title="Permanent link">&para;</a></h3>
+<p>Most files hold several lines that say the same thing in different ways, so OVOS can
+recognize (or speak) varied phrasings. Each line is a <strong>variant</strong>. (A <em>slot</em> is something
+else: a <code>{variable}</code> placeholder inside a line.)</p>
 <ul>
-<li>Translate <strong>at least one</strong> slot per file.</li>
-<li>If a slot doesn't make sense in your language, enter <code>[UNUSED]</code>. That tells us you
-  reviewed it on purpose.</li>
+<li>Translate <strong>at least one</strong> variant per file.</li>
+<li>If a line doesn't make sense in your language, enter <code>[UNUSED]</code>. That convention tells
+  us you reviewed it on purpose.</li>
 <li>Need more room for natural variations? Add a new line and write another translation.</li>
 </ul>
 <hr />
@@ -1472,8 +1473,8 @@ translation plugins, see the <strong><a href="../lang-support/">Language Support
 <hr />
 <h2 id="need-help">Need help?<a class="headerlink" href="#need-help" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>Matrix chat:</strong> <a href="https://matrix.to/#/#openvoiceos-languages:matrix.org">#openvoiceos-languages:matrix.org</a></li>
-<li><strong>Email:</strong> <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#117;&#112;&#112;&#111;&#114;&#116;&#64;&#111;&#112;&#101;&#110;&#118;&#111;&#105;&#99;&#101;&#111;&#115;&#46;&#111;&#114;&#103;">&#115;&#117;&#112;&#112;&#111;&#114;&#116;&#64;&#111;&#112;&#101;&#110;&#118;&#111;&#105;&#99;&#101;&#111;&#115;&#46;&#111;&#114;&#103;</a></li>
+<li><strong>Matrix chat:</strong> <a href="https://matrix.to/#/#OpenVoiceOS:matrix.org">#OpenVoiceOS:matrix.org</a></li>
+<li><strong>Issues:</strong> <a href="https://github.com/OpenVoiceOS/ovos-localize/issues">ovos-localize on GitHub</a></li>
 </ul>
 <p>Every translation makes OVOS usable for more people around the world.</p>
 <hr />
