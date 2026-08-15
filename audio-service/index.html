@@ -1882,7 +1882,7 @@ streams. See the <strong>Two independent subsystems</strong> note at the top of 
 <p><strong><a href="../tts-plugins/">TTS</a> Synthesis</strong>: Converts text to speech using various plugins.</p>
 </li>
 <li>
-<p><strong>Speech &amp; Sound Playback</strong>: A single queue (<code>TTS.queue</code>, one <code>PlaybackThread</code>) plays spoken responses and queued sounds in order; instant sounds (<code>play_sound</code>) bypass it.</p>
+<p><strong>Speech &amp; Sound Playback</strong>: A single queue (<code>TTS.queue</code>, one <code>PlaybackThread</code>) plays spoken responses and queued sounds in order. Instant sounds (<code>play_sound</code>) bypass it.</p>
 </li>
 <li>
 <p><strong>Audio Focus</strong>: Prioritizes speech over music or other background sounds (ducking).</p>
@@ -1905,7 +1905,7 @@ streams. See the <strong>Two independent subsystems</strong> note at the top of 
     Queue --&gt; Thread[PlaybackThread]
     Thread --&gt;|ALSA/Pulse| Speakers[Speakers]
     Bus --&gt;|"ovos.audio.play_sound&lt;br/&gt;(instant, may play over TTS)"| Speakers</code></pre>
-<p><em>Diagram:</em> The flow starts at the message bus and ends at the speakers. Queued sounds (<code>ovos.audio.queue</code>) skip the transformers and join <code>TTS.queue</code> in order with speech, while <code>ovos.audio.play_sound</code> bypasses the queue entirely and plays immediately, possibly over active TTS.</p>
+<p><em>Diagram:</em> The flow starts at the message bus and ends at the speakers. Queued sounds (<code>ovos.audio.queue</code>) skip the transformers and join <code>TTS.queue</code> in order with speech. <code>ovos.audio.play_sound</code> bypasses the queue and plays immediately, possibly over active TTS.</p>
 <h3 id="subsystem-2-legacy-media-audioservice-only-if-enable_old_audioservice">Subsystem 2: legacy media audioservice (only if <code>enable_old_audioservice</code>)<a class="headerlink" href="#subsystem-2-legacy-media-audioservice-only-if-enable_old_audioservice" title="Permanent link">&para;</a></h3>
 <pre class="mermaid"><code>flowchart LR
     Bus2[MessageBus] --&gt;|mycroft.audio.service.play| AS[AudioService]
