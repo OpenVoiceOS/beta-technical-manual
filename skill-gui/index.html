@@ -1769,7 +1769,7 @@ shown, and any connected GUI client (Qt shell, web, terminal, ...) renders it.</
 <p><strong>In plain terms:</strong> <code>self.gui</code> is a dict-like object. You put data in it
 (<code>self.gui["name"] = "OVOS"</code>), then call a <code>show_*</code> method to display a page.</p>
 <p>Under the hood, <code>self.gui</code> is a <code>SkillGUI</code> instance (a subclass of <code>GUIInterface</code>)
-created automatically for every <code>OVOSSkill</code>. On current <code>ovos-workshop</code> v8 the base class
+created automatically for every <code>OVOSSkill</code>. On current <code>ovos-workshop</code> the base class
 lives in <code>ovos_bus_client.apis.gui.GUIInterface</code>. The skill wrapper is
 <code>ovos_workshop.skills.ovos.SkillGUI</code>, namespaced to your <code>skill_id</code>.</p>
 <div class="admonition warning">
@@ -1865,13 +1865,16 @@ clients.</p>
 return to the idle/home screen for that many seconds. <code>override_animations=True</code>
 disables platform transition animations for the page.</p>
 </div>
+<p>The shipped <code>GUIInterface</code> also carries three animation helpers beyond the templates above:
+<code>show_face(awake=True, ...)</code> (the classic assistant face), <code>show_loading_animation(text, ...)</code>,
+and <code>show_status_animation(text, success, ...)</code>.</p>
 <div class="admonition warning">
 <p class="admonition-title">Upcoming — a wider template surface in the standalone package</p>
 <p>The templates above are what today's <code>ovos_bus_client.apis.gui.GUIInterface</code> ships. The
 forward-looking standalone <strong><code>ovos-gui-api-client</code></strong> <code>GUIInterface</code> (the package
 <a href="https://github.com/OpenVoiceOS/ovos-workshop/pull/420">ovos-workshop#420</a> rebinds
 <code>self.gui</code> to) adds more <code>SYSTEM_*</code> helpers: <code>show_list</code>, <code>show_grid</code>, <code>show_table</code>,
-<code>show_weather</code>, <code>show_clock</code>, <code>show_timer</code>, <code>show_map</code>, <code>show_media_player</code>, <code>show_face</code>,
+<code>show_weather</code>, <code>show_clock</code>, <code>show_timer</code>, <code>show_map</code>, <code>show_media_player</code>,
 and the two voice-first dialogue helpers <code>show_confirm(question, ...)</code> and
 <code>show_select(items, prompt=None, ...)</code>. These are <strong>not</strong> on a released <code>ovos-workshop</code>.
 Treat them as the template set new skills will target once the rebind lands.</p>
