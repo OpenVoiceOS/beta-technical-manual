@@ -1297,6 +1297,15 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#plugin-installs-over-the-bus" class="md-nav__link">
+    <span class="md-ellipsis">
+      Plugin installs over the bus
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#configuration" class="md-nav__link">
     <span class="md-ellipsis">
       Configuration
@@ -1773,6 +1782,15 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#plugin-installs-over-the-bus" class="md-nav__link">
+    <span class="md-ellipsis">
+      Plugin installs over the bus
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#configuration" class="md-nav__link">
     <span class="md-ellipsis">
       Configuration
@@ -2031,6 +2049,12 @@ services can query over the bus:</p>
 </table>
 <p>The <code>alive</code> callback exists in the hook map but <code>PHAL.start()</code> does not call
 <code>set_alive()</code>. The status goes straight to <code>started</code> then <code>ready</code>.</p>
+<h3 id="plugin-installs-over-the-bus">Plugin installs over the bus<a class="headerlink" href="#plugin-installs-over-the-bus" title="Permanent link">&para;</a></h3>
+<p>The service runs its own <code>ServiceInstaller</code> (service name <code>ovos_PHAL</code>, or
+<code>ovos_PHAL_admin</code> for AdminPHAL), so PHAL plugins can be pip-installed into the PHAL
+process's own environment over the bus. Gated by <code>skills.installer.allow_pip</code> (off by
+default). See <a href="../skill-installer/">Skill Installer</a> for the topics and the other services
+that do this.</p>
 <h3 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">&para;</a></h3>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="p">{</span>
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">  </span><span class="nt">&quot;PHAL&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>

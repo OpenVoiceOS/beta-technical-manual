@@ -1767,11 +1767,12 @@ full picture before enabling this in production.</p>
 <p>Services other than core can run their own <code>ServiceInstaller</code> (from <code>ovos-utils</code>), which
 listens on the broadcast topics above <strong>and</strong> on a targeted
 <code>ovos.pip.install.&lt;service_name&gt;</code> / <code>ovos.pip.uninstall.&lt;service_name&gt;</code> pair, so a package
-installs into the process that actually loads it. Three services do this: <code>ovos-audio</code>
+installs into the process that actually loads it. Four services do this: <code>ovos-audio</code>
 (service name <code>ovos_audio</code>, since 2.2.0a1), <code>ovos-dinkum-listener</code> (<code>ovos_dinkum_listener</code>,
-since 0.9.0a1), and <code>ovos-gui</code> (<code>ovos_gui</code>, since 1.5.0a1) — relevant when services run in
-separate venvs or containers, where a broadcast install into core's environment would not
-reach the target process.</p>
+since 0.9.0a1), <code>ovos-gui</code> (<code>ovos_gui</code>, since 1.5.0a1), and <code>ovos-PHAL</code> (since 0.3.0a1,
+service name <code>ovos_PHAL</code>, or <code>ovos_PHAL_admin</code> when running as <a href="../phal/">AdminPHAL</a>).
+This matters when services run in separate venvs or containers, where a broadcast install
+into core's environment would not reach the target process.</p>
 <h2 id="post-install-discovery">Post-Install Discovery<a class="headerlink" href="#post-install-discovery" title="Permanent link">&para;</a></h2>
 <p>After a successful skill installation, <code>ovos-plugin-manager</code>'s entry point cache is reloaded. This ensures the new skill is discovered on the next <code>SkillManager</code> scan cycle (which occurs every 30 seconds by default).</p>
 <h2 id="installerror-types">InstallError Types<a class="headerlink" href="#installerror-types" title="Permanent link">&para;</a></h2>
