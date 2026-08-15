@@ -87,7 +87,7 @@ streams. See the **Two independent subsystems** note at the top of this page.
 - **[TTS](tts-plugins.md) Synthesis**: Converts text to speech using various plugins.
 
 
-- **Speech & Sound Playback**: A single queue (`TTS.queue`, one `PlaybackThread`) plays spoken responses and queued sounds in order; instant sounds (`play_sound`) bypass it.
+- **Speech & Sound Playback**: A single queue (`TTS.queue`, one `PlaybackThread`) plays spoken responses and queued sounds in order. Instant sounds (`play_sound`) bypass it.
 
 
 - **Audio Focus**: Prioritizes speech over music or other background sounds (ducking).
@@ -114,7 +114,7 @@ flowchart TD
     Bus -->|"ovos.audio.play_sound<br/>(instant, may play over TTS)"| Speakers
 ```
 
-*Diagram:* The flow starts at the message bus and ends at the speakers. Queued sounds (`ovos.audio.queue`) skip the transformers and join `TTS.queue` in order with speech, while `ovos.audio.play_sound` bypasses the queue entirely and plays immediately, possibly over active TTS.
+*Diagram:* The flow starts at the message bus and ends at the speakers. Queued sounds (`ovos.audio.queue`) skip the transformers and join `TTS.queue` in order with speech. `ovos.audio.play_sound` bypasses the queue and plays immediately, possibly over active TTS.
 
 ### Subsystem 2: legacy media audioservice (only if `enable_old_audioservice`)
 
