@@ -370,7 +370,6 @@
 - Mar 2026 - `ovos-bus-client` version **1.5.0** released.
 - May 2026 - [architecture](https://github.com/OpenVoiceOS/architecture) repo introduced: formal written specifications for the OVOS protocols, with [ovos-spec-tools](https://github.com/OpenVoiceOS/ovos-spec-tools) as their dependency-free reference implementation
 - Jun 2026 - **MediaProvider plugin family** introduced (bandcamp, youtube, tunein, somafm, pyradios, soundcloud, spotify, news, mass), superseding the legacy OCP media skills
-- Jun 2026 - **GUI refactor**: `ovos-gui` moves to a template-based `GUIInterface` and the `opm.gui_adapter` plugin system, decoupling the GUI layer from the legacy QML/page model.
 - Jun 2026 - [ovos-test-harness](https://github.com/OpenVoiceOS/ovos-test-harness) introduced: an executable conformance suite proving the running stack against the formal specs, covering every published spec
 - Jul 2026 - OVOS speech servers gain [UTCP/MCP endpoints](https://blog.openvoiceos.org/posts/2026-07-15-mcp-utcp-speech-servers), callable from any AI agent
 - Jul 2026 - Bus topics migrate to the canonical `ovos.*` spec namespace, with transparent bridging so legacy and spec components interoperate during the transition — see [Bus namespace migration](bus-namespace-migration.md)

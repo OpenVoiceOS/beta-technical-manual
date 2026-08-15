@@ -51,6 +51,7 @@ hello-world-skill = "hello_world_skill:HelloWorldSkill"
 OVOSSkill                             ovos_workshop/skills/ovos.py
 ├── ConversationalSkill               ovos_workshop/skills/converse.py
 │   └── ActiveSkill                   ovos_workshop/skills/active.py
+│       └── PassiveSkill              ovos_workshop/skills/passive.py
 ├── FallbackSkill                     ovos_workshop/skills/fallback.py
 ├── IdleDisplaySkill                  ovos_workshop/skills/idle_display_skill.py
 ├── OVOSCommonPlaybackSkill           ovos_workshop/skills/common_play.py
