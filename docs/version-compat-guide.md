@@ -151,7 +151,7 @@ argument, and the new caller, which calls with none.
 `found_wake_word(audio_data)` became `found_wake_word()`, with audio now fed
 separately through `update(chunk)`. Both `mycroft-classic-listener` (`19d9961`, #12,
 2026-01-09) and `ovos-simple-listener` (`34e2219`, #20, 2026-01-23) landed the
-caller-side change on the same opm bump, so a plugin still expecting one positional
+caller-side change when they bumped to opm `2.0.0`, so a plugin still expecting one positional
 argument gets called with zero and raises `TypeError` on any updated listener:
 
 ```python
@@ -166,7 +166,7 @@ class MyWakeWordPlugin(HotWordEngine):
 
     def found_wake_word(self, audio_data=None) -> bool:
         # opm 1.0.0+: called with no arguments, audio already fed via update()
-        # pre-2.0: called with the raw audio chunk directly
+        # pre-1.0.0: called with the raw audio chunk directly
         chunk = audio_data if audio_data is not None else self._buffer
         return self._detect(chunk)
 ```

@@ -7,7 +7,7 @@ This page is for maintainers of [STT](stt-plugins.md), [TTS](tts-plugins.md), [w
 OVOS install. Entries are in date order: start at the version you are
 currently running and read forward to your target version. For the
 Big-ticket migrations (the changes with the widest blast radius, including
-the opm 2.0 wake-word signature change), see
+the wake-word signature split), see
 [Updating from Older OVOS](updating-from-older-ovos.md#big-ticket-migrations).
 
 ## If you maintain plugins
