@@ -1046,6 +1046,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#ovos-wordnet-plugin" class="md-nav__link">
+    <span class="md-ellipsis">
+      ovos-wordnet-plugin
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#ovos-solver-yesno-plugin" class="md-nav__link">
     <span class="md-ellipsis">
       ovos-solver-YesNo-plugin
@@ -1455,6 +1464,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#ovos-wordnet-plugin" class="md-nav__link">
+    <span class="md-ellipsis">
+      ovos-wordnet-plugin
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#ovos-solver-yesno-plugin" class="md-nav__link">
     <span class="md-ellipsis">
       ovos-solver-YesNo-plugin
@@ -1703,6 +1721,16 @@ Start at <a href="../agent-plugins/">Agent Plugins</a> to pick a plugin, come he
 </li>
 <li>
 <p><strong>Config</strong>: <code>"keyword_extractor"</code>: module name of the keyword-extraction plugin used to pull search terms out of the question (defaults to <code>ovos-rake-keyword-extractor</code>).</p>
+</li>
+</ul>
+<hr />
+<h2 id="ovos-wordnet-plugin">ovos-wordnet-plugin<a class="headerlink" href="#ovos-wordnet-plugin" title="Permanent link">&para;</a></h2>
+<ul>
+<li>
+<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-wordnet-plugin">OpenVoiceOS/ovos-wordnet-plugin</a></p>
+</li>
+<li>
+<p><strong>Description</strong>: Answers word-knowledge questions from the local WordNet corpus. Registers a <code>RetrievalEngine</code> (<code>opm.agents.retrieval</code>, entry point <code>ovos-wordnet-plugin</code>) that matches locale intent patterns such as "what are the antonyms of dog?" and falls back to multi-sense definition passages for bare word lookups, plus the <code>ovos-wordnet-tools</code> toolbox (<code>define_word</code>, <code>word_relations</code>) documented on <a href="../tool-plugins/#available-toolboxes">Tool Plugins</a>.</p>
 </li>
 </ul>
 <hr />

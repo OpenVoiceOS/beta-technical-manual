@@ -1892,9 +1892,12 @@ exist in the OVOS org.</p>
 <code>ovos-shell-tools</code>, <code>ovos-web-search-tools</code>, <code>ovos-clock-tools</code>, <code>ovos-skill-md-toolbox</code>).
 See that page for those.</p>
 <h2 id="available-chat-engines">Available Chat Engines<a class="headerlink" href="#available-chat-engines" title="Permanent link">&para;</a></h2>
-<p><code>opm.agents.chat</code> plugins beyond the ones documented in the <a href="../agent-plugins/#plugin-catalog">Agent Plugins catalog</a>
-(<code>ovos-openai-plugin</code>, <code>ovos-gguf-plugin</code>) are not currently shipped by an OpenVoiceOS-org
-repository. This manual only documents plugins backed by an OpenVoiceOS-org repo.</p>
+<p>The OpenVoiceOS-org <code>opm.agents.chat</code> registrants are <code>ovos-openai-plugin</code> and
+<code>ovos-gguf-plugin</code> (see the <a href="../agent-plugins/#plugin-catalog">Agent Plugins catalog</a>),
+<code>ovos-messagebus-chat-plugin</code>, the <code>ovos-agentic-loop</code> reasoning loops, and
+<code>ovos-a2a-agent-plugin</code> (<code>ovos-a2a-solver</code>, documented on
+<a href="../agent-interop/">Agent Interoperability</a>). This manual only documents plugins backed by
+an OpenVoiceOS-org repo.</p>
 <h2 id="testing-tool-calling-without-a-gpu">Testing Tool Calling Without a GPU<a class="headerlink" href="#testing-tool-calling-without-a-gpu" title="Permanent link">&para;</a></h2>
 <p>Reviewing tool-calling code needs a model that reliably <em>emits</em> tool calls, not necessarily a
 smart one. A small CPU-only model under <a href="https://github.com/ggml-org/llama.cpp">llama.cpp</a>'s
