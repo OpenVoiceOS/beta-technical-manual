@@ -172,7 +172,7 @@ Each table below names the PR-comment section a workflow posts. The bot prefixes
 |---|---|
 | `skill-check.yml` | Locale structure, language coverage, `skill.json` validity. Post `Skill`. |
 | `locale-check.yml` | Verify locale folders are correctly included in the package build. |
-| `spec-lint.yml` | Run `ovos-spec-lint` against a skill's locale folder (OVOS-INTENT-1 / OVOS-INTENT-2). |
+| `spec-lint.yml` | Run `ovos-spec-lint` against a skill's locale folder (OVOS-INTENT-1 / OVOS-INTENT-2). Also invoked automatically from `skill-check.yml` (input `spec_lint`, default `true`), which is how it reaches every `ovos-skill-*` repo without per-repo caller changes; set `spec_lint: false` there to opt a repo out. |
 
 ### Notifications & dependency tracking
 
