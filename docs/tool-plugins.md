@@ -63,32 +63,11 @@ The base class signature is `ToolBox.__init__(self, toolbox_id, config=None, bus
 `__init__(self, config=None, bus=None)` and passing its own identity up, as above, so that
 callers do not have to know the name.
 
-!!! warning "Loaders do not agree on how to construct a toolbox — accept all three arguments"
-    The three loaders in the org each call this differently, and none of them matches the
-    others:
-
-    | Loader | Call |
-    |---|---|
-    | `ovos-persona-server` | `cls(toolbox_id=name)` |
-    | `ovos-PHAL-plugin-tools` | `cls(config=..., bus=self.bus)` |
-    | `ovos-agentic-loop` | `cls(config=..., bus=bus)` |
-
-    The toolboxes shipped today (DuckDuckGo, Wikipedia, Wolfram Alpha, Wordnet) take
-    `__init__(self, config=None)` and nothing else, so they raise `TypeError` under every one
-    of those calls. Each loader catches it and logs a warning, so the toolbox is silently
-    absent rather than failing loudly.
-
-    Until that settles, take all three and give each a default:
-
-    ```python
-    def __init__(self, toolbox_id="my-toolbox", config=None, bus=None):
-        super().__init__(toolbox_id=toolbox_id, config=config, bus=bus)
-    ```
-
-    A toolbox written this way loads under all three loaders. It also gets the per-instance id
-    that an adapter fronting several external servers (the MCP and UTCP adapters) needs to keep
-    one bus topic per instance — those two set `toolbox_id` as a class attribute instead, so
-    they cannot currently run as more than one instance.
+!!! note "Loaders and shipped toolboxes agree on `(config, bus)`"
+    All three loaders in the org (`ovos-persona-server`, `ovos-PHAL-plugin-tools`,
+    `ovos-agentic-loop`) construct a toolbox as `cls(config=..., bus=bus)`, and every
+    shipped toolbox accepts `__init__(self, config=None, bus=None)`. Plugins own their
+    own `toolbox_id`; no loader passes one. Write new toolboxes with that signature.
 
 `ToolBox.__init__` calls `discover_tools()` immediately to populate `self.tools`, and `bind(bus)`
 registers the messagebus handlers described below. The full authoring guide with more
@@ -314,13 +293,10 @@ bus via `ovos.persona.tools.{toolbox_id}.call`.
 
 | Plugin ID | Tools | Package | API key |
 |---|---|---|---|
-| `ovos-wikipedia-tool` | `search_wikipedia`, `get_wikipedia_sections`, `get_wikipedia_page` | `ovos-wikipedia-plugin` | None, public Wikipedia REST API |
-| `ovos-ddg-tools` | `search_duckduckgo`, `get_duckduckgo_infobox` | `ovos-ddg-plugin` | None, DuckDuckGo Instant Answer API |
-| `ovos-wolfram-alpha-tools` | `compute`, `compute_full` | `ovos-wolfram-alpha-plugin` | Optional, free key at developer.wolframalpha.com; a demo key ships in the plugin |
-| `ovos-wordnet-tool` | `lookup_word`, `define_word` | `ovos-wordnet-plugin` | None, local NLTK corpus |
-
-Note the two singular `-tool` IDs. They are the entry-point names the plugins actually
-register, not typos.
+| `ovos-wikipedia-tools` | `search_wikipedia` | `ovos-wikipedia-plugin` | None, public Wikipedia REST API |
+| `ovos-ddg-tools` | `search_duckduckgo`, `duckduckgo_infobox`, `duckduckgo_image` | `ovos-ddg-plugin` | None, DuckDuckGo Instant Answer API |
+| `ovos-wolfram-alpha-tools` | `search_wolfram_alpha` | `ovos-wolfram-alpha-plugin` | Optional, free key at developer.wolframalpha.com; a demo key ships in the plugin |
+| `ovos-wordnet-tools` | `define_word`, `word_relations` | `ovos-wordnet-plugin` | None, local NLTK corpus |
 
 Skills are a natural place for more of these — weather, date and time, the ISS tracker — but
 none of those skills registers an `opm.agents.toolbox` entry point yet. Only the four above
