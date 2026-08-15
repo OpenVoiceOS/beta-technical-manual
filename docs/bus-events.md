@@ -58,7 +58,7 @@ Handled by `ovos-core`'s `IntentService`. See [Intent Service](intent-service.md
 | Event | Handler | Meaning |
 |---|---|---|
 | `ovos.utterance.handle` (legacy: `recognizer_loop:utterance`) | `handle_utterance` | Run an utterance through the pipeline |
-| `add_context` / `remove_context` / `clear_context` | `handle_add_context` / `handle_remove_context` / `handle_clear_context` | Manage [intent context](context.md) |
+| `add_context` / `remove_context` / `clear_context` | `handle_add_context` / `handle_remove_context` / `handle_clear_context` | Legacy-compat [intent context](context.md) writes (modern emitters mutate the session directly) |
 | `intent.service.intent.get` | `handle_get_intent` | Query the best-matching intent without dispatching it |
 | `intent.service.skills.deactivate` | `_handle_deactivate` | Remove a skill from active/converse consideration |
 | `intent.service.pipelines.reload` | `handle_reload_pipelines` | Reload the configured pipeline plugin stack |
