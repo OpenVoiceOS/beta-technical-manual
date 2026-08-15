@@ -133,6 +133,7 @@ A pipeline plugin is a matcher exposing `match(utterances, lang, session) → Ma
 | Video Player | `opm.media.video` |
 | Web Player | `opm.media.web` |
 | Media Provider | `opm.media.provider` |
+| Legacy audio backend | `mycroft.plugin.audioservice` — deprecated but still discovered at runtime; it has no `opm.*` rename (`opm.media.audio` is a distinct newer type, not its replacement). Used by the classic [audio backends](ocp-audio-plugin.md) |
 
 ### Agent Plugins
 
