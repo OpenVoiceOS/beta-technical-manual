@@ -114,7 +114,7 @@ if (version.VERSION_MAJOR, version.VERSION_MINOR) >= (7, 1):
 ```
 
 The `CommonQuerySkill` removal is the sharper case: the class itself is gone in
-`ovos-workshop` as of `6382d0a` (#400, 2026-04-08, pre-`8.0.0`), so you cannot import
+`ovos-workshop` as of `6382d0a` (#400, first shipped in `8.0.4a3`), so you cannot import
 it unconditionally even inside a `try`/`except` used only for typing. Prefer the
 modern `@common_query` decorator (`ovos_workshop.decorators.common_query`) when it
 exists, and only import the deprecated base class on cores old enough to still ship

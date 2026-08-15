@@ -77,8 +77,8 @@ The gate only ever emits a warning, never an error, and it fires when a resource
 | Role | Requires |
 |---|---|
 | [`.blacklist`](resource-files.md) | 1 |
-| `.prompt` | 2 |
-| `<name>` | 3 |
+| `<name>` (inline vocabulary reference) | 2 |
+| `.prompt` | 3 |
 
 So `--spec-version 0` warns about a `.blacklist`, and any value from 1 up says nothing about
 it. Use the flag to check what an older deployment would silently drop, not to grade a

@@ -265,7 +265,7 @@ Translation plugins must implement `LanguageTranslator` from `ovos_plugin_manage
 
 ```python
 class LanguageTranslator:
-    def translate(self, text, target="en", source="auto") -> str: ...
+    def translate(self, text, target=None, source=None) -> str: ...
 ```
 
 Detection plugins must implement `LanguageDetector`:

@@ -190,84 +190,12 @@ Lifecycle:
 class) was already removed outright in `d526e99` (#207, 2026-05-18,
 `2.0.0`): migrate to `ovos-messagebus-chat-plugin`.
 
-### GUI adapter plugin handler signature gains `session_id`
+### Pending plugin-surface changes
 
-All `handle_show_*` template handlers, `on_namespace_activated`,
-`on_namespace_deactivated`, `on_status_event`, `on_session_update`, and
-`dispatch_template()` gained a new `session_id: str = "default"` parameter
-inserted **before** the existing `site_id` parameter.
-
-```python
-# old
-def handle_show_text(self, skill_id, data, site_id="default"): ...
-
-# new
-def handle_show_text(self, skill_id, data, session_id="default", site_id="default"): ...
-```
-
-- Migration: switch any positional `site_id` call sites to keyword
-  arguments, or insert `session_id="default"` explicitly before the old
-  third positional argument.
-Lifecycle:
-
-| Phase | Version | Notes |
-|---|---|---|
-| Active | before `34a0f13` | |
-| Deprecated but functional | none | explicit `BREAKING CHANGE:` in the commit body |
-| Dropped | landed `34a0f13` (2026-03-12) | (ovos-plugin-manager `34a0f13`) |
-
-### PHAL enclosure abstraction dropped
-
-`PHALPlugin` lost its Mark-1/Mark-2 enclosure command handling
-(`register_enclosure_namespace`, `on_eyes_*`, `on_mouth_*`, `on_display`,
-and so on) in one commit, then lost its lifecycle bus-event auto-wiring
-(record/speak/wake/sleep) in a same-day follow-up. `PHALPlugin` is now a
-bare background thread with no bus events wired by the base class at all.
-
-- Migration: mix in `EnclosureProtocolListener` from the separate
-  `ovos-ui-enclosure-protocol` package for both the enclosure commands and
-  `register_core_events()`. The `EnclosureAPI` producer moved to
-  `ovos-gui-api-client`. See [PHAL](phal.md) for the current plugin contract.
-Lifecycle:
-
-| Phase | Version | Notes |
-|---|---|---|
-| Active | before `eac52a4` | |
-| Deprecated but functional | none | both commits landed same day |
-| Dropped | `eac52a4` and `f7c613b` (2026-06-25) | (ovos-plugin-manager `eac52a4`, `f7c613b`) |
-
-### `MediaProvider` template collapsed to `search()`
-
-`MediaProvider` lost `is_available`, `matches`, `serves`, `search_context`,
-`search_safe`, `featured_media`, and the `media`/`playback_type`/
-`genre_filter` ClassVars, all on the same day the `QueryContext` dataclass
-parameter was also replaced by plain `**context` kwargs.
-
-```python
-# old
-class MyProvider(MediaProvider):
-    def search(self, signals, context: QueryContext) -> list[Release]:
-        if context.allows_playback(...):
-            ...
-
-# new
-class MyProvider(MediaProvider):
-    def search(self, signals, lang='en-us', **context) -> list[Release]:
-        if context.get('supported_playback_types'):
-            ...
-```
-
-- Migration: implement the single `search(signals, lang='en-us',
-  **context)` method. Read routing/availability info from `**context`
-  instead of the removed `QueryContext` helper methods. See [Media Service](ovos-media.md)
-  and [OCP](ocp-pipeline.md) for how providers are queried.
-Lifecycle:
-
-| Phase | Version | Notes |
-|---|---|---|
-| Active | before `8a03351` | |
-| Deprecated but functional | none | fast in-place redesign of a still-fresh API: `opm.media.provider` type was only introduced days earlier in `83ade15`, #405 |
-| Dropped | `8a03351` and `1741181`, both 2026-06-25 | (ovos-plugin-manager `8a03351`, `1741181`) |
+Three further breaking changes to plugin templates (GUI adapters gaining
+`session_id`, the PHAL enclosure-abstraction drop, and the `MediaProvider`
+surface) exist only as open pull requests. Nothing shipped implements them.
+See [Upcoming Changes](upcoming-changes.md) for the PR-by-PR status.
 
 ---
 
