@@ -69,9 +69,10 @@ Persona management is session-isolated:
 - Conversation history is tracked per session, not globally.
 - Enables: different persona per wake word, different TTS voice per persona, distinct persona for each HiveMind satellite.
 
-The active persona travels in the session's `persona_id` field; it is switched through the
-pipeline's `persona:summon` / `persona:release` matches, or queried over the bus with
-`ovos.persona.query`.
+The active persona travels in the session's `persona_id` field and is switched through the
+pipeline's `persona:summon` / `persona:release` matches. Independently, `ovos.persona.query`
+lets any caller ask a **named** persona a one-off, stateless question without touching
+`session.persona_id`.
 
 ---
 
@@ -324,7 +325,9 @@ Register the class under the `opm.agents.memory` entry-point group in your packa
 The active persona is carried on the session as `Session.persona_id` (OVOS-PERSONA-1 §3), the
 same field [Persona Pipeline](persona-pipeline.md) documents. There is no `active_persona`
 field and no `ovos.persona.set` message: the persona is switched through the pipeline's
-`persona:summon` / `persona:release` matches, or over the bus with `ovos.persona.query`.
+`persona:summon` / `persona:release` matches only. The `ovos.persona.query` bus message is
+unrelated to switching: it is a stateless one-shot question to a named persona that never
+mutates `session.persona_id`.
 
 ---
 
