@@ -1838,22 +1838,18 @@ rather than <code>{type}</code>. Reserve <code>{slot}</code> for values you inte
 <code>message.data</code> in the handler; if the handler never consumes the captured value, it
 should probably not be a slot at all.</p>
 </div>
-<div class="admonition warning">
-<p class="admonition-title">Out-of-list matches are invisible on a default install</p>
+<div class="admonition note">
+<p class="admonition-title">Out-of-list matches land in the medium stage</p>
 <p>In <code>ovos-padatious-pipeline-plugin</code> (2.0.3a1+), an out-of-list value is floored at
 <code>ENTITY_HINT_FLOOR = 0.8</code> rather than collapsing the candidate, and a listed value scores
-near-identity from <code>0.9</code> up. That floor lands squarely in the plugin's own
-<strong>medium</strong>-confidence band (<code>conf_med = 0.8</code>, <code>conf_high = 0.95</code> by default), well below
-<code>conf_high</code>. The stock <code>mycroft.conf</code> pipeline only enables
-<code>ovos-padatious-pipeline-plugin-high</code>, not the medium or low stages. The floor applies to
+near-identity from <code>0.9</code> up. That floor lands in the plugin's <strong>medium</strong>-confidence band
+(<code>conf_med = 0.8</code>, <code>conf_high = 0.95</code> by default), below <code>conf_high</code>. The floor applies to
 the per-slot entity contribution, not the final confidence, so the exact final score
-varies with the rest of the match — but in practice an out-of-list value drags the match
-below <code>conf_high</code>, and on a default install it then produces no match at all: the
-medium-confidence result exists internally but nothing in the default pipeline reads it.
-Enabling
-<code>ovos-padatious-pipeline-plugin-medium</code> in <code>pipeline</code> is what would make those matches
-visible. Whether the default pipeline should change to include it is an open decision,
-not something already shipped.</p>
+varies with the rest of the match, but in practice an out-of-list value drags the match
+below <code>conf_high</code>. The stock <code>mycroft.conf</code> pipeline includes
+<code>ovos-padatious-pipeline-plugin-medium</code> (since ovos-config <code>2.3.9a1</code>) precisely so these
+matches still fire. On a deployment that trims the pipeline to the high stage only,
+out-of-list slot values silently produce no match at all.</p>
 </div>
 <h3 id="number-matching">Number matching<a class="headerlink" href="#number-matching" title="Permanent link">&para;</a></h3>
 <blockquote>
