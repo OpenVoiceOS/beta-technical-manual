@@ -123,8 +123,10 @@ A radio-button list of installation profiles:
 
 `listener`
 :   A HiveMind Core hub (`hivemind-core listen`) that HiveMind satellites and bots connect
-    to. It is not OVOS's own local wake-word/listening service — that ships with the `ovos`
-    and `satellite` profiles. See [Composable Deployments](composable-deployments.md).
+    to. The installer treats `listener` as a desktop profile, so it also runs OVOS's own
+    local `ovos-dinkum-listener` service. The `satellite` profile is different: it runs a
+    HiveMind satellite client instead and has no local OVOS core or listener at all. See
+    [Composable Deployments](composable-deployments.md).
 
 `server`
 :   A headless core with no local audio hardware assumptions, meant to serve satellites. It also skips GUI/LLM/Home Assistant options.

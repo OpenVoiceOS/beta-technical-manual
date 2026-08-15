@@ -22,7 +22,7 @@ LLM-backed implementations are provided by `ovos-openai-plugin` / `ovos-gguf-plu
 (dialog transformers).
 
 Multiple transformers of each type can be stacked. The `priority` config key controls
-execution order (higher priority runs first).
+execution order (lower priority runs first, OVOS-TRANSFORM-1 §4 ascending order).
 
 ---
 
@@ -35,7 +35,7 @@ dict.
 A typical utterance transformer normalises informal or noisy speech to standard form, or
 classifies ASR output as valid or invalid *before* it reaches intent matching so that garbled
 speech like `"Potato stop green light now yes."` is discarded. The `priority` config key
-controls where each runs in the chain (higher priority runs first).
+controls where each runs in the chain (lower priority runs first).
 
 ---
 
@@ -108,7 +108,7 @@ implementations:
 ## Stacking Transformers
 
 Multiple transformers of the same type can be active at once. Each configured entry under
-`dialog_transformers` runs in turn, **higher `priority` first**. Each one's output feeds into
+`dialog_transformers` runs in turn, **lower `priority` first** (ascending). Each one's output feeds into
 the next. For example, you can run a cheap local pass to strip markdown and jargon, then let an
 expensive cloud model add personality on top:
 
@@ -119,14 +119,14 @@ expensive cloud model add personality on top:
       "model": "/path/to/model.gguf",
       "rewrite_prompt": "Remove all markdown and technical jargon; keep it plain and short.",
       "n_gpu_layers": 20,
-      "priority": 60
+      "priority": 40
     },
     "ovos-dialog-transformer-openai-plugin": {
       "api_url": "https://api.openai.com/v1",
       "key": "sk-...",
       "model": "gpt-4o-mini",
       "rewrite_prompt": "Rewrite in the style of a grumpy old pirate.",
-      "priority": 40
+      "priority": 60
     }
   }
 }
@@ -134,12 +134,12 @@ expensive cloud model add personality on top:
 ```
 
 With this configuration, a skill's dialog is rewritten twice before TTS: first the GGUF
-transformer (`priority: 60`) runs locally to clean the raw text, then its output is passed to
-the OpenAI transformer (`priority: 40`) to apply the character voice. If either call fails, it
+transformer (`priority: 40`) runs locally to clean the raw text, then its output is passed to
+the OpenAI transformer (`priority: 60`) to apply the character voice. If either call fails, it
 falls back to passing its input through unchanged, so the chain degrades gracefully.
 
 Utterance transformers work the same way but run before intent matching (cleaning or validating
-ASR output), with higher priority also running first.
+ASR output), with lower priority also running first.
 
 ---
 
