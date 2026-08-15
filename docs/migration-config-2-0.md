@@ -48,7 +48,7 @@ New `core.pipeline`, `2.0.0` and later:
 are standalone opt-in plugins now. Add `"ovos-adapt-pipeline-plugin-low"` and
 the common-query plugin ID back explicitly if you still want them.
 
-These are the pipeline stages as they stood at `2.0.0`, written in the old short-name
+These are the pipeline stages as they stood at `2.0.0`, already in the new plugin-id
 notation. The default list has since grown: `ovos-padatious-pipeline-plugin-medium` joined
 it in ovos-config `2.3.9a1`. See [Pipelines Overview](pipelines-overview.md) for the
 current stage list and how the pipeline matcher chain works.

@@ -1092,7 +1092,7 @@ on, and assets used across projects.
 :   A compatibility shim exposing the classic mycroft-core GUI plugin interface on top of modern ovos-gui. Used only by GUI clients written against the old mycroft-core API.
 
 **[ovos-localize](https://github.com/OpenVoiceOS/ovos-localize)**
-:   A GitHub-native localization platform purpose-built for OVOS skill and plugin locale files, replacing GitLocalize. Used by maintainers and translators to manage translations; see [Machine-Translation Boundary](ovos-localize-tutorial.md) if present, or the localization workflow docs.
+:   A GitHub-native localization platform purpose-built for OVOS skill and plugin locale files, replacing GitLocalize. Used by maintainers and translators to manage translations; see [Contribute Translations with OVOS Localize](ovos-localize-tutorial.md) for the workflow.
 
 **[ovos-machine-translations](https://github.com/OpenVoiceOS/ovos-machine-translations)**
 :   Temporary machine-translated resource files produced while skills and plugins waited for GitLocalize-based human translation. Historical/staging resource, not imported by runtime code.
