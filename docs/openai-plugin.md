@@ -301,9 +301,11 @@ Focus on the most important information.
 
 **OPM plugin name:** `ovos-translate-openai-plugin`
 
-Translates text between languages using an LLM. Language codes follow BCP-47 (e.g. `en-us`,
-`pt-pt`, `es-es`). Supports translating OVOS `.intent` files while preserving `{variables}`,
-`[optional]`, and `(alt|ernatives)` syntax.
+Translates plain text between languages by prompting the LLM. Language codes follow BCP-47
+(e.g. `en-us`, `pt-pt`, `es-es`); the code is resolved to an English display name for the
+prompt. There is no special handling for OVOS template syntax: feeding it an `.intent` file
+line gives no guarantee that `{variables}`, `[optional]`, or `(alt|ernatives)` markers
+survive translation.
 
 ```json
 {
