@@ -146,7 +146,7 @@ A checklist (only shown for the `ovos`/`listener`/`server` profiles, not `satell
 :   Install additional community skills beyond the default set. Off by default.
 
 `gui`
-:   Enable the OVOS GUI. Only offered on Mark II/DevKit hardware running Debian Trixie (or newer). On those devices it defaults **on**. Not offered on the `server`/`satellite` profiles.
+:   Enable the OVOS GUI. Only offered on Mark II/DevKit hardware running Debian Trixie (the check is an exact match on Debian 13, so later Debian releases need an installer update). On those devices it defaults **on**. Not offered on the `server`/`satellite` profiles.
 
 `homeassistant`
 :   Enable Home Assistant integration. Prompts for a URL and access token. Only offered for the `ovos`/`listener` profiles with the `virtualenv` or `containers` method.
