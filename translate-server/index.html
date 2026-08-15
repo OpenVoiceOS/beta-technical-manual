@@ -2094,8 +2094,9 @@ from <code>mycroft.conf</code> via <code>Configuration()</code>, empty when unse
 <h2 id="gotchas">Gotchas<a class="headerlink" href="#gotchas" title="Permanent link">&para;</a></h2>
 <ul>
 <li><strong>All endpoints are <code>GET</code> with the text in the URL path.</strong> Long or special-character utterances must be URL-encoded by the client. There is no request body and no authentication. Don't expose this server directly to untrusted networks. Front it with a reverse proxy.</li>
-<li>With the <code>mcp</code> extra installed, MCP is mounted at <code>/mcp</code> on the same HTTP server and port
-  (<code>9686</code>) automatically — nothing extra to run. The standalone MCP-only process (<code>python -m
+<li>MCP mounts at <code>/mcp</code> on the same HTTP server and port (<code>9686</code>) only when the server starts
+  with the <code>--mcp</code> flag and the <code>mcp</code> extra is installed. The extra alone does not
+  auto-mount the endpoint. The standalone MCP-only process (<code>python -m
   ovos_translate_server.mcp_server</code>, default <code>127.0.0.1:9687</code>) is a separate, optional way to run
   MCP without the HTTP API; running one does not start the other.</li>
 </ul>

@@ -1694,10 +1694,11 @@ See <a href="../stt-plugins/">STT plugins</a> and the <a href="../glossary/">Glo
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pip<span class="w"> </span>install<span class="w"> </span>ovos-stt-http-server
 </span></code></pre></div>
 <p><strong>Choose your STT plugin</strong></p>
-<p>You name the plugin to serve with the <code>--engine</code> flag (below). Unlike a full OVOS
-install, the standalone server instantiates the plugin with an <strong>empty config</strong>, so it runs
-with the plugin's <strong>built-in defaults</strong>. It does <strong>not</strong> read the <code>stt</code> section of
-<code>mycroft.conf</code>. Pick a plugin whose defaults suit you, or one that loads its own configuration.</p>
+<p>You name the plugin to serve with the <code>--engine</code> flag (below). When no explicit config is
+passed, the server reads the plugin's own section from <code>mycroft.conf</code> (<code>stt.&lt;plugin-id&gt;</code>),
+matching <code>OVOSSTTFactory</code> behavior, so a mounted config file can select the model, device,
+and other plugin settings. With no config file present, the plugin runs with its built-in
+defaults.</p>
 <p>A normal OVOS install (not this server) selects its STT plugin under the <code>stt</code> section instead:</p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="p">{</span>
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w"> </span><span class="nt">&quot;stt&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
