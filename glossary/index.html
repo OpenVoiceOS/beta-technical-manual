@@ -1467,7 +1467,7 @@ else here is reference material you can meet when a page links to it.</p>
 <dt><strong>Dispatch-shaped topic</strong></dt>
 <dd>A bus topic containing <code>:</code>, assembled from identifiers to address one specific registered handler: canonically <code>&lt;skill_id&gt;:&lt;intent_name&gt;</code>. The <code>:</code> is the marker. Only a formal specification may define a colon-bearing topic shape. <a href="https://github.com/OpenVoiceOS/architecture/blob/dev/msg-1.md">OVOS-MSG-1 §2.1.1</a>.</dd>
 <dt><strong>Dotted addressed topic</strong></dt>
-<dd>An ordinary <code>:</code>-free dotted topic (<code>&lt;x&gt;.&lt;y&gt;.&lt;verb&gt;</code>) that names a specific recipient in one of its segments, for example <code>&lt;skill_id&gt;.common_query.request</code>. It is an addressed message, not a dispatch. <a href="https://github.com/OpenVoiceOS/architecture/blob/dev/msg-1.md">OVOS-MSG-1 §2.1.1</a>, <a href="https://github.com/OpenVoiceOS/architecture/blob/dev/common-query.md">OVOS-COMMON-QUERY-1 §7</a>.</dd>
+<dd>An ordinary <code>:</code>-free dotted topic (<code>&lt;x&gt;.&lt;y&gt;.&lt;verb&gt;</code>) that names a specific recipient in one of its segments, for example the legacy <code>{skill_id}.converse.request</code>. It is an addressed message, not a dispatch. The spec treats these as legacy: per <a href="https://github.com/OpenVoiceOS/architecture/blob/dev/msg-1.md">OVOS-MSG-1 §2.1.1</a> a spec-conformant dotted topic is a static string, and addressing travels in the payload instead (as in <code>ovos.common_query.request</code> naming its target in <code>data.skill_id</code>).</dd>
 </dl>
 <h2 id="e">E<a class="headerlink" href="#e" title="Permanent link">&para;</a></h2>
 <dl>
@@ -1583,7 +1583,7 @@ else here is reference material you can meet when a page links to it.</p>
 <dt><strong>RAG (Retrieval-Augmented Generation)</strong></dt>
 <dd>Fetching relevant remembered/retrieved context and giving it to an LLM <em>before</em> it answers. See <a href="../persona-memory/">Persona Memory</a>.</dd>
 <dt><strong>Recency-targeted stop</strong></dt>
-<dd>How the stop plugin picks a target once the stoppability poll comes back with <strong>at least one</strong> <code>can_handle: true</code> responder: it stops the entry with the highest <code>activated_at</code> in <code>session.active_handlers</code>. If no handler answers positively, it does the opposite of targeting — it escalates to a global stop. <a href="https://github.com/OpenVoiceOS/architecture/blob/dev/stop-1.md">OVOS-STOP-1 §4.1</a>.</dd>
+<dd>How the stop plugin picks a target: among positive responders to the stoppability poll it stops the entry with the highest <code>activated_at</code> in <code>session.active_handlers</code>. When no handler answers positively it still falls back to recency over the full <code>active_handlers</code> set rather than escalating; a global stop is reserved for explicit global-stop vocabulary and the empty-<code>active_handlers</code> case. <a href="https://github.com/OpenVoiceOS/architecture/blob/dev/stop-1.md">OVOS-STOP-1 §4.1</a>.</dd>
 <dt><strong>Release Channel</strong></dt>
 <dd>A stability track, either <em>stable</em>, <em>testing</em>, or <em>alpha</em>, that controls how new the installed packages are. See <a href="../release-channels/">Release Channels</a>.</dd>
 <dt><strong>Reserved <code>intent_name</code></strong></dt>
