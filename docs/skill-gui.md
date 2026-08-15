@@ -18,7 +18,7 @@ shown, and any connected GUI client (Qt shell, web, terminal, ...) renders it.
 (`self.gui["name"] = "OVOS"`), then call a `show_*` method to display a page.
 
 Under the hood, `self.gui` is a `SkillGUI` instance (a subclass of `GUIInterface`)
-created automatically for every `OVOSSkill`. On current `ovos-workshop` v8 the base class
+created automatically for every `OVOSSkill`. On current `ovos-workshop` the base class
 lives in `ovos_bus_client.apis.gui.GUIInterface`. The skill wrapper is
 `ovos_workshop.skills.ovos.SkillGUI`, namespaced to your `skill_id`.
 
@@ -147,12 +147,16 @@ gui.remove_controlled_notification()
     return to the idle/home screen for that many seconds. `override_animations=True`
     disables platform transition animations for the page.
 
+The shipped `GUIInterface` also carries three animation helpers beyond the templates above:
+`show_face(awake=True, ...)` (the classic assistant face), `show_loading_animation(text, ...)`,
+and `show_status_animation(text, success, ...)`.
+
 !!! warning "Upcoming — a wider template surface in the standalone package"
     The templates above are what today's `ovos_bus_client.apis.gui.GUIInterface` ships. The
     forward-looking standalone **`ovos-gui-api-client`** `GUIInterface` (the package
     [ovos-workshop#420](https://github.com/OpenVoiceOS/ovos-workshop/pull/420) rebinds
     `self.gui` to) adds more `SYSTEM_*` helpers: `show_list`, `show_grid`, `show_table`,
-    `show_weather`, `show_clock`, `show_timer`, `show_map`, `show_media_player`, `show_face`,
+    `show_weather`, `show_clock`, `show_timer`, `show_map`, `show_media_player`,
     and the two voice-first dialogue helpers `show_confirm(question, ...)` and
     `show_select(items, prompt=None, ...)`. These are **not** on a released `ovos-workshop`.
     Treat them as the template set new skills will target once the rebind lands.
