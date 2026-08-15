@@ -192,7 +192,10 @@ Set `stream=true` (where the vendor API supports it) to get incremental output. 
 | HuggingFace TGI | SSE token events |
 | AWS Bedrock | SSE with `outputText` events |
 
-Tool calling is only supported with `stream=false`, regardless of vendor.
+Tool calling works with streaming too, but not natively: the server resolves the tool round
+through its non-streaming loop first (the streaming seam itself cannot report `tool_calls`),
+then emits the result as SSE deltas — the final answer sentence by sentence, or a single
+`tool_calls` delta for a client-side call.
 
 ---
 
@@ -278,8 +281,7 @@ name(s) from the persona's solver config.
 
 - **Mind the prefix.** Clients must hit `/openai/v1` (OpenAI) or `/ollama/api` (Ollama), not the
   bare host root. Pointing a client at `http://localhost:8337` alone will 404. The legacy
-  `/v1` and `/api` aliases still work but are deprecated. Tool calling is only supported with
-  `stream=false`.
+  `/v1` and `/api` aliases still work but are deprecated.
 
 - Make sure your persona file's `handlers` and their config are complete. A missing plugin or model means the persona cannot answer.
 
