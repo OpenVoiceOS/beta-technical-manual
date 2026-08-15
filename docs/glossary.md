@@ -57,7 +57,7 @@ This glossary defines common terms, acronyms, and concepts used throughout the O
 :   A bus topic containing `:`, assembled from identifiers to address one specific registered handler: canonically `<skill_id>:<intent_name>`. The `:` is the marker. Only a formal specification may define a colon-bearing topic shape. [OVOS-MSG-1 §2.1.1](https://github.com/OpenVoiceOS/architecture/blob/dev/msg-1.md).
 
 **Dotted addressed topic**
-:   An ordinary `:`-free dotted topic (`<x>.<y>.<verb>`) that names a specific recipient in one of its segments, for example `<skill_id>.common_query.request`. It is an addressed message, not a dispatch. [OVOS-MSG-1 §2.1.1](https://github.com/OpenVoiceOS/architecture/blob/dev/msg-1.md), [OVOS-COMMON-QUERY-1 §7](https://github.com/OpenVoiceOS/architecture/blob/dev/common-query.md).
+:   An ordinary `:`-free dotted topic (`<x>.<y>.<verb>`) that names a specific recipient in one of its segments, for example the legacy `{skill_id}.converse.request`. It is an addressed message, not a dispatch. The spec treats these as legacy: per [OVOS-MSG-1 §2.1.1](https://github.com/OpenVoiceOS/architecture/blob/dev/msg-1.md) a spec-conformant dotted topic is a static string, and addressing travels in the payload instead (as in `ovos.common_query.request` naming its target in `data.skill_id`).
 
 ## E
 
@@ -201,7 +201,7 @@ This glossary defines common terms, acronyms, and concepts used throughout the O
 :   Fetching relevant remembered/retrieved context and giving it to an LLM *before* it answers. See [Persona Memory](persona-memory.md).
 
 **Recency-targeted stop**
-:   How the stop plugin picks a target once the stoppability poll comes back with **at least one** `can_handle: true` responder: it stops the entry with the highest `activated_at` in `session.active_handlers`. If no handler answers positively, it does the opposite of targeting — it escalates to a global stop. [OVOS-STOP-1 §4.1](https://github.com/OpenVoiceOS/architecture/blob/dev/stop-1.md).
+:   How the stop plugin picks a target: among positive responders to the stoppability poll it stops the entry with the highest `activated_at` in `session.active_handlers`. When no handler answers positively it still falls back to recency over the full `active_handlers` set rather than escalating; a global stop is reserved for explicit global-stop vocabulary and the empty-`active_handlers` case. [OVOS-STOP-1 §4.1](https://github.com/OpenVoiceOS/architecture/blob/dev/stop-1.md).
 
 **Release Channel**
 :   A stability track, either *stable*, *testing*, or *alpha*, that controls how new the installed packages are. See [Release Channels](release-channels.md).
