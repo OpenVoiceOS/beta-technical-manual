@@ -89,7 +89,7 @@ It is only useful if you still run legacy CPS skills.
 
     This is why a high-tier OCP stage belongs early in `session.pipeline`: as a selective pipeline plugin it claims a control utterance like "resume" or "next" only *while it holds paused media for that session*. First-match-wins (PIPELINE-1 §6.2) lets it intercept those bare words before a general intent engine does. This is exactly the conservative, state-aware claiming pattern the spec describes.
 
-    Seek is **absolute** on the wire (`ovos.common_play.seek` carries a millisecond `position` within now-playing). A relative "skip forward 10 seconds" utterance is resolved to that absolute position by the matcher itself, reading the player's own state reports, so two concurrent "skip forward" requests can't compound each other's offset. The `ovos.common_play.*` bus surface in the spec is the formal counterpart of the `ovos.common_play.query` / `…status` / `…track.state` topics used below.
+    Seek on the wire (`ovos.common_play.seek`) carries a relative `seconds` delta. The player, not the pipeline matcher, converts it to milliseconds and adds it to its own live playback position, so the result never depends on stale matcher-side state (a separate GUI-only `seekValue` field carries an absolute position). The `ovos.common_play.*` bus surface in the spec is the formal counterpart of the `ovos.common_play.query` / `…status` / `…track.state` topics used below.
 
 ```mermaid
 flowchart TD

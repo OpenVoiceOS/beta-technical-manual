@@ -331,13 +331,16 @@ liveness probe — the rest are on the player, so they answer only once a player
 |---|---|
 | `ovos.common_play.home` | Open the OCP home/menu |
 | `ovos.common_play.ping` | Liveness probe. Lets callers detect a running `ovos-media` |
-| `ovos.common_play.search.start` / `ovos.common_play.search.end` | Bracket an in-progress OCP search |
+| `ovos.common_play.search.end` | Close out an in-progress OCP search |
 | `opm.audio.query` | OPM plugin-discovery compatibility with the legacy `PlaybackService` handler |
 
-The rest are registered by `OCPMediaPlayer`:
+The rest are registered by `OCPMediaPlayer` (`ovos.common_play.search.start` lives here, not
+on the daemon — the player's session-gated handler pushes the "loading" GUI state, and a
+duplicate daemon-level registration was removed because it double-pushed it):
 
 | Bus message | Purpose |
 |---|---|
+| `ovos.common_play.search.start` | Open an OCP search (session-gated "loading" GUI state) |
 | `ovos.common_play.seek` | Seek within the current track |
 | `ovos.common_play.playlist.set` / `.queue` / `.clear` | Replace, append to, or empty the playlist |
 | `ovos.common_play.shuffle.toggle` / `.set` / `.unset` | Toggle or explicitly set/unset shuffle mode |
