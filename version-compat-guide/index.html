@@ -1674,7 +1674,7 @@ argument, and the new caller, which calls with none.</p>
 <code>found_wake_word(audio_data)</code> became <code>found_wake_word()</code>, with audio now fed
 separately through <code>update(chunk)</code>. Both <code>mycroft-classic-listener</code> (<code>19d9961</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/12" title="GitHub Issue: TigreGotico/ovos-technical-manual #12">#12</a>,
 2026-01-09) and <code>ovos-simple-listener</code> (<code>34e2219</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/20" title="GitHub Issue: TigreGotico/ovos-technical-manual #20">#20</a>, 2026-01-23) landed the
-caller-side change on the same opm bump, so a plugin still expecting one positional
+caller-side change when they bumped to opm <code>2.0.0</code>, so a plugin still expecting one positional
 argument gets called with zero and raises <code>TypeError</code> on any updated listener:</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kn">from</span> <span class="nn">ovos_plugin_manager.templates.hotwords</span> <span class="kn">import</span> <span class="n">HotWordEngine</span>
 </span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>
@@ -1687,7 +1687,7 @@ argument gets called with zero and raises <code>TypeError</code> on any updated 
 </span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>
 </span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>    <span class="k">def</span> <span class="nf">found_wake_word</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">audio_data</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 </span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>        <span class="c1"># opm 1.0.0+: called with no arguments, audio already fed via update()</span>
-</span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>        <span class="c1"># pre-2.0: called with the raw audio chunk directly</span>
+</span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>        <span class="c1"># pre-1.0.0: called with the raw audio chunk directly</span>
 </span><span id="__span-5-13"><a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>        <span class="n">chunk</span> <span class="o">=</span> <span class="n">audio_data</span> <span class="k">if</span> <span class="n">audio_data</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">_buffer</span>
 </span><span id="__span-5-14"><a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_detect</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span>
 </span></code></pre></div>
