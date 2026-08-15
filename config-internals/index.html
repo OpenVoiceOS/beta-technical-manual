@@ -1984,15 +1984,16 @@ class attributes at that moment, and nothing later rebuilds them — <code>Confi
 and <code>reload()</code> re-read the existing file paths, they do not recompute the path list.</p>
 <p>Python setters exist (<code>set_xdg_base</code>, <code>set_config_filename</code>, <code>set_default_config</code> in
 <code>ovos_config.meta</code>), but they only affect code that later calls the dynamic path helpers
-(<code>get_xdg_config_save_path()</code>, <code>find_user_config()</code>, <code>get_xdg_config_dirs()</code>). They cannot
-redirect the <code>Configuration</code> singleton itself: importing <code>ovos_config.meta</code> executes the
-package <code>__init__</code>, which imports <code>ovos_config.config</code> first, so by the time a setter is
-even importable the singleton's paths are already frozen. <strong>Setting the environment
-variables before the process starts is the only mechanism that changes where
-<code>Configuration</code> looks</strong>:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">OVOS_CONFIG_BASE_FOLDER</span><span class="o">=</span>my_distro<span class="w">          </span><span class="c1"># ~/.config/my_distro/</span>
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="nb">export</span><span class="w"> </span><span class="nv">OVOS_CONFIG_FILENAME</span><span class="o">=</span>mycroft.conf<span class="w">          </span><span class="c1"># filename inside the XDG dir</span>
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="nb">export</span><span class="w"> </span><span class="nv">OVOS_DEFAULT_CONFIG</span><span class="o">=</span>/opt/my_distro/default.conf
+(<code>get_xdg_config_save_path()</code>, <code>find_user_config()</code>, <code>get_xdg_config_dirs()</code>). To change
+where the <code>Configuration</code> singleton itself looks, call a setter <strong>before</strong> the first import
+of <code>ovos_config.config</code>, or, the only mechanism that works regardless of import order, set
+the environment variables before the process starts:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kn">from</span> <span class="nn">ovos_config.meta</span> <span class="kn">import</span> <span class="n">set_xdg_base</span><span class="p">,</span> <span class="n">set_config_filename</span><span class="p">,</span> <span class="n">set_default_config</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="c1"># effective only if ovos_config.config has not been imported yet</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="n">set_xdg_base</span><span class="p">(</span><span class="s2">&quot;my_distro&quot;</span><span class="p">)</span>                         <span class="c1"># ~/.config/my_distro/</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="n">set_config_filename</span><span class="p">(</span><span class="s2">&quot;mycroft.conf&quot;</span><span class="p">)</span>               <span class="c1"># filename inside the XDG dir</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="n">set_default_config</span><span class="p">(</span><span class="s2">&quot;/opt/my_distro/default.conf&quot;</span><span class="p">)</span> <span class="c1"># bundled defaults path</span>
 </span></code></pre></div>
 <h3 id="distribution-overrides">Distribution Overrides<a class="headerlink" href="#distribution-overrides" title="Permanent link">&para;</a></h3>
 <p>Distributions can change the default XDG base folder or config filename by setting environment variables:</p>
