@@ -1830,7 +1830,7 @@
 </tr>
 <tr>
 <td><code>ovos_color_parser/core/</code></td>
-<td>Internal building blocks: <code>distance.py</code> (in-house CIEDE2000 implementation), <code>space.py</code> (color-space math)</td>
+<td>Internal building blocks: <code>distance.py</code> (in-house CIEDE2000 implementation), <code>space.py</code> (color-space math), <code>gamut.py</code> (<code>GamutPolicy</code> CLAMP/MAP/REJECT resolution of out-of-sRGB colors)</td>
 </tr>
 <tr>
 <td><code>ovos_color_parser/match/automaton.py</code></td>
@@ -1877,7 +1877,8 @@
 <p>Weighted circular-mean hue averaging (<code>average_colors()</code>) prevents wrap-around errors for hues near 0°/360°.</p>
 <hr />
 <h2 id="api-reference">API reference<a class="headerlink" href="#api-reference" title="Permanent link">&para;</a></h2>
-<p><strong>Importable from the top-level <code>ovos_color_parser</code>:</strong> <code>color_from_description</code>, <code>color_distance</code>, <code>closest_color</code>, <code>average_colors</code>, <code>convert_K_to_RGB</code>, <code>get_contrasting_black_or_white</code>, <code>ColorMatcher</code>, <code>palette_from_description</code>, <code>lookup_name</code>, <code>rgb_to_cmyk</code>, <code>cmyk_to_rgb</code>, <code>is_hex_code_valid</code>, <code>srgb8_distance</code>, <code>load_palettes</code>, <code>load_locale_palettes</code>, <code>load_shared_palettes</code>, <code>palette_names</code>, and the model classes <code>sRGBAColor</code>, <code>HLSColor</code>, <code>HSVColor</code>, <code>SpectralColor</code>, <code>HueRange</code>, <code>ColorTerm</code>, <code>LanguageColorVocabulary</code>, <code>sRGBAColorPalette</code>, <code>HSVColorPalette</code>, <code>HLSColorPalette</code>, <code>SpectralColorPalette</code>, <code>NewtonSpectralColorTerms</code>, <code>ISCCNBSSpectralColorTerms</code>, <code>EnglishColorTerms</code>.</p>
+<p><strong>Importable from the top-level <code>ovos_color_parser</code>:</strong> <code>color_from_description</code>, <code>color_distance</code>, <code>closest_color</code>, <code>average_colors</code>, <code>convert_K_to_RGB</code>, <code>get_contrasting_black_or_white</code>, <code>ColorMatcher</code>, <code>palette_from_description</code>, <code>lookup_name</code>, <code>rgb_to_cmyk</code>, <code>cmyk_to_rgb</code>, <code>is_hex_code_valid</code>, <code>srgb8_distance</code>, <code>load_palettes</code>, <code>load_locale_palettes</code>, <code>load_shared_palettes</code>, <code>palette_names</code>, the gamut
+helpers <code>GamutPolicy</code>, <code>in_gamut</code>, <code>fit_to_gamut</code>, and the model classes <code>sRGBAColor</code>, <code>HLSColor</code>, <code>HSVColor</code>, <code>SpectralColor</code>, <code>HueRange</code>, <code>ColorTerm</code>, <code>LanguageColorVocabulary</code>, <code>sRGBAColorPalette</code>, <code>HSVColorPalette</code>, <code>HLSColorPalette</code>, <code>SpectralColorPalette</code>, <code>NewtonSpectralColorTerms</code>, <code>ISCCNBSSpectralColorTerms</code>, <code>EnglishColorTerms</code>.</p>
 <p>Only the pre-built spectral/language palette <strong>constants</strong> below (e.g. <code>MalacaraSpectralColorTerms</code>, <code>CRCHandbookSpectralColorTerms</code>, <code>IRSpectralColors</code>, <code>UVSpectralColors</code>, <code>ElectroMagneticSpectrum</code>, <code>OtjihereroColorTerms</code>) are <strong>not</strong> re-exported and must be imported from their submodule (<code>ovos_color_parser.models</code>).</p>
 <h3 id="color-model-classes-ovos_color_parsermodelspy">Color model classes (<code>ovos_color_parser/models.py</code>)<a class="headerlink" href="#color-model-classes-ovos_color_parsermodelspy" title="Permanent link">&para;</a></h3>
 <table>
@@ -2025,9 +2026,9 @@
 <tbody>
 <tr>
 <td><code>color_from_description</code></td>
-<td><code>(description: str, lang: str = "en", strategy: MatchStrategy = DAMERAU_LEVENSHTEIN_SIMILARITY, cast_to_palette: bool = False, fuzzy: bool = True) -&gt; Optional[sRGBAColor]</code></td>
+<td><code>(description: str, lang: str = "en", strategy: MatchStrategy = DAMERAU_LEVENSHTEIN_SIMILARITY, cast_to_palette: bool = False, fuzzy: bool = True, gamut: GamutPolicy = GamutPolicy.CLAMP) -&gt; Optional[sRGBAColor]</code></td>
 <td><code>sRGBAColor</code> or <code>None</code></td>
-<td>Main entry point. Resolves a natural-language description to an RGB color. Returns <code>None</code> if no color candidates are found. When <code>cast_to_palette=True</code>, snaps the result to the nearest matched candidate instead of returning an averaged value.</td>
+<td>Main entry point. Resolves a natural-language description to an RGB color. Returns <code>None</code> if no color candidates are found. When <code>cast_to_palette=True</code>, snaps the result to the nearest matched candidate instead of returning an averaged value. <code>gamut</code> picks how out-of-sRGB results (extreme color temperatures, pure spectral wavelengths) are resolved: <code>CLAMP</code> clips per channel, <code>MAP</code> fits perceptually, <code>REJECT</code> refuses (<code>ovos_color_parser/core/gamut.py</code>).</td>
 </tr>
 <tr>
 <td><code>color_distance</code></td>
