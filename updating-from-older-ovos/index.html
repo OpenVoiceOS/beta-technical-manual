@@ -1147,6 +1147,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#recently-shipped-conformance-work" class="md-nav__link">
+    <span class="md-ellipsis">
+      Recently shipped conformance work
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#coming-next" class="md-nav__link">
     <span class="md-ellipsis">
       Coming next
@@ -1652,6 +1661,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#recently-shipped-conformance-work" class="md-nav__link">
+    <span class="md-ellipsis">
+      Recently shipped conformance work
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#coming-next" class="md-nav__link">
     <span class="md-ellipsis">
       Coming next
@@ -1866,7 +1884,7 @@ the CommonQuerySkill removal, and the bus-client dual-emit bridge, in that order
 <tr>
 <td>2026-04-08</td>
 <td><code>CommonQuerySkill</code> deleted, no direct successor</td>
-<td><code>ovos-workshop</code> <code>6382d0a</code>, pre-<code>8.0.0</code></td>
+<td><code>ovos-workshop</code> <code>6382d0a</code>, first in <code>8.0.4a3</code></td>
 <td>Skill maintainers using common-query matching</td>
 <td><a href="../migration-workshop-7/">The ovos-workshop 7.0.0 release train</a></td>
 </tr>
@@ -1887,6 +1905,13 @@ the CommonQuerySkill removal, and the bus-client dual-emit bridge, in that order
 </tbody>
 </table>
 <hr />
+<h2 id="recently-shipped-conformance-work">Recently shipped conformance work<a class="headerlink" href="#recently-shipped-conformance-work" title="Permanent link">&para;</a></h2>
+<p>OVOS-PIPELINE-1 / STOP-1 conformance is released, not pending: the orchestrator owns
+<code>ovos.intent.handler.{start,complete,error}</code> around every skill dispatch and
+<code>ovos.intent.matched</code> before it (ovos-core <code>2178788d</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/788" title="GitHub Issue: TigreGotico/ovos-technical-manual #788">#788</a>, first tag <code>2.3.0a1</code>), with
+STOP-1 landing in <code>3.0.0a1</code> (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/802" title="GitHub Issue: TigreGotico/ovos-technical-manual #802">#802</a>). These emits are unconditional; the once-proposed
+<code>legacy_namespace</code> gating never shipped (its branch was superseded), and legacy interop
+rides the bus-client bridge instead.</p>
 <h2 id="coming-next">Coming next<a class="headerlink" href="#coming-next" title="Permanent link">&para;</a></h2>
 <p>The following work is visible on unmerged branches only and is <strong>not
 released</strong>. It is included so you know it is coming, not because it is
@@ -1899,12 +1924,6 @@ safe to build against yet.</p>
   commits on the branch promise <code>Configuration().remote</code> and
   <code>load_config_stack(...)</code> keep working once this lands. Do not target
   <code>AssistantConfig</code> yet. Watch the <code>ovos-config</code> release notes.</li>
-<li><strong>OVOS-PIPELINE-1 / STOP-1 conformance shipped</strong>: the orchestrator owns
-  <code>ovos.intent.handler.{start,complete,error}</code> around every skill dispatch and
-  <code>ovos.intent.matched</code> before it (ovos-core <code>2178788d</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/788" title="GitHub Issue: TigreGotico/ovos-technical-manual #788">#788</a>, first tag <code>2.3.0a1</code>),
-  with STOP-1 landing in <code>3.0.0a1</code> (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/802" title="GitHub Issue: TigreGotico/ovos-technical-manual #802">#802</a>). These emits are unconditional; the
-  once-proposed <code>legacy_namespace</code> gating never shipped (its branch was superseded),
-  and legacy interop rides the bus-client bridge instead.</li>
 <li>Unmerged <code>ovos-workshop</code> branches <code>feat/deprecate-ocp-skills</code>,
   <code>feat/remove-skill-homescreens</code>, <code>feat/gameskill-and-ocp-deprecation</code>:
   OCP-skill-base-class and skill-homescreen removal has not landed as of
