@@ -1391,27 +1391,9 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#gui-adapter-plugin-handler-signature-gains-session_id" class="md-nav__link">
+  <a href="#pending-plugin-surface-changes" class="md-nav__link">
     <span class="md-ellipsis">
-      GUI adapter plugin handler signature gains session_id
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#phal-enclosure-abstraction-dropped" class="md-nav__link">
-    <span class="md-ellipsis">
-      PHAL enclosure abstraction dropped
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#mediaprovider-template-collapsed-to-search" class="md-nav__link">
-    <span class="md-ellipsis">
-      MediaProvider template collapsed to search()
+      Pending plugin-surface changes
     </span>
   </a>
   
@@ -1776,27 +1758,9 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#gui-adapter-plugin-handler-signature-gains-session_id" class="md-nav__link">
+  <a href="#pending-plugin-surface-changes" class="md-nav__link">
     <span class="md-ellipsis">
-      GUI adapter plugin handler signature gains session_id
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#phal-enclosure-abstraction-dropped" class="md-nav__link">
-    <span class="md-ellipsis">
-      PHAL enclosure abstraction dropped
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#mediaprovider-template-collapsed-to-search" class="md-nav__link">
-    <span class="md-ellipsis">
-      MediaProvider template collapsed to search()
+      Pending plugin-surface changes
     </span>
   </a>
   
@@ -2236,138 +2200,11 @@ Lifecycle:</li>
 <p><code>ovos-bus-client</code>'s parallel <code>opm.py</code> (<code>neon.plugin.solver</code>-based chat
 class) was already removed outright in <code>d526e99</code> (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/207" title="GitHub Issue: TigreGotico/ovos-technical-manual #207">#207</a>, 2026-05-18,
 <code>2.0.0</code>): migrate to <code>ovos-messagebus-chat-plugin</code>.</p>
-<h3 id="gui-adapter-plugin-handler-signature-gains-session_id">GUI adapter plugin handler signature gains <code>session_id</code><a class="headerlink" href="#gui-adapter-plugin-handler-signature-gains-session_id" title="Permanent link">&para;</a></h3>
-<p>All <code>handle_show_*</code> template handlers, <code>on_namespace_activated</code>,
-<code>on_namespace_deactivated</code>, <code>on_status_event</code>, <code>on_session_update</code>, and
-<code>dispatch_template()</code> gained a new <code>session_id: str = "default"</code> parameter
-inserted <strong>before</strong> the existing <code>site_id</code> parameter.</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># old</span>
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="k">def</span> <span class="nf">handle_show_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">skill_id</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">site_id</span><span class="o">=</span><span class="s2">&quot;default&quot;</span><span class="p">):</span> <span class="o">...</span>
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="c1"># new</span>
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="k">def</span> <span class="nf">handle_show_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">skill_id</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">session_id</span><span class="o">=</span><span class="s2">&quot;default&quot;</span><span class="p">,</span> <span class="n">site_id</span><span class="o">=</span><span class="s2">&quot;default&quot;</span><span class="p">):</span> <span class="o">...</span>
-</span></code></pre></div>
-<ul>
-<li>Migration: switch any positional <code>site_id</code> call sites to keyword
-  arguments, or insert <code>session_id="default"</code> explicitly before the old
-  third positional argument.
-Lifecycle:</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th>Phase</th>
-<th>Version</th>
-<th>Notes</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Active</td>
-<td>before <code>34a0f13</code></td>
-<td></td>
-</tr>
-<tr>
-<td>Deprecated but functional</td>
-<td>none</td>
-<td>explicit <code>BREAKING CHANGE:</code> in the commit body</td>
-</tr>
-<tr>
-<td>Dropped</td>
-<td>landed <code>34a0f13</code> (2026-03-12)</td>
-<td>(ovos-plugin-manager <code>34a0f13</code>)</td>
-</tr>
-</tbody>
-</table>
-<h3 id="phal-enclosure-abstraction-dropped">PHAL enclosure abstraction dropped<a class="headerlink" href="#phal-enclosure-abstraction-dropped" title="Permanent link">&para;</a></h3>
-<p><code>PHALPlugin</code> lost its Mark-1/Mark-2 enclosure command handling
-(<code>register_enclosure_namespace</code>, <code>on_eyes_*</code>, <code>on_mouth_*</code>, <code>on_display</code>,
-and so on) in one commit, then lost its lifecycle bus-event auto-wiring
-(record/speak/wake/sleep) in a same-day follow-up. <code>PHALPlugin</code> is now a
-bare background thread with no bus events wired by the base class at all.</p>
-<ul>
-<li>Migration: mix in <code>EnclosureProtocolListener</code> from the separate
-  <code>ovos-ui-enclosure-protocol</code> package for both the enclosure commands and
-  <code>register_core_events()</code>. The <code>EnclosureAPI</code> producer moved to
-  <code>ovos-gui-api-client</code>. See <a href="../phal/">PHAL</a> for the current plugin contract.
-Lifecycle:</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th>Phase</th>
-<th>Version</th>
-<th>Notes</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Active</td>
-<td>before <code>eac52a4</code></td>
-<td></td>
-</tr>
-<tr>
-<td>Deprecated but functional</td>
-<td>none</td>
-<td>both commits landed same day</td>
-</tr>
-<tr>
-<td>Dropped</td>
-<td><code>eac52a4</code> and <code>f7c613b</code> (2026-06-25)</td>
-<td>(ovos-plugin-manager <code>eac52a4</code>, <code>f7c613b</code>)</td>
-</tr>
-</tbody>
-</table>
-<h3 id="mediaprovider-template-collapsed-to-search"><code>MediaProvider</code> template collapsed to <code>search()</code><a class="headerlink" href="#mediaprovider-template-collapsed-to-search" title="Permanent link">&para;</a></h3>
-<p><code>MediaProvider</code> lost <code>is_available</code>, <code>matches</code>, <code>serves</code>, <code>search_context</code>,
-<code>search_safe</code>, <code>featured_media</code>, and the <code>media</code>/<code>playback_type</code>/
-<code>genre_filter</code> ClassVars, all on the same day the <code>QueryContext</code> dataclass
-parameter was also replaced by plain <code>**context</code> kwargs.</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># old</span>
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="k">class</span> <span class="nc">MyProvider</span><span class="p">(</span><span class="n">MediaProvider</span><span class="p">):</span>
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>    <span class="k">def</span> <span class="nf">search</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">signals</span><span class="p">,</span> <span class="n">context</span><span class="p">:</span> <span class="n">QueryContext</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Release</span><span class="p">]:</span>
-</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>        <span class="k">if</span> <span class="n">context</span><span class="o">.</span><span class="n">allows_playback</span><span class="p">(</span><span class="o">...</span><span class="p">):</span>
-</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>            <span class="o">...</span>
-</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>
-</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="c1"># new</span>
-</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="k">class</span> <span class="nc">MyProvider</span><span class="p">(</span><span class="n">MediaProvider</span><span class="p">):</span>
-</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>    <span class="k">def</span> <span class="nf">search</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">signals</span><span class="p">,</span> <span class="n">lang</span><span class="o">=</span><span class="s1">&#39;en-us&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">context</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Release</span><span class="p">]:</span>
-</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>        <span class="k">if</span> <span class="n">context</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;supported_playback_types&#39;</span><span class="p">):</span>
-</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>            <span class="o">...</span>
-</span></code></pre></div>
-<ul>
-<li>Migration: implement the single <code>search(signals, lang='en-us',
-  **context)</code> method. Read routing/availability info from <code>**context</code>
-  instead of the removed <code>QueryContext</code> helper methods. See <a href="../ovos-media/">Media Service</a>
-  and <a href="../ocp-pipeline/">OCP</a> for how providers are queried.
-Lifecycle:</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th>Phase</th>
-<th>Version</th>
-<th>Notes</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Active</td>
-<td>before <code>8a03351</code></td>
-<td></td>
-</tr>
-<tr>
-<td>Deprecated but functional</td>
-<td>none</td>
-<td>fast in-place redesign of a still-fresh API: <code>opm.media.provider</code> type was only introduced days earlier in <code>83ade15</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/405" title="GitHub Issue: TigreGotico/ovos-technical-manual #405">#405</a></td>
-</tr>
-<tr>
-<td>Dropped</td>
-<td><code>8a03351</code> and <code>1741181</code>, both 2026-06-25</td>
-<td>(ovos-plugin-manager <code>8a03351</code>, <code>1741181</code>)</td>
-</tr>
-</tbody>
-</table>
+<h3 id="pending-plugin-surface-changes">Pending plugin-surface changes<a class="headerlink" href="#pending-plugin-surface-changes" title="Permanent link">&para;</a></h3>
+<p>Three further breaking changes to plugin templates (GUI adapters gaining
+<code>session_id</code>, the PHAL enclosure-abstraction drop, and the <code>MediaProvider</code>
+surface) exist only as open pull requests. Nothing shipped implements them.
+See <a href="../upcoming-changes/">Upcoming Changes</a> for the PR-by-PR status.</p>
 <hr />
 <p><strong>Read next:</strong> <a href="../version-compat-guide/">Version-Compatible Skills &amp; Plugins</a> · <a href="../upcoming-changes/">Upcoming Changes</a>
 <strong>Related:</strong> <a href="../updating-from-older-ovos/">Updating from Older OVOS</a> · <a href="../ovos-media/">Media Service (ovos-media)</a></p>

@@ -1642,7 +1642,7 @@ the method they expect:</p>
 </span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>    <span class="o">...</span>  <span class="c1"># post-break behavior</span>
 </span></code></pre></div>
 <p>The <code>CommonQuerySkill</code> removal is the sharper case: the class itself is gone in
-<code>ovos-workshop</code> as of <code>6382d0a</code> (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/400" title="GitHub Issue: TigreGotico/ovos-technical-manual #400">#400</a>, 2026-04-08, pre-<code>8.0.0</code>), so you cannot import
+<code>ovos-workshop</code> as of <code>6382d0a</code> (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/400" title="GitHub Issue: TigreGotico/ovos-technical-manual #400">#400</a>, first shipped in <code>8.0.4a3</code>), so you cannot import
 it unconditionally even inside a <code>try</code>/<code>except</code> used only for typing. Prefer the
 modern <code>@common_query</code> decorator (<code>ovos_workshop.decorators.common_query</code>) when it
 exists, and only import the deprecated base class on cores old enough to still ship
