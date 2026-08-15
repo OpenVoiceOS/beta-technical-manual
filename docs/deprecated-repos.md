@@ -15,7 +15,7 @@ This page covers **repo-level** deprecations (an entire repository retired). For
 canonical one while the plugin itself keeps working, see
 [Plugin Types Reference: Deprecated Types](plugin-types-reference.md#deprecated-types).
 
-There are roughly **84** archived repositories (the exact count drifts as more get archived). They are grouped by area below. Each row gives the reason and the current replacement where one exists.
+There are roughly **85** archived repositories (the exact count drifts as more get archived). They are grouped by area below. Each row gives the reason and the current replacement where one exists.
 
 
 ## Backend services (removed architecture) (5)
@@ -74,7 +74,7 @@ There are roughly **84** archived repositories (the exact count drifts as more g
 | [ovos-tts-plugin-nos](https://github.com/OpenVoiceOS/ovos-tts-plugin-nos) | Galician TTS | [phoonnx](https://github.com/TigreGotico/phoonnx): runs the Proxecto Nós Galician voices |
 | [ovos-tts-plugin-piper](https://github.com/OpenVoiceOS/ovos-tts-plugin-piper) | TTS plugin running Piper ONNX voices | [phoonnx](https://github.com/TigreGotico/phoonnx): runs Piper ONNX voices (incl. the `kusal` voice) |
 
-## Wake-word & VAD plugins (9)
+## Wake-word & VAD plugins (8)
 
 *Older wake word/VAD engines. The Precise family is superseded by the ONNX build.*
 
@@ -82,7 +82,6 @@ There are roughly **84** archived repositories (the exact count drifts as more g
 |---|---|---|
 | [ovos-vad-plugin-precise](https://github.com/OpenVoiceOS/ovos-vad-plugin-precise) | tflite GRU VAD detector | [ovos-vad-plugin-silero](https://github.com/OpenVoiceOS/ovos-vad-plugin-silero) |
 | [ovos-ww-plugin-nyumaya-legacy](https://github.com/OpenVoiceOS/ovos-ww-plugin-nyumaya-legacy) | wake-word plugin for mycroft-core | Removed: use [ovos-ww-plugin-precise-onnx](https://github.com/OpenVoiceOS/ovos-ww-plugin-precise-onnx) / openWakeWord |
-| [ovos-ww-plugin-pocketsphinx](https://github.com/OpenVoiceOS/ovos-ww-plugin-pocketsphinx) | OpenVoiceOS plugin for detecting wake words with pocketsphinx | [ovos-ww-plugin-vosk](https://github.com/OpenVoiceOS/ovos-ww-plugin-vosk) |
 | [ovos-ww-plugin-precise](https://github.com/OpenVoiceOS/ovos-ww-plugin-precise) | mycroft plugin for detecting wake word with precise | [ovos-ww-plugin-precise-onnx](https://github.com/OpenVoiceOS/ovos-ww-plugin-precise-onnx) |
 | [ovos-ww-plugin-precise-lite](https://github.com/OpenVoiceOS/ovos-ww-plugin-precise-lite) | TFLite Precise wake-word plugin | Archived, but still the shipped **fallback** (`fallback_ww`) wake-word engine in the bundled `mycroft.conf` (the primary is `ovos-ww-plugin-precise-onnx`): [ovos-ww-plugin-precise-onnx](https://github.com/OpenVoiceOS/ovos-ww-plugin-precise-onnx) is the maintained successor for new setups |
 | [ovos-ww-plugin-snowboy](https://github.com/OpenVoiceOS/ovos-ww-plugin-snowboy) | snowboy plugin for mycroft | Removed: use [ovos-ww-plugin-precise-onnx](https://github.com/OpenVoiceOS/ovos-ww-plugin-precise-onnx) / openWakeWord |

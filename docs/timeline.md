@@ -327,10 +327,10 @@
 - Apr 2024 - First successful run of [HiveMind Satellite](https://github.com/JarbasHiveMind/HiveMind-voice-sat) on Mark 1 device
 - Jun 2024 - [First successful run of OpenVoiceOS natively on Windows](https://github.com/mikejgray/ovos-windows)
 - Jul 2024 - Introduction of [ovos-gguf-plugin](https://github.com/OpenVoiceOS/ovos-gguf-plugin), enabling local LLM inference.
-- Jul 2024 - [ovos-tts-plugin-matxa-multispeaker-cat](https://github.com/OpenVoiceOS/ovos-tts-plugin-matxa-multispeaker-cat) Catalan TTS released in collaboration with the [ILENIA project](https://proyectoilenia.es/) (BSC / projecte AINA)
+- Jul 2024 - [ovos-tts-plugin-matxa-multispeaker-cat](https://github.com/OpenVoiceOS/ovos-tts-plugin-matxa-multispeaker-cat) Catalan TTS released in collaboration with the [ILENIA project](http://web.archive.org/web/20251008035516/https://proyectoilenia.es/) (BSC / projecte AINA)
 - Jul 2024 - [ovos-adapt-pipeline-plugin](https://github.com/OpenVoiceOS/ovos-adapt-pipeline-plugin) and [ovos-padatious-pipeline-plugin](https://github.com/OpenVoiceOS/ovos-padatious-pipeline-plugin) split out of ovos-core as standalone pipeline plugins
 - Aug 2024 - The OVOS Foundation (*Stichting OVOS*) is declared in the Netherlands, registered at the Dutch Chamber of Commerce under number 94609292, to support the project in legal and financial matters
-- Sep 2024 - [ovos-tts-plugin-nos](https://github.com/OpenVoiceOS/ovos-tts-plugin-nos) Galician TTS released in collaboration with the [ILENIA project](https://proyectoilenia.es/) (Proxecto Nós, USC)
+- Sep 2024 - [ovos-tts-plugin-nos](https://github.com/OpenVoiceOS/ovos-tts-plugin-nos) Galician TTS released in collaboration with the [ILENIA project](http://web.archive.org/web/20251008035516/https://proyectoilenia.es/) (Proxecto Nós, USC)
 - Sep 2024 - [gh-automations](https://github.com/OpenVoiceOS/gh-automations) introduced: shared, reusable CI/CD workflows for every repo in the org
 - Sep 2024 - `ovos-core` version **0.0.8** released (tagged 2024-09-17), the last of the pre-SemVer `0.0.x` line
 - Sep 2024 - `ovos-core` version **0.1.0** released, hitting the first major feature milestone after adopting Semantic Versioning.
@@ -355,7 +355,7 @@
 - Nov 2025 - `ovos-workshop` version **8.0.0** released, a **major breaking release** that decoupled GUI and resource management into mixins.
 - Nov 2025 - [Precise wake-word engine ported to ONNX](https://blog.openvoiceos.org/posts/2025-11-03-precise-onnx), dropping the tensorflow dependency
 - Dec 2025 - Speech support for minority languages expands: [TTS voices for Asturian and Aragonese](https://blog.openvoiceos.org/posts/2025-12-09-ast) and the [first phonemizer for Barranquenho](https://blog.openvoiceos.org/posts/2025-12-14-barranquenho)
-- ??? 2025 - OVOS prototype selected as an [ILENIA demonstrator](https://proyectoilenia.es/en/demonstrators-2025/ovos-prototype/): an open voice assistant in all co-official languages of Spain, runnable on a PC or Raspberry Pi
+- ??? 2025 - OVOS prototype selected as an [ILENIA demonstrator](http://web.archive.org/web/2025/https://proyectoilenia.es/en/demonstrators-2025/ovos-prototype/): an open voice assistant in all co-official languages of Spain, runnable on a PC or Raspberry Pi
 
 ### 2026
 
