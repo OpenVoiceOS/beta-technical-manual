@@ -68,9 +68,10 @@ Lifecycle:
 ### Per-service legacy topic migrations (spec-bus adoption, 2026-06)
 
 Every listener/core service in the org migrated its own emit/listen sites
-to `ovos_spec_tools.SpecMessage` constants around the same time, mostly
-gated behind a `legacy_namespace` config key (default `True`, so
-out-of-the-box wire behavior is initially unchanged):
+to `ovos_spec_tools.SpecMessage` constants around the same time. Wire
+compatibility with legacy producers and consumers comes from the
+`ovos-bus-client` bridge (receive-side re-dispatch plus marked legacy wire
+twins for canonical emits), not from any per-service config flag:
 
 | Legacy topic | Spec topic | Landed in |
 |---|---|---|
@@ -80,13 +81,13 @@ out-of-the-box wire behavior is initially unchanged):
 | `mycroft.mic.listen` | `SpecMessage.MIC_LISTEN` | ovos-dinkum-listener `d9dc04e` · mycroft-classic-listener `4458a3f` |
 | `recognizer_loop:audio_output_start` / `_end` | `SpecMessage.AUDIO_OUTPUT_STARTED` / `_ENDED` | ovos-dinkum-listener `d9dc04e` · mycroft-classic-listener `4458a3f` |
 | `recognizer_loop:sleep` | `SpecMessage.LISTENER_SLEEP` | ovos-dinkum-listener `d9dc04e` · mycroft-classic-listener `4458a3f` |
-| `mycroft.stop`, per-skill stop pings, `complete_intent_failure` | `ovos.stop`, `ovos.stop.ping`, `ovos.intent.unmatched` | ovos-core `f4c00d90b2` (2026-06-05) |
+| `mycroft.stop`, per-skill stop pings, `complete_intent_failure` | `ovos.stop`, `ovos.stop.ping`, `ovos.intent.unmatched` | ovos-core `690cb42` (#802, first tag `3.0.0a1`) |
 | `stop.openvoiceos.stop.response` | removal pending, not replaced | ovos-core `2b05201705`, **unmerged** (feature branch): would stop `StopService` registering itself as a skill. On current `dev` the legacy stop service still registers as `stop.openvoiceos`; once this lands, do not count it as a participating skill in custom global-stop aggregation |
 
-- Migration: for any deployment that explicitly sets
-  `legacy_namespace: false`, subscribe to the `ovos.*` spec topics instead
-  of the legacy ones. Default deployments are unaffected until that flag's
-  default flips (not yet flipped as of `f4c00d90b2`/`f9862a760e`). Prefer
+- Migration: subscribe to the `ovos.*` spec topics; the bus-client bridge keeps
+  legacy producers and consumers working in the meantime (its own flags are
+  `OVOS_BUS_MODERNIZE` / `OVOS_BUS_EMIT_LEGACY` / `OVOS_BUS_WIRE_LEGACY_TWINS`,
+  see [Bus Namespace Migration](bus-namespace-migration.md)). Prefer
   `ovos_spec_tools.SpecMessage.*` constants over hardcoded topic strings
   going forward, since their literal values are not always the same as
   the legacy strings they replace.
@@ -94,33 +95,31 @@ Lifecycle:
 
 | Phase | Version | Notes |
 |---|---|---|
-| Active | legacy-only, before ovos-core `f4c00d90b2` (2026-06-05) | |
-| Deprecated but functional | dual-emit, from ovos-core `f4c00d90b2` (2026-06-05) onward | dual-emit or `legacy_namespace`-gated |
+| Active | legacy-only, before the per-service SpecMessage migrations (2026-06) | |
+| Deprecated but functional | bridged: receive-side re-dispatch everywhere, plus wire twins for canonical emits since bus-client `2.8.3a1` | |
 | Dropped | no hard drop has shipped | `ovos-bus-client`'s bridge removal is the unmerged kill-switch [PR #272](https://github.com/OpenVoiceOS/ovos-bus-client/pull/272) (commit `f1a481d` on its branch) |
 
-`legacy_namespace` gating in `ovos-core` itself (`f4c00d90b2`/`f9862a760e`,
-"gate bus topics by legacy_namespace") lives only on unmerged feature
-branches, not on `dev`: the default has not flipped because the flag has
-not shipped to a stable release yet.
+No `legacy_namespace` flag exists in shipped `ovos-core`: the branch that proposed
+it (`f4c00d90b2`/`f9862a760e`) was superseded by the unconditional spec-topic emits
+plus the bus-client bridge. Shipped `ovos-core` listens only on the spec topics;
+a legacy `recognizer_loop:utterance` from an old satellite reaches it through the
+bridge, not through any core-side compatibility flag.
 
-### SESSION-1 spec adoption: one shipped change, more in review
+### SESSION-1 spec adoption: shipped
 
-Shipped: `SessionManager` enforces one live `Session` object per id
-(singleton, `7a2e39f`, #249). Code holding a stale `Session` reference
-expecting it to stay independent from the manager's canonical instance
-will observe shared-state changes it did not make.
+`SessionManager` enforces one live `Session` object per id (singleton, `7a2e39f`,
+#249). Code holding a stale `Session` reference expecting it to stay independent
+from the manager's canonical instance will observe shared-state changes it did
+not make.
+
+The rest of the SESSION-1 rebuild has shipped too: `SessionManager` subclasses
+the `ovos-spec-tools` session registry (`d453cac`, #254, first tag `2.6.2a2`),
+session TTL/pruning is deprecated (`prune_sessions` logs a deprecation warning),
+and `serialize()` omits empty list-valued override fields per SESSION-1 §3.4, so
+absence of a key like `pipeline` on the wire means "deployment default".
 
 - Migration: read sessions through `Session.deserialize()`/the `Session`
   class, not by holding raw references or indexing the raw wire dict.
-
-Still in review on unmerged `ovos-bus-client` branches (nothing on `dev`
-yet, no migration needed): a rebuild of `SessionManager` on the
-`ovos-spec-tools` session registry, deprecation of session TTL/pruning
-(`prune_sessions`, `Session.expired`), default-session folding per
-SESSION-1 §4, and omitting empty list-valued override fields from
-`serialize()` output. If those land, absence of a key like `pipeline`
-on the wire will mean "deployment default" — going through
-`Session.deserialize()` today keeps you compatible either way.
 
 ### Legacy `mycroft.*`/`recognizer_loop:*` topic bridge scheduled for removal
 

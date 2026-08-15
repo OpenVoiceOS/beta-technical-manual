@@ -66,7 +66,7 @@ The project follows a deprecate-then-drop pattern almost everywhere:
 2. **Deprecated but functional**: a new replacement exists, the old path
    still works, and calling it logs a deprecation warning (`log_deprecation`
    or `@deprecated(...)`) or is gated behind a compatibility flag (for
-   example `legacy_namespace`, `modernize`, `emit_legacy`).
+   example `modernize`, `emit_legacy`, `wire_legacy_twins`).
 3. **Dropped**: the old path is deleted. Calling it raises `ImportError`,
    `AttributeError`, `TypeError`, or the bus message is simply never sent
    or received again.
@@ -143,12 +143,12 @@ safe to build against yet.
   commits on the branch promise `Configuration().remote` and
   `load_config_stack(...)` keep working once this lands. Do not target
   `AssistantConfig` yet. Watch the `ovos-config` release notes.
-- **OVOS-PIPELINE-1 / STOP-1 / INTENT-4 conformance** (`ovos-core`,
-  active on `dev` through at least 2026-08-01): the orchestrator is
-  taking over emitting `ovos.intent.handler.{start,complete,error}` around
-  every skill dispatch, and `ovos.intent.matched` before every dispatch.
-  Still landing incrementally under `legacy_namespace` gating. Not yet in
-  a numbered stable release.
+- **OVOS-PIPELINE-1 / STOP-1 conformance shipped**: the orchestrator owns
+  `ovos.intent.handler.{start,complete,error}` around every skill dispatch and
+  `ovos.intent.matched` before it (ovos-core `2178788d`, #788, first tag `2.3.0a1`),
+  with STOP-1 landing in `3.0.0a1` (#802). These emits are unconditional; the
+  once-proposed `legacy_namespace` gating never shipped (its branch was superseded),
+  and legacy interop rides the bus-client bridge instead.
 - Unmerged `ovos-workshop` branches `feat/deprecate-ocp-skills`,
   `feat/remove-skill-homescreens`, `feat/gameskill-and-ocp-deprecation`:
   OCP-skill-base-class and skill-homescreen removal has not landed as of
