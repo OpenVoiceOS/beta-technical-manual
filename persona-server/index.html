@@ -1852,7 +1852,10 @@ configured via environment variables:</p>
 </tr>
 </tbody>
 </table>
-<p>Tool calling is only supported with <code>stream=false</code>, regardless of vendor.</p>
+<p>Tool calling works with streaming too, but not natively: the server resolves the tool round
+through its non-streaming loop first (the streaming seam itself cannot report <code>tool_calls</code>),
+then emits the result as SSE deltas — the final answer sentence by sentence, or a single
+<code>tool_calls</code> delta for a client-side call.</p>
 <hr />
 <h2 id="function-calling-who-executes-what">Function Calling: Who Executes What<a class="headerlink" href="#function-calling-who-executes-what" title="Permanent link">&para;</a></h2>
 <p>A chat request can carry two independent kinds of tools, and they are executed by different
@@ -1924,8 +1927,7 @@ name(s) from the persona's solver config.</p>
 <li>
 <p><strong>Mind the prefix.</strong> Clients must hit <code>/openai/v1</code> (OpenAI) or <code>/ollama/api</code> (Ollama), not the
   bare host root. Pointing a client at <code>http://localhost:8337</code> alone will 404. The legacy
-  <code>/v1</code> and <code>/api</code> aliases still work but are deprecated. Tool calling is only supported with
-  <code>stream=false</code>.</p>
+  <code>/v1</code> and <code>/api</code> aliases still work but are deprecated.</p>
 </li>
 <li>
 <p>Make sure your persona file's <code>handlers</code> and their config are complete. A missing plugin or model means the persona cannot answer.</p>
