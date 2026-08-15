@@ -1949,7 +1949,7 @@
 </tr>
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/ovos-legacy-mycroft-gui-plugin">ovos-legacy-mycroft-gui-plugin</a></td>
-<td>A compatibility shim exposing the classic mycroft-core GUI plugin interface on top of...</td>
+<td>Reference <code>opm.gui_adapter</code> implementation: renders OVOS SYSTEM_* templates over the legacy mycroft-gui Qt protocol for existing Qt clients</td>
 <td><a href="#meta-infrastructure-other-components-43">Meta &amp; infrastructure / other components</a></td>
 </tr>
 <tr>
@@ -3554,7 +3554,7 @@ on, and assets used across projects.</p>
 <dt><strong><a href="https://github.com/OpenVoiceOS/ovos-gguf-plugin">ovos-gguf-plugin</a></strong></dt>
 <dd>A unified GGUF/llama-cpp-python wrapper providing chat, summarization, dialog rewriting, translation, language detection, and text embeddings from quantized local models. Registers multiple <code>opm.*</code> plugin types (solver, transformer, embeddings) backed by the same GGUF runtime, so it can be loaded by ovos-persona, the transformer pipeline, or memory backends depending on which capability is configured.</dd>
 <dt><strong><a href="https://github.com/OpenVoiceOS/ovos-legacy-mycroft-gui-plugin">ovos-legacy-mycroft-gui-plugin</a></strong></dt>
-<dd>A compatibility shim exposing the classic mycroft-core GUI plugin interface on top of modern ovos-gui. Used only by GUI clients written against the old mycroft-core API.</dd>
+<dd>The reference implementation of the <code>opm.gui_adapter</code> interface: translates OVOS <code>SYSTEM_*</code> page templates into the legacy mycroft-gui Qt WebSocket protocol so existing Qt5/Qt6 clients keep working, rendering pages from its own bundled QML. Despite the name, it is the modern adapter, not a legacy shim.</dd>
 <dt><strong><a href="https://github.com/OpenVoiceOS/ovos-localize">ovos-localize</a></strong></dt>
 <dd>A GitHub-native localization platform purpose-built for OVOS skill and plugin locale files, replacing GitLocalize. Used by maintainers and translators to manage translations; see <a href="../ovos-localize-tutorial/">Contribute Translations with OVOS Localize</a> for the workflow.</dd>
 <dt><strong><a href="https://github.com/OpenVoiceOS/ovos-machine-translations">ovos-machine-translations</a></strong></dt>
