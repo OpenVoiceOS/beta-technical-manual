@@ -46,6 +46,7 @@ the [Pipelines Overview](pipelines-overview.md#available-pipeline-components):
       "ovos-ocp-pipeline-plugin-medium",
       "ovos-fallback-pipeline-plugin-high",
       "ovos-stop-pipeline-plugin-medium",
+      "ovos-padatious-pipeline-plugin-medium",
       "ovos-adapt-pipeline-plugin-medium",
       "ovos-fallback-pipeline-plugin-medium",
       "ovos-fallback-pipeline-plugin-low"
@@ -81,6 +82,11 @@ Why each stage sits where it does:
 - **`ovos-fallback-pipeline-plugin-high`**: the fallback plugin's high-priority range
   (`0 < p ≤ 5`) is reserved for critical fallback handlers, tried before medium-confidence
   matchers get another pass. See [Fallback Pipeline](fallback-pipeline.md).
+- **`ovos-padatious-pipeline-plugin-medium`** (in the default list since ovos-config
+  `2.3.9a1`): catches template matches that score below `conf_high`, most importantly
+  utterances whose auto-registered `.entity` slot values are out-of-list and therefore cap
+  below the high threshold. Without this stage those utterances go unmatched on a default
+  install.
 - **`ovos-stop-pipeline-plugin-medium`**: a fuzzy (non-exact) stop match, for stop phrases that
   are not a literal "stop" or "cancel". See [Stop Pipeline](stop-pipeline.md).
 - **`ovos-adapt-pipeline-plugin-medium`**: Adapt's medium tier, a second, looser pass over

@@ -136,21 +136,17 @@ that means in practice.
     `message.data` in the handler; if the handler never consumes the captured value, it
     should probably not be a slot at all.
 
-!!! warning "Out-of-list matches are invisible on a default install"
+!!! note "Out-of-list matches land in the medium stage"
     In `ovos-padatious-pipeline-plugin` (2.0.3a1+), an out-of-list value is floored at
     `ENTITY_HINT_FLOOR = 0.8` rather than collapsing the candidate, and a listed value scores
-    near-identity from `0.9` up. That floor lands squarely in the plugin's own
-    **medium**-confidence band (`conf_med = 0.8`, `conf_high = 0.95` by default), well below
-    `conf_high`. The stock `mycroft.conf` pipeline only enables
-    `ovos-padatious-pipeline-plugin-high`, not the medium or low stages. The floor applies to
+    near-identity from `0.9` up. That floor lands in the plugin's **medium**-confidence band
+    (`conf_med = 0.8`, `conf_high = 0.95` by default), below `conf_high`. The floor applies to
     the per-slot entity contribution, not the final confidence, so the exact final score
-    varies with the rest of the match — but in practice an out-of-list value drags the match
-    below `conf_high`, and on a default install it then produces no match at all: the
-    medium-confidence result exists internally but nothing in the default pipeline reads it.
-    Enabling
-    `ovos-padatious-pipeline-plugin-medium` in `pipeline` is what would make those matches
-    visible. Whether the default pipeline should change to include it is an open decision,
-    not something already shipped.
+    varies with the rest of the match, but in practice an out-of-list value drags the match
+    below `conf_high`. The stock `mycroft.conf` pipeline includes
+    `ovos-padatious-pipeline-plugin-medium` (since ovos-config `2.3.9a1`) precisely so these
+    matches still fire. On a deployment that trims the pipeline to the high stage only,
+    out-of-list slot values silently produce no match at all.
 
 ### Number matching
 

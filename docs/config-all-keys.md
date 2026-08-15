@@ -123,7 +123,7 @@
 | `intents.ovos-ocp-pipeline-plugin.filter_SEI` | `true` |  |
 | `intents.ovos-ocp-pipeline-plugin.playback_mode` | `0` |  |
 | `intents.ovos-ocp-pipeline-plugin.search_fallback` | `true` |  |
-| `intents.pipeline` | `["ovos-stop-pipeline-plugin-high", "ovos-converse-pipeline-plugin", "ovos-ocp-pipeline-plugin-high", "ovos-padatious-pipeline-plugin-high", "ovos-adapt-pipeline-plugin-high", "ovos-m2v-pipeline-high", "ovos-ocp-pipeline-plugin-medium", "ovos-fallback-pipeline-plugin-high", "ovos-stop-pipeline-plugin-medium", "ovos-adapt-pipeline-plugin-medium", "ovos-fallback-pipeline-plugin-medium", "ovos-fallback-pipeline-plugin-low"]` |  |
+| `intents.pipeline` | `["ovos-stop-pipeline-plugin-high", "ovos-converse-pipeline-plugin", "ovos-ocp-pipeline-plugin-high", "ovos-padatious-pipeline-plugin-high", "ovos-adapt-pipeline-plugin-high", "ovos-m2v-pipeline-high", "ovos-ocp-pipeline-plugin-medium", "ovos-fallback-pipeline-plugin-high", "ovos-stop-pipeline-plugin-medium", "ovos-padatious-pipeline-plugin-medium", "ovos-adapt-pipeline-plugin-medium", "ovos-fallback-pipeline-plugin-medium", "ovos-fallback-pipeline-plugin-low"]` |  |
 
 ### `skills`
 

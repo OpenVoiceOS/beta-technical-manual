@@ -45,6 +45,7 @@ The `intents.pipeline` defines the order in which matchers are evaluated.
     "ovos-ocp-pipeline-plugin-medium",
     "ovos-fallback-pipeline-plugin-high",
     "ovos-stop-pipeline-plugin-medium",
+    "ovos-padatious-pipeline-plugin-medium",
     "ovos-adapt-pipeline-plugin-medium",
     "ovos-fallback-pipeline-plugin-medium",
     "ovos-fallback-pipeline-plugin-low"
