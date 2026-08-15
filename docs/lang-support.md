@@ -161,7 +161,7 @@ refreshed alongside the translation app. This is the current source of translati
 > is a **frozen GitLocalize-era snapshot** (superseded by OVOS Localize). Its percentages
 > are no longer updated and should not be treated as current.
 
-> Note: if your language is missing from [OVOS Localize](https://openvoiceos.github.io/ovos-localize/), [open an issue](https://github.com/OpenVoiceOS/lang-support-tracker/issues) to request it. Currently, languages must be added manually.
+> Note: if your language is missing from [OVOS Localize](https://openvoiceos.github.io/ovos-localize/), [open an issue on ovos-localize](https://github.com/OpenVoiceOS/ovos-localize/issues) to request it. Currently, languages must be added manually.
 
 See **[Contribute Translations with OVOS Localize](ovos-localize-tutorial.md)** for the step-by-step translator guide.
 
