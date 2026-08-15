@@ -1712,14 +1712,14 @@
 <td>yes</td>
 <td>WIP</td>
 <td>yes</td>
-<td>WIP</td>
+<td>yes</td>
 </tr>
 <tr>
 <td><code>kab</code> (Kabyle)</td>
 <td>yes</td>
 <td>yes</td>
 <td>yes</td>
-<td>WIP</td>
+<td>yes</td>
 </tr>
 <tr>
 <td><code>az</code> (Azerbaijani)</td>
@@ -2032,7 +2032,7 @@ section of the repo README for the current full list.</p>
 </span></code></pre></div>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="k">def</span> <span class="nf">numbers_to_digits</span><span class="p">(</span><span class="n">utterance</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">lang</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">scale</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Scale</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span> <span class="o">...</span>
 </span></code></pre></div>
-<p><code>scale</code> (<code>Scale.LONG</code> / <code>Scale.SHORT</code>, from <code>ovos_number_parser.util</code>) only matters for languages that distinguish short/long scale (e.g. <code>pt</code>/<code>mwl</code>). Hand-written rewriting is dispatched for <code>ast</code>, <code>oc</code>, <code>an</code>, <code>fy</code>, <code>gl</code>, <code>de</code>, <code>pt</code>, <code>mwl</code>, <code>ro</code>, <code>bg</code>, <code>hr</code>, <code>ru</code>, <code>sk</code>, <code>id</code>, <code>ms</code>, <code>tr</code>, and <code>uk</code>. Every other language (including <code>en</code> and <code>kab</code>) gets a generic word-span replacement instead. It works but is less precise about compound numerals than a hand-written implementation. No language ever raises here. One that has no parser at all is simply left unchanged.</p>
+<p><code>scale</code> (<code>Scale.LONG</code> / <code>Scale.SHORT</code>, from <code>ovos_number_parser.util</code>) only matters for languages that distinguish short/long scale (e.g. <code>pt</code>/<code>mwl</code>). Hand-written rewriting is dispatched for <code>en</code>, <code>kab</code>, <code>ast</code>, <code>oc</code>, <code>an</code>, <code>fy</code>, <code>gl</code>, <code>de</code>, <code>pt</code>, <code>mwl</code>, <code>ro</code>, <code>bg</code>, <code>hr</code>, <code>ru</code>, <code>sk</code>, <code>id</code>, <code>ms</code>, <code>tr</code>, and <code>uk</code>. Every other language gets a generic word-span replacement instead. It works but is less precise about compound numerals than a hand-written implementation. No language ever raises here. One that has no parser at all is simply left unchanged.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Kabyle (<code>kab</code>) has two coexisting numeral systems: everyday loan-word counting (Arabic-derived above ten, e.g. <code>waḥed u ɛecrin</code> = 21) used for pronunciation, and a formalized pan-Amazigh proposal (invariable tens, descending magnitudes, no connectors) that extraction also recognizes. <code>kab</code> counts only up to 9999 and has no scale or fraction vocabulary.</p>
