@@ -16,7 +16,8 @@
     it up (via the [ovos-installer](ovos-installer.md)), the kernel driver involved, and the one
     thing you must **not** do: mix in Neon packages (see the warning below). Audio, fan control,
     the touchscreen, and the hardware buttons all work through the installer today. The LED ring
-    is the one piece of the SJ201 board the installer path doesn't drive yet. New to the terms
+    works out of the box on the **dev kit**; on the **retail** Mark II it is the one piece of
+    the SJ201 board the installer path doesn't drive yet. New to the terms
     here? See the [Glossary](glossary.md).
 
 The **Mycroft Mark 2** is built around a **Raspberry Pi 4** carrying the **SJ201** HAT. This is an
@@ -41,6 +42,7 @@ There are **two SJ201 revisions**, and they need slightly different setup:
 | SJ201 board | revision 6 | revision 10 |
 | Tell-tale | exposes an `attiny1614` micro-controller on the i2c bus | no `attiny1614` |
 | Fan control | needs the [`ovos-PHAL-plugin-mk2-v6-fan-control`](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-mk2-v6-fan-control) plugin (`pip install ovos-PHAL-plugin-mk2-fan-control` — the pip name has no `v6`) | PWM fan handled by a device-tree overlay |
+| LED ring | driven by the installer via [`ovos-PHAL-plugin-sj201-leds`](https://github.com/OVOSHatchery/ovos-PHAL-plugin-sj201-leds) (dev-kit boards only) | not driven by the installer (see the LED note below) |
 
 The [ovos-installer](ovos-installer.md) tells them apart automatically by probing the i2c bus: a
 Raspberry Pi 4 with the `tas5806` amplifier present is treated as the "Mark 2 family", and if an
@@ -113,9 +115,12 @@ The container method is not supported there.) That role:
     script. `ovos-i2csound` belongs to the raspOVOS image. The installer's Mark 2 audio comes
     entirely from the `VocalFusionDriver` kernel module above.
 
-!!! info "LED ring support is incomplete via the installer"
-    The installer brings up audio, fan, touchscreen and buttons, but **LED-ring support on the
-    Mark 2 is currently incomplete** in the ovos-installer path. One option in the meantime is
+!!! info "LED-ring support differs by board"
+    On the **dev kit** the installer drives the ring automatically: alongside the
+    `ovos-PHAL[mk2dev]` extra it git-installs
+    [`ovos-PHAL-plugin-sj201-leds`](https://github.com/OVOSHatchery/ovos-PHAL-plugin-sj201-leds),
+    which drives the 12-pixel ring directly over i2c (dev-kit boards only). On the **retail**
+    Mark II the installer ships no LED plugin, so the ring stays dark. One option there is
     Neon's [`neon-phal-plugin-linear_led`](https://github.com/NeonGeckoCom/neon-phal-plugin-linear_led)
     (see the [Neon packages table](#neon-mark-2-packages-official-but-separate) below), which
     already drives the ring's listening/speaking/muted/error animations. Keep in mind the
