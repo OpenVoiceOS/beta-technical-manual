@@ -2401,8 +2401,8 @@ liveness probe — the rest are on the player, so they answer only once a player
 <td>Liveness probe. Lets callers detect a running <code>ovos-media</code></td>
 </tr>
 <tr>
-<td><code>ovos.common_play.search.start</code> / <code>ovos.common_play.search.end</code></td>
-<td>Bracket an in-progress OCP search</td>
+<td><code>ovos.common_play.search.end</code></td>
+<td>Close out an in-progress OCP search</td>
 </tr>
 <tr>
 <td><code>opm.audio.query</code></td>
@@ -2410,7 +2410,9 @@ liveness probe — the rest are on the player, so they answer only once a player
 </tr>
 </tbody>
 </table>
-<p>The rest are registered by <code>OCPMediaPlayer</code>:</p>
+<p>The rest are registered by <code>OCPMediaPlayer</code> (<code>ovos.common_play.search.start</code> lives here, not
+on the daemon — the player's session-gated handler pushes the "loading" GUI state, and a
+duplicate daemon-level registration was removed because it double-pushed it):</p>
 <table>
 <thead>
 <tr>
@@ -2419,6 +2421,10 @@ liveness probe — the rest are on the player, so they answer only once a player
 </tr>
 </thead>
 <tbody>
+<tr>
+<td><code>ovos.common_play.search.start</code></td>
+<td>Open an OCP search (session-gated "loading" GUI state)</td>
+</tr>
 <tr>
 <td><code>ovos.common_play.seek</code></td>
 <td>Seek within the current track</td>
