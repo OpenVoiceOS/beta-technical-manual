@@ -2455,7 +2455,7 @@ is <code>false</code>.</p>
 <tr>
 <td><code>lang2model</code></td>
 <td>unset</td>
-<td>Per-language routing map, e.g. <code>{"ru": "gigaam-v2-rnnt"}</code>. BCP-47 keys, full tags beat primary subtags. A language named here (or via an <code>ONNX_ASR_DEFAULT_&lt;LANG&gt;</code> env var) beats <code>model</code>; an unnamed language falls to the plugin's built-in best-model-per-language registry. Routed models load lazily on first request and stay cached</td>
+<td>Per-language routing map, e.g. <code>{"ru": "gigaam-v2-rnnt"}</code>. BCP-47 keys, full tags beat primary subtags. A language named here (or via an <code>ONNX_ASR_DEFAULT_&lt;LANG&gt;</code> env var) beats <code>model</code>; an unnamed language still uses <code>model</code> if set, and only falls to the plugin's built-in best-model-per-language registry when neither is configured. Routed models load lazily on first request and stay cached</td>
 </tr>
 <tr>
 <td><code>max_loaded_models</code></td>
