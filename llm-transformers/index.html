@@ -1389,7 +1389,7 @@ backends.</p>
 <p>LLM-backed implementations are provided by <code>ovos-openai-plugin</code> / <code>ovos-gguf-plugin</code>
 (dialog transformers).</p>
 <p>Multiple transformers of each type can be stacked. The <code>priority</code> config key controls
-execution order (higher priority runs first).</p>
+execution order (lower priority runs first, OVOS-TRANSFORM-1 §4 ascending order).</p>
 <hr />
 <h2 id="utterance-transformers">Utterance Transformers<a class="headerlink" href="#utterance-transformers" title="Permanent link">&para;</a></h2>
 <p>Utterance transformers normalize or validate ASR output before it reaches the intent pipeline.
@@ -1398,7 +1398,7 @@ dict.</p>
 <p>A typical utterance transformer normalises informal or noisy speech to standard form, or
 classifies ASR output as valid or invalid <em>before</em> it reaches intent matching so that garbled
 speech like <code>"Potato stop green light now yes."</code> is discarded. The <code>priority</code> config key
-controls where each runs in the chain (higher priority runs first).</p>
+controls where each runs in the chain (lower priority runs first).</p>
 <hr />
 <h2 id="dialog-transformers">Dialog Transformers<a class="headerlink" href="#dialog-transformers" title="Permanent link">&para;</a></h2>
 <p>Dialog transformers receive the final response string from the skill and return a rewritten
@@ -1474,7 +1474,7 @@ implementations:</p>
 <hr />
 <h2 id="stacking-transformers">Stacking Transformers<a class="headerlink" href="#stacking-transformers" title="Permanent link">&para;</a></h2>
 <p>Multiple transformers of the same type can be active at once. Each configured entry under
-<code>dialog_transformers</code> runs in turn, <strong>higher <code>priority</code> first</strong>. Each one's output feeds into
+<code>dialog_transformers</code> runs in turn, <strong>lower <code>priority</code> first</strong> (ascending). Each one's output feeds into
 the next. For example, you can run a cheap local pass to strip markdown and jargon, then let an
 expensive cloud model add personality on top:</p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="p">{</span>
@@ -1483,24 +1483,24 @@ expensive cloud model add personality on top:</p>
 </span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">      </span><span class="nt">&quot;model&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/path/to/model.gguf&quot;</span><span class="p">,</span>
 </span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">      </span><span class="nt">&quot;rewrite_prompt&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Remove all markdown and technical jargon; keep it plain and short.&quot;</span><span class="p">,</span>
 </span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">      </span><span class="nt">&quot;n_gpu_layers&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span>
-</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">      </span><span class="nt">&quot;priority&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">60</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">      </span><span class="nt">&quot;priority&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">40</span>
 </span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">    </span><span class="p">},</span>
 </span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="w">    </span><span class="nt">&quot;ovos-dialog-transformer-openai-plugin&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 </span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="w">      </span><span class="nt">&quot;api_url&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://api.openai.com/v1&quot;</span><span class="p">,</span>
 </span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="w">      </span><span class="nt">&quot;key&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;sk-...&quot;</span><span class="p">,</span>
 </span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="w">      </span><span class="nt">&quot;model&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;gpt-4o-mini&quot;</span><span class="p">,</span>
 </span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="w">      </span><span class="nt">&quot;rewrite_prompt&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Rewrite in the style of a grumpy old pirate.&quot;</span><span class="p">,</span>
-</span><span id="__span-2-14"><a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a><span class="w">      </span><span class="nt">&quot;priority&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">40</span>
+</span><span id="__span-2-14"><a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a><span class="w">      </span><span class="nt">&quot;priority&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">60</span>
 </span><span id="__span-2-15"><a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a><span class="w">    </span><span class="p">}</span>
 </span><span id="__span-2-16"><a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a><span class="w">  </span><span class="p">}</span>
 </span><span id="__span-2-17"><a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a><span class="p">}</span>
 </span></code></pre></div>
 <p>With this configuration, a skill's dialog is rewritten twice before TTS: first the GGUF
-transformer (<code>priority: 60</code>) runs locally to clean the raw text, then its output is passed to
-the OpenAI transformer (<code>priority: 40</code>) to apply the character voice. If either call fails, it
+transformer (<code>priority: 40</code>) runs locally to clean the raw text, then its output is passed to
+the OpenAI transformer (<code>priority: 60</code>) to apply the character voice. If either call fails, it
 falls back to passing its input through unchanged, so the chain degrades gracefully.</p>
 <p>Utterance transformers work the same way but run before intent matching (cleaning or validating
-ASR output), with higher priority also running first.</p>
+ASR output), with lower priority also running first.</p>
 <hr />
 <div class="admonition note">
 <p class="admonition-title">Where this code actually lives</p>
