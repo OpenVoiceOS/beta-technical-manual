@@ -67,7 +67,6 @@ wyoming-ovos-wakeword --uri tcp://0.0.0.0:7893
 | `--zeroconf` | No | disabled | Enable mDNS/zeroconf service discovery (optional: service name) |
 | `--debug` | No | `False` | Enable DEBUG log level |
 | `--log-format` | No | `BASIC_FORMAT` | Format string for log messages |
-| `--version` | No | — | Print the installed version and exit |
 
 Examples:
 
@@ -145,9 +144,8 @@ Server → Detection(name="hey_mycroft")   ← if detected
 
 ### Zeroconf / mDNS Discovery
 
-When `--zeroconf` is passed, the bridge instantiates
-`wyoming.zeroconf.HomeAssistantZeroconf(name=..., port=..., host=...)` and awaits its
-`register_server()` method to announce itself on the local
+When `--zeroconf` is passed, the bridge awaits
+`wyoming.zeroconf.register_server(name=..., port=..., host=...)` directly to announce itself on the local
 network. Home Assistant and other Wyoming clients can discover the service automatically
 without manual IP configuration.
 

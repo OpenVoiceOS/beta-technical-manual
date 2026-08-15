@@ -125,7 +125,7 @@ ovos-persona-server --persona my_persona.json
 |----------|--------|-------------|
 | `/tools/manual` | GET | UTCP 1.0 manifest of all installed tool plugins |
 | `/tools/{name}` | POST | Direct HTTP invocation of a tool |
-| `/mcp` | SSE | MCP server (one tool per OPM ToolBox tool) |
+| `/mcp` | Streamable HTTP | MCP server (one tool per OPM ToolBox tool) |
 | `/mcp` (stdio) | — | Console script `ovos-persona-tools-mcp` |
 
 ---
