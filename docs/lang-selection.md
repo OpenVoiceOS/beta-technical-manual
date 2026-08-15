@@ -59,7 +59,7 @@ is present *and* resolves to a valid language:
 | **2** | `request_lang` | Volunteered by the source (e.g., a per-wake-word `stt_lang` override — see [Wake Word Plugins](wake-word-plugins.md) — or a remote client). |
 | **3** | `detected_lang` | Set by a [Transformer](transformer-plugins.md) plugin (e.g., a language classifier). |
 
-The message language itself is resolved by `get_message_lang()`, which checks `message.data["lang"]` first and then `message.context["lang"]`. If neither is present, it falls back to the system `lang` from `mycroft.conf`.
+The message language itself is resolved by `get_message_lang()`, which checks `message.data["lang"]` first and then `message.context["lang"]`. If neither is present, it looks for a session on the message (`context["session_id"]` or `context["session"]`) and uses that session's `lang` — in a running system this is the usual source, since each client carries its own session. Only a message with no session either falls back to the system `lang` from `mycroft.conf`.
 
 ### Validation against `valid_langs`
 
