@@ -88,7 +88,7 @@ With `max_model_mb: 500` and `count_cached_as_free: false`, `en -> ca` routes th
 | `collapse_varieties` | `true` | Reports the macrolanguage instead of the detected variety. |
 | `min_confidence` | `0.0` | Below this score, `detect()` returns the configured `lang` instead of a guess. |
 
-`collapse_varieties` matters because OVOS resolves a language tag with the `langcodes` tag distance and accepts a candidate at distance 10 or less. That bound handles region and script subtags (`ar-SA` resolves to `ar` at distance 4) and even a member measured directly against its macrolanguage (`ajp` sits at exactly 10 from `ar`, so it still resolves). It does not stretch to more distant varieties: `yue` sits at 64 from `zh`, so an uncollapsed `yue` is discarded rather than degraded, and the session keeps its previous language.
+`collapse_varieties` matters because OVOS resolves a language tag with the `langcodes` tag distance and accepts a candidate at distance 10 or less. That bound handles region and script subtags (`ar-SA` resolves to `ar` at distance 4) and even a member measured directly against its macrolanguage (`arz` sits at exactly 10 from `ar`, so it still resolves). It does not stretch to more distant varieties: `ajp` and `yue` sit at 64 from `ar` and `zh`, so an uncollapsed variety like these is discarded rather than degraded, and the session keeps its previous language.
 
 Set `collapse_varieties: false` when the caller reads the dialect itself, for example to log it or to route on it.
 
