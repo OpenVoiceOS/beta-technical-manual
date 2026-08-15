@@ -170,7 +170,7 @@ Wyoming client                    wyoming-ovos-tts                  OVOS plugin 
 **`OVOSTTSEventHandler`**
 
 One instance per client connection. On `Synthesize`, calls `TTS.synth(text)` which returns
-a path to a WAV file. The WAV is split into chunks (1024 samples by default) and streamed
+a path to a WAV file. The WAV is split into fixed 1024-sample chunks and streamed
 back as `AudioStart` + `AudioChunk`* + `AudioStop`.
 
 | Event type | Action |

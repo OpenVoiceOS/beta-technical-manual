@@ -208,10 +208,13 @@ intent.service.intent.get  {utterance: "...", lang: "..."}
 | `intent.service.skills.deactivate` | `_handle_deactivate` |
 | `intent.service.pipelines.reload` | `handle_reload_pipelines` |
 
-The `*_context` events (`add_context` / `remove_context` / `clear_context`) mutate the per-session
-intent context (`session.intent_context`) specified by
-[OVOS-CONTEXT-1](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-context.md) — see
-[Session Aware Skills](session.md).
+The `*_context` events (`add_context` / `remove_context` / `clear_context`) are **legacy-compat
+input topics**:
+[OVOS-CONTEXT-1](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-context.md) §5.0
+defines no context-mutation topic — the session is the only context write path. Modern emitters
+write `session.intent_context` directly; these handlers survive only so pre-§5.0 skill processes
+whose `set_context()` wrapper emits the old messages keep working (a redundant idempotent
+write-through). See [Session Aware Skills](session.md).
 
 !!! note "INTENT-4 registration topics"
     Skills broadcast their intent and entity registrations on the canonical
