@@ -41,8 +41,8 @@ skill and which line of code each phrase comes from, so you always have context.
 
 !!! tip "Don't see your language?"
     Languages are added on request. Ask in the
-    [Matrix chat](https://matrix.to/#/#openvoiceos-languages:matrix.org) or
-    [open an issue](https://github.com/OpenVoiceOS/lang-support-tracker/issues) and
+    [OVOS Matrix chat](https://matrix.to/#/#OpenVoiceOS:matrix.org) or
+    [open an issue on ovos-localize](https://github.com/OpenVoiceOS/ovos-localize/issues) and
     we'll enable it.
 
 ## Step 2 — Translate
@@ -97,14 +97,15 @@ word optional.
 - Alternatives: `I love (cats|dogs|birds)` → `Amo (gatos|perros|pájaros)`
 - Optional word: `I (really|) love it` → `(Realmente|) me encanta`
 
-### Slots (repeated variations)
+### Variants (repeated phrasings)
 
-Sometimes one phrase appears several times so OVOS can recognize different phrasings.
-Each variation is a **slot**.
+Most files hold several lines that say the same thing in different ways, so OVOS can
+recognize (or speak) varied phrasings. Each line is a **variant**. (A *slot* is something
+else: a `{variable}` placeholder inside a line.)
 
-- Translate **at least one** slot per file.
-- If a slot doesn't make sense in your language, enter `[UNUSED]`. That tells us you
-  reviewed it on purpose.
+- Translate **at least one** variant per file.
+- If a line doesn't make sense in your language, enter `[UNUSED]`. That convention tells
+  us you reviewed it on purpose.
 - Need more room for natural variations? Add a new line and write another translation.
 
 ---
@@ -132,8 +133,8 @@ translation plugins, see the **[Language Support overview](lang-support.md)**.
 
 ## Need help?
 
-- **Matrix chat:** [#openvoiceos-languages:matrix.org](https://matrix.to/#/#openvoiceos-languages:matrix.org)
-- **Email:** support@openvoiceos.org
+- **Matrix chat:** [#OpenVoiceOS:matrix.org](https://matrix.to/#/#OpenVoiceOS:matrix.org)
+- **Issues:** [ovos-localize on GitHub](https://github.com/OpenVoiceOS/ovos-localize/issues)
 
 Every translation makes OVOS usable for more people around the world.
 
