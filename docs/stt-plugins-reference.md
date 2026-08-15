@@ -354,7 +354,7 @@ If `model` is omitted, the plugin loads its **built-in default `nemo-canary-1b-v
 | `quantization` | unset | Set `"int8"` to load int8 weights where a model ships them (smaller/faster) |
 | `use_cuda` | `false` | Select the CUDA execution provider (with a CPU fallback) |
 | `providers` | unset | Explicit list of onnxruntime execution providers, takes precedence over `use_cuda` |
-| `lang2model` | unset | Per-language routing map, e.g. `{"ru": "gigaam-v2-rnnt"}`. BCP-47 keys, full tags beat primary subtags. A language named here (or via an `ONNX_ASR_DEFAULT_<LANG>` env var) beats `model`; an unnamed language falls to the plugin's built-in best-model-per-language registry. Routed models load lazily on first request and stay cached |
+| `lang2model` | unset | Per-language routing map, e.g. `{"ru": "gigaam-v2-rnnt"}`. BCP-47 keys, full tags beat primary subtags. A language named here (or via an `ONNX_ASR_DEFAULT_<LANG>` env var) beats `model`; an unnamed language still uses `model` if set, and only falls to the plugin's built-in best-model-per-language registry when neither is configured. Routed models load lazily on first request and stay cached |
 | `max_loaded_models` | unset | LRU cap on resident models (each is multi-GB when serving many languages). Unset keeps every loaded model forever; when set, the least-recently-used model is evicted as a new one would exceed the cap. Bounds cache retention, not peak memory: a model mid-transcription is held by its thread |
 
 !!! note "Language handling is model-family-gated"
