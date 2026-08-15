@@ -1070,9 +1070,9 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#ovos-audio-plugin-mpv" class="md-nav__link">
+  <a href="#ovos-media-plugin-mpv" class="md-nav__link">
     <span class="md-ellipsis">
-      ovos-audio-plugin-mpv
+      ovos-media-plugin-mpv
     </span>
   </a>
   
@@ -1427,9 +1427,9 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#ovos-audio-plugin-mpv" class="md-nav__link">
+  <a href="#ovos-media-plugin-mpv" class="md-nav__link">
     <span class="md-ellipsis">
-      ovos-audio-plugin-mpv
+      ovos-media-plugin-mpv
     </span>
   </a>
   
@@ -1709,11 +1709,12 @@ playback: legacy vs. ovos-media</a>.</p>
 </span></code></pre></div>
 <p>Then select it in your audio/media backend config. See <a href="../ovos-media/">Media playback: legacy vs. ovos-media</a>.</p>
 <hr />
-<h2 id="ovos-audio-plugin-mpv">ovos-audio-plugin-mpv<a class="headerlink" href="#ovos-audio-plugin-mpv" title="Permanent link">&para;</a></h2>
+<h2 id="ovos-media-plugin-mpv">ovos-media-plugin-mpv<a class="headerlink" href="#ovos-media-plugin-mpv" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
 <p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-media-plugin-mpv">ovos-media-plugin-mpv</a>
-  (the repo lives under this name. The PyPI package is still published as <code>ovos-audio-plugin-mpv</code>).</p>
+  (PyPI publishes under the same name; the pre-rename <code>ovos-audio-plugin-mpv</code> package still
+  exists but stopped at 0.2.1 and lacks the dual-target backend).</p>
 </li>
 <li>
 <p><strong>Description</strong>: MPV audio/video playback. Ships entry points for both
@@ -1721,7 +1722,7 @@ playback: legacy vs. ovos-media</a>.</p>
   and the old audio service (<code>mycroft.plugin.audioservice</code>, type <code>ovos_mpv</code>).</p>
 </li>
 </ul>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>pip<span class="w"> </span>install<span class="w"> </span>ovos-audio-plugin-mpv
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>pip<span class="w"> </span>install<span class="w"> </span>--pre<span class="w"> </span>ovos-media-plugin-mpv
 </span></code></pre></div>
 <p>Then select it in your audio/media backend config. See <a href="../ovos-media/">Media playback: legacy vs. ovos-media</a>.</p>
 <hr />
