@@ -56,8 +56,7 @@ deleted, along with the `hivemind.agent.protocol` entry point.
   *name* is preserved, so HiveMind-core configs need no change, only the
   dependency install). `ovos_bus_client.opm` (QuestionSolver-based chat) →
   `ovos-messagebus-chat-plugin` (implements `ChatEngine`, uses
-  `SessionManager` for multi-turn state). See
-  JarbasHiveMind/HiveMind-core#85.
+  `SessionManager` for multi-turn state).
 Lifecycle:
 
 | Phase | Version | Notes |

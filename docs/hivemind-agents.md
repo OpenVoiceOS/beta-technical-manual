@@ -197,7 +197,7 @@ This split is the real "voice satellite" story: cheap devices listen and speak, 
 
 HiveMind is **deny-by-default**: a client may only do what it has been explicitly granted,
 enforced per message type. The
-[Permissions community docs](https://jarbashivemind.github.io/HiveMind-community-docs/16_permissions/)
+[Security & Permissions community docs](https://jarbashivemind.github.io/HiveMind-community-docs/concepts/security/)
 cover the model and the admin CLI. One OVOS-side caveat: the skill/intent blacklist verbs
 (`blacklist-skill`, `blacklist-intent`, and their allow counterparts) only write client
 metadata. Enforcing them requires the `OVOSAgentPolicy` plugin (from
