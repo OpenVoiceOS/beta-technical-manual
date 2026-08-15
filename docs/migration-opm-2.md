@@ -1,30 +1,33 @@
-# Migrating Wake-word Plugins to opm 2.0
+# Migrating Wake-word Plugins to the Split HotWordEngine Contract
 
 !!! abstract "In a nutshell"
-    Wake-word plugin maintainers are affected. opm 2.0 split the old
+    Wake-word plugin maintainers are affected. `ovos-plugin-manager` split the old
     single-call `found_wake_word(audio_data)` contract into a separate
     `update(chunk)` feed step and a zero-argument poll. Fix it by
     implementing both methods on the new contract.
 
-### Wake-word plugin `found_wake_word()` signature change (opm 2.0)
+### Wake-word plugin `found_wake_word()` signature change
 
-opm 2.0 pulled apart what had been a single call into two steps: audio is
+The split pulled apart what had been a single call into two steps: audio is
 fed to the plugin separately now, and detection is polled with no
 arguments at all. A wake-word plugin written for the one-argument form
 still loads and still gets called after the caller-side change lands in a
 listener service, but the call itself throws, since `found_wake_word()`
 now runs with zero arguments where it used to expect the audio chunk.
 
-`ovos-plugin-manager` 2.0 changed the `HotWordEngine` contract: audio is
-fed separately, then detection is polled with no arguments.
+The `HotWordEngine` contract changed in `ovos-plugin-manager` `1.0.0`
+(`ce1c97b`, #314): audio is fed separately, then detection is polled with
+no arguments. Plugins only started breaking when the listener services
+adopted the caller side on the opm `2.0.0` bump, which is why their
+commits cite opm 2.0.
 
 ```python
-# old (pre-opm-2.0)
+# old (pre-split, opm < 1.0.0)
 class MyWakeWordPlugin(HotWordEngine):
     def found_wake_word(self, audio_data) -> bool:
         ...
 
-# new (opm 2.0+)
+# new (opm 1.0.0+)
 class MyWakeWordPlugin(HotWordEngine):
     def update(self, chunk: bytes) -> None:
         ...  # feed audio incrementally

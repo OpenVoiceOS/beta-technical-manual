@@ -331,7 +331,7 @@ nav:
           - ovos-config 2.0.0: migration-config-2-0.md
           - Bus-Client Dual-Emit Bridge: migration-bus-dual-emit.md
           - OCP to ovos-media: migration-ocp-to-media.md
-          - Wake-word opm 2.0: migration-opm-2.md
+          - Wake-word signature split: migration-opm-2.md
           - Audio-Transformer Chain Order: migration-audio-transformer-order.md
           - For Skill Maintainers: updating-skills.md
           - For Plugin Maintainers: updating-plugins.md
