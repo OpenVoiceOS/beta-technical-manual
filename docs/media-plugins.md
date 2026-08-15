@@ -153,10 +153,11 @@ Then select it in your audio/media backend config. See [Media playback: legacy v
 
 ---
 
-## ovos-audio-plugin-mpv
+## ovos-media-plugin-mpv
 
 - **GitHub**: [ovos-media-plugin-mpv](https://github.com/OpenVoiceOS/ovos-media-plugin-mpv)
-  (the repo lives under this name. The PyPI package is still published as `ovos-audio-plugin-mpv`).
+  (PyPI publishes under the same name; the pre-rename `ovos-audio-plugin-mpv` package still
+  exists but stopped at 0.2.1 and lacks the dual-target backend).
 
 
 - **Description**: MPV audio/video playback. Ships entry points for both
@@ -164,7 +165,7 @@ Then select it in your audio/media backend config. See [Media playback: legacy v
   and the old audio service (`mycroft.plugin.audioservice`, type `ovos_mpv`).
 
 ```bash
-pip install ovos-audio-plugin-mpv
+pip install --pre ovos-media-plugin-mpv
 ```
 
 Then select it in your audio/media backend config. See [Media playback: legacy vs. ovos-media](ovos-media.md).
