@@ -2053,9 +2053,11 @@ for consumption by skills before TTS, not directly by end-users.</p>
 <h2 id="translator-opmlangtranslate">Translator (<code>opm.lang.translate</code>)<a class="headerlink" href="#translator-opmlangtranslate" title="Permanent link">&para;</a></h2>
 <p><strong>Class:</strong> <code>OpenAITextTranslator</code>, <code>ovos_openai_plugin/translate.py:OpenAITextTranslator</code></p>
 <p><strong>OPM plugin name:</strong> <code>ovos-translate-openai-plugin</code></p>
-<p>Translates text between languages using an LLM. Language codes follow BCP-47 (e.g. <code>en-us</code>,
-<code>pt-pt</code>, <code>es-es</code>). Supports translating OVOS <code>.intent</code> files while preserving <code>{variables}</code>,
-<code>[optional]</code>, and <code>(alt|ernatives)</code> syntax.</p>
+<p>Translates plain text between languages by prompting the LLM. Language codes follow BCP-47
+(e.g. <code>en-us</code>, <code>pt-pt</code>, <code>es-es</code>); the code is resolved to an English display name for the
+prompt. There is no special handling for OVOS template syntax: feeding it an <code>.intent</code> file
+line gives no guarantee that <code>{variables}</code>, <code>[optional]</code>, or <code>(alt|ernatives)</code> markers
+survive translation.</p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="p">{</span>
 </span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="w">  </span><span class="nt">&quot;language&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 </span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">    </span><span class="nt">&quot;translation_module&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ovos-translate-openai-plugin&quot;</span><span class="p">,</span>
