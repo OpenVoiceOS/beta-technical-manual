@@ -2099,7 +2099,7 @@ full diagram of this same pipeline.</p>
 </tr>
 <tr>
 <td><code>spec-lint.yml</code></td>
-<td>Run <code>ovos-spec-lint</code> against a skill's locale folder (OVOS-INTENT-1 / OVOS-INTENT-2).</td>
+<td>Run <code>ovos-spec-lint</code> against a skill's locale folder (OVOS-INTENT-1 / OVOS-INTENT-2). Also invoked automatically from <code>skill-check.yml</code> (input <code>spec_lint</code>, default <code>true</code>), which is how it reaches every <code>ovos-skill-*</code> repo without per-repo caller changes; set <code>spec_lint: false</code> there to opt a repo out.</td>
 </tr>
 </tbody>
 </table>
