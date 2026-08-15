@@ -203,19 +203,21 @@ toward `ovos-backend-client` (`ee9a14cb23`, 2022-10-04) and the full
 removal of the `mycroft` compat package including Selene API support
 (`2a10fa9c1c`, #439, 2025-03-04, first stable release `1.1.0`).
 
-### `padatious_medium` dropped from default pipeline
+### `padatious_medium` dropped from default pipeline, later reinstated
 
-- Migration: add `padatious_medium` back explicitly to `core.pipeline` (see
-  [Pipelines Overview](pipelines-overview.md)) in
-  USER config if you want it (maintainers' note: "it is always wrong in
-  benchmarks"). See the [Padatious pipeline](padatious-pipeline.md) page for what it does.
+- Migration: nothing to do on current installs. The stage returned to the shipped default
+  pipeline as `ovos-padatious-pipeline-plugin-medium` in ovos-config `2.3.9a1` (`4d52513`,
+  #289), so out-of-list entity-slot matches fire again by default. Only a deployment pinned
+  between `1.0.2` and `2.3.9a1` needs to add it back explicitly in USER config (see
+  [Pipelines Overview](pipelines-overview.md) and the
+  [Padatious pipeline](padatious-pipeline.md) page).
 Lifecycle:
 
 | Phase | Version | Notes |
 |---|---|---|
 | Active | before `b08b7b8` | |
-| Deprecated but functional | none | |
-| Dropped | `b08b7b8` (2025-02-28, tag `1.0.2`) | (ovos-config `b08b7b8`, #200) |
+| Dropped | `b08b7b8` (2025-02-28, tag `1.0.2`) | (ovos-config `b08b7b8`, #200; maintainers' note at the time: "it is always wrong in benchmarks") |
+| Reinstated | `4d52513` (first tag `2.3.9a1`) | (ovos-config `4d52513`, #289) |
 
 ### phoonnx becomes the default offline TTS in autoconfigure
 
