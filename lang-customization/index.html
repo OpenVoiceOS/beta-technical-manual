@@ -1428,7 +1428,7 @@ data path, by default <code>~/.local/share/mycroft</code>. A typical override fi
 </div>
 <h3 id="language-fallback">Language fallback<a class="headerlink" href="#language-fallback" title="Permanent link">&para;</a></h3>
 <p>If the requested language has no directory, the loader prefers an exact match but <strong>may</strong> fall
-back to the nearest available language. OVOS uses the <code>langcodes</code> <code>tag_distance()</code> function and
+back to the nearest available language. OVOS resolves this through <code>ovos-spec-tools</code>' language-matching helpers (<code>lang_matches</code>/<code>lang_distance</code>, built on <code>langcodes</code>) and
 treats a distance of <code>10</code> or less as a usable regional match (the bound is inclusive —
 <code>10</code> is exactly the distance of a language against its macrolanguage tag), e.g. <code>en-au</code>
 resolving to <code>en-us</code>.

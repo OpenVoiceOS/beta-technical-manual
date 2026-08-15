@@ -1818,8 +1818,8 @@ namespace), so the UI can react to listening/speaking state:</p>
 <td><a href="../life-of-an-utterance/">Utterance</a> recognized</td>
 </tr>
 <tr>
-<td><code>recognizer_loop:speech.recognition.unknown</code></td>
-<td><a href="../stt-plugins/">STT</a> gave no result</td>
+<td><code>recognizer_loop:recognition_unknown</code></td>
+<td>Intended STT-empty forward; the listener actually emits <code>recognizer_loop:speech.recognition.unknown</code>, so this subscription never fires (topic-name mismatch in <code>ovos-gui</code>)</td>
 </tr>
 <tr>
 <td><code>speak</code></td>
