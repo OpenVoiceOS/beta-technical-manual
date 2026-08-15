@@ -96,8 +96,13 @@ scenes are named inside Home Assistant:
 
 - "Turn on the living room lights."
 - "Turn off the kitchen lights."
-- "Set the thermostat to 20 degrees."
-- "Activate the movie night scene."
+- "Tell home assistant to set the thermostat to 20 degrees."
+- "Tell home assistant to activate the movie night scene."
+
+Thermostats and scenes have no dedicated intent in the skill: the "tell home assistant to
+…" phrasing forwards the rest of the sentence to Home Assistant's own Assist conversation
+API, which handles anything HA itself can parse. Lights, switches, and sensors get
+dedicated intents with barer phrasing.
 
 See [What can I say? — Smart Home](skill-examples.md#smart-home) for the skill's catalog entry.
 
