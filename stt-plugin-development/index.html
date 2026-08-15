@@ -1702,7 +1702,7 @@ candidates read it. <code>execute()</code> then remains the single-best convenie
   bound it raises <code>NotImplementedError</code>. Language detection is opt-in per deployment.</p>
 </li>
 <li>
-<p><code>transcribe(audio, lang="auto")</code>. The <code>"auto"</code> sentinel runs <code>detect_language()</code> first and
+<p><code>transcribe(audio, lang=None)</code> with <code>lang="auto"</code> passed explicitly. The <code>"auto"</code> sentinel runs <code>detect_language()</code> first and
   transcribes in whatever it returns. If detection fails, the plugin falls back to <code>self.lang</code>
   and transcribes anyway, so <code>"auto"</code> never turns a detector problem into a failed
   transcription.</p>
@@ -1737,7 +1737,7 @@ manages, not inline in <code>stream_data()</code>.</p>
 <p><code>StreamingSTT</code> runs the streaming work on a background thread, fed through a queue:</p>
 <ul>
 <li><code>stream_start(language=None)</code> creates a fresh <code>Queue</code>, builds a <code>StreamThread</code> via <code>create_streaming_thread()</code>, and starts it.</li>
-<li>Each call to <code>stream_data(chunk)</code> puts one raw PCM <code>bytes</code> chunk (16 kHz/16-bit/mono, <code>chunk_size</code>-sized, see the audio format contract above) onto that queue.</li>
+<li>Each call to <code>stream_data(chunk)</code> puts one raw PCM <code>bytes</code> chunk (16 kHz/16-bit/mono, <code>chunk_size</code>-sized; see <a href="../mic-plugin-development/#the-microphone-interface">the microphone interface</a> for the audio-format contract) onto that queue.</li>
 <li>The <code>StreamThread</code>'s <code>run()</code> calls your <code>handle_audio_stream(audio, language)</code> with <code>audio</code> as a <strong>generator</strong> that yields chunks off the queue until a <code>None</code> sentinel appears. Your implementation should loop over it (e.g. <code>for chunk in audio:</code>) and feed each chunk to the underlying engine, setting <code>self.text</code> as partial/final results arrive.</li>
 <li><code>stream_stop()</code> pushes the <code>None</code> sentinel, joins the thread, and calls <code>finalize()</code> on it to retrieve the stored <code>self.text</code> as the final transcript. This is also what <code>execute()</code> returns for a <code>StreamingSTT</code> plugin.</li>
 </ul>

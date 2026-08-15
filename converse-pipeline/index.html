@@ -1635,7 +1635,7 @@
 <tbody>
 <tr>
 <td><code>session.converse_handlers</code> — the recency-ordered eligibility list the plugin polls</td>
-<td><code>Session.active_skills</code></td>
+<td><code>Session.active_handlers</code> (the deprecated <code>Session.active_skills</code> view is a legacy projection of it)</td>
 </tr>
 <tr>
 <td><code>session.response_mode</code> <code>{skill_id, expires_at}</code> — the single-shot response window for <code>get_response</code></td>
@@ -1716,10 +1716,10 @@
 <p>If converse <strong>returns True</strong> (to consume the utterance), the skill is <strong>reactivated</strong> right <strong>after</strong> converse.</p>
 </li>
 <li>
-<p>A skill can activate or deactivate itself at any time via <code>self.make_active()</code> / <code>self.deactivate()</code>.</p>
+<p>A skill can activate or deactivate itself at any time via <code>self.activate()</code> / <code>self.deactivate()</code>.</p>
 </li>
 </ol>
-<p>Active skills are tracked in <code>Session.active_skills</code> (<code>ovos_bus_client.session.Session</code>). The converse service reads and updates this list via <code>session.activate_skill()</code> / <code>session.deactivate_skill()</code>, which also forward <code>intent.service.skills.activated</code> / <code>intent.service.skills.deactivated</code> on the bus.</p>
+<p>Active skills are tracked in <code>Session.active_handlers</code> (<code>ovos_bus_client.session.Session</code>; the deprecated <code>Session.active_skills</code> view logs a warning on every access). The converse service reads and updates this list via <code>session.activate_skill()</code> / <code>session.deactivate_skill()</code> (back-compat shims over <code>add_active_handler</code> / <code>remove_active_handler</code>), which also forward <code>intent.service.skills.activated</code> / <code>intent.service.skills.deactivated</code> on the bus.</p>
 <hr />
 <h2 id="pipeline-stages">Pipeline Stages<a class="headerlink" href="#pipeline-stages" title="Permanent link">&para;</a></h2>
 <table>
@@ -1929,7 +1929,7 @@
 </tbody>
 </table>
 <blockquote>
-<p>Note: <code>converse_activation</code> does not apply to regular skill activation, only to skill-initiated activation requests (for example, <code>self.make_active()</code>).</p>
+<p>Note: <code>converse_activation</code> does not apply to regular skill activation, only to skill-initiated activation requests (for example, <code>self.activate()</code>).</p>
 </blockquote>
 <hr />
 <h2 id="bus-events-handled">Bus Events Handled<a class="headerlink" href="#bus-events-handled" title="Permanent link">&para;</a></h2>
