@@ -103,7 +103,10 @@ call also considers the special label `stop:stop` (source: `_SPECIAL_LABELS` and
 `_allowed_special_labels()` in `__init__.py`), but only because
 `ovos-stop-pipeline-plugin` normally runs earlier and would have already claimed
 it. `stop:stop` is only reachable through this pipeline when
-`ovos-stop-pipeline-plugin` is itself listed in `session.pipeline`.
+`ovos-stop-pipeline-plugin` is itself listed in `session.pipeline`. Two more special
+labels get the same treatment: `ocp:play` (remapped to `ovos.common_play.play_search`,
+gated on the OCP pipeline being present) and `common_query:common_query` (remapped to
+`common_query.question`, gated on the common-query pipeline).
 
 ---
 
