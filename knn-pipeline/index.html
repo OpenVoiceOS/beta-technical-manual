@@ -1554,7 +1554,10 @@ call also considers the special label <code>stop:stop</code> (source: <code>_SPE
 <code>_allowed_special_labels()</code> in <code>__init__.py</code>), but only because
 <code>ovos-stop-pipeline-plugin</code> normally runs earlier and would have already claimed
 it. <code>stop:stop</code> is only reachable through this pipeline when
-<code>ovos-stop-pipeline-plugin</code> is itself listed in <code>session.pipeline</code>.</p>
+<code>ovos-stop-pipeline-plugin</code> is itself listed in <code>session.pipeline</code>. Two more special
+labels get the same treatment: <code>ocp:play</code> (remapped to <code>ovos.common_play.play_search</code>,
+gated on the OCP pipeline being present) and <code>common_query:common_query</code> (remapped to
+<code>common_query.question</code>, gated on the common-query pipeline).</p>
 <hr />
 <h2 id="when-to-use-it-and-when-not-to">When to use it, and when not to<a class="headerlink" href="#when-to-use-it-and-when-not-to" title="Permanent link">&para;</a></h2>
 <p>Use the Hierarchical KNN pipeline as a <strong>semantic safety net</strong> behind Adapt and
