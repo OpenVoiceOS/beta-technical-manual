@@ -88,7 +88,7 @@ kept working as a fallback but not a pick for new setups.*
 
 ### STT (Speech-to-Text)
 
-Transcribes speech to text. See the [STT catalog](stt-plugins.md) (15 plugins, top picks shown).
+Transcribes speech to text. See the [STT catalog](stt-plugins.md) (16 plugins, top picks shown).
 
 | Plugin | Maturity | Runs | Choose this if |
 |---|---|---|---|

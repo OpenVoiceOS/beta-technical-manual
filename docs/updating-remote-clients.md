@@ -78,8 +78,8 @@ twins for canonical emits), not from any per-service config flag:
 | `recognizer_loop:utterance` | `ovos.utterance.handle` (`SpecMessage.UTTERANCE`) | ovos-core `1672e35ed0` (#772/#775) · ovos-dinkum-listener `d9dc04e` (#232) · ovos-simple-listener `b8326fa` (#26) · mycroft-classic-listener `4458a3f` (#23, `1.0.0a1`) |
 | `mycroft.awoken` | `SpecMessage.LISTENER_AWOKEN` | ovos-dinkum-listener `d9dc04e` · mycroft-classic-listener `4458a3f` |
 | `recognizer_loop:record_begin` / `record_end` | `SpecMessage.LISTENER_RECORD_STARTED` / `_ENDED` | ovos-dinkum-listener `d9dc04e` · mycroft-classic-listener `4458a3f` |
-| `mycroft.mic.listen` | `SpecMessage.MIC_LISTEN` | ovos-dinkum-listener `d9dc04e` · mycroft-classic-listener `4458a3f` |
-| `recognizer_loop:audio_output_start` / `_end` | `SpecMessage.AUDIO_OUTPUT_STARTED` / `_ENDED` | ovos-dinkum-listener `d9dc04e` · mycroft-classic-listener `4458a3f` |
+| `mycroft.mic.listen` | `SpecMessage.MIC_LISTEN` | ovos-dinkum-listener `d9dc04e` · mycroft-classic-listener `4458a3f` · ovos-audio `d730aef` (#165, `2.0.0a1`) |
+| `recognizer_loop:audio_output_start` / `_end` | `SpecMessage.AUDIO_OUTPUT_STARTED` / `_ENDED` | ovos-audio `d730aef` (#165, `2.0.0a1`, the emit side) · ovos-dinkum-listener `d9dc04e` · mycroft-classic-listener `4458a3f` |
 | `recognizer_loop:sleep` | `SpecMessage.LISTENER_SLEEP` | ovos-dinkum-listener `d9dc04e` · mycroft-classic-listener `4458a3f` |
 | `mycroft.stop`, per-skill stop pings, `complete_intent_failure` | `ovos.stop`, `ovos.stop.ping`, `ovos.intent.unmatched` | ovos-core `690cb42` (#802, first tag `3.0.0a1`) |
 | `stop.openvoiceos.stop.response` | removal pending, not replaced | ovos-core `2b05201705`, **unmerged** (feature branch): would stop `StopService` registering itself as a skill. On current `dev` the legacy stop service still registers as `stop.openvoiceos`; once this lands, do not count it as a participating skill in custom global-stop aggregation |
