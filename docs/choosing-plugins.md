@@ -163,7 +163,7 @@ backend plugin, not the service.
 
 | Plugin | Maturity | Runs | Choose this if |
 |---|---|---|---|
-| ⭐ **ovos-audio-plugin-mpv** | Stable | offline | General-purpose local audio+video; works on both media backends |
+| ⭐ **ovos-media-plugin-mpv** | Stable | offline | General-purpose local audio+video; works on both media backends |
 | ovos-media-plugin-mplayer | Stable | offline | MPlayer as the local audio+video backend |
 | ovos-media-plugin-ffplay | Stable | offline | Lightweight ffplay audio-only playback |
 | ovos-media-plugin-vlc | Beta | offline | Headless VLC audio+video, ovos-media-ready package |
