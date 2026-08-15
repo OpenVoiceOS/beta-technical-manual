@@ -346,6 +346,7 @@ plugins should use them.
 | [ovos-chromadb-embeddings-plugin](agent-plugins-reference.md#ovos-chromadb-embeddings-plugin) | The `ChromaEmbeddingsDB` plugin integrates with the [ChromaDB](https://www.trychroma.com/) database to store, retrieve, and query embeddings. This plugin extends the abstract `EmbeddingsDB` class, using ChromaDB's capabilities. | MIT | Beta |
 | [ovos-wolfram-alpha-plugin](agent-plugins-reference.md#ovos-wolfram-alpha-plugin) | Answers computational and factual questions via the Wolfram Alpha API. | Apache-2.0 | Alpha |
 | [ovos-ddg-plugin](agent-plugins-reference.md#ovos-ddg-plugin) | Answers questions using DuckDuckGo instant-answer results. | Apache-2.0 | Alpha |
+| [ovos-wordnet-plugin](agent-plugins-reference.md#ovos-wordnet-plugin) | Answers word-knowledge questions (definitions, synonyms, antonyms, and other relations) from the local WordNet corpus, as both a `RetrievalEngine` and a toolbox. | Apache-2.0 | Alpha |
 | [ovos-solver-YesNo-plugin](agent-plugins-reference.md#ovos-solver-yesno-plugin) | A simple tool to indicate whether a user answered "yes" or "no" to a yes/no prompt. | Apache-2.0 | Deprecated |
 | [ovos-solver-failure-plugin](agent-plugins-reference.md#ovos-solver-failure-plugin) | Extreme fallback, just complains it does not have a brain | MIT | Beta |
 | [ovos-gguf-plugin](agent-plugins-reference.md#ovos-gguf-plugin) | Unified GGUF wrapper for chat, summarization, dialog rewriting, translation, language detection, and text embeddings, all backed by quantized GGUF models via `llama-cpp-python`. | MIT | Beta |

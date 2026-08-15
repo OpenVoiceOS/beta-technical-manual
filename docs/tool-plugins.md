@@ -308,9 +308,12 @@ See that page for those.
 
 ## Available Chat Engines
 
-`opm.agents.chat` plugins beyond the ones documented in the [Agent Plugins catalog](agent-plugins.md#plugin-catalog)
-(`ovos-openai-plugin`, `ovos-gguf-plugin`) are not currently shipped by an OpenVoiceOS-org
-repository. This manual only documents plugins backed by an OpenVoiceOS-org repo.
+The OpenVoiceOS-org `opm.agents.chat` registrants are `ovos-openai-plugin` and
+`ovos-gguf-plugin` (see the [Agent Plugins catalog](agent-plugins.md#plugin-catalog)),
+`ovos-messagebus-chat-plugin`, the `ovos-agentic-loop` reasoning loops, and
+`ovos-a2a-agent-plugin` (`ovos-a2a-solver`, documented on
+[Agent Interoperability](agent-interop.md)). This manual only documents plugins backed by
+an OpenVoiceOS-org repo.
 
 ## Testing Tool Calling Without a GPU
 

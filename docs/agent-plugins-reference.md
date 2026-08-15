@@ -121,6 +121,15 @@ Per-collection metadata defaults `hnsw:space` to `cosine` when not specified.
 
 ---
 
+## ovos-wordnet-plugin
+
+- **GitHub**: [OpenVoiceOS/ovos-wordnet-plugin](https://github.com/OpenVoiceOS/ovos-wordnet-plugin)
+
+
+- **Description**: Answers word-knowledge questions from the local WordNet corpus. Registers a `RetrievalEngine` (`opm.agents.retrieval`, entry point `ovos-wordnet-plugin`) that matches locale intent patterns such as "what are the antonyms of dog?" and falls back to multi-sense definition passages for bare word lookups, plus the `ovos-wordnet-tools` toolbox (`define_word`, `word_relations`) documented on [Tool Plugins](tool-plugins.md#available-toolboxes).
+
+---
+
 ## ovos-solver-YesNo-plugin
 
 - **GitHub**: [OpenVoiceOS/ovos-solver-YesNo-plugin](https://github.com/OpenVoiceOS/ovos-solver-YesNo-plugin)
