@@ -1605,8 +1605,8 @@ The title and skill ID show as text. Duration shows as the elapsed-time readout.
 </li>
 <li>
 <p>Implement the <code>ocp_search</code> decorator, as many as you want (within your skill they run
-  sequentially, in registration order; parallelism happens across different OCP skills
-  answering on the bus, not across your own search methods)</p>
+  sequentially, one at a time, in no guaranteed order; parallelism happens across different
+  OCP skills answering on the bus, not across your own search methods)</p>
 </li>
 <li>
 <p>The decorated method can return a list or be an iterator of <code>result_dict</code> (track or playlist)</p>
