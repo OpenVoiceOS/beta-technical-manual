@@ -128,6 +128,14 @@ services can query over the bus:
 The `alive` callback exists in the hook map but `PHAL.start()` does not call
 `set_alive()`. The status goes straight to `started` then `ready`.
 
+### Plugin installs over the bus
+
+The service runs its own `ServiceInstaller` (service name `ovos_PHAL`, or
+`ovos_PHAL_admin` for AdminPHAL), so PHAL plugins can be pip-installed into the PHAL
+process's own environment over the bus. Gated by `skills.installer.allow_pip` (off by
+default). See [Skill Installer](skill-installer.md) for the topics and the other services
+that do this.
+
 ### Configuration
 
 ```json

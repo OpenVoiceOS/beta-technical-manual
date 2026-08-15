@@ -118,11 +118,12 @@ ovos.pip.uninstall         data: {"packages": ["some-lib"]}
 Services other than core can run their own `ServiceInstaller` (from `ovos-utils`), which
 listens on the broadcast topics above **and** on a targeted
 `ovos.pip.install.<service_name>` / `ovos.pip.uninstall.<service_name>` pair, so a package
-installs into the process that actually loads it. Three services do this: `ovos-audio`
+installs into the process that actually loads it. Four services do this: `ovos-audio`
 (service name `ovos_audio`, since 2.2.0a1), `ovos-dinkum-listener` (`ovos_dinkum_listener`,
-since 0.9.0a1), and `ovos-gui` (`ovos_gui`, since 1.5.0a1) — relevant when services run in
-separate venvs or containers, where a broadcast install into core's environment would not
-reach the target process.
+since 0.9.0a1), `ovos-gui` (`ovos_gui`, since 1.5.0a1), and `ovos-PHAL` (since 0.3.0a1,
+service name `ovos_PHAL`, or `ovos_PHAL_admin` when running as [AdminPHAL](phal.md)).
+This matters when services run in separate venvs or containers, where a broadcast install
+into core's environment would not reach the target process.
 
 ## Post-Install Discovery
 
