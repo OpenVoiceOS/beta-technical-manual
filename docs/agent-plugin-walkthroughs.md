@@ -64,7 +64,7 @@ config:
 [project]
 name = "ovos-notes-retrieval-plugin"
 version = "0.1.0"
-dependencies = ["ovos-plugin-manager>=2.3.0a1,<3.0.0"]
+dependencies = ["ovos-plugin-manager>=2.4.0a1,<3.0.0"]
 
 [project.entry-points."opm.agents.retrieval.documents"]
 ovos-notes-retrieval = "ovos_notes_retrieval:NotesRetrieval"
@@ -292,8 +292,9 @@ generations freely during migration:
 The `"solvers"` key is itself legacy naming. Newer configs use `"handlers"`, and
 ovos-persona accepts both. One more back-compat layer sits below all this: with
 an `ovos-plugin-manager` from before the early 2.2.x alphas the `opm.agents.*` registries
-do not exist (they landed piecemeal across 2.2.x; the example pin of `>=2.3.0a1` above is
-the safe floor that has all of them), and
+do not exist (they landed piecemeal from 2.2.x through `2.4.0a1`, where the option-matcher
+group arrived last; the example pin of `>=2.4.0a1` above is the safe floor that has all of
+them), and
 ovos-persona stubs them out so solver-only personas keep working. None of this
 back-compat is permanent. The solver classes stay loadable until the next major OPM
 release, and new plugins must not use them.

@@ -121,8 +121,8 @@ A pipeline plugin is a matcher exposing `match(utterances, lang, session) → Ma
 !!! note "Minimum OPM version"
     The transformer (`opm.transformer.*`) and solver (`opm.solver.*`) groups require
     `ovos-plugin-manager>=2.1.0`. The agent groups (`opm.agents.*`) require
-    `ovos-plugin-manager>=2.3.0a1`. Pin accordingly in your plugin's dependencies
-    (cap below `<3.0.0`).
+    `ovos-plugin-manager>=2.4.0a1` (the option-matcher group arrived last). Pin
+    accordingly in your plugin's dependencies (cap below `<3.0.0`).
 
 ### Media Plugins
 

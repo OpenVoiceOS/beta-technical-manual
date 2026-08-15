@@ -13,8 +13,8 @@ through the entry point. There is no registration API to call and no framework t
 beyond the one base class.
 
 !!! note "Version requirement"
-    The `opm.agents.*` groups need **`ovos-plugin-manager >= 2.3.0a1`** (cap below
-    `<3.0.0`). The legacy `QuestionSolver` family (`opm.solver.*`) is deprecated. See the
+    The `opm.agents.*` groups need **`ovos-plugin-manager >= 2.4.0a1`** (cap below
+    `<3.0.0`; the option-matcher group arrived last, in `2.4.0a1`). The legacy `QuestionSolver` family (`opm.solver.*`) is deprecated. See the
     migration map in [Deprecated Solver Types](agent-plugins.md#deprecated-solver-types).
 
 ---

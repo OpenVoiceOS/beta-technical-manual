@@ -10,8 +10,9 @@ loads them. Each plugin advertises itself to OVOS through an OPM entry-point gro
 
 !!! note "Version requirement"
     The agent plugin system (`opm.agents.*` entry-point groups) requires
-    **`ovos-plugin-manager >= 2.3.0a1`** (cap below `<3.0.0`). Older OPM releases don't
-    know these groups.
+    **`ovos-plugin-manager >= 2.4.0a1`** (cap below `<3.0.0`); that floor covers every
+    group, including `opm.agents.option_matcher`, which arrived last. Older OPM releases
+    don't know these groups.
 
 **For advanced users:** every agent engine subclasses an abstract base in
 `ovos_plugin_manager.templates.agents` and registers under one `opm.agents.*` group (each with a
