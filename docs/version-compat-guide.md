@@ -147,7 +147,7 @@ Use this when a plugin template method's argument list changed. Give the paramet
 default so the same method body satisfies both the old caller, which passes an
 argument, and the new caller, which calls with none.
 
-`ovos-plugin-manager` 2.0 changed the `HotWordEngine` contract:
+`ovos-plugin-manager` `1.0.0` (`ce1c97b`, #314) changed the `HotWordEngine` contract:
 `found_wake_word(audio_data)` became `found_wake_word()`, with audio now fed
 separately through `update(chunk)`. Both `mycroft-classic-listener` (`19d9961`, #12,
 2026-01-09) and `ovos-simple-listener` (`34e2219`, #20, 2026-01-23) landed the
@@ -160,12 +160,12 @@ from ovos_plugin_manager.templates.hotwords import HotWordEngine
 
 class MyWakeWordPlugin(HotWordEngine):
     def update(self, chunk: bytes) -> None:
-        # opm 2.0+ callers feed audio here; older callers never call this,
+        # opm 1.0.0+ callers feed audio here; older callers never call this,
         # so buffer it yourself and fall back to accumulating in found_wake_word
         self._buffer = chunk
 
     def found_wake_word(self, audio_data=None) -> bool:
-        # opm 2.0+: called with no arguments, audio already fed via update()
+        # opm 1.0.0+: called with no arguments, audio already fed via update()
         # pre-2.0: called with the raw audio chunk directly
         chunk = audio_data if audio_data is not None else self._buffer
         return self._detect(chunk)
@@ -222,7 +222,7 @@ just a floor that excludes the versions before the replacement existed:
 [project]
 dependencies = [
     "ovos-workshop>=5.0.0",   # ConversationalSkill mixin required, no pre-5.0 shim
-    "ovos-plugin-manager>=2.0.0",  # found_wake_word() no-arg contract only
+    "ovos-plugin-manager>=1.0.0",  # found_wake_word() no-arg contract only
 ]
 ```
 
