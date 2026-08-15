@@ -1637,9 +1637,10 @@ unregistered and will be silently skipped rather than erroring.</p>
 <p><code>adapt_low</code> and <code>common_qa</code> are dropped from the default list entirely — they
 are standalone opt-in plugins now. Add <code>"ovos-adapt-pipeline-plugin-low"</code> and
 the common-query plugin ID back explicitly if you still want them.</p>
-<p>These are the same pipeline stages as the current default, just written in the old
-short-name notation instead of full plugin IDs. See <a href="../pipelines-overview/">Pipelines Overview</a>
-for the current stage list and how the pipeline matcher chain works.</p>
+<p>These are the pipeline stages as they stood at <code>2.0.0</code>, written in the old short-name
+notation. The default list has since grown: <code>ovos-padatious-pipeline-plugin-medium</code> joined
+it in ovos-config <code>2.3.9a1</code>. See <a href="../pipelines-overview/">Pipelines Overview</a> for the
+current stage list and how the pipeline matcher chain works.</p>
 <p>The same commit changed the default <code>"lang"</code> value in <code>mycroft.conf</code> from
 <code>"en-us"</code> to <code>"en-US"</code>. Any code doing an exact string comparison against
 the lowercase default breaks. Compare case-insensitively or update the

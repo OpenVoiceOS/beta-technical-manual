@@ -1423,13 +1423,13 @@ the <a href="../pipelines-overview/#available-pipeline-components">Pipelines Ove
 <li><strong><code>ovos-fallback-pipeline-plugin-high</code></strong>: the fallback plugin's high-priority range
   (<code>0 &lt; p ≤ 5</code>) is reserved for critical fallback handlers, tried before medium-confidence
   matchers get another pass. See <a href="../fallback-pipeline/">Fallback Pipeline</a>.</li>
+<li><strong><code>ovos-stop-pipeline-plugin-medium</code></strong>: a fuzzy (non-exact) stop match, for stop phrases that
+  are not a literal "stop" or "cancel". See <a href="../stop-pipeline/">Stop Pipeline</a>.</li>
 <li><strong><code>ovos-padatious-pipeline-plugin-medium</code></strong> (in the default list since ovos-config
   <code>2.3.9a1</code>): catches template matches that score below <code>conf_high</code>, most importantly
   utterances whose auto-registered <code>.entity</code> slot values are out-of-list and therefore cap
   below the high threshold. Without this stage those utterances go unmatched on a default
   install.</li>
-<li><strong><code>ovos-stop-pipeline-plugin-medium</code></strong>: a fuzzy (non-exact) stop match, for stop phrases that
-  are not a literal "stop" or "cancel". See <a href="../stop-pipeline/">Stop Pipeline</a>.</li>
 <li><strong><code>ovos-adapt-pipeline-plugin-medium</code></strong>: Adapt's medium tier, a second, looser pass over
   keyword rules.</li>
 <li><strong><code>ovos-fallback-pipeline-plugin-medium</code></strong> and <strong><code>ovos-fallback-pipeline-plugin-low</code></strong>: general
