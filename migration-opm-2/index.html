@@ -22,7 +22,7 @@
     
     
       
-        <title>Wake-word opm 2.0 - OpenVoiceOS Technical Manual</title>
+        <title>Wake-word signature split - OpenVoiceOS Technical Manual</title>
       
     
     
@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#migrating-wake-word-plugins-to-opm-20" class="md-skip">
+        <a href="#migrating-wake-word-plugins-to-the-split-hotwordengine-contract" class="md-skip">
           Skip to content
         </a>
       
@@ -111,7 +111,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Wake-word opm 2.0
+              Wake-word signature split
             
           </span>
         </div>
@@ -1204,7 +1204,7 @@
           
   
   <span class="md-ellipsis">
-    Wake-word opm 2.0
+    Wake-word signature split
   </span>
   
 
@@ -1215,7 +1215,7 @@
         
   
   <span class="md-ellipsis">
-    Wake-word opm 2.0
+    Wake-word signature split
   </span>
   
 
@@ -1237,9 +1237,9 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#wake-word-plugin-found_wake_word-signature-change-opm-20" class="md-nav__link">
+  <a href="#wake-word-plugin-found_wake_word-signature-change" class="md-nav__link">
     <span class="md-ellipsis">
-      Wake-word plugin found_wake_word() signature change (opm 2.0)
+      Wake-word plugin found_wake_word() signature change
     </span>
   </a>
   
@@ -1571,9 +1571,9 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#wake-word-plugin-found_wake_word-signature-change-opm-20" class="md-nav__link">
+  <a href="#wake-word-plugin-found_wake_word-signature-change" class="md-nav__link">
     <span class="md-ellipsis">
-      Wake-word plugin found_wake_word() signature change (opm 2.0)
+      Wake-word plugin found_wake_word() signature change
     </span>
   </a>
   
@@ -1597,29 +1597,32 @@
   
 
 
-<h1 id="migrating-wake-word-plugins-to-opm-20">Migrating Wake-word Plugins to opm 2.0<a class="headerlink" href="#migrating-wake-word-plugins-to-opm-20" title="Permanent link">&para;</a></h1>
+<h1 id="migrating-wake-word-plugins-to-the-split-hotwordengine-contract">Migrating Wake-word Plugins to the Split HotWordEngine Contract<a class="headerlink" href="#migrating-wake-word-plugins-to-the-split-hotwordengine-contract" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>Wake-word plugin maintainers are affected. opm 2.0 split the old
+<p>Wake-word plugin maintainers are affected. <code>ovos-plugin-manager</code> split the old
 single-call <code>found_wake_word(audio_data)</code> contract into a separate
 <code>update(chunk)</code> feed step and a zero-argument poll. Fix it by
 implementing both methods on the new contract.</p>
 </div>
-<h3 id="wake-word-plugin-found_wake_word-signature-change-opm-20">Wake-word plugin <code>found_wake_word()</code> signature change (opm 2.0)<a class="headerlink" href="#wake-word-plugin-found_wake_word-signature-change-opm-20" title="Permanent link">&para;</a></h3>
-<p>opm 2.0 pulled apart what had been a single call into two steps: audio is
+<h3 id="wake-word-plugin-found_wake_word-signature-change">Wake-word plugin <code>found_wake_word()</code> signature change<a class="headerlink" href="#wake-word-plugin-found_wake_word-signature-change" title="Permanent link">&para;</a></h3>
+<p>The split pulled apart what had been a single call into two steps: audio is
 fed to the plugin separately now, and detection is polled with no
 arguments at all. A wake-word plugin written for the one-argument form
 still loads and still gets called after the caller-side change lands in a
 listener service, but the call itself throws, since <code>found_wake_word()</code>
 now runs with zero arguments where it used to expect the audio chunk.</p>
-<p><code>ovos-plugin-manager</code> 2.0 changed the <code>HotWordEngine</code> contract: audio is
-fed separately, then detection is polled with no arguments.</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># old (pre-opm-2.0)</span>
+<p>The <code>HotWordEngine</code> contract changed in <code>ovos-plugin-manager</code> <code>1.0.0</code>
+(<code>ce1c97b</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/314" title="GitHub Issue: TigreGotico/ovos-technical-manual #314">#314</a>): audio is fed separately, then detection is polled with
+no arguments. Plugins only started breaking when the listener services
+adopted the caller side on the opm <code>2.0.0</code> bump, which is why their
+commits cite opm 2.0.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># old (pre-split, opm &lt; 1.0.0)</span>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="k">class</span> <span class="nc">MyWakeWordPlugin</span><span class="p">(</span><span class="n">HotWordEngine</span><span class="p">):</span>
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>    <span class="k">def</span> <span class="nf">found_wake_word</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">audio_data</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 </span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>        <span class="o">...</span>
 </span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>
-</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="c1"># new (opm 2.0+)</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="c1"># new (opm 1.0.0+)</span>
 </span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="k">class</span> <span class="nc">MyWakeWordPlugin</span><span class="p">(</span><span class="n">HotWordEngine</span><span class="p">):</span>
 </span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chunk</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 </span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>        <span class="o">...</span>  <span class="c1"># feed audio incrementally</span>

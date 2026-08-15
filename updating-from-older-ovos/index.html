@@ -1289,7 +1289,7 @@
         
   
   <span class="md-ellipsis">
-    Wake-word opm 2.0
+    Wake-word signature split
   </span>
   
 
@@ -1735,7 +1735,7 @@ and wants to know exactly what changed between then and now.</p>
 <tr>
 <td><a href="../updating-plugins/">Updating Plugins</a></td>
 <td>STT/TTS/wake word/audio-backend/media/GUI-adapter/PHAL/solver plugin contract breaks</td>
-<td>The <a href="../migration-opm-2/">opm 2.0 wake-word signature</a> change</td>
+<td>The <a href="../migration-opm-2/">wake-word signature split</a></td>
 </tr>
 <tr>
 <td><a href="../updating-deployers/">Updating Deployers</a></td>
@@ -1858,10 +1858,10 @@ the CommonQuerySkill removal, and the bus-client dual-emit bridge, in that order
 </tr>
 <tr>
 <td>2026-01-09/23</td>
-<td><code>found_wake_word()</code> split into <code>update()</code> + zero-arg poll</td>
-<td><code>ovos-plugin-manager</code> <code>2.0.0</code></td>
+<td><code>found_wake_word()</code> split into <code>update()</code> + zero-arg poll (contract shipped in opm <code>1.0.0</code>; listeners adopted it on the <code>2.0.0</code> bump)</td>
+<td><code>ovos-plugin-manager</code> <code>1.0.0</code></td>
 <td>Wake-word plugin maintainers</td>
-<td><a href="../migration-opm-2/">Wake-word plugins and opm 2.0</a></td>
+<td><a href="../migration-opm-2/">Wake-word signature split</a></td>
 </tr>
 <tr>
 <td>2026-04-08</td>
