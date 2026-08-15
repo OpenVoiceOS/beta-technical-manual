@@ -307,8 +307,9 @@ docker run -p 9686:9686 my-translate-server
 ## Gotchas
 
 - **All endpoints are `GET` with the text in the URL path.** Long or special-character utterances must be URL-encoded by the client. There is no request body and no authentication. Don't expose this server directly to untrusted networks. Front it with a reverse proxy.
-- With the `mcp` extra installed, MCP is mounted at `/mcp` on the same HTTP server and port
-  (`9686`) automatically — nothing extra to run. The standalone MCP-only process (`python -m
+- MCP mounts at `/mcp` on the same HTTP server and port (`9686`) only when the server starts
+  with the `--mcp` flag and the `mcp` extra is installed. The extra alone does not
+  auto-mount the endpoint. The standalone MCP-only process (`python -m
   ovos_translate_server.mcp_server`, default `127.0.0.1:9687`) is a separate, optional way to run
   MCP without the HTTP API; running one does not start the other.
 

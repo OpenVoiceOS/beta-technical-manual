@@ -26,10 +26,11 @@ pip install ovos-stt-http-server
 
 **Choose your STT plugin**
 
-You name the plugin to serve with the `--engine` flag (below). Unlike a full OVOS
-install, the standalone server instantiates the plugin with an **empty config**, so it runs
-with the plugin's **built-in defaults**. It does **not** read the `stt` section of
-`mycroft.conf`. Pick a plugin whose defaults suit you, or one that loads its own configuration.
+You name the plugin to serve with the `--engine` flag (below). When no explicit config is
+passed, the server reads the plugin's own section from `mycroft.conf` (`stt.<plugin-id>`),
+matching `OVOSSTTFactory` behavior, so a mounted config file can select the model, device,
+and other plugin settings. With no config file present, the plugin runs with its built-in
+defaults.
 
 A normal OVOS install (not this server) selects its STT plugin under the `stt` section instead:
 
