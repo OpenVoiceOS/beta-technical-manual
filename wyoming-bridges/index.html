@@ -1890,7 +1890,7 @@ servers entirely: fully offline plugins exist for everything.</p>
 </span></code></pre></div>
 <p><strong><code>OVOSTTSEventHandler</code></strong></p>
 <p>One instance per client connection. On <code>Synthesize</code>, calls <code>TTS.synth(text)</code> which returns
-a path to a WAV file. The WAV is split into chunks (1024 samples by default) and streamed
+a path to a WAV file. The WAV is split into fixed 1024-sample chunks and streamed
 back as <code>AudioStart</code> + <code>AudioChunk</code>* + <code>AudioStop</code>.</p>
 <table>
 <thead>

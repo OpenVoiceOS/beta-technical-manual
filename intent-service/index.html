@@ -1881,10 +1881,13 @@ failure.</p>
 </tr>
 </tbody>
 </table>
-<p>The <code>*_context</code> events (<code>add_context</code> / <code>remove_context</code> / <code>clear_context</code>) mutate the per-session
-intent context (<code>session.intent_context</code>) specified by
-<a href="https://github.com/OpenVoiceOS/architecture/blob/dev/intent-context.md">OVOS-CONTEXT-1</a> — see
-<a href="../session/">Session Aware Skills</a>.</p>
+<p>The <code>*_context</code> events (<code>add_context</code> / <code>remove_context</code> / <code>clear_context</code>) are <strong>legacy-compat
+input topics</strong>:
+<a href="https://github.com/OpenVoiceOS/architecture/blob/dev/intent-context.md">OVOS-CONTEXT-1</a> §5.0
+defines no context-mutation topic — the session is the only context write path. Modern emitters
+write <code>session.intent_context</code> directly; these handlers survive only so pre-§5.0 skill processes
+whose <code>set_context()</code> wrapper emits the old messages keep working (a redundant idempotent
+write-through). See <a href="../session/">Session Aware Skills</a>.</p>
 <div class="admonition note">
 <p class="admonition-title">INTENT-4 registration topics</p>
 <p>Skills broadcast their intent and entity registrations on the canonical
