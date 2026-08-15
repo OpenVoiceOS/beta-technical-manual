@@ -215,6 +215,7 @@ You can customize the intent pipeline through configuration files. You can enabl
       "ovos-ocp-pipeline-plugin-medium",
       "ovos-fallback-pipeline-plugin-high",
       "ovos-stop-pipeline-plugin-medium",
+      "ovos-padatious-pipeline-plugin-medium",
       "ovos-adapt-pipeline-plugin-medium",
       "ovos-fallback-pipeline-plugin-medium",
       "ovos-fallback-pipeline-plugin-low"
