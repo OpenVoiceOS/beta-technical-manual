@@ -78,7 +78,7 @@ lower-precedence file entirely. You do **not** merge line-by-line, and you do **
 copy files you aren't changing.
 
 !!! warning "`.dialog` files: user overrides not honored yet"
-    The user-override tier currently applies to `.intent`, `.voc`, `.entity`, `.regex` and
+    The user-override tier currently applies to `.intent`, `.voc`, `.entity`, `.rx` (regex) and
     the other resource roles, but **not** to `.dialog` files: the dialog renderer in
     `ovos-workshop` still loads dialog only from the skill's own directory (a known gap,
     marked for a deliberate follow-up migration in the source). Until that lands, rewording

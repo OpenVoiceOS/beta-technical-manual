@@ -30,7 +30,7 @@ as:
 - `is_sj201_v6`: Mycroft SJ201 **dev kit** board (revision 6)
 - `is_sj201_v10`: SJ201 **production** board (revision 10)
 - `is_texas_tas5806`: the TAS5806 amplifier (used to confirm an SJ201 v10)
-- `is_wm8960`: WM8960-based HATs (ReSpeaker 2-mic, Adafruit 2-mic)
+- `is_wm8960`: WM8960-based HATs such as the ReSpeaker 2-mic (i2c `0x1a`). Adafruit's 2-mic Voice Bonnet is detected separately by `is_adafruit_amp` (i2c `0x4b`)
 
 This is the primitive that tells the [Mark 2](mark2.md) dev kit apart from the retail unit, and
 it is used by the detection and configuration tools below.

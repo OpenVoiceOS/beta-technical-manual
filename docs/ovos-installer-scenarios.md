@@ -122,7 +122,9 @@ A radio-button list of installation profiles:
 :   A microphone/speaker endpoint that talks to a separate OVOS core over the network. See [composable deployments](composable-deployments.md). It skips the feature-selection screen (no local skills/GUI/LLM/Home Assistant to configure), but adds four HiveMind connection prompts: host, port, access key, and password.
 
 `listener`
-:   Runs only the listening/wake word side of OVOS.
+:   A HiveMind Core hub (`hivemind-core listen`) that HiveMind satellites and bots connect
+    to. It is not OVOS's own local wake-word/listening service — that ships with the `ovos`
+    and `satellite` profiles. See [Composable Deployments](composable-deployments.md).
 
 `server`
 :   A headless core with no local audio hardware assumptions, meant to serve satellites. It also skips GUI/LLM/Home Assistant options.
