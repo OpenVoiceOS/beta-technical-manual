@@ -118,8 +118,10 @@ PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 pytest test/test_hello.py -v
 ```
 
 `PYTEST_DISABLE_PLUGIN_AUTOLOAD=1` avoids autoloading unrelated pytest plugins that some OVOS
-dependencies register. It's harmless to leave set for any OVOS test run. A real run looks like
-this (trimmed of the framework's own deprecation-warning noise):
+dependencies register. It fits the hand-built examples on this page, but it also disables
+`ovoscope`'s own `pytest11` plugin: with it set, the `minicroft` fixture from the tip above
+is not found unless you re-enable the plugin explicitly with `-p ovoscope.pytest_plugin`.
+A real run looks like this (trimmed of the framework's own deprecation-warning noise):
 
 ```text
 test/test_hello.py::test_hello_matches_and_speaks PASSED                [100%]
