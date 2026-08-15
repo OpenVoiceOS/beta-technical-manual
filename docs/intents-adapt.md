@@ -115,7 +115,7 @@ For the following example we will use the two files we outlined above:
 * `Potato.voc`
 
 
-* `Type.rx`
+* `type.rx`
 
 We will also add some new `.voc` files:
 
