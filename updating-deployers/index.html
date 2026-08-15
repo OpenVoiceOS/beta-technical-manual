@@ -1421,9 +1421,9 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#padatious_medium-dropped-from-default-pipeline" class="md-nav__link">
+  <a href="#padatious_medium-dropped-from-default-pipeline-later-reinstated" class="md-nav__link">
     <span class="md-ellipsis">
-      padatious_medium dropped from default pipeline
+      padatious_medium dropped from default pipeline, later reinstated
     </span>
   </a>
   
@@ -1794,9 +1794,9 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#padatious_medium-dropped-from-default-pipeline" class="md-nav__link">
+  <a href="#padatious_medium-dropped-from-default-pipeline-later-reinstated" class="md-nav__link">
     <span class="md-ellipsis">
-      padatious_medium dropped from default pipeline
+      padatious_medium dropped from default pipeline, later reinstated
     </span>
   </a>
   
@@ -2214,12 +2214,14 @@ Lifecycle:</p>
 toward <code>ovos-backend-client</code> (<code>ee9a14cb23</code>, 2022-10-04) and the full
 removal of the <code>mycroft</code> compat package including Selene API support
 (<code>2a10fa9c1c</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/439" title="GitHub Issue: TigreGotico/ovos-technical-manual #439">#439</a>, 2025-03-04, first stable release <code>1.1.0</code>).</p>
-<h3 id="padatious_medium-dropped-from-default-pipeline"><code>padatious_medium</code> dropped from default pipeline<a class="headerlink" href="#padatious_medium-dropped-from-default-pipeline" title="Permanent link">&para;</a></h3>
+<h3 id="padatious_medium-dropped-from-default-pipeline-later-reinstated"><code>padatious_medium</code> dropped from default pipeline, later reinstated<a class="headerlink" href="#padatious_medium-dropped-from-default-pipeline-later-reinstated" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Migration: add <code>padatious_medium</code> back explicitly to <code>core.pipeline</code> (see
-  <a href="../pipelines-overview/">Pipelines Overview</a>) in
-  USER config if you want it (maintainers' note: "it is always wrong in
-  benchmarks"). See the <a href="../padatious-pipeline/">Padatious pipeline</a> page for what it does.
+<li>Migration: nothing to do on current installs. The stage returned to the shipped default
+  pipeline as <code>ovos-padatious-pipeline-plugin-medium</code> in ovos-config <code>2.3.9a1</code> (<code>4d52513</code>,
+  <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/289" title="GitHub Issue: TigreGotico/ovos-technical-manual #289">#289</a>), so out-of-list entity-slot matches fire again by default. Only a deployment pinned
+  between <code>1.0.2</code> and <code>2.3.9a1</code> needs to add it back explicitly in USER config (see
+  <a href="../pipelines-overview/">Pipelines Overview</a> and the
+  <a href="../padatious-pipeline/">Padatious pipeline</a> page).
 Lifecycle:</li>
 </ul>
 <table>
@@ -2237,14 +2239,14 @@ Lifecycle:</li>
 <td></td>
 </tr>
 <tr>
-<td>Deprecated but functional</td>
-<td>none</td>
-<td></td>
-</tr>
-<tr>
 <td>Dropped</td>
 <td><code>b08b7b8</code> (2025-02-28, tag <code>1.0.2</code>)</td>
-<td>(ovos-config <code>b08b7b8</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/200" title="GitHub Issue: TigreGotico/ovos-technical-manual #200">#200</a>)</td>
+<td>(ovos-config <code>b08b7b8</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/200" title="GitHub Issue: TigreGotico/ovos-technical-manual #200">#200</a>; maintainers' note at the time: "it is always wrong in benchmarks")</td>
+</tr>
+<tr>
+<td>Reinstated</td>
+<td><code>4d52513</code> (first tag <code>2.3.9a1</code>)</td>
+<td>(ovos-config <code>4d52513</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/289" title="GitHub Issue: TigreGotico/ovos-technical-manual #289">#289</a>)</td>
 </tr>
 </tbody>
 </table>
