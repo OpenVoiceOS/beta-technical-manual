@@ -50,8 +50,8 @@ Every function takes an explicit `lang` (a BCP-47 code such as `"en"` or `"pt-br
 
 | Language Code           | Pronounce Number | Pronounce Ordinal | Extract Number | numbers_to_digits |
 |-------------------------|------------------|-------------------|----------------|-------------------|
-| `en` (English)          | yes               | WIP                | yes             | WIP                |
-| `kab` (Kabyle)          | yes               | yes                | yes             | WIP                |
+| `en` (English)          | yes               | WIP                | yes             | yes                |
+| `kab` (Kabyle)          | yes               | yes                | yes             | yes                |
 | `az` (Azerbaijani)      | yes               | WIP                | yes             | WIP                |
 | `ca` (Catalan)          | yes                | yes                 | yes              | WIP                 |
 | `gl` (Galician)         | yes                | yes                | yes              |  yes                  |
@@ -301,7 +301,7 @@ numbers_to_digits("set a timer for twenty five minutes", "en")
 def numbers_to_digits(utterance: str, lang: str, scale: Optional[Scale] = None) -> str: ...
 ```
 
-`scale` (`Scale.LONG` / `Scale.SHORT`, from `ovos_number_parser.util`) only matters for languages that distinguish short/long scale (e.g. `pt`/`mwl`). Hand-written rewriting is dispatched for `ast`, `oc`, `an`, `fy`, `gl`, `de`, `pt`, `mwl`, `ro`, `bg`, `hr`, `ru`, `sk`, `id`, `ms`, `tr`, and `uk`. Every other language (including `en` and `kab`) gets a generic word-span replacement instead. It works but is less precise about compound numerals than a hand-written implementation. No language ever raises here. One that has no parser at all is simply left unchanged.
+`scale` (`Scale.LONG` / `Scale.SHORT`, from `ovos_number_parser.util`) only matters for languages that distinguish short/long scale (e.g. `pt`/`mwl`). Hand-written rewriting is dispatched for `en`, `kab`, `ast`, `oc`, `an`, `fy`, `gl`, `de`, `pt`, `mwl`, `ro`, `bg`, `hr`, `ru`, `sk`, `id`, `ms`, `tr`, and `uk`. Every other language gets a generic word-span replacement instead. It works but is less precise about compound numerals than a hand-written implementation. No language ever raises here. One that has no parser at all is simply left unchanged.
 
 !!! note
     Kabyle (`kab`) has two coexisting numeral systems: everyday loan-word counting (Arabic-derived above ten, e.g. `waḥed u ɛecrin` = 21) used for pronunciation, and a formalized pan-Amazigh proposal (invariable tens, descending magnitudes, no connectors) that extraction also recognizes. `kab` counts only up to 9999 and has no scale or fraction vocabulary.
