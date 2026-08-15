@@ -185,7 +185,7 @@ Lifecycle:
 |---|---|---|
 | Active | before `e12559e` | |
 | Deprecated but functional | unverified | |
-| Dropped | `e12559e` (2026-04-03), pre-`8.0.0` | (ovos-workshop `e12559e`, #392) |
+| Dropped | `e12559e` (2026-04-03), post-`8.0.0`, first in `8.0.2a1` | (ovos-workshop `e12559e`, #392) |
 
 ### `_get_dialog()` removed as a public symbol
 
@@ -204,7 +204,7 @@ Lifecycle:
 |---|---|---|
 | Active | before `acbd438` | |
 | Deprecated but functional | unverified | |
-| Dropped | `acbd438` (2026-04-08), pre-`8.0.0` | (ovos-workshop `acbd438`, #395) |
+| Dropped | `acbd438` (2026-04-08), post-`8.0.0`, first in `8.0.4a1` | (ovos-workshop `acbd438`, #395) |
 
 ---
 

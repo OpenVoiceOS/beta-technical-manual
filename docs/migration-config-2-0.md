@@ -30,7 +30,7 @@ Old `core.pipeline`, before `2.0.0`:
 ```json
 ["stop_high", "converse", "ocp_high", "padatious_high", "adapt_high",
  "ocp_medium", "fallback_high", "stop_medium", "adapt_medium",
- "fallback_medium", "adapt_low", "common_qa", "fallback_low"]
+ "adapt_low", "common_qa", "fallback_medium", "fallback_low"]
 ```
 
 New `core.pipeline`, `2.0.0` and later:

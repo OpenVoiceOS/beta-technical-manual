@@ -123,12 +123,21 @@ the CommonQuerySkill removal, and the bus-client dual-emit bridge, in that order
 | 2025-06-07/08 | Four `OVOSSkill` API breaks landed in about a day | `ovos-workshop` `4.0.0` → `7.0.0` | Skill maintainers | [The ovos-workshop 7.0.0 release train](migration-workshop-7.md) |
 | 2025-06-16 | `core.pipeline` stage IDs renamed, `lang` default casing changed | `ovos-config` `2.0.0` | Deployers with a customized `core.pipeline` | [ovos-config 2.0.0](migration-config-2-0.md) |
 | 2026-01-09/23 | `found_wake_word()` split into `update()` + zero-arg poll (contract shipped in opm `1.0.0`; listeners adopted it on the `2.0.0` bump) | `ovos-plugin-manager` `1.0.0` | Wake-word plugin maintainers | [Wake-word signature split](migration-opm-2.md) |
-| 2026-04-08 | `CommonQuerySkill` deleted, no direct successor | `ovos-workshop` `6382d0a`, pre-`8.0.0` | Skill maintainers using common-query matching | [The ovos-workshop 7.0.0 release train](migration-workshop-7.md) |
+| 2026-04-08 | `CommonQuerySkill` deleted, no direct successor | `ovos-workshop` `6382d0a`, first in `8.0.4a3` | Skill maintainers using common-query matching | [The ovos-workshop 7.0.0 release train](migration-workshop-7.md) |
 | 2026-06-25/07-03 | Legacy `mycroft.*`/`recognizer_loop:*` topics bridged to `ovos.*`, dual-emit bugs fixed | `ovos-bus-client` `2.x` | Remote/HiveMind operators, any bus producer/consumer | [The bus-client dual-emit bridge](migration-bus-dual-emit.md) |
 | 2026-06-28 | Audio-transformer chain order flipped from descending to ascending `priority` | `ovos-dinkum-listener` `1fd909f` | Deployers with more than one audio-transformer plugin | [Audio-transformer chain-order flip](migration-audio-transformer-order.md) |
 
 ---
 
+
+## Recently shipped conformance work
+
+OVOS-PIPELINE-1 / STOP-1 conformance is released, not pending: the orchestrator owns
+`ovos.intent.handler.{start,complete,error}` around every skill dispatch and
+`ovos.intent.matched` before it (ovos-core `2178788d`, #788, first tag `2.3.0a1`), with
+STOP-1 landing in `3.0.0a1` (#802). These emits are unconditional; the once-proposed
+`legacy_namespace` gating never shipped (its branch was superseded), and legacy interop
+rides the bus-client bridge instead.
 
 ## Coming next
 
@@ -143,12 +152,6 @@ safe to build against yet.
   commits on the branch promise `Configuration().remote` and
   `load_config_stack(...)` keep working once this lands. Do not target
   `AssistantConfig` yet. Watch the `ovos-config` release notes.
-- **OVOS-PIPELINE-1 / STOP-1 conformance shipped**: the orchestrator owns
-  `ovos.intent.handler.{start,complete,error}` around every skill dispatch and
-  `ovos.intent.matched` before it (ovos-core `2178788d`, #788, first tag `2.3.0a1`),
-  with STOP-1 landing in `3.0.0a1` (#802). These emits are unconditional; the
-  once-proposed `legacy_namespace` gating never shipped (its branch was superseded),
-  and legacy interop rides the bus-client bridge instead.
 - Unmerged `ovos-workshop` branches `feat/deprecate-ocp-skills`,
   `feat/remove-skill-homescreens`, `feat/gameskill-and-ocp-deprecation`:
   OCP-skill-base-class and skill-homescreen removal has not landed as of

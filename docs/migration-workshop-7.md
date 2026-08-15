@@ -117,7 +117,7 @@ Lifecycle:
 
 | Change | Active | Deprecated but functional | Dropped |
 |---|---|---|---|
-| `ovos_workshop.skills.common_query_skill.CommonQuerySkill` | before `4.0.0` | `4.0.0` to pre-`8.0.0` | `6382d0a` (2026-04-08, pre-`8.0.0`) |
+| `ovos_workshop.skills.common_query_skill.CommonQuerySkill` | before `4.0.0` | `4.0.0` until removal | `6382d0a` (2026-04-08, post-`8.0.0`, `8.0.4a3`) |
 | `ovos-core` hardcoded common-query wiring | before `62024dbf98` | unverified | `62024dbf98` (`2.1.0`, 2025-06-10) |
 
 ---
