@@ -72,8 +72,10 @@ lifecycle (OVOS-PIPELINE-1 §9.6). The service runs the text through the **dialo
 chain**, sends it to a [TTS](tts-plugins.md) engine, runs the resulting audio through the
 **tts-transformer chain**, and plays it through its playback queue (OVOS-AUDIO-1 §3).
 
-The same queue also plays sound effects (`ovos.audio.queue` / `ovos.audio.play_sound`, legacy:
-`mycroft.audio.queue` / `mycroft.audio.play_sound`). A remote client can instead ask for the
+The same queue also plays queued sound files (`ovos.audio.queue`, legacy:
+`mycroft.audio.queue`), in order with speech. `ovos.audio.play_sound` (legacy:
+`mycroft.audio.play_sound`) is different: it bypasses the queue and plays the file
+immediately, possibly over active TTS. A remote client can instead ask for the
 synthesized audio **back over the bus** (base64 in the reply, nothing played locally) via
 `ovos.utterance.speak.b64` / `ovos.audio.speech`. See the
 [JSON round trip](bus-recipes.md#from-a-non-python-client-the-json-round-trip). Separately, and only when
@@ -85,7 +87,7 @@ streams. See the **Two independent subsystems** note at the top of this page.
 - **[TTS](tts-plugins.md) Synthesis**: Converts text to speech using various plugins.
 
 
-- **Speech & Sound Playback**: A single queue (`TTS.queue`, one `PlaybackThread`) plays spoken responses and sound effects in order.
+- **Speech & Sound Playback**: A single queue (`TTS.queue`, one `PlaybackThread`) plays spoken responses and queued sounds in order; instant sounds (`play_sound`) bypass it.
 
 
 - **Audio Focus**: Prioritizes speech over music or other background sounds (ducking).
@@ -105,13 +107,14 @@ flowchart TD
     Bus[MessageBus] -->|"ovos.utterance.speak<br/>(legacy: speak)"| DXForm["dialog-transformers<br/>§3.5"]
     DXForm --> TTS[TTS Plugin]
     TTS --> TXForm["tts-transformers<br/>§3.6"]
-    Bus -->|play_sound| Queue[TTS.queue]
+    Bus -->|"ovos.audio.queue"| Queue[TTS.queue]
     TXForm --> Queue
     Queue --> Thread[PlaybackThread]
     Thread -->|ALSA/Pulse| Speakers[Speakers]
+    Bus -->|"ovos.audio.play_sound<br/>(instant, may play over TTS)"| Speakers
 ```
 
-*Diagram:* The flow starts at the message bus and ends at the speakers, and it branches so that a play_sound event skips the dialog- and TTS-transformers and joins the queue directly.
+*Diagram:* The flow starts at the message bus and ends at the speakers. Queued sounds (`ovos.audio.queue`) skip the transformers and join `TTS.queue` in order with speech, while `ovos.audio.play_sound` bypasses the queue entirely and plays immediately, possibly over active TTS.
 
 ### Subsystem 2: legacy media audioservice (only if `enable_old_audioservice`)
 
