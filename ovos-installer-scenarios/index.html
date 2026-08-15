@@ -1643,7 +1643,9 @@ pins an older snapshot (see <a href="../release-channels/">Release Channels</a>)
 <dt><code>satellite</code></dt>
 <dd>A microphone/speaker endpoint that talks to a separate OVOS core over the network. See <a href="../composable-deployments/">composable deployments</a>. It skips the feature-selection screen (no local skills/GUI/LLM/Home Assistant to configure), but adds four HiveMind connection prompts: host, port, access key, and password.</dd>
 <dt><code>listener</code></dt>
-<dd>Runs only the listening/wake word side of OVOS.</dd>
+<dd>A HiveMind Core hub (<code>hivemind-core listen</code>) that HiveMind satellites and bots connect
+to. It is not OVOS's own local wake-word/listening service — that ships with the <code>ovos</code>
+and <code>satellite</code> profiles. See <a href="../composable-deployments/">Composable Deployments</a>.</dd>
 <dt><code>server</code></dt>
 <dd>A headless core with no local audio hardware assumptions, meant to serve satellites. It also skips GUI/LLM/Home Assistant options.</dd>
 </dl>
