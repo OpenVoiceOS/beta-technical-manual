@@ -1534,7 +1534,8 @@ the retail unit) that need slightly different setup. This page documents the OVO
 it up (via the <a href="../ovos-installer/">ovos-installer</a>), the kernel driver involved, and the one
 thing you must <strong>not</strong> do: mix in Neon packages (see the warning below). Audio, fan control,
 the touchscreen, and the hardware buttons all work through the installer today. The LED ring
-is the one piece of the SJ201 board the installer path doesn't drive yet. New to the terms
+works out of the box on the <strong>dev kit</strong>; on the <strong>retail</strong> Mark II it is the one piece of
+the SJ201 board the installer path doesn't drive yet. New to the terms
 here? See the <a href="../glossary/">Glossary</a>.</p>
 </div>
 <p>The <strong>Mycroft Mark 2</strong> is built around a <strong>Raspberry Pi 4</strong> carrying the <strong>SJ201</strong> HAT. This is an
@@ -1574,6 +1575,11 @@ edges and treat everything below as best-effort.</p>
 <td>Fan control</td>
 <td>needs the <a href="https://github.com/OpenVoiceOS/ovos-PHAL-plugin-mk2-v6-fan-control"><code>ovos-PHAL-plugin-mk2-v6-fan-control</code></a> plugin (<code>pip install ovos-PHAL-plugin-mk2-fan-control</code> — the pip name has no <code>v6</code>)</td>
 <td>PWM fan handled by a device-tree overlay</td>
+</tr>
+<tr>
+<td>LED ring</td>
+<td>driven by the installer via <a href="https://github.com/OVOSHatchery/ovos-PHAL-plugin-sj201-leds"><code>ovos-PHAL-plugin-sj201-leds</code></a> (dev-kit boards only)</td>
+<td>not driven by the installer (see the LED note below)</td>
 </tr>
 </tbody>
 </table>
@@ -1642,9 +1648,12 @@ script. <code>ovos-i2csound</code> belongs to the raspOVOS image. The installer'
 entirely from the <code>VocalFusionDriver</code> kernel module above.</p>
 </div>
 <div class="admonition info">
-<p class="admonition-title">LED ring support is incomplete via the installer</p>
-<p>The installer brings up audio, fan, touchscreen and buttons, but <strong>LED-ring support on the
-Mark 2 is currently incomplete</strong> in the ovos-installer path. One option in the meantime is
+<p class="admonition-title">LED-ring support differs by board</p>
+<p>On the <strong>dev kit</strong> the installer drives the ring automatically: alongside the
+<code>ovos-PHAL[mk2dev]</code> extra it git-installs
+<a href="https://github.com/OVOSHatchery/ovos-PHAL-plugin-sj201-leds"><code>ovos-PHAL-plugin-sj201-leds</code></a>,
+which drives the 12-pixel ring directly over i2c (dev-kit boards only). On the <strong>retail</strong>
+Mark II the installer ships no LED plugin, so the ring stays dark. One option there is
 Neon's <a href="https://github.com/NeonGeckoCom/neon-phal-plugin-linear_led"><code>neon-phal-plugin-linear_led</code></a>
 (see the <a href="#neon-mark-2-packages-official-but-separate">Neon packages table</a> below), which
 already drives the ring's listening/speaking/muted/error animations. Keep in mind the
