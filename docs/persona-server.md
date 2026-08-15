@@ -192,10 +192,12 @@ Set `stream=true` (where the vendor API supports it) to get incremental output. 
 | HuggingFace TGI | SSE token events |
 | AWS Bedrock | SSE with `outputText` events |
 
-Tool calling works with streaming too, but not natively: the server resolves the tool round
-through its non-streaming loop first (the streaming seam itself cannot report `tool_calls`),
-then emits the result as SSE deltas — the final answer sentence by sentence, or a single
-`tool_calls` delta for a client-side call.
+Tool calling is an OpenAI-route feature (`/openai/v1/chat/completions`) and works there with
+streaming too, though not natively: the server resolves the tool round through its
+non-streaming loop first (the streaming seam itself cannot report `tool_calls`), then emits
+the result as SSE deltas — the final answer sentence by sentence, or a single `tool_calls`
+delta for a client-side call. The other vendor routers never forward `tools` from the
+request at all, streaming or not; Ollama accepts the field but never uses it.
 
 ---
 
