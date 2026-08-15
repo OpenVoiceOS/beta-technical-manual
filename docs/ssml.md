@@ -199,10 +199,10 @@ Source: `TTS.modify_tag()` and `TTS.validate_ssml()` in
 
 # default handling of ssml, advanced plugins may override this method
 def modify_tag(self, tag):
-    """Override to modify each supported ssml tag.
+    """
+    Modify an SSML tag before synthesis.
 
-    Arguments:
-        tag (str): SSML tag to check and possibly transform.
+    Called for each supported SSML tag to allow plugins to transform or normalize the tag string.
     """
     return tag
 

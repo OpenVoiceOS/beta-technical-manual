@@ -32,7 +32,7 @@ A secondary use case is scientific. The library supports the full electromagneti
 | `ovos_color_parser/__init__.py` | Convenience re-exports of the most common model classes and matching functions (a subset: see the API reference for what each submodule exposes) |
 | `ovos_color_parser/models.py` | Dataclasses for all color spaces plus pre-built spectral palettes and language vocabulary objects |
 | `ovos_color_parser/matching.py` | Color name lookup, adjective adjustment, `ColorMatcher` class, utility functions |
-| `ovos_color_parser/core/` | Internal building blocks: `distance.py` (in-house CIEDE2000 implementation), `space.py` (color-space math) |
+| `ovos_color_parser/core/` | Internal building blocks: `distance.py` (in-house CIEDE2000 implementation), `space.py` (color-space math), `gamut.py` (`GamutPolicy` CLAMP/MAP/REJECT resolution of out-of-sRGB colors) |
 | `ovos_color_parser/match/automaton.py` | `SubstringMatcher`: an in-house substring-matching automaton used for color-name lookup (no external Aho-Corasick dependency) |
 | `ovos_color_parser/vocab/` | Vocabulary loading helpers for the per-language resource files |
 | `ovos_color_parser/res/<lang>/` | Per-language JSON word-lists (`*.json`) and object-color mappings (`object_colors.json`) and adjective descriptors (`color_descriptors.json`) |
@@ -78,7 +78,8 @@ Weighted circular-mean hue averaging (`average_colors()`) prevents wrap-around e
 
 ## API reference
 
-**Importable from the top-level `ovos_color_parser`:** `color_from_description`, `color_distance`, `closest_color`, `average_colors`, `convert_K_to_RGB`, `get_contrasting_black_or_white`, `ColorMatcher`, `palette_from_description`, `lookup_name`, `rgb_to_cmyk`, `cmyk_to_rgb`, `is_hex_code_valid`, `srgb8_distance`, `load_palettes`, `load_locale_palettes`, `load_shared_palettes`, `palette_names`, and the model classes `sRGBAColor`, `HLSColor`, `HSVColor`, `SpectralColor`, `HueRange`, `ColorTerm`, `LanguageColorVocabulary`, `sRGBAColorPalette`, `HSVColorPalette`, `HLSColorPalette`, `SpectralColorPalette`, `NewtonSpectralColorTerms`, `ISCCNBSSpectralColorTerms`, `EnglishColorTerms`.
+**Importable from the top-level `ovos_color_parser`:** `color_from_description`, `color_distance`, `closest_color`, `average_colors`, `convert_K_to_RGB`, `get_contrasting_black_or_white`, `ColorMatcher`, `palette_from_description`, `lookup_name`, `rgb_to_cmyk`, `cmyk_to_rgb`, `is_hex_code_valid`, `srgb8_distance`, `load_palettes`, `load_locale_palettes`, `load_shared_palettes`, `palette_names`, the gamut
+helpers `GamutPolicy`, `in_gamut`, `fit_to_gamut`, and the model classes `sRGBAColor`, `HLSColor`, `HSVColor`, `SpectralColor`, `HueRange`, `ColorTerm`, `LanguageColorVocabulary`, `sRGBAColorPalette`, `HSVColorPalette`, `HLSColorPalette`, `SpectralColorPalette`, `NewtonSpectralColorTerms`, `ISCCNBSSpectralColorTerms`, `EnglishColorTerms`.
 
 Only the pre-built spectral/language palette **constants** below (e.g. `MalacaraSpectralColorTerms`, `CRCHandbookSpectralColorTerms`, `IRSpectralColors`, `UVSpectralColors`, `ElectroMagneticSpectrum`, `OtjihereroColorTerms`) are **not** re-exported and must be imported from their submodule (`ovos_color_parser.models`).
 
@@ -123,7 +124,7 @@ Type aliases exported from `models.py`:
 
 | Function | Signature | Returns | Description |
 |----------|-----------|---------|-------------|
-| `color_from_description` | `(description: str, lang: str = "en", strategy: MatchStrategy = DAMERAU_LEVENSHTEIN_SIMILARITY, cast_to_palette: bool = False, fuzzy: bool = True) -> Optional[sRGBAColor]` | `sRGBAColor` or `None` | Main entry point. Resolves a natural-language description to an RGB color. Returns `None` if no color candidates are found. When `cast_to_palette=True`, snaps the result to the nearest matched candidate instead of returning an averaged value. |
+| `color_from_description` | `(description: str, lang: str = "en", strategy: MatchStrategy = DAMERAU_LEVENSHTEIN_SIMILARITY, cast_to_palette: bool = False, fuzzy: bool = True, gamut: GamutPolicy = GamutPolicy.CLAMP) -> Optional[sRGBAColor]` | `sRGBAColor` or `None` | Main entry point. Resolves a natural-language description to an RGB color. Returns `None` if no color candidates are found. When `cast_to_palette=True`, snaps the result to the nearest matched candidate instead of returning an averaged value. `gamut` picks how out-of-sRGB results (extreme color temperatures, pure spectral wavelengths) are resolved: `CLAMP` clips per channel, `MAP` fits perceptually, `REJECT` refuses (`ovos_color_parser/core/gamut.py`). |
 | `color_distance` | `(color_a: Color, color_b: Color) -> float` | `float` | CIEDE2000 perceptual distance between two colors in sRGB-255 space. Lower is more similar. Computed by the in-house `srgb8_distance`/`delta_e_cie2000` implementation in `ovos_color_parser/core/distance.py`, with no `colorspacious` dependency. |
 | `closest_color` | `(color: Color, color_opts: List[Color]) -> Color` | `Color` | Returns the element of `color_opts` with the smallest `color_distance` to `color`. |
 | `average_colors` | `(colors: List[Color], weights: Optional[List[float]] = None) -> HLSColor` | `HLSColor` | Weighted average of a list of colors. Hue is averaged using circular mean (atan2) to avoid wrap-around errors. Returns an `HLSColor`. |
