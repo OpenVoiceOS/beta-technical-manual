@@ -1852,10 +1852,12 @@ configured via environment variables:</p>
 </tr>
 </tbody>
 </table>
-<p>Tool calling works with streaming too, but not natively: the server resolves the tool round
-through its non-streaming loop first (the streaming seam itself cannot report <code>tool_calls</code>),
-then emits the result as SSE deltas — the final answer sentence by sentence, or a single
-<code>tool_calls</code> delta for a client-side call.</p>
+<p>Tool calling is an OpenAI-route feature (<code>/openai/v1/chat/completions</code>) and works there with
+streaming too, though not natively: the server resolves the tool round through its
+non-streaming loop first (the streaming seam itself cannot report <code>tool_calls</code>), then emits
+the result as SSE deltas — the final answer sentence by sentence, or a single <code>tool_calls</code>
+delta for a client-side call. The other vendor routers never forward <code>tools</code> from the
+request at all, streaming or not; Ollama accepts the field but never uses it.</p>
 <hr />
 <h2 id="function-calling-who-executes-what">Function Calling: Who Executes What<a class="headerlink" href="#function-calling-who-executes-what" title="Permanent link">&para;</a></h2>
 <p>A chat request can carry two independent kinds of tools, and they are executed by different
