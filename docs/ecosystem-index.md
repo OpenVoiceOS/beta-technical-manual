@@ -65,7 +65,7 @@ There are roughly **260** public, non-archived repositories in the [`OpenVoiceOS
     | [ovos-lang-detector-classics-plugin](https://github.com/OpenVoiceOS/ovos-lang-detector-classics-plugin) | Provides plugins for the following packages:. | [Translation plugins](#translation-plugins-6) |
     | [ovos-lang-detector-fasttext-plugin](https://github.com/OpenVoiceOS/ovos-lang-detector-fasttext-plugin) | fasttext-language-identification is the companion language detector for the NLLB model. | [Translation plugins](#translation-plugins-6) |
     | [ovos-lang-parser](https://github.com/OpenVoiceOS/ovos-lang-parser) | Map spoken and written language names to standard IETF/BCP-47 language codes - and back -... | [Core services & libraries](#core-services-libraries-18) |
-    | [ovos-legacy-mycroft-gui-plugin](https://github.com/OpenVoiceOS/ovos-legacy-mycroft-gui-plugin) | A compatibility shim exposing the classic mycroft-core GUI plugin interface on top of... | [Meta & infrastructure / other components](#meta-infrastructure-other-components-43) |
+    | [ovos-legacy-mycroft-gui-plugin](https://github.com/OpenVoiceOS/ovos-legacy-mycroft-gui-plugin) | Reference `opm.gui_adapter` implementation: renders OVOS SYSTEM_* templates over the legacy mycroft-gui Qt protocol for existing Qt clients | [Meta & infrastructure / other components](#meta-infrastructure-other-components-43) |
     | [ovos-localize](https://github.com/OpenVoiceOS/ovos-localize) | A GitHub-native localization platform purpose-built for OVOS skill and plugin locale... | [Meta & infrastructure / other components](#meta-infrastructure-other-components-43) |
     | [ovos-m2v-pipeline](https://github.com/OpenVoiceOS/ovos-m2v-pipeline) | An intent matching pipeline for OpenVoiceOS (OVOS), powered by the Model2Vec model for... | [Pipeline / Intent plugins](#pipeline-intent-plugins-10) |
     | [ovos-machine-translations](https://github.com/OpenVoiceOS/ovos-machine-translations) | Temporary machine-translated resource files produced while skills and plugins waited for... | [Meta & infrastructure / other components](#meta-infrastructure-other-components-43) |
@@ -1089,7 +1089,7 @@ on, and assets used across projects.
 :   A unified GGUF/llama-cpp-python wrapper providing chat, summarization, dialog rewriting, translation, language detection, and text embeddings from quantized local models. Registers multiple `opm.*` plugin types (solver, transformer, embeddings) backed by the same GGUF runtime, so it can be loaded by ovos-persona, the transformer pipeline, or memory backends depending on which capability is configured.
 
 **[ovos-legacy-mycroft-gui-plugin](https://github.com/OpenVoiceOS/ovos-legacy-mycroft-gui-plugin)**
-:   A compatibility shim exposing the classic mycroft-core GUI plugin interface on top of modern ovos-gui. Used only by GUI clients written against the old mycroft-core API.
+:   The reference implementation of the `opm.gui_adapter` interface: translates OVOS `SYSTEM_*` page templates into the legacy mycroft-gui Qt WebSocket protocol so existing Qt5/Qt6 clients keep working, rendering pages from its own bundled QML. Despite the name, it is the modern adapter, not a legacy shim.
 
 **[ovos-localize](https://github.com/OpenVoiceOS/ovos-localize)**
 :   A GitHub-native localization platform purpose-built for OVOS skill and plugin locale files, replacing GitLocalize. Used by maintainers and translators to manage translations; see [Contribute Translations with OVOS Localize](ovos-localize-tutorial.md) for the workflow.
