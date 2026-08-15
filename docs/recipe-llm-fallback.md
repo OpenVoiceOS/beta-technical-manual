@@ -27,6 +27,10 @@ class LLMFallbackSkill(FallbackSkill):
         # broad catch-all: let every more specific fallback/skill go first
         self.register_fallback(self.handle_fallback, 90)
 
+    def can_answer(self, message):
+        # required abstract method: a cheap yes/no before handle_fallback runs
+        return self.solver is not None
+
     def handle_fallback(self, message):
         utterance = message.data["utterance"]
         if self.solver is None:
@@ -40,6 +44,7 @@ class LLMFallbackSkill(FallbackSkill):
 
 ### Moving parts
 
+- `can_answer(message)` is a **required** abstract method (enforced since ovos-workshop 9.3.9a1): a skill without it fails to load with a `TypeError`. It is a cheap capability check the service can ask before committing to your handler; returning whether the solver loaded is enough here.
 - A `FallbackSkill` subclass calls `self.register_fallback(handler, priority)` in `initialize()`. `handler` must return `True` if it produced an answer (stopping the chain) or `False` to let the next-priority fallback try. Priority `90` is deliberately high (tried late) since an LLM should be the *last* resort, not the first. See [Fallback Skill](fallbacks.md) for the recommended priority tiers.
 - `QuestionSolver.get_spoken_answer(query, lang=None, units=None)` is the common template every question-answering solver plugin implements. A plugin is just a Python entry point (`opm.solver`) you load by id, the same plugin-discovery pattern used everywhere else in OVOS.
 - !!! warning "Upcoming: solver templates are being replaced"
