@@ -105,7 +105,8 @@ happened to own it.
 `CommonQuerySkill` had been deprecation-flagged since ovos-workshop
 `4.0.0` and was deleted entirely (259 lines, including the `CQSMatchLevel`
 enum and `CQS_match_query_phrase`/`CQS_action` abstract methods) in
-`6382d0a` (#400, 2026-04-08), ahead of the `8.0.0` release. There is no
+`6382d0a` (#400, 2026-04-08), months after the `8.0.0` release, first shipping in
+`8.0.4a3`. There is no
 direct successor class in `ovos-workshop`. Common-query matching now lives
 in whatever pipeline plugin currently owns it (check `ovos-core`'s
 common-query pipeline plugin). On `ovos-core` itself, the equivalent

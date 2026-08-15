@@ -127,7 +127,7 @@ try:
     from ovos_workshop.skills.common_query_skill import CommonQuerySkill
     _HAS_LEGACY_CQS = True
 except ImportError:
-    # dropped in ovos-workshop 6382d0a (2026-04-08), pre-8.0.0
+    # dropped in ovos-workshop 6382d0a (2026-04-08), post-8.0.0 (first in 8.0.4a3)
     CommonQuerySkill = OVOSSkill
     _HAS_LEGACY_CQS = False
 
