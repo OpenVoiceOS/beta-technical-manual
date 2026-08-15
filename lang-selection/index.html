@@ -1416,7 +1416,7 @@ is present <em>and</em> resolves to a valid language:</p>
 </tr>
 </tbody>
 </table>
-<p>The message language itself is resolved by <code>get_message_lang()</code>, which checks <code>message.data["lang"]</code> first and then <code>message.context["lang"]</code>. If neither is present, it falls back to the system <code>lang</code> from <code>mycroft.conf</code>.</p>
+<p>The message language itself is resolved by <code>get_message_lang()</code>, which checks <code>message.data["lang"]</code> first and then <code>message.context["lang"]</code>. If neither is present, it looks for a session on the message (<code>context["session_id"]</code> or <code>context["session"]</code>) and uses that session's <code>lang</code> — in a running system this is the usual source, since each client carries its own session. Only a message with no session either falls back to the system <code>lang</code> from <code>mycroft.conf</code>.</p>
 <h3 id="validation-against-valid_langs">Validation against <code>valid_langs</code><a class="headerlink" href="#validation-against-valid_langs" title="Permanent link">&para;</a></h3>
 <p>Each candidate above is validated against the enabled-language list before it is accepted. That list is taken from <code>message.context["valid_langs"]</code> if the source provided one, otherwise from <code>get_valid_languages()</code> (i.e. <code>lang</code> + <code>secondary_langs</code> in <code>mycroft.conf</code>). OVOS uses the <code>closest_lang</code> helper (from <code>ovos_spec_tools</code>) to find the closest match:</p>
 <ul>
