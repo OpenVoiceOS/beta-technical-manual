@@ -1571,8 +1571,9 @@ loads them. Each plugin advertises itself to OVOS through an OPM entry-point gro
 <div class="admonition note">
 <p class="admonition-title">Version requirement</p>
 <p>The agent plugin system (<code>opm.agents.*</code> entry-point groups) requires
-<strong><code>ovos-plugin-manager &gt;= 2.3.0a1</code></strong> (cap below <code>&lt;3.0.0</code>). Older OPM releases don't
-know these groups.</p>
+<strong><code>ovos-plugin-manager &gt;= 2.4.0a1</code></strong> (cap below <code>&lt;3.0.0</code>); that floor covers every
+group, including <code>opm.agents.option_matcher</code>, which arrived last. Older OPM releases
+don't know these groups.</p>
 </div>
 <p><strong>For advanced users:</strong> every agent engine subclasses an abstract base in
 <code>ovos_plugin_manager.templates.agents</code> and registers under one <code>opm.agents.*</code> group (each with a
