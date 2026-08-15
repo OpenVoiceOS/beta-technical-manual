@@ -1841,8 +1841,9 @@ should probably not be a slot at all.</p>
 <div class="admonition note">
 <p class="admonition-title">Out-of-list matches land in the medium stage</p>
 <p>In <code>ovos-padatious-pipeline-plugin</code> (2.0.3a1+), an out-of-list value is floored at
-<code>ENTITY_HINT_FLOOR = 0.8</code> rather than collapsing the candidate, and a listed value scores
-near-identity from <code>0.9</code> up. That floor lands in the plugin's <strong>medium</strong>-confidence band
+<code>ENTITY_HINT_FLOOR = 0.8</code> rather than collapsing the candidate. A listed value scores
+exactly <code>1.0</code> through a deterministic exact-match fast path (2.0.5a1+), the same as if
+no entity were attached at all. That floor lands in the plugin's <strong>medium</strong>-confidence band
 (<code>conf_med = 0.8</code>, <code>conf_high = 0.95</code> by default), below <code>conf_high</code>. The floor applies to
 the per-slot entity contribution, not the final confidence, so the exact final score
 varies with the rest of the match, but in practice an out-of-list value drags the match
