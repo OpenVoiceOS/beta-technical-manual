@@ -145,18 +145,17 @@ and `reload()` re-read the existing file paths, they do not recompute the path l
 
 Python setters exist (`set_xdg_base`, `set_config_filename`, `set_default_config` in
 `ovos_config.meta`), but they only affect code that later calls the dynamic path helpers
-(`get_xdg_config_save_path()`, `find_user_config()`, `get_xdg_config_dirs()`). To change
-where the `Configuration` singleton itself looks, call a setter **before** the first import
-of `ovos_config.config`, or, the only mechanism that works regardless of import order, set
-the environment variables before the process starts:
+(`get_xdg_config_save_path()`, `find_user_config()`, `get_xdg_config_dirs()`). They cannot
+redirect the `Configuration` singleton itself: importing `ovos_config.meta` executes the
+package `__init__`, which imports `ovos_config.config` first, so by the time a setter is
+even importable the singleton's paths are already frozen. **Setting the environment
+variables before the process starts is the only mechanism that changes where
+`Configuration` looks**:
 
-```python
-from ovos_config.meta import set_xdg_base, set_config_filename, set_default_config
-
-# effective only if ovos_config.config has not been imported yet
-set_xdg_base("my_distro")                         # ~/.config/my_distro/
-set_config_filename("mycroft.conf")               # filename inside the XDG dir
-set_default_config("/opt/my_distro/default.conf") # bundled defaults path
+```bash
+export OVOS_CONFIG_BASE_FOLDER=my_distro          # ~/.config/my_distro/
+export OVOS_CONFIG_FILENAME=mycroft.conf          # filename inside the XDG dir
+export OVOS_DEFAULT_CONFIG=/opt/my_distro/default.conf
 ```
 
 ### Distribution Overrides
