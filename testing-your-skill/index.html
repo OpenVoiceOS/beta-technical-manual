@@ -1523,8 +1523,10 @@ you understand it, the fixture is the leaner way to write most tests.</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nv">PYTEST_DISABLE_PLUGIN_AUTOLOAD</span><span class="o">=</span><span class="m">1</span><span class="w"> </span>pytest<span class="w"> </span>test/test_hello.py<span class="w"> </span>-v
 </span></code></pre></div>
 <p><code>PYTEST_DISABLE_PLUGIN_AUTOLOAD=1</code> avoids autoloading unrelated pytest plugins that some OVOS
-dependencies register. It's harmless to leave set for any OVOS test run. A real run looks like
-this (trimmed of the framework's own deprecation-warning noise):</p>
+dependencies register. It fits the hand-built examples on this page, but it also disables
+<code>ovoscope</code>'s own <code>pytest11</code> plugin: with it set, the <code>minicroft</code> fixture from the tip above
+is not found unless you re-enable the plugin explicitly with <code>-p ovoscope.pytest_plugin</code>.
+A real run looks like this (trimmed of the framework's own deprecation-warning noise):</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>test/test_hello.py::test_hello_matches_and_speaks PASSED                [100%]
 </span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
 </span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>================== 1 passed, 563 warnings in 70.16s (0:01:10) ==================
