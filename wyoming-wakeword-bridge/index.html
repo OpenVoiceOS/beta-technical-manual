@@ -1635,12 +1635,6 @@ Clients select which to activate with the <code>Detect</code> event.</p>
 <td><code>BASIC_FORMAT</code></td>
 <td>Format string for log messages</td>
 </tr>
-<tr>
-<td><code>--version</code></td>
-<td>No</td>
-<td>—</td>
-<td>Print the installed version and exit</td>
-</tr>
 </tbody>
 </table>
 <p>Examples:</p>
@@ -1710,9 +1704,8 @@ Clients select which to activate with the <code>Detect</code> event.</p>
 </span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>       | NotDetected                      ← if not detected
 </span></code></pre></div>
 <h3 id="zeroconf-mdns-discovery">Zeroconf / mDNS Discovery<a class="headerlink" href="#zeroconf-mdns-discovery" title="Permanent link">&para;</a></h3>
-<p>When <code>--zeroconf</code> is passed, the bridge instantiates
-<code>wyoming.zeroconf.HomeAssistantZeroconf(name=..., port=..., host=...)</code> and awaits its
-<code>register_server()</code> method to announce itself on the local
+<p>When <code>--zeroconf</code> is passed, the bridge awaits
+<code>wyoming.zeroconf.register_server(name=..., port=..., host=...)</code> directly to announce itself on the local
 network. Home Assistant and other Wyoming clients can discover the service automatically
 without manual IP configuration.</p>
 <hr />

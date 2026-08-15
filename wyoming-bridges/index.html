@@ -1906,22 +1906,16 @@ back as <code>AudioStart</code> + <code>AudioChunk</code>* + <code>AudioStop</co
 </tr>
 <tr>
 <td><code>Synthesize</code></td>
-<td>Call <code>TTS.synth()</code>, stream WAV chunks</td>
-</tr>
-<tr>
-<td><code>SynthesizeStart</code> / <code>SynthesizeChunk</code> / <code>SynthesizeStop</code></td>
-<td>Streaming synthesis: text chunks are fed to a <code>SentenceBoundaryDetector</code>, and each complete sentence is synthesized and streamed as soon as it is detected, rather than waiting for the whole text</td>
+<td>Call the plugin's synth, then stream the WAV back as <code>AudioChunk</code>s (1024 samples per chunk, fixed)</td>
 </tr>
 </tbody>
 </table>
 <div class="admonition note">
-<p class="admonition-title">Streaming synthesis is on by default</p>
-<p><code>wyoming-ovos-tts</code> advertises <code>supports_synthesize_streaming</code> and accepts the
-<code>SynthesizeStart</code>/<code>SynthesizeChunk</code>/<code>SynthesizeStop</code> protocol unless you pass
-<code>--no-streaming</code>. A <code>SentenceBoundaryDetector</code> buffers incoming text chunks and releases
-complete sentences for synthesis as they arrive; whatever text is left when <code>SynthesizeStop</code>
-is received is synthesized and flushed before <code>SynthesizeStopped</code> is sent. With
-<code>--no-streaming</code>, only the plain <code>Synthesize</code> event is handled.</p>
+<p class="admonition-title">Whole-utterance synthesis only</p>
+<p><code>wyoming-ovos-tts</code> handles the plain <code>Synthesize</code> event only: the full text is
+synthesized in one call and the resulting WAV is chunked back over the wire.
+Wyoming's streaming-synthesis protocol
+(<code>SynthesizeStart</code>/<code>SynthesizeChunk</code>/<code>SynthesizeStop</code>) is not implemented.</p>
 </div>
 <h3 id="running_1">Running<a class="headerlink" href="#running_1" title="Permanent link">&para;</a></h3>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>pip<span class="w"> </span>install<span class="w"> </span>wyoming-ovos-tts
@@ -1950,34 +1944,10 @@ is received is synthesized and flushed before <code>SynthesizeStopped</code> is 
 <td><code>tcp://HOST:PORT</code> or <code>unix:///path/to/socket</code></td>
 </tr>
 <tr>
-<td><code>--no-streaming</code></td>
-<td>No</td>
-<td><code>False</code></td>
-<td>Disable streaming synthesis (<code>SynthesizeStart</code>/<code>SynthesizeChunk</code>/<code>SynthesizeStop</code>); only plain <code>Synthesize</code> is handled</td>
-</tr>
-<tr>
-<td><code>--samples-per-chunk</code></td>
-<td>No</td>
-<td><code>1024</code></td>
-<td>Audio samples per Wyoming <code>AudioChunk</code></td>
-</tr>
-<tr>
 <td><code>--debug</code></td>
 <td>No</td>
 <td><code>False</code></td>
 <td>Enable DEBUG log level</td>
-</tr>
-<tr>
-<td><code>--log-format</code></td>
-<td>No</td>
-<td><code>logging.BASIC_FORMAT</code></td>
-<td>Format string for log messages</td>
-</tr>
-<tr>
-<td><code>--version</code></td>
-<td>No</td>
-<td>—</td>
-<td>Print the installed version and exit</td>
 </tr>
 </tbody>
 </table>
