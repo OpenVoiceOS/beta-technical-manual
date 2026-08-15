@@ -62,7 +62,7 @@ lobby music
 ### Moving parts
 
 - `MediaType` and `PlaybackType` are enums imported from `ovos_utils.ocp`. Results are plain dicts, not a dedicated result class. Mandatory keys are `uri`, `title`, `media_type`, `playback`, `match_confidence` (0-100), with `artist`, `album`, `image`, `length` (seconds) optional. Full field table: [OCP Skills](ocp-skills.md).
-- `@ocp_search()` (imported from `ovos_workshop.decorators.ocp`) marks a method as a search provider. OCP calls every registered provider's search method in parallel and keeps the best-confidence result across all installed OCP skills. A search method may `return` a list or `yield` results incrementally.
+- `@ocp_search()` (imported from `ovos_workshop.decorators.ocp`) marks a method as a search provider. OCP queries every OCP skill in parallel across the bus (a single skill's own `@ocp_search` methods run sequentially) and keeps the best-confidence result across all installed OCP skills. A search method may `return` a list or `yield` results incrementally.
 - `supported_media` (passed to `super().__init__()`) tells OCP which `MediaType`s this skill should even be asked about.
 - `self.voc_match(phrase, "office_playlist")` reuses the same vocabulary mechanism as intents to give a confident match a high score, while still falling back to a loose substring check.
 - [OCP Skills](ocp-skills.md) also documents `self.extend_timeout()` (ask OCP to wait longer for a slow search). It notes that new integrations not needing the full skill lifecycle may prefer a `MediaProvider` plugin instead. See that page's opening warning.

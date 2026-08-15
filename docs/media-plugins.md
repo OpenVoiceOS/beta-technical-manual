@@ -32,7 +32,7 @@ both families. See the table below for what each currently supports.
 | [ovos-media-plugin-chromecast](#ovos-media-plugin-chromecast) | Chromecast (audio + video) | yes: both | Apache-2.0 | Stable |
 | [ovos-media-plugin-vlc](#ovos-media-plugin-vlc) | headless VLC (audio + video) | yes: both | Apache-2.0 | Beta |
 | [ovos-media-plugin-mplayer](#ovos-media-plugin-mplayer) | MPlayer (audio + video) | yes: both | Apache-2.0 | Stable |
-| [ovos-audio-plugin-mpv](#ovos-audio-plugin-mpv) | MPV (audio + video) | yes: both | Apache-2.0 | Stable |
+| [ovos-media-plugin-mpv](#ovos-media-plugin-mpv) | MPV (audio + video) | yes: both | Apache-2.0 | Stable |
 | [ovos-media-plugin-ffplay](#ovos-media-plugin-ffplay) | ffplay (audio) | yes: both | Apache-2.0 | Stable |
 | [ovos-media-plugin-cli](#ovos-media-plugin-cli) | generic CLI-command player (audio) | yes: both | Apache-2.0 | Alpha |
 | [ovos-plugin-vlc](#ovos-plugin-vlc) | VLC | old audio service only (legacy). Use ovos-media-plugin-vlc for ovos-media | Apache-2.0 | Stable |

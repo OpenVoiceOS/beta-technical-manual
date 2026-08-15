@@ -97,8 +97,8 @@ General steps to create a skill:
 
 
 - Implement the `ocp_search` decorator, as many as you want (within your skill they run
-  sequentially, in registration order; parallelism happens across different OCP skills
-  answering on the bus, not across your own search methods)
+  sequentially, one at a time, in no guaranteed order; parallelism happens across different
+  OCP skills answering on the bus, not across your own search methods)
 
 
   - The decorated method can return a list or be an iterator of `result_dict` (track or playlist)
