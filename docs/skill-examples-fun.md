@@ -141,7 +141,7 @@ Track the location of the International Space Station.
 - When is the ISS passing over
 - Where is the ISS
 - Tell me the ISS location
-- how many persons on board of the space station
+- how many people are on board of the space station
 - Who is on board of the space station?
 
 ??? note "Install"
