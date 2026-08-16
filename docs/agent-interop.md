@@ -17,7 +17,7 @@ flowchart TD
     Ext -->|/mcp, /utcp| TTS
     Ext -->|/mcp, /utcp| TX
     Ext -->|"/mcp, /utcp,<br/>/tools/*"| PS
-    PS -->|"/.well-known/<br/>agent.json,<br/>tasks/send"| A2AClient["External<br/>A2A client"]
+    PS -->|"/.well-known/<br/>agent-card.json,<br/>SendMessage"| A2AClient["External<br/>A2A client"]
     ExtA2A["External<br/>A2A server"] -->|"ovos-a2a-solver<br/>ChatEngine"| Persona[OVOS persona]
     ExtMCP["External MCP/UTCP<br/>server"] -->|"ovos-mcp-toolbox /<br/>ovos-utcp-toolbox"| Loop["Agentic loop<br/>ToolBox"]
 ```
@@ -36,7 +36,7 @@ flowchart TD
 |----------|-----------|------------|------|
 | **UTCP** | `GET /utcp` → UTCP 1.0 JSON manifest | `POST /utcp/{tool}` or native HTTP endpoints | None (always on) |
 | **MCP** | MCP `initialize` + `list_tools` | `call_tool` over Streamable HTTP / SSE | `pip install …[mcp]` |
-| **A2A** | `GET /.well-known/agent.json` (agent card) | JSON-RPC 2.0 `tasks/send` / `tasks/sendSubscribe` | `pip install …[a2a]` |
+| **A2A** | `GET /.well-known/agent-card.json` (agent card; `/.well-known/agent.json` kept for 0.3.x clients) | JSON-RPC 2.0 `SendMessage` / `SendStreamingMessage` (0.3.x clients: `message/send` / `message/stream`) | `pip install …[a2a]` |
 
 ---
 
@@ -142,8 +142,9 @@ ovos-persona-server --persona my_persona.json
 ```
 
 The `OVOSPersonaAgentExecutor` wraps the active persona. `create_a2a_application()`
-builds the A2A app, with an agent card at `/.well-known/agent.json` and support for
-blocking (`tasks/send`) and streaming (`tasks/sendSubscribe`) modes when the persona
+builds the A2A app, with an agent card at `/.well-known/agent-card.json` (the 0.3.x
+`/.well-known/agent.json` path stays as a compat alias) and support for blocking
+(`SendMessage`) and streaming (`SendStreamingMessage`) modes when the persona
 solver supports streaming.
 
 Start it with `--a2a-base-url`, which both enables the `/a2a` endpoint and sets the public
