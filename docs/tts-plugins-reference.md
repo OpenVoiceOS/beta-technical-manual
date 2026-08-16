@@ -342,10 +342,14 @@ size instead, and is the one to reach for on a mixed catalog. (Mirrors `max_load
 
 ```
 
-`pinned_voices` (a string or a list) names voices that are loaded at startup and never evicted.
-If the pins alone need more memory than `max_loaded_bytes` allows, the budget is raised to fit
-them — a pin is a promise the cache honors even over its own configured ceiling — and a warning
-is logged so the mismatch isn't silent.
+`pinned_voices` (a string or a list) names voices that are loaded at startup and never
+evicted. The two caps treat pins differently. If more voices are pinned than
+`max_loaded_voices` allows, that **count** limit is raised to fit them (logged as an error so
+the mismatch isn't silent). The `max_loaded_bytes` **size** budget is never raised: a pin that
+fits individually still loads even when resident usage then exceeds the budget (again logged,
+not fatal), but a pin whose own on-disk size alone exceeds the entire budget is refused and
+never becomes resident (1.82.0a1+ — loading it would be a guaranteed OOM kill, not a degraded
+path). A failed pin never stops the service from starting.
 
 Size the budget for the actual peak, not just the steady state: peak resident memory is the
 cached models plus whatever is loading in flight at that moment, and a request that arrives
