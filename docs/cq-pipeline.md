@@ -136,7 +136,7 @@ back to the older `intents.common_query` key.
 |-----|---------|-------------|
 | `min_self_confidence` | `0.5` | Minimum confidence a skill must self-report to be considered. |
 | `min_reranker_score` | `0.2` | Minimum reranker score to accept a reranked answer. |
-| `reranker` | `ovos-flashrank-reranker-plugin` | An installed `opm.agents.reranker` plugin name used to reorder candidate answers, if installed. See [Agent Plugins](agent-plugins.md). |
+| `reranker` | `ovos-flashrank-reranker-plugin` | An installed reranker plugin name used to reorder candidate answers, if installed. The pipeline still loads this through the legacy `opm.solver.multiple_choice` group (a `MultipleChoiceSolver`), not the newer `opm.agents.reranker` contract. See [Agent Plugins](agent-plugins.md). |
 | `ignore_skill_scores` | `true` | When a reranker is loaded, trust its order over the skills' self-scores. |
 | `min_response_wait` | `1` | Seconds to wait before evaluating responses. |
 | `max_response_wait` | `4` | Hard cap (seconds) on gathering responses, regardless of extensions. |
