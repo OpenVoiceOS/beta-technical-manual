@@ -91,11 +91,11 @@ fleets no longer run legacy-namespace consumers.
 | [ovos-workshop#414](https://github.com/OpenVoiceOS/ovos-workshop/pull/414) | Routes resource loading through `ovos-spec-tools`, back-compat mixin | skill authors on the legacy resource API | No | 9.3.3 |
 | [ovos-persona#192](https://github.com/OpenVoiceOS/ovos-persona/pull/192) | Fixes persona's PIPELINE-1 done-signal timing | skill/pipeline authors on `ovos-core>=2.3.0a1` | No | 0.9.1 |
 | [ovos-bus-client#271](https://github.com/OpenVoiceOS/ovos-bus-client/pull/271) | Adds a version-skew bridge for `.intent` topics (removed later by #272) | deployers running mixed-version fleets | No | 2.8.0a1 (merged, on `dev`) |
-| [ovos-utils#411](https://github.com/OpenVoiceOS/ovos-utils/pull/411) | Mirrors the #271 bridge in `FakeBus`/`AsyncFakeBus` | test-harness authors (ovoscope, skill test suites) | No | 0.14.0 |
+| [ovos-utils#411](https://github.com/OpenVoiceOS/ovos-utils/pull/411) | Mirrors the #271 bridge in `FakeBus`/`AsyncFakeBus` — **shipped** via the superseding [#417](https://github.com/OpenVoiceOS/ovos-utils/pull/417) in 0.13.10a1; #411 itself stays open as a duplicate | test-harness authors (ovoscope, skill test suites) | No | shipped (0.13.10a1) |
 | [ovos-bus-client#272](https://github.com/OpenVoiceOS/ovos-bus-client/pull/272) | Kill-switch: drops the namespace bridge from `MessageBusClient` (blocked on #271) | deployers with legacy-namespace consumers | Yes | 3.0.0 |
 | [ovos-core#837](https://github.com/OpenVoiceOS/ovos-core/pull/837) | Kill-switch: drops the last legacy-topic literals from `ovos-core` | deployers/plugin authors on legacy topic spellings | Yes | 3.0.0 |
 | [ovos-workshop#501](https://github.com/OpenVoiceOS/ovos-workshop/pull/501) | Kill-switch: drops legacy-topic literals from `ovos-workshop` (blocked on #500) | deployers/skill authors on legacy topic spellings | Yes | 10.0.0 |
-| [ovos-utils#412](https://github.com/OpenVoiceOS/ovos-utils/pull/412) | Kill-switch: drops the bridge from `FakeBus` (blocked on #411) | test-harness authors on legacy-compat flags | Yes | 1.0.0 |
+| [ovos-utils#412](https://github.com/OpenVoiceOS/ovos-utils/pull/412) | Kill-switch: drops the bridge from `FakeBus` (its prerequisite bridge shipped via #417) | test-harness authors on legacy-compat flags | Yes | 1.0.0 |
 
 The four kill-switch PRs above (`ovos-bus-client#272`, `ovos-core#837`,
 `ovos-workshop#501`, `ovos-utils#412`) must merge together. `ovos-bus-client#272`

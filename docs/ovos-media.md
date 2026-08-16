@@ -351,9 +351,11 @@ duplicate daemon-level registration was removed because it double-pushed it):
 | `ovos.common_play.status` | Report full current player status |
 | `ovos.common_play.SEI.get` | Report the stream extractor identifiers `ovos-media` supports |
 
-These live alongside the legacy ducking/cork aliases kept for backward compatibility. The full
-~30-entry `OCPMediaPlayer` handler list, including exact legacy alias names, is in
-`ovos_media/player.py`.
+Ducking binds to ovos-audio's spec topics (`ovos.audio.output.started` / `.ended` trigger
+duck/unduck since 1.0.0a1, which dropped the `recognizer_loop:audio_output_*` aliases), while
+cork still listens on the legacy-style `recognizer_loop:record_begin` / `record_end`, since no
+spec topic covers the mic-recording window. The full ~30-entry `OCPMediaPlayer` handler list
+is in `ovos_media/player.py`.
 
 `ovos.common_play.playlist.set` validates the payload before touching the playlist. A
 non-list `tracks` value is ignored outright and the current playlist is kept. For a list
@@ -405,8 +407,9 @@ Shuffle mode honors the same failure bounds (0.4.13a1): a shuffled pick excludes
 uri already failed this queue, and when nothing playable remains — every track failed, or the
 queue is empty and the current track failed — the player stops and speaks `queue.finished`,
 the same ending as sequential playback. Repeat mode with at least one good track keeps
-playing. A shut-down player also stops reacting to duck/unduck/cork on both the legacy and
-`ovos.common_play.*` spellings, so a dead daemon no longer adjusts system volume.
+playing. A shut-down player also stops reacting to duck/unduck/cork on every spelling it
+listens on (`ovos.common_play.*`, the `ovos.audio.output.*` duck triggers, and cork's
+`recognizer_loop:record_*`), so a dead daemon no longer adjusts system volume.
 
 ---
 
