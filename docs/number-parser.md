@@ -119,7 +119,7 @@ def pronounce_number(number: Union[int, float], lang: str, places: int = 3, shor
         number: The number to pronounce.
         lang (str): A BCP-47 language code.
         places (int): Number of decimal places to express. Default is 3.
-        short_scale (bool): Use short (True) or long scale (False) for large numbers. When left `None`, the language's canonical convention applies (e.g. `pt-br` short, `pt-pt` long), not an unconditional short scale.
+        short_scale (bool): DEPRECATED, use the `scale` enum instead. Short (True) or long scale (False) for large numbers. When left `None`, the language's canonical convention applies (e.g. `pt-br` short, `pt-pt` long), not an unconditional short scale.
         scientific (bool): Pronounce in scientific notation if True.
         ordinals (bool): Pronounce as an ordinal if True.
         digits (DigitPronunciation): Digit-reading style (e.g. read digit-by-digit). Honored by pt/mwl.
@@ -164,7 +164,7 @@ def pronounce_ordinal(number: Union[int, float], lang: str, short_scale: Optiona
     Args:
         number: The number to pronounce.
         lang (str): A BCP-47 language code.
-        short_scale (bool): Use short (True) or long scale (False) for large numbers.
+        short_scale (bool): DEPRECATED, use the `scale` enum instead. Short (True) or long scale (False) for large numbers.
         gender (GrammaticalGender): Grammatical gender (honored by pt/mwl).
 
     Returns:
@@ -202,7 +202,7 @@ def extract_number(text: str, lang: str, short_scale: Optional[bool] = None, ord
     Args:
         text (str): The string to extract a number from.
         lang (str): A BCP-47 language code.
-        short_scale (bool): Use short scale if True, long scale if False.
+        short_scale (bool): DEPRECATED, use the `scale` enum instead. Short scale if True, long scale if False.
         ordinals (bool): Consider ordinal numbers.
 
     Returns:
@@ -235,7 +235,7 @@ def is_fractional(input_str: str, lang: str, short_scale: Optional[bool] = None,
     Args:
         input_str (str): The string to check if fractional.
         lang (str): A BCP-47 language code.
-        short_scale (bool): Use short scale if True, long scale if False.
+        short_scale (bool): DEPRECATED, use the `scale` enum instead. Short scale if True, long scale if False.
 
     Returns:
         bool or float: False if not a fraction, otherwise the fraction as a float.
