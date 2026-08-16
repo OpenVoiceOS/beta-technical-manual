@@ -2463,9 +2463,11 @@ duplicate daemon-level registration was removed because it double-pushed it):</p
 </tr>
 </tbody>
 </table>
-<p>These live alongside the legacy ducking/cork aliases kept for backward compatibility. The full
-~30-entry <code>OCPMediaPlayer</code> handler list, including exact legacy alias names, is in
-<code>ovos_media/player.py</code>.</p>
+<p>Ducking binds to ovos-audio's spec topics (<code>ovos.audio.output.started</code> / <code>.ended</code> trigger
+duck/unduck since 1.0.0a1, which dropped the <code>recognizer_loop:audio_output_*</code> aliases), while
+cork still listens on the legacy-style <code>recognizer_loop:record_begin</code> / <code>record_end</code>, since no
+spec topic covers the mic-recording window. The full ~30-entry <code>OCPMediaPlayer</code> handler list
+is in <code>ovos_media/player.py</code>.</p>
 <p><code>ovos.common_play.playlist.set</code> validates the payload before touching the playlist. A
 non-list <code>tracks</code> value is ignored outright and the current playlist is kept. For a list
 payload, each entry is checked on its own: invalid entries are skipped with a warning,
@@ -2512,8 +2514,9 @@ loading, so a track that loads fine but fails to play does not reset the rate li
 uri already failed this queue, and when nothing playable remains — every track failed, or the
 queue is empty and the current track failed — the player stops and speaks <code>queue.finished</code>,
 the same ending as sequential playback. Repeat mode with at least one good track keeps
-playing. A shut-down player also stops reacting to duck/unduck/cork on both the legacy and
-<code>ovos.common_play.*</code> spellings, so a dead daemon no longer adjusts system volume.</p>
+playing. A shut-down player also stops reacting to duck/unduck/cork on every spelling it
+listens on (<code>ovos.common_play.*</code>, the <code>ovos.audio.output.*</code> duck triggers, and cork's
+<code>recognizer_loop:record_*</code>), so a dead daemon no longer adjusts system volume.</p>
 <hr />
 <h2 id="upcoming-mediaprovider-plugins-replace-ocp-skills">Upcoming: MediaProvider plugins replace OCP skills<a class="headerlink" href="#upcoming-mediaprovider-plugins-replace-ocp-skills" title="Permanent link">&para;</a></h2>
 <div class="admonition info">
