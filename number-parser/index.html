@@ -1903,17 +1903,18 @@ section of the repo README for the current full list.</p>
 </span><span id="__span-2-16"><a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a><span class="sd">        ordinals (bool): Pronounce as an ordinal if True.</span>
 </span><span id="__span-2-17"><a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a><span class="sd">        digits (DigitPronunciation): Digit-reading style (e.g. read digit-by-digit). Honored by pt/mwl.</span>
 </span><span id="__span-2-18"><a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a><span class="sd">        gender (GrammaticalGender): Grammatical gender for languages that inflect numbers. Honored by pt/mwl.</span>
-</span><span id="__span-2-19"><a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a><span class="sd">        scale (Scale): Alternate way to select short/long scale. Honored by pt/mwl.</span>
-</span><span id="__span-2-20"><a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a>
-</span><span id="__span-2-21"><a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a><span class="sd">    Returns:</span>
-</span><span id="__span-2-22"><a id="__codelineno-2-22" name="__codelineno-2-22" href="#__codelineno-2-22"></a><span class="sd">        str: The pronounced number.</span>
-</span><span id="__span-2-23"><a id="__codelineno-2-23" name="__codelineno-2-23" href="#__codelineno-2-23"></a>
-</span><span id="__span-2-24"><a id="__codelineno-2-24" name="__codelineno-2-24" href="#__codelineno-2-24"></a><span class="sd">    Raises:</span>
-</span><span id="__span-2-25"><a id="__codelineno-2-25" name="__codelineno-2-25" href="#__codelineno-2-25"></a><span class="sd">        NotImplementedError: if the language has neither an implementation nor a unicode-rbnf fallback.</span>
-</span><span id="__span-2-26"><a id="__codelineno-2-26" name="__codelineno-2-26" href="#__codelineno-2-26"></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="__span-2-19"><a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a><span class="sd">        scale (Scale): Preferred way to select short/long scale; resolved to an effective</span>
+</span><span id="__span-2-20"><a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a><span class="sd">            scale for every language whose backend takes one.</span>
+</span><span id="__span-2-21"><a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a>
+</span><span id="__span-2-22"><a id="__codelineno-2-22" name="__codelineno-2-22" href="#__codelineno-2-22"></a><span class="sd">    Returns:</span>
+</span><span id="__span-2-23"><a id="__codelineno-2-23" name="__codelineno-2-23" href="#__codelineno-2-23"></a><span class="sd">        str: The pronounced number.</span>
+</span><span id="__span-2-24"><a id="__codelineno-2-24" name="__codelineno-2-24" href="#__codelineno-2-24"></a>
+</span><span id="__span-2-25"><a id="__codelineno-2-25" name="__codelineno-2-25" href="#__codelineno-2-25"></a><span class="sd">    Raises:</span>
+</span><span id="__span-2-26"><a id="__codelineno-2-26" name="__codelineno-2-26" href="#__codelineno-2-26"></a><span class="sd">        NotImplementedError: if the language has neither an implementation nor a unicode-rbnf fallback.</span>
+</span><span id="__span-2-27"><a id="__codelineno-2-27" name="__codelineno-2-27" href="#__codelineno-2-27"></a><span class="sd">    &quot;&quot;&quot;</span>
 </span></code></pre></div>
 <blockquote>
-<p>Most language backends only consume <code>number</code>, <code>places</code>, <code>short_scale</code>, <code>scientific</code>, and <code>ordinals</code>. The <code>digits</code>, <code>gender</code>, and <code>scale</code> arguments (and <code>DigitPronunciation</code>/<code>GrammaticalGender</code>/<code>Scale</code>, importable from <code>ovos_number_parser.util</code>) currently only affect Portuguese (<code>pt</code>) and Mirandese (<code>mwl</code>).</p>
+<p>The <code>digits</code> and <code>gender</code> arguments (<code>DigitPronunciation</code>/<code>GrammaticalGender</code>, importable from <code>ovos_number_parser.util</code>) currently only affect Portuguese (<code>pt</code>) and Mirandese (<code>mwl</code>). <code>scale</code> (<code>Scale</code>, same module) is different: every dispatch function resolves it to an effective short/long scale and threads it into the majority of language backends (English, German, Dutch, the Nordic and Slavic families, and more); only backends that take no scale parameter at all ignore it, and that set differs per function.</p>
 <p><code>pronounce_number</code> also accepts a Python <code>complex</code> value and speaks it in rectangular <code>a+bi</code> form, e.g. <code>pronounce_number(complex(3, 2), "en")</code> → <code>"three plus two i"</code>. The number itself is composed from the per-language cardinal pronunciation. Only the "plus"/"minus"/"i" connectives are language-specific (English used as the default).</p>
 </blockquote>
 <p><strong>Example Usage:</strong></p>
