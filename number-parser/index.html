@@ -1898,7 +1898,7 @@ section of the repo README for the current full list.</p>
 </span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="sd">        number: The number to pronounce.</span>
 </span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="sd">        lang (str): A BCP-47 language code.</span>
 </span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="sd">        places (int): Number of decimal places to express. Default is 3.</span>
-</span><span id="__span-2-14"><a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a><span class="sd">        short_scale (bool): Use short (True) or long scale (False) for large numbers. When left `None`, the language&#39;s canonical convention applies (e.g. `pt-br` short, `pt-pt` long), not an unconditional short scale.</span>
+</span><span id="__span-2-14"><a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a><span class="sd">        short_scale (bool): DEPRECATED, use the `scale` enum instead. Short (True) or long scale (False) for large numbers. When left `None`, the language&#39;s canonical convention applies (e.g. `pt-br` short, `pt-pt` long), not an unconditional short scale.</span>
 </span><span id="__span-2-15"><a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a><span class="sd">        scientific (bool): Pronounce in scientific notation if True.</span>
 </span><span id="__span-2-16"><a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a><span class="sd">        ordinals (bool): Pronounce as an ordinal if True.</span>
 </span><span id="__span-2-17"><a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a><span class="sd">        digits (DigitPronunciation): Digit-reading style (e.g. read digit-by-digit). Honored by pt/mwl.</span>
@@ -1934,7 +1934,7 @@ section of the repo README for the current full list.</p>
 </span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="sd">    Args:</span>
 </span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="sd">        number: The number to pronounce.</span>
 </span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="sd">        lang (str): A BCP-47 language code.</span>
-</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="sd">        short_scale (bool): Use short (True) or long scale (False) for large numbers.</span>
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="sd">        short_scale (bool): DEPRECATED, use the `scale` enum instead. Short (True) or long scale (False) for large numbers.</span>
 </span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="sd">        gender (GrammaticalGender): Grammatical gender (honored by pt/mwl).</span>
 </span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>
 </span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="sd">    Returns:</span>
@@ -1962,7 +1962,7 @@ section of the repo README for the current full list.</p>
 </span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="sd">    Args:</span>
 </span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="sd">        text (str): The string to extract a number from.</span>
 </span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="sd">        lang (str): A BCP-47 language code.</span>
-</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="sd">        short_scale (bool): Use short scale if True, long scale if False.</span>
+</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="sd">        short_scale (bool): DEPRECATED, use the `scale` enum instead. Short scale if True, long scale if False.</span>
 </span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="sd">        ordinals (bool): Consider ordinal numbers.</span>
 </span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a>
 </span><span id="__span-6-12"><a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a><span class="sd">    Returns:</span>
@@ -1986,7 +1986,7 @@ section of the repo README for the current full list.</p>
 </span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="sd">    Args:</span>
 </span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="sd">        input_str (str): The string to check if fractional.</span>
 </span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="sd">        lang (str): A BCP-47 language code.</span>
-</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="sd">        short_scale (bool): Use short scale if True, long scale if False.</span>
+</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="sd">        short_scale (bool): DEPRECATED, use the `scale` enum instead. Short scale if True, long scale if False.</span>
 </span><span id="__span-8-10"><a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a>
 </span><span id="__span-8-11"><a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a><span class="sd">    Returns:</span>
 </span><span id="__span-8-12"><a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a><span class="sd">        bool or float: False if not a fraction, otherwise the fraction as a float.</span>
