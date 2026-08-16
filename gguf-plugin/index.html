@@ -1534,8 +1534,9 @@ You can share one <code>Llama</code> between engines by passing <code>gguf_engin
 <div class="admonition note">
 <p class="admonition-title">Scope</p>
 <p>This plugin does <strong>not</strong> ship coref / reranker / extractive-QA / NLI / yes-no / memory
-engines, a chat-summarizer, or an utterance transformer. For reranking, install any
-<code>opm.agents.reranker</code> plugin (see <a href="../agent-plugins/">Agent Plugins</a>).</p>
+engines, a chat-summarizer, or an utterance transformer. For reranking, install a
+reranker plugin such as <code>ovos-flashrank-reranker-plugin</code> (no <code>opm.agents.reranker</code>
+implementation ships yet, see <a href="../agent-plugins/">Agent Plugins</a>).</p>
 </div>
 <hr />
 <h2 id="common-configuration-keys">Common Configuration Keys<a class="headerlink" href="#common-configuration-keys" title="Permanent link">&para;</a></h2>
