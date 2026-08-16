@@ -1722,7 +1722,9 @@ reusing the same threshold.</p>
 </span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="w">  </span><span class="p">}</span>
 </span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="p">}</span>
 </span></code></pre></div>
-<p>The <code>reranker</code> key names any installed <code>opm.agents.reranker</code> plugin.</p>
+<p>The <code>reranker</code> key names an installed legacy <code>opm.solver.multiple_choice</code> plugin (see the
+note above); it will name an <code>opm.agents.reranker</code> plugin once one ships and the pipeline
+migrates its loader.</p>
 <hr />
 <h3 id="extractive-qa-opmagentsextractive_qa">Extractive QA: <code>opm.agents.extractive_qa</code><a class="headerlink" href="#extractive-qa-opmagentsextractive_qa" title="Permanent link">&para;</a></h3>
 <p><strong>Base class:</strong> <code>ExtractiveQAEngine</code></p>
