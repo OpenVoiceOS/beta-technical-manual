@@ -124,7 +124,8 @@ def pronounce_number(number: Union[int, float], lang: str, places: int = 3, shor
         ordinals (bool): Pronounce as an ordinal if True.
         digits (DigitPronunciation): Digit-reading style (e.g. read digit-by-digit). Honored by pt/mwl.
         gender (GrammaticalGender): Grammatical gender for languages that inflect numbers. Honored by pt/mwl.
-        scale (Scale): Alternate way to select short/long scale. Honored by pt/mwl.
+        scale (Scale): Preferred way to select short/long scale; resolved to an effective
+            scale for every language whose backend takes one.
 
     Returns:
         str: The pronounced number.
@@ -135,7 +136,7 @@ def pronounce_number(number: Union[int, float], lang: str, places: int = 3, shor
 
 ```
 
-> Most language backends only consume `number`, `places`, `short_scale`, `scientific`, and `ordinals`. The `digits`, `gender`, and `scale` arguments (and `DigitPronunciation`/`GrammaticalGender`/`Scale`, importable from `ovos_number_parser.util`) currently only affect Portuguese (`pt`) and Mirandese (`mwl`).
+> The `digits` and `gender` arguments (`DigitPronunciation`/`GrammaticalGender`, importable from `ovos_number_parser.util`) currently only affect Portuguese (`pt`) and Mirandese (`mwl`). `scale` (`Scale`, same module) is different: every dispatch function resolves it to an effective short/long scale and threads it into the majority of language backends (English, German, Dutch, the Nordic and Slavic families, and more); only backends that take no scale parameter at all ignore it, and that set differs per function.
 
 > `pronounce_number` also accepts a Python `complex` value and speaks it in rectangular `a+bi` form, e.g. `pronounce_number(complex(3, 2), "en")` → `"three plus two i"`. The number itself is composed from the per-language cardinal pronunciation. Only the "plus"/"minus"/"i" connectives are language-specific (English used as the default).
 
