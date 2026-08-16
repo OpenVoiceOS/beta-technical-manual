@@ -461,8 +461,9 @@ when `ovos-media` is not running, and bridges old pre-OCP `CommonPlaySkill` skil
 On a server that fans playback out to several [HiveMind](hivemind-agents.md) satellites, not
 every bus handler should act on behalf of every session. `ovos_media/utils.py`'s
 `require_default_session()` gates the subset of handlers that only make sense for the local
-("default") session — for example, the legacy `mycroft.audio.service.*` handlers a single
-physical machine's audio hardware would receive — while the OCP-native `ovos.common_play.*`
+("default") session — for example, the hardware-bound duck and cork handlers reacting to
+`ovos.audio.output.started`/`.ended` and `recognizer_loop:record_begin` on the machine whose
+speakers are playing — while the OCP-native `ovos.common_play.*`
 handlers stay session-aware and can target whichever satellite's player state they're addressed
 to.
 

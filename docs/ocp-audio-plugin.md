@@ -177,9 +177,10 @@ repos, what remains is the player itself. Instead of cramming it into the audio 
 
 What stays the same: the **search layer is shared**. The [OCP pipeline](ocp-pipeline.md)
 (intent matching) and [OCP skills](ocp-skills.md) (media providers) are used by *both*. Only the
-*playback backend* changes. `ovos-media` also keeps a **backwards-compatibility bridge** that
-translates the old `mycroft.audio.service.*` bus messages, so existing skills and clients keep
-working.
+*playback backend* changes. `ovos-media` no longer carries a
+`mycroft.audio.service.*` bridge of its own (its `LegacyAudioServiceCompat` shim was dropped
+in 1.0.0a1): clients on the old topics are served by the legacy ovos-audio/OCP stack, and the
+OCP pipeline plugin's own fallback, not by the `ovos-media` daemon.
 
 To switch to `ovos-media`: set **`"enable_old_audioservice": false`** in `mycroft.conf` and run
 the `ovos-media` daemon. See the [ovos-media](ovos-media.md) page for the full setup and the list
