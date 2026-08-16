@@ -1492,7 +1492,7 @@
     Ext --&gt;|/mcp, /utcp| TTS
     Ext --&gt;|/mcp, /utcp| TX
     Ext --&gt;|"/mcp, /utcp,&lt;br/&gt;/tools/*"| PS
-    PS --&gt;|"/.well-known/&lt;br/&gt;agent.json,&lt;br/&gt;tasks/send"| A2AClient["External&lt;br/&gt;A2A client"]
+    PS --&gt;|"/.well-known/&lt;br/&gt;agent-card.json,&lt;br/&gt;SendMessage"| A2AClient["External&lt;br/&gt;A2A client"]
     ExtA2A["External&lt;br/&gt;A2A server"] --&gt;|"ovos-a2a-solver&lt;br/&gt;ChatEngine"| Persona[OVOS persona]
     ExtMCP["External MCP/UTCP&lt;br/&gt;server"] --&gt;|"ovos-mcp-toolbox /&lt;br/&gt;ovos-utcp-toolbox"| Loop["Agentic loop&lt;br/&gt;ToolBox"]</code></pre>
 <p><em>Diagram:</em> The flow starts at an external MCP/UTCP client or server and ends at OVOS's service servers or agentic loop ToolBox, branching between the persona server's A2A client link and the OVOS-persona A2A solver path.</p>
@@ -1527,8 +1527,8 @@ satellite or a remote voice client instead, see <a href="../hivemind-agents/">Hi
 </tr>
 <tr>
 <td><strong>A2A</strong></td>
-<td><code>GET /.well-known/agent.json</code> (agent card)</td>
-<td>JSON-RPC 2.0 <code>tasks/send</code> / <code>tasks/sendSubscribe</code></td>
+<td><code>GET /.well-known/agent-card.json</code> (agent card; <code>/.well-known/agent.json</code> kept for 0.3.x clients)</td>
+<td>JSON-RPC 2.0 <code>SendMessage</code> / <code>SendStreamingMessage</code> (0.3.x clients: <code>message/send</code> / <code>message/stream</code>)</td>
 <td><code>pip install …[a2a]</code></td>
 </tr>
 </tbody>
@@ -1677,8 +1677,9 @@ the flag set but the extra missing, the server logs a warning and runs without t
 </span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>ovos-persona-server<span class="w"> </span>--persona<span class="w"> </span>my_persona.json
 </span></code></pre></div>
 <p>The <code>OVOSPersonaAgentExecutor</code> wraps the active persona. <code>create_a2a_application()</code>
-builds the A2A app, with an agent card at <code>/.well-known/agent.json</code> and support for
-blocking (<code>tasks/send</code>) and streaming (<code>tasks/sendSubscribe</code>) modes when the persona
+builds the A2A app, with an agent card at <code>/.well-known/agent-card.json</code> (the 0.3.x
+<code>/.well-known/agent.json</code> path stays as a compat alias) and support for blocking
+(<code>SendMessage</code>) and streaming (<code>SendStreamingMessage</code>) modes when the persona
 solver supports streaming.</p>
 <p>Start it with <code>--a2a-base-url</code>, which both enables the <code>/a2a</code> endpoint and sets the public
 base URL that goes into the agent card:</p>
