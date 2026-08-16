@@ -32,8 +32,9 @@ Install: `pip install ovos-gguf-plugin`
 
 !!! note "Scope"
     This plugin does **not** ship coref / reranker / extractive-QA / NLI / yes-no / memory
-    engines, a chat-summarizer, or an utterance transformer. For reranking, install any
-    `opm.agents.reranker` plugin (see [Agent Plugins](agent-plugins.md)).
+    engines, a chat-summarizer, or an utterance transformer. For reranking, install a
+    reranker plugin such as `ovos-flashrank-reranker-plugin` (no `opm.agents.reranker`
+    implementation ships yet, see [Agent Plugins](agent-plugins.md)).
 
 ---
 
