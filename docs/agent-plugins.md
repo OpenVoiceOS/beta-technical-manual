@@ -105,7 +105,9 @@ best = engine.select_answer("play bohemian rhapsody", candidates)
 
 ```
 
-The `reranker` key names any installed `opm.agents.reranker` plugin.
+The `reranker` key names an installed legacy `opm.solver.multiple_choice` plugin (see the
+note above); it will name an `opm.agents.reranker` plugin once one ships and the pipeline
+migrates its loader.
 
 ---
 
