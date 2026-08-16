@@ -1577,7 +1577,7 @@ back to the older <code>intents.common_query</code> key.</p>
 <tr>
 <td><code>reranker</code></td>
 <td><code>ovos-flashrank-reranker-plugin</code></td>
-<td>An installed <code>opm.agents.reranker</code> plugin name used to reorder candidate answers, if installed. See <a href="../agent-plugins/">Agent Plugins</a>.</td>
+<td>An installed reranker plugin name used to reorder candidate answers, if installed. The pipeline still loads this through the legacy <code>opm.solver.multiple_choice</code> group (a <code>MultipleChoiceSolver</code>), not the newer <code>opm.agents.reranker</code> contract. See <a href="../agent-plugins/">Agent Plugins</a>.</td>
 </tr>
 <tr>
 <td><code>ignore_skill_scores</code></td>

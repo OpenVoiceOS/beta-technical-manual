@@ -1701,13 +1701,14 @@ Used internally by the <a href="../cq-pipeline/">Common Query pipeline</a> and
 <p class="admonition-title">Score semantics</p>
 <p><code>ReRankerEngine.rerank()</code> returns <code>(score, option)</code> pairs, but the base class does
 <strong>not</strong> fix the score's scale. It is whatever the underlying model produces. There
-is no <code>ReRankerEngine</code> implementation shipped by an OpenVoiceOS-org repository yet.
-A community reranker plugin such as <code>ovos-flashrank-reranker-plugin</code> applies a
-sigmoid (binary cross-encoder) or softmax (multi-class) normalization internally,
-so its scores land in <strong><code>[0, 1]</code></strong> and read as a relevance/similarity value, with
-<code>min_reranker_score</code> tunable as a plain probability-like threshold against it. A
-different reranker plugin backed by a raw-logit model would need its own
-calibration. Check that plugin's docs before reusing the same threshold.</p>
+is no <code>ReRankerEngine</code> implementation shipped by an OpenVoiceOS-org repository yet;
+the de-facto reranker, <code>ovos-flashrank-reranker-plugin</code>, still registers only the
+legacy <code>opm.solver.multiple_choice</code> group (a <code>MultipleChoiceSolver</code>), which is what
+the Common Query pipeline actually loads. Its scores land in <strong><code>[0, 1]</code></strong> because
+the underlying FlashRank library normalizes cross-encoder outputs, so
+<code>min_reranker_score</code> reads as a probability-like threshold there. A reranker backed
+by a raw-logit model would need its own calibration. Check the plugin's docs before
+reusing the same threshold.</p>
 </div>
 <h4 id="common-query-pipeline-config">Common Query pipeline config<a class="headerlink" href="#common-query-pipeline-config" title="Permanent link">&para;</a></h4>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="p">{</span>
