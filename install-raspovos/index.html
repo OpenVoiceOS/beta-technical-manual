@@ -1744,8 +1744,10 @@
 <p class="admonition-title">Project status: stable images paused, development active</p>
 <p>The last <strong>stable</strong> raspOVOS images date from mid-2025 and are not receiving updates,
 so they are not the recommended install path for a new setup. The repository itself is
-actively developed — CI work continues and newer <strong>DEV</strong> images appear on the
-<a href="https://github.com/OpenVoiceOS/raspOVOS/releases">releases page</a> — but DEV images are
+actively developed — CI work continues and newer <strong>DEV</strong> images are published as git
+tags such as <code>raspOVOS-DEV-bookworm-arm64-lite-&lt;date&gt;</code> (the
+<a href="https://github.com/OpenVoiceOS/raspOVOS/releases">releases page</a> itself is empty, so
+browse <a href="https://github.com/OpenVoiceOS/raspOVOS/tags">tags</a>) — but DEV images are
 untested builds toward the refreshed image on the roadmap, not something to hand a
 newcomer. Check the repository for status before flashing. For a supported setup on a
 Raspberry Pi, install Raspberry Pi OS and use the <a href="../ovos-installer/">ovos-installer</a>.
@@ -1803,12 +1805,14 @@ tier (see <a href="../stt-plugins/">STT Plugins</a>, <a href="../tts-plugins/">T
   public one.</p>
 <ul>
 <li><strong>Pi 4:</strong> a comfortable middle ground for local, on-device models. The <code>hybrid</code> and <code>offline</code>
-  raspOVOS images actually ship <a href="../tts-plugins-reference/#ovos-tts-plugin-piper"><code>ovos-tts-plugin-piper</code></a>
-  as the default TTS for this tier, and this is what the config below uses. Note the shipped
-  default lags the current recommendation: the piper plugin is archived/deprecated in the
+  raspOVOS images install <a href="../tts-plugins-reference/#ovos-tts-plugin-piper"><code>ovos-tts-plugin-piper</code></a>
+  for this tier, and the config below selects it explicitly. Note it lags the current
+  recommendation: the piper plugin is archived/deprecated in the
   <a href="../tts-plugins/">TTS catalog</a>, with <a href="../tts-plugins-reference/#ovos-tts-plugin-phoonnx"><code>ovos-tts-plugin-phoonnx</code></a>
-  as its maintained successor — the images predate that transition. The shipped piper still
-  works; phoonnx is the swap to make if you install anything yourself.</li>
+  as its maintained successor — the images predate that transition. Piper works once
+  selected, but see the warning below: the hybrid build has the same
+  autoconfigure-before-install ordering as the offline one, so its generated config names
+  phoonnx while only piper is installed.</li>
 </ul>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>// ~/.config/mycroft/mycroft.conf — Pi 4-class tier: local ONNX STT, shipped Piper TTS
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>{
@@ -1845,10 +1849,10 @@ tier (see <a href="../stt-plugins/">STT Plugins</a>, <a href="../tts-plugins/">T
 </ul>
 <div class="admonition warning">
 <p class="admonition-title">The image's own generated config may not match what it installs</p>
-<p>The offline build runs <code>ovos-config autoconfigure --offline</code> before installing those
-plugins, and the recommendation layer that command writes now points at
-<code>ovos-stt-plugin-onnx-asr</code> and <code>ovos-tts-plugin-phoonnx</code>, neither of which the build
-installs. On a freshly built image, set <code>stt.module</code>/<code>tts.module</code> yourself (as below) to
+<p>Both the hybrid and offline builds run <code>ovos-config autoconfigure</code> before installing
+their plugins, and the recommendation layer that command writes now points at
+<code>ovos-stt-plugin-onnx-asr</code> (offline) and <code>ovos-tts-plugin-phoonnx</code> (both tiers), none of
+which either build installs. On a freshly built image, set <code>stt.module</code>/<code>tts.module</code> yourself (as below) to
 a plugin that is actually present rather than trusting the generated defaults. Optional swaps, not what ships by default, are</p>
 </div>
 <p><code>ovos-stt-plugin-fasterwhisper</code> (a larger, more accurate Whisper-class model, if your language
