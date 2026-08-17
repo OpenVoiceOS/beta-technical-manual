@@ -1376,9 +1376,9 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#default-configuration_3" class="md-nav__link">
+  <a href="#example-configuration_2" class="md-nav__link">
     <span class="md-ellipsis">
-      Default Configuration
+      Example Configuration
     </span>
   </a>
   
@@ -1409,7 +1409,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#example-configuration_2" class="md-nav__link">
+  <a href="#example-configuration_3" class="md-nav__link">
     <span class="md-ellipsis">
       Example Configuration
     </span>
@@ -2010,9 +2010,9 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#default-configuration_3" class="md-nav__link">
+  <a href="#example-configuration_2" class="md-nav__link">
     <span class="md-ellipsis">
-      Default Configuration
+      Example Configuration
     </span>
   </a>
   
@@ -2043,7 +2043,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#example-configuration_2" class="md-nav__link">
+  <a href="#example-configuration_3" class="md-nav__link">
     <span class="md-ellipsis">
       Example Configuration
     </span>
@@ -2364,12 +2364,16 @@ servers entirely: fully offline plugins exist for everything.</p>
 <p><strong>Description</strong>: OVOS TTS plugin for <a href="https://coqui-tts.readthedocs.io/en/latest">Coqui TTS</a></p>
 </li>
 </ul>
-<h3 id="default-configuration_3">Default Configuration<a class="headerlink" href="#default-configuration_3" title="Permanent link">&para;</a></h3>
+<h3 id="example-configuration_2">Example Configuration<a class="headerlink" href="#example-configuration_2" title="Permanent link">&para;</a></h3>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>  &quot;tts&quot;: {
 </span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>    &quot;module&quot;: &quot;ovos-tts-plugin-coqui&quot;,
 </span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>    &quot;ovos-tts-plugin-coqui&quot;: {}
 </span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>  }
 </span></code></pre></div>
+<p>There is no single hardcoded default model. Leaving <code>model</code> unset resolves one from an
+internal <code>LANG2MODEL</code> table keyed by <code>lang</code>, and raises <code>ValueError</code> at load if the configured
+language has no entry and no <code>model</code> is set explicitly — pass <code>model</code> directly for a language
+the table doesn't cover.</p>
 <hr />
 <h2 id="ovos-tts-plugin-pico">ovos-tts-plugin-pico<a class="headerlink" href="#ovos-tts-plugin-pico" title="Permanent link">&para;</a></h2>
 <ul>
@@ -2390,7 +2394,7 @@ servers entirely: fully offline plugins exist for everything.</p>
 <p><strong>Description</strong>: OVOS's own multilingual, ONNX-based neural TTS engine, distributed as part of the <code>phoonnx</code> package. Registering the plugin only requires <code>pip install phoonnx</code>. Model files are fetched and cached automatically the first time a voice is used.</p>
 </li>
 </ul>
-<h3 id="example-configuration_2">Example Configuration<a class="headerlink" href="#example-configuration_2" title="Permanent link">&para;</a></h3>
+<h3 id="example-configuration_3">Example Configuration<a class="headerlink" href="#example-configuration_3" title="Permanent link">&para;</a></h3>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>  &quot;tts&quot;: {
 </span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>    &quot;module&quot;: &quot;ovos-tts-plugin-phoonnx&quot;,
 </span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>    &quot;ovos-tts-plugin-phoonnx&quot;: {
