@@ -2118,10 +2118,9 @@
 <h2 id="ovos-stt-plugin-wav2vec">ovos-stt-plugin-wav2vec<a class="headerlink" href="#ovos-stt-plugin-wav2vec" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
-<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-stt-plugin-wav2vec">OpenVoiceOS/ovos-stt-plugin-wav2vec</a> (aliased by
-  <a href="https://github.com/OpenVoiceOS/ovos-stt-plugin-wav2vec2">ovos-stt-plugin-wav2vec2</a>. A
-  separate GitHub repo that installs the same package and module id, <code>ovos-stt-plugin-wav2vec</code>.
-  the repo name differs but the entry point does not, so both resolve to the same plugin)</p>
+<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-stt-plugin-wav2vec2">OpenVoiceOS/ovos-stt-plugin-wav2vec2</a>
+  (renamed from <code>ovos-stt-plugin-wav2vec</code>, whose URL redirects; the PyPI package and module id
+  keep the old <code>ovos-stt-plugin-wav2vec</code> name)</p>
 </li>
 <li>
 <p><strong>Description</strong>: OVOS plugin for <a href="https://ai.meta.com/blog/wav2vec-20-learning-the-structure-of-speech-from-raw-audio/">Wav2Vec2</a></p>
@@ -2173,7 +2172,7 @@ API with an API key. Google can change or revoke access to this endpoint at any 
 <p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-stt-plugin-mms">OpenVoiceOS/ovos-stt-plugin-mms</a></p>
 </li>
 <li>
-<p><strong>Description</strong>: OVOS plugin for <a href="https://huggingface.co/docs/transformers/main/en/model_doc/mms">The Massively Multilingual Speech (MMS) project</a>. Warning: archived. MMS models also run under <a href="https://github.com/OpenVoiceOS/ovos-stt-plugin-wav2vec2">ovos-stt-plugin-wav2vec2</a>, which is not on PyPI yet — install it from source, or use <a href="#ovos-stt-plugin-onnx-asr">onnx-asr</a>, which covers the same wav2vec2 families.</p>
+<p><strong>Description</strong>: OVOS plugin for <a href="https://huggingface.co/docs/transformers/main/en/model_doc/mms">The Massively Multilingual Speech (MMS) project</a>. Warning: archived. MMS models also run under <a href="https://github.com/OpenVoiceOS/ovos-stt-plugin-wav2vec2">ovos-stt-plugin-wav2vec2</a> (<code>pip install ovos-stt-plugin-wav2vec</code>), or use <a href="#ovos-stt-plugin-onnx-asr">onnx-asr</a>, which covers the same wav2vec2 families.</p>
 </li>
 </ul>
 <h3 id="default-configuration_1">Default Configuration<a class="headerlink" href="#default-configuration_1" title="Permanent link">&para;</a></h3>
@@ -2233,7 +2232,9 @@ servers entirely: fully offline plugins exist for everything.</p>
 <h2 id="ovos-stt-plugin-whisper">ovos-stt-plugin-whisper<a class="headerlink" href="#ovos-stt-plugin-whisper" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
-<p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-stt-plugin-whisper">OpenVoiceOS/ovos-stt-plugin-whisper</a></p>
+<p><strong>GitHub</strong>: <a href="https://github.com/TigreGotico/ovos-stt-plugin-whisper">TigreGotico/ovos-stt-plugin-whisper</a>
+  (the identically named <code>OpenVoiceOS/ovos-stt-plugin-whisper</code> repo is an older, different
+  plugin wrapping the <code>whisper</code> pip package, default model <code>base</code>, no CUDA switch)</p>
 </li>
 <li>
 <p><strong>Description</strong>: OpenVoiceOS STT plugin for <a href="https://github.com/guillaumekln/faster-whisper">Whisper</a>, using transformers library</p>
