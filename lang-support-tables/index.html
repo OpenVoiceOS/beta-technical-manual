@@ -1179,8 +1179,11 @@ it's listed. Where the table shows an offline TTS entry, it is always
 <a href="../tts-plugins-reference/#ovos-tts-plugin-phoonnx"><code>ovos-tts-plugin-phoonnx</code></a>, pinned to a specific male
 and/or female voice. <code>int8</code> next to a model means a quantized CPU build is available and used
 by default.</p>
-<p><code>--gpu</code> swaps the STT module entirely to <code>ovos-stt-plugin-fasterwhisper</code> with
-<code>whisper-large-v3-turbo</code> and <code>use_cuda: true</code>. Only the 12 languages with a
+<p><code>--gpu</code> swaps the STT module to the best GPU model recommended for that language, with
+<code>use_cuda: true</code>. That is <code>ovos-stt-plugin-fasterwhisper</code> for eleven of the twelve, but the
+model varies: six (<code>da-dk</code>, <code>de-de</code>, <code>en-us</code>, <code>fr-fr</code>, <code>it-it</code>, <code>nl-nl</code>) get the generic
+<code>whisper-large-v3-turbo</code>, while <code>ca-es</code>, <code>es-es</code>, <code>gl-es</code>, <code>pt-br</code>, and <code>pt-pt</code> get dedicated
+finetunes. Basque (<code>eu-es</code>) uses a different plugin entirely, <code>ovos-stt-plugin-HiTZ</code>. Only the 12 languages with a
 <code>recommends/gpu/*.conf</code> in <code>ovos-config</code> have a GPU tier at all. The others keep their
 CPU recommendation.</p>
 <div class="admonition note">
