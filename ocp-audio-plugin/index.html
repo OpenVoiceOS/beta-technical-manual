@@ -1517,8 +1517,8 @@ in <a href="../ovos-media/"><code>ovos-media</code></a>. Plan a migration if you
 <ul>
 <li><strong><code>preferred_audio_services</code></strong>: order in which OCP picks a lower-level audio backend to
   actually emit sound. The shipped <code>mycroft.conf</code> sets <code>["mpv", "vlc", "simple"]</code>, which is
-  what a stock install uses; the plugin's own code fallback of <code>["vlc", "mplayer", "simple"]</code>
-  applies only when the key is absent from config entirely.</li>
+  what every install uses (the plugin source carries an unused <code>OCPPluginConfig</code> dict with a
+  different list, dead code that is never merged into the runtime config).</li>
 <li><strong><code>dbus_type</code></strong> / MPRIS keys: see <a href="#mpris">MPRIS</a> below.</li>
 </ul>
 <div class="admonition warning">
