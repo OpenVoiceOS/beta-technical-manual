@@ -1474,6 +1474,8 @@ as:</p>
 <li><code>is_sj201_v10</code>: SJ201 <strong>production</strong> board (revision 10)</li>
 <li><code>is_texas_tas5806</code>: the TAS5806 amplifier (used to confirm an SJ201 v10)</li>
 <li><code>is_wm8960</code>: WM8960-based HATs such as the ReSpeaker 2-mic (i2c <code>0x1a</code>). Adafruit's 2-mic Voice Bonnet is detected separately by <code>is_adafruit_amp</code> (i2c <code>0x4b</code>)</li>
+<li><code>is_respeaker_4mic</code> / <code>is_respeaker_6mic</code>: ReSpeaker 4-mic and 6-mic arrays (i2c <code>0x3b</code> / <code>0x35</code>)</li>
+<li><code>is_hifiberry_dac_pro</code>: HiFiBerry DAC+/DAC Pro (i2c <code>0x4d</code>)</li>
 </ul>
 <p>This is the primitive that tells the <a href="../mark2/">Mark 2</a> dev kit apart from the retail unit, and
 it is used by the detection and configuration tools below.</p>
