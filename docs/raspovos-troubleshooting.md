@@ -35,7 +35,7 @@ If the device does not complete its boot sequence:
 ## OVOS Fails to Speak "I am Ready"
 
 - Confirm the device has a working Internet connection. Otherwise OVOS won't consider itself ready
-- The "I am Ready" announcement is spoken by the `ovos-skill-boot-finished` skill: if that skill is not installed or failed to load, the device can be fully working yet stay silent at boot. Check it appears in the loaded-skills list (see [How to check installed skills](#how-to-check-installed-skills) below, where `skill-ovos-boot-finished.openvoiceos` should be present).
+- The "I am Ready" announcement is spoken by the `ovos-skill-boot-finished` skill: if that skill is not installed or failed to load, the device can be fully working yet stay silent at boot. Check it appears in the loaded-skills list (see [How to check installed skills](#how-to-check-installed-skills) below, where `ovos-skill-boot-finished.openvoiceos` should be present).
 - For what "ready" actually means and how to probe it on headless or fleet deployments, see [Knowing when the assistant is actually ready](production-operations.md#knowing-when-the-assistant-is-actually-ready).
 
 ## How to debug intent matching
@@ -112,7 +112,7 @@ Use the `ls-skills` command to list every installed skill.
      'skill-ovos-randomness.openvoiceos',
      'skill-ovos-naptime.openvoiceos',
      'skill-ovos-wikipedia.openvoiceos',
-     'skill-ovos-boot-finished.openvoiceos',
+     'ovos-skill-boot-finished.openvoiceos',
      'ovos-skill-camera.openvoiceos',
      'skill-ovos-ddg.openvoiceos',
      'ovos-skill-laugh.openvoiceos',
@@ -168,7 +168,7 @@ Skills can optionally provide metadata, if they do instructions will be availabl
     26) - skill-ovos-randomness.openvoiceos
     27) - skill-ovos-naptime.openvoiceos
     28) - skill-ovos-wikipedia.openvoiceos
-    29) - skill-ovos-boot-finished.openvoiceos
+    29) - ovos-skill-boot-finished.openvoiceos
     30) - ovos-skill-camera.openvoiceos
     31) - skill-ovos-ddg.openvoiceos
     32) - ovos-skill-laugh.openvoiceos

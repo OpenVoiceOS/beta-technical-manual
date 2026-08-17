@@ -83,17 +83,18 @@ sequenceDiagram
     participant Thread as StreamThread
     Mic->>STT: stream_start(language)
     STT->>Thread: create_streaming_thread()
+    Thread->>Thread: handle_audio_stream(audio, language)
+    Note over Thread: audio is a generator that yields queued chunks
     loop each captured chunk
         Mic->>STT: stream_data(chunk)
         STT->>Thread: queue.put(chunk)
-        Thread->>Thread: handle_audio_stream(audio, language)
     end
     Mic->>STT: stream_stop()
     STT->>Thread: queue.put(None)
     Thread-->>STT: finalize() returns self.text
 ```
 
-*Diagram:* The sequence starts with the mic thread calling stream_start and ends with the stream thread returning finalize() text, and it loops over each captured audio chunk between those two points.
+*Diagram:* The sequence starts with the mic thread calling stream_start and ends with the stream thread returning finalize() text, The stream thread calls handle_audio_stream one time, and the loop between those two points feeds audio chunks to the generator it reads.
 
 Audio arrives synchronously per chunk: `stream_data()` is called once per captured
 chunk on the mic thread, so it must return well under the per-chunk time budget
