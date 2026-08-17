@@ -241,41 +241,41 @@ If you want to revert OVOS to a blank state you can use `ovos-reset-brain` to re
     Using Python 3.11.2 environment at: .venvs/ovos
     Uninstalled 37 packages in 513ms
 
-     - ovos-skill-alerts==0.1.15
-     - ovos-skill-audio-recording==0.2.5a5
-     - ovos-skill-boot-finished==0.4.9
-     - ovos-skill-camera==1.0.3a4
-     - ovos-skill-cmd==0.2.8
-     - ovos-skill-confucius-quotes==0.1.11a1
-     - ovos-skill-date-time==0.4.6
-     - ovos-skill-days-in-history==0.3.9
-     - ovos-skill-dictation==0.2.10
-     - ovos-skill-fallback-unknown==0.1.6a2
+     - ovos-skill-alerts==0.1.28
+     - ovos-skill-audio-recording==0.2.7
+     - ovos-skill-boot-finished==0.5.0
+     - ovos-skill-camera==1.0.4
+     - ovos-skill-cmd==0.2.11
+     - ovos-skill-confucius-quotes==0.2.0
+     - ovos-skill-date-time==1.1.5
+     - ovos-skill-days-in-history==0.3.11
+     - ovos-skill-dictation==0.2.21
+     - ovos-skill-fallback-unknown==0.1.9
      - ovos-skill-example-quotes==0.0.1
-     - ovos-skill-hello-world==0.1.11a4
-     - ovos-skill-icanhazdadjokes==0.3.2
-     - ovos-skill-ip==0.2.7a1
-     - ovos-skill-iss-location==0.2.10
-     - ovos-skill-laugh==0.2.1a3
-     - ovos-skill-local-media==0.2.9
-     - ovos-skill-moviemaster==0.0.8a4
-     - ovos-skill-naptime==0.3.12a1
-     - ovos-skill-number-facts==0.1.10
-     - ovos-skill-parrot==0.1.14
-     - ovos-skill-personal==0.1.9
-     - ovos-skill-pyradios==0.1.5a1
-     - ovos-skill-randomness==0.1.2a1
+     - ovos-skill-hello-world==0.2.1
+     - ovos-skill-icanhazdadjokes==0.3.7
+     - ovos-skill-ip==0.2.8
+     - ovos-skill-iss-location==0.2.16
+     - ovos-skill-laugh==1.0.5
+     - ovos-skill-local-media==0.2.12
+     - ovos-skill-moviemaster==0.0.12
+     - ovos-skill-naptime==0.3.15
+     - ovos-skill-number-facts==0.1.12
+     - ovos-skill-parrot==0.1.25
+     - ovos-skill-personal==0.1.19
+     - ovos-skill-pyradios==0.1.5
+     - ovos-skill-randomness==1.0.1
      - ovos-skill-somafm==0.1.5
-     - ovos-skill-speedtest==0.3.3a4
-     - ovos-skill-spelling==0.2.6a3
-     - ovos-skill-spotify==0.1.9
-     - ovos-skill-volume==0.1.13a2
-     - ovos-skill-weather==0.1.14
-     - ovos-skill-wikihow==0.2.14
-     - ovos-skill-wikipedia==0.6.0a1
+     - ovos-skill-speedtest==0.3.6
+     - ovos-skill-spelling==0.2.6
+     - ovos-skill-spotify==0.1.10
+     - ovos-skill-volume==0.1.16
+     - ovos-skill-weather==1.0.6
+     - ovos-skill-wikihow==0.3.3
+     - ovos-skill-wikipedia==0.8.13
      - ovos-skill-ddg==0.3.7
      - ovos-skill-news==0.4.6
-     - skill-ovos-fallback-chatgpt==0.1.12
+     - skill-ovos-fallback-chatgpt==0.1.13
      - ovos-skill-wolfie==0.5.8
      - ovos-skill-wordnet==0.2.6
     [SUCCESS] All skills have been uninstalled successfully.
