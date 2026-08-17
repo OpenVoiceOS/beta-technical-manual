@@ -201,10 +201,6 @@ You can customize the intent pipeline through configuration files. You can enabl
       "conf_med": 0.3,
       "conf_low": 0.2
     },
-    "persona": {
-      "handle_fallback": true,
-      "default_persona": "Remote Llama"
-    },
     "pipeline": [
       "ovos-stop-pipeline-plugin-high",
       "ovos-converse-pipeline-plugin",
