@@ -36,9 +36,9 @@ Use this when a symbol moved between packages or between modules inside the same
 package, and both the old and new location can be imported side by side without
 conflict. Try the new path first, fall back to the old one on `ImportError`.
 
-`ovos-workshop` `5.0.0` (2025-06-07) moved `converse()` off `OVOSSkill` and onto a
-mixin, `ConversationalSkill`. Before `5.0.0`, a skill overrode `converse()` directly on
-`OVOSSkill`. From `5.0.0` on, the mixin must also be inherited or the override is
+`ovos-workshop` `5.0.0` (2025-06-07) moved `converse()` off `OVOSSkill` and into its own
+base class, `ConversationalSkill`. Before `5.0.0`, a skill overrode `converse()` directly on
+`OVOSSkill`. From `5.0.0` on, the skill must subclass that base class or the override is
 silently never called by the pipeline (`ovos-workshop` `f725f5e`, #339):
 
 ```python
@@ -50,7 +50,7 @@ try:
     from ovos_workshop.skills.converse import ConversationalSkill
     _BASES = (ConversationalSkill,)
 except ImportError:
-    # pre-5.0.0: converse() lived directly on OVOSSkill, no mixin exists
+    # pre-5.0.0: converse() lived directly on OVOSSkill, no such base class exists
     _BASES = (OVOSSkill,)
 
 
@@ -221,7 +221,7 @@ just a floor that excludes the versions before the replacement existed:
 ```toml
 [project]
 dependencies = [
-    "ovos-workshop>=5.0.0",   # ConversationalSkill mixin required, no pre-5.0 shim
+    "ovos-workshop>=5.0.0",   # ConversationalSkill base class required, no pre-5.0 shim
     "ovos-plugin-manager>=1.0.0",  # found_wake_word() no-arg contract only
 ]
 ```

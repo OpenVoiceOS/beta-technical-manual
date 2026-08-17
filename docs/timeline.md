@@ -366,7 +366,7 @@
 - Feb 2026 - [Real-time offline speech recognition](https://blog.openvoiceos.org/posts/2026-02-16-onnx-asr) lands via ONNX STT plugins
 - Mar 2026 - [ovos-installer gains macOS support](https://blog.openvoiceos.org/posts/2026-03-05-ovos-installer-macos-intel-apple-silicon) (Intel and Apple Silicon)
 - Mar 2026 - [ovos-agentic-loop](https://github.com/OpenVoiceOS/ovos-agentic-loop) introduced: agentic reasoning patterns (ReAct, reflexion, tree-of-thoughts, …) as OVOS agent plugins
-- Mar 2026 - [ovos-pydantic-models](https://github.com/OpenVoiceOS/ovos-pydantic-models) introduced to standardize ecosystem-wide data structures.
+- Mar 2026 - [ovos-pydantic-models](https://github.com/OpenVoiceOS/ovos-pydantic-models) reaches its first tagged release, packaging the ecosystem-wide data structures first committed in October 2025.
 - Mar 2026 - `ovos-bus-client` version **1.5.0** released.
 - May 2026 - [architecture](https://github.com/OpenVoiceOS/architecture) repo introduced: formal written specifications for the OVOS protocols, with [ovos-spec-tools](https://github.com/OpenVoiceOS/ovos-spec-tools) as their dependency-free reference implementation
 - Jun 2026 - **MediaProvider plugin family** introduced (bandcamp, youtube, tunein, somafm, pyradios, soundcloud, spotify, news, mass) as repositories, intended to eventually supersede the legacy OCP media skills; the in-process loading is not yet wired into `ovos-media`, see [ovos-media](ovos-media.md#upcoming-mediaprovider-plugins-replace-ocp-skills)
