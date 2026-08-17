@@ -2035,7 +2035,7 @@
 <h1 id="ovos-media">ovos-media<a class="headerlink" href="#ovos-media" title="Permanent link">&para;</a></h1>
 <div class="admonition warning">
 <p class="admonition-title">Maturity — Proof-of-concept ⬤◯◯◯◯</p>
-<p>The <code>ovos-media</code> daemon is <strong>unfinished</strong>. It is the <strong>upcoming</strong> media-playback service for OVOS, still being refactored, and <strong>not enabled by default</strong>. Today, stock installs play media through the <strong>legacy audio backend</strong>, the <a href="../media-plugins/#ovos-ocp-audio-plugin"><code>ovos-ocp-audio-plugin</code></a> ("old audio service") inside <a href="../audio-service/"><code>ovos-audio</code></a>, which is <strong>deprecated but still shipped</strong>. Switching to <code>ovos-media</code> is opt-in and some parts are still coupled (Qt5 GUI, player-as-skill). Treat this page as the <em>target architecture</em>, for exploration only. Rated by <a href="../maturity/">repository health</a>, not version.</p>
+<p>The <code>ovos-media</code> daemon is <strong>unfinished</strong>. It is the <strong>upcoming</strong> media-playback service for OVOS, still being refactored, and <strong>not enabled by default</strong>. Today, stock installs play media through the <strong>legacy audio backend</strong>, the <a href="../media-plugins/#ovos-ocp-audio-plugin"><code>ovos-ocp-audio-plugin</code></a> ("old audio service") inside <a href="../audio-service/"><code>ovos-audio</code></a>, which is <strong>deprecated but still shipped</strong>. Switching to <code>ovos-media</code> is opt-in and the player-as-skill coupling remains (the in-process GUI surface was dropped in 2.0.0a1; any GUI is an external bus client). Treat this page as the <em>target architecture</em>, for exploration only. Rated by <a href="../maturity/">repository health</a>, not version.</p>
 <p>OVOS has <strong>two media-playback backends</strong> sharing the same <a href="../ocp-pipeline/">OCP</a> search framework (pipeline + skills + extractors):</p>
 <table>
 <thead>
@@ -2132,7 +2132,7 @@ daemon described here, which is the target:</p>
     Media --&gt; PSM["Player state machine (OCPMediaPlayer)"]
     Media --&gt; MPRIS
     Media --&gt; Backends["Media backend plugins"]
-    Media --&gt; GUI["GUI (still coupled, target: GUI adapter plugins)"]</code></pre>
+    Media --&gt; GUI["GUI (external bus clients since 2.0.0a1)"]</code></pre>
 <p><em>Diagram: the intent pipeline routes to either the legacy <code>ovos-ocp-audio-plugin</code> or the standalone <code>ovos-media</code> daemon, which drives the player state machine, MPRIS, backend plugins, and the GUI.</em></p>
 <hr />
 <h2 id="ocp-pipeline-plugin">OCP Pipeline Plugin<a class="headerlink" href="#ocp-pipeline-plugin" title="Permanent link">&para;</a></h2>
@@ -2154,7 +2154,7 @@ parses <code>--help</code> and <code>--version</code> and exits before starting 
 <p><code>ovos_media/media_backends/</code>: <code>AudioService</code>, <code>VideoService</code>, <code>WebService</code>. Each manages typed backend plugins</p>
 </li>
 <li>
-<p><code>ovos_media/player.py</code>: uses a <code>GUIInterface</code> from <code>ovos-gui-api-client</code> (<code>self.gui.show_media_player(...)</code>) to push player state via the template API (the old <code>ovos_media/gui.py</code> / <code>OCPGUIInterface</code> is gone)</p>
+<p><code>ovos_media/player.py</code>: pushes player state only through <code>ovos.common_play.*</code> bus broadcasts (2.0.0a1 dropped the in-process <code>GUIInterface</code> along with the old <code>ovos_media/gui.py</code> / <code>OCPGUIInterface</code>); any GUI, ovos-webui included, is an outboard bus client</p>
 </li>
 <li>
 <p><code>ovos_media/mpris.py</code>: MPRIS integration</p>
@@ -2310,8 +2310,8 @@ the Role A / Role B reflection-and-takeover behavior have moved to their own pag
 </span><span id="__span-2-16"><a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a>    &quot;preferred_web_services&quot;: [],
 </span><span id="__span-2-17"><a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a>
 </span><span id="__span-2-18"><a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a>    // force playback through the audio players even for video/web media, e.g. on headless setups
-</span><span id="__span-2-19"><a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a>    // numeric PlaybackMode value from ovos_utils.ocp (30 = FORCE_AUDIO); the enum NAME as a
-</span><span id="__span-2-20"><a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a>    // string is not recognized
+</span><span id="__span-2-19"><a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a>    // numeric PlaybackMode value from ovos_utils.ocp (30 = FORCE_AUDIO) or, since 2.0.0a1,
+</span><span id="__span-2-20"><a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a>    // the enum name as a string (&quot;FORCE_AUDIO&quot;)
 </span><span id="__span-2-21"><a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a>    &quot;playback_mode&quot;: 30,
 </span><span id="__span-2-22"><a id="__codelineno-2-22" name="__codelineno-2-22" href="#__codelineno-2-22"></a>
 </span><span id="__span-2-23"><a id="__codelineno-2-23" name="__codelineno-2-23" href="#__codelineno-2-23"></a>    &quot;audio_players&quot;: {
@@ -2347,10 +2347,9 @@ audio list is also the generic fallback when a type-specific list is empty.</p>
 (<code>ovos-media-audio-plugin-qt5</code>, <code>…-video-plugin-qt5</code>, <code>…-web-plugin-qt5</code>). That
 backend is legacy and needs the deprecated <a href="../ovos-shell/">ovos-shell</a>.</p>
 <p>Other <code>media.*</code> keys read by the player (all optional): <code>autoplay</code> (default
-<code>true</code>, play the next queued track automatically), <code>merge_search</code> (fold new
-search results into the active playlist vs. replacing it), and
-<code>force_audioservice</code> (route audio through the audio backend even when a GUI is
-available).</p>
+<code>true</code>, play the next queued track automatically) and <code>merge_search</code> (fold new
+search results into the active playlist vs. replacing it). The old
+<code>force_audioservice</code> key was removed in 2.0.0a1; use <code>playback_mode</code> instead.</p>
 <h3 id="first-playback">First playback<a class="headerlink" href="#first-playback" title="Permanent link">&para;</a></h3>
 <p><code>ovos-media</code> listens for <code>ovos.common_play.play</code> and expects a <code>media</code> dict plus an optional
 <code>playlist</code> list:</p>
@@ -2378,7 +2377,8 @@ emitted as <code>&lt;msg_type&gt;.response</code>. For example, <code>ovos.commo
 <code>ovos.common_play.status.response</code>, and <code>ovos.common_play.track_info</code> on
 <code>ovos.common_play.track_info.response</code>.</p>
 <h3 id="service-level-bus-messages">Service-level bus messages<a class="headerlink" href="#service-level-bus-messages" title="Permanent link">&para;</a></h3>
-<p>Beyond the per-player <code>ovos.audio.service.*</code> / <code>ovos.video.service.*</code> API, these bus messages
+<p>All service-level media control speaks <code>ovos.common_play.*</code> (2.0.0a1 dropped the per-player
+<code>ovos.audio.service.*</code> / <code>ovos.video.service.*</code> bus surface). These bus messages
 are handled inside the <code>ovos-media</code> process. The canonical reference for the full
 <code>ovos.common_play.*</code> namespace is <a href="../bus-events/#ocp-media-playback">Bus Events Reference: OCP / media playback</a>;
 this section covers only the service-level subset with <code>ovos-media</code>-specific behavior notes.</p>
