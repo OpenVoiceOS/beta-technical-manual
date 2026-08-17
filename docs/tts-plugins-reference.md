@@ -314,6 +314,17 @@ table on the [TTS Plugins](tts-plugins.md) page.
 
 > If `"voice"` is omitted, the plugin picks the first bundled model that supports the configured language.
 
+### Per-language default voices
+
+A configured `voice` pins one voice regardless of request language. For multilingual serving
+(1.86.0a1+), the `lang2voice` config map, e.g. `{"pt-br": "...", "gl": "..."}`, and
+`PHOONNX_DEFAULT_VOICE_<LANG>` env vars resolve the default voice per request language. Keys
+are BCP-47 tags, full tag tried before primary subtag, and resolution is table-major: the
+whole `lang2voice` table wins outright for any language it names before env vars are consulted
+at all. Spellings are normalized on both sides (`gl-ES`/`gl`, `pt-br`/`pt_BR` agree). An entry
+naming a nonexistent voice logs the mistake and falls back to the voice index's own default
+rather than refusing to serve the language.
+
 ### Bounding the voice cache
 
 Loaded voice models stay resident in an in-process cache. Two settings bound it, and they are
