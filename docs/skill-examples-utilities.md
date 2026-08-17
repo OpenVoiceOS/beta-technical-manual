@@ -120,6 +120,10 @@ where you want a voice shortcut to a maintenance script instead of SSHing in.
 - run script ___
 - launch command ___
 
+The blank is a phrase you define yourself: the skill matches nothing by voice until you map
+at least one spoken phrase to a script or command under `alias` in its `settings.json`. With
+an alias named `generate report`, "run script generate report" runs the mapped command.
+
 ??? note "Install"
     [:material-github: OpenVoiceOS/ovos-skill-cmd](https://github.com/OpenVoiceOS/ovos-skill-cmd) · `pip install ovos-skill-cmd` · Maturity: Stable
 
