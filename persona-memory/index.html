@@ -1564,7 +1564,7 @@
 <p><strong>What this is:</strong> a pluggable way to control what an OVOS persona "remembers". Instead of a fixed conversation buffer, a memory plugin decides which past messages (and any summaries or retrieved snippets) get prepended to the LLM call on each turn. It also decides how that history is persisted across turns and sessions.</p>
 <p>Persona memory is managed through the <code>AgentContextManager</code> interface (OPM <code>opm.agents.memory</code>), which <code>ovos-persona</code> loads for each persona. The persona owns the chat engine and tools. The memory plugin owns <strong>conversation state and context assembly</strong>, composing with any chat backend instead of generating answers itself.</p>
 <p><code>ovos-memory-plugins</code> is <strong>local-first</strong>: most backends need no external service at all. Only <code>longterm</code> and <code>entity</code> call an OpenAI-compatible chat endpoint, and that endpoint can be your own local LLM, never a hosted provider.</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pip<span class="w"> </span>install<span class="w"> </span>ovos-memory-plugins
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pip<span class="w"> </span>install<span class="w"> </span>--pre<span class="w"> </span>ovos-memory-plugins
 </span></code></pre></div>
 <hr />
 <h2 id="interface">Interface<a class="headerlink" href="#interface" title="Permanent link">&para;</a></h2>
@@ -1785,7 +1785,7 @@ keys) are in the <a href="#backends">per-backend sections</a> below.</p>
 <p>Class <code>LocalRAGMemory</code>. Runs Retrieval-Augmented Generation <strong>entirely in-process</strong>. It loads an OVOS text-embeddings plugin (<code>opm.embeddings.text</code>) and an <code>EmbeddingsDB</code> plugin directly, with no HTTP and no cloud key. It embeds every exchange and retrieves the top-k <strong>semantically</strong> similar past turns at query time. This is the local-first replacement for any server- or OpenAI-coupled RAG. Server-coupled RAG lives in <a href="../openai-plugin/"><code>ovos-openai-plugin</code></a> instead.</p>
 <p><strong>Use it when</strong> a private/offline assistant needs exact semantic recall of past detail.</p>
 <p>Install the known-good offline stack with the extra:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>pip<span class="w"> </span>install<span class="w"> </span><span class="s1">&#39;ovos-memory-plugins[local-rag]&#39;</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>pip<span class="w"> </span>install<span class="w"> </span>--pre<span class="w"> </span><span class="s1">&#39;ovos-memory-plugins[local-rag]&#39;</span>
 </span></code></pre></div>
 <p>which pulls <code>ovos-gguf-plugin</code> (whose <code>ovos-gguf-embeddings-plugin</code> entry point provides labse
 gguf embeddings) + <code>ovos-chromadb-embeddings-plugin</code> (persistent local vector store). Any

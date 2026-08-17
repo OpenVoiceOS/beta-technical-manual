@@ -1313,7 +1313,7 @@
 </table>
 <p>Both run on ONNX Runtime. Neither needs torch. Both work offline after the models are in the local cache.</p>
 <h2 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">&para;</a></h2>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pip<span class="w"> </span>install<span class="w"> </span>ovos-plugin-linguonnx
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pip<span class="w"> </span>install<span class="w"> </span>--pre<span class="w"> </span>ovos-plugin-linguonnx
 </span></code></pre></div>
 <p>Models download from HuggingFace on first use. Constructing a plugin downloads nothing. The first <code>detect()</code> or <code>translate()</code> call does the download.</p>
 <h2 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">&para;</a></h2>
