@@ -43,10 +43,11 @@ nothing (or spoke the fallback-unknown dialog if one is installed).
   training completes. Set `instant_train` if you need deterministic behavior while testing. See
   [Padatious Pipeline: gotcha](padatious-pipeline.md#advanced).
 - If you expect Adapt to catch it, confirm both the vocabulary and the rule are registered by
-  checking `bus.log` for `register_vocab` / `register_intent` traffic (the messagebus daemon
-  logs every topic at debug level; the pipeline plugin itself logs nothing on the success
-  path, so `skills.log` stays silent). Adapt has no training step and should match immediately
-  once registered. See [Adapt Pipeline](adapt-pipeline.md).
+  checking `bus.log` for `register_vocab` / `register_intent` traffic. The messagebus daemon
+  only logs individual topics when `websocket.filter: true` is set (off by default); with it
+  on, every topic is logged at debug level. The pipeline plugin itself logs nothing on the
+  success path, so `skills.log` stays silent either way. Adapt has no training step and
+  should match immediately once registered. See [Adapt Pipeline](adapt-pipeline.md).
 
 **Bus events to watch** (with `ovos-busmon` or by grepping the logs): `ovos.utterance.handle`
 (legacy `recognizer_loop:utterance`, confirms the utterance entered the pipeline at all),
