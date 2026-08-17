@@ -976,9 +976,9 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#standalone-skills" class="md-nav__link">
+  <a href="#running-one-skill-in-its-own-process" class="md-nav__link">
     <span class="md-ellipsis">
-      Standalone skills
+      Running one skill in its own process
     </span>
   </a>
   
@@ -1552,9 +1552,9 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#standalone-skills" class="md-nav__link">
+  <a href="#running-one-skill-in-its-own-process" class="md-nav__link">
     <span class="md-ellipsis">
-      Standalone skills
+      Running one skill in its own process
     </span>
   </a>
   
@@ -1794,9 +1794,11 @@ out-of-the-box behavior. See <a href="#caveats">Caveats</a> below.</p>
 when a display client genuinely runs on another machine — doing so exposes the
 unauthenticated GUI protocol socket to the LAN.</p>
 </div>
-<h2 id="standalone-skills">Standalone skills<a class="headerlink" href="#standalone-skills" title="Permanent link">&para;</a></h2>
-<p>A skill does not need a running <code>ovos-core</code> to execute. <code>ovos-workshop</code> ships a launcher that
-loads exactly one skill and connects it to a bus on its own:</p>
+<h2 id="running-one-skill-in-its-own-process">Running one skill in its own process<a class="headerlink" href="#running-one-skill-in-its-own-process" title="Permanent link">&para;</a></h2>
+<p>A skill can run outside <code>ovos-core</code>'s own process, in its own process on the same
+machine or a different one — but it still needs a reachable, running <code>ovos-core</code>,
+since it waits for that core's skill manager to answer <code>mycroft.skills.is_ready</code>
+before it loads. <code>ovos-workshop</code> ships a launcher for this:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>ovos-skill-launcher<span class="w"> </span><span class="o">{</span>skill_id<span class="o">}</span><span class="w"> </span><span class="o">[</span>path/to/skill/directory<span class="o">]</span>
 </span></code></pre></div>
 <p>This is the <code>ovos-skill-launcher</code> console script, backed by <code>ovos_workshop.skill_launcher.SkillContainer</code>.
@@ -1806,18 +1808,20 @@ skill straight out of a git checkout.</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">from</span> <span class="nn">ovos_workshop.skill_launcher</span> <span class="kn">import</span> <span class="n">SkillContainer</span>
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
 </span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="n">skill</span> <span class="o">=</span> <span class="n">SkillContainer</span><span class="p">(</span><span class="n">skill_id</span><span class="o">=</span><span class="s2">&quot;my-skill.openvoiceos&quot;</span><span class="p">,</span> <span class="n">skill_directory</span><span class="o">=</span><span class="s2">&quot;./my-skill&quot;</span><span class="p">)</span>
-</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="n">skill</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>  <span class="c1"># connects to the bus (websocket config) and loads only this skill</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="n">skill</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>  <span class="c1"># connects to the bus, waits for ovos-core&#39;s skill manager to</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>              <span class="c1"># report ready, then loads only this skill</span>
 </span></code></pre></div>
-<p>Because this is a normal Python process that only needs a reachable bus, it enables:</p>
+<p>Because this is a normal Python process that only needs a reachable bus and a running <code>ovos-core</code>, it enables:</p>
 <ul>
 <li><strong>Developing one skill against a remote device</strong>: run the skill on a laptop, point its
   <code>websocket.host</code> at a Raspberry Pi running the rest of the stack, and iterate without touching
   the device.</li>
 <li><strong>Resource isolation</strong>: a heavyweight skill (for example, one embedding a local LLM) runs in its own
-  process with its own memory ceiling, instead of sharing <code>ovos-core</code>'s process.</li>
+  process with its own memory ceiling, instead of sharing <code>ovos-core</code>'s process. The <code>ovos-core</code>
+  process the skill waits for still runs somewhere, sized for everything else.</li>
 <li><strong>Per-skill containers</strong>: package a single skill and <code>ovos-skill-launcher</code> into a minimal
-  container image, so a skill can be deployed, scaled, or restarted independently of the rest of
-  the assistant.</li>
+  container image, alongside (not instead of) a running <code>ovos-core</code>, so a skill can be deployed,
+  scaled, or restarted independently of the rest of the assistant.</li>
 </ul>
 <h2 id="library-reuse-outside-ovos">Library reuse outside OVOS<a class="headerlink" href="#library-reuse-outside-ovos" title="Permanent link">&para;</a></h2>
 <p>The pattern goes further than "one service, one process". The packages underneath each service
