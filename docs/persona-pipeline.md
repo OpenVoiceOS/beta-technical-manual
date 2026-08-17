@@ -167,6 +167,7 @@ Only unmatched or low-confidence utterances are routed to the persona.
           "ovos-persona-pipeline-plugin-high",
           "ovos-padatious-pipeline-plugin-medium",
           "ovos-adapt-pipeline-plugin-medium",
+          "ovos-persona-pipeline-plugin-low",
           "ovos-fallback-pipeline-plugin-high",
           "ovos-fallback-pipeline-plugin-medium",
           "ovos-fallback-pipeline-plugin-low"

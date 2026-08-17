@@ -172,6 +172,7 @@ the catch-all fallback skills get a turn.
       "ovos-persona-pipeline-plugin-high",
       "ovos-padatious-pipeline-plugin-medium",
       "ovos-adapt-pipeline-plugin-medium",
+      "ovos-persona-pipeline-plugin-low",
       "ovos-fallback-pipeline-plugin-high",
       "ovos-fallback-pipeline-plugin-medium",
       "ovos-fallback-pipeline-plugin-low"
@@ -190,9 +191,12 @@ Why each stage sits where it does:
   assistant behavior" while the persona "fills in where skills fall short."
   See [Persona Pipeline](persona-pipeline.md).
 - **`ovos-persona-pipeline-plugin-high`**: placed after the deterministic high tiers but before
-  their medium tiers. An active or default persona (`handle_fallback: true`, `default_persona`)
-  catches open-ended chat and unmatched questions before the pipeline relaxes to a looser
-  keyword pass.
+  their medium tiers. It engages only for a persona already summoned in the session; it never
+  consults `default_persona`.
+- **`ovos-persona-pipeline-plugin-low`**: the stage where `handle_fallback: true` and
+  `default_persona` actually take effect. Without it those keys are dead config and a fresh
+  session never reaches the persona: the low stage is what catches open-ended chat and
+  unmatched questions before the fallback ladder.
 - **`ovos-padatious-pipeline-plugin-medium`** and **`ovos-adapt-pipeline-plugin-medium`**: a
   second, looser skill-matching pass in case the persona missed something a skill could still
   answer.
