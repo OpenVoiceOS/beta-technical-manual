@@ -233,10 +233,12 @@ TTS uses [`ovos-tts-plugin-phoonnx`](tts-plugins-reference.md#ovos-tts-plugin-ph
 for every language, auto-selecting a default voice. The table below shows the exact
 per-language model and voice picked for each.
 
-Passing `--gpu` selects the GPU tier instead: the same model family at full `fp32` precision
-with `use_cuda: true`, or, for languages with enough training data, a larger and more accurate
-model than the CPU default (for example a full Whisper or Canary model instead of a
-lighter Conformer). `--gpu` needs a CUDA-capable GPU and implies `--offline`.
+Passing `--gpu` selects the GPU tier instead: a different, GPU-accelerated STT
+recommendation for the language, almost always `ovos-stt-plugin-fasterwhisper` with
+`use_cuda: true` and `compute_type: float16` (Basque uses `ovos-stt-plugin-HiTZ`
+instead), typically running a larger model than the CPU-tier plugin (for example a
+full Whisper model instead of a lighter Conformer). This swap is STT-only; the TTS
+recommendation is unaffected. `--gpu` needs a CUDA-capable GPU and implies `--offline`.
 
 ### Flags
 
