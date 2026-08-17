@@ -22,8 +22,8 @@ $XDG_DATA_HOME/mycroft/resources/<skill-id>/
 ```
 
 `XDG_DATA_HOME` is usually `~/.local/share` on Linux, so for the skill ID
-`skill-ovos-date-time.openvoiceos` the directory is
-`~/.local/share/mycroft/resources/skill-ovos-date-time.openvoiceos/`.
+`ovos-skill-date-time.openvoiceos` the directory is
+`~/.local/share/mycroft/resources/ovos-skill-date-time.openvoiceos/`.
 
 Inside it, mirror the skill's own directory layout. Create the directory with `mkdir -p` if it
 does not exist. You do not need to fork a skill to change what it says or what languages it
@@ -44,7 +44,7 @@ speaks.
     gap closes, and they already work for the other resource types.
 
 Replace one dialog file of an installed [skill](skill-design-guidelines.md) with your own
-wording. This example replaces `time.current.dialog` in `skill-ovos-date-time.openvoiceos`.
+wording. This example replaces `time.current.dialog` in `ovos-skill-date-time.openvoiceos`.
 
 1. Find the skill ID and the dialog file you want to replace. The file lives in the skill's
    `locale/en-us/dialog` directory.
@@ -53,9 +53,9 @@ wording. This example replaces `time.current.dialog` in `skill-ovos-date-time.op
 3. Copy it into the matching path under the user resources directory:
 
     ```bash
-    mkdir -p ~/.local/share/mycroft/resources/skill-ovos-date-time.openvoiceos/locale/en-us/dialog
+    mkdir -p ~/.local/share/mycroft/resources/ovos-skill-date-time.openvoiceos/locale/en-us/dialog
     cp time.current.dialog \
-      ~/.local/share/mycroft/resources/skill-ovos-date-time.openvoiceos/locale/en-us/dialog/
+      ~/.local/share/mycroft/resources/ovos-skill-date-time.openvoiceos/locale/en-us/dialog/
     ```
 
 4. Restart OpenVoiceOS so the skill reloads its resources, then ask for the current time.
@@ -83,7 +83,7 @@ This example adds Spanish (`es-es`) to the same skill.
 2. Create the language folder under the user resources directory:
 
     ```bash
-    mkdir -p ~/.local/share/mycroft/resources/skill-ovos-date-time.openvoiceos/locale/es-es
+    mkdir -p ~/.local/share/mycroft/resources/ovos-skill-date-time.openvoiceos/locale/es-es
     ```
 
 3. Copy the resource files from an existing language folder, such as `en-us`, into it. This

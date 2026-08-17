@@ -58,14 +58,14 @@ To easily debug intent parsing, open a terminal and run `ologs | grep intent`. T
 
     ```bash
     (ovos) ovos@raspOVOS:~ $ ologs | grep intent
-    2025-01-23 16:29:54.299 - skills - ovos_core.intent_services:handle_utterance:416 - INFO - common_qa match: IntentHandlerMatch(match_type='question:action.skill-ovos-wikipedia.openvoiceos', match_data={'phrase': 'Who is Ada Lovelace', 'skill_id': 'skill-ovos-wikipedia.openvoiceos', 'answer': "Ada Lovelace was a mathematician known for her work on Charles Babbage's Analytical Engine.", 'callback_data': {'answer': "Ada Lovelace was a mathematician known for her work on Charles Babbage's Analytical Engine."}, 'conf': 0.6}, skill_id='skill-ovos-wikipedia.openvoiceos', utterance='Who is Ada Lovelace', updated_session=None)
+    2025-01-23 16:29:54.299 - skills - ovos_core.intent_services:handle_utterance:416 - INFO - common_qa match: IntentHandlerMatch(match_type='question:action.ovos-skill-wikipedia.openvoiceos', match_data={'phrase': 'Who is Ada Lovelace', 'skill_id': 'ovos-skill-wikipedia.openvoiceos', 'answer': "Ada Lovelace was a mathematician known for her work on Charles Babbage's Analytical Engine.", 'callback_data': {'answer': "Ada Lovelace was a mathematician known for her work on Charles Babbage's Analytical Engine."}, 'conf': 0.6}, skill_id='ovos-skill-wikipedia.openvoiceos', utterance='Who is Ada Lovelace', updated_session=None)
     2025-01-23 16:29:54.300 - skills - ovos_core.intent_services:handle_utterance:436 - DEBUG - intent matching took: 1.5732948780059814
     2025-01-23 16:34:07.672 - skills - ovos_core.intent_services:handle_utterance:399 - INFO - Parsing utterance: ['what time is it']
     2025-01-23 16:34:07.675 - skills - ovos_core.intent_services:get_pipeline:234 - DEBUG - Session pipeline: ['stop_high', 'converse', 'ocp_high', 'padatious_high', 'adapt_high', 'ocp_medium', 'fallback_high', 'stop_medium', 'adapt_medium', 'adapt_low', 'common_qa', 'fallback_medium', 'fallback_low']
     2025-01-23 16:34:07.678 - skills - ovos_core.intent_services:handle_utterance:430 - DEBUG - no match from <bound method StopService.match_high of <ovos_core.intent_services.stop_service.StopService object at 0x7fff2b036310>>
     2025-01-23 16:34:07.686 - skills - ovos_core.intent_services:handle_utterance:430 - DEBUG - no match from <bound method ConverseService.match of <ovos_core.intent_services.converse_service.ConverseService object at 0x7fff7159ae50>>
     2025-01-23 16:34:07.691 - skills - ovos_core.intent_services:handle_utterance:430 - DEBUG - no match from <bound method OCPPipelineMatcher.match_high of <ocp_pipeline.opm.OCPPipelineMatcher object at 0x7fff26ac3910>>
-    2025-01-23 16:34:07.696 - skills - ovos_core.intent_services:handle_utterance:416 - INFO - padatious_high match: IntentHandlerMatch(match_type='skill-ovos-date-time.openvoiceos:what.time.is.it.intent', match_data={}, skill_id='skill-ovos-date-time.openvoiceos', utterance='what time is it', updated_session=None)
+    2025-01-23 16:34:07.696 - skills - ovos_core.intent_services:handle_utterance:416 - INFO - padatious_high match: IntentHandlerMatch(match_type='ovos-skill-date-time.openvoiceos:what.time.is.it.intent', match_data={}, skill_id='ovos-skill-date-time.openvoiceos', utterance='what time is it', updated_session=None)
     2025-01-23 16:34:07.698 - skills - ovos_core.intent_services:handle_utterance:436 - DEBUG - intent matching took: 0.022924184799194336
 
     ```
@@ -83,42 +83,42 @@ Use the `ls-skills` command to list every installed skill.
 
     The following skills are installed:
 
-    ['skill-ovos-weather.openvoiceos',
+    ['ovos-skill-weather.openvoiceos',
      'ovos-skill-dictation.openvoiceos',
-     'skill-ovos-parrot.openvoiceos',
+     'ovos-skill-parrot.openvoiceos',
      'ovos-skill-speedtest.openvoiceos',
      'ovos-skill-ip.openvoiceos',
      'skill-ovos-spelling.openvoiceos',
      'ovos-skill-iss-location.openvoiceos',
-     'skill-ovos-audio-recording.openvoiceos',
-     'skill-ovos-wordnet.openvoiceos',
+     'ovos-skill-audio-recording.openvoiceos',
+     'ovos-skill-wordnet.openvoiceos',
      'ovos-skill-days-in-history.openvoiceos',
      'ovos-skill-confucius-quotes.openvoiceos',
      'skill-ovos-fallback-chatgpt.openvoiceos',
      'ovos-skill-alerts.openvoiceos',
-     'skill-ovos-local-media.openvoiceos',
-     'skill-ovos-volume.openvoiceos',
+     'ovos-skill-local-media.openvoiceos',
+     'ovos-skill-volume.openvoiceos',
      'ovos-skill-wikihow.openvoiceos',
      'ovos-skill-personal.OpenVoiceOS',
      'ovos-skill-number-facts.openvoiceos',
-     'skill-ovos-hello-world.openvoiceos',
+     'ovos-skill-hello-world.openvoiceos',
      'ovos-skill-moviemaster.openvoiceos',
-     'skill-ovos-date-time.openvoiceos',
-     'skill-ovos-fallback-unknown.openvoiceos',
+     'ovos-skill-date-time.openvoiceos',
+     'ovos-skill-fallback-unknown.openvoiceos',
      'ovos-skill-pyradios.openvoiceos',
-     'skill-ovos-icanhazdadjokes.openvoiceos',
+     'ovos-skill-icanhazdadjokes.openvoiceos',
      'ovos-skill-cmd.openvoiceos',
      'ovos-skill-spotify.openvoiceos',
      'skill-ovos-randomness.openvoiceos',
-     'skill-ovos-naptime.openvoiceos',
-     'skill-ovos-wikipedia.openvoiceos',
+     'ovos-skill-naptime.openvoiceos',
+     'ovos-skill-wikipedia.openvoiceos',
      'ovos-skill-boot-finished.openvoiceos',
      'ovos-skill-camera.openvoiceos',
-     'skill-ovos-ddg.openvoiceos',
+     'ovos-skill-ddg.openvoiceos',
      'ovos-skill-laugh.openvoiceos',
      'skill-ovos-somafm.openvoiceos',
-     'skill-ovos-news.openvoiceos',
-     'skill-ovos-wolfie.openvoiceos',
+     'ovos-skill-news.openvoiceos',
+     'ovos-skill-wolfie.openvoiceos',
      'ovos-skill-example-quotes.openvoiceos']
     [SUCCESS] Skill listing completed.
 
@@ -139,42 +139,42 @@ Skills can optionally provide metadata, if they do instructions will be availabl
     Scanning skills...
     Found 37 installed skills
     Skill ids:
-    0) - skill-ovos-weather.openvoiceos
+    0) - ovos-skill-weather.openvoiceos
     1) - ovos-skill-dictation.openvoiceos
-    2) - skill-ovos-parrot.openvoiceos
+    2) - ovos-skill-parrot.openvoiceos
     3) - ovos-skill-speedtest.openvoiceos
     4) - ovos-skill-ip.openvoiceos
     5) - skill-ovos-spelling.openvoiceos
     6) - ovos-skill-iss-location.openvoiceos
-    7) - skill-ovos-audio-recording.openvoiceos
-    8) - skill-ovos-wordnet.openvoiceos
+    7) - ovos-skill-audio-recording.openvoiceos
+    8) - ovos-skill-wordnet.openvoiceos
     9) - ovos-skill-days-in-history.openvoiceos
     10) - ovos-skill-confucius-quotes.openvoiceos
     11) - skill-ovos-fallback-chatgpt.openvoiceos
     12) - ovos-skill-alerts.openvoiceos
-    13) - skill-ovos-local-media.openvoiceos
-    14) - skill-ovos-volume.openvoiceos
+    13) - ovos-skill-local-media.openvoiceos
+    14) - ovos-skill-volume.openvoiceos
     15) - ovos-skill-wikihow.openvoiceos
     16) - ovos-skill-personal.OpenVoiceOS
     17) - ovos-skill-number-facts.openvoiceos
-    18) - skill-ovos-hello-world.openvoiceos
+    18) - ovos-skill-hello-world.openvoiceos
     19) - ovos-skill-moviemaster.openvoiceos
-    20) - skill-ovos-date-time.openvoiceos
-    21) - skill-ovos-fallback-unknown.openvoiceos
+    20) - ovos-skill-date-time.openvoiceos
+    21) - ovos-skill-fallback-unknown.openvoiceos
     22) - ovos-skill-pyradios.openvoiceos
-    23) - skill-ovos-icanhazdadjokes.openvoiceos
+    23) - ovos-skill-icanhazdadjokes.openvoiceos
     24) - ovos-skill-cmd.openvoiceos
     25) - ovos-skill-spotify.openvoiceos
     26) - skill-ovos-randomness.openvoiceos
-    27) - skill-ovos-naptime.openvoiceos
-    28) - skill-ovos-wikipedia.openvoiceos
+    27) - ovos-skill-naptime.openvoiceos
+    28) - ovos-skill-wikipedia.openvoiceos
     29) - ovos-skill-boot-finished.openvoiceos
     30) - ovos-skill-camera.openvoiceos
-    31) - skill-ovos-ddg.openvoiceos
+    31) - ovos-skill-ddg.openvoiceos
     32) - ovos-skill-laugh.openvoiceos
     33) - skill-ovos-somafm.openvoiceos
-    34) - skill-ovos-news.openvoiceos
-    35) - skill-ovos-wolfie.openvoiceos
+    34) - ovos-skill-news.openvoiceos
+    35) - ovos-skill-wolfie.openvoiceos
     36) - ovos-skill-example-quotes.openvoiceos
     Select skill number: 36
 

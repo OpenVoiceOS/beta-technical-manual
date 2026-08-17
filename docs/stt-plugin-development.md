@@ -94,7 +94,7 @@ sequenceDiagram
     Thread-->>STT: finalize() returns self.text
 ```
 
-*Diagram:* The sequence starts with the mic thread calling stream_start and ends with the stream thread returning finalize() text, The stream thread calls handle_audio_stream one time, and the loop between those two points feeds audio chunks to the generator it reads.
+*Diagram:* The sequence starts with the mic thread calling stream_start and ends with the stream thread returning finalize() text. The stream thread calls handle_audio_stream one time, and the loop between those two points feeds audio chunks to the generator it reads.
 
 Audio arrives synchronously per chunk: `stream_data()` is called once per captured
 chunk on the mic thread, so it must return well under the per-chunk time budget
