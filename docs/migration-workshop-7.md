@@ -14,9 +14,9 @@
 family in the space of about a day, each one landing on top of the last
 before the previous change had even settled. A skill author jumping the
 gap felt it as a moving target: `can_answer` went abstract, converse moved
-into a mixin, `can_stop` briefly went hard-abstract then was loosened
-hours later, and the mixin's own method name turned out to be wrong for
-about a day before being renamed. Anyone upgrading past a pre-2025-06
+out to its own base class, `can_stop` briefly went hard-abstract then was
+loosened hours later, and that new base class's own method name turned out to
+be wrong for about a day before being renamed. Anyone upgrading past a pre-2025-06
 workshop version in one hop needs to treat all four changes as landing at
 once, not as separable steps.
 
@@ -47,7 +47,7 @@ class MySkill(FallbackSkill):
 `FallbackSkill.make_intent_failure_handler(cls, bus)` (the old mycroft-style
 bus-driven fallback dispatcher) is removed with it (ovos-workshop `c066bc3`, #336).
 
-**v5.0.0: converse moves out of `OVOSSkill` into a mixin.**
+**v5.0.0: converse moves out of `OVOSSkill` into its own base class.**
 
 ```python
 # old: converse lived directly on OVOSSkill
@@ -77,7 +77,7 @@ overriding if the skill also overrides `stop`/`stop_session`
 `stop_session()`, also implement `can_stop()`.
 
 **v7.0.0: `can_answer` on `ConversationalSkill` renamed to `can_converse`.**
-The v5.0.0 mixin shipped with the wrong method name for about a day. Rename
+The v5.0.0 base class shipped with the wrong method name for about a day. Rename
 `can_answer` → `can_converse` in any `ConversationalSkill` subclass
 (ovos-workshop `1fdd532`, #348).
 

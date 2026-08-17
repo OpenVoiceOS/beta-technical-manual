@@ -162,7 +162,9 @@ for grid in a:
 !!! note "Upcoming: enclosure protocol mixin"
     The Mark 1 PHAL plugin is expected to adopt a shared `EnclosureProtocolListener` mixin for
     handling the enclosure protocol, aligning it with how other enclosure PHAL plugins are
-    structured.
+    structured. Tracked in
+    [ovos-PHAL-plugin-mk1#39](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-mk1/pull/39),
+    still open, so the mixin does not exist in any released version yet.
 
 ---
 **Read next:** [Mark 2 Hardware](mark2.md)
