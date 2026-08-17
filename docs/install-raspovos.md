@@ -6,8 +6,10 @@
 !!! warning "Project status: stable images paused, development active"
     The last **stable** raspOVOS images date from mid-2025 and are not receiving updates,
     so they are not the recommended install path for a new setup. The repository itself is
-    actively developed — CI work continues and newer **DEV** images appear on the
-    [releases page](https://github.com/OpenVoiceOS/raspOVOS/releases) — but DEV images are
+    actively developed — CI work continues and newer **DEV** images are published as git
+    tags such as `raspOVOS-DEV-bookworm-arm64-lite-<date>` (the
+    [releases page](https://github.com/OpenVoiceOS/raspOVOS/releases) itself is empty, so
+    browse [tags](https://github.com/OpenVoiceOS/raspOVOS/tags)) — but DEV images are
     untested builds toward the refreshed image on the roadmap, not something to hand a
     newcomer. Check the repository for status before flashing. For a supported setup on a
     Raspberry Pi, install Raspberry Pi OS and use the [ovos-installer](ovos-installer.md).
@@ -66,12 +68,14 @@ tier (see [STT Plugins](stt-plugins.md), [TTS Plugins](tts-plugins.md),
   public one.
 
 - **Pi 4:** a comfortable middle ground for local, on-device models. The `hybrid` and `offline`
-  raspOVOS images actually ship [`ovos-tts-plugin-piper`](tts-plugins-reference.md#ovos-tts-plugin-piper)
-  as the default TTS for this tier, and this is what the config below uses. Note the shipped
-  default lags the current recommendation: the piper plugin is archived/deprecated in the
+  raspOVOS images install [`ovos-tts-plugin-piper`](tts-plugins-reference.md#ovos-tts-plugin-piper)
+  for this tier, and the config below selects it explicitly. Note it lags the current
+  recommendation: the piper plugin is archived/deprecated in the
   [TTS catalog](tts-plugins.md), with [`ovos-tts-plugin-phoonnx`](tts-plugins-reference.md#ovos-tts-plugin-phoonnx)
-  as its maintained successor — the images predate that transition. The shipped piper still
-  works; phoonnx is the swap to make if you install anything yourself.
+  as its maintained successor — the images predate that transition. Piper works once
+  selected, but see the warning below: the hybrid build has the same
+  autoconfigure-before-install ordering as the offline one, so its generated config names
+  phoonnx while only piper is installed.
 
   ```jsonc
   // ~/.config/mycroft/mycroft.conf — Pi 4-class tier: local ONNX STT, shipped Piper TTS
@@ -108,10 +112,10 @@ tier (see [STT Plugins](stt-plugins.md), [TTS Plugins](tts-plugins.md),
   selects them explicitly.
 
 !!! warning "The image's own generated config may not match what it installs"
-    The offline build runs `ovos-config autoconfigure --offline` before installing those
-    plugins, and the recommendation layer that command writes now points at
-    `ovos-stt-plugin-onnx-asr` and `ovos-tts-plugin-phoonnx`, neither of which the build
-    installs. On a freshly built image, set `stt.module`/`tts.module` yourself (as below) to
+    Both the hybrid and offline builds run `ovos-config autoconfigure` before installing
+    their plugins, and the recommendation layer that command writes now points at
+    `ovos-stt-plugin-onnx-asr` (offline) and `ovos-tts-plugin-phoonnx` (both tiers), none of
+    which either build installs. On a freshly built image, set `stt.module`/`tts.module` yourself (as below) to
     a plugin that is actually present rather than trusting the generated defaults. Optional swaps, not what ships by default, are
   `ovos-stt-plugin-fasterwhisper` (a larger, more accurate Whisper-class model, if your language
   isn't one of the ones it already ships for) and `ovos-tts-plugin-phoonnx`.
