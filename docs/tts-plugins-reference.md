@@ -133,18 +133,25 @@
 
 - **Description**: OVOS TTS plugin for [Cotovia TTS](https://web.archive.org/web/2023/http://gtm.uvigo.es/cotovia)
 
-### Default Configuration
+### Example Configuration
 
 ```jsonc
   "tts": {
     "module": "ovos-tts-plugin-cotovia",
     "ovos-tts-plugin-cotovia": {
-      "voice": "iago"
+      "voice": "sabela"
     }
   }
  
 
 ```
+
+Leaving `voice` unset (or `"default"`) does not resolve to a fixed voice: the plugin lists
+whatever `cotovia-voice-*` packages are installed under `data_path`
+(`/usr/share/cotovia/data` unless overridden) and picks the first entry in directory order,
+which is not deterministic across installs. Cotovia's own docs call `sabela` the recommended
+default among its three voices (`iago`, `sabela-large`, `sabela`), so set `voice` explicitly
+if a stable choice matters.
 
 ---
 
