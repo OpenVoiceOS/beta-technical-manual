@@ -1503,12 +1503,13 @@ the catch-all fallback skills get a turn.</p>
 </span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="w">      </span><span class="s2">&quot;ovos-persona-pipeline-plugin-high&quot;</span><span class="p">,</span>
 </span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="w">      </span><span class="s2">&quot;ovos-padatious-pipeline-plugin-medium&quot;</span><span class="p">,</span>
 </span><span id="__span-2-14"><a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a><span class="w">      </span><span class="s2">&quot;ovos-adapt-pipeline-plugin-medium&quot;</span><span class="p">,</span>
-</span><span id="__span-2-15"><a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a><span class="w">      </span><span class="s2">&quot;ovos-fallback-pipeline-plugin-high&quot;</span><span class="p">,</span>
-</span><span id="__span-2-16"><a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a><span class="w">      </span><span class="s2">&quot;ovos-fallback-pipeline-plugin-medium&quot;</span><span class="p">,</span>
-</span><span id="__span-2-17"><a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a><span class="w">      </span><span class="s2">&quot;ovos-fallback-pipeline-plugin-low&quot;</span>
-</span><span id="__span-2-18"><a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a><span class="w">    </span><span class="p">]</span>
-</span><span id="__span-2-19"><a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a><span class="w">  </span><span class="p">}</span>
-</span><span id="__span-2-20"><a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a><span class="p">}</span>
+</span><span id="__span-2-15"><a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a><span class="w">      </span><span class="s2">&quot;ovos-persona-pipeline-plugin-low&quot;</span><span class="p">,</span>
+</span><span id="__span-2-16"><a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a><span class="w">      </span><span class="s2">&quot;ovos-fallback-pipeline-plugin-high&quot;</span><span class="p">,</span>
+</span><span id="__span-2-17"><a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a><span class="w">      </span><span class="s2">&quot;ovos-fallback-pipeline-plugin-medium&quot;</span><span class="p">,</span>
+</span><span id="__span-2-18"><a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a><span class="w">      </span><span class="s2">&quot;ovos-fallback-pipeline-plugin-low&quot;</span>
+</span><span id="__span-2-19"><a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a><span class="w">    </span><span class="p">]</span>
+</span><span id="__span-2-20"><a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a><span class="w">  </span><span class="p">}</span>
+</span><span id="__span-2-21"><a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a><span class="p">}</span>
 </span></code></pre></div>
 <p>Why each stage sits where it does:</p>
 <ul>
@@ -1520,9 +1521,12 @@ the catch-all fallback skills get a turn.</p>
   assistant behavior" while the persona "fills in where skills fall short."
   See <a href="../persona-pipeline/">Persona Pipeline</a>.</li>
 <li><strong><code>ovos-persona-pipeline-plugin-high</code></strong>: placed after the deterministic high tiers but before
-  their medium tiers. An active or default persona (<code>handle_fallback: true</code>, <code>default_persona</code>)
-  catches open-ended chat and unmatched questions before the pipeline relaxes to a looser
-  keyword pass.</li>
+  their medium tiers. It engages only for a persona already summoned in the session; it never
+  consults <code>default_persona</code>.</li>
+<li><strong><code>ovos-persona-pipeline-plugin-low</code></strong>: the stage where <code>handle_fallback: true</code> and
+  <code>default_persona</code> actually take effect. Without it those keys are dead config and a fresh
+  session never reaches the persona: the low stage is what catches open-ended chat and
+  unmatched questions before the fallback ladder.</li>
 <li><strong><code>ovos-padatious-pipeline-plugin-medium</code></strong> and <strong><code>ovos-adapt-pipeline-plugin-medium</code></strong>: a
   second, looser skill-matching pass in case the persona missed something a skill could still
   answer.</li>
