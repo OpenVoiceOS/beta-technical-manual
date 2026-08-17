@@ -347,12 +347,11 @@
 - Apr 2025 - [ovos-busmon](https://github.com/OpenVoiceOS/ovos-busmon) introduced: web-based live messagebus monitor and debugging tool
 - Jun 2025 - Introduction of [ovoscope](https://github.com/OpenVoiceOS/ovoscope), the formal end-to-end testing framework for OVOS skills and core components.
 - Jun 2025 - `ovos-utils` version **0.8.0** released, standardizing cross-platform utilities.
-- Jun 2025 - `ovos-workshop` walks 4.0.0 → 7.0.0 in one day of breaking cleanups; `ovos-plugin-manager` reaches 1.0.0 and `ovos-config` 2.0.0
+- Jun 2025 - `ovos-workshop` walks 4.0.0 → 7.0.0 in one day of breaking cleanups and drops the skill launcher's compatibility layer for Mycroft-style skill loading; `ovos-plugin-manager` reaches 1.0.0 and `ovos-config` 2.0.0
 - Jul 2025 - [Transcription Validator](https://blog.openvoiceos.org/posts/2025-07-22-ovos-transcription-validator-plugin) utterance plugin introduced, filtering STT nonsense before intent matching
 - Oct 2025 - `ovos-core` reaches the **2.x** line (`2.1.0`), a major release formalizing the multi-intent-pipeline architecture.
 - Oct 2025 - [phoonnx](https://blog.openvoiceos.org/posts/2025-10-06-phoonnx) introduced: OVOS's own ONNX-based multilingual neural TTS engine and the recommended on-device voice
 - Oct 2025 - OpenVoiceOS [selected for an NGI Zero Commons Fund grant](https://blog.openvoiceos.org/posts/2025-10-20-ngi) by the [NLnet Foundation](https://nlnet.nl/project/OpenVoiceOS/), funding the road to a first stable version, onboarding, language support, and documentation
-- Nov 2025 - `ovos-workshop` version **8.0.0** released, a **major breaking release** that removed the legacy `MycroftSkill` compatibility layer from the skill launcher.
 - Nov 2025 - [Precise wake-word engine ported to ONNX](https://blog.openvoiceos.org/posts/2025-11-03-precise-onnx), dropping the tensorflow dependency
 - Dec 2025 - Speech support for minority languages expands: [TTS voices for Asturian and Aragonese](https://blog.openvoiceos.org/posts/2025-12-09-ast) and the [first phonemizer for Barranquenho](https://blog.openvoiceos.org/posts/2025-12-14-barranquenho)
 - ??? 2025 - OVOS prototype selected as a demonstrator of the [ILENIA project](http://web.archive.org/web/20251008035516/https://proyectoilenia.es/): an open voice assistant in all co-official languages of Spain, runnable on a PC or Raspberry Pi
