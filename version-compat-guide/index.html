@@ -1578,9 +1578,9 @@ below.</p>
 <p>Use this when a symbol moved between packages or between modules inside the same
 package, and both the old and new location can be imported side by side without
 conflict. Try the new path first, fall back to the old one on <code>ImportError</code>.</p>
-<p><code>ovos-workshop</code> <code>5.0.0</code> (2025-06-07) moved <code>converse()</code> off <code>OVOSSkill</code> and onto a
-mixin, <code>ConversationalSkill</code>. Before <code>5.0.0</code>, a skill overrode <code>converse()</code> directly on
-<code>OVOSSkill</code>. From <code>5.0.0</code> on, the mixin must also be inherited or the override is
+<p><code>ovos-workshop</code> <code>5.0.0</code> (2025-06-07) moved <code>converse()</code> off <code>OVOSSkill</code> and into its own
+base class, <code>ConversationalSkill</code>. Before <code>5.0.0</code>, a skill overrode <code>converse()</code> directly on
+<code>OVOSSkill</code>. From <code>5.0.0</code> on, the skill must subclass that base class or the override is
 silently never called by the pipeline (<code>ovos-workshop</code> <code>f725f5e</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/339" title="GitHub Issue: TigreGotico/ovos-technical-manual #339">#339</a>):</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span> <span class="nn">ovos_workshop.skills</span> <span class="kn">import</span> <span class="n">OVOSSkill</span>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
@@ -1590,7 +1590,7 @@ silently never called by the pipeline (<code>ovos-workshop</code> <code>f725f5e<
 </span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>    <span class="kn">from</span> <span class="nn">ovos_workshop.skills.converse</span> <span class="kn">import</span> <span class="n">ConversationalSkill</span>
 </span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>    <span class="n">_BASES</span> <span class="o">=</span> <span class="p">(</span><span class="n">ConversationalSkill</span><span class="p">,)</span>
 </span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
-</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>    <span class="c1"># pre-5.0.0: converse() lived directly on OVOSSkill, no mixin exists</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>    <span class="c1"># pre-5.0.0: converse() lived directly on OVOSSkill, no such base class exists</span>
 </span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>    <span class="n">_BASES</span> <span class="o">=</span> <span class="p">(</span><span class="n">OVOSSkill</span><span class="p">,)</span>
 </span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>
 </span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>
@@ -1727,7 +1727,7 @@ still in its deprecated-but-functional phase, you often do not need a shim at al
 just a floor that excludes the versions before the replacement existed:</p>
 <div class="language-toml highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="k">[project]</span>
 </span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="n">dependencies</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
-</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">    </span><span class="s2">&quot;ovos-workshop&gt;=5.0.0&quot;</span><span class="p">,</span><span class="w">   </span><span class="c1"># ConversationalSkill mixin required, no pre-5.0 shim</span>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">    </span><span class="s2">&quot;ovos-workshop&gt;=5.0.0&quot;</span><span class="p">,</span><span class="w">   </span><span class="c1"># ConversationalSkill base class required, no pre-5.0 shim</span>
 </span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="w">    </span><span class="s2">&quot;ovos-plugin-manager&gt;=1.0.0&quot;</span><span class="p">,</span><span class="w">  </span><span class="c1"># found_wake_word() no-arg contract only</span>
 </span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="p">]</span>
 </span></code></pre></div>
