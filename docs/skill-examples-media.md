@@ -45,10 +45,13 @@ News streams from around the globe.
 
 - play npr news
 - play news in spanish
-- play euronews
 - play the news
 - play portuguese news
-- play catalan news
+
+Naming a specific feed by station name ("play euronews") or asking for Catalan news does not
+reliably surface the right feed: the skill's language matcher does not cover Catalan and its
+default-feed bonus can outrank a literal station-name match. Stick to the default feed or the
+language phrasings above until that is fixed upstream.
 
 ??? note "Install"
     [:material-github: OpenVoiceOS/ovos-skill-news](https://github.com/OpenVoiceOS/ovos-skill-news) · `pip install ovos-skill-news` · Maturity: Stable
