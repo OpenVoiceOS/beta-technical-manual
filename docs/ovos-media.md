@@ -1,7 +1,7 @@
 # ovos-media
 
 !!! warning "Maturity — Proof-of-concept ⬤◯◯◯◯"
-    The `ovos-media` daemon is **unfinished**. It is the **upcoming** media-playback service for OVOS, still being refactored, and **not enabled by default**. Today, stock installs play media through the **legacy audio backend**, the [`ovos-ocp-audio-plugin`](media-plugins.md#ovos-ocp-audio-plugin) ("old audio service") inside [`ovos-audio`](audio-service.md), which is **deprecated but still shipped**. Switching to `ovos-media` is opt-in and some parts are still coupled (Qt5 GUI, player-as-skill). Treat this page as the *target architecture*, for exploration only. Rated by [repository health](maturity.md), not version.
+    The `ovos-media` daemon is **unfinished**. It is the **upcoming** media-playback service for OVOS, still being refactored, and **not enabled by default**. Today, stock installs play media through the **legacy audio backend**, the [`ovos-ocp-audio-plugin`](media-plugins.md#ovos-ocp-audio-plugin) ("old audio service") inside [`ovos-audio`](audio-service.md), which is **deprecated but still shipped**. Switching to `ovos-media` is opt-in and the player-as-skill coupling remains (the in-process GUI surface was dropped in 2.0.0a1; any GUI is an external bus client). Treat this page as the *target architecture*, for exploration only. Rated by [repository health](maturity.md), not version.
 
     OVOS has **two media-playback backends** sharing the same [OCP](ocp-pipeline.md) search framework (pipeline + skills + extractors):
 
@@ -83,7 +83,7 @@ flowchart TD
     Media --> PSM["Player state machine (OCPMediaPlayer)"]
     Media --> MPRIS
     Media --> Backends["Media backend plugins"]
-    Media --> GUI["GUI (still coupled, target: GUI adapter plugins)"]
+    Media --> GUI["GUI (external bus clients since 2.0.0a1)"]
 ```
 
 *Diagram: the intent pipeline routes to either the legacy `ovos-ocp-audio-plugin` or the standalone `ovos-media` daemon, which drives the player state machine, MPRIS, backend plugins, and the GUI.*
@@ -113,7 +113,7 @@ Key modules:
 - `ovos_media/media_backends/`: `AudioService`, `VideoService`, `WebService`. Each manages typed backend plugins
 
 
-- `ovos_media/player.py`: uses a `GUIInterface` from `ovos-gui-api-client` (`self.gui.show_media_player(...)`) to push player state via the template API (the old `ovos_media/gui.py` / `OCPGUIInterface` is gone)
+- `ovos_media/player.py`: pushes player state only through `ovos.common_play.*` bus broadcasts (2.0.0a1 dropped the in-process `GUIInterface` along with the old `ovos_media/gui.py` / `OCPGUIInterface`); any GUI, ovos-webui included, is an outboard bus client
 
 
 - `ovos_media/mpris.py`: MPRIS integration
@@ -240,8 +240,8 @@ the Role A / Role B reflection-and-takeover behavior have moved to their own pag
     "preferred_web_services": [],
 
     // force playback through the audio players even for video/web media, e.g. on headless setups
-    // numeric PlaybackMode value from ovos_utils.ocp (30 = FORCE_AUDIO); the enum NAME as a
-    // string is not recognized
+    // numeric PlaybackMode value from ovos_utils.ocp (30 = FORCE_AUDIO) or, since 2.0.0a1,
+    // the enum name as a string ("FORCE_AUDIO")
     "playback_mode": 30,
 
     "audio_players": {
@@ -280,10 +280,9 @@ To hand playback to the legacy GUI player, add the `qt5` entry points
 backend is legacy and needs the deprecated [ovos-shell](ovos-shell.md).
 
 Other `media.*` keys read by the player (all optional): `autoplay` (default
-`true`, play the next queued track automatically), `merge_search` (fold new
-search results into the active playlist vs. replacing it), and
-`force_audioservice` (route audio through the audio backend even when a GUI is
-available).
+`true`, play the next queued track automatically) and `merge_search` (fold new
+search results into the active playlist vs. replacing it). The old
+`force_audioservice` key was removed in 2.0.0a1; use `playback_mode` instead.
 
 ### First playback
 
@@ -319,7 +318,8 @@ emitted as `<msg_type>.response`. For example, `ovos.common_play.status` is answ
 
 ### Service-level bus messages
 
-Beyond the per-player `ovos.audio.service.*` / `ovos.video.service.*` API, these bus messages
+All service-level media control speaks `ovos.common_play.*` (2.0.0a1 dropped the per-player
+`ovos.audio.service.*` / `ovos.video.service.*` bus surface). These bus messages
 are handled inside the `ovos-media` process. The canonical reference for the full
 `ovos.common_play.*` namespace is [Bus Events Reference: OCP / media playback](bus-events.md#ocp-media-playback);
 this section covers only the service-level subset with `ovos-media`-specific behavior notes.
