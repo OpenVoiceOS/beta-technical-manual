@@ -248,6 +248,8 @@ CPU is the shipped default (`use_cuda: false`). Set `use_cuda: true` for accepta
 ## ovos-stt-plugin-citrinet
 
 - **GitHub**: [OpenVoiceOS/ovos-stt-plugin-citrinet](https://github.com/OpenVoiceOS/ovos-stt-plugin-citrinet)
+- **Warning**: deprecated by its own README. [ovos-stt-plugin-onnx-asr](#ovos-stt-plugin-onnx-asr)
+  runs the same Citrinet models (and more NeMo architectures) and is the maintained path.
 
 
 - **Description**: OpenVoiceOS STT plugin

@@ -118,7 +118,7 @@ Image {
 
 - `ListenerAnimation` drives the listening animation, reacting to
   `recognizer_loop:wakeword` (show), `recognizer_loop:record_end` (hide),
-  `mycroft.mic.listen` (show), and `recognizer_loop:speech.recognition.unknown` (hide).
+  `mycroft.mic.listen` (show), and `mycroft.speech.recognition.unknown` (hide).
 
 ---
 
