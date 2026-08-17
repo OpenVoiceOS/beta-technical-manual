@@ -1552,12 +1552,16 @@ reaches <code>ovos-hierarchical-knn-pipeline-high</code>:</p>
 <p>If the user instead says "stop" with no weather skill active, the same <code>_match()</code>
 call also considers the special label <code>stop:stop</code> (source: module-level
 <code>_SPECIAL_LABELS = {"ocp:play", "common_query:common_query", "stop:stop"}</code> in
-<code>__init__.py</code>). All three special labels are unconditionally unioned into both the
-active-domain set and the match allow-list — this plugin never checks whether a
-stop, OCP, or common-query pipeline plugin is actually configured. In practice
-<code>ovos-stop-pipeline-plugin</code> normally runs earlier in <code>session.pipeline</code> and claims
-"stop" first, so this stage rarely gets the chance to fire on <code>stop:stop</code>, but that
-is an ordering effect between pipeline plugins, not a gate this plugin enforces.</p>
+<code>__init__.py</code>), but only when <code>ovos-stop-pipeline-plugin</code> is itself present in
+<code>session.pipeline</code> — <code>_allowed_special_labels()</code> maps each special label to the
+downstream pipeline it needs (<code>_SPECIAL_LABEL_PIPELINES</code>) and checks the session's
+own pipeline list before allowing it into the match. The two other special labels
+get the same treatment: <code>ocp:play</code> needs <code>ovos-ocp-pipeline-plugin</code> in
+<code>session.pipeline</code>, and <code>common_query:common_query</code> needs
+<code>ovos-common-query-pipeline-plugin</code>. If the session or its pipeline list can't be
+determined at all (no message, or the lookup fails), the plugin falls back to
+allowing all three special labels, so it keeps working in headless or test
+contexts.</p>
 <hr />
 <h2 id="when-to-use-it-and-when-not-to">When to use it, and when not to<a class="headerlink" href="#when-to-use-it-and-when-not-to" title="Permanent link">&para;</a></h2>
 <p>Use the Hierarchical KNN pipeline as a <strong>semantic safety net</strong> behind Adapt and
@@ -1648,8 +1652,8 @@ embedding model at all, see <a href="../padacioso/">Padacioso</a> or <a href="..
 </tr>
 <tr>
 <td><code>renormalize</code></td>
-<td><code>true</code></td>
-<td>Renormalize confidence scores before threshold checks.</td>
+<td><code>false</code></td>
+<td>Re-scale surviving probabilities to sum to 1 before threshold checks. Off by default: the classifier already renormalizes internally, so turning this on re-scales a second time over only the registered intents and loses information about how confident the classifier was overall.</td>
 </tr>
 <tr>
 <td><code>timeout</code></td>
