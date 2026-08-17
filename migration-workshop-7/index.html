@@ -1724,8 +1724,9 @@ The v5.0.0 base class shipped with the wrong method name for about a day. Rename
 </table>
 <h3 id="commonqueryskill-removal">CommonQuerySkill removal<a class="headerlink" href="#commonqueryskill-removal" title="Permanent link">&para;</a></h3>
 <p><code>CommonQuerySkill</code> sat deprecation-flagged for the better part of two
-years before it was finally cut in one commit, with no
-direct successor class left in <code>ovos-workshop</code>. The removal only
+years before it was finally cut in one commit. There is no successor
+<em>class</em>, but <code>ovos-workshop</code> still ships the replacement: the
+<code>@common_query</code> decorator on a plain <code>OVOSSkill</code>. The removal only
 completed a migration that had already happened underneath it: the
 matching hardcoded common-query wiring inside <code>ovos-core</code> itself had been
 pulled out earlier, when the whole intent-service module turned into a
@@ -1736,10 +1737,10 @@ happened to own it.</p>
 <code>4.0.0</code> and was deleted entirely (259 lines, including the <code>CQSMatchLevel</code>
 enum and <code>CQS_match_query_phrase</code>/<code>CQS_action</code> abstract methods) in
 <code>6382d0a</code> (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/400" title="GitHub Issue: TigreGotico/ovos-technical-manual #400">#400</a>, 2026-04-08), months after the <code>8.0.0</code> release, first shipping in
-<code>8.0.4a3</code>. There is no
-direct successor class in <code>ovos-workshop</code>. Common-query matching now lives
-in whatever pipeline plugin currently owns it (check <code>ovos-core</code>'s
-common-query pipeline plugin). On <code>ovos-core</code> itself, the equivalent
+<code>8.0.4a3</code>. There is no successor <em>class</em>: a plain
+<code>OVOSSkill</code> joins common-query by decorating a method with <code>@common_query()</code>
+(the removed class's own deprecation warning said exactly this). The matching
+and ranking are dispatched by the common-query pipeline plugin. On <code>ovos-core</code> itself, the equivalent
 hardcoded common-query wiring was removed from <code>ovos_core.intent_services</code>
 in <code>62024dbf98</code> (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/690" title="GitHub Issue: TigreGotico/ovos-technical-manual #690">#690</a>, 2025-06-10, first stable release <code>2.1.0</code>) when the
 whole intent-service module became a config-driven OPM pipeline factory.</p>
