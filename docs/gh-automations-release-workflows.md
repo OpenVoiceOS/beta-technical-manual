@@ -168,7 +168,7 @@ Runs on push to `master` (typically triggered by merging the release PR). Remove
 | `bump_version` | `github.actor != 'github-actions[bot]'` | Detects the target branch, calls `remove_alpha.py`, commits via `git-auto-commit-action@v7` |
 | `tag_release` | `publish_release: true` + `bump_version` succeeded | Creates GitHub release via `ncipollo/release-action@v1` |
 | `publish_pypi` | `publish_pypi: true` + `bump_version` succeeded | Builds and publishes to PyPI (stable) via `pypa/gh-action-pypi-publish@release/v1` |
-| `cleanup` | after `bump_version` | Tidies up the short-lived release branch |
+| `cleanup` | needs `tag_release` to have succeeded, so it never runs when `publish_release: false` | Tidies up the short-lived release branch |
 | `sync_dev` | `sync_dev: true` + `bump_version` succeeded | Pushes `master` → `dev` via `ad-m/github-push-action` |
 | `notify` | `notify_matrix: true` + `bump_version` succeeded | Sends a Matrix notification directly (duplicates, does not call, notify-matrix.yml) with configurable channel and message |
 

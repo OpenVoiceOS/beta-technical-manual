@@ -287,6 +287,24 @@ By default the server ignores any `system` message a client sends: the persona's
 `replace` (client's system message wins), or `append` (persona identity first, client
 instructions added after). Applied once per chat/completions call.
 
+## Choosing tools with `tool_choice`
+
+The OpenAI route honors `tool_choice` by shaping which tools it offers the engine
+(0.17.4a1+; before that it was accepted and silently ignored):
+
+| Value | Effect |
+|---|---|
+| absent or `"auto"` | every available tool is offered, the engine decides |
+| `"none"` | no tools are offered, so no tool call can come back |
+| `{"type": "function", "function": {"name": "..."}}` | only that one tool is offered |
+| `"tool"` / `"required"` (force *some* tool) | rejected with HTTP **422**: the engine contract has no lever to force an unspecified call |
+
+## Error responses
+
+When every handler in the persona's chain declines to answer, the server returns
+HTTP **422** rather than a 500 or an empty 200 (0.17.3a1+). Every vendor router maps
+this the same way; on a streaming request it arrives as an in-band SSE error event.
+
 ## Tips
 
 - **Mind the prefix.** Clients must hit `/openai/v1` (OpenAI) or `/ollama/api` (Ollama), not the
