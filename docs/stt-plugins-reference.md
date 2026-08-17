@@ -88,22 +88,23 @@ languages resolve to different pretrained models.
     a private or guaranteed-available endpoint. Point it at your own self-hosted server (see
     [stt-server](stt-server.md#companion-plugin)) if you need privacy or reliability.
 
-### Default Configuration
+### Recommended Configuration
 
 ```jsonc
   "stt": {
     "module": "ovos-stt-plugin-server",
     "ovos-stt-plugin-server": {
-      "urls": ["https://0.0.0.0:8080/stt"],
+      "urls": ["https://your-own-server.example/stt"],
       "verify_ssl": true
     },
  }
 
 ```
 
-Leaving `urls` unset falls back to public community-run STT servers rather than failing. See
-[stt-server](stt-server.md#companion-plugin) for a self-hosted alternative, or pick a fully
-offline engine from the table above.
+Leaving `urls` unset falls back to a shuffled pick from the plugin's own hardcoded public
+community-run server list, currently `stt.openvoiceos.pt` and `stt.smartgic.io`, rather than
+failing. See [stt-server](stt-server.md#companion-plugin) for a self-hosted alternative, or
+pick a fully offline engine from the table above.
 
 --8<-- "snippets/community-servers.md"
 

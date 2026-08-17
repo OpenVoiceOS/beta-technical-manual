@@ -281,7 +281,7 @@ table on the [TTS Plugins](tts-plugins.md) page.
 
 - **Description**: OVOS TTS plugin for [Coqui TTS](https://coqui-tts.readthedocs.io/en/latest)
 
-### Default Configuration
+### Example Configuration
 
 ```jsonc
   "tts": {
@@ -291,6 +291,11 @@ table on the [TTS Plugins](tts-plugins.md) page.
  
 
 ```
+
+There is no single hardcoded default model. Leaving `model` unset resolves one from an
+internal `LANG2MODEL` table keyed by `lang`, and raises `ValueError` at load if the configured
+language has no entry and no `model` is set explicitly — pass `model` directly for a language
+the table doesn't cover.
 
 ---
 
