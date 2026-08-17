@@ -167,7 +167,7 @@ Lifecycle:
 
 `ovos-core`'s own equivalent removal of folder-based skill loading
 (`_load_skill`, `_get_skill_directories`, `_unload_removed_skills`)
-landed the same era in `62024dbf98` (#690, 2025-06-10, `1.3.0`).
+landed the same era in `62024dbf98` (#690, 2025-06-10, first stable `2.1.0`).
 
 ### Skill locale directories renamed to canonical BCP-47
 

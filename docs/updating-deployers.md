@@ -170,7 +170,7 @@ Lifecycle:
 On the `ovos-core` side, the matching `SkillManager.is_device_ready()`/
 `check_services_ready()`/`handle_check_device_readiness()` methods
 (deprecated since `1.0.0`) were removed outright in `62024dbf98` (#690,
-2025-06-10, `1.3.0`).
+2025-06-10, first stable `2.1.0`).
 
 ### Backend/microservices config block removed
 

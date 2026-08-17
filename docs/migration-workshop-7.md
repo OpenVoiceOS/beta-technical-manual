@@ -93,8 +93,9 @@ Lifecycle:
 ### CommonQuerySkill removal
 
 `CommonQuerySkill` sat deprecation-flagged for the better part of two
-years before it was finally cut in one commit, with no
-direct successor class left in `ovos-workshop`. The removal only
+years before it was finally cut in one commit. There is no successor
+*class*, but `ovos-workshop` still ships the replacement: the
+`@common_query` decorator on a plain `OVOSSkill`. The removal only
 completed a migration that had already happened underneath it: the
 matching hardcoded common-query wiring inside `ovos-core` itself had been
 pulled out earlier, when the whole intent-service module turned into a
@@ -106,10 +107,10 @@ happened to own it.
 `4.0.0` and was deleted entirely (259 lines, including the `CQSMatchLevel`
 enum and `CQS_match_query_phrase`/`CQS_action` abstract methods) in
 `6382d0a` (#400, 2026-04-08), months after the `8.0.0` release, first shipping in
-`8.0.4a3`. There is no
-direct successor class in `ovos-workshop`. Common-query matching now lives
-in whatever pipeline plugin currently owns it (check `ovos-core`'s
-common-query pipeline plugin). On `ovos-core` itself, the equivalent
+`8.0.4a3`. There is no successor *class*: a plain
+`OVOSSkill` joins common-query by decorating a method with `@common_query()`
+(the removed class's own deprecation warning said exactly this). The matching
+and ranking are dispatched by the common-query pipeline plugin. On `ovos-core` itself, the equivalent
 hardcoded common-query wiring was removed from `ovos_core.intent_services`
 in `62024dbf98` (#690, 2025-06-10, first stable release `2.1.0`) when the
 whole intent-service module became a config-driven OPM pipeline factory.
