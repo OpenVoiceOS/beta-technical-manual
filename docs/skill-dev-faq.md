@@ -150,8 +150,7 @@ systems that's `~/.config/mycroft/skills/<skill_id>/settings.json`, since `<base
 to `mycroft` for backwards-compatibility (a system-wide `ovos.conf`, or the
 `OVOS_CONFIG_BASE_FOLDER` environment variable, can rename it, commonly to `OpenVoiceOS`). A
 `FileWatcher` on that path fires `ovos.skills.settings_changed` whenever it changes. Persistent
-skill data belongs under `self.file_system`, not a path you build yourself. It resolves to
-`$XDG_DATA_HOME/mycroft/filesystem/skills/<skill_id>/` and survives skill reinstalls.
+skill data belongs under `self.file_system`, not a path you build yourself. It resolves to `$XDG_DATA_HOME/<base_folder>/filesystem/skills/<skill_id>/` (with the default base folder: `~/.local/share/mycroft/filesystem/skills/<skill_id>/`) and survives skill reinstalls.
 
 ```python
 self.settings.get("my_key", "default")   # read

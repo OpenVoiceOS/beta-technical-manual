@@ -45,7 +45,8 @@ nothing (or spoke the fallback-unknown dialog if one is installed).
 - If you expect Adapt to catch it, confirm both the vocabulary and the rule are registered by
   checking `bus.log` for `register_vocab` / `register_intent` traffic. The messagebus daemon
   only logs individual topics when `websocket.filter: true` is set (off by default); with it
-  on, every topic is logged at debug level. The pipeline plugin itself logs nothing on the
+  on, every topic except the `filter_logs` exclusions is logged at debug level (see
+  [Bus Service](bus-service.md)). The pipeline plugin itself logs nothing on the
   success path, so `skills.log` stays silent either way. Adapt has no training step and
   should match immediately once registered. See [Adapt Pipeline](adapt-pipeline.md).
 
