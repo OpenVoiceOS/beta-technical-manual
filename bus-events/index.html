@@ -1660,9 +1660,9 @@ names where applicable.</p>
 <td>Command recording ended</td>
 </tr>
 <tr>
-<td><code>ovos.listener.wakeword</code> (legacy: <code>recognizer_loop:wakeword</code>)</td>
-<td><code>{"wake_word", "lang"}</code></td>
-<td>Wake word detected, capture is opening. <code>lang</code> is optional and only present when the deployment binds wake words to languages</td>
+<td><code>recognizer_loop:wakeword</code></td>
+<td><code>{"utterance": str, "key_phrase": str, …}</code></td>
+<td>Wake word detected, capture is opening. Legacy-only: no <code>ovos.listener.*</code> counterpart exists, see <a href="../speech-service/">Speech Service</a></td>
 </tr>
 <tr>
 <td><code>recognizer_loop:speech.recognition.unknown</code></td>
@@ -1670,7 +1670,7 @@ names where applicable.</p>
 <td>STT returned nothing (silence / failure)</td>
 </tr>
 <tr>
-<td><code>ovos.listener.sleep</code></td>
+<td><code>ovos.listener.sleep</code> (legacy: <code>recognizer_loop:sleep</code>)</td>
 <td>none</td>
 <td>Request the listener enter sleep mode and suspend capture: device-scoped, see <a href="../speech-service/">Speech Service</a></td>
 </tr>
