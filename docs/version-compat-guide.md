@@ -132,7 +132,9 @@ except ImportError:
     _HAS_LEGACY_CQS = False
 
 
-class MySkill(OVOSSkill, CommonQuerySkill if _HAS_LEGACY_CQS else OVOSSkill):
+# on modern cores the alias above is OVOSSkill; on cores that still ship it,
+# CommonQuerySkill extends OVOSSkill itself, so one base covers both
+class MySkill(CommonQuerySkill):
     @common_query()
     def answer_common_query(self, utterance, lang):
         # modern cores dispatch through the decorator; on cores old enough to
