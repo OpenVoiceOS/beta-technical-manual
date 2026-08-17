@@ -1837,14 +1837,22 @@ tier (see <a href="../stt-plugins/">STT Plugins</a>, <a href="../tts-plugins/">T
 <ul>
 <li><strong>Pi 5:</strong> the offline STT performance improvement noted above gives you the most headroom for
   larger local models, including Whisper-class STT, if you want to stay fully offline. The
-  <code>offline</code> raspOVOS image actually ships
-  <a href="../stt-plugins-reference/#ovos-stt-plugin-citrinet"><code>ovos-stt-plugin-citrinet</code></a> as the default STT (with
-  <code>ovos-stt-plugin-fasterwhisper</code> shipped only for a few languages), and
-  <a href="../tts-plugins-reference/#ovos-tts-plugin-piper"><code>ovos-tts-plugin-piper</code></a> as the default TTS. The config
-  below uses those shipped defaults. Optional swaps, not what ships by default, are
-  <code>ovos-stt-plugin-fasterwhisper</code> (a larger, more accurate Whisper-class model, if your language
-  isn't one of the ones it already ships for) and <code>ovos-tts-plugin-phoonnx</code>.</li>
+  <code>offline</code> raspOVOS image installs
+  <a href="../stt-plugins-reference/#ovos-stt-plugin-citrinet"><code>ovos-stt-plugin-citrinet</code></a> (with
+  <code>ovos-stt-plugin-fasterwhisper</code> for a few languages) and
+  <a href="../tts-plugins-reference/#ovos-tts-plugin-piper"><code>ovos-tts-plugin-piper</code></a>, and the config below
+  selects them explicitly.</li>
 </ul>
+<div class="admonition warning">
+<p class="admonition-title">The image's own generated config may not match what it installs</p>
+<p>The offline build runs <code>ovos-config autoconfigure --offline</code> before installing those
+plugins, and the recommendation layer that command writes now points at
+<code>ovos-stt-plugin-onnx-asr</code> and <code>ovos-tts-plugin-phoonnx</code>, neither of which the build
+installs. On a freshly built image, set <code>stt.module</code>/<code>tts.module</code> yourself (as below) to
+a plugin that is actually present rather than trusting the generated defaults. Optional swaps, not what ships by default, are</p>
+</div>
+<p><code>ovos-stt-plugin-fasterwhisper</code> (a larger, more accurate Whisper-class model, if your language
+  isn't one of the ones it already ships for) and <code>ovos-tts-plugin-phoonnx</code>.</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>// ~/.config/mycroft/mycroft.conf — Pi 5-class tier: shipped Citrinet STT, Piper TTS
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>{
 </span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>  &quot;stt&quot;: {
