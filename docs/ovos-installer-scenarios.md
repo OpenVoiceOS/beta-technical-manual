@@ -66,6 +66,12 @@ An informational screen. No action needed. It reports what the installer auto-de
 `CPU capability`
 :   whether the CPU supports AVX2/SIMD (affects which speech plugins are offered)
 
+`Hardware`
+:   detected hardware profile, such as a Mark II or DevKit signal
+
+`Venv`
+:   path to the Python environment the installer uses for OVOS
+
 `Sound server`
 :   PulseAudio or PipeWire, if detected
 
