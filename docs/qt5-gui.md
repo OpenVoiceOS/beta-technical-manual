@@ -16,7 +16,9 @@
 
     - **Qt6/Kirigami**: [mycroft-gui-qt6](https://github.com/OpenVoiceOS/mycroft-gui-qt6)
       (`feat/gui-protocol-rework`), still needs a human C++/Qt6 build review.
-    - **pyhtmx** (browser/HTMX): a web-based render path via the GUI-adapter system.
+    - **pyhtmx** (browser/HTMX): `pyhtmx-gui-client`, a standalone web client speaking the
+      legacy GUI websocket protocol (it is not a GUI-adapter plugin, see
+      [GUI adapters](gui-adapters.md)).
 
     Until one of these ships, there is **no maintained GUI client**. See
     [GUI Adapters](gui-adapters.md) for the rework architecture.
