@@ -205,7 +205,7 @@ is `false`.
 
 CPU is the shipped default (`use_cuda: false`). Set `use_cuda: true` for acceptable throughput on supported GPUs. The GPU recommendation is about speed, not a required default.
 
-### Default Configuration
+### Example Configuration
 
 ```jsonc
   "stt": {
@@ -218,6 +218,9 @@ CPU is the shipped default (`use_cuda: false`). Set `use_cuda: true` for accepta
 
 ```
 
+The model shown is the Basque pick; without config the plugin resolves the model from the global `lang` via its internal table (`en` resolves to `stt_en_quartznet15x5`).
+
+
 ---
 
 ## ovos-stt-plugin-whisper-lm
@@ -227,7 +230,7 @@ CPU is the shipped default (`use_cuda: false`). Set `use_cuda: true` for accepta
 
 - **Description**: OpenVoiceOS STT plugin for [Whisper-LM-transformers](https://github.com/hitz-zentroa/whisper-lm-transformers), KenLM and Large language model integration with Whisper ASR models implemented in Hugging Face library.
 
-### Default Configuration
+### Example Configuration
 
 ```jsonc
   "stt": {
@@ -244,6 +247,9 @@ CPU is the shipped default (`use_cuda: false`). Set `use_cuda: true` for accepta
 
 ```
 
+This is a Basque-language example. The plugin only auto-selects pretrained models for `gl`/`es`/`eu`/`ca`; on any other configured language, set `model`, `lm_repo`, and `lm_model` explicitly or init raises a `ValueError`.
+
+
 ---
 
 ## ovos-stt-plugin-citrinet
@@ -255,7 +261,7 @@ CPU is the shipped default (`use_cuda: false`). Set `use_cuda: true` for accepta
 
 - **Description**: OpenVoiceOS STT plugin
 
-### Default Configuration
+### Example Configuration
 
 ```jsonc
   "stt": {
@@ -315,7 +321,7 @@ CPU is the shipped default (`use_cuda: false`). Set `use_cuda: true` for accepta
 
 - **Description**: Mycroft STT plugin for [Vosk](https://alphacephei.com/vosk/)
 
-### Default Configuration
+### Example Configuration
 
 ```jsonc
   "stt": {
@@ -327,6 +333,9 @@ CPU is the shipped default (`use_cuda: false`). Set `use_cuda: true` for accepta
  
 
 ```
+
+With no `model` configured, the plugin auto-downloads a default model for the configured language; the path here is where a custom local model would go.
+
 
 ---
 

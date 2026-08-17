@@ -213,7 +213,7 @@
 
 - **Description**: OVOS TTS plugin for [AhoTTS](https://github.com/aholab/AhoTTS)
 
-### Default Configuration
+### Required Configuration
 
 ```jsonc
   "tts": {
@@ -224,6 +224,9 @@
   }
 
 ```
+
+`lang` has no default here: it must be `es` or `eu`, and the plugin raises a `ValueError` on any other configured language.
+
 
 ---
 
@@ -300,7 +303,7 @@ table on the [TTS Plugins](tts-plugins.md) page.
 
 - **Description**: OVOS's own multilingual, ONNX-based neural TTS engine, distributed as part of the `phoonnx` package. Registering the plugin only requires `pip install phoonnx`. Model files are fetched and cached automatically the first time a voice is used.
 
-### Default Configuration
+### Example Configuration
 
 ```jsonc
   "tts": {

@@ -309,7 +309,7 @@ Maturity reflects repository health (age, activity, open issues/PRs, in-repo doc
 
 - **Description**: Mycroft wake-word plugin for [Vosk](https://alphacephei.com/vosk/)
 
-### Default Configuration
+### Example Configuration
 
 ```jsonc
   "listener": {
@@ -323,6 +323,9 @@ Maturity reflects repository health (age, activity, open issues/PRs, in-repo doc
   }
 
 ```
+
+`hey_computer` is a custom-wake-word example; the shipped config uses vosk only as the `hey_mycroft_vosk` fallback tier, not as the primary wake word.
+
 
 ---
 
