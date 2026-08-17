@@ -1636,9 +1636,9 @@
 <p><strong>When you'd want this:</strong> a skill answers "what's the exchange rate" or similar by hitting a remote HTTP API, and needs to (a) never hang the skill process on a slow/dead endpoint, and (b) fail with a spoken sentence instead of a traceback.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>This recipe also shows <code>runtime_requirements</code>, a deprecated, legacy declaration kept here
-for skills that already use it. See <a href="../skill-runtime-requirements/">Runtime Requirements</a>
-for what it currently does. New skills don't need it for the timeout/cache/spoken-error
+<p>This recipe also shows <code>runtime_requirements</code>, the declaration a skill uses to state what
+connectivity it needs. See <a href="../skill-runtime-requirements/">Runtime Requirements</a> for how
+the loader uses it. New skills don't need it for the timeout/cache/spoken-error
 pattern below, which works regardless.</p>
 </div>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span> <span class="nn">json</span>
@@ -1658,7 +1658,7 @@ pattern below, which works regardless.</p>
 </span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>
 </span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>    <span class="nd">@classproperty</span>
 </span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>    <span class="k">def</span> <span class="nf">runtime_requirements</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>        <span class="c1"># legacy declaration: this skill needs a live network connection.</span>
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>        <span class="c1"># declares that this skill needs a live network connection.</span>
 </span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>        <span class="c1"># only gates loading if &quot;skills.use_deferred_loading&quot; is enabled.</span>
 </span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>        <span class="k">return</span> <span class="n">RuntimeRequirements</span><span class="p">(</span>
 </span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>            <span class="n">network_before_load</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
@@ -1712,7 +1712,7 @@ pattern below, which works regardless.</p>
 </span></code></pre></div>
 <h3 id="moving-parts">Moving parts<a class="headerlink" href="#moving-parts" title="Permanent link">&para;</a></h3>
 <ul>
-<li><code>runtime_requirements</code> (a <code>@classproperty</code> you override, returning <code>RuntimeRequirements(...)</code>) is a deprecated, legacy declaration. Its <code>*_before_load</code> flags only gate loading when <code>skills.use_deferred_loading</code> is enabled in config. With the default config, all skills load unconditionally regardless of this declaration. See <a href="../skill-runtime-requirements/">Runtime Requirements</a> for the current behavior.</li>
+<li><code>runtime_requirements</code> (a <code>@classproperty</code> you override, returning <code>RuntimeRequirements(...)</code>) declares what a skill needs at load time. Its <code>*_before_load</code> flags only gate loading when <code>skills.use_deferred_loading</code> is enabled in config. With the default config, all skills load unconditionally regardless of this declaration. See <a href="../skill-runtime-requirements/">Runtime Requirements</a> for the current behavior.</li>
 <li>Always pass <code>timeout=</code> to <code>requests.get</code>/<code>.post</code>. An OVOS skill runs on the shared bus-handling thread pool, and a hung HTTP call can stall other skill callbacks.</li>
 <li><code>self.file_system</code> (a <code>FileSystemAccess</code>, exposing <code>.path</code>) is a writable, skill-private directory distinct from <code>settings.json</code>. It is the right place for a response cache, downloaded assets, or anything larger than a few settings keys.</li>
 <li>Wrap the network call narrowly (<code>requests.exceptions.Timeout</code> / <code>.RequestException</code>) so a real bug elsewhere in the handler still raises normally instead of being swallowed by a broad <code>except Exception</code>.</li>
