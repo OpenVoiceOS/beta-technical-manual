@@ -1803,7 +1803,7 @@ plugin includes a bridge:</p>
 <hr />
 <h2 id="known-coupling-issues">Known Coupling Issues<a class="headerlink" href="#known-coupling-issues" title="Permanent link">&para;</a></h2>
 <h3 id="ocpmediacatalog-is-a-skill">OCPMediaCatalog is a skill<a class="headerlink" href="#ocpmediacatalog-is-a-skill" title="Permanent link">&para;</a></h3>
-<p><code>OCPMediaCatalog</code> in <code>ovos_media/player.py</code> inherits from <code>OVOSCommonPlaybackSkill</code>. This registers
+<p><code>OCPMediaCatalog</code> in <code>ovos_media/player/__init__.py</code> inherits from <code>OVOSCommonPlaybackSkill</code>. This registers
 <code>ovos-media</code> as a skill on the bus and loads skill infrastructure (settings, locale, etc.). It
 registers <code>@ocp_search()</code> to expose liked songs as a search result. There is no
 <code>@ocp_featured_media()</code> handler.</p>

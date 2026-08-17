@@ -2426,6 +2426,11 @@ not equivalent:</p>
 <td>Count of resident voices, LRU-evicted.</td>
 <td>unset (no limit)</td>
 </tr>
+<tr>
+<td><code>load_wait_timeout</code></td>
+<td>Seconds a load waits for resident memory to free up before proceeding anyway.</td>
+<td><code>300</code></td>
+</tr>
 </tbody>
 </table>
 <p><code>max_loaded_voices</code> is the older setting and a poor bound on this catalog: a Piper voice is
@@ -2447,9 +2452,15 @@ evicted. The two caps treat pins differently. If more voices are pinned than
 <code>max_loaded_voices</code> allows, that <strong>count</strong> limit is raised to fit them (logged as an error so
 the mismatch isn't silent). The <code>max_loaded_bytes</code> <strong>size</strong> budget is never raised: a pin that
 fits individually still loads even when resident usage then exceeds the budget (again logged,
-not fatal), but a pin whose own on-disk size alone exceeds the entire budget is refused and
-never becomes resident (1.82.0a1+ — loading it would be a guaranteed OOM kill, not a degraded
-path). A failed pin never stops the service from starting.</p>
+not fatal). A failed pin never stops the service from starting.</p>
+<p>This refusal applies to any voice load, not only pins: any voice whose own known on-disk size
+alone exceeds the whole <code>max_loaded_bytes</code> budget is refused with <code>VoiceExceedsMemoryBudget</code>
+and never becomes resident — loading it would be a guaranteed OOM kill, not a degraded path.
+A voice that fits on its own but not beside what is currently resident instead waits for room:
+up to <code>load_wait_timeout</code> seconds (default <code>300</code>) for another load to finish or a leased voice
+to be released, after which it loads anyway and logs a warning that memory use will exceed the
+budget. A voice not yet downloaded can't be measured and is treated as needing the whole
+budget, so it always loads alone.</p>
 <p>Size the budget for the actual peak, not just the steady state: peak resident memory is the
 cached models plus whatever is loading in flight at that moment, and a request that arrives
 mid-load can tip a box over even when the cache's own ceiling looks safe.</p>
