@@ -1,7 +1,7 @@
 # Ambient behavior from bus events: react to listening state and time of day
 
 !!! abstract "In a nutshell"
-    You build an `OVOSSkill` that reacts to bus events instead of utterances, using `add_event` on `recognizer_loop:*` events plus a repeating scheduled check.
+    You build an `OVOSSkill` that reacts to bus events instead of utterances, using `add_event` on `ovos.listener.record.*` / `ovos.audio.output.*` events plus a repeating scheduled check.
 
 **When you'd want this:** a skill needs to do something not triggered by an utterance at all. Examples include dimming a light while the device is actively listening, or changing its greeting depending on whether it's morning or night, driven purely by bus events other services already emit.
 
