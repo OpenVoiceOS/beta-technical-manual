@@ -119,7 +119,7 @@ OCP is configured as a backend under the `Audio` section of [`mycroft.conf`](con
     "backends": {
       "OCP": {
         "type": "ovos_common_play",
-        "preferred_audio_services": ["mpv", "vlc", "simple"],
+        "preferred_audio_services": ["vlc", "mplayer", "simple"],
         "dbus_type": "session",
         "manage_external_players": false,
         "active": true
@@ -130,7 +130,7 @@ OCP is configured as a backend under the `Audio` section of [`mycroft.conf`](con
 ```
 
 - **`preferred_audio_services`**: order in which OCP picks a lower-level audio backend to
-  actually emit sound.
+  actually emit sound (`["vlc", "mplayer", "simple"]` is the shipped default).
 - **`dbus_type`** / MPRIS keys: see [MPRIS](#mpris) below.
 
 !!! warning "`default-backend` must not be `"OCP"`"
