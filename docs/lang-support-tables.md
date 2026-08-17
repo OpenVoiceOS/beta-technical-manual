@@ -15,8 +15,11 @@ it's listed. Where the table shows an offline TTS entry, it is always
 and/or female voice. `int8` next to a model means a quantized CPU build is available and used
 by default.
 
-`--gpu` swaps the STT module entirely to `ovos-stt-plugin-fasterwhisper` with
-`whisper-large-v3-turbo` and `use_cuda: true`. Only the 12 languages with a
+`--gpu` swaps the STT module to the best GPU model recommended for that language, with
+`use_cuda: true`. That is `ovos-stt-plugin-fasterwhisper` for eleven of the twelve, but the
+model varies: six (`da-dk`, `de-de`, `en-us`, `fr-fr`, `it-it`, `nl-nl`) get the generic
+`whisper-large-v3-turbo`, while `ca-es`, `es-es`, `gl-es`, `pt-br`, and `pt-pt` get dedicated
+finetunes. Basque (`eu-es`) uses a different plugin entirely, `ovos-stt-plugin-HiTZ`. Only the 12 languages with a
 `recommends/gpu/*.conf` in `ovos-config` have a GPU tier at all. The others keep their
 CPU recommendation.
 
