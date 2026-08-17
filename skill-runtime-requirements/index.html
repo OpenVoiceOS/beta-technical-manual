@@ -1870,17 +1870,11 @@
 
 
 <h1 id="runtime-requirements-in-ovos">Runtime Requirements in OVOS<a class="headerlink" href="#runtime-requirements-in-ovos" title="Permanent link">&para;</a></h1>
-<div class="admonition warning">
-<p class="admonition-title">Deprecated — legacy reference</p>
-<p><code>RuntimeRequirements</code> is a deprecated mechanism, kept documented here for existing skills
-that already declare it. There is currently no successor mechanism in <code>ovos-utils</code>/
-<code>ovos-workshop</code>. New skills should not be built around it.</p>
-</div>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>Some skills only make sense under certain conditions. A weather skill needs internet, a smart-home skill needs the local network, a picture skill needs a screen. "Runtime requirements" is a legacy declaration where a skill states what it needs, so OVOS can optionally defer loading it until those things are available. For where this fits in a skill's lifecycle, see <a href="../skill-classes/">Skill Classes</a>. For term definitions, see the <a href="../glossary/">Glossary</a>.</p>
+<p>Some skills only make sense under certain conditions. A weather skill needs internet, a smart-home skill needs the local network, a picture skill needs a screen. "Runtime requirements" is how a skill states what it needs, so OVOS can optionally defer loading it until those things are available. For where this fits in a skill's lifecycle, see <a href="../skill-classes/">Skill Classes</a>. For term definitions, see the <a href="../glossary/">Glossary</a>.</p>
 </div>
-<p><code>RuntimeRequirements</code> lets a skill declare, up front, what conditions (internet, network, GUI) it needs. It was historically intended to let OVOS defer loading a skill until the system is ready for it. It also skips premature activation on offline, headless, or GUI-enabled setups.</p>
+<p><code>RuntimeRequirements</code> lets a skill declare, up front, what conditions (internet, network, GUI) it needs. Override the <code>runtime_requirements</code> classproperty on your skill to declare them; <code>ovos-core</code> reads it to defer loading a skill until the system is ready for it. It also skips premature activation on offline, headless, or GUI-enabled setups.</p>
 <hr />
 <h2 id="usage-guide">Usage Guide<a class="headerlink" href="#usage-guide" title="Permanent link">&para;</a></h2>
 <h3 id="step-1-customize-ready_settings-boot-finished-skill">Step 1: Customize <code>ready_settings</code> (boot-finished skill)<a class="headerlink" href="#step-1-customize-ready_settings-boot-finished-skill" title="Permanent link">&para;</a></h3>

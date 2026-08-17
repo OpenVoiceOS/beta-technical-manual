@@ -1902,6 +1902,13 @@ the CommonQuerySkill removal, and the bus-client dual-emit bridge, in that order
 <td>Deployers with more than one audio-transformer plugin</td>
 <td><a href="../migration-audio-transformer-order/">Audio-transformer chain-order flip</a></td>
 </tr>
+<tr>
+<td>2026-08-15</td>
+<td><code>ovos-audio</code> dropped its direct legacy-topic subscriptions, relying on the bus-client bridge instead (floor raised to <code>ovos-bus-client&gt;=2.8.3a1</code>)</td>
+<td><code>ovos-audio</code> <code>d83123e</code>, first in <code>2.2.0a2</code></td>
+<td>Deployers pinning an older bus-client</td>
+<td><a href="../bus-namespace-migration/">Bus namespace migration</a></td>
+</tr>
 </tbody>
 </table>
 <hr />
