@@ -159,8 +159,8 @@ Handled by `ovos-audio`. See [Audio Service](audio-service.md).
 | `mycroft.audio.speech.stop` | Interrupt in-progress TTS speech (emitted by the [`@intent_handler(..., stop_tts=True)`](decorators.md) decorator, among others) |
 | `mycroft.audio.service.play` | Legacy media audioservice: play a track (only relevant when `enable_old_audioservice` is on) |
 | `recognizer_loop:utterance_start` | Emitted by the playback thread right before spoken audio starts playing |
-| `recognizer_loop:audio_output_start` (spec: `ovos.audio.output.started`) | Emitted by the playback thread when audio actually starts playing |
-| `recognizer_loop:audio_output_end` (spec: `ovos.audio.output.ended`) | Emitted by the playback thread when audio finishes playing |
+| `ovos.audio.output.started` (legacy: `recognizer_loop:audio_output_start`) | Emitted by the playback thread when audio actually starts playing |
+| `ovos.audio.output.ended` (legacy: `recognizer_loop:audio_output_end`) | Emitted by the playback thread when audio finishes playing |
 
 ## GUI forwarding
 

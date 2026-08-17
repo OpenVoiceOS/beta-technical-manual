@@ -16,11 +16,11 @@ class AmbientMoodSkill(OVOSSkill):
     def initialize(self):
         # the listener (ovos-dinkum-listener) emits these around each
         # recording, independent of any skill or intent
-        self.add_event("recognizer_loop:record_begin", self.handle_listening_start)
-        self.add_event("recognizer_loop:record_end", self.handle_listening_end)
+        self.add_event("ovos.listener.record.started", self.handle_listening_start)
+        self.add_event("ovos.listener.record.ended", self.handle_listening_end)
         # ovos-audio emits these around each spoken response
-        self.add_event("recognizer_loop:audio_output_start", self.handle_speaking_start)
-        self.add_event("recognizer_loop:audio_output_end", self.handle_speaking_end)
+        self.add_event("ovos.audio.output.started", self.handle_speaking_start)
+        self.add_event("ovos.audio.output.ended", self.handle_speaking_end)
 
         # check the time of day once now, and again every 15 minutes
         self._update_time_of_day()
@@ -50,7 +50,7 @@ class AmbientMoodSkill(OVOSSkill):
 
 ### Moving parts
 
-- `recognizer_loop:record_begin` / `recognizer_loop:record_end` bracket an active recording (wake word already triggered). `recognizer_loop:audio_output_start` / `_end` bracket the device speaking and are emitted by `ovos-audio`. Both pairs fire regardless of which skill (if any) is involved. There is also `recognizer_loop:wakeword`, emitted the instant the wake word itself is detected, slightly before recording begins.
+- `ovos.listener.record.started` / `ovos.listener.record.ended` bracket an active recording (wake word already triggered). `ovos.audio.output.started` / `.ended` bracket the device speaking and are emitted by `ovos-audio`. Each of these four also travels under a pre-spec name (`recognizer_loop:record_begin`, `recognizer_loop:record_end`, `recognizer_loop:audio_output_start`, `recognizer_loop:audio_output_end`), so older subscribers keep working, but new skills subscribe to the spec names shown here. Both pairs fire regardless of which skill (if any) is involved. There is also `recognizer_loop:wakeword`, emitted the instant the wake word itself is detected, slightly before recording begins.
 - `self.add_event(msg_type, handler)` subscribes for the lifetime of the skill (auto-removed on shutdown). This is the general-purpose alternative to a decorator-based intent handler, for any bus event that isn't an utterance.
 - `schedule_repeating_event(handler, when, frequency, name=...)` with `when=None` starts the first run after one `frequency` interval. Pass a `datetime` for `when` instead if the first run needs to happen at a specific moment.
 - This skill emits its own `ovos.ambient_mood.changed` event rather than reaching into a light/hardware plugin directly, keeping it decoupled from whatever actually consumes the mood (a PHAL plugin, another skill, a GUI). See [Bus Service](bus-service.md) for the emit/on API and [PIPELINE-1 correlation](converse-pipeline.md) for how bus events relate to a given utterance's session.
