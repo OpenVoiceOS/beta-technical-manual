@@ -35,7 +35,7 @@ are driven by the bus handlers below rather than called directly.
 | `configuration.updated` | `Configuration.updated` | Reload the default, system, remote and XDG layers |
 | `configuration.patch` | `Configuration.patch` | Apply `data["config"]` as an in-memory patch |
 | `configuration.patch.clear` | `Configuration.patch_clear` | Clear the in-memory patch |
-| `configuration.cache.clear` | `Configuration.clear_cache` | Drop the cached merged config |
+| `configuration.cache.clear` | `Configuration.clear_cache` | Deprecated no-op. It only re-emits `configuration.updated`. There is no separate cache to drop |
 | `mycroft.paired` | `Configuration.handle_remote_update` | Reload the remote/backend config layer |
 | `mycroft.internet.connected` | `Configuration.handle_remote_update` | Reload the remote/backend config layer |
 
