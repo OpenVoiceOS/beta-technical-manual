@@ -184,7 +184,7 @@ status, SEI queries), see
 
 | Event | Direction | Meaning |
 |---|---|---|
-| `ovos.common_play.search` | in | Pipeline plugin asks OCP to search for playable media |
+| `ovos.common_play.search` | in | External client (a GUI search box, for example) asks the OCP pipeline plugin to search across skills; the plugin performs the search itself and replies with results |
 | `ovos.common_play.play_search` | in | Skill dispatch label for a matched "play X" intent |
 | `ovos.common_play.play` | in | Start playback of a track or playlist |
 | `ovos.common_play.pause` | in | Pause playback |
@@ -206,6 +206,7 @@ status, SEI queries), see
 | `ovos.common_play.home` | in | Request the OCP home/media browser view |
 | `ovos.common_play.ping` / `.pong` | in/out | OCP service discovery handshake |
 | `ovos.common_play.search.start` / `.search.end` | in | Pipeline plugin brackets a search request; the player uses them to gate busy state |
+| `ovos.common_play.search.stop` | out | Emitted by the player on stop, and by the pipeline plugin, to cancel a search still in flight |
 | `ovos.common_play.announce` | in | A skill registers itself as an OCP media provider |
 | `ovos.common_play.register_keyword` / `.deregister_keyword` | in | A skill registers/removes its media-type keywords for the pipeline plugin |
 | `ovos.common_play.skills.detach` | in | Remove a skill from the OCP provider list |
@@ -268,7 +269,7 @@ See [Bus Service: common message types](bus-service.md#key-message-categories).
 | `skillmanager.list` | any client | `ovos-core` |
 | `ovos.skills.install` | any client | `ovos-core` |
 | `ovos.session.sync` | new client | `ovos-core` |
-| `ovos.session.update_default` | `ovos-core` | all clients |
+| `ovos.session.update_default` | `ovos-core` | all clients (legacy default-session echo, deprecated) |
 | `mycroft.network.connected` / `mycroft.internet.connected` | `ovos-PHAL` | `ovos-core`, skills |
 
 ## Legacy ↔ spec migration
