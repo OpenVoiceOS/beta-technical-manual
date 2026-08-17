@@ -126,6 +126,7 @@ the CommonQuerySkill removal, and the bus-client dual-emit bridge, in that order
 | 2026-04-08 | `CommonQuerySkill` deleted, replaced by the `@common_query` decorator on plain `OVOSSkill` | `ovos-workshop` `6382d0a`, first in `8.0.4a3` | Skill maintainers using common-query matching | [The ovos-workshop 7.0.0 release train](migration-workshop-7.md) |
 | 2026-06-25/07-03 | Legacy `mycroft.*`/`recognizer_loop:*` topics bridged to `ovos.*`, dual-emit bugs fixed | `ovos-bus-client` `2.x` | Remote/HiveMind operators, any bus producer/consumer | [The bus-client dual-emit bridge](migration-bus-dual-emit.md) |
 | 2026-06-28 | Audio-transformer chain order flipped from descending to ascending `priority` | `ovos-dinkum-listener` `1fd909f` | Deployers with more than one audio-transformer plugin | [Audio-transformer chain-order flip](migration-audio-transformer-order.md) |
+| 2026-08-15 | `ovos-audio` dropped its direct legacy-topic subscriptions, relying on the bus-client bridge instead (floor raised to `ovos-bus-client>=2.8.3a1`) | `ovos-audio` `d83123e`, first in `2.2.0a2` | Deployers pinning an older bus-client | [Bus namespace migration](bus-namespace-migration.md) |
 
 ---
 

@@ -113,7 +113,6 @@ already landed on that repo's `dev`.
 | PR | What it changes | Audience | Breaking | Version |
 |---|---|---|---|---|
 | [#146](https://github.com/OpenVoiceOS/ovos-audio/pull/146) | Adds duration to the `utterance_start` recognizer event | skill authors, remote bus consumers, analytics tooling | No | 2.2.0 |
-| [#179](https://github.com/OpenVoiceOS/ovos-audio/pull/179) | Drops six legacy AUDIO-1 bus subscriptions, relies on the bus-client bridge | deployers on an older bus-client, legacy AUDIO-1 consumers | Not conventional-commit-marked, but risky without the bridge | 2.1.2 |
 
 ### ovos-bus-client
 

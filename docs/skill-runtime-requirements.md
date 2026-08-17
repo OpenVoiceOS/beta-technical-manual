@@ -1,14 +1,9 @@
 # Runtime Requirements in OVOS
 
-!!! warning "Deprecated — legacy reference"
-    `RuntimeRequirements` is a deprecated mechanism, kept documented here for existing skills
-    that already declare it. There is currently no successor mechanism in `ovos-utils`/
-    `ovos-workshop`. New skills should not be built around it.
-
 !!! abstract "In a nutshell"
-    Some skills only make sense under certain conditions. A weather skill needs internet, a smart-home skill needs the local network, a picture skill needs a screen. "Runtime requirements" is a legacy declaration where a skill states what it needs, so OVOS can optionally defer loading it until those things are available. For where this fits in a skill's lifecycle, see [Skill Classes](skill-classes.md). For term definitions, see the [Glossary](glossary.md).
+    Some skills only make sense under certain conditions. A weather skill needs internet, a smart-home skill needs the local network, a picture skill needs a screen. "Runtime requirements" is how a skill states what it needs, so OVOS can optionally defer loading it until those things are available. For where this fits in a skill's lifecycle, see [Skill Classes](skill-classes.md). For term definitions, see the [Glossary](glossary.md).
 
-`RuntimeRequirements` lets a skill declare, up front, what conditions (internet, network, GUI) it needs. It was historically intended to let OVOS defer loading a skill until the system is ready for it. It also skips premature activation on offline, headless, or GUI-enabled setups.
+`RuntimeRequirements` lets a skill declare, up front, what conditions (internet, network, GUI) it needs. Override the `runtime_requirements` classproperty on your skill to declare them; `ovos-core` reads it to defer loading a skill until the system is ready for it. It also skips premature activation on offline, headless, or GUI-enabled setups.
 
 ---
 
