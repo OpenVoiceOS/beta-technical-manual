@@ -1430,16 +1430,16 @@ The pieces:</p>
 <li>manages the now-playing queue and player state,</li>
 <li>runs <a href="../ocp-plugins/">stream extractors</a>,</li>
 <li>exposes the player over <a href="#mpris">MPRIS</a>, and</li>
-<li>drives the actual audio output through a lower-level audio backend (<code>mpv</code>, <code>vlc</code>, or
-     <code>simple</code>).</li>
+<li>drives the actual audio output through a lower-level audio backend (<code>vlc</code>, <code>mplayer</code>, or
+     <code>simple</code> by default).</li>
 </ul>
 <pre class="mermaid"><code>flowchart TD
     A["OCP pipeline / skills&lt;br/&gt;search results"] --&gt; B["OCP audio plugin"]
     B --&gt; C["Queue +&lt;br/&gt;player state"]
     C --&gt; D["Stream extractors"]
     D --&gt; E["MPRIS"]
-    D --&gt; F["Audio backend&lt;br/&gt;mpv / vlc / simple"]</code></pre>
-<p><em>Diagram:</em> The flow starts at OCP pipeline and skill search results and ends at playback, and the stream extractors branch output to either MPRIS or the mpv/vlc/simple audio backend.</p>
+    D --&gt; F["Audio backend&lt;br/&gt;vlc / mplayer / simple"]</code></pre>
+<p><em>Diagram:</em> The flow starts at OCP pipeline and skill search results and ends at playback, and the stream extractors branch output to either MPRIS or the vlc/mplayer/simple audio backend.</p>
 <p>OCP is a <em>coordinator</em>, not an audio codec: it does the voice/queue/MPRIS logic and then hands
 the raw stream to one of the simple audio backends to make sound.</p>
 <hr />
@@ -1452,7 +1452,7 @@ backend, an mpv backend) to do it. The only extension point for "something that 
 therefore the <code>mycroft.plugin.audioservice</code> group.</p>
 <p>So OCP was bolted on as a <strong>hack</strong>: it registered itself as <strong>the</strong> audio backend (the
 <code>ovos_common_play</code> type, set as the default backend), <strong>captured</strong> every playback request, and
-then <strong>delegated</strong> the actual sound output back to a real audio backend (<code>mpv</code>/<code>vlc</code>/<code>simple</code>).
+then <strong>delegated</strong> the actual sound output back to a real audio backend.
 Messy, but it slotted into the machinery that existed. The result was a <strong>monolith</strong>: a single
 plugin doing <em>everything</em>, including NLP/intent matching, cross-skill search, the player state
 machine, and MPRIS.</p>
@@ -1562,7 +1562,7 @@ repos, what remains is the player itself. Instead of cramming it into the audio 
 </tr>
 <tr>
 <td>Player plugins</td>
-<td>One bundled player; delegates to <code>mpv</code>/<code>vlc</code>/<code>simple</code> audio backends</td>
+<td>One bundled player; delegates to <code>vlc</code>/<code>mplayer</code>/<code>simple</code> audio backends</td>
 <td>Typed plugins on <code>opm.media.audio</code> / <code>opm.media.video</code> / <code>opm.media.web</code> (see <a href="../media-plugins/">Media Playback</a>)</td>
 </tr>
 <tr>

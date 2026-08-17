@@ -1045,6 +1045,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#client-system-messages" class="md-nav__link">
+    <span class="md-ellipsis">
+      Client system messages
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#tips" class="md-nav__link">
     <span class="md-ellipsis">
       Tips
@@ -1440,6 +1449,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#client-system-messages" class="md-nav__link">
+    <span class="md-ellipsis">
+      Client system messages
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#tips" class="md-nav__link">
     <span class="md-ellipsis">
       Tips
@@ -1625,8 +1643,8 @@ not-yet-populated volume into a container.</p>
 </tr>
 <tr>
 <td><code>/ollama/api/show</code></td>
-<td>POST</td>
-<td>Ollama model details</td>
+<td>GET</td>
+<td>Ollama model details (real Ollama uses POST here; this server only accepts GET)</td>
 </tr>
 <tr>
 <td><code>/ollama/api/ps</code></td>
@@ -1794,8 +1812,8 @@ configured via environment variables:</p>
 <tr>
 <td><code>/openai/v1/embeddings</code></td>
 <td>OpenAI</td>
-<td>Server scans the persona's loaded handlers for the first one that implements <code>get_embeddings()</code></td>
-<td>Returns <code>501</code> with <code>{"detail": "No embeddings solver configured for this persona."}</code></td>
+<td>The configured text-embeddings plugin (<code>TEXT_EMBEDDINGS_PLUGIN</code>) is tried first; a persona solver exposing <code>get_embeddings()</code> is only the fallback when the plugin is absent or fails to load</td>
+<td>Returns <code>501</code> with a detail starting "No embeddings backend available: configure TEXT_EMBEDDINGS_PLUGIN..."</td>
 </tr>
 <tr>
 <td><code>/ollama/api/embed</code>, <code>/ollama/api/embeddings</code></td>
@@ -1924,6 +1942,12 @@ clients treat the persona as a local model. For example, the
 connect directly and use the persona as its LLM backend. <code>/ollama/api/tags</code> reports the model
 name(s) from the persona's solver config.</p>
 <hr />
+<h2 id="client-system-messages">Client system messages<a class="headerlink" href="#client-system-messages" title="Permanent link">&para;</a></h2>
+<p>By default the server ignores any <code>system</code> message a client sends: the persona's own
+<code>system_prompt</code> stays authoritative. The <code>system_prompt_strategy</code> persona-config key (or the
+<code>PERSONA_SYSTEM_PROMPT_STRATEGY</code> env var) changes this per persona: <code>ignore</code> (default),
+<code>replace</code> (client's system message wins), or <code>append</code> (persona identity first, client
+instructions added after). Applied once per chat/completions call.</p>
 <h2 id="tips">Tips<a class="headerlink" href="#tips" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
