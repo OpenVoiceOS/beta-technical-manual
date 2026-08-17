@@ -229,8 +229,6 @@ the Role A / Role B reflection-and-takeover behavior have moved to their own pag
     "ignored_players": [],       // MPRIS player names OVOS should not track/adopt
     "dbus_type": "session",      // "session" (per-user, default) or "system" D-Bus
 
-    // message sources trusted to bypass per-session validation
-    "native_sources": ["debug_cli", "audio"],
     // when true, the daemon only acts on the local ("default") session.
     // set false for HiveMind/multi-session setups that drive playback remotely
     "validate_source": true,
@@ -324,23 +322,18 @@ are handled inside the `ovos-media` process. The canonical reference for the ful
 `ovos.common_play.*` namespace is [Bus Events Reference: OCP / media playback](bus-events.md#ocp-media-playback);
 this section covers only the service-level subset with `ovos-media`-specific behavior notes.
 
-Four are on the `MediaService` daemon itself. `ovos.common_play.ping` is the one to use for a
-liveness probe — the rest are on the player, so they answer only once a player exists:
+Two are on the `MediaService` daemon itself, in `_service_table()`
+(`ovos_media/bus/api.py`): `ovos.common_play.ping`, the one to use for a liveness probe, and
+`opm.audio.query` (OPM plugin-discovery compatibility with the legacy `PlaybackService`
+handler). `ovos.common_play.home`, `.search.start` and `.search.end` are pipeline-side
+signals — the OCP pipeline plugin uses them to drive a GUI's own navigation/loading state.
+`ovos-media` has no in-process GUI and nothing else that reacts to them, so neither the daemon
+nor the player subscribes to any of the three; a bus message with no subscriber here is legal.
+
+The rest are registered by `OCPMediaPlayer`:
 
 | Bus message | Purpose |
 |---|---|
-| `ovos.common_play.home` | Open the OCP home/menu |
-| `ovos.common_play.ping` | Liveness probe. Lets callers detect a running `ovos-media` |
-| `ovos.common_play.search.end` | Close out an in-progress OCP search |
-| `opm.audio.query` | OPM plugin-discovery compatibility with the legacy `PlaybackService` handler |
-
-The rest are registered by `OCPMediaPlayer` (`ovos.common_play.search.start` lives here, not
-on the daemon — the player's session-gated handler pushes the "loading" GUI state, and a
-duplicate daemon-level registration was removed because it double-pushed it):
-
-| Bus message | Purpose |
-|---|---|
-| `ovos.common_play.search.start` | Open an OCP search (session-gated "loading" GUI state) |
 | `ovos.common_play.seek` | Seek within the current track |
 | `ovos.common_play.playlist.set` / `.queue` / `.clear` | Replace, append to, or empty the playlist |
 | `ovos.common_play.shuffle.toggle` / `.set` / `.unset` | Toggle or explicitly set/unset shuffle mode |
@@ -354,8 +347,9 @@ duplicate daemon-level registration was removed because it double-pushed it):
 Ducking binds to ovos-audio's spec topics (`ovos.audio.output.started` / `.ended` trigger
 duck/unduck since 1.0.0a1, which dropped the `recognizer_loop:audio_output_*` aliases), while
 cork still listens on the legacy-style `recognizer_loop:record_begin` / `record_end`, since no
-spec topic covers the mic-recording window. The full ~30-entry `OCPMediaPlayer` handler list
-is in `ovos_media/player.py`.
+spec topic covers the mic-recording window. The full handler list, with each topic's `gated` value, is in `_player_table()`
+(`ovos_media/bus/api.py`) — see [HiveMind: multi-session gating](#hivemind-multi-session-gating)
+above.
 
 `ovos.common_play.playlist.set` validates the payload before touching the playlist. A
 non-list `tracks` value is ignored outright and the current playlist is kept. For a list
