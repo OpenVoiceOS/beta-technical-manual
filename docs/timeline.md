@@ -352,7 +352,7 @@
 - Oct 2025 - `ovos-core` reaches the **2.x** line (`2.1.0`), a major release formalizing the multi-intent-pipeline architecture.
 - Oct 2025 - [phoonnx](https://blog.openvoiceos.org/posts/2025-10-06-phoonnx) introduced: OVOS's own ONNX-based multilingual neural TTS engine and the recommended on-device voice
 - Oct 2025 - OpenVoiceOS [selected for an NGI Zero Commons Fund grant](https://blog.openvoiceos.org/posts/2025-10-20-ngi) by the [NLnet Foundation](https://nlnet.nl/project/OpenVoiceOS/), funding the road to a first stable version, onboarding, language support, and documentation
-- Nov 2025 - `ovos-workshop` version **8.0.0** released, a **major breaking release** that decoupled GUI and resource management into mixins.
+- Nov 2025 - `ovos-workshop` version **8.0.0** released, a **major breaking release** that removed the legacy `MycroftSkill` compatibility layer from the skill launcher.
 - Nov 2025 - [Precise wake-word engine ported to ONNX](https://blog.openvoiceos.org/posts/2025-11-03-precise-onnx), dropping the tensorflow dependency
 - Dec 2025 - Speech support for minority languages expands: [TTS voices for Asturian and Aragonese](https://blog.openvoiceos.org/posts/2025-12-09-ast) and the [first phonemizer for Barranquenho](https://blog.openvoiceos.org/posts/2025-12-14-barranquenho)
 - ??? 2025 - OVOS prototype selected as a demonstrator of the [ILENIA project](http://web.archive.org/web/20251008035516/https://proyectoilenia.es/): an open voice assistant in all co-official languages of Spain, runnable on a PC or Raspberry Pi
