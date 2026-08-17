@@ -1806,11 +1806,11 @@ namespace), so the UI can react to listening/speaking state:</p>
 <td>Wake word detected</td>
 </tr>
 <tr>
-<td><code>recognizer_loop:record_begin</code></td>
+<td><code>ovos.listener.record.started</code> (legacy: <code>recognizer_loop:record_begin</code>)</td>
 <td>Microphone opened</td>
 </tr>
 <tr>
-<td><code>recognizer_loop:record_end</code></td>
+<td><code>ovos.listener.record.ended</code> (legacy: <code>recognizer_loop:record_end</code>)</td>
 <td>Microphone closed</td>
 </tr>
 <tr>
@@ -1834,7 +1834,7 @@ namespace), so the UI can react to listening/speaking state:</p>
 <td>Audio playback ended</td>
 </tr>
 <tr>
-<td><code>recognizer_loop:sleep</code></td>
+<td><code>ovos.listener.sleep</code> (legacy: <code>recognizer_loop:sleep</code>)</td>
 <td>Device going to sleep</td>
 </tr>
 <tr>
@@ -1842,7 +1842,7 @@ namespace), so the UI can react to listening/speaking state:</p>
 <td>Device waking up</td>
 </tr>
 <tr>
-<td><code>mycroft.awoken</code></td>
+<td><code>ovos.listener.awoken</code> (legacy: <code>mycroft.awoken</code>)</td>
 <td>Wake-up acknowledged</td>
 </tr>
 <tr>
