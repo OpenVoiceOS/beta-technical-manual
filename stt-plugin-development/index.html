@@ -1719,15 +1719,16 @@ candidates read it. <code>execute()</code> then remains the single-best convenie
     participant Thread as StreamThread
     Mic-&gt;&gt;STT: stream_start(language)
     STT-&gt;&gt;Thread: create_streaming_thread()
+    Thread-&gt;&gt;Thread: handle_audio_stream(audio, language)
+    Note over Thread: audio is a generator that yields queued chunks
     loop each captured chunk
         Mic-&gt;&gt;STT: stream_data(chunk)
         STT-&gt;&gt;Thread: queue.put(chunk)
-        Thread-&gt;&gt;Thread: handle_audio_stream(audio, language)
     end
     Mic-&gt;&gt;STT: stream_stop()
     STT-&gt;&gt;Thread: queue.put(None)
     Thread--&gt;&gt;STT: finalize() returns self.text</code></pre>
-<p><em>Diagram:</em> The sequence starts with the mic thread calling stream_start and ends with the stream thread returning finalize() text, and it loops over each captured audio chunk between those two points.</p>
+<p><em>Diagram:</em> The sequence starts with the mic thread calling stream_start and ends with the stream thread returning finalize() text, The stream thread calls handle_audio_stream one time, and the loop between those two points feeds audio chunks to the generator it reads.</p>
 <p>Audio arrives synchronously per chunk: <code>stream_data()</code> is called once per captured
 chunk on the mic thread, so it must return well under the per-chunk time budget
 (the same real-time cadence constraint a wake-word plugin's <code>update(chunk)</code> runs

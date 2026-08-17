@@ -1768,7 +1768,7 @@ problems in plain language before you dig into the technical steps below.</p>
 <h2 id="ovos-fails-to-speak-i-am-ready">OVOS Fails to Speak "I am Ready"<a class="headerlink" href="#ovos-fails-to-speak-i-am-ready" title="Permanent link">&para;</a></h2>
 <ul>
 <li>Confirm the device has a working Internet connection. Otherwise OVOS won't consider itself ready</li>
-<li>The "I am Ready" announcement is spoken by the <code>ovos-skill-boot-finished</code> skill: if that skill is not installed or failed to load, the device can be fully working yet stay silent at boot. Check it appears in the loaded-skills list (see <a href="#how-to-check-installed-skills">How to check installed skills</a> below, where <code>skill-ovos-boot-finished.openvoiceos</code> should be present).</li>
+<li>The "I am Ready" announcement is spoken by the <code>ovos-skill-boot-finished</code> skill: if that skill is not installed or failed to load, the device can be fully working yet stay silent at boot. Check it appears in the loaded-skills list (see <a href="#how-to-check-installed-skills">How to check installed skills</a> below, where <code>ovos-skill-boot-finished.openvoiceos</code> should be present).</li>
 <li>For what "ready" actually means and how to probe it on headless or fleet deployments, see <a href="../production-operations/#knowing-when-the-assistant-is-actually-ready">Knowing when the assistant is actually ready</a>.</li>
 </ul>
 <h2 id="how-to-debug-intent-matching">How to debug intent matching<a class="headerlink" href="#how-to-debug-intent-matching" title="Permanent link">&para;</a></h2>
@@ -1840,7 +1840,7 @@ Tail that one on its own: <code>tail -f ~/.local/state/mycroft/bus.log</code>.</
 </span><span id="__span-1-33"><a id="__codelineno-1-33" name="__codelineno-1-33" href="#__codelineno-1-33"></a><span class="w"> </span><span class="s1">&#39;skill-ovos-randomness.openvoiceos&#39;</span>,
 </span><span id="__span-1-34"><a id="__codelineno-1-34" name="__codelineno-1-34" href="#__codelineno-1-34"></a><span class="w"> </span><span class="s1">&#39;skill-ovos-naptime.openvoiceos&#39;</span>,
 </span><span id="__span-1-35"><a id="__codelineno-1-35" name="__codelineno-1-35" href="#__codelineno-1-35"></a><span class="w"> </span><span class="s1">&#39;skill-ovos-wikipedia.openvoiceos&#39;</span>,
-</span><span id="__span-1-36"><a id="__codelineno-1-36" name="__codelineno-1-36" href="#__codelineno-1-36"></a><span class="w"> </span><span class="s1">&#39;skill-ovos-boot-finished.openvoiceos&#39;</span>,
+</span><span id="__span-1-36"><a id="__codelineno-1-36" name="__codelineno-1-36" href="#__codelineno-1-36"></a><span class="w"> </span><span class="s1">&#39;ovos-skill-boot-finished.openvoiceos&#39;</span>,
 </span><span id="__span-1-37"><a id="__codelineno-1-37" name="__codelineno-1-37" href="#__codelineno-1-37"></a><span class="w"> </span><span class="s1">&#39;ovos-skill-camera.openvoiceos&#39;</span>,
 </span><span id="__span-1-38"><a id="__codelineno-1-38" name="__codelineno-1-38" href="#__codelineno-1-38"></a><span class="w"> </span><span class="s1">&#39;skill-ovos-ddg.openvoiceos&#39;</span>,
 </span><span id="__span-1-39"><a id="__codelineno-1-39" name="__codelineno-1-39" href="#__codelineno-1-39"></a><span class="w"> </span><span class="s1">&#39;ovos-skill-laugh.openvoiceos&#39;</span>,
@@ -1892,7 +1892,7 @@ Tail that one on its own: <code>tail -f ~/.local/state/mycroft/bus.log</code>.</
 </span><span id="__span-2-35"><a id="__codelineno-2-35" name="__codelineno-2-35" href="#__codelineno-2-35"></a><span class="m">26</span><span class="o">)</span><span class="w"> </span>-<span class="w"> </span>skill-ovos-randomness.openvoiceos
 </span><span id="__span-2-36"><a id="__codelineno-2-36" name="__codelineno-2-36" href="#__codelineno-2-36"></a><span class="m">27</span><span class="o">)</span><span class="w"> </span>-<span class="w"> </span>skill-ovos-naptime.openvoiceos
 </span><span id="__span-2-37"><a id="__codelineno-2-37" name="__codelineno-2-37" href="#__codelineno-2-37"></a><span class="m">28</span><span class="o">)</span><span class="w"> </span>-<span class="w"> </span>skill-ovos-wikipedia.openvoiceos
-</span><span id="__span-2-38"><a id="__codelineno-2-38" name="__codelineno-2-38" href="#__codelineno-2-38"></a><span class="m">29</span><span class="o">)</span><span class="w"> </span>-<span class="w"> </span>skill-ovos-boot-finished.openvoiceos
+</span><span id="__span-2-38"><a id="__codelineno-2-38" name="__codelineno-2-38" href="#__codelineno-2-38"></a><span class="m">29</span><span class="o">)</span><span class="w"> </span>-<span class="w"> </span>ovos-skill-boot-finished.openvoiceos
 </span><span id="__span-2-39"><a id="__codelineno-2-39" name="__codelineno-2-39" href="#__codelineno-2-39"></a><span class="m">30</span><span class="o">)</span><span class="w"> </span>-<span class="w"> </span>ovos-skill-camera.openvoiceos
 </span><span id="__span-2-40"><a id="__codelineno-2-40" name="__codelineno-2-40" href="#__codelineno-2-40"></a><span class="m">31</span><span class="o">)</span><span class="w"> </span>-<span class="w"> </span>skill-ovos-ddg.openvoiceos
 </span><span id="__span-2-41"><a id="__codelineno-2-41" name="__codelineno-2-41" href="#__codelineno-2-41"></a><span class="m">32</span><span class="o">)</span><span class="w"> </span>-<span class="w"> </span>ovos-skill-laugh.openvoiceos
