@@ -303,8 +303,8 @@ none of those skills registers an `opm.agents.toolbox` entry point yet. Only the
 exist in the OVOS org.
 
 The [agentic loop](agentic-loop.md) bundles its own toolboxes (`ovos-filesystem-tools`,
-`ovos-shell-tools`, `ovos-web-search-tools`, `ovos-clock-tools`, `ovos-skill-md-toolbox`).
-See that page for those.
+`ovos-shell-tools`, `ovos-web-search-tools`, `ovos-clock-tools`, `ovos-math-tools`,
+`ovos-skill-md-toolbox`). See that page for those.
 
 ## Available Chat Engines
 
