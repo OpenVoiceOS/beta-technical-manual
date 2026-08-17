@@ -1630,9 +1630,9 @@ pipeline-plugin approach.</p>
 family in the space of about a day, each one landing on top of the last
 before the previous change had even settled. A skill author jumping the
 gap felt it as a moving target: <code>can_answer</code> went abstract, converse moved
-into a mixin, <code>can_stop</code> briefly went hard-abstract then was loosened
-hours later, and the mixin's own method name turned out to be wrong for
-about a day before being renamed. Anyone upgrading past a pre-2025-06
+out to its own base class, <code>can_stop</code> briefly went hard-abstract then was
+loosened hours later, and that new base class's own method name turned out to
+be wrong for about a day before being renamed. Anyone upgrading past a pre-2025-06
 workshop version in one hop needs to treat all four changes as landing at
 once, not as separable steps.</p>
 <p>Four major versions of <code>ovos-workshop</code> shipped on the same day
@@ -1657,7 +1657,7 @@ the skill refusing to load without an implementation — arrived later, in 9.3.9
 </span></code></pre></div>
 <p><code>FallbackSkill.make_intent_failure_handler(cls, bus)</code> (the old mycroft-style
 bus-driven fallback dispatcher) is removed with it (ovos-workshop <code>c066bc3</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/336" title="GitHub Issue: TigreGotico/ovos-technical-manual #336">#336</a>).</p>
-<p><strong>v5.0.0: converse moves out of <code>OVOSSkill</code> into a mixin.</strong></p>
+<p><strong>v5.0.0: converse moves out of <code>OVOSSkill</code> into its own base class.</strong></p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># old: converse lived directly on OVOSSkill</span>
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="k">class</span> <span class="nc">MySkill</span><span class="p">(</span><span class="n">OVOSSkill</span><span class="p">):</span>
 </span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>    <span class="k">def</span> <span class="nf">converse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -1682,7 +1682,7 @@ overriding if the skill also overrides <code>stop</code>/<code>stop_session</cod
 (<code>813f7b5</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/346" title="GitHub Issue: TigreGotico/ovos-technical-manual #346">#346</a>, released as <code>6.0.1</code>). If you implement <code>stop()</code> or
 <code>stop_session()</code>, also implement <code>can_stop()</code>.</p>
 <p><strong>v7.0.0: <code>can_answer</code> on <code>ConversationalSkill</code> renamed to <code>can_converse</code>.</strong>
-The v5.0.0 mixin shipped with the wrong method name for about a day. Rename
+The v5.0.0 base class shipped with the wrong method name for about a day. Rename
 <code>can_answer</code> → <code>can_converse</code> in any <code>ConversationalSkill</code> subclass
 (ovos-workshop <code>1fdd532</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/348" title="GitHub Issue: TigreGotico/ovos-technical-manual #348">#348</a>).</p>
 <p>Lifecycle:</p>
