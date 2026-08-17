@@ -59,7 +59,7 @@ the lowercase default breaks. Compare case-insensitively or update the
 literal.
 
 Also in this commit: `skills.directory` dropped from shipped defaults,
-`gui.idle_display_skill` renamed `ovos-skill-homescreen.openvoiceos` →
+`gui.idle_display_skill` renamed `skill-ovos-homescreen.openvoiceos` →
 `ovos-skill-homescreen.openvoiceos`, and the entire NLP-plugin config block
 (`tokenization`, `segmentation`, `keyword_extract`, `coref`, `postag`) was
 removed from `mycroft.conf` (no longer core-config-driven).

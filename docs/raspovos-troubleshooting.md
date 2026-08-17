@@ -99,7 +99,7 @@ Use the `ls-skills` command to list every installed skill.
      'ovos-skill-local-media.openvoiceos',
      'ovos-skill-volume.openvoiceos',
      'ovos-skill-wikihow.openvoiceos',
-     'ovos-skill-personal.OpenVoiceOS',
+     'ovos-skill-personal.openvoiceos',
      'ovos-skill-number-facts.openvoiceos',
      'ovos-skill-hello-world.openvoiceos',
      'ovos-skill-moviemaster.openvoiceos',
@@ -155,7 +155,7 @@ Skills can optionally provide metadata, if they do instructions will be availabl
     13) - ovos-skill-local-media.openvoiceos
     14) - ovos-skill-volume.openvoiceos
     15) - ovos-skill-wikihow.openvoiceos
-    16) - ovos-skill-personal.OpenVoiceOS
+    16) - ovos-skill-personal.openvoiceos
     17) - ovos-skill-number-facts.openvoiceos
     18) - ovos-skill-hello-world.openvoiceos
     19) - ovos-skill-moviemaster.openvoiceos
@@ -232,11 +232,11 @@ If you want to revert OVOS to a blank state you can use `ovos-reset-brain` to re
     - ovos-skill-weather
     - ovos-skill-wikihow
     - ovos-skill-wikipedia
-    - skill-ddg
-    - skill-news
+    - ovos-skill-ddg
+    - ovos-skill-news
     - skill-ovos-fallback-chatgpt
-    - skill-wolfie
-    - skill-wordnet
+    - ovos-skill-wolfie
+    - ovos-skill-wordnet
     [INFO] Uninstalling skills...
     Using Python 3.11.2 environment at: .venvs/ovos
     Uninstalled 37 packages in 513ms
@@ -273,11 +273,11 @@ If you want to revert OVOS to a blank state you can use `ovos-reset-brain` to re
      - ovos-skill-weather==0.1.14
      - ovos-skill-wikihow==0.2.14
      - ovos-skill-wikipedia==0.6.0a1
-     - skill-ddg==0.1.15
-     - skill-news==0.1.12
+     - ovos-skill-ddg==0.3.7
+     - ovos-skill-news==0.4.6
      - skill-ovos-fallback-chatgpt==0.1.12
-     - skill-wolfie==0.3.0
-     - skill-wordnet==0.1.1
+     - ovos-skill-wolfie==0.5.8
+     - ovos-skill-wordnet==0.2.6
     [SUCCESS] All skills have been uninstalled successfully.
     [WARNING] Note: This operation only deletes the skills. Configuration files and pipeline plugins (which still influence intent matching) are NOT affected by this action.
 
