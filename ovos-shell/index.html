@@ -1752,8 +1752,10 @@ but never replace voice.</p>
   has cases for <code>recognizer_loop:record_end</code> (hide) and <code>mycroft.speech.recognition.unknown</code>
   (hide), but ovos-gui forwards those two events under their spec names
   (<code>ovos.listener.record.ended</code>, <code>ovos.speech.recognition.unknown</code>) rather than the
-  legacy strings the QML switches on, so neither branch currently fires — the
-  animation only ever hides through some other path (e.g. GUI namespace teardown).</p>
+  legacy strings the QML switches on, so neither branch currently fires. The
+  component is embedded once, persistently, and writes <code>visible</code> in no other
+  place, so as shipped it has no verified way to hide once shown (tracked
+  upstream by the unmerged <code>fix/listener-animation-spec-events</code> branch).</p>
 </li>
 </ul>
 <hr />
