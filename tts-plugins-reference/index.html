@@ -1418,6 +1418,15 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#per-language-default-voices" class="md-nav__link">
+    <span class="md-ellipsis">
+      Per-language default voices
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#bounding-the-voice-cache" class="md-nav__link">
     <span class="md-ellipsis">
       Bounding the voice cache
@@ -2043,6 +2052,15 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#per-language-default-voices" class="md-nav__link">
+    <span class="md-ellipsis">
+      Per-language default voices
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#bounding-the-voice-cache" class="md-nav__link">
     <span class="md-ellipsis">
       Bounding the voice cache
@@ -2376,6 +2394,15 @@ servers entirely: fully offline plugins exist for everything.</p>
 <blockquote>
 <p>If <code>"voice"</code> is omitted, the plugin picks the first bundled model that supports the configured language.</p>
 </blockquote>
+<h3 id="per-language-default-voices">Per-language default voices<a class="headerlink" href="#per-language-default-voices" title="Permanent link">&para;</a></h3>
+<p>A configured <code>voice</code> pins one voice regardless of request language. For multilingual serving
+(1.86.0a1+), the <code>lang2voice</code> config map, e.g. <code>{"pt-br": "...", "gl": "..."}</code>, and
+<code>PHOONNX_DEFAULT_VOICE_&lt;LANG&gt;</code> env vars resolve the default voice per request language. Keys
+are BCP-47 tags, full tag tried before primary subtag, and resolution is table-major: the
+whole <code>lang2voice</code> table wins outright for any language it names before env vars are consulted
+at all. Spellings are normalized on both sides (<code>gl-ES</code>/<code>gl</code>, <code>pt-br</code>/<code>pt_BR</code> agree). An entry
+naming a nonexistent voice logs the mistake and falls back to the voice index's own default
+rather than refusing to serve the language.</p>
 <h3 id="bounding-the-voice-cache">Bounding the voice cache<a class="headerlink" href="#bounding-the-voice-cache" title="Permanent link">&para;</a></h3>
 <p>Loaded voice models stay resident in an in-process cache. Two settings bound it, and they are
 not equivalent:</p>
