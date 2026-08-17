@@ -30,8 +30,8 @@ The pieces:
   1. manages the now-playing queue and player state,
   2. runs [stream extractors](ocp-plugins.md),
   3. exposes the player over [MPRIS](#mpris), and
-  4. drives the actual audio output through a lower-level audio backend (`mpv`, `vlc`, or
-     `simple`).
+  4. drives the actual audio output through a lower-level audio backend (`vlc`, `mplayer`, or
+     `simple` by default).
 
 ```mermaid
 flowchart TD
@@ -39,10 +39,10 @@ flowchart TD
     B --> C["Queue +<br/>player state"]
     C --> D["Stream extractors"]
     D --> E["MPRIS"]
-    D --> F["Audio backend<br/>mpv / vlc / simple"]
+    D --> F["Audio backend<br/>vlc / mplayer / simple"]
 ```
 
-*Diagram:* The flow starts at OCP pipeline and skill search results and ends at playback, and the stream extractors branch output to either MPRIS or the mpv/vlc/simple audio backend.
+*Diagram:* The flow starts at OCP pipeline and skill search results and ends at playback, and the stream extractors branch output to either MPRIS or the vlc/mplayer/simple audio backend.
 
 OCP is a *coordinator*, not an audio codec: it does the voice/queue/MPRIS logic and then hands
 the raw stream to one of the simple audio backends to make sound.
@@ -60,7 +60,7 @@ therefore the `mycroft.plugin.audioservice` group.
 
 So OCP was bolted on as a **hack**: it registered itself as **the** audio backend (the
 `ovos_common_play` type, set as the default backend), **captured** every playback request, and
-then **delegated** the actual sound output back to a real audio backend (`mpv`/`vlc`/`simple`).
+then **delegated** the actual sound output back to a real audio backend.
 Messy, but it slotted into the machinery that existed. The result was a **monolith**: a single
 plugin doing *everything*, including NLP/intent matching, cross-skill search, the player state
 machine, and MPRIS.
@@ -171,7 +171,7 @@ repos, what remains is the player itself. Instead of cramming it into the audio 
 | | OCP audio plugin (legacy, default) | `ovos-media` (upcoming) |
 |---|---|---|
 | Where it runs | Inside [`ovos-audio`](audio-service.md) as a `mycroft.plugin.audioservice` backend | Its own service/daemon |
-| Player plugins | One bundled player; delegates to `mpv`/`vlc`/`simple` audio backends | Typed plugins on `opm.media.audio` / `opm.media.video` / `opm.media.web` (see [Media Playback](media-plugins.md)) |
+| Player plugins | One bundled player; delegates to `vlc`/`mplayer`/`simple` audio backends | Typed plugins on `opm.media.audio` / `opm.media.video` / `opm.media.web` (see [Media Playback](media-plugins.md)) |
 | Video / web | Limited | Dedicated audio **and** video **and** web players |
 | Status | Enabled by default | Opt-in |
 

@@ -112,7 +112,7 @@ Solvers are tried in order. The first that returns an answer wins. Some solvers 
 | `/ollama/api/chat` | POST | Ollama chat |
 | `/ollama/api/generate` | POST | Ollama generate |
 | `/ollama/api/tags` | GET | Ollama model listing |
-| `/ollama/api/show` | POST | Ollama model details |
+| `/ollama/api/show` | GET | Ollama model details (real Ollama uses POST here; this server only accepts GET) |
 | `/ollama/api/ps` | GET | Ollama running-model listing (stub) |
 | `/ollama/api/pull`, `/ollama/api/push` | POST | Ollama pull/push (stubs; there is nothing to pull or push) |
 | `/ollama/api/embed`, `/ollama/api/embeddings` | POST | Ollama embeddings |
@@ -172,7 +172,7 @@ configured via environment variables:
 
 | Endpoint | Vendor | Detection | If no handler supports it |
 |---|---|---|---|
-| `/openai/v1/embeddings` | OpenAI | Server scans the persona's loaded handlers for the first one that implements `get_embeddings()` | Returns `501` with `{"detail": "No embeddings solver configured for this persona."}` |
+| `/openai/v1/embeddings` | OpenAI | The configured text-embeddings plugin (`TEXT_EMBEDDINGS_PLUGIN`) is tried first; a persona solver exposing `get_embeddings()` is only the fallback when the plugin is absent or fails to load | Returns `501` with a detail starting "No embeddings backend available: configure TEXT_EMBEDDINGS_PLUGIN..." |
 | `/ollama/api/embed`, `/ollama/api/embeddings` | Ollama | Same detection mechanism, shared with the other two endpoints | Same `501` response |
 | `/cohere/v1/embed` | Cohere | Same detection mechanism, shared with the other two endpoints | Same `501` response |
 
@@ -278,6 +278,14 @@ connect directly and use the persona as its LLM backend. `/ollama/api/tags` repo
 name(s) from the persona's solver config.
 
 ---
+
+## Client system messages
+
+By default the server ignores any `system` message a client sends: the persona's own
+`system_prompt` stays authoritative. The `system_prompt_strategy` persona-config key (or the
+`PERSONA_SYSTEM_PROMPT_STRATEGY` env var) changes this per persona: `ignore` (default),
+`replace` (client's system message wins), or `append` (persona identity first, client
+instructions added after). Applied once per chat/completions call.
 
 ## Tips
 
