@@ -461,15 +461,19 @@ when `ovos-media` is not running, and bridges old pre-OCP `CommonPlaySkill` skil
 On a server that fans playback out to several [HiveMind](hivemind-agents.md) satellites, not
 every bus handler should act on behalf of every session. `ovos_media/bus/api.py`'s single
 registration table marks each playback-executing topic `gated`, and applies `is_default_session()`
-(`ovos_media/utils.py`) before dispatching it. This covers most `ovos.common_play.*`
-playback-control topics too, not only the hardware-bound ones — `play`, `pause`, `stop`, `next`,
-`previous`, `seek`, `playlist.clear`, `duck`/`unduck`/`cork`/`uncork`, `shuffle.*`, `repeat.*`,
-`like`/`unlike`, `ovos.audio.output.started`/`.ended`, and `recognizer_loop:record_begin`/`_end`
-are all gated to the local ("default") session. Only the read-only/status topics
+(`ovos_media/utils.py`) before dispatching it. Every `ovos.common_play.*` topic that changes
+player state is gated to the local ("default") session this way — the full playback-control set
+(`play`, `pause`, `play_pause`, `resume`, `stop`, `next`, `previous`, `seek`,
+`set_track_position`), the whole `playlist.*` group (`set`, `clear`, `queue`), the hardware-bound
+`duck`/`unduck`/`cork`/`uncork` (which react to `ovos.audio.output.started`/`.ended` and
+`recognizer_loop:record_begin`/`_end`), the whole `shuffle.*` and `repeat.*` groups,
+`like`/`unlike`, and `ovos.utterance.handled`. Only the read-only/status topics
 (`get_track_length`, `get_track_position`, `track_info`, `list_backends`, `status`,
-`media.state`, `playback_time`, `SEI.get`) and a few others stay ungated. Set
-`media.validate_source: false` on an instance that must act on non-default/remote HiveMind
-sessions — see [Updating: deployers](updating-deployers.md#native_sources-config-key-replaced-by-session-based-routing).
+`media.state`, `playback_time`, `SEI.get`) and a few others stay ungated — check
+`_player_table()` in `ovos_media/bus/api.py` for the authoritative, current list rather than
+treating this paragraph as exhaustive. Set `media.validate_source: false` on an instance that
+must act on non-default/remote HiveMind sessions — see
+[Updating: deployers](updating-deployers.md#native_sources-config-key-replaced-by-session-based-routing).
 
 The `media.validate_source` config flag (see [Configuration](#configuration) above) controls how
 strict this gating is:
