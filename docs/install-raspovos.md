@@ -101,11 +101,18 @@ tier (see [STT Plugins](stt-plugins.md), [TTS Plugins](tts-plugins.md),
 
 - **Pi 5:** the offline STT performance improvement noted above gives you the most headroom for
   larger local models, including Whisper-class STT, if you want to stay fully offline. The
-  `offline` raspOVOS image actually ships
-  [`ovos-stt-plugin-citrinet`](stt-plugins-reference.md#ovos-stt-plugin-citrinet) as the default STT (with
-  `ovos-stt-plugin-fasterwhisper` shipped only for a few languages), and
-  [`ovos-tts-plugin-piper`](tts-plugins-reference.md#ovos-tts-plugin-piper) as the default TTS. The config
-  below uses those shipped defaults. Optional swaps, not what ships by default, are
+  `offline` raspOVOS image installs
+  [`ovos-stt-plugin-citrinet`](stt-plugins-reference.md#ovos-stt-plugin-citrinet) (with
+  `ovos-stt-plugin-fasterwhisper` for a few languages) and
+  [`ovos-tts-plugin-piper`](tts-plugins-reference.md#ovos-tts-plugin-piper), and the config below
+  selects them explicitly.
+
+!!! warning "The image's own generated config may not match what it installs"
+    The offline build runs `ovos-config autoconfigure --offline` before installing those
+    plugins, and the recommendation layer that command writes now points at
+    `ovos-stt-plugin-onnx-asr` and `ovos-tts-plugin-phoonnx`, neither of which the build
+    installs. On a freshly built image, set `stt.module`/`tts.module` yourself (as below) to
+    a plugin that is actually present rather than trusting the generated defaults. Optional swaps, not what ships by default, are
   `ovos-stt-plugin-fasterwhisper` (a larger, more accurate Whisper-class model, if your language
   isn't one of the ones it already ships for) and `ovos-tts-plugin-phoonnx`.
 
