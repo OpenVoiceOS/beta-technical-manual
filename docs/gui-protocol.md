@@ -205,16 +205,16 @@ namespace), so the UI can react to listening/speaking state:
 | Bus message type | Meaning |
 |---|---|
 | `recognizer_loop:wakeword` | Wake word detected |
-| `recognizer_loop:record_begin` | Microphone opened |
-| `recognizer_loop:record_end` | Microphone closed |
+| `ovos.listener.record.started` (legacy: `recognizer_loop:record_begin`) | Microphone opened |
+| `ovos.listener.record.ended` (legacy: `recognizer_loop:record_end`) | Microphone closed |
 | `recognizer_loop:utterance` | [Utterance](life-of-an-utterance.md) recognized |
 | `recognizer_loop:recognition_unknown` | Intended STT-empty forward; the listener actually emits `recognizer_loop:speech.recognition.unknown`, so this subscription never fires (topic-name mismatch in `ovos-gui`) |
 | `speak` | [TTS](tts-plugins.md) about to speak |
 | `recognizer_loop:audio_output_start` | Audio playback started |
 | `recognizer_loop:audio_output_end` | Audio playback ended |
-| `recognizer_loop:sleep` | Device going to sleep |
+| `ovos.listener.sleep` (legacy: `recognizer_loop:sleep`) | Device going to sleep |
 | `recognizer_loop:wake_up` | Device waking up |
-| `mycroft.awoken` | Wake-up acknowledged |
+| `ovos.listener.awoken` (legacy: `mycroft.awoken`) | Wake-up acknowledged |
 | `mycroft.skill.handler.start` | A skill handler started |
 | `mycroft.skill.handler.complete` | A skill handler completed |
 | `complete_intent_failure` | No intent/fallback matched the utterance |
