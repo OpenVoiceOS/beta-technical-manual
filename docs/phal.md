@@ -228,7 +228,7 @@ Skills and the core pipeline never run as root.
     "admin": {
       "ovos-PHAL-plugin-system": {
         "enabled": true,
-        "some_option": "value"
+        "use_external_factory_reset": true
       }
     }
   }

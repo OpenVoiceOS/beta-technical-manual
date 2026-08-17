@@ -347,7 +347,7 @@
 - Apr 2025 - [ovos-busmon](https://github.com/OpenVoiceOS/ovos-busmon) introduced: web-based live messagebus monitor and debugging tool
 - Jun 2025 - Introduction of [ovoscope](https://github.com/OpenVoiceOS/ovoscope), the formal end-to-end testing framework for OVOS skills and core components.
 - Jun 2025 - `ovos-utils` version **0.8.0** released, standardizing cross-platform utilities.
-- Jun 2025 - `ovos-workshop` walks 4.0.0 → 7.0.0 in one day of breaking cleanups and drops the skill launcher's compatibility layer for Mycroft-style skill loading; `ovos-plugin-manager` reaches 1.0.0 and `ovos-config` 2.0.0
+- Jun 2025 - `ovos-workshop` walks 4.0.0 → 7.0.0 in one day of breaking cleanups, then drops the skill launcher's compatibility layer for Mycroft-style skill loading two weeks later in `7.0.7a1`; `ovos-plugin-manager` reaches 1.0.0 and `ovos-config` 2.0.0
 - Jul 2025 - [Transcription Validator](https://blog.openvoiceos.org/posts/2025-07-22-ovos-transcription-validator-plugin) utterance plugin introduced, filtering STT nonsense before intent matching
 - Oct 2025 - `ovos-core` reaches the **2.x** line (`2.1.0`), a major release formalizing the multi-intent-pipeline architecture.
 - Oct 2025 - [phoonnx](https://blog.openvoiceos.org/posts/2025-10-06-phoonnx) introduced: OVOS's own ONNX-based multilingual neural TTS engine and the recommended on-device voice
