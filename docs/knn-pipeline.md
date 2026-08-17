@@ -99,14 +99,14 @@ reaches `ovos-hierarchical-knn-pipeline-high`:
    next, where the same label now clears `conf_medium`.
 
 If the user instead says "stop" with no weather skill active, the same `_match()`
-call also considers the special label `stop:stop` (source: `_SPECIAL_LABELS` and
-`_allowed_special_labels()` in `__init__.py`), but only because
-`ovos-stop-pipeline-plugin` normally runs earlier and would have already claimed
-it. `stop:stop` is only reachable through this pipeline when
-`ovos-stop-pipeline-plugin` is itself listed in `session.pipeline`. Two more special
-labels get the same treatment: `ocp:play` (remapped to `ovos.common_play.play_search`,
-gated on the OCP pipeline being present) and `common_query:common_query` (remapped to
-`common_query.question`, gated on the common-query pipeline).
+call also considers the special label `stop:stop` (source: module-level
+`_SPECIAL_LABELS = {"ocp:play", "common_query:common_query", "stop:stop"}` in
+`__init__.py`). All three special labels are unconditionally unioned into both the
+active-domain set and the match allow-list — this plugin never checks whether a
+stop, OCP, or common-query pipeline plugin is actually configured. In practice
+`ovos-stop-pipeline-plugin` normally runs earlier in `session.pipeline` and claims
+"stop" first, so this stage rarely gets the chance to fire on `stop:stop`, but that
+is an ordering effect between pipeline plugins, not a gate this plugin enforces.
 
 ---
 
@@ -171,7 +171,7 @@ Settings live under `intents.ovos_hierarchical_knn_pipeline` in `mycroft.conf`:
 | `conf_high` | `0.7` | Minimum confidence for a `match_high` result. |
 | `conf_medium` | `0.5` | Minimum confidence for a `match_medium` result. |
 | `conf_low` | `0.15` | Minimum confidence for a `match_low` result. |
-| `renormalize` | `false` | Renormalize confidence scores before threshold checks. |
+| `renormalize` | `true` | Renormalize confidence scores before threshold checks. |
 | `timeout` | `1` | Seconds to wait for the classifier before giving up on a match. |
 
 See [Pipelines Overview](pipelines-overview.md) for how to place it in your pipeline and how

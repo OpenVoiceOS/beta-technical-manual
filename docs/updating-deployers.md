@@ -111,6 +111,14 @@ plus a new `media.validate_source` (bool, default `True`) config key in
 central `ovos-media` instance that must act on non-default/remote
 HiveMind sessions.
 
+`ovos-media`'s `require_default_session()` decorator was itself replaced in
+`72f6088` (#160, 2026-08-17, `2.0.0a3`): gating moved from a per-handler
+decorator to a `gated` flag in `ovos_media/bus/api.py`'s single registration
+table, checked with `is_default_session()` (`ovos_media/utils.py`) before
+dispatch. `media.validate_source` still gates the same way. See
+[ovos-media: HiveMind multi-session gating](ovos-media.md#hivemind-multi-session-gating)
+for the current mechanism.
+
 ### Listener defaults changed (instant_listen, remove_silence, mic backend)
 
 `listener.instant_listen` and `listener.remove_silence` flipped to enabled
