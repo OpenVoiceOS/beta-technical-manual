@@ -219,9 +219,9 @@ those pages state a maturity rating for these plugins.
 | ovos-openai-plugin | not rated | online | Pointing at OpenAI or any OpenAI-compatible endpoint (cloud, Ollama, vLLM, LocalAI, `ovos-persona-server`) |
 | ovos-messagebus-chat-plugin | not rated | offline | Answering through the existing skills/intent stack instead of an LLM |
 | ovos-solver-rivescript-plugin / ovos-solver-aiml-plugin | not rated | offline | A lightweight scripted chatbot, no model weights at all. The repos put the words in a different order (`ovos-solver-plugin-rivescript`, `ovos-solver-plugin-aiml`), but the package and handler names are the ones shown here |
-| ovos-wikipedia-solver | not rated | online | Factual questions answered from Wikipedia |
-| ovos-wolfram-alpha-solver | not rated | online | Computational/factual questions (math, unit conversion, …) |
-| ovos-ddg-solver-plugin | not rated | online | General web-search-style answers via DuckDuckGo |
+| ovos-wikipedia-plugin | not rated | online | Factual questions answered from Wikipedia |
+| ovos-wolfram-alpha-plugin | not rated | online | Computational/factual questions (math, unit conversion, …) |
+| ovos-ddg-plugin | not rated | online | General web-search-style answers via DuckDuckGo |
 
 !!! note "Privacy of the demo persona"
     `ovos-openai-plugin` ships a `Remote Llama` demo persona pointed at a public third-party

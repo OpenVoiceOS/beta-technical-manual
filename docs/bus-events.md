@@ -141,8 +141,8 @@ shown, and do not translate them by analogy:
 
 | Event | Direction | Meaning |
 |---|---|---|
-| `stop:global` | in | Global-stop dispatch: its handler emits the `ovos.stop` broadcast (and `ovos.utterance.handled`) |
-| `{skill_id}.stop` | out | Targeted stop dispatch to one skill, produced by a `stop:skill` match |
+| `<pipeline_id>:global_stop` (legacy: `stop:global`) | in | Global-stop dispatch: its handler emits the `ovos.stop` broadcast (and `ovos.utterance.handled`) |
+| `{skill_id}.stop` | out | Targeted stop dispatch to one skill, produced by a `<skill_id>:stop` match (legacy: `stop:skill`) |
 | `{skill_id}.stop.ping` | out | Asks one skill whether it can stop |
 | `ovos.stop.pong` (legacy: `skill.stop.pong`) | in | Handler's `can_handle` reply |
 | `ovos.stop` (legacy: `mycroft.stop`) | out | Universal stop broadcast |
