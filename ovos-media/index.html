@@ -2597,15 +2597,19 @@ when <code>ovos-media</code> is not running, and bridges old pre-OCP <code>Commo
 <p>On a server that fans playback out to several <a href="../hivemind-agents/">HiveMind</a> satellites, not
 every bus handler should act on behalf of every session. <code>ovos_media/bus/api.py</code>'s single
 registration table marks each playback-executing topic <code>gated</code>, and applies <code>is_default_session()</code>
-(<code>ovos_media/utils.py</code>) before dispatching it. This covers most <code>ovos.common_play.*</code>
-playback-control topics too, not only the hardware-bound ones — <code>play</code>, <code>pause</code>, <code>stop</code>, <code>next</code>,
-<code>previous</code>, <code>seek</code>, <code>playlist.clear</code>, <code>duck</code>/<code>unduck</code>/<code>cork</code>/<code>uncork</code>, <code>shuffle.*</code>, <code>repeat.*</code>,
-<code>like</code>/<code>unlike</code>, <code>ovos.audio.output.started</code>/<code>.ended</code>, and <code>recognizer_loop:record_begin</code>/<code>_end</code>
-are all gated to the local ("default") session. Only the read-only/status topics
+(<code>ovos_media/utils.py</code>) before dispatching it. Every <code>ovos.common_play.*</code> topic that changes
+player state is gated to the local ("default") session this way — the full playback-control set
+(<code>play</code>, <code>pause</code>, <code>play_pause</code>, <code>resume</code>, <code>stop</code>, <code>next</code>, <code>previous</code>, <code>seek</code>,
+<code>set_track_position</code>), the whole <code>playlist.*</code> group (<code>set</code>, <code>clear</code>, <code>queue</code>), the hardware-bound
+<code>duck</code>/<code>unduck</code>/<code>cork</code>/<code>uncork</code> (which react to <code>ovos.audio.output.started</code>/<code>.ended</code> and
+<code>recognizer_loop:record_begin</code>/<code>_end</code>), the whole <code>shuffle.*</code> and <code>repeat.*</code> groups,
+<code>like</code>/<code>unlike</code>, and <code>ovos.utterance.handled</code>. Only the read-only/status topics
 (<code>get_track_length</code>, <code>get_track_position</code>, <code>track_info</code>, <code>list_backends</code>, <code>status</code>,
-<code>media.state</code>, <code>playback_time</code>, <code>SEI.get</code>) and a few others stay ungated. Set
-<code>media.validate_source: false</code> on an instance that must act on non-default/remote HiveMind
-sessions — see <a href="../updating-deployers/#native_sources-config-key-replaced-by-session-based-routing">Updating: deployers</a>.</p>
+<code>media.state</code>, <code>playback_time</code>, <code>SEI.get</code>) and a few others stay ungated — check
+<code>_player_table()</code> in <code>ovos_media/bus/api.py</code> for the authoritative, current list rather than
+treating this paragraph as exhaustive. Set <code>media.validate_source: false</code> on an instance that
+must act on non-default/remote HiveMind sessions — see
+<a href="../updating-deployers/#native_sources-config-key-replaced-by-session-based-routing">Updating: deployers</a>.</p>
 <p>The <code>media.validate_source</code> config flag (see <a href="#configuration">Configuration</a> above) controls how
 strict this gating is:</p>
 <ul>
