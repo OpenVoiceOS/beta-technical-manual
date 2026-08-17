@@ -264,7 +264,7 @@ stock install keys placed under `intents.OCP` change nothing (see
   "backends": {
     "OCP": {
       "type": "ovos_common_play",
-      "preferred_audio_services": ["vlc", "mplayer", "simple"],
+      "preferred_audio_services": ["mpv", "vlc", "simple"],
       "active": true
     }
   }
@@ -275,7 +275,7 @@ stock install keys placed under `intents.OCP` change nothing (see
 |---|---|---|
 | `Audio.default-backend` | `"mpv"` | Audio backend used for playback. |
 | `Audio.backends.OCP.type` | `"ovos_common_play"` | Backend type for the OCP entry. Do not set this to the string `"OCP"`. That name is only valid as the key under `backends`. |
-| `Audio.backends.OCP.preferred_audio_services` | `["vlc", "mplayer", "simple"]` | Order in which OCP tries local media players. |
+| `Audio.backends.OCP.preferred_audio_services` | `["mpv", "vlc", "simple"]` | Order in which OCP tries local media players. |
 | `Audio.backends.OCP.active` | `true` | Whether the OCP backend is available for selection. |
 
 Source: the `intents.ovos-ocp-pipeline-plugin` and `Audio` sections of `mycroft.conf` in [OpenVoiceOS/ovos-config](https://github.com/OpenVoiceOS/ovos-config).

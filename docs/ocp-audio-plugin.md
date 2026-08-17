@@ -30,8 +30,8 @@ The pieces:
   1. manages the now-playing queue and player state,
   2. runs [stream extractors](ocp-plugins.md),
   3. exposes the player over [MPRIS](#mpris), and
-  4. drives the actual audio output through a lower-level audio backend (`vlc`, `mplayer`, or
-     `simple` by default).
+  4. drives the actual audio output through a lower-level audio backend (`mpv`, `vlc`, or
+     `simple` in the shipped default order).
 
 ```mermaid
 flowchart TD
@@ -39,10 +39,10 @@ flowchart TD
     B --> C["Queue +<br/>player state"]
     C --> D["Stream extractors"]
     D --> E["MPRIS"]
-    D --> F["Audio backend<br/>vlc / mplayer / simple"]
+    D --> F["Audio backend<br/>mpv / vlc / simple"]
 ```
 
-*Diagram:* The flow starts at OCP pipeline and skill search results and ends at playback, and the stream extractors branch output to either MPRIS or the vlc/mplayer/simple audio backend.
+*Diagram:* The flow starts at OCP pipeline and skill search results and ends at playback, and the stream extractors branch output to either MPRIS or the mpv/vlc/simple audio backend.
 
 OCP is a *coordinator*, not an audio codec: it does the voice/queue/MPRIS logic and then hands
 the raw stream to one of the simple audio backends to make sound.
@@ -119,7 +119,7 @@ OCP is configured as a backend under the `Audio` section of [`mycroft.conf`](con
     "backends": {
       "OCP": {
         "type": "ovos_common_play",
-        "preferred_audio_services": ["vlc", "mplayer", "simple"],
+        "preferred_audio_services": ["mpv", "vlc", "simple"],
         "dbus_type": "session",
         "manage_external_players": false,
         "active": true
@@ -130,7 +130,9 @@ OCP is configured as a backend under the `Audio` section of [`mycroft.conf`](con
 ```
 
 - **`preferred_audio_services`**: order in which OCP picks a lower-level audio backend to
-  actually emit sound (`["vlc", "mplayer", "simple"]` is the shipped default).
+  actually emit sound. The shipped `mycroft.conf` sets `["mpv", "vlc", "simple"]`, which is
+  what a stock install uses; the plugin's own code fallback of `["vlc", "mplayer", "simple"]`
+  applies only when the key is absent from config entirely.
 - **`dbus_type`** / MPRIS keys: see [MPRIS](#mpris) below.
 
 !!! warning "`default-backend` must not be `"OCP"`"
@@ -171,7 +173,7 @@ repos, what remains is the player itself. Instead of cramming it into the audio 
 | | OCP audio plugin (legacy, default) | `ovos-media` (upcoming) |
 |---|---|---|
 | Where it runs | Inside [`ovos-audio`](audio-service.md) as a `mycroft.plugin.audioservice` backend | Its own service/daemon |
-| Player plugins | One bundled player; delegates to `vlc`/`mplayer`/`simple` audio backends | Typed plugins on `opm.media.audio` / `opm.media.video` / `opm.media.web` (see [Media Playback](media-plugins.md)) |
+| Player plugins | One bundled player; delegates to `mpv`/`vlc`/`simple` audio backends | Typed plugins on `opm.media.audio` / `opm.media.video` / `opm.media.web` (see [Media Playback](media-plugins.md)) |
 | Video / web | Limited | Dedicated audio **and** video **and** web players |
 | Status | Enabled by default | Opt-in |
 

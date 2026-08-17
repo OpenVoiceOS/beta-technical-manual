@@ -348,7 +348,7 @@
 | `Audio.native_sources` | `["debug_cli", "audio", "mycroft-gui"]` |  |
 | `Audio.default-backend` | `"mpv"` |  |
 | `Audio.backends.OCP.type` | `"ovos_common_play"` |  |
-| `Audio.backends.OCP.preferred_audio_services` | `["vlc", "mplayer", "simple"]` |  |
+| `Audio.backends.OCP.preferred_audio_services` | `["mpv", "vlc", "simple"]` |  |
 | `Audio.backends.OCP.disable_mpris` | `true` |  |
 | `Audio.backends.OCP.dbus_type` | `"session"` |  |
 | `Audio.backends.OCP.manage_external_players` | `false` |  |
