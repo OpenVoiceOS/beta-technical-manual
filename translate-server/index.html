@@ -1373,6 +1373,15 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#error-responses" class="md-nav__link">
+    <span class="md-ellipsis">
+      Error responses
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1724,6 +1733,15 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#error-responses" class="md-nav__link">
+    <span class="md-ellipsis">
+      Error responses
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -2004,6 +2022,31 @@ got: <code>pip show ovos-translate-server</code>.</p>
 <hr />
 <h3 id="get-utcp"><code>GET /utcp</code><a class="headerlink" href="#get-utcp" title="Permanent link">&para;</a></h3>
 <p>Returns the UTCP (Universal Tool Calling Protocol) manual describing every HTTP endpoint. UTCP-compatible agents can use it to discover and invoke the translation tools. No extra dependency is required.</p>
+<h3 id="error-responses">Error responses<a class="headerlink" href="#error-responses" title="Permanent link">&para;</a></h3>
+<p>Every endpoint reports failures as JSON <code>{"error": "&lt;ExceptionType&gt;", "detail": "&lt;message&gt;"}</code>
+(0.9.1a1+):</p>
+<table>
+<thead>
+<tr>
+<th>Status</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>400</strong></td>
+<td>The request itself is wrong: an unsupported or unknown language pair (<code>ValueError</code>). Fix the request.</td>
+</tr>
+<tr>
+<td><strong>503</strong></td>
+<td>The translation engine or model is unavailable (<code>RuntimeError</code>). Transient, but retrying the same request immediately will not help.</td>
+</tr>
+<tr>
+<td><strong>500</strong></td>
+<td>Any other unexpected failure.</td>
+</tr>
+</tbody>
+</table>
 <hr />
 <h2 id="vendor-compatible-routers">Vendor-Compatible Routers<a class="headerlink" href="#vendor-compatible-routers" title="Permanent link">&para;</a></h2>
 <p>Beyond the native endpoints above, the app mounts drop-in compatible routers. Clients written for hosted translation APIs can talk to this server unchanged: DeepL, DeepLX, LibreTranslate, Lingva, Amazon Translate, Google Translate, and Azure Translator. See the server's <code>/docs</code> (OpenAPI) for their exact paths.</p>
