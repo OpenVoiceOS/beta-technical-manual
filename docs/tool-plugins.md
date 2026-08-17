@@ -167,7 +167,7 @@ converting the merged list to the OpenAI spec in a single call.
 [OpenVoiceOS/ovos-PHAL-plugin-tools](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-tools) is a PHAL plugin that loads all installed `ToolBox` plugins and registers them on the messagebus. Any component that can emit bus messages can then use them.
 
 ```bash
-pip install ovos-PHAL-plugin-tools
+pip install --pre ovos-PHAL-plugin-tools
 ```
 
 Entry point group: `opm.phal`; plugin name `ovos-phal-plugin-tools`.

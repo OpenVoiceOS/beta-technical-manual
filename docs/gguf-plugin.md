@@ -13,7 +13,7 @@ Models load from a [Hugging Face Hub](https://huggingface.co) repository (downlo
 use) or from a local `.gguf` file path. Each engine loads its own `llama_cpp.Llama` instance.
 You can share one `Llama` between engines by passing `gguf_engine=` in code.
 
-Install: `pip install ovos-gguf-plugin`
+Install: `pip install --pre ovos-gguf-plugin`
 
 **GitHub**: [OpenVoiceOS/ovos-gguf-plugin](https://github.com/OpenVoiceOS/ovos-gguf-plugin)
 

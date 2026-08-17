@@ -264,8 +264,8 @@ Then select it in your `media.audio_players` / `media.video_players` config. See
   only touched when actually used.
 
 ```bash
-pip install ovos-media-classifier          # keyword backend only
-pip install ovos-media-classifier[ner]     # adds the Aho-Corasick NER backend
+pip install --pre ovos-media-classifier          # keyword backend only
+pip install --pre ovos-media-classifier[ner]     # adds the Aho-Corasick NER backend
 ```
 
 ```python

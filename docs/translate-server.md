@@ -36,7 +36,7 @@ Also install the translation plugin(s) you intend to serve:
 
 ```bash
 pip install ovos-translate-plugin-nllb
-pip install ovos-lang-detector-classics-plugin
+pip install --pre ovos-lang-detector-classics-plugin
 ```
 
 ---

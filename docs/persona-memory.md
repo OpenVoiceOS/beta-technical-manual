@@ -10,7 +10,7 @@ Persona memory is managed through the `AgentContextManager` interface (OPM `opm.
 `ovos-memory-plugins` is **local-first**: most backends need no external service at all. Only `longterm` and `entity` call an OpenAI-compatible chat endpoint, and that endpoint can be your own local LLM, never a hosted provider.
 
 ```bash
-pip install ovos-memory-plugins
+pip install --pre ovos-memory-plugins
 ```
 
 ---
@@ -171,7 +171,7 @@ Class `LocalRAGMemory`. Runs Retrieval-Augmented Generation **entirely in-proces
 Install the known-good offline stack with the extra:
 
 ```bash
-pip install 'ovos-memory-plugins[local-rag]'
+pip install --pre 'ovos-memory-plugins[local-rag]'
 ```
 
 which pulls `ovos-gguf-plugin` (whose `ovos-gguf-embeddings-plugin` entry point provides labse

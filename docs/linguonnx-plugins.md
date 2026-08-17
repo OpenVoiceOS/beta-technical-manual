@@ -15,7 +15,7 @@ Both run on ONNX Runtime. Neither needs torch. Both work offline after the model
 ## Installation
 
 ```bash
-pip install ovos-plugin-linguonnx
+pip install --pre ovos-plugin-linguonnx
 ```
 
 Models download from HuggingFace on first use. Constructing a plugin downloads nothing. The first `detect()` or `translate()` call does the download.

@@ -52,7 +52,6 @@ and is launched by its own console script (`ovos_PHAL` / `ovos_PHAL_admin`):
                                            ┌───────┴───────┐
                                            │  AdminPHAL    │
                                            │  (root)       │
-                                           │  plugin-mk2   │
                                            │  plugin-system│
                                            └───────────────┘
 

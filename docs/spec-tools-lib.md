@@ -40,8 +40,8 @@ clause-for-clause.
 | `ovos-spec-lint` | [OVOS-INTENT-1](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-1.md) / [-2](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-2.md) | A linter that validates a `locale/` folder against the resource-format specs, including `.blacklist`/`.entity` naming and slot-free constraints |
 
 ```bash
-pip install ovos-spec-tools            # core — no dependencies (Python 3.10+)
-pip install ovos-spec-tools[langcodes] # adds smart language fallback
+pip install --pre ovos-spec-tools            # core — no dependencies (Python 3.10+)
+pip install --pre ovos-spec-tools[langcodes] # adds smart language fallback
 ```
 
 ```python

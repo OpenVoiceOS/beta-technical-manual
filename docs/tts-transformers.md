@@ -84,7 +84,7 @@ Replace `"plugin_name"` with the identifier of the desired plugin and provide an
 * **Installation**:
 
 ```bash
-  pip install ovos-tts-transformer-sox-plugin
+  pip install --pre ovos-tts-transformer-sox-plugin
 
 ```
 
