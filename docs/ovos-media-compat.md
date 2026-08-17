@@ -34,7 +34,7 @@ This bridge is marked for removal in `ovos-core 0.1.0`.
 
 ### OCPMediaCatalog is a skill
 
-`OCPMediaCatalog` in `ovos_media/player.py` inherits from `OVOSCommonPlaybackSkill`. This registers
+`OCPMediaCatalog` in `ovos_media/player/__init__.py` inherits from `OVOSCommonPlaybackSkill`. This registers
 `ovos-media` as a skill on the bus and loads skill infrastructure (settings, locale, etc.). It
 registers `@ocp_search()` to expose liked songs as a search result. There is no
 `@ocp_featured_media()` handler.

@@ -107,13 +107,13 @@ parses `--help` and `--version` and exits before starting the daemon or touching
 
 Key modules:
 
-- `ovos_media/player.py`: `OCPMediaPlayer`, the player state machine (playlist, track history, playback/media/loop state). `OCPMediaCatalog` (an `OVOSCommonPlaybackSkill` subclass, instantiated as `self.media`) manages only the liked-songs store and search-results playlist
+- `ovos_media/player/__init__.py`: `OCPMediaPlayer`, the player state machine (playlist, track history, playback/media/loop state). `OCPMediaCatalog` (an `OVOSCommonPlaybackSkill` subclass, instantiated as `self.media`) manages only the liked-songs store and search-results playlist
 
 
 - `ovos_media/media_backends/`: `AudioService`, `VideoService`, `WebService`. Each manages typed backend plugins
 
 
-- `ovos_media/player.py`: pushes player state only through `ovos.common_play.*` bus broadcasts (2.0.0a1 dropped the in-process `GUIInterface` along with the old `ovos_media/gui.py` / `OCPGUIInterface`); any GUI, `ovos-control-panel` (formerly ovos-webui) included, is an outboard bus client
+- `ovos_media/player/__init__.py`: pushes player state only through `ovos.common_play.*` bus broadcasts (2.0.0a1 dropped the in-process `GUIInterface` along with the old `ovos_media/gui.py` / `OCPGUIInterface`); any GUI, `ovos-control-panel` (formerly ovos-webui) included, is an outboard bus client
 
 
 - `ovos_media/mpris.py`: MPRIS integration

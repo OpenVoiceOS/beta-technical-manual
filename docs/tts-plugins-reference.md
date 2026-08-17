@@ -337,6 +337,7 @@ not equivalent:
 |---|---|---|
 | `max_loaded_bytes` | Total size in memory, LRU-evicted. Accepts a plain byte count or a human size like `"3GB"`, `"512MB"`, `"1.5GiB"` (`KB/MB/GB/TB` are powers of 1000, `KiB/MiB/GiB/TiB` powers of 1024). | unset (no budget) |
 | `max_loaded_voices` | Count of resident voices, LRU-evicted. | unset (no limit) |
+| `load_wait_timeout` | Seconds a load waits for resident memory to free up before proceeding anyway. | `300` |
 
 `max_loaded_voices` is the older setting and a poor bound on this catalog: a Piper voice is
 around 60 MB while an omnivoice voice is around 2.2 GB, roughly a 40x spread, so a count that is
@@ -361,9 +362,16 @@ evicted. The two caps treat pins differently. If more voices are pinned than
 `max_loaded_voices` allows, that **count** limit is raised to fit them (logged as an error so
 the mismatch isn't silent). The `max_loaded_bytes` **size** budget is never raised: a pin that
 fits individually still loads even when resident usage then exceeds the budget (again logged,
-not fatal), but a pin whose own on-disk size alone exceeds the entire budget is refused and
-never becomes resident (1.82.0a1+ — loading it would be a guaranteed OOM kill, not a degraded
-path). A failed pin never stops the service from starting.
+not fatal). A failed pin never stops the service from starting.
+
+This refusal applies to any voice load, not only pins: any voice whose own known on-disk size
+alone exceeds the whole `max_loaded_bytes` budget is refused with `VoiceExceedsMemoryBudget`
+and never becomes resident — loading it would be a guaranteed OOM kill, not a degraded path.
+A voice that fits on its own but not beside what is currently resident instead waits for room:
+up to `load_wait_timeout` seconds (default `300`) for another load to finish or a leased voice
+to be released, after which it loads anyway and logs a warning that memory use will exceed the
+budget. A voice not yet downloaded can't be measured and is treated as needing the whole
+budget, so it always loads alone.
 
 Size the budget for the actual peak, not just the steady state: peak resident memory is the
 cached models plus whatever is loading in flight at that moment, and a request that arrives
