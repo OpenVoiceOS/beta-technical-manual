@@ -1430,16 +1430,16 @@ The pieces:</p>
 <li>manages the now-playing queue and player state,</li>
 <li>runs <a href="../ocp-plugins/">stream extractors</a>,</li>
 <li>exposes the player over <a href="#mpris">MPRIS</a>, and</li>
-<li>drives the actual audio output through a lower-level audio backend (<code>vlc</code>, <code>mplayer</code>, or
-     <code>simple</code> by default).</li>
+<li>drives the actual audio output through a lower-level audio backend (<code>mpv</code>, <code>vlc</code>, or
+     <code>simple</code> in the shipped default order).</li>
 </ul>
 <pre class="mermaid"><code>flowchart TD
     A["OCP pipeline / skills&lt;br/&gt;search results"] --&gt; B["OCP audio plugin"]
     B --&gt; C["Queue +&lt;br/&gt;player state"]
     C --&gt; D["Stream extractors"]
     D --&gt; E["MPRIS"]
-    D --&gt; F["Audio backend&lt;br/&gt;vlc / mplayer / simple"]</code></pre>
-<p><em>Diagram:</em> The flow starts at OCP pipeline and skill search results and ends at playback, and the stream extractors branch output to either MPRIS or the vlc/mplayer/simple audio backend.</p>
+    D --&gt; F["Audio backend&lt;br/&gt;mpv / vlc / simple"]</code></pre>
+<p><em>Diagram:</em> The flow starts at OCP pipeline and skill search results and ends at playback, and the stream extractors branch output to either MPRIS or the mpv/vlc/simple audio backend.</p>
 <p>OCP is a <em>coordinator</em>, not an audio codec: it does the voice/queue/MPRIS logic and then hands
 the raw stream to one of the simple audio backends to make sound.</p>
 <hr />
@@ -1505,7 +1505,7 @@ in <a href="../ovos-media/"><code>ovos-media</code></a>. Plan a migration if you
 </span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">    </span><span class="nt">&quot;backends&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 </span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">      </span><span class="nt">&quot;OCP&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 </span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">        </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ovos_common_play&quot;</span><span class="p">,</span>
-</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">        </span><span class="nt">&quot;preferred_audio_services&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;vlc&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;mplayer&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;simple&quot;</span><span class="p">],</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">        </span><span class="nt">&quot;preferred_audio_services&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;mpv&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;vlc&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;simple&quot;</span><span class="p">],</span>
 </span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">        </span><span class="nt">&quot;dbus_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;session&quot;</span><span class="p">,</span>
 </span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">        </span><span class="nt">&quot;manage_external_players&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
 </span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="w">        </span><span class="nt">&quot;active&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
@@ -1516,7 +1516,9 @@ in <a href="../ovos-media/"><code>ovos-media</code></a>. Plan a migration if you
 </span></code></pre></div>
 <ul>
 <li><strong><code>preferred_audio_services</code></strong>: order in which OCP picks a lower-level audio backend to
-  actually emit sound (<code>["vlc", "mplayer", "simple"]</code> is the shipped default).</li>
+  actually emit sound. The shipped <code>mycroft.conf</code> sets <code>["mpv", "vlc", "simple"]</code>, which is
+  what a stock install uses; the plugin's own code fallback of <code>["vlc", "mplayer", "simple"]</code>
+  applies only when the key is absent from config entirely.</li>
 <li><strong><code>dbus_type</code></strong> / MPRIS keys: see <a href="#mpris">MPRIS</a> below.</li>
 </ul>
 <div class="admonition warning">
@@ -1562,7 +1564,7 @@ repos, what remains is the player itself. Instead of cramming it into the audio 
 </tr>
 <tr>
 <td>Player plugins</td>
-<td>One bundled player; delegates to <code>vlc</code>/<code>mplayer</code>/<code>simple</code> audio backends</td>
+<td>One bundled player; delegates to <code>mpv</code>/<code>vlc</code>/<code>simple</code> audio backends</td>
 <td>Typed plugins on <code>opm.media.audio</code> / <code>opm.media.video</code> / <code>opm.media.web</code> (see <a href="../media-plugins/">Media Playback</a>)</td>
 </tr>
 <tr>
