@@ -2154,7 +2154,7 @@ parses <code>--help</code> and <code>--version</code> and exits before starting 
 <p><code>ovos_media/media_backends/</code>: <code>AudioService</code>, <code>VideoService</code>, <code>WebService</code>. Each manages typed backend plugins</p>
 </li>
 <li>
-<p><code>ovos_media/player.py</code>: pushes player state only through <code>ovos.common_play.*</code> bus broadcasts (2.0.0a1 dropped the in-process <code>GUIInterface</code> along with the old <code>ovos_media/gui.py</code> / <code>OCPGUIInterface</code>); any GUI, ovos-webui included, is an outboard bus client</p>
+<p><code>ovos_media/player.py</code>: pushes player state only through <code>ovos.common_play.*</code> bus broadcasts (2.0.0a1 dropped the in-process <code>GUIInterface</code> along with the old <code>ovos_media/gui.py</code> / <code>OCPGUIInterface</code>); any GUI, <code>ovos-control-panel</code> (formerly ovos-webui) included, is an outboard bus client</p>
 </li>
 <li>
 <p><code>ovos_media/mpris.py</code>: MPRIS integration</p>
