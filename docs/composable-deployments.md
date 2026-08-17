@@ -87,10 +87,12 @@ display clients connect over a second WebSocket.
     when a display client genuinely runs on another machine — doing so exposes the
     unauthenticated GUI protocol socket to the LAN.
 
-## Standalone skills
+## Running one skill in its own process
 
-A skill does not need a running `ovos-core` to execute. `ovos-workshop` ships a launcher that
-loads exactly one skill and connects it to a bus on its own:
+A skill can run outside `ovos-core`'s own process, in its own process on the same
+machine or a different one — but it still needs a reachable, running `ovos-core`,
+since it waits for that core's skill manager to answer `mycroft.skills.is_ready`
+before it loads. `ovos-workshop` ships a launcher for this:
 
 ```bash
 ovos-skill-launcher {skill_id} [path/to/skill/directory]
@@ -105,19 +107,21 @@ skill straight out of a git checkout.
 from ovos_workshop.skill_launcher import SkillContainer
 
 skill = SkillContainer(skill_id="my-skill.openvoiceos", skill_directory="./my-skill")
-skill.run()  # connects to the bus (websocket config) and loads only this skill
+skill.run()  # connects to the bus, waits for ovos-core's skill manager to
+              # report ready, then loads only this skill
 ```
 
-Because this is a normal Python process that only needs a reachable bus, it enables:
+Because this is a normal Python process that only needs a reachable bus and a running `ovos-core`, it enables:
 
 - **Developing one skill against a remote device**: run the skill on a laptop, point its
   `websocket.host` at a Raspberry Pi running the rest of the stack, and iterate without touching
   the device.
 - **Resource isolation**: a heavyweight skill (for example, one embedding a local LLM) runs in its own
-  process with its own memory ceiling, instead of sharing `ovos-core`'s process.
+  process with its own memory ceiling, instead of sharing `ovos-core`'s process. The `ovos-core`
+  process the skill waits for still runs somewhere, sized for everything else.
 - **Per-skill containers**: package a single skill and `ovos-skill-launcher` into a minimal
-  container image, so a skill can be deployed, scaled, or restarted independently of the rest of
-  the assistant.
+  container image, alongside (not instead of) a running `ovos-core`, so a skill can be deployed,
+  scaled, or restarted independently of the rest of the assistant.
 
 ## Library reuse outside OVOS
 
