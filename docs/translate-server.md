@@ -178,6 +178,17 @@ GET /translate/pt/en/o meu nome é Casimiro
 
 Returns the UTCP (Universal Tool Calling Protocol) manual describing every HTTP endpoint. UTCP-compatible agents can use it to discover and invoke the translation tools. No extra dependency is required.
 
+### Error responses
+
+Every endpoint reports failures as JSON `{"error": "<ExceptionType>", "detail": "<message>"}`
+(0.9.1a1+):
+
+| Status | Meaning |
+|---|---|
+| **400** | The request itself is wrong: an unsupported or unknown language pair (`ValueError`). Fix the request. |
+| **503** | The translation engine or model is unavailable (`RuntimeError`). Transient, but retrying the same request immediately will not help. |
+| **500** | Any other unexpected failure. |
+
 ---
 
 ## Vendor-Compatible Routers

@@ -354,7 +354,12 @@ Pre-built containers are also available via the [ovos-docker-stt](https://github
 
 - **`/stt` takes raw audio bytes, not a multipart upload.** Send the PCM/WAV bytes as the request body (`curl --data-binary @audio.wav`). Pass `sample_rate`/`sample_width` as query params if they differ from the 16000/2 defaults. Those defaults are assumed when reading the raw body.
 
-- **Audio Formats**: Ensure client sends PCM‑compatible formats (`.wav`, `.mp3` recommended).
+- **Audio Formats**: the native `/stt` endpoint takes raw PCM/WAV bytes. The
+  vendor-compatible multipart routers (OpenAI, ElevenLabs, Groq, and the rest) accept
+  other container formats only when `pydub` is installed, which the base install omits:
+  `pip install 'ovos-stt-http-server[audio]'`. Without that extra, uploading anything
+  other than WAV through those routers returns HTTP **501** naming the missing format
+  support.
 
 
 - **Securing Endpoints**: Consider putting a reverse proxy (NGINX, Traefik) in front for SSL or API keys. Minimal NGINX server block, proxying plain HTTP to the server on port 8080:
