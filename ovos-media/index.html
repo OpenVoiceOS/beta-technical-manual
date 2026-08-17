@@ -2299,33 +2299,31 @@ the Role A / Role B reflection-and-takeover behavior have moved to their own pag
 </span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>    &quot;ignored_players&quot;: [],       // MPRIS player names OVOS should not track/adopt
 </span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>    &quot;dbus_type&quot;: &quot;session&quot;,      // &quot;session&quot; (per-user, default) or &quot;system&quot; D-Bus
 </span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>
-</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>    // message sources trusted to bypass per-session validation
-</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>    &quot;native_sources&quot;: [&quot;debug_cli&quot;, &quot;audio&quot;],
-</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>    // when true, the daemon only acts on the local (&quot;default&quot;) session.
-</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>    // set false for HiveMind/multi-session setups that drive playback remotely
-</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>    &quot;validate_source&quot;: true,
-</span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>
-</span><span id="__span-2-14"><a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>    &quot;preferred_audio_services&quot;: [&quot;vlc&quot;, &quot;mplayer&quot;, &quot;cli&quot;],
-</span><span id="__span-2-15"><a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a>    &quot;preferred_video_services&quot;: [&quot;vlc&quot;, &quot;mplayer&quot;],
-</span><span id="__span-2-16"><a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a>    &quot;preferred_web_services&quot;: [],
-</span><span id="__span-2-17"><a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a>
-</span><span id="__span-2-18"><a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a>    // force playback through the audio players even for video/web media, e.g. on headless setups
-</span><span id="__span-2-19"><a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a>    // numeric PlaybackMode value from ovos_utils.ocp (30 = FORCE_AUDIO) or, since 2.0.0a1,
-</span><span id="__span-2-20"><a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a>    // the enum name as a string (&quot;FORCE_AUDIO&quot;)
-</span><span id="__span-2-21"><a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a>    &quot;playback_mode&quot;: 30,
-</span><span id="__span-2-22"><a id="__codelineno-2-22" name="__codelineno-2-22" href="#__codelineno-2-22"></a>
-</span><span id="__span-2-23"><a id="__codelineno-2-23" name="__codelineno-2-23" href="#__codelineno-2-23"></a>    &quot;audio_players&quot;: {
-</span><span id="__span-2-24"><a id="__codelineno-2-24" name="__codelineno-2-24" href="#__codelineno-2-24"></a>      &quot;vlc&quot;: { &quot;module&quot;: &quot;ovos-media-audio-plugin-vlc&quot;, &quot;aliases&quot;: [&quot;VLC&quot;], &quot;active&quot;: true },
-</span><span id="__span-2-25"><a id="__codelineno-2-25" name="__codelineno-2-25" href="#__codelineno-2-25"></a>      &quot;cli&quot;: { &quot;module&quot;: &quot;ovos-media-audio-plugin-cli&quot;, &quot;aliases&quot;: [&quot;Command Line&quot;], &quot;active&quot;: true }
-</span><span id="__span-2-26"><a id="__codelineno-2-26" name="__codelineno-2-26" href="#__codelineno-2-26"></a>    },
-</span><span id="__span-2-27"><a id="__codelineno-2-27" name="__codelineno-2-27" href="#__codelineno-2-27"></a>    &quot;video_players&quot;: {
-</span><span id="__span-2-28"><a id="__codelineno-2-28" name="__codelineno-2-28" href="#__codelineno-2-28"></a>      &quot;vlc&quot;: { &quot;module&quot;: &quot;ovos-media-video-plugin-vlc&quot;, &quot;aliases&quot;: [&quot;VLC&quot;], &quot;active&quot;: true }
-</span><span id="__span-2-29"><a id="__codelineno-2-29" name="__codelineno-2-29" href="#__codelineno-2-29"></a>    },
-</span><span id="__span-2-30"><a id="__codelineno-2-30" name="__codelineno-2-30" href="#__codelineno-2-30"></a>    &quot;web_players&quot;: {
-</span><span id="__span-2-31"><a id="__codelineno-2-31" name="__codelineno-2-31" href="#__codelineno-2-31"></a>      &quot;mpv&quot;: { &quot;module&quot;: &quot;ovos-media-web-plugin-mpv&quot;, &quot;aliases&quot;: [&quot;mpv&quot;], &quot;active&quot;: true }
-</span><span id="__span-2-32"><a id="__codelineno-2-32" name="__codelineno-2-32" href="#__codelineno-2-32"></a>    }
-</span><span id="__span-2-33"><a id="__codelineno-2-33" name="__codelineno-2-33" href="#__codelineno-2-33"></a>  }
-</span><span id="__span-2-34"><a id="__codelineno-2-34" name="__codelineno-2-34" href="#__codelineno-2-34"></a>}
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>    // when true, the daemon only acts on the local (&quot;default&quot;) session.
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>    // set false for HiveMind/multi-session setups that drive playback remotely
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>    &quot;validate_source&quot;: true,
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>
+</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>    &quot;preferred_audio_services&quot;: [&quot;vlc&quot;, &quot;mplayer&quot;, &quot;cli&quot;],
+</span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>    &quot;preferred_video_services&quot;: [&quot;vlc&quot;, &quot;mplayer&quot;],
+</span><span id="__span-2-14"><a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>    &quot;preferred_web_services&quot;: [],
+</span><span id="__span-2-15"><a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a>
+</span><span id="__span-2-16"><a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a>    // force playback through the audio players even for video/web media, e.g. on headless setups
+</span><span id="__span-2-17"><a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a>    // numeric PlaybackMode value from ovos_utils.ocp (30 = FORCE_AUDIO) or, since 2.0.0a1,
+</span><span id="__span-2-18"><a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a>    // the enum name as a string (&quot;FORCE_AUDIO&quot;)
+</span><span id="__span-2-19"><a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a>    &quot;playback_mode&quot;: 30,
+</span><span id="__span-2-20"><a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a>
+</span><span id="__span-2-21"><a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a>    &quot;audio_players&quot;: {
+</span><span id="__span-2-22"><a id="__codelineno-2-22" name="__codelineno-2-22" href="#__codelineno-2-22"></a>      &quot;vlc&quot;: { &quot;module&quot;: &quot;ovos-media-audio-plugin-vlc&quot;, &quot;aliases&quot;: [&quot;VLC&quot;], &quot;active&quot;: true },
+</span><span id="__span-2-23"><a id="__codelineno-2-23" name="__codelineno-2-23" href="#__codelineno-2-23"></a>      &quot;cli&quot;: { &quot;module&quot;: &quot;ovos-media-audio-plugin-cli&quot;, &quot;aliases&quot;: [&quot;Command Line&quot;], &quot;active&quot;: true }
+</span><span id="__span-2-24"><a id="__codelineno-2-24" name="__codelineno-2-24" href="#__codelineno-2-24"></a>    },
+</span><span id="__span-2-25"><a id="__codelineno-2-25" name="__codelineno-2-25" href="#__codelineno-2-25"></a>    &quot;video_players&quot;: {
+</span><span id="__span-2-26"><a id="__codelineno-2-26" name="__codelineno-2-26" href="#__codelineno-2-26"></a>      &quot;vlc&quot;: { &quot;module&quot;: &quot;ovos-media-video-plugin-vlc&quot;, &quot;aliases&quot;: [&quot;VLC&quot;], &quot;active&quot;: true }
+</span><span id="__span-2-27"><a id="__codelineno-2-27" name="__codelineno-2-27" href="#__codelineno-2-27"></a>    },
+</span><span id="__span-2-28"><a id="__codelineno-2-28" name="__codelineno-2-28" href="#__codelineno-2-28"></a>    &quot;web_players&quot;: {
+</span><span id="__span-2-29"><a id="__codelineno-2-29" name="__codelineno-2-29" href="#__codelineno-2-29"></a>      &quot;mpv&quot;: { &quot;module&quot;: &quot;ovos-media-web-plugin-mpv&quot;, &quot;aliases&quot;: [&quot;mpv&quot;], &quot;active&quot;: true }
+</span><span id="__span-2-30"><a id="__codelineno-2-30" name="__codelineno-2-30" href="#__codelineno-2-30"></a>    }
+</span><span id="__span-2-31"><a id="__codelineno-2-31" name="__codelineno-2-31" href="#__codelineno-2-31"></a>  }
+</span><span id="__span-2-32"><a id="__codelineno-2-32" name="__codelineno-2-32" href="#__codelineno-2-32"></a>}
 </span></code></pre></div>
 <p><code>dbus_type</code> picks which D-Bus the MPRIS integration registers and scans on: the per-user
 <strong>session</strong> bus (default) or the system-wide <strong>system</strong> bus. <code>playback_mode</code> forces media that
@@ -2382,8 +2380,14 @@ emitted as <code>&lt;msg_type&gt;.response</code>. For example, <code>ovos.commo
 are handled inside the <code>ovos-media</code> process. The canonical reference for the full
 <code>ovos.common_play.*</code> namespace is <a href="../bus-events/#ocp-media-playback">Bus Events Reference: OCP / media playback</a>;
 this section covers only the service-level subset with <code>ovos-media</code>-specific behavior notes.</p>
-<p>Four are on the <code>MediaService</code> daemon itself. <code>ovos.common_play.ping</code> is the one to use for a
-liveness probe — the rest are on the player, so they answer only once a player exists:</p>
+<p>Two are on the <code>MediaService</code> daemon itself, in <code>_service_table()</code>
+(<code>ovos_media/bus/api.py</code>): <code>ovos.common_play.ping</code>, the one to use for a liveness probe, and
+<code>opm.audio.query</code> (OPM plugin-discovery compatibility with the legacy <code>PlaybackService</code>
+handler). <code>ovos.common_play.home</code>, <code>.search.start</code> and <code>.search.end</code> are pipeline-side
+signals — the OCP pipeline plugin uses them to drive a GUI's own navigation/loading state.
+<code>ovos-media</code> has no in-process GUI and nothing else that reacts to them, so neither the daemon
+nor the player subscribes to any of the three; a bus message with no subscriber here is legal.</p>
+<p>The rest are registered by <code>OCPMediaPlayer</code>:</p>
 <table>
 <thead>
 <tr>
@@ -2392,39 +2396,6 @@ liveness probe — the rest are on the player, so they answer only once a player
 </tr>
 </thead>
 <tbody>
-<tr>
-<td><code>ovos.common_play.home</code></td>
-<td>Open the OCP home/menu</td>
-</tr>
-<tr>
-<td><code>ovos.common_play.ping</code></td>
-<td>Liveness probe. Lets callers detect a running <code>ovos-media</code></td>
-</tr>
-<tr>
-<td><code>ovos.common_play.search.end</code></td>
-<td>Close out an in-progress OCP search</td>
-</tr>
-<tr>
-<td><code>opm.audio.query</code></td>
-<td>OPM plugin-discovery compatibility with the legacy <code>PlaybackService</code> handler</td>
-</tr>
-</tbody>
-</table>
-<p>The rest are registered by <code>OCPMediaPlayer</code> (<code>ovos.common_play.search.start</code> lives here, not
-on the daemon — the player's session-gated handler pushes the "loading" GUI state, and a
-duplicate daemon-level registration was removed because it double-pushed it):</p>
-<table>
-<thead>
-<tr>
-<th>Bus message</th>
-<th>Purpose</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>ovos.common_play.search.start</code></td>
-<td>Open an OCP search (session-gated "loading" GUI state)</td>
-</tr>
 <tr>
 <td><code>ovos.common_play.seek</code></td>
 <td>Seek within the current track</td>
@@ -2466,8 +2437,9 @@ duplicate daemon-level registration was removed because it double-pushed it):</p
 <p>Ducking binds to ovos-audio's spec topics (<code>ovos.audio.output.started</code> / <code>.ended</code> trigger
 duck/unduck since 1.0.0a1, which dropped the <code>recognizer_loop:audio_output_*</code> aliases), while
 cork still listens on the legacy-style <code>recognizer_loop:record_begin</code> / <code>record_end</code>, since no
-spec topic covers the mic-recording window. The full ~30-entry <code>OCPMediaPlayer</code> handler list
-is in <code>ovos_media/player.py</code>.</p>
+spec topic covers the mic-recording window. The full handler list, with each topic's <code>gated</code> value, is in <code>_player_table()</code>
+(<code>ovos_media/bus/api.py</code>) — see <a href="#hivemind-multi-session-gating">HiveMind: multi-session gating</a>
+above.</p>
 <p><code>ovos.common_play.playlist.set</code> validates the payload before touching the playlist. A
 non-list <code>tracks</code> value is ignored outright and the current playlist is kept. For a list
 payload, each entry is checked on its own: invalid entries are skipped with a warning,
