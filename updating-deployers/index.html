@@ -2045,6 +2045,13 @@ plus a new <code>media.validate_source</code> (bool, default <code>True</code>) 
 <code>4601792</code> (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/58" title="GitHub Issue: TigreGotico/ovos-technical-manual #58">#58</a>, 2026-06-26): set <code>media.validate_source: false</code> on a
 central <code>ovos-media</code> instance that must act on non-default/remote
 HiveMind sessions.</p>
+<p><code>ovos-media</code>'s <code>require_default_session()</code> decorator was itself replaced in
+<code>72f6088</code> (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/160" title="GitHub Issue: TigreGotico/ovos-technical-manual #160">#160</a>, 2026-08-17, <code>2.0.0a3</code>): gating moved from a per-handler
+decorator to a <code>gated</code> flag in <code>ovos_media/bus/api.py</code>'s single registration
+table, checked with <code>is_default_session()</code> (<code>ovos_media/utils.py</code>) before
+dispatch. <code>media.validate_source</code> still gates the same way. See
+<a href="../ovos-media/#hivemind-multi-session-gating">ovos-media: HiveMind multi-session gating</a>
+for the current mechanism.</p>
 <h3 id="listener-defaults-changed-instant_listen-remove_silence-mic-backend">Listener defaults changed (instant_listen, remove_silence, mic backend)<a class="headerlink" href="#listener-defaults-changed-instant_listen-remove_silence-mic-backend" title="Permanent link">&para;</a></h3>
 <p><code>listener.instant_listen</code> and <code>listener.remove_silence</code> flipped to enabled
 by default (<code>54a0844</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/133" title="GitHub Issue: TigreGotico/ovos-technical-manual #133">#133</a>, 2024-06-11). The default microphone module

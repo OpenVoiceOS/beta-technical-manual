@@ -2595,11 +2595,11 @@ when <code>ovos-media</code> is not running, and bridges old pre-OCP <code>Commo
 <hr />
 <h2 id="hivemind-multi-session-gating">HiveMind: multi-session gating<a class="headerlink" href="#hivemind-multi-session-gating" title="Permanent link">&para;</a></h2>
 <p>On a server that fans playback out to several <a href="../hivemind-agents/">HiveMind</a> satellites, not
-every bus handler should act on behalf of every session. <code>ovos_media/utils.py</code>'s
-<code>require_default_session()</code> gates the subset of handlers that only make sense for the local
-("default") session — for example, the hardware-bound duck and cork handlers reacting to
-<code>ovos.audio.output.started</code>/<code>.ended</code> and <code>recognizer_loop:record_begin</code> on the machine whose
-speakers are playing — while the OCP-native <code>ovos.common_play.*</code>
+every bus handler should act on behalf of every session. <code>ovos_media/bus/api.py</code>'s single
+registration table marks each playback-executing topic <code>gated</code>, and applies <code>is_default_session()</code>
+(<code>ovos_media/utils.py</code>) before dispatching it — for example, the hardware-bound duck and cork
+handlers reacting to <code>ovos.audio.output.started</code>/<code>.ended</code> and <code>recognizer_loop:record_begin</code> on
+the machine whose speakers are playing — while the OCP-native <code>ovos.common_play.*</code>
 handlers stay session-aware and can target whichever satellite's player state they're addressed
 to.</p>
 <p>The <code>media.validate_source</code> config flag (see <a href="#configuration">Configuration</a> above) controls how

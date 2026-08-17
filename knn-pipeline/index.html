@@ -1550,14 +1550,14 @@ reaches <code>ovos-hierarchical-knn-pipeline-high</code>:</p>
    next, where the same label now clears <code>conf_medium</code>.</li>
 </ol>
 <p>If the user instead says "stop" with no weather skill active, the same <code>_match()</code>
-call also considers the special label <code>stop:stop</code> (source: <code>_SPECIAL_LABELS</code> and
-<code>_allowed_special_labels()</code> in <code>__init__.py</code>), but only because
-<code>ovos-stop-pipeline-plugin</code> normally runs earlier and would have already claimed
-it. <code>stop:stop</code> is only reachable through this pipeline when
-<code>ovos-stop-pipeline-plugin</code> is itself listed in <code>session.pipeline</code>. Two more special
-labels get the same treatment: <code>ocp:play</code> (remapped to <code>ovos.common_play.play_search</code>,
-gated on the OCP pipeline being present) and <code>common_query:common_query</code> (remapped to
-<code>common_query.question</code>, gated on the common-query pipeline).</p>
+call also considers the special label <code>stop:stop</code> (source: module-level
+<code>_SPECIAL_LABELS = {"ocp:play", "common_query:common_query", "stop:stop"}</code> in
+<code>__init__.py</code>). All three special labels are unconditionally unioned into both the
+active-domain set and the match allow-list — this plugin never checks whether a
+stop, OCP, or common-query pipeline plugin is actually configured. In practice
+<code>ovos-stop-pipeline-plugin</code> normally runs earlier in <code>session.pipeline</code> and claims
+"stop" first, so this stage rarely gets the chance to fire on <code>stop:stop</code>, but that
+is an ordering effect between pipeline plugins, not a gate this plugin enforces.</p>
 <hr />
 <h2 id="when-to-use-it-and-when-not-to">When to use it, and when not to<a class="headerlink" href="#when-to-use-it-and-when-not-to" title="Permanent link">&para;</a></h2>
 <p>Use the Hierarchical KNN pipeline as a <strong>semantic safety net</strong> behind Adapt and
@@ -1648,7 +1648,7 @@ embedding model at all, see <a href="../padacioso/">Padacioso</a> or <a href="..
 </tr>
 <tr>
 <td><code>renormalize</code></td>
-<td><code>false</code></td>
+<td><code>true</code></td>
 <td>Renormalize confidence scores before threshold checks.</td>
 </tr>
 <tr>
