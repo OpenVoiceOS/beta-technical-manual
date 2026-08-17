@@ -2083,7 +2083,7 @@ status, SEI queries), see
 <tr>
 <td><code>ovos.common_play.search</code></td>
 <td>in</td>
-<td>Pipeline plugin asks OCP to search for playable media</td>
+<td>External client (a GUI search box, for example) asks the OCP pipeline plugin to search across skills; the plugin performs the search itself and replies with results</td>
 </tr>
 <tr>
 <td><code>ovos.common_play.play_search</code></td>
@@ -2189,6 +2189,11 @@ status, SEI queries), see
 <td><code>ovos.common_play.search.start</code> / <code>.search.end</code></td>
 <td>in</td>
 <td>Pipeline plugin brackets a search request; the player uses them to gate busy state</td>
+</tr>
+<tr>
+<td><code>ovos.common_play.search.stop</code></td>
+<td>out</td>
+<td>Emitted by the player on stop, and by the pipeline plugin, to cancel a search still in flight</td>
 </tr>
 <tr>
 <td><code>ovos.common_play.announce</code></td>
@@ -2408,7 +2413,7 @@ startup to normalize the initial volume.</p>
 <tr>
 <td><code>ovos.session.update_default</code></td>
 <td><code>ovos-core</code></td>
-<td>all clients</td>
+<td>all clients (legacy default-session echo, deprecated)</td>
 </tr>
 <tr>
 <td><code>mycroft.network.connected</code> / <code>mycroft.internet.connected</code></td>
