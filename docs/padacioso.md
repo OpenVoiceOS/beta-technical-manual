@@ -42,9 +42,9 @@ container.calc_intent('say something, whatever')
 ```
 
 Slot names follow the OVOS sentence-template grammar (`{lowercase_with_underscores}`).
-The colon-typed `simplematch` syntax such as `{number:int}` is **not** supported: the
-normalizer passes it through untouched, so the braces are matched literally instead of
-being interpreted as a typed slot.
+The colon-typed `simplematch` syntax such as `{number:int}` is **not** supported:
+`add_intent()` raises `MalformedTemplate` at registration (slot names allow only lowercase
+letters, digits, and underscores), rather than treating it as a literal or a typed slot.
 
 A wildcard (`*`) carries a confidence penalty proportional to how much of the template it
 covers: `0.05 + 0.20 × (wildcard tokens / total tokens)`, so any wildcard costs between
