@@ -1502,7 +1502,7 @@ failure, not a media-specific bug:</p>
   <code>wpctl status</code> / <code>pactl list short sinks</code>) to confirm the speaker is present, unmuted, and set
   as the default sink.</li>
 <li>Check the OCP backend's audio configuration: the <code>preferred_audio_services</code> order it uses to
-  pick a lower-level backend (<code>mpv</code>, <code>vlc</code>, <code>simple</code>), described in <a href="../ocp-audio-plugin/#configuration">OCP Audio
+  pick a lower-level backend (default <code>vlc</code>, <code>mplayer</code>, <code>simple</code>), described in <a href="../ocp-audio-plugin/#configuration">OCP Audio
   Plugin</a>. A missing or misconfigured backend in that list can
   leave OCP with nothing to hand the stream to.</li>
 </ul>
