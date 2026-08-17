@@ -1642,7 +1642,7 @@ thin docs. Don't read one column as implying the other.</p>
   <a href="#ovos-plugin-vlc">ovos-plugin-vlc</a> still exists as a separate package.</p>
 </li>
 </ul>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>pip<span class="w"> </span>install<span class="w"> </span>ovos-media-plugin-vlc
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>pip<span class="w"> </span>install<span class="w"> </span>--pre<span class="w"> </span>ovos-media-plugin-vlc
 </span></code></pre></div>
 <div class="admonition warning">
 <p class="admonition-title">Needs the native <code>libvlc</code> system library</p>
@@ -1705,7 +1705,7 @@ playback: legacy vs. ovos-media</a>.</p>
   and the old audio service (<code>mycroft.plugin.audioservice</code>, type <code>ovos_mplayer</code>).</p>
 </li>
 </ul>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>pip<span class="w"> </span>install<span class="w"> </span>ovos-media-plugin-mplayer
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>pip<span class="w"> </span>install<span class="w"> </span>--pre<span class="w"> </span>ovos-media-plugin-mplayer
 </span></code></pre></div>
 <p>Then select it in your audio/media backend config. See <a href="../ovos-media/">Media playback: legacy vs. ovos-media</a>.</p>
 <hr />
@@ -1738,7 +1738,7 @@ playback: legacy vs. ovos-media</a>.</p>
   <code>ovos_ffplay</code>). Direct programmatic access is available via <code>FFPlayAudioPlayer</code>.</p>
 </li>
 </ul>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>pip<span class="w"> </span>install<span class="w"> </span>ovos-media-plugin-ffplay
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>pip<span class="w"> </span>install<span class="w"> </span>--pre<span class="w"> </span>ovos-media-plugin-ffplay
 </span></code></pre></div>
 <p>A good default for a headless box: it only needs <code>ffmpeg</code>/<code>ffplay</code> on the <code>PATH</code>, which most
 systems already have or can install with a single package (<code>apt install ffmpeg</code>), with no
