@@ -1631,7 +1631,7 @@
 <h1 id="ambient-behavior-from-bus-events-react-to-listening-state-and-time-of-day">Ambient behavior from bus events: react to listening state and time of day<a class="headerlink" href="#ambient-behavior-from-bus-events-react-to-listening-state-and-time-of-day" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>You build an <code>OVOSSkill</code> that reacts to bus events instead of utterances, using <code>add_event</code> on <code>recognizer_loop:*</code> events plus a repeating scheduled check.</p>
+<p>You build an <code>OVOSSkill</code> that reacts to bus events instead of utterances, using <code>add_event</code> on <code>ovos.listener.record.*</code> / <code>ovos.audio.output.*</code> events plus a repeating scheduled check.</p>
 </div>
 <p><strong>When you'd want this:</strong> a skill needs to do something not triggered by an utterance at all. Examples include dimming a light while the device is actively listening, or changing its greeting depending on whether it's morning or night, driven purely by bus events other services already emit.</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span> <span class="nn">datetime</span>

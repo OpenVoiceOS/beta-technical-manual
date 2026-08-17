@@ -1748,8 +1748,12 @@ but never replace voice.</p>
 </li>
 <li>
 <p><code>ListenerAnimation</code> drives the listening animation, reacting to
-  <code>recognizer_loop:wakeword</code> (show), <code>recognizer_loop:record_end</code> (hide),
-  <code>mycroft.mic.listen</code> (show), and <code>mycroft.speech.recognition.unknown</code> (hide).</p>
+  <code>recognizer_loop:wakeword</code> (show) and <code>mycroft.mic.listen</code> (show). The QML also
+  has cases for <code>recognizer_loop:record_end</code> (hide) and <code>mycroft.speech.recognition.unknown</code>
+  (hide), but ovos-gui forwards those two events under their spec names
+  (<code>ovos.listener.record.ended</code>, <code>ovos.speech.recognition.unknown</code>) rather than the
+  legacy strings the QML switches on, so neither branch currently fires — the
+  animation only ever hides through some other path (e.g. GUI namespace teardown).</p>
 </li>
 </ul>
 <hr />
