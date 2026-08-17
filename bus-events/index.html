@@ -1963,14 +1963,14 @@ shown, and do not translate them by analogy:</p>
 </thead>
 <tbody>
 <tr>
-<td><code>stop:global</code></td>
+<td><code>&lt;pipeline_id&gt;:global_stop</code> (legacy: <code>stop:global</code>)</td>
 <td>in</td>
 <td>Global-stop dispatch: its handler emits the <code>ovos.stop</code> broadcast (and <code>ovos.utterance.handled</code>)</td>
 </tr>
 <tr>
 <td><code>{skill_id}.stop</code></td>
 <td>out</td>
-<td>Targeted stop dispatch to one skill, produced by a <code>stop:skill</code> match</td>
+<td>Targeted stop dispatch to one skill, produced by a <code>&lt;skill_id&gt;:stop</code> match (legacy: <code>stop:skill</code>)</td>
 </tr>
 <tr>
 <td><code>{skill_id}.stop.ping</code></td>
