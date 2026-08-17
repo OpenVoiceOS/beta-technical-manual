@@ -46,7 +46,6 @@ and is launched by its own console script (`ovos_PHAL` / `ovos_PHAL_admin`):
       │  PHAL  (user-space)                          │
       │    ovos-PHAL-plugin-alsa                     │
       │    ovos-PHAL-plugin-network-manager          │
-      │    ovos-PHAL-plugin-wifi-setup               │
       │    …                                         │
       └────────────────────────────────────────────┬─┘
                                                    │

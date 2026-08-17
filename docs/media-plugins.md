@@ -79,7 +79,7 @@ Then select it in your audio/media backend config. See [Media playback: legacy v
   [ovos-plugin-vlc](#ovos-plugin-vlc) still exists as a separate package.
 
 ```bash
-pip install ovos-media-plugin-vlc
+pip install --pre ovos-media-plugin-vlc
 ```
 
 !!! warning "Needs the native `libvlc` system library"
@@ -146,7 +146,7 @@ Then select it in your audio/media backend config. See [Media playback: legacy v
   and the old audio service (`mycroft.plugin.audioservice`, type `ovos_mplayer`).
 
 ```bash
-pip install ovos-media-plugin-mplayer
+pip install --pre ovos-media-plugin-mplayer
 ```
 
 Then select it in your audio/media backend config. See [Media playback: legacy vs. ovos-media](ovos-media.md).
@@ -183,7 +183,7 @@ Then select it in your audio/media backend config. See [Media playback: legacy v
   `ovos_ffplay`). Direct programmatic access is available via `FFPlayAudioPlayer`.
 
 ```bash
-pip install ovos-media-plugin-ffplay
+pip install --pre ovos-media-plugin-ffplay
 ```
 
 A good default for a headless box: it only needs `ffmpeg`/`ffplay` on the `PATH`, which most
