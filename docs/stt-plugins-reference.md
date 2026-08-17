@@ -5,10 +5,9 @@
 
 ## ovos-stt-plugin-wav2vec
 
-- **GitHub**: [OpenVoiceOS/ovos-stt-plugin-wav2vec](https://github.com/OpenVoiceOS/ovos-stt-plugin-wav2vec) (aliased by
-  [ovos-stt-plugin-wav2vec2](https://github.com/OpenVoiceOS/ovos-stt-plugin-wav2vec2). A
-  separate GitHub repo that installs the same package and module id, `ovos-stt-plugin-wav2vec`.
-  the repo name differs but the entry point does not, so both resolve to the same plugin)
+- **GitHub**: [OpenVoiceOS/ovos-stt-plugin-wav2vec2](https://github.com/OpenVoiceOS/ovos-stt-plugin-wav2vec2)
+  (renamed from `ovos-stt-plugin-wav2vec`, whose URL redirects; the PyPI package and module id
+  keep the old `ovos-stt-plugin-wav2vec` name)
 
 
 - **Description**: OVOS plugin for [Wav2Vec2](https://ai.meta.com/blog/wav2vec-20-learning-the-structure-of-speech-from-raw-audio/)
@@ -61,7 +60,7 @@ languages resolve to different pretrained models.
 - **GitHub**: [OpenVoiceOS/ovos-stt-plugin-mms](https://github.com/OpenVoiceOS/ovos-stt-plugin-mms)
 
 
-- **Description**: OVOS plugin for [The Massively Multilingual Speech (MMS) project](https://huggingface.co/docs/transformers/main/en/model_doc/mms). Warning: archived. MMS models also run under [ovos-stt-plugin-wav2vec2](https://github.com/OpenVoiceOS/ovos-stt-plugin-wav2vec2), which is not on PyPI yet — install it from source, or use [onnx-asr](#ovos-stt-plugin-onnx-asr), which covers the same wav2vec2 families.
+- **Description**: OVOS plugin for [The Massively Multilingual Speech (MMS) project](https://huggingface.co/docs/transformers/main/en/model_doc/mms). Warning: archived. MMS models also run under [ovos-stt-plugin-wav2vec2](https://github.com/OpenVoiceOS/ovos-stt-plugin-wav2vec2) (`pip install ovos-stt-plugin-wav2vec`), or use [onnx-asr](#ovos-stt-plugin-onnx-asr), which covers the same wav2vec2 families.
 
 ### Default Configuration
 
@@ -121,7 +120,9 @@ offline engine from the table above.
 
 ## ovos-stt-plugin-whisper
 
-- **GitHub**: [OpenVoiceOS/ovos-stt-plugin-whisper](https://github.com/OpenVoiceOS/ovos-stt-plugin-whisper)
+- **GitHub**: [TigreGotico/ovos-stt-plugin-whisper](https://github.com/TigreGotico/ovos-stt-plugin-whisper)
+  (the identically named `OpenVoiceOS/ovos-stt-plugin-whisper` repo is an older, different
+  plugin wrapping the `whisper` pip package, default model `base`, no CUDA switch)
 
 
 - **Description**: OpenVoiceOS STT plugin for [Whisper](https://github.com/guillaumekln/faster-whisper), using transformers library
