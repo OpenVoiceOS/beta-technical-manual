@@ -30,6 +30,8 @@
 
 - **GitHub**: [OpenVoiceOS/ovos-solver-plugin-aiml](https://github.com/OpenVoiceOS/ovos-solver-plugin-aiml)
 
+- **Install**: `pip install ovos-solver-aiml-plugin`. The package and handler name put the words in a different order from the repo name.
+
 
 - **Description**: A rule-based chatbot answer engine for OVOS, using AIML pattern matching.
 
@@ -177,6 +179,8 @@ Per-collection metadata defaults `hnsw:space` to `cosine` when not specified.
 ## ovos-solver-plugin-rivescript
 
 - **GitHub**: [OpenVoiceOS/ovos-solver-plugin-rivescript](https://github.com/OpenVoiceOS/ovos-solver-plugin-rivescript)
+
+- **Install**: `pip install ovos-solver-rivescript-plugin`. The package and handler name put the words in a different order from the repo name.
 
 
 - **Description**: A rule-based chatbot answer engine for OVOS, using RiveScript pattern matching.
