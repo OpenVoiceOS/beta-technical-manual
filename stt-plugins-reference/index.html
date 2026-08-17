@@ -1229,9 +1229,9 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#default-configuration_4" class="md-nav__link">
+  <a href="#example-configuration" class="md-nav__link">
     <span class="md-ellipsis">
-      Default Configuration
+      Example Configuration
     </span>
   </a>
   
@@ -1253,9 +1253,9 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#default-configuration_5" class="md-nav__link">
+  <a href="#example-configuration_1" class="md-nav__link">
     <span class="md-ellipsis">
-      Default Configuration
+      Example Configuration
     </span>
   </a>
   
@@ -1277,9 +1277,9 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#default-configuration_6" class="md-nav__link">
+  <a href="#example-configuration_2" class="md-nav__link">
     <span class="md-ellipsis">
-      Default Configuration
+      Example Configuration
     </span>
   </a>
   
@@ -1301,7 +1301,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#default-configuration_7" class="md-nav__link">
+  <a href="#default-configuration_4" class="md-nav__link">
     <span class="md-ellipsis">
       Default Configuration
     </span>
@@ -1325,7 +1325,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#default-configuration_8" class="md-nav__link">
+  <a href="#default-configuration_5" class="md-nav__link">
     <span class="md-ellipsis">
       Default Configuration
     </span>
@@ -1349,9 +1349,9 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#default-configuration_9" class="md-nav__link">
+  <a href="#example-configuration_3" class="md-nav__link">
     <span class="md-ellipsis">
-      Default Configuration
+      Example Configuration
     </span>
   </a>
   
@@ -1935,9 +1935,9 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#default-configuration_4" class="md-nav__link">
+  <a href="#example-configuration" class="md-nav__link">
     <span class="md-ellipsis">
-      Default Configuration
+      Example Configuration
     </span>
   </a>
   
@@ -1959,9 +1959,9 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#default-configuration_5" class="md-nav__link">
+  <a href="#example-configuration_1" class="md-nav__link">
     <span class="md-ellipsis">
-      Default Configuration
+      Example Configuration
     </span>
   </a>
   
@@ -1983,9 +1983,9 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#default-configuration_6" class="md-nav__link">
+  <a href="#example-configuration_2" class="md-nav__link">
     <span class="md-ellipsis">
-      Default Configuration
+      Example Configuration
     </span>
   </a>
   
@@ -2007,7 +2007,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#default-configuration_7" class="md-nav__link">
+  <a href="#default-configuration_4" class="md-nav__link">
     <span class="md-ellipsis">
       Default Configuration
     </span>
@@ -2031,7 +2031,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#default-configuration_8" class="md-nav__link">
+  <a href="#default-configuration_5" class="md-nav__link">
     <span class="md-ellipsis">
       Default Configuration
     </span>
@@ -2055,9 +2055,9 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#default-configuration_9" class="md-nav__link">
+  <a href="#example-configuration_3" class="md-nav__link">
     <span class="md-ellipsis">
-      Default Configuration
+      Example Configuration
     </span>
   </a>
   
@@ -2304,7 +2304,7 @@ is <code>false</code>.</p>
 </li>
 </ul>
 <p>CPU is the shipped default (<code>use_cuda: false</code>). Set <code>use_cuda: true</code> for acceptable throughput on supported GPUs. The GPU recommendation is about speed, not a required default.</p>
-<h3 id="default-configuration_4">Default Configuration<a class="headerlink" href="#default-configuration_4" title="Permanent link">&para;</a></h3>
+<h3 id="example-configuration">Example Configuration<a class="headerlink" href="#example-configuration" title="Permanent link">&para;</a></h3>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>  &quot;stt&quot;: {
 </span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>    &quot;module&quot;: &quot;ovos-stt-plugin-nemo&quot;,
 </span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>    &quot;ovos-stt-plugin-nemo&quot;: {
@@ -2313,6 +2313,7 @@ is <code>false</code>.</p>
 </span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>    }
 </span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>  }
 </span></code></pre></div>
+<p>The model shown is the Basque pick; without config the plugin resolves the model from the global <code>lang</code> via its internal table (<code>en</code> resolves to <code>stt_en_quartznet15x5</code>).</p>
 <hr />
 <h2 id="ovos-stt-plugin-whisper-lm">ovos-stt-plugin-whisper-lm<a class="headerlink" href="#ovos-stt-plugin-whisper-lm" title="Permanent link">&para;</a></h2>
 <ul>
@@ -2323,7 +2324,7 @@ is <code>false</code>.</p>
 <p><strong>Description</strong>: OpenVoiceOS STT plugin for <a href="https://github.com/hitz-zentroa/whisper-lm-transformers">Whisper-LM-transformers</a>, KenLM and Large language model integration with Whisper ASR models implemented in Hugging Face library.</p>
 </li>
 </ul>
-<h3 id="default-configuration_5">Default Configuration<a class="headerlink" href="#default-configuration_5" title="Permanent link">&para;</a></h3>
+<h3 id="example-configuration_1">Example Configuration<a class="headerlink" href="#example-configuration_1" title="Permanent link">&para;</a></h3>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>  &quot;stt&quot;: {
 </span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>    &quot;module&quot;: &quot;ovos-stt-plugin-whisper-lm&quot;,
 </span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>    &quot;ovos-stt-plugin-whisper-lm&quot;: {
@@ -2336,6 +2337,7 @@ is <code>false</code>.</p>
 </span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>    }
 </span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>  }
 </span></code></pre></div>
+<p>This is a Basque-language example. The plugin only auto-selects pretrained models for <code>gl</code>/<code>es</code>/<code>eu</code>/<code>ca</code>; on any other configured language, set <code>model</code>, <code>lm_repo</code>, and <code>lm_model</code> explicitly or init raises a <code>ValueError</code>.</p>
 <hr />
 <h2 id="ovos-stt-plugin-citrinet">ovos-stt-plugin-citrinet<a class="headerlink" href="#ovos-stt-plugin-citrinet" title="Permanent link">&para;</a></h2>
 <ul>
@@ -2348,7 +2350,7 @@ is <code>false</code>.</p>
 <p><strong>Description</strong>: OpenVoiceOS STT plugin</p>
 </li>
 </ul>
-<h3 id="default-configuration_6">Default Configuration<a class="headerlink" href="#default-configuration_6" title="Permanent link">&para;</a></h3>
+<h3 id="example-configuration_2">Example Configuration<a class="headerlink" href="#example-configuration_2" title="Permanent link">&para;</a></h3>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>  &quot;stt&quot;: {
 </span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>    &quot;module&quot;: &quot;ovos-stt-plugin-citrinet&quot;,
 </span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>    &quot;ovos-stt-plugin-citrinet&quot;: {
@@ -2366,7 +2368,7 @@ is <code>false</code>.</p>
 <p><strong>Description</strong>: Galician STT using <a href="https://github.com/proxectonos">Proxecto Nós</a> wav2vec2 models. Warning: archived. Superseded by <a href="https://github.com/OpenVoiceOS/ovos-stt-plugin-wav2vec2">ovos-stt-plugin-wav2vec2</a>.</p>
 </li>
 </ul>
-<h3 id="default-configuration_7">Default Configuration<a class="headerlink" href="#default-configuration_7" title="Permanent link">&para;</a></h3>
+<h3 id="default-configuration_4">Default Configuration<a class="headerlink" href="#default-configuration_4" title="Permanent link">&para;</a></h3>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>&quot;stt&quot;: {
 </span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>    &quot;module&quot;: &quot;ovos-stt-plugin-nos&quot;
 </span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>}
@@ -2381,7 +2383,7 @@ is <code>false</code>.</p>
 <p><strong>Description</strong>: OpenVoiceOS STT plugin for <strong>Basque</strong> models trained by <a href="https://huggingface.co/HiTZ">HiTZ</a>. Warning: archived, deprecated.</p>
 </li>
 </ul>
-<h3 id="default-configuration_8">Default Configuration<a class="headerlink" href="#default-configuration_8" title="Permanent link">&para;</a></h3>
+<h3 id="default-configuration_5">Default Configuration<a class="headerlink" href="#default-configuration_5" title="Permanent link">&para;</a></h3>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>  &quot;stt&quot;: {
 </span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>    &quot;module&quot;: &quot;ovos-stt-plugin-HiTZ&quot;,
 </span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>    &quot;ovos-stt-plugin-HiTZ&quot;: {
@@ -2399,7 +2401,7 @@ is <code>false</code>.</p>
 <p><strong>Description</strong>: Mycroft STT plugin for <a href="https://alphacephei.com/vosk/">Vosk</a></p>
 </li>
 </ul>
-<h3 id="default-configuration_9">Default Configuration<a class="headerlink" href="#default-configuration_9" title="Permanent link">&para;</a></h3>
+<h3 id="example-configuration_3">Example Configuration<a class="headerlink" href="#example-configuration_3" title="Permanent link">&para;</a></h3>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>  &quot;stt&quot;: {
 </span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>    &quot;module&quot;: &quot;ovos-stt-plugin-vosk&quot;,
 </span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>    &quot;ovos-stt-plugin-vosk&quot;: {
@@ -2407,6 +2409,7 @@ is <code>false</code>.</p>
 </span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>    }
 </span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>  }
 </span></code></pre></div>
+<p>With no <code>model</code> configured, the plugin auto-downloads a default model for the configured language; the path here is where a custom local model would go.</p>
 <hr />
 <h2 id="ovos-stt-plugin-onnx-asr">ovos-stt-plugin-onnx-asr<a class="headerlink" href="#ovos-stt-plugin-onnx-asr" title="Permanent link">&para;</a></h2>
 <ul>
