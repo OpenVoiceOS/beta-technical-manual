@@ -1728,7 +1728,7 @@ candidates read it. <code>execute()</code> then remains the single-best convenie
     Mic-&gt;&gt;STT: stream_stop()
     STT-&gt;&gt;Thread: queue.put(None)
     Thread--&gt;&gt;STT: finalize() returns self.text</code></pre>
-<p><em>Diagram:</em> The sequence starts with the mic thread calling stream_start and ends with the stream thread returning finalize() text, The stream thread calls handle_audio_stream one time, and the loop between those two points feeds audio chunks to the generator it reads.</p>
+<p><em>Diagram:</em> The sequence starts with the mic thread calling stream_start and ends with the stream thread returning finalize() text. The stream thread calls handle_audio_stream one time, and the loop between those two points feeds audio chunks to the generator it reads.</p>
 <p>Audio arrives synchronously per chunk: <code>stream_data()</code> is called once per captured
 chunk on the mic thread, so it must return well under the per-chunk time budget
 (the same real-time cadence constraint a wake-word plugin's <code>update(chunk)</code> runs

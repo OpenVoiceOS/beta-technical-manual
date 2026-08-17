@@ -1778,8 +1778,8 @@ XDG data directory.</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>$XDG_DATA_HOME/mycroft/resources/&lt;skill-id&gt;/
 </span></code></pre></div>
 <p><code>XDG_DATA_HOME</code> is usually <code>~/.local/share</code> on Linux, so for the skill ID
-<code>skill-ovos-date-time.openvoiceos</code> the directory is
-<code>~/.local/share/mycroft/resources/skill-ovos-date-time.openvoiceos/</code>.</p>
+<code>ovos-skill-date-time.openvoiceos</code> the directory is
+<code>~/.local/share/mycroft/resources/ovos-skill-date-time.openvoiceos/</code>.</p>
 <p>Inside it, mirror the skill's own directory layout. Create the directory with <code>mkdir -p</code> if it
 does not exist. You do not need to fork a skill to change what it says or what languages it
 speaks.</p>
@@ -1797,7 +1797,7 @@ instead. The steps stay documented because they are the intended mechanism once 
 gap closes, and they already work for the other resource types.</p>
 </div>
 <p>Replace one dialog file of an installed <a href="../skill-design-guidelines/">skill</a> with your own
-wording. This example replaces <code>time.current.dialog</code> in <code>skill-ovos-date-time.openvoiceos</code>.</p>
+wording. This example replaces <code>time.current.dialog</code> in <code>ovos-skill-date-time.openvoiceos</code>.</p>
 <ol>
 <li>Find the skill ID and the dialog file you want to replace. The file lives in the skill's
    <code>locale/en-us/dialog</code> directory.</li>
@@ -1805,9 +1805,9 @@ wording. This example replaces <code>time.current.dialog</code> in <code>skill-o
    lines as you like.</li>
 <li>
 <p>Copy it into the matching path under the user resources directory:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>mkdir<span class="w"> </span>-p<span class="w"> </span>~/.local/share/mycroft/resources/skill-ovos-date-time.openvoiceos/locale/en-us/dialog
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>mkdir<span class="w"> </span>-p<span class="w"> </span>~/.local/share/mycroft/resources/ovos-skill-date-time.openvoiceos/locale/en-us/dialog
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>cp<span class="w"> </span>time.current.dialog<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">  </span>~/.local/share/mycroft/resources/skill-ovos-date-time.openvoiceos/locale/en-us/dialog/
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">  </span>~/.local/share/mycroft/resources/ovos-skill-date-time.openvoiceos/locale/en-us/dialog/
 </span></code></pre></div>
 </li>
 <li>
@@ -1834,7 +1834,7 @@ This example adds Spanish (<code>es-es</code>) to the same skill.</p>
 <li>Find the skill ID and the language code you want to add.</li>
 <li>
 <p>Create the language folder under the user resources directory:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>mkdir<span class="w"> </span>-p<span class="w"> </span>~/.local/share/mycroft/resources/skill-ovos-date-time.openvoiceos/locale/es-es
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>mkdir<span class="w"> </span>-p<span class="w"> </span>~/.local/share/mycroft/resources/ovos-skill-date-time.openvoiceos/locale/es-es
 </span></code></pre></div>
 </li>
 <li>
