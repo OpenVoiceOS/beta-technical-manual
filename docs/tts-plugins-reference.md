@@ -61,7 +61,7 @@
 
 - **Description**: [Matxa-TTS](https://huggingface.co/projecte-aina/matxa-tts-cat-multiaccent), the multispeaker, multidialectal neural TTS model. It works together with the vocoder model [alVoCat](https://huggingface.co/projecte-aina/alvocat-vocos-22khz) to generate speech in four Catalan dialects. Warning: archived, deprecated.
 
-### Default Configuration
+### Example Configuration
 
 ```jsonc
   "tts": {
