@@ -131,8 +131,8 @@ OCP is configured as a backend under the `Audio` section of [`mycroft.conf`](con
 
 - **`preferred_audio_services`**: order in which OCP picks a lower-level audio backend to
   actually emit sound. The shipped `mycroft.conf` sets `["mpv", "vlc", "simple"]`, which is
-  what a stock install uses; the plugin's own code fallback of `["vlc", "mplayer", "simple"]`
-  applies only when the key is absent from config entirely.
+  what every install uses (the plugin source carries an unused `OCPPluginConfig` dict with a
+  different list, dead code that is never merged into the runtime config).
 - **`dbus_type`** / MPRIS keys: see [MPRIS](#mpris) below.
 
 !!! warning "`default-backend` must not be `"OCP"`"
