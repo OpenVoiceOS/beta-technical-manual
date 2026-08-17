@@ -48,12 +48,14 @@ cp -a ~/.local/share/mycroft "$BACKUP_DIR/data"
 systemctl --user start ovos.service
 ```
 
-!!! warning "Do not copy these directories while the assistant is running"
-    Both writers truncate the file and then stream JSON into it: `LocalConf.store()` in
-    `ovos-config` for `mycroft.conf`, and `JsonStorage.store()` in `json_database` for
-    per-skill `settings.json`. Neither writes to a temporary file and renames it, so there
-    is a window in which the file on disk is half-written. A `cp` that lands in that window
-    copies a truncated file, and the backup then looks fine until the day you restore it.
+!!! warning "Do not copy `mycroft.conf` while the assistant is running"
+    `LocalConf.store()` in `ovos-config` truncates the file and then streams JSON into it,
+    without writing to a temporary file and renaming, so there is a window in which
+    `mycroft.conf` on disk is half-written. A `cp` that lands in that window copies a
+    truncated file, and the backup then looks fine until the day you restore it. Per-skill
+    `settings.json` is safe to copy live: `JsonStorage.store()` in `json_database` writes to
+    a temporary file in the same directory and swaps it in with `os.replace` (atomic, since
+    `1.0.4a1`), so a reader always sees either the old file or the new one.
 
     A skill writes its settings whenever `self.settings` changes — a `settings.json` edit,
     a settings-meta change from the web UI, or the skill's own code. That is rare, so a
