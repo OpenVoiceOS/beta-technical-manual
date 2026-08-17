@@ -39,9 +39,9 @@ Emitted by `ovos-dinkum-listener` as the audio pipeline runs. See
 |---|---|---|
 | `ovos.listener.record.started` (legacy: `recognizer_loop:record_begin`) | none | Command recording started |
 | `ovos.listener.record.ended` (legacy: `recognizer_loop:record_end`) | none | Command recording ended |
-| `ovos.listener.wakeword` (legacy: `recognizer_loop:wakeword`) | `{"wake_word", "lang"}` | Wake word detected, capture is opening. `lang` is optional and only present when the deployment binds wake words to languages |
+| `recognizer_loop:wakeword` | `{"utterance": str, "key_phrase": str, …}` | Wake word detected, capture is opening. Legacy-only: no `ovos.listener.*` counterpart exists, see [Speech Service](speech-service.md) |
 | `recognizer_loop:speech.recognition.unknown` | none | STT returned nothing (silence / failure) |
-| `ovos.listener.sleep` | none | Request the listener enter sleep mode and suspend capture: device-scoped, see [Speech Service](speech-service.md) |
+| `ovos.listener.sleep` (legacy: `recognizer_loop:sleep`) | none | Request the listener enter sleep mode and suspend capture: device-scoped, see [Speech Service](speech-service.md) |
 | `ovos.listener.awoken` (legacy: `mycroft.awoken`) | none | Listener woke from sleep |
 
 ## STT / utterance entry point
