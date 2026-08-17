@@ -1468,12 +1468,14 @@ system-wide (see <a href="../locations-ref/#environment-variable-influence">Loca
 </span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>systemctl<span class="w"> </span>--user<span class="w"> </span>start<span class="w"> </span>ovos.service
 </span></code></pre></div>
 <div class="admonition warning">
-<p class="admonition-title">Do not copy these directories while the assistant is running</p>
-<p>Both writers truncate the file and then stream JSON into it: <code>LocalConf.store()</code> in
-<code>ovos-config</code> for <code>mycroft.conf</code>, and <code>JsonStorage.store()</code> in <code>json_database</code> for
-per-skill <code>settings.json</code>. Neither writes to a temporary file and renames it, so there
-is a window in which the file on disk is half-written. A <code>cp</code> that lands in that window
-copies a truncated file, and the backup then looks fine until the day you restore it.</p>
+<p class="admonition-title">Do not copy <code>mycroft.conf</code> while the assistant is running</p>
+<p><code>LocalConf.store()</code> in <code>ovos-config</code> truncates the file and then streams JSON into it,
+without writing to a temporary file and renaming, so there is a window in which
+<code>mycroft.conf</code> on disk is half-written. A <code>cp</code> that lands in that window copies a
+truncated file, and the backup then looks fine until the day you restore it. Per-skill
+<code>settings.json</code> is safe to copy live: <code>JsonStorage.store()</code> in <code>json_database</code> writes to
+a temporary file in the same directory and swaps it in with <code>os.replace</code> (atomic, since
+<code>1.0.4a1</code>), so a reader always sees either the old file or the new one.</p>
 <p>A skill writes its settings whenever <code>self.settings</code> changes — a <code>settings.json</code> edit,
 a settings-meta change from the web UI, or the skill's own code. That is rare, so a
 live copy usually works, which is exactly what makes the failure hard to trace. Stop
