@@ -38,7 +38,7 @@ Runs [ovoscope](ovoscope-overview.md) end-to-end skill tests on a **single Pytho
 | `runner` | string | `ubuntu-latest` | Runner label |
 | `python_version` | string | `3.11` | Python version to use |
 | `system_deps` | string | `""` | Extra apt packages to install before testing (space-separated) |
-| `install_extras` | string | `test` | pip extras used when installing the package, e.g. 'test' or 'dev,test'. The extras must pull in ovoscope (e.g. ovoscope>=0.7.0 in [test]). |
+| `install_extras` | string | `test` | Extra dependencies used when installing the package; the extras must pull in ovoscope (e.g. ovoscope>=0.7.0 in [test]). Accepts a bare extras name ('test'), a bracketed list ('[dev,test]'), a full target ('.[test]'), or raw pip arguments ('-r requirements/test.txt'). |
 | `pre_install_pip` | string | `""` | Optional space-separated pip requirement specs to install BEFORE the package install step. Use to override transitive deps with git URLs (e.g. to test against an unreleased sibling package). Mirrors the build-tests workflow input. |
 | `post_install_pip` | string | `""` | Optional space-separated pip requirement specs installed AFTER the package + test-extras install, with --force-reinstall --no-deps so the dependency resolver cannot revert them. Use to pin an unreleased prerelease (e.g. a sibling at the same version as a published wheel) that the test-extras resolution would otherwise downgrade. |
 | `test_path` | string | `test/end2end/` | Path passed to pytest — should point at the end2end directory |
@@ -150,7 +150,7 @@ Use alongside [`ovoscope.yml`](#ovoscopeyml): `ovoscope.yml` for hand-written E2
 | `runner` | string | `ubuntu-latest` |  |
 | `python_version` | string | `3.11` |  |
 | `system_deps` | string | `""` | Extra apt packages to install before testing (space-separated) |
-| `install_extras` | string | `test` | pip extras used when installing the package; must pull in ovoscope. |
+| `install_extras` | string | `test` | Extra dependencies used when installing the package; must pull in ovoscope. Accepts a bare extras name ('test'), a bracketed list ('[dev,test]'), a full target ('.[test]'), or raw pip arguments ('-r requirements/test.txt'). |
 | `test_path` | string | `test/end2end/` | Path passed to pytest. Default `test/end2end/` collects the whole end2end suite; ovoscope's intent-case auto-discovery picks up the shim file (`ovoscope_intent_cases = {...}`) inside it. |
 | `require_adapt` | boolean | `false` |  |
 | `require_padatious` | boolean | `false` |  |
@@ -183,7 +183,7 @@ End-to-end TTS intelligibility scoring. Synthesises speech with the TTS plugin u
 | `runner` | string | `ubuntu-latest` | Runner label |
 | `python_version` | string | `3.11` | Python version to use |
 | `system_deps` | string | `""` | Extra apt packages to install before testing (space-separated), e.g. 'espeak-ng sox'. Engines backed by a system binary need this. |
-| `install_extras` | string | `test` | pip extras used when installing the package, e.g. 'test' or 'dev,test'. The extras should pull in ovoscope[tts]. |
+| `install_extras` | string | `test` | Extra dependencies used when installing the package; the extras should pull in ovoscope[tts]. Accepts a bare extras name ('test'), a bracketed list ('[dev,test]'), a full target ('.[test]'), or raw pip arguments ('-r requirements/test.txt'). |
 | `test_path` | string | `test/end2end/test_tts_intelligibility.py` | Path passed to pytest — the intelligibility test file |
 | `max_wer` | string | `0.5` | Intelligibility gate (exported as TTS_MAX_WER): the test fails when the mean word-error-rate of the STT round-trip exceeds this. Default 0.5 — more than half the words wrong is treated as unintelligible. Raise it per-plugin for engines/voices/low-resource langs the reference STT transcribes weakly; lower it to tighten the bar. |
 | `pre_release` | boolean | `false` | Install ovoscope[tts] from its GitHub `dev` branch instead of PyPI. Use to validate against unreleased ovoscope changes. |
