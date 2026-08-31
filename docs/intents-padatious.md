@@ -179,7 +179,7 @@ free-form numeric slot like this.
 > the `:0` unknown-token below are **Padatious extensions**, not part of the
 > [OVOS-INTENT-1](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-1.md) Sentence
 > Template Grammar, so they're not portable to other pipeline plugins. Since
-> `ovos-padatious-pipeline-plugin` `2.0.9a1`, an unescaped inline `#` in a template line logs a
+> `ovos-padatious-pipeline-plugin` `2.0.8a2`, an unescaped inline `#` in a template line logs a
 > one-time deprecation warning (`#` still matches digits exactly as before — nothing breaks this
 > cycle). Prefer the `{slot}` pattern above for new skills. A non-normative spec note on this is
 > **pending** [OpenVoiceOS/architecture#166](https://github.com/OpenVoiceOS/architecture/pull/166),
