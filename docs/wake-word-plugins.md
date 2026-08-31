@@ -36,10 +36,14 @@ The full roster with descriptions and licenses lives in one place: the
 up is not installed:
 
 1. `ovos-ww-plugin-precise-onnx` (default)
-2. `ovos-ww-plugin-precise-lite` (TFLite)
-3. `ovos-ww-plugin-precise` (classic Precise)
+2. `ovos-ww-plugin-precise-lite` (TFLite, **archived**)
+3. `ovos-ww-plugin-precise` (classic Precise, **archived**)
 4. `ovos-ww-plugin-vosk`
 5. `ovos-ww-plugin-pocketsphinx`
+
+Everything in the Precise family except `ovos-ww-plugin-precise-onnx` is archived on GitHub.
+The chain keeps them as fallbacks purely for compatibility with older trained models
+(`.tflite`/legacy Precise formats); new setups only need `ovos-ww-plugin-precise-onnx`.
 
 Vosk offers the fastest setup for an arbitrary wake phrase without model training.
 
