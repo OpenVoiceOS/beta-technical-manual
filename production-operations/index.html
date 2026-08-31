@@ -1668,6 +1668,15 @@ ever get a response.</p>
 <p><code>wait_for_response</code> returns <code>None</code> on timeout. It does not raise. Always check for <code>None</code>.
 A bare <code>response.data</code> on a timed-out call raises <code>AttributeError</code>, not a clean failure.</p>
 </div>
+<div class="admonition danger">
+<p class="admonition-title">The 30s timeout only applies once connected</p>
+<p><code>wait_for_response</code> calls <code>emit()</code> internally to send the request, and <code>emit()</code> waits on an
+internal connected-event with <strong>no timeout</strong> if the bus was never reachable. If the
+messagebus service isn't up yet when this probe runs — a real possibility right at
+<code>ExecStartPost</code> — the probe hangs forever instead of failing after 30s, and <code>systemd</code> never
+gets past the post-start check. Give the unit its own <code>TimeoutStartSec</code>, or add a bus-reachability
+check (e.g. a plain socket connect) before calling <code>wait_for_response</code>.</p>
+</div>
 <h3 id="headless-devices-choosing-what-ready-means">Headless devices: choosing what "ready" means<a class="headerlink" href="#headless-devices-choosing-what-ready-means" title="Permanent link">&para;</a></h3>
 <p><a href="https://github.com/OpenVoiceOS/ovos-skill-boot-finished"><code>ovos-skill-boot-finished</code></a> is the
 skill that actually answers <code>mycroft.ready.check</code> and decides what to wait for, via its

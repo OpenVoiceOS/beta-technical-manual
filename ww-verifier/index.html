@@ -1652,6 +1652,15 @@
 </span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="p">}</span>
 </span></code></pre></div>
 <p>You can list multiple verifiers. A detection is accepted only if all verifiers pass. Use either <code>ww_verifiers</code> or <code>vad_pre_wake_enabled</code>. Enabling both is redundant.</p>
+<div class="admonition warning">
+<p class="admonition-title">Installing a verifier plugin activates it</p>
+<p>The listener loads every <em>installed</em> <code>opm.wake_word.verifier</code> plugin, not only the ones
+listed under <code>ww_verifiers</code> — an installed plugin absent from <code>ww_verifiers</code> still runs,
+with its own defaults. Set <code>"enabled": false</code> under that plugin's entry in <code>ww_verifiers</code>
+to opt back out. The shipped <code>mycroft.conf</code> pre-empts this only for
+<code>ovos-ww-verifier-silero</code>, which it disables by default; any other verifier you install
+activates on install alone.</p>
+</div>
 <hr />
 <h2 id="opm-verifier-interface">OPM Verifier Interface<a class="headerlink" href="#opm-verifier-interface" title="Permanent link">&para;</a></h2>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">from</span> <span class="nn">ovos_plugin_manager.templates.hotwords</span> <span class="kn">import</span> <span class="n">HotWordVerifier</span>

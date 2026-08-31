@@ -1794,7 +1794,7 @@ are driven by the bus handlers below rather than called directly.</p>
 <tr>
 <td><code>configuration.updated</code></td>
 <td><code>Configuration.updated</code></td>
-<td>Reload the default, system, remote and XDG layers</td>
+<td>Reload the default, distribution, system, assistant, and XDG layers</td>
 </tr>
 <tr>
 <td><code>configuration.patch</code></td>
@@ -1811,20 +1811,10 @@ are driven by the bus handlers below rather than called directly.</p>
 <td><code>Configuration.clear_cache</code></td>
 <td>Drop the memoized merged config stack, then re-emit <code>configuration.updated</code></td>
 </tr>
-<tr>
-<td><code>mycroft.paired</code></td>
-<td><code>Configuration.handle_remote_update</code></td>
-<td>Reload the remote/backend config layer</td>
-</tr>
-<tr>
-<td><code>mycroft.internet.connected</code></td>
-<td><code>Configuration.handle_remote_update</code></td>
-<td>Reload the remote/backend config layer</td>
-</tr>
 </tbody>
 </table>
 <p><code>configuration.updated</code> reloads <strong>every</strong> layer: <code>reload()</code> re-reads default, distribution,
-system, remote and all the XDG configs from disk (the read-only layers included — their
+system, assistant, and all the XDG configs from disk (the read-only layers included — their
 <code>reload()</code> does a real, mtime-checked re-read). A script that edits any layer's file and then
 emits this event sees the change immediately, without waiting for the file watcher.</p>
 <p><code>Configuration.set_config_watcher()</code> uses <code>ovos-utils</code>' <code>FileWatcher</code> (watchdog) to monitor
@@ -1858,34 +1848,37 @@ applies to it.</p>
 <td>Raises <code>PermissionError</code> on mutation (unless <code>allow_overwrite=True</code>)</td>
 </tr>
 <tr>
-<td><code>MycroftDefaultConfig</code></td>
+<td><code>DefaultConfig</code></td>
 <td>bundled <code>mycroft.conf</code></td>
 <td><code>ReadOnlyConfig</code></td>
 </tr>
 <tr>
-<td><code>OvosDistributionConfig</code></td>
+<td><code>DistributionConfig</code></td>
 <td><code>/usr/share/mycroft/mycroft.conf</code></td>
 <td><code>ReadOnlyConfig</code></td>
 </tr>
 <tr>
-<td><code>MycroftSystemConfig</code></td>
+<td><code>SystemConfig</code></td>
 <td><code>/etc/mycroft/mycroft.conf</code></td>
 <td><code>ReadOnlyConfig</code></td>
 </tr>
 <tr>
-<td><code>RemoteConf</code></td>
-<td>backend / paired-server cache</td>
-<td>Optional remote layer (<code>LocalConf</code>)</td>
+<td><code>AssistantConfig</code></td>
+<td><code>~/.config/mycroft/runtime.conf</code></td>
+<td>OVOS's own runtime-write layer (<code>LocalConf</code>)</td>
 </tr>
 <tr>
-<td><code>MycroftUserConfig</code></td>
+<td><code>UserConfig</code></td>
 <td><code>~/.config/mycroft/mycroft.conf</code></td>
 <td>Primary user layer (<code>LocalConf</code>)</td>
 </tr>
 </tbody>
 </table>
-<p><code>MycroftUserConfig</code> is also exported under the alias <code>MycroftXDGConfig</code> for backward
-compatibility.</p>
+<p><code>MycroftDefaultConfig</code>/<code>OvosDistributionConfig</code>/<code>MycroftSystemConfig</code>/<code>MycroftUserConfig</code> are
+deprecated aliases of the classes above, kept for backward compatibility and slated for removal.
+<code>MycroftXDGConfig</code> is a deprecated alias of <code>UserConfig</code>. <code>RemoteConf</code> (the old backend /
+paired-server cache) is deprecated without replacement — constructing it emits a
+<code>DeprecationWarning</code>, and <code>Configuration</code> no longer instantiates it at all.</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">from</span> <span class="nn">ovos_config.models</span> <span class="kn">import</span> <span class="n">LocalConf</span><span class="p">,</span> <span class="n">MycroftUserConfig</span>
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
 </span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="c1"># Direct access to a layer</span>

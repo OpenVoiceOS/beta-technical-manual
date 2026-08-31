@@ -1751,14 +1751,15 @@ confidence (0.0-1.0). Matching proceeds in tiers:</p>
 </table>
 <p>Returns a single spoken name string. Resolution is most-specific-first: the full tag's curated
 name, then the <strong>base-language</strong> curated name (a regioned or private-use tag like <code>ar-EG</code> or
-<code>pt-BR-x-caipira</code> resolves to the name of <code>ar</code> / <code>pt</code>). Unlike <code>extract_langcode()</code> below, there
-is no CLDR/<code>langcodes</code> fallback here — a code with no curated name at either level, like <code>mwl</code>
-(Mirandese, no <code>-</code> subtag to fall back on), is returned unchanged.</p>
+<code>pt-BR-x-caipira</code> resolves to the name of <code>ar</code> / <code>pt</code>). If the wordlist has no curated name
+either way, it falls back to the CLDR display name via <code>langcodes</code> (<code>mwl</code> → <code>"Mirandese"</code>, <code>lij</code>
+→ <code>"Ligurian"</code>), covering the long tail of ISO-639 codes no wordlist bundles. Only a code CLDR
+itself doesn't know, or a private-use tag, is returned unchanged.</p>
 <p>Example:
 <div class="language-python highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="n">pronounce_lang</span><span class="p">(</span><span class="s2">&quot;fr&quot;</span><span class="p">,</span> <span class="s2">&quot;en&quot;</span><span class="p">)</span>   <span class="c1"># &quot;French&quot;</span>
 </span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="n">pronounce_lang</span><span class="p">(</span><span class="s2">&quot;es&quot;</span><span class="p">,</span> <span class="s2">&quot;en&quot;</span><span class="p">)</span>   <span class="c1"># &quot;Spanish&quot;</span>
 </span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="n">pronounce_lang</span><span class="p">(</span><span class="s2">&quot;en&quot;</span><span class="p">,</span> <span class="s2">&quot;fr&quot;</span><span class="p">)</span>   <span class="c1"># &quot;Anglais&quot;</span>
-</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="n">pronounce_lang</span><span class="p">(</span><span class="s2">&quot;mwl&quot;</span><span class="p">,</span> <span class="s2">&quot;en&quot;</span><span class="p">)</span>  <span class="c1"># &quot;mwl&quot;  (no curated name, no CLDR fallback for this function)</span>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="n">pronounce_lang</span><span class="p">(</span><span class="s2">&quot;mwl&quot;</span><span class="p">,</span> <span class="s2">&quot;en&quot;</span><span class="p">)</span>  <span class="c1"># &quot;Mirandese&quot;  (CLDR fallback, no curated wordlist entry)</span>
 </span></code></pre></div></p>
 <hr />
 <h2 id="dialects-regional-subtags">Dialects &amp; regional subtags<a class="headerlink" href="#dialects-regional-subtags" title="Permanent link">&para;</a></h2>

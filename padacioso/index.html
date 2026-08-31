@@ -1461,10 +1461,12 @@
 </span><span id="__span-0-24"><a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a><span class="n">container</span><span class="o">.</span><span class="n">calc_intent</span><span class="p">(</span><span class="s1">&#39;say something, whatever&#39;</span><span class="p">)</span>
 </span><span id="__span-0-25"><a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a><span class="c1"># {&#39;name&#39;: &#39;say&#39;, &#39;entities&#39;: {}, &#39;conf&#39;: 0.85}</span>
 </span></code></pre></div>
-<p>Slot names follow the OVOS sentence-template grammar (<code>{lowercase_with_underscores}</code>).
-The colon-typed <code>simplematch</code> syntax such as <code>{number:int}</code> is <strong>not</strong> supported:
-<code>add_intent()</code> raises <code>MalformedTemplate</code> at registration (slot names allow only lowercase
-letters, digits, and underscores), rather than treating it as a literal or a typed slot.</p>
+<p><code>padacioso.IntentContainer.add_intent()</code>, called directly as above, honors <code>simplematch</code>'s
+colon-typed slot syntax (<code>{number:int}</code>) with real type coercion. An unparseable value fails to
+match. It does not crash.</p>
+<p>The OVOS pipeline's <code>.intent</code>-file path differs. <code>ovos-spec-tools</code> validates slot names against
+the OVOS grammar (<code>{lowercase_with_underscores}</code>) first. A colon-typed name raises
+<code>MalformedTemplate</code> there, before padacioso ever sees the template.</p>
 <p>A wildcard (<code>*</code>) carries a confidence penalty proportional to how much of the template it
 covers: <code>0.05 + 0.20 × (wildcard tokens / total tokens)</code>, so any wildcard costs between
 <code>0.05</code> and <code>0.25</code>. For example, <code>"say *"</code> is one wildcard out of two tokens, dropping the
