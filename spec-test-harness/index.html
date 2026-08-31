@@ -1540,11 +1540,9 @@ CI never re-resolves and never downgrades a component. Each test then:</p>
 </ul>
 <h2 id="coverage">Coverage<a class="headerlink" href="#coverage" title="Permanent link">&para;</a></h2>
 <p>Every spec document on the architecture <code>dev</code> branch has a conformance suite —
-the harness's own matrix counts 21 spec IDs with 21 suites, of which 20 map to
-architecture spec documents (SESSION-1 and SESSION-2 share one suite; INTENT-4 has both an
-orchestrator suite and a per-plugin registration-compliance suite; the 21<sup>st</sup> ID,
-OVOS-USER-ID-1, has a suite ahead of any published spec document). The
-authoritative spec→suite traceability matrix lives in the repo's
+the harness's own matrix counts 20 spec IDs with 20 suites (SESSION-1 and SESSION-2 share
+one suite; INTENT-4 has both an orchestrator suite and a per-plugin registration-compliance
+suite). The authoritative spec→suite traceability matrix lives in the repo's
 <a href="https://github.com/OpenVoiceOS/ovos-test-harness/blob/dev/docs/coverage.md"><code>docs/coverage.md</code></a>.
 Documented conformance gaps are recorded as <code>xfail</code> entries and catalogued in
 <a href="https://github.com/OpenVoiceOS/ovos-test-harness/blob/dev/docs/known-gaps.md"><code>docs/known-gaps.md</code></a>.</p>
