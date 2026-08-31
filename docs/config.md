@@ -216,19 +216,24 @@ The system config (`/etc/mycroft/mycroft.conf`) can enforce constraints:
 
 | Key in system config | Effect |
 |---|---|
-| `protected_keys` | Dict of `{"user": [...]}`: keys stripped from the user layer before merging |
-| `disable_user_config` | If `true`, every layer except `default` and `system` is ignored — see the warning below |
+| `protected_keys` | Dict of `{"user": [...], "assistant": [...]}`: keys stripped from the matching layer before merging |
+| `disable_user_config` | If `true`, every layer except `default`, `system`, and `assistant` is ignored — see the warning below |
+
+Since `ovos-config` `3.0.1a1`, the **assistant** layer (`runtime.conf`) has its own protection
+list (`protected_keys.assistant`) and is no longer classified as a "user" layer for merge
+purposes — `disable_user_config` does **not** drop it, unlike earlier releases.
 
 !!! danger "`disable_user_config` drops more than the user layer"
-    The merge filter treats every layer whose path is neither the bundled default nor the
-    system config as a user layer. That includes the **distribution** layer
-    (`/usr/share/mycroft/mycroft.conf`), the **assistant** layer (`runtime.conf`), and the
-    in-memory **patch** that `configuration.patch` bus messages write to.
+    The merge filter treats every layer whose path is neither the bundled default, the
+    system config, nor the assistant config as a user layer. That includes the
+    **distribution** layer (`/usr/share/mycroft/mycroft.conf`) and the in-memory **patch**
+    that `configuration.patch` bus messages write to.
 
     So an OEM that ships a distribution config and then locks the device with
-    `disable_user_config` erases its own settings and silences every runtime config update.
-    The device falls back to stock defaults, with no error and no log line. Verified: with
-    `lang` set to `pt-PT` in the distribution layer, turning the flag on returns `en-US`.
+    `disable_user_config` erases its own settings and silences every runtime config update
+    that goes through the patch layer. The device falls back to stock defaults, with no
+    error and no log line. Verified against `ovos-config` `3.0.1a1`: with `lang` set to
+    `pt-PT` in the distribution layer, turning the flag on returns `en-US`.
 
     To lock a device, put the values in `/etc/mycroft/mycroft.conf` (the system layer), which
     the filter keeps.

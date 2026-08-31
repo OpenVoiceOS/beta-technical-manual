@@ -159,7 +159,12 @@ corrupt the user's own config file. This shipped as a **breaking change**, not a
 deprecate-then-remove cycle: the old Mycroft Home / `home.mycroft.ai` remote-config layer was
 removed outright. `Configuration.remote` now raises `AttributeError`; `RemoteConf` stays
 importable only as a deprecated, warn-on-construction class (`ovos-config` `5a7d1a3`, #194,
-first tag `3.0.0a1`).
+first tag `3.0.0a1`). `3.0.0a1` itself was an incomplete release; `3.0.1a1` finished the work:
+`AssistantConfig` gained its own `protected_keys.assistant` protection list and stopped being
+classified as a "user" layer, so `disable_user_config` no longer drops it (see
+[Configuration Management](config.md#protected-keys-and-system-restrictions)). `3.0.1a1` also
+does a one-time migration of the old `web_cache.json` (plugin-written location data, etc.) into
+`runtime.conf`, renaming the old file to `web_cache.json.migrated` afterward.
 
 `ovos-core`'s opt-in intent-metrics upload (`open_data.intent_urls`, empty/disabled by default)
 now includes `pipeline` (the matcher ids from `session.pipeline` that produced the match) and
