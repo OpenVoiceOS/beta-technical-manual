@@ -193,6 +193,23 @@ This split is the real "voice satellite" story: cheap devices listen and speak, 
 
 ---
 
+## Session isolation between clients
+
+A `session_id` (see [Sessions](session.md)) names an OVOS-side conversation. HiveMind never
+routes on it: a client is addressed by its own connection identity, not by its session. Two
+clients may declare the same `session_id`, including OVOS's reserved device-local `"default"`.
+The server translates each connection's declared `session_id` into its own private identity
+before the utterance reaches the orchestrator, and translates it back on the way out. A client
+sees a stable id, its own name, never another client's, and never the orchestrator's actual
+device-local session, per
+[`HIVEMIND-BRIDGE-1 §4/§4.1`](https://github.com/JarbasHiveMind/architecture/blob/dev/hivemind-bridge-1.md#4-session-fidelity).
+
+A client multiplexing several conversations over one connection (a chat-room or telephony
+bridge) gets each mapped to its own isolated session. Session contents, every field besides
+the id, are adopted as sent, unmodified.
+
+---
+
 ## Permissions & access control
 
 HiveMind is **deny-by-default**: a client may only do what it has been explicitly granted,
