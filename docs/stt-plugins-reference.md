@@ -12,7 +12,7 @@
 
 - **Description**: OVOS plugin for [Wav2Vec2](https://ai.meta.com/blog/wav2vec-20-learning-the-structure-of-speech-from-raw-audio/)
 
-### Default Configuration
+### Example Configuration
 
 ```jsonc
   "stt": {
@@ -23,6 +23,11 @@
   }
 
 ```
+
+There is no single hardcoded default model. Leaving `model` unset resolves one from an
+internal `LANG2MODEL` table keyed by `lang` (the value above is the `gl`/Galician entry), and
+raises `ValueError` at load if the configured language has no entry and no `model` is set
+explicitly.
 
 There is no single hardcoded default model: the plugin picks a model from an internal
 per-language table (keyed by BCP-47 language code) unless `model` is set explicitly, and

@@ -132,7 +132,11 @@ match_data = {
 
 ## Writing Your Own Intent [Transformer](transformer-plugins.md)
 
-Subclass `IntentTransformer` and implement `transform()` (the base declares it abstract). The method receives and must return an `IntentHandlerMatch`. Mutate its `match_data` in place and return it. Register under the `opm.transformer.intent` entry-point group.
+Subclass `IntentTransformer` and implement `transform()`. The base class is not ABC-enforced, so a
+subclass that omits it instantiates and registers fine — the base method just returns the intent
+unchanged, a silent no-op rather than a crash. Add a unit test that asserts your override actually
+runs. The method receives and must return an `IntentHandlerMatch`. Mutate its `match_data` in
+place and return it. Register under the `opm.transformer.intent` entry-point group.
 
 ```python
 from ovos_plugin_manager.templates.transformers import IntentTransformer

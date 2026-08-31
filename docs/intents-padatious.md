@@ -151,47 +151,39 @@ that means in practice.
 
 ### Number matching
 
-> **Engine-specific:** the `#` digit token and the `:0` unknown-token shown below are **Padatious extensions**. They are **not** part of the [OVOS-INTENT-1](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-1.md) Sentence Template Grammar (which has no digit token and no wildcard), so they are not portable to other pipeline plugins. Use them only when you know your skill targets Padatious.
-
-!!! warning "The inline `#` digit wildcard is deprecated"
-    Since `ovos-padatious-pipeline-plugin` `2.0.9a1`, registering a template line with an
-    unescaped inline `#` (like the ones below) logs a one-time deprecation warning. `#` still
-    matches digits exactly as before — nothing breaks this cycle — but new skills should use a
-    `{slot}` instead and parse the captured text themselves (values may arrive as digits or
-    spelled out, depending on the ASR). A leading `#` used only as a comment marker, or an
-    escaped `\#`, does not warn. **Pending** [OpenVoiceOS/architecture#166](https://github.com/OpenVoiceOS/architecture/pull/166) (non-normative INTENT-3 note on this) and [OpenVoiceOS/ovos-skill-count#55](https://github.com/OpenVoiceOS/ovos-skill-count/pull/55) (a worked `{slot}` migration example), both not yet merged — once they land, this section should show the `{slot}` pattern as the primary example, with `#` demoted to a legacy note.
-
-Let's say you are writing an intent to call a phone number. You can make it match only
-specific formats of numbers by writing out possible arrangements using `#` where a number
-would go. For example, with the following intent:
+The portable way to match a number is a plain `{slot}`, parsed in the handler with
+[`ovos-number-parser`](https://github.com/OpenVoiceOS/ovos-number-parser)'s `extract_number()` —
+it handles both digit and spelled-out forms, since which one you get depends on the ASR:
 
 ```text
-Call {number}.
-Call the phone number {number}.
-
+Count to {number}.
 ```
 
-the number.entity could be written as:
+```python
+from ovos_number_parser import extract_number
 
-```text
-+### ### ###-####
-+## ### ###-####
-+# ### ###-####
-### ###-####
-###-####
-###-###-####
-###.###.####
-
-### ### ####
-
+def handle_count_intent(self, message):
+    number = message.data.get("number")
+    try:
+        n = int(number)
+    except ValueError:
+        n = extract_number(number, lang=self.lang)
 ```
 
-!!! warning "No literal parentheses in a `#`-pattern"
-    `(###)` looks like a natural way to write an optional area code, but parentheses are
-    [Parentheses Expansion](#parentheses-expansion) group syntax, not literal characters — a
-    group needs at least two `|`-separated branches, so `(###)` fails to load with
-    `MalformedTemplate: single-branch group`. Write the digits without surrounding parens, as
-    the lines above do.
+`extract_number("five", lang="en-us")` returns `5`, same as `extract_number("3", lang="en-us")`
+returns `3` — both `"count to five"` and `"count to 3"` reach the handler as the matched
+`{number}` slot text, and the fallback resolves either. No `.entity` file is needed for a
+free-form numeric slot like this.
+
+> **Engine-specific, deprecated:** an inline `#` digit token (matching only bare digit runs) and
+> the `:0` unknown-token below are **Padatious extensions**, not part of the
+> [OVOS-INTENT-1](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-1.md) Sentence
+> Template Grammar, so they're not portable to other pipeline plugins. Since
+> `ovos-padatious-pipeline-plugin` `2.0.9a1`, an unescaped inline `#` in a template line logs a
+> one-time deprecation warning (`#` still matches digits exactly as before — nothing breaks this
+> cycle). Prefer the `{slot}` pattern above for new skills. A non-normative spec note on this is
+> **pending** [OpenVoiceOS/architecture#166](https://github.com/OpenVoiceOS/architecture/pull/166),
+> not yet merged.
 
 ### Entities with unknown tokens
 
