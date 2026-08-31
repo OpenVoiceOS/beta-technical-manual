@@ -1631,7 +1631,9 @@ the flag set but the extra missing, the server logs a warning and runs without t
 </tr>
 </tbody>
 </table>
-<p>UTCP tools: <code>ovos_translate.translate</code>, <code>ovos_translate.detect_language</code>, and the native HTTP REST endpoints.</p>
+<p>UTCP tools: <code>ovos_translate.translate</code>, <code>ovos_translate.translate_with_source</code>,
+<code>ovos_translate.detect_language</code>, <code>ovos_translate.classify_language</code>,
+<code>ovos_translate.supported_languages</code>, and the native HTTP REST endpoints.</p>
 <p>MCP tools: <code>translate</code> (params: <code>text</code>, <code>target_lang</code>, optional <code>source_lang</code>), <code>detect_language</code> (param: <code>text</code>).</p>
 <h3 id="persona-server-tool-plugins-via-mcp-utcp">Persona Server: Tool Plugins via MCP + UTCP<a class="headerlink" href="#persona-server-tool-plugins-via-mcp-utcp" title="Permanent link">&para;</a></h3>
 <p>The persona server surfaces every installed OPM <code>ToolBox</code> plugin as both a UTCP tool and an MCP tool.</p>
