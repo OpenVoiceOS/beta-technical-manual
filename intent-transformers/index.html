@@ -1789,7 +1789,11 @@ is the key <code>intent_transformers</code> must use.</p>
 </span></code></pre></div>
 <hr />
 <h2 id="writing-your-own-intent-transformer">Writing Your Own Intent <a href="../transformer-plugins/">Transformer</a><a class="headerlink" href="#writing-your-own-intent-transformer" title="Permanent link">&para;</a></h2>
-<p>Subclass <code>IntentTransformer</code> and implement <code>transform()</code> (the base declares it abstract). The method receives and must return an <code>IntentHandlerMatch</code>. Mutate its <code>match_data</code> in place and return it. Register under the <code>opm.transformer.intent</code> entry-point group.</p>
+<p>Subclass <code>IntentTransformer</code> and implement <code>transform()</code>. The base class is not ABC-enforced, so a
+subclass that omits it instantiates and registers fine — the base method just returns the intent
+unchanged, a silent no-op rather than a crash. Add a unit test that asserts your override actually
+runs. The method receives and must return an <code>IntentHandlerMatch</code>. Mutate its <code>match_data</code> in
+place and return it. Register under the <code>opm.transformer.intent</code> entry-point group.</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kn">from</span> <span class="nn">ovos_plugin_manager.templates.transformers</span> <span class="kn">import</span> <span class="n">IntentTransformer</span>
 </span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="kn">from</span> <span class="nn">ovos_plugin_manager.templates.pipeline</span> <span class="kn">import</span> <span class="n">IntentHandlerMatch</span>
 </span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>

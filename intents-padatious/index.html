@@ -1853,43 +1853,35 @@ matches still fire. On a deployment that trims the pipeline to the high stage on
 out-of-list slot values silently produce no match at all.</p>
 </div>
 <h3 id="number-matching">Number matching<a class="headerlink" href="#number-matching" title="Permanent link">&para;</a></h3>
+<p>The portable way to match a number is a plain <code>{slot}</code>, parsed in the handler with
+<a href="https://github.com/OpenVoiceOS/ovos-number-parser"><code>ovos-number-parser</code></a>'s <code>extract_number()</code> —
+it handles both digit and spelled-out forms, since which one you get depends on the ASR:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>Count to {number}.
+</span></code></pre></div>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kn">from</span> <span class="nn">ovos_number_parser</span> <span class="kn">import</span> <span class="n">extract_number</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="k">def</span> <span class="nf">handle_count_intent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>    <span class="n">number</span> <span class="o">=</span> <span class="n">message</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;number&quot;</span><span class="p">)</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>    <span class="k">try</span><span class="p">:</span>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>        <span class="n">n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">number</span><span class="p">)</span>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>    <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>        <span class="n">n</span> <span class="o">=</span> <span class="n">extract_number</span><span class="p">(</span><span class="n">number</span><span class="p">,</span> <span class="n">lang</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">lang</span><span class="p">)</span>
+</span></code></pre></div>
+<p><code>extract_number("five", lang="en-us")</code> returns <code>5</code>, same as <code>extract_number("3", lang="en-us")</code>
+returns <code>3</code> — both <code>"count to five"</code> and <code>"count to 3"</code> reach the handler as the matched
+<code>{number}</code> slot text, and the fallback resolves either. No <code>.entity</code> file is needed for a
+free-form numeric slot like this.</p>
 <blockquote>
-<p><strong>Engine-specific:</strong> the <code>#</code> digit token and the <code>:0</code> unknown-token shown below are <strong>Padatious extensions</strong>. They are <strong>not</strong> part of the <a href="https://github.com/OpenVoiceOS/architecture/blob/dev/intent-1.md">OVOS-INTENT-1</a> Sentence Template Grammar (which has no digit token and no wildcard), so they are not portable to other pipeline plugins. Use them only when you know your skill targets Padatious.</p>
+<p><strong>Engine-specific, deprecated:</strong> an inline <code>#</code> digit token (matching only bare digit runs) and
+the <code>:0</code> unknown-token below are <strong>Padatious extensions</strong>, not part of the
+<a href="https://github.com/OpenVoiceOS/architecture/blob/dev/intent-1.md">OVOS-INTENT-1</a> Sentence
+Template Grammar, so they're not portable to other pipeline plugins. Since
+<code>ovos-padatious-pipeline-plugin</code> <code>2.0.9a1</code>, an unescaped inline <code>#</code> in a template line logs a
+one-time deprecation warning (<code>#</code> still matches digits exactly as before — nothing breaks this
+cycle). Prefer the <code>{slot}</code> pattern above for new skills. A non-normative spec note on this is
+<strong>pending</strong> <a href="https://github.com/OpenVoiceOS/architecture/pull/166">OpenVoiceOS/architecture#166</a>,
+not yet merged.</p>
 </blockquote>
-<div class="admonition warning">
-<p class="admonition-title">The inline <code>#</code> digit wildcard is deprecated</p>
-<p>Since <code>ovos-padatious-pipeline-plugin</code> <code>2.0.9a1</code>, registering a template line with an
-unescaped inline <code>#</code> (like the ones below) logs a one-time deprecation warning. <code>#</code> still
-matches digits exactly as before — nothing breaks this cycle — but new skills should use a
-<code>{slot}</code> instead and parse the captured text themselves (values may arrive as digits or
-spelled out, depending on the ASR). A leading <code>#</code> used only as a comment marker, or an
-escaped <code>\#</code>, does not warn. <strong>Pending</strong> <a href="https://github.com/OpenVoiceOS/architecture/pull/166">OpenVoiceOS/architecture#166</a> (non-normative INTENT-3 note on this) and <a href="https://github.com/OpenVoiceOS/ovos-skill-count/pull/55">OpenVoiceOS/ovos-skill-count#55</a> (a worked <code>{slot}</code> migration example), both not yet merged — once they land, this section should show the <code>{slot}</code> pattern as the primary example, with <code>#</code> demoted to a legacy note.</p>
-</div>
-<p>Let's say you are writing an intent to call a phone number. You can make it match only
-specific formats of numbers by writing out possible arrangements using <code>#</code> where a number
-would go. For example, with the following intent:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>Call {number}.
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>Call the phone number {number}.
-</span></code></pre></div>
-<p>the number.entity could be written as:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>+### ### ###-####
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>+## ### ###-####
-</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>+# ### ###-####
-</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>### ###-####
-</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>###-####
-</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>###-###-####
-</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>###.###.####
-</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>
-</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>### ### ####
-</span></code></pre></div>
-<div class="admonition warning">
-<p class="admonition-title">No literal parentheses in a <code>#</code>-pattern</p>
-<p><code>(###)</code> looks like a natural way to write an optional area code, but parentheses are
-<a href="#parentheses-expansion">Parentheses Expansion</a> group syntax, not literal characters — a
-group needs at least two <code>|</code>-separated branches, so <code>(###)</code> fails to load with
-<code>MalformedTemplate: single-branch group</code>. Write the digits without surrounding parens, as
-the lines above do.</p>
-</div>
 <h3 id="entities-with-unknown-tokens">Entities with unknown tokens<a class="headerlink" href="#entities-with-unknown-tokens" title="Permanent link">&para;</a></h3>
 <p>Let's say you want to create an intent to match places:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>Directions to {place}.
