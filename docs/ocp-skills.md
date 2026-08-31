@@ -251,7 +251,9 @@ OCP keywords are registered via `self.register_ocp_keyword`.
     (e.g. to call `ocp_voc_match` directly, as in the example below). Without it, `ocp_voc_match`
     still runs but returns `{}` — the registered keywords are still sent to OCP over the bus, so
     matching still works end to end through the normal OCP pipeline, only the local call returns
-    empty.
+    empty. `ahocorasick_ner` is specific to this legacy OCP-skill-side keyword matching; it is not
+    expected to gain new features as OCP skills give way to MediaProvider plugins (see the
+    migration note at the top of this page).
 
 Wordlists can also be loaded from a .csv file. See [the OCP dataset](https://github.com/OpenVoiceOS/ovos-classifiers/tree/dev/scripts/training/ocp/datasets) for a list of keywords gathered from wikidata with SPARQL queries.
 
