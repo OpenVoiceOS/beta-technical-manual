@@ -2469,6 +2469,11 @@ is <code>false</code>.</p>
 <td>unset</td>
 <td>LRU cap on resident models (each is multi-GB when serving many languages). Unset keeps every loaded model forever; when set, the least-recently-used model is evicted as a new one would exceed the cap. Bounds cache retention, not peak memory: a model mid-transcription is held by its thread</td>
 </tr>
+<tr>
+<td><code>cpu_models_only</code></td>
+<td><code>false</code></td>
+<td><strong>Pending</strong> <a href="https://github.com/OpenVoiceOS/ovos-stt-plugin-onnx-asr/pull/34"><code>ovos-stt-plugin-onnx-asr#34</code></a>, not yet merged. When <code>true</code>, drops any model whose id advertises 0.6B+ parameters from the built-in per-language registry and swaps the ultimate fallback from <code>nemo-canary-1b-v2</code> (1B) to <code>whisper-base</code> (74M). Naming an excluded model explicitly through <code>model</code> or <code>lang2model</code> is refused at startup rather than silently swapped. Off by default; leaving it unset keeps every model selectable</td>
+</tr>
 </tbody>
 </table>
 <div class="admonition note">

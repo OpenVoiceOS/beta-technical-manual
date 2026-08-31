@@ -1710,6 +1710,13 @@ playable media</strong> (a voice game, an ebook reader) stays an OCP skill. See
 <td>Yes</td>
 <td>3.0.0</td>
 </tr>
+<tr>
+<td><a href="https://github.com/OpenVoiceOS/ovos-ocp-pipeline-plugin/pull/156">ovos-ocp-pipeline-plugin#156</a></td>
+<td>Dispatches search in-process to installed MediaProvider plugins, merged with the existing bus-only OCP-skill search rather than replacing it (dedup only drops a provider entry whose URI a legacy result already covers). No bus message types change. Enabled by default, with an explicit <code>media_providers.enabled: false</code> off-switch under the OCP pipeline config; with no MediaProvider plugins installed, behavior is byte-identical to today</td>
+<td>deployers running MediaProvider plugins, OCP pipeline config authors</td>
+<td>No</td>
+<td>not yet released</td>
+</tr>
 </tbody>
 </table>
 <h2 id="official-spec-adoption">Official spec adoption<a class="headerlink" href="#official-spec-adoption" title="Permanent link">&para;</a></h2>
