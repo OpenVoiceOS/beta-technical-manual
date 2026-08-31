@@ -140,7 +140,7 @@ STOP-1 landing in `3.0.0a1` (#802). These emits are unconditional; the once-prop
 `legacy_namespace` gating never shipped (its branch was superseded), and legacy interop
 rides the bus-client bridge instead.
 
-`EventsAPI.update_scheduled_event()` emitted `mycroft.schedule.update_event`, missing the
+`EventSchedulerInterface.update_scheduled_event()` emitted `mycroft.schedule.update_event`, missing the
 "r" in "scheduler" — the server-side `EventScheduler` listens on `mycroft.scheduler.update_event`,
 so calls never reached the scheduler. Fixed (`ovos-bus-client` `fac29c3`, #222, first tag
 `2.8.5a2`).
@@ -153,19 +153,24 @@ helpers (`ovos-bus-client` `185ce7b1`, #200, first tag `2.8.6a2`).
 in favor of `importlib.metadata` (`ovos-plugin-manager` `81c5e9bf`, #295, first tag `2.11.4a1`).
 No public symbol was removed.
 
+`ovos-config` gained `AssistantConfig`, a `~/.config/mycroft/runtime.conf` layer for OVOS's own
+runtime writes (skills, plugins, e.g. automatic location detection), so those writes never
+corrupt the user's own config file. This shipped as a **breaking change**, not a
+deprecate-then-remove cycle: the old Mycroft Home / `home.mycroft.ai` remote-config layer was
+removed outright. `Configuration.remote` now raises `AttributeError`; `RemoteConf` stays
+importable only as a deprecated, warn-on-construction class (`ovos-config` `5a7d1a3`, #194,
+first tag `3.0.0a1`).
+
+`ovos-core`'s opt-in intent-metrics upload (`open_data.intent_urls`, empty/disabled by default)
+now includes `pipeline` (the matcher ids from `session.pipeline` that produced the match) and
+`core_version` in its payload (`ovos-core` #689, first tag `3.0.12a1`).
+
 ## Coming next
 
 The following work is visible on unmerged branches only and is **not
 released**. It is included so you know it is coming, not because it is
 safe to build against yet.
 
-- **AssistantConfig** (`ovos-config`, branches `feat/assistant_config`,
-  `pr194`): introduces a new `runtime.conf` config layer for
-  OVOS-internal runtime writes, so plugins/components stop corrupting the
-  user's `mycroft.conf`. Deprecates `RemoteConfig`. Explicit back-compat
-  commits on the branch promise `Configuration().remote` and
-  `load_config_stack(...)` keep working once this lands. Do not target
-  `AssistantConfig` yet. Watch the `ovos-config` release notes.
 - Unmerged `ovos-workshop` branches `feat/deprecate-ocp-skills`,
   `feat/remove-skill-homescreens`, `feat/gameskill-and-ocp-deprecation`:
   OCP-skill-base-class and skill-homescreen removal has not landed as of

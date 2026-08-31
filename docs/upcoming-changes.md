@@ -119,10 +119,9 @@ already landed on that repo's `dev`.
 
 | PR | What it changes | Audience | Breaking | Version |
 |---|---|---|---|---|
-| [#194](https://github.com/OpenVoiceOS/ovos-config/pull/194) | Adds `AssistantConfig` runtime-write layer, deprecates `RemoteConf` | skill/plugin authors writing config, deployers | No | 2.4.0 |
-| [#282](https://github.com/OpenVoiceOS/ovos-config/pull/282) | Adds offline STT/TTS recommends for 49 languages | deployers running `autoconfigure --offline`, langpack maintainers | No | 2.4.0 |
-| [#274](https://github.com/OpenVoiceOS/ovos-config/pull/274) | Moves the `--gpu` STT tier onto `onnx-asr` with `use_cuda` | deployers running the `--gpu` autoconfigure tier | No | 2.4.0 |
-| [#278](https://github.com/OpenVoiceOS/ovos-config/pull/278) | Documents `ww_urls`/`stt_urls` `open_data` config keys | deployers opting into `open_data`, listener users | No | 2.4.0 |
+| [#282](https://github.com/OpenVoiceOS/ovos-config/pull/282) | Adds offline STT/TTS recommends for 49 languages | deployers running `autoconfigure --offline`, langpack maintainers | No | not yet released |
+| [#274](https://github.com/OpenVoiceOS/ovos-config/pull/274) | Moves the `--gpu` STT tier onto `onnx-asr` with `use_cuda` | deployers running the `--gpu` autoconfigure tier | No | not yet released |
+| [#278](https://github.com/OpenVoiceOS/ovos-config/pull/278) | Documents `ww_urls`/`stt_urls` `open_data` config keys | deployers opting into `open_data`, listener users | No | not yet released |
 | [#267](https://github.com/OpenVoiceOS/ovos-config/pull/267) | Fixes a wrong fasterwhisper model id in the GPU-tier recommend | deployers on the GPU-tier `en-us` recommend | No | not yet released |
 | [#82](https://github.com/OpenVoiceOS/ovos-config/pull/82) | Turns on audio ducking by default | end users/deployers of the legacy `ovos-audio` service | Not breaking, but changes default audio behavior | not yet released |
 
@@ -131,7 +130,6 @@ already landed on that repo's `dev`.
 | PR | What it changes | Audience | Breaking | Version |
 |---|---|---|---|---|
 | [#832](https://github.com/OpenVoiceOS/ovos-core/pull/832) | Adds pipeline blacklisting at load time and per session | deployers tuning boot cost and per-session policy | No | 2.6.0a1 (merged, on `dev`) |
-| [#689](https://github.com/OpenVoiceOS/ovos-core/pull/689) | Adds pipeline id and core version to intent metrics | consumers of the intent-metrics telemetry event | No | not yet released |
 
 ### ovos-dinkum-listener
 

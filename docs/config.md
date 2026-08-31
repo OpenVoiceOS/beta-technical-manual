@@ -28,16 +28,22 @@ At read time OVOS stacks several files on top of each other and merges them. The
 file closest to *you* wins:
 
 ```text
-bundled default  →  remote cache  →  /usr/share/...  →  /etc/mycroft/...  →  ~/.config/mycroft/mycroft.conf  →  runtime patch
-     lowest priority  ───────────────────────────────────────────────────►  highest priority
+bundled default  →  /usr/share/...  →  /etc/mycroft/...  →  runtime.conf  →  ~/.config/mycroft/mycroft.conf  →  runtime patch
+     lowest priority  ─────────────────────────────────────────────────────────────────►  highest priority
 ```
 
-The **remote cache** is an optional layer holding settings pushed from a paired backend
-(the legacy Mycroft-Home / `home.mycroft.ai` model). It sits low in the stack, so anything you
-set by hand always wins. You can turn it off entirely with the `disable_remote_config`
-system constraint.
+**`runtime.conf`** (`~/.config/mycroft/runtime.conf`) is where OVOS itself persists runtime
+changes — for example automatic location detection — without ever touching the file you edit
+by hand. Write to it programmatically with `update_assistant_config(config, bus)`.
 
 It is not the file you edit. See the [Config Layer Stack](#config-layer-stack) below.
+
+!!! note "Remote configuration is gone"
+    The old Mycroft Home / `home.mycroft.ai` backend layer (`RemoteConf`,
+    `disable_remote_config`, `protected_keys.remote`) was removed as a breaking change
+    (`ovos-config` `5a7d1a3`, #194, first tag `3.0.0a1`). `Configuration.remote` now raises
+    `AttributeError`; `RemoteConf` stays importable only as a deprecated, warn-on-construction
+    class.
 
 To switch to a German voice, you only need:
 
@@ -64,26 +70,26 @@ the full picture.
 Layers are merged in this order. Later layers override earlier ones:
 
 ```text
-MycroftDefaultConfig   (bundled mycroft.conf — read-only to OVOS itself; admins edit the file)
-RemoteConf             (backend / paired-server cache — optional; disabled by disable_remote_config)
-OvosDistributionConfig (/usr/share/mycroft/mycroft.conf — read-only to OVOS itself; admins edit the file)
-MycroftSystemConfig    (/etc/mycroft/mycroft.conf — read-only to OVOS itself; admins edit the file)
-MycroftUserConfig      (~/.config/mycroft/mycroft.conf — XDG user config)
-__patch                (in-memory overlay applied last)
+DefaultConfig      (bundled mycroft.conf — read-only to OVOS itself; admins edit the file)
+DistributionConfig (/usr/share/mycroft/mycroft.conf — read-only to OVOS itself; admins edit the file)
+SystemConfig       (/etc/mycroft/mycroft.conf — read-only to OVOS itself; admins edit the file)
+AssistantConfig    (~/.config/mycroft/runtime.conf — OVOS's own runtime-write layer)
+xdg user configs   (~/.config/mycroft/mycroft.conf and other XDG dirs)
+__patch            (in-memory overlay applied last)
 
 ```
 
 ```mermaid
 flowchart TD
-    A["MycroftDefaultConfig<br/>bundled default"] --> B["RemoteConf<br/>backend/paired cache"]
-    B --> C["OvosDistributionConfig<br/>/usr/share/mycroft/..."]
-    C --> D["MycroftSystemConfig<br/>/etc/mycroft/..."]
-    D --> E["MycroftUserConfig<br/>~/.config/mycroft/..."]
+    A["DefaultConfig<br/>bundled default"] --> C["DistributionConfig<br/>/usr/share/mycroft/..."]
+    C --> D["SystemConfig<br/>/etc/mycroft/..."]
+    D --> R["AssistantConfig<br/>runtime.conf"]
+    R --> E["xdg user configs<br/>~/.config/mycroft/..."]
     E --> F["__patch<br/>in-memory overlay"]
     F --> W["Wins: highest<br/>priority"]
 ```
 
-*Diagram:* The merge order starts at the bundled default config and ends at the in-memory patch, which wins as the highest priority over remote, distribution, system, and user layers.
+*Diagram:* The merge order starts at the bundled default config and ends at the in-memory patch, which wins as the highest priority over distribution, system, assistant, and user layers.
 
 The XDG user layer is actually a list of configs, one per XDG config dir.
 
@@ -103,14 +109,13 @@ The layers merge left to right, so the last one wins. `$XDG_CONFIG_HOME`
     ```
 
     The last path printed is the one that wins. All layers are `LocalConf` dict subclasses backed by a file. Only the user
-config (`~/.config/mycroft/mycroft.conf`) should be edited by users. The **`RemoteConf`**
-layer is the optional backend or paired-server settings cache (the legacy Mycroft-Home /
-`home.mycroft.ai` model). It is merged low in the stack and can be turned off with the
-`disable_remote_config` system constraint.
+config (`~/.config/mycroft/mycroft.conf`) should be edited by users. The **`AssistantConfig`**
+layer (`runtime.conf`) is where OVOS itself persists runtime changes, kept separate from the
+user's own file so OVOS can never overwrite something the user authored by hand.
 
-> The merge order in `load_all_configs()` is: default → remote → distribution → system →
-> xdg user configs → in-memory patch. The remote layer is skipped when `disable_remote_config`
-> is set, and the user/XDG layers when `disable_user_config` is set.
+> The merge order in `load_all_configs()` is: default → distribution → system → assistant →
+> xdg user configs → in-memory patch. The user/XDG layers are skipped when `disable_user_config`
+> is set.
 
 ---
 
@@ -211,15 +216,14 @@ The system config (`/etc/mycroft/mycroft.conf`) can enforce constraints:
 
 | Key in system config | Effect |
 |---|---|
-| `protected_keys` | Dict of `{"user": [...], "remote": [...]}`: keys stripped from the user / remote layer before merging |
+| `protected_keys` | Dict of `{"user": [...]}`: keys stripped from the user layer before merging |
 | `disable_user_config` | If `true`, every layer except `default` and `system` is ignored — see the warning below |
-| `disable_remote_config` | If `true`, the remote / backend config layer is ignored |
 
 !!! danger "`disable_user_config` drops more than the user layer"
     The merge filter treats every layer whose path is neither the bundled default nor the
     system config as a user layer. That includes the **distribution** layer
-    (`/usr/share/mycroft/mycroft.conf`), the **remote** layer, and the in-memory **patch**
-    that `configuration.patch` bus messages write to.
+    (`/usr/share/mycroft/mycroft.conf`), the **assistant** layer (`runtime.conf`), and the
+    in-memory **patch** that `configuration.patch` bus messages write to.
 
     So an OEM that ships a distribution config and then locks the device with
     `disable_user_config` erases its own settings and silences every runtime config update.
@@ -274,7 +278,7 @@ ovos-config show -u --section base      # user config, top-level scalar keys
 
 ```
 
-Merge priority displayed: `user > system > remote > default`
+Merge priority displayed: `user > assistant > system > default`
 
 ### `get`
 
@@ -338,12 +342,12 @@ ovos-config telemetry --disable   # opt out
 
 - `get_config_locations()` is a rough guide, not the load list: it includes the legacy
   `~/.mycroft/mycroft.conf`, which is never loaded, omits `/etc/xdg/mycroft/mycroft.conf`,
-  which is, ignores the path environment variables, and lists the remote layer in a different
+  which is, ignores the path environment variables, and lists the assistant layer in a different
   position than the merge uses. For what is really in play, print
   `get_xdg_config_locations()` and the layer paths on `Configuration`.
 
 
-- Use `disable_user_config` with caution. It silently skips the distribution and remote
+- Use `disable_user_config` with caution. It silently skips the distribution and assistant
   layers and runtime patches too, not only the user layer.
 
 

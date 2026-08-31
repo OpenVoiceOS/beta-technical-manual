@@ -111,12 +111,17 @@ user.store()   # write to disk
 The individual layers are class attributes on `Configuration` (not per-instance):
 
 ```python
-Configuration.default       # MycroftDefaultConfig
-Configuration.remote        # RemoteConf — backend / paired-server cache (optional)
-Configuration.distribution  # OvosDistributionConfig
-Configuration.system        # MycroftSystemConfig
+Configuration.default       # DefaultConfig
+Configuration.distribution  # DistributionConfig
+Configuration.system        # SystemConfig
+Configuration.assistant     # AssistantConfig — OVOS's own runtime-write layer
 Configuration.xdg_configs   # list[LocalConf] — the user/XDG layer(s)
 ```
+
+There is no `Configuration.remote` — the old Mycroft Home / `mycroft.ai` backend layer was
+removed as a breaking change (`ovos-config` `5a7d1a3`, #194, first tag `3.0.0a1`). Accessing
+`Configuration.remote` now raises `AttributeError`, both from the class and from an instance.
+`RemoteConf` stays importable as a deprecated class that warns on construction.
 
 There is no `.user` attribute. The editable user config is the **last** entry in
 `Configuration.xdg_configs`. The list runs from lowest to highest precedence — system-wide
