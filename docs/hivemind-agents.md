@@ -239,11 +239,13 @@ bot.connect()
 print(bot.spoken_answer("what is the speed of light?"))
 ```
 
-!!! warning "`connect()` retries forever, with no built-in timeout"
-    If the server is unreachable or the identity is wrong, `connect()` blocks: the underlying
-    client's handshake wait keeps retrying every 5 seconds indefinitely rather than raising or
-    returning. Verify the server is reachable and the identity is correct first (`hivemind-client
-    test-identity`), or wrap the call in your own timeout/watchdog.
+!!! warning "`connect()` retries forever if the server is unreachable"
+    If the server is unreachable, `connect()` blocks: the underlying client's handshake wait
+    keeps retrying every 5 seconds indefinitely, with no default cap. Wrap the call in your own
+    timeout/watchdog if that matters. A **wrong identity** is a different, faster failure: the
+    client detects the server's auth-rejection close frame and raises `ConnectionRefusedError`
+    right away instead of retrying — no timeout needed for that case. `hivemind-client
+    test-identity` checks the identity ahead of time either way.
 
 ### As an intent-pipeline stage
 
