@@ -38,8 +38,8 @@ jobs:
 
 `secrets: inherit` passes your repo's secrets (e.g. `GITHUB_TOKEN`, and `PYPI_TOKEN`/`MATRIX_TOKEN` for the publish workflows) through to the called workflow. See [Workflow Reference](gh-automations-workflows.md) for every input.
 
-!!! info "Pending: one accepted spelling for `install_extras`"
-    **Pending [OpenVoiceOS/gh-automations#88](https://github.com/OpenVoiceOS/gh-automations/pull/88), not yet merged.** Today, `install_extras` means something different per workflow: some read it as a bare extras name (`'test'`), some as a bracketed list (`'[dev,test]'`), some as a full install target (`'.[dev]'`), and a caller has to know which. Once #88 lands, every reusable workflow that takes `install_extras` accepts all of those spellings, plus raw pip arguments (`'-r requirements/test.txt'`), normalizing internally. The per-workflow input tables below and on the linked reference pages should be updated to state this once the PR merges, instead of documenting a single required spelling per workflow.
+!!! info "`install_extras` accepts any spelling"
+    Every reusable workflow that takes `install_extras` accepts a bare extras name (`'test'`), a bracketed list (`'[dev,test]'`), a full install target (`'.[dev]'`), or raw pip arguments (`'-r requirements/test.txt'`), normalizing internally ([OpenVoiceOS/gh-automations#88](https://github.com/OpenVoiceOS/gh-automations/pull/88)). Use whichever spelling reads clearest; the per-workflow input tables below and on the linked reference pages may still show one particular spelling in their example, but any of the four forms works.
 
 ### Scripts checkout
 
