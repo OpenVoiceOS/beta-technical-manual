@@ -1841,14 +1841,21 @@ term definitions, see the <a href="../glossary/">Glossary</a>.</p>
 Everything you don't mention keeps its default.</p>
 <p>At read time OVOS stacks several files on top of each other and merges them. The
 file closest to <em>you</em> wins:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>bundled default  →  remote cache  →  /usr/share/...  →  /etc/mycroft/...  →  ~/.config/mycroft/mycroft.conf  →  runtime patch
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>     lowest priority  ───────────────────────────────────────────────────►  highest priority
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>bundled default  →  /usr/share/...  →  /etc/mycroft/...  →  runtime.conf  →  ~/.config/mycroft/mycroft.conf  →  runtime patch
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>     lowest priority  ─────────────────────────────────────────────────────────────────►  highest priority
 </span></code></pre></div>
-<p>The <strong>remote cache</strong> is an optional layer holding settings pushed from a paired backend
-(the legacy Mycroft-Home / <code>home.mycroft.ai</code> model). It sits low in the stack, so anything you
-set by hand always wins. You can turn it off entirely with the <code>disable_remote_config</code>
-system constraint.</p>
+<p><strong><code>runtime.conf</code></strong> (<code>~/.config/mycroft/runtime.conf</code>) is where OVOS itself persists runtime
+changes — for example automatic location detection — without ever touching the file you edit
+by hand. Write to it programmatically with <code>update_assistant_config(config, bus)</code>.</p>
 <p>It is not the file you edit. See the <a href="#config-layer-stack">Config Layer Stack</a> below.</p>
+<div class="admonition note">
+<p class="admonition-title">Remote configuration is gone</p>
+<p>The old Mycroft Home / <code>home.mycroft.ai</code> backend layer (<code>RemoteConf</code>,
+<code>disable_remote_config</code>, <code>protected_keys.remote</code>) was removed as a breaking change
+(<code>ovos-config</code> <code>5a7d1a3</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/194" title="GitHub Issue: TigreGotico/ovos-technical-manual #194">#194</a>, first tag <code>3.0.0a1</code>). <code>Configuration.remote</code> now raises
+<code>AttributeError</code>; <code>RemoteConf</code> stays importable only as a deprecated, warn-on-construction
+class.</p>
+</div>
 <p>To switch to a German voice, you only need:</p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="p">{</span>
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span><span class="nt">&quot;lang&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;de-DE&quot;</span>
@@ -1865,21 +1872,21 @@ the full picture.</p>
 <hr />
 <h2 id="config-layer-stack">Config Layer Stack<a class="headerlink" href="#config-layer-stack" title="Permanent link">&para;</a></h2>
 <p>Layers are merged in this order. Later layers override earlier ones:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>MycroftDefaultConfig   (bundled mycroft.conf — read-only to OVOS itself; admins edit the file)
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>RemoteConf             (backend / paired-server cache — optional; disabled by disable_remote_config)
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>OvosDistributionConfig (/usr/share/mycroft/mycroft.conf — read-only to OVOS itself; admins edit the file)
-</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>MycroftSystemConfig    (/etc/mycroft/mycroft.conf — read-only to OVOS itself; admins edit the file)
-</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>MycroftUserConfig      (~/.config/mycroft/mycroft.conf — XDG user config)
-</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>__patch                (in-memory overlay applied last)
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>DefaultConfig      (bundled mycroft.conf — read-only to OVOS itself; admins edit the file)
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>DistributionConfig (/usr/share/mycroft/mycroft.conf — read-only to OVOS itself; admins edit the file)
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>SystemConfig       (/etc/mycroft/mycroft.conf — read-only to OVOS itself; admins edit the file)
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>AssistantConfig    (~/.config/mycroft/runtime.conf — OVOS&#39;s own runtime-write layer)
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>xdg user configs   (~/.config/mycroft/mycroft.conf and other XDG dirs)
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>__patch            (in-memory overlay applied last)
 </span></code></pre></div>
 <pre class="mermaid"><code>flowchart TD
-    A["MycroftDefaultConfig&lt;br/&gt;bundled default"] --&gt; B["RemoteConf&lt;br/&gt;backend/paired cache"]
-    B --&gt; C["OvosDistributionConfig&lt;br/&gt;/usr/share/mycroft/..."]
-    C --&gt; D["MycroftSystemConfig&lt;br/&gt;/etc/mycroft/..."]
-    D --&gt; E["MycroftUserConfig&lt;br/&gt;~/.config/mycroft/..."]
+    A["DefaultConfig&lt;br/&gt;bundled default"] --&gt; C["DistributionConfig&lt;br/&gt;/usr/share/mycroft/..."]
+    C --&gt; D["SystemConfig&lt;br/&gt;/etc/mycroft/..."]
+    D --&gt; R["AssistantConfig&lt;br/&gt;runtime.conf"]
+    R --&gt; E["xdg user configs&lt;br/&gt;~/.config/mycroft/..."]
     E --&gt; F["__patch&lt;br/&gt;in-memory overlay"]
     F --&gt; W["Wins: highest&lt;br/&gt;priority"]</code></pre>
-<p><em>Diagram:</em> The merge order starts at the bundled default config and ends at the in-memory patch, which wins as the highest priority over remote, distribution, system, and user layers.</p>
+<p><em>Diagram:</em> The merge order starts at the bundled default config and ends at the in-memory patch, which wins as the highest priority over distribution, system, assistant, and user layers.</p>
 <p>The XDG user layer is actually a list of configs, one per XDG config dir.</p>
 <p>The layers merge left to right, so the last one wins. <code>$XDG_CONFIG_HOME</code>
 (<code>~/.config/mycroft/mycroft.conf</code>) is last, and therefore overrides a system-wide
@@ -1895,14 +1902,13 @@ either:</p>
 </span></code></pre></div>
 <p>The last path printed is the one that wins. All layers are <code>LocalConf</code> dict subclasses backed by a file. Only the user</p>
 </div>
-<p>config (<code>~/.config/mycroft/mycroft.conf</code>) should be edited by users. The <strong><code>RemoteConf</code></strong>
-layer is the optional backend or paired-server settings cache (the legacy Mycroft-Home /
-<code>home.mycroft.ai</code> model). It is merged low in the stack and can be turned off with the
-<code>disable_remote_config</code> system constraint.</p>
+<p>config (<code>~/.config/mycroft/mycroft.conf</code>) should be edited by users. The <strong><code>AssistantConfig</code></strong>
+layer (<code>runtime.conf</code>) is where OVOS itself persists runtime changes, kept separate from the
+user's own file so OVOS can never overwrite something the user authored by hand.</p>
 <blockquote>
-<p>The merge order in <code>load_all_configs()</code> is: default → remote → distribution → system →
-xdg user configs → in-memory patch. The remote layer is skipped when <code>disable_remote_config</code>
-is set, and the user/XDG layers when <code>disable_user_config</code> is set.</p>
+<p>The merge order in <code>load_all_configs()</code> is: default → distribution → system → assistant →
+xdg user configs → in-memory patch. The user/XDG layers are skipped when <code>disable_user_config</code>
+is set.</p>
 </blockquote>
 <hr />
 <h2 id="usage">Usage<a class="headerlink" href="#usage" title="Permanent link">&para;</a></h2>
@@ -1979,15 +1985,11 @@ server actually receives the request. See <a href="../stt-server/#companion-plug
 <tbody>
 <tr>
 <td><code>protected_keys</code></td>
-<td>Dict of <code>{"user": [...], "remote": [...]}</code>: keys stripped from the user / remote layer before merging</td>
+<td>Dict of <code>{"user": [...]}</code>: keys stripped from the user layer before merging</td>
 </tr>
 <tr>
 <td><code>disable_user_config</code></td>
 <td>If <code>true</code>, every layer except <code>default</code> and <code>system</code> is ignored — see the warning below</td>
-</tr>
-<tr>
-<td><code>disable_remote_config</code></td>
-<td>If <code>true</code>, the remote / backend config layer is ignored</td>
 </tr>
 </tbody>
 </table>
@@ -1995,8 +1997,8 @@ server actually receives the request. See <a href="../stt-server/#companion-plug
 <p class="admonition-title"><code>disable_user_config</code> drops more than the user layer</p>
 <p>The merge filter treats every layer whose path is neither the bundled default nor the
 system config as a user layer. That includes the <strong>distribution</strong> layer
-(<code>/usr/share/mycroft/mycroft.conf</code>), the <strong>remote</strong> layer, and the in-memory <strong>patch</strong>
-that <code>configuration.patch</code> bus messages write to.</p>
+(<code>/usr/share/mycroft/mycroft.conf</code>), the <strong>assistant</strong> layer (<code>runtime.conf</code>), and the
+in-memory <strong>patch</strong> that <code>configuration.patch</code> bus messages write to.</p>
 <p>So an OEM that ships a distribution config and then locks the device with
 <code>disable_user_config</code> erases its own settings and silences every runtime config update.
 The device falls back to stock defaults, with no error and no log line. Verified: with
@@ -2035,7 +2037,7 @@ and XDG path helpers are covered on the
 </span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>ovos-config<span class="w"> </span>show<span class="w"> </span>-s<span class="w"> </span>-l<span class="w">                  </span><span class="c1"># list sections of system config</span>
 </span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>ovos-config<span class="w"> </span>show<span class="w"> </span>-u<span class="w"> </span>--section<span class="w"> </span>base<span class="w">      </span><span class="c1"># user config, top-level scalar keys</span>
 </span></code></pre></div>
-<p>Merge priority displayed: <code>user &gt; system &gt; remote &gt; default</code></p>
+<p>Merge priority displayed: <code>user &gt; assistant &gt; system &gt; default</code></p>
 <h3 id="get"><code>get</code><a class="headerlink" href="#get" title="Permanent link">&para;</a></h3>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>ovos-config<span class="w"> </span>get<span class="w"> </span>-k<span class="w"> </span>lang<span class="w">                 </span><span class="c1"># find all keys containing &quot;lang&quot;</span>
 </span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>ovos-config<span class="w"> </span>get<span class="w"> </span>-k<span class="w"> </span>/tts/module<span class="w">          </span><span class="c1"># get exact value at tts.module (strict path)</span>
@@ -2107,12 +2109,12 @@ and XDG path helpers are covered on the
 <li>
 <p><code>get_config_locations()</code> is a rough guide, not the load list: it includes the legacy
   <code>~/.mycroft/mycroft.conf</code>, which is never loaded, omits <code>/etc/xdg/mycroft/mycroft.conf</code>,
-  which is, ignores the path environment variables, and lists the remote layer in a different
+  which is, ignores the path environment variables, and lists the assistant layer in a different
   position than the merge uses. For what is really in play, print
   <code>get_xdg_config_locations()</code> and the layer paths on <code>Configuration</code>.</p>
 </li>
 <li>
-<p>Use <code>disable_user_config</code> with caution. It silently skips the distribution and remote
+<p>Use <code>disable_user_config</code> with caution. It silently skips the distribution and assistant
   layers and runtime patches too, not only the user layer.</p>
 </li>
 <li>

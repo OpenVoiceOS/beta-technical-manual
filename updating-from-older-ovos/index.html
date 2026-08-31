@@ -1919,7 +1919,7 @@ the CommonQuerySkill removal, and the bus-client dual-emit bridge, in that order
 STOP-1 landing in <code>3.0.0a1</code> (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/802" title="GitHub Issue: TigreGotico/ovos-technical-manual #802">#802</a>). These emits are unconditional; the once-proposed
 <code>legacy_namespace</code> gating never shipped (its branch was superseded), and legacy interop
 rides the bus-client bridge instead.</p>
-<p><code>EventsAPI.update_scheduled_event()</code> emitted <code>mycroft.schedule.update_event</code>, missing the
+<p><code>EventSchedulerInterface.update_scheduled_event()</code> emitted <code>mycroft.schedule.update_event</code>, missing the
 "r" in "scheduler" — the server-side <code>EventScheduler</code> listens on <code>mycroft.scheduler.update_event</code>,
 so calls never reached the scheduler. Fixed (<code>ovos-bus-client</code> <code>fac29c3</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/222" title="GitHub Issue: TigreGotico/ovos-technical-manual #222">#222</a>, first tag
 <code>2.8.5a2</code>).</p>
@@ -1929,18 +1929,21 @@ helpers (<code>ovos-bus-client</code> <code>185ce7b1</code>, <a class="magiclink
 <p><code>ovos-plugin-manager</code> dropped the last <code>pkg_resources</code> fallback for plugin entry-point discovery
 in favor of <code>importlib.metadata</code> (<code>ovos-plugin-manager</code> <code>81c5e9bf</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/295" title="GitHub Issue: TigreGotico/ovos-technical-manual #295">#295</a>, first tag <code>2.11.4a1</code>).
 No public symbol was removed.</p>
+<p><code>ovos-config</code> gained <code>AssistantConfig</code>, a <code>~/.config/mycroft/runtime.conf</code> layer for OVOS's own
+runtime writes (skills, plugins, e.g. automatic location detection), so those writes never
+corrupt the user's own config file. This shipped as a <strong>breaking change</strong>, not a
+deprecate-then-remove cycle: the old Mycroft Home / <code>home.mycroft.ai</code> remote-config layer was
+removed outright. <code>Configuration.remote</code> now raises <code>AttributeError</code>; <code>RemoteConf</code> stays
+importable only as a deprecated, warn-on-construction class (<code>ovos-config</code> <code>5a7d1a3</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/194" title="GitHub Issue: TigreGotico/ovos-technical-manual #194">#194</a>,
+first tag <code>3.0.0a1</code>).</p>
+<p><code>ovos-core</code>'s opt-in intent-metrics upload (<code>open_data.intent_urls</code>, empty/disabled by default)
+now includes <code>pipeline</code> (the matcher ids from <code>session.pipeline</code> that produced the match) and
+<code>core_version</code> in its payload (<code>ovos-core</code> <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/689" title="GitHub Issue: TigreGotico/ovos-technical-manual #689">#689</a>, first tag <code>3.0.12a1</code>).</p>
 <h2 id="coming-next">Coming next<a class="headerlink" href="#coming-next" title="Permanent link">&para;</a></h2>
 <p>The following work is visible on unmerged branches only and is <strong>not
 released</strong>. It is included so you know it is coming, not because it is
 safe to build against yet.</p>
 <ul>
-<li><strong>AssistantConfig</strong> (<code>ovos-config</code>, branches <code>feat/assistant_config</code>,
-  <code>pr194</code>): introduces a new <code>runtime.conf</code> config layer for
-  OVOS-internal runtime writes, so plugins/components stop corrupting the
-  user's <code>mycroft.conf</code>. Deprecates <code>RemoteConfig</code>. Explicit back-compat
-  commits on the branch promise <code>Configuration().remote</code> and
-  <code>load_config_stack(...)</code> keep working once this lands. Do not target
-  <code>AssistantConfig</code> yet. Watch the <code>ovos-config</code> release notes.</li>
 <li>Unmerged <code>ovos-workshop</code> branches <code>feat/deprecate-ocp-skills</code>,
   <code>feat/remove-skill-homescreens</code>, <code>feat/gameskill-and-ocp-deprecation</code>:
   OCP-skill-base-class and skill-homescreen removal has not landed as of
