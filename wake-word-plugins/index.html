@@ -1838,11 +1838,14 @@ The full roster with descriptions and licenses lives in one place: the
 up is not installed:</p>
 <ol>
 <li><code>ovos-ww-plugin-precise-onnx</code> (default)</li>
-<li><code>ovos-ww-plugin-precise-lite</code> (TFLite)</li>
-<li><code>ovos-ww-plugin-precise</code> (classic Precise)</li>
+<li><code>ovos-ww-plugin-precise-lite</code> (TFLite, <strong>archived</strong>)</li>
+<li><code>ovos-ww-plugin-precise</code> (classic Precise, <strong>archived</strong>)</li>
 <li><code>ovos-ww-plugin-vosk</code></li>
 <li><code>ovos-ww-plugin-pocketsphinx</code></li>
 </ol>
+<p>Everything in the Precise family except <code>ovos-ww-plugin-precise-onnx</code> is archived on GitHub.
+The chain keeps them as fallbacks purely for compatibility with older trained models
+(<code>.tflite</code>/legacy Precise formats); new setups only need <code>ovos-ww-plugin-precise-onnx</code>.</p>
 <p>Vosk offers the fastest setup for an arbitrary wake phrase without model training.</p>
 <p>The default <code>hey_mycroft</code> engine <code>ovos-ww-plugin-precise-onnx</code> is rated <strong>Beta</strong>. Its
 fallback <code>ovos-ww-plugin-vosk</code> is Stable, and <code>ovos-ww-plugin-precise-lite</code> is Deprecated.
