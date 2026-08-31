@@ -1935,7 +1935,12 @@ corrupt the user's own config file. This shipped as a <strong>breaking change</s
 deprecate-then-remove cycle: the old Mycroft Home / <code>home.mycroft.ai</code> remote-config layer was
 removed outright. <code>Configuration.remote</code> now raises <code>AttributeError</code>; <code>RemoteConf</code> stays
 importable only as a deprecated, warn-on-construction class (<code>ovos-config</code> <code>5a7d1a3</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/194" title="GitHub Issue: TigreGotico/ovos-technical-manual #194">#194</a>,
-first tag <code>3.0.0a1</code>).</p>
+first tag <code>3.0.0a1</code>). <code>3.0.0a1</code> itself was an incomplete release; <code>3.0.1a1</code> finished the work:
+<code>AssistantConfig</code> gained its own <code>protected_keys.assistant</code> protection list and stopped being
+classified as a "user" layer, so <code>disable_user_config</code> no longer drops it (see
+<a href="../config/#protected-keys-and-system-restrictions">Configuration Management</a>). <code>3.0.1a1</code> also
+does a one-time migration of the old <code>web_cache.json</code> (plugin-written location data, etc.) into
+<code>runtime.conf</code>, renaming the old file to <code>web_cache.json.migrated</code> afterward.</p>
 <p><code>ovos-core</code>'s opt-in intent-metrics upload (<code>open_data.intent_urls</code>, empty/disabled by default)
 now includes <code>pipeline</code> (the matcher ids from <code>session.pipeline</code> that produced the match) and
 <code>core_version</code> in its payload (<code>ovos-core</code> <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/689" title="GitHub Issue: TigreGotico/ovos-technical-manual #689">#689</a>, first tag <code>3.0.12a1</code>).</p>

@@ -1985,24 +1985,28 @@ server actually receives the request. See <a href="../stt-server/#companion-plug
 <tbody>
 <tr>
 <td><code>protected_keys</code></td>
-<td>Dict of <code>{"user": [...]}</code>: keys stripped from the user layer before merging</td>
+<td>Dict of <code>{"user": [...], "assistant": [...]}</code>: keys stripped from the matching layer before merging</td>
 </tr>
 <tr>
 <td><code>disable_user_config</code></td>
-<td>If <code>true</code>, every layer except <code>default</code> and <code>system</code> is ignored — see the warning below</td>
+<td>If <code>true</code>, every layer except <code>default</code>, <code>system</code>, and <code>assistant</code> is ignored — see the warning below</td>
 </tr>
 </tbody>
 </table>
+<p>Since <code>ovos-config</code> <code>3.0.1a1</code>, the <strong>assistant</strong> layer (<code>runtime.conf</code>) has its own protection
+list (<code>protected_keys.assistant</code>) and is no longer classified as a "user" layer for merge
+purposes — <code>disable_user_config</code> does <strong>not</strong> drop it, unlike earlier releases.</p>
 <div class="admonition danger">
 <p class="admonition-title"><code>disable_user_config</code> drops more than the user layer</p>
-<p>The merge filter treats every layer whose path is neither the bundled default nor the
-system config as a user layer. That includes the <strong>distribution</strong> layer
-(<code>/usr/share/mycroft/mycroft.conf</code>), the <strong>assistant</strong> layer (<code>runtime.conf</code>), and the
-in-memory <strong>patch</strong> that <code>configuration.patch</code> bus messages write to.</p>
+<p>The merge filter treats every layer whose path is neither the bundled default, the
+system config, nor the assistant config as a user layer. That includes the
+<strong>distribution</strong> layer (<code>/usr/share/mycroft/mycroft.conf</code>) and the in-memory <strong>patch</strong>
+that <code>configuration.patch</code> bus messages write to.</p>
 <p>So an OEM that ships a distribution config and then locks the device with
-<code>disable_user_config</code> erases its own settings and silences every runtime config update.
-The device falls back to stock defaults, with no error and no log line. Verified: with
-<code>lang</code> set to <code>pt-PT</code> in the distribution layer, turning the flag on returns <code>en-US</code>.</p>
+<code>disable_user_config</code> erases its own settings and silences every runtime config update
+that goes through the patch layer. The device falls back to stock defaults, with no
+error and no log line. Verified against <code>ovos-config</code> <code>3.0.1a1</code>: with <code>lang</code> set to
+<code>pt-PT</code> in the distribution layer, turning the flag on returns <code>en-US</code>.</p>
 <p>To lock a device, put the values in <code>/etc/mycroft/mycroft.conf</code> (the system layer), which
 the filter keeps.</p>
 </div>
