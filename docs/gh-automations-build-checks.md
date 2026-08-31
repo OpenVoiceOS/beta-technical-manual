@@ -36,7 +36,7 @@ Runs build, install, and optionally tests across a configurable matrix of Python
 | `runner` | string | `ubuntu-latest` | Runner label |
 | `python_versions` | string | `["3.10", "3.11", "3.12", "3.13", "3.14"]` | JSON array of Python versions to test against |
 | `system_deps` | string | `""` | Extra apt packages to install before building (space-separated) |
-| `install_extras` | string | `""` | pip extras appended to the install command, e.g. 'test' or 'dev,test'. Applied when installing the built wheel. |
+| `install_extras` | string | `""` | Extra dependencies applied when installing the built wheel. Accepts a bare extras name ('test'), a bracketed list ('[dev,test]'), a full target ('.[test]'), or raw pip arguments ('-r requirements/test.txt'). |
 | `pre_install_pip` | string | `""` | Optional space-separated pip requirement specs to install BEFORE the package build/install step. Use this to override transitive deps with git URLs (e.g. for testing against an unreleased version of a sibling package). Each whitespace-separated item is passed as a single argument to `pip install`, so quoted git URLs are supported. |
 | `test_path` | string | `""` | If set, run pytest against this path after installing the package. Leave empty to skip test execution (build/install verification only). |
 | `pytest_args` | string | `""` | Extra arguments appended to the pytest invocation, e.g. '--capture=tee-sys' to keep a crashing test's output visible when pytest's default fd-level capture would otherwise swallow it (native crashes, SIGABRT). Same name and meaning as on channel-compat.yml. Empty by default: no change to the command line. |
@@ -103,7 +103,7 @@ comment.
 | `python_version` | string | `3.11` | Python version to use. |
 | `system_deps` | string | `""` | Extra apt packages to install before testing (space-separated). Extra apt packages, if the tested tree needs any. |
 | `pre_install_pip` | string | `""` | Optional space-separated pip requirement specs installed BEFORE the repo under test, under the channel constraints. Use for test-only siblings the channel does not name. Named to match the same input on build-tests.yml and ovoscope.yml. |
-| `install_extras` | string | `test` | pip extras used when installing the repo under test, e.g. 'test' or 'dev,test'. Set to '' to install the package with no extras. |
+| `install_extras` | string | `test` | Extra dependencies used when installing the repo under test. Accepts a bare extras name ('test'), a bracketed list ('[dev,test]'), a full target ('.[test]'), or raw pip arguments ('-r requirements/test.txt'). Set to '' to install the package with no extras. |
 | `pytest_args` | string | `-v --tb=short -rxX` | Extra arguments appended to the pytest invocation. |
 | `pr_comment` | boolean | `true` | Post a '📡 Channel Compat' section (one per channel) in the OVOS PR Checks comment. Only runs on pull_request events. |
 | `soft_fail` | boolean | `false` | Report the run but do not fail the job when tests fail. GitHub does not allow `continue-on-error` on a job that calls a reusable workflow, so callers that want an advisory gate set this instead. Use it while a repo's channel baseline is still being established, then turn it off. |
@@ -182,7 +182,7 @@ Runs an install matrix across Python versions and install modes (regular + edita
 | `python_versions` | string | `["3.10", "3.11", "3.12", "3.13", "3.14"]` | JSON array of Python versions to check |
 | `version_file` | string | `""` | Path to version.py (relative to repo root). If empty, auto-detects. |
 | `install_modes` | string | `["regular", "editable"]` | JSON array of install modes ('regular', 'editable') |
-| `install_extras` | string | `""` | pip extras to install, e.g. '[dev]' |
+| `install_extras` | string | `""` | Extra dependencies to install. Accepts a bare extras name ('dev'), a bracketed list ('[dev,rl]'), a full target ('.[dev]'), or raw pip arguments ('-r requirements/test.txt'). |
 | `system_deps` | string | `""` | Extra apt packages beyond python3-dev and libssl-dev |
 | `entry_point` | string | `""` | The expected skill entry point ID to verify with OPM |
 | `pr_comment` | boolean | `true` | Post/update the '🐍 Python Support' section in the PR comment |

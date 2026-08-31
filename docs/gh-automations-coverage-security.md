@@ -39,10 +39,11 @@ Runs `pytest --cov`, generates a coverage report, and posts it to the job summar
 | `system_deps` | string | `""` | Extra apt packages to install before testing (space-separated) |
 | `test_extras` | string | `dev` | Name of the pyproject.toml extras key that declares the package's test dependencies (e.g. 'dev' or 'test'). Tried first via 'pip install -e .[<test_extras>]'. Override per repo if the package uses a different convention. |
 | `test_extras_fallback` | string | `test` | Extras key tried if `test_extras` is not declared. Default 'test'. Set to empty to skip the fallback. |
-| `install_extras` | string | `""` | Extra pip install arguments run before tests. Example: '.[dev]' or '-r requirements/test.txt'. If empty, the package itself is installed via 'pip install -e .[dev]' (falling back to bare install). |
+| `install_extras` | string | `""` | Extra dependencies to install before tests. Accepts a bare extras name ('dev'), a bracketed list ('[dev,rl]'), a full target ('.[dev]'), or raw pip arguments ('-r requirements/test.txt'). If empty, the package itself is installed via 'pip install -e .[dev]' (falling back to bare install). |
 | `pre_install_pip` | string | `""` | Optional space-separated pip requirement specs to install BEFORE the package install step. Use this to override transitive deps with git URLs (e.g. for testing against an unreleased version of a sibling package). |
 | `test_path` | string | `test/` | Path passed to pytest (file, directory, or glob) |
 | `coverage_source` | string | `.` | Value of --cov= passed to pytest. Set to your package directory (e.g. 'ovos_core') to measure only your own code rather than the full repo. |
+| `pytest_args` | string | `""` | Extra arguments appended to the pytest invocation, e.g. '-n auto' to run tests in parallel via pytest-xdist. Same name and meaning as on build-tests.yml. Empty by default: no change to the command line. |
 | `deploy_pages` | boolean | `false` | Push the HTML coverage report to the gh-pages branch for GitHub Pages serving. Replaces the separate coverage-pages.yml workflow. |
 | `gh_pages_branch` | string | `gh-pages` | Branch to push the HTML coverage report to (when deploy_pages: true). |
 | `min_coverage` | number | `0` | Minimum total coverage percentage (0 = disabled). The job fails if coverage falls below this threshold. |
@@ -122,7 +123,7 @@ Runs `pytest --cov` and deploys the HTML coverage report to GitHub Pages.
 | `runner` | string | `ubuntu-latest` |  |
 | `python_version` | string | `3.11` |  |
 | `system_deps` | string | `""` | Extra apt packages to install before testing (space-separated) |
-| `install_extras` | string | `""` | Extra pip install arguments run before tests. Example: '.[dev]' or '-r requirements/test.txt'. If empty, the package itself is installed via 'pip install -e .[dev]' (falling back to bare install). |
+| `install_extras` | string | `""` | Extra dependencies to install before tests. Accepts a bare extras name ('dev'), a bracketed list ('[dev,rl]'), a full target ('.[dev]'), or raw pip arguments ('-r requirements/test.txt'). If empty, the package itself is installed via 'pip install -e .[dev]' (falling back to bare install). |
 | `test_path` | string | `test/` | Path passed to pytest (file, directory, or glob) |
 | `coverage_source` | string | `.` | Value of --cov= passed to pytest. Set to your package directory (e.g. 'ovos_core') to measure only your own code rather than the full repo. |
 | `gh_pages_branch` | string | `gh-pages` | Branch to push the HTML coverage report to. |
@@ -183,7 +184,7 @@ Scans installed dependencies for known CVEs using [`pypa/gh-action-pip-audit`](h
 | `uv_prerelease` | string | `allow` | uv prerelease resolution mode (allow \| if-necessary \| explicit \| disallow). Defaults to "allow": the OVOS ecosystem ships pre-1.0 alphas and relies on prerelease floor-pins resolving the way pip did. |
 | `runner` | string | `ubuntu-latest` |  |
 | `python_version` | string | `3.14` | Python version to use for the audit |
-| `install_extras` | string | `""` | pip extras to install, e.g. '[extras]' |
+| `install_extras` | string | `""` | Extra dependencies to install. Accepts a bare extras name ('dev'), a bracketed list ('[dev,rl]'), a full target ('.[dev]'), or raw pip arguments ('-r requirements/test.txt'). |
 | `system_deps` | string | `""` | Extra apt packages beyond python3-dev |
 | `ignore_vulns` | string | `GHSA-r9hx-vwmv-q579` | Newline-separated list of GHSA vulnerability IDs to ignore. Default ignores GHSA-r9hx-vwmv-q579 (setuptools path traversal — dev-only, not exploitable in OVOS runtime context). |
 | `warn_only` | boolean | `false` | When true, report vulnerabilities in the PR comment but do NOT fail the job. Useful for repos that want visibility without blocking merges. |

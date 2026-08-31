@@ -37,7 +37,7 @@ Runs OPM (OVOS Plugin Manager) plugin detection and validation on a **single Pyt
 | `runner` | string | `ubuntu-latest` | Runner label |
 | `python_version` | string | `3.11` | Python version to use for OPM checks |
 | `system_deps` | string | `""` | Extra apt packages to install before building (space-separated) |
-| `install_extras` | string | `""` | pip extras appended to the install command, e.g. 'test' or 'dev,test'. |
+| `install_extras` | string | `""` | Extra dependencies to install. Accepts a bare extras name ('dev'), a bracketed list ('[dev,test]'), a full target ('.[dev]'), or raw pip arguments ('-r requirements/test.txt'). |
 | `plugin_type` | string | `auto` | Plugin type (auto, skill, tts, stt, wake_word, vad, phal, pipeline, utterance_transformer, tts_transformer) |
 | `entry_point` | string | `""` | Legacy: a single entry point ID to verify. For packages that ship multiple OPM plugins from one wheel, prefer `entry_points` (plural) or leave both empty — auto-detection enumerates every `opm.*` entry point declared in pyproject.toml. |
 | `entry_points` | string | `""` | JSON array of entry point IDs to verify, e.g. '["foo", "bar"]'. When set, runs the OPM check once per entry point and aggregates results into the PR comment. Takes precedence over `entry_point`. |
@@ -156,7 +156,7 @@ Checks all installed dependencies for licenses incompatible with the **OVOS univ
 | `uv_prerelease` | string | `allow` | uv prerelease resolution mode (allow \| if-necessary \| explicit \| disallow). Defaults to "allow": the OVOS ecosystem ships pre-1.0 alphas and relies on prerelease floor-pins resolving the way pip did. |
 | `runner` | string | `ubuntu-latest` |  |
 | `python_version` | string | `3.14` |  |
-| `install_extras` | string | `""` | pip extras to install, e.g. '[extras,linux]' |
+| `install_extras` | string | `""` | Extra dependencies to install. Accepts a bare extras name ('dev'), a bracketed list ('[dev,linux]'), a full target ('.[dev]'), or raw pip arguments ('-r requirements/test.txt'). |
 | `system_deps` | string | `""` | Extra apt packages beyond python3-dev and libssl-dev |
 | `exclude_packages` | string | `""` | PCRE regex of repo-specific package names to exclude, unioned with the central whitelist (docs/license-whitelist.md) and the package under test (auto-derived from pyproject.toml/setup.py). Leave empty to use the central whitelist plus self-exclusion only. Example: '^my-internal-pkg$'. |
 | `exclude_licenses` | string | `^Mozilla Public License.*` | PCRE regex of license identifiers to exclude. Default allows MPL (file-level copyleft, safe as library). |
