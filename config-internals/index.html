@@ -1809,7 +1809,7 @@ are driven by the bus handlers below rather than called directly.</p>
 <tr>
 <td><code>configuration.cache.clear</code></td>
 <td><code>Configuration.clear_cache</code></td>
-<td>Deprecated no-op. It only re-emits <code>configuration.updated</code>. There is no separate cache to drop</td>
+<td><strong>Pending</strong> <a href="https://github.com/OpenVoiceOS/ovos-config/pull/288"><code>ovos-config#288</code></a>, not yet merged: currently a deprecated no-op that only re-emits <code>configuration.updated</code> (no cache exists to drop today), but <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/288" title="GitHub Issue: TigreGotico/ovos-technical-manual #288">#288</a> memoizes the merged config stack and makes this handler drop that memo again</td>
 </tr>
 <tr>
 <td><code>mycroft.paired</code></td>
