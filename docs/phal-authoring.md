@@ -46,7 +46,14 @@ The base class (`PHALPlugin`) is a `threading.Thread`. Key points:
 
 - It auto-registers a large set of legacy enclosure (`enclosure.eyes.*`,
   `enclosure.mouth.*`) and `recognizer_loop:*` bus handlers. Override the matching
-  `on_*` methods to react to them. Call `super().shutdown()` to unregister them.
+  `on_*` methods to react to them.
+
+!!! warning "`super().shutdown()` does not actually unregister most of these"
+    A mismatch between the callables passed to `bus.on()` and `bus.remove()` in
+    `ovos-plugin-manager`'s `PHALPlugin` means most `enclosure.mouth.*`/`enclosure.eyes.*`
+    handlers, and `recognizer_loop:audio_output_end`, stay registered after `shutdown()`
+    runs — reproduced live against a `FakeBus`. Known upstream issue, not a manual-only
+    quirk; don't rely on clean plugin teardown for these specific handlers.
 
 !!! note "Hardware-interface ABCs live in `ovos-hardware-helpers`"
     The abstract base classes that hardware PHAL plugins implement,

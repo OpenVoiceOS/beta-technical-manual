@@ -178,6 +178,10 @@ if a stable choice matters.
 
 ```
 
+Two more keys default unset: `binary` (path to the `mimic` executable; unset autodetects via
+XDG premium-mimic paths, then `mimic` on `PATH`) and `duration_stretch` (unset applies no
+stretch; when set, passed through as mimic's `--setf duration_stretch=<value>`).
+
 ---
 
 ## ovos-tts-plugin-SAM
