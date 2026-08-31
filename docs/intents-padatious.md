@@ -166,10 +166,10 @@ Call the phone number {number}.
 the number.entity could be written as:
 
 ```text
-+### (###) ###-####
-+## (###) ###-####
-+# (###) ###-####
-(###) ###-####
++### ### ###-####
++## ### ###-####
++# ### ###-####
+### ###-####
 ###-####
 ###-###-####
 ###.###.####
@@ -177,6 +177,13 @@ the number.entity could be written as:
 ### ### ####
 
 ```
+
+!!! warning "No literal parentheses in a `#`-pattern"
+    `(###)` looks like a natural way to write an optional area code, but parentheses are
+    [Parentheses Expansion](#parentheses-expansion) group syntax, not literal characters — a
+    group needs at least two `|`-separated branches, so `(###)` fails to load with
+    `MalformedTemplate: single-branch group`. Write the digits without surrounding parens, as
+    the lines above do.
 
 ### Entities with unknown tokens
 
