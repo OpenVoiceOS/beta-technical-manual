@@ -268,6 +268,14 @@ and `video_players` do, keyed by local name with a `module` entry-point name.
 > `chromecast`, and the legacy `qt5` GUI hand-off (see the
 > [backend table](#available-media-backend-plugins)).
 
+!!! tip "Installed backend plugins load automatically"
+    `audio_players`/`video_players`/`web_players` are optional. An installed backend plugin
+    loads on its own. Use a `{type}_players` entry only to customize a plugin's name/aliases,
+    reorder it, or disable it (`"active": false`). Set `"autoload_backends": false` under
+    `media` to disable autoloading entirely. `Remote{Audio,Video,Web}PlayerBackend` subclasses
+    (a backend driving a remote target) never autoload; they always need an explicit
+    `{type}_players` entry, and configured entries always sort before autoloaded ones.
+
 Each entry's key is a local name. `module` is the plugin's **entry-point name**
 (e.g. `ovos-media-audio-plugin-vlc`), which can differ from its pip package name
 (`ovos-media-plugin-vlc`). `preferred_*_services` are ordered fallback lists. The
