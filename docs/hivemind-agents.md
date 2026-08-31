@@ -239,6 +239,12 @@ bot.connect()
 print(bot.spoken_answer("what is the speed of light?"))
 ```
 
+!!! warning "`connect()` retries forever, with no built-in timeout"
+    If the server is unreachable or the identity is wrong, `connect()` blocks: the underlying
+    client's handshake wait keeps retrying every 5 seconds indefinitely rather than raising or
+    returning. Verify the server is reachable and the identity is correct first (`hivemind-client
+    test-identity`), or wrap the call in your own timeout/watchdog.
+
 ### As an intent-pipeline stage
 
 There is also a pipeline-plugin form,

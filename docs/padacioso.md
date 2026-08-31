@@ -46,8 +46,10 @@ colon-typed slot syntax (`{number:int}`) with real type coercion. An unparseable
 match. It does not crash.
 
 The OVOS pipeline's `.intent`-file path differs. `ovos-spec-tools` validates slot names against
-the OVOS grammar (`{lowercase_with_underscores}`) first. A colon-typed name raises
-`MalformedTemplate` there, before padacioso ever sees the template.
+the OVOS grammar (`{lowercase_with_underscores}`) first, and a colon-typed name fails that check
+with `MalformedTemplate`. The pipeline plugin catches it per sample rather than propagating a
+crash: the malformed line is skipped with a `LOG.warning`, and registration only fails outright
+if every sample in the file was malformed.
 
 A wildcard (`*`) carries a confidence penalty proportional to how much of the template it
 covers: `0.05 + 0.20 × (wildcard tokens / total tokens)`, so any wildcard costs between
