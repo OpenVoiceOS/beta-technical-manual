@@ -1508,9 +1508,9 @@ pattern for STT/TTS.</p>
 <p><code>ovos-docker</code> builds one image per service, published under <code>docker.io/smartgic</code>:</p>
 <ul>
 <li><code>ovos-messagebus</code>, <code>ovos-core</code>, <code>ovos-audio</code>, <code>ovos-listener</code>, <code>ovos-cli</code></li>
-<li><code>ovos-phal</code>, <code>ovos-phal-admin</code>, <code>ovos-plugin-ggwave</code></li>
-<li><code>ovos-gui-websocket</code>, <code>ovos-gui-original</code>, <code>ovos-gui-shell</code></li>
-<li><code>ovos-skill-base</code> and default skill images</li>
+<li><code>ovos-phal</code>, <code>ovos-phal-admin</code></li>
+<li><code>ovos-gui-websocket</code></li>
+<li><code>ovos-skill-base</code> and default skill images, e.g. <code>ovos-skill-ggwave</code></li>
 </ul>
 <p>There is no single "OVOS in one container" image. Each image installs one Python package and
 runs one process. This mirrors the split described in

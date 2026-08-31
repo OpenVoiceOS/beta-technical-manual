@@ -1923,6 +1923,12 @@ rides the bus-client bridge instead.</p>
 "r" in "scheduler" — the server-side <code>EventScheduler</code> listens on <code>mycroft.scheduler.update_event</code>,
 so calls never reached the scheduler. Fixed (<code>ovos-bus-client</code> <code>fac29c3</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/222" title="GitHub Issue: TigreGotico/ovos-technical-manual #222">#222</a>, first tag
 <code>2.8.5a2</code>).</p>
+<p><code>ovos-bus-client</code> gained <code>AsyncMessageBusClient</code>, an asyncio-native counterpart to the existing
+threaded <code>MessageBusClient</code>, with coroutine equivalents of the sync client's emit/wait/collect
+helpers (<code>ovos-bus-client</code> <code>185ce7b1</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/200" title="GitHub Issue: TigreGotico/ovos-technical-manual #200">#200</a>, first tag <code>2.8.6a2</code>).</p>
+<p><code>ovos-plugin-manager</code> dropped the last <code>pkg_resources</code> fallback for plugin entry-point discovery
+in favor of <code>importlib.metadata</code>, and deprecated <code>normalize_lang()</code> (<code>ovos-plugin-manager</code>
+<code>81c5e9bf</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/295" title="GitHub Issue: TigreGotico/ovos-technical-manual #295">#295</a>, first tag <code>2.11.4a1</code>). No public symbol was removed.</p>
 <h2 id="coming-next">Coming next<a class="headerlink" href="#coming-next" title="Permanent link">&para;</a></h2>
 <p>The following work is visible on unmerged branches only and is <strong>not
 released</strong>. It is included so you know it is coming, not because it is
