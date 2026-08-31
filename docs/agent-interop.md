@@ -108,7 +108,9 @@ python -m ovos_translate_server --tx-engine ovos-google-translate-plugin --port 
 | `/utcp` | GET | UTCP manifest (always on) |
 | `/mcp` | Streamable HTTP | MCP server (requires `[mcp]` extra **and** the `--mcp` flag) |
 
-UTCP tools: `ovos_translate.translate`, `ovos_translate.detect_language`, and the native HTTP REST endpoints.
+UTCP tools: `ovos_translate.translate`, `ovos_translate.translate_with_source`,
+`ovos_translate.detect_language`, `ovos_translate.classify_language`,
+`ovos_translate.supported_languages`, and the native HTTP REST endpoints.
 
 MCP tools: `translate` (params: `text`, `target_lang`, optional `source_lang`), `detect_language` (param: `text`).
 

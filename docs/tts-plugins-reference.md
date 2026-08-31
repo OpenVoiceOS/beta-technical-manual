@@ -37,9 +37,13 @@
 
 ```jsonc
   "tts": {
-    "module": "ovos-tts-plugin-google-tx"
+    "module": "ovos-tts-plugin-google-tx",
+    "ovos-tts-plugin-google-tx": {
+        "tld": "com",
+        "slow": false,
+        "lang_check": false
+    }
   }
- 
 
 ```
 
