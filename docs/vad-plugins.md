@@ -132,6 +132,10 @@ from ovos_plugin_manager.templates.vad import VADEngine
 
 
 class MyCustomVAD(VADEngine):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.my_model = load_my_model()  # replace with your real model
+
     def is_silence(self, chunk) -> bool:
         # Implement your VAD logic here
         # Return True for silence, False for speech
@@ -169,9 +173,16 @@ advertising.
 running OVOS stack:
 
 ```python
-from ovos_vad_plugin_mymodel import MyCustomVAD
+from ovos_plugin_manager.templates.vad import VADEngine
 
-vad = MyCustomVAD()
+
+class StubVAD(VADEngine):
+    """Deterministic stand-in for MyCustomVAD, no real model needed for this test."""
+    def is_silence(self, chunk) -> bool:
+        return chunk == b"\x00" * len(chunk)
+
+
+vad = StubVAD()
 silence_chunk = b"\x00" * 640
 assert vad.is_silence(silence_chunk) is True
 ```
