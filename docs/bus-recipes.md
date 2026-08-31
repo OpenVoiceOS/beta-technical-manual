@@ -45,7 +45,11 @@ bus.close()
 `websocket` section (see [messagebus Configuration](bus-service.md#configuration) above).
 `run_in_thread()` starts the WebSocket loop on a daemon thread so the call returns immediately.
 `wait_for_response` blocks the calling thread until a message of `reply_type` arrives or the
-timeout elapses, returning `None` on timeout.
+timeout elapses, returning `None` on timeout — but only once the client has connected at least
+once. `emit()` (which `wait_for_response` calls internally to send the request) waits on an
+internal connected-event with no timeout if the bus was never reachable, so the whole call hangs
+forever instead of respecting `timeout=3.0`. Start the messagebus service before running this
+recipe.
 
 ### From the command line
 
