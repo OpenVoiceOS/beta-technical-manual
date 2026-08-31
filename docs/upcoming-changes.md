@@ -115,12 +115,6 @@ already landed on that repo's `dev`.
 |---|---|---|---|---|
 | [#146](https://github.com/OpenVoiceOS/ovos-audio/pull/146) | Adds duration to the `utterance_start` recognizer event | skill authors, remote bus consumers, analytics tooling | No | not yet released |
 
-### ovos-bus-client
-
-| PR | What it changes | Audience | Breaking | Version |
-|---|---|---|---|---|
-| [#200](https://github.com/OpenVoiceOS/ovos-bus-client/pull/200) | Adds `AsyncMessageBusClient`, an async-native client | bus-client consumers, plugin authors wanting async I/O | No | not yet released |
-
 ### ovos-config
 
 | PR | What it changes | Audience | Breaking | Version |
@@ -165,7 +159,6 @@ already landed on that repo's `dev`.
 | PR | What it changes | Audience | Breaking | Version |
 |---|---|---|---|---|
 | [#385](https://github.com/OpenVoiceOS/ovos-plugin-manager/pull/385) | Adds a triples semantic pipeline, fixes a discovery bug | plugin authors building semantic/knowledge-graph plugins | No | 2.12.0 |
-| [#295](https://github.com/OpenVoiceOS/ovos-plugin-manager/pull/295) | Modernizes `importlib`, deprecates `normalize_lang()` | plugin authors, deployers on older Python | No, no public symbol removed | 2.11.2 |
 
 ### ovos-workshop
 

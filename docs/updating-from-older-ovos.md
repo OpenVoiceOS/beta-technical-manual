@@ -145,6 +145,14 @@ rides the bus-client bridge instead.
 so calls never reached the scheduler. Fixed (`ovos-bus-client` `fac29c3`, #222, first tag
 `2.8.5a2`).
 
+`ovos-bus-client` gained `AsyncMessageBusClient`, an asyncio-native counterpart to the existing
+threaded `MessageBusClient`, with coroutine equivalents of the sync client's emit/wait/collect
+helpers (`ovos-bus-client` `185ce7b1`, #200, first tag `2.8.6a2`).
+
+`ovos-plugin-manager` dropped the last `pkg_resources` fallback for plugin entry-point discovery
+in favor of `importlib.metadata`, and deprecated `normalize_lang()` (`ovos-plugin-manager`
+`81c5e9bf`, #295, first tag `2.11.4a1`). No public symbol was removed.
+
 ## Coming next
 
 The following work is visible on unmerged branches only and is **not

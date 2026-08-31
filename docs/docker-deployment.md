@@ -13,9 +13,9 @@
 `ovos-docker` builds one image per service, published under `docker.io/smartgic`:
 
 - `ovos-messagebus`, `ovos-core`, `ovos-audio`, `ovos-listener`, `ovos-cli`
-- `ovos-phal`, `ovos-phal-admin`, `ovos-plugin-ggwave`
-- `ovos-gui-websocket`, `ovos-gui-original`, `ovos-gui-shell`
-- `ovos-skill-base` and default skill images
+- `ovos-phal`, `ovos-phal-admin`
+- `ovos-gui-websocket`
+- `ovos-skill-base` and default skill images, e.g. `ovos-skill-ggwave`
 
 There is no single "OVOS in one container" image. Each image installs one Python package and
 runs one process. This mirrors the split described in

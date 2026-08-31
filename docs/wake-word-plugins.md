@@ -284,9 +284,11 @@ Maturity reflects repository health (age, activity, open issues/PRs, in-repo doc
   "hey_mycroft_tflite": {
     "module": "ovos-ww-plugin-precise-lite",
     "model": "https://github.com/OpenVoiceOS/precise-lite-models/raw/master/wakewords/en/hey_mycroft.tflite",
+    "expected_duration": 3,
     "trigger_level": 3,
     "sensitivity": 0.5,
-    "listen": true
+    "listen": true,
+    "fallback_ww": "hey_mycroft_precise"
   }
 }
 
@@ -348,7 +350,9 @@ Maturity reflects repository health (age, activity, open issues/PRs, in-repo doc
     "module": "ovos-ww-plugin-precise-onnx",
     "model": "https://github.com/OpenVoiceOS/precise-lite-models/raw/master/wakewords/en/hey_mycroft.onnx",
     "trigger_level": 3,
-    "sensitivity": 0.5
+    "sensitivity": 0.5,
+    "listen": true,
+    "fallback_ww": "hey_mycroft_tflite"
    }
 }
 
