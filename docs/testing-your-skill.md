@@ -81,7 +81,7 @@ def test_hello_matches_and_speaks():
     # hello.dialog has three possible lines and OVOS picks one at random,
     # so assert the skill spoke one of the real candidates, not one fixed string.
     messages = test.execute()
-    spoken = [m.data.get("utterance") for m in messages if m.msg_type == "speak"]
+    spoken = [m.data.get("utterance") for m in messages if m.msg_type == "ovos.utterance.speak"]
     assert spoken, "expected the skill to speak, got nothing"
     assert spoken[0] in {
         "Hello! Nice to meet you.",
@@ -178,7 +178,7 @@ def test_unrelated_utterance_is_not_handled():
         test_message_number=False,
     )
     messages = test.execute()
-    spoken = [m.data.get("utterance") for m in messages if m.msg_type == "speak"]
+    spoken = [m.data.get("utterance") for m in messages if m.msg_type == "ovos.utterance.speak"]
     assert not spoken, f"skill should stay silent for an unrelated utterance, got: {spoken}"
 ```
 
@@ -236,9 +236,11 @@ test = End2EndTest.from_message(
 test.save("test/fixtures/hello.json")
 ```
 
-Running it produces a fixture with the full 7-message sequence for this interaction: the
-utterance coming in, the skill activating, the intent matching, the handler starting, the `speak`,
-and the handler/utterance completing.
+Running it produces a fixture with the full 11-message sequence for this interaction:
+`recognizer_loop:utterance`, `my-first.youruser.activate`, `ovos.intent.matched`,
+`ovos.intent.handler.start`, the matched intent event (`my-first.youruser:Hello`),
+`mycroft.skill.handler.start`, `ovos.utterance.speak`, `recognizer_loop:audio_output_start`,
+`mycroft.skill.handler.complete`, `ovos.intent.handler.complete`, and `ovos.utterance.handled`.
 
 ```text
 $ python3 test/record_hello_fixture.py

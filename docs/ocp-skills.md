@@ -246,6 +246,13 @@ This efficiently matches many keywords against an utterance.
 
 OCP keywords are registered via `self.register_ocp_keyword`.
 
+!!! note "`ocp_voc_match` needs `ahocorasick_ner` for local matching"
+    `pip install ahocorasick_ner` to run keyword matching locally, inside the skill process
+    (e.g. to call `ocp_voc_match` directly, as in the example below). Without it, `ocp_voc_match`
+    still runs but returns `{}` — the registered keywords are still sent to OCP over the bus, so
+    matching still works end to end through the normal OCP pipeline, only the local call returns
+    empty.
+
 Wordlists can also be loaded from a .csv file. See [the OCP dataset](https://github.com/OpenVoiceOS/ovos-classifiers/tree/dev/scripts/training/ocp/datasets) for a list of keywords gathered from wikidata with SPARQL queries.
 
 
