@@ -140,6 +140,11 @@ STOP-1 landing in `3.0.0a1` (#802). These emits are unconditional; the once-prop
 `legacy_namespace` gating never shipped (its branch was superseded), and legacy interop
 rides the bus-client bridge instead.
 
+`EventsAPI.update_scheduled_event()` emitted `mycroft.schedule.update_event`, missing the
+"r" in "scheduler" — the server-side `EventScheduler` listens on `mycroft.scheduler.update_event`,
+so calls never reached the scheduler. Fixed (`ovos-bus-client` `fac29c3`, #222, first tag
+`2.8.5a2`).
+
 ## Coming next
 
 The following work is visible on unmerged branches only and is **not

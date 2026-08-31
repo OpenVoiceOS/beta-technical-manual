@@ -33,7 +33,7 @@ the only screen stack that runs today.
 | [ovos-gui#117](https://github.com/OpenVoiceOS/ovos-gui/pull/117) | Adds `SYSTEM_` template-name gate, partitions display state per session | skill authors emitting GUI pages, GUI-adapter authors | No | 1.5.0 |
 | [opm#377](https://github.com/OpenVoiceOS/ovos-plugin-manager/pull/377) | Adds `AbstractGUIPlugin` framework (text, image, video, audio, weather, map, interactive) | GUI-adapter plugin authors, OVOS-GUI integrators | No | 2.12.0 |
 | [opm#406](https://github.com/OpenVoiceOS/ovos-plugin-manager/pull/406) | Drops legacy Mark-1 `enclosure.*` wiring from `PHALPlugin` | PHAL/enclosure plugin authors, GUI integration maintainers | Yes | 3.0.0 |
-| [ovos-bus-client#238](https://github.com/OpenVoiceOS/ovos-bus-client/pull/238) | Stops emitting null GUI keys, base64-encodes local image paths | GUI render-backend implementers, GUI wire-protocol consumers | No | 2.7.3 |
+| [ovos-bus-client#238](https://github.com/OpenVoiceOS/ovos-bus-client/pull/238) | Stops emitting null GUI keys, base64-encodes local image paths | GUI render-backend implementers, GUI wire-protocol consumers | No | not yet released |
 | [ovos-bus-client#197](https://github.com/OpenVoiceOS/ovos-bus-client/pull/197) | Deprecates `EnclosureAPI`, adds `PageTemplates` constants | consumers of `EnclosureAPI` and `GUIInterface` | Yes | 3.0.0 |
 | [ovos-workshop#420](https://github.com/OpenVoiceOS/ovos-workshop/pull/420) | Binds `OVOSSkill.gui` to `ovos-gui-api-client`, drops `ui_directories` | skill authors | Yes | 10.0.0 |
 | [ovos-workshop#421](https://github.com/OpenVoiceOS/ovos-workshop/pull/421) | Deletes the skill-side resting-screen API | skill authors, plus downstream skills listed below | Yes | 10.0.0 |
@@ -89,12 +89,12 @@ fleets no longer run legacy-namespace consumers.
 | [ovos-core#786](https://github.com/OpenVoiceOS/ovos-core/pull/786) | Core-resident OVOS-CONTEXT-1 store, additive | skill authors declaring context, remote session-sync consumers | No | 3.0.0a1 (merged, on `dev`) |
 | [ovos-core#785](https://github.com/OpenVoiceOS/ovos-core/pull/785) | Conforms transformer chains to OVOS-TRANSFORM-1 | transformer plugin authors | No | 2.5.10a1 (merged, on `dev`) |
 | [ovos-workshop#500](https://github.com/OpenVoiceOS/ovos-workshop/pull/500) | Drops the `.intent`-topic dual-bind for canonical intent topics | skill authors on `.intent` topics, mixed-container deployers | Not marked breaking, but drops the dual bind | 9.3.11a2 (merged, on `dev`) |
-| [ovos-workshop#414](https://github.com/OpenVoiceOS/ovos-workshop/pull/414) | Routes resource loading through `ovos-spec-tools`, back-compat mixin | skill authors on the legacy resource API | No | 9.3.3 |
+| [ovos-workshop#414](https://github.com/OpenVoiceOS/ovos-workshop/pull/414) | Routes resource loading through `ovos-spec-tools`, back-compat mixin | skill authors on the legacy resource API | No | not yet released |
 | [ovos-persona#192](https://github.com/OpenVoiceOS/ovos-persona/pull/192) | Fixes persona's PIPELINE-1 done-signal timing | skill/pipeline authors on `ovos-core>=2.3.0a1` | No | 0.9.1 |
 | [ovos-bus-client#271](https://github.com/OpenVoiceOS/ovos-bus-client/pull/271) | Adds a version-skew bridge for `.intent` topics (removed later by #272) | deployers running mixed-version fleets | No | 2.8.0a1 (merged, on `dev`) |
 | [ovos-utils#411](https://github.com/OpenVoiceOS/ovos-utils/pull/411) | Mirrors the #271 bridge in `FakeBus`/`AsyncFakeBus` — **shipped** via the superseding [#417](https://github.com/OpenVoiceOS/ovos-utils/pull/417) in 0.13.10a1; #411 itself stays open as a duplicate | test-harness authors (ovoscope, skill test suites) | No | shipped (0.13.10a1) |
 | [ovos-bus-client#272](https://github.com/OpenVoiceOS/ovos-bus-client/pull/272) | Kill-switch: drops the namespace bridge from `MessageBusClient` (blocked on #271) | deployers with legacy-namespace consumers | Yes | 3.0.0 |
-| [ovos-core#837](https://github.com/OpenVoiceOS/ovos-core/pull/837) | Kill-switch: drops the last legacy-topic literals from `ovos-core` | deployers/plugin authors on legacy topic spellings | Yes | 3.0.0 |
+| [ovos-core#837](https://github.com/OpenVoiceOS/ovos-core/pull/837) | Kill-switch: drops the last legacy-topic literals from `ovos-core` | deployers/plugin authors on legacy topic spellings | Yes | not yet released |
 | [ovos-workshop#501](https://github.com/OpenVoiceOS/ovos-workshop/pull/501) | Kill-switch: drops legacy-topic literals from `ovos-workshop` (blocked on #500) | deployers/skill authors on legacy topic spellings | Yes | 10.0.0 |
 | [ovos-utils#412](https://github.com/OpenVoiceOS/ovos-utils/pull/412) | Kill-switch: drops the bridge from `FakeBus` (its prerequisite bridge shipped via #417) | test-harness authors on legacy-compat flags | Yes | 1.0.0 |
 
@@ -113,14 +113,13 @@ already landed on that repo's `dev`.
 
 | PR | What it changes | Audience | Breaking | Version |
 |---|---|---|---|---|
-| [#146](https://github.com/OpenVoiceOS/ovos-audio/pull/146) | Adds duration to the `utterance_start` recognizer event | skill authors, remote bus consumers, analytics tooling | No | 2.2.0 |
+| [#146](https://github.com/OpenVoiceOS/ovos-audio/pull/146) | Adds duration to the `utterance_start` recognizer event | skill authors, remote bus consumers, analytics tooling | No | not yet released |
 
 ### ovos-bus-client
 
 | PR | What it changes | Audience | Breaking | Version |
 |---|---|---|---|---|
-| [#222](https://github.com/OpenVoiceOS/ovos-bus-client/pull/222) | Fixes `EventsAPI` to emit the right scheduler topic | callers of `EventsAPI.update_scheduled_event()` | No | 2.7.3 |
-| [#200](https://github.com/OpenVoiceOS/ovos-bus-client/pull/200) | Adds `AsyncMessageBusClient`, an async-native client | bus-client consumers, plugin authors wanting async I/O | No | 2.8.0 |
+| [#200](https://github.com/OpenVoiceOS/ovos-bus-client/pull/200) | Adds `AsyncMessageBusClient`, an async-native client | bus-client consumers, plugin authors wanting async I/O | No | not yet released |
 
 ### ovos-config
 
@@ -130,22 +129,22 @@ already landed on that repo's `dev`.
 | [#282](https://github.com/OpenVoiceOS/ovos-config/pull/282) | Adds offline STT/TTS recommends for 49 languages | deployers running `autoconfigure --offline`, langpack maintainers | No | 2.4.0 |
 | [#274](https://github.com/OpenVoiceOS/ovos-config/pull/274) | Moves the `--gpu` STT tier onto `onnx-asr` with `use_cuda` | deployers running the `--gpu` autoconfigure tier | No | 2.4.0 |
 | [#278](https://github.com/OpenVoiceOS/ovos-config/pull/278) | Documents `ww_urls`/`stt_urls` `open_data` config keys | deployers opting into `open_data`, listener users | No | 2.4.0 |
-| [#267](https://github.com/OpenVoiceOS/ovos-config/pull/267) | Fixes a wrong fasterwhisper model id in the GPU-tier recommend | deployers on the GPU-tier `en-us` recommend | No | 2.3.7 |
-| [#82](https://github.com/OpenVoiceOS/ovos-config/pull/82) | Turns on audio ducking by default | end users/deployers of the legacy `ovos-audio` service | Not breaking, but changes default audio behavior | 2.3.7 |
+| [#267](https://github.com/OpenVoiceOS/ovos-config/pull/267) | Fixes a wrong fasterwhisper model id in the GPU-tier recommend | deployers on the GPU-tier `en-us` recommend | No | not yet released |
+| [#82](https://github.com/OpenVoiceOS/ovos-config/pull/82) | Turns on audio ducking by default | end users/deployers of the legacy `ovos-audio` service | Not breaking, but changes default audio behavior | not yet released |
 
 ### ovos-core
 
 | PR | What it changes | Audience | Breaking | Version |
 |---|---|---|---|---|
 | [#832](https://github.com/OpenVoiceOS/ovos-core/pull/832) | Adds pipeline blacklisting at load time and per session | deployers tuning boot cost and per-session policy | No | 2.6.0a1 (merged, on `dev`) |
-| [#689](https://github.com/OpenVoiceOS/ovos-core/pull/689) | Adds pipeline id and core version to intent metrics | consumers of the intent-metrics telemetry event | No | 2.6.0 |
+| [#689](https://github.com/OpenVoiceOS/ovos-core/pull/689) | Adds pipeline id and core version to intent metrics | consumers of the intent-metrics telemetry event | No | not yet released |
 
 ### ovos-dinkum-listener
 
 | PR | What it changes | Audience | Breaking | Version |
 |---|---|---|---|---|
-| [#243](https://github.com/OpenVoiceOS/ovos-dinkum-listener/pull/243) | Adds opt-in upload of wake word/STT samples (pairs with ovos-config#278) | deployers who opt in to data-sharing | No | 0.8.3 |
-| [#215](https://github.com/OpenVoiceOS/ovos-dinkum-listener/pull/215) | Adds a `duration` field to the utterance bus message | skill/plugin authors, remote bus consumers | No | 0.8.3 |
+| [#243](https://github.com/OpenVoiceOS/ovos-dinkum-listener/pull/243) | Adds opt-in upload of wake word/STT samples (pairs with ovos-config#278) | deployers who opt in to data-sharing | No | not yet released |
+| [#215](https://github.com/OpenVoiceOS/ovos-dinkum-listener/pull/215) | Adds a `duration` field to the utterance bus message | skill/plugin authors, remote bus consumers | No | not yet released |
 
 ### ovos-gui
 
@@ -159,7 +158,7 @@ already landed on that repo's `dev`.
 | PR | What it changes | Audience | Breaking | Version |
 |---|---|---|---|---|
 | [#60](https://github.com/OpenVoiceOS/ovos-persona-server/pull/60) | Fixes the `toolbox_id` loader, plugins own their id now | OPM `ToolBox` plugin authors | Framed as a fix, but breaks the constructor contract | 0.13.4a1 (merged, on `dev`) |
-| [#38](https://github.com/OpenVoiceOS/ovos-persona-server/pull/38) | Adds an OpenAI-proxy Docker Compose config and docs | deployers wanting a containerized OpenAI-compatible endpoint | No | 0.14.0 |
+| [#38](https://github.com/OpenVoiceOS/ovos-persona-server/pull/38) | Adds an OpenAI-proxy Docker Compose config and docs | deployers wanting a containerized OpenAI-compatible endpoint | No | not yet released |
 
 ### ovos-plugin-manager
 
