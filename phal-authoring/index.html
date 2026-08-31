@@ -1866,8 +1866,16 @@ entry point, and how to test the result without a running OVOS stack.</p>
 <ul>
 <li>It auto-registers a large set of legacy enclosure (<code>enclosure.eyes.*</code>,
   <code>enclosure.mouth.*</code>) and <code>recognizer_loop:*</code> bus handlers. Override the matching
-  <code>on_*</code> methods to react to them. Call <code>super().shutdown()</code> to unregister them.</li>
+  <code>on_*</code> methods to react to them.</li>
 </ul>
+<div class="admonition warning">
+<p class="admonition-title"><code>super().shutdown()</code> does not actually unregister most of these</p>
+<p>A mismatch between the callables passed to <code>bus.on()</code> and <code>bus.remove()</code> in
+<code>ovos-plugin-manager</code>'s <code>PHALPlugin</code> means most <code>enclosure.mouth.*</code>/<code>enclosure.eyes.*</code>
+handlers, and <code>recognizer_loop:audio_output_end</code>, stay registered after <code>shutdown()</code>
+runs — reproduced live against a <code>FakeBus</code>. Known upstream issue, not a manual-only
+quirk; don't rely on clean plugin teardown for these specific handlers.</p>
+</div>
 <div class="admonition note">
 <p class="admonition-title">Hardware-interface ABCs live in <code>ovos-hardware-helpers</code></p>
 <p>The abstract base classes that hardware PHAL plugins implement,
