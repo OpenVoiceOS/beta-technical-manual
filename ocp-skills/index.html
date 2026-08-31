@@ -1740,6 +1740,14 @@ The title and skill ID show as text. Duration shows as the elapsed-time readout.
 <p>Uses the <a href="https://en.wikipedia.org/wiki/Aho%E2%80%93Corasick_algorithm">Aho–Corasick algorithm</a> to match OCP keywords.</p>
 <p>This efficiently matches many keywords against an utterance.</p>
 <p>OCP keywords are registered via <code>self.register_ocp_keyword</code>.</p>
+<div class="admonition note">
+<p class="admonition-title"><code>ocp_voc_match</code> needs <code>ahocorasick_ner</code> for local matching</p>
+<p><code>pip install ahocorasick_ner</code> to run keyword matching locally, inside the skill process
+(e.g. to call <code>ocp_voc_match</code> directly, as in the example below). Without it, <code>ocp_voc_match</code>
+still runs but returns <code>{}</code> — the registered keywords are still sent to OCP over the bus, so
+matching still works end to end through the normal OCP pipeline, only the local call returns
+empty.</p>
+</div>
 <p>Wordlists can also be loaded from a .csv file. See <a href="https://github.com/OpenVoiceOS/ovos-classifiers/tree/dev/scripts/training/ocp/datasets">the OCP dataset</a> for a list of keywords gathered from wikidata with SPARQL queries.</p>
 <h3 id="ocp-database-skill">OCP Database Skill<a class="headerlink" href="#ocp-database-skill" title="Permanent link">&para;</a></h3>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kn">import</span> <span class="nn">json</span>
