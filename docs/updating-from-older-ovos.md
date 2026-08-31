@@ -150,8 +150,8 @@ threaded `MessageBusClient`, with coroutine equivalents of the sync client's emi
 helpers (`ovos-bus-client` `185ce7b1`, #200, first tag `2.8.6a2`).
 
 `ovos-plugin-manager` dropped the last `pkg_resources` fallback for plugin entry-point discovery
-in favor of `importlib.metadata`, and deprecated `normalize_lang()` (`ovos-plugin-manager`
-`81c5e9bf`, #295, first tag `2.11.4a1`). No public symbol was removed.
+in favor of `importlib.metadata` (`ovos-plugin-manager` `81c5e9bf`, #295, first tag `2.11.4a1`).
+No public symbol was removed.
 
 ## Coming next
 
