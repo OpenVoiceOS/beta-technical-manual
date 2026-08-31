@@ -1919,6 +1919,10 @@ the CommonQuerySkill removal, and the bus-client dual-emit bridge, in that order
 STOP-1 landing in <code>3.0.0a1</code> (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/802" title="GitHub Issue: TigreGotico/ovos-technical-manual #802">#802</a>). These emits are unconditional; the once-proposed
 <code>legacy_namespace</code> gating never shipped (its branch was superseded), and legacy interop
 rides the bus-client bridge instead.</p>
+<p><code>EventsAPI.update_scheduled_event()</code> emitted <code>mycroft.schedule.update_event</code>, missing the
+"r" in "scheduler" — the server-side <code>EventScheduler</code> listens on <code>mycroft.scheduler.update_event</code>,
+so calls never reached the scheduler. Fixed (<code>ovos-bus-client</code> <code>fac29c3</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/222" title="GitHub Issue: TigreGotico/ovos-technical-manual #222">#222</a>, first tag
+<code>2.8.5a2</code>).</p>
 <h2 id="coming-next">Coming next<a class="headerlink" href="#coming-next" title="Permanent link">&para;</a></h2>
 <p>The following work is visible on unmerged branches only and is <strong>not
 released</strong>. It is included so you know it is coming, not because it is
