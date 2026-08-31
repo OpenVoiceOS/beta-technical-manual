@@ -1570,7 +1570,11 @@ with no such caveat.</p>
 <code>websocket</code> section (see <a href="../bus-service/#configuration">messagebus Configuration</a> above).
 <code>run_in_thread()</code> starts the WebSocket loop on a daemon thread so the call returns immediately.
 <code>wait_for_response</code> blocks the calling thread until a message of <code>reply_type</code> arrives or the
-timeout elapses, returning <code>None</code> on timeout.</p>
+timeout elapses, returning <code>None</code> on timeout — but only once the client has connected at least
+once. <code>emit()</code> (which <code>wait_for_response</code> calls internally to send the request) waits on an
+internal connected-event with no timeout if the bus was never reachable, so the whole call hangs
+forever instead of respecting <code>timeout=3.0</code>. Start the messagebus service before running this
+recipe.</p>
 <h3 id="from-the-command-line">From the command line<a class="headerlink" href="#from-the-command-line" title="Permanent link">&para;</a></h3>
 <p>The <a href="../cli-tools/#talking-to-a-running-ovos-ovos-bus-client"><code>ovos-bus-client</code> CLI tools</a> wrap
 the same client for quick, no-code interaction with a running assistant:</p>
