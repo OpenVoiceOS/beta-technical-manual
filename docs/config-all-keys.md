@@ -192,7 +192,7 @@
 | Key | Default | Description |
 |---|---|---|
 | `listener.sample_rate` | `16000` | Audio sampling rate in Hz. |
-| `listener.fake_barge_in` | `true` | Mute output during recording. |
+| `listener.fake_barge_in` | `true` | Lower playback volume during recording, restored afterward. It does not mute. |
 | `listener.speech_begin` | `0.3` | Seconds of detected speech before a command is considered started. |
 | `listener.silence_end` | `0.7` | Seconds of silence before a command is considered ended. |
 | `listener.recording_timeout` | `10.0` | Max seconds for a single recording. |
