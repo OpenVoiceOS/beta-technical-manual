@@ -1757,6 +1757,11 @@ VAD only has to classify one chunk as speech/silence, not decode it.</p>
 <td>Stable</td>
 </tr>
 <tr>
+<td><a href="https://github.com/OpenVoiceOS/ovos-vad-plugin-precise">ovos-vad-plugin-precise</a></td>
+<td>Trained with <code>precise-lite-trainer</code>. Shipped <code>mycroft.conf</code>'s first fallback tier below silero.</td>
+<td>Alpha</td>
+</tr>
+<tr>
 <td><a href="https://github.com/OpenVoiceOS/ovos-vad-plugin-noise">ovos-vad-plugin-noise</a></td>
 <td>Simple energy/noise-threshold VAD with no model download.</td>
 <td>Stable</td>
@@ -1940,12 +1945,13 @@ construct it yourself with your config dict.</p>
 </span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>            &quot;ovos-vad-plugin-silero&quot;: {
 </span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>                // speech-probability cutoff; below this a chunk is treated as silence
 </span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>                &quot;threshold&quot;: 0.2,
-</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>                // optional: override the bundled model with a custom ONNX file
-</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a>                &quot;model&quot;: &quot;/optional/path/to/model.onnx&quot;
-</span><span id="__span-8-10"><a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a>            }
-</span><span id="__span-8-11"><a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a>        }
-</span><span id="__span-8-12"><a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a>    }
-</span><span id="__span-8-13"><a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a>}
+</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>                // the shipped default falls back to ovos-vad-plugin-precise if this
+</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a>                // plugin errors, forming a chain (precise -&gt; webrtcvad -&gt; noise)
+</span><span id="__span-8-10"><a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a>                &quot;fallback_module&quot;: &quot;ovos-vad-plugin-precise&quot;
+</span><span id="__span-8-11"><a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a>            }
+</span><span id="__span-8-12"><a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a>        }
+</span><span id="__span-8-13"><a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a>    }
+</span><span id="__span-8-14"><a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a>}
 </span></code></pre></div>
 <table>
 <thead>
@@ -1962,9 +1968,14 @@ construct it yourself with your config dict.</p>
 <td>Speech-probability cutoff. Chunks scoring below it are classified as silence</td>
 </tr>
 <tr>
+<td><code>fallback_module</code></td>
+<td><code>ovos-vad-plugin-precise</code></td>
+<td>VAD plugin to fall back to on error. Shipped <code>mycroft.conf</code> chains it further: <code>precise</code> → <code>webrtcvad</code> → <code>noise</code></td>
+</tr>
+<tr>
 <td><code>model</code></td>
 <td>bundled <code>silero_vad.onnx</code></td>
-<td>Path to a custom ONNX model. Defaults to the model shipped in the package</td>
+<td>Optional: path to a custom ONNX model, overriding the one shipped in the package. Not set by default</td>
 </tr>
 </tbody>
 </table>
