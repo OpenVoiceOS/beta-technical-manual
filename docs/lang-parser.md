@@ -156,16 +156,17 @@ Return the spoken name of a language code in the UI language `lang`.
 
 Returns a single spoken name string. Resolution is most-specific-first: the full tag's curated
 name, then the **base-language** curated name (a regioned or private-use tag like `ar-EG` or
-`pt-BR-x-caipira` resolves to the name of `ar` / `pt`). Unlike `extract_langcode()` below, there
-is no CLDR/`langcodes` fallback here — a code with no curated name at either level, like `mwl`
-(Mirandese, no `-` subtag to fall back on), is returned unchanged.
+`pt-BR-x-caipira` resolves to the name of `ar` / `pt`). If the wordlist has no curated name
+either way, it falls back to the CLDR display name via `langcodes` (`mwl` → `"Mirandese"`, `lij`
+→ `"Ligurian"`), covering the long tail of ISO-639 codes no wordlist bundles. Only a code CLDR
+itself doesn't know, or a private-use tag, is returned unchanged.
 
 Example:
 ```python
 pronounce_lang("fr", "en")   # "French"
 pronounce_lang("es", "en")   # "Spanish"
 pronounce_lang("en", "fr")   # "Anglais"
-pronounce_lang("mwl", "en")  # "mwl"  (no curated name, no CLDR fallback for this function)
+pronounce_lang("mwl", "en")  # "Mirandese"  (CLDR fallback, no curated wordlist entry)
 ```
 
 ---

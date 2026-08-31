@@ -38,6 +38,14 @@ When enabled, audio frames pass through the configured VAD plugin before reachin
 
 You can list multiple verifiers. A detection is accepted only if all verifiers pass. Use either `ww_verifiers` or `vad_pre_wake_enabled`. Enabling both is redundant.
 
+!!! warning "Installing a verifier plugin activates it"
+    The listener loads every *installed* `opm.wake_word.verifier` plugin, not only the ones
+    listed under `ww_verifiers` — an installed plugin absent from `ww_verifiers` still runs,
+    with its own defaults. Set `"enabled": false` under that plugin's entry in `ww_verifiers`
+    to opt back out. The shipped `mycroft.conf` pre-empts this only for
+    `ovos-ww-verifier-silero`, which it disables by default; any other verifier you install
+    activates on install alone.
+
 ---
 
 ## OPM Verifier Interface

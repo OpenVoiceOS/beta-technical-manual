@@ -32,15 +32,13 @@ are driven by the bus handlers below rather than called directly.
 
 | Bus Event | Handler | Action |
 |---|---|---|
-| `configuration.updated` | `Configuration.updated` | Reload the default, system, remote and XDG layers |
+| `configuration.updated` | `Configuration.updated` | Reload the default, distribution, system, assistant, and XDG layers |
 | `configuration.patch` | `Configuration.patch` | Apply `data["config"]` as an in-memory patch |
 | `configuration.patch.clear` | `Configuration.patch_clear` | Clear the in-memory patch |
 | `configuration.cache.clear` | `Configuration.clear_cache` | Drop the memoized merged config stack, then re-emit `configuration.updated` |
-| `mycroft.paired` | `Configuration.handle_remote_update` | Reload the remote/backend config layer |
-| `mycroft.internet.connected` | `Configuration.handle_remote_update` | Reload the remote/backend config layer |
 
 `configuration.updated` reloads **every** layer: `reload()` re-reads default, distribution,
-system, remote and all the XDG configs from disk (the read-only layers included — their
+system, assistant, and all the XDG configs from disk (the read-only layers included — their
 `reload()` does a real, mtime-checked re-read). A script that edits any layer's file and then
 emits this event sees the change immediately, without waiting for the file watcher.
 
@@ -65,14 +63,17 @@ Each layer is a `LocalConf` instance, a file-backed `dict` subclass.
 |---|---|---|
 | `LocalConf` | any path | Base class; supports JSON and YAML |
 | `ReadOnlyConfig` | any path | Raises `PermissionError` on mutation (unless `allow_overwrite=True`) |
-| `MycroftDefaultConfig` | bundled `mycroft.conf` | `ReadOnlyConfig` |
-| `OvosDistributionConfig` | `/usr/share/mycroft/mycroft.conf` | `ReadOnlyConfig` |
-| `MycroftSystemConfig` | `/etc/mycroft/mycroft.conf` | `ReadOnlyConfig` |
-| `RemoteConf` | backend / paired-server cache | Optional remote layer (`LocalConf`) |
-| `MycroftUserConfig` | `~/.config/mycroft/mycroft.conf` | Primary user layer (`LocalConf`) |
+| `DefaultConfig` | bundled `mycroft.conf` | `ReadOnlyConfig` |
+| `DistributionConfig` | `/usr/share/mycroft/mycroft.conf` | `ReadOnlyConfig` |
+| `SystemConfig` | `/etc/mycroft/mycroft.conf` | `ReadOnlyConfig` |
+| `AssistantConfig` | `~/.config/mycroft/runtime.conf` | OVOS's own runtime-write layer (`LocalConf`) |
+| `UserConfig` | `~/.config/mycroft/mycroft.conf` | Primary user layer (`LocalConf`) |
 
-`MycroftUserConfig` is also exported under the alias `MycroftXDGConfig` for backward
-compatibility.
+`MycroftDefaultConfig`/`OvosDistributionConfig`/`MycroftSystemConfig`/`MycroftUserConfig` are
+deprecated aliases of the classes above, kept for backward compatibility and slated for removal.
+`MycroftXDGConfig` is a deprecated alias of `UserConfig`. `RemoteConf` (the old backend /
+paired-server cache) is deprecated without replacement — constructing it emits a
+`DeprecationWarning`, and `Configuration` no longer instantiates it at all.
 
 ```python
 from ovos_config.models import LocalConf, MycroftUserConfig

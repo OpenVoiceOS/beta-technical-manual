@@ -173,6 +173,14 @@ ExecStartPost=/usr/local/bin/ovos-ready-probe
     `wait_for_response` returns `None` on timeout. It does not raise. Always check for `None`.
     A bare `response.data` on a timed-out call raises `AttributeError`, not a clean failure.
 
+!!! danger "The 30s timeout only applies once connected"
+    `wait_for_response` calls `emit()` internally to send the request, and `emit()` waits on an
+    internal connected-event with **no timeout** if the bus was never reachable. If the
+    messagebus service isn't up yet when this probe runs — a real possibility right at
+    `ExecStartPost` — the probe hangs forever instead of failing after 30s, and `systemd` never
+    gets past the post-start check. Give the unit its own `TimeoutStartSec`, or add a bus-reachability
+    check (e.g. a plain socket connect) before calling `wait_for_response`.
+
 ### Headless devices: choosing what "ready" means
 
 [`ovos-skill-boot-finished`](https://github.com/OpenVoiceOS/ovos-skill-boot-finished) is the

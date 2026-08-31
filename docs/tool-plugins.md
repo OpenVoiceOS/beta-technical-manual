@@ -203,6 +203,12 @@ result = bus.wait_for_response(Message("ovos.tools.invoke",
                                        {"name": "add", "args": {"a": 1, "b": 2}}))
 ```
 
+!!! warning "`wait_for_response` hangs forever if the bus was never reachable"
+    Its default `timeout=3.0` only starts counting once the client has connected. If the
+    messagebus is unreachable when `run_in_thread()` starts, `emit()`'s internal send waits on
+    an unbounded connected-event, and every call above blocks forever instead of respecting the
+    timeout. Make sure the messagebus service is already running before using this recipe.
+
 ---
 
 ## ovos-agentic-loop Toolboxes

@@ -41,10 +41,13 @@ container.calc_intent('say something, whatever')
 # {'name': 'say', 'entities': {}, 'conf': 0.85}
 ```
 
-Slot names follow the OVOS sentence-template grammar (`{lowercase_with_underscores}`).
-The colon-typed `simplematch` syntax such as `{number:int}` is **not** supported:
-`add_intent()` raises `MalformedTemplate` at registration (slot names allow only lowercase
-letters, digits, and underscores), rather than treating it as a literal or a typed slot.
+`padacioso.IntentContainer.add_intent()`, called directly as above, honors `simplematch`'s
+colon-typed slot syntax (`{number:int}`) with real type coercion. An unparseable value fails to
+match. It does not crash.
+
+The OVOS pipeline's `.intent`-file path differs. `ovos-spec-tools` validates slot names against
+the OVOS grammar (`{lowercase_with_underscores}`) first. A colon-typed name raises
+`MalformedTemplate` there, before padacioso ever sees the template.
 
 A wildcard (`*`) carries a confidence penalty proportional to how much of the template it
 covers: `0.05 + 0.20 × (wildcard tokens / total tokens)`, so any wildcard costs between
