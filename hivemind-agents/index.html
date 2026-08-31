@@ -1755,6 +1755,13 @@ delegating hard questions or surviving local outages.</p>
 </span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="n">bot</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span>
 </span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="nb">print</span><span class="p">(</span><span class="n">bot</span><span class="o">.</span><span class="n">spoken_answer</span><span class="p">(</span><span class="s2">&quot;what is the speed of light?&quot;</span><span class="p">))</span>
 </span></code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title"><code>connect()</code> retries forever, with no built-in timeout</p>
+<p>If the server is unreachable or the identity is wrong, <code>connect()</code> blocks: the underlying
+client's handshake wait keeps retrying every 5 seconds indefinitely rather than raising or
+returning. Verify the server is reachable and the identity is correct first (<code>hivemind-client
+test-identity</code>), or wrap the call in your own timeout/watchdog.</p>
+</div>
 <h3 id="as-an-intent-pipeline-stage">As an intent-pipeline stage<a class="headerlink" href="#as-an-intent-pipeline-stage" title="Permanent link">&para;</a></h3>
 <p>There is also a pipeline-plugin form,
 <strong><a href="https://github.com/JarbasHiveMind/ovos-hivemind-pipeline-plugin"><code>ovos-hivemind-pipeline-plugin</code></a></strong>
