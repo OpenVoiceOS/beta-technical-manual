@@ -2134,10 +2134,6 @@
 </span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>    }
 </span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>  }
 </span></code></pre></div>
-<p>There is no single hardcoded default model. Leaving <code>model</code> unset resolves one from an
-internal <code>LANG2MODEL</code> table keyed by <code>lang</code> (the value above is the <code>gl</code>/Galician entry), and
-raises <code>ValueError</code> at load if the configured language has no entry and no <code>model</code> is set
-explicitly.</p>
 <p>There is no single hardcoded default model: the plugin picks a model from an internal
 per-language table (keyed by BCP-47 language code) unless <code>model</code> is set explicitly, and
 raises an error if the configured <code>lang</code> has no entry and no <code>model</code> is given. The
