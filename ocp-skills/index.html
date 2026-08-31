@@ -1746,9 +1746,10 @@ The title and skill ID show as text. Duration shows as the elapsed-time readout.
 (e.g. to call <code>ocp_voc_match</code> directly, as in the example below). Without it, <code>ocp_voc_match</code>
 still runs but returns <code>{}</code> — the registered keywords are still sent to OCP over the bus, so
 matching still works end to end through the normal OCP pipeline, only the local call returns
-empty. <code>ahocorasick_ner</code> is specific to this legacy OCP-skill-side keyword matching; it is not
+empty. This <code>ocp_voc_match</code> integration is legacy OCP-skill-side keyword matching. It is not
 expected to gain new features as OCP skills give way to MediaProvider plugins (see the
-migration note at the top of this page).</p>
+migration note above). The <code>ahocorasick_ner</code> package itself stays live: it also backs the
+unrelated <a href="../intent-transformers/"><code>ovos-ahocorasick-ner-plugin</code></a> intent transformer.</p>
 </div>
 <p>Wordlists can also be loaded from a .csv file. See <a href="https://github.com/OpenVoiceOS/ovos-classifiers/tree/dev/scripts/training/ocp/datasets">the OCP dataset</a> for a list of keywords gathered from wikidata with SPARQL queries.</p>
 <h3 id="ocp-database-skill">OCP Database Skill<a class="headerlink" href="#ocp-database-skill" title="Permanent link">&para;</a></h3>
