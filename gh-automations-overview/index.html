@@ -1909,6 +1909,10 @@
 </span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="w">      </span><span class="nt">test_path</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;test/&#39;</span>
 </span></code></pre></div>
 <p><code>secrets: inherit</code> passes your repo's secrets (e.g. <code>GITHUB_TOKEN</code>, and <code>PYPI_TOKEN</code>/<code>MATRIX_TOKEN</code> for the publish workflows) through to the called workflow. See <a href="../gh-automations-workflows/">Workflow Reference</a> for every input.</p>
+<div class="admonition info">
+<p class="admonition-title"><code>install_extras</code> accepts any spelling</p>
+<p>Every reusable workflow that takes <code>install_extras</code> accepts a bare extras name (<code>'test'</code>), a bracketed list (<code>'[dev,test]'</code>), a full install target (<code>'.[dev]'</code>), or raw pip arguments (<code>'-r requirements/test.txt'</code>), normalizing internally (<a href="https://github.com/OpenVoiceOS/gh-automations/pull/88">OpenVoiceOS/gh-automations#88</a>). Use whichever spelling reads clearest; the per-workflow input tables below and on the linked reference pages may still show one particular spelling in their example, but any of the four forms works.</p>
+</div>
 <h3 id="scripts-checkout">Scripts checkout<a class="headerlink" href="#scripts-checkout" title="Permanent link">&para;</a></h3>
 <p>Several reusable workflows check this repo out again at runtime to reach <code>scripts/</code> (the PR-comment helper, version utilities, etc.), pinned to <code>ref: dev</code>. You do not write this yourself: it lives inside the reusable workflow.</p>
 <details class="example">
