@@ -54,6 +54,7 @@ You can configure the VAD plugin in your `mycroft.conf`. The example below uses
 |--------|-------------|----------|
 | [ovos-vad-plugin-webrtcvad](https://github.com/OpenVoiceOS/ovos-vad-plugin-webrtcvad) | Based on Google's WebRTC VAD (`webrtcvad-wheels`). Lightweight, CPU-only, widely used. `vad_mode` (0 to 3) sets how aggressively it filters out non-speech. `0` is the least aggressive: most permissive, more likely to classify borderline audio as speech. `3` is the most aggressive at filtering out non-speech and is the plugin's default. | Stable |
 | [ovos-vad-plugin-silero](https://github.com/OpenVoiceOS/ovos-vad-plugin-silero) | Uses the Silero deep-learning model for high-accuracy VAD, particularly in noisy environments. | Stable |
+| [ovos-vad-plugin-precise](https://github.com/OpenVoiceOS/ovos-vad-plugin-precise) | Trained with `precise-lite-trainer`. Shipped `mycroft.conf`'s first fallback tier below silero. | Alpha |
 | [ovos-vad-plugin-noise](https://github.com/OpenVoiceOS/ovos-vad-plugin-noise) | Simple energy/noise-threshold VAD with no model download. | Stable |
 
 --8<-- "snippets/maturity-disclaimer.md"
@@ -271,8 +272,9 @@ Detailed per-plugin configuration for the same roster listed in
             "ovos-vad-plugin-silero": {
                 // speech-probability cutoff; below this a chunk is treated as silence
                 "threshold": 0.2,
-                // optional: override the bundled model with a custom ONNX file
-                "model": "/optional/path/to/model.onnx"
+                // the shipped default falls back to ovos-vad-plugin-precise if this
+                // plugin errors, forming a chain (precise -> webrtcvad -> noise)
+                "fallback_module": "ovos-vad-plugin-precise"
             }
         }
     }
@@ -283,7 +285,8 @@ Detailed per-plugin configuration for the same roster listed in
 | Config key | Default | Effect |
 |---|---|---|
 | `threshold` | `0.2` | Speech-probability cutoff. Chunks scoring below it are classified as silence |
-| `model` | bundled `silero_vad.onnx` | Path to a custom ONNX model. Defaults to the model shipped in the package |
+| `fallback_module` | `ovos-vad-plugin-precise` | VAD plugin to fall back to on error. Shipped `mycroft.conf` chains it further: `precise` → `webrtcvad` → `noise` |
+| `model` | bundled `silero_vad.onnx` | Optional: path to a custom ONNX model, overriding the one shipped in the package. Not set by default |
 
 !!! tip "Same package also provides a pre-wake VAD verifier"
     `ovos-vad-plugin-silero` registers a second entry point, `ovos-ww-verifier-silero`
