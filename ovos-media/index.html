@@ -2337,6 +2337,15 @@ backends. The bundled players are <code>vlc</code>, <code>mplayer</code>, <code>
 <code>chromecast</code>, and the legacy <code>qt5</code> GUI hand-off (see the
 <a href="#available-media-backend-plugins">backend table</a>).</p>
 </blockquote>
+<div class="admonition tip">
+<p class="admonition-title">Installed backend plugins load automatically</p>
+<p><code>audio_players</code>/<code>video_players</code>/<code>web_players</code> are optional. An installed backend plugin
+loads on its own. Use a <code>{type}_players</code> entry only to customize a plugin's name/aliases,
+reorder it, or disable it (<code>"active": false</code>). Set <code>"autoload_backends": false</code> under
+<code>media</code> to disable autoloading entirely. <code>Remote{Audio,Video,Web}PlayerBackend</code> subclasses
+(a backend driving a remote target) never autoload; they always need an explicit
+<code>{type}_players</code> entry, and configured entries always sort before autoloaded ones.</p>
+</div>
 <p>Each entry's key is a local name. <code>module</code> is the plugin's <strong>entry-point name</strong>
 (e.g. <code>ovos-media-audio-plugin-vlc</code>), which can differ from its pip package name
 (<code>ovos-media-plugin-vlc</code>). <code>preferred_*_services</code> are ordered fallback lists. The
