@@ -518,11 +518,12 @@ By default every service logs at `INFO`. To see the `DEBUG` lines quoted through
     ```
 
     Once the key exists anywhere in the merged configuration (including after you've added it
-    this way once), `ovos-config set -k log_level -v DEBUG` will find and update it — but see
-    the [known bug](config.md#usage-guide): it currently writes to a different file
-    (`~/.config/mycroft/runtime.conf`) than the one above. Since that layer merges above
-    `mycroft.conf`, the value still takes effect; only the file that changed on disk is a
-    surprise.
+    this way once), `ovos-config set -k log_level -v DEBUG` will find it — but see the
+    [known bug](config.md#usage-guide): it currently writes to a different file
+    (`~/.config/mycroft/runtime.conf`) than the one above. That layer merges *before*
+    `mycroft.conf`, so if `mycroft.conf` already defines `log_level`, the new value `set`
+    just wrote is silently overridden and never takes effect at all. Edit `mycroft.conf`
+    directly instead of relying on `set` until the bug is fixed.
 
 This applies to every service (they all watch the same configuration and pick up the change
 without a restart). To raise the level for only one service, add the nested `"logging"` section
