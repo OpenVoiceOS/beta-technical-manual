@@ -190,6 +190,13 @@ ovos-config set -k /tts/module -v ovos-tts-plugin-phoonnx
 
 See the **Secrets and permissions** warning above. `ovos-config set` does not restrict the file's permissions itself.
 
+!!! warning "Known bug: `ovos-config set` writes to the wrong file"
+    `ovos-config` mis-indexed its config-layer table after the AssistantConfig rewrite:
+    `ovos-config set` writes to `~/.config/mycroft/runtime.conf` (the Assistant layer),
+    not `~/.config/mycroft/mycroft.conf` (the User layer) as intended. `ovos-config show
+    -u` and `ovos-config show -a` are swapped the same way. Check `runtime.conf` if a
+    `set` value doesn't show up where expected.
+
 **Restart and verify**
 
 `ovos-config set` writes the change to disk. It does not restart the running services. They

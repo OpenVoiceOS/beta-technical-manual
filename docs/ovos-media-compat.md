@@ -41,10 +41,11 @@ now just a back-compat alias for the plain, skill-free catalog object). `OCPVoic
 registers `@ocp_search()` to expose liked songs as a search result. There is no
 `@ocp_featured_media()` handler.
 
-### No next/prev in some backends
+### Music Assistant next/prev delegate to the queue API
 
-The Music Assistant audio backend does not implement `next()` or `previous()` through the legacy
-`AudioBackend` interface. Only through the MA queue API.
+The Music Assistant audio backend's `next()`/`previous()` on the legacy `AudioBackend`
+interface work: they delegate internally to Music Assistant's own queue API
+(`next_track()`/`previous_track()`) rather than implementing track skipping themselves.
 
 ---
 **Read next:** [ovos-media HiveMind: multi-session gating](ovos-media.md#hivemind-multi-session-gating)
