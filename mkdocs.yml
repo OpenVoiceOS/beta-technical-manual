@@ -350,6 +350,7 @@ nav:
           - Overview: home-assistant.md
           - Wyoming Bridges (OVOS engines for HA): wyoming-bridges.md
           - Wyoming Wake-word Bridge: wyoming-wakeword-bridge.md
+      - Music Assistant: music-assistant.md
   - Reference:
       - Reference Overview: reference-overview.md
       - OVOS Repository Index: ecosystem-index.md
