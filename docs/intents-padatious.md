@@ -136,6 +136,10 @@ that means in practice.
     `message.data` in the handler; if the handler never consumes the captured value, it
     should probably not be a slot at all.
 
+    An inline alternation group over 64 branches is dropped from padaos entirely for that
+    line: the engine logs a warning naming the intent and branch count, and that line falls
+    back to neural-only matching. Past 64 options, use a slot with an `.entity` file instead.
+
 !!! note "Out-of-list matches land in the medium stage"
     In `ovos-padatious-pipeline-plugin` (2.0.3a1+), an out-of-list value is floored at
     `ENTITY_HINT_FLOOR = 0.8` rather than collapsing the candidate. A listed value scores

@@ -205,6 +205,8 @@ Avoid Padatious for complex conversational use cases, skills with overlapping in
 
 **Gotcha: training is asynchronous.** Padatious must train its model before it can match. On a cold start (or after installing a skill), matches will silently fail until training completes. Set `instant_train` to force synchronous training when you need deterministic behavior in tests.
 
+Only the very first training pass on a fresh container runs synchronously; every retrain after that runs on a background worker, off the utterance-handling thread. Queries made while a retrain is in flight, and the `intent.service.padatious.manifest.get` bus response, still serve the previous trained generation rather than blocking or erroring. Re-registering an intent or entity with unchanged content is a no-op: both workers debounce a burst of registrations (up to a 60-second quiet window) into a single retrain instead of retraining once per registration.
+
 **Per-domain training.** Setting `domain_engine: true` in the plugin's config trains a separate model per skill domain (using the same `ovos-padatious-pipeline-plugin` entry point) instead of one flat model across all skills, reducing cross-skill collisions at the cost of extra memory.
 
 !!! note "Upcoming"
